@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
+        php-versions: ['7.4', '8.0']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
-      key: cache-v1    
+      key: cache-v1
     steps:
     - uses: actions/checkout@v1
     - name: Setup cache environment
@@ -43,7 +43,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /tmp/composer-cache
-        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
     - uses: php-actions/composer@v5
       with:
         php_version: 7.4
@@ -54,12 +54,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
+        php-versions: ['7.4', '8.0']
     name: phpunit (${{ matrix.php-versions }})
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
       key: cache-v1
     steps:
+    - name: Install gettext
+      run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext
     - uses: ankane/setup-mariadb@v1
       with:
         mariadb-version: 10.5
@@ -89,22 +91,28 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /tmp/composer-cache
-        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
     - uses: php-actions/composer@v5
       with:
         php_version: 7.4
-    - name: Get GLPI
-      run: wget https://github.com/glpi-project/glpi/releases/download/9.5.3/glpi-9.5.3.tgz
-    - name: Uncompress GLPI
-      run: tar zxvf glpi-9.5.3.tgz
+    - name: Checkout GLPI
+      uses: actions/checkout@v2
+      with:
+        repository: glpi-project/glpi
+        path: glpi
+        fetch-depth: 1
+        ref: master
     - name: Copy Plugin FusionInventory
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/fusioninventory/
     - name: Create the database
       run: mysqladmin create glpi
-    - name: Check php dependencies
-      run: cd glpi && php bin/console glpi:system:check_requirements
+    - name: Install dependencies
+      run: |
+        cd glpi
+        php bin/console dependencies install
+        php bin/console locales:compile
     - name: Install GLPI
-      run: cd glpi && mkdir tests && php bin/console glpi:database:install -n --config-dir=tests --db-name=glpi --db-user=root
+      run: cd glpi && php bin/console glpi:database:install -n --config-dir=tests --db-name=glpi --db-user=root
     - name: Install plugin FusionInventory
       run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory
     - name: Activate plugin FusionInventory
