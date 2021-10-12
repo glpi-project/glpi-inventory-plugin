@@ -223,7 +223,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
             'value' => 'Group',
          ],
          [
-            'name' => __('Groups of computers', 'fusioninventory'),
+            'name' => __('Groups of computers', 'glpiinventory'),
             'value' => 'PluginFusioninventoryDeployGroup',
          ]
       ];

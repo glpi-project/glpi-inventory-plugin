@@ -62,7 +62,7 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return _n('Found file', 'Found files', $nb, 'fusioninventory');
+      return _n('Found file', 'Found files', $nb, 'glpiinventory');
    }
 
 
@@ -93,9 +93,9 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
          $filter = '< '.$row['filter_sizelower'];
       }
       if ($row['filter_is_file'] == 1) {
-         $type = __('File', 'fusioninventory');
+         $type = __('File', 'glpiinventory');
       } else {
-         $type = __('Folder', 'fusioninventory');
+         $type = __('Folder', 'glpiinventory');
       }
 
       return [
@@ -114,7 +114,7 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
    }
 
    function displayNewSpecificities() {
-      echo "<td>".__('Limit', 'fusioninventory')."</td>";
+      echo "<td>".__('Limit', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showNumber('limit', [
                            'min'   => 1,
@@ -127,19 +127,19 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo _n('Filter', 'Filters', 2, 'fusioninventory');
+      echo _n('Filter', 'Filters', 2, 'glpiinventory');
       echo "</th>";
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Base folder', 'fusioninventory');
+      echo __('Base folder', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='dir' value='/' size='50' />";
       echo "</td>";
       echo "<td>";
-      echo __('Folder recursive', 'fusioninventory');
+      echo __('Folder recursive', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo('is_recursive', 1);
@@ -148,17 +148,17 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Regex', 'fusioninventory');
+      echo __('Regex', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='filter_regex' value='' size='50' />";
       echo "</td>";
       echo "<td>";
-      echo __('Size', 'fusioninventory');
+      echo __('Size', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray('sizetype', [
-          'none'    => __('Disabled', 'fusioninventory'),
+          'none'    => __('Disabled', 'glpiinventory'),
           'equals'  => '=',
           'greater' => '>',
           'lower'   => '<'
@@ -170,13 +170,13 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Checksum SHA512', 'fusioninventory');
+      echo __('Checksum SHA512', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='filter_checksumsha512' value='' />";
       echo "</td>";
       echo "<td>";
-      echo __('Checksum SHA2', 'fusioninventory');
+      echo __('Checksum SHA2', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='filter_checksumsha2' value='' />";
@@ -185,24 +185,24 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Filename', 'fusioninventory');
+      echo __('Filename', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray('filter_nametype', [
-          'none'  => __('Disabled', 'fusioninventory'),
-          'name'  => __('Non sentitive case', 'fusioninventory'),
-          'iname' => __('Sentitive case', 'fusioninventory')
+          'none'  => __('Disabled', 'glpiinventory'),
+          'name'  => __('Non sentitive case', 'glpiinventory'),
+          'iname' => __('Sentitive case', 'glpiinventory')
          ]
       );
       echo "<input type='text' name='filter_name' value='' />";
       echo "</td>";
       echo "<td>";
-      echo __('Type', 'fusioninventory');
+      echo __('Type', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray('type', [
-            'file' => __('File', 'fusioninventory'),
-            'dir'  => __('Folder', 'fusioninventory')
+            'file' => __('File', 'glpiinventory'),
+            'dir'  => __('Folder', 'glpiinventory')
          ]
       );
       echo "</td>";

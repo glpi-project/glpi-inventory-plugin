@@ -92,7 +92,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
          'id'           => '1',
          'table'        => $this->getTable(),
          'field'        => 'value',
-         'name'         => __('blacklisted value', 'fusioninventory'),
+         'name'         => __('blacklisted value', 'glpiinventory'),
          'autocomplete' => true,
       ];
 
@@ -149,7 +149,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('blacklisted value', 'fusioninventory')."</td>";
+      echo "<td>".__('blacklisted value', 'glpiinventory')."</td>";
       echo "<td>";
       Html::autocompletionTextField($this, 'value');
       echo "</td>";

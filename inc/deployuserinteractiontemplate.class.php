@@ -113,7 +113,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    **/
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       $tabs[1] = __('General');
-      $tabs[2] = _n('Behavior', 'Behaviors', 2, 'fusioninventory');
+      $tabs[2] = _n('Behavior', 'Behaviors', 2, 'glpiinventory');
       return $tabs;
    }
 
@@ -149,7 +149,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
     */
    static function getTypeName($nb = 0) {
          return _n('User interaction template',
-                   'User interaction templates', $nb, 'fusioninventory');
+                   'User interaction templates', $nb, 'glpiinventory');
    }
 
 
@@ -161,7 +161,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
     */
    static function getTypes() {
       return [self::ALERT_WTS
-               => __("Windows system alert (WTS)", 'fusioninventory')];
+               => __("Windows system alert (WTS)", 'glpiinventory')];
    }
 
 
@@ -188,15 +188,15 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    static function getButtons($interaction_type = '') {
       $interactions = [
          self::ALERT_WTS => [
-            self::WTS_BUTTON_OK_SYNC             => __('OK', 'fusioninventory'),
-            self::WTS_BUTTON_OK_ASYNC            => __('OK (asynchronous)', 'fusioninventory'),
-            self::WTS_BUTTON_OK_CANCEL           => __('OK - Cancel', 'fusioninventory'),
-            self::WTS_BUTTON_YES_NO              => __('Yes - No', 'fusioninventory'),
-            self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('OK - Abort - Retry', 'fusioninventory'),
-            self::WTS_BUTTON_RETRY_CANCEL        => __('Retry - Cancel', 'fusioninventory'),
-            self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('Abort - Retry - Ignore', 'fusioninventory'),
-            self::WTS_BUTTON_CANCEL_TRY_CONTINUE => __('Cancel - Try - Continue', 'fusioninventory'),
-            self::WTS_BUTTON_YES_NO_CANCEL       => __('Yes - No - Cancel', 'fusioninventory')
+            self::WTS_BUTTON_OK_SYNC             => __('OK', 'glpiinventory'),
+            self::WTS_BUTTON_OK_ASYNC            => __('OK (asynchronous)', 'glpiinventory'),
+            self::WTS_BUTTON_OK_CANCEL           => __('OK - Cancel', 'glpiinventory'),
+            self::WTS_BUTTON_YES_NO              => __('Yes - No', 'glpiinventory'),
+            self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('OK - Abort - Retry', 'glpiinventory'),
+            self::WTS_BUTTON_RETRY_CANCEL        => __('Retry - Cancel', 'glpiinventory'),
+            self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('Abort - Retry - Ignore', 'glpiinventory'),
+            self::WTS_BUTTON_CANCEL_TRY_CONTINUE => __('Cancel - Try - Continue', 'glpiinventory'),
+            self::WTS_BUTTON_YES_NO_CANCEL       => __('Yes - No - Cancel', 'glpiinventory')
          ]
       ];
       if (isset($interactions[$interaction_type])) {
@@ -235,7 +235,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
             self::WTS_ICON_WARNING  => __('Warning'),
             self::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
             self::WTS_ICON_ERROR    => __('Error'),
-            self::WTS_ICON_QUESTION => __('Question', 'fusioninventory')
+            self::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
          ]
       ];
       if (isset($icons[$interaction_type])) {
@@ -267,9 +267,9 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
     * @return array
     */
    static function getBehaviors() {
-      return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction', 'fusioninventory'),
-              self::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'fusioninventory'),
-              self::BEHAVIOR_STOP_DEPLOY     => __('Cancel job', 'fusioninventory')
+      return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction', 'glpiinventory'),
+              self::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'glpiinventory'),
+              self::BEHAVIOR_STOP_DEPLOY     => __('Cancel job', 'glpiinventory')
              ];
    }
 
@@ -418,7 +418,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
                                                    ]);
       echo "</td>";
 
-      echo "<td>".__('Interaction format', 'fusioninventory')."</td>";
+      echo "<td>".__('Interaction format', 'glpiinventory')."</td>";
       echo "<td>";
       $this->dropdownTypes($json_data['platform']);
       echo "</td>";
@@ -426,24 +426,24 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
 
       echo "<tr class='tab_bg_1'>";
 
-      echo "<td>".__('Interaction type', 'fusioninventory')."</td>";
+      echo "<td>".__('Interaction type', 'glpiinventory')."</td>";
       echo "<td>";
       $this->dropdownButtons($json_data['buttons']);
       echo "</td>";
 
-      echo "<td>".__('Alert icon', 'fusioninventory')."</td>";
+      echo "<td>".__('Alert icon', 'glpiinventory')."</td>";
       echo "<td>";
       $this->dropdownIcons($json_data['icon']);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Retry job after', 'fusioninventory')."</td>";
+      echo "<td>".__('Retry job after', 'glpiinventory')."</td>";
       echo "<td>";
       $this->dropdownRetry($json_data['retry_after']);
       echo "</td>";
 
-      echo "<td>".__('Maximum number of retry allowed', 'fusioninventory')."</td>";
+      echo "<td>".__('Maximum number of retry allowed', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showNumber('nb_max_retry',
                            ['value' => $json_data['nb_max_retry'],
@@ -455,7 +455,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alert display timeout', 'fusioninventory')."</td>";
+      echo "<td>".__('Alert display timeout', 'glpiinventory')."</td>";
       echo "<td>";
       $this->dropdownTimeout($json_data['timeout']);
       echo "</td>";
@@ -548,18 +548,18 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    * @return array an array of event => event label
    */
    public function getEvents() {
-      return ['on_ok'       => __('Button ok', 'fusioninventory'),
-              'on_yes'      => __('Button yes', 'fusioninventory'),
-              'on_continue' => __('Button continue', 'fusioninventory'),
-              'on_retry'    => __('Button retry', 'fusioninventory'),
-              'on_tryagain' => __('Button try', 'fusioninventory'),
-              'on_no'       => __('Button no', 'fusioninventory'),
-              'on_cancel'   => __('Button cancel', 'fusioninventory'),
-              'on_abort'    => __('Button abort', 'fusioninventory'),
-              'on_ignore'   => __('Button ignore', 'fusioninventory'),
-              'on_nouser'   => __('No active session', 'fusioninventory'),
-              'on_timeout'  => __('Alert timeout exceeded', 'fusioninventory'),
-              'on_multiusers' => __('Several active sessions', 'fusioninventory')
+      return ['on_ok'       => __('Button ok', 'glpiinventory'),
+              'on_yes'      => __('Button yes', 'glpiinventory'),
+              'on_continue' => __('Button continue', 'glpiinventory'),
+              'on_retry'    => __('Button retry', 'glpiinventory'),
+              'on_tryagain' => __('Button try', 'glpiinventory'),
+              'on_no'       => __('Button no', 'glpiinventory'),
+              'on_cancel'   => __('Button cancel', 'glpiinventory'),
+              'on_abort'    => __('Button abort', 'glpiinventory'),
+              'on_ignore'   => __('Button ignore', 'glpiinventory'),
+              'on_nouser'   => __('No active session', 'glpiinventory'),
+              'on_timeout'  => __('Alert timeout exceeded', 'glpiinventory'),
+              'on_multiusers' => __('Several active sessions', 'glpiinventory')
              ];
 
    }
@@ -667,7 +667,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>".__('Behaviors', 'fusioninventory')."</th>";
+      echo "<th colspan='4'>".__('Behaviors', 'glpiinventory')."</th>";
       echo "</tr>";
 
       foreach ($this->getMainFormFields() as $field) {

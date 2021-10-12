@@ -149,13 +149,13 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     */
    static function getStateNames() {
       return [
-         self::PREPARED             => __('Prepared', 'fusioninventory'),
-         self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'fusioninventory'),
-         self::AGENT_HAS_SENT_DATA  => __('Agent replied with data to the server', 'fusioninventory'),
-         self::FINISHED             => __('Finished', 'fusioninventory'),
-         self::IN_ERROR             => __('Error', 'fusioninventory'),
-         self::CANCELLED            => __('Cancelled', 'fusioninventory'),
-         self::POSTPONED            => __('Postponed', 'fusioninventory')
+         self::PREPARED             => __('Prepared', 'glpiinventory'),
+         self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'glpiinventory'),
+         self::AGENT_HAS_SENT_DATA  => __('Agent replied with data to the server', 'glpiinventory'),
+         self::FINISHED             => __('Finished', 'glpiinventory'),
+         self::IN_ERROR             => __('Error', 'glpiinventory'),
+         self::CANCELLED            => __('Cancelled', 'glpiinventory'),
+         self::POSTPONED            => __('Postponed', 'glpiinventory')
       ];
    }
 
@@ -253,7 +253,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    function stateTaskjobItem($items_id, $itemtype, $state = 'all') {
       global $DB;
 
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $icon         = "";
@@ -266,13 +266,13 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
          case 'running':
             $fields['state'] = ['NOT', self::FINISHED];
-            $title = __('Running tasks', 'fusioninventory');
+            $title = __('Running tasks', 'glpiinventory');
             $icon  = "<img src='".$fi_path."/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $fields['state'] = self::FINISHED;
-            $title = __('Finished tasks', 'fusioninventory');
+            $title = __('Finished tasks', 'glpiinventory');
             $icon  = "<img src='".$fi_path."/pics/task_finished.png'/>";
             break;
 
@@ -311,9 +311,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo "<table class='tab_cadre' width='950'>";
          echo "<tr>";
          echo "<th></th>";
-         echo "<th>".__('Unique id', 'fusioninventory')."</th>";
-         echo "<th>".__('Job', 'fusioninventory')."</th>";
-         echo "<th>".__('Agent', 'fusioninventory')."</th>";
+         echo "<th>".__('Unique id', 'glpiinventory')."</th>";
+         echo "<th>".__('Job', 'glpiinventory')."</th>";
+         echo "<th>".__('Agent', 'glpiinventory')."</th>";
          echo "<th>";
          echo _n('Date', 'Dates', 1);
          echo "</th>";
@@ -604,8 +604,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                ];
                $log->add($log_input);
 
-               $reason = sprintf(__('Job available for next execution at %s', 'fusioninventory'),
-                            Html::convDateTime($params['date_start'], 'fusioninventory'));
+               $reason = sprintf(__('Job available for next execution at %s', 'glpiinventory'),
+                            Html::convDateTime($params['date_start'], 'glpiinventory'));
 
                $log_input = [
                   'plugin_fusioninventory_taskjobstates_id' => $states_id,
@@ -618,9 +618,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                $log->add($log_input);
 
                if ($params['nb_retry'] <= $params['max_retry']) {
-                  $reason= ' '.sprintf(__('Retry #%d', 'fusioninventory'), $params['nb_retry']);
+                  $reason= ' '.sprintf(__('Retry #%d', 'glpiinventory'), $params['nb_retry']);
                } else {
-                  $reason= ' '.sprintf(__('Maximum number of retry reached: force deployment', 'fusioninventory'));
+                  $reason= ' '.sprintf(__('Maximum number of retry reached: force deployment', 'glpiinventory'));
                }
                $log_input = [
                   'plugin_fusioninventory_taskjobstates_id' => $states_id,

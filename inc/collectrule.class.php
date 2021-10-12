@@ -83,7 +83,7 @@ class PluginFusioninventoryCollectRule extends Rule {
     * @return string name of this type
     */
    function getTitle() {
-      return __('Computer information rules', 'fusioninventory');
+      return __('Computer information rules', 'glpiinventory');
    }
 
 
@@ -201,27 +201,27 @@ class PluginFusioninventoryCollectRule extends Rule {
       $criterias = [];
 
       $criterias['regkey']['field']       = 'name';
-      $criterias['regkey']['name']        = __('Registry key', 'fusioninventory');
+      $criterias['regkey']['name']        = __('Registry key', 'glpiinventory');
       $criterias['regkey']['table']       = 'glpi_plugin_fusioninventory_collects_registries';
 
       $criterias['regvalue']['field']     = 'name';
-      $criterias['regvalue']['name']      = __('Registry value', 'fusioninventory');
+      $criterias['regvalue']['name']      = __('Registry value', 'glpiinventory');
 
       $criterias['wmiproperty']['field']  = 'name';
-      $criterias['wmiproperty']['name']   = __('WMI property', 'fusioninventory');
+      $criterias['wmiproperty']['name']   = __('WMI property', 'glpiinventory');
       $criterias['wmiproperty']['table']  = 'glpi_plugin_fusioninventory_collects_wmis';
 
       $criterias['wmivalue']['field']     = 'name';
-      $criterias['wmivalue']['name']      = __('WMI value', 'fusioninventory');
+      $criterias['wmivalue']['name']      = __('WMI value', 'glpiinventory');
 
       $criterias['filename']['field']     = 'name';
-      $criterias['filename']['name']      = __('File name', 'fusioninventory');
+      $criterias['filename']['name']      = __('File name', 'glpiinventory');
 
       $criterias['filepath']['field']     = 'name';
-      $criterias['filepath']['name']      = __('File path', 'fusioninventory');
+      $criterias['filepath']['name']      = __('File path', 'glpiinventory');
 
       $criterias['filesize']['field']     = 'name';
-      $criterias['filesize']['name']      = __('File size', 'fusioninventory');
+      $criterias['filesize']['name']      = __('File size', 'glpiinventory');
 
       return $criterias;
    }
@@ -272,7 +272,7 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['software']['name']  = __('Software');
       $actions['software']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['softwareversion']['name']  = __('Software version', 'fusioninventory');
+      $actions['softwareversion']['name']  = __('Software version', 'glpiinventory');
       $actions['softwareversion']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['otherserial']['name']  = __('Inventory number');

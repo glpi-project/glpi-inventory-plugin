@@ -62,7 +62,7 @@ class PluginFusioninventoryCollect_Registry extends PluginFusioninventoryCollect
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return _n('Found entry', 'Found entries', $nb, 'fusioninventory');
+      return _n('Found entry', 'Found entries', $nb, 'glpiinventory');
    }
 
    /**
@@ -79,7 +79,7 @@ class PluginFusioninventoryCollect_Registry extends PluginFusioninventoryCollect
    function getListHeaders() {
       return [
          __('Name'),
-         __('Hive', 'fusioninventory'),
+         __('Hive', 'glpiinventory'),
          __("Path", "fusioninventory"),
          __("Key", "fusioninventory"),
          __("Action")
@@ -96,7 +96,7 @@ class PluginFusioninventoryCollect_Registry extends PluginFusioninventoryCollect
    }
 
    function displayNewSpecificities() {
-      echo "<td>".__('Hive', 'fusioninventory')."</td>";
+      echo "<td>".__('Hive', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showFromArray('hive',
                               PluginFusioninventoryCollect_Registry::getHives());
@@ -105,13 +105,13 @@ class PluginFusioninventoryCollect_Registry extends PluginFusioninventoryCollect
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Path', 'fusioninventory');
+      echo __('Path', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='path' value='' size='80' />";
       echo "</td>";
       echo "<td>";
-      echo __('Key', 'fusioninventory');
+      echo __('Key', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='key' value='' />";

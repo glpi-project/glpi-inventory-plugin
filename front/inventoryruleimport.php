@@ -46,7 +46,7 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
+Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
         "admin", "pluginfusioninventorymenu", "inventoryruleimport");
 
 Session::checkLoginUser();
@@ -62,9 +62,9 @@ if (isset($_GET['resetrules'])) {
    Html::back();
 }
 
-echo "<center><a href='". Plugin::getWebDir('fusioninventory') .
+echo "<center><a href='". Plugin::getWebDir('glpiinventory') .
          "/front/inventoryruleimport.php?resetrules=1' class='vsubmit'>";
-echo __('Reset import rules (define only default rules)', 'fusioninventory');
+echo __('Reset import rules (define only default rules)', 'glpiinventory');
 echo "</a></center><br/>";
 
 include (GLPI_ROOT . "/front/rule.common.php");

@@ -79,7 +79,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
       $pfCommunication = new PluginFusioninventoryCommunication();
       $pfCommunication->handleOCSCommunication('', $content);
 
-      $msg = __('Computer injected into GLPI', 'fusioninventory');
+      $msg = __('Computer injected into GLPI', 'glpiinventory');
 
       return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_FAILED, '', $msg);
    }

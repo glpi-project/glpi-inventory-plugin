@@ -13,6 +13,6 @@ php bin/console glpi:plugin:activate --config-dir=tests fusioninventory
 ## Run FusionInventory tests
 
 ```
-cd plugins/fusioninventory/
+cd plugins/glpiinventory/
 php vendor/bin/phpunit --testdox tests/
 ```

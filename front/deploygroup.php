@@ -48,7 +48,7 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('Groups of computers', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
+Html::header(__('Groups of computers', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "deploygroup");
 
 

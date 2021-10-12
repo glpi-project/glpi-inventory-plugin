@@ -66,13 +66,13 @@ if (isset($_REQUEST['id'])) {
 
                case 'noanswer':
                   $agentStatus['message'] = "<i class='fa fa-exclamation-triangle'></i>".
-                                            __('cannot contact the agent', 'fusioninventory');
+                                            __('cannot contact the agent', 'glpiinventory');
                   break;
 
                case 'waiting':
                   $agentStatus['waiting'] = true;
                   $agentStatus['message'] = sprintf(
-                     __('Available on %1$s', 'fusioninventory'),
+                     __('Available on %1$s', 'glpiinventory'),
                      '<a target="_blank" href="'. $agentStatus['url_ok'] . '">' . $agentStatus['url_ok'] . '</a>'
                   );
                   break;
@@ -92,13 +92,13 @@ if (isset($_REQUEST['id'])) {
 
          case "start_agent";
             if ($agent->wakeUp()) {
-               Session::addMessageAfterRedirect(__('The agent is running', 'fusioninventory'));
+               Session::addMessageAfterRedirect(__('The agent is running', 'glpiinventory'));
                $response = [
                   'status' => 'ok'
                ];
 
             } else {
-               Session::addMessageAfterRedirect(__('Impossible to communicate with agent!', 'fusioninventory'));
+               Session::addMessageAfterRedirect(__('Impossible to communicate with agent!', 'glpiinventory'));
                $response = [
                   'status' => 'ko'
                ];

@@ -101,7 +101,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       if ($item->getType() == 'PluginFusioninventoryAgent') {
          if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-             $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
+             $array_ret[0] = self::createTabEntry(__('Import information', 'glpiinventory'));
          }
       } else {
          $continue = true;
@@ -109,13 +109,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          switch ($item->getType()) {
             case 'PluginFusioninventoryAgent':
                if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-                   $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
+                   $array_ret[0] = self::createTabEntry(__('Import information', 'glpiinventory'));
                }
                break;
 
             case 'PluginFusioninventoryUnmanaged':
                $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
-               $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
+               $array_ret[1] = self::createTabEntry(__('Import information', 'glpiinventory'), $cnt);
                break;
 
             case 'Computer':
@@ -135,7 +135,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             return [];
          } else if (empty($array_ret)) {
             $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
-            $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
+            $array_ret[1] = self::createTabEntry(__('Import information', 'glpiinventory'), $cnt);
          }
          return $array_ret;
       }
@@ -246,7 +246,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='5'>";
-      echo __('Rule import logs', 'fusioninventory');
+      echo __('Rule import logs', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
@@ -257,15 +257,15 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Rule name', 'fusioninventory');
+      echo __('Rule name', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
-      echo __('Agent', 'fusioninventory');
+      echo __('Agent', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
-      echo __('Module', 'fusioninventory');
+      echo __('Module', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
@@ -343,7 +343,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='5'>";
-      echo __('Rule import logs', 'fusioninventory');
+      echo __('Rule import logs', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
@@ -354,7 +354,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Rule name', 'fusioninventory');
+      echo __('Rule name', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
@@ -366,7 +366,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Module', 'fusioninventory');
+      echo __('Module', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";

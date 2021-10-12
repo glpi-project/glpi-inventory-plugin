@@ -79,7 +79,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       $tab_names = [];
       if ($item->fields['id'] > 0 and $this->can('task', READ)) {
-         return __('Jobs configuration', 'fusioninventory');
+         return __('Jobs configuration', 'glpiinventory');
       }
       return '';
    }
@@ -190,7 +190,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                       data-ajaxurl='".$this->getBaseUrlFor('fi.job.create')."'
                       data-task_id='$task_id'
                       style='padding:5px;margin:0;right:0'
-                      value=' ".__('Add a job', 'fusioninventory')." '/>
+                      value=' ".__('Add a job', 'glpiinventory')." '/>
             </th>";
       }
       echo "</tr>";
@@ -256,7 +256,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       // Check if cron GLPI running
       if (count($taskjobs) > 1) {
          $message = __('Several jobs in the same task is not anymore supported because of unexpected side-effects.
-         Please consider modifying this task to avoid unexpected results.', 'fusioninventory');
+         Please consider modifying this task to avoid unexpected results.', 'glpiinventory');
          Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
       }
 
@@ -280,7 +280,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          echo "<div class='left'>";
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete_taskjobs' value=\"".
-            __('Delete', 'fusioninventory')."\" class='submit'>";
+            __('Delete', 'glpiinventory')."\" class='submit'>";
          echo "</div>";
       }
       Html::closeForm();
@@ -351,11 +351,11 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       switch ($options['moduletype']) {
 
          case 'actors':
-            $title = __('Actor Type', 'fusioninventory');
+            $title = __('Actor Type', 'glpiinventory');
             break;
 
          case 'targets':
-            $title = __('Target Type', 'fusioninventory');
+            $title = __('Target Type', 'glpiinventory');
             break;
 
       }
@@ -396,11 +396,11 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       switch ($moduletype) {
 
          case 'actors':
-            $title = __('Actor Item', 'fusioninventory');
+            $title = __('Actor Item', 'glpiinventory');
             break;
 
          case 'targets':
-            $title = __('Target Item', 'fusioninventory');
+            $title = __('Target Item', 'glpiinventory');
             break;
 
       }
@@ -530,7 +530,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       $pfTask = $this->getTask();
 
       echo "<form method='post' name='form_taskjob' action='".
-            Plugin::getWebDir('fusioninventory')."/front/taskjob.form.php''>";
+            Plugin::getWebDir('glpiinventory')."/front/taskjob.form.php''>";
 
       if (!$new_item) {
          echo "<input type='hidden' name='id' value='".$id."' />";
@@ -552,10 +552,10 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          }
       } else {
          if ($ismultientities) {
-            echo __('New action', 'fusioninventory')."&nbsp;:&nbsp;".
+            echo __('New action', 'glpiinventory')."&nbsp;:&nbsp;".
                  Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
          } else {
-            echo __('New action', 'fusioninventory');
+            echo __('New action', 'glpiinventory');
          }
       }
       echo '</th>';
@@ -583,7 +583,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          }
       }
       $modules_methods_rand = $this->showDropdownFromArray(
-         __('Module method', 'fusioninventory'), "method",
+         __('Module method', 'glpiinventory'), "method",
          $modules_methods
       );
       if (!$new_item) {
@@ -602,22 +602,22 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
          echo "<div class='input_wrap split_column tab_bg_4'>";
          echo $this->getAddItemtypeButton(
-            __('Targets', 'fusioninventory'),
+            __('Targets', 'glpiinventory'),
             'targets', $this->fields['method']
          );
          //echo "<br/><span class='description' style='font-size:50%;font-style:italic'>";
          echo "<br/><span class='description'>";
-         echo __('The items that should be applied for this job.', 'fusioninventory');
+         echo __('The items that should be applied for this job.', 'glpiinventory');
          echo "</span>";
          echo "</div>";
 
          echo "<div class='input_wrap split_column tab_bg_4'>";
          echo $this->getAddItemtypeButton(
-            __('Actors', 'fusioninventory'),
+            __('Actors', 'glpiinventory'),
             'actors', $this->fields['method']
          );
          echo "<br/><span class='description'>";
-         echo __('The items that should carry out those targets.', 'fusioninventory');
+         echo __('The items that should carry out those targets.', 'glpiinventory');
          echo "</span>";
          echo "</div>";
 
@@ -632,7 +632,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          echo "<hr/>
                <div>
                   <div class='taskjob_list_header'>
-                     <label>".__('Targets', 'fusioninventory')."&nbsp;:</label>
+                     <label>".__('Targets', 'glpiinventory')."&nbsp;:</label>
                   </div>
                   <div id='taskjob_targets_list'>
                      $targets_display_list
@@ -640,12 +640,12 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                   <div>
                      <a class='clear_list button'
                         data-clear-param='targets'>".
-                        __('Clear list', 'fusioninventory')."
+                        __('Clear list', 'glpiinventory')."
                      </a>
                       /
                      <a class='delete_items_selected'
                         data-delete-param='targets'>".
-                        __('Delete selected items', 'fusioninventory')."
+                        __('Delete selected items', 'glpiinventory')."
                      </a>
                   </div>
                </div>";
@@ -654,7 +654,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          echo "<hr/>
                <div>
                   <div class='taskjob_list_header'>
-                     <label>".__('Actors', 'fusioninventory')."&nbsp;:</label>
+                     <label>".__('Actors', 'glpiinventory')."&nbsp;:</label>
                   </div>
                   <div id='taskjob_actors_list'>
                      $actors_display_list
@@ -662,12 +662,12 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                   <div>
                      <a class='clear_list'
                         data-clear-param='actors'>".
-                        __('Clear list', 'fusioninventory')."
+                        __('Clear list', 'glpiinventory')."
                      </a>
                        /
                      <a class='delete_items_selected'
                         data-delete-param='actors'>".
-                        __('Delete selected items', 'fusioninventory')."
+                        __('Delete selected items', 'glpiinventory')."
                      </a>
                   </div>
                </div>";
@@ -689,17 +689,17 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                   <div id='cancel_job_changes_button' style='display:none'>
                      <input type='button' class='submit'
                             onclick='taskjobs.edit(\"".$this->getBaseUrlFor('fi.job.edit')."\", $id)'
-                            value='".__('Cancel modifications', 'fusioninventory')."'/>
+                            value='".__('Cancel modifications', 'glpiinventory')."'/>
                   </div>
                </td>";
 
          echo "<td class='center'>";
          echo "<input type='submit'
                       name='delete'
-                      value=\"".__('Purge', 'fusioninventory')."\"
+                      value=\"".__('Purge', 'glpiinventory')."\"
                       class='submit' ".
                       Html::addConfirmationOnAction(__('Confirm the final deletion ?',
-                                                       'fusioninventory')).">";
+                                                       'glpiinventory')).">";
          echo "</td>";
          echo '</tr>';
       }
@@ -873,7 +873,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             $add_redirect = "&edit_job=$jobs_id#taskjobs_form";
          }
 
-         Html::redirect(Plugin::getWebDir('fusioninventory')."/front/task.form.php?id=".
+         Html::redirect(Plugin::getWebDir('glpiinventory')."/front/task.form.php?id=".
                                  $postvars['plugin_fusioninventory_tasks_id'].$add_redirect);
       } else if (isset($postvars["delete"])) {
          // * delete taskjob

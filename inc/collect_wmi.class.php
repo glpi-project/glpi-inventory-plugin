@@ -62,7 +62,7 @@ class PluginFusioninventoryCollect_Wmi extends PluginFusioninventoryCollectCommo
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return _n('Found WMI', 'Found WMIs', $nb, 'fusioninventory');
+      return _n('Found WMI', 'Found WMIs', $nb, 'glpiinventory');
    }
 
    function getListHeaders() {
@@ -85,7 +85,7 @@ class PluginFusioninventoryCollect_Wmi extends PluginFusioninventoryCollectCommo
    }
 
    function displayNewSpecificities() {
-      echo "<td>".__('moniker', 'fusioninventory')."</td>";
+      echo "<td>".__('moniker', 'glpiinventory')."</td>";
       echo "<td>";
       echo "<input type='text' name='moniker' value='' size='50' />";
       echo "</td>";
@@ -93,13 +93,13 @@ class PluginFusioninventoryCollect_Wmi extends PluginFusioninventoryCollectCommo
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Class', 'fusioninventory');
+      echo __('Class', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='class' value='' />";
       echo "</td>";
       echo "<td>";
-      echo __('Properties', 'fusioninventory');
+      echo __('Properties', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='properties' value='' size='50' />";

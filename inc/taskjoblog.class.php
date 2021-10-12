@@ -105,12 +105,12 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    static function dropdownStateValues() {
 
       $elements = [
-         self::TASK_PREPARED           => __('Prepared', 'fusioninventory'),
-         self::TASK_STARTED            => __('Started', 'fusioninventory'),
+         self::TASK_PREPARED           => __('Prepared', 'glpiinventory'),
+         self::TASK_STARTED            => __('Started', 'glpiinventory'),
          self::TASK_RUNNING            => __('Running'),
-         self::TASK_OK                 => __('Ok', 'fusioninventory'),
+         self::TASK_OK                 => __('Ok', 'glpiinventory'),
          self::TASK_ERROR              => __('Error'),
-         self::TASK_INFO               => __('Info', 'fusioninventory'),
+         self::TASK_INFO               => __('Info', 'glpiinventory'),
       ];
 
       return $elements;
@@ -196,7 +196,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          'id'            => '3',
          'table'         => 'glpi_plugin_fusioninventory_taskjobs',
          'field'         => 'name',
-         'name'          => __('Job', 'fusioninventory'),
+         'name'          => __('Job', 'glpiinventory'),
          'datatype'      => 'itemlink',
          'itemlink_type' => "PluginFusioninventoryTaskjob",
       ];
@@ -222,7 +222,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          'id'       => '6',
          'table'    => 'glpi_plugin_fusioninventory_taskjobstates',
          'field'    => 'uniqid',
-         'name'     => __('Unique id', 'fusioninventory'),
+         'name'     => __('Unique id', 'glpiinventory'),
          'datatype' => 'string',
       ];
 
@@ -238,7 +238,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          'id'           => '8',
          'table'        => "glpi_plugin_fusioninventory_agents",
          'field'        => 'name',
-         'name'         => __('Agent', 'fusioninventory'),
+         'name'         => __('Agent', 'glpiinventory'),
          'datatype'     => 'itemlink',
          'forcegroupby' => true,
          'joinparams'   => [
@@ -258,7 +258,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     * @global array $CFG_GLPI
     */
    function javascriptHistory() {
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
             echo "<script  type='text/javascript'>
 function close_array(id) {
@@ -294,7 +294,7 @@ function appear_array(id) {
                              $nb_td = 5) {
       global $CFG_GLPI;
 
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent        = new PluginFusioninventoryAgent();
@@ -356,7 +356,7 @@ function appear_array(id) {
                  $pfTaskjobstate->fields['id']."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".
                  $pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
-         echo '<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
+         echo '<input name="forceend" value="'.__('Force the end', 'glpiinventory').'"
              class="submit" type="submit">';
          Html::closeForm();
          echo "</td>";
@@ -404,7 +404,7 @@ function appear_array(id) {
          } else {
             $text .= "<tr>";
             $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".
-                         __('Process number', 'fusioninventory')."&nbsp;: ".$data['id']."</th>";
+                         __('Process number', 'glpiinventory')."&nbsp;: ".$data['id']."</th>";
             $text .= "<th>";
             $text .= _n('Date', 'Dates', 1);
 
@@ -420,7 +420,7 @@ function appear_array(id) {
             $text .= "</tr>";
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
-            $text .= __('Agent', 'fusioninventory');
+            $text .= __('Agent', 'glpiinventory');
 
             $text .= "</th>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
@@ -442,7 +442,7 @@ function appear_array(id) {
 
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
-            $text .= __('Definition', 'fusioninventory');
+            $text .= __('Definition', 'glpiinventory');
 
             $text .= "<sup>(".(count($a_devices_merged) + 1).")</sup>";
             $text .= "</th>";
@@ -543,13 +543,13 @@ function appear_array(id) {
 
          case self::TASK_PREPARED :
             $text .= "<td align='center'>";
-            $text .= __('Prepared', 'fusioninventory');
+            $text .= __('Prepared', 'glpiinventory');
 
             break;
 
          case self::TASK_STARTED :
             $text .= "<td align='center'>";
-            $text .= __('Started', 'fusioninventory');
+            $text .= __('Started', 'glpiinventory');
 
             break;
 
@@ -557,7 +557,7 @@ function appear_array(id) {
             $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius:".
                  " 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
-            $text .= "<strong>".__('Ok', 'fusioninventory')."</strong>";
+            $text .= "<strong>".__('Ok', 'glpiinventory')."</strong>";
             $finish++;
             break;
 
@@ -573,7 +573,7 @@ function appear_array(id) {
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: ".
                  "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
-            $text .= "<strong>".__('Info', 'fusioninventory')."</strong>";
+            $text .= "<strong>".__('Info', 'glpiinventory')."</strong>";
             $finish++;
             break;
 
@@ -655,9 +655,9 @@ function appear_array(id) {
          }
       }
       $input = [];
-      $input[__('Started', 'fusioninventory')] = $finishState[2];
-      $input[__('Ok', 'fusioninventory')]      = $finishState[3];
-      $input[__('Error / rescheduled', 'fusioninventory')] = $finishState[4];
+      $input[__('Started', 'glpiinventory')] = $finishState[2];
+      $input[__('Ok', 'glpiinventory')]      = $finishState[3];
+      $input[__('Error / rescheduled', 'glpiinventory')] = $finishState[4];
       $input[__('Error')] = $finishState[5];
       Stat::showGraph(['status' => $input],
                         ['title'     => '',
@@ -701,11 +701,11 @@ function appear_array(id) {
 
          case self::TASK_PREPARED:
             return "<".$type." align='center' width='".$width."'>".
-                      __('Prepared', 'fusioninventory')."</".$type.">";
+                      __('Prepared', 'glpiinventory')."</".$type.">";
 
          case self::TASK_STARTED:
             return "<".$type." align='center' width='".$width."'>".
-                       __('Started', 'fusioninventory')."</".$type.">";
+                       __('Started', 'glpiinventory')."</".$type.">";
 
          case self::TASK_OK:
             return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;".
@@ -723,7 +723,7 @@ function appear_array(id) {
             return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;".
                      "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                      "align='center' width='".$width."'>".
-                     "<strong>".__('unknown', 'fusioninventory')."</strong></".$type.">";
+                     "<strong>".__('unknown', 'glpiinventory')."</strong></".$type.">";
 
          case self::TASK_RUNNING:
             return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;".
@@ -756,15 +756,15 @@ function appear_array(id) {
       if (strstr($comment, "==")) {
          preg_match_all("/==([\w\d]+)==/", $comment, $matches);
          $a_text = [
-            'devicesqueried'  => __('devices queried', 'fusioninventory'),
-            'devicesfound'    => __('devices found', 'fusioninventory'),
-            'addtheitem'      => __('Add the item', 'fusioninventory'),
-            'updatetheitem'   => __('Update the item', 'fusioninventory'),
-            'inventorystarted' => __('Inventory started', 'fusioninventory'),
-            'detail'          => __('Detail', 'fusioninventory'),
-            'badtoken'        => __('Agent communication error, impossible to start agent', 'fusioninventory'),
-            'agentcrashed'    => __('Agent stopped/crashed', 'fusioninventory'),
-            'importdenied'    => __('Import denied', 'fusioninventory')
+            'devicesqueried'  => __('devices queried', 'glpiinventory'),
+            'devicesfound'    => __('devices found', 'glpiinventory'),
+            'addtheitem'      => __('Add the item', 'glpiinventory'),
+            'updatetheitem'   => __('Update the item', 'glpiinventory'),
+            'inventorystarted' => __('Inventory started', 'glpiinventory'),
+            'detail'          => __('Detail', 'glpiinventory'),
+            'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
+            'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
+            'importdenied'    => __('Import denied', 'glpiinventory')
          ];
          foreach ($matches[0] as $num=>$commentvalue) {
             $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);

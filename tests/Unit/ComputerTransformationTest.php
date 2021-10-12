@@ -1123,7 +1123,7 @@ class ComputerTransformationTest extends TestCase {
             'Fedora release 23 (Twenty Three)';
          return $params;
       };
-      $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['fusioninventory'] = $callable;
+      $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['glpiinventory'] = $callable;
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerInventoryTransformation($a_computer);

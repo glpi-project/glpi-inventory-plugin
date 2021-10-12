@@ -50,7 +50,7 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight('computer', READ);
 
@@ -69,13 +69,13 @@ echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";
 echo "<th colspan='2'>";
-echo __('Computers not inventoried since xx days', 'fusioninventory');
+echo __('Computers not inventoried since xx days', 'glpiinventory');
 echo "</th>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo __('Number of days (minimum) since last inventory', 'fusioninventory')." :&nbsp;";
+echo __('Number of days (minimum) since last inventory', 'glpiinventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", [
@@ -130,7 +130,7 @@ echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<th>".__('Name')."</th>";
-echo "<th>".__('Last inventory', 'fusioninventory')."</th>";
+echo "<th>".__('Last inventory', 'glpiinventory')."</th>";
 echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
 echo "<th>".__('Status')."</th>";

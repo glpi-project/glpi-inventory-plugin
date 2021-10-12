@@ -75,7 +75,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Time slot entry', 'fusioninventory');
+      return __('Time slot entry', 'glpiinventory');
    }
 
 
@@ -90,7 +90,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       $tab[] = [
          'id' => 'common',
-         'name' => __('Time slot', 'fusioninventory')
+         'name' => __('Time slot', 'glpiinventory')
       ];
 
       $tab[] = [
@@ -142,7 +142,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Start time', 'fusioninventory');
+      echo __('Start time', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       $days = [
@@ -168,7 +168,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('End time', 'fusioninventory');
+      echo __('End time', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo '<div id="beginday">';

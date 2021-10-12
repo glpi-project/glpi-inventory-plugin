@@ -80,15 +80,15 @@ class DeployactionTest extends TestCase {
     */
    public function testGetLabelForAType() {
       $action = new PluginFusioninventoryDeployAction();
-      $this->assertEquals(__('Command', 'fusioninventory'),
+      $this->assertEquals(__('Command', 'glpiinventory'),
                           $action->getLabelForAType('cmd'));
-      $this->assertEquals(__('Move', 'fusioninventory'),
+      $this->assertEquals(__('Move', 'glpiinventory'),
                           $action->getLabelForAType('move'));
-      $this->assertEquals(__('Copy', 'fusioninventory'),
+      $this->assertEquals(__('Copy', 'glpiinventory'),
                           $action->getLabelForAType('copy'));
-      $this->assertEquals(__('Delete directory', 'fusioninventory'),
+      $this->assertEquals(__('Delete directory', 'glpiinventory'),
                           $action->getLabelForAType('delete'));
-      $this->assertEquals(__('Create directory', 'fusioninventory'),
+      $this->assertEquals(__('Create directory', 'glpiinventory'),
                           $action->getLabelForAType('mkdir'));
       $this->assertEquals('foo',
                           $action->getLabelForAType('foo'));

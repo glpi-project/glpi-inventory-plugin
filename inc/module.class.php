@@ -83,7 +83,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
       if (!isset($_SESSION['glpi_plugins'])) {
          return $index;
       }
-      if ($p_name == 'fusioninventory') {
+      if ($p_name == 'glpiinventory') {
          $index = array_search($p_name, $_SESSION['glpi_plugins']);
          if (!$index) {
             $plugin = new Plugin();
@@ -107,7 +107,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
    static function getModuleName($p_id) {
       if (isset($_SESSION['glpi_plugins'][$p_id])) {
          if ((substr($_SESSION['glpi_plugins'][$p_id], 0, 6) == 'fusinv')
-              OR ($_SESSION['glpi_plugins'][$p_id] == 'fusioninventory')) {
+              OR ($_SESSION['glpi_plugins'][$p_id] == 'glpiinventory')) {
             return $_SESSION['glpi_plugins'][$p_id];
          } else {
             return false;

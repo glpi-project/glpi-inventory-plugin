@@ -71,7 +71,7 @@ class PluginFusioninventoryDeployFilepart {
       $sha512 = $matches[1];
       //      $short_sha512 = substr($sha512, 0, 6);
 
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
+      $repoPath = GLPI_PLUGIN_DOC_DIR."/glpiinventory/files/repository/";
 
       $pfDeployFile = new PluginFusioninventoryDeployFile();
       $filePath     = $repoPath.$pfDeployFile->getDirBySha512($sha512).'/'.$sha512;

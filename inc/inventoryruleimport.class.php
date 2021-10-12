@@ -119,8 +119,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          'entities_id' => [
             'table'           => 'glpi_entities',
             'field'           => 'entities_id',
-            'name'            => __('Asset', 'fusioninventory').' > '.
-                                 __('Destination of equipment entity', 'fusioninventory'),
+            'name'            => __('Asset', 'glpiinventory').' > '.
+                                 __('Destination of equipment entity', 'glpiinventory'),
             'linkfield'       => 'entities_id',
             'type'            => 'dropdown',
             'is_global'       => false,
@@ -138,62 +138,62 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          'states_id' => [
             'table'           => 'glpi_states',
             'field'           => 'name',
-            'name'            => __('General', 'fusioninventory').' > '.
-                                 __('Search GLPI equipment with the status', 'fusioninventory'),
+            'name'            => __('General', 'glpiinventory').' > '.
+                                 __('Search GLPI equipment with the status', 'glpiinventory'),
             'linkfield'       => 'state',
             'type'            => 'dropdown',
             'is_global'       => true,
             'allow_condition' => [Rule::PATTERN_IS, Rule::PATTERN_IS_NOT],
          ],
          'model' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.__('Model'),
+            'name'            => __('Asset', 'glpiinventory').' > '.__('Model'),
          ],
          'mac' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  _n('Network port', 'Network ports', 1).' > '.__('MAC'),
          ],
          'ip' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  _n('Network port', 'Network ports', 1).' > '.__('IP'),
          ],
          'ifdescr' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  _n('Network port', 'Network ports', 1).' > '.
-                                 __('Network port description', 'fusioninventory'),
+                                 __('Network port description', 'glpiinventory'),
          ],
          'ifnumber' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  _n('Network port', 'Network ports', 1).' > '.
                                  __('Port number'),
          ],
          'serial' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  __('Serial number'),
          ],
          'uuid' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.__('UUID'),
+            'name'            => __('Asset', 'glpiinventory').' > '.__('UUID'),
          ],
          'device_id' => [
-            'name'            => __('Agent', 'fusioninventory').' > '.
-                                 __('Device_id', 'fusioninventory'),
+            'name'            => __('Agent', 'glpiinventory').' > '.
+                                 __('Device_id', 'glpiinventory'),
          ],
          'mskey' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  __('Serial of the operating system'),
          ],
          'name' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.__('Name'),
+            'name'            => __('Asset', 'glpiinventory').' > '.__('Name'),
          ],
          'tag' => [
-            'name'            => __('Agent', 'fusioninventory').' > '.
-                                 __('FusionInventory tag', 'fusioninventory'),
+            'name'            => __('Agent', 'glpiinventory').' > '.
+                                 __('FusionInventory tag', 'glpiinventory'),
          ],
          'osname' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  OperatingSystem::getTypeName(1),
          ],
          'itemtype' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  __('Item type'),
             'type'            => 'dropdown_itemtype',
             'is_global'       => false,
@@ -207,18 +207,18 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          'domains_id' => [
             'table'           => 'glpi_domains',
             'field'           => 'name',
-            'name'            => __('Asset', 'fusioninventory').' > '.__('Domain'),
+            'name'            => __('Asset', 'glpiinventory').' > '.__('Domain'),
             'linkfield'       => 'domain',
             'type'            => 'dropdown',
             'is_global'       => false,
          ],
          'entityrestrict' => [
-            'name'            => __('General', 'fusioninventory').' > '.
-                                 __('Restrict search in defined entity', 'fusioninventory'),
+            'name'            => __('General', 'glpiinventory').' > '.
+                                 __('Restrict search in defined entity', 'glpiinventory'),
             'allow_condition' => [PluginFusioninventoryInventoryRuleImport::PATTERN_ENTITY_RESTRICT],
          ],
          'oscomment' => [
-            'name'            => __('Asset', 'fusioninventory').' > '.
+            'name'            => __('Asset', 'glpiinventory').' > '.
                                  OperatingSystem::getTypeName(1).'/'.__('Comments'),
             'allow_condition' => [
                                     Rule::PATTERN_IS,
@@ -232,25 +232,25 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                  ],
          ],
          'link_criteria_port' => [
-            'name'            => __('General', 'fusioninventory').' > '.
-                                 __('Restrict criteria to same network port', 'fusioninventory'),
+            'name'            => __('General', 'glpiinventory').' > '.
+                                 __('Restrict criteria to same network port', 'glpiinventory'),
             'allow_condition' => [PluginFusioninventoryInventoryRuleImport::PATTERN_NETWORK_PORT_RESTRICT],
             'is_global'       => true
          ],
          'only_these_criteria' => [
-            'name'            => __('General', 'fusioninventory').' > '.
-                                 __('Only criteria of this rule in data', 'fusioninventory'),
+            'name'            => __('General', 'glpiinventory').' > '.
+                                 __('Only criteria of this rule in data', 'glpiinventory'),
             'allow_condition' => [PluginFusioninventoryInventoryRuleImport::PATTERN_ONLY_CRITERIA_RULE],
             'is_global'       => true
          ],
 
          /*
          'hdserial' => [
-            'name'            => __('Assets to import', 'fusioninventory').' > '.
+            'name'            => __('Assets to import', 'glpiinventory').' > '.
                                  __('Hard disk serial number'),
          ],
          'partitionserial' => [
-            'name'            => __('Assets to import', 'fusioninventory').' > '.
+            'name'            => __('Assets to import', 'glpiinventory').' > '.
                                  __('Partition serial number'),
          ],
           */
@@ -267,10 +267,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function getActions() {
 
       $actions = [];
-      $actions['_fusion']['name']        = __('FusionInventory link', 'fusioninventory');
+      $actions['_fusion']['name']        = __('FusionInventory link', 'glpiinventory');
       $actions['_fusion']['type']        = 'fusion_type';
 
-      $actions['_ignore_import']['name'] = __('To be unaware of import (with log)', 'fusioninventory');
+      $actions['_ignore_import']['name'] = __('To be unaware of import (with log)', 'glpiinventory');
       $actions['_ignore_import']['type'] = 'yesonly';
 
       return $actions;
@@ -284,8 +284,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     */
    static function getRuleActionValues() {
 
-      return [self::RULE_ACTION_LINK   => __('Link', 'fusioninventory'),
-                   self::RULE_ACTION_DENIED => __('Import denied (no log)', 'fusioninventory')];
+      return [self::RULE_ACTION_LINK   => __('Link', 'glpiinventory'),
+                   self::RULE_ACTION_DENIED => __('Import denied (no log)', 'glpiinventory')];
    }
 
 
@@ -316,8 +316,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function manageSpecificCriteriaValues($criteria, $name, $value) {
       if ($criteria['type'] == 'state') {
          $link_array = ["0" => __('No'),
-                             "1" => __('Yes')." : ".__('equal', 'fusioninventory'),
-                             "2" => __('Yes')." : ".__('empty', 'fusioninventory')];
+                             "1" => __('Yes')." : ".__('equal', 'glpiinventory'),
+                             "2" => __('Yes')." : ".__('empty', 'glpiinventory')];
          Dropdown::showFromArray($name, $link_array, ['value' => $value]);
          return true;
       }
@@ -1202,7 +1202,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       $types["PluginFusioninventoryUnmanaged"] =
                      PluginFusioninventoryUnmanaged::getTypeName();
-      $types[""] = __('No itemtype defined', 'fusioninventory');
+      $types[""] = __('No itemtype defined', 'glpiinventory');
       return $types;
    }
 
@@ -1249,12 +1249,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case self::LINK_RESULT_CREATE:
-               echo __('Device created', 'fusioninventory');
+               echo __('Device created', 'glpiinventory');
 
                break;
 
             case self::LINK_RESULT_DENIED:
-               echo __('Import denied', 'fusioninventory');
+               echo __('Import denied', 'glpiinventory');
 
                break;
 
@@ -1293,7 +1293,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $types[$itemtype] = $item->getTypeName();
          }
       }
-      $types[""] = __('No itemtype defined', 'fusioninventory');
+      $types[""] = __('No itemtype defined', 'glpiinventory');
       ksort($types);
       return $types;
    }

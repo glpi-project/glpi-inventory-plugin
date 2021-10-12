@@ -157,7 +157,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
       $taskId = $pfTask->add($input);
       $this->assertNotFalse($taskId);
 
-      $a_plugins = current(getAllDataFromTable('glpi_plugins', ['directory' => 'fusioninventory']));
+      $a_plugins = current(getAllDataFromTable('glpi_plugins', ['directory' => 'glpiinventory']));
 
       $input = [
          'plugin_fusioninventory_tasks_id' => $taskId,

@@ -52,7 +52,7 @@ class DeploycheckTest extends TestCase {
       $check = new PluginFusioninventoryDeployCheck();
       $types = $check->getTypes();
       $this->assertEquals(4, count($types));
-      $this->assertEquals(7, count($types[__('Registry', 'fusioninventory')]));
+      $this->assertEquals(7, count($types[__('Registry', 'glpiinventory')]));
       $this->assertEquals(7, count($types[__('File')]));
       $this->assertEquals(2, count($types[__('Directory')]));
       $this->assertEquals(1, count($types[__('Other')]));
@@ -66,9 +66,9 @@ class DeploycheckTest extends TestCase {
    public function getGetLabelForAType() {
       $check = new PluginFusioninventoryDeployCheck();
 
-      $this->assertEquals(__("Registry key exists", 'fusioninventory'),
+      $this->assertEquals(__("Registry key exists", 'glpiinventory'),
                           $check->getLabelForAType('winkeyExists'));
-      $this->assertEquals(__("Free space is greater than", 'fusioninventory'),
+      $this->assertEquals(__("Free space is greater than", 'glpiinventory'),
                           $check->getLabelForAType('freespaceGreater'));
       $this->assertEquals('', $check->getLabelForAType('foo'));
 
@@ -421,11 +421,11 @@ class DeploycheckTest extends TestCase {
    public function testGetAllReturnValues() {
       $check  = new PluginFusioninventoryDeployCheck();
       $values = $check->getAllReturnValues();
-      $expected = ["error"    => __('abort job', 'fusioninventory'),
-                   "skip"     => __("skip job", 'fusioninventory'),
-                   "startnow" => __("start job now", 'fusioninventory'),
-                   "info"     => __("report info", 'fusioninventory'),
-                   "warning"  => __("report warning", 'fusioninventory')
+      $expected = ["error"    => __('abort job', 'glpiinventory'),
+                   "skip"     => __("skip job", 'glpiinventory'),
+                   "startnow" => __("start job now", 'glpiinventory'),
+                   "info"     => __("report info", 'glpiinventory'),
+                   "warning"  => __("report warning", 'glpiinventory')
                ];
       $this->assertEquals($values, $expected);
    }

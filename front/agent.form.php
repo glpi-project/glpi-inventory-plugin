@@ -70,7 +70,7 @@ if (isset ($_POST["update"])) {
 }
 
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
+Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "agent");
 
 PluginFusioninventoryMenu::displayMenu("mini");

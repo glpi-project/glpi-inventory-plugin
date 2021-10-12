@@ -106,7 +106,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->fields['id'] > 0) {
-         return __('Associated SNMP credentials', 'fusioninventory');
+         return __('Associated SNMP credentials', 'glpiinventory');
       }
       return '';
    }
@@ -203,13 +203,13 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "<tr class='tab_bg_2'>";
       echo "<th width='10'>".Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand)."</th>";
       echo "<th>";
-      echo __('SNMP credentials', 'fusioninventory');
+      echo __('SNMP credentials', 'glpiinventory');
       echo "</th>";
       echo "<th>";
-      echo __('Version', 'fusioninventory');
+      echo __('Version', 'glpiinventory');
       echo "</th>";
       echo "<th>";
-      echo __('By order of priority', 'fusioninventory');
+      echo __('By order of priority', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
 

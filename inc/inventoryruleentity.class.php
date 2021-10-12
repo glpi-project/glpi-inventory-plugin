@@ -85,7 +85,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     * @return string name of this type
     */
    function getTitle() {
-      return __('Entity rules', 'fusioninventory');
+      return __('Entity rules', 'glpiinventory');
    }
 
 
@@ -188,7 +188,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias = [];
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
+      $criterias['tag']['name']      = __('FusionInventory tag', 'glpiinventory');
 
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = __('Domain');
@@ -197,10 +197,10 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias['subnet']['name']      = __('Subnet');
 
       $criterias['ip']['field']     = 'name';
-      $criterias['ip']['name']      = __('IP Address', 'fusioninventory');
+      $criterias['ip']['name']      = __('IP Address', 'glpiinventory');
 
       $criterias['name']['field']     = 'name';
-      $criterias['name']['name']      = __("Computer's name", 'fusioninventory');
+      $criterias['name']['name']      = __("Computer's name", 'glpiinventory');
 
       $criterias['serial']['field']     = 'name';
       $criterias['serial']['name']      = __('Serial number');
@@ -236,7 +236,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $actions['_affect_entity_by_tag']['force_actions'] = ['regex_result'];
 
       $actions['_ignore_import']['name'] =
-                     __('Ignore in FusionInventory import', 'fusioninventory');
+                     __('Ignore in FusionInventory import', 'glpiinventory');
 
       $actions['_ignore_import']['type'] = 'yesonly';
 
@@ -290,8 +290,8 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    static function addMoreCriteria($criterion = '') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
-         return [self::PATTERN_CIDR => __('is CIDR', 'fusioninventory'),
-                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'fusioninventory')];
+         return [self::PATTERN_CIDR => __('is CIDR', 'glpiinventory'),
+                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'glpiinventory')];
       }
       return [];
    }

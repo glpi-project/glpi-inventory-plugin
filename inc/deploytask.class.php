@@ -49,9 +49,9 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/taskjobview.class.php");
-include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/taskview.class.php");
-include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/task.class.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskjobview.class.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskview.class.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/task.class.php");
 
 /**
  * Manage the deploy task.
@@ -69,7 +69,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       if ($nb > 1) {
          return PluginFusioninventoryDeployGroup::getTypeName();
       }
-      return __('Task', 'fusioninventory');
+      return __('Task', 'glpiinventory');
    }
 
 
@@ -122,7 +122,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       switch (get_class($item)) {
 
          case __CLASS__:
-            return __('Order list', 'fusioninventory');
+            return __('Order list', 'glpiinventory');
 
       }
       return '';
@@ -168,10 +168,10 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       global  $CFG_GLPI;
 
       $buttons = [];
-      $title = __('Task', 'fusioninventory');
+      $title = __('Task', 'glpiinventory');
 
       if ($this->canCreate()) {
-         $buttons["task.form.php?new=1"] = __('Add task', 'fusioninventory');
+         $buttons["task.form.php?new=1"] = __('Add task', 'glpiinventory');
          $title = "";
       }
       Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png",
@@ -198,7 +198,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
          echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
          echo "</div></div></div>";
          echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
-         echo __('Edit impossible, this task is active', 'fusioninventory');
+         echo __('Edit impossible, this task is active', 'glpiinventory');
 
          echo "</div></div></div>";
          echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
@@ -232,7 +232,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
          Session::addMessageAfterRedirect(
-            __('This task is active. delete denied', 'fusioninventory'));
+            __('This task is active. delete denied', 'glpiinventory'));
 
          Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id=".
             $this->getField('id'));

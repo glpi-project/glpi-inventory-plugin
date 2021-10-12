@@ -147,7 +147,7 @@ class RestURLTest extends TestCase {
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/collect/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/collect/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
@@ -180,7 +180,7 @@ class RestURLTest extends TestCase {
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/deploy/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/deploy/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
@@ -213,7 +213,7 @@ class RestURLTest extends TestCase {
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/esx/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/esx/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
@@ -249,7 +249,7 @@ class RestURLTest extends TestCase {
       ];
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
-      $this->assertEquals('http://127.0.0.1/glpi085/plugins/fusioninventory/b/collect/',
+      $this->assertEquals('http://127.0.0.1/glpi085/plugins/glpiinventory/b/collect/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }

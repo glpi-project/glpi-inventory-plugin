@@ -81,7 +81,7 @@ class PluginFusioninventoryCollect_Wmi_Content
                $in = array_keys($a_colregs);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
                                 "`plugin_fusioninventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
-                  return __('Windows WMI content', 'fusioninventory');
+                  return __('Windows WMI content', 'glpiinventory');
                }
             }
          }
@@ -155,10 +155,10 @@ class PluginFusioninventoryCollect_Wmi_Content
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr>";
-      echo "<th>".__('Moniker', 'fusioninventory')."</th>";
-      echo "<th>".__('Class', 'fusioninventory')."</th>";
-      echo "<th>".__('Property', 'fusioninventory')."</th>";
-      echo "<th>".__('Value', 'fusioninventory')."</th>";
+      echo "<th>".__('Moniker', 'glpiinventory')."</th>";
+      echo "<th>".__('Class', 'glpiinventory')."</th>";
+      echo "<th>".__('Property', 'glpiinventory')."</th>";
+      echo "<th>".__('Value', 'glpiinventory')."</th>";
       echo "</tr>";
 
       $a_data = $this->find(['computers_id' => $computers_id],
@@ -205,8 +205,8 @@ class PluginFusioninventoryCollect_Wmi_Content
 
       echo "<tr>";
       echo "<th>".__('Computer')."</th>";
-      echo "<th>".__('Property', 'fusioninventory')."</th>";
-      echo "<th>".__('Value', 'fusioninventory')."</th>";
+      echo "<th>".__('Property', 'glpiinventory')."</th>";
+      echo "<th>".__('Value', 'glpiinventory')."</th>";
       echo "</tr>";
 
       $a_data = $this->find(['plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id],

@@ -81,7 +81,7 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
     * @return string name of this type
     */
    function getTitle() {
-      return __('Computer information rules', 'fusioninventory');
+      return __('Computer information rules', 'glpiinventory');
    }
 
 

@@ -403,14 +403,14 @@ class PluginFusioninventoryInventoryComputerInventory {
     * After rule engine passed, update task (log) and create item if required
     *
     * @global object $DB
-    * @global string $PLUGIN_FUSIONINVENTORY_XML
+    * @global string $PLUGIN_GLPI_INVENTORY_XML
     * @global boolean $PF_ESXINVENTORY
     * @global array $CFG_GLPI
     * @param integer $items_id id of the item (0 = not exist in database)
     * @param string $itemtype
     */
    function rulepassed($items_id, $itemtype, $ports_id = 0) {
-      global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY, $CFG_GLPI;
+      global $DB, $PLUGIN_GLPI_INVENTORY_XML, $PF_ESXINVENTORY, $CFG_GLPI;
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
@@ -584,10 +584,10 @@ class PluginFusioninventoryInventoryComputerInventory {
          //  memory_get_peak_usage()."\n");
 
          // Write XML file
-         if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
+         if (!empty($PLUGIN_GLPI_INVENTORY_XML)) {
             PluginFusioninventoryToolbox::writeXML(
                     $items_id,
-                    $PLUGIN_FUSIONINVENTORY_XML->asXML(),
+                    $PLUGIN_GLPI_INVENTORY_XML->asXML(),
                     'computer');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnmanaged') {
@@ -627,10 +627,10 @@ class PluginFusioninventoryInventoryComputerInventory {
          $input['id'] = $class->fields['id'];
 
          // Write XML file
-         if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
+         if (!empty($PLUGIN_GLPI_INVENTORY_XML)) {
             PluginFusioninventoryToolbox::writeXML(
                     $items_id,
-                    $PLUGIN_FUSIONINVENTORY_XML->asXML(),
+                    $PLUGIN_GLPI_INVENTORY_XML->asXML(),
                     'PluginFusioninventoryUnmanaged');
          }
 

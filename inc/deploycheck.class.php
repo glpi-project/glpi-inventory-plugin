@@ -65,30 +65,30 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
     */
    function getTypes() {
       return [
-         __('Registry', 'fusioninventory') => [
-                  'winkeyExists'       => __("Registry key exists", 'fusioninventory'),
-                  'winvalueExists'     => __("Registry value exists", 'fusioninventory'),
-                  'winkeyMissing'      => __("Registry key missing", 'fusioninventory'),
-                  'winvalueMissing'    => __("Registry value missing", 'fusioninventory'),
-                  'winkeyEquals'       => __("Registry value equals to", 'fusioninventory'),
-                  'winkeyNotEquals'    => __("Registry value not equals to", 'fusioninventory'),
-                  'winvalueType'       => __("Type of registry value equals to", 'fusioninventory')
+         __('Registry', 'glpiinventory') => [
+                  'winkeyExists'       => __("Registry key exists", 'glpiinventory'),
+                  'winvalueExists'     => __("Registry value exists", 'glpiinventory'),
+                  'winkeyMissing'      => __("Registry key missing", 'glpiinventory'),
+                  'winvalueMissing'    => __("Registry value missing", 'glpiinventory'),
+                  'winkeyEquals'       => __("Registry value equals to", 'glpiinventory'),
+                  'winkeyNotEquals'    => __("Registry value not equals to", 'glpiinventory'),
+                  'winvalueType'       => __("Type of registry value equals to", 'glpiinventory')
                ],
                __('File') => [
-                  'fileExists'         => __("File exists", 'fusioninventory'),
-                  'fileMissing'        => __("File is missing", 'fusioninventory'),
-                  'fileSizeGreater'    => __("File size is greater than", 'fusioninventory'),
-                  'fileSizeEquals'     => __("File size is equal to", 'fusioninventory'),
-                  'fileSizeLower'      => __("File size is lower than", 'fusioninventory'),
-                  'fileSHA512'         => __("SHA-512 hash value matches", 'fusioninventory'),
-                  'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'fusioninventory'),
+                  'fileExists'         => __("File exists", 'glpiinventory'),
+                  'fileMissing'        => __("File is missing", 'glpiinventory'),
+                  'fileSizeGreater'    => __("File size is greater than", 'glpiinventory'),
+                  'fileSizeEquals'     => __("File size is equal to", 'glpiinventory'),
+                  'fileSizeLower'      => __("File size is lower than", 'glpiinventory'),
+                  'fileSHA512'         => __("SHA-512 hash value matches", 'glpiinventory'),
+                  'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'glpiinventory'),
                ],
                __('Directory') => [
-                  'directoryExists'    => __("Directory exists", 'fusioninventory'),
-                  'directoryMissing'   => __("Directory is missing", 'fusioninventory'),
+                  'directoryExists'    => __("Directory exists", 'glpiinventory'),
+                  'directoryMissing'   => __("Directory is missing", 'glpiinventory'),
                ],
              __('Other') => [
-            'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
+            'freespaceGreater'   => __("Free space is greater than", 'glpiinventory')
              ]
       ];
    }
@@ -132,11 +132,11 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       //The skip case is a litte bit different. So we notice to the user
       //that if audit is successful, the the audit check process continue
       if ($return == 'skip') {
-         $return_string.=' : '.__('continue', 'fusioninventory');
+         $return_string.=' : '.__('continue', 'glpiinventory');
       } else {
-         $return_string.=' : '.__('passed', 'fusioninventory');
+         $return_string.=' : '.__('passed', 'glpiinventory');
       }
-      $return_string.= ', '.__('otherwise', 'fusioninventory').' : ';
+      $return_string.= ', '.__('otherwise', 'glpiinventory').' : ';
       $return_string.= $this->getValueForReturn($return);
 
       return $return_string;
@@ -274,7 +274,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
 
          echo "</td>";
          if ($canedit) {
-            echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+            echo "<td class='rowhandler control' title='".__('drag', 'glpiinventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
@@ -289,7 +289,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt='' />";
          echo "<input type='submit' name='delete' value=\"".
-            __('Delete', 'fusioninventory')."\" class='submit' />";
+            __('Delete', 'glpiinventory')."\" class='submit' />";
       }
    }
 
@@ -307,7 +307,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       $values = [
          'warning_message' => false,
          'name_value'  => "",
-         'name_label'  => __('Audit label', 'fusioninventory'),
+         'name_label'  => __('Audit label', 'glpiinventory'),
          'name_type'   => "input",
          'path_label'  => "",
          'path_value'  => "",
@@ -349,7 +349,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
-            $values['path_label']         = __("Path to the key", 'fusioninventory').$mandatory_mark;
+            $values['path_label']         = __("Path to the key", 'glpiinventory').$mandatory_mark;
             $values['value_label']     = false;
             $values['path_comment']    = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
             $values['warning_message'] = sprintf(__('Fusioninventory-Agent %1s or higher recommended'), '2.3.20');
@@ -357,7 +357,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
 
          case "winvalueExists":
          case "winvalueMissing":
-            $values['path_label']      = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['path_label']      = __("Path to the value", 'glpiinventory').$mandatory_mark;
             $values['value_label']     = false;
             $values['path_comment']    = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
             $values['warning_message'] = sprintf(__('Fusioninventory-Agent %1s or higher mandatory'), '2.3.20');
@@ -365,8 +365,8 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
 
          case "winkeyEquals":
          case "winkeyNotEquals":
-            $values['path_label']      = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label']     = __('Value', 'fusioninventory');
+            $values['path_label']      = __("Path to the value", 'glpiinventory').$mandatory_mark;
+            $values['value_label']     = __('Value', 'glpiinventory');
             $values['path_comment']    = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
             if ($check_type == 'winkeyEquals') {
                $values['warning_message'] = sprintf(__('Fusioninventory-Agent %1s or higher recommended'), '2.3.20');
@@ -376,42 +376,42 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
             break;
 
          case "winvalueType":
-            $values['path_label']      = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label']     = __('Type of value', 'fusioninventory').$mandatory_mark;
+            $values['path_label']      = __("Path to the value", 'glpiinventory').$mandatory_mark;
+            $values['value_label']     = __('Type of value', 'glpiinventory').$mandatory_mark;
             $values['value_type']      = 'registry_type';
             $values['path_comment']    = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
             $values['warning_message'] = sprintf(__('Fusioninventory-Agent %1s or higher mandatory'), '2.3.20');            break;
 
          case "fileExists":
          case "fileMissing":
-            $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("File", 'glpiinventory').$mandatory_mark;
             $values['value_label'] = false;
             break;
 
          case "directoryExists":
          case "directoryMissing":
-            $values['path_label']  = __("Directory", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("Directory", 'glpiinventory').$mandatory_mark;
             $values['value_label'] = false;
             break;
 
          case "fileSizeGreater":
          case "fileSizeEquals":
          case "fileSizeLower":
-            $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("File", 'glpiinventory').$mandatory_mark;
+            $values['value_label'] = __('Value', 'glpiinventory').$mandatory_mark;
             $values['value_type']  = "input+unit";
             break;
 
          case "fileSHA512":
          case "fileSHA512mismatch":
-            $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("File", 'glpiinventory').$mandatory_mark;
+            $values['value_label'] = __('Value', 'glpiinventory').$mandatory_mark;
             $values['value_type']  = "textarea";
             break;
 
          case "freespaceGreater":
-            $values['path_label']  = __("Disk or directory", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("Disk or directory", 'glpiinventory').$mandatory_mark;
+            $values['value_label'] = __('Value', 'glpiinventory').$mandatory_mark;
             $values['value_type']  = "input+unit";
             break;
 
@@ -462,7 +462,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__('Audit label', 'fusioninventory')."</th>";
+      echo "<th>".__('Audit label', 'glpiinventory')."</th>";
       echo "<td><input type='text' name='name' id='check_name{$rand}' value=\"{$values['name_value']}\" /></td>";
       echo "</tr>";
       echo "<th>{$values['path_label']}</th>";
@@ -522,7 +522,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
                    . "value='{$value}' />";
                echo "</td>";
                echo "</tr><tr>";
-               echo "<th>".__("Unit", 'fusioninventory')."</th>";
+               echo "<th>".__("Unit", 'glpiinventory')."</th>";
                echo "<td>";
                $unit_labels = $this->getUnitLabel();
 
@@ -546,7 +546,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
 
       echo "<tr>";
-      echo "<th>".__("If not successful", 'fusioninventory')."</th>";
+      echo "<th>".__("If not successful", 'glpiinventory')."</th>";
       echo "<td>";
       Dropdown::showFromArray('return', $this->getAllReturnValues(),
                               ['value' => $values['return']]);
@@ -573,11 +573,11 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    * @return an array of return values and their labels
    */
    function getAllReturnValues() {
-      return  ["error"   => __('abort job', 'fusioninventory'),
-               "skip"    => __("skip job", 'fusioninventory'),
-               "startnow" => __("start job now", 'fusioninventory'),
-               "info"    => __("report info", 'fusioninventory'),
-               "warning" => __("report warning", 'fusioninventory')
+      return  ["error"   => __('abort job', 'glpiinventory'),
+               "skip"    => __("skip job", 'glpiinventory'),
+               "startnow" => __("start job now", 'glpiinventory'),
+               "info"    => __("report info", 'glpiinventory'),
+               "warning" => __("report warning", 'glpiinventory')
               ];
    }
 

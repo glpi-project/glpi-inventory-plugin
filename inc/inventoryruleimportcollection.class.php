@@ -82,7 +82,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     * @return string name of this type
     */
    function getTitle() {
-      return __('Equipment import and link rules', 'fusioninventory');
+      return __('Equipment import and link rules', 'glpiinventory');
    }
 
 
@@ -117,12 +117,12 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE:
-               echo __('Device created', 'fusioninventory');
+               echo __('Device created', 'glpiinventory');
 
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
-               echo __('Import denied', 'fusioninventory');
+               echo __('Import denied', 'glpiinventory');
 
                break;
 

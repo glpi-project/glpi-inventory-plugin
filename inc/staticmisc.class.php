@@ -68,7 +68,7 @@ class PluginFusioninventoryStaticmisc {
             [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryWakeonlan',
                      'method'         => 'wakeonlan',
-                     'name'           => __('Wake On LAN', 'fusioninventory'),
+                     'name'           => __('Wake On LAN', 'glpiinventory'),
                      'use_rest'       => false
             ],
 
@@ -76,7 +76,7 @@ class PluginFusioninventoryStaticmisc {
                      'method'         => 'inventory',
                      'selection_type' => 'devices',
                      'hidetask'       => 1,
-                     'name'           => __('Computer Inventory', 'fusioninventory'),
+                     'name'           => __('Computer Inventory', 'glpiinventory'),
                      'use_rest'       => false
             ],
 
@@ -84,7 +84,7 @@ class PluginFusioninventoryStaticmisc {
                      'classname'      => 'PluginFusioninventoryInventoryComputerESX',
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
-                     'name'           => __('VMware host remote inventory', 'fusioninventory'),
+                     'name'           => __('VMware host remote inventory', 'glpiinventory'),
                      'task'           => 'ESX',
                      'use_rest'       => true
             ],
@@ -92,19 +92,19 @@ class PluginFusioninventoryStaticmisc {
             [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryNetworkDiscovery',
                      'method'         => 'networkdiscovery',
-                     'name'           => __('Network discovery', 'fusioninventory')
+                     'name'           => __('Network discovery', 'glpiinventory')
             ],
 
             [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryNetworkInventory',
                      'method'         => 'networkinventory',
-                     'name'           => __('Network inventory (SNMP)', 'fusioninventory')
+                     'name'           => __('Network inventory (SNMP)', 'glpiinventory')
             ],
 
             [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryDeployCommon',
                      'method'         => 'deployinstall',
-                     'name'           => __('Package deploy', 'fusioninventory'),
+                     'name'           => __('Package deploy', 'glpiinventory'),
                      'task'           => "DEPLOY",
                      'use_rest'       => true
             ],
@@ -112,7 +112,7 @@ class PluginFusioninventoryStaticmisc {
             [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryCollect',
                      'method'         => 'collect',
-                     'name'           => __('Collect data', 'fusioninventory'),
+                     'name'           => __('Collect data', 'glpiinventory'),
                      'task'           => "Collect",
                      'use_rest'       => true
             ]
@@ -286,7 +286,7 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_actiontype_InventoryComputerESX($a_itemtype) {
       return ['' => Dropdown::EMPTY_VALUE ,
-                   'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory')];
+                   'PluginFusioninventoryAgent' => __('Agents', 'glpiinventory')];
 
    }
 
@@ -370,7 +370,7 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_definitiontype_networkdiscovery($a_itemtype) {
-      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'fusioninventory');
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'glpiinventory');
       return $a_itemtype;
    }
 
@@ -402,7 +402,7 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_definitiontype_networkinventory($a_itemtype) {
-      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'fusioninventory');
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'glpiinventory');
 
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
       $a_itemtype['Printer'] = Printer::getTypeName();
@@ -467,13 +467,13 @@ class PluginFusioninventoryStaticmisc {
    static function task_networkdiscovery_agents() {
 
       $array = [];
-      $array["-.1"] = __('Auto managenement dynamic of agents', 'fusioninventory');
+      $array["-.1"] = __('Auto managenement dynamic of agents', 'glpiinventory');
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
       foreach ($array1 as $id => $data) {
          $array["PluginFusioninventoryAgent-".$id] =
-                 __('Auto managenement dynamic of agents', 'fusioninventory')." - ".$data['name'];
+                 __('Auto managenement dynamic of agents', 'glpiinventory')." - ".$data['name'];
       }
       return $array;
    }
@@ -671,7 +671,7 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_definitiontype_collect($a_itemtype) {
       return ['' => Dropdown::EMPTY_VALUE,
-                   'PluginFusioninventoryCollect' => __('Collect information', 'fusioninventory')];
+                   'PluginFusioninventoryCollect' => __('Collect information', 'glpiinventory')];
    }
 
 

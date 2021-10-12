@@ -115,39 +115,39 @@ if (!file_exists(GLPI_LOG_DIR.'/sql-errors.log')) {
 }
 
 // Creation of folders if not created in tests
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/tmp')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/tmp');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/computer')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/computer');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/printer')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/printer');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/networkequipment')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/networkequipment');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/upload')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/upload');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/repository')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/repository');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/manifests')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/manifests');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/import')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/import');
 }
-if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export')) {
-   mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export');
+if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/export')) {
+   mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/export');
 }

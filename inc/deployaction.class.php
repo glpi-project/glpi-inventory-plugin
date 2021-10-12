@@ -66,10 +66,10 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    function getReturnActionNames() {
       return [
          0              => Dropdown::EMPTY_VALUE,
-         'okCode'       => __("Return code is equal to", 'fusioninventory'),
-         'errorCode'    => __("Return code is not equal to", 'fusioninventory'),
-         'okPattern'    => __("Command output contains", 'fusioninventory'),
-         'errorPattern' => __("Command output does not contains", 'fusioninventory')
+         'okCode'       => __("Return code is equal to", 'glpiinventory'),
+         'errorCode'    => __("Return code is not equal to", 'glpiinventory'),
+         'okPattern'    => __("Command output contains", 'glpiinventory'),
+         'errorPattern' => __("Command output does not contains", 'glpiinventory')
       ];
    }
 
@@ -81,11 +81,11 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
     */
    function getTypes() {
        return [
-         'cmd'     => __('Command', 'fusioninventory'),
-         'move'    => __('Move', 'fusioninventory'),
-         'copy'    => __('Copy', 'fusioninventory'),
-         'delete'  => __('Delete directory', 'fusioninventory'),
-         'mkdir'   => __('Create directory', 'fusioninventory')
+         'cmd'     => __('Command', 'glpiinventory'),
+         'move'    => __('Move', 'glpiinventory'),
+         'copy'    => __('Copy', 'glpiinventory'),
+         'delete'  => __('Delete directory', 'glpiinventory'),
+         'mkdir'   => __('Create directory', 'glpiinventory')
        ];
    }
 
@@ -215,7 +215,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             } else {
                echo "<b>";
                if ($key == 'exec') {
-                  echo __('Command to execute', 'fusioninventory');
+                  echo __('Command to execute', 'glpiinventory');
                } else {
                   echo $key;
                }
@@ -229,7 +229,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             }
          }
          if (isset($action[$action_type]['retChecks'])) {
-            echo "<br><b>".__("return codes saved for this command", 'fusioninventory').
+            echo "<br><b>".__("return codes saved for this command", 'glpiinventory').
                "</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
@@ -242,7 +242,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          echo "</td>";
          echo "</td>";
          if ($canedit) {
-            echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+            echo "<td class='rowhandler control' title='".__('drag', 'glpiinventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
@@ -257,7 +257,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
-         __('Delete', 'fusioninventory')."\" class='submit'>";
+         __('Delete', 'glpiinventory')."\" class='submit'>";
       }
    }
 
@@ -301,7 +301,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       $value_1      = "";
       $value_2      = "";
       $retChecks    = null;
-      $name_label   = __('Action label', 'fusioninventory');
+      $name_label   = __('Action label', 'glpiinventory');
       $name_value   = (isset($config_data['name']))?$config_data['name']:"";
       $name_type    = "input";
       $logLineLimit = (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:100;
@@ -313,9 +313,9 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
          case 'move':
          case 'copy':
-            $value_label_1 = __("From", 'fusioninventory');
+            $value_label_1 = __("From", 'glpiinventory');
             $name_label_1  = "from";
-            $value_label_2 = __("To", 'fusioninventory');
+            $value_label_2 = __("To", 'glpiinventory');
             $name_label_2  = "to";
             if ($mode === self::EDIT) {
                $value_1 = $config_data['from'];
@@ -324,7 +324,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             break;
 
          case 'cmd':
-            $value_label_1 = __("exec", 'fusioninventory');
+            $value_label_1 = __("exec", 'glpiinventory');
             $name_label_1  = "exec";
             $value_label_2 = false;
             $value_type_1  = "textarea";
@@ -338,7 +338,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
          case 'delete':
          case 'mkdir':
-            $value_label_1 = __("path", 'fusioninventory');
+            $value_label_1 = __("path", 'glpiinventory');
             $name_label_1  = "list[]";
             $value_label_2 = false;
             if ($mode === self::EDIT) {
@@ -357,7 +357,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__('Action label', 'fusioninventory')."</th>";
+      echo "<th>".__('Action label', 'glpiinventory')."</th>";
       echo "<td><input type='text' name='name' id='check_name' value=\"{$name_value}\" /></td>";
       echo "</tr>";
       echo "<tr>";
@@ -386,7 +386,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       //specific case for cmd : add retcheck form
       if ($type == "cmd") {
          echo "<tr>";
-         echo "<th>".__("Execution checks", 'fusioninventory');
+         echo "<th>".__("Execution checks", 'glpiinventory');
          PluginFusioninventoryDeployPackage::plusButton("retchecks", ".table_retchecks.template");
          echo "</th>";
          echo "<td>";
@@ -434,7 +434,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
       if ($type == 'cmd') {
          echo "<tr>";
-         echo "<th>".__('Number of output lines to retrieve', 'fusioninventory')."</th>";
+         echo "<th>".__('Number of output lines to retrieve', 'glpiinventory')."</th>";
          echo "<td>";
          $options = ['min'   => 0,
                      'max'   => 5000,

@@ -94,7 +94,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if ($this->canView()) {
-         return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
+         return self::createTabEntry(__('FusionInventory SNMP', 'glpiinventory'));
       }
       return '';
    }
@@ -109,7 +109,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       if ($item->fields['id'] > 0) {
          $pfPrinter = new PluginFusioninventoryPrinter();
@@ -159,12 +159,12 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
 
       echo '<table class="tab_glpi" width="100%">';
       echo '<tr>';
-      echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '<th colspan="2">'.__('FusionInventory', 'glpiinventory').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
       echo '<td>';
-      echo __('Last inventory', 'fusioninventory');
+      echo __('Last inventory', 'glpiinventory');
       echo '</td>';
       echo '<td>';
       echo Html::convDateTime($a_printerextend['last_fusioninventory_update']);

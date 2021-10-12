@@ -312,13 +312,13 @@ class PluginFusioninventoryToolbox {
       if (empty($folder)) {
          $folder = '0';
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory")) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory");
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/glpiinventory")) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/glpiinventory");
       }
-      if (!file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR)) {
-         mkdir(PLUGIN_FUSIONINVENTORY_XML_DIR);
+      if (!file_exists(PLUGIN_GLPI_INVENTORY_XML_DIR)) {
+         mkdir(PLUGIN_GLPI_INVENTORY_XML_DIR);
       }
-      $itemtype_dir = PLUGIN_FUSIONINVENTORY_XML_DIR.strtolower($itemtype);
+      $itemtype_dir = PLUGIN_GLPI_INVENTORY_XML_DIR.strtolower($itemtype);
       if (!file_exists($itemtype_dir)) {
          mkdir($itemtype_dir);
       }
@@ -523,7 +523,7 @@ class PluginFusioninventoryToolbox {
    static function sendXML($items_id, $itemtype) {
       if (preg_match("/^([a-zA-Z]+)\/(\d+)\/(\d+)\.xml$/", $items_id)
          && call_user_func([$itemtype, 'canView'])) {
-         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
+         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/glpiinventory/xml/".$items_id);
          echo $xml;
       } else {
          Html::displayRightError();

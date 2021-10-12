@@ -76,7 +76,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Job', 'fusioninventory');
+      return __('Job', 'glpiinventory');
    }
 
 
@@ -217,7 +217,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       Ajax::updateItemOnEvent(
               'dropdown_'.ucfirst($myname).'Type'.$rand,
               "show_".ucfirst($myname)."List".$taskjobs_id,
-              Plugin::getWebDir('fusioninventory')."/ajax/dropdowntypelist.php",
+              Plugin::getWebDir('glpiinventory')."/ajax/dropdowntypelist.php",
               $params);
 
       return $rand;
@@ -324,7 +324,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                       'taskjobs_id'=>$taskjobs_id];
       Ajax::updateItemOnEvent([$iddropdown.$rand , "add_button_".$_POST['name'].$taskjobs_id],
                               "Additem_$rand",
-                              Plugin::getWebDir('fusioninventory')."/ajax/taskjobaddtype.php",
+                              Plugin::getWebDir('glpiinventory')."/ajax/taskjobaddtype.php",
                               $params,
                               ["click"],
                               "-1",
@@ -376,7 +376,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             ];
       Ajax::updateItemOnSelectEvent('dropdown_ActionType'.$rand,
                                     "show_ActionList",
-                                    Plugin::getWebDir('fusioninventory')."/ajax/dropdownactionlist.php",
+                                    Plugin::getWebDir('glpiinventory')."/ajax/dropdownactionlist.php",
                                     $params);
 
       return $rand;
@@ -433,7 +433,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                     'actiontypeid'     => $actiontypeid];
 
       Ajax::updateItemOnEvent('addAObject', 'show_ActionListEmpty',
-                              Plugin::getWebDir('fusioninventory')."/ajax/dropdownactionselection.php",
+                              Plugin::getWebDir('glpiinventory')."/ajax/dropdownactionselection.php",
                               $params, ["click"]);
 
    }
@@ -887,10 +887,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       echo "<tr class='tab_bg_1'>";
       echo "<th>".__('Name')."</th>";
       echo "<th>".__('Active')."</th>";
-      echo "<th>".__('Scheduled date', 'fusioninventory')."</th>";
-      echo "<th>".__('Periodicity', 'fusioninventory')."</th>";
-      echo "<th>".__('Definition', 'fusioninventory')."</td>";
-      echo "<th>".__('Action', 'fusioninventory')."</th>";
+      echo "<th>".__('Scheduled date', 'glpiinventory')."</th>";
+      echo "<th>".__('Periodicity', 'glpiinventory')."</th>";
+      echo "<th>".__('Definition', 'glpiinventory')."</td>";
+      echo "<th>".__('Action', 'glpiinventory')."</th>";
       echo "</tr>";
 
       foreach ($a_list as $data) {
@@ -908,17 +908,17 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
             case 'minutes':
                $a_time = $pfTask->fields['periodicity_count']." ".
-               strtolower(__('Minute(s)', 'fusioninventory'));
+               strtolower(__('Minute(s)', 'glpiinventory'));
                break;
 
             case 'hours':
                $a_time = $pfTask->fields['periodicity_count']." ".
-                    strtolower(__('hour(s)', 'fusioninventory'));
+                    strtolower(__('hour(s)', 'glpiinventory'));
                break;
 
             case 'days':
                $a_time = $pfTask->fields['periodicity_count']." ".
-                    __('day(s)', 'fusioninventory');
+                    __('day(s)', 'glpiinventory');
                break;
 
             case 'months':
@@ -946,9 +946,9 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                $itemname = $class->getTypeName();
                $class->getFromDB($items_id);
                if ($items_id == '.1') {
-                  $name = __('Auto managenement dynamic of agents', 'fusioninventory');
+                  $name = __('Auto managenement dynamic of agents', 'glpiinventory');
                } else if ($items_id == '.2') {
-                  $name =  __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
+                  $name =  __('Auto managenement dynamic of agents (same subnet)', 'glpiinventory');
                } else {
                   $name = $class->getLink(1);
                }
@@ -1006,7 +1006,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
       Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                Plugin::getWebDir('fusioninventory')."/ajax/dropdownlist.php",
+                                Plugin::getWebDir('glpiinventory')."/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
    }
@@ -1042,7 +1042,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
       Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                Plugin::getWebDir('fusioninventory')."/ajax/dropdownlist.php",
+                                Plugin::getWebDir('glpiinventory')."/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
    }
@@ -1255,7 +1255,7 @@ function new_subtype(id) {
          echo "</a><br />";
 
          echo "<b>";
-         echo __('Definition', 'fusioninventory');
+         echo __('Definition', 'glpiinventory');
          echo "</b>";
          echo "<ul class='retChecks'>";
          $a_definitions = importArrayFromDB($data['definition']);
@@ -1272,7 +1272,7 @@ function new_subtype(id) {
          echo "</ul>";
 
          echo "<b>";
-         echo __('Action', 'fusioninventory');
+         echo __('Action', 'glpiinventory');
          echo "</b>";
          echo "<ul class='retChecks'>";
          $a_actions = importArrayFromDB($data['action']);
@@ -1290,7 +1290,7 @@ function new_subtype(id) {
 
          echo "</td>";
          echo "</td>";
-         echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+         echo "<td class='rowhandler control' title='".__('drag', 'glpiinventory').
             "'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
@@ -1302,7 +1302,7 @@ function new_subtype(id) {
       echo "</div>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
-         __('Delete', 'fusioninventory')."\" class='submit'>";
+         __('Delete', 'glpiinventory')."\" class='submit'>";
 
       /**
        * Initialize drag and drop on subtype lists
@@ -1324,7 +1324,7 @@ function new_subtype(id) {
    function getSpecificMassiveActions($checkitem = null) {
 
       $actions = [];
-      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'fusioninventory');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'glpiinventory');
       return $actions;
    }
 

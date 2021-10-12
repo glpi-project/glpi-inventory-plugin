@@ -102,8 +102,8 @@ jobs:
         path: glpi
         fetch-depth: 1
         ref: master
-    - name: Copy Plugin FusionInventory
-      run: rsync -avr --exclude='glpi' ./* glpi/plugins/fusioninventory/
+    - name: Copy plugin
+      run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Create the database
       run: mysqladmin create glpi
     - name: Install dependencies
@@ -113,9 +113,9 @@ jobs:
         php bin/console locales:compile
     - name: Install GLPI
       run: cd glpi && php bin/console glpi:database:install -n --config-dir=tests --db-name=glpi --db-user=root
-    - name: Install plugin FusionInventory
-      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory
-    - name: Activate plugin FusionInventory
-      run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory
+    - name: Install plugin
+      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi glpiinventory
+    - name: Activate plugin
+      run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests glpiinventory
     - name: run tests
-      run: cd glpi/plugins/fusioninventory/ && php vendor/bin/phpunit --testdox tests/
+      run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox tests/

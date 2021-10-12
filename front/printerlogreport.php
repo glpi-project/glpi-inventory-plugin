@@ -49,7 +49,7 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),
+Html::header(__('FusionInventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
              "pluginfusioninventorymenu",
@@ -98,7 +98,7 @@ function displaySearchForm() {
    echo "<table class='tab_cadre' cellpadding='5'>";
    echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-   echo __('Starting date', 'fusioninventory')." :";
+   echo __('Starting date', 'glpiinventory')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateField("glpi_plugin_fusioninventory_date_start",
@@ -106,7 +106,7 @@ function displaySearchForm() {
    echo "</td>";
 
    echo "<td>";
-   echo __('Ending date', 'fusioninventory')." :";
+   echo __('Ending date', 'glpiinventory')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateField("glpi_plugin_fusioninventory_date_end",

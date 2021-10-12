@@ -82,6 +82,6 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
     * @return string name of this type
     */
    function getTitle() {
-      return __('Location rules', 'fusioninventory');
+      return __('Location rules', 'glpiinventory');
    }
 }

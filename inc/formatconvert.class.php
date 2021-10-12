@@ -73,14 +73,14 @@ class PluginFusioninventoryFormatconvert {
    /**
     * Convert XML into php array
     *
-    * @global string $PLUGIN_FUSIONINVENTORY_XML
+    * @global string $PLUGIN_GLPI_INVENTORY_XML
     * @param object $xml
     * @return array
     */
    static function XMLtoArray($xml) {
-      global $PLUGIN_FUSIONINVENTORY_XML;
+      global $PLUGIN_GLPI_INVENTORY_XML;
 
-      $PLUGIN_FUSIONINVENTORY_XML = $xml;
+      $PLUGIN_GLPI_INVENTORY_XML = $xml;
       $datainventory = json_decode(json_encode((array)$xml), true);
 
       //TODO: factorize this code with older one (need to find a suitable solution for all)

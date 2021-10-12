@@ -53,7 +53,7 @@ if (!defined("GLPI_PLUGIN_DOC_DIR")) {
 }
 Session::checkLoginUser();
 
-$docDir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory';
+$docDir = GLPI_PLUGIN_DOC_DIR.'/glpiinventory';
 
 if (isset($_GET['file'])) {
    $filename = $_GET['file'];

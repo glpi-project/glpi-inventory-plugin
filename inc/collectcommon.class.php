@@ -153,7 +153,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
       echo "<th colspan=".count($headers).">"
-         .__('Windows registry associated', 'fusioninventory')."</th>";
+         .__('Windows registry associated', 'glpiinventory')."</th>";
       echo "</tr>";
       echo "<tr>";
       foreach ($headers as $label) {

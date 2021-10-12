@@ -228,7 +228,7 @@ class PluginFusioninventoryCommunication {
                  $this->message['CONTENT'],
                  $arrayinventory);
       } else {
-         $errors.=__('Unattended element in', 'fusioninventory').' QUERY : *'.$xmltag."*\n";
+         $errors.=__('Unattended element in', 'glpiinventory').' QUERY : *'.$xmltag."*\n";
       }
       $result=true;
       // TODO manage this error ( = delete it)

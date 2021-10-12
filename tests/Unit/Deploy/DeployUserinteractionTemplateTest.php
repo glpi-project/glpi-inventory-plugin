@@ -98,7 +98,7 @@ class DeployUserinteractionTemplateTest extends TestCase {
    public function testGetTypes() {
       $types = PluginFusioninventoryDeployUserinteractionTemplate::getTypes();
       $this->assertEquals($types,
-                          [PluginFusioninventoryDeployUserinteractionTemplate::ALERT_WTS => __("Windows system alert (WTS)", 'fusioninventory')]);
+                          [PluginFusioninventoryDeployUserinteractionTemplate::ALERT_WTS => __("Windows system alert (WTS)", 'glpiinventory')]);
    }
 
 
@@ -168,7 +168,7 @@ class DeployUserinteractionTemplateTest extends TestCase {
                                     PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_WARNING  => __('Warning'),
                                     PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
                                     PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_ERROR    => __('Error'),
-                                    PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION => __('Question', 'fusioninventory')
+                                    PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
                                    ]);
 
       $icons = PluginFusioninventoryDeployUserinteractionTemplate::getIcons('foo');
@@ -179,7 +179,7 @@ class DeployUserinteractionTemplateTest extends TestCase {
                                     PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_WARNING  => __('Warning'),
                                     PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
                                     PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_ERROR    => __('Error'),
-                                    PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION => __('Question', 'fusioninventory')
+                                    PluginFusioninventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
                                    ]);
 
    }
@@ -191,7 +191,7 @@ class DeployUserinteractionTemplateTest extends TestCase {
    public function testGetBehaviors() {
       $behaviors = PluginFusioninventoryDeployUserinteractionTemplate::getBehaviors();
       $expected  = [PluginFusioninventoryDeployUserinteractionTemplate::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction'),
-                    PluginFusioninventoryDeployUserinteractionTemplate::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'fusioninventory'),
+                    PluginFusioninventoryDeployUserinteractionTemplate::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'glpiinventory'),
                     PluginFusioninventoryDeployUserinteractionTemplate::BEHAVIOR_STOP_DEPLOY   => __('Cancel job')
                    ];
       $this->assertEquals($expected, $behaviors);

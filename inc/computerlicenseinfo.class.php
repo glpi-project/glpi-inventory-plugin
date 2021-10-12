@@ -70,7 +70,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('FusionInventory', 'fusioninventory')
+      return __('FusionInventory', 'glpiinventory')
          .' - '._n('License', 'Licenses', $nb);
    }
 
@@ -109,14 +109,14 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   || $licenseInfo['is_oem']) {
                $options = [];
                $fields = ['is_update' => _sx('name', 'Update'),
-                          'is_trial'  => __('Trial', 'fusioninventory'),
-                          'is_oem'    => __('OEM', 'fusioninventory')];
+                          'is_trial'  => __('Trial', 'glpiinventory'),
+                          'is_oem'    => __('OEM', 'glpiinventory')];
                foreach ($fields as $field => $label) {
                   if ($licenseInfo[$field]) {
                      array_push($options, $label);
                   }
                }
-               $license_options = __('Option', 'fusioninventory')
+               $license_options = __('Option', 'glpiinventory')
                   ."&nbsp;(".implode(', ', $options).")";
             }
             echo "<td>";

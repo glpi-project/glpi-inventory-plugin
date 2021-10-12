@@ -65,7 +65,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->fields['id'] > 0) {
-         return __('FusionInventory historical', 'fusioninventory');
+         return __('FusionInventory historical', 'glpiinventory');
       }
       return '';
    }
@@ -131,7 +131,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3'>";
-      echo __('List of fields to history', 'fusioninventory')." :";
+      echo __('List of fields to history', 'glpiinventory')." :";
       echo "</td>";
       echo "</tr>";
 
@@ -210,7 +210,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
             echo "<input type='submit'  class=\"submit\" ".
                     "name='plugin_fusioninventory_extraction_delete' value='<< ".
-                    __('Delete', 'fusioninventory') . "'>";
+                    __('Delete', 'glpiinventory') . "'>";
          }
       }
       echo "</td><td class='left'>";
@@ -229,7 +229,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='3'>";
-      echo __('Clean history', 'fusioninventory')." :";
+      echo __('Clean history', 'glpiinventory')." :";
       echo "</th>";
       echo "</tr>";
 
@@ -470,7 +470,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections
-               $imgfolder = Plugin::getWebDir('fusioninventory')."/pics";
+               $imgfolder = Plugin::getWebDir('glpiinventory')."/pics";
                if ($data['field'] == '1') {
                   $text .= "<td align='center'><img src='".$imgfolder."/connection_ok.png'/></td>";
                } else {
@@ -491,7 +491,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                         $link .= __('Without name');
                      }
                      $link .= "</a>";
-                     $text .= "<td align='center'>".$link." ".__('on', 'fusioninventory')." ".
+                     $text .= "<td align='center'>".$link." ".__('on', 'glpiinventory')." ".
                                  $link1."</td>";
                   } else {
                      $text .= "<td align='center'><font color='#ff0000'>".__('Deleted').
@@ -512,7 +512,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                         $link .= __('Without name');
                      }
                      $link .= "</a>";
-                     $text .= "<td align='center'>".$link." ".__('on', 'fusioninventory')." ".
+                     $text .= "<td align='center'>".$link." ".__('on', 'glpiinventory')." ".
                                  $link1."</td>";
                   } else {
                      $text .= "<td align='center'><font color='#ff0000'>".__('Deleted').

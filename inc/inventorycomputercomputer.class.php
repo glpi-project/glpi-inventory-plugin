@@ -97,14 +97,14 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       if ($a_computerextend['bios_date'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
+         echo '<td>'.__('BIOS date', 'glpiinventory').'</td>';
          echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
          echo '</tr>';
       }
 
       if ($a_computerextend['bios_version'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
+         echo '<td>'.__('BIOS version', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['bios_version'].'</td>';
          echo '</tr>';
       }
@@ -129,14 +129,14 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       if ($a_computerextend['winowner'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+         echo '<td>'.__('Owner', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['winowner'].'</td>';
          echo '</tr>';
       }
 
       if ($a_computerextend['wincompany'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Company', 'fusioninventory').'</td>';
+         echo '<td>'.__('Company', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
          echo '</tr>';
       }
@@ -166,7 +166,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
             echo '</tr>';
 
             echo '<tr>';
-            echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+            echo '<th colspan="4">'.__('FusionInventory', 'glpiinventory').'</th>';
             echo '</tr>';
             $pfAgent->showInfoForComputer($item, 4);
          }
@@ -197,10 +197,10 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo "</tr>";
 
       echo '<tr class="tab_bg_1">';
-      echo '<td>'.__('Company', 'fusioninventory').'</td>';
+      echo '<td>'.__('Company', 'glpiinventory').'</td>';
       echo '<td>'.$a_computerextend['wincompany'].'</td>';
 
-      echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+      echo '<td>'.__('Owner', 'glpiinventory').'</td>';
       echo '<td>'.$a_computerextend['winowner'].'</td>';
       echo '</tr>';
 
@@ -212,7 +212,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('HostID', 'fusioninventory')."</td>";
+      echo "<td>".__('HostID', 'glpiinventory')."</td>";
       echo "<td>";
       echo $a_computerextend['hostid'];
       echo "</td><colspan='2'></td>";
@@ -230,7 +230,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
     * @return true
     */
    static function showComputerInfo($item) {
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       // Manage locks pictures
       PluginFusioninventoryLock::showLockIcon('Computer');
@@ -244,7 +244,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<table class="tab_glpi" width="100%">';
 
       echo '<tr>';
-      echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '<th colspan="4">'.__('FusionInventory', 'glpiinventory').'</th>';
       echo '</tr>';
 
       $pfAgent = new PluginFusioninventoryAgent();
@@ -252,14 +252,14 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       echo '<tr class="tab_bg_1">';
       if ($a_computerextend['remote_addr'] != '') {
-         echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
+         echo '<td>'.__('Public contact address', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
       } else {
          echo "<td colspan='2'></td>";
       }
 
       echo '<td>';
-      echo __('Last inventory', 'fusioninventory');
+      echo __('Last inventory', 'glpiinventory');
       echo '</td>';
       echo '<td>';
       echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
@@ -269,20 +269,20 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<tr class="tab_bg_1">';
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {
-         echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
+         echo '<td>'.__('Automatic entity transfer', 'glpiinventory').'</td>';
          echo '<td>';
          $pfEntity = new PluginFusioninventoryEntity();
          if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
-            echo __('No, locked (by entity configuration)', 'fusioninventory');
+            echo __('No, locked (by entity configuration)', 'glpiinventory');
          } else {
             if ($a_computerextend['is_entitylocked'] == 1) {
-               echo __('No, locked manually', 'fusioninventory');
+               echo __('No, locked manually', 'glpiinventory');
                echo " [ <a href='".$fi_path."/front/computerentitylock.form.php?id=".
-                     $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
+                     $a_computerextend['id']."&lock=0'>".__('Unlock it', 'glpiinventory')."</a> ]";
             } else {
                echo __('Yes');
                echo " [ <a href='".$fi_path."/front/computerentitylock.form.php?id=".
-                     $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
+                     $a_computerextend['id']."&lock=1'>".__('Lock it', 'glpiinventory')."</a> ]";
             }
          }
          echo '</td>';
@@ -290,7 +290,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
          echo "<td colspan='2'></td>";
       }
       echo '<td>';
-      echo __('Last boot', 'fusioninventory');
+      echo __('Last boot', 'glpiinventory');
       echo '</td>';
       echo '<td>';
       echo Html::convDateTime($a_computerextend['last_boot']);

@@ -111,7 +111,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          'id'    => '3',
          'table' => $this->getTable(),
          'field' => 'ifmtu',
-         'name'  => __('MTU', 'fusioninventory'),
+         'name'  => __('MTU', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -125,42 +125,42 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          'id'    => '6',
          'table' => $this->getTable(),
          'field' => 'ifinternalstatus',
-         'name'  => __('Internal status', 'fusioninventory'),
+         'name'  => __('Internal status', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '7',
          'table' => $this->getTable(),
          'field' => 'iflastchange',
-         'name'  => __('Last change', 'fusioninventory'),
+         'name'  => __('Last change', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '8',
          'table' => $this->getTable(),
          'field' => 'ifinoctets',
-         'name'  => __('Number of bytes received / Number of bytes sent', 'fusioninventory'),
+         'name'  => __('Number of bytes received / Number of bytes sent', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '9',
          'table' => $this->getTable(),
          'field' => 'ifinerrors',
-         'name'  => __('Number of input errors / Number of errors in reception', 'fusioninventory'),
+         'name'  => __('Number of input errors / Number of errors in reception', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '10',
          'table' => $this->getTable(),
          'field' => 'portduplex',
-         'name'  => __('Duplex', 'fusioninventory'),
+         'name'  => __('Duplex', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '11',
          'table' => $this->getTable(),
          'field' => 'mac',
-         'name'  => __('Internal MAC address', 'fusioninventory'),
+         'name'  => __('Internal MAC address', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -188,14 +188,14 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          'id'    => '15',
          'table' => $this->getTable(),
          'field' => 'lastup',
-         'name'  => __('Port not connected since', 'fusioninventory'),
+         'name'  => __('Port not connected since', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '16',
          'table' => $this->getTable(),
          'field' => 'ifalias',
-         'name'  => __('Alias', 'fusioninventory'),
+         'name'  => __('Alias', 'glpiinventory'),
       ];
 
       $tab[] = [

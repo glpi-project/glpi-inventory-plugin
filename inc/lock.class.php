@@ -220,14 +220,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='4'>".__('FusionInventory', 'fusioninventory')."</th></tr>";
+      echo "<tr><th colspan='4'>".__('FusionInventory', 'glpiinventory')."</th></tr>";
 
       echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
       if ($p_items_id != '0') {
-         echo "<th>".__('Values GLPI', 'fusioninventory')."</th>";
-         echo "<th>".__('Values of last inventory', 'fusioninventory')."</th>";
+         echo "<th>".__('Values GLPI', 'glpiinventory')."</th>";
+         echo "<th>".__('Values of last inventory', 'glpiinventory')."</th>";
       }
-      echo "<th>"._n('Lock', 'Locks', 2, 'fusioninventory')."</th>";
+      echo "<th>"._n('Lock', 'Locks', 2, 'glpiinventory')."</th>";
       echo "</tr>";
 
       $checked = false;
@@ -292,17 +292,17 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($p_items_id == '0') {
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
-         echo "<th colspan='2'>".__('Job', 'fusioninventory')."</th>";
+         echo "<th colspan='2'>".__('Job', 'glpiinventory')."</th>";
          echo "<tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Add locks', 'fusioninventory')."</td>";
+         echo "<td>".__('Add locks', 'glpiinventory')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='addLock' ".
                  "checked/></td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Delete locks', 'fusioninventory')."</td>";
+         echo "<td>".__('Delete locks', 'glpiinventory')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='deleteLock' /></td>";
          echo "</tr>";
       }
@@ -362,7 +362,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "</tr>";
 
       echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
-      echo "<th>"._n('Lock', 'Locks', 2, 'fusioninventory')."</th>";
+      echo "<th>"._n('Lock', 'Locks', 2, 'glpiinventory')."</th>";
       echo "</tr>";
 
       $checked = false;

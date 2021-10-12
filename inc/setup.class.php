@@ -65,7 +65,7 @@ class PluginFusioninventorySetup {
    static function uninstall() {
       global $DB;
 
-      CronTask::Unregister('fusioninventory');
+      CronTask::Unregister('glpiinventory');
       PluginFusioninventoryProfile::uninstallProfile();
 
       $pfSetup  = new PluginFusioninventorySetup();
@@ -77,8 +77,8 @@ class PluginFusioninventorySetup {
          $user->delete(['id'=>$users_id], 1);
       }
 
-      if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+      if (file_exists(GLPI_PLUGIN_DOC_DIR.'/glpiinventory')) {
+         $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory');
       }
 
       $result = $DB->query("SHOW TABLES;");

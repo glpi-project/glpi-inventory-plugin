@@ -252,7 +252,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
             default :
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.
-                           __('Unattended element in', 'fusioninventory').' CONTENT : '.$childname;
+                           __('Unattended element in', 'glpiinventory').' CONTENT : '.$childname;
                $this->addtaskjoblog();
          }
       }
@@ -263,7 +263,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    /**
     * import process of one device
     *
-    * @global SimpleXMLElement $PLUGIN_FUSIONINVENTORY_XML
+    * @global SimpleXMLElement $PLUGIN_GLPI_INVENTORY_XML
     * @param string $itemtype
     * @param integer $items_id
     * @param array $a_inventory
@@ -271,7 +271,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @return string errors or empty string
     */
    function importDevice($itemtype, $items_id, $a_inventory, $no_history) {
-      global $PLUGIN_FUSIONINVENTORY_XML;
+      global $PLUGIN_GLPI_INVENTORY_XML;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
@@ -282,7 +282,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       // Write XML file
       if (count($a_inventory) > 0
               AND isset($_SESSION['plugin_fusioninventory_xmlnum'])) {
-         $xml = $PLUGIN_FUSIONINVENTORY_XML->CONTENT->DEVICE[$_SESSION['plugin_fusioninventory_xmlnum']]->asXML();
+         $xml = $PLUGIN_GLPI_INVENTORY_XML->CONTENT->DEVICE[$_SESSION['plugin_fusioninventory_xmlnum']]->asXML();
          PluginFusioninventoryToolbox::writeXML(
                  $items_id,
                  $xml,
@@ -320,7 +320,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             break;
 
          default:
-            return __('Unattended element in', 'fusioninventory').' TYPE : '.$a_inventory['itemtype']."\n";
+            return __('Unattended element in', 'glpiinventory').' TYPE : '.$a_inventory['itemtype']."\n";
       }
       return '';
    }

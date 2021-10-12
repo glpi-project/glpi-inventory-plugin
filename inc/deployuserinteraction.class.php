@@ -96,7 +96,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
     */
    static function getTypeName($nb = 0) {
          return _n('User interaction',
-                   'User interactions', $nb, 'fusioninventory');
+                   'User interactions', $nb, 'glpiinventory');
    }
 
 
@@ -106,11 +106,11 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
     * @return array
     */
    function getTypes() {
-      return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'fusioninventory'),
-              self::EVENT_AFTER_DOWNLOAD   => __("After download", 'fusioninventory'),
-              self::EVENT_AFTER_ACTIONS    => __("After actions", 'fusioninventory'),
-              self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'fusioninventory'),
-              self::EVENT_ACTION_FAILURE   => __("On actions failure", 'fusioninventory')
+      return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'glpiinventory'),
+              self::EVENT_AFTER_DOWNLOAD   => __("After download", 'glpiinventory'),
+              self::EVENT_AFTER_ACTIONS    => __("After actions", 'glpiinventory'),
+              self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'glpiinventory'),
+              self::EVENT_ACTION_FAILURE   => __("On actions failure", 'glpiinventory')
              ];
    }
 
@@ -211,7 +211,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    function getValues($type, $data, $mode) {
       $values = [
          'name_value'          => "",
-         'name_label'          => __('Interaction label', 'fusioninventory'),
+         'name_label'          => __('Interaction label', 'glpiinventory'),
          'name_type'           => "input",
          'title_label'         => __('Title').$this->getMandatoryMark(),
          'title_value'         => "",
@@ -280,7 +280,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
 
          echo "</td>";
          if ($canedit) {
-            echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+            echo "<td class='rowhandler control' title='".__('drag', 'glpiinventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
@@ -295,7 +295,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt='' />";
          echo "<input type='submit' name='delete' value=\"".
-            __('Delete', 'fusioninventory')."\" class='submit' />";
+            __('Delete', 'glpiinventory')."\" class='submit' />";
       }
    }
 
@@ -416,21 +416,21 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       switch ($behavior) {
          case self::RESPONSE_STOP:
             $message .= sprintf(__('Job cancelled by the user %1$s',
-                                   'fusioninventory'), $user);
+                                   'glpiinventory'), $user);
             break;
 
          case self::RESPONSE_CONTINUE:
             $message .= sprintf(__('User %1$s agreed to continue the job',
-                                   'fusioninventory'), $user);
+                                   'glpiinventory'), $user);
             break;
 
          case self::RESPONSE_POSTPONE:
-            $message .= sprintf(__('Job postponed by the user %1$s', 'fusioninventory'),
+            $message .= sprintf(__('Job postponed by the user %1$s', 'glpiinventory'),
                                 $user);
             break;
 
          case self::RESPONSE_BAD_EVENT:
-            $message .= __('Bad event sent to the agent', 'fusioninventory');
+            $message .= __('Bad event sent to the agent', 'glpiinventory');
             break;
 
       }
@@ -449,34 +449,34 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
             return sprintf($message, __('Yes'));
 
          case 'on_async':
-            return __('Alert displayed, no input required', 'fusioninventory');
+            return __('Alert displayed, no input required', 'glpiinventory');
 
          case 'on_no':
             return sprintf($message, __('No'));
 
          case 'on_retry':
-            return sprintf($message, __('Retry', 'fusioninventory'));
+            return sprintf($message, __('Retry', 'glpiinventory'));
 
          case 'on_cancel':
             return sprintf($message, __('Cancel'));
 
          case 'on_abort':
-            return sprintf($message, __('Abort', 'fusioninventory'));
+            return sprintf($message, __('Abort', 'glpiinventory'));
 
          case 'on_ignore':
-            return sprintf($message, __('Ignore', 'fusioninventory'));
+            return sprintf($message, __('Ignore', 'glpiinventory'));
 
          case 'on_continue':
             return sprintf($message, __('Continue'));
 
          case 'on_timeout':
-            return __('Alert duration exceeded', 'fusioninventory');
+            return __('Alert duration exceeded', 'glpiinventory');
 
          case 'on_nouser':
-            return __('No user connected', 'fusioninventory');
+            return __('No user connected', 'glpiinventory');
 
          case 'on_multiusers':
-            return __('Multiple users connected', 'fusioninventory');
+            return __('Multiple users connected', 'glpiinventory');
       }
    }
 }

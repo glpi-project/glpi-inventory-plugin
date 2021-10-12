@@ -72,7 +72,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
     * @return boolean
     */
    function showImportForm() {
-      $target = Plugin::getWebDir('fusioninventory').'/front/inventorycomputerimportxml.php';
+      $target = Plugin::getWebDir('glpiinventory').'/front/inventorycomputerimportxml.php';
 
       echo "<form action='".$target."' method='post' enctype='multipart/form-data'>";
 
@@ -80,7 +80,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
       echo "<table class='tab_cadre' cellpadding='1' width='600'>";
       echo "<tr>";
       echo "<th>";
-      echo __('Import XML file from an Agent', 'fusioninventory')." :";
+      echo __('Import XML file from an Agent', 'glpiinventory')." :";
       echo "</th>";
       echo "</tr>";
 
@@ -91,7 +91,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
          'It\'s also possible to upload <b>ZIP</b> archive directly with a '.
          'collection of XML files. '.
          'Read you agent documentation to see how to generate such XML '.
-         'file', 'fusioninventory');
+         'file', 'glpiinventory');
       echo "</td>";
       echo "</tr>";
 

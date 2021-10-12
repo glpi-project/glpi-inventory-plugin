@@ -71,9 +71,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
-         return __('Agents modules', 'fusioninventory');
+         return __('Agents modules', 'glpiinventory');
       } else if ($item->getType()=='PluginFusioninventoryAgent') {
-         return __('Agents modules', 'fusioninventory');
+         return __('Agents modules', 'glpiinventory');
       }
       return '';
    }
@@ -117,9 +117,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                  Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<th width='130'>".__('Module', 'fusioninventory')."</th>";
-         echo "<th width='180'>".__('Activation (by default)', 'fusioninventory')."</th>";
-         echo "<th>".__('Exceptions', 'fusioninventory')."</th>";
+         echo "<th width='130'>".__('Module', 'glpiinventory')."</th>";
+         echo "<th width='180'>".__('Activation (by default)', 'glpiinventory')."</th>";
+         echo "<th>".__('Exceptions', 'glpiinventory')."</th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
@@ -138,12 +138,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
          // Hack for snmpquery
          if ($data["modulename"] == 'SNMPQUERY') {
-            $modulename = __('Network inventory (SNMP)', 'fusioninventory');
+            $modulename = __('Network inventory (SNMP)', 'glpiinventory');
 
          }
          // Hack for deploy
          if ($data["modulename"] == 'DEPLOY') {
-            $modulename = __('Package deployment', 'fusioninventory');
+            $modulename = __('Package deployment', 'glpiinventory');
 
          }
 
@@ -214,14 +214,14 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       echo "<br/>";
       if ($canedit) {
-         echo "<form name='form_ic' method='post' action='".Plugin::getWebDir('fusioninventory').
+         echo "<form name='form_ic' method='post' action='".Plugin::getWebDir('glpiinventory').
                "/front/agentmodule.form.php'>";
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>".__('Module', 'fusioninventory')."</th>";
+      echo "<th>".__('Module', 'glpiinventory')."</th>";
       echo "<th>Activation</th>";
-      echo "<th>".__('Module', 'fusioninventory')."</th>";
+      echo "<th>".__('Module', 'glpiinventory')."</th>";
       echo "<th>Activation</th>";
       echo "</tr>";
 
@@ -245,12 +245,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
          // Hack for snmpquery
          if ($data["modulename"] == 'SNMPQUERY') {
-            $modulename = __('Network inventory (SNMP)', 'fusioninventory');
+            $modulename = __('Network inventory (SNMP)', 'glpiinventory');
 
          }
          // Hack for deploy
          if ($data["modulename"] == 'DEPLOY') {
-            $modulename = __('Package deployment', 'fusioninventory');
+            $modulename = __('Package deployment', 'glpiinventory');
 
          }
 
@@ -406,7 +406,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @return string the URL generated
     */
    static function getUrlForModule($modulename, $entities_id = -1) {
-      $fi_dir = '/'.Plugin::getWebDir('fusioninventory', false);
+      $fi_dir = '/'.Plugin::getWebDir('glpiinventory', false);
 
       // Get current entity URL if it exists ...
       $pfEntity = new PluginFusioninventoryEntity();

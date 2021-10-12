@@ -51,7 +51,7 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
+Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
 Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
@@ -192,7 +192,7 @@ function displaySearchForm() {
 
    // Display Reset search
    echo "<td>";
-   echo "<a href='".Plugin::getWebDir('fusioninventory')."/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"".__('Blank')."\" alt=\"".__('Blank')."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
+   echo "<a href='".Plugin::getWebDir('glpiinventory')."/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"".__('Blank')."\" alt=\"".__('Blank')."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
    echo "</td>";
 
    echo "<td>";

@@ -132,7 +132,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       echo "<tr>";
       echo "<td colspan='2'>";
-      echo __('Model for automatic computers transfer in an other entity', 'fusioninventory').
+      echo __('Model for automatic computers transfer in an other entity', 'glpiinventory').
               "&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
@@ -177,7 +177,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
       echo "<td colspan='2'>";
       $value = $this->fields["agent_base_url"];
       $inheritedValue = $this->getValueAncestor('agent_base_url', $entities_id);
-      echo __('Service URL', 'fusioninventory').'&nbsp;';
+      echo __('Service URL', 'glpiinventory').'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo " : ";
 

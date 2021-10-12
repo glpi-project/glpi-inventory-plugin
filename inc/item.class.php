@@ -95,13 +95,13 @@ class PluginFusioninventoryItem extends CommonDBTM {
 
       $file_found     = false;
       //Check if the file exists with the .xml extension (new format)
-      $file           = PLUGIN_FUSIONINVENTORY_XML_DIR;
+      $file           = PLUGIN_GLPI_INVENTORY_XML_DIR;
       $filename       = $items_id.'.xml';
       $file_shortname = strtolower($this->itemtype)."/".$folder."/".$filename;
       $file          .= $file_shortname;
       if (!file_exists($file)) {
          //The file doesn't exists, check without the extension (old format)
-         $file           = PLUGIN_FUSIONINVENTORY_XML_DIR;
+         $file           = PLUGIN_GLPI_INVENTORY_XML_DIR;
          $filename       = $items_id;
          $file_shortname = strtolower($this->itemtype)."/".$folder."/".$filename;
          $file          .= $file_shortname;
@@ -115,11 +115,11 @@ class PluginFusioninventoryItem extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
-         $url = Plugin::getWebDir('fusioninventory')."/front/send_inventory.php";
+         $url = Plugin::getWebDir('glpiinventory')."/front/send_inventory.php";
          $url.= "?itemtype=".get_class($this)
             ."&function=sendXML&items_id=".$file_shortname."&filename=".$filename;
          echo "<a href='$url' target='_blank'>";
-         $message = __('Download inventory file', 'fusioninventory');
+         $message = __('Download inventory file', 'glpiinventory');
          echo "<img src=\"".$CFG_GLPI["root_doc"].
                  "/pics/icones/csv-dist.png\" alt='$message' title='$message'>";
          echo "&nbsp;$message</a>";
@@ -155,14 +155,14 @@ class PluginFusioninventoryItem extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo __('SNMP information', 'fusioninventory');
+      echo __('SNMP information', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Sysdescr', 'fusioninventory');
+      echo __('Sysdescr', 'glpiinventory');
 
       echo "</td>";
       echo "<td>";
@@ -173,7 +173,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
 
       echo "<table><tr>";
       echo "<td align='center'>";
-      echo __('Last inventory', 'fusioninventory');
+      echo __('Last inventory', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo Html::convDateTime(
@@ -183,7 +183,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "</td>";
-      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."</td>";
+      echo "<td align='center'>".__('SNMP authentication', 'glpiinventory')."</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::authDropdown(
               $this->fields["plugin_fusioninventory_configsecurities_id"]);
@@ -296,7 +296,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
          ._n('Minute', 'Minutes', $uptime_values['minute'])." ";
       $output.=__('and');
       $output.= "<b>".$uptime_values['second']."</b> "
-         .__('sec(s)', 'fusioninventory')." ";
+         .__('sec(s)', 'glpiinventory')." ";
       return $output;
    }
 }

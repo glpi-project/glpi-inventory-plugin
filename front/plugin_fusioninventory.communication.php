@@ -47,5 +47,5 @@
 
 include ("../../../inc/includes.php");
 
-include_once(PLUGIN_FUSIONINVENTORY_DIR."/front/communication.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR."/front/communication.php");
 

@@ -82,7 +82,7 @@ switch (filter_input(INPUT_GET, "action")) {
             if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
                foreach ($taskjobstates as $taskjobstate) {
                   $taskjobstate->cancel(
-                     __("Deploy module has been disabled for this agent", 'fusioninventory')
+                     __("Deploy module has been disabled for this agent", 'glpiinventory')
                   );
                }
                $response = "{}";
@@ -153,10 +153,10 @@ switch (filter_input(INPUT_GET, "action")) {
    case 'setStatus':
 
       $partjob_mapping = [
-         "checking"    => __('Checks', 'fusioninventory'),
-         "downloading" => __('Files download', 'fusioninventory'),
-         "prepare"     => __('Files preparation', 'fusioninventory'),
-         "processing"  => __('Actions', 'fusioninventory'),
+         "checking"    => __('Checks', 'glpiinventory'),
+         "downloading" => __('Files download', 'glpiinventory'),
+         "prepare"     => __('Files preparation', 'glpiinventory'),
+         "processing"  => __('Actions', 'glpiinventory'),
       ];
 
       $error = false;
@@ -275,9 +275,9 @@ switch (filter_input(INPUT_GET, "action")) {
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
             $pfTaskjobstate->getFromDBByUniqID($params['uuid']);
             if ($cancel) {
-               $pfTaskjobstate->cancel(__('User canceled the job', 'fusioninventory'));
+               $pfTaskjobstate->cancel(__('User canceled the job', 'glpiinventory'));
             } else {
-               $pfTaskjobstate->postpone($type, __('User postponed the job', 'fusioninventory'));
+               $pfTaskjobstate->postpone($type, __('User postponed the job', 'glpiinventory'));
             }
          }
       }

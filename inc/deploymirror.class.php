@@ -80,7 +80,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Mirror servers', 'fusioninventory');
+      return __('Mirror servers', 'glpiinventory');
    }
 
 
@@ -231,13 +231,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td>".__('Mirror server address', 'glpiinventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       Html::autocompletionTextField($this, 'url', ['size' => 40]);
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror location', 'fusioninventory')." (".__('Location').")"."&nbsp;:</td>";
+      echo "<td>".__('Mirror location', 'glpiinventory')." (".__('Location').")"."&nbsp;:</td>";
       echo "<td align='center'>";
 
       //If
@@ -249,7 +249,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
                     'id'           => $id
                    ];
          Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
-                 Plugin::getWebDir('fusioninventory')."/ajax/dropdownlocation.php", $params);
+                 Plugin::getWebDir('glpiinventory')."/ajax/dropdownlocation.php", $params);
 
          echo "<div id='displaydropdownlocation'>";
          // Location option
@@ -307,7 +307,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          'id'           => '2',
          'table'        => $this->getTable(),
          'field'        => 'url',
-         'name'         => __('Mirror server address', 'fusioninventory'),
+         'name'         => __('Mirror server address', 'glpiinventory'),
          'datatype'     => 'string',
          'autocomplete' => true,
       ];

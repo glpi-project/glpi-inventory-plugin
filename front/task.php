@@ -47,7 +47,7 @@
 include ("../../../inc/includes.php");
 
 
-Html::header(__('FusionInventory', 'fusioninventory'),
+Html::header(__('FusionInventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
              "pluginfusioninventorymenu",

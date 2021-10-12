@@ -124,9 +124,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   ]);
                $messages['Total Found'] = $messages['Updated'] + $messages['Created'];
 
-               $message = __('Processed:', 'fusioninventory').$messages['Total Found'].' ';
-               $message.= __('Created:', 'fusioninventory').$messages['Created'].' ';
-               $message.= __(' Updated:', 'fusioninventory').$messages['Updated'];
+               $message = __('Processed:', 'glpiinventory').$messages['Total Found'].' ';
+               $message.= __('Created:', 'glpiinventory').$messages['Created'].' ';
+               $message.= __(' Updated:', 'glpiinventory').$messages['Updated'];
                $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
                                                    $a_agent['id'],
                                                    'PluginFusioninventoryAgent',

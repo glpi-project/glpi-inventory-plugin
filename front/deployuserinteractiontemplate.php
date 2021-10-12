@@ -47,7 +47,7 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('User interaction template', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
+Html::header(__('User interaction template', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "deployuserinteractiontemplate");
 
 

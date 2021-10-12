@@ -92,7 +92,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       global $CFG_GLPI;
       parent::__construct();
 
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       $this->base_urls = [
          'fi.base'   => $fi_path,
@@ -293,12 +293,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       switch ($type) {
 
          case self::MSG_WARNING:
-            $msg = __('Warning:', 'fusioninventory') . " $msg";
+            $msg = __('Warning:', 'glpiinventory') . " $msg";
             $class_msg = 'warning';
             break;
 
          case self::MSG_ERROR:
-            $msg = __('Error:', 'fusioninventory') . " $msg";
+            $msg = __('Error:', 'glpiinventory') . " $msg";
             $class_msg = 'error';
             break;
 

@@ -52,7 +52,7 @@ $NEEDED_ITEMS=["search", "computer", "infocom", "setup", "networking", "printer"
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
+Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
 Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
@@ -67,7 +67,7 @@ echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo __('Number of days since last inventory', 'fusioninventory')." :&nbsp;";
+echo __('Number of days since last inventory', 'glpiinventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", [
@@ -153,7 +153,7 @@ ORDER BY last_fusioninventory_update DESC";
 echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 echo "<tr class='tab_bg_1'>";
 echo "<th>".__('Name')."</th>";
-echo "<th>".__('Last inventory', 'fusioninventory')."</th>";
+echo "<th>".__('Last inventory', 'glpiinventory')."</th>";
 echo "<th>".__('Item type')."</th>";
 echo "<th>".__('IP')."</th>";
 echo "<th>".__('Serial Number')."</th>";

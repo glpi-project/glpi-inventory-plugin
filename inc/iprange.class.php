@@ -90,15 +90,15 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
             // Permanent task discovery
-            return __('Communication mode', 'fusioninventory');
+            return __('Communication mode', 'glpiinventory');
          } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
             // Permanent task inventory
-            return __('See all informations of task', 'fusioninventory');
+            return __('See all informations of task', 'glpiinventory');
          } else {
-            return __('IP Ranges', 'fusioninventory');
+            return __('IP Ranges', 'glpiinventory');
          }
       }
-      return __('IP Ranges', 'fusioninventory');
+      return __('IP Ranges', 'glpiinventory');
    }
 
 
@@ -123,7 +123,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $tab[] = [
          'id' => 'common',
-         'name' => __('IP range configuration', 'fusioninventory')
+         'name' => __('IP range configuration', 'glpiinventory')
       ];
 
       $tab[] = [
@@ -148,14 +148,14 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          'id'        => '3',
          'table'     => $this->getTable(),
          'field'     => 'ip_start',
-         'name'      => __('Start of IP range', 'fusioninventory'),
+         'name'      => __('Start of IP range', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'        => '4',
          'table'     => $this->getTable(),
          'field'     => 'ip_end',
-         'name'      => __('End of IP range', 'fusioninventory'),
+         'name'      => __('End of IP range', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -164,7 +164,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          'field'         => 'name',
          'datatype'      => 'dropdown',
          'right'         => 'all',
-         'name'          => __('SNMP credentials', 'fusioninventory'),
+         'name'          => __('SNMP credentials', 'glpiinventory'),
          'forcegroupby'  => true,
          'massiveaction' => false,
          'joinparams'    => [
@@ -235,7 +235,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('Start of IP range', 'fusioninventory') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('Start of IP range', 'glpiinventory') . "</td>";
       echo "<td align='center' colspan='2'>";
       if (empty($this->fields["ip_start"])) {
          $this->fields["ip_start"] = "...";
@@ -260,7 +260,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('End of IP range', 'fusioninventory') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('End of IP range', 'glpiinventory') . "</td>";
       echo "<td align='center' colspan='2'>";
       unset($ipexploded);
       if (empty($this->fields["ip_end"])) {
@@ -339,12 +339,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       if ($count == '0') {
          return true;
       } else {
-          Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP', 'fusioninventory').
+          Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP', 'glpiinventory').
             "</font><br/>".
-            __('Start of IP range', 'fusioninventory')." : ".
+            __('Start of IP range', 'glpiinventory')." : ".
             $a_input['ip_start0'].".".$a_input['ip_start1'].".".
             $a_input['ip_start2'].".".$a_input['ip_start3']."<br/>".
-            __('End of IP range', 'fusioninventory')." : ".
+            __('End of IP range', 'glpiinventory')." : ".
             $a_input['ip_end0'].".".$a_input['ip_end1'].".".
             $a_input['ip_end2'].".".$a_input['ip_end3']);
          return false;
@@ -391,7 +391,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $actions = [];
       if (Session::haveRight("plugin_fusioninventory_task", UPDATE)) {
-         $actions['PluginFusioninventoryTask'.MassiveAction::CLASS_ACTION_SEPARATOR.'addtojob_target'] = __('Target a task', 'fusioninventory');
+         $actions['PluginFusioninventoryTask'.MassiveAction::CLASS_ACTION_SEPARATOR.'addtojob_target'] = __('Target a task', 'glpiinventory');
       }
       return $actions;
    }

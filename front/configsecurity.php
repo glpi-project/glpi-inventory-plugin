@@ -46,7 +46,7 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
+Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
         "admin", "pluginfusioninventorymenu", "configsecurity");
 
 Session::checkRight('plugin_fusioninventory_configsecurity', READ);

@@ -44,7 +44,7 @@ use PHPUnit\Framework\TestCase;
 
 class DeploymirrorIntTest extends TestCase {
 
-   private $serverUrl = 'http://localhost:8080/glpi/plugins/fusioninventory/b/deploy/?action=getFilePart&file=';
+   private $serverUrl = 'http://localhost:8080/glpi/plugins/glpiinventory/b/deploy/?action=getFilePart&file=';
 
    public static function setUpBeforeClass(): void {
 

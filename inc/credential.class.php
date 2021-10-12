@@ -89,7 +89,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Authentication for remote devices (VMware)', 'fusioninventory');
+      return __('Authentication for remote devices (VMware)', 'glpiinventory');
    }
 
 
@@ -184,7 +184,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $tab[] = [
          'id'   => 'common',
-         'name' => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+         'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -291,7 +291,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    static function findItemtypeType($credential_itemtype) {
 
       $credential = ['itemtype' => 'PluginFusioninventoryInventoryComputerESX', //Credential itemtype
-                           'name'    => __('VMware host', 'fusioninventory'), //Label
+                           'name'    => __('VMware host', 'glpiinventory'), //Label
                            'targets' => ['Computer']];
       if ($credential['itemtype'] == $credential_itemtype) {
          return $credential;
@@ -307,7 +307,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    static function getCredentialsItemTypes() {
       return ['PluginFusioninventoryInventoryComputerESX' =>
-                           __('VMware host', 'fusioninventory')];
+                           __('VMware host', 'glpiinventory')];
    }
 
 
@@ -365,7 +365,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
                                            ['value' => $p['itemtype']]);
       $ajparams = ['itemtype' => '__VALUE__',
                         'id'       => $p['id']];
-      $url       = Plugin::getWebDir('fusioninventory')."/ajax/dropdownCredentials.php";
+      $url       = Plugin::getWebDir('glpiinventory')."/ajax/dropdownCredentials.php";
       Ajax::updateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand",
                                   "span_credentials", $url, $ajparams);
 

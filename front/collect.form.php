@@ -46,7 +46,7 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('Collect management', 'fusioninventory'),
+Html::header(__('Collect management', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
              "pluginfusioninventorymenu",

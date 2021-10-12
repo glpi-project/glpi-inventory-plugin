@@ -94,7 +94,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center' colspan='3'>";
-      echo __('Cartridge(s)', 'fusioninventory');
+      echo __('Cartridge(s)', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
@@ -128,7 +128,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
          } else if ($a_cartridge['state'] < 0) {
             $a_cartridge['state'] = $a_cartridge['state'] * -1;
             echo $a_cartridge['state'];
-            echo ' '.__('remaining pages', 'fusioninventory');
+            echo ' '.__('remaining pages', 'glpiinventory');
          } else if ($mapping->fields['name'] == 'paperrollinches') {
             echo $a_cartridge['state']." inches";
          } else if ($mapping->fields['name'] == 'paperrollcentimeters') {

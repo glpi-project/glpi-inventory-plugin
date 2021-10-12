@@ -72,7 +72,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Equipment ignored on import', 'fusioninventory');
+      return __('Equipment ignored on import', 'glpiinventory');
    }
 
 
@@ -87,7 +87,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       $tab[] = [
          'id' => 'common',
-         'name' => __('Agent', 'fusioninventory')
+         'name' => __('Agent', 'glpiinventory')
       ];
 
       $tab[] = [
@@ -102,7 +102,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          'id'            => '2',
          'table'         => 'glpi_rules',
          'field'         => 'id',
-         'name'          => __('Rule name', 'fusioninventory'),
+         'name'          => __('Rule name', 'glpiinventory'),
          'datatype'      => 'itemlink',
          'itemlink_type' => 'PluginFusioninventoryInventoryRuleImport',
          'massiveaction' => false,
@@ -175,7 +175,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          'id'            => '10',
          'table'         => $this->getTable(),
          'field'         => 'method',
-         'name'          => __('Module', 'fusioninventory'),
+         'name'          => __('Module', 'glpiinventory'),
          'datatype'      => 'string',
          'massiveaction' => false,
       ];
@@ -184,7 +184,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          'id'            => '11',
          'table'         => 'glpi_plugin_fusioninventory_agents',
          'field'         => 'name',
-         'name'          => __('Agent', 'fusioninventory'),
+         'name'          => __('Agent', 'glpiinventory'),
          'datatype'      => 'itemlink',
          'massiveaction' => false,
          'itemlink_type' => 'PluginFusioninventoryAgent',

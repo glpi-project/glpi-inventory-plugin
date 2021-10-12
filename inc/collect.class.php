@@ -69,7 +69,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Collect information', 'fusioninventory');
+      return __('Collect information', 'glpiinventory');
    }
 
 
@@ -146,9 +146,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     */
    static function getTypes() {
       return [
-         'registry' => __('Registry', 'fusioninventory'),
-         'wmi'      => __('WMI', 'fusioninventory'),
-         'file'     => __('Find file', 'fusioninventory')
+         'registry' => __('Registry', 'glpiinventory'),
+         'wmi'      => __('WMI', 'glpiinventory'),
+         'file'     => __('Find file', 'glpiinventory')
       ];
    }
 
@@ -194,7 +194,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_registries_contents';
             $tab[$i]['field']         = 'value';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Registry', 'fusioninventory')." - ".$registry['name'];
+            $tab[$i]['name']          = __('Registry', 'glpiinventory')." - ".$registry['name'];
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
@@ -212,7 +212,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_wmis_contents';
             $tab[$i]['field']         = 'value';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('WMI', 'fusioninventory')." - ".$wmi['name'];
+            $tab[$i]['name']          = __('WMI', 'glpiinventory')." - ".$wmi['name'];
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
@@ -231,9 +231,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_files_contents';
             $tab[$i]['field']         = 'pathfile';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Find file', 'fusioninventory').
+            $tab[$i]['name']          = __('Find file', 'glpiinventory').
                                     " - ".$file['name'].
-                                    " - ".__('pathfile', 'fusioninventory');
+                                    " - ".__('pathfile', 'glpiinventory');
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
@@ -246,9 +246,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_files_contents';
             $tab[$i]['field']         = 'size';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Find file', 'fusioninventory').
+            $tab[$i]['name']          = __('Find file', 'glpiinventory').
                                     " - ".$file['name'].
-                                    " - ".__('Size', 'fusioninventory');
+                                    " - ".__('Size', 'glpiinventory');
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
@@ -700,7 +700,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                foreach ($taskjobstates as $taskjobstate) {
                   if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
                      $taskjobstate->cancel(
-                        __("Collect module has been disabled for this agent", 'fusioninventory')
+                        __("Collect module has been disabled for this agent", 'glpiinventory')
                      );
                   } else {
                      $out = $this->run($taskjobstate, $agent);
@@ -830,7 +830,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                   $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
                } else {
                   $flag    = PluginFusioninventoryTaskjoblog::TASK_ERROR;
-                  $message = __('Path not found', 'fusioninventory');
+                  $message = __('Path not found', 'glpiinventory');
                }
                   $pfTaskjoblog->addTaskjoblog($jobstate['id'],
                                              $jobstate['items_id'],

@@ -178,7 +178,7 @@ class PluginFusioninventoryProfile extends Profile {
       $rights = $this->getRightsGeneral();
       $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('General', 'fusioninventory')]);
+                                                      'title'         => __('General', 'glpiinventory')]);
 
       $rights = $this->getRightsRules();
       $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
@@ -188,12 +188,12 @@ class PluginFusioninventoryProfile extends Profile {
       $rights = $this->getRightsInventory();
       $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Inventory', 'fusioninventory')]);
+                                                      'title'         => __('Inventory', 'glpiinventory')]);
 
       $rights = $this->getRightsDeploy();
       $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Software deployment', 'fusioninventory')]);
+                                                      'title'         => __('Software deployment', 'glpiinventory')]);
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
@@ -230,12 +230,12 @@ class PluginFusioninventoryProfile extends Profile {
 
       $rights = [
           ['rights'    => [READ => __('Read')],
-                'label'     => __('Deploy packages on demand', 'fusioninventory'),
+                'label'     => __('Deploy packages on demand', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_selfpackage']
       ];
       $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Software deployment', 'fusioninventory')]);
+                                                      'title'         => __('Software deployment', 'glpiinventory')]);
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
@@ -289,7 +289,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_ruleimport'
           ],
           ['itemtype'  => 'PluginFusioninventoryInventoryRuleEntity',
-                'label'     => __('Entity rules', 'fusioninventory'),
+                'label'     => __('Entity rules', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_ruleentity'
           ],
           ['itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
@@ -297,15 +297,15 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_rulelocation'
           ],
           ['itemtype'  => 'PluginFusioninventoryInventoryComputerBlacklist',
-                'label'     => __('Fields blacklist', 'fusioninventory'),
+                'label'     => __('Fields blacklist', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_blacklist'
           ],
           ['itemtype'  => 'PluginFusioninventoryCollectRule',
-                'label'     => __('Computer information rules', 'fusioninventory'),
+                'label'     => __('Computer information rules', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_rulecollect'
           ],
           ['itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
-                'label'     =>  __('Equipment ignored on import', 'fusioninventory'),
+                'label'     =>  __('Equipment ignored on import', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_ignoredimportdevice'
           ],
       ];
@@ -321,16 +321,16 @@ class PluginFusioninventoryProfile extends Profile {
    function getRightsDeploy() {
       $rights = [
           ['itemtype'  => 'PluginFusioninventoryDeployPackage',
-                'label'     => __('Manage packages', 'fusioninventory'),
+                'label'     => __('Manage packages', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_package'],
           ['itemtype'  => 'PluginFusioninventoryDeployPackage',
-               'label'     => __('User interaction template', 'fusioninventory'),
+               'label'     => __('User interaction template', 'glpiinventory'),
                'field'     => 'plugin_fusioninventory_userinteractiontemplate'],
           ['itemtype'  => 'PluginFusioninventoryDeployMirror',
-                'label'     => __('Mirror servers', 'fusioninventory'),
+                'label'     => __('Mirror servers', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_deploymirror'],
           ['itemtype'  => 'PluginFusioninventoryDeployPackage',
-                'label'     => __('Deploy packages on demand', 'fusioninventory'),
+                'label'     => __('Deploy packages on demand', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_selfpackage',
                 'rights'    => [READ => __('Read')]]
       ];
@@ -346,40 +346,40 @@ class PluginFusioninventoryProfile extends Profile {
    function getRightsInventory() {
       $rights = [
           ['itemtype'  => 'PluginFusioninventoryIprange',
-                'label'     => __('IP range configuration', 'fusioninventory'),
+                'label'     => __('IP range configuration', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_iprange'],
           ['itemtype'  => 'PluginFusioninventoryCredential',
-                'label'     => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+                'label'     => __('Authentication for remote devices (VMware)', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_credential'],
           ['itemtype'  => 'PluginFusioninventoryCredentialip',
-                'label'     => __('Remote devices to inventory (VMware)', 'fusioninventory'),
+                'label'     => __('Remote devices to inventory (VMware)', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_credentialip'],
           ['itemtype'  => 'PluginFusioninventoryCredential',
-                'label'     => __('VMware host', 'fusioninventory'),
+                'label'     => __('VMware host', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_esx'],
           ['itemtype'  => 'PluginFusioninventoryConfigSecurity',
-                'label'     => __('SNMP credentials', 'fusioninventory'),
+                'label'     => __('SNMP credentials', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_configsecurity'],
           ['itemtype'  => 'PluginFusioninventoryNetworkEquipment',
-                'label'     => __('Network equipment SNMP', 'fusioninventory'),
+                'label'     => __('Network equipment SNMP', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_networkequipment'],
           ['itemtype'  => 'PluginFusioninventoryPrinter',
-                'label'     => __('Printer SNMP', 'fusioninventory'),
+                'label'     => __('Printer SNMP', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_printer'],
           ['itemtype'  => 'PluginFusioninventoryUnmanaged',
-                'label'     => __('Unmanaged devices', 'fusioninventory'),
+                'label'     => __('Unmanaged devices', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_unmanaged'],
           ['itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
-                'label'     => __('computer XML manual import', 'fusioninventory'),
+                'label'     => __('computer XML manual import', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_importxml'],
           ['rights'    => [READ => __('Read')],
-                'label'     => __('Printers report', 'fusioninventory'),
+                'label'     => __('Printers report', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_reportprinter'],
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Network report'),
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'],
           ['itemtype'  => 'PluginFusioninventoryLock',
-                'label'     => __('Lock', 'fusioninventory'),
+                'label'     => __('Lock', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_lock']
       ];
       return $rights;
@@ -394,29 +394,29 @@ class PluginFusioninventoryProfile extends Profile {
    function getRightsGeneral() {
       $rights = [
           ['rights'    => [READ => __('Read')],
-                'label'     => __('Menu', 'fusioninventory'),
+                'label'     => __('Menu', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_menu'],
           ['itemtype'  => 'PluginFusioninventoryAgent',
-                'label'     => __('Agents', 'fusioninventory'),
+                'label'     => __('Agents', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_agent'],
           ['rights'    => [READ => __('Read')],
-                'label'     => __('Agent remote control', 'fusioninventory'),
+                'label'     => __('Agent remote control', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_remotecontrol'],
           ['rights'    => [READ => __('Read'), UPDATE => __('Update')],
                 'itemtype'  => 'PluginFusioninventoryConfig',
-                'label'     => __('Configuration', 'fusioninventory'),
+                'label'     => __('Configuration', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_configuration'],
           ['itemtype'  => 'PluginFusioninventoryTask',
-                'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
+                'label'     => _n('Task', 'Tasks', 2, 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_task'],
           ['rights'    => [READ => __('Read')],
-                'label'     => __('Wake On LAN', 'fusioninventory'),
+                'label'     => __('Wake On LAN', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_wol'],
           ['itemtype'  => 'PluginFusioninventoryDeployGroup',
-                'label'     => __('Groups of computers', 'fusioninventory'),
+                'label'     => __('Groups of computers', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_group'],
           ['itemtype'  => 'PluginFusioninventoryCollect',
-                'label'     => __('Computer information', 'fusioninventory'),
+                'label'     => __('Computer information', 'glpiinventory'),
                 'field'     => 'plugin_fusioninventory_collect']
       ];
 
@@ -453,7 +453,7 @@ class PluginFusioninventoryProfile extends Profile {
     * @param integer $profiles_id id of profile
     */
    static function createFirstAccess($profiles_id) {
-      include_once(PLUGIN_FUSIONINVENTORY_DIR."/inc/profile.class.php");
+      include_once(PLUGIN_GLPI_INVENTORY_DIR."/inc/profile.class.php");
       $profile = new self();
       foreach ($profile->getAllRights() as $right) {
          self::addDefaultProfileInfos($profiles_id,

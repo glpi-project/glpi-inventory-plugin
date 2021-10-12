@@ -70,7 +70,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Remote management', 'fusioninventory');
+      return __('Remote management', 'glpiinventory');
    }
 
 
@@ -88,7 +88,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       if (count($a_remotemanagement)) {
 
          echo '<tr>';
-         echo '<th colspan="4">'.__('Remote management', 'fusioninventory').'</th>';
+         echo '<th colspan="4">'.__('Remote management', 'glpiinventory').'</th>';
          echo '</tr>';
 
          foreach ($a_remotemanagement as $remotemanagement) {

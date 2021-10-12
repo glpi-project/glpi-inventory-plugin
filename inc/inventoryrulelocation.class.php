@@ -85,7 +85,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     * @return string name of this type
     */
    function getTitle() {
-      return __('Location rules', 'fusioninventory');
+      return __('Location rules', 'glpiinventory');
    }
 
 
@@ -191,7 +191,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       $criterias = [];
 
-      $criterias['itemtype']['name'] = __('Assets', 'fusioninventory').' : '.
+      $criterias['itemtype']['name'] = __('Assets', 'glpiinventory').' : '.
                                           __('Item type');
       $criterias['itemtype']['type']            = 'dropdown_itemtype';
       $criterias['itemtype']['is_global']       = false;
@@ -202,7 +202,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
                                                   ];
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
+      $criterias['tag']['name']      = __('FusionInventory tag', 'glpiinventory');
 
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = __('Domain');
@@ -242,7 +242,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       $actions['locations_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['_ignore_import']['name'] =
-                     __('Ignore in FusionInventory import', 'fusioninventory');
+                     __('Ignore in FusionInventory import', 'glpiinventory');
 
       $actions['_ignore_import']['type'] = 'yesonly';
 
@@ -306,8 +306,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    static function addMoreCriteria($criterion = '') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
-         return [self::PATTERN_CIDR => __('is CIDR', 'fusioninventory'),
-                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'fusioninventory')];
+         return [self::PATTERN_CIDR => __('is CIDR', 'glpiinventory'),
+                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'glpiinventory')];
       }
       return [];
    }
@@ -403,7 +403,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
             $types[$itemtype] = $item->getTypeName();
          }
       }
-      $types[""] = __('No itemtype defined', 'fusioninventory');
+      $types[""] = __('No itemtype defined', 'glpiinventory');
       ksort($types);
       return $types;
    }

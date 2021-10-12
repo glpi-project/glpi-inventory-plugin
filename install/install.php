@@ -5,9 +5,7 @@
  *
  * Copyright (C) 2010-2016 by the FusionInventory Development Team.
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * https://github.com/glpi_project/glpi-inventory-plugin
  *
  * ------------------------------------------------------------------------
  *
@@ -39,8 +37,7 @@
  * @copyright Copyright (c) 2010-2016 FusionInventory team
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ * @link      https://github.com/glpi_project/glpi-inventory-plugin
  *
  */
 
@@ -62,14 +59,14 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     * Load classes
     */
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . '/inc/commonview.class.php');
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . '/inc/taskjobview.class.php');
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . '/inc/taskview.class.php');
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . '/inc/deploypackageitem.class.php');
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . '/inc/item.class.php');
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . '/inc/collectcommon.class.php');
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . '/inc/collectcontentcommon.class.php');
-   foreach (glob(PLUGIN_FUSIONINVENTORY_DIR.'/inc/*.php') as $file) {
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/commonview.class.php');
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/taskjobview.class.php');
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/taskview.class.php');
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/deploypackageitem.class.php');
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/item.class.php');
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/collectcommon.class.php');
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/collectcontentcommon.class.php');
+   foreach (glob(PLUGIN_GLPI_INVENTORY_DIR.'/inc/*.php') as $file) {
       require_once($file);
    }
 
@@ -151,63 +148,54 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     * Create DB structure
     */
    $migration->displayMessage("Creation tables in database");
-   $DB_file = PLUGIN_FUSIONINVENTORY_DIR ."/install/mysql/plugin_fusioninventory-empty.sql";
+   $DB_file = PLUGIN_GLPI_INVENTORY_DIR ."/install/mysql/plugin_glpiinventory-empty.sql";
    if (!$DB->runFile($DB_file)) {
       $migration->displayMessage("Error on creation tables in database");
-   }
-   if (!$DB->runFile(PLUGIN_FUSIONINVENTORY_DIR ."/install/mysql/usbid.sql")) {
-      $migration->displayMessage("Error on creation table usbid in database");
-   }
-   if (!$DB->runFile(PLUGIN_FUSIONINVENTORY_DIR ."/install/mysql/pciid.sql")) {
-      $migration->displayMessage("Error on creation table pciid in database");
-   }
-   if (!$DB->runFile(PLUGIN_FUSIONINVENTORY_DIR ."/install/mysql/oui.sql")) {
-      $migration->displayMessage("Error on creation table oui in database");
    }
 
    /*
     * Creation of folders
     */
    $migration->displayMessage("Creation of folders");
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/tmp')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/tmp');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/computer')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/computer');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/printer')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/printer');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/networkequipment')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/networkequipment');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/upload')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/upload');
    }
 
    /*
     * Deploy folders
     */
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/repository')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/repository');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/manifests')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/manifests');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/import')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/import');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/export')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/export');
    }
 
    /*
@@ -298,10 +286,10 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30]);
    CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-                              'comment'=> Toolbox::addslashes_deep(__('Delete agents that have not contacted the server since "xxx" days.', 'fusioninventory'))]);
+                              'comment'=> Toolbox::addslashes_deep(__('Delete agents that have not contacted the server since "xxx" days.', 'glpiinventory'))]);
    CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                              'comment'=> Toolbox::addslashes_deep(__('Wake agents ups', 'fusioninventory'))]);
+                              'comment'=> Toolbox::addslashes_deep(__('Wake agents ups', 'glpiinventory'))]);
    CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                         'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]);
@@ -330,7 +318,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
-   require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
+   require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
    PluginFusioninventoryInventoryComputerStat::init();
 
    /*

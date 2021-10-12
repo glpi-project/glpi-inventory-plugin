@@ -373,7 +373,7 @@ class DevicesLocksTest extends TestCase {
          'mac'                          => '6c:50:4d:39:59:80'
       ];
 
-      $PLUGIN_FUSIONINVENTORY_XML = '';
+      $PLUGIN_GLPI_INVENTORY_XML = '';
       $pfCommunicationNetworkInventory->importDevice('NetworkEquipment', $networkEquipmentId, $a_inventory, 1);
 
       $this->assertEquals(0, countElementsInTable('glpi_locations'), 'Location has been created :/');

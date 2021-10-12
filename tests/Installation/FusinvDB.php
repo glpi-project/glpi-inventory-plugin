@@ -270,7 +270,7 @@ class FusinvDB extends Assert{
        * Verify config fields added
        */
       $plugin = new Plugin();
-      $data = $plugin->find(['directory' => 'fusioninventory']);
+      $data = $plugin->find(['directory' => 'glpiinventory']);
       $plugins_id = 0;
       if (count($data)) {
          $fields = current($data);
@@ -311,7 +311,7 @@ class FusinvDB extends Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
       $data = $DB->fetchAssoc($result);
-      $this->assertEquals($data['value'], PLUGIN_FUSIONINVENTORY_VERSION, "Field 'version' not with right version");
+      $this->assertEquals($data['value'], PLUGIN_GLPI_INVENTORY_VERSION, "Field 'version' not with right version");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='otherserial'";

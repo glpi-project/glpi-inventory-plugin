@@ -108,10 +108,10 @@ class RepositoryTest extends TestCase {
       $this->assertTrue(isset($json['associatedFiles'][$this->sha512]));
 
       // retrieve the sha512 of the single part
-      $sha512_part = trim(file_get_contents(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$this->sha512), "\n");
-      $fulldir  = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.
+      $sha512_part = trim(file_get_contents(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$this->sha512), "\n");
+      $fulldir  = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR.
                      $pfDeployFile->getDirBySha512($sha512_part);
-      $firstdir = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.substr($sha512_part, 0, 1);
+      $firstdir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR.substr($sha512_part, 0, 1);
 
       // check the directories are created
       $this->asserttrue(is_dir($fulldir));

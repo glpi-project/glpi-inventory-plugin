@@ -102,7 +102,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('SNMP version', 'fusioninventory') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('SNMP version', 'glpiinventory') . "</td>";
       echo "<td align='center' colspan='2'>";
          $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
       echo "</td>";
@@ -114,7 +114,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Community', 'fusioninventory') . "</td>";
+      echo "<td align='center'>" . __('Community', 'glpiinventory') . "</td>";
       echo "<td align='center'>";
       Html::autocompletionTextField($this, 'community');
       echo "</td>";
@@ -129,7 +129,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>".__('Encryption protocol for authentication ', 'fusioninventory').
+      echo "<td align='center'>".__('Encryption protocol for authentication ', 'glpiinventory').
               "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPAuth($this->fields["authentication"]);
@@ -148,7 +148,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Encryption protocol for data', 'fusioninventory') . "</td>";
+      echo "<td align='center'>" . __('Encryption protocol for data', 'glpiinventory') . "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPEncryption($this->fields["encryption"]);
       echo "</td>";
@@ -398,7 +398,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
          'id'            => '2',
          'table'         => $this->getTable(),
          'field'         => 'community',
-         'name'          => __('Community', 'fusioninventory'),
+         'name'          => __('Community', 'glpiinventory'),
          'datatype'      => 'string',
          'massiveaction' => false,
          'autocomplete'  => true,

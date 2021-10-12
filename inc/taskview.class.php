@@ -75,7 +75,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       // add a list limit for include old jobs
       $include_oldjobs_id = $this->showDropdownFromArray(
-         __("Include old jobs", 'fusioninventory'),
+         __("Include old jobs", 'glpiinventory'),
          null,
          [
             1   => __('Last'),
@@ -96,7 +96,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          __("refresh interval", "fusioninventory"),
          null,
          [
-            "off"  => __('Off', 'fusioninventory'),
+            "off"  => __('Off', 'glpiinventory'),
             "1"    => '1 '._n('second', 'seconds', 1),
             "5"    => '5 '._n('second', 'seconds', 5),
             "10"   => '10 '._n('second', 'seconds', 10),
@@ -124,7 +124,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<script id='template_task' type='x-tmpl-mustache'>
                <div id='{{task_id}}' class='task_block {{expanded}}'>
                   <h3>".
-                     __("Task", 'fusioninventory')."
+                     __("Task", 'glpiinventory')."
                      <span class='task_name'>{{task_name}}</span>
                   </h3>
                   <a href='".PluginFusioninventoryTask::getFormURL()."?id={{task_id}}'
@@ -197,13 +197,13 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          };
 
          taskjobs.statuses_names = {
-            'agents_notdone':   '". __('Not done yet', 'fusioninventory')."',
-            'agents_error':     '". __('In error', 'fusioninventory') . "',
-            'agents_success':   '". __('Successful', 'fusioninventory')."',
-            'agents_running':   '". __('Running', 'fusioninventory')."',
-            'agents_prepared':  '". __('Prepared', 'fusioninventory')."',
-            'agents_postponed':  '". __('Postponed', 'fusioninventory')."',
-            'agents_cancelled': '". __('Cancelled', 'fusioninventory')."',
+            'agents_notdone':   '". __('Not done yet', 'glpiinventory')."',
+            'agents_error':     '". __('In error', 'glpiinventory') . "',
+            'agents_success':   '". __('Successful', 'glpiinventory')."',
+            'agents_running':   '". __('Running', 'glpiinventory')."',
+            'agents_prepared':  '". __('Prepared', 'glpiinventory')."',
+            'agents_postponed':  '". __('Postponed', 'glpiinventory')."',
+            'agents_cancelled': '". __('Cancelled', 'glpiinventory')."',
          };
 
          taskjobs.logstatuses_names = ".
@@ -261,7 +261,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                   action='".self::getFormURLWithID($task_id) ."'>";
 
       // states checkboxes
-      echo "<label for='include_old_jobs'>".__("Task execution states", 'fusioninventory').
+      echo "<label for='include_old_jobs'>".__("Task execution states", 'glpiinventory').
            "</label>";
       echo "<div class='state_checkboxes'>";
        // set options checked by default
@@ -275,7 +275,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       ];
       foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
          $agent_state_type = str_replace("agents_", "", $agent_state_type);
-         $locale  = __(ucfirst($agent_state_type), 'fusioninventory');
+         $locale  = __(ucfirst($agent_state_type), 'glpiinventory');
          $checked = "";
          if ($agent_state_checked) {
             $checked = "checked='checked'";
@@ -329,7 +329,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       $this->showTextField( __('Name'), "name");
       $this->showTextArea(__('Comments'), "comment");
-      $this->showCheckboxField(__('Re-prepare a target-actor if previous run is successful', 'fusioninventory'),
+      $this->showCheckboxField(__('Re-prepare a target-actor if previous run is successful', 'glpiinventory'),
                                "reprepare_if_successful");
       if ($this->fields['is_deploy_on_demand']) {
          echo "<div class='input_wrap'>";
@@ -345,15 +345,15 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             'timestep'   => 1,
             'maybeempty' => true,
          ];
-         $this->showDateTimeField(__('Schedule start', 'fusioninventory'),
+         $this->showDateTimeField(__('Schedule start', 'glpiinventory'),
                                   "datetime_start", $datetime_field_options
          );
 
-         $this->showDateTimeField(__('Schedule end', 'fusioninventory'),
+         $this->showDateTimeField(__('Schedule end', 'glpiinventory'),
                                   "datetime_end", $datetime_field_options
          );
 
-         $this->showDropdownForItemtype(__('Preparation timeslot', 'fusioninventory'),
+         $this->showDropdownForItemtype(__('Preparation timeslot', 'glpiinventory'),
                                         "PluginFusioninventoryTimeslot",
                                        ['name'  => 'plugin_fusioninventory_timeslots_prep_id',
                                         'value' => $this->fields['plugin_fusioninventory_timeslots_prep_id']
@@ -361,20 +361,20 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             );
 
          $this->showDropdownForItemtype(
-            __('Execution timeslot', 'fusioninventory'),
+            __('Execution timeslot', 'glpiinventory'),
             "PluginFusioninventoryTimeslot",
             ['name'  => 'plugin_fusioninventory_timeslots_exec_id',
                   'value' => $this->fields['plugin_fusioninventory_timeslots_exec_id']]
             );
 
-         $this->showIntegerField( __('Agent wakeup interval (in minutes)', 'fusioninventory'), "wakeup_agent_time",
+         $this->showIntegerField( __('Agent wakeup interval (in minutes)', 'glpiinventory'), "wakeup_agent_time",
                                  ['value' => $this->fields['wakeup_agent_time'],
                                   'toadd' => ['0' => __('Never')],
                                   'min'   => 1,
                                   'step'  => 1
                                  ] );
 
-         $this->showIntegerField( __('Number of agents to wake up', 'fusioninventory'), "wakeup_agent_counter",
+         $this->showIntegerField( __('Number of agents to wake up', 'glpiinventory'), "wakeup_agent_counter",
                                  ['value' => $this->fields['wakeup_agent_counter'],
                                   'toadd' => ['0' => __('None')],
                                   'min'   => 0,
@@ -410,7 +410,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       if ($this->fields['is_active']) {
          echo "<td>";
-         echo Html::submit(__('Force start', 'fusioninventory'),
+         echo Html::submit(__('Force start', 'glpiinventory'),
                            ['name' => 'forcestart']);
          echo "</td>";
       }

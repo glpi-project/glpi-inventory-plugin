@@ -104,8 +104,8 @@ class PluginFusioninventoryCollect_File_Content
             echo '</tr>';
 
             echo "<tr>";
-            echo "<th>".__('Path/file', 'fusioninventory')."</th>";
-            echo "<th>".__('Size', 'fusioninventory')."</th>";
+            echo "<th>".__('Path/file', 'glpiinventory')."</th>";
+            echo "<th>".__('Size', 'glpiinventory')."</th>";
             echo "</tr>";
 
             $previous_key = $data['plugin_fusioninventory_collects_files_id'];
@@ -145,8 +145,8 @@ class PluginFusioninventoryCollect_File_Content
 
       echo "<tr>";
       echo "<th>".__('Computer')."</th>";
-      echo "<th>".__('pathfile', 'fusioninventory')."</th>";
-      echo "<th>".__('Size', 'fusioninventory')."</th>";
+      echo "<th>".__('pathfile', 'glpiinventory')."</th>";
+      echo "<th>".__('Size', 'glpiinventory')."</th>";
       echo "</tr>";
 
       $a_data = $this->find(['plugin_fusioninventory_collects_files_id' => $collects_files_id],

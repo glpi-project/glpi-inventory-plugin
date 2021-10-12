@@ -95,8 +95,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    public function __construct() {
       $this->grouptypes = [
-            self::STATIC_GROUP  => __('Static group', 'fusioninventory'),
-            self::DYNAMIC_GROUP => __('Dynamic group', 'fusioninventory')
+            self::STATIC_GROUP  => __('Static group', 'glpiinventory'),
+            self::DYNAMIC_GROUP => __('Dynamic group', 'glpiinventory')
       ];
    }
 
@@ -108,7 +108,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('FusionInventory group', 'fusioninventory');
+      return __('FusionInventory group', 'glpiinventory');
    }
 
 
@@ -211,7 +211,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    function getSpecificMassiveActions($checkitem = null) {
       $actions = [];
-      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'targettask'] = __('Target a task', 'fusioninventory');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'targettask'] = __('Target a task', 'glpiinventory');
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'duplicate']  = _sx('button', 'Duplicate');
       return $actions;
    }
@@ -329,7 +329,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $title   = self::getTypeName();
 
       if ($this->canCreate()) {
-         $buttons["group.form.php?new=1"] = __('Add group', 'fusioninventory');
+         $buttons["group.form.php?new=1"] = __('Add group', 'glpiinventory');
          $title = "";
       }
       Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png",
@@ -664,7 +664,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          echo "<a href='".$link."?id=".$this->fields['id']."'>".$this->fields['name']."</a>";
          echo "</td>";
          echo "<td>";
-         echo __('Static group', 'fusioninventory');
+         echo __('Static group', 'glpiinventory');
          echo "</td>";
          echo "</tr>";
       }
@@ -682,7 +682,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          echo "<a href='".$link."?id=".$this->fields['id']."'>".$this->fields['name']."</a>";
          echo "</td>";
          echo "<td>";
-         echo __('Dynamic group', 'fusioninventory');
+         echo __('Dynamic group', 'glpiinventory');
          echo "</td>";
          echo "</tr>";
       }

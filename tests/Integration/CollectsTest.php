@@ -157,7 +157,7 @@ class CollectsTest extends TestCase {
          'table'            => 'glpi_plugin_fusioninventory_collects_registries_contents',
          'field'            => 'value',
          'linkfield'        => '',
-         'name'             => __('Registry', 'fusioninventory')." - Registry collection",
+         'name'             => __('Registry', 'glpiinventory')." - Registry collection",
          'joinparams'       => ['jointype' => 'child'],
          'datatype'         => 'text',
          'forcegroupby'     => true,
@@ -174,7 +174,7 @@ class CollectsTest extends TestCase {
          'table'            => 'glpi_plugin_fusioninventory_collects_wmis_contents',
          'field'            => 'value',
          'linkfield'        => '',
-         'name'             => __('WMI', 'fusioninventory')." - WMI",
+         'name'             => __('WMI', 'glpiinventory')." - WMI",
          'joinparams'       => ['jointype' => 'child'],
          'datatype'         => 'text',
          'forcegroupby'     => true,
@@ -191,8 +191,8 @@ class CollectsTest extends TestCase {
          'table'            => 'glpi_plugin_fusioninventory_collects_files_contents',
          'field'            => 'pathfile',
          'linkfield'        => '',
-         'name'             => __('Find file', 'fusioninventory')." - PHP files".
-            " - ".__('pathfile', 'fusioninventory'),
+         'name'             => __('Find file', 'glpiinventory')." - PHP files".
+            " - ".__('pathfile', 'glpiinventory'),
          'joinparams'       => ['jointype' => 'child'],
          'datatype'         => 'text',
          'forcegroupby'     => true,
@@ -209,8 +209,8 @@ class CollectsTest extends TestCase {
          'table'            => 'glpi_plugin_fusioninventory_collects_files_contents',
          'field'            => 'size',
          'linkfield'        => '',
-         'name'             => __('Find file', 'fusioninventory'). " - PHP files".
-                                    " - ".__('Size', 'fusioninventory'),
+         'name'             => __('Find file', 'glpiinventory'). " - PHP files".
+                                    " - ".__('Size', 'glpiinventory'),
          'joinparams'       => ['jointype' => 'child'],
          'datatype'         => 'text',
          'forcegroupby'     => true,
@@ -351,7 +351,7 @@ class CollectsTest extends TestCase {
           'backend-collect-timeout' => 180,
           'httpd-port'              => '62354',
           'no-ssl-check'            => 1,
-          'server'                  => 'http://10.0.2.2/glpi090/plugins/fusioninventory/',
+          'server'                  => 'http://10.0.2.2/glpi090/plugins/glpiinventory/',
           'logfile'                 => 'C:\\Program Files\\FusionInventory-Agent\\fusioninventory-agent.log',
           'timeout'                 => 180,
           'httpd-trust'             => '127.0.0.1/32',

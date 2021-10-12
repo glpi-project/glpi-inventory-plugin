@@ -67,7 +67,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Task management', 'fusioninventory');
+      return __('Task management', 'glpiinventory');
    }
 
 
@@ -109,7 +109,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'id'        => '2',
          'table'     => $this->getTable(),
          'field'     => 'datetime_start',
-         'name'      => __('Schedule start', 'fusioninventory'),
+         'name'      => __('Schedule start', 'glpiinventory'),
          'datatype'  => 'datetime',
       ];
 
@@ -117,7 +117,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'id'        => '8',
          'table'     => $this->getTable(),
          'field'     => 'datetime_end',
-         'name'      => __('Schedule end', 'fusioninventory'),
+         'name'      => __('Schedule end', 'glpiinventory'),
          'datatype'  => 'datetime',
       ];
 
@@ -150,7 +150,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'table'     => $this->getTable(),
          'field'     => 'reprepare_if_successful',
          'name'      => __('Re-prepare a target-actor if previous run is successful',
-            'fusioninventory'),
+            'glpiinventory'),
          'datatype'  => 'bool',
       ];
 
@@ -158,7 +158,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'id'       => '7',
          'table'    => $this->getTable(),
          'field'    => 'is_deploy_on_demand',
-         'name'     => __('deploy on demand task', 'fusioninventory'),
+         'name'     => __('deploy on demand task', 'glpiinventory'),
          'datatype' => 'bool',
       ];
 
@@ -364,7 +364,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = [
                'jobstate' => $jobstate,
                'reason'   => __("The agent is requesting a configuration that has already been sent to him by the server. It is more likely that the agent is subject to a critical error.",
-                                'fusioninventory'),
+                                'glpiinventory'),
                'code'     => $jobstate::IN_ERROR
             ];
             continue;
@@ -375,7 +375,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = [
                'jobstate' => $jobstate,
                'reason'   => __('The task has been deactivated after preparation of this job.',
-                                'fusioninventory')
+                                'glpiinventory')
             ];
             continue;
          };
@@ -394,7 +394,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = [
                   'jobstate' => $jobstate,
                   'reason'   => __("This job can not be executed anymore due to the task's schedule.",
-                                   'fusioninventory')
+                                   'glpiinventory')
                ];
                continue;
             }
@@ -425,7 +425,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = [
                   'jobstate' => $jobstate,
                   'reason'   => __("This job can not be executed anymore due to the task's timeslot.",
-                                   'fusioninventory')
+                                   'glpiinventory')
                ];
                continue;
             }
@@ -442,7 +442,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = [
                'jobstate' => $jobstate,
                'reason'   => __('This agent does not belong anymore in the actors defined in the job.',
-                                'fusioninventory')
+                                'glpiinventory')
             ];
             continue;
          }
@@ -663,7 +663,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                    ]);
             foreach ($jobstates_tocancel as $jobstate_tocancel) {
                $jobstate->getFromDB($jobstate_tocancel['id']);
-               $jobstate->cancel(__('Device no longer defined in definition of job', 'fusioninventory'));
+               $jobstate->cancel(__('Device no longer defined in definition of job', 'glpiinventory'));
             }
 
             foreach ($agent_ids as $agent_id => $agent_not_running) {
@@ -1687,7 +1687,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
          foreach ($results as $data) {
             $pfTaskjobstate->getFromDB($data['run']['id']);
-            $pfTaskjobstate->cancel(__('Task has been disabled', 'fusioninventory'));
+            $pfTaskjobstate->cancel(__('Task has been disabled', 'glpiinventory'));
          }
       }
       parent::post_updateItem($history);
@@ -1904,7 +1904,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "<table class='tab_cadre' width='600'>";
             echo "<tr>";
             echo "<td>";
-            echo __('Task', 'fusioninventory')."&nbsp;:";
+            echo __('Task', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
             $rand = mt_rand();
@@ -1914,7 +1914,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
-                        'url'             => Plugin::getWebDir('fusioninventory')."/ajax/dropdown_taskjob.php"
+                        'url'             => Plugin::getWebDir('glpiinventory')."/ajax/dropdown_taskjob.php"
                   ]
             ]);
             echo "</td>";
@@ -1922,7 +1922,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             echo "<tr>";
             echo "<td>";
-            echo __('Package', 'fusioninventory')."&nbsp;:";
+            echo __('Package', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
             Dropdown::show('PluginFusioninventoryDeployPackage', [
@@ -1944,7 +1944,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "<table class='tab_cadre' width='600'>";
             echo "<tr>";
             echo "<td>";
-            echo __('Task', 'fusioninventory')."&nbsp;:";
+            echo __('Task', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
             $rand = mt_rand();
@@ -1953,7 +1953,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "taskjob$rand",
-                        'url'             => Plugin::getWebDir('fusioninventory')."/ajax/dropdown_taskjob.php"
+                        'url'             => Plugin::getWebDir('glpiinventory')."/ajax/dropdown_taskjob.php"
                   ]
             ]);
             echo "</td>";
@@ -1961,7 +1961,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             echo "<tr>";
             echo "<td>";
-            echo __('Job', 'fusioninventory')."&nbsp;:";
+            echo __('Job', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
             echo "<div id='taskjob$rand'>";
@@ -2052,7 +2052,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
                Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
                   __('You must choose a task and a package to target a task with a deployment package.',
-                     'fusioninventory')), false, ERROR);
+                     'glpiinventory')), false, ERROR);
                PluginFusioninventoryToolbox::logIfExtradebug(
                   "pluginFusioninventory-tasks", "Missing task and/or package for targeting a task"
                );
@@ -2064,7 +2064,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   ", id: " . $pfTask->getId()
             );
 
-            $job_name = __('Deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName();
+            $job_name = __('Deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName();
 
             // Prepare base data
             $input = [
@@ -2079,8 +2079,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             if ($pfTaskjob->getFromDBByCrit(['plugin_fusioninventory_tasks_id' => $ma->POST['tasks_id'], 'name' => $job_name])) {
                // The task already has a job with the same name - update the job actors
                $message = sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
-                  __('Updated a deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName() .
-                  __(', actors: ', 'fusioninventory'));
+                  __('Updated a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName() .
+                  __(', actors: ', 'glpiinventory'));
                foreach ($ids as $computer_id) {
                   $computer->getFromDB($computer_id);
                   $message .= $computer->getName() . ",";
@@ -2103,7 +2103,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
                   }
                   Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
-                     __('The selected task already has a deployment job for another package: ' . $pfTaskjob->getName(), 'fusioninventory')),
+                     __('The selected task already has a deployment job for another package: ' . $pfTaskjob->getName(), 'glpiinventory')),
                      false, ERROR);
                   PluginFusioninventoryToolbox::logIfExtradebug(
                      "pluginFusioninventory-tasks", "Not allowed to update the task job"
@@ -2111,8 +2111,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                } else {
                   // The task do not have a job - create a new one
                   $message = sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
-                     __('Created a deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName() .
-                     __(', actors: ', 'fusioninventory'));
+                     __('Created a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName() .
+                     __(', actors: ', 'glpiinventory'));
                   foreach ($ids as $computer_id) {
                      $computer->getFromDB($computer_id);
                      $message .= $computer->getName() . ",";

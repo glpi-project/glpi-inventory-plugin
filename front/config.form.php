@@ -49,7 +49,7 @@ include ("../../../inc/includes.php");
 
 Session::checkRight('plugin_fusioninventory_configuration', READ);
 
-Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
+Html::header(__('Features', 'glpiinventory'), $_SERVER["PHP_SELF"],
              "admin", "pluginfusioninventorymenu", "config");
 
 

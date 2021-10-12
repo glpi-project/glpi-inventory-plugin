@@ -115,7 +115,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          } else {
             $tabs[2] = _n('Associated item', 'Associated items', $count);
          }
-         $tabs[3] = __('CSV import', 'fusioninventory');
+         $tabs[3] = __('CSV import', 'glpiinventory');
          return $tabs;
       }
       return '';
@@ -254,7 +254,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       echo "<table class='tab_cadre_fixe' cellpadding='1' width='600'>";
       echo "<tr>";
       echo "<th>";
-      echo __('Import a list of computers from a CSV file (the first column must contain the computer ID)', 'fusioninventory')." :";
+      echo __('Import a list of computers from a CSV file (the first column must contain the computer ID)', 'glpiinventory')." :";
       echo "</th>";
       echo "</tr>";
 
@@ -298,10 +298,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
                    $pfDeployGroup_static->add($input);
                }
             }
-            Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'fusioninventory'), false, INFO);
+            Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'glpiinventory'), false, INFO);
             fclose($handle);
          } else {
-            Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'fusioninventory'), false, ERROR);
+            Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'glpiinventory'), false, ERROR);
             return false;
          }
       } else {

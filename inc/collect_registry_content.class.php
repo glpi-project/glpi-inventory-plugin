@@ -79,7 +79,7 @@ class PluginFusioninventoryCollect_Registry_Content extends PluginFusioninventor
                $in = array_keys($a_colregs);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_registries_contents',
                      ['plugin_fusioninventory_collects_registries_id' => $in]) > 0) {
-                  return __('Windows registry content', 'fusioninventory');
+                  return __('Windows registry content', 'glpiinventory');
                }
             }
          }
@@ -167,9 +167,9 @@ class PluginFusioninventoryCollect_Registry_Content extends PluginFusioninventor
             echo '</tr>';
 
             echo "<tr>";
-            echo "<th>".__('Path', 'fusioninventory')."</th>";
-            echo "<th>".__('Value', 'fusioninventory')."</th>";
-            echo "<th>".__('Data', 'fusioninventory')."</th>";
+            echo "<th>".__('Path', 'glpiinventory')."</th>";
+            echo "<th>".__('Value', 'glpiinventory')."</th>";
+            echo "<th>".__('Data', 'glpiinventory')."</th>";
             echo "</tr>";
 
             $previous_key = $data['plugin_fusioninventory_collects_registries_id'];
@@ -214,8 +214,8 @@ class PluginFusioninventoryCollect_Registry_Content extends PluginFusioninventor
 
       echo "<tr>";
       echo "<th>".__('Computer')."</th>";
-      echo "<th>".__('Value', 'fusioninventory')."</th>";
-      echo "<th>".__('Data', 'fusioninventory')."</th>";
+      echo "<th>".__('Value', 'glpiinventory')."</th>";
+      echo "<th>".__('Data', 'glpiinventory')."</th>";
       echo "</tr>";
 
       $a_data = $this->find(['plugin_fusioninventory_collects_registries_id' => $collects_registries_id],

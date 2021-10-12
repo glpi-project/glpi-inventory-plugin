@@ -172,7 +172,7 @@ class SoftwareUpdateTest extends TestCase {
       $a_software = [];
       $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'fusioninventory team',
-                'NAME'      => 'fusioninventory',
+                'NAME'      => 'glpiinventory',
                 'VERSION'   => '0.85+1.0',
                 'SYSTEM_CATEGORY' => 'devel'
             ];
@@ -187,7 +187,7 @@ class SoftwareUpdateTest extends TestCase {
 
       $a_reference = [];
       $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
-               'name'                  => 'fusioninventory',
+               'name'                  => 'glpiinventory',
                'manufacturers_id'      => $manufacturers_id,
                'version'               => '0.85+1.0',
                'is_template_item'  => 0,

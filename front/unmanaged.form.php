@@ -49,7 +49,7 @@ include ("../../../inc/includes.php");
 $pfUnmanaged = new PluginFusioninventoryUnmanaged();
 $ptt  = new PluginFusioninventoryTask();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
+Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
         "assets", "pluginfusioninventoryunmanaged");
 
 
@@ -83,7 +83,7 @@ if (isset ($_POST["add"])) {
 
    if ($pfUnmanaged->restore($_POST)) {
       Event::log($_POST["id"], "PluginFusioninventoryUnmanaged", 4, "inventory",
-               $_SESSION["glpiname"]." ".__('restoration of the item', 'fusioninventory')." ".
+               $_SESSION["glpiname"]." ".__('restoration of the item', 'glpiinventory')." ".
                $pfUnmanaged->getField('name'));
    }
    $pfUnmanaged->redirectToList();
@@ -104,14 +104,14 @@ if (isset ($_POST["add"])) {
    $NoImport = 0;
    list($Import, $NoImport) = $pfUnmanaged->import($_POST['id'], $Import, $NoImport);
     Session::addMessageAfterRedirect(
-            __('Number of imported devices', 'fusioninventory')." : ".$Import);
+            __('Number of imported devices', 'glpiinventory')." : ".$Import);
     Session::addMessageAfterRedirect(
-            __('Number of devices not imported because type not defined', 'fusioninventory').
+            __('Number of devices not imported because type not defined', 'glpiinventory').
             " : ".$NoImport);
    if ($Import == "0") {
       Html::back();
    } else {
-      Html::redirect(Plugin::getWebDir('fusioninventory')."/front/unmanaged.php");
+      Html::redirect(Plugin::getWebDir('glpiinventory')."/front/unmanaged.php");
    }
 }
 

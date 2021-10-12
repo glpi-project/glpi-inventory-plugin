@@ -410,7 +410,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='3'>".
-              __('Ports types to import (for network equipments)', 'fusioninventory')."</th>";
+              __('Ports types to import (for network equipments)', 'glpiinventory')."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
 
@@ -438,7 +438,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
          if (count($a_imports)) {
             echo "<input type='submit' class='submit' name='type_delete' value='<< ".
-                  __('Delete', 'fusioninventory')."'>";
+                  __('Delete', 'glpiinventory')."'>";
          }
          echo "</td><td>";
       } else {

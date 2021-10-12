@@ -70,7 +70,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Job', 'fusioninventory');
+      return __('Job', 'glpiinventory');
    }
 
 

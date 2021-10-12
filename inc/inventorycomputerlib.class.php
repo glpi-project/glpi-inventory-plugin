@@ -2368,7 +2368,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       if (empty($data['designation'])) {
          //Placebo designation; sometimes missing from agent
-         $data['designation'] = __('Internal battery', 'fusioninventory');
+         $data['designation'] = __('Internal battery', 'glpiinventory');
       }
 
       $data['capacity']           = $data['capacity'];

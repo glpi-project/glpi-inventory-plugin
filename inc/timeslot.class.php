@@ -76,7 +76,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Time slot', 'fusioninventory');
+      return __('Time slot', 'glpiinventory');
    }
 
 
@@ -91,7 +91,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       $tab[] = [
          'id' => 'common',
-         'name' => __('Time slot', 'fusioninventory')
+         'name' => __('Time slot', 'glpiinventory')
       ];
 
       $tab[] = [

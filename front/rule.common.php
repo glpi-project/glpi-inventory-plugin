@@ -171,7 +171,7 @@ if (isset($_GET["action"])) {
    exit();
 }
 
-$fi_path = Plugin::getWebDir('fusioninventory');
+$fi_path = Plugin::getWebDir('glpiinventory');
 
 Html::header(_n('Rule', 'Rules', 2), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
              $rulecollection->menu_option);
@@ -179,7 +179,7 @@ Html::header(_n('Rule', 'Rules', 2), $_SERVER['PHP_SELF'], "admin", $rulecollect
    $tabs = [];
 if ($rulecollection->showInheritedTab()) {
    $tabs[0] = [
-             'title'  => __('Rules applied', 'fusioninventory').' : '.
+             'title'  => __('Rules applied', 'glpiinventory').' : '.
                              Dropdown::getDropdownName('glpi_entities',
                                                        $_SESSION['glpiactive_entity']),
              'url'    => $fi_path."/ajax/rules.tabs.php",
@@ -190,7 +190,7 @@ if ($rulecollection->showInheritedTab()) {
    $title = _n('Rule', 'Rules', 2);
 
 if ($rulecollection->isRuleRecursive()) {
-   $title = __('Local rules', 'fusioninventory').' : '.
+   $title = __('Local rules', 'glpiinventory').' : '.
                Dropdown::getDropdownName('glpi_entities', $_SESSION['glpiactive_entity']);
 }
    $tabs[1] = ['title'  => $title,

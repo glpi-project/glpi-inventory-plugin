@@ -97,7 +97,7 @@ composer install --no-dev --optimize-autoloader --prefer-dist --quiet
 
 echo "Set version and official release"
 sed \
-   -e 's/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0"/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1"/' \
+   -e 's/"PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE", "0"/"PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE", "1"/' \
    -e 's/ SNAPSHOT//' \
    -i '' setup.php
 

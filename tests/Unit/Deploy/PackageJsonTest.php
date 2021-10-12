@@ -160,7 +160,7 @@ class PackageJsonTest extends TestCase {
       $DB->query($query);
 
        // run migration packages
-       require_once (PLUGIN_FUSIONINVENTORY_DIR . "/install/update.php");
+       require_once (PLUGIN_GLPI_INVENTORY_DIR . "/install/update.php");
        $migration = new Migration('9.1');
        do_deploypackage_migration($migration);
 

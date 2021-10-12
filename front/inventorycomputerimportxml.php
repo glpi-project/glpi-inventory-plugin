@@ -46,7 +46,7 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),
+Html::header(__('FusionInventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
              "pluginfusioninventorymenu",
@@ -71,7 +71,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
       if (!$zip) {
          error_log("Zip failure");
          Session::addMessageAfterRedirect(
-            __("Can't read zip file!", 'fusioninventory'),
+            __("Can't read zip file!", 'glpiinventory'),
             ERROR
          );
       } else {
@@ -94,7 +94,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
       unset($_SESSION['glpi_fusionionventory_nolock']);
    } else {
       Session::addMessageAfterRedirect(
-         __('No file to import!', 'fusioninventory'),
+         __('No file to import!', 'glpiinventory'),
          ERROR
       );
    }
