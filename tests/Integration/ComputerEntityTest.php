@@ -95,7 +95,7 @@ class ComputerEntityTest extends TestCase {
     * @test
     */
    public function AddComputer() {
-      plugin_init_fusioninventory();
+      plugin_init_glpiinventory();
 
       $entity = new Entity();
 

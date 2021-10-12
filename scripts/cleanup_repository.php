@@ -36,13 +36,13 @@ require ("./logging.php");
 define ( 'MANIFESTS_PATH',
    implode(
       DIRECTORY_SEPARATOR,
-      [ GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files' , 'manifests' ]
+      [ GLPI_PLUGIN_DOC_DIR, 'glpiinventory', 'files' , 'manifests' ]
    )
 );
 define ( 'REPOSITORY_PATH',
    implode(
       DIRECTORY_SEPARATOR,
-      [ GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files', 'repository' ]
+      [ GLPI_PLUGIN_DOC_DIR, 'glpiinventory', 'files', 'repository' ]
    )
 );
 

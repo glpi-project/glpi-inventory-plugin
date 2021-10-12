@@ -85,10 +85,10 @@ class InstallationTest extends TestCase {
       $returncode = 0;
       $outputActivate     = [];
       $returncodeActivate = 0;
-      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory";
+      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi glpiinventory";
       exec($command, $output, $returncode);
 
-      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory";
+      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests glpiinventory";
       exec($commandActivate, $outputActivate, $returncodeActivate);
 
       // Check if errors in logs
@@ -102,7 +102,7 @@ class InstallationTest extends TestCase {
       );
 
       $FusinvDBTest = new FusinvDB();
-      $FusinvDBTest->checkInstall("fusioninventory", "install new version");
+      $FusinvDBTest->checkInstall("glpiinventory", "install new version");
 
       PluginFusioninventoryConfig::loadCache();
 

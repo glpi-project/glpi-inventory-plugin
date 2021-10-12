@@ -104,7 +104,7 @@ $auth->user = $user;
 Session::init($auth);
 Session::initEntityProfiles(2);
 Session::changeProfile(4);
-plugin_init_fusioninventory();
+plugin_init_glpiinventory();
 
 if (!file_exists(GLPI_LOG_DIR.'/php-errors.log')) {
    file_put_contents(GLPI_LOG_DIR.'/php-errors.log', '');

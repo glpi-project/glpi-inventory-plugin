@@ -818,7 +818,7 @@ function cron_plugin_fusioninventory() {
  *
  * @return boolean
  */
-function plugin_fusioninventory_install() {
+function plugin_glpiinventory_install() {
    ini_set("max_execution_time", "0");
 
    if (basename(filter_input(INPUT_SERVER, "SCRIPT_NAME")) != "cli_install.php") {
@@ -858,7 +858,7 @@ function plugin_fusioninventory_install() {
  *
  * @return boolean
  */
-function plugin_fusioninventory_uninstall() {
+function plugin_glpiinventory_uninstall() {
    require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/setup.class.php");
    require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/profile.class.php");
    require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/inventoryruleimport.class.php");

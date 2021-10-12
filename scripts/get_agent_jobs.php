@@ -62,7 +62,7 @@ foreach ($device_ids as $device_id) {
    //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods, array('read_only'=>true));
    //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods);
    $time = microtime(true);
-   file_get_contents("http://glpi.kroy-laptop.sandbox/glpi/plugins/fusioninventory/b/deploy/?action=getJobs&machineid=".$device_id);
+   file_get_contents("http://glpi.kroy-laptop.sandbox/glpi/plugins/glpiinventory/b/deploy/?action=getJobs&machineid=".$device_id);
    $time = microtime(true) - $time;
    $logger->info("Get prepared jobs for Agent '$device_id' : $time s");
 }

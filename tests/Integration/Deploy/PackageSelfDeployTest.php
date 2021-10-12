@@ -120,7 +120,7 @@ class PackageSelfDeployTest extends TestCase {
       Session::init($auth);
       Session::initEntityProfiles(2);
       Session::changeProfile(4);
-      plugin_init_fusioninventory();
+      plugin_init_glpiinventory();
    }
 
 

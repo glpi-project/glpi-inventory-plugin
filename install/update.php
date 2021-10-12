@@ -262,7 +262,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    $prepare_rangeip = [];
    $prepare_Config = [];
 
-   $a_plugin = plugin_version_fusioninventory();
+   $a_plugin = plugin_version_glpiinventory();
    $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
    $migration->displayMessage("Migration Classname : " . $migrationname);

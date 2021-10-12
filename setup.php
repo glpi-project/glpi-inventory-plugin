@@ -69,8 +69,7 @@ define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
 define("PLUGIN_FUSIONINVENTORY_XML_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/");
 
-// include_once GLPI_ROOT .'/plugins/fusioninventory/vendor/autoload.php';
-
+include_once GLPI_ROOT .'/plugins/glpiinventory/vendor/autoload.php';
 
 /**
  * Check if the script name finish by
@@ -489,15 +488,14 @@ function plugin_init_fusioninventory() {
  *
  * @return array
  */
-function plugin_version_fusioninventory() {
-   return ['name'           => 'FusionInventory',
-           'shortname'      => 'fusioninventory',
+function plugin_version_glpiinventory() {
+   return ['name'           => 'GLPI Inventory',
+           'shortname'      => 'glpiinventory',
            'version'        => PLUGIN_FUSIONINVENTORY_VERSION,
            'license'        => 'AGPLv3+',
            'oldname'        => 'tracker',
-           'author'         => '<a href="mailto:david@durieux.family">David DURIEUX</a>
-                                & FusionInventory team',
-           'homepage'       => 'https://github.com/fusioninventory/fusioninventory-for-glpi',
+           'author'         => 'David DURIEUX & FusionInventory team',
+           'homepage'       => 'https://github.com/glpi-project/glpi-inventory-plugin',
            'requirements'   => [
               'glpi' => [
                   'min' => PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION,
@@ -523,7 +521,7 @@ function plugin_version_fusioninventory() {
  * @global object $DB
  * @return boolean
  */
-function plugin_fusioninventory_check_prerequisites() {
+function plugin_glpiinventory_check_prerequisites() {
    global $DB;
 
    if (!method_exists('Plugin', 'checkVersions')) {
@@ -574,7 +572,7 @@ function plugin_fusioninventory_check_prerequisites() {
  *
  * @return boolean
  */
-function plugin_fusioninventory_check_config() {
+function plugin_glpiinventory_check_config() {
    return true;
 }
 

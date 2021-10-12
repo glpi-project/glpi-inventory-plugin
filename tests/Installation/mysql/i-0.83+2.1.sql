@@ -93,11 +93,11 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
 (597, 'PluginFusinvsnmpStateDiscovery', 11, 9, 0),
 (598, 'PluginFusinvsnmpStateDiscovery', 12, 10, 0);
 
-DELETE FROM glpi_plugins where directory='fusioninventory';
+DELETE FROM glpi_plugins where directory='glpiinventory';
 
 INSERT INTO `glpi_plugins` (`id`, `directory`, `name`, `version`, `state`, `author`, `homepage`, `license`) VALUES
 (2, 'fusinvinventory', 'FusionInventory INVENTORY', '0.83+2.1', 4, '<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>\n                                    & FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+'),
-(5, 'fusioninventory', 'FusionInventory', '0.83+2.1', 6, '<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>\n                                    & FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+'),
+(5, 'glpiinventory', 'GLPI Inventory', '0.83+2.1', 6, '<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>\n                                    & FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+'),
 (9, 'fusinvdeploy', 'FusionInventory DEPLOY', '0.83+2.1', 4, '<a href=''http://www.teclib.com''>TECLIB''</a> and the FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+'),
 (21, 'fusinvsnmp', 'FusionInventory SNMP', '0.83+2.1', 4, '<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>\n                                    & FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+');
 

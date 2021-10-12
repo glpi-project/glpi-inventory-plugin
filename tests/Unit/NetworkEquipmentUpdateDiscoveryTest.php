@@ -139,7 +139,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
       $_SESSION['glpidefault_entity'] = 0;
       Session::initEntityProfiles(2);
       Session::changeProfile(4);
-      plugin_init_fusioninventory();
+      plugin_init_glpiinventory();
 
       $pfCND = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
@@ -222,7 +222,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
       $_SESSION['glpidefault_entity'] = 0;
       Session::initEntityProfiles(2);
       Session::changeProfile(4);
-      plugin_init_fusioninventory();
+      plugin_init_glpiinventory();
 
       // Update 2nd time
       $pfCND = new PluginFusioninventoryCommunicationNetworkDiscovery();

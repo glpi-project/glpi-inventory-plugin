@@ -41,5 +41,5 @@
  */
 
 echo "Use glpi console:\n";
-echo " * php bin/console glpi:plugin:install --username=glpi fusioninventory\n";
-echo " * php bin/console glpi:plugin:activate fusioninventory\n";
+echo " * php bin/console glpi:plugin:install --username=glpi glpiinventory\n";
+echo " * php bin/console glpi:plugin:activate glpiinventory\n";

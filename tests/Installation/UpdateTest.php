@@ -105,7 +105,7 @@ class UpdateTest extends TestCase {
    function update($version = '', $verify = false, $nbrules = 0) {
       global $DB;
 
-      // uninstall the plugin FusionInventory
+      // uninstall the plugin
       $plugin = new Plugin();
       $plugin->getFromDBByCrit(['directory' => 'fusioninventory']);
       $plugin->uninstall($plugin->fields['id']);
@@ -122,7 +122,7 @@ class UpdateTest extends TestCase {
          WHERE `itemtype` LIKE 'PluginFus%'";
       $DB->query($query);
 
-      // Delete all fusion rules
+      // Delete all plugin rules
       $rule = new Rule();
       $items = $rule->find(['sub_type' => ['like', "PluginFusion%"]]);
       foreach ($items as $item) {
@@ -134,7 +134,7 @@ class UpdateTest extends TestCase {
 
       if ($version != '') {
          $sqlfile = "tests/Installation/mysql/i-".$version.".sql";
-         // Load specific FusionInventory version in database
+         // Load specific plugin version in database
          $result = $this->load_mysql_file(
             $DB->dbuser,
             $DB->dbhost,
@@ -143,7 +143,7 @@ class UpdateTest extends TestCase {
             $sqlfile
          );
          $this->assertEquals( 0, $result['returncode'],
-            "Failed to install Fusioninventory ".$sqlfile.":\n".
+            "Failed to install plugin ".$sqlfile.":\n".
             implode("\n", $result['output'])
          );
       }
@@ -151,10 +151,10 @@ class UpdateTest extends TestCase {
       $returncode = 0;
       $outputActivate     = [];
       $returncodeActivate = 0;
-      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory";
+      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi glpiinventory";
       exec($command, $output, $returncode);
 
-      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory";
+      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests glpiinventory";
       exec($commandActivate, $outputActivate, $returncodeActivate);
 
       $this->assertEquals(0, $returncode, implode("\n", $output));
@@ -164,7 +164,7 @@ class UpdateTest extends TestCase {
       $GLPIlog->testPHPlogs();
 
       $FusinvDB = new FusinvDB();
-      $FusinvDB->checkInstall("fusioninventory", "upgrade from ".$version);
+      $FusinvDB->checkInstall("glpiinventory", "upgrade from ".$version);
 
       $this->verifyEntityRules($nbrules);
       $this->checkDeployMirrors();
