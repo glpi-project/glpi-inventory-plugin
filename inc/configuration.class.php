@@ -101,7 +101,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options = []) {
+   function showConfigForm($options = []) {
 
       $this->initForm($options);
 

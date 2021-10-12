@@ -122,7 +122,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfIPRange_ConfigSecurity = new self();
-      $pfIPRange_ConfigSecurity->showForm($item);
+      $pfIPRange_ConfigSecurity->showItemForm($item);
       return true;
    }
 
@@ -146,7 +146,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     * @param array $options
     * @return boolean
     */
-   function showForm(CommonDBTM $item, array $options = []) {
+   function showItemForm(CommonDBTM $item, array $options = []) {
 
       $ID = $item->getField('id');
 

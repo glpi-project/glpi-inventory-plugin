@@ -113,12 +113,12 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
 
       if ($item->fields['id'] > 0) {
          $pfPrinter = new PluginFusioninventoryPrinter();
-         $pfPrinter->showForm($item,
+         $pfPrinter->showItemForm($item,
                      ['target' => $fi_path.'/front/printer_info.form.php']);
          echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
          $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
-         $pfPrinterCartridge->showForm($item,
+         $pfPrinterCartridge->showItemForm($item,
                      ['target' => $fi_path.'/front/printer_info.form.php']);
 
          $pfPrinterLog = new PluginFusioninventoryPrinterLog();

@@ -61,7 +61,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
     * @global array $CFG_GLPI
     * @param array $input
     */
-   function showForm($input = []) {
+   function showLogForm($input = []) {
       global $DB, $CFG_GLPI;
 
       $fi_path = Plugin::getWebDir('fusioninventory');

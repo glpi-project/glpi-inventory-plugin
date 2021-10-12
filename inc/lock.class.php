@@ -161,10 +161,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
          return true;
       }
       if ($item->fields['id'] < 1) {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
+         $pflock->showLockForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
                            $item->getType());
       } else {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.
+         $pflock->showLockForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.
                               $item->fields['id'],
                            $item->getType(), $item->fields['id']);
       }
@@ -182,7 +182,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $p_items_id Line id.
     * @return true
     */
-   function showForm($p_target, $p_itemtype, $p_items_id = 0) {
+   function showLockForm($p_target, $p_itemtype, $p_items_id = 0) {
 
       $can = 0;
       $typeright = strtolower($p_itemtype);

@@ -97,7 +97,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
          switch (Session::getActiveTab('NetworkEquipment')) {
             case 'PluginFusioninventoryNetworkEquipment$1':
-               $pfNetworkEquipment->showForm($item, $options);
+               $pfNetworkEquipment->showItemForm($item, $options);
                break;
 
             case 'NetworkPort$1':

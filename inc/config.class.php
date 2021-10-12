@@ -272,7 +272,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       switch ($tabnum) {
 
          case 0:
-            $item->showForm();
+            $item->showConfigForm();
             return true;
 
          case 1:
@@ -335,7 +335,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options = []) {
+   function showConfigForm($options = []) {
 
       $this->showFormHeader($options);
 
@@ -856,7 +856,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfsnmpConfig->showFormButtons($options);
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
-      $pfConfigLogField->showForm([
+      $pfConfigLogField->showConfigForm([
           'target'=>Plugin::getWebDir('fusioninventory')."/front/configlogfield.form.php"]
           );
 

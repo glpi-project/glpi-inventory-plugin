@@ -91,7 +91,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          $pfAgentmodule = new self();
-         $pfAgentmodule->showForm();
+         $pfAgentmodule->showModuleForm();
          return true;
       } else if ($item->getType()=='PluginFusioninventoryAgent') {
          $pfAgentmodule = new self();
@@ -107,7 +107,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     *
     * @return boolean true if no problem
     */
-   function showForm() {
+   function showModuleForm() {
 
       $pfAgent = new PluginFusioninventoryAgent();
 
