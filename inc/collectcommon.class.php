@@ -191,7 +191,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($collects_id, $options = []) {
+   function showForm($collects_id, array $options = []) {
       $this->initForm(0, $options);
       $this->showFormHeader($options);
 

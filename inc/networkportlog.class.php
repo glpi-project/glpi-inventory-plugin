@@ -123,7 +123,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
      * @param array $options
      * @return true
      */
-   function showForm($id, $options = []) {
+   function showForm($id, array $options = []) {
       global $DB;
 
       $this->initForm($id, $options);

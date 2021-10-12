@@ -82,7 +82,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $computers_id id of the computer
     * @return true
     */
-   function showForm($computers_id) {
+   function showForm($computers_id, array $options = []) {
       global $CFG_GLPI, $DB;
 
       $iterator = $DB->request('glpi_plugin_fusioninventory_computerlicenseinfos',

@@ -392,7 +392,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @param array $options
     * @return boolean
     */
-   function showForm($agents_id, $options = []) {
+   function showForm($agents_id, array $options = []) {
       global $CFG_GLPI;
 
       if ($agents_id!='') {

@@ -89,7 +89,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options = []) {
+   function showForm($id, array $options = []) {
       Session::checkRight('plugin_fusioninventory_configsecurity', READ);
       $this->initForm($id, $options);
       $this->showFormHeader($options);

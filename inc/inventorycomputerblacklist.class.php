@@ -138,7 +138,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($items_id, $options = []) {
+   function showForm($items_id, array $options = []) {
 
       if ($items_id!='') {
          $this->getFromDB($items_id);

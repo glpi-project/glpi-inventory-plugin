@@ -146,7 +146,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     * @param array $options
     * @return boolean
     */
-   function showForm(CommonDBTM $item, $options = []) {
+   function showForm(CommonDBTM $item, array $options = []) {
 
       $ID = $item->getField('id');
 

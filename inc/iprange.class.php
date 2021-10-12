@@ -222,7 +222,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options = []) {
+   function showForm($id, array $options = []) {
 
       $this->initForm($id, $options);
       $this->showFormHeader($options);

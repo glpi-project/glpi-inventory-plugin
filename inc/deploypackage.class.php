@@ -474,7 +474,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($ID, $options = []) {
+   function showForm($ID, array $options = []) {
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
       //Add redips_clone element before displaying tabs
