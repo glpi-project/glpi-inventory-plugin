@@ -71,6 +71,7 @@ class FusinvDB extends Assert{
                $s_line = explode("`", $line);
                $s_type = explode("COMMENT", $s_line[2]);
                $s_type[0] = trim($s_type[0]);
+               $s_type[0] = str_replace(" COLLATE utf8mb4_unicode_ci", "", $s_type[0]);
                $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
                $s_type[0] = str_replace(" CHARACTER SET utf8", "", $s_type[0]);
                $a_tables_ref[$current_table][$s_line[1]] = str_replace(",", "", $s_type[0]);
@@ -97,6 +98,7 @@ class FusinvDB extends Assert{
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))) {
 
              $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
+             $data[0] = str_replace(" COLLATE utf8mb4_unicode_ci", "", $data[0]);
              $data[0] = str_replace("( ", "(", $data[0]);
              $data[0] = str_replace(" )", ")", $data[0]);
              $a_tables[] = $data[0];
@@ -122,6 +124,7 @@ class FusinvDB extends Assert{
                      $s_type[0] = str_replace(
                         [
                            " COLLATE utf8_unicode_ci",
+                           " COLLATE utf8mb4_unicode_ci",
                            " CHARACTER SET utf8",
                            ',',
                         ], [

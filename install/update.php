@@ -1779,7 +1779,7 @@ function do_locks_migration($migration) {
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
    $a_table['fields']['tablename']  = [
-                     'type'    => "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
+                     'type'    => "varchar(64) NOT NULL DEFAULT ''",
                      'value'   => null];
    $a_table['fields']['items_id']   = ['type'    => 'integer',
                                             'value'   => null];
@@ -1918,7 +1918,7 @@ function do_mapping_migration($migration) {
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
    $a_table['fields']['itemtype']   = [
-                     'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
+                     'type'    => "varchar(100) DEFAULT NULL",
                      'value'   => null];
    $a_table['fields']['name']       = ['type'    => 'string',
                                             'value'   => null];
@@ -2352,7 +2352,7 @@ function do_ignoredimport_migration($migration) {
    $a_table['fields']['date']       = ['type'    => 'datetime',
                                             'value'   => null];
    $a_table['fields']['itemtype']   = [
-                     'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
+                     'type'    => "varchar(100) DEFAULT NULL",
                      'value'   => null];
    $a_table['fields']['entities_id']= ['type'    => 'integer',
                                             'value'   => null];
@@ -2727,7 +2727,7 @@ function do_rulematchedlog_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
-               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+               ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -2745,7 +2745,7 @@ function do_rulematchedlog_migration($migration) {
                               "int(11) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                               "itemtype",
-                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+                              "varchar(100) DEFAULT NULL");
    $migration->addField($newTable,
                               "rules_id",
                               "int(11) NOT NULL DEFAULT '0'");
@@ -2754,10 +2754,10 @@ function do_rulematchedlog_migration($migration) {
                               "int(11) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                               "method",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                              "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "criteria",
-                           'text COLLATE utf8_unicode_ci DEFAULT NULL');
+                           'text DEFAULT NULL');
    $migration->migrationOneTable($newTable);
    $DB->listFields($newTable, false);
 }
@@ -3069,7 +3069,7 @@ function do_configlogfield_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                   `id` int(8) NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
-               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+               ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -3137,7 +3137,7 @@ function do_networkport_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+               ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
    }
    $migration->changeField($newTable,
                         "ID",
@@ -3219,7 +3219,7 @@ function do_networkport_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+               ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -3270,7 +3270,7 @@ function do_networkport_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
    }
    $migration->changeField($newTable,
                            "id",
@@ -3291,7 +3291,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifinternalstatus",
                            "ifinternalstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifconnectionstatus",
                            "ifconnectionstatus",
@@ -3299,7 +3299,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "iflastchange",
                            "iflastchange",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifinoctets",
                            "ifinoctets",
@@ -3319,19 +3319,19 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifstatus",
                            "ifstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "mac",
                            "mac",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifdescr",
                            "ifdescr",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "portduplex",
                            "portduplex",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "trunk",
                            "trunk",
@@ -3352,7 +3352,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifmac",
                            "mac",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->dropKey($newTable,
                         "FK_networking_ports");
    $migration->migrationOneTable($newTable);
@@ -3370,13 +3370,13 @@ function do_networkport_migration($migration) {
                            "bigint(50) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifinternalstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifconnectionstatus",
                            "int(8) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "iflastchange",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifinoctets",
                            "bigint(50) NOT NULL DEFAULT '0'");
@@ -3391,19 +3391,19 @@ function do_networkport_migration($migration) {
                            "bigint(50) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "mac",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifdescr",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifalias",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "portduplex",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "trunk",
                            "tinyint(1) NOT NULL DEFAULT '0'");
@@ -3510,7 +3510,7 @@ function do_networkport_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -3791,7 +3791,7 @@ function do_printer_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
    }
    $migration->changeField($newTable,
                            "id",
@@ -3804,7 +3804,7 @@ function do_printer_migration($migration) {
    $migration->changeField($newTable,
                            "sysdescr",
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusinvsnmp_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
@@ -3859,7 +3859,7 @@ function do_printer_migration($migration) {
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "int(11) NOT NULL DEFAULT '0'");
@@ -3891,7 +3891,7 @@ function do_printer_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
    }
    $migration->changeField($newTable,
                            "id",
@@ -4026,7 +4026,7 @@ function do_printer_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` bigint(100) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
    }
    $migration->changeField($newTable,
                            "id",
@@ -4340,7 +4340,7 @@ function do_networkequipment_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
    }
    $migration->changeField($newTable,
                            "id",
@@ -4353,7 +4353,7 @@ function do_networkequipment_migration($migration) {
    $migration->changeField($newTable,
                            "sysdescr",
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
@@ -4361,7 +4361,7 @@ function do_networkequipment_migration($migration) {
    $migration->changeField($newTable,
                            "uptime",
                            "uptime",
-                           "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0'");
+                           "varchar(255) NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "cpu",
                            "cpu",
@@ -4420,13 +4420,13 @@ function do_networkequipment_migration($migration) {
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "uptime",
-                           "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0'");
+                           "varchar(255) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "cpu",
                            "int(3) NOT NULL DEFAULT '0' COMMENT '%'");
@@ -4463,7 +4463,7 @@ function do_networkequipment_migration($migration) {
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
       }
       $migration->changeField($newTable,
                               "id",
@@ -4708,7 +4708,7 @@ function do_configsecurity_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
    }
    $migration->changeField($newTable,
                            "id",
@@ -4717,35 +4717,35 @@ function do_configsecurity_migration($migration) {
       $migration->changeField($newTable,
                            "name",
                            "name",
-                           "varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(64) DEFAULT NULL");
    $migration->changeField($newTable,
                            "snmpversion",
                            "snmpversion",
-                           "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+                           "varchar(8) NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "community",
                            "community",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "username",
                            "username",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "authentication",
                            "authentication",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "auth_passphrase",
                            "auth_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "encryption",
                            "encryption",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "priv_passphrase",
                            "priv_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "is_deleted",
                            "is_deleted",
@@ -4758,11 +4758,11 @@ function do_configsecurity_migration($migration) {
    $migration->changeField($newTable,
                            "FK_snmp_version",
                            "snmpversion",
-                           "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+                           "varchar(8) NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "sec_name",
                            "username",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->dropField($newTable,
                            "sec_level");
    $migration->dropField($newTable,
@@ -4777,28 +4777,28 @@ function do_configsecurity_migration($migration) {
                            "int(11) NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "name",
-                           "varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(64) DEFAULT NULL");
    $migration->addField($newTable,
                            "snmpversion",
-                           "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+                           "varchar(8) NOT NULL DEFAULT '1'");
    $migration->addField($newTable,
                            "community",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "username",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "authentication",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "auth_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "encryption",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "priv_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "is_deleted",
                            "tinyint(1) NOT NULL DEFAULT '0'");
@@ -4838,7 +4838,7 @@ function do_statediscovery_migration($migration) {
       $DB->query("CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC");
    }
    $migration->changeField($newTable,
                            "id",
@@ -5335,7 +5335,7 @@ function do_deployuserinteraction_migration($migration) {
    if (!$DB->tableExists('glpi_plugin_fusioninventory_deployuserinteractions')) {
       $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
          `id` int(11) NOT NULL AUTO_INCREMENT,
-         `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+         `name` varchar(255) DEFAULT NULL,
          `entities_id` int(11) NOT NULL DEFAULT '0',
          `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
          `date_creation` datetime DEFAULT NULL,
@@ -5346,7 +5346,7 @@ function do_deployuserinteraction_migration($migration) {
          KEY `date_creation` (`date_creation`),
          KEY `entities_id` (`entities_id`),
          KEY `is_recursive` (`is_recursive`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
       $DB->query($query);
    }
 }
@@ -5522,7 +5522,7 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'name' =>  [
-               'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL',
+               'type' => 'varchar(255) NOT NULL',
                'value' => null
       ],
       'comment' =>  [
@@ -5794,11 +5794,11 @@ function do_deploymirror_migration($migration) {
          'value' => null
       ],
       'name' =>  [
-         'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
+         'type' => 'varchar(255) NOT NULL',
          'value' => null
       ],
       'url' =>  [
-         'type' => "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci".
+         'type' => "varchar(255)".
                    " NOT NULL DEFAULT ''",
          'value' => null
       ],
@@ -5887,7 +5887,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'name' =>  [
-         'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
+         'type' => 'varchar(255) NOT NULL',
          'value' => null
       ],
       'comment' =>  [
@@ -5895,7 +5895,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'type' =>  [
-         'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL',
+         'type' => 'varchar(255) NOT NULL',
          'value' => null
       ],
    ];
@@ -5936,7 +5936,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'itemtype' =>  [
-         'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+         'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
       'items_id' =>  [
@@ -9748,12 +9748,12 @@ function migrateTablesFusionInventory($migration, $a_table) {
          $query = "CREATE TABLE `".$a_table['name']."` (
                         `value` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`value`)
-                     ) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
       } else {
          $query = "CREATE TABLE `".$a_table['name']."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
       }
 
       $DB->query($query);

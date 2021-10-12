@@ -33,11 +33,11 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `last_contact` timestamp NULL DEFAULT NULL,
    `version` varchar(255) DEFAULT NULL,
    `lock` tinyint(1) NOT NULL DEFAULT '0',
-   `device_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE',
+   `device_id` varchar(255) DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE',
    `computers_id` int(11) NOT NULL DEFAULT '0',
-   `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `useragent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `token` varchar(255) DEFAULT NULL,
+   `useragent` varchar(255) DEFAULT NULL,
+   `tag` varchar(255) DEFAULT NULL,
    `threads_networkdiscovery` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
    `threads_networkinventory` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
    `senddico` tinyint(1) NOT NULL DEFAULT '0',
@@ -48,7 +48,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    KEY `name` (`name`),
    KEY `device_id` (`device_id`),
    KEY `computers_id` (`computers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -56,11 +56,11 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `type` varchar(255) DEFAULT NULL,
+   `value` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -73,7 +73,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_entities` (
    `agent_base_url` varchar(255) NOT NULL DEFAULT '',
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`,`transfers_id_auto`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -81,14 +81,14 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_locks`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_locks` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `tablename` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `tablename` varchar(64) NOT NULL DEFAULT '',
    `items_id` int(11) NOT NULL DEFAULT '0',
    `tablefields` text DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `tablename` (`tablename`),
    KEY `items_id` (`items_id`),
    UNIQUE KEY `unicity` (`tablename`,`items_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_tasks`;
 CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
@@ -118,7 +118,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   KEY `reprepare_if_successful` (`reprepare_if_successful`),
   KEY `is_deploy_on_demand` (`is_deploy_on_demand`),
   KEY `wakeup_agent_counter` (`wakeup_agent_counter`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -128,20 +128,20 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_fusioninventory_tasks_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
-  `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `targets` text DEFAULT NULL COLLATE utf8_unicode_ci,
-  `actors` text DEFAULT NULL COLLATE utf8_unicode_ci,
+  `method` varchar(255) DEFAULT NULL,
+  `targets` text DEFAULT NULL,
+  `actors` text DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
   `statuscomments` text DEFAULT NULL,
-  `enduser` text DEFAULT NULL COLLATE utf8_unicode_ci,
+  `enduser` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_tasks_id` (`plugin_fusioninventory_tasks_id`),
   KEY `entities_id` (`entities_id`),
   KEY `method` (`method`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -157,7 +157,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_taskjobstates_id` (`plugin_fusioninventory_taskjobstates_id`,`state`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -171,7 +171,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   `state` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
-  `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `uniqid` varchar(255) DEFAULT NULL,
   `date_start` timestamp NULL DEFAULT NULL,
   `nb_retry` int(11) NOT NULL DEFAULT '0',
   `max_retry` int(11) NOT NULL DEFAULT '1',
@@ -181,7 +181,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`),
   KEY `plugin_fusioninventory_agents_ids_states` (`plugin_fusioninventory_agents_id`, `plugin_fusioninventory_taskjobs_id`, `items_id`, `itemtype`, `id`, `state`),
   KEY `uniqid` (`uniqid`,`state`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -189,10 +189,10 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mappings`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `tablefield` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `itemtype` varchar(100) DEFAULT NULL,
+   `name` varchar(255) DEFAULT NULL,
+   `table` varchar(255) DEFAULT NULL,
+   `tablefield` varchar(255) DEFAULT NULL,
    `locale` int(4) NOT NULL DEFAULT '0',
    `shortlocale` int(4) DEFAULT NULL,
    PRIMARY KEY (`id`),
@@ -201,7 +201,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
    KEY `table` (`table`),
    KEY `tablefield` (`tablefield`)
 --   UNIQUE KEY `unicity` (`name`, `itemtype`) -- Specified key was too long; max key length is 1000 bytes
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -209,7 +209,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unmanageds`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `name` varchar(255) DEFAULT NULL,
    `date_mod` timestamp NULL DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `locations_id` int(11) NOT NULL DEFAULT '0',
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `item_type` varchar(255) DEFAULT NULL,
    `accepted` tinyint(1) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-   `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ip` varchar(255) DEFAULT NULL,
    `hub` tinyint(1) NOT NULL DEFAULT '0',
    `states_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
@@ -235,20 +235,20 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
    KEY `is_deleted` (`is_deleted`),
    KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `modulename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `modulename` varchar(255) DEFAULT NULL,
    `is_active` tinyint(1) NOT NULL DEFAULT '0',
    `exceptions` text DEFAULT NULL COMMENT 'array(agent_id)',
    PRIMARY KEY (`id`),
    UNIQUE KEY `modulename` (`modulename`),
    KEY `is_active` (`is_active`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -262,7 +262,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
    `ip_end` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -275,7 +275,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges_configsecurities` (
   `rank` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `unicity` (`plugin_fusioninventory_ipranges_id`,`plugin_fusioninventory_configsecurities_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -285,14 +285,14 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `name` varchar(255) NOT NULL DEFAULT '',
+   `username` varchar(255) NOT NULL DEFAULT '',
+   `password` varchar(255) NOT NULL DEFAULT '',
    `comment` text DEFAULT NULL,
    `date_mod` timestamp NULL DEFAULT NULL,
-   `itemtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `itemtype` varchar(255) NOT NULL DEFAULT '',
    PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -302,12 +302,12 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_credentials_id` int(11) NOT NULL DEFAULT '0',
-   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `name` varchar(255) NOT NULL DEFAULT '',
    `comment` text DEFAULT NULL,
-   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `ip` varchar(255) NOT NULL DEFAULT '',
    `date_mod` timestamp NULL DEFAULT NULL,
    PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -315,19 +315,19 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ignoredimportdevices`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `name` varchar(255) DEFAULT NULL,
    `date` timestamp NULL DEFAULT NULL,
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `itemtype` varchar(100) DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
-   `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ip` varchar(255) DEFAULT NULL,
+   `mac` varchar(255) DEFAULT NULL,
    `rules_id` int(11) NOT NULL DEFAULT '0',
-   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `method` varchar(255) DEFAULT NULL,
+   `serial` varchar(255) DEFAULT NULL,
+   `uuid` varchar(255) DEFAULT NULL,
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -340,11 +340,11 @@ CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
    `itemtype` varchar(100) DEFAULT NULL,
    `rules_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `method` varchar(255) DEFAULT NULL,
    `criteria` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `item` (`itemtype`,`items_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -352,11 +352,11 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercriterias`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercriterias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -368,7 +368,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -391,7 +391,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -403,7 +403,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstats` (
  `hour` tinyint(2) NOT NULL DEFAULT '0',
  `counter` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -415,7 +415,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
    `days` int(255) NOT NULL DEFAULT '-1',
    PRIMARY KEY ( `id` ) ,
    KEY `plugin_fusioninventory_mappings_id` ( `plugin_fusioninventory_mappings_id` )
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -431,7 +431,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
    PRIMARY KEY (`id`),
    KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_fusioninventory_agentprocesses_id` ),
    KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -440,9 +440,9 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkequipments`;
 CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkequipments_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   `sysdescr` text DEFAULT NULL,
    `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
-   `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+   `uptime` varchar(255) NOT NULL DEFAULT '0',
    `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
    `memory` int(11) NOT NULL DEFAULT '0',
    `last_fusioninventory_update` timestamp NULL DEFAULT NULL,
@@ -450,7 +450,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
    `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `networkequipments_id` (`networkequipments_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -463,7 +463,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
    `othername` varchar(255) DEFAULT NULL,
    `import` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers`;
@@ -471,7 +471,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers`;
 CREATE TABLE `glpi_plugin_fusioninventory_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   `sysdescr` text DEFAULT NULL,
    `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` timestamp NULL DEFAULT NULL,
@@ -480,7 +480,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers` (
    UNIQUE KEY `unicity` (`printers_id`),
    KEY `plugin_fusioninventory_configsecurities_id` (`plugin_fusioninventory_configsecurities_id`),
    KEY `printers_id` (`printers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -504,7 +504,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
    `pages_total_fax` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `printers_id` (`printers_id`,`date`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -520,7 +520,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
    KEY `printers_id` (`printers_id`),
    KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
    KEY `cartridges_id` (`cartridges_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -531,23 +531,23 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
    `networkports_id` int(11) NOT NULL DEFAULT '0',
    `ifmtu` int(8) NOT NULL DEFAULT '0',
    `ifspeed` bigint(50) NOT NULL DEFAULT '0',
-   `ifinternalstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ifinternalstatus` varchar(255) DEFAULT NULL,
    `ifconnectionstatus` int(8) NOT NULL DEFAULT '0',
-   `iflastchange` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `iflastchange` varchar(255) DEFAULT NULL,
    `ifinoctets` bigint(50) NOT NULL DEFAULT '0',
    `ifinerrors` bigint(50) NOT NULL DEFAULT '0',
    `ifoutoctets` bigint(50) NOT NULL DEFAULT '0',
    `ifouterrors` bigint(50) NOT NULL DEFAULT '0',
-   `ifstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `ifdescr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `ifalias` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `portduplex` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ifstatus` varchar(255) DEFAULT NULL,
+   `mac` varchar(255) DEFAULT NULL,
+   `ifdescr` varchar(255) DEFAULT NULL,
+   `ifalias` varchar(255) DEFAULT NULL,
+   `portduplex` varchar(255) DEFAULT NULL,
    `trunk` tinyint(1) NOT NULL DEFAULT '0',
    `lastup` timestamp NULL DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `networkports_id` (`networkports_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -555,19 +555,19 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configsecurities`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `snmpversion` varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
-   `community` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `authentication` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `auth_passphrase` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `encryption` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `priv_passphrase` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `name` varchar(64) DEFAULT NULL,
+   `snmpversion` varchar(8) NOT NULL DEFAULT '1',
+   `community` varchar(255) DEFAULT NULL,
+   `username` varchar(255) DEFAULT NULL,
+   `authentication` varchar(255) DEFAULT NULL,
+   `auth_passphrase` varchar(255) DEFAULT NULL,
+   `encryption` varchar(255) DEFAULT NULL,
+   `priv_passphrase` varchar(255) DEFAULT NULL,
    `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `snmpversion` (`snmpversion`),
    KEY `is_deleted` (`is_deleted`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -586,7 +586,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
    KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
    KEY `plugin_fusioninventory_agentprocesses_id` (`plugin_fusioninventory_agentprocesses_id`),
    KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -606,7 +606,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
   `nb_exists` int(11) NOT NULL DEFAULT '0',
   `nb_import` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -626,7 +626,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `fullname` (`fullname`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -639,7 +639,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerremotemanagements` (
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -650,18 +650,18 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `comment` text DEFAULT NULL,
   `entities_id` int(11) NOT NULL,
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `date_mod` timestamp NULL DEFAULT NULL,
-  `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
   `json` longtext DEFAULT NULL,
   `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -676,7 +676,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_entities` (
   KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -693,7 +693,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_groups` (
   KEY `groups_id` (`groups_id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -710,7 +710,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_profiles` (
   KEY `profiles_id` (`profiles_id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -723,7 +723,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_users` (
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
   KEY `users_id` (`users_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -731,8 +731,8 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfiles`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `mimetype` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `mimetype` varchar(255) NOT NULL,
   `filesize` bigint(20) NOT NULL,
   `comment` text DEFAULT NULL,
   `sha512` char(128) NOT NULL,
@@ -744,7 +744,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
   KEY `shortsha512` (`shortsha512`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -755,8 +755,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   `entities_id` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL DEFAULT '',
   `locations_id` int(11) NOT NULL,
   `comment` text DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
@@ -765,7 +765,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   KEY `is_active` (`is_active`),
   KEY `is_recursive` (`is_recursive`),
   KEY `date_mod` (`date_mod`)
-) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -773,11 +773,11 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploygroups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `comment` text DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -791,7 +791,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_staticdatas` (
   PRIMARY KEY (  `id` ),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `items_id` (`items_id`)
-) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -806,13 +806,13 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)
-) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `name` varchar(255) DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
    `date_creation` timestamp NULL DEFAULT NULL,
@@ -823,7 +823,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontem
    KEY `date_creation` (`date_creation`),
    KEY `entities_id` (`entities_id`),
    KEY `is_recursive` (`is_recursive`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- END DEPLOY
@@ -842,7 +842,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects` (
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -856,7 +856,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_registries` (
   `path` text DEFAULT NULL,
   `key` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -870,7 +870,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -884,7 +884,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
   `class` varchar(255) DEFAULT NULL,
   `properties` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -897,7 +897,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
   `property` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -921,7 +921,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_files` (
   `filter_is_file` tinyint(1) NOT NULL DEFAULT '1',
   `filter_is_dir` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -934,7 +934,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
   `pathfile` text DEFAULT NULL,
   `size` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -948,7 +948,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
   `comment` text DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -965,7 +965,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_timeslotentries` (
  PRIMARY KEY (`id`),
  KEY `plugin_fusioninventory_calendars_id` (`plugin_fusioninventory_timeslots_id`),
  KEY `day` (`day`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -976,7 +976,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblockinventorynames` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
-) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -987,7 +987,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblockinventories` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
-) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -998,7 +998,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwares` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
-) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
@@ -1009,7 +1009,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwareversions` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
-) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
