@@ -1,5 +1,49 @@
 <?php
 
+/*
+   ------------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2021 by the FusionInventory Development Team.
+
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ------------------------------------------------------------------------
+
+   LICENSE
+
+   This file is part of FusionInventory project.
+
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author
+   @copyright Copyright (C) 2010-2021 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+
+   ------------------------------------------------------------------------
+ */
+
+use Glpi\Cache\CacheManager;
+use Glpi\Cache\SimpleCache;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
@@ -36,7 +80,14 @@ foreach (get_defined_constants() as $constant_name => $constant_value) {
 }
 
 //init cache
-$GLPI_CACHE = Config::getCache('cache_db');
+if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FILENAME)) {
+   // Use configured cache for cache tests
+   $cache_manager = new CacheManager();
+   $GLPI_CACHE = $cache_manager->getCoreCacheInstance();
+} else {
+   // Use "in-memory" cache for other tests
+   $GLPI_CACHE = new SimpleCache(new ArrayAdapter());
+}
 
 global $PLUGIN_HOOKS;
 
