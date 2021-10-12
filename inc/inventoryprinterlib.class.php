@@ -164,6 +164,12 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       // Cartridges
       $this->importCartridges($a_inventory['cartridge'], $printers_id);
 
+      Plugin::doHook("fusioninventory_inventory",
+      ['inventory_data' => $a_inventory,
+       'printers_id'   => $printers_id,
+       'no_history'     => $no_history
+      ]);
+
    }
 
 
@@ -240,6 +246,4 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
          }
       }
    }
-
-
 }

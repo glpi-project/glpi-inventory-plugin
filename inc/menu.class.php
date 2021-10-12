@@ -112,7 +112,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     */
    static function getAdditionalMenuOptions() {
       $fi_full_path = Plugin::getWebDir('fusioninventory');
-      $fi_rel_path = '/' . Plugin::getWebDir('fusioninventory');
 
       $elements = [
           'iprange'                    => 'PluginFusioninventoryIPRange',
@@ -162,16 +161,16 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       // Add icon for import package
       $img = Html::image($fi_full_path . "/pics/menu_import.png",
                                       ['alt' => __('Import', 'fusioninventory')]);
-      $options['deploypackage']['links'][$img] = $fi_rel_path . '/front/deploypackage.import.php';
+      $options['deploypackage']['links'][$img] = '/plugins/fusioninventory/front/deploypackage.import.php';
       // Add icon for clean unused deploy files
       $img = Html::image($fi_full_path . "/pics/menu_cleanfiles.png",
                                       ['alt' => __('Clean unused files', 'fusioninventory')]);
-      $options['deploypackage']['links'][$img] = $fi_rel_path . '/front/deployfile.clean.php';
+      $options['deploypackage']['links'][$img] = '/plugins/fusioninventory/front/deployfile.clean.php';
 
       // Add icon for documentation
       $img = Html::image($fi_full_path . "/pics/books.png",
                                       ['alt' => __('Import', 'fusioninventory')]);
-      $options['menu']['links'][$img] = $fi_rel_path . '/front/documentation.php';
+      $options['menu']['links'][$img] = '/plugins/fusioninventory/front/documentation.php';
 
       $options['agent'] = [
            'title' => PluginFusioninventoryAgent::getTypeName(),
@@ -229,7 +228,15 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       if ($cronTask->fields['lastrun'] == ''
               OR strtotime($cronTask->fields['lastrun']) < strtotime("-3 day")) {
          $message = __('GLPI cron not running, see ', 'fusioninventory');
-         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/cron.html'>".__('documentation', 'fusioninventory')."</a>";
+         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/cron.html' target='_blank'>".__('documentation', 'fusioninventory')."</a>";
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
+      }
+
+      // Check if plugin right updated (because security problems)
+      $fi_php_path = Plugin::getPhpDir('fusioninventory');
+      if (file_exists($fi_php_path."/ajax/deploydropdown_operatingsystems.php")) {
+         $message = __('SECURITY PROBLEM, see `2.1 Update` section to update correctly the plugin on ', 'fusioninventory');
+         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/installation.html' target='_blank'>".__('documentation', 'fusioninventory')."</a>";
          Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
       }
 
@@ -999,6 +1006,4 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       });");
       echo "</div>";
    }
-
-
 }
