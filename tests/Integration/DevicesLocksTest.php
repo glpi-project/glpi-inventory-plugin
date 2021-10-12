@@ -253,7 +253,7 @@ class DevicesLocksTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
-          'powersupply'    => [],
+         'powersupply'    => [],
          'itemtype'       => 'Computer'
       ];
 
@@ -289,7 +289,6 @@ class DevicesLocksTest extends TestCase {
     */
    public function switchLockItemtypeNotDuplicated() {
       $pfLock = new PluginFusioninventoryLock();
-          'powersupply'    => [],
 
       $input = [
          'tablename'   => 'glpi_computers',
