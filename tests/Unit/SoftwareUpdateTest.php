@@ -186,7 +186,7 @@ class SoftwareUpdateTest extends TestCase {
       $this->assertGreaterThan(0, $manufacturers_id);
 
       $a_reference = [];
-      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
+      $a_reference['software']["glpi_inventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
                'name'                  => 'glpiinventory',
                'manufacturers_id'      => $manufacturers_id,
                'version'               => '0.85+1.0',
@@ -197,7 +197,7 @@ class SoftwareUpdateTest extends TestCase {
                'operatingsystems_id'   => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel',
-               'comp_key_noos'         => "fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0",
+               'comp_key_noos'         => "glpi_inventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0",
                'comment'               => ''
             ];
 

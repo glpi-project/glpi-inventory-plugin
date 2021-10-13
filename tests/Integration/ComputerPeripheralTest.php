@@ -186,11 +186,11 @@ class ComputerPeripheralTest extends TestCase {
       $computer->getFromDBByCrit(['name' => 'pc001']);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
 
-      $manufacturer->getFromDBByCrit(['name' => 'DisplayLink']);
+      $this->assertTrue($manufacturer->getFromDBByCrit(['name' => 'DisplayLink']), 'Cannot find manufacturer DisplayLink');
       $manufacturerFirst = $manufacturer->fields['id'];
-      $manufacturer->getFromDBByCrit(['name' => 'Ericsson Business Mobile Networks BV']);
+      $this->assertTrue($manufacturer->getFromDBByCrit(['name' => 'Ericsson Business Mobile Networks BV']), 'Cannot find manufacturer Ericsson Business Mobile Networks BV');
       $manufacturerSecond = $manufacturer->fields['id'];
-      $manufacturer->getFromDBByCrit(['name' => 'STMicroelectronics']);
+      $this->assertTrue($manufacturer->getFromDBByCrit(['name' => 'STMicroelectronics']), 'Cannot find manufacturer STMicroelectronics');
       $manufacturerThird = $manufacturer->fields['id'];
 
       $reference = [
@@ -218,7 +218,8 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'uuid'                => null
          ],
          [
             'name' => 'H5321 gw Mobile Broadband Module',
@@ -244,7 +245,8 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'uuid'                => null
          ],
          [
             'name'                => 'Sensor Hub',
@@ -270,7 +272,8 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'uuid'                => null
          ]
       ];
 

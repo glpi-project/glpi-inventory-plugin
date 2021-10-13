@@ -583,6 +583,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                && $itemtype != 'Cluster'
                && $itemtype != 'Contract'
                && $itemtype != 'SoftwareVersion'
+               && $itemtype != 'DatabaseInstance'
+               && $itemtype != 'Cable'
                )) {
                $itemtypeselected[] = $itemtype;
             }

@@ -491,6 +491,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -536,6 +537,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -582,6 +584,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -618,7 +621,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $soft['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -650,7 +654,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $software['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -682,7 +687,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $software['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -1098,7 +1104,22 @@ class ComputerUpdateTest extends TestCase {
             'name'                  => 'em0',
             'instantiation_type'    => 'NetworkPortEthernet',
             'mac'                   => '00:23:18:cf:0d:93',
-            'comment'               => null
+            'comment'               => null,
+            'ifmtu' => 0,
+            'ifspeed' => 0,
+            'ifinternalstatus' => null,
+            'ifconnectionstatus' => 0,
+            'iflastchange' => null,
+            'ifinbytes' => 0,
+            'ifinerrors' => 0,
+            'ifoutbytes' => 0,
+            'ifouterrors' => 0,
+            'ifstatus' => null,
+            'ifdescr' => null,
+            'ifalias' => null,
+            'portduplex' => null,
+            'trunk' => 0,
+            'lastup' => null
          ],
          [
             'items_id'              => $id,
@@ -1111,7 +1132,22 @@ class ComputerUpdateTest extends TestCase {
             'name'                  => 'lo0',
             'instantiation_type'    => 'NetworkPortLocal',
             'mac'                   => '',
-            'comment'               => null
+            'comment'               => null,
+            'ifmtu' => 0,
+            'ifspeed' => 0,
+            'ifinternalstatus' => null,
+            'ifconnectionstatus' => 0,
+            'iflastchange' => null,
+            'ifinbytes' => 0,
+            'ifinerrors' => 0,
+            'ifoutbytes' => 0,
+            'ifouterrors' => 0,
+            'ifstatus' => null,
+            'ifdescr' => null,
+            'ifalias' => null,
+            'portduplex' => null,
+            'trunk' => 0,
+            'lastup' => null
          ]
       ];
 
@@ -1178,7 +1214,8 @@ class ComputerUpdateTest extends TestCase {
           'states_id'         => 0,
           'ticket_tco'        => '0.0000',
           'is_dynamic'        => 1,
-          'is_recursive'      => 0
+          'is_recursive'      => 0,
+          'uuid'              => null
       ];
 
       $this->assertEquals($a_reference, $monitor->fields);
@@ -1214,7 +1251,7 @@ class ComputerUpdateTest extends TestCase {
           'users_id_tech'        => 0,
           'groups_id_tech'       => 0,
           'serial'               => 'MY47L1W1JHEB6',
-          'otherserial'          => null,
+          'otherserial'          => '',
           'have_serial'          => 0,
           'have_parallel'        => 0,
           'have_usb'             => 1,
@@ -1238,6 +1275,8 @@ class ComputerUpdateTest extends TestCase {
           'states_id'            => 0,
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => 1,
+          'uuid'                 => null,
+          'sysdescr'             => null
       ];
 
       $this->assertEquals($a_reference, $printer->fields);

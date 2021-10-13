@@ -218,7 +218,8 @@ class ComputerDeviceBatteryTest extends TestCase {
          'serial'             => '0E52B',
          'otherserial'        => null,
          'locations_id'       => 0,
-         'states_id'          => 0
+         'states_id'          => 0,
+         'real_capacity'      => 31478
       ];
 
       $this->assertEquals(
@@ -332,7 +333,8 @@ class ComputerDeviceBatteryTest extends TestCase {
          'serial'             => '00000000',
          'otherserial'        => null,
          'locations_id'       => 0,
-         'states_id'          => 0
+         'states_id'          => 0,
+         'real_capacity'      => 0
       ];
 
       $this->assertEquals(

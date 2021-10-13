@@ -150,7 +150,7 @@ class PrinterUpdateTest extends TestCase {
          'manufacturers_id'     => 10,
          'locations_id'         => 102,
          'printermodels_id'     => 15,
-         'memory_size'          => 64,
+         'memory_size'          => '64',
          'entities_id'          => 0,
          'is_recursive'         => 0,
          'contact'              => null,
@@ -176,6 +176,8 @@ class PrinterUpdateTest extends TestCase {
          'states_id'            => 0,
          'ticket_tco'           => '0.0000',
          'is_dynamic'           => 1,
+         'uuid'                 => null,
+         'sysdescr'             => null
       ];
 
       $this->assertEquals($a_reference, $printer->fields);

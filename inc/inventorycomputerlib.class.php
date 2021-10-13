@@ -450,8 +450,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             }
          }
          if (count($db_powersupplies) == 0) {
-            foreach ($a_computerinventory['powersupply'] as $a_powersupply) {
-               $this->addPowerSupply($a_powersupply, $computers_id, $no_history);
+            if (isset($a_computerinventory['powersupply'])) {
+               foreach ($a_computerinventory['powersupply'] as $a_powersupply) {
+                  $this->addPowerSupply($a_powersupply, $computers_id, $no_history);
+               }
             }
          } else {
             foreach ($a_computerinventory['powersupply'] as $key_inv => $array_inv) {

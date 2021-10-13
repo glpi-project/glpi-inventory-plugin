@@ -144,7 +144,22 @@ class UnmanagedImportTest extends TestCase {
           'mac'                  => '00:00:00:43:ae:0f',
           'comment'              => null,
           'is_deleted'           => 0,
-          'is_dynamic'           => 1
+          'is_dynamic'           => 1,
+          'ifmtu' => 0,
+          'ifspeed' => 0,
+          'ifinternalstatus' => null,
+          'ifconnectionstatus' => 0,
+          'iflastchange' => null,
+          'ifinbytes' => 0,
+          'ifinerrors' => 0,
+          'ifoutbytes' => 0,
+          'ifouterrors' => 0,
+          'ifstatus' => null,
+          'ifdescr' => null,
+          'ifalias' => null,
+          'portduplex' => null,
+          'trunk' => 0,
+          'lastup' => null
       ];
       $this->assertEquals($a_reference, $networkPort->fields, "Networkport");
       $networkName->getFromDBByCrit(['items_id' => $networkPortId]);
