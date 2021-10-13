@@ -1681,7 +1681,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                $arrays['entities_id'] = $entities_id;
                $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
                   'Peripheral', '', $entities_id);
-               $a_peripherals[] = $peripheral->add($arrays);
+               $a_peripherals[] = $peripheral->add(\Toolbox::addslashes_deep($arrays));
             } else {
                $a_peripherals[] = $data['found_equipment'][0];
             }
