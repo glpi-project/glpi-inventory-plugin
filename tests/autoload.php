@@ -92,6 +92,7 @@ if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FIL
 global $PLUGIN_HOOKS;
 
 include_once GLPI_ROOT . 'inc/includes.php';
+include_once GLPI_ROOT .'/plugins/glpiinventory/vendor/autoload.php';
 include_once __DIR__ . '/LogTest.php';
 
 // $_SESSION['glpiprofiles'][4]['entities'] = [0 => ['id' => 0, 'is_recursive' => true]];
