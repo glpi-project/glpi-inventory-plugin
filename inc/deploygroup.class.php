@@ -657,7 +657,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             'itemtype' => 'Computer',
          ],
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";
@@ -675,7 +675,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             'computers_id_cache' => ["LIKE", '%"'.$computers_id.'"%'],
          ],
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";

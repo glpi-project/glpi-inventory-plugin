@@ -73,7 +73,7 @@ function pluginFusioninventoryGetCurrentVersion() {
 
          $data = [];
          if (count($iterator)) {
-            $data = $iterator->next();
+            $data = $iterator->current();
             return $data['value'];
          }
       }
@@ -108,7 +108,7 @@ function pluginFusioninventoryGetCurrentVersion() {
 
          $data = [];
          if (count($iterator)) {
-            $data = $iterator->next();
+            $data = $iterator->current();
          }
 
          if ($data['version'] == "0") {
@@ -127,7 +127,7 @@ function pluginFusioninventoryGetCurrentVersion() {
 
       $data = [];
       if (count($iterator)) {
-         $data = $iterator->next();
+         $data = $iterator->current();
          return $data['value'];
       }
       if ($DB->fieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')) {
@@ -138,7 +138,7 @@ function pluginFusioninventoryGetCurrentVersion() {
             'LIMIT'  => 1
          ]);
          if (count($iterator)) {
-            $ex_pluginid = $iterator->next();
+            $ex_pluginid = $iterator->current();
 
             $DB->update(
                'glpi_plugin_fusioninventory_taskjobs', [
@@ -173,7 +173,7 @@ function pluginFusioninventoryGetCurrentVersion() {
 
             $data = [];
             if (count($iterator)) {
-               $data = $iterator->next();
+               $data = $iterator->current();
                return $data['value'];
             }
          }
@@ -688,7 +688,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       );
       $stmt = $DB->prepare($update);
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $a_defs = importArrayFromDB($data['targets']);
          foreach ($a_defs as $num=>$a_def) {
             if (key($a_def) == 'PluginFusinvsnmpIPRange') {
@@ -748,7 +748,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       );
       $stmt = $DB->prepare($update);
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $a_defs = importArrayFromDB($data['actors']);
          foreach ($a_defs as $num=>$a_def) {
             if (key($a_def) == 'PluginFusinvdeployGroup') {
@@ -961,7 +961,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param(
             'ss',
             $data['entities_id'],
@@ -1083,7 +1083,7 @@ function do_agent_migration($migration) {
               && $DB->fieldExists("glpi_plugin_tracker_agents",
                               "ifaddr_start")) {
       $iterator = $DB->request(['FROM' => 'glpi_plugin_tracker_agents']);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $prepare_rangeip[] = [
             "ip_start"=> $data['ifaddr_start'],
             "ip_end"  => $data['ifaddr_end'],
@@ -1100,7 +1100,7 @@ function do_agent_migration($migration) {
                   AND $DB->fieldExists("glpi_plugin_tracker_agents",
                               "core_discovery")) {
       $iterator = $DB->request(['FROM' => 'glpi_plugin_tracker_agents']);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $prepare_agentConfig[] = [
             "name" => $data["name"],
             "lock" => $data['lock'],
@@ -1111,7 +1111,7 @@ function do_agent_migration($migration) {
    } else if ($DB->tableExists("glpi_plugin_fusioninventory_agents")) {
       if ($DB->fieldExists($newTable, "module_snmpquery")) {
          $iterator = $DB->request(['FROM' => 'glpi_plugin_tracker_agents']);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $prepare_agentConfig[] = [
                "id" => $data["ID"],
                "threads_networkinventory" => $data['threads_query'],
@@ -1416,7 +1416,7 @@ function do_agent_migration($migration) {
             ]
          );
          $stmt = $DB->prepare($update);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $stmt->bind_param(
                'ssss',
                $data['threads_netdiscovery'],
@@ -1483,7 +1483,7 @@ function do_config_migration($migration) {
             'LIMIT'  => 1
          ]);
          if (count($iterator)) {
-            $data = $iterator->next();
+            $data = $iterator->current();
             $prepare_Config['ssl_only'] = $data['ssl_only'];
          }
       }
@@ -1507,7 +1507,7 @@ function do_config_migration($migration) {
             ]
          );
          $stmt = $DB->prepare($delete);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $stmt->bind_param('s', $data['id']);
             $stmt->execute();
          }
@@ -1666,7 +1666,7 @@ function do_iprange_migration($migration) {
    if ($DB->tableExists("glpi_plugin_tracker_rangeip")) {
       // Get all data to create task
       $iterator = $DB->request(['FROM' => 'glpi_plugin_tracker_rangeip']);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          if ($data['discover'] == '1') {
             $prepare_task[] = ["agents_id" => $data['FK_tracker_agents'],
                                     "ipranges_id" => $data['ID'],
@@ -1685,7 +1685,7 @@ function do_iprange_migration($migration) {
 
       // Get all data to create task
       $iterator = $DB->request(['FROM' => 'glpi_plugin_fusioninventory_rangeip']);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          if ($data['discover'] == '1') {
             $prepare_task[] = ["agents_id" => $data['FK_fusioninventory_agents_discover'],
                                     "ipranges_id" => $data['ID'],
@@ -1801,7 +1801,7 @@ function do_locks_migration($migration) {
          'cpt' => ['>', 1]
       ]
    ]);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       $DB->query("DELETE FROM glpi_plugin_fusioninventory_locks ".
       "WHERE `tablename`='".$data['tablename']."' AND `items_id`='".$data['items_id']."' ".
       "ORDER BY ID desc LIMIT ".($data['cpt'] - 1));
@@ -1874,7 +1874,7 @@ function do_iprangeconfigsecurity_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($delete);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
          $stmt->execute();
       }
@@ -1940,7 +1940,7 @@ function do_mapping_migration($migration) {
       'FROM'   => 'glpi_plugin_fusioninventory_mappings',
       'ORDER'  => 'id'
    ]);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       if (!isset($a_mapping[$data['itemtype'].".".$data['name']])) {
          $a_mapping[$data['itemtype'].".".$data['name']] = $data['id'];
       } else {
@@ -2261,7 +2261,7 @@ function do_unmanaged_migration($migration) {
             ]
          );
          $stmt = $DB->prepare($update);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $stmt->bind_param(
                'sss',
                $data['sysdescr'],
@@ -2467,7 +2467,7 @@ function do_blacklist_migration($migration) {
    }
    $a_criteria = [];
    $iterator = $DB->request(['FROM' => 'glpi_plugin_fusioninventory_inventorycomputercriterias']);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       $a_criteria[$data['comment']] = $data['id'];
    }
 
@@ -2666,7 +2666,7 @@ function do_blacklist_migration($migration) {
 
    $a_criteria = [];
    $iterator = $DB->request(['FROM' => 'glpi_plugin_fusioninventory_inventorycomputercriterias']);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       $a_criteria[$data['comment']] = $data['id'];
    }
 
@@ -2779,7 +2779,7 @@ function do_computercomputer_migration($migration) {
            && $DB->fieldExists("glpi_plugin_fusinvinventory_computers", "uuid")) {
       $Computer = new Computer();
       $iterator = $DB->request(['FROM' => 'glpi_plugin_fusinvinventory_computers']);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          if ($Computer->getFromDB($data['items_id'])) {
             $input = [
                'id'     => $data['items_id'],
@@ -2848,7 +2848,7 @@ function do_computercomputer_migration($migration) {
    $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
    if ($DB->tableExists('glpi_plugin_fusinvinventory_libserialization')) {
       $iterator = $DB->request(['FROM' => 'glpi_plugin_fusinvinventory_libserialization']);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $a_pfcomputer = current($pfInventoryComputerComputer->find(
                ['computers_id' => $data['computers_id']],
                [], 1));
@@ -2883,7 +2883,7 @@ function do_computercomputer_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['computers_id']);
          $stmt->execute();
       }
@@ -2936,7 +2936,7 @@ function do_biosascomponentmigration() {
                'LIMIT'  => 1
             ]);
             if (count($iterator)) {
-               $existing = $iterator->next();
+               $existing = $iterator->current();
                $bioses[$key] = $existing['id'];
             } else {
                $designation = sprintf(
@@ -3035,7 +3035,7 @@ function do_configlogfield_migration($migration) {
    if ($DB->tableExists($newTable)) {
       if ($DB->fieldExists($newTable, "field")) {
          $iterator = $DB->request(['FROM' => $newTable]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $pfMapping = new PluginFusioninventoryMapping();
             $mapping = 0;
             if ($mapping = $pfMapping->get("NetworkEquipment", $data['field'])) {
@@ -3414,7 +3414,7 @@ function do_networkport_migration($migration) {
          'COUNT'  => 'cpt',
          'WHERE'  => ['Field' => 0]
       ]);
-      $datas = $iterator->next();
+      $datas = $iterator->current();
       $nb = $datas['cpt'];
 
       //echo "Move Connections history to another table...";
@@ -3427,7 +3427,7 @@ function do_networkport_migration($migration) {
             'ORDER'  => ['FK_process DESC', 'date_mod DESC'],
             'LIMIT'  => 500
          ]);
-         while ($thread_connection = $iterator->next()) {
+         foreach ($iterator as $thread_connection) {
             $input = [];
             $input['process_number'] = $thread_connection['FK_process'];
             $input['date'] = $thread_connection['date_mod'];
@@ -3455,7 +3455,7 @@ function do_networkport_migration($migration) {
                      'WHERE'  => ['mac' => $thread_connection['old_value']],
                      'LIMIT'  => 1
                   ]);
-                  $dataPort = $port_iterator->next();
+                  $dataPort = $port_iterator->current();
                }
                if (isset($dataPort['id'])) {
                   $input['FK_port_destination'] = $dataPort['id'];
@@ -3547,7 +3547,7 @@ function do_networkport_migration($migration) {
          'FROM'      => $newTable,
          'GROUPBY'   => 'Field'
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $mapping = 0;
          if ($mapping = $pfMapping->get("NetworkEquipment", $data['Field'])) {
             $DB->update(
@@ -3728,9 +3728,9 @@ function do_networkport_migration($migration) {
       'WHERE'  => ['name' => 'ifstatus'],
       'LIMIT'  => 1
    ]);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       $iterator_np = $DB->request(['FROM' => 'glpi_plugin_fusioninventory_networkports']);
-      while ($data_np = $iterator_np->next()) {
+      foreach ($iterator_np as $data_np) {
          $iterator_npplog = $DB->request([
             'FROM'   => 'glpi_plugin_fusioninventory_networkportlogs',
             'WHERE'  => [
@@ -3740,7 +3740,7 @@ function do_networkport_migration($migration) {
             'ORDER'  => 'date_mod DESC',
             'LIMIT'  => 1
          ]);
-         while ($data_nplog = $iterator_npplog->next()) {
+         foreach ($iterator_npplog as $data_nplog) {
             $DB->update(
                'glpi_plugin_fusioninventory_networkports', [
                   'lastup' => $data_nplog['date_mod']
@@ -4057,7 +4057,7 @@ function do_printer_migration($migration) {
          'FROM'   => $newTable,
          'GROUP'  => 'object_name'
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $pfMapping = new PluginFusioninventoryMapping();
          $mapping = 0;
          if (($mapping = $pfMapping->get("Printer", $data['object_name']))) {
@@ -4122,7 +4122,7 @@ function do_printer_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($delete);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
          $stmt->execute();
       }
@@ -4148,7 +4148,7 @@ function do_printer_migration($migration) {
    ]);
 
    $stmt = null;
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       $DB->delete(
          'glpi_plugin_fusioninventory_printercartridges', [
             'id' => $data['id']
@@ -4202,7 +4202,7 @@ function do_printer_migration($migration) {
             $stmt->execute();
          }
       } else {
-         while ($data = $iterator2->next()) {
+         foreach ($iterator2 as $data) {
             $delete = true;
             foreach ($a_searchoptions as $searchoption) {
                if ($searchoption['id'] == $data['num']) {
@@ -4249,7 +4249,7 @@ function do_printer_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($delete);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
          $stmt->execute();
       }
@@ -4269,7 +4269,7 @@ function do_printer_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['printers_id']);
          $stmt->execute();
       }
@@ -4285,7 +4285,7 @@ function do_printer_migration($migration) {
       'FROM'   => 'glpi_printers',
       'WHERE'  => ['serial' => ['LIKE', '%/']]
    ]);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       $cleanSerial = preg_replace('/\/$/', '', $data['serial']);
       $iterator2 = $DB->request([
          'FROM'   => 'glpi_printers',
@@ -4505,14 +4505,14 @@ function do_networkequipment_migration($migration) {
       $networkEquipment = new NetworkEquipment();
 
       $iterator = $DB->request(['FROM' => 'glpi_plugin_fusioninventory_networkequipments']);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          if ($networkEquipment->getFromDB($data['networkequipments_id'])) {
             $oldtableip = [];
             $iterator2 = $DB->request([
                'FROM'   => 'glpi_plugin_fusioninventory_networkequipmentips',
                'WHERE'  => ['networkequipments_id' => $data['networkequipments_id']]
             ]);
-            while ($dataIP = $iterator->next()) {
+            foreach ($iterator2 as $dataIP) {
                $oldtableip[$dataIP['ip']] = $dataIP['ip'];
             }
 
@@ -4583,7 +4583,7 @@ function do_networkequipment_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($delete);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
          $stmt->execute();
       }
@@ -4639,7 +4639,7 @@ function do_networkequipment_migration($migration) {
          'users_id'  => 0
       ]
    ]);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       if (!isset($a_check[$data['num']])) {
          $DB->delete(
             'glpi_displaypreferences', [
@@ -4662,7 +4662,7 @@ function do_networkequipment_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['networkequipments_id']);
          $stmt->execute();
       }
@@ -5126,7 +5126,7 @@ function do_operatingsystemkernel_migration($migration) {
       ";
       $iterator = $DB->request($query);
 
-      while ($row = $iterator->next()) {
+      foreach ($iterator as $row) {
          $key = "{$row['kid']}|{$row['kvid']}";
          if (!isset($mapping[$key])) {
             //find in db for an existing kernel name
@@ -5172,7 +5172,7 @@ function do_computeroperatingsystem_migration($migration) {
          ";
       $iterator = $DB->request($query);
 
-      while ($row = $iterator->next()) {
+      foreach ($iterator as $row) {
          $search = [
             'itemtype'                          => 'Computer',
             'items_id'                          => $row['cid'],
@@ -5228,7 +5228,7 @@ function do_computeroperatingsystem_migration($migration) {
                   )"
          );
          $users = [];
-         while ($row = $iterator->next()) {
+         foreach ($iterator as $row) {
             if (!in_array($row['users_id'], $users)) {
                $users[] = $row['users_id'];
                $DB->update(
@@ -5255,7 +5255,7 @@ function do_computeroperatingsystem_migration($migration) {
             'itemtype' => 'Computer'
          ]
       ]);
-      while ($row = $iterator->next()) {
+      foreach ($iterator as $row) {
          parse_str($row["query"], $options);
          $changed = false;
          foreach ($options['criteria'] as &$criterion) {
@@ -5279,7 +5279,7 @@ function do_computeroperatingsystem_migration($migration) {
       $iterator = $DB->request([
          'FROM'   => 'glpi_plugin_fusioninventory_deploygroups_dynamicdatas'
       ]);
-      while ($row = $iterator->next()) {
+      foreach ($iterator as $row) {
          $fields = unserialize($row['fields_array']);
          $changed = false;
          foreach ($fields as &$type) {
@@ -6512,7 +6512,7 @@ function do_rule_migration($migration) {
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
          $stmt->execute();
       }
@@ -7448,7 +7448,7 @@ function doDynamicDataSearchParamsMigration() {
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($dynamic_data = $iterator->next()) {
+      foreach ($iterator as $dynamic_data) {
          $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
          $stmt->bind_param(
             'ss',
@@ -9576,7 +9576,7 @@ function update213to220_ConvertField($migration) {
             ]);
             if (count($iterator) == 1) {
                $input = [];
-               $data_port = $iterator->next();
+               $data_port = $iterator->current();
                $input['FK_port_source'] = $data_port['id'];
 
                $port_iterator = $DB->request([
@@ -9598,7 +9598,7 @@ function update213to220_ConvertField($migration) {
                      );
                      $stmt = $DB->prepare($insert);
                   }
-                  $data_port2 = $port_iterator->next();
+                  $data_port2 = $port_iterator->current();
                   $input['FK_port_destination'] = $data_port2['id'];
 
                   $input['date'] = $data['date_mod'];
@@ -9653,7 +9653,7 @@ function update213to220_ConvertField($migration) {
             ]);
             if (count($iterator) == 1) {
                $input = [];
-               $data_port = $iterator->next();
+               $data_port = $iterator->current();
                $input['FK_port_source'] = $data_port['id'];
 
                $port_iterator = $DB->request([
@@ -9664,7 +9664,7 @@ function update213to220_ConvertField($migration) {
                   ]
                ]);
                if (count($port_iterator) == 1) {
-                  $data_port2 = $port_iterator->next();
+                  $data_port2 = $port_iterator->current();
                   $input['FK_port_destination'] = $data_port2['id'];
 
                   $input['date'] = $data['date_mod'];
@@ -9819,7 +9819,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
       //== glpi_plugin_fusioninventory_deployorders ==
       $o_iterator = $DB->request(['FROM' => 'glpi_plugin_fusioninventory_deployorders']);
-      while ($o_datas = $o_iterator->next()) {
+      foreach ($o_iterator as $o_datas) {
          $order_id = $o_datas['id'];
 
          $o_line = [];

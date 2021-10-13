@@ -153,7 +153,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
                 ];
       $iterator = $DB->request($params);
       if ($iterator->numrows()) {
-         $data = $iterator->next();
+         $data = $iterator->current();
          return $data['itemtype'];
       } else {
          return '';

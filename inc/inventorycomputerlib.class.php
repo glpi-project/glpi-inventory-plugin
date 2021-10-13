@@ -233,7 +233,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'START'  => 0,
             'LIMIT'  => 1
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             foreach ($data as $key=>$value) {
                $data[$key] = Toolbox::addslashes_deep($value);
             }
@@ -293,7 +293,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                'is_dynamic'   => 1
             ]
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -363,7 +363,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $db_processors[$idtmp] = Toolbox::addslashes_deep($data);
@@ -443,7 +443,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic' => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $db_powersupplies[$idtmp] = Toolbox::addslashes_deep($data);
@@ -513,7 +513,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                ]
             ]);
 
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -581,7 +581,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -662,7 +662,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -738,7 +738,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
@@ -808,7 +808,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
@@ -878,7 +878,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -946,7 +946,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1005,7 +1005,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1090,7 +1090,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'LIMIT'  => 1
                   ]);
                   $computers_vm_id = 0;
-                  while ($data = $iterator->next()) {
+                  foreach ($iterator as $data) {
                      $computers_vm_id = $data['id'];
                   }
                   if ($computers_vm_id == 0) {
@@ -1126,7 +1126,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1230,7 +1230,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                'FROM'   => $pfInventoryComputerAntivirus->getTable(),
                'WHERE'  => ['computers_id' => $computers_id]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1287,7 +1287,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'FROM'   => 'glpi_plugin_fusioninventory_computerlicenseinfos',
             'WHERE'  => ['computers_id' => $computers_id]
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -1327,7 +1327,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'FROM'   => 'glpi_plugin_fusioninventory_computerremotemanagements',
             'WHERE'  => ['computers_id' => $computers_id]
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -1386,7 +1386,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                ]
             ]);
 
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data = Toolbox::addslashes_deep($data);
@@ -1504,7 +1504,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'glpi_monitors.is_global'           => 0
          ]
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_monitors[$idtmp] = $data['id'];
@@ -1617,7 +1617,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          ]
       ]);
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_printers[$idtmp] = $data['id'];
@@ -1727,7 +1727,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          ]
       ]);
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_peripherals[$idtmp] = $data['id'];
@@ -1886,7 +1886,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'is_dynamic'   => 1
          ]
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['id'];
          unset($data['id']);
          if (is_null($data['mac'])) {
@@ -2020,7 +2020,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'itemtype'  => 'NetworkName'
                   ]
                ]);
-               while ($data = $iterator->next()) {
+               foreach ($iterator as $data) {
                   $db_addresses[$data['id']] = $data['name'];
                }
                $a_computerinventory_ipaddress =

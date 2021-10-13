@@ -1325,7 +1325,7 @@ class PluginFusioninventoryFormatconvert {
                      ] + $where_add,
                      'LIMIT'  => 1
                   ]);
-                  if ($row = $iterator->next()) {
+                  foreach ($iterator as $row) {
                      $a_inventory['Computer']['users_id'] = $row['id'];
                   }
                }

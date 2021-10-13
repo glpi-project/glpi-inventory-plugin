@@ -137,7 +137,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          'WHERE' => ['networkequipments_id' => $items_id]
       ];
       $iterator = $DB->request($params);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          foreach ($data as $key=>$value) {
             $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
          }

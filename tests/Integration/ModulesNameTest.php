@@ -171,7 +171,7 @@ class ModulesNameTest extends TestCase {
       ]);
 
       $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->assertEquals('inventory', $data['method']);
       }
 
@@ -184,7 +184,7 @@ class ModulesNameTest extends TestCase {
       ]);
 
       $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->assertEquals('inventory', $data['method']);
       }
 
@@ -254,7 +254,7 @@ class ModulesNameTest extends TestCase {
             'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
          ]);
          $this->assertEquals(2, count($iterator), 'Must have 2, 1 for the switch and 1 for the device found on port');
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $this->assertEquals("networkinventory", $data['method'], "Problem with agent query: ".$versionName);
          }
       }
@@ -368,7 +368,7 @@ class ModulesNameTest extends TestCase {
          'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
       ]);
       $this->assertEquals(1, count($iterator));
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->assertEquals('networkdiscovery', $data['method']);
       }
    }

@@ -1104,7 +1104,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       $iterator = $DB->request($params);
       if ($iterator->numrows()) {
          $ram_pourcentage = 0;
-         $data            = $iterator->next();
+         $data            = $iterator->current();
          if (!empty($data["ram"])
             && !empty($this->fields['memory'])) {
             $ram_pourcentage = ceil((100 * ($data["ram"] - $this->fields['memory'])) / $data["ram"]);

@@ -713,7 +713,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          ],
          'ORDER' => 'id DESC',
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
          $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          if (!isset($tasks_id[$pfTask->fields['id']])) {

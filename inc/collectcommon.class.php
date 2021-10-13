@@ -160,7 +160,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
          echo "<th>".$label."</th>";
       }
       echo "</tr>";
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          echo "<tr>";
          $row_data = $this->displayOneRow($data);
          foreach ($row_data as $value) {

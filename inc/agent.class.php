@@ -583,7 +583,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $agent = [];
       if (count($iterator)) {
-         $agent = $iterator->next();
+         $agent = $iterator->current();
       }
       return $agent;
    }
@@ -1233,14 +1233,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $action = $pfConfig->getValue('agents_action');
          if ($action == PluginFusioninventoryConfig::ACTION_CLEAN) {
             //delete agents
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $pfAgent->delete($data);
                $task->addVolume(1);
                $cron_status = true;
             }
          } else {
             //change status of agents
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $computer = new Computer();
                if ($computer->getFromDB($data['computers_id'])) {
                   $computer->update([
