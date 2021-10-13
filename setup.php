@@ -274,7 +274,6 @@ function plugin_init_glpiinventory() {
             "lib/d3/d3".($debug_mode?"":".min").".js"
          );
       }
-      $PLUGIN_HOOKS['add_javascript']['glpiinventory'][] = 'js/footer.js';
       if (script_endswith("timeslot.form.php")) {
          $PLUGIN_HOOKS['add_javascript']['glpiinventory'][] = "lib/timeslot".($debug_mode?"":".min").".js";
       }
@@ -588,26 +587,3 @@ function plugin_fusioninventory_haveTypeRight($type, $right) {
    return true;
 }
 
-
-/**
- * Add the FusionInventory footer in GLPI interface
- *
- * @param string $baseroot
- */
-function plugin_fusioninventory_footer($baseroot) {
-
-      echo "<div id='footer'>";
-      echo "<table width='100%'>";
-      echo "<tr>";
-      echo "<td class='right'>";
-      echo "<a href='http://fusioninventory.org/'>";
-      echo "<span class='copyright'>FusionInventory ".PLUGIN_GLPI_INVENTORY_VERSION." | copyleft ".
-           "<img src='".$baseroot."/".Plugin::getWebDir('glpiinventory', false)."/pics/copyleft.png'/> "
-              . " 2010-2016 by FusionInventory Team".
-           "</span>";
-      echo "</a>";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-      echo "</div>";
-}
