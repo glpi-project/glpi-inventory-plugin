@@ -45,6 +45,8 @@
  *
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -247,11 +249,11 @@ class PluginFusioninventoryToolbox {
             if (count($value->children()) > 0) {
                $this->cleanXML($value);
             } else if (isset($nodes[$key])) {
-               $xml->$key->$i = Toolbox::clean_cross_side_scripting_deep(
+               $xml->$key->$i = Sanitizer::sanitize(
                                     Toolbox::addslashes_deep($value));
                $i++;
             } else {
-               $xml->$key = Toolbox::clean_cross_side_scripting_deep(
+               $xml->$key = Sanitizer::sanitize(
                                  Toolbox::addslashes_deep($value));
             }
          }

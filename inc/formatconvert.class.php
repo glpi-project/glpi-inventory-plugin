@@ -45,6 +45,8 @@
  *
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -236,7 +238,7 @@ class PluginFusioninventoryFormatconvert {
             if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $value)) {
                $value = Toolbox::addslashes_deep($value);
             }
-            $value = Toolbox::clean_cross_side_scripting_deep($value);
+            $value = Sanitizer::sanitize($value);
          }
          $data[$key] = $value;
       }

@@ -46,6 +46,8 @@
  *
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -389,7 +391,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       if (isset($order_job['actions'])) {
          foreach ($order_job['actions'] as $key => $value) {
             if (isset($value['cmd']) && isset($value['cmd']['exec'])) {
-               $order_job['actions'][$key]['cmd']['exec']= Toolbox::unclean_cross_side_scripting_deep($value['cmd']['exec']);
+               $order_job['actions'][$key]['cmd']['exec']= Sanitizer::unsanitize($value['cmd']['exec']);
             }
          }
       }
