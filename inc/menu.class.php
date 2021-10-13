@@ -196,20 +196,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $fi_path = Plugin::getWebDir('glpiinventory');
 
-      if (PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE != 1) {
-         echo "<div class='beta'>
-               <i class='fa fa-exclamation-triangle fa-5x'></i>
-               <a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>
-                  ".__('This is a beta version!')."
-               </a>
-               <a href='https://www.transifex.com/projects/p/FusionInventory/resource/plugin-fusioninventory-93' class='trans'>
-                  <i class='fa fa-flag-checkered fa-2x'></i><br/>
-                  ".__('Help us for translation')."
-               </a>
-            </div>";
-         echo "<h2>Version '".PLUGIN_GLPI_INVENTORY_REALVERSION."'</h2>\n";
-      }
-
       $pfEntity = new PluginFusioninventoryEntity();
       if (strlen($pfEntity->getValue('agent_base_url', 0))<10
               && !strstr($_SERVER['PHP_SELF'], 'front/config.form.php')) {

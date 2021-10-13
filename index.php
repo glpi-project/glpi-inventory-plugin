@@ -60,8 +60,8 @@ if ((!empty($action)
 
    //Fusioninventory plugin pages
 } else {
-   Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "plugins",
-                "fusioninventory");
+   Html::header(__('GLPI Inventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "plugins",
+                "glpiinventory");
 
    Html::redirect(Plugin::getWebDir('glpiinventory')."/front/menu.php");
    Html::footer();
