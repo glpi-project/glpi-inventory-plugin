@@ -50,7 +50,7 @@
  * @param string $itemtype
  * @return array
  */
-function plugin_fusioninventory_getAddSearchOptions($itemtype) {
+function plugin_glpiinventory_getAddSearchOptions($itemtype) {
 
    $sopt = [];
    if ($itemtype == 'Computer' or $itemtype == 'PluginFusioninventoryComputer') {
@@ -316,7 +316,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
  * @param integer $num
  * @return string
  */
-function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
+function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
    global $CFG_GLPI, $DB;
 
    $searchopt = &Search::getOptions($type);
@@ -758,7 +758,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
  * @param object $item
  * @return boolean
  */
-function plugin_fusioninventory_searchOptionsValues($item) {
+function plugin_glpiinventory_searchOptionsValues($item) {
    global $DB;
 
    if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjoblogs'
@@ -789,7 +789,7 @@ function plugin_fusioninventory_searchOptionsValues($item) {
  *
  * @return array
  */
-function plugin_fusioninventory_getDropdown() {
+function plugin_glpiinventory_getDropdown() {
    return [];
 }
 
@@ -872,7 +872,7 @@ function plugin_glpiinventory_uninstall() {
  * @param string $type
  * @return array
  */
-function plugin_fusioninventory_MassiveActions($type) {
+function plugin_glpiinventory_MassiveActions($type) {
 
    $sep = MassiveAction::CLASS_ACTION_SEPARATOR;
    $ma = [];
@@ -917,7 +917,7 @@ function plugin_fusioninventory_MassiveActions($type) {
  * @param array $options
  * @return boolean
  */
-function plugin_fusioninventory_MassiveActionsFieldsDisplay($options = []) {
+function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = []) {
 
    $table = $options['options']['table'];
    $field = $options['options']['field'];
@@ -984,7 +984,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options = []) {
  * @param integer $num
  * @return string
  */
-function plugin_fusioninventory_addSelect($type, $id, $num) {
+function plugin_glpiinventory_addSelect($type, $id, $num) {
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -1107,7 +1107,7 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
  * @param string $type
  * @return boolean
  */
-function plugin_fusioninventory_forceGroupBy($type) {
+function plugin_glpiinventory_forceGroupBy($type) {
     return false;
 }
 
@@ -1122,7 +1122,7 @@ function plugin_fusioninventory_forceGroupBy($type) {
  * @param string $already_link_tables
  * @return string
  */
-function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield,
+function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield,
                                             &$already_link_tables) {
 
    switch ($itemtype) {
@@ -1474,7 +1474,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
  * @param integer $key
  * @return string
  */
-function plugin_fusioninventory_addOrderBy($type, $id, $order, $key = 0) {
+function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0) {
    return "";
 }
 
@@ -1485,7 +1485,7 @@ function plugin_fusioninventory_addOrderBy($type, $id, $order, $key = 0) {
  * @param string $type
  * @return string
  */
-function plugin_fusioninventory_addDefaultWhere($type) {
+function plugin_glpiinventory_addDefaultWhere($type) {
    if ($type == 'PluginFusioninventoryTaskjob' && !isAPI()) {
       return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
@@ -1504,7 +1504,7 @@ function plugin_fusioninventory_addDefaultWhere($type) {
  * @param string $val
  * @return string
  */
-function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
+function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -2281,7 +2281,7 @@ function plugin_item_transfer_fusioninventory($parm) {
  *
  * @global array $WEBSERVICES_METHOD
  */
-function plugin_fusioninventory_registerMethods() {
+function plugin_glpiinventory_registerMethods() {
    global $WEBSERVICES_METHOD;
 
    $WEBSERVICES_METHOD['fusioninventory.test'] = [
@@ -2298,11 +2298,11 @@ function plugin_fusioninventory_registerMethods() {
  *
  * @return array
  */
-function plugin_fusioninventory_getDatabaseRelations() {
+function plugin_glpiinventory_getDatabaseRelations() {
 
    $plugin = new Plugin();
 
-   if ($plugin->isActivated("fusioninventory")) {
+   if ($plugin->isActivated("glpiinventory")) {
       return ["glpi_locations"
                         => ['glpi_plugin_fusioninventory_deploymirrors' => 'locations_id'],
                    "glpi_entities"
@@ -2348,7 +2348,7 @@ function plugin_fusioninventory_getDatabaseRelations() {
  *
  * @return void
  */
-function plugin_fusioninventory_postItemForm($params) {
+function plugin_glpiinventory_postItemForm($params) {
    if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
       switch (get_class($params['item'])) {
          case 'Computer':
@@ -2371,7 +2371,7 @@ function plugin_fusioninventory_postItemForm($params) {
  *
  * @return void
  */
-function plugin_fusioninventory_postshowtab($params) {
+function plugin_glpiinventory_postshowtab($params) {
    if (isset($params['item']) && is_object($params['item'])) {
       $item = $params['item'];
 
@@ -2414,7 +2414,7 @@ function plugin_fusioninventory_postshowtab($params) {
   *
   * @return void
   */
-function plugin_fusioninventory_preshowtab($params) {
+function plugin_glpiinventory_preshowtab($params) {
    global $CFG_GLPI;
 
    if (isset($params['item']) && is_object($params['item'])) {
@@ -2436,7 +2436,7 @@ function plugin_fusioninventory_preshowtab($params) {
  * @param array $params
  * @return boolean
  */
-function plugin_fusioninventory_dynamicReport($params) {
+function plugin_glpiinventory_dynamicReport($params) {
    switch ($params['item_type']) {
       case "PluginFusioninventoryComputer";
          if ($url = parse_url($_SERVER['HTTP_REFERER'])) {

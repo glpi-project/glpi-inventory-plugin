@@ -68,11 +68,13 @@ class DeploymirrorTest extends TestCase {
     */
    public function testAddMirror() {
       $pfDeploymirror = new PluginFusioninventoryDeployMirror();
-      $input = ['name'    => 'MyMirror',
-                'comment' => 'MyComment',
-                'url'     => 'http://localhost:8080/mirror',
-                'entities_id' => 0
-               ];
+      $input = [
+         'name'    => 'MyMirror',
+         'comment' => 'MyComment',
+         'url'     => 'http://localhost:8080/mirror',
+         'entities_id' => 0,
+         'locations_id' => 0
+      ];
       $mirrors_id = $pfDeploymirror->add($input);
       $this->assertGreaterThan(0, $mirrors_id);
       $this->assertTrue($pfDeploymirror->getFromDB($mirrors_id));

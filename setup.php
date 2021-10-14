@@ -319,11 +319,11 @@ function plugin_init_glpiinventory() {
                                         'showInfo']];
 
       $PLUGIN_HOOKS['post_item_form']['glpiinventory']
-         = 'plugin_fusioninventory_postItemForm';
+         = 'plugin_glpiinventory_postItemForm';
       $PLUGIN_HOOKS['post_show_tab']['glpiinventory']
-         = 'plugin_fusioninventory_postShowTab';
+         = 'plugin_glpiinventory_postShowTab';
       $PLUGIN_HOOKS['pre_show_tab']['glpiinventory']
-         = 'plugin_fusioninventory_preShowTab';
+         = 'plugin_glpiinventory_preShowTab';
 
       $PLUGIN_HOOKS['use_massive_action']['glpiinventory'] = 1;
 
@@ -415,7 +415,7 @@ function plugin_init_glpiinventory() {
             $PLUGIN_HOOKS['submenu_entry']['glpiinventory']['config'] = 'front/config.form.php';
          }
 
-         $PLUGIN_HOOKS['webservices']['glpiinventory'] = 'plugin_fusioninventory_registerMethods';
+         $PLUGIN_HOOKS['webservices']['glpiinventory'] = 'plugin_glpiinventory_registerMethods';
 
          // Hack for NetworkEquipment display ports
          if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/ajax/common.tabs.php')) {

@@ -116,12 +116,12 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
       $exploded = explode(':', $mac);
 
       if (isset($exploded[2])) {
-         if (!$GLPI_CACHE->has('glpi_inventory_ouis')) {
+         if (!$GLPI_CACHE->has('glpiinventory_ouis')) {
             $jsonfile = new FilesToJSON();
             $ouis = json_decode(file_get_contents($jsonfile->getJsonFilePath('ouis')), true);
-            $GLPI_CACHE->set('glpi_inventory_ouis', $ouis);
+            $GLPI_CACHE->set('glpiinventory_ouis', $ouis);
          }
-         $ouis = $ouis ?? $GLPI_CACHE->get('glpi_inventory_ouis');
+         $ouis = $ouis ?? $GLPI_CACHE->get('glpiinventory_ouis');
 
          $mac = sprintf('%s:%s:%s', $exploded[0], $exploded[1], $exploded[2]);
          return $ouis[strtoupper($mac)] ?? false;
