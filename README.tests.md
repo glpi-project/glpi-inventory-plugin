@@ -5,9 +5,9 @@
 
 ```
 cd glpi/
-php bin/console glpi:database:install --config-dir=tests --force
-php bin/console glpi:plugin:install --config-dir=tests --username=glpi fusioninventory
-php bin/console glpi:plugin:activate --config-dir=tests fusioninventory
+php bin/console glpi:database:install --config-dir=tests/config --force
+php bin/console glpi:plugin:install --config-dir=tests/config --username=glpi fusioninventory
+php bin/console glpi:plugin:activate --config-dir=tests/config fusioninventory
 ```
 
 ## Run FusionInventory tests

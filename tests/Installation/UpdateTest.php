@@ -151,10 +151,10 @@ class UpdateTest extends TestCase {
       $returncode = 0;
       $outputActivate     = [];
       $returncodeActivate = 0;
-      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi glpiinventory";
+      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory";
       exec($command, $output, $returncode);
 
-      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests glpiinventory";
+      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory";
       exec($commandActivate, $outputActivate, $returncodeActivate);
 
       $this->assertEquals(0, $returncode, implode("\n", $output));

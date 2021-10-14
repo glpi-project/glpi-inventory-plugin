@@ -112,10 +112,10 @@ jobs:
         php bin/console dependencies install
         php bin/console locales:compile
     - name: Install GLPI
-      run: cd glpi && php bin/console glpi:database:install -n --config-dir=tests --db-name=glpi --db-user=root
+      run: cd glpi && php bin/console glpi:database:install -n --config-dir=tests/config --db-name=glpi --db-user=root
     - name: Install plugin
-      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi glpiinventory
+      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory
     - name: Activate plugin
-      run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests glpiinventory
+      run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory
     - name: run tests
       run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox tests/
