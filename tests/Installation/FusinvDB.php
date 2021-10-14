@@ -71,9 +71,30 @@ class FusinvDB extends Assert{
                $s_line = explode("`", $line);
                $s_type = explode("COMMENT", $s_line[2]);
                $s_type[0] = trim($s_type[0]);
-               $s_type[0] = str_replace(" COLLATE utf8mb4_unicode_ci", "", $s_type[0]);
-               $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
-               $s_type[0] = str_replace(" CHARACTER SET utf8", "", $s_type[0]);
+               $s_type[0] = str_replace(
+                  [
+                     ' COLLATE utf8mb4_unicode_ci',
+                     ' CHARACTER SET utf8mb4'
+                  ],
+                  [
+                     '',
+                     ''
+                  ],
+                  $s_type[0]
+               );
+
+               $column_replacements = [
+                  // Remove comments
+                  '/ COMMENT \'.+\'/i' => '',
+                  // Remove integer display width
+                  '/((tiny|small|medium|big)?int)\(\d+\)/i' => '$1',
+               ];
+               $s_type[0] = preg_replace(
+                  array_keys($column_replacements),
+                  array_values($column_replacements),
+                  $s_type[0]
+               );
+
                $a_tables_ref[$current_table][$s_line[1]] = str_replace(",", "", $s_type[0]);
             }
          }
@@ -97,10 +118,22 @@ class FusinvDB extends Assert{
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbdevices"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))) {
 
-             $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
-             $data[0] = str_replace(" COLLATE utf8mb4_unicode_ci", "", $data[0]);
-             $data[0] = str_replace("( ", "(", $data[0]);
-             $data[0] = str_replace(" )", ")", $data[0]);
+            $data[0] = str_replace(
+               [
+                  ' COLLATE utf8mb4_unicode_ci',
+                  ' CHARACTER SET utf8mb4',
+                  '( ',
+                  ' )'
+               ],
+               [
+                  '',
+                  '',
+                  '(',
+                  ')'
+               ],
+               $data[0]
+            );
+
              $a_tables[] = $data[0];
          }
       }
@@ -123,14 +156,16 @@ class FusinvDB extends Assert{
                      $s_type = explode("COMMENT", $s_line[2]);
                      $s_type[0] = str_replace(
                         [
-                           " COLLATE utf8_unicode_ci",
-                           " COLLATE utf8mb4_unicode_ci",
-                           " CHARACTER SET utf8",
-                           ',',
-                        ], [
+                           ' COLLATE utf8mb4_unicode_ci',
+                           ' COLLATE utf8_unicode_ci',
+                           ' CHARACTER SET utf8mb4',
+                           ','
+                        ],
+                        [
                            '',
                            '',
                            '',
+                           ''
                         ],
                         trim($s_type[0])
                      );
@@ -159,6 +194,19 @@ class FusinvDB extends Assert{
                         || trim($s_type[0]) == 'longtext') {
                         $s_type[0] .= ' DEFAULT NULL';
                      }
+
+                     $column_replacements = [
+                        // Remove comments
+                        '/ COMMENT \'.+\'/i' => '',
+                        // Remove integer display width
+                        '/((tiny|small|medium|big)?int)\(\d+\)/i' => '$1',
+                     ];
+                     $s_type[0] = preg_replace(
+                        array_keys($column_replacements),
+                        array_values($column_replacements),
+                        $s_type[0]
+                     );
+
                      $s_type[0] = preg_replace("/(DEFAULT) ([-|+]?\d+)/", "$1 '$2'", $s_type[0]);
                      $a_tables_db[$current_table][$s_line[1]] = $s_type[0];
                   }
