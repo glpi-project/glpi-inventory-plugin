@@ -48,6 +48,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Inventory\FilesToJSON;
+
 /**
  * Used to get the name of PCIID, USBID and PCIID.
  */
@@ -62,37 +64,22 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
     * @return array
     */
    static function getDataFromPCIID($pciid) {
-      global $DB;
+      $pcivendor = new \PCIVendor();
+      $exploded = explode(":", $pciid);
 
-      $a_return = [];
+      //manufacturer
+      $pci_manufacturer = $pcivendor->getManufacturer($exploded[0]);
+      //product name
+      $pci_product = $pcivendor->getProductName($exploded[0], $exploded[1]);
 
-      if ($pciid == '') {
-         return $a_return;
+      if ($pci_manufacturer || $pcivendor) {
+         return [
+            'name' => $pci_product,
+            'manufacturer' => $pci_manufacturer
+         ];
       }
 
-      $pciidArray = explode(":", $pciid);
-
-      if (!isset($pciidArray[1])) {
-         return $a_return;
-      }
-
-      $vendorId = $pciidArray[0];
-
-      $query_select = "SELECT `glpi_plugin_fusioninventory_pcivendors`.`name` as `manufacturer`,
-         `glpi_plugin_fusioninventory_pcidevices`.`name` as `name`
-         FROM `glpi_plugin_fusioninventory_pcivendors`
-         LEFT JOIN `glpi_plugin_fusioninventory_pcidevices`
-            ON `plugin_fusioninventory_pcivendor_id` = `glpi_plugin_fusioninventory_pcivendors`.`id`
-         WHERE `vendorid`='".$vendorId."'
-            AND `deviceid`='".$pciidArray[1]."'
-            LIMIT 1";
-      $resultSelect = $DB->query($query_select);
-      if ($DB->numrows($resultSelect) > 0) {
-         $data = $DB->fetchAssoc($resultSelect);
-         $a_return['name'] = html_entity_decode($data['name']);
-         $a_return['manufacturer'] = html_entity_decode($data['manufacturer']);
-      }
-      return $a_return;
+      return [];
    }
 
 
@@ -105,32 +92,13 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
      * @return array
      */
    static function getDataFromUSBID($vendorId, $productId) {
-      global $DB;
+      $usbvendor = new \USBVendor();
 
-      $vendorId = strtolower($vendorId);
-      $deviceId = strtolower($productId);
-      $vendors_name = "";
-      $devices_name = "";
+      //manufacturer
+      $vendors_name = $usbvendor->getManufacturer($vendorId);
+      //product name
+      $devices_name = $usbvendor->getProductName($vendorId, $productId);
 
-      $query_select = "SELECT id, name FROM `glpi_plugin_fusioninventory_usbvendors`
-        WHERE `vendorid`='".$vendorId."'
-        LIMIT 1";
-      $resultSelect = $DB->query($query_select);
-      if ($DB->numrows($resultSelect) > 0) {
-         $data = $DB->fetchAssoc($resultSelect);
-         $vendors_id = $data['id'];
-         $vendors_name = html_entity_decode($data['name']);
-
-         $query_selectd = "SELECT name FROM `glpi_plugin_fusioninventory_usbdevices`
-           WHERE `deviceid`='".$deviceId."'
-              AND `plugin_fusioninventory_usbvendor_id`='".$vendors_id."'
-           LIMIT 1";
-         $resultSelectd = $DB->query($query_selectd);
-         if ($DB->numrows($resultSelectd) > 0) {
-            $data = $DB->fetchAssoc($resultSelectd);
-            $devices_name = html_entity_decode($data['name']);
-         }
-      }
       return [$vendors_name, $devices_name];
    }
 
@@ -143,21 +111,22 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
     * @return string
     */
    static function getManufacturerWithMAC($mac) {
-      global $DB;
+      global $GLPI_CACHE;
 
-      $a_mac = explode(":", $mac);
-      if (isset($a_mac[2])) {
-         $searchMac = $a_mac[0].":".$a_mac[1].":".$a_mac[2];
+      $exploded = explode(':', $mac);
 
-         $query_select = "SELECT name FROM `glpi_plugin_fusioninventory_ouis`
-           WHERE `mac`='".$searchMac."'
-           LIMIT 1";
-         $resultSelect = $DB->query($query_select);
-         if ($DB->numrows($resultSelect) == 1) {
-            $data = $DB->fetchAssoc($resultSelect);
-            return $data['name'];
+      if (isset($exploded[2])) {
+         if (!$GLPI_CACHE->has('glpi_inventory_ouis')) {
+            $jsonfile = new FilesToJSON();
+            $ouis = json_decode(file_get_contents($jsonfile->getJsonFilePath('ouis')), true);
+            $GLPI_CACHE->set('glpi_inventory_ouis', $ouis);
          }
+         $ouis = $ouis ?? $GLPI_CACHE->get('glpi_inventory_ouis');
+
+         $mac = sprintf('%s:%s:%s', $exploded[0], $exploded[1], $exploded[2]);
+         return $ouis[strtoupper($mac)] ?? false;
       }
-      return "";
+
+      return '';
    }
 }

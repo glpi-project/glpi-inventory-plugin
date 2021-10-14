@@ -207,7 +207,7 @@ class SoftwareUpdateTest extends TestCase {
 
 
    /**
-   * This tests ignore the import of a computer, based on the software dictionnary
+   * This test ignores the import of a computer, based on the software dictionary
     * @test
     */
    public function AddSoftwareIgnore() {

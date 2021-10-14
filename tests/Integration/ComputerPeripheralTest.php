@@ -247,7 +247,7 @@ class ComputerPeripheralTest extends TestCase {
             'is_recursive'        => 0
          ],
          [
-            'name' => 'Sensor Hub',
+            'name'                => 'Sensor Hub',
             'serial'              => 'STM32_EMOTION2',
             'peripheraltypes_id'  => 0,
             'peripheralmodels_id' => 0,
