@@ -124,23 +124,25 @@ class PackageJsonTest extends TestCase {
       $query = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages` ";
       $DB->query($query);
 
-      $query = "CREATE TABLE `glpi_plugin_fusioninventory_deploypackages` (
-            `id` int(11) NOT NULL,
-            `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-            `comment` text COLLATE utf8_unicode_ci,
-            `entities_id` int(11) NOT NULL,
-            `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-            `date_mod` timestamp NULL DEFAULT NULL,
-            `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-            PRIMARY KEY (`id`)
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
+         `id` int(11) NOT NULL AUTO_INCREMENT,
+         `name` varchar(255) NOT NULL,
+         `comment` text DEFAULT NULL,
+         `entities_id` int(11) NOT NULL,
+         `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+         `date_mod` timestamp NULL DEFAULT NULL,
+         `uuid` varchar(255) DEFAULT NULL,
+         PRIMARY KEY (`id`),
+         KEY `entities_id` (`entities_id`),
+         KEY `date_mod` (`date_mod`)
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;";
       $DB->query($query);
 
       $query = "INSERT INTO `glpi_plugin_fusioninventory_deploypackages` (`id`, `name`, `comment`, `entities_id`, `is_recursive`, `date_mod`, `uuid`) VALUES
         (16, 'INST VLC 2.1.5', 'Install VLC 2.1.5 unintall all VLC', 0, 0, '2014-10-17 11:11:02', NULL);";
       $DB->query($query);
 
-       // glpi_plugin_fusioninventory_deployorders
+      // glpi_plugin_fusioninventory_deployorders
       $query = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployorders` ";
       $DB->query($query);
 
@@ -149,16 +151,16 @@ class PackageJsonTest extends TestCase {
         `type` int(11) NOT NULL,
         `create_date` timestamp NOT NULL,
         `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL,
-        `json` longtext COLLATE utf8_unicode_ci,
+        `json` longtext,
         PRIMARY KEY (`id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;";
       $DB->query($query);
 
       $query = "INSERT INTO `glpi_plugin_fusioninventory_deployorders` (`id`, `type`, `create_date`, `plugin_fusioninventory_deploypackages_id`, `json`) VALUES
         (31, 0, '2013-04-29 09:58:58', 16, '{\"jobs\":{\"checks\":[],\"actions\":[{\"mkdir\":{\"list\":[\"c:\\\\packages\\\\vlc\"]}},{\"move\":{\"from\":\"*.*\",\"to\":\"c:\\\\packages\\\\vlc\"}},{\"cmd\":{\"exec\":\"c:\\\\packages\\\\vlc\\\\vlcinstall.cmd\"}}],\"associatedFiles\":[\"1f54a4730571d165a488f7f343e49d71f7e06c639091959df7065019971d1c3080f97da6517a94173083a50625dc1c1ba11f685d0c6f15705a75d5265c708cee\"]},\"associatedFiles\":{\"1f54a4730571d165a488f7f343e49d71f7e06c639091959df7065019971d1c3080f97da6517a94173083a50625dc1c1ba11f685d0c6f15705a75d5265c708cee\":{\"name\":\"vlc.zip\",\"p2p\":1,\"p2p-retention-duration\":16,\"uncompress\":1}}}'),
         (32, 1, '2013-04-29 09:58:58', 16, '{\"jobs\":{\"checks\":[],\"actions\":[{\"cmd\":{\"exec\":\"vlcuninstall.cmd\"}}],\"associatedFiles\":[\"b16d6a078538842df7b6e572be62845b16870d5f325ec39ac4ae3d6705b2845990684c5a39206c7f23db177226781660324fab14330d98e71f2315658d13584b\"]},\"associatedFiles\":{\"b16d6a078538842df7b6e572be62845b16870d5f325ec39ac4ae3d6705b2845990684c5a39206c7f23db177226781660324fab14330d98e71f2315658d13584b\":{\"name\":\"vlcuninstall.cmd\",\"p2p\":0,\"p2p-retention-duration\":5,\"uncompress\":0}}}');";
-      $DB->query($query);
 
+      $DB->query($query);
        // run migration packages
        require_once (PLUGIN_GLPI_INVENTORY_DIR . "/install/update.php");
        $migration = new Migration('9.1');
