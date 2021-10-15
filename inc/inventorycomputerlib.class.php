@@ -113,7 +113,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
     * @param integer $setdynamic
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic = 0) {
-      global $DB, $CFG_GLPI;
+      global $DB;
 
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();

@@ -177,14 +177,14 @@ class FusinvDB extends Assert{
                         $s_type[0]
                      );
                      //Mariadb 10.2 will return current_timestamp()
-                     //while older retuns CURRENT_TIMESTAMP...
+                     //while older returns CURRENT_TIMESTAMP...
                      $s_type[0] = preg_replace(
                         '/ CURRENT_TIMESTAMP$/',
                         ' CURRENT_TIMESTAMP()',
                         $s_type[0]
                      );
-                     //Mariadb 10.2 allow default vlues on longblob
-                     //while older retuns CURRENT_TIMESTAMP...
+                     //Mariadb 10.2 allow default values on longblob
+                     //while older returns CURRENT_TIMESTAMP...
                      $s_type[0] = preg_replace(
                         '/^longblob$/',
                         'longblob DEFAULT NULL',

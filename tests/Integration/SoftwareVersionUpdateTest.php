@@ -118,7 +118,7 @@ class SoftwareVersionUpdateTest extends TestCase {
       //There must be only one version 2.4 for FusionInventory-Agent software
       $this->assertEquals(1, countElementsInTable('glpi_softwareversions',
          ['softwares_id' => $softwares_id, 'name' => '2.4']));
-      //The computer is still linked to the software version
+      //The computer is linked to the existing software version
       $this->assertEquals(
          1,
          countElementsInTable(
@@ -146,7 +146,7 @@ class SoftwareVersionUpdateTest extends TestCase {
       //There must be a second version 2.4 for FusionInventory-Agent software, with OS infos
       $this->assertEquals(2, countElementsInTable('glpi_softwareversions',
          ['softwares_id' => $softwares_id, 'name' => '2.4']));
-      //The computer is still linked to the software version
+      //The computer is no longer linked to the existing software version
       $this->assertEquals(
          0,
          countElementsInTable(
