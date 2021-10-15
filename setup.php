@@ -493,7 +493,7 @@ function plugin_version_glpiinventory() {
            'version'        => PLUGIN_GLPI_INVENTORY_VERSION,
            'license'        => 'AGPLv3+',
            'oldname'        => 'tracker',
-           'author'         => 'David DURIEUX & FusionInventory team',
+           'author'         => 'Teclib\'',
            'homepage'       => 'https://github.com/glpi-project/glpi-inventory-plugin',
            'requirements'   => [
               'glpi' => [
