@@ -84,7 +84,7 @@ function script_endswith($scriptname) {
 
 
 /**
- * Init the hooks of FusionInventory
+ * Init hook
  *
  * @global array $PLUGIN_HOOKS
  * @global array $CFG_GLPI

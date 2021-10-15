@@ -83,7 +83,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       if ($item->fields['id'] > -1) {
          if (Session::haveRight("config", READ)) {
-            return self::createTabEntry('Fusioninventory');
+            return self::createTabEntry(__('GLPI Inventory', 'glpiinventory'));
          }
       }
       return '';

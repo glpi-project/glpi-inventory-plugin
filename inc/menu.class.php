@@ -49,7 +49,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Manage the menu of plugin FusionInventory.
+ * Manage plugin menu
  */
 class PluginFusioninventoryMenu extends CommonGLPI {
 
@@ -61,7 +61,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return 'FusionInventory';
+      return __('GLPI Inventory', 'glpiinventory');
    }
 
 

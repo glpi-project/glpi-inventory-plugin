@@ -2,7 +2,7 @@
 
 <root>
    <name>GLPI Inventory</name>
-   <key>glpi_inventory</key>
+   <key>glpiinventory</key>
    <state>stable</state>
    <description>
       <short>
