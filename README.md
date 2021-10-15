@@ -1,9 +1,6 @@
-## Fusioninventory Plugin
-[![Build Status](https://travis-ci.org/fusioninventory/fusioninventory-for-glpi.svg?branch=master)](https://travis-ci.org/fusioninventory/fusioninventory-for-glpi)
-[![Coverage Status](https://coveralls.io/repos/fusioninventory/fusioninventory-for-glpi/badge.svg)](https://coveralls.io/r/fusioninventory/fusioninventory-for-glpi)
-(![GitHub downloads](https://img.shields.io/github/downloads/fusioninventory/fusioninventory-for-glpi/total.svg) + ![Redmine downloads](https://img.shields.io/badge/downloads%20redmine-218k%20total-brightgreen.svg))
+## GLPI Inventory Plugin
 
-This plugin makes GLPI to process various types of tasks for Fusioninventory agents:
+This plugin makes GLPI to process various types of tasks for GLPI agents:
 * Computer inventory
 * Network discovery
 * Network (SNMP) inventory
@@ -34,6 +31,6 @@ Some icons used in the project comes from the following set of graphics licensed
 
 ## Additional resources
 
-* [Official website](http://fusioninventory.org/)
-* [Translations on transifex service](https://www.transifex.com/ddurieux/FusionInventory/content/)
-* [Issues](https://github.com/fusioninventory/fusioninventory-for-glpi)
+* [Official website](http://glpi-project.org/)
+* [Translations on transifex service](https://www.transifex.com/glpi/glpi-inventory-plugin/)
+* [Issues](https://github.com/glpi-project/glpi-inventory-plugin)

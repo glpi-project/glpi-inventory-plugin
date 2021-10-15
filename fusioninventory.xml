@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-    Document   : plugin.xml.xml
-    Created on : July 24, 2009, 11:16 PM
-    Author     : ddurieux
-    Description:
-        Purpose of the document follows.
--->
-
 <root>
-   <name>Fusioninventory for GLPI</name>
-   <key>fusioninventory</key>
+   <name>GLPI Inventory</name>
+   <key>glpi_inventory</key>
    <state>stable</state>
-   <logo>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/pics/fusioninventory_logo_square.png</logo>
    <description>
       <short>
-         <cs><![CDATA[FusionInventory je svobodný a opensource projekt, poskytující inventarizaci hardware a software, nasazování software a prozkoumávání sítě a to jako doplněk do software pro správu IT vybavení a technické podpory, zvaný GLPI. „FusionInventory pro GLPI“ je sadou zásuvných modulů komunikující s agenty (FusionInventory-Agent), nasazenými na počítačích]]></cs>
-         <en><![CDATA[FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI. "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers]]></en>
-         <fr><![CDATA[FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI. "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent)]]></fr>      
+         <cs><![CDATA[GLPI Inventory je svobodný a opensource projekt, poskytující inventarizaci hardware a software, nasazování software a prozkoumávání sítě a to jako doplněk do software pro správu IT vybavení a technické podpory, zvaný GLPI. „GLPI Inventory pro GLPI“ je sadou zásuvných modulů komunikující s agenty (GLPI Inventory-Agent), nasazenými na počítačích]]></cs>
+         <en><![CDATA[GLPI Inventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI. "GLPI Inventory for GLPI" is a collection of plugins communicating with some agents (GLPI Inventory-Agent), deployed on computers]]></en>
+         <fr><![CDATA[GLPI Inventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI. "GLPI Inventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (GLPI Inventory-Agent)]]></fr>      
       </short>
       <long>
       <cs>
-   FusionInventory je svobodný a opensource projekt, poskytující inventarizaci hardware a software, nasazování software a prozkoumávání sítě a to jako doplněk do software pro správu IT vybavení a technické podpory, zvaný GLPI.  
-   „FusionInventory pro GLPI“ je sadou zásuvných modulů komunikující s agenty (FusionInventory-Agent), nasazenými na počítačích
+   GLPI Inventory je svobodný a opensource projekt, poskytující inventarizaci hardware a software, nasazování software a prozkoumávání sítě a to jako doplněk do software pro správu IT vybavení a technické podpory, zvaný GLPI.  
+   „GLPI Inventory pro GLPI“ je sadou zásuvných modulů komunikující s agenty (GLPI Inventory-Agent), nasazenými na počítačích
    
-   - FusionInventory Core: poskytuje základní funkce:
+   - GLPI Inventory Core: poskytuje základní funkce:
    
       1. Komunikace s agenty pro inventarizaci a prozkoumávání sítě.
       2. Správa úloh a plánování.
@@ -32,23 +23,23 @@
       4. Centralizovaná pravidla pro import majetku do GLPI.
       5. Správa neznámých zařízení (dočasná zóna, v GLPI, před skutečnou správou majetku).
 
-   - FusionInventory Inventory:
+   - GLPI Inventory Inventory:
       1. Inventura na počítačích (hardware, software, antivirus).
       2. Zacházení s a aktualizace počítačů, které už jsou v GLPI.
       
-   - FusionInventory SNMP:
+   - GLPI Inventory SNMP:
      
-      1. Prozkoumávání sítě, správa neznámých zařízení (pomocí zásuvného modulu FusionInventory core).
+      1. Prozkoumávání sítě, správa neznámých zařízení (pomocí zásuvného modulu GLPI Inventory core).
       2. Vzdálená síťová zařízení a tiskárny (díky SNMP protokolu).
       3. Získání informací o síťovém portu, VLAN sítích, propojení mezi síťovými porty přepínače a zařízeními, které už se nachází v GLPI (počítače, síťové tiskárny, síťová zařízení, atd.).
       4. Historie změna a výkaz o každém ze síťových portů.
       5. Stavy náplní v tiskárnách, denní čítače stránek a výkazy.
       </cs>
       <en>
-   FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI.  
-   "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers
+   GLPI Inventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI.  
+   "GLPI Inventory for GLPI" is a collection of plugins communicating with some agents (GLPI Inventory-Agent), deployed on computers
    
-   - FusionInventory Core: provides core functionnalities:
+   - GLPI Inventory Core: provides core functionnalities:
    
       1. Communication with inventory and network discovery agents.
       2. Tasks management and scheduling.
@@ -56,23 +47,23 @@
       4. Centralized rules for assets import in GLPI.
       5. Unknown devices management (temporary zone, in GLPI, before real asset management).
 
-   - FusionInventory Inventory:
+   - GLPI Inventory Inventory:
       1. Local inventory for computers (hardware, software, antivirus).
       2. Handle and update computers already in GLPI.
       
-   - FusionInventory SNMP:
+   - GLPI Inventory SNMP:
      
-      1. Network discovery, unknown devices management (using FusionInventory core plugin).
+      1. Network discovery, unknown devices management (using GLPI Inventory core plugin).
       2. Remote network devices and printers (thanks to the SNMP protocol).
       3. Get network port informations, VLANs, link between switchs network ports and assets already in GLPI (computers, network printers, network devices, etc.).
       4. Change history and reports for each network port.
       5. Printers cartridges' ink levels, daily page counters and reports.
       </en>
    <fr>
-   FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI.  
-   "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent).  
+   GLPI Inventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI.  
+   "GLPI Inventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (GLPI Inventory-Agent).  
 
-   - FusionInventory Core, fournit les fonctionnalités centrales :
+   - GLPI Inventory Core, fournit les fonctionnalités centrales :
 
       1. Communication avec les agents d'inventaire et de découverte.
       2. Gestion et planifications des tâches.
@@ -80,12 +71,12 @@
       4. Règles centralisées pour ces plugins d'import de matériel.
       5. Gestion du matériel inconnu (zone tampon entre vos matériels gérés dans GLPI et ceux présents réellement sur le réseau).
 
-   - FusionInventory Inventory :
+   - GLPI Inventory Inventory :
 
       1. Inventaire local des ordinateurs (matériel, logiciel, antivirus).
       2. Prise en charge et mise à jour des ordinateurs déjà dans GLPI.
 
-   - FusionInventory SNMP :
+   - GLPI Inventory SNMP :
 
       1. Découverte réseau avec gestion des matériels inconnus.
       2. Inventaire distant des switchs et imprimantes (grâce au protocole SNMP).
@@ -95,13 +86,13 @@
    </fr>
       </long>
    </description>
-   <homepage>http://fusioninventory.org/</homepage>
-   <download>https://github.com/fusioninventory/fusioninventory-for-glpi/releases</download>
-   <issues>https://github.com/fusioninventory/fusioninventory-for-glpi/issues</issues>
-   <readme>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/README.md</readme>
+   <homepage>httpis://glpi-project.org</homepage>
+   <download>https://github.com/glpi-project/glpi-inventory-plugin/releases</download>
+   <issues>https://github.com/glpi-project/glpi-inventory-plugin/issues</issues>
+   <readme>https://raw.githubusercontent.com/glpi-project/glpi-inventory-plugin/master/README.md</readme>
    <authors>
-      <author>David DURIEUX</author>
-      <author>FusionInventory team</author>
+      <author>Teclib'</author>
+      <author>GLPI Inventory team</author>
    </authors>
    <versions>
       <version>
@@ -446,11 +437,4 @@
             <tag>télédéploiement</tag>
          </fr>
    </tags>
-   <screenshots>
-      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-central.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-deploypackage.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-monitoring.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-rules.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-tasks.png</screenshot>
-   </screenshots>
 </root>
