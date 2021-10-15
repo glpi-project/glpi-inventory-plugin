@@ -114,7 +114,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                   $stmt = $DB->prepare($delete);
                   while ($data=$DB->fetchArray($result)) {
                      $stmt->bind_param('s', $data['id']);
-                     $stmt->execute();
+                     $DB->executeStatement($stmt);
                   }
                   mysqli_stmt_close($stmt);
                }

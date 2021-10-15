@@ -319,7 +319,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       $to_import = [];
       foreach ($input as $number=>$name) {
          $stmt_select->bind_param('s', $number);
-         $stmt_select->execute();
+         $DB->executeStatement($stmt_select);
          if ($DB->numrows($stmt_select) == '0') {
             $to_import[$number] = $name;
          }
@@ -365,7 +365,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
                $othername,
                $import
             );
-            $stmt_insert->execute();
+            $DB->executeStatement($stmt_insert);
          }
          mysqli_stmt_close($stmt_insert);
       }

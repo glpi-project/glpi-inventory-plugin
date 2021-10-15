@@ -2563,7 +2563,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             $input['entities_id'],
             $input['date_install']
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -2707,7 +2707,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                $new_value,
                $username
             );
-            $stmt->execute();
+            $DB->executeStatement($stmt);
          }
 
          $this->log_add = [];
@@ -3075,7 +3075,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'softwareversions_id' => $softwareversions_id,
                      'is_dynamic'          => 1,
                      'entities_id'         => $computer->fields['entities_id'],
-                     'date_install'        => 'NULL'
+                     'date_install'        => null
                   ];
                   if (isset($a_software['date_install'])) {
                      $a_tmp['date_install'] = $a_software['date_install'];

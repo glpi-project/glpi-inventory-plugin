@@ -173,7 +173,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          list($type, $name) = explode("-", $data['field']);
          if (!isset($listName[$type."-".$name])) {
             $stmt->bind_param('s', $data['id']);
-            $stmt->execute();
+            $DB->executeStatement($stmt);
          } else {
             $options[$data['field']]=$listName[$type."-".$name];
          }

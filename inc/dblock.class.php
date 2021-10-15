@@ -150,7 +150,7 @@ class PluginFusioninventoryDBLock {
    *
    */
    function releaseAllLocks() {
-      $where = ['date' => ['<', new \QueryExpression("CURRENT_TIMESTAMP() - ".self::SECONDS_TO_RELEASE_LOCK)]];
+      $where = ['date' => ['<', new \QueryExpression(sprintf('CURRENT_TIMESTAMP() - INTERVAL %s second', self::SECONDS_TO_RELEASE_LOCK))]];
       $tables = [
          'inventorynames',
          'inventories',

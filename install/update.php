@@ -666,7 +666,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
             $idata[0],
             $idata[1]
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -704,7 +704,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
             $targets,
             $data['id']
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
 
       mysqli_stmt_close($stmt);
@@ -762,7 +762,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
             $actors,
             $data['id']
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
 
       mysqli_stmt_close($stmt);
@@ -967,7 +967,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
             $data['entities_id'],
             $data['id']
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -1424,7 +1424,7 @@ function do_agent_migration($migration) {
                $data['senddico'],
                $data['plugin_fusioninventory_agents_id']
             );
-            $stmt->execute();
+            $DB->executeStatement($stmt);
          }
          mysqli_stmt_close($stmt);
       }
@@ -1509,7 +1509,7 @@ function do_config_migration($migration) {
          $stmt = $DB->prepare($delete);
          foreach ($iterator as $data) {
             $stmt->bind_param('s', $data['id']);
-            $stmt->execute();
+            $DB->executeStatement($stmt);
          }
          mysqli_stmt_close($stmt);
       }
@@ -1876,7 +1876,7 @@ function do_iprangeconfigsecurity_migration($migration) {
       $stmt = $DB->prepare($delete);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -2885,7 +2885,7 @@ function do_computercomputer_migration($migration) {
       $stmt = $DB->prepare($update);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['computers_id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -4124,7 +4124,7 @@ function do_printer_migration($migration) {
       $stmt = $DB->prepare($delete);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -4199,7 +4199,7 @@ function do_printer_migration($migration) {
                $idata[0],
                $idata[1]
             );
-            $stmt->execute();
+            $DB->executeStatement($stmt);
          }
       } else {
          foreach ($iterator2 as $data) {
@@ -4251,7 +4251,7 @@ function do_printer_migration($migration) {
       $stmt = $DB->prepare($delete);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -4271,7 +4271,7 @@ function do_printer_migration($migration) {
       $stmt = $DB->prepare($update);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['printers_id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -4585,7 +4585,7 @@ function do_networkequipment_migration($migration) {
       $stmt = $DB->prepare($delete);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
    }
 
@@ -4664,7 +4664,7 @@ function do_networkequipment_migration($migration) {
       $stmt = $DB->prepare($update);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['networkequipments_id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -5470,7 +5470,7 @@ function do_deployfile_migration($migration) {
                      $data['is_recursive'],
                      $data['id']
                   );
-                  $stmt->execute();
+                  $DB->executeStatement($stmt);
                }
                mysqli_stmt_close($stmt);
             }
@@ -6514,7 +6514,7 @@ function do_rule_migration($migration) {
       $stmt = $DB->prepare($update);
       foreach ($iterator as $data) {
          $stmt->bind_param('s', $data['id']);
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -9547,7 +9547,7 @@ function update213to220_ConvertField($migration) {
             $mappingvalue,
             $langvalue
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
          $migration->displayMessage("$i / $nb");
       }
       mysqli_stmt_close($stmt);
@@ -9612,7 +9612,7 @@ function update213to220_ConvertField($migration) {
                      $input['FK_port_source'],
                      $input['FK_port_destination']
                   );
-                  $stmt->execute();
+                  $DB->executeStatement($stmt);
                }
             }
 
@@ -9690,7 +9690,7 @@ function update213to220_ConvertField($migration) {
                         $input['FK_port_source'],
                         $input['FK_port_destination']
                      );
-                     $stmt->execute();
+                     $DB->executeStatement($stmt);
                   }
                }
             }

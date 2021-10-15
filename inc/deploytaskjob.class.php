@@ -200,7 +200,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
             'minutes',
             '0'
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
