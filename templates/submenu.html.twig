@@ -1,0 +1,27 @@
+<nav class="navbar navbar-dark navbar-expand-lg mx-n3 mt-n3 mb-4">
+   <div class="container-fluid">
+      <ul class="navbar-nav me-auto">
+         {% for first_lvl_key, first_lvl in menu %}
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#" id="{{ first_lvl_key }}_menu"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ first_lvl['name'] }}
+               </a>
+               <ul class="dropdown-menu" aria-labelledby="{{ first_lvl_key }}_menu">
+                  {% for second_lvl in first_lvl['children'] %}
+                     <li>
+                        <a class="dropdown-item text-wrap" href="{{ second_lvl['link'] }}">
+                           {% if second_lvl['pic']|length %}
+                              <img class="me-2" src="{{ second_lvl['pic'] }}" width="16" height="16">
+                           {% endif %}
+
+                           <span>{{ second_lvl['name'] }}</span>
+                        </a>
+                     </li>
+                  {% endfor %}
+               </ul>
+            </li>
+         {% endfor %}
+      </ul>
+   </div>
+</nav>

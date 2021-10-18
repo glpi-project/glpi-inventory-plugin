@@ -30,6 +30,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -178,149 +180,135 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     * @param string $type
     */
    static function displayMenu($type = "big") {
-      global $CFG_GLPI;
-
       $fi_path = Plugin::getWebDir('glpiinventory');
 
-      $width_status = 0;
-
-      echo "<div align='center' style='height: 35px; display: inline-block; width: 100%; margin: 0 auto;'>";
-      echo "<table width='100%'>";
-
-      echo "<tr>";
-      echo "<td align='center'>";
-
-      echo "<table>";
-      echo "<tr>";
-      echo "<td>";
-
+      $menu = [];
       /*
        * General
        */
-      $a_menu = [];
+      $general_menu = [];
       if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-         $a_menu[0]['name'] = __('Agents management', 'glpiinventory');
-         $a_menu[0]['pic']  = $fi_path."/pics/menu_agents.png";
-         $a_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
+         $general_menu[0]['name'] = __('Agents management', 'glpiinventory');
+         $general_menu[0]['pic']  = $fi_path."/pics/menu_agents.png";
+         $general_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
 
       if (Session::haveRight('plugin_fusioninventory_group', READ)) {
-         $a_menu[2]['name'] = __('Groups of computers', 'glpiinventory');
-         $a_menu[2]['pic']  = $fi_path."/pics/menu_group.png";
-         $a_menu[2]['link'] = $fi_path."/front/deploygroup.php";
+         $general_menu[2]['name'] = __('Groups of computers', 'glpiinventory');
+         $general_menu[2]['pic']  = $fi_path."/pics/menu_group.png";
+         $general_menu[2]['link'] = $fi_path."/front/deploygroup.php";
       }
 
       if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
-         $a_menu[3]['name'] = __('General configuration', 'glpiinventory');
-         $a_menu[3]['pic']  = $fi_path."/pics/menu_agents.png";
-         $a_menu[3]['link'] = $fi_path."/front/config.form.php";
+         $general_menu[3]['name'] = __('General configuration', 'glpiinventory');
+         $general_menu[3]['pic']  = $fi_path."/pics/menu_agents.png";
+         $general_menu[3]['link'] = $fi_path."/front/config.form.php";
       }
 
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'glpiinventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
+      if (!empty($general_menu)) {
+         $menu['general'] = [
+            'name'     => __('General', 'glpiinventory'),
+            'children' => $general_menu,
+         ];
       }
 
       /*
        * Tasks
        */
-      $a_menu = [];
+      $tasks_menu = [];
       if (Session::haveRight('plugin_fusioninventory_task', READ)) {
-         $a_menu[2]['name'] = __('Task management', 'glpiinventory');
-         $a_menu[2]['pic']  = $fi_path."/pics/menu_task.png";
-         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
+         $tasks_menu[2]['name'] = __('Task management', 'glpiinventory');
+         $tasks_menu[2]['pic']  = $fi_path."/pics/menu_task.png";
+         $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
 
-         $a_menu[3]['name'] = __('Monitoring / Logs', 'glpiinventory');
-         $a_menu[3]['pic']  = $fi_path."/pics/menu_runningjob.png";
-         $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
+         $tasks_menu[3]['name'] = __('Monitoring / Logs', 'glpiinventory');
+         $tasks_menu[3]['pic']  = $fi_path."/pics/menu_runningjob.png";
+         $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
       if (Session::haveRight('plugin_fusioninventory_importxml', CREATE)) {
-         $a_menu[0]['name'] = __('Import agent XML file', 'glpiinventory');
-         $a_menu[0]['pic']  = $fi_path."/pics/menu_importxml.png";
-         $a_menu[0]['link'] = $fi_path."/front/inventorycomputerimportxml.php";
+         $tasks_menu[0]['name'] = __('Import agent XML file', 'glpiinventory');
+         $tasks_menu[0]['pic']  = $fi_path."/pics/menu_importxml.png";
+         $tasks_menu[0]['link'] = $fi_path."/front/inventorycomputerimportxml.php";
       }
 
       if (Session::haveRight("plugin_fusioninventory_collect", READ)) {
-         $a_menu[11]['name'] = __('Computer information', 'glpiinventory');
-         $a_menu[11]['pic']  = $fi_path."/pics/menu_task.png";
-         $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
+         $tasks_menu[11]['name'] = __('Computer information', 'glpiinventory');
+         $tasks_menu[11]['pic']  = $fi_path."/pics/menu_task.png";
+         $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
       }
 
       if (Session::haveRight('plugin_fusioninventory_task', READ)) {
-         $a_menu[12]['name'] = __('Time slot', 'glpiinventory');
-         $a_menu[12]['pic']  = $fi_path."/pics/menu_timeslot.png";
-         $a_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');
+         $tasks_menu[12]['name'] = __('Time slot', 'glpiinventory');
+         $tasks_menu[12]['pic']  = $fi_path."/pics/menu_timeslot.png";
+         $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');
       }
 
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Tasks', 'glpiinventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
+      if (!empty($tasks_menu)) {
+         $menu['tasks'] = [
+            'name'     => __('Tasks', 'glpiinventory'),
+            'children' => $tasks_menu,
+         ];
       }
 
       /*
        * Rules
        */
-      $a_menu = [];
-
+      $rules_menu = [];
       if (Session::haveRight('plugin_fusioninventory_ruleimport', READ)) {
-         $a_menu[1]['name'] = __('Equipment import and link rules', 'glpiinventory');
-         $a_menu[1]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
+         $rules_menu[1]['name'] = __('Equipment import and link rules', 'glpiinventory');
+         $rules_menu[1]['pic']  = $fi_path."/pics/menu_rules.png";
+         $rules_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
                     'PluginFusioninventoryInventoryRuleImport'
                  );
       }
 
       if (Session::haveRight('plugin_fusioninventory_ignoredimportdevice', READ)) {
-         $a_menu[2]['name'] = __('Asset skipped during import', 'glpiinventory');
-         $a_menu[2]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL(
+         $rules_menu[2]['name'] = __('Asset skipped during import', 'glpiinventory');
+         $rules_menu[2]['pic']  = $fi_path."/pics/menu_rules.png";
+         $rules_menu[2]['link'] = Toolbox::getItemTypeSearchURL(
                     'PluginFusioninventoryIgnoredimportdevice'
                  );
       }
 
       if (Session::haveRight('plugin_fusioninventory_ruleentity', READ)) {
-         $a_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
-         $a_menu[3]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
+         $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
+         $rules_menu[3]['pic']  = $fi_path."/pics/menu_rules.png";
+         $rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
       }
 
       if (Session::haveRight('plugin_fusioninventory_rulelocation', READ)) {
-         $a_menu[4]['name'] = __('Location rules', 'glpiinventory');
-         $a_menu[4]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[4]['link'] = $fi_path."/front/inventoryrulelocation.php";
+         $rules_menu[4]['name'] = __('Location rules', 'glpiinventory');
+         $rules_menu[4]['pic']  = $fi_path."/pics/menu_rules.png";
+         $rules_menu[4]['link'] = $fi_path."/front/inventoryrulelocation.php";
       }
 
       if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
-         $a_menu[5]['name'] = __('Computer information rules', 'glpiinventory');
-         $a_menu[5]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[5]['link'] = $fi_path."/front/collectrule.php";
+         $rules_menu[5]['name'] = __('Computer information rules', 'glpiinventory');
+         $rules_menu[5]['pic']  = $fi_path."/pics/menu_rules.png";
+         $rules_menu[5]['link'] = $fi_path."/front/collectrule.php";
       }
 
       if (Session::haveRight('plugin_fusioninventory_blacklist', READ)) {
-         $a_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
-         $a_menu[6]['pic']  = $fi_path."/pics/menu_blacklist.png";
-         $a_menu[6]['link'] = $fi_path."/front/inventorycomputerblacklist.php";
+         $rules_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
+         $rules_menu[6]['pic']  = $fi_path."/pics/menu_blacklist.png";
+         $rules_menu[6]['link'] = $fi_path."/front/inventorycomputerblacklist.php";
       }
 
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Rules', 'glpiinventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
+      if (!empty($rules_menu)) {
+         $menu['rules'] = [
+            'name'     => __('Rules', 'glpiinventory'),
+            'children' => $rules_menu,
+         ];
       }
 
       /*
        * Network
        */
-      $a_menu = [];
+      $network_menu = [];
 
       if (Session::haveRight('plugin_fusioninventory_iprange', READ)) {
-         $a_menu[] = [
+         $network_menu[] = [
             'name' => __('IP Ranges', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_rangeip.png",
             'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange')
@@ -328,7 +316,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_credentialip', READ)) {
-         $a_menu[] = [
+         $network_menu[] = [
             'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_credentialips.png",
             'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip')
@@ -336,7 +324,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
-         $a_menu[] = [
+         $network_menu[] = [
             'name' => __('SNMP credentials', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_authentification.png",
             'link' => $fi_path."/front/configsecurity.php"
@@ -344,7 +332,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_credential', READ)) {
-         $a_menu[] = [
+         $network_menu[] = [
             'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_authentification.png",
             'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential')
@@ -352,13 +340,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_task', READ)) {
-         $a_menu[] = [
+         $network_menu[] = [
             'name' => __('Discovery status', 'glpiinventory'),
             'pic'  =>   $fi_path."/pics/menu_discovery_status.png",
             'link' =>   $fi_path."/front/statediscovery.php"
          ];
 
-         $a_menu[] = [
+         $network_menu[] = [
                'name' => __('Network inventory status', 'glpiinventory'),
                'pic' =>    $fi_path."/pics/menu_inventory_status.png",
                'link' =>   $fi_path."/front/stateinventory.php",
@@ -366,27 +354,27 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_model', READ)) {
-         $a_menu[] = [
+         $network_menu[] = [
             'name' => __('SNMP models creation', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_constructmodel.png",
             'link' => $fi_path."/front/constructmodel.php"
          ];
       }
 
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Networking', 'glpiinventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
+      if (!empty($network_menu)) {
+         $menu['network'] = [
+            'name'     => __('Networking', 'glpiinventory'),
+            'children' => $network_menu,
+         ];
       }
 
       /*
        * Deploy
        */
-      $a_menu = [];
+      $deploy_menu = [];
 
       if (Session::haveRight('plugin_fusioninventory_package', READ)) {
-         $a_menu[] =[
+         $deploy_menu[] =[
             'name' => __('Package management', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_package.png",
             'link' => $fi_path."/front/deploypackage.php"
@@ -394,57 +382,52 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_deploymirror', READ)) {
-         $a_menu[1]['name'] = __('Mirror servers', 'glpiinventory');
-         $a_menu[1]['pic']  = $fi_path."/pics/menu_files.png";
-         $a_menu[1]['link'] = $fi_path."/front/deploymirror.php";
+         $deploy_menu[1]['name'] = __('Mirror servers', 'glpiinventory');
+         $deploy_menu[1]['pic']  = $fi_path."/pics/menu_files.png";
+         $deploy_menu[1]['link'] = $fi_path."/front/deploymirror.php";
       }
 
       if (Session::haveRight('plugin_fusioninventory_userinteractiontemplate', READ)) {
-         $a_menu[2]['name'] = _n('User interaction template',
+         $deploy_menu[2]['name'] = _n('User interaction template',
                                  'User interaction templates', 2, 'glpiinventory');
-         $a_menu[2]['pic']  = $fi_path."/pics/menu_files.png";
-         $a_menu[2]['link'] = $fi_path."/front/deployuserinteractiontemplate.php";
+         $deploy_menu[2]['pic']  = $fi_path."/pics/menu_files.png";
+         $deploy_menu[2]['link'] = $fi_path."/front/deployuserinteractiontemplate.php";
       }
 
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'glpiinventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
+      if (!empty($deploy_menu)) {
+         $menu['deploy'] = [
+            'name'     => __('Deploy', 'glpiinventory'),
+            'children' => $deploy_menu,
+         ];
       }
 
       /*
        * Guide
        */
-      $a_menu = [];
+      $guide_menu = [];
 
-         $a_menu[] = [
-            'name' => "FI> ".__('Computer inv.', 'glpiinventory'),
-            'pic'  => "",
-            'link' => $fi_path."/front/menu_inventory.php"
+      $guide_menu[] = [
+         'name' => "FI> ".__('Computer inv.', 'glpiinventory'),
+         'pic'  => "",
+         'link' => $fi_path."/front/menu_inventory.php"
+      ];
+
+      $guide_menu[] = [
+         'name' => "FI> ".__('SNMP inv.', 'glpiinventory'),
+         'pic'  => "",
+         'link' => $fi_path."/front/menu_snmpinventory.php"
+      ];
+
+      if (!empty($guide_menu)) {
+         $menu['guide'] = [
+            'name'     => __('Guide', 'glpiinventory'),
+            'children' => $guide_menu,
          ];
+      }
 
-         $a_menu[] = [
-            'name' => "FI> ".__('SNMP inv.', 'glpiinventory'),
-            'pic'  => "",
-            'link' => $fi_path."/front/menu_snmpinventory.php"
-         ];
-
-         if (!empty($a_menu)) {
-            $width_status = PluginFusioninventoryMenu::htmlMenu(__('Guide', 'glpiinventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
-         }
-
-         echo "</td>";
-         echo "</tr>";
-         echo "</table>";
-
-         echo "</td>";
-         echo "</tr>";
-         echo "</table>";
-         echo "</div><br/><br/><br/>";
+      TemplateRenderer::getInstance()->display('@glpiinventory/submenu.html.twig', [
+         'menu' => $menu,
+      ]);
    }
 
 
@@ -623,74 +606,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          echo "</tr>";
       }
       echo "</table>";
-   }
-
-
-   /**
-    * Display menu in html
-    *
-    * @global array $CFG_GLPI
-    * @param string $menu_name
-    * @param array $a_menu
-    * @param string $type
-    * @param integer $width_status
-    * @return integer
-    */
-   static function htmlMenu($menu_name, $a_menu = [], $type = "big", $width_status = 300) {
-      global $CFG_GLPI;
-
-      $width_max = 1250;
-
-      $width = 180;
-
-      if (($width + $width_status) > $width_max) {
-         $width_status = 0;
-         echo "</td>";
-         echo "</tr>";
-         echo "</table>";
-         echo "<table>";
-         echo "<tr>";
-         echo "<td valign='top'>";
-      } else {
-         echo "</td>";
-         echo "<td valign='top'>";
-      }
-      $width_status = ($width + $width_status);
-
-      echo "<table class='tab_cadre' style='position: relative; z-index: 30;'
-         onMouseOver='document.getElementById(\"menu".$menu_name."\").style.display=\"block\"'
-         onMouseOut='document.getElementById(\"menu".$menu_name."\").style.display=\"none\"'>";
-
-      echo "<tr>";
-      echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
-         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
-         &nbsp;".str_replace("FusionInventory ", "", $menu_name)."&nbsp;
-         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
-      </th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1' id='menu".$menu_name."' style='display:none; position: relative; z-index: 30;'>";
-      echo "<td>";
-      echo "<table>";
-      foreach ($a_menu as $menu_id) {
-         echo "<tr>";
-         $menu_id['pic'] = str_replace("/menu_", "/menu_mini_", $menu_id['pic']);
-         echo "<th>";
-         if (!empty($menu_id['pic'])) {
-            echo "<img src='".$menu_id['pic']."' width='16' height='16'/>";
-         }
-         echo "</th>";
-         echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."' style='text-align: left'>
-                  <a href='".$menu_id['link']."'>".$menu_id['name']."</a></th>";
-         echo "</tr>";
-      }
-      echo "</table>";
-
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-
-      return $width_status;
    }
 
 
