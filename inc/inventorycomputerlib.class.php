@@ -2376,7 +2376,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $data['capacity']           = $data['capacity'];
       $data['voltage']            = $data['voltage'];
       $batteries_id = $deviceBattery->import($data);
-      if (!isset($data['real_capacity'])) {
+      if (!isset($data['real_capacity']) || empty($data['real_capacity'])) {
          $data['real_capacity'] = '0';
       }
       $data['devicebatteries_id'] = $batteries_id;

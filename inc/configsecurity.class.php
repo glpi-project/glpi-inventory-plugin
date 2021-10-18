@@ -97,7 +97,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      Html::input('name');
+      echo Html::input('name');
       echo "</td>";
       echo "</tr>";
 
@@ -116,12 +116,12 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Community', 'glpiinventory') . "</td>";
       echo "<td align='center'>";
-      Html::input('community', ['value' => $this->fields['community']]);
+      echo Html::input('community', ['value' => $this->fields['community']]);
       echo "</td>";
 
       echo "<td align='center'>" . __('User') . "</td>";
       echo "<td align='center'>";
-      Html::input('username', ['value' => $this->fields['username']]);
+      echo Html::input('username', ['value' => $this->fields['username']]);
       echo "</td>";
       echo "</tr>";
 
@@ -138,7 +138,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      Html::input('auth_passphrase', ['value' => $this->fields['auth_passphrase']]);
+      echo Html::input('auth_passphrase', ['value' => $this->fields['auth_passphrase']]);
       echo "</td>";
       echo "</tr>";
 
@@ -154,7 +154,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      Html::input('priv_passphrase', ['value' => $this->fields['priv_passphrase']]);
+      echo Html::input('priv_passphrase', ['value' => $this->fields['priv_passphrase']]);
       echo "</td>";
       echo "</tr>";
 

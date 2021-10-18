@@ -150,7 +150,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('blacklisted value', 'glpiinventory')."</td>";
       echo "<td>";
-      Html::input('value', ['value' => $this->fields['value']]);
+      echo Html::input('value', ['value' => $this->fields['value']]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";

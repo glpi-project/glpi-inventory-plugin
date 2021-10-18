@@ -279,7 +279,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      Html::input('name', ['value' => $this->fields['name']]);
+      echo Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";

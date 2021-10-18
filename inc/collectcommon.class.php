@@ -202,7 +202,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       echo "<td>";
       echo Html::hidden('plugin_fusioninventory_collects_id',
                         ['value' => $collects_id]);
-      Html::input('name', ['value' => $this->fields['name']]);
+      echo Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";
       $this->displayNewSpecificities();
 

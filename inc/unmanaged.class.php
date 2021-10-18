@@ -393,7 +393,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Name') . "&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::input('name', ['size' => 35, 'value' => $this->fields['name']]);
+      echo Html::input('name', ['size' => 35, 'value' => $this->fields['name']]);
       echo "</td>";
 
       if (Session::isMultiEntitiesMode()) {
@@ -429,7 +429,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<td align='center'>" . __('Alternate username') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      Html::input('contact', ['size' => 35, 'value' => $this->fields['contact']]);
+      echo Html::input('contact', ['size' => 35, 'value' => $this->fields['contact']]);
       echo "</td>";
       echo "</tr>";
 
@@ -457,7 +457,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<td align='center'>" . __('Serial Number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      Html::input('serial', ['size' => 35, 'value' => $this->fields['serial']]);
+      echo Html::input('serial', ['size' => 35, 'value' => $this->fields['serial']]);
       echo "</td>";
       echo "</tr>";
 
@@ -469,7 +469,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<td align='center'>" . __('Inventory number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      Html::input('otherserial', ['size' => 35, 'value' => $this->fields['otherserial']]);
+      echo Html::input('otherserial', ['size' => 35, 'value' => $this->fields['otherserial']]);
       echo "</td>";
       echo "</tr>";
 
@@ -477,7 +477,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . __('IP') . " :</td>";
          echo "<td align='center'>";
-         Html::input('ip', ['size' => 35, 'value' => $this->fields['ip']]);
+         echo Html::input('ip', ['size' => 35, 'value' => $this->fields['ip']]);
          echo "</td>";
 
          echo "<td colspan='2'></td>";

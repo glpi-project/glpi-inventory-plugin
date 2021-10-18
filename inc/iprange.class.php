@@ -229,7 +229,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      Html::input('name', ['value' => $this->fields['name']]);
+      echo Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";
       echo "</tr>";
 

@@ -483,7 +483,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td>";
-      Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td>".__('Comments')."&nbsp;:</td>";

@@ -139,7 +139,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    public function showTextField($title, $varname) {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
-      Html::autocompletionTextField ($this, $varname, $this->fields['name']);
+      echo Html::input($varname, ['value' => $this->fields[$varname]]);
       echo "</div>";
    }
 

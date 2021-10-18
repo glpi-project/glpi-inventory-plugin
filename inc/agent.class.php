@@ -416,7 +416,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')." :</td>";
       echo "<td align='center'>";
-      Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
       echo "<td>".__('Device_id', 'glpiinventory')."&nbsp;:</td>";
       echo "<td align='center'>";
