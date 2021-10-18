@@ -219,7 +219,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td rowspan='3' class='middle right'>".__('Comments')."&nbsp;: </td>";
@@ -233,7 +233,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Mirror server address', 'glpiinventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'url', ['size' => 40]);
+      Html::input('url', ['size' => 40, 'value' => $this->fields['url']]);
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -291,8 +291,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          'field'         => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
-         'itemlink_type' => $this->getType(),
-         'autocomplete'  => true,
+         'itemlink_type' => $this->getType()
       ];
 
       $tab[] = [
@@ -308,8 +307,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          'table'        => $this->getTable(),
          'field'        => 'url',
          'name'         => __('Mirror server address', 'glpiinventory'),
-         'datatype'     => 'string',
-         'autocomplete' => true,
+         'datatype'     => 'string'
       ];
 
       $tab[] = [

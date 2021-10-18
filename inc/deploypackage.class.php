@@ -334,8 +334,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          'field'         => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
-         'itemlink_link' => $this->getType(),
-         'autocomplete'  => true,
+         'itemlink_link' => $this->getType()
       ];
 
       $tab[] = [
@@ -484,7 +483,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td>".__('Comments')."&nbsp;:</td>";

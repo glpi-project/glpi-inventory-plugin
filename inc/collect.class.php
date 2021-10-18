@@ -166,8 +166,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
          'table'        => $this->getTable(),
          'field'        => 'name',
          'name'         => __('Name'),
-         'datatype'     => 'itemlink',
-         'autocomplete' => true,
+         'datatype'     => 'itemlink'
       ];
 
       return $tab;
@@ -280,7 +279,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, 'name');
+      Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";

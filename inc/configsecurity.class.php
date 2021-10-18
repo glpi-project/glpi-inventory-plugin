@@ -97,7 +97,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      Html::autocompletionTextField($this, 'name');
+      Html::input('name');
       echo "</td>";
       echo "</tr>";
 
@@ -116,14 +116,12 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Community', 'glpiinventory') . "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'community');
+      Html::input('community', ['value' => $this->fields['community']]);
       echo "</td>";
 
       echo "<td align='center'>" . __('User') . "</td>";
       echo "<td align='center'>";
-      // FIXME This is a credential field so it is not in autocomplete whitelist.
-      // Replace with a simple text input.
-      Html::autocompletionTextField($this, 'username');
+      Html::input('username', ['value' => $this->fields['username']]);
       echo "</td>";
       echo "</tr>";
 
@@ -140,9 +138,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      // FIXME This is a credential field so it is not in autocomplete whitelist.
-      // Replace with a password text input, crypt it, and handle ability to "blank" it.
-      Html::autocompletionTextField($this, 'auth_passphrase');
+      Html::input('auth_passphrase', ['value' => $this->fields['auth_passphrase']]);
       echo "</td>";
       echo "</tr>";
 
@@ -158,9 +154,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      // FIXME This is a credential field so it is not in autocomplete whitelist.
-      // Replace with a password text input, crypt it, and handle ability to "blank" it.
-      Html::autocompletionTextField($this, 'priv_passphrase');
+      Html::input('priv_passphrase', ['value' => $this->fields['priv_passphrase']]);
       echo "</td>";
       echo "</tr>";
 
@@ -390,8 +384,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
          'table'         => $this->getTable(),
          'field'         => 'name',
          'name'          => __('Name'),
-         'datatype'      => 'itemlink',
-         'autocomplete'  => true,
+         'datatype'      => 'itemlink'
       ];
 
       $tab[] = [
@@ -400,8 +393,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
          'field'         => 'community',
          'name'          => __('Community', 'glpiinventory'),
          'datatype'      => 'string',
-         'massiveaction' => false,
-         'autocomplete'  => true,
+         'massiveaction' => false
       ];
 
       return $tab;

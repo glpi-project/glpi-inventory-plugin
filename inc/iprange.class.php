@@ -131,8 +131,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          'table'        => $this->getTable(),
          'field'        => 'name',
          'name'         => __('Name'),
-         'datatype'     => 'itemlink',
-         'autocomplete' => true,
+         'datatype'     => 'itemlink'
       ];
 
       $tab[] = [
@@ -230,7 +229,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      Html::autocompletionTextField($this, 'name');
+      Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";
       echo "</tr>";
 

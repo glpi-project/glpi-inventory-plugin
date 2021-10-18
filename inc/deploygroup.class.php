@@ -352,7 +352,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      Html::input('name', ['size' => 40, 'value' => $this->fields['value']]);
       echo "</td>";
 
       echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
@@ -393,8 +393,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          'field'         => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
-         'massiveaction' => false,
-         'autocomplete'  => true,
+         'massiveaction' => false
       ];
 
       $tab[] = [

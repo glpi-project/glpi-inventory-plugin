@@ -954,8 +954,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          'table'        => $this->getTable(),
          'field'        => 'name',
          'name'         => __('Name'),
-         'datatype'     => 'itemlink',
-         'autocomplete' => true,
+         'datatype'     => 'itemlink'
       ];
 
       return $tab;
