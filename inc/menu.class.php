@@ -196,36 +196,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $fi_path = Plugin::getWebDir('glpiinventory');
 
-      $pfEntity = new PluginFusioninventoryEntity();
-      if (strlen($pfEntity->getValue('agent_base_url', 0))<10
-              && !strstr($_SERVER['PHP_SELF'], 'front/config.form.php')) {
-         echo "<div class='msgboxmonit msgboxmonit-red'>";
-         print "<center><a href=\"".$CFG_GLPI['root_doc']."/front/entity.form.php?id=0&forcetab=PluginFusioninventoryEntity$0\">";
-         print __('The server needs to know the URL the agents use to access the server. Please '.
-                 'configure it in the General Configuration page.', 'glpiinventory');
-         print "</a></center>";
-         echo "</div>";
-         exit;
-      }
-
-      // Check if cron GLPI running
-      $cronTask = new CronTask();
-      $cronTask->getFromDBbyName('PluginFusioninventoryTask', 'taskscheduler');
-      if ($cronTask->fields['lastrun'] == ''
-              OR strtotime($cronTask->fields['lastrun']) < strtotime("-3 day")) {
-         $message = __('GLPI cron not running, see ', 'glpiinventory');
-         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/cron.html' target='_blank'>".__('documentation', 'glpiinventory')."</a>";
-         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
-      }
-
-      // Check if plugin right updated (because security problems)
-      $fi_php_path = Plugin::getPhpDir('glpiinventory');
-      if (file_exists($fi_php_path."/ajax/deploydropdown_operatingsystems.php")) {
-         $message = __('SECURITY PROBLEM, see `2.1 Update` section to update correctly the plugin on ', 'glpiinventory');
-         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/installation.html' target='_blank'>".__('documentation', 'glpiinventory')."</a>";
-         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
-      }
-
       $width_status = 0;
 
       echo "<div align='center' style='height: 35px; display: inline-block; width: 100%; margin: 0 auto;'>";
