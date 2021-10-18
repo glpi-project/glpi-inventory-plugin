@@ -277,8 +277,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
          $this->fields[$varname].
          "</textarea>";
       echo "</div>";
-
-      echo Html::scriptBlock("$('.autogrow').autogrow();");
    }
 
 
