@@ -173,7 +173,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias = [];
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = __('FusionInventory tag', 'glpiinventory');
+      $criterias['tag']['name']      = __('Inventory tag', 'glpiinventory');
 
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = __('Domain');
@@ -221,7 +221,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $actions['_affect_entity_by_tag']['force_actions'] = ['regex_result'];
 
       $actions['_ignore_import']['name'] =
-                     __('Ignore in FusionInventory import', 'glpiinventory');
+                     __('Ignore in inventory import', 'glpiinventory');
 
       $actions['_ignore_import']['type'] = 'yesonly';
 

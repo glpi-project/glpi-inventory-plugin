@@ -35,7 +35,7 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'glpiinventory'),
+Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
              "pluginfusioninventorymenu",

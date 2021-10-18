@@ -37,7 +37,7 @@ $pfTask = new PluginFusioninventoryTask();
 //Submit the task form parameters
 $pfTask->submitForm($_POST);
 
-Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
         "admin", "pluginfusioninventorymenu", "task");
 
 

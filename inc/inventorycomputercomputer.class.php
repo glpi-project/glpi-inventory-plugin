@@ -152,7 +152,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
             echo '</tr>';
 
             echo '<tr>';
-            echo '<th colspan="4">'.__('FusionInventory', 'glpiinventory').'</th>';
+            echo '<th colspan="4">'.__('GLPI Inventory', 'glpiinventory').'</th>';
             echo '</tr>';
             $pfAgent->showInfoForComputer($item, 4);
          }
@@ -230,7 +230,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<table class="tab_glpi" width="100%">';
 
       echo '<tr>';
-      echo '<th colspan="4">'.__('FusionInventory', 'glpiinventory').'</th>';
+      echo '<th colspan="4">'.__('GLPI Inventory', 'glpiinventory').'</th>';
       echo '</tr>';
 
       $pfAgent = new PluginFusioninventoryAgent();

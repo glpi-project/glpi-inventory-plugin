@@ -33,7 +33,7 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "admin",
+Html::header(__('GLPI Inventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "deploypackage");
 
 PluginFusioninventoryMenu::displayMenu("mini");

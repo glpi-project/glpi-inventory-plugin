@@ -880,7 +880,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       switch ($name) {
          case 'taskScheduler' :
-            return ['description' => __('FusionInventory task scheduler')];
+            return ['description' => __('Inventory task scheduler')];
 
          case 'cleanOnDemand' :
             return ['description' => __('Clean on demand deployment tasks')];

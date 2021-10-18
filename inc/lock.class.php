@@ -205,7 +205,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='4'>".__('FusionInventory', 'glpiinventory')."</th></tr>";
+      echo "<tr><th colspan='4'>".__('GLPI Inventory', 'glpiinventory')."</th></tr>";
 
       echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
       if ($p_items_id != '0') {

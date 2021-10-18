@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Manage the FusionInventory agents.
+ * Manage agents
  */
 class PluginFusioninventoryAgent extends CommonDBTM {
 
@@ -169,7 +169,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          'id'            => '11',
          'table'         => $this->getTable(),
          'field'         => 'tag',
-         'name'          => __('FusionInventory tag', 'glpiinventory'),
+         'name'          => __('Inventory tag', 'glpiinventory'),
          'datatype'      => 'text',
          'massiveaction' => false,
       ];
@@ -497,7 +497,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'max' => 400]
       );
       echo "</td>";
-      echo "<td>".__('FusionInventory tag', 'glpiinventory')."&nbsp:</td>";
+      echo "<td>".__('Inventory tag', 'glpiinventory')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["tag"];
       echo "</td>";
@@ -1168,7 +1168,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $this->showRemoteStatus($computer);
 
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('FusionInventory tag', 'glpiinventory').'</td>';
+         echo '<td>'.__('Inventory tag', 'glpiinventory').'</td>';
          echo '<td>'.$this->fields['tag'].'</td>';
          if ($colspan == 2) {
             echo '</tr>';

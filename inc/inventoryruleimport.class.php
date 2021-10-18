@@ -171,7 +171,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          ],
          'tag' => [
             'name'            => __('Agent', 'glpiinventory').' > '.
-                                 __('FusionInventory tag', 'glpiinventory'),
+                                 __('Inventory tag', 'glpiinventory'),
          ],
          'osname' => [
             'name'            => __('Asset', 'glpiinventory').' > '.
@@ -252,7 +252,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function getActions() {
 
       $actions = [];
-      $actions['_fusion']['name']        = __('FusionInventory link', 'glpiinventory');
+      $actions['_fusion']['name']        = __('Inventory link', 'glpiinventory');
       $actions['_fusion']['type']        = 'fusion_type';
 
       $actions['_ignore_import']['name'] = __('To be unaware of import (with log)', 'glpiinventory');

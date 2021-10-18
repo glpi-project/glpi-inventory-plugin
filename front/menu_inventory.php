@@ -33,7 +33,7 @@
 include ("../../../inc/includes.php");
 
 if (PluginFusioninventoryMenu::canView()) {
-   Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
+   Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
                 "fusioninventory", "menu");
 
    PluginFusioninventoryMenu::displayMenuInventory();

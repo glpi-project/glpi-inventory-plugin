@@ -35,7 +35,7 @@ include ("../../../inc/includes.php");
 Session::checkRight('plugin_fusioninventory_task', READ);
 
 
-Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
         "admin", "pluginfusioninventorymenu", "timeslot");
 
 PluginFusioninventoryMenu::displayMenu("mini");

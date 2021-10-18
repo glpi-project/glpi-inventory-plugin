@@ -172,7 +172,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
    /**
-    * Display the menu of plugin FusionInventory
+    * Display the menu of plugin
     *
     * @global array $CFG_GLPI
     * @param string $type
@@ -471,7 +471,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>";
-      echo __('This is the steps to configure FusionInventory plugin for computer inventory', 'glpiinventory');
+      echo __('This is the steps to configure plugin for computer inventory', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
 
@@ -550,7 +550,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>";
-      echo __('This is the steps to configure FusionInventory plugin for SNMP inventory (swicth, router, network printer)', 'glpiinventory');
+      echo __('This is the steps to configure plugin for SNMP inventory (swicth, router, network printer)', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
 
@@ -695,7 +695,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
    /**
-    * Display the board (graph / stats on FusionInventory plugin page)
+    * Display the board (graph / stats on plugin page)
     *
     * @global object $DB
     */
@@ -724,7 +724,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $dataComputer = [];
       $dataComputer[] = [
-          'key' => __('FusionInventory computers', 'glpiinventory').' : '.$fusionComputers,
+          'key' => __('GLPI Inventory computers', 'glpiinventory').' : '.$fusionComputers,
           'y'   => $fusionComputers,
           'color' => '#3dff7d'
       ];

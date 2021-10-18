@@ -34,7 +34,7 @@ include ("../../../inc/includes.php");
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "taskjob");
 
 Session::checkRight('plugin_fusioninventory_task', READ);

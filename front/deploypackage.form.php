@@ -113,7 +113,7 @@ if (isset ($data["add"])) {
    Html::back();
 }
 
-Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
+Html::header(__('GLPI Inventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
    "pluginfusioninventorymenu", "deploypackage");
 PluginFusioninventoryMenu::displayMenu("mini");
 $id = "";

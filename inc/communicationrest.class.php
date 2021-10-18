@@ -137,7 +137,7 @@ class PluginFusioninventoryCommunicationRest {
    /**
     * Get jobs for an agent
     * TODO: This methods must be used inplace of other methods in order to mutualize code and
-    * to fully support FusionInventory REST API for every task's types
+    * to fully support agent REST API for every task's types
     *       -- kiniou
     *
     * @param array $params

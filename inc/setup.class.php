@@ -41,7 +41,7 @@ class PluginFusioninventorySetup {
 
 
    /**
-    * Uninstall process when uninstall the plugin FusionInventory
+    * Uninstall process when uninstall the plugin
     *
     * @global object $DB
     * @return true
@@ -1217,7 +1217,7 @@ class PluginFusioninventorySetup {
 
 
    /**
-    * Creation of FusionInventory user
+    * Creation of user
     *
     * @return integer id of the user "plugin FusionInventory"
     */

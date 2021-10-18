@@ -40,7 +40,7 @@ if (isset($_POST["sub_type"])) {
 } else if (isset($_GET["sub_type"])) {
    $sub_type = $_GET["sub_type"];
 }
-$sub_type = str_replace('FusionInventory', '', $sub_type);
+$sub_type = str_replace('GLPI Inventory', '', $sub_type);
 
 if (isset($_POST["condition"])) {
    $condition = $_POST["condition"];

@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Manage the webservice methods offered by the plugin FusionInventory.
+ * Manage the webservice methods offered by the plugin
  * It require the GLPI plugin Webservice.
  */
 class PluginFusioninventoryInventoryComputerWebservice {

@@ -51,7 +51,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->fields['id'] > 0) {
-         return __('FusionInventory historical', 'glpiinventory');
+         return __('GLPI Inventory historical', 'glpiinventory');
       }
       return '';
    }

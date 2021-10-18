@@ -32,7 +32,7 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
         "admin", "pluginfusioninventorymenu", "taskjoblog");
 
 Session::checkRight('plugin_fusioninventory_task', READ);

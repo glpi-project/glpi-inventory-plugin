@@ -93,7 +93,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('FusionInventory group', 'glpiinventory');
+      return __('Inventory group', 'glpiinventory');
    }
 
 

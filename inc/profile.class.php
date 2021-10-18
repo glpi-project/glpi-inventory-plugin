@@ -75,7 +75,7 @@ class PluginFusioninventoryProfile extends Profile {
 
    /**
     * Get the mapping old rights => new rights. Require it for upgrade from old
-    * version of plugin FusionInventory
+    * version of plugin
     *
     * @return array
     */
@@ -116,7 +116,7 @@ class PluginFusioninventoryProfile extends Profile {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      return self::createTabEntry('FusionInventory');
+      return self::createTabEntry('GLPI Inventory');
    }
 
 
@@ -476,7 +476,7 @@ class PluginFusioninventoryProfile extends Profile {
 
 
    /**
-    * Migration script for old rights from old version of plugin FusionInventory
+    * Migration script for old rights from old version of plugin
     */
    static function migrateProfiles() {
       //Get all rights from the old table

@@ -57,7 +57,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if ($this->canView()) {
-         return self::createTabEntry(__('FusionInventory SNMP', 'glpiinventory'));
+         return self::createTabEntry(__('GLPI Inventory SNMP', 'glpiinventory'));
       }
       return '';
    }
@@ -489,7 +489,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       echo '<table class="tab_glpi" width="100%">';
       echo '<tr>';
-      echo '<th colspan="2">'.__('FusionInventory', 'glpiinventory').'</th>';
+      echo '<th colspan="2">'.__('GLPI Inventory', 'glpiinventory').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';

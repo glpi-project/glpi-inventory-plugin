@@ -35,7 +35,7 @@ include ("../../../inc/includes.php");
 $pfUnmanaged = new PluginFusioninventoryUnmanaged();
 $ptt  = new PluginFusioninventoryTask();
 
-Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
         "assets", "pluginfusioninventoryunmanaged");
 
 

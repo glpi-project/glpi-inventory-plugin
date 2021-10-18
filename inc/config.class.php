@@ -565,7 +565,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("location",
                               ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'glpiinventory')],
+                                    "1"=>__('Inventory tag', 'glpiinventory')],
                               ['value'=>$pfConfig->getValue('location')]);
       echo "</td>";
 
@@ -575,7 +575,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("group",
                               ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'glpiinventory')],
+                                    "1"=>__('Inventory tag', 'glpiinventory')],
                               ['value'=>$pfConfig->getValue('group')]);
       echo "</td>";
       echo "</tr>";
@@ -603,7 +603,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("otherserial",
                               ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'glpiinventory')],
+                                    "1"=>__('Inventory tag', 'glpiinventory')],
                               ['value'=>$pfConfig->getValue('otherserial')]);
       echo "</td>";
 
