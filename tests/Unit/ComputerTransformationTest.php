@@ -40,7 +40,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerGeneral() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -151,7 +151,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerUsers() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -236,7 +236,7 @@ class ComputerTransformationTest extends TestCase {
       global $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -950,7 +950,7 @@ class ComputerTransformationTest extends TestCase {
       global $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
@@ -1041,7 +1041,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerProcessor() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1100,7 +1100,7 @@ class ComputerTransformationTest extends TestCase {
       global $PLUGIN_HOOKS;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [
         'HARDWARE' => [
@@ -1133,7 +1133,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerMonitor() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1195,7 +1195,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerLicenses() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1246,7 +1246,7 @@ class ComputerTransformationTest extends TestCase {
       global $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
@@ -1363,7 +1363,7 @@ class ComputerTransformationTest extends TestCase {
       global $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
@@ -1478,7 +1478,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerCdrom() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1533,7 +1533,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerNetworkport() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1664,7 +1664,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerNetworkportOldFormat() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1731,7 +1731,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerBattery() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1814,7 +1814,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerRemotemgmt() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1861,7 +1861,7 @@ class ComputerTransformationTest extends TestCase {
       global $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
@@ -1996,7 +1996,7 @@ class ComputerTransformationTest extends TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [

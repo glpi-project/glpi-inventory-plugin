@@ -73,7 +73,7 @@ class CollectsTest extends TestCase {
    public function prepareDb() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollect = new PluginFusioninventoryCollect();
 
@@ -221,7 +221,7 @@ class CollectsTest extends TestCase {
    public function registryProcessWithAgent() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfAgent            = new PluginFusioninventoryAgent();
       $pfCollect          = new PluginFusioninventoryCollect();
@@ -388,7 +388,7 @@ class CollectsTest extends TestCase {
       }
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfCollect = new PluginFusioninventoryCollect();
@@ -552,7 +552,7 @@ class CollectsTest extends TestCase {
       }
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfCollect = new PluginFusioninventoryCollect();
@@ -777,7 +777,7 @@ class CollectsTest extends TestCase {
    public function testFilesCleanComputer() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollect = new PluginFusioninventoryCollect_File();
       $computer = new Computer();
@@ -835,7 +835,7 @@ class CollectsTest extends TestCase {
    public function testRegistryCleanComputer() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollect = new PluginFusioninventoryCollect();
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
@@ -875,7 +875,7 @@ class CollectsTest extends TestCase {
    public function testWmiCleanComputer() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollect = new PluginFusioninventoryCollect();
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
@@ -915,7 +915,7 @@ class CollectsTest extends TestCase {
    public function testDeleteComputer() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       // Create computer
 

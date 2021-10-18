@@ -123,7 +123,7 @@ class ComputerDeviceBatteryTest extends TestCase {
    public function BatteryWithFullInfos() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
@@ -226,7 +226,7 @@ class ComputerDeviceBatteryTest extends TestCase {
    public function BatteryWithoutFullInfos() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();

@@ -1219,16 +1219,16 @@ class PluginFusioninventorySetup {
    /**
     * Creation of user
     *
-    * @return integer id of the user "plugin FusionInventory"
+    * @return integer id of the user "Plugin GLPI Inventory"
     */
    function createFusionInventoryUser() {
       $user = new User();
-      $a_users = $user->find(['name' => 'Plugin_FusionInventory']);
+      $a_users = $user->find(['name' => 'Plugin_GLPI_Inventory']);
       if (count($a_users) == '0') {
          $input = [];
-         $input['name'] = 'Plugin_FusionInventory';
+         $input['name'] = 'Plugin_GLPI_Inventory';
          $input['password'] = mt_rand(30, 39);
-         $input['firstname'] = "Plugin FusionInventory";
+         $input['firstname'] = "Plugin GLPI Inventory";
          return $user->add($input);
       } else {
          $user = current($a_users);

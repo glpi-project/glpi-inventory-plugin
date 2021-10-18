@@ -61,7 +61,7 @@ class CollectRuleTest extends TestCase {
    public function prepareDatabase() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $rule = new Rule();
       $ruleCriteria = new RuleCriteria();
@@ -263,7 +263,7 @@ class CollectRuleTest extends TestCase {
    public function getComputerCommentAssign() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
@@ -283,7 +283,7 @@ class CollectRuleTest extends TestCase {
    public function getComputerModelAssign() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
@@ -306,7 +306,7 @@ class CollectRuleTest extends TestCase {
    public function getComputerModelRegexCreate() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
@@ -330,7 +330,7 @@ class CollectRuleTest extends TestCase {
    public function getComputerModelRegex() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
@@ -354,7 +354,7 @@ class CollectRuleTest extends TestCase {
    public function getUserRegex() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
@@ -376,7 +376,7 @@ class CollectRuleTest extends TestCase {
    public function getSoftwareVersionRegex() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
@@ -398,7 +398,7 @@ class CollectRuleTest extends TestCase {
    public function getOtherserialRegex() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
@@ -420,7 +420,7 @@ class CollectRuleTest extends TestCase {
    public function getOtherserialAssign() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 

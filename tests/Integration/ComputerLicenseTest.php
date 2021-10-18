@@ -120,7 +120,7 @@ class ComputerLicenseTest extends TestCase {
    public function testAddLicensesWhenInventory() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
@@ -169,7 +169,7 @@ class ComputerLicenseTest extends TestCase {
    public function testCleanComputer() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       //First, check if license does exist
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
@@ -209,7 +209,7 @@ class ComputerLicenseTest extends TestCase {
    public function testDeleteComputer() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();

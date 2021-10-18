@@ -723,7 +723,7 @@ class PluginFusioninventoryToolbox {
    * @param CommonDBTM $item the item to check
    * @return boolean true if handle by FusionInventory
    */
-   static function isAFusionInventoryDevice($item) {
+   static function isAnInventoryDevice($item) {
       $table = '';
       switch ($item->getType()) {
          case 'Computer':

@@ -238,7 +238,7 @@ class ComputerPrinterTest extends TestCase {
    public function testPrinterDicoIgnoreImport() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $manufacturer = new Manufacturer();
       $computer     = new Computer();
@@ -348,7 +348,7 @@ class ComputerPrinterTest extends TestCase {
    public function PrinterDicoRename() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $computer = new Computer();
       $pfici    = new PluginFusioninventoryInventoryComputerInventory();

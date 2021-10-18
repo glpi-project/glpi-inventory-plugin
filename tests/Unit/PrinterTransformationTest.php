@@ -44,7 +44,7 @@ class PrinterTransformationTest extends TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
       $a_printer['INFO'] = [
@@ -102,7 +102,7 @@ class PrinterTransformationTest extends TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
       $a_printer['INFO'] = [
@@ -174,7 +174,7 @@ class PrinterTransformationTest extends TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
       $a_printer['INFO'] = [

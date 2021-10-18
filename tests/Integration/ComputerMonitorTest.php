@@ -167,7 +167,7 @@ class ComputerMonitorTest extends TestCase {
    public function MonitorUniqueSerialimport() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();

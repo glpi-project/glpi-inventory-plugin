@@ -109,7 +109,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             case 'Peripheral':
             case 'Phone':
             case 'Printer':
-               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+               $continue = PluginFusioninventoryToolbox::isAnInventoryDevice($item);
                break;
 
             default:

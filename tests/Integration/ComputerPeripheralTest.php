@@ -155,7 +155,7 @@ class ComputerPeripheralTest extends TestCase {
       global $DB;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $computer     = new Computer();
       $manufacturer = new Manufacturer();

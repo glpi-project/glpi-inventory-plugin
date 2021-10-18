@@ -269,7 +269,7 @@ class ComputerLogTest extends TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $serialized = gzcompress(serialize($inventory));
       $inventory['fusioninventorycomputer']['serialized_inventory'] =

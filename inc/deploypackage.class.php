@@ -1013,7 +1013,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             case 'Computer':
                if (Session::haveRight("plugin_fusioninventory_selfpackage", READ)
-                  && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)
+                  && PluginFusioninventoryToolbox::isAnInventoryDevice($item)
                      && self::isDeployEnabled($item->fields['id'])) {
                   return __('Package deploy', 'glpiinventory');
                }

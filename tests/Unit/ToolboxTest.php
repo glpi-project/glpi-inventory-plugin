@@ -77,10 +77,10 @@ JSON;
    /**
     * @test
     */
-   public function isAFusionInventoryDevice() {
+   public function isAnInventoryDevice() {
       $computer = new Computer();
 
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($computer));
 
       $values = ['name'         => 'comp',
                  'is_dynamic'   => 1,
@@ -89,11 +89,11 @@ JSON;
       $computers_id = $computer->add($values);
       $computer->getFromDB($computers_id);
 
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($computer));
 
       $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
       $pfComputer->add(['computers_id' => $computers_id]);
-      $this->assertTrue(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+      $this->assertTrue(PluginFusioninventoryToolbox::isAnInventoryDevice($computer));
 
       $printer = new Printer();
       $values  = ['name'         => 'printer',
@@ -102,11 +102,11 @@ JSON;
                   'is_recursive' => 0];
       $printers_id = $printer->add($values);
       $printer->getFromDB($printers_id);
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($printer));
 
       $pfPrinter = new PluginFusioninventoryPrinter();
       $pfPrinter->add(['printers_id' => $printers_id]);
-      $this->assertTrue(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+      $this->assertTrue(PluginFusioninventoryToolbox::isAnInventoryDevice($printer));
 
       $values  = ['name'         => 'printer2',
                   'is_dynamic'   => 0,
@@ -115,7 +115,7 @@ JSON;
       $printers_id_2 = $printer->add($values);
       $printer->getFromDB($printers_id_2);
       $pfPrinter->add(['printers_id' => $printers_id_2]);
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($printer));
 
    }
 

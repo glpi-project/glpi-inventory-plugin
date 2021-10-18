@@ -61,7 +61,7 @@ class RestURLTest extends TestCase {
       global $DB;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $entity   = new Entity();
       $pfAgent  = new PluginFusioninventoryAgent();
@@ -115,7 +115,7 @@ class RestURLTest extends TestCase {
    public function getCollectUrlEnt1Entity() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent  = new PluginFusioninventoryAgent();
@@ -149,7 +149,7 @@ class RestURLTest extends TestCase {
    public function getDeployUrlRootEntity() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent  = new PluginFusioninventoryAgent();
@@ -182,7 +182,7 @@ class RestURLTest extends TestCase {
    public function getEsxUrlRootEntity() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent  = new PluginFusioninventoryAgent();
@@ -215,7 +215,7 @@ class RestURLTest extends TestCase {
    public function getCollectUrlRootEntity() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $config = new PluginFusioninventoryConfig();
       $config->loadCache();

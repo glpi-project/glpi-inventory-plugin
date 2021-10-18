@@ -157,7 +157,7 @@ class SoftwareUpdateTest extends TestCase {
    public function AddSoftwareNormal() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"]                      = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -206,7 +206,7 @@ class SoftwareUpdateTest extends TestCase {
       $a_reference = [];
 
       $_SESSION["plugin_fusioninventory_entity"] = 1;
-      $_SESSION["glpiname"]                      = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'indepnet',
@@ -230,7 +230,7 @@ class SoftwareUpdateTest extends TestCase {
    public function AddSoftwareRename() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -275,7 +275,7 @@ class SoftwareUpdateTest extends TestCase {
    public function AddSoftwareRenameManufacturer() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -318,7 +318,7 @@ class SoftwareUpdateTest extends TestCase {
    public function AddSoftwareVersion() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -362,7 +362,7 @@ class SoftwareUpdateTest extends TestCase {
    public function ProcessInstalldate() {
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [

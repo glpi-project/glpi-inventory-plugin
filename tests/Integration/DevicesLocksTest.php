@@ -100,7 +100,7 @@ class DevicesLocksTest extends TestCase {
     */
    public function computerLockItem() {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
@@ -197,7 +197,7 @@ class DevicesLocksTest extends TestCase {
       global $DB;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
@@ -304,7 +304,7 @@ class DevicesLocksTest extends TestCase {
       global $DB;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfLock = new PluginFusioninventoryLock();
       $networkEquipment = new NetworkEquipment();
@@ -381,7 +381,7 @@ class DevicesLocksTest extends TestCase {
       global $DB;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfCommunication  = new PluginFusioninventoryCommunication();
       $monitor = new Monitor();
