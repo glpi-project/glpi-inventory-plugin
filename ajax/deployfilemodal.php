@@ -35,5 +35,5 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-PluginFusioninventoryDeployFile::showServerFileTree(
+PluginGlpiinventoryDeployFile::showServerFileTree(
         filter_input(INPUT_POST, "rand"));

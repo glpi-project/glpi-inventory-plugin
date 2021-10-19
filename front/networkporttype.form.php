@@ -34,7 +34,7 @@ include ("../../../inc/includes.php");
 
 Session::checkRight('config', UPDATE);
 
-$pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
+$pfNetworkporttype = new PluginGlpiinventoryNetworkporttype();
 
 if (isset($_POST['type_to_add'])) {
    foreach ($_POST['type_to_add'] as $id) {

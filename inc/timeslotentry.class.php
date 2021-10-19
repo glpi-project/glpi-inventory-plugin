@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the hours in the timeslot.
  */
-class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
+class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -51,7 +51,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_task';
+   static $rightname = 'plugin_glpiinventory_task';
 
 
    /**
@@ -148,7 +148,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec) {
          $hours[$timestamp] = date('H:i', $timestamp);
       }
-      PluginFusioninventoryToolbox::showHours('beginhours', ['step' => 15]);
+      PluginGlpiinventoryToolbox::showHours('beginhours', ['step' => 15]);
       echo "</td>";
       echo "</tr>";
 
@@ -160,7 +160,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       echo '<div id="beginday">';
       Dropdown::showFromArray('lastday', $days);
       echo '</div>';
-      PluginFusioninventoryToolbox::showHours('lasthours', ['step' => 15]);
+      PluginGlpiinventoryToolbox::showHours('lasthours', ['step' => 15]);
       echo Html::hidden('timeslots_id', ['value' => $timeslots_id]);
       echo "</td>";
       echo "</tr>";
@@ -183,8 +183,8 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    function formDeleteEntry($timeslots_id) {
 
       $dbentries = getAllDataFromTable(
-         'glpi_plugin_fusioninventory_timeslotentries', [
-            'WHERE'  => ['plugin_fusioninventory_timeslots_id' => $timeslots_id],
+         'glpi_plugin_glpiinventory_timeslotentries', [
+            'WHERE'  => ['plugin_glpiinventory_timeslots_id' => $timeslots_id],
             'ORDER'  => ['day', 'begin ASC']
          ]
       );
@@ -205,9 +205,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          echo $daysofweek[$dbentry['day']];
          echo "</td>";
          echo "<td>";
-         echo PluginFusioninventoryToolbox::getHourMinute($dbentry['begin']);
+         echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['begin']);
          echo " - ";
-         echo PluginFusioninventoryToolbox::getHourMinute($dbentry['end']);
+         echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['end']);
          echo "</td>";
          echo "<td colspan='2'>";
          if ($canedit) {
@@ -249,9 +249,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       for ($day=1; $day <= 7; $day++) {
          $dbentries = getAllDataFromTable(
-            'glpi_plugin_fusioninventory_timeslotentries', [
+            'glpi_plugin_glpiinventory_timeslotentries', [
                'WHERE'  => [
-                  'plugin_fusioninventory_timeslots_id' => $timeslots_id,
+                  'plugin_glpiinventory_timeslots_id' => $timeslots_id,
                   'day'                                 => $day,
                ],
                'ORDER'  => 'begin ASC'
@@ -295,9 +295,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
          // now get from DB
          $dbentries = getAllDataFromTable(
-            'glpi_plugin_fusioninventory_timeslotentries', [
+            'glpi_plugin_glpiinventory_timeslotentries', [
                'WHERE'  => [
-                  'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+                  'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                   'day'                                 => $day,
                ],
                'ORDER'  => 'begin ASC'
@@ -319,7 +319,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                // So we need manage the end
                if ($range['lasthours'] < $entries['begin']) {
                   $addEntries[] = [
-                     'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+                     'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                      'day'   => $day,
                      'begin' => $range['beginhours'],
                      'end'   => $range['lasthours']
@@ -340,7 +340,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
             } else if (($range['lasthours'] < $entries['begin'])) {
                // We add
                $this->add([
-                  'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+                  'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                   'day'   => $day,
                   'begin' => $range['beginhours'],
                   'end'   => $range['lasthours']
@@ -378,14 +378,14 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          }
          if (count($dbentries) == 0) {
             $addEntries[] = [
-               'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+               'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                'day'   => $day,
                'begin' => $range['beginhours'],
                'end'   => $range['lasthours']
             ];
          } else if ($inThePeriod || (count($updateEntries) == 0 && count($deleteEntries) == 0 & count($addEntries) == 0)) {
             $addEntries[] = [
-               'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+               'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                'day'   => $day,
                'begin' => $range['beginhours'],
                'end'   => $range['lasthours']

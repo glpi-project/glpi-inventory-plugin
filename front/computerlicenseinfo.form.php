@@ -35,10 +35,10 @@ include ("../../../inc/includes.php");
 Session::checkRight('license', UPDATE);
 
 if (isset($_POST['associate']) && is_array($_POST['associate'])) {
-   $pflicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
+   $pflicenseinfo = new PluginGlpiinventoryComputerLicenseInfo();
    $pflicenseinfo->associate($_POST);
 } else if (isset($_POST['dissociate']) && is_array($_POST['dissociate'])) {
-   $pflicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
+   $pflicenseinfo = new PluginGlpiinventoryComputerLicenseInfo();
    $pflicenseinfo->dissociate($_POST);
 }
 

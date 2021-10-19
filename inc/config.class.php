@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the configuration of the plugin.
  */
-class PluginFusioninventoryConfig extends CommonDBTM {
+class PluginGlpiinventoryConfig extends CommonDBTM {
 
    /**
     * Initialize the displaylist public variable
@@ -51,7 +51,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_configuration';
+   static $rightname = 'plugin_glpiinventory_configuration';
 
    /**
     * Define number to the action 'clean' of agents
@@ -76,7 +76,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    function initConfigModule($getOnly = false) {
 
-      $pfSetup  = new PluginFusioninventorySetup();
+      $pfSetup  = new PluginGlpiinventorySetup();
       $users_id = $pfSetup->createFusionInventoryUser();
       $input    = [];
 
@@ -202,14 +202,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $ong        = [];
       $moduleTabs = [];
-      $this->addStandardTab("PluginFusioninventoryConfig", $ong, $options);
-      $this->addStandardTab("PluginFusioninventoryAgentmodule", $ong, $options);
-      $this->addStandardTab("PluginFusioninventoryLock", $ong, $options);
+      $this->addStandardTab("PluginGlpiinventoryConfig", $ong, $options);
+      $this->addStandardTab("PluginGlpiinventoryAgentmodule", $ong, $options);
+      $this->addStandardTab("PluginGlpiinventoryLock", $ong, $options);
 
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
+      if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $ong;
          $moduleTabForms =
-                  $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+                  $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
             foreach ($moduleTabForms as $module=>$form) {
                if ($plugin->isActivated($module)) {
@@ -218,7 +218,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
             }
             $moduleTabs = array_diff($ong, $fusionTabs);
          }
-         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+         $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabs'] = $moduleTabs;
       }
       return $ong;
    }
@@ -508,7 +508,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function showFormInventory($options = []) {
 
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
 
       $pfConfig->fields['id'] = 1;
       if (!isset($options['formtitle'])) {
@@ -775,7 +775,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function showFormNetworkInventory($options = []) {
       global $CFG_GLPI;
 
-      $pfConfig     = new PluginFusioninventoryConfig();
+      $pfConfig     = new PluginGlpiinventoryConfig();
       $pfsnmpConfig = new self();
 
       $pfsnmpConfig->fields['id'] = 1;
@@ -841,12 +841,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $options['candel'] = false;
       $pfsnmpConfig->showFormButtons($options);
 
-      $pfConfigLogField = new PluginFusioninventoryConfigLogField();
+      $pfConfigLogField = new PluginGlpiinventoryConfigLogField();
       $pfConfigLogField->showConfigForm([
           'target'=>Plugin::getWebDir('glpiinventory')."/front/configlogfield.form.php"]
           );
 
-      $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
+      $pfNetworkporttype = new PluginGlpiinventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
 
       return true;
@@ -861,7 +861,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function showFormDeploy($options = []) {
 
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $pfConfig->fields['id'] = 1;
       $options['colspan'] = 1;
       $pfConfig->showFormHeader($options);
@@ -885,9 +885,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Match mirrors to agents', 'glpiinventory')."</td>";
       echo "<td>";
       $mirror_options = [
-         PluginFusioninventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
-         PluginFusioninventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'glpiinventory'),
-         PluginFusioninventoryDeployMirror::MATCH_BOTH     => __('with both', 'glpiinventory')
+         PluginGlpiinventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
+         PluginGlpiinventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'glpiinventory'),
+         PluginGlpiinventoryDeployMirror::MATCH_BOTH     => __('with both', 'glpiinventory')
       ];
       Dropdown::showFromArray('mirror_match',
                               $mirror_options,
@@ -1002,9 +1002,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function loadCache() {
       global $DB, $PF_CONFIG;
 
-      if ($DB->tableExists('glpi_plugin_fusioninventory_configs')) {
+      if ($DB->tableExists('glpi_plugin_glpiinventory_configs')) {
          $PF_CONFIG = [];
-         foreach ($DB->request('glpi_plugin_fusioninventory_configs') as $data) {
+         foreach ($DB->request('glpi_plugin_glpiinventory_configs') as $data) {
             $PF_CONFIG[$data['type']] = $data['value'];
          }
       }

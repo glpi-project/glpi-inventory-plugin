@@ -36,16 +36,16 @@ include ("../../../inc/includes.php");
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "task");
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-//PluginFusioninventoryTaskjob::isAllowurlfopen();
+//PluginGlpiinventoryTaskjob::isAllowurlfopen();
 
-$pfTask = new PluginFusioninventoryTask();
+$pfTask = new PluginGlpiinventoryTask();
 
 $pfTask->showList();
 

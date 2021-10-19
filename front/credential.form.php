@@ -32,7 +32,7 @@
 
 include ("../../../inc/includes.php");
 
-$dropdown = new PluginFusioninventoryCredential();
+$dropdown = new PluginGlpiinventoryCredential();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");
 
 if (isset($_GET['popup'])) {

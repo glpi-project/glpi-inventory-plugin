@@ -66,7 +66,7 @@ class UnmanagedManagedTest extends TestCase {
       $this->update_time = date('Y-m-d H:i:s');
 
       $a_inventory = [
-         'PluginFusioninventoryNetworkEquipment' => [
+         'PluginGlpiinventoryNetworkEquipment' => [
             'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
             'last_fusioninventory_update' => $this->update_time,
             'cpu'                         => 5,
@@ -121,7 +121,7 @@ class UnmanagedManagedTest extends TestCase {
       $a_inventory['vlans'] = [];
       $a_inventory['connection-lldp'] = [];
 
-      $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
 
       $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJXXX',
@@ -141,7 +141,7 @@ class UnmanagedManagedTest extends TestCase {
     */
    public function NewComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
@@ -211,7 +211,7 @@ class UnmanagedManagedTest extends TestCase {
       $a_networkport = current($a_networkports);
       $networkports_id = $a_networkport['id'];
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $computers_id = $computer->add(['serial'      => 'XB63J7D',

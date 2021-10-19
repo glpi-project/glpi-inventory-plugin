@@ -40,6 +40,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->showList();
 

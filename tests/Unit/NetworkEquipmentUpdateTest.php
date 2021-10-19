@@ -53,14 +53,14 @@ class NetworkEquipmentUpdateTest extends TestCase {
    public function AddNetworkEquipment() {
       global $DB;
 
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+      $DB->query("UPDATE `glpi_plugin_glpiinventory_networkporttypes`"
               ." SET `import`='1'"
               ." WHERE `number`='54'");
 
       $this->datelatupdate = date('Y-m-d H:i:s');
 
       $a_inventory = [
-          'PluginFusioninventoryNetworkEquipment' => [
+          'PluginGlpiinventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
                   'last_fusioninventory_update' => $this->datelatupdate,
                   'cpu'                         => 5,
@@ -202,7 +202,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
           '5005' => ['10001', '10002']
       ];
 
-      $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
 
       $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJEU4',
@@ -212,7 +212,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
 
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 1);
 
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+      $DB->query("UPDATE `glpi_plugin_glpiinventory_networkporttypes`"
               ." SET `import`='0'"
               ." WHERE `number`='54'");
 
@@ -271,7 +271,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
     * @test
     */
    public function NetworkEquipmentSnmpExtension() {
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
       $networkEquipment = new NetworkEquipment();
       $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
 
@@ -284,7 +284,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
-          'plugin_fusioninventory_configsecurities_id'  => 0,
+          'plugin_glpiinventory_configsecurities_id'  => 0,
           'uptime'                                      => '157 days, 02:14:44.00',
           'cpu'                                         => 5,
           'memory'                                      => 18,
@@ -345,7 +345,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $a_networkports = $networkPort->find(
             ['mac'      => 'cc:f9:54:a1:03:35',
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
 
@@ -362,7 +362,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
    public function NetworkPortConnection() {
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
 
       $a_networkports = $networkPort->find(['logical_number' => 10001]);
 
@@ -378,7 +378,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $a_networkports = $networkPort->find(
             ['items_id' => $pfUnmanaged->fields['id'],
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
    }

@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the IP of VMWARE ESX and link to credentials to be able to inventory
  * these specific systems througth the webservice.
  */
-class PluginFusioninventoryCredentialIp extends CommonDropdown {
+class PluginGlpiinventoryCredentialIp extends CommonDropdown {
 
    /**
     * Define first level menu name
@@ -52,7 +52,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     *
     * @var string
     */
-   public $second_level_menu = "pluginfusioninventorymenu";
+   public $second_level_menu = "pluginglpiinventorymenu";
 
    /**
     * Define third level menu name
@@ -66,7 +66,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_credentialip';
+   static $rightname = 'plugin_glpiinventory_credentialip';
 
 
    /**
@@ -107,11 +107,11 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
          case 'credentials' :
             if ($ID > 0) {
-               $field['id'] = $this->fields['plugin_fusioninventory_credentials_id'];
+               $field['id'] = $this->fields['plugin_glpiinventory_credentials_id'];
             } else {
                $field['id'] = -1;
             }
-            PluginFusioninventoryCredential::dropdownCredentials($field);
+            PluginGlpiinventoryCredential::dropdownCredentials($field);
             break;
       }
    }
@@ -153,7 +153,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
          'field'         => 'name',
          'name'          => __('Authentication for remote devices (VMware)', 'glpiinventory'),
          'datatype'      => 'itemlink',
-         'itemlink_type' => 'PluginFusioninventoryCredential',
+         'itemlink_type' => 'PluginGlpiinventoryCredential',
       ];
 
       $tab[] = [
@@ -176,6 +176,6 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       parent::displayHeader();
 
       //Fusioninventory menu
-      PluginFusioninventoryMenu::displayMenu("mini");
+      PluginGlpiinventoryMenu::displayMenu("mini");
    }
 }

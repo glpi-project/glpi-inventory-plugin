@@ -33,17 +33,17 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "admin", "pluginfusioninventorymenu", "inventoryruleimport");
+        "admin", "pluginglpiinventorymenu", "inventoryruleimport");
 
 Session::checkLoginUser();
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 RuleCollection::titleBackup();
 
-$rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+$rulecollection = new PluginGlpiinventoryInventoryRuleImportCollection();
 
 if (isset($_GET['resetrules'])) {
-   $pfSetup = new PluginFusioninventorySetup();
+   $pfSetup = new PluginGlpiinventorySetup();
    $pfSetup->initRules(1);
    Html::back();
 }

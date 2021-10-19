@@ -32,7 +32,7 @@
 
 include ("../../../inc/includes.php");
 
-$pfCollect_File = new PluginFusioninventoryCollect_File();
+$pfCollect_File = new PluginGlpiinventoryCollect_File();
 
 if (isset($_POST["add"])) {
    // conversions

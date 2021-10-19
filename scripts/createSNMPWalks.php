@@ -62,19 +62,19 @@ SELECT
 FROM
   glpi_plugin_fusinvsnmp_unmanageds,
   glpi_networkports,
-  glpi_plugin_fusioninventory_configsecurities
+  glpi_plugin_glpiinventory_configsecurities
 WHERE
-  glpi_plugin_fusinvsnmp_unmanageds.plugin_fusioninventory_snmpmodels_id<1
+  glpi_plugin_fusinvsnmp_unmanageds.plugin_glpiinventory_snmpmodels_id<1
  AND
   sysdescr IS NOT NULL
  AND
-  glpi_networkports.itemtype='PluginFusioninventoryUnmanaged'
+  glpi_networkports.itemtype='PluginGlpiinventoryUnmanaged'
  AND
-  glpi_networkports.items_id=plugin_fusioninventory_unmanageds_id
+  glpi_networkports.items_id=plugin_glpiinventory_unmanageds_id
  AND
   length(glpi_networkports.ip)>1
  AND
-  glpi_plugin_fusioninventory_configsecurities.id=glpi_plugin_fusinvsnmp_unmanageds.plugin_fusinvsnmp_configsecurities_id
+  glpi_plugin_glpiinventory_configsecurities.id=glpi_plugin_fusinvsnmp_unmanageds.plugin_fusinvsnmp_configsecurities_id
 
 ";
 $result = $DB->query($sql);

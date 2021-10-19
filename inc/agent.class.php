@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage agents
  */
-class PluginFusioninventoryAgent extends CommonDBTM {
+class PluginGlpiinventoryAgent extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -51,7 +51,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_agent';
+   static $rightname = 'plugin_glpiinventory_agent';
 
 
    /**
@@ -203,7 +203,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $i = 20;
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data) {
          $tab[] = [
@@ -231,7 +231,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $ong = [];
       $this->addDefaultFormTab($ong);
-      $this->addStandardTab('PluginFusioninventoryAgentmodule', $ong, $options);
+      $this->addStandardTab('PluginGlpiinventoryAgentmodule', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
 
       return $ong;
@@ -264,8 +264,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function getSpecificMassiveActions($checkitem = null) {
 
       $actions = [];
-      if (Session::haveRight("plugin_fusioninventory_agent", UPDATE)) {
-         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      if (Session::haveRight("plugin_glpiinventory_agent", UPDATE)) {
+         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
          $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
             $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.$data["modulename"]] =
@@ -291,7 +291,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                                       ['name' => 'massiveaction']);
          return true;
       }
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data) {
          if ($ma->getAction() == $data['modulename']) {
@@ -337,7 +337,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             return;
       }
 
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data2) {
          if ($ma->getAction() == $data2['modulename']) {
@@ -384,7 +384,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $this->getFromDB($agents_id);
       } else {
          $this->getEmpty();
-         $pfConfig = new PluginFusioninventoryConfig();
+         $pfConfig = new PluginGlpiinventoryConfig();
          unset($this->fields['id']);
          $this->fields['threads_networkdiscovery'] =
                  $pfConfig->getValue('threads_networkdiscovery');
@@ -518,7 +518,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       echo "<td>".__('Agent port', 'glpiinventory')." (".
               __('if empty use port configured in general options', 'glpiinventory')
               ." <i>".$pfConfig->getValue('agent_port')."</i>)&nbsp:</td>";
@@ -542,7 +542,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    */
    function disconnect($params) {
       if (isset($params['computers_id']) && isset($params['id'])) {
-         $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+         $pfComputer = new PluginGlpiinventoryInventoryComputerComputer();
          $pfComputer->deleteByCriteria(['computers_id' => $params['computers_id']]);
          $this->update(['id' => $params['id'], 'computers_id' => 0]);
       }
@@ -629,7 +629,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
               || $this->fields['computers_id'] == 0) {
          trigger_error('Agent must be initialized');
       }
-      $ip_addresses = PluginFusioninventoryToolbox::getIPforDevice('Computer', $this->fields['computers_id']);
+      $ip_addresses = PluginGlpiinventoryToolbox::getIPforDevice('Computer', $this->fields['computers_id']);
       return $ip_addresses;
    }
 
@@ -872,7 +872,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $url_addresses = $this->getAgentStatusURLs();
 
-      PluginFusioninventoryDisplay::disableDebug();
+      PluginGlpiinventoryDisplay::disableDebug();
 
       ob_start();
       ini_set("allow_url_fopen", "1");
@@ -902,7 +902,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       $error = ob_get_contents();
       ob_end_clean();
-      PluginFusioninventoryDisplay::reenableusemode();
+      PluginGlpiinventoryDisplay::reenableusemode();
 
       $status = [
          "url_ok" => $url_ok,
@@ -930,7 +930,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $ret = false;
 
-      PluginFusioninventoryDisplay::disableDebug();
+      PluginGlpiinventoryDisplay::disableDebug();
       $urls = $this->getAgentRunURLs();
 
       $ctx = stream_context_create(['http' => ['timeout' => 2]]);
@@ -942,7 +942,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             }
          }
       }
-      PluginFusioninventoryDisplay::reenableusemode();
+      PluginGlpiinventoryDisplay::reenableusemode();
 
       return $ret;
    }
@@ -995,7 +995,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    static function getByDeviceID($device_id) {
       $agents = getAllDataFromTable(
-         'glpi_plugin_fusioninventory_agents',
+         'glpi_plugin_glpiinventory_agents',
          [
             'device_id' => $device_id,
             'lock'      => 0
@@ -1015,7 +1015,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @return array list of HTTP URL used to contact the agent
     */
    public function getAgentBaseURLs() {
-      $config  = new PluginFusioninventoryConfig();
+      $config  = new PluginGlpiinventoryConfig();
 
       $port = $config->getValue('agent_port');
       $url_addresses = [];
@@ -1198,8 +1198,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    static function cronCleanoldagents($task = null) {
       global $DB;
 
-      $pfConfig = new PluginFusioninventoryConfig();
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfConfig = new PluginGlpiinventoryConfig();
+      $pfAgent  = new PluginGlpiinventoryAgent();
 
       $retentiontime = $pfConfig->getValue('agents_old_days');
       if ($retentiontime == 0) {
@@ -1207,7 +1207,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
 
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_agents',
+         'FROM'   => 'glpi_plugin_glpiinventory_agents',
          'WHERE'  => [
             'last_contact' => ['<', new QueryExpression("date_add(now(), interval -".$retentiontime." day)")]
          ]
@@ -1216,7 +1216,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if (count($iterator)) {
          $cron_status = false;
          $action = $pfConfig->getValue('agents_action');
-         if ($action == PluginFusioninventoryConfig::ACTION_CLEAN) {
+         if ($action == PluginGlpiinventoryConfig::ACTION_CLEAN) {
             //delete agents
             foreach ($iterator as $data) {
                $pfAgent->delete($data);

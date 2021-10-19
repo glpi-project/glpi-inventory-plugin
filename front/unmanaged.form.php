@@ -32,23 +32,23 @@
 
 include ("../../../inc/includes.php");
 
-$pfUnmanaged = new PluginFusioninventoryUnmanaged();
-$ptt  = new PluginFusioninventoryTask();
+$pfUnmanaged = new PluginGlpiinventoryUnmanaged();
+$ptt  = new PluginGlpiinventoryTask();
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "assets", "pluginfusioninventoryunmanaged");
+        "assets", "pluginglpiinventoryunmanaged");
 
 
-Session::checkRight('plugin_fusioninventory_unmanaged', READ);
+Session::checkRight('plugin_glpiinventory_unmanaged', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_unmanaged', CREATE);
+   Session::checkRight('plugin_glpiinventory_unmanaged', CREATE);
    if (isset($_POST['items_id'])
           && ($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
@@ -56,7 +56,7 @@ if (isset ($_POST["add"])) {
    $pfUnmanaged->add($_POST);
    Html::back();
 } else if (isset($_POST["delete"])) {
-   Session::checkRight('plugin_fusioninventory_unmanaged', PURGE);
+   Session::checkRight('plugin_glpiinventory_unmanaged', PURGE);
 
    $pfUnmanaged->check($_POST['id'], DELETE);
 
@@ -68,14 +68,14 @@ if (isset ($_POST["add"])) {
    $pfUnmanaged->check($_POST['id'], DELETE);
 
    if ($pfUnmanaged->restore($_POST)) {
-      Event::log($_POST["id"], "PluginFusioninventoryUnmanaged", 4, "inventory",
+      Event::log($_POST["id"], "PluginGlpiinventoryUnmanaged", 4, "inventory",
                $_SESSION["glpiname"]." ".__('restoration of the item', 'glpiinventory')." ".
                $pfUnmanaged->getField('name'));
    }
    $pfUnmanaged->redirectToList();
 
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
-   Session::checkRight('plugin_fusioninventory_unmanaged', PURGE);
+   Session::checkRight('plugin_glpiinventory_unmanaged', PURGE);
 
    $pfUnmanaged->check($_POST['id'], PURGE);
 

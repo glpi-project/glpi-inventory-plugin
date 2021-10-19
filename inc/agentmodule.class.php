@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage (enable or not) the modules in the agent.
  */
-class PluginFusioninventoryAgentmodule extends CommonDBTM {
+class PluginGlpiinventoryAgentmodule extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_agent";
+   static $rightname = "plugin_glpiinventory_agent";
 
 
    /**
@@ -56,9 +56,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if ($item->getType()=='PluginFusioninventoryConfig') {
+      if ($item->getType()=='PluginGlpiinventoryConfig') {
          return __('Agents modules', 'glpiinventory');
-      } else if ($item->getType()=='PluginFusioninventoryAgent') {
+      } else if ($item->getType()=='PluginGlpiinventoryAgent') {
          return __('Agents modules', 'glpiinventory');
       }
       return '';
@@ -75,11 +75,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-      if ($item->getType()=='PluginFusioninventoryConfig') {
+      if ($item->getType()=='PluginGlpiinventoryConfig') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showModuleForm();
          return true;
-      } else if ($item->getType()=='PluginFusioninventoryAgent') {
+      } else if ($item->getType()=='PluginGlpiinventoryAgent') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showFormAgentException($item->fields['id']);
          return true;
@@ -95,7 +95,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    function showModuleForm() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
@@ -109,7 +109,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
          $modulename = $data["modulename"];
 
          foreach ($a_methods as $datamod) {
@@ -150,7 +150,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          foreach ($a_agentList as $agent_id) {
             $a_used[] = $agent_id;
          }
-            Dropdown::show("PluginFusioninventoryAgent", ["name" => "agent_to_add[]",
+            Dropdown::show("PluginGlpiinventoryAgent", ["name" => "agent_to_add[]",
                                                                "used" => $a_used]);
             echo "</td>";
             echo "<td align='center'>";
@@ -194,7 +194,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @param integer $agents_id id of the agent
     */
    function showFormAgentException($agents_id) {
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDB($agents_id);
       $canedit = $pfAgent->can($agents_id, UPDATE);
 
@@ -213,7 +213,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       $a_modules = $this->find();
       $i = 0;
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
       foreach ($a_modules as $data) {
          if ($i == 0) {
             echo "<tr class='tab_bg_1'>";
@@ -303,7 +303,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    function getAgentsCanDo($module_name) {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       if ($module_name == 'SNMPINVENTORY') {
          $module_name = 'SNMPQUERY';
@@ -395,11 +395,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       $fi_dir = '/'.Plugin::getWebDir('glpiinventory', false);
 
       // Get current entity URL if it exists ...
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
       $baseUrl = $pfEntity->getValue('agent_base_url', $entities_id);
       if (! empty($baseUrl)) {
-         PluginFusioninventoryToolbox::logIfExtradebug(
-            "pluginFusioninventory-agent-url",
+         PluginGlpiinventoryToolbox::logIfExtradebug(
+            "pluginGlpiinventory-agent-url",
             "Entity ".$entities_id.", agent base URL: ".$baseUrl
          );
 
@@ -410,13 +410,13 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       // ... else use global plugin configuration parameter.
       if (strlen($pfEntity->getValue('agent_base_url', $entities_id))<10) {
-         PluginFusioninventoryCommunicationRest::sendError();
+         PluginGlpiinventoryCommunicationRest::sendError();
          exit;
          // die ("agent_base_url is unset!\n");
       }
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-agent-url",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-agent-url",
          "Global configuration URL: ".$pfEntity->getValue('agent_base_url', $entities_id)
       );
 
@@ -433,7 +433,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    static function getModules() {
       $a_modules = [];
-      $a_data = getAllDataFromTable(PluginFusioninventoryAgentmodule::getTable());
+      $a_data = getAllDataFromTable(PluginGlpiinventoryAgentmodule::getTable());
       foreach ($a_data as $data) {
          $a_modules[] = $data['modulename'];
       }

@@ -37,9 +37,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the deploy task job.
  *
- * @todo This class should inherit the PluginFusioninventoryTaskjob
+ * @todo This class should inherit the PluginGlpiinventoryTaskjob
  */
-class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
+class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
 
 
    /**
@@ -76,7 +76,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
       $sql = " SELECT *
                FROM `".$this->getTable()."`
-               WHERE `plugin_fusioninventory_deploytasks_id` = '$tasks_id'
+               WHERE `plugin_glpiinventory_deploytasks_id` = '$tasks_id'
                AND method = 'deployinstall'";
 
       $res  = $DB->query($sql);
@@ -97,7 +97,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                $tmp         = array_keys($action);
                $action_type = $tmp[0];
 
-               $json['tasks'][$i]['package_id']       = $package['PluginFusioninventoryDeployPackage'];
+               $json['tasks'][$i]['package_id']       = $package['PluginGlpiinventoryDeployPackage'];
                $json['tasks'][$i]['method']           = $task['method'];
                $json['tasks'][$i]['comment']          = $task['comment'];
                $json['tasks'][$i]['retry_nb']         = $task['retry_nb'];
@@ -130,7 +130,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $tasks = json_decode($params['tasks']);
 
       //remove old jobs from task
-      $this->deleteByCriteria(['plugin_fusioninventory_deploytasks_id' => $tasks_id], true);
+      $this->deleteByCriteria(['plugin_glpiinventory_deploytasks_id' => $tasks_id], true);
 
       //get plugin id
       $plug = new Plugin();
@@ -144,7 +144,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $qparam = new QueryParam();
       $query = $DB::buildInsert(
          $this->getTable(), [
-            'plugin_fusioninventory_deploytasks_id'   => $qparam,
+            'plugin_glpiinventory_deploytasks_id'   => $qparam,
             'name'                                    => $qparam,
             'date_creation'                           => $qparam,
             'entities_id'                             => $qparam,
@@ -168,7 +168,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          //    $task['action_type'] => $task['action_selection'])));
          $action = exportArrayToDB($task['action']);
          $definition = exportArrayToDB([[
-            'PluginFusioninventoryDeployPackage' => $task['package_id']]]);
+            'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
 
          $stmt->bind_param(
             'ssssssssssss',
@@ -209,7 +209,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          ],
          [
             'name' => __('Groups of computers', 'glpiinventory'),
-            'value' => 'PluginFusioninventoryDeployGroup',
+            'value' => 'PluginGlpiinventoryDeployGroup',
          ]
       ];
    }
@@ -274,8 +274,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                   $res = json_encode($res);
                   break;
 
-               case 'PluginFusioninventoryDeployGroup':
-                  $res = PluginFusioninventoryDeployGroup::getAllDatas('action_selections');
+               case 'PluginGlpiinventoryDeployGroup':
+                  $res = PluginGlpiinventoryDeployGroup::getAllDatas('action_selections');
                   break;
 
             }

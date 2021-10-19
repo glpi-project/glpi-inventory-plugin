@@ -30,33 +30,33 @@
 --
 
 -- obsolete tables
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`;
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol`;
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_errors`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_inventory_state`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentprocesses`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computers`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_networking`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_history`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_stats`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_discovery`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_errors`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_glpiinventory_snmp_auth_auth_protocol`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_glpiinventory_snmp_auth_priv_protocol`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_glpiinventory_snmp_version`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agents_errors`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agents_inventory_state`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agentprocesses`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_computers`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_config_modules`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_config_snmp_networking`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_connection_history`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_connection_stats`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_discovery`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_errors`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_unknown_mac`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_walks`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_lockable`;
 
 -- renamed tables
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
--- DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_config`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_config_modules`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_lock`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_task`;
+-- DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_unknown_device`;
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agents`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_agents` (
+CREATE TABLE `glpi_plugin_glpiinventory_agents` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `is_recursive` tinyint(1) NOT NULL DEFAULT '1',
@@ -83,9 +83,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configs`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_configs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_configs` (
+CREATE TABLE `glpi_plugin_glpiinventory_configs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `type` varchar(255) DEFAULT NULL,
    `value` varchar(255) DEFAULT NULL,
@@ -95,9 +95,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_configs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_entities`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_entities`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_entities` (
+CREATE TABLE `glpi_plugin_glpiinventory_entities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `transfers_id_auto` int(11) NOT NULL DEFAULT '0',
@@ -108,9 +108,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_entities` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_locks`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_locks`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_locks` (
+CREATE TABLE `glpi_plugin_glpiinventory_locks` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `tablename` varchar(64) NOT NULL DEFAULT '',
    `items_id` int(11) NOT NULL DEFAULT '0',
@@ -123,9 +123,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_locks` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_tasks`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_tasks`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
+CREATE TABLE `glpi_plugin_glpiinventory_tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -134,8 +134,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `datetime_start` timestamp NULL DEFAULT NULL,
   `datetime_end` timestamp NULL DEFAULT NULL,
-  `plugin_fusioninventory_timeslots_prep_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_timeslots_exec_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_timeslots_prep_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_timeslots_exec_id` int(11) NOT NULL DEFAULT '0',
   `last_agent_wakeup` timestamp NULL DEFAULT NULL,
   `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
   `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
@@ -143,8 +143,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `is_deploy_on_demand` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
-  KEY `plugin_fusioninventory_timeslots_prep_id` (`plugin_fusioninventory_timeslots_prep_id`),
-  KEY `plugin_fusioninventory_timeslots_exec_id` (`plugin_fusioninventory_timeslots_exec_id`),
+  KEY `plugin_glpiinventory_timeslots_prep_id` (`plugin_glpiinventory_timeslots_prep_id`),
+  KEY `plugin_glpiinventory_timeslots_exec_id` (`plugin_glpiinventory_timeslots_exec_id`),
   KEY `is_active` (`is_active`),
   KEY `reprepare_if_successful` (`reprepare_if_successful`),
   KEY `is_deploy_on_demand` (`is_deploy_on_demand`),
@@ -153,11 +153,11 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobs`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_taskjobs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
+CREATE TABLE `glpi_plugin_glpiinventory_taskjobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_tasks_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_tasks_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
@@ -169,56 +169,56 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `statuscomments` text DEFAULT NULL,
   `enduser` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_tasks_id` (`plugin_fusioninventory_tasks_id`),
+  KEY `plugin_glpiinventory_tasks_id` (`plugin_glpiinventory_tasks_id`),
   KEY `entities_id` (`entities_id`),
   KEY `method` (`method`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjoblogs`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_taskjoblogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
+CREATE TABLE `glpi_plugin_glpiinventory_taskjoblogs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjobstates_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_taskjobstates_id` int(11) NOT NULL DEFAULT '0',
   `date` timestamp NULL DEFAULT NULL,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_taskjobstates_id` (`plugin_fusioninventory_taskjobstates_id`,`state`)
+  KEY `plugin_glpiinventory_taskjobstates_id` (`plugin_glpiinventory_taskjobstates_id`,`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobstates`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_taskjobstates`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
+CREATE TABLE `glpi_plugin_glpiinventory_taskjobstates` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
   `uniqid` varchar(255) DEFAULT NULL,
   `date_start` timestamp NULL DEFAULT NULL,
   `nb_retry` int(11) NOT NULL DEFAULT '0',
   `max_retry` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
-  KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
-  KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`),
-  KEY `plugin_fusioninventory_agents_ids_states` (`plugin_fusioninventory_agents_id`, `plugin_fusioninventory_taskjobs_id`, `items_id`, `itemtype`, `id`, `state`),
+  KEY `plugin_glpiinventory_taskjobs_id` (`plugin_glpiinventory_taskjobs_id`),
+  KEY `plugin_glpiinventory_agents_id` (`plugin_glpiinventory_agents_id`,`state`),
+  KEY `plugin_glpiinventory_taskjob_2` (`plugin_glpiinventory_taskjobs_id`,`state`),
+  KEY `plugin_glpiinventory_agents_ids_states` (`plugin_glpiinventory_agents_id`, `plugin_glpiinventory_taskjobs_id`, `items_id`, `itemtype`, `id`, `state`),
   KEY `uniqid` (`uniqid`,`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mappings`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_mappings`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
+CREATE TABLE `glpi_plugin_glpiinventory_mappings` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `itemtype` varchar(100) DEFAULT NULL,
    `name` varchar(255) DEFAULT NULL,
@@ -236,9 +236,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unmanageds`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_unmanageds`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_unmanageds` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `date_mod` timestamp NULL DEFAULT NULL,
@@ -253,25 +253,25 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `comment` text DEFAULT NULL,
    `item_type` varchar(255) DEFAULT NULL,
    `accepted` tinyint(1) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
    `ip` varchar(255) DEFAULT NULL,
    `hub` tinyint(1) NOT NULL DEFAULT '0',
    `states_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
-   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
    `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`),
-   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
+   KEY `plugin_glpiinventory_agents_id` (`plugin_glpiinventory_agents_id`),
    KEY `is_deleted` (`is_deleted`),
    KEY `date_mod` (`date_mod`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agentmodules`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
+CREATE TABLE `glpi_plugin_glpiinventory_agentmodules` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `modulename` varchar(255) DEFAULT NULL,
    `is_active` tinyint(1) NOT NULL DEFAULT '0',
@@ -283,9 +283,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ipranges`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
+CREATE TABLE `glpi_plugin_glpiinventory_ipranges` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -297,22 +297,22 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges_configsecurities`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ipranges_configsecurities`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_ipranges_configsecurities` (
+CREATE TABLE `glpi_plugin_glpiinventory_ipranges_configsecurities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_ipranges_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_ipranges_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
   `rank` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `unicity` (`plugin_fusioninventory_ipranges_id`,`plugin_fusioninventory_configsecurities_id`)
+  KEY `unicity` (`plugin_glpiinventory_ipranges_id`,`plugin_glpiinventory_configsecurities_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentials`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_credentials`;
 
-CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
+CREATE TABLE  `glpi_plugin_glpiinventory_credentials` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
@@ -327,12 +327,12 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentialips`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_credentialips`;
 
-CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
+CREATE TABLE  `glpi_plugin_glpiinventory_credentialips` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_credentials_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_credentials_id` int(11) NOT NULL DEFAULT '0',
    `name` varchar(255) NOT NULL DEFAULT '',
    `comment` text DEFAULT NULL,
    `ip` varchar(255) NOT NULL DEFAULT '',
@@ -342,9 +342,9 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ignoredimportdevices`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ignoredimportdevices`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
+CREATE TABLE `glpi_plugin_glpiinventory_ignoredimportdevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `date` timestamp NULL DEFAULT NULL,
@@ -356,21 +356,21 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `method` varchar(255) DEFAULT NULL,
    `serial` varchar(255) DEFAULT NULL,
    `uuid` varchar(255) DEFAULT NULL,
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rulematchedlogs`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_rulematchedlogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
+CREATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `date` timestamp NULL DEFAULT NULL,
    `items_id` int(11) NOT NULL DEFAULT '0',
    `itemtype` varchar(100) DEFAULT NULL,
    `rules_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
    `method` varchar(255) DEFAULT NULL,
    `criteria` text DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -379,9 +379,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercriterias`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputercriterias`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercriterias` (
+CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputercriterias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
@@ -391,22 +391,22 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercriterias` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerblacklists`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputerblacklists`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
+CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputerblacklists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_criterium_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_criterium_id` int(11) NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`)
+  KEY `plugin_glpiinventory_criterium_id` (`plugin_glpiinventory_criterium_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercomputers`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputercomputers`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
+CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputercomputers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `operatingsystem_installationdate` timestamp NULL DEFAULT NULL,
@@ -426,9 +426,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstats`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputerstats`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstats` (
+CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputerstats` (
  `id` smallint(3) NOT NULL AUTO_INCREMENT,
  `day` smallint(3) NOT NULL DEFAULT '0',
  `hour` tinyint(2) NOT NULL DEFAULT '0',
@@ -438,41 +438,41 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstats` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configlogfields`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_configlogfields`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
+CREATE TABLE `glpi_plugin_glpiinventory_configlogfields` (
    `id` int(8) NOT NULL AUTO_INCREMENT,
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `days` int(255) NOT NULL DEFAULT '-1',
    PRIMARY KEY ( `id` ) ,
-   KEY `plugin_fusioninventory_mappings_id` ( `plugin_fusioninventory_mappings_id` )
+   KEY `plugin_glpiinventory_mappings_id` ( `plugin_glpiinventory_mappings_id` )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportconnectionlogs`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkportconnectionlogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
+CREATE TABLE `glpi_plugin_glpiinventory_networkportconnectionlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `date_mod` timestamp NULL DEFAULT NULL,
    `creation` tinyint(1) NOT NULL DEFAULT '0',
    `networkports_id_source` int(11) NOT NULL DEFAULT '0',
    `networkports_id_destination` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_fusioninventory_agentprocesses_id` ),
+   KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_glpiinventory_agentprocesses_id` ),
    KEY `date_mod` (`date_mod`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkequipments`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkequipments`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
+CREATE TABLE `glpi_plugin_glpiinventory_networkequipments` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkequipments_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
-   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `uptime` varchar(255) NOT NULL DEFAULT '0',
    `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
    `memory` int(11) NOT NULL DEFAULT '0',
@@ -485,9 +485,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkporttypes`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkporttypes`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
+CREATE TABLE `glpi_plugin_glpiinventory_networkporttypes` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `number` int(4) NOT NULL DEFAULT '0',
@@ -497,27 +497,27 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_printers`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_printers` (
+CREATE TABLE `glpi_plugin_glpiinventory_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
-   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` timestamp NULL DEFAULT NULL,
    `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`printers_id`),
-   KEY `plugin_fusioninventory_configsecurities_id` (`plugin_fusioninventory_configsecurities_id`),
+   KEY `plugin_glpiinventory_configsecurities_id` (`plugin_glpiinventory_configsecurities_id`),
    KEY `printers_id` (`printers_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printerlogs`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_printerlogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
+CREATE TABLE `glpi_plugin_glpiinventory_printerlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
    `date` timestamp NULL DEFAULT NULL,
@@ -539,25 +539,25 @@ CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printercartridges`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_printercartridges`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
+CREATE TABLE `glpi_plugin_glpiinventory_printercartridges` (
    `id` bigint(100) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `cartridges_id` int(11) NOT NULL DEFAULT '0',
    `state` int(3) NOT NULL DEFAULT '100',
    PRIMARY KEY (`id`),
    KEY `printers_id` (`printers_id`),
-   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
+   KEY `plugin_glpiinventory_mappings_id` (`plugin_glpiinventory_mappings_id`),
    KEY `cartridges_id` (`cartridges_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkports`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkports`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
+CREATE TABLE `glpi_plugin_glpiinventory_networkports` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkports_id` int(11) NOT NULL DEFAULT '0',
    `ifmtu` int(8) NOT NULL DEFAULT '0',
@@ -582,9 +582,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configsecurities`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_configsecurities`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
+CREATE TABLE `glpi_plugin_glpiinventory_configsecurities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) DEFAULT NULL,
    `snmpversion` varchar(8) NOT NULL DEFAULT '1',
@@ -602,31 +602,31 @@ CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportlogs`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkportlogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
+CREATE TABLE `glpi_plugin_glpiinventory_networkportlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkports_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `date_mod` timestamp NULL DEFAULT NULL,
    `value_old` varchar(255) DEFAULT NULL,
    `value_new` varchar(255) DEFAULT NULL,
-   `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `networkports_id` (`networkports_id`,`date_mod`),
-   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
-   KEY `plugin_fusioninventory_agentprocesses_id` (`plugin_fusioninventory_agentprocesses_id`),
+   KEY `plugin_glpiinventory_mappings_id` (`plugin_glpiinventory_mappings_id`),
+   KEY `plugin_glpiinventory_agentprocesses_id` (`plugin_glpiinventory_agentprocesses_id`),
    KEY `date_mod` (`date_mod`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_statediscoveries`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_statediscoveries`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
+CREATE TABLE `glpi_plugin_glpiinventory_statediscoveries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjob_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_taskjob_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
@@ -641,9 +641,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerlicenseinfos`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_computerlicenseinfos`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
+CREATE TABLE `glpi_plugin_glpiinventory_computerlicenseinfos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `softwarelicenses_id` int(11) NOT NULL DEFAULT '0',
@@ -661,9 +661,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerremotemanagements`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_computerremotemanagements`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_computerremotemanagements` (
+CREATE TABLE `glpi_plugin_glpiinventory_computerremotemanagements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `number` varchar(255) DEFAULT NULL,
@@ -677,9 +677,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerremotemanagements` (
 --
 -- BEGIN DEPLOY
 --
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deploypackages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `comment` text DEFAULT NULL,
@@ -688,7 +688,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
   `date_mod` timestamp NULL DEFAULT NULL,
   `uuid` varchar(255) DEFAULT NULL,
   `json` longtext DEFAULT NULL,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
@@ -696,31 +696,31 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_entities`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_entities`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_entities` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_entities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_groups`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_groups`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_groups` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
   `groups_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `groups_id` (`groups_id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`)
@@ -728,16 +728,16 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_groups` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_profiles`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_profiles`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_profiles` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
   `profiles_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `profiles_id` (`profiles_id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`)
@@ -745,22 +745,22 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_profiles` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_users`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_users`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_users` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
   `users_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `users_id` (`users_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfiles`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deployfiles`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployfiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `mimetype` varchar(255) NOT NULL,
@@ -779,9 +779,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploymirrors`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploymirrors`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploymirrors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
@@ -800,9 +800,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploygroups`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploygroups` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploygroups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `comment` text DEFAULT NULL,
@@ -812,36 +812,36 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups_staticdatas`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploygroups_staticdatas`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_staticdatas` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploygroups_staticdatas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
   `items_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (  `id` ),
-  KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
+  KEY `plugin_glpiinventory_deploygroups_id` (`plugin_glpiinventory_deploygroups_id`),
   KEY `items_id` (`items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploygroups_dynamicdatas`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
+CREATE TABLE `glpi_plugin_glpiinventory_deploygroups_dynamicdatas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   `fields_array` text DEFAULT NULL,
   `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
   `computers_id_cache` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
+  KEY `plugin_glpiinventory_deploygroups_id` (`plugin_glpiinventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deployuserinteractiontemplates`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployuserinteractiontemplates` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -862,9 +862,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontem
 
 
 -- Collect tables
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_collects` (
+CREATE TABLE `glpi_plugin_glpiinventory_collects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -877,12 +877,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_registries`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_collects_registries` (
+CREATE TABLE `glpi_plugin_glpiinventory_collects_registries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_id` int(11) NOT NULL DEFAULT '0',
   `hive` varchar(255) DEFAULT NULL,
   `path` text DEFAULT NULL,
   `key` varchar(255) DEFAULT NULL,
@@ -891,12 +891,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_registries` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries_contents`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_registries_contents`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
+CREATE TABLE `glpi_plugin_glpiinventory_collects_registries_contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_collects_registries_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_registries_id` int(11) NOT NULL DEFAULT '0',
   `key` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -905,12 +905,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_wmis`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
+CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_id` int(11) NOT NULL DEFAULT '0',
   `moniker` varchar(255) DEFAULT NULL,
   `class` varchar(255) DEFAULT NULL,
   `properties` varchar(255) DEFAULT NULL,
@@ -919,12 +919,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis_contents`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_wmis_contents`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
+CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis_contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_collects_wmis_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_wmis_id` int(11) NOT NULL DEFAULT '0',
   `property` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -932,12 +932,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_files`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_collects_files` (
+CREATE TABLE `glpi_plugin_glpiinventory_collects_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_id` int(11) NOT NULL DEFAULT '0',
   `dir` varchar(255) DEFAULT NULL,
   `limit` int(4) NOT NULL DEFAULT '50',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
@@ -956,12 +956,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_files` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files_contents`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_files_contents`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
+CREATE TABLE `glpi_plugin_glpiinventory_collects_files_contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_collects_files_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_files_id` int(11) NOT NULL DEFAULT '0',
   `pathfile` text DEFAULT NULL,
   `size` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -969,9 +969,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslots`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_timeslots`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
+CREATE TABLE `glpi_plugin_glpiinventory_timeslots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
@@ -983,26 +983,26 @@ CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslotentries`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_timeslotentries`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_timeslotentries` (
+CREATE TABLE `glpi_plugin_glpiinventory_timeslotentries` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
- `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
+ `plugin_glpiinventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
  `entities_id` int(11) NOT NULL DEFAULT '0',
  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
  `day` tinyint(1) NOT NULL DEFAULT '1',
  `begin` int(11) DEFAULT NULL,
  `end` int(11) DEFAULT NULL,
  PRIMARY KEY (`id`),
- KEY `plugin_fusioninventory_calendars_id` (`plugin_fusioninventory_timeslots_id`),
+ KEY `plugin_glpiinventory_calendars_id` (`plugin_glpiinventory_timeslots_id`),
  KEY `day` (`day`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblockinventorynames`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblockinventorynames`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_dblockinventorynames` (
+CREATE TABLE `glpi_plugin_glpiinventory_dblockinventorynames` (
   `value` varchar(100) NOT NULL DEFAULT '',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
@@ -1011,9 +1011,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblockinventorynames` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblockinventories`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblockinventories`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_dblockinventories` (
+CREATE TABLE `glpi_plugin_glpiinventory_dblockinventories` (
   `value` int(11) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
@@ -1022,9 +1022,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblockinventories` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblocksoftwares`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblocksoftwares`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwares` (
+CREATE TABLE `glpi_plugin_glpiinventory_dblocksoftwares` (
   `value` tinyint(1) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
@@ -1033,9 +1033,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwares` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblocksoftwareversions`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblocksoftwareversions`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwareversions` (
+CREATE TABLE `glpi_plugin_glpiinventory_dblocksoftwareversions` (
   `value` tinyint(1) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
@@ -1045,122 +1045,122 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwareversions` (
 
 
 -- INSERT
--- glpi_plugin_fusioninventory_configsecurities
-INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
+-- glpi_plugin_glpiinventory_configsecurities
+INSERT INTO `glpi_plugin_glpiinventory_configsecurities`
       (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`, `encryption`, `priv_passphrase`, `is_deleted`)
    VALUES (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', '0'),
           (2, 'Public community v2c', '2', 'public', '', '0', '', '0', '', '0');
 
 
--- glpi_plugin_fusioninventory_entities
-INSERT INTO `glpi_plugin_fusioninventory_entities`
+-- glpi_plugin_glpiinventory_entities
+INSERT INTO `glpi_plugin_glpiinventory_entities`
       (`entities_id`, `transfers_id_auto`)
    VALUES ('0', '0');
 
 
 -- glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-   VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryAgent', '4', '2', '0'),
-          (NULL,'PluginFusioninventoryAgent', '5', '3', '0'),
-          (NULL,'PluginFusioninventoryAgent', '6', '4', '0'),
-          (NULL,'PluginFusioninventoryAgent', '7', '5', '0'),
-          (NULL,'PluginFusioninventoryAgent', '8', '6', '0'),
-          (NULL,'PluginFusioninventoryAgent', '9', '7', '0'),
+   VALUES (NULL,'PluginGlpiinventoryAgent', '2', '1', '0'),
+          (NULL,'PluginGlpiinventoryAgent', '4', '2', '0'),
+          (NULL,'PluginGlpiinventoryAgent', '5', '3', '0'),
+          (NULL,'PluginGlpiinventoryAgent', '6', '4', '0'),
+          (NULL,'PluginGlpiinventoryAgent', '7', '5', '0'),
+          (NULL,'PluginGlpiinventoryAgent', '8', '6', '0'),
+          (NULL,'PluginGlpiinventoryAgent', '9', '7', '0'),
 
-          (NULL, 'PluginFusioninventoryUnmanaged', '2', '1', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '3', '3', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '5', '4', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '7', '5', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '10', '6', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '18', '8', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '14', '9', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '15', '10', '0'),
-          (NULL, 'PluginFusioninventoryUnmanaged', '9', '11', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '2', '1', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '4', '2', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '3', '3', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '5', '4', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '7', '5', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '10', '6', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '18', '8', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '14', '9', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '15', '10', '0'),
+          (NULL, 'PluginGlpiinventoryUnmanaged', '9', '11', '0'),
 
-          (NULL, 'PluginFusioninventoryTask', '2', '1', '0'),
-          (NULL, 'PluginFusioninventoryTask', '3', '2', '0'),
-          (NULL, 'PluginFusioninventoryTask', '4', '3', '0'),
-          (NULL, 'PluginFusioninventoryTask', '5', '4', '0'),
-          (NULL, 'PluginFusioninventoryTask', '6', '5', '0'),
-          (NULL, 'PluginFusioninventoryTask', '7', '6', '0'),
-          (NULL, 'PluginFusioninventoryTask', '30', '7', '0'),
+          (NULL, 'PluginGlpiinventoryTask', '2', '1', '0'),
+          (NULL, 'PluginGlpiinventoryTask', '3', '2', '0'),
+          (NULL, 'PluginGlpiinventoryTask', '4', '3', '0'),
+          (NULL, 'PluginGlpiinventoryTask', '5', '4', '0'),
+          (NULL, 'PluginGlpiinventoryTask', '6', '5', '0'),
+          (NULL, 'PluginGlpiinventoryTask', '7', '6', '0'),
+          (NULL, 'PluginGlpiinventoryTask', '30', '7', '0'),
 
-          (NULL,'PluginFusioninventoryIPRange', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '4', '3', '0'),
+          (NULL,'PluginGlpiinventoryIPRange', '2', '1', '0'),
+          (NULL,'PluginGlpiinventoryIPRange', '3', '2', '0'),
+          (NULL,'PluginGlpiinventoryIPRange', '4', '3', '0'),
 
-          (NULL,'PluginFusioninventoryTaskjob', '1', '1', '0'),
-          (NULL,'PluginFusioninventoryTaskjob', '2', '2', '0'),
-          (NULL,'PluginFusioninventoryTaskjob', '3', '3', '0'),
-          (NULL,'PluginFusioninventoryTaskjob', '4', '4', '0'),
-          (NULL,'PluginFusioninventoryTaskjob', '5', '5', '0'),
+          (NULL,'PluginGlpiinventoryTaskjob', '1', '1', '0'),
+          (NULL,'PluginGlpiinventoryTaskjob', '2', '2', '0'),
+          (NULL,'PluginGlpiinventoryTaskjob', '3', '3', '0'),
+          (NULL,'PluginGlpiinventoryTaskjob', '4', '4', '0'),
+          (NULL,'PluginGlpiinventoryTaskjob', '5', '5', '0'),
 
-          (NULL,'PluginFusioninventoryInventoryComputerBlacklist', '2', '1', '0'),
+          (NULL,'PluginGlpiinventoryInventoryComputerBlacklist', '2', '1', '0'),
 
-          (NULL,'PluginFusioninventoryTaskjoblog', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryTaskjoblog', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryTaskjoblog', '4', '3', '0'),
-          (NULL,'PluginFusioninventoryTaskjoblog', '5', '4', '0'),
-          (NULL,'PluginFusioninventoryTaskjoblog', '6', '5', '0'),
-          (NULL,'PluginFusioninventoryTaskjoblog', '7', '6', '0'),
-          (NULL,'PluginFusioninventoryTaskjoblog', '8', '7', '0'),
+          (NULL,'PluginGlpiinventoryTaskjoblog', '2', '1', '0'),
+          (NULL,'PluginGlpiinventoryTaskjoblog', '3', '2', '0'),
+          (NULL,'PluginGlpiinventoryTaskjoblog', '4', '3', '0'),
+          (NULL,'PluginGlpiinventoryTaskjoblog', '5', '4', '0'),
+          (NULL,'PluginGlpiinventoryTaskjoblog', '6', '5', '0'),
+          (NULL,'PluginGlpiinventoryTaskjoblog', '7', '6', '0'),
+          (NULL,'PluginGlpiinventoryTaskjoblog', '8', '7', '0'),
 
-          (NULL, 'PluginFusioninventoryConfigSecurity', '3', '1', '0'),
-          (NULL, 'PluginFusioninventoryConfigSecurity', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryConfigSecurity', '5', '3', '0'),
-          (NULL, 'PluginFusioninventoryConfigSecurity', '7', '4', '0'),
-          (NULL, 'PluginFusioninventoryConfigSecurity', '8', '5', '0'),
-          (NULL, 'PluginFusioninventoryConfigSecurity', '9', '6', '0'),
-          (NULL, 'PluginFusioninventoryConfigSecurity', '10', '7', '0'),
+          (NULL, 'PluginGlpiinventoryConfigSecurity', '3', '1', '0'),
+          (NULL, 'PluginGlpiinventoryConfigSecurity', '4', '2', '0'),
+          (NULL, 'PluginGlpiinventoryConfigSecurity', '5', '3', '0'),
+          (NULL, 'PluginGlpiinventoryConfigSecurity', '7', '4', '0'),
+          (NULL, 'PluginGlpiinventoryConfigSecurity', '8', '5', '0'),
+          (NULL, 'PluginGlpiinventoryConfigSecurity', '9', '6', '0'),
+          (NULL, 'PluginGlpiinventoryConfigSecurity', '10', '7', '0'),
 
-          (NULL,'PluginFusioninventoryNetworkEquipment', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '4', '3', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '5', '4', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '6', '5', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '7', '6', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '8', '7', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '9', '8', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '10', '9', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '11', '10', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '14', '11', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '12', '12', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '13', '13', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '2', '1', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '3', '2', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '4', '3', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '5', '4', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '6', '5', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '7', '6', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '8', '7', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '9', '8', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '10', '9', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '11', '10', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '14', '11', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '12', '12', '0'),
+          (NULL,'PluginGlpiinventoryNetworkEquipment', '13', '13', '0'),
 
-          (NULL,'PluginFusioninventoryNetworkPortLog', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '4', '3', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '5', '4', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '6', '5', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPortLog', '2', '1', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPortLog', '3', '2', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPortLog', '4', '3', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPortLog', '5', '4', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPortLog', '6', '5', '0'),
 
-          (NULL,'PluginFusioninventoryNetworkPort', '3', '1', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '5', '2', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '6', '3', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '7', '4', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '8', '5', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '9', '6', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '10', '7', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '11', '8', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '12', '9', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '13', '10', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '14', '11', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '3', '1', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '5', '2', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '6', '3', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '7', '4', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '8', '5', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '9', '6', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '10', '7', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '11', '8', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '12', '9', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '13', '10', '0'),
+          (NULL,'PluginGlpiinventoryNetworkPort', '14', '11', '0'),
 
-          (NULL,'PluginFusioninventoryStateDiscovery', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '4', '2', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '5', '3', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '6', '4', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '7', '5', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '8', '6', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '9', '7', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '10', '8', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '11', '9', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '12', '10', '0');
+          (NULL,'PluginGlpiinventoryStateDiscovery', '2', '1', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '4', '2', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '5', '3', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '6', '4', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '7', '5', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '8', '6', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '9', '7', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '10', '8', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '11', '9', '0'),
+          (NULL,'PluginGlpiinventoryStateDiscovery', '12', '10', '0');
 
 
 
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
+INSERT INTO `glpi_plugin_glpiinventory_inventorycomputercriterias`
 (`id`, `name`, `comment`) VALUES
 (1, 'Serial number', 'ssn'),
 (2, 'uuid', 'uuid'),
@@ -1174,8 +1174,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
 (10, 'Manufacturer', 'manufacturer'),
 (11, 'IP', 'IP');
 
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
-(`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
+INSERT INTO `glpi_plugin_glpiinventory_inventorycomputerblacklists`
+(`id`, `plugin_glpiinventory_criterium_id`, `value`) VALUES
 (1, 3, '50:50:54:50:30:30'),
 (2, 1, 'N/A'),
 (3, 1, '(null string)'),
@@ -1243,8 +1243,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 
 
 
--- glpi_plugin_fusioninventory_mappings
-INSERT INTO `glpi_plugin_fusioninventory_mappings`
+-- glpi_plugin_glpiinventory_mappings
+INSERT INTO `glpi_plugin_glpiinventory_mappings`
       (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
    VALUES ('NetworkEquipment','location','glpi_networkequipments','locations_id',1,NULL),
           ('NetworkEquipment','firmware','glpi_networkequipments',
@@ -1253,19 +1253,19 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('NetworkEquipment','firmware2','','',2,NULL),
           ('NetworkEquipment','contact','glpi_networkequipments','contact',403,NULL),
           ('NetworkEquipment','comments','glpi_networkequipments','comment',404,NULL),
-          ('NetworkEquipment','uptime','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','uptime','glpi_plugin_glpiinventory_networkequipments',
              'uptime',3,NULL),
-          ('NetworkEquipment','cpu','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','cpu','glpi_plugin_glpiinventory_networkequipments',
              'cpu',12,NULL),
-          ('NetworkEquipment','cpuuser','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','cpuuser','glpi_plugin_glpiinventory_networkequipments',
              'cpu',401,NULL),
-          ('NetworkEquipment','cpusystem','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','cpusystem','glpi_plugin_glpiinventory_networkequipments',
              'cpu',402,NULL),
           ('NetworkEquipment','serial','glpi_networkequipments','serial',13,NULL),
           ('NetworkEquipment','otherserial','glpi_networkequipments','otherserial',419,NULL),
           ('NetworkEquipment','name','glpi_networkequipments','name',20,NULL),
           ('NetworkEquipment','ram','glpi_networkequipments','ram',21,NULL),
-          ('NetworkEquipment','memory','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','memory','glpi_plugin_glpiinventory_networkequipments',
              'memory',22,NULL),
           ('NetworkEquipment','vtpVlanName','','',19,NULL),
           ('NetworkEquipment','vmvlan','','',430,NULL),
@@ -1293,32 +1293,32 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('NetworkEquipment','PortVlanIndex','','',422,NULL),
 -- NetworkPorts
           ('NetworkEquipment','ifIndex','','',408,NULL),
-          ('NetworkEquipment','ifmtu','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifmtu','glpi_plugin_glpiinventory_networkports',
              'ifmtu',4,NULL),
-          ('NetworkEquipment','ifspeed','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifspeed','glpi_plugin_glpiinventory_networkports',
              'ifspeed',5,NULL),
-          ('NetworkEquipment','ifinternalstatus','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifinternalstatus','glpi_plugin_glpiinventory_networkports',
              'ifinternalstatus',6,NULL),
-          ('NetworkEquipment','iflastchange','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','iflastchange','glpi_plugin_glpiinventory_networkports',
              'iflastchange',7,NULL),
-          ('NetworkEquipment','ifinoctets','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifinoctets','glpi_plugin_glpiinventory_networkports',
              'ifinoctets',8,NULL),
-          ('NetworkEquipment','ifoutoctets','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifoutoctets','glpi_plugin_glpiinventory_networkports',
              'ifoutoctets',9,NULL),
-          ('NetworkEquipment','ifinerrors','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifinerrors','glpi_plugin_glpiinventory_networkports',
              'ifinerrors',10,NULL),
-          ('NetworkEquipment','ifouterrors','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifouterrors','glpi_plugin_glpiinventory_networkports',
              'ifouterrors',11,NULL),
-          ('NetworkEquipment','ifstatus','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifstatus','glpi_plugin_glpiinventory_networkports',
              'ifstatus',14,NULL),
           ('NetworkEquipment','ifPhysAddress','glpi_networkports','mac',15,NULL),
           ('NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
           ('NetworkEquipment','ifType','','',18,NULL),
-          ('NetworkEquipment','ifdescr','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifdescr','glpi_plugin_glpiinventory_networkports',
              'ifdescr',23,NULL),
-          ('NetworkEquipment','portDuplex','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','portDuplex','glpi_plugin_glpiinventory_networkports',
              'portduplex',33,NULL),
-          ('NetworkEquipment','ifalias','glpi_plugin_fusioninventory_networkports',
+          ('NetworkEquipment','ifalias','glpi_plugin_glpiinventory_networkports',
              'ifalias',120,NULL),
 -- Printers
           ('Printer','model','glpi_printers','printermodels_id',25,NULL),
@@ -1410,31 +1410,31 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Printer','paperrollinches','','',197,197),
           ('Printer','paperrollcentimeters','','',198,198),
 -- Printers : Counter pages
-          ('Printer','pagecountertotalpages','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecountertotalpages','glpi_plugin_glpiinventory_printerlogs',
              'pages_total',28,128),
-          ('Printer','pagecounterblackpages','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecounterblackpages','glpi_plugin_glpiinventory_printerlogs',
              'pages_n_b',29,129),
-          ('Printer','pagecountercolorpages','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecountercolorpages','glpi_plugin_glpiinventory_printerlogs',
              'pages_color',30,130),
-          ('Printer','pagecounterrectoversopages','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecounterrectoversopages','glpi_plugin_glpiinventory_printerlogs',
              'pages_recto_verso',54,154),
-          ('Printer','pagecounterscannedpages','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecounterscannedpages','glpi_plugin_glpiinventory_printerlogs',
              'scanned',55,155),
-          ('Printer','pagecountertotalpages_print','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecountertotalpages_print','glpi_plugin_glpiinventory_printerlogs',
              'pages_total_print',423,1423),
-          ('Printer','pagecounterblackpages_print','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecounterblackpages_print','glpi_plugin_glpiinventory_printerlogs',
              'pages_n_b_print',424,1424),
-          ('Printer','pagecountercolorpages_print','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecountercolorpages_print','glpi_plugin_glpiinventory_printerlogs',
              'pages_color_print',425,1425),
-          ('Printer','pagecountertotalpages_copy','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecountertotalpages_copy','glpi_plugin_glpiinventory_printerlogs',
              'pages_total_copy',426,1426),
-          ('Printer','pagecounterblackpages_copy','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecounterblackpages_copy','glpi_plugin_glpiinventory_printerlogs',
              'pages_n_b_copy',427,1427),
-          ('Printer','pagecountercolorpages_copy','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecountercolorpages_copy','glpi_plugin_glpiinventory_printerlogs',
              'pages_color_copy',428,1428),
-          ('Printer','pagecountertotalpages_fax','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecountertotalpages_fax','glpi_plugin_glpiinventory_printerlogs',
              'pages_total_fax',429,1429),
-          ('Printer','pagecounterlargepages','glpi_plugin_fusioninventory_printerlogs',
+          ('Printer','pagecounterlargepages','glpi_plugin_glpiinventory_printerlogs',
              'pages_total_large',434,1434),
 -- Printers : NetworkPort
           ('Printer','ifPhysAddress','glpi_networkports','mac',58,NULL),

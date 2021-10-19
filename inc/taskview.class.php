@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the display part of tasks.
  */
-class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
+class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
 
 
    /**
@@ -73,7 +73,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             250 => 250,
             -1  => __('All')
          ],
-         ['value' => $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs']]
+         ['value' => $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs']]
       );
 
       // add an auto-refresh control
@@ -90,7 +90,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             "300"  => '5 '._n('minute', 'minutes', 5),
             "600"  => '10 '._n('minute', 'minutes', 10),
          ],
-         ['value' => $_SESSION['glpi_plugin_fusioninventory']['refresh']]
+         ['value' => $_SESSION['glpi_plugin_glpiinventory']['refresh']]
       );
 
       // display export button
@@ -112,7 +112,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                      __("Task", 'glpiinventory')."
                      <span class='task_name'>{{task_name}}</span>
                   </h3>
-                  <a href='".PluginFusioninventoryTask::getFormURL()."?id={{task_id}}'
+                  <a href='".PluginGlpiinventoryTask::getFormURL()."?id={{task_id}}'
                      class='task_block_link'>
                      <i class='fa fa-link pointer'></i>
                   </a>
@@ -192,7 +192,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          };
 
          taskjobs.logstatuses_names = ".
-            json_encode(PluginFusioninventoryTaskjoblog::dropdownStateValues()).";
+            json_encode(PluginGlpiinventoryTaskjoblog::dropdownStateValues()).";
       });");
 
       // Template for agents' blocks
@@ -212,15 +212,15 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else {
          $task_id = null;
       }
-      $pfAgent      = new PluginFusioninventoryAgent();
+      $pfAgent      = new PluginGlpiinventoryAgent();
       $Computer     = new Computer();
 
       echo Html::scriptBlock("$(document).ready(function() {
          taskjobs.task_id        = '".$task_id."';
          taskjobs.ajax_url       = '".$this->getBaseUrlFor('fi.job.logs')."';
          taskjobs.agents_url     = '".$pfAgent->getFormUrl()."';
-         taskjobs.includeoldjobs = '".$_SESSION['glpi_plugin_fusioninventory']['includeoldjobs']."';
-         taskjobs.refresh        = '".$_SESSION['glpi_plugin_fusioninventory']['refresh']."';
+         taskjobs.includeoldjobs = '".$_SESSION['glpi_plugin_glpiinventory']['includeoldjobs']."';
+         taskjobs.refresh        = '".$_SESSION['glpi_plugin_glpiinventory']['refresh']."';
          taskjobs.computers_url  = '".$Computer->getFormUrl()."';
          taskjobs.init_templates();
          taskjobs.init_refresh_form(
@@ -291,14 +291,14 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     *
     **/
    function showForm($id, $options = []) {
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
       $taskjobs = [];
       $new_item = false;
 
       if ($id > 0) {
          $this->getFromDB($id);
-         $taskjobs = $pfTaskjob->find(['plugin_fusioninventory_tasks_id' => $id], ['id']);
+         $taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $id], ['id']);
       } else {
          $this->getEmpty();
          $new_item = true;
@@ -339,17 +339,17 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          );
 
          $this->showDropdownForItemtype(__('Preparation timeslot', 'glpiinventory'),
-                                        "PluginFusioninventoryTimeslot",
-                                       ['name'  => 'plugin_fusioninventory_timeslots_prep_id',
-                                        'value' => $this->fields['plugin_fusioninventory_timeslots_prep_id']
+                                        "PluginGlpiinventoryTimeslot",
+                                       ['name'  => 'plugin_glpiinventory_timeslots_prep_id',
+                                        'value' => $this->fields['plugin_glpiinventory_timeslots_prep_id']
                                        ]
             );
 
          $this->showDropdownForItemtype(
             __('Execution timeslot', 'glpiinventory'),
-            "PluginFusioninventoryTimeslot",
-            ['name'  => 'plugin_fusioninventory_timeslots_exec_id',
-                  'value' => $this->fields['plugin_fusioninventory_timeslots_exec_id']]
+            "PluginGlpiinventoryTimeslot",
+            ['name'  => 'plugin_glpiinventory_timeslots_exec_id',
+                  'value' => $this->fields['plugin_glpiinventory_timeslots_exec_id']]
             );
 
          $this->showIntegerField( __('Agent wakeup interval (in minutes)', 'glpiinventory'), "wakeup_agent_time",
@@ -424,27 +424,27 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    public function submitForm($postvars) {
 
       if (isset($postvars['forcestart'])) {
-         Session::checkRight('plugin_fusioninventory_task', UPDATE);
+         Session::checkRight('plugin_glpiinventory_task', UPDATE);
 
          $this->getFromDB($postvars['id']);
          $this->forceRunning();
 
          Html::back();
       } else if (isset ($postvars["add"])) {
-         Session::checkRight('plugin_fusioninventory_task', CREATE);
+         Session::checkRight('plugin_glpiinventory_task', CREATE);
          $items_id = $this->add($postvars);
          Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."?id=".$items_id);
       } else if (isset($postvars["purge"])) {
-         Session::checkRight('plugin_fusioninventory_task', PURGE);
-         $pfTaskJob = new PluginFusioninventoryTaskjob();
-         $taskjobs = $pfTaskJob->find(['plugin_fusioninventory_tasks_id' => $postvars['id']]);
+         Session::checkRight('plugin_glpiinventory_task', PURGE);
+         $pfTaskJob = new PluginGlpiinventoryTaskjob();
+         $taskjobs = $pfTaskJob->find(['plugin_glpiinventory_tasks_id' => $postvars['id']]);
          foreach ($taskjobs as $taskjob) {
             $pfTaskJob->delete($taskjob);
          }
          $this->delete($postvars);
          Html::redirect(Toolbox::getItemTypeSearchURL(get_class($this)));
       } else if (isset($_POST["update"])) {
-         Session::checkRight('plugin_fusioninventory_task', UPDATE);
+         Session::checkRight('plugin_glpiinventory_task', UPDATE);
          $this->getFromDB($postvars['id']);
          //Ensure empty value are set to NULL for datetime fields
          if (isset($postvars['datetime_start']) && $postvars['datetime_start'] === '') {
@@ -456,7 +456,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          $this->update($postvars);
          Html::back();
       } else if (isset($postvars['export_jobs'])) {
-         Session::checkRight('plugin_fusioninventory_task', READ);
+         Session::checkRight('plugin_glpiinventory_task', READ);
          $this->csvExport($postvars);
       }
    }
@@ -467,7 +467,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     */
    function getEmpty() {
       parent::getEmpty();
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $this->fields['reprepare_if_successful'] = $pfConfig->getValue('reprepare_job');
    }
 

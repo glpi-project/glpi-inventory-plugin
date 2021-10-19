@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files to search in collect module.
  */
-class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectCommon {
+class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon {
 
    public $type = 'file';
 
@@ -200,8 +200,8 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
     */
    function post_purgeItem() {
       // Delete all File
-      $pfCollectFileContent = new PluginFusioninventoryCollect_File_Content();
-      $items = $pfCollectFileContent->find(['plugin_fusioninventory_collects_files_id' => $this->fields['id']]);
+      $pfCollectFileContent = new PluginGlpiinventoryCollect_File_Content();
+      $items = $pfCollectFileContent->find(['plugin_glpiinventory_collects_files_id' => $this->fields['id']]);
       foreach ($items as $item) {
          $pfCollectFileContent->delete(['id' => $item['id']], true);
       }

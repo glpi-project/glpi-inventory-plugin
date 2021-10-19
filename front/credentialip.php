@@ -32,5 +32,5 @@
 
 include ("../../../inc/includes.php");
 
-$dropdown = new PluginFusioninventoryCredentialIp();
+$dropdown = new PluginGlpiinventoryCredentialIp();
 include (GLPI_ROOT . "/front/dropdown.common.php");

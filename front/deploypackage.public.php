@@ -34,8 +34,8 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::helpHeader(__('GLPI Inventory'), $_SERVER["PHP_SELF"], "plugins",
-                 "pluginfusioninventorymenu", "deploypackage");
-$pfDeployPackage = new PluginFusioninventoryDeployPackage();
+                 "pluginglpiinventorymenu", "deploypackage");
+$pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
 if (isset($_POST['prepareinstall'])) {
    $computers_id = false;
@@ -62,7 +62,7 @@ if (isset($_POST['prepareinstall'])) {
       case 'remote':
          if ($computers_id) {
             //Remote call to wakeup the agent, from the server
-            $agent = new PluginFusioninventoryAgent();
+            $agent = new PluginGlpiinventoryAgent();
             $agent->getAgentWithComputerid($computers_id);
             $agent->wakeUp();
          }
@@ -74,7 +74,7 @@ if (isset($_POST['prepareinstall'])) {
    Html::back();
 } else {
    Html::header(__('GLPI Inventory'), $_SERVER["PHP_SELF"], "plugins",
-                "pluginfusioninventorymenu", "deploypackage");
+                "pluginglpiinventorymenu", "deploypackage");
 
    $pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
    Html::footer();

@@ -40,7 +40,7 @@ if (!empty($fi_move_item)) { //ajax request
 
    $json_response = ["success" => true, "reason"  => ''];
 
-   if (Session::haveRight('plugin_fusioninventory_package', UPDATE)) {
+   if (Session::haveRight('plugin_glpiinventory_package', UPDATE)) {
       $params = [
                   'old_index' => filter_input(INPUT_POST, "old_index"),
                   'new_index' => filter_input(INPUT_POST, "new_index"),
@@ -78,7 +78,7 @@ if (!empty($fi_move_item)) { //ajax request
       exit;
    }
 
-   $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+   $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
    $pfDeployPackage->getFromDB($packages_id);
 
    //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
@@ -99,7 +99,7 @@ if (!empty($fi_move_item)) { //ajax request
          }
          break;
       default:
-         $classname = 'PluginFusioninventoryDeploy'.ucfirst($itemtype);
+         $classname = 'PluginGlpiinventoryDeploy'.ucfirst($itemtype);
          $class     = new $classname();
          $class->displayForm($pfDeployPackage, $input, $rand, $mode);
          break;

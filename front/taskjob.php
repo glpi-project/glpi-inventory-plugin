@@ -35,15 +35,15 @@ include ("../../../inc/includes.php");
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "taskjob");
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 echo "<div class='monitoring-logs'>";
-$pfTask = new PluginFusioninventoryTask();
+$pfTask = new PluginGlpiinventoryTask();
 $pfTask->showJobLogs();
 echo "</div>";
 

@@ -34,12 +34,12 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('Groups of computers', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "deploygroup");
+             "pluginglpiinventorymenu", "deploygroup");
 
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryDeployGroup');
+Search::show('PluginGlpiinventoryDeployGroup');
 
 Html::footer();
 

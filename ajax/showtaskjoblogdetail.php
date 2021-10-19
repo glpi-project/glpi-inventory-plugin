@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 
 Session::checkCentralAccess();
 
-$pftaskjoblog = new PluginFusioninventoryTaskjoblog();
+$pftaskjoblog = new PluginGlpiinventoryTaskjoblog();
 echo $pftaskjoblog->showHistoryInDetail(
         filter_input(INPUT_POST, "agents_id"),
         filter_input(INPUT_POST, "uniqid"),

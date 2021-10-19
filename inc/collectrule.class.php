@@ -38,14 +38,14 @@ if (!defined('GLPI_ROOT')) {
  * Rules for collect information.
  * The goal is to fill inventory with collect information.
  */
-class PluginFusioninventoryCollectRule extends Rule {
+class PluginGlpiinventoryCollectRule extends Rule {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_rulecollect";
+   static $rightname = "plugin_glpiinventory_rulecollect";
 
    /**
     * Set these rules can be sorted
@@ -102,27 +102,27 @@ class PluginFusioninventoryCollectRule extends Rule {
     */
    function executeActions($output, $params, array $input = []) {
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules-collect",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules-collect",
          "execute actions, data:\n". print_r($output, true). "\n" . print_r($params, true)
       );
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules-collect",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules-collect",
          "execute actions: ". count($this->actions) ."\n"
       );
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-rules-collect",
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-rules-collect",
                "- action: ". $action->fields["action_type"] ." for: ". $action->fields["field"] ."\n"
             );
 
             switch ($action->fields["action_type"]) {
                case "assign" :
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-rules-collect",
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-rules-collect",
                      "- value ".$action->fields["value"]."\n"
                   );
                   $output[$action->fields["field"]] = $action->fields["value"];
@@ -132,14 +132,14 @@ class PluginFusioninventoryCollectRule extends Rule {
                   //Regex result : assign value from the regex
                   $res = "";
                   if (isset($this->regex_results[0])) {
-                     PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-rules-collect",
+                     PluginGlpiinventoryToolbox::logIfExtradebug(
+                        "pluginGlpiinventory-rules-collect",
                         "- regex ".print_r($this->regex_results[0], true)."\n"
                      );
                      $res .= RuleAction::getRegexResultById($action->fields["value"],
                                                             $this->regex_results[0]);
-                     PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-rules-collect",
+                     PluginGlpiinventoryToolbox::logIfExtradebug(
+                        "pluginGlpiinventory-rules-collect",
                         "- regex result: ".$res."\n"
                      );
                   } else {
@@ -151,13 +151,13 @@ class PluginFusioninventoryCollectRule extends Rule {
                               && $action->fields["field"] != 'software'
                               && $action->fields["field"] != 'softwareversion')) {
                      $entities_id = 0;
-                     if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-                        $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                     if (isset($_SESSION["plugin_glpiinventory_entity"])) {
+                        $entities_id = $_SESSION["plugin_glpiinventory_entity"];
                      }
                      $res = Dropdown::importExternal(getItemtypeForForeignKeyField($action->fields['field']), $res, $entities_id);
                   }
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-rules-collect",
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-rules-collect",
                      "- value ".$res."\n"
                   );
                   $output[$action->fields["field"]] = $res;
@@ -187,14 +187,14 @@ class PluginFusioninventoryCollectRule extends Rule {
 
       $criterias['regkey']['field']       = 'name';
       $criterias['regkey']['name']        = __('Registry key', 'glpiinventory');
-      $criterias['regkey']['table']       = 'glpi_plugin_fusioninventory_collects_registries';
+      $criterias['regkey']['table']       = 'glpi_plugin_glpiinventory_collects_registries';
 
       $criterias['regvalue']['field']     = 'name';
       $criterias['regvalue']['name']      = __('Registry value', 'glpiinventory');
 
       $criterias['wmiproperty']['field']  = 'name';
       $criterias['wmiproperty']['name']   = __('WMI property', 'glpiinventory');
-      $criterias['wmiproperty']['table']  = 'glpi_plugin_fusioninventory_collects_wmis';
+      $criterias['wmiproperty']['table']  = 'glpi_plugin_glpiinventory_collects_wmis';
 
       $criterias['wmivalue']['field']     = 'name';
       $criterias['wmivalue']['name']      = __('WMI value', 'glpiinventory');

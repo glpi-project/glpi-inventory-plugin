@@ -37,7 +37,7 @@ class DeployUserinteractionTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all packages
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $items = $pfDeployPackage->find();
       foreach ($items as $item) {
          $pfDeployPackage->delete(['id' => $item['id']], true);
@@ -51,11 +51,11 @@ class DeployUserinteractionTest extends TestCase {
     */
    public function testGetTypeName() {
       $this->assertEquals('User interactions',
-                           PluginFusioninventoryDeployUserinteraction::getTypeName());
+                           PluginGlpiinventoryDeployUserinteraction::getTypeName());
       $this->assertEquals('User interaction',
-                           PluginFusioninventoryDeployUserinteraction::getTypeName(1));
+                           PluginGlpiinventoryDeployUserinteraction::getTypeName(1));
       $this->assertEquals('User interactions',
-                           PluginFusioninventoryDeployUserinteraction::getTypeName(2));
+                           PluginGlpiinventoryDeployUserinteraction::getTypeName(2));
    }
 
 
@@ -63,7 +63,7 @@ class DeployUserinteractionTest extends TestCase {
     * @test
     */
    public function testGetTypes() {
-      $interaction = new PluginFusioninventoryDeployUserinteraction();
+      $interaction = new PluginGlpiinventoryDeployUserinteraction();
       $events      = $interaction->getTypes();
       $this->assertEquals(5, count($events));
    }
@@ -73,7 +73,7 @@ class DeployUserinteractionTest extends TestCase {
     * @test
     */
    public function testGetLabelForAType() {
-      $interaction = new PluginFusioninventoryDeployUserinteraction();
+      $interaction = new PluginGlpiinventoryDeployUserinteraction();
       $this->assertEquals("Before download",
                            $interaction->getLabelForAType('before'));
       $this->assertEquals("After download",
@@ -91,7 +91,7 @@ class DeployUserinteractionTest extends TestCase {
     * @test
     */
    public function testGetValues() {
-      $interaction = new PluginFusioninventoryDeployUserinteraction();
+      $interaction = new PluginGlpiinventoryDeployUserinteraction();
       $data        = ['name' => 'foo', 'title' => 'title', 'text' => 'text', 'template' => 1];
       $values      = $interaction->getValues([], $data, 'edit');
       $expected    = ['name_value'        => 'foo',
@@ -132,7 +132,7 @@ class DeployUserinteractionTest extends TestCase {
     * @test
     */
    public function testGetInteractionDescription() {
-      $template = new PluginFusioninventoryDeployUserinteractionTemplate();
+      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
       $tmp['name']         = 'My Template';
       $tmp['json']         = '{"platform":"wts","timeout":4,"buttons":"ok","retry_after":4,"nb_max_retry":4,"on_timeout":"continue","on_nouser":"continue","on_multiusers":"cancel"}';
       $tmp['entities_id']  = 0;
@@ -141,7 +141,7 @@ class DeployUserinteractionTest extends TestCase {
 
       $tmp = [];
 
-      $interaction     = new PluginFusioninventoryDeployUserinteraction();
+      $interaction     = new PluginGlpiinventoryDeployUserinteraction();
       $tmp['name']     = 'inter';
       $tmp['type']     = 'after';
       $tmp['template'] = $templates_id;
@@ -167,12 +167,12 @@ class DeployUserinteractionTest extends TestCase {
    public function testAdd_item() {
       $_SESSION['glpiactiveentities_string'] = 0;
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0];
       $packages_id = $pfDeployPackage->add($input);
 
-      $interaction     = new PluginFusioninventoryDeployUserinteraction();
+      $interaction     = new PluginGlpiinventoryDeployUserinteraction();
       $params = ['id'                   => $packages_id,
                  'userinteractionstype' => 'before',
                  'name'                 => 'My interaction',
@@ -209,8 +209,8 @@ class DeployUserinteractionTest extends TestCase {
    public function testSave_item() {
       $_SESSION['glpiactiveentities_string'] = 0;
 
-      $interaction = new PluginFusioninventoryDeployUserinteraction();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $interaction = new PluginGlpiinventoryDeployUserinteraction();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
       $params = ['id'                   => $pfDeployPackage->fields['id'],
                  'index'                => 0,
@@ -236,8 +236,8 @@ class DeployUserinteractionTest extends TestCase {
    public function testMove_item() {
       $_SESSION['glpiactiveentities_string'] = 0;
 
-      $interaction     = new PluginFusioninventoryDeployUserinteraction();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $interaction     = new PluginGlpiinventoryDeployUserinteraction();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
       $interaction->move_item(['id'        => $pfDeployPackage->fields['id'],
                                'old_index' => 0,
@@ -256,8 +256,8 @@ class DeployUserinteractionTest extends TestCase {
    public function testRemove_item() {
       $_SESSION['glpiactiveentities_string'] = 0;
 
-      $interaction     = new PluginFusioninventoryDeployUserinteraction();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $interaction     = new PluginGlpiinventoryDeployUserinteraction();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
       $interaction->remove_item(['packages_id'              => $pfDeployPackage->fields['id'],
                                  'userinteractions_entries' => [0 => 'on']]);

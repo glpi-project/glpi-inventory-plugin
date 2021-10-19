@@ -42,10 +42,10 @@ if (isset($_POST["unlock_field_fusioninventory"])) {
    if (Session::haveRight($typeright, UPDATE)) {
       if (isset($_POST["lockfield_fusioninventory"])
               && count($_POST["lockfield_fusioninventory"])) {
-         $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
-         PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);
+         $tab=PluginGlpiinventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
+         PluginGlpiinventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);
       } else {
-         PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], []);
+         PluginGlpiinventoryLock::setLockArray($_POST['type'], $_POST["id"], []);
       }
    }
    Html::back();

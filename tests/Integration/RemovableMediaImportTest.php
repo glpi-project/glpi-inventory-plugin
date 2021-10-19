@@ -66,18 +66,18 @@ class RemovableMediaImportTest extends TestCase {
       $_SESSION['glpiname'] = 'glpi';
 
       unset($PF_CONFIG['component_removablemedia']);
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $pfConfig->updateValue('component_removablemedia', '1');
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
 
       $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $agents_id = $pfAgent->add($data['inventory']['AGENT']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
       // ** Add
       $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation
@@ -97,18 +97,18 @@ class RemovableMediaImportTest extends TestCase {
       $_SESSION['glpiname'] = 'glpi';
 
       unset($PF_CONFIG['component_removablemedia']);
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $pfConfig->updateValue('component_removablemedia', '0');
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
 
       $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $agents_id = $pfAgent->add($data['inventory']['AGENT']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
       // ** Add
       $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation

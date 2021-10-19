@@ -166,10 +166,10 @@ class ComputerMonitorTest extends TestCase {
     */
    public function MonitorUniqueSerialimport() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory = $this->a_computer1;
@@ -197,7 +197,7 @@ class ComputerMonitorTest extends TestCase {
     */
    public function MonitorUniqueSecondImport() {
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       // Second try (verify not create a second same monitor)
@@ -224,7 +224,7 @@ class ComputerMonitorTest extends TestCase {
     */
    public function MonitorUniqueConnectedOnSecondComputer() {
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       // Second computer with same monitor
@@ -266,7 +266,7 @@ class ComputerMonitorTest extends TestCase {
     */
    public function UpdateFirstComputerWithoutMonitor() {
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       // Retry first computer without monitor
@@ -293,7 +293,7 @@ class ComputerMonitorTest extends TestCase {
     */
    public function UpdateFirstComputerWithMonitor() {
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       // * Retry first computer with monitor

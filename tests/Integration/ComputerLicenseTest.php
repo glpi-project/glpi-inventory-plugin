@@ -119,10 +119,10 @@ class ComputerLicenseTest extends TestCase {
     */
    public function testAddLicensesWhenInventory() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory = $this->a_computer1;
@@ -139,10 +139,10 @@ class ComputerLicenseTest extends TestCase {
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
 
       $this->assertEquals(1,
-                          countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos'),
+                          countElementsInTable('glpi_plugin_glpiinventory_computerlicenseinfos'),
                           'License may be added in fusion table');
 
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);
       $a_ref = [
           'id'                   => $pfComputerLicenseInfo->fields['id'],
@@ -168,11 +168,11 @@ class ComputerLicenseTest extends TestCase {
     */
    public function testCleanComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       //First, check if license does exist
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $computer = new Computer();
       $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);
       $computer->getFromDBByCrit(['name' => 'pc001']);
@@ -195,7 +195,7 @@ class ComputerLicenseTest extends TestCase {
                           'License data');
 
       //Second, clean and check if it has been removed
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->cleanComputer($computer->fields['id']);
 
       $ret = $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);
@@ -208,10 +208,10 @@ class ComputerLicenseTest extends TestCase {
     */
    public function testDeleteComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory = $this->a_computer1;
@@ -224,7 +224,7 @@ class ComputerLicenseTest extends TestCase {
       $computer->getFromDB(1);
 
       //First, check if license does exist
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);;
 
       $a_ref = [

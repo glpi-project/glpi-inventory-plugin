@@ -32,7 +32,7 @@
 
 include ("../../../inc/includes.php");
 
-$pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+$pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
 
 if (isset($_POST["add"])) {
    $pfCollect_Wmi->add($_POST);

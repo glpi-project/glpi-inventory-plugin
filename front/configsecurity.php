@@ -33,15 +33,15 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "admin", "pluginfusioninventorymenu", "configsecurity");
+        "admin", "pluginglpiinventorymenu", "configsecurity");
 
-Session::checkRight('plugin_fusioninventory_configsecurity', READ);
+Session::checkRight('plugin_glpiinventory_configsecurity', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 $_GET['target']="configsecurity.php";
 
-Search::show('PluginFusioninventoryConfigSecurity');
+Search::show('PluginGlpiinventoryConfigSecurity');
 
 Html::footer();
 

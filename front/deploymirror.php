@@ -34,12 +34,12 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('Mirror servers'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "deploymirror");
+             "pluginglpiinventorymenu", "deploymirror");
 
-//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents", "r");
+//PluginGlpiinventoryProfile::checkRight("Fusioninventory", "agents", "r");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryDeployMirror');
+Search::show('PluginGlpiinventoryDeployMirror');
 Html::footer();
 

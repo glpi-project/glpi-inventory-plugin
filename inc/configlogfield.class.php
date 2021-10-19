@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the configuration of logs of network inventory (network equipment
  * and printer).
  */
-class PluginFusioninventoryConfigLogField extends CommonDBTM {
+class PluginGlpiinventoryConfigLogField extends CommonDBTM {
 
 
    /**
@@ -74,25 +74,25 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
           ]
       ];
 
-      $mapping = new PluginFusioninventoryMapping();
+      $mapping = new PluginGlpiinventoryMapping();
       foreach ($logs as $itemtype=>$fields) {
          foreach ($fields as $name=>$value) {
             $input = [];
             $mapfields = $mapping->get($itemtype, $name);
             if ($mapfields != false) {
                if (!$this->getValue($mapfields['id'])) {
-                  $input['plugin_fusioninventory_mappings_id'] = $mapfields['id'];
+                  $input['plugin_glpiinventory_mappings_id'] = $mapfields['id'];
                   $input['days']  = $value;
                   $this->add($input);
                } else {
                   // On old version, can have many times same value in DB
-                  $query = "SELECT *  FROM `glpi_plugin_fusioninventory_configlogfields`
-                     WHERE `plugin_fusioninventory_mappings_id` = '".$mapfields['id']."'
+                  $query = "SELECT *  FROM `glpi_plugin_glpiinventory_configlogfields`
+                     WHERE `plugin_glpiinventory_mappings_id` = '".$mapfields['id']."'
                      LIMIT 1,1000";
                   $result=$DB->query($query);
 
                   $delete = $DB->buildDelete(
-                     'glpi_plugin_fusioninventory_configlogfields', [
+                     'glpi_plugin_glpiinventory_configlogfields', [
                         'id' => new \QueryParam()
                      ]
                   );
@@ -121,7 +121,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
       $query = "SELECT days
                 FROM ".$this->getTable()."
-                WHERE `plugin_fusioninventory_mappings_id`='".$field."'
+                WHERE `plugin_glpiinventory_mappings_id`='".$field."'
                 LIMIT 1;";
       $result = $DB->query($query);
       if ($result) {
@@ -145,7 +145,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
    function showConfigForm($options = []) {
       global $DB;
 
-      $mapping = new PluginFusioninventoryMapping();
+      $mapping = new PluginGlpiinventoryMapping();
 
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<div class='center' id='tabsbody'>";
@@ -177,9 +177,9 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       }
 
       $query = "SELECT `".$this->getTable()."`.`id`, `locale`, `days`, `itemtype`, `name`
-                FROM `".$this->getTable()."`, `glpi_plugin_fusioninventory_mappings`
-                WHERE `".$this->getTable()."`.`plugin_fusioninventory_mappings_id`=
-                         `glpi_plugin_fusioninventory_mappings`.`id`
+                FROM `".$this->getTable()."`, `glpi_plugin_glpiinventory_mappings`
+                WHERE `".$this->getTable()."`.`plugin_glpiinventory_mappings_id`=
+                         `glpi_plugin_glpiinventory_mappings`.`id`
                 ORDER BY `itemtype`, `name`;";
       $result=$DB->query($query);
       if ($result) {
@@ -197,7 +197,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          }
       }
 
-      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+      if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input type='hidden' name='tabs' value='history'/>
                <input class='submit' type='submit' name='update'
@@ -209,7 +209,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
-      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+      if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' ".
                  "value='"._x('button', 'Clean')."' >";
       }

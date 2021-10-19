@@ -35,27 +35,27 @@ include ("../../../inc/includes.php");
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "inventorycomputerblacklist");
 
-Session::checkRight('plugin_fusioninventory_blacklist', READ);
+Session::checkRight('plugin_glpiinventory_blacklist', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-$pfInventoryComputerBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
+$pfInventoryComputerBlacklist = new PluginGlpiinventoryInventoryComputerBlacklist();
 
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_blacklist', CREATE);
+   Session::checkRight('plugin_glpiinventory_blacklist', CREATE);
    if (!empty($_POST['value'])) {
       $pfInventoryComputerBlacklist->add($_POST);
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
-   Session::checkRight('plugin_fusioninventory_blacklist', UPDATE);
+   Session::checkRight('plugin_glpiinventory_blacklist', UPDATE);
    $pfInventoryComputerBlacklist->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   Session::checkRight('plugin_fusioninventory_blacklist', PURGE);
+   Session::checkRight('plugin_glpiinventory_blacklist', PURGE);
    $pfInventoryComputerBlacklist->delete($_POST);
    Html::redirect("blacklist.php");
 }

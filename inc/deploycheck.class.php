@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the checks before deploy a package.
  */
-class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackageItem {
+class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageItem {
 
    public $shortname = 'checks';
    public $json_name = 'checks';
@@ -178,11 +178,11 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
     * Display list of checks
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored checks
     * @param string $rand unique element id used to identify/update an element
     */
-   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
+   function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
       $checks_types = $this->getTypes();
@@ -420,7 +420,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    function displayAjaxValues($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['orders_id']);

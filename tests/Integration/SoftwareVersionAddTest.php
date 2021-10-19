@@ -52,7 +52,7 @@ class SoftwareVersionAddTest extends TestCase {
       }
 
       // Delete all agents
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $items = $pfAgent->find();
       foreach ($items as $item) {
          $pfAgent->delete(['id' => $item['id']], true);
@@ -88,15 +88,15 @@ class SoftwareVersionAddTest extends TestCase {
 
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION['glpiname'] = 'glpi';
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
 
       $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $agents_id = $pfAgent->add($data['inventory']['AGENT']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
       // ** Add
       $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation
@@ -199,7 +199,7 @@ class SoftwareVersionAddTest extends TestCase {
             ]
          ]
       ];
-      $pfici = new PluginFusioninventoryInventoryComputerInventory();
+      $pfici = new PluginGlpiinventoryInventoryComputerInventory();
       $software = new Software();
       $csv = new Item_SoftwareVersion();
 
@@ -324,7 +324,7 @@ class SoftwareVersionAddTest extends TestCase {
             ]
          ]
       ];
-      $pfici = new PluginFusioninventoryInventoryComputerInventory();
+      $pfici = new PluginGlpiinventoryInventoryComputerInventory();
       $softwareVersion = new SoftwareVersion();
 
       $pfici->sendCriteria('TESTAAAA', $arrayinventory);

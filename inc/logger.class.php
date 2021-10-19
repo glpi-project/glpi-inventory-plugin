@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage extra debug in files.
  */
-class PluginFusioninventoryLogger {
+class PluginGlpiinventoryLogger {
 
 
    /**
@@ -47,7 +47,7 @@ class PluginFusioninventoryLogger {
     * @param string $message
     */
    static function logIfExtradebug($file, $message) {
-      if (!PluginFusioninventoryConfig::isExtradebugActive()) {
+      if (!PluginGlpiinventoryConfig::isExtradebugActive()) {
          return;
       }
       Toolbox::logInFile($file, $message);

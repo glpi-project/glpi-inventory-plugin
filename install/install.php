@@ -37,7 +37,7 @@
  * @param string $version
  * @param string $migrationname class name related to Migration class of GLPI
  */
-function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
+function pluginGlpiinventoryInstall($version, $migrationname = 'Migration') {
    global $DB;
 
    ini_set("memory_limit", "-1");
@@ -90,7 +90,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
 
    $DB->delete(
       'glpi_displaypreferences', [
-         'itemtype' => ['LIKE', 'PluginFusioninventory%']
+         'itemtype' => ['LIKE', 'PluginGlpiinventory%']
       ]
    );
    $DB->delete(
@@ -119,7 +119,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     */
    $migration->displayMessage("Clean rules from old installation of the plugin");
    $Rule = new Rule();
-   $a_rules = $Rule->find(['sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
+   $a_rules = $Rule->find(['sub_type' => 'PluginGlpiinventoryInventoryRuleImport']);
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }
@@ -191,16 +191,16 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     * Manage profiles
     */
     $migration->displayMessage("Initialize profiles");
-    PluginFusioninventoryProfile::initProfile();
+    PluginGlpiinventoryProfile::initProfile();
 
    /*
     * bug of purge network port when purge unmanaged devices, so we clean
     */
    $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
-         LEFT JOIN `glpi_plugin_fusioninventory_unmanageds`
-            ON `glpi_plugin_fusioninventory_unmanageds`.`id` = `glpi_networkports`.`items_id`
-         WHERE `itemtype`='PluginFusioninventoryUnmanaged'
-            AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL ";
+         LEFT JOIN `glpi_plugin_glpiinventory_unmanageds`
+            ON `glpi_plugin_glpiinventory_unmanageds`.`id` = `glpi_networkports`.`items_id`
+         WHERE `itemtype`='PluginGlpiinventoryUnmanaged'
+            AND `glpi_plugin_glpiinventory_unmanageds`.`id` IS NULL ";
    $result=$DB->query($sql);
    while ($data=$DB->fetchArray($result)) {
       $networkPort->delete(['id'=>$data['nid']], 1);
@@ -210,17 +210,17 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     * Add config
     */
    $migration->displayMessage("Initialize configuration");
-   $pfConfig = new PluginFusioninventoryConfig();
+   $pfConfig = new PluginGlpiinventoryConfig();
    $pfConfig->initConfigModule();
 
-   $configLogField = new PluginFusioninventoryConfigLogField();
+   $configLogField = new PluginGlpiinventoryConfigLogField();
    $configLogField->initConfig();
 
    /*
     * Register Agent TASKS
     */
    $migration->displayMessage("Initialize agent TASKS");
-   $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+   $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
    $input = [];
    $input['modulename'] = "WAKEONLAN";
    $input['is_active']  = 0;
@@ -267,19 +267,19 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     * Add cron task
     */
    $migration->displayMessage("Initialize cron task");
-   CronTask::Register('PluginFusioninventoryTask', 'taskscheduler', '60',
+   CronTask::Register('PluginGlpiinventoryTask', 'taskscheduler', '60',
                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30]);
-   CronTask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
+   CronTask::Register('PluginGlpiinventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]);
-   CronTask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
+   CronTask::Register('PluginGlpiinventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30]);
-   CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
+   CronTask::Register('PluginGlpiinventoryAgent', 'cleanoldagents', (3600 * 24),
                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
                               'comment'=> Toolbox::addslashes_deep(__('Delete agents that have not contacted the server since "xxx" days.', 'glpiinventory'))]);
-   CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
+   CronTask::Register('PluginGlpiinventoryAgentWakeup', 'wakeupAgents', 120,
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                               'comment'=> Toolbox::addslashes_deep(__('Wake agents ups', 'glpiinventory'))]);
-   CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
+   CronTask::Register('PluginGlpiinventoryTask', 'cleanondemand', 86400,
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                         'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]);
 
@@ -287,7 +287,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     * Create rules
     */
    $migration->displayMessage("Create rules");
-   $pfSetup = new PluginFusioninventorySetup();
+   $pfSetup = new PluginGlpiinventorySetup();
    $pfSetup->initRules();
 
    /*
@@ -298,20 +298,20 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     *  Import OCS locks
     */
    $migration->displayMessage("Import OCS locks if exists");
-   $pfLock = new PluginFusioninventoryLock();
+   $pfLock = new PluginGlpiinventoryLock();
    $pfLock->importFromOcs();
 
-   CronTask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
+   CronTask::Register('PluginGlpiinventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                       ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]);
 
-   $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
+   $pfNetworkporttype = new PluginGlpiinventoryNetworkporttype();
    $pfNetworkporttype->init();
 
    require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
-   PluginFusioninventoryInventoryComputerStat::init();
+   PluginGlpiinventoryInventoryComputerStat::init();
 
    /*
-    * Define when install agent_base_url in glpi_plugin_fusioninventory_entities
+    * Define when install agent_base_url in glpi_plugin_glpiinventory_entities
     */
    $full_url = filter_input(INPUT_SERVER, "PHP_SELF");
    $https = filter_input(INPUT_SERVER, "HTTPS");
@@ -324,7 +324,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
       }
       $agent_base_url = str_replace('/front/plugin.form.php', '', $agent_base_url);
       $DB->update(
-         'glpi_plugin_fusioninventory_entities', [
+         'glpi_plugin_glpiinventory_entities', [
             'agent_base_url'  => $agent_base_url
          ], [
             'id'              => 1

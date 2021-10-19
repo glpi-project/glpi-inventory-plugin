@@ -32,15 +32,15 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight('plugin_fusioninventory_configuration', READ);
+Session::checkRight('plugin_glpiinventory_configuration', READ);
 
 Html::header(__('Features', 'glpiinventory'), $_SERVER["PHP_SELF"],
-             "admin", "pluginfusioninventorymenu", "config");
+             "admin", "pluginglpiinventorymenu", "config");
 
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-$pfConfig = new PluginFusioninventoryConfig();
+$pfConfig = new PluginGlpiinventoryConfig();
 
 if (isset($_POST['update'])) {
    $data = $_POST;

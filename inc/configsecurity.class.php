@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage SNMP credentials: v1, v2c and v3 support.
  */
-class PluginFusioninventoryConfigSecurity extends CommonDBTM {
+class PluginGlpiinventoryConfigSecurity extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -51,7 +51,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_configsecurity';
+   static $rightname = 'plugin_glpiinventory_configsecurity';
 
 
    /**
@@ -75,7 +75,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @return true
     */
    function showForm($id, array $options = []) {
-      Session::checkRight('plugin_fusioninventory_configsecurity', READ);
+      Session::checkRight('plugin_glpiinventory_configsecurity', READ);
       $this->initForm($id, $options);
       $this->showFormHeader($options);
 
@@ -270,8 +270,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     */
    static function authDropdown($selected = "") {
 
-      Dropdown::show("PluginFusioninventoryConfigSecurity",
-                      ['name' => "plugin_fusioninventory_configsecurities_id",
+      Dropdown::show("PluginGlpiinventoryConfigSecurity",
+                      ['name' => "plugin_glpiinventory_configsecurities_id",
                            'value' => $selected,
                            'comment' => false]);
    }
@@ -285,7 +285,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       if ($ma->getAction() == 'assign_auth') {
-         PluginFusioninventoryConfigSecurity::authDropdown();
+         PluginGlpiinventoryConfigSecurity::authDropdown();
          echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
          return true;
       }
@@ -311,15 +311,15 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
             switch ($itemtype) {
 
                case 'NetworkEquipment':
-                  $equipement = new PluginFusioninventoryNetworkEquipment();
+                  $equipement = new PluginGlpiinventoryNetworkEquipment();
                   break;
 
                case 'Printer':
-                  $equipement = new PluginFusioninventoryPrinter();
+                  $equipement = new PluginGlpiinventoryPrinter();
                   break;
 
-               case 'PluginFusioninventoryUnmanaged':
-                  $equipement = new PluginFusioninventoryUnmanaged();
+               case 'PluginGlpiinventoryUnmanaged':
+                  $equipement = new PluginGlpiinventoryUnmanaged();
                   break;
 
             }
@@ -331,13 +331,13 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                   $current = current($found);
                   $equipement->getFromDB($current['id']);
                   $input['id'] = $equipement->fields['id'];
-                  $input['plugin_fusioninventory_configsecurities_id'] =
-                              $_POST['plugin_fusioninventory_configsecurities_id'];
+                  $input['plugin_glpiinventory_configsecurities_id'] =
+                              $_POST['plugin_glpiinventory_configsecurities_id'];
                   $return = $equipement->update($input);
                } else {
                   $input[$fk] = $key;
-                  $input['plugin_fusioninventory_configsecurities_id'] =
-                              $_POST['plugin_fusioninventory_configsecurities_id'];
+                  $input['plugin_glpiinventory_configsecurities_id'] =
+                              $_POST['plugin_glpiinventory_configsecurities_id'];
                   $return = $equipement->add($input);
                }
 

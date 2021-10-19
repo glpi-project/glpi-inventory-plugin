@@ -32,21 +32,21 @@
 
 include ("../../../inc/includes.php");
 
-$pfTask = new PluginFusioninventoryTask();
+$pfTask = new PluginGlpiinventoryTask();
 
 //Submit the task form parameters
 $pfTask->submitForm($_POST);
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "admin", "pluginfusioninventorymenu", "task");
+        "admin", "pluginglpiinventorymenu", "task");
 
 
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-//PluginFusioninventoryTaskjob::isAllowurlfopen();
+//PluginGlpiinventoryTaskjob::isAllowurlfopen();
 
 //If there is no form to submit, display the form
 $pfTask->display($_GET);

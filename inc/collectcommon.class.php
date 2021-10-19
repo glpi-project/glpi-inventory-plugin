@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the windows registry to get in collect module.
  */
-class PluginFusioninventoryCollectCommon extends CommonDBTM {
+class PluginGlpiinventoryCollectCommon extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_collect';
+   static $rightname = 'plugin_glpiinventory_collect';
 
    public $type = '';
 
@@ -127,7 +127,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       global $DB;
       $params = [
          'FROM'  => $this->getTable(),
-         'WHERE' => ['plugin_fusioninventory_collects_id' => $collects_id]
+         'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id]
       ];
       $iterator = $DB->request($params);
 
@@ -186,7 +186,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      echo Html::hidden('plugin_fusioninventory_collects_id',
+      echo Html::hidden('plugin_glpiinventory_collects_id',
                         ['value' => $collects_id]);
       echo Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";

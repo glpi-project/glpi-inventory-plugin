@@ -33,11 +33,11 @@
 include ("../../../inc/includes.php");
 
 Session::checkRight('networking', READ);
-Session::checkRight('plugin_fusioninventory_networkequipment', UPDATE);
+Session::checkRight('plugin_glpiinventory_networkequipment', UPDATE);
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
-   $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-   $pfNetworkEquipment->updateNetworkInfo($_POST['id'], $_POST['plugin_fusioninventory_configsecurities_id'], $_POST['sysdescr']);
+   $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
+   $pfNetworkEquipment->updateNetworkInfo($_POST['id'], $_POST['plugin_glpiinventory_configsecurities_id'], $_POST['sysdescr']);
 }
 
 Html::back();

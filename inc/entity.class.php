@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the entity configuration.
  */
-class PluginFusioninventoryEntity extends CommonDBTM {
+class PluginGlpiinventoryEntity extends CommonDBTM {
 
    /**
     * The right name for this class
@@ -87,7 +87,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       if ($item->fields['id'] > -1) {
-         $pmEntity = new PluginFusioninventoryEntity();
+         $pmEntity = new PluginGlpiinventoryEntity();
          $pmEntity->showForm($item->fields['id']);
          return true;
       }

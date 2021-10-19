@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the entity rules collection.
  */
-class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection {
+class PluginGlpiinventoryInventoryRuleEntityCollection extends RuleCollection {
 
 
    /**
@@ -59,7 +59,7 @@ class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection 
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_ruleentity';
+   static $rightname = 'plugin_glpiinventory_ruleentity';
 
 
    /**

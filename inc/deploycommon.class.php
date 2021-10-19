@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the prepare task job and give the data to the agent when request what
  * to deploy.
  */
-class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunication {
+class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication {
 
 
    /**
@@ -75,15 +75,15 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
    function prepareRun($taskjob_id, $definitions_filter = null) {
       global $DB;
 
-      $task       = new PluginFusioninventoryTask();
-      $job        = new PluginFusioninventoryTaskjob();
-      $joblog     = new PluginFusioninventoryTaskjoblog();
-      $jobstate   = new PluginFusioninventoryTaskjobstate();
-      $agent      = new PluginFusioninventoryAgent();
-      $agentmodule= new PluginFusioninventoryAgentmodule();
+      $task       = new PluginGlpiinventoryTask();
+      $job        = new PluginGlpiinventoryTaskjob();
+      $joblog     = new PluginGlpiinventoryTaskjoblog();
+      $jobstate   = new PluginGlpiinventoryTaskjobstate();
+      $agent      = new PluginGlpiinventoryAgent();
+      $agentmodule= new PluginGlpiinventoryAgentmodule();
 
       $job->getFromDB($taskjob_id);
-      $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
+      $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
       $communication= $task->fields['communication'];
 
@@ -144,18 +144,18 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
                break;
 
-            case 'PluginFusioninventoryDeployGroup':
-               $group = new PluginFusioninventoryDeployGroup;
+            case 'PluginGlpiinventoryDeployGroup':
+               $group = new PluginGlpiinventoryDeployGroup;
                $group->getFromDB($items_id);
 
                switch ($group->getField('type')) {
 
                   case 'STATIC':
-                     if ($this->definitionFiltered("PluginFusioninventoryDeployGroupStatic", $definitions_filter)) {
+                     if ($this->definitionFiltered("PluginGlpiinventoryDeployGroupStatic", $definitions_filter)) {
                         break;
                      }
                      $query = "SELECT items_id
-                     FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
+                     FROM glpi_plugin_glpiinventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
                      $res = $DB->query($query);
@@ -165,7 +165,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      break;
 
                   case 'DYNAMIC':
-                     if ($this->definitionFiltered("PluginFusioninventoryDeployGroupDynamic", $definitions_filter)) {
+                     if ($this->definitionFiltered("PluginGlpiinventoryDeployGroupDynamic", $definitions_filter)) {
                         break;
                      }
 
@@ -176,7 +176,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                         $where = "";
                      }
                      $query = "SELECT fields_array
-                     FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
+                     FROM glpi_plugin_glpiinventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id' $where
                      LIMIT 1";
                      $res = $DB->query($query);
@@ -203,7 +203,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                         $_GET["glpisearchcount2"] = count($_GET['field2']);
                      }
 
-                     $pfSearch = new PluginFusioninventorySearch();
+                     $pfSearch = new PluginGlpiinventorySearch();
                      Search::manageParams('Computer');
                      $glpilist_limit             = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
@@ -235,22 +235,22 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $computers = array_keys($tmp_computers);
 
       $c_input= [];
-      $c_input['plugin_fusioninventory_taskjobs_id'] = $job->fields['id'];
+      $c_input['plugin_glpiinventory_taskjobs_id'] = $job->fields['id'];
       $c_input['state']                              = 0;
-      $c_input['plugin_fusioninventory_agents_id']   = 0;
+      $c_input['plugin_glpiinventory_agents_id']   = 0;
       $c_input['execution_id']                       = $task->fields['execution_id'];
 
-      $package = new PluginFusioninventoryDeployPackage();
+      $package = new PluginGlpiinventoryDeployPackage();
 
       foreach ($computers as $computer_id) {
          //Unique Id match taskjobstatuses for an agent(computer)
 
          foreach ($definitions as $definition) {
             $uniqid = uniqid();
-            $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
+            $package->getFromDB($definition['PluginGlpiinventoryDeployPackage']);
 
             $c_input['state']    = 0;
-            $c_input['itemtype'] = 'PluginFusioninventoryDeployPackage';
+            $c_input['itemtype'] = 'PluginGlpiinventoryDeployPackage';
             $c_input['items_id'] = $package->fields['id'];
             $c_input['date']     = date("Y-m-d H:i:s");
             $c_input['uniqid']   = $uniqid;
@@ -266,30 +266,30 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                                              "No agent found for [[Computer::".$computer_id."]]");
             } else {
                if ($agentmodule->isAgentCanDo('DEPLOY', $agents_id)) {
-                  $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+                  $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
 
                   $jobstates_running = $jobstate->find(
-                        ['itemtype'                         => 'PluginFusioninventoryDeployPackage',
+                        ['itemtype'                         => 'PluginGlpiinventoryDeployPackage',
                          'items_id'                         => $package->fields['id'],
-                         'state'                            => ['!=', PluginFusioninventoryTaskjobstate::FINISHED],
-                         'plugin_fusioninventory_agents_id' => $agents_id
+                         'state'                            => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED],
+                         'plugin_glpiinventory_agents_id' => $agents_id
                         ]);
 
                   if (count($jobstates_running) == 0) {
                      // Push the agent, in the stack of agent to awake
                      if ($communication == "push") {
-                        $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                        $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
                      }
 
                      $jobstates_id= $jobstate->add($c_input);
 
                      //Add log of taskjob
-                     $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-                     $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                     $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                     $c_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
                      $taskvalid++;
                      $joblog->add($c_input);
                      unset($c_input['state']);
-                     unset($c_input['plugin_fusioninventory_agents_id']);
+                     unset($c_input['plugin_glpiinventory_agents_id']);
                   }
                }
             }
@@ -299,7 +299,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          $job->fields['status']= 1;
          $job->update($job->fields);
       } else {
-         $job->reinitializeTaskjobs($job->fields['plugin_fusioninventory_tasks_id']);
+         $job->reinitializeTaskjobs($job->fields['plugin_glpiinventory_tasks_id']);
       }
    }
 
@@ -307,7 +307,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
    /**
     * run function, so return data to send to the agent for deploy
     *
-    * @param object $taskjobstate PluginFusioninventoryTaskjobstate instance
+    * @param object $taskjobstate PluginGlpiinventoryTaskjobstate instance
     * @return array
     */
    function run($taskjobstate) {
@@ -321,7 +321,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       }
 
       //get order by type and package id
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployPackage->getFromDB($taskjobstate->fields['items_id']);
       //decode order data
       $order_data = json_decode($pfDeployPackage->fields['json'], true);
@@ -341,7 +341,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
        * $order_files = []
        * foreach ($order_job["associatedFiles"] as $hash) {
        *    if (!isset($order_files[$hash]) {
-       *       $order_files[$hash] = PluginFusioninventoryDeployFile::getByHash($hash);
+       *       $order_files[$hash] = PluginGlpiinventoryDeployFile::getByHash($hash);
        *       $order_files[$hash]['mirrors'] = $mirrors
        *    }
        * }
@@ -349,8 +349,8 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $order_files = $order_data['associatedFiles'];
 
       //Add mirrors to associatedFiles
-      $mirrors = PluginFusioninventoryDeployMirror::getList(
-         $taskjobstate->fields['plugin_fusioninventory_agents_id']
+      $mirrors = PluginGlpiinventoryDeployMirror::getList(
+         $taskjobstate->fields['plugin_glpiinventory_agents_id']
       );
       foreach ($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;

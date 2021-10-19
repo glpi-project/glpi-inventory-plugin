@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the log reports of printers.
  */
-class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
+class PluginGlpiinventoryPrinterLogReport extends CommonDBTM {
 
 
    /**
@@ -47,8 +47,8 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
     */
    function __construct() {
       global $CFG_GLPI;
-      $this->table = "glpi_plugin_fusioninventory_printers";
-      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = $this->table;
+      $this->table = "glpi_plugin_glpiinventory_printers";
+      $CFG_GLPI['glpitablesitemtype']["PluginGlpiinventoryPrinterLogReport"] = $this->table;
    }
 
 
@@ -59,11 +59,11 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
     */
    function rawSearchOptions() {
 
-      $pfPrinterLog = new PluginFusioninventoryPrinterLog();
+      $pfPrinterLog = new PluginGlpiinventoryPrinterLog();
       $tab = $pfPrinterLog->rawSearchOptions();
 
       foreach ($tab as $searchOptions) {
-         if ($searchOptions['table'] == PluginFusioninventoryPrinterLog::getTable()) {
+         if ($searchOptions['table'] == PluginGlpiinventoryPrinterLog::getTable()) {
             $tab[$searchOptions['id']]['forcegroupby']='1';
          }
       }

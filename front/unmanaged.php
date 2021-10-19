@@ -33,13 +33,13 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "assets", "pluginfusioninventoryunmanaged", "unmanaged");
+        "assets", "pluginglpiinventoryunmanaged", "unmanaged");
 
-Session::checkRight('plugin_fusioninventory_unmanaged', READ);
+Session::checkRight('plugin_glpiinventory_unmanaged', READ);
 
 $_GET['target'] = "unmanaged.php";
 
-Search::show('PluginFusioninventoryUnmanaged');
+Search::show('PluginGlpiinventoryUnmanaged');
 
 Html::footer();
 

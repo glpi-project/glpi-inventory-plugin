@@ -124,15 +124,15 @@ class VirtualmachineTest extends TestCase {
     */
    public function AddComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = $this->computer_inventory;
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
@@ -201,8 +201,8 @@ class VirtualmachineTest extends TestCase {
 
       $a_inventory['virtualmachine'][0]['ram'] = '2048';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 1);
 

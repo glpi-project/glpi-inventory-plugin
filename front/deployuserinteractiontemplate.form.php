@@ -37,18 +37,18 @@ if (!isset($_GET["id"])) {
    $_GET["id"] = "";
 }
 
-$template = new PluginFusioninventoryDeployUserinteractionTemplate();
+$template = new PluginGlpiinventoryDeployUserinteractionTemplate();
 //general form
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', CREATE);
+   Session::checkRight('plugin_glpiinventory_userinteractiontemplate', CREATE);
    $newID = $template->add($_POST);
    Html::redirect($template->getFormURLWithID($newID));
 } else if (isset ($_POST["update"])) {
-   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', UPDATE);
+   Session::checkRight('plugin_glpiinventory_userinteractiontemplate', UPDATE);
    $template->update($_POST);
    Html::back();
 } else if (isset ($_POST["purge"])) {
-   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', PURGE);
+   Session::checkRight('plugin_glpiinventory_userinteractiontemplate', PURGE);
    $template->delete($_POST, 1);
    $template->redirectToList();
 }
@@ -57,8 +57,8 @@ if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
    Html::nullHeader(__('GLPI Inventory DEPLOY'), $_SERVER["PHP_SELF"]);
 } else {
    Html::header(__('GLPI Inventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
-      "pluginfusioninventorymenu", "deployuserinteractiontemplate");
-   PluginFusioninventoryMenu::displayMenu("mini");
+      "pluginglpiinventorymenu", "deployuserinteractiontemplate");
+   PluginGlpiinventoryMenu::displayMenu("mini");
 }
 $template->display($_GET);
 if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {

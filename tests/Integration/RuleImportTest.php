@@ -39,7 +39,7 @@ class RuleImportTest extends TestCase {
 
       // Delete all inventoryrules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleImport"]);
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleImport"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -47,7 +47,7 @@ class RuleImportTest extends TestCase {
 
    public static function tearDownAfterClass(): void {
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
@@ -81,7 +81,7 @@ class RuleImportTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Printer model',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 198,
       ];
       $rule_id = $rule->add($input);
@@ -115,7 +115,7 @@ class RuleImportTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Import printer',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 199,
       ];
       $rule_id = $rule->add($input);
@@ -175,7 +175,7 @@ class RuleImportTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Import printer',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 200,
       ];
       $rule_id = $rule->add($input);
@@ -227,7 +227,7 @@ class RuleImportTest extends TestCase {
           'TYPE'         => 'PRINTER'
       ];
 
-      $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCommunicationNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
 
       $printer->add([
@@ -275,7 +275,7 @@ class RuleImportTest extends TestCase {
           'TYPE'         => 'PRINTER'
       ];
 
-      $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCommunicationNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
 
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
@@ -289,7 +289,7 @@ class RuleImportTest extends TestCase {
       $a_printers = $printer->find();
       $this->assertEquals(0, count($a_printers), 'May have only one Printer');
 
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $a_logs = $pfTaskjoblog->find(['comment' => ['LIKE', '%importdenied%']], ['id DESC'], 1);
       $a_log = current($a_logs);
       $this->assertEquals('==importdenied== [serial]:E8J596100A, '.

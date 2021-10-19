@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the general configuration tabs (display) in plugin Fusioninventory.
  */
-class PluginFusioninventoryConfiguration extends CommonDBTM {
+class PluginGlpiinventoryConfiguration extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_configuration";
+   static $rightname = "plugin_glpiinventory_configuration";
 
 
    /**
@@ -60,10 +60,10 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
       $tabs[1]=__('General setup');
       $tabs[2]=__('Agents modules', 'glpiinventory');
 
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
+      if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $tabs;
          $moduleTabForms =
-               $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+               $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
             foreach ($moduleTabForms as $module=>$form) {
                $plugin = new Plugin;
@@ -73,7 +73,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
             }
             $moduleTabs = array_diff($tabs, $fusionTabs);
          }
-         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+         $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabs'] = $moduleTabs;
       }
       return $tabs;
    }

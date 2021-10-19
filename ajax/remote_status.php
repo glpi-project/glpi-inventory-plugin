@@ -37,7 +37,7 @@ header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
 if (isset($_REQUEST['id'])) {
-   $agent = new PluginFusioninventoryAgent;
+   $agent = new PluginGlpiinventoryAgent;
    $agent->getFromDB((int) $_REQUEST['id']);
 
    if (isset($_REQUEST['action'])) {

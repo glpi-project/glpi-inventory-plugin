@@ -37,21 +37,21 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the visibility of package by user.
  */
-class PluginFusioninventoryDeployPackage_User extends CommonDBRelation {
+class PluginGlpiinventoryDeployPackage_User extends CommonDBRelation {
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1          = 'PluginFusioninventoryDeployPackage';
+   static public $itemtype_1          = 'PluginGlpiinventoryDeployPackage';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1          = 'plugin_fusioninventory_deploypackages_id';
+   static public $items_id_1          = 'plugin_glpiinventory_deploypackages_id';
 
    /**
     * Itemtype for the second part of relation
@@ -93,9 +93,9 @@ class PluginFusioninventoryDeployPackage_User extends CommonDBRelation {
       global $DB;
 
       $users = [];
-      $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_users`.*
-                FROM `glpi_plugin_fusioninventory_deploypackages_users`
-                WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
+      $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_users`.*
+                FROM `glpi_plugin_glpiinventory_deploypackages_users`
+                WHERE `plugin_glpiinventory_deploypackages_id` = '$deploypackages_id'";
 
       foreach ($DB->request($query) as $data) {
          $users[$data['users_id']][] = $data;

@@ -37,14 +37,14 @@
  * @param object $migration
  * @param integer $plugin_id
  */
-function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
+function pluginGlpiinventoryUpdateTasks($migration, $plugin_id) {
    global $DB;
 
    /*
-    * Table glpi_plugin_fusioninventory_tasks
+    * Table glpi_plugin_glpiinventory_tasks
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_tasks';
+   $table['name'] = 'glpi_plugin_glpiinventory_tasks';
    $table['oldname'] = [];
 
    $table['fields']  = [
@@ -80,11 +80,11 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type'    => 'datetime',
          'value'   => null
       ],
-      'plugin_fusioninventory_timeslots_prep_id' => [
+      'plugin_glpiinventory_timeslots_prep_id' => [
          'type'    => 'integer',
          'value'   => null
       ],
-      'plugin_fusioninventory_timeslots_exec_id' => [
+      'plugin_glpiinventory_timeslots_exec_id' => [
          'type'    => 'integer',
          'value'   => null
       ],
@@ -101,24 +101,24 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
 
    $table['renamefields'] = [
       'date_scheduled'                      => 'datetime_start',
-      'plugin_fusioninventory_timeslots_id' => 'plugin_fusioninventory_timeslots_prep_id'
+      'plugin_glpiinventory_timeslots_id' => 'plugin_glpiinventory_timeslots_prep_id'
    ];
 
    $table['keys']   = [];
    $table['keys'][] = ['field' => 'entities_id', 'name' => '', 'type' => 'INDEX'];
    $table['keys'][] = ['field' => 'is_active', 'name' => '', 'type' => 'INDEX'];
-   $table['keys'][] = ['field' => 'plugin_fusioninventory_timeslots_prep_id', 'name' => '', 'type' => 'INDEX'];
-   $table['keys'][] = ['field' => 'plugin_fusioninventory_timeslots_exec_id', 'name' => '', 'type' => 'INDEX'];
+   $table['keys'][] = ['field' => 'plugin_glpiinventory_timeslots_prep_id', 'name' => '', 'type' => 'INDEX'];
+   $table['keys'][] = ['field' => 'plugin_glpiinventory_timeslots_exec_id', 'name' => '', 'type' => 'INDEX'];
 
    $table['oldkeys'] = [];
 
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
    /*
-    * Table glpi_plugin_fusioninventory_taskjobs
+    * Table glpi_plugin_glpiinventory_taskjobs
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_taskjobs';
+   $table['name'] = 'glpi_plugin_glpiinventory_taskjobs';
    $table['oldname'] = [];
 
    $table['oldfields'] = [
@@ -144,7 +144,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type'    => 'autoincrement',
          'value'   => ''
       ],
-      'plugin_fusioninventory_tasks_id' => [
+      'plugin_glpiinventory_tasks_id' => [
          'type'    => 'integer',
          'value'   => null
       ],
@@ -180,7 +180,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
 
    $table['keys']   = [];
    $table['keys'][] = [
-      'field' => 'plugin_fusioninventory_tasks_id',
+      'field' => 'plugin_glpiinventory_tasks_id',
       'name' => '', 'type' => 'INDEX'
    ];
    $table['keys'][] = [
@@ -200,25 +200,25 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
       'rescheduled_taskjob_id'
    ];
 
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
    // * Update method name changed
    $DB->update(
-      'glpi_plugin_fusioninventory_taskjobs', [
+      'glpi_plugin_glpiinventory_taskjobs', [
          'method' => 'InventoryComputerESX'
       ], [
          'method' => 'ESX'
       ]
    );
    $DB->update(
-      'glpi_plugin_fusioninventory_taskjobs', [
+      'glpi_plugin_glpiinventory_taskjobs', [
          'method' => 'networkinventory'
       ], [
          'method' => 'snmpinventory'
       ]
    );
    $DB->update(
-      'glpi_plugin_fusioninventory_taskjobs', [
+      'glpi_plugin_glpiinventory_taskjobs', [
          'method' => 'networkdiscovery'
       ], [
          'method' => 'netdiscovery'
@@ -226,10 +226,10 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    );
 
    /*
-    * Table glpi_plugin_fusioninventory_taskjoblogs
+    * Table glpi_plugin_glpiinventory_taskjoblogs
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_taskjoblogs';
+   $table['name'] = 'glpi_plugin_glpiinventory_taskjoblogs';
    $table['oldname'] = [];
 
    $table['fields']  = [
@@ -237,7 +237,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT',
          'value' => ''
       ],
-      'plugin_fusioninventory_taskjobstates_id' => [
+      'plugin_glpiinventory_taskjobstates_id' => [
          'type' => 'integer',
          'value' => null
       ],
@@ -266,19 +266,19 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    $table['oldfields']  = [];
 
    $table['renamefields'] = [
-      'plugin_fusioninventory_taskjobstatus_id' => 'plugin_fusioninventory_taskjobstates_id'
+      'plugin_glpiinventory_taskjobstatus_id' => 'plugin_glpiinventory_taskjobstates_id'
    ];
 
    $table['keys']   = [
-      ['field' => ['plugin_fusioninventory_taskjobstates_id', 'state', 'date'],
-      'name' => 'plugin_fusioninventory_taskjobstates_id', 'type' => 'INDEX']
+      ['field' => ['plugin_glpiinventory_taskjobstates_id', 'state', 'date'],
+      'name' => 'plugin_glpiinventory_taskjobstates_id', 'type' => 'INDEX']
    ];
 
    $table['oldkeys'] = [
-      'plugin_fusioninventory_taskjobstatus_id'
+      'plugin_glpiinventory_taskjobstatus_id'
    ];
 
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
    // rename comments for new lang system (gettext in 0.84)
    $texts = [
@@ -324,12 +324,12 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    }
 
    /*
-    * Table glpi_plugin_fusioninventory_taskjobstates
+    * Table glpi_plugin_glpiinventory_taskjobstates
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_taskjobstates';
+   $table['name'] = 'glpi_plugin_glpiinventory_taskjobstates';
    $table['oldname'] = [
-      'glpi_plugin_fusioninventory_taskjobstatus'
+      'glpi_plugin_glpiinventory_taskjobstatus'
    ];
 
    $table['fields'] = [
@@ -337,7 +337,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type' => 'bigint(20) not null auto_increment',
          'value' => '0'
       ],
-      'plugin_fusioninventory_taskjobs_id' => [
+      'plugin_glpiinventory_taskjobs_id' => [
          'type' => 'integer',
          'value' => null
       ],
@@ -349,7 +349,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
-      'plugin_fusioninventory_agents_id' => [
+      'plugin_glpiinventory_agents_id' => [
          'type' => 'integer',
          'value' => null
       ],
@@ -387,32 +387,32 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    $table['keys'] = [
       [
          'field' => [
-            'plugin_fusioninventory_taskjobs_id'
+            'plugin_glpiinventory_taskjobs_id'
          ],
          'name' => '', 'type' => 'INDEX'
       ],
       [
          'field' => [
-            'plugin_fusioninventory_agents_id',
+            'plugin_glpiinventory_agents_id',
             'state'
          ],
          'name' => '', 'type' => 'INDEX'
       ],
       [
          'field' => [
-            'plugin_fusioninventory_agents_id',
-            'plugin_fusioninventory_taskjobs_id',
+            'plugin_glpiinventory_agents_id',
+            'plugin_glpiinventory_taskjobs_id',
             'items_id',
             'itemtype',
             'id',
             'state'
          ],
-         'name' => 'plugin_fusioninventory_agents_items_states',
+         'name' => 'plugin_glpiinventory_agents_items_states',
          'type' => 'INDEX'
       ]
 
    ];
    $table['oldkeys'] = [];
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
 }

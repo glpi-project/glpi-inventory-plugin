@@ -36,10 +36,10 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdownCredentials.php")) {
    Html::header_nocache();
 }
 
-Session::checkRight('plugin_fusioninventory_credential', READ);
+Session::checkRight('plugin_glpiinventory_credential', READ);
 $params = [
     'itemtype' => filter_input(INPUT_POST, "itemtype"),
     'id'       => filter_input(INPUT_POST, "id")
 ];
-PluginFusioninventoryCredential::dropdownCredentialsForItemtype($params);
+PluginGlpiinventoryCredential::dropdownCredentialsForItemtype($params);
 

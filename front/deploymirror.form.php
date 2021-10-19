@@ -34,26 +34,26 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('Mirror servers'), $_SERVER["PHP_SELF"], "admin",
-   "pluginfusioninventorymenu", "deploymirror");
+   "pluginglpiinventorymenu", "deploymirror");
 
-//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents", "r");
+//PluginGlpiinventoryProfile::checkRight("Fusioninventory", "agents", "r");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-$mirror = new PluginFusioninventoryDeployMirror();
+$mirror = new PluginGlpiinventoryDeployMirror();
 
 if (isset ($_POST["add"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   // PluginGlpiinventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $newID = $mirror->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   // PluginGlpiinventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   // PluginGlpiinventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->delete($_POST);
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployMirror'));
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployMirror'));
 }
 
 $id = "";

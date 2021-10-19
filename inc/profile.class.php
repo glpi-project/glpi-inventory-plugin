@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the profiles in plugin.
  */
-class PluginFusioninventoryProfile extends Profile {
+class PluginGlpiinventoryProfile extends Profile {
 
    /**
     * The right name for this class
@@ -80,29 +80,29 @@ class PluginFusioninventoryProfile extends Profile {
     * @return array
     */
    static function getOldRightsMappings() {
-      $types = ['agent'                  => 'plugin_fusioninventory_agent',
-                     'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
-                     'configuration'          => 'plugin_fusioninventory_configuration',
-                     'wol'                    => 'plugin_fusioninventory_wol',
-                     'unmanaged'              => 'plugin_fusioninventory_unmanaged',
-                     'task'                   => 'plugin_fusioninventory_task',
-                     'credential'             => 'plugin_fusioninventory_credential',
-                     'credentialip'           => 'plugin_fusioninventory_credentialip',
-                     'existantrule'           => ['plugin_fusioninventory_ruleimport',
-                                                        'plugin_fusioninventory_ruleentity',
-                                                        'plugin_fusioninventory_rulelocation'],
-                     'importxml'              => 'plugin_fusioninventory_importxml',
-                     'blacklist'              => 'plugin_fusioninventory_blacklist',
-                     'ESX'                    => 'plugin_fusioninventory_esx',
-                     'configsecurity'         => 'plugin_fusioninventory_configsecurity',
-                     'networkequipment'       => 'plugin_fusioninventory_networkequipment',
-                     'printer'                => 'plugin_fusioninventory_printer',
-                     'reportprinter'          => 'plugin_fusioninventory_reportprinter',
-                     'reportnetworkequipment' => 'plugin_fusioninventory_reportnetworkequipment',
-                     'packages'               => 'plugin_fusioninventory_package',
-                     'status'                 => 'plugin_fusioninventory_status',
-                     'collect'                => ['plugin_fusioninventory_collect',
-                                                       'plugin_fusioninventory_rulecollect']];
+      $types = ['agent'                  => 'plugin_glpiinventory_agent',
+                     'remotecontrol'          => 'plugin_glpiinventory_remotecontrol',
+                     'configuration'          => 'plugin_glpiinventory_configuration',
+                     'wol'                    => 'plugin_glpiinventory_wol',
+                     'unmanaged'              => 'plugin_glpiinventory_unmanaged',
+                     'task'                   => 'plugin_glpiinventory_task',
+                     'credential'             => 'plugin_glpiinventory_credential',
+                     'credentialip'           => 'plugin_glpiinventory_credentialip',
+                     'existantrule'           => ['plugin_glpiinventory_ruleimport',
+                                                        'plugin_glpiinventory_ruleentity',
+                                                        'plugin_glpiinventory_rulelocation'],
+                     'importxml'              => 'plugin_glpiinventory_importxml',
+                     'blacklist'              => 'plugin_glpiinventory_blacklist',
+                     'ESX'                    => 'plugin_glpiinventory_esx',
+                     'configsecurity'         => 'plugin_glpiinventory_configsecurity',
+                     'networkequipment'       => 'plugin_glpiinventory_networkequipment',
+                     'printer'                => 'plugin_glpiinventory_printer',
+                     'reportprinter'          => 'plugin_glpiinventory_reportprinter',
+                     'reportnetworkequipment' => 'plugin_glpiinventory_reportnetworkequipment',
+                     'packages'               => 'plugin_glpiinventory_package',
+                     'status'                 => 'plugin_glpiinventory_status',
+                     'collect'                => ['plugin_glpiinventory_collect',
+                                                       'plugin_glpiinventory_rulecollect']];
 
       return $types;
    }
@@ -217,7 +217,7 @@ class PluginFusioninventoryProfile extends Profile {
       $rights = [
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Deploy packages on demand', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_selfpackage']
+                'field'     => 'plugin_glpiinventory_selfpackage']
       ];
       $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
@@ -270,29 +270,29 @@ class PluginFusioninventoryProfile extends Profile {
     */
    function getRightsRules() {
       $rights = [
-          ['itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
+          ['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),
-                'field'     => 'plugin_fusioninventory_ruleimport'
+                'field'     => 'plugin_glpiinventory_ruleimport'
           ],
-          ['itemtype'  => 'PluginFusioninventoryInventoryRuleEntity',
+          ['itemtype'  => 'PluginGlpiinventoryInventoryRuleEntity',
                 'label'     => __('Entity rules', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_ruleentity'
+                'field'     => 'plugin_glpiinventory_ruleentity'
           ],
-          ['itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
+          ['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),
-                'field'     => 'plugin_fusioninventory_rulelocation'
+                'field'     => 'plugin_glpiinventory_rulelocation'
           ],
-          ['itemtype'  => 'PluginFusioninventoryInventoryComputerBlacklist',
+          ['itemtype'  => 'PluginGlpiinventoryInventoryComputerBlacklist',
                 'label'     => __('Fields blacklist', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_blacklist'
+                'field'     => 'plugin_glpiinventory_blacklist'
           ],
-          ['itemtype'  => 'PluginFusioninventoryCollectRule',
+          ['itemtype'  => 'PluginGlpiinventoryCollectRule',
                 'label'     => __('Computer information rules', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_rulecollect'
+                'field'     => 'plugin_glpiinventory_rulecollect'
           ],
-          ['itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
+          ['itemtype'  => 'PluginGlpiinventoryIgnoredimportdevice',
                 'label'     =>  __('Equipment ignored on import', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_ignoredimportdevice'
+                'field'     => 'plugin_glpiinventory_ignoredimportdevice'
           ],
       ];
       return $rights;
@@ -306,18 +306,18 @@ class PluginFusioninventoryProfile extends Profile {
     */
    function getRightsDeploy() {
       $rights = [
-          ['itemtype'  => 'PluginFusioninventoryDeployPackage',
+          ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
                 'label'     => __('Manage packages', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_package'],
-          ['itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'field'     => 'plugin_glpiinventory_package'],
+          ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
                'label'     => __('User interaction template', 'glpiinventory'),
-               'field'     => 'plugin_fusioninventory_userinteractiontemplate'],
-          ['itemtype'  => 'PluginFusioninventoryDeployMirror',
+               'field'     => 'plugin_glpiinventory_userinteractiontemplate'],
+          ['itemtype'  => 'PluginGlpiinventoryDeployMirror',
                 'label'     => __('Mirror servers', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_deploymirror'],
-          ['itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'field'     => 'plugin_glpiinventory_deploymirror'],
+          ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
                 'label'     => __('Deploy packages on demand', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_selfpackage',
+                'field'     => 'plugin_glpiinventory_selfpackage',
                 'rights'    => [READ => __('Read')]]
       ];
       return $rights;
@@ -331,42 +331,42 @@ class PluginFusioninventoryProfile extends Profile {
     */
    function getRightsInventory() {
       $rights = [
-          ['itemtype'  => 'PluginFusioninventoryIprange',
+          ['itemtype'  => 'PluginGlpiinventoryIprange',
                 'label'     => __('IP range configuration', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_iprange'],
-          ['itemtype'  => 'PluginFusioninventoryCredential',
+                'field'     => 'plugin_glpiinventory_iprange'],
+          ['itemtype'  => 'PluginGlpiinventoryCredential',
                 'label'     => __('Authentication for remote devices (VMware)', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_credential'],
-          ['itemtype'  => 'PluginFusioninventoryCredentialip',
+                'field'     => 'plugin_glpiinventory_credential'],
+          ['itemtype'  => 'PluginGlpiinventoryCredentialip',
                 'label'     => __('Remote devices to inventory (VMware)', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_credentialip'],
-          ['itemtype'  => 'PluginFusioninventoryCredential',
+                'field'     => 'plugin_glpiinventory_credentialip'],
+          ['itemtype'  => 'PluginGlpiinventoryCredential',
                 'label'     => __('VMware host', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_esx'],
-          ['itemtype'  => 'PluginFusioninventoryConfigSecurity',
+                'field'     => 'plugin_glpiinventory_esx'],
+          ['itemtype'  => 'PluginGlpiinventoryConfigSecurity',
                 'label'     => __('SNMP credentials', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_configsecurity'],
-          ['itemtype'  => 'PluginFusioninventoryNetworkEquipment',
+                'field'     => 'plugin_glpiinventory_configsecurity'],
+          ['itemtype'  => 'PluginGlpiinventoryNetworkEquipment',
                 'label'     => __('Network equipment SNMP', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_networkequipment'],
-          ['itemtype'  => 'PluginFusioninventoryPrinter',
+                'field'     => 'plugin_glpiinventory_networkequipment'],
+          ['itemtype'  => 'PluginGlpiinventoryPrinter',
                 'label'     => __('Printer SNMP', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_printer'],
-          ['itemtype'  => 'PluginFusioninventoryUnmanaged',
+                'field'     => 'plugin_glpiinventory_printer'],
+          ['itemtype'  => 'PluginGlpiinventoryUnmanaged',
                 'label'     => __('Unmanaged devices', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_unmanaged'],
-          ['itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
+                'field'     => 'plugin_glpiinventory_unmanaged'],
+          ['itemtype'  => 'PluginGlpiinventoryInventoryComputerImportXML',
                 'label'     => __('computer XML manual import', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_importxml'],
+                'field'     => 'plugin_glpiinventory_importxml'],
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Printers report', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_reportprinter'],
+                'field'     => 'plugin_glpiinventory_reportprinter'],
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Network report'),
-                'field'     => 'plugin_fusioninventory_reportnetworkequipment'],
-          ['itemtype'  => 'PluginFusioninventoryLock',
+                'field'     => 'plugin_glpiinventory_reportnetworkequipment'],
+          ['itemtype'  => 'PluginGlpiinventoryLock',
                 'label'     => __('Lock', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_lock']
+                'field'     => 'plugin_glpiinventory_lock']
       ];
       return $rights;
    }
@@ -381,29 +381,29 @@ class PluginFusioninventoryProfile extends Profile {
       $rights = [
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Menu', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_menu'],
-          ['itemtype'  => 'PluginFusioninventoryAgent',
+                'field'     => 'plugin_glpiinventory_menu'],
+          ['itemtype'  => 'PluginGlpiinventoryAgent',
                 'label'     => __('Agents', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_agent'],
+                'field'     => 'plugin_glpiinventory_agent'],
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Agent remote control', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_remotecontrol'],
+                'field'     => 'plugin_glpiinventory_remotecontrol'],
           ['rights'    => [READ => __('Read'), UPDATE => __('Update')],
-                'itemtype'  => 'PluginFusioninventoryConfig',
+                'itemtype'  => 'PluginGlpiinventoryConfig',
                 'label'     => __('Configuration', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_configuration'],
-          ['itemtype'  => 'PluginFusioninventoryTask',
+                'field'     => 'plugin_glpiinventory_configuration'],
+          ['itemtype'  => 'PluginGlpiinventoryTask',
                 'label'     => _n('Task', 'Tasks', 2, 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_task'],
+                'field'     => 'plugin_glpiinventory_task'],
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Wake On LAN', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_wol'],
-          ['itemtype'  => 'PluginFusioninventoryDeployGroup',
+                'field'     => 'plugin_glpiinventory_wol'],
+          ['itemtype'  => 'PluginGlpiinventoryDeployGroup',
                 'label'     => __('Groups of computers', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_group'],
-          ['itemtype'  => 'PluginFusioninventoryCollect',
+                'field'     => 'plugin_glpiinventory_group'],
+          ['itemtype'  => 'PluginGlpiinventoryCollect',
                 'label'     => __('Computer information', 'glpiinventory'),
-                'field'     => 'plugin_fusioninventory_collect']
+                'field'     => 'plugin_glpiinventory_collect']
       ];
 
       return $rights;
@@ -460,17 +460,17 @@ class PluginFusioninventoryProfile extends Profile {
       }
       ProfileRight::deleteProfileRights([$right['field']]);
 
-      if (isset($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu'])) {
-         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu']);
+      if (isset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu'])) {
+         unset ($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu']);
       }
-      if (isset($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu'])) {
-         unset ($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu']);
+      if (isset($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu'])) {
+         unset ($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu']);
       }
-      if (isset($_SESSION['glpimenu']['assets']['types']['PluginFusioninventoryUnmanaged'])) {
-         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryUnmanaged']);
+      if (isset($_SESSION['glpimenu']['assets']['types']['PluginGlpiinventoryUnmanaged'])) {
+         unset ($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryUnmanaged']);
       }
-      if (isset($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunmanaged'])) {
-         unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunmanaged']);
+      if (isset($_SESSION['glpimenu']['assets']['content']['pluginglpiinventoryunmanaged'])) {
+         unset ($_SESSION['glpimenu']['assets']['content']['pluginglpiinventoryunmanaged']);
       }
    }
 

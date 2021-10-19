@@ -43,7 +43,7 @@ class PrinterTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
@@ -59,16 +59,16 @@ class PrinterTransformationTest extends TestCase {
                 'MEMORY'         => 64
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryPrinter'])
-              && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryPrinter'])
+              && isset($a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryPrinter' => [
+          'PluginGlpiinventoryPrinter' => [
                   'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
                   'last_fusioninventory_update' => $date
                 ],
@@ -101,7 +101,7 @@ class PrinterTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
@@ -118,16 +118,16 @@ class PrinterTransformationTest extends TestCase {
                 'COPYTOTAL'   => ''
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryPrinter'])
-              && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryPrinter'])
+              && isset($a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryPrinter' => [
+          'PluginGlpiinventoryPrinter' => [
                   'sysdescr'                    => '',
                   'last_fusioninventory_update' => $date
                 ],
@@ -173,7 +173,7 @@ class PrinterTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
@@ -189,8 +189,8 @@ class PrinterTransformationTest extends TestCase {
                 'CARTRIDGEYELLOW'  => '30pages' //define number pages remaining
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      $pfMapping       = new PluginFusioninventoryMapping();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
+      $pfMapping       = new PluginGlpiinventoryMapping();
 
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
 

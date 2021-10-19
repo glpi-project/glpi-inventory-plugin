@@ -167,7 +167,7 @@ class ComputerDeviceSimcardTest extends TestCase {
     * @test
     */
    public function testSimcardTransformation() {
-      $formatConvert = new PluginFusioninventoryFormatconvert();
+      $formatConvert = new PluginGlpiinventoryFormatconvert();
 
       $input = [
          'SIMCARDS' => [
@@ -342,11 +342,11 @@ class ComputerDeviceSimcardTest extends TestCase {
     */
    private function updateComputer($computer_fields) {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory       = $computer_fields;

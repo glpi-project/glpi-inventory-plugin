@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the history of network port changes.
  */
-class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
+class PluginGlpiinventoryNetworkPortLog extends CommonDBTM {
 
 
    /**
@@ -89,9 +89,9 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       if ($status == "field") {
          $DB->insert(
-            'glpi_plugin_fusioninventory_networkportlogs', [
+            'glpi_plugin_glpiinventory_networkportlogs', [
                'networkports_id'                      => $array['networkports_id'],
-               'plugin_fusioninventory_mappings_id'   => $array['plugin_fusioninventory_mappings_id'],
+               'plugin_glpiinventory_mappings_id'   => $array['plugin_glpiinventory_mappings_id'],
                'value_old'                            => $array('value_old'),
                'value_new'                            => $array['value_new'],
                'date_mod'                             => date("Y-m-d H:i:s")
@@ -125,7 +125,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       $options = [];
 
-      $mapping = new PluginFusioninventoryMapping;
+      $mapping = new PluginGlpiinventoryMapping;
       $maps = $mapping->find();
       $listName = [];
       foreach ($maps as $mapfields) {
@@ -140,13 +140,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       // Get list of fields configured for history
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_configlogfields'
+         'FROM'   => 'glpi_plugin_glpiinventory_configlogfields'
       ]);
 
       $stmt = null;
       if (count($iterator)) {
          $delete = $DB->buildDelete(
-            'glpi_plugin_fusioninventory_configlogfields', [
+            'glpi_plugin_glpiinventory_configlogfields', [
                'id' => new \QueryParam()
             ]
          );
@@ -175,7 +175,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       }
       echo "<td class='right' width='350'>";
       if (count($listName)) {
-         echo "<select name='plugin_fusioninventory_extraction_to_add[]' multiple size='15'>";
+         echo "<select name='plugin_glpiinventory_extraction_to_add[]' multiple size='15'>";
          foreach ($listName as $key => $val) {
             //list ($item_type, $item) = explode("_", $key);
             echo "<option value='$key'>" . $val . "</option>\n";
@@ -186,22 +186,22 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo "</td><td class='center'>";
 
       if (count($listName)) {
-         if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+         if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
             echo "<input type='submit'  class=\"submit\" ".
-                    "name='plugin_fusioninventory_extraction_add' value='" . __('Add') . " >>'>";
+                    "name='plugin_glpiinventory_extraction_add' value='" . __('Add') . " >>'>";
          }
       }
       echo "<br /><br />";
       if (!empty($options)) {
-         if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+         if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
             echo "<input type='submit'  class=\"submit\" ".
-                    "name='plugin_fusioninventory_extraction_delete' value='<< ".
+                    "name='plugin_glpiinventory_extraction_delete' value='<< ".
                     __('Delete', 'glpiinventory') . "'>";
          }
       }
       echo "</td><td class='left'>";
       if (!empty($options)) {
-         echo "<select name='plugin_fusioninventory_extraction_to_delete[]' multiple size='15'>";
+         echo "<select name='plugin_glpiinventory_extraction_to_delete[]' multiple size='15'>";
          foreach ($options as $key => $val) {
             //list ($item_type, $item) = explode("_", $key);
             echo "<option value='$key'>" . $val . "</option>\n";
@@ -221,7 +221,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
-      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+      if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' ".
                  "value='".__('Clean')."' >";
       }
@@ -251,8 +251,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    static function cronCleannetworkportlogs() {
       global $DB;
 
-      $pfConfigLogField = new PluginFusioninventoryConfigLogField();
-      $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
+      $pfConfigLogField = new PluginGlpiinventoryConfigLogField();
+      $pfNetworkPortLog = new PluginGlpiinventoryNetworkPortLog();
 
       $a_list = $pfConfigLogField->find();
       if (count($a_list)) {
@@ -261,7 +261,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                case '-1':
                   $DB->delete(
                      $pfNetworkPortLog->getTable(), [
-                        'plugin_fusioninventory_mappings_id' => $data['plugin_fusioninventory_mappings_id']
+                        'plugin_glpiinventory_mappings_id' => $data['plugin_glpiinventory_mappings_id']
                      ]
                   );
                   break;
@@ -272,7 +272,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                default:
                   $DB->delete(
                      $pfNetworkPortLog->getTable(), [
-                        'plugin_fusioninventory_mappings_id'   => $data['plugin_fusioninventory_mappings_id'],
+                        'plugin_glpiinventory_mappings_id'   => $data['plugin_glpiinventory_mappings_id'],
                         'date_mod'                             => new \QueryExpression(
                            "date_add(now(), interval - {$data['days']} day)"
                         )
@@ -294,10 +294,10 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     * @param string $field
     */
    static function networkport_addLog($port_id, $value_new, $field) {
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-      $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
-      $pfConfigLogField = new PluginFusioninventoryConfigLogField();
-      $pfMapping = new PluginFusioninventoryMapping();
+      $pfNetworkPort = new PluginGlpiinventoryNetworkPort();
+      $pfNetworkPortLog = new PluginGlpiinventoryNetworkPortLog();
+      $pfConfigLogField = new PluginGlpiinventoryConfigLogField();
+      $pfMapping = new PluginGlpiinventoryMapping();
 
       $db_field = $field;
       switch ($field) {
@@ -341,7 +341,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          if ((isset($days)) AND ($days != '-1')) {
             $array = [];
             $array["networkports_id"] = $port_id;
-            $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
+            $array["plugin_glpiinventory_mappings_id"] = $a_mapping['id'];
             $array["value_old"] = $pfNetworkPort->getValue($db_field);
             $array["value_new"] = $value_new;
             $pfNetworkPortLog->insertConnection("field", $array);
@@ -361,7 +361,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     */
    static function addLogConnection($status, $ports_id) {
 
-      $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
+      $pfNetworkPortConnectionLog = new PluginGlpiinventoryNetworkPortConnectionLog();
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
 
       $input = [];
@@ -404,10 +404,10 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $query = "
          SELECT * FROM(
             SELECT * FROM (
-               SELECT `id`, `date_mod`, `plugin_fusioninventory_agentprocesses_id`,
+               SELECT `id`, `date_mod`, `plugin_glpiinventory_agentprocesses_id`,
                   `networkports_id_source`, `networkports_id_destination`,
                   `creation` as `field`, NULL as `value_old`, NULL as `value_new`
-               FROM `glpi_plugin_fusioninventory_networkportconnectionlogs`
+               FROM `glpi_plugin_glpiinventory_networkportconnectionlogs`
                WHERE `networkports_id_source`='".$ID_port."'
                   OR `networkports_id_destination`='".$ID_port."'
                ORDER BY `date_mod` DESC
@@ -415,16 +415,16 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             AS `DerivedTable1`
             UNION ALL
             SELECT * FROM (
-               SELECT `glpi_plugin_fusioninventory_networkportlogs`.`id`,
-                  `date_mod` as `date_mod`, `plugin_fusioninventory_agentprocesses_id`,
+               SELECT `glpi_plugin_glpiinventory_networkportlogs`.`id`,
+                  `date_mod` as `date_mod`, `plugin_glpiinventory_agentprocesses_id`,
                   `networkports_id` AS `networkports_id_source`,
                   NULL as `networkports_id_destination`,
                   `name` AS `field`, `value_old`, `value_new`
-               FROM `glpi_plugin_fusioninventory_networkportlogs`
-               LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                  ON `glpi_plugin_fusioninventory_networkportlogs`.".
-                        "`plugin_fusioninventory_mappings_id` =
-                     `glpi_plugin_fusioninventory_mappings`.`id`
+               FROM `glpi_plugin_glpiinventory_networkportlogs`
+               LEFT JOIN `glpi_plugin_glpiinventory_mappings`
+                  ON `glpi_plugin_glpiinventory_networkportlogs`.".
+                        "`plugin_glpiinventory_mappings_id` =
+                     `glpi_plugin_glpiinventory_mappings`.`id`
                WHERE `networkports_id`='".$ID_port."'
                ORDER BY `date_mod` DESC
                )
@@ -513,7 +513,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                $text .= "<td align='center' colspan='2'></td>";
                //               $text .= "<td align='center'>".
                //                      $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
-               $mapping = new PluginFusioninventoryMapping();
+               $mapping = new PluginGlpiinventoryMapping();
                $mapfields = $mapping->get('NetworkEquipment', $data["field"]);
                if ($mapfields != false) {
                   $text .= "<td align='center'>".

@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the agent modules.
  */
-class PluginFusioninventoryModule extends CommonDBTM {
+class PluginGlpiinventoryModule extends CommonDBTM {
 
 
    /**

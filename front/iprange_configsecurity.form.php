@@ -32,12 +32,12 @@
 
 include ("../../../inc/includes.php");
 
-$pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
+$pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_ConfigSecurity();
 
 if (isset ($_POST["add"])) {
 
-   $a_data = current(getAllDataFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
-                                 ['plugin_fusioninventory_ipranges_id' => $_POST['plugin_fusioninventory_ipranges_id']],
+   $a_data = current(getAllDataFromTable('glpi_plugin_glpiinventory_ipranges_configsecurities',
+                                 ['plugin_glpiinventory_ipranges_id' => $_POST['plugin_glpiinventory_ipranges_id']],
                                  false,
                                  '`rank` DESC'));
    $_POST['rank'] = 1;

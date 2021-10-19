@@ -41,7 +41,7 @@ class RepositoryTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all packages
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $items = $pfDeployPackage->find();
       foreach ($items as $item) {
          $pfDeployPackage->delete(['id' => $item['id']], true);
@@ -50,7 +50,7 @@ class RepositoryTest extends TestCase {
 
    protected function setUp(): void {
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       // create a package
       $this->packages_1_id = $pfDeployPackage->add([
@@ -67,7 +67,7 @@ class RepositoryTest extends TestCase {
       $this->assertNotFalse($this->packages_2_id);
 
       // get Fusion config
-      $config = new PluginFusioninventoryConfig;
+      $config = new PluginGlpiinventoryConfig;
       $server_upload_path = $config->getValue("server_upload_path");
 
       // create a file in fusion upload folder
@@ -82,17 +82,17 @@ class RepositoryTest extends TestCase {
     * @test
     */
    public function cleanFiles() {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployFile    = new PluginFusioninventoryDeployFile();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+      $pfDeployFile    = new PluginGlpiinventoryDeployFile();
 
       // create a file for this package
       $data_file = [
          'id'        => $this->packages_1_id,
-         'itemtype'  => 'PluginFusioninventoryDeployFile',
+         'itemtype'  => 'PluginGlpiinventoryDeployFile',
          'filestype' => 'Server',
          'filename'  => $this->filename,
       ];
-      $ret = PluginFusioninventoryDeployPackage::alterJSON('add_item', $data_file);
+      $ret = PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
       $this->assertTrue($ret, 'File not right added');
 
       // check json of the package
@@ -115,15 +115,15 @@ class RepositoryTest extends TestCase {
 
       // add the same file to the second package
       $data_file['id'] = $this->packages_2_id;
-      PluginFusioninventoryDeployPackage::alterJSON('add_item', $data_file);
+      PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
 
       // remove file from the first package
       $data_file = [
          'packages_id'     => $this->packages_1_id,
-         'itemtype'        => 'PluginFusioninventoryDeployFile',
+         'itemtype'        => 'PluginGlpiinventoryDeployFile',
          'file_entries'    => [0 => 1]
       ];
-      PluginFusioninventoryDeployPackage::alterJSON('remove_item', $data_file);
+      PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
 
       // check json of the package
       $pfDeployPackage->getFromDB($this->packages_1_id);
@@ -137,10 +137,10 @@ class RepositoryTest extends TestCase {
       // remove file from the second package
       $data_file = [
          'packages_id'     => $this->packages_2_id,
-         'itemtype'        => 'PluginFusioninventoryDeployFile',
+         'itemtype'        => 'PluginGlpiinventoryDeployFile',
          'file_entries'    => [0 => 1]
       ];
-      PluginFusioninventoryDeployPackage::alterJSON('remove_item', $data_file);
+      PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
 
       // check json of the package
       $pfDeployPackage->getFromDB($this->packages_2_id);
@@ -161,19 +161,19 @@ class RepositoryTest extends TestCase {
     * @test
     */
    public function cleanPackage() {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployFile    = new PluginFusioninventoryDeployFile();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+      $pfDeployFile    = new PluginGlpiinventoryDeployFile();
 
       // create a file and it to both packages
       $data_file = [
          'id'        => $this->packages_1_id,
-         'itemtype'  => 'PluginFusioninventoryDeployFile',
+         'itemtype'  => 'PluginGlpiinventoryDeployFile',
          'filestype' => 'Server',
          'filename'  => $this->filename,
       ];
-      PluginFusioninventoryDeployPackage::alterJSON('add_item', $data_file);
+      PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
       $data_file['id'] = $this->packages_2_id;
-      PluginFusioninventoryDeployPackage::alterJSON('add_item', $data_file);
+      PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
 
       // remove a package and check presence of file
       $pfDeployPackage->delete([

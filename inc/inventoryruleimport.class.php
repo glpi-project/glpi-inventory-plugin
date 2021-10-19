@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage import rules for inventory (local, network discovery, network
  * inventory).
  */
-class PluginFusioninventoryInventoryRuleImport extends Rule {
+class PluginGlpiinventoryInventoryRuleImport extends Rule {
 
    const PATTERN_IS_EMPTY              = 30;
    const PATTERN_ENTITY_RESTRICT       = 202;
@@ -200,7 +200,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          'entityrestrict' => [
             'name'            => __('General', 'glpiinventory').' > '.
                                  __('Restrict search in defined entity', 'glpiinventory'),
-            'allow_condition' => [PluginFusioninventoryInventoryRuleImport::PATTERN_ENTITY_RESTRICT],
+            'allow_condition' => [PluginGlpiinventoryInventoryRuleImport::PATTERN_ENTITY_RESTRICT],
          ],
          'oscomment' => [
             'name'            => __('Asset', 'glpiinventory').' > '.
@@ -219,13 +219,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          'link_criteria_port' => [
             'name'            => __('General', 'glpiinventory').' > '.
                                  __('Restrict criteria to same network port', 'glpiinventory'),
-            'allow_condition' => [PluginFusioninventoryInventoryRuleImport::PATTERN_NETWORK_PORT_RESTRICT],
+            'allow_condition' => [PluginGlpiinventoryInventoryRuleImport::PATTERN_NETWORK_PORT_RESTRICT],
             'is_global'       => true
          ],
          'only_these_criteria' => [
             'name'            => __('General', 'glpiinventory').' > '.
                                  __('Only criteria of this rule in data', 'glpiinventory'),
-            'allow_condition' => [PluginFusioninventoryInventoryRuleImport::PATTERN_ONLY_CRITERIA_RULE],
+            'allow_condition' => [PluginGlpiinventoryInventoryRuleImport::PATTERN_ONLY_CRITERIA_RULE],
             'is_global'       => true
          ],
 
@@ -385,7 +385,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          case Rule::PATTERN_EXISTS:
          case Rule::PATTERN_DOES_NOT_EXISTS:
          case Rule::PATTERN_FIND:
-         case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY:
+         case PluginGlpiinventoryInventoryRuleImport::PATTERN_IS_EMPTY:
             Dropdown::showYesNo($name, 1, 0);
             return true;
 
@@ -437,10 +437,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
 
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules",
          $input
       );
 
@@ -574,7 +574,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                $itemtypeselected[] = $itemtype;
             }
          }
-         $itemtypeselected[] = "PluginFusioninventoryUnmanaged";
+         $itemtypeselected[] = "PluginGlpiinventoryUnmanaged";
       }
       $sql_where = " `[typetable]`.`is_template` = '0' ";
       $sql_from  = "`[typetable]`";
@@ -608,8 +608,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                   AND `glpi_networkports`.`itemtype` = '[typename]')";
          }
          if ($is_networkport_fusion) {
-            $sql_from .= " LEFT JOIN `glpi_plugin_fusioninventory_networkports`
-                              ON (`glpi_plugin_fusioninventory_networkports`.`networkports_id` = `glpi_networkports`.`id`)";
+            $sql_from .= " LEFT JOIN `glpi_plugin_glpiinventory_networkports`
+                              ON (`glpi_plugin_glpiinventory_networkports`.`networkports_id` = `glpi_networkports`.`id`)";
          }
       } else {
          // 1 join per criterion
@@ -630,8 +630,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                      AND networkports_".$criteria->fields['criteria'].".`itemtype` = '[typename]')";
             }
             if (in_array($criteria->fields['criteria'], $is_networkports_fusion)) {
-               $sql_from .= " LEFT JOIN `glpi_plugin_fusioninventory_networkports`
-                                 ON (`glpi_plugin_fusioninventory_networkports`.`networkports_id` = networkports_".$criteria->fields['criteria'].".`id`)";
+               $sql_from .= " LEFT JOIN `glpi_plugin_glpiinventory_networkports`
+                                 ON (`glpi_plugin_glpiinventory_networkports`.`networkports_id` = networkports_".$criteria->fields['criteria'].".`id`)";
             }
          }
       }
@@ -679,7 +679,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case 'ifdescr':
-               $sql_where .= " AND `glpi_plugin_fusioninventory_networkports`.`ifdescr`='".$input['ifdescr']."'";
+               $sql_where .= " AND `glpi_plugin_glpiinventory_networkports`.`ifdescr`='".$input['ifdescr']."'";
                $selectSQLPort[] = "networkports_".$criteria->fields['criteria'].".`id` as portid_".$criteria->fields['criteria'];
                $select_networkport = true;
                break;
@@ -697,13 +697,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             case 'serial':
                if (isset($input['itemtype'])
                        AND $input['itemtype'] == 'Computer'
-                       AND isset($_SESSION["plugin_fusioninventory_manufacturerHP"])
+                       AND isset($_SESSION["plugin_glpiinventory_manufacturerHP"])
                        AND preg_match("/^[sS]/", $input['serial'])) {
 
                   $serial2 = preg_replace("/^[sS]/", "", $input['serial']);
                   $sql_where_temp = " AND (`[typetable]`.`serial`='".$input["serial"]."'
                      OR `[typetable]`.`serial`='".$serial2."')";
-                  $_SESSION["plugin_fusioninventory_serialHP"] = $serial2;
+                  $_SESSION["plugin_glpiinventory_serialHP"] = $serial2;
 
                } else if (isset($input['itemtype'])
                        AND $input['itemtype'] == 'Monitor'
@@ -765,10 +765,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case 'device_id':
-               $sql_from_temp = " LEFT JOIN `glpi_plugin_fusioninventory_agents`
-                                 ON `glpi_plugin_fusioninventory_agents`.`computers_id` = ".
+               $sql_from_temp = " LEFT JOIN `glpi_plugin_glpiinventory_agents`
+                                 ON `glpi_plugin_glpiinventory_agents`.`computers_id` = ".
                                      "`[typetable]`.`id` ";
-               $sql_where_temp = " AND `glpi_plugin_fusioninventory_agents`.`device_id` = '".
+               $sql_where_temp = " AND `glpi_plugin_glpiinventory_agents`.`device_id` = '".
                                     $input["device_id"]."'";
 
                $sql_from .= $sql_from_temp;
@@ -789,8 +789,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       // Suivant le / les types, on cherche dans un ou plusieurs / tous les types
       $found = 0;
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules",
          "===============\n"
       );
 
@@ -810,21 +810,21 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          } else if ($itemtype == 'Printer') {
             $sql_from_temp .= $sql_from_domain;
             $sql_where_temp .= $sql_where_domain;
-         } else if ($itemtype == 'PluginFusioninventoryUnmanaged') {
-            $itemtype = 'PluginFusioninventoryUnmanaged';
+         } else if ($itemtype == 'PluginGlpiinventoryUnmanaged') {
+            $itemtype = 'PluginGlpiinventoryUnmanaged';
             $sql_from_temp .= $sql_from_domain;
             $sql_where_temp .= $sql_where_domain;
          }
 
-         if ($itemtype != 'PluginFusioninventoryUnmanaged') {
+         if ($itemtype != 'PluginGlpiinventoryUnmanaged') {
             $sql_from_temp .= $sql_from_model;
             $sql_where_temp .= $sql_where_model;
          }
 
          if ($entityRestrict) {
-            if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+            if (isset($_SESSION['plugin_glpiinventory_entityrestrict'])) {
                $sql_where_temp .= " AND `[typetable]`.`entities_id`='".
-                                       $_SESSION['plugin_fusioninventory_entityrestrict']."'";
+                                       $_SESSION['plugin_glpiinventory_entityrestrict']."'";
             } else {
                $sql_where_temp .= " AND `[typetable]`.`entities_id`='0'";
             }
@@ -855,8 +855,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
             $sql_glpi = str_replace("[typenamefortable]", strtolower($itemtype), $sql_glpi);
 
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-rules",
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-rules",
                $sql_glpi."\n"
             );
             $result_glpi = $DB->query($sql_glpi);
@@ -897,17 +897,17 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function executeActions($output, $params, array $input = []) {
       if (isset($params['class'])) {
          $class = $params['class'];
-      } else if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])
-            && !empty($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-         $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
-         if ($classname == "PluginFusioninventoryCommunicationNetworkInventory") {
-            $class = new PluginFusioninventoryCommunicationNetworkInventory();
+      } else if (isset($_SESSION['plugin_glpiinventory_classrulepassed'])
+            && !empty($_SESSION['plugin_glpiinventory_classrulepassed'])) {
+         $classname = $_SESSION['plugin_glpiinventory_classrulepassed'];
+         if ($classname == "PluginGlpiinventoryCommunicationNetworkInventory") {
+            $class = new PluginGlpiinventoryCommunicationNetworkInventory();
          } else {
             $class = new $classname();
          }
       }
 
-      $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+      $pfRulematchedlog = new PluginGlpiinventoryRulematchedlog();
       $inputrulelog = [];
       $inputrulelog['date'] = date('Y-m-d H:i:s');
       $inputrulelog['rules_id'] = $this->fields['id'];
@@ -916,27 +916,27 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                && method_exists($class, 'rulepassed')) {
             $inputrulelog['method'] = $class->getMethod();
          }
-         if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-            $inputrulelog['plugin_fusioninventory_agents_id'] =
-                           $_SESSION['plugin_fusioninventory_agents_id'];
+         if (isset($_SESSION['plugin_glpiinventory_agents_id'])) {
+            $inputrulelog['plugin_glpiinventory_agents_id'] =
+                           $_SESSION['plugin_glpiinventory_agents_id'];
          }
       }
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules",
          "execute actions, data:\n". print_r($output, true). "\n" . print_r($params, true)
       );
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules",
          "execute actions: ". count($this->actions) ."\n"
       );
-      $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
+      $_SESSION['plugin_glpiinventory_rules_id'] = $this->fields['id'];
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
-               PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-rules",
+               PluginGlpiinventoryToolbox::logIfExtradebug(
+                  "pluginGlpiinventory-rules",
                   "- value".$action->fields["value"]."\n"
                );
 
@@ -993,9 +993,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                         if (isset($class)
                               && method_exists($class, 'rulepassed')) {
                            if (!isset($params['return'])) {
-                              $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
+                              $class->rulepassed("0", "PluginGlpiinventoryUnmanaged");
                            }
-                           $output['found_equipment'] = [0, "PluginFusioninventoryUnmanaged"];
+                           $output['found_equipment'] = [0, "PluginGlpiinventoryUnmanaged"];
                            return $output;
                         } else {
                            $output['action'] = self::LINK_RESULT_CREATE;
@@ -1004,23 +1004,23 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      }
                   }
                } else if ($action->fields["value"] == self::RULE_ACTION_DENIED) {
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-rules",
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-rules",
                      "- action denied\n"
                   );
                   $output['action'] = self::LINK_RESULT_DENIED;
                   return $output;
                }
             } else if ($action->fields['field'] == '_ignore_import') {
-               PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-rules",
+               PluginGlpiinventoryToolbox::logIfExtradebug(
+                  "pluginGlpiinventory-rules",
                   "- ignore import\n"
                );
                $output['action'] = self::LINK_RESULT_DENIED;
                return $output;
             } else {
-               PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-rules",
+               PluginGlpiinventoryToolbox::logIfExtradebug(
+                  "pluginGlpiinventory-rules",
                   "- no import\n"
                );
                // no import
@@ -1049,9 +1049,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   if (isset($class)
                         && method_exists($class, 'rulepassed')) {
                      if (!isset($params['return'])) {
-                        $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
+                        $class->rulepassed("0", "PluginGlpiinventoryUnmanaged");
                      }
-                     $output['found_equipment'] = [0, 'PluginFusioninventoryUnmanaged'];
+                     $output['found_equipment'] = [0, 'PluginGlpiinventoryUnmanaged'];
                      return $output;
                   } else {
                      $output['action'] = self::LINK_RESULT_CREATE;
@@ -1155,9 +1155,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          $display = $this->displayAdditionalRuleCondition($condition, $crit, $name, $value);
       }
 
-      if ($condition == PluginFusioninventoryInventoryRuleImport::PATTERN_ENTITY_RESTRICT
-            || $condition == PluginFusioninventoryInventoryRuleImport::PATTERN_NETWORK_PORT_RESTRICT
-            || $condition == PluginFusioninventoryInventoryRuleImport::PATTERN_ONLY_CRITERIA_RULE) {
+      if ($condition == PluginGlpiinventoryInventoryRuleImport::PATTERN_ENTITY_RESTRICT
+            || $condition == PluginGlpiinventoryInventoryRuleImport::PATTERN_NETWORK_PORT_RESTRICT
+            || $condition == PluginGlpiinventoryInventoryRuleImport::PATTERN_ONLY_CRITERIA_RULE) {
          echo Html::hidden($name, ['value' => 1]);
          return;
       }
@@ -1187,8 +1187,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $types[$itemtype] = $item->getTypeName();
          }
       }
-      $types["PluginFusioninventoryUnmanaged"] =
-                     PluginFusioninventoryUnmanaged::getTypeName();
+      $types["PluginGlpiinventoryUnmanaged"] =
+                     PluginGlpiinventoryUnmanaged::getTypeName();
       $types[""] = __('No itemtype defined', 'glpiinventory');
       return $types;
    }

@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the search engine. Same than GLPI search engine but with little
  * modifications.
  */
-class PluginFusioninventorySearch extends CommonDBTM {
+class PluginGlpiinventorySearch extends CommonDBTM {
 
    /**
     * Define the form URL
@@ -76,9 +76,9 @@ class PluginFusioninventorySearch extends CommonDBTM {
     */
    static function constructDatas(array &$data, $onlycount = false) {
       // Hack the built SQL query to use Computer rather than FusionInventoryComputer
-      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
+      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginGlpiinventoryComputer'",
          "`mainitemtype` = 'Computer'", $data['sql']['search']);
-      $data['sql']['search'] = str_replace("`itemtype` = 'PluginFusioninventoryComputer'",
+      $data['sql']['search'] = str_replace("`itemtype` = 'PluginGlpiinventoryComputer'",
          "`itemtype` = 'Computer'", $data['sql']['search']);
 
       Search::constructData($data, $onlycount);

@@ -32,14 +32,14 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "admin", "pluginfusioninventorymenu", "timeslot");
+        "admin", "pluginglpiinventorymenu", "timeslot");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryTimeslot');
+Search::show('PluginGlpiinventoryTimeslot');
 
 Html::footer();

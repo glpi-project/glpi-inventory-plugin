@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the webservice methods offered by the plugin
  * It require the GLPI plugin Webservice.
  */
-class PluginFusioninventoryInventoryComputerWebservice {
+class PluginGlpiinventoryInventoryComputerWebservice {
 
 
    /**
@@ -61,7 +61,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
 
       $content = base64_decode($params['base64']);
 
-      $pfCommunication = new PluginFusioninventoryCommunication();
+      $pfCommunication = new PluginGlpiinventoryCommunication();
       $pfCommunication->handleOCSCommunication('', $content);
 
       $msg = __('Computer injected into GLPI', 'glpiinventory');
@@ -84,7 +84,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
               || !is_numeric($params['computers_id'])) {
          return $response;
       }
-      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
                                               ['computers_id' => $params['computers_id']],
                                               [], 1));

@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the remote management information of softwares installed on computer.
  */
-class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
+class PluginGlpiinventoryComputerRemoteManagement extends CommonDBTM {
 
 
    /**

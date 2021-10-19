@@ -32,28 +32,28 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight('plugin_fusioninventory_configsecurity', READ);
+Session::checkRight('plugin_glpiinventory_configsecurity', READ);
 
-$pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
-$config = new PluginFusioninventoryConfig();
+$pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
+$config = new PluginGlpiinventoryConfig();
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-         "pluginfusioninventorymenu", "configsecurity");
+         "pluginglpiinventorymenu", "configsecurity");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_configsecurity', CREATE);
+   Session::checkRight('plugin_glpiinventory_configsecurity', CREATE);
    $new_ID = 0;
    $new_ID = $pfConfigSecurity->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   Session::checkRight('plugin_fusioninventory_configsecurity', UPDATE);
+   Session::checkRight('plugin_glpiinventory_configsecurity', UPDATE);
    $pfConfigSecurity->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   Session::checkRight('plugin_fusioninventory_configsecurity', PURGE);
+   Session::checkRight('plugin_glpiinventory_configsecurity', PURGE);
    $pfConfigSecurity->delete($_POST);
    Html::redirect("configsecurity.php");
 }

@@ -37,11 +37,11 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files found by the collect module of agent.
  */
-class PluginFusioninventoryCollect_File_Content
-   extends PluginFusioninventoryCollectContentCommon {
+class PluginGlpiinventoryCollect_File_Content
+   extends PluginGlpiinventoryCollectContentCommon {
 
-   public $collect_itemtype = 'PluginFusioninventoryCollect_File';
-   public $collect_table    = 'glpi_plugin_fusioninventory_collects_files';
+   public $collect_itemtype = 'PluginGlpiinventoryCollect_File';
+   public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
    public $type             = 'file';
 
    /**
@@ -57,7 +57,7 @@ class PluginFusioninventoryCollect_File_Content
       foreach ($file_data as $key => $value) {
          $input = [
             'computers_id' => $computers_id,
-            'plugin_fusioninventory_collects_files_id' => $collects_files_id,
+            'plugin_glpiinventory_collects_files_id' => $collects_files_id,
             'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
             'size'         => $value['size']
          ];
@@ -72,16 +72,16 @@ class PluginFusioninventoryCollect_File_Content
     * @param integer $computers_id id of the computer
     */
    function showForComputer($computers_id) {
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
       echo "<table class='tab_cadre_fixe'>";
 
       $a_data = $this->find(['computers_id' => $computers_id],
-                            ['plugin_fusioninventory_collects_files_id', 'pathfile']);
+                            ['plugin_glpiinventory_collects_files_id', 'pathfile']);
       $previous_key = 0;
       foreach ($a_data as $data) {
-         $pfCollect_File->getFromDB($data['plugin_fusioninventory_collects_files_id']);
-         if ($previous_key != $data['plugin_fusioninventory_collects_files_id']) {
+         $pfCollect_File->getFromDB($data['plugin_glpiinventory_collects_files_id']);
+         if ($previous_key != $data['plugin_glpiinventory_collects_files_id']) {
             echo "<tr class='tab_bg_1'>";
             echo '<th colspan="3">';
             echo $pfCollect_File->fields['name']. ": ".$pfCollect_File->fields['dir'];
@@ -93,7 +93,7 @@ class PluginFusioninventoryCollect_File_Content
             echo "<th>".__('Size', 'glpiinventory')."</th>";
             echo "</tr>";
 
-            $previous_key = $data['plugin_fusioninventory_collects_files_id'];
+            $previous_key = $data['plugin_glpiinventory_collects_files_id'];
          }
 
          echo "<tr class='tab_bg_1'>";
@@ -115,7 +115,7 @@ class PluginFusioninventoryCollect_File_Content
     * @param integer $collects_files_id id of collect_file
     */
    function showContent($collects_files_id) {
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
       $computer = new Computer();
 
       $pfCollect_File->getFromDB($collects_files_id);
@@ -134,7 +134,7 @@ class PluginFusioninventoryCollect_File_Content
       echo "<th>".__('Size', 'glpiinventory')."</th>";
       echo "</tr>";
 
-      $a_data = $this->find(['plugin_fusioninventory_collects_files_id' => $collects_files_id],
+      $a_data = $this->find(['plugin_glpiinventory_collects_files_id' => $collects_files_id],
                             ['pathfile']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";

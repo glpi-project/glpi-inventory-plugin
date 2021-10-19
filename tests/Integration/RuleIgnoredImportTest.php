@@ -39,7 +39,7 @@ class RuleIgnoredImportTest extends TestCase {
 
       // Delete all collectrules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleImport"]);
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleImport"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -52,7 +52,7 @@ class RuleIgnoredImportTest extends TestCase {
       }
 
       // Delete all ignoreddevice import
-      $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+      $pfIgnoredimportdevice = new PluginGlpiinventoryIgnoredimportdevice();
       $items = $pfIgnoredimportdevice->find();
       foreach ($items as $item) {
          $pfIgnoredimportdevice->delete(['id' => $item['id']], true);
@@ -60,12 +60,12 @@ class RuleIgnoredImportTest extends TestCase {
 
       // Add a rule to ignore import
       // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $rulecollection = new PluginGlpiinventoryInventoryRuleImportCollection();
       $input = [
          'is_active' => 1,
          'name'      => 'Ignore import',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 200,
       ];
       $rule_id = $rulecollection->add($input);
@@ -95,7 +95,7 @@ class RuleIgnoredImportTest extends TestCase {
 
    public static function tearDownAfterClass(): void {
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
@@ -109,8 +109,8 @@ class RuleIgnoredImportTest extends TestCase {
       $_SESSION['glpishowallentities']       = 1;
       $_SESSION['glpiname']                  = 'glpi';
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
+      $pfIgnoredimportdevice = new PluginGlpiinventoryIgnoredimportdevice();
       $rule            = new Rule();
 
       $a_inventory = [];
@@ -120,23 +120,23 @@ class RuleIgnoredImportTest extends TestCase {
       $a_inventory['CONTENT']['SOFTWARES'][] = [];
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents_id = $pfAgent->add([
          'name'      => 'pc-2013-02-13',
          'device_id' => 'pc-2013-02-13'
       ]);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $a_agents_id;
 
       $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
 
       $this->assertEquals(0, countElementsInTable('glpi_computers'), 'Computer may not be added');
 
-      $this->assertEquals(0, countElementsInTable('glpi_plugin_fusioninventory_unmanageds'), 'Unmanaged may not be added');
+      $this->assertEquals(0, countElementsInTable('glpi_plugin_glpiinventory_unmanageds'), 'Unmanaged may not be added');
 
       $a_ignored = $pfIgnoredimportdevice->find();
       $this->assertEquals(1, count($a_ignored), 'May have only one ignored device import');
 
-      $rule_values = $rule->find(['name' => 'Ignore import', 'sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
+      $rule_values = $rule->find(['name' => 'Ignore import', 'sub_type' => 'PluginGlpiinventoryInventoryRuleImport']);
       $this->assertEquals(1, count($rule_values), 'Ignore import rule not found');
       $rule_ignore = array_pop($rule_values);
 
@@ -153,7 +153,7 @@ class RuleIgnoredImportTest extends TestCase {
           'method'                           => 'inventory',
           'serial'                           => '',
           'uuid'                             => '',
-          'plugin_fusioninventory_agents_id' => $a_agents_id
+          'plugin_glpiinventory_agents_id' => $a_agents_id
       ];
       unset($a_ignore['date']);
       $this->assertEquals($a_reference, $a_ignore, 'Ignored import computer');
@@ -173,10 +173,10 @@ class RuleIgnoredImportTest extends TestCase {
           'IP'          => '192.168.20.3'
       ];
 
-      $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCommunicationNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $computer = new Computer();
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
-      $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
+      $pfIgnoredimportdevice = new PluginGlpiinventoryIgnoredimportdevice();
 
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';

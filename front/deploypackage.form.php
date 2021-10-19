@@ -33,29 +33,29 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-$package = new PluginFusioninventoryDeployPackage();
+$package = new PluginGlpiinventoryDeployPackage();
 if (isset($_POST['update_json'])) {
    $json_clean = stripcslashes($_POST['json']);
 
    $json = json_decode($json_clean, true);
 
-   $ret = PluginFusioninventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
+   $ret = PluginGlpiinventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
    Html::back();
    exit;
 } else if (isset($_POST['add_item'])) {
    $data = array_map(['Toolbox', 'stripslashes_deep'],
                      $package->escapeText($_POST));
-   PluginFusioninventoryDeployPackage::alterJSON('add_item', $data);
+   PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data);
    Html::back();
 } else if (isset($_POST['save_item'])) {
    $data = array_map(['Toolbox', 'stripslashes_deep'],
                      $package->escapeText($_POST));
-   PluginFusioninventoryDeployPackage::alterJSON('save_item', $data);
+   PluginGlpiinventoryDeployPackage::alterJSON('save_item', $data);
    Html::back();
 } else if (isset($_POST['remove_item'])) {
    $data = array_map(['Toolbox', 'stripslashes_deep'],
                      $package->escapeText($_POST));
-   PluginFusioninventoryDeployPackage::alterJSON('remove_item', $data);
+   PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data);
    Html::back();
 }
 
@@ -64,48 +64,48 @@ $data = $_POST;
 
 //general form
 if (isset ($data["add"])) {
-   Session::checkRight('plugin_fusioninventory_package', CREATE);
+   Session::checkRight('plugin_glpiinventory_package', CREATE);
    $newID = $package->add($data);
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployPackage')."?id=".$newID);
 } else if (isset ($data["update"])) {
-   Session::checkRight('plugin_fusioninventory_package', UPDATE);
+   Session::checkRight('plugin_glpiinventory_package', UPDATE);
    $package->update($data);
    Html::back();
 } else if (isset ($data["purge"])) {
-   Session::checkRight('plugin_fusioninventory_package', PURGE);
+   Session::checkRight('plugin_glpiinventory_package', PURGE);
    $package->delete($data, 1);
    $package->redirectToList();
 } else if (isset($_POST["addvisibility"])) {
    if (isset($_POST["_type"]) && !empty($_POST["_type"])
-           && isset($_POST["plugin_fusioninventory_deploypackages_id"])
-           && $_POST["plugin_fusioninventory_deploypackages_id"]) {
+           && isset($_POST["plugin_glpiinventory_deploypackages_id"])
+           && $_POST["plugin_glpiinventory_deploypackages_id"]) {
       $item = null;
       switch ($_POST["_type"]) {
          case 'User' :
             if (isset($_POST['users_id']) && $_POST['users_id']) {
-               $item = new PluginFusioninventoryDeployPackage_User();
+               $item = new PluginGlpiinventoryDeployPackage_User();
             }
             break;
 
          case 'Group' :
             if (isset($_POST['groups_id']) && $_POST['groups_id']) {
-               $item = new PluginFusioninventoryDeployPackage_Group();
+               $item = new PluginGlpiinventoryDeployPackage_Group();
             }
             break;
 
          case 'Profile' :
             if (isset($_POST['profiles_id']) && $_POST['profiles_id']) {
-               $item = new PluginFusioninventoryDeployPackage_Profile();
+               $item = new PluginGlpiinventoryDeployPackage_Profile();
             }
             break;
 
          case 'Entity' :
-            $item = new PluginFusioninventoryDeployPackage_Entity();
+            $item = new PluginGlpiinventoryDeployPackage_Entity();
             break;
       }
       if (!is_null($item)) {
          $item->add($_POST);
-         //         Event::log($_POST["plugin_fusioninventory_deploypackages_id"], "sla", 4, "tools",
+         //         Event::log($_POST["plugin_glpiinventory_deploypackages_id"], "sla", 4, "tools",
          //                    //TRANS: %s is the user login
          //                    sprintf(__('%s adds a target'), $_SESSION["glpiname"]));
       }
@@ -114,8 +114,8 @@ if (isset ($data["add"])) {
 }
 
 Html::header(__('GLPI Inventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
-   "pluginfusioninventorymenu", "deploypackage");
-PluginFusioninventoryMenu::displayMenu("mini");
+   "pluginglpiinventorymenu", "deploypackage");
+PluginGlpiinventoryMenu::displayMenu("mini");
 $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];

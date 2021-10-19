@@ -56,7 +56,7 @@ $_SESSION['glpishowallentities'] = true;
 ob_end_clean();
 header("server-type: glpi/fusioninventory ".PLUGIN_GLPI_INVENTORY_VERSION);
 
-if (!class_exists("PluginFusioninventoryConfig")) {
+if (!class_exists("PluginGlpiinventoryConfig")) {
    header("Content-Type: application/xml");
    echo "<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
@@ -66,13 +66,13 @@ if (!class_exists("PluginFusioninventoryConfig")) {
    exit();
 }
 
-$pfCommunication  = new PluginFusioninventoryCommunication();
+$pfCommunication  = new PluginGlpiinventoryCommunication();
 
 if (!isset($rawdata)) {
    $rawdata = file_get_contents("php://input");
 }
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   PluginFusioninventoryCommunicationRest::handleFusionCommunication();
+   PluginGlpiinventoryCommunicationRest::handleFusionCommunication();
 } else if (!empty($rawdata)) {
    $pfCommunication->handleOCSCommunication($rawdata);
 }

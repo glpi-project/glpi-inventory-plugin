@@ -146,7 +146,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
       Session::changeProfile(4);
       plugin_init_glpiinventory();
 
-      $pfCND = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCND = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
 
       $input = [
@@ -230,7 +230,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
       plugin_init_glpiinventory();
 
       // Update 2nd time
-      $pfCND = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCND = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
       $item = current($networkEquipment->find([], [], 1));
 

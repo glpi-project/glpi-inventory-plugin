@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Used to get the deploy file in many parts.
  */
-class PluginFusioninventoryDeployFilepart {
+class PluginGlpiinventoryDeployFilepart {
 
 
    /**
@@ -58,7 +58,7 @@ class PluginFusioninventoryDeployFilepart {
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/glpiinventory/files/repository/";
 
-      $pfDeployFile = new PluginFusioninventoryDeployFile();
+      $pfDeployFile = new PluginGlpiinventoryDeployFile();
       $filePath     = $repoPath.$pfDeployFile->getDirBySha512($sha512).'/'.$sha512;
 
       if (!is_file($filePath)) {

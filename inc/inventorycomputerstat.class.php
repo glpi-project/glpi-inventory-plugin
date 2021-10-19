@@ -38,14 +38,14 @@ if (!defined('GLPI_ROOT')) {
  * Manage the computer inventory stats (number of inventories arrived in
  * the plugin Fusioninventory and regroued by hour).
  */
-class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
+class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_agent';
+   static $rightname = 'plugin_glpiinventory_agent';
 
 
    /**
@@ -68,7 +68,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       global $DB;
 
       $insert = $DB->buildInsert(
-         'glpi_plugin_fusioninventory_inventorycomputerstats', [
+         'glpi_plugin_glpiinventory_inventorycomputerstats', [
             'day'    => new \QueryParam(),
             'hour'   => new \QueryParam()
          ]
@@ -99,7 +99,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       global $DB;
 
       $DB->update(
-         'glpi_plugin_fusioninventory_inventorycomputerstats', [
+         'glpi_plugin_glpiinventory_inventorycomputerstats', [
             'counter'   => new \QueryExpression($DB->quoteName('counter') . ' + 1')
          ], [
             'day'    => date('z'),
@@ -125,7 +125,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       $timestamp = date('U');
       for ($i=$nb; $i>=0; $i--) {
          $timestampSearch = $timestamp - ($i * 3600);
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputerstats` "
+         $query = "SELECT * FROM `glpi_plugin_glpiinventory_inventorycomputerstats` "
                     ."WHERE `day`='".date('z', $timestampSearch)."' "
                     ."   AND `hour`='".date('G', $timestampSearch)."' "
                     ."LIMIT 1";

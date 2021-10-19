@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Common class to manage informations FI display on an asset
  */
-class PluginFusioninventoryItem extends CommonDBTM {
+class PluginGlpiinventoryItem extends CommonDBTM {
 
    /**
     * The right name for this class
@@ -171,8 +171,8 @@ class PluginFusioninventoryItem extends CommonDBTM {
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication', 'glpiinventory')."</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::authDropdown(
-              $this->fields["plugin_fusioninventory_configsecurities_id"]);
+      PluginGlpiinventoryConfigSecurity::authDropdown(
+              $this->fields["plugin_glpiinventory_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";
       echo "</table></td></tr>";
@@ -212,13 +212,13 @@ class PluginFusioninventoryItem extends CommonDBTM {
    static function getFIItemClassInstance($itemtype) {
       switch ($itemtype) {
          case 'Computer':
-            return new PluginFusioninventoryInventoryComputerComputer();
+            return new PluginGlpiinventoryInventoryComputerComputer();
 
          case 'NetworkEquipment':
-            return new PluginFusioninventoryNetworkEquipment();
+            return new PluginGlpiinventoryNetworkEquipment();
 
          case 'Printer':
-            return new PluginFusioninventoryPrinter();
+            return new PluginGlpiinventoryPrinter();
 
          default:
             // Toolbox::logDebug("getFIItemClassInstance: there's no FI class for itemtype $itemtype");

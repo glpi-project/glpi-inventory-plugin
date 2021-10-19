@@ -32,14 +32,14 @@
 
 include ("../../../inc/includes.php");
 
-if (PluginFusioninventoryMenu::canView()) {
+if (PluginGlpiinventoryMenu::canView()) {
    Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-                "pluginfusioninventorymenu", "menu");
+                "pluginglpiinventorymenu", "menu");
 
    echo Html::manageRefreshPage();
 
-   PluginFusioninventoryMenu::displayMenu();
-   PluginFusioninventoryMenu::board();
+   PluginGlpiinventoryMenu::displayMenu();
+   PluginGlpiinventoryMenu::board();
 } else {
    Html::displayRightError();
 }

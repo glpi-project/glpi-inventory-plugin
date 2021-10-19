@@ -40,7 +40,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
-Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
+Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
 $nbdays = filter_input(INPUT_GET, "nbdays");
 if ($nbdays == '') {
@@ -87,7 +87,7 @@ Html::closeForm();
 
 $FK_networking_ports = filter_input(INPUT_GET, "FK_networking_ports");
 if ($FK_networking_ports != '') {
-   echo PluginFusioninventoryNetworkPortLog::showHistory($FK_networking_ports);
+   echo PluginGlpiinventoryNetworkPortLog::showHistory($FK_networking_ports);
 }
 
 Html::closeForm();
@@ -100,9 +100,9 @@ if (($state != "") AND ($state != "0")) {
 $query = "SELECT * FROM (
 SELECT `glpi_networkequipments`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `networkequipmentmodels_id`, `glpi_networkequipments`.`id` as `network_id`, 0 as `printer_id`,
-   `plugin_fusioninventory_configsecurities_id`,
+   `plugin_glpiinventory_configsecurities_id`,
    `glpi_ipaddresses`.`name` as ip, `states_id`
-   FROM `glpi_plugin_fusioninventory_networkequipments`
+   FROM `glpi_plugin_glpiinventory_networkequipments`
 JOIN `glpi_networkequipments` on `networkequipments_id` = `glpi_networkequipments`.`id`
 LEFT JOIN `glpi_networkports`
    ON (`glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
@@ -118,9 +118,9 @@ WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) O
 UNION
 SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `printermodels_id`, 0 as `network_id`, `glpi_printers`.`id` as `printer_id`,
-   `plugin_fusioninventory_configsecurities_id`,
+   `plugin_glpiinventory_configsecurities_id`,
    `glpi_ipaddresses`.`name` as ip, `states_id`
-   FROM `glpi_plugin_fusioninventory_printers`
+   FROM `glpi_plugin_glpiinventory_printers`
 JOIN `glpi_printers` on `printers_id` = `glpi_printers`.`id`
 LEFT JOIN `glpi_networkports`
    ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id`
@@ -181,7 +181,7 @@ if ($result=$DB->query($query)) {
          echo "<td>".Dropdown::getDropdownName("glpi_printermodels", $data['printermodels_id'])."</td>";
       }
       echo "<td>";
-      echo Dropdown::getDropdownName('glpi_plugin_fusioninventory_configsecurities', $data['plugin_fusioninventory_configsecurities_id']);
+      echo Dropdown::getDropdownName('glpi_plugin_glpiinventory_configsecurities', $data['plugin_glpiinventory_configsecurities_id']);
       echo "</td>";
       echo "<td>";
       echo Dropdown::getDropdownName(getTableForItemType("State"), $data['states_id']);

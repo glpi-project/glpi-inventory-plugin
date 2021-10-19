@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage import rule collection for inventory.
  */
-class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection {
+class PluginGlpiinventoryInventoryRuleImportCollection extends RuleCollection {
 
 
    /**
@@ -59,7 +59,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     *
     * @var string
     */
-   static $rightname           = "plugin_fusioninventory_ruleimport";
+   static $rightname           = "plugin_glpiinventory_ruleimport";
 
 
    /**
@@ -97,17 +97,17 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
          echo "<td>";
 
          switch ($output["action"]) {
-            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_LINK :
+            case PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_LINK :
                echo __('Link');
 
                break;
 
-            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE:
+            case PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_CREATE:
                echo __('Device created', 'glpiinventory');
 
                break;
 
-            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
+            case PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_DENIED:
                echo __('Import denied', 'glpiinventory');
 
                break;
@@ -116,7 +116,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
          echo "</td>";
          echo "</tr>";
-         if ($output["action"] != PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED
+         if ($output["action"] != PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_DENIED
              && isset($output["found_equipment"])) {
             echo "<tr class='tab_bg_2'>";
             $className = $output["found_equipment"][1];

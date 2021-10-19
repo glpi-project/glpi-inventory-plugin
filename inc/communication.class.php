@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage communication with agents using XML
  */
-class PluginFusioninventoryCommunication {
+class PluginGlpiinventoryCommunication {
 
    /**
     * Define message variable
@@ -54,9 +54,9 @@ class PluginFusioninventoryCommunication {
       $this->message = new SimpleXMLElement(
                  "<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>"
               );
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         'pluginFusioninventory-communication',
-         'New PluginFusioninventoryCommunication object.'
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         'pluginGlpiinventory-communication',
+         'New PluginGlpiinventoryCommunication object.'
       );
    }
 
@@ -99,14 +99,14 @@ class PluginFusioninventoryCommunication {
       switch ($compressmode) {
          case 'none':
             header("Content-Type: application/xml");
-            echo PluginFusioninventoryToolbox::formatXML($this->message);
+            echo PluginGlpiinventoryToolbox::formatXML($this->message);
             break;
 
          case 'zlib':
             // rfc 1950
             header("Content-Type: application/x-compress-zlib");
             echo gzcompress(
-               PluginFusioninventoryToolbox::formatXML($this->message)
+               PluginGlpiinventoryToolbox::formatXML($this->message)
             );
             break;
 
@@ -114,7 +114,7 @@ class PluginFusioninventoryCommunication {
             // rfc 1951
             header("Content-Type: application/x-compress-deflate");
             echo gzdeflate(
-               PluginFusioninventoryToolbox::formatXML($this->message)
+               PluginGlpiinventoryToolbox::formatXML($this->message)
             );
             break;
 
@@ -122,7 +122,7 @@ class PluginFusioninventoryCommunication {
             // rfc 1952
             header("Content-Type: application/x-compress-gzip");
             echo gzencode(
-               PluginFusioninventoryToolbox::formatXML($this->message)
+               PluginGlpiinventoryToolbox::formatXML($this->message)
             );
             break;
 
@@ -138,8 +138,8 @@ class PluginFusioninventoryCommunication {
    static function addLog($p_logs) {
 
       if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
-         if (PluginFusioninventoryConfig::isExtradebugActive()) {
-            file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
+         if (PluginGlpiinventoryConfig::isExtradebugActive()) {
+            file_put_contents(GLPI_LOG_DIR.'/pluginGlpiinventory-communication.log',
                               "\n".time().' : '.$p_logs,
                               FILE_APPEND);
          }
@@ -155,10 +155,10 @@ class PluginFusioninventoryCommunication {
     */
    function import($arrayinventory) {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         'pluginFusioninventory-communication',
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         'pluginGlpiinventory-communication',
          'Function import().'
       );
 
@@ -174,10 +174,10 @@ class PluginFusioninventoryCommunication {
          $xmltag = "NETWORKINVENTORY";
       }
 
-      if (!isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+      if (!isset($_SESSION['plugin_glpiinventory_agents_id'])) {
          $agent = $pfAgent->infoByKey($this->message['DEVICEID']);
       } else {
-         $agent = ['id' => $_SESSION['plugin_fusioninventory_agents_id']];
+         $agent = ['id' => $_SESSION['plugin_glpiinventory_agents_id']];
       }
       if ($xmltag == "PROLOG") {
          return false;
@@ -205,8 +205,8 @@ class PluginFusioninventoryCommunication {
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
-         $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
+      if (isset($_SESSION['glpi_plugin_glpiinventory']['xmltags']["$xmltag"])) {
+         $moduleClass = $_SESSION['glpi_plugin_glpiinventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
          $errors.=$moduleCommunication->import($this->message['DEVICEID'],
                  $this->message['CONTENT'],
@@ -218,7 +218,7 @@ class PluginFusioninventoryCommunication {
       // TODO manage this error ( = delete it)
       if ($errors != '') {
          echo $errors;
-         if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
+         if (isset($_SESSION['glpi_plugin_glpiinventory_processnumber'])) {
             $result=true;
          } else {
             // It's PROLOG
@@ -236,7 +236,7 @@ class PluginFusioninventoryCommunication {
     */
    function getTaskAgent($agent_id) {
 
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
 
       /**
        * TODO: the following must be definitely done differently !
@@ -244,7 +244,7 @@ class PluginFusioninventoryCommunication {
        */
       $methods = [];
       $classnames = [];
-      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
          if (isset($method['classname'])) {
             $methods[] = $method['method'];
             $classnames[$method['method']] = $method['classname'];
@@ -259,12 +259,12 @@ class PluginFusioninventoryCommunication {
              * TODO: check if use_rest is enabled in Staticmisc::get_methods.
              * Also, this get_methods function need to be reviewed
              */
-            if ($className != "PluginFusioninventoryInventoryComputerESX"
-                    && $className != "PluginFusioninventoryDeployCommon"
-                    && $className != "PluginFusioninventoryCollect") {
+            if ($className != "PluginGlpiinventoryInventoryComputerESX"
+                    && $className != "PluginGlpiinventoryDeployCommon"
+                    && $className != "PluginGlpiinventoryCollect") {
                $class = new $className();
                $sxml_temp = $class->run($jobstate);
-               PluginFusioninventoryToolbox::appendSimplexml(
+               PluginGlpiinventoryToolbox::appendSimplexml(
                   $this->message, $sxml_temp
                );
             }
@@ -277,7 +277,7 @@ class PluginFusioninventoryCommunication {
     * Set prolog for agent
     */
    function addProlog() {
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue("inventory_frequence"));
    }
 
@@ -289,7 +289,7 @@ class PluginFusioninventoryCommunication {
     * @param integer $agents_id id of the agent
     */
    function addInventory($agents_id) {
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
       if ($pfAgentmodule->isAgentCanDo('INVENTORY', $agents_id)) {
          $this->message->addChild('RESPONSE', "SEND");
       }
@@ -316,7 +316,7 @@ class PluginFusioninventoryCommunication {
       //$rawdata = gzcompress('');
       // ********** End ********** //
 
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       $user   = new User();
 
       if (!isset($_SESSION['glpiID'])) {
@@ -334,14 +334,14 @@ class PluginFusioninventoryCommunication {
          $_SESSION['glpiactiveprofile']['peripheral'] = ALLSTANDARDRIGHT;
          $_SESSION['glpiactiveprofile']['networking'] = ALLSTANDARDRIGHT;
 
-         $_SESSION["glpi_plugin_fusioninventory_profile"]['unmanaged'] = ALLSTANDARDRIGHT;
+         $_SESSION["glpi_plugin_glpiinventory_profile"]['unmanaged'] = ALLSTANDARDRIGHT;
       }
 
-      $communication  = new PluginFusioninventoryCommunication();
-      $pfToolbox = new PluginFusioninventoryToolbox();
+      $communication  = new PluginGlpiinventoryCommunication();
+      $pfToolbox = new PluginGlpiinventoryToolbox();
 
       // identify message compression algorithm
-      PluginFusioninventoryDisplay::disableDebug();
+      PluginGlpiinventoryDisplay::disableDebug();
       $compressmode = '';
       $content_type = filter_input(INPUT_SERVER, "CONTENT_TYPE");
       if (!empty($xml)) {
@@ -375,7 +375,7 @@ class PluginFusioninventoryCommunication {
             $compressmode = 'none';
          }
       }
-      PluginFusioninventoryDisplay::reenableusemode();
+      PluginGlpiinventoryDisplay::reenableusemode();
 
       // check if we are in ssl only mode
       $ssl = $config->getValue('ssl_only');
@@ -392,8 +392,8 @@ class PluginFusioninventoryCommunication {
          return;
       }
 
-      PluginFusioninventoryConfig::logIfExtradebug(
-         'pluginFusioninventory-dial' . uniqid(),
+      PluginGlpiinventoryConfig::logIfExtradebug(
+         'pluginGlpiinventory-dial' . uniqid(),
          $xml
       );
 
@@ -428,19 +428,19 @@ class PluginFusioninventoryCommunication {
          }
       }
 
-      $_SESSION['plugin_fusioninventory_compressmode'] = $compressmode;
+      $_SESSION['plugin_glpiinventory_compressmode'] = $compressmode;
 
       // Convert XML into PHP array
-      $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
+      $arrayinventory = PluginGlpiinventoryFormatconvert::XMLtoArray($pxml);
       unset($pxml);
       $deviceid = '';
       if (isset($arrayinventory['DEVICEID'])) {
          $deviceid = $arrayinventory['DEVICEID'];
       }
 
-      $agent = new PluginFusioninventoryAgent();
+      $agent = new PluginGlpiinventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
       if (!$communication->import($arrayinventory)) {
 

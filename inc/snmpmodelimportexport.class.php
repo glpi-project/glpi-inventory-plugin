@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the network discovery import.
  */
-class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
+class PluginGlpiinventorySnmpmodelImportExport extends CommonGLPI {
 
 
    /**
@@ -48,11 +48,11 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
     */
    function import_netdiscovery($arrayinventory, $device_id) {
 
-      PluginFusioninventoryCommunication::addLog(
-         'Function PluginFusioninventorySnmpmodelImportExport->import_netdiscovery().');
+      PluginGlpiinventoryCommunication::addLog(
+         'Function PluginGlpiinventorySnmpmodelImportExport->import_netdiscovery().');
 
-      $ptap = new PluginFusioninventoryStateDiscovery();
-      $pta  = new PluginFusioninventoryAgent();
+      $ptap = new PluginGlpiinventoryStateDiscovery();
+      $pta  = new PluginGlpiinventoryAgent();
 
       $agent = $pta->infoByKey($device_id);
 
@@ -72,7 +72,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          $agent['last_contact'] = date("Y-m-d H:i:s");
          $pta->update($agent);
       }
-      $_SESSION['glpi_plugin_fusioninventory_agentid'] = $agent['id'];
+      $_SESSION['glpi_plugin_glpiinventory_agentid'] = $agent['id'];
       $count_discovery_devices = 0;
       if (isset($arrayinventory['DEVICE'])) {
          if (is_int(key($arrayinventory['DEVICE']))) {
@@ -82,19 +82,19 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          }
       }
       if ($count_discovery_devices != "0") {
-         $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+         $ptap->updateState($_SESSION['glpi_plugin_glpiinventory_processnumber'],
                             ['nb_found' => $count_discovery_devices], $agent['id']);
          if (is_int(key($arrayinventory['DEVICE']))) {
             foreach ($arrayinventory['DEVICE'] as $discovery) {
                if (count($discovery) > 0) {
                   $pfCommunicationNetworkDiscovery =
-                                    new PluginFusioninventoryCommunicationNetworkDiscovery();
+                                    new PluginGlpiinventoryCommunicationNetworkDiscovery();
                   $pfCommunicationNetworkDiscovery->sendCriteria($discovery);
                }
             }
          } else {
             $pfCommunicationNetworkDiscovery =
-                                    new PluginFusioninventoryCommunicationNetworkDiscovery();
+                                    new PluginGlpiinventoryCommunicationNetworkDiscovery();
             $pfCommunicationNetworkDiscovery->sendCriteria($arrayinventory['DEVICE']);
          }
       }

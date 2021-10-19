@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the logs of task job.
  */
-class PluginFusioninventoryTaskjoblog extends CommonDBTM {
+class PluginGlpiinventoryTaskjoblog extends CommonDBTM {
 
    /**
     * Define state task started
@@ -128,13 +128,13 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    static function getStateItemtype($taskjoblogs_id) {
       global $DB;
 
-      $params = ['FROM'   => 'glpi_plugin_fusioninventory_taskjobstates',
-                 'LEFT JOIN' => ['glpi_plugin_fusioninventory_taskjoblogs',
-                     ['FKEY' => ['glpi_plugin_fusioninventory_taskjoblogs'   => 'plugin_fusioninventory_taskjobstates_id',
-                                 'glpi_plugin_fusioninventory_taskjobstates' => 'id']]
+      $params = ['FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
+                 'LEFT JOIN' => ['glpi_plugin_glpiinventory_taskjoblogs',
+                     ['FKEY' => ['glpi_plugin_glpiinventory_taskjoblogs'   => 'plugin_glpiinventory_taskjobstates_id',
+                                 'glpi_plugin_glpiinventory_taskjobstates' => 'id']]
                      ],
                  'FIELDS' => ['itemtype'],
-                 'WHERE'  => ['glpi_plugin_fusioninventory_taskjobstates.id' => $taskjoblogs_id],
+                 'WHERE'  => ['glpi_plugin_glpiinventory_taskjobstates.id' => $taskjoblogs_id],
                  'LIMIT'  => 1
                 ];
       $iterator = $DB->request($params);
@@ -171,20 +171,20 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $tab[] = [
          'id'            => '2',
-         'table'         => 'glpi_plugin_fusioninventory_tasks',
+         'table'         => 'glpi_plugin_glpiinventory_tasks',
          'field'         => 'name',
          'name'          => _n('Task', 'Tasks', 2),
          'datatype'      => 'itemlink',
-         'itemlink_type' => "PluginFusioninventoryTask",
+         'itemlink_type' => "PluginGlpiinventoryTask",
       ];
 
       $tab[] = [
          'id'            => '3',
-         'table'         => 'glpi_plugin_fusioninventory_taskjobs',
+         'table'         => 'glpi_plugin_glpiinventory_taskjobs',
          'field'         => 'name',
          'name'          => __('Job', 'glpiinventory'),
          'datatype'      => 'itemlink',
-         'itemlink_type' => "PluginFusioninventoryTaskjob",
+         'itemlink_type' => "PluginGlpiinventoryTaskjob",
       ];
 
       $tab[] = [
@@ -206,7 +206,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $tab[] = [
          'id'       => '6',
-         'table'    => 'glpi_plugin_fusioninventory_taskjobstates',
+         'table'    => 'glpi_plugin_glpiinventory_taskjobstates',
          'field'    => 'uniqid',
          'name'     => __('Unique id', 'glpiinventory'),
          'datatype' => 'string',
@@ -222,14 +222,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $tab[] = [
          'id'           => '8',
-         'table'        => "glpi_plugin_fusioninventory_agents",
+         'table'        => "glpi_plugin_glpiinventory_agents",
          'field'        => 'name',
          'name'         => __('Agent', 'glpiinventory'),
          'datatype'     => 'itemlink',
          'forcegroupby' => true,
          'joinparams'   => [
             'beforejoin' => [
-               'table'      => 'glpi_plugin_fusioninventory_taskjobstates',
+               'table'      => 'glpi_plugin_glpiinventory_taskjobstates',
                'joinparams' => ['jointype' => 'child'],
             ],
          ],
@@ -282,14 +282,14 @@ function appear_array(id) {
 
       $fi_path = Plugin::getWebDir('glpiinventory');
 
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfAgent        = new PluginFusioninventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfAgent        = new PluginGlpiinventoryAgent();
 
       $pfTaskjobstate->getFromDB($taskjobstates_id);
 
       $displayforceend = 0;
       $a_history = $this->find(
-            ['plugin_fusioninventory_taskjobstates_id' => $pfTaskjobstate->fields['id']],
+            ['plugin_glpiinventory_taskjobstates_id' => $pfTaskjobstate->fields['id']],
             ['id DESC'], 1);
 
       echo "<tr class='tab_bg_1'>";
@@ -307,24 +307,24 @@ function appear_array(id) {
          echo "</td>";
       }
       if ($displaytaskjob == '1') {
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $pfTask    = new PluginFusioninventoryTask();
+         $pfTaskjob = new PluginGlpiinventoryTaskjob();
+         $pfTask    = new PluginGlpiinventoryTask();
 
-         $pfTaskjob->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']);
-         $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+         $pfTaskjob->getFromDB($pfTaskjobstate->fields['plugin_glpiinventory_taskjobs_id']);
+         $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
          echo "<td>";
          echo $pfTaskjob->getLink(1)." (".$pfTask->getLink().")";
          echo "</td>";
       }
       echo "<td>";
-      $pfAgent->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_agents_id']);
+      $pfAgent->getFromDB($pfTaskjobstate->fields['plugin_glpiinventory_agents_id']);
       echo $pfAgent->getLink(1);
 
       Ajax::updateItemOnEvent('plusmoins'.$pfTaskjobstate->fields["id"],
                       'viewfollowup'.$pfTaskjobstate->fields["id"],
                       $fi_path."/ajax/showtaskjoblogdetail.php",
                       ['agents_id' =>
-                                 $pfTaskjobstate->fields['plugin_fusioninventory_agents_id'],
+                                 $pfTaskjobstate->fields['plugin_glpiinventory_agents_id'],
                           'uniqid' => $pfTaskjobstate->fields['uniqid']],
                       ["click"]);
 
@@ -341,7 +341,7 @@ function appear_array(id) {
          echo "<input type='hidden' name='taskjobstates_id' value='".
                  $pfTaskjobstate->fields['id']."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".
-                 $pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
+                 $pfTaskjobstate->fields['plugin_glpiinventory_taskjobs_id']."' />";
          echo '<input name="forceend" value="'.__('Force the end', 'glpiinventory').'"
              class="submit" type="submit">';
          Html::closeForm();
@@ -368,19 +368,19 @@ function appear_array(id) {
    function showHistoryInDetail($agents_id, $uniqid, $width = 950) {
       global $CFG_GLPI, $DB;
 
-      $pfAgent          = new PluginFusioninventoryAgent();
+      $pfAgent          = new PluginGlpiinventoryAgent();
       $a_devices_merged = [];
 
       $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
-      $params = ['FROM'  => 'glpi_plugin_fusioninventory_taskjobstates',
-                 'WHERE' => ['plugin_fusioninventory_agents_id' => $agents_id, 'uniqid' => $uniqid],
+      $params = ['FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
+                 'WHERE' => ['plugin_glpiinventory_agents_id' => $agents_id, 'uniqid' => $uniqid],
                  'ORDER' => 'id DESC'
                 ];
       foreach ($DB->request($params) as $data) {
 
          $displayforceend = 0;
-         $a_history = $this->find(['plugin_fusioninventory_taskjobstates_id' => $data['id']], ['id']);
+         $a_history = $this->find(['plugin_glpiinventory_taskjobstates_id' => $data['id']], ['id']);
 
          if (strstr(exportArrayToDB($a_history), "Merged with ")) {
             $classname = $data['itemtype'];
@@ -417,7 +417,7 @@ function appear_array(id) {
 
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<td colspan='2'>";
-            $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+            $pfAgent->getFromDB($data['plugin_glpiinventory_agents_id']);
             $text .= $pfAgent->getLink(1);
             $text .= "</td>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
@@ -578,7 +578,7 @@ function appear_array(id) {
       $text .= "</td>";
       if ($comment == '1') {
          $text .= "<td class='fusinv_task_comment'>";
-         $datas['comment'] = PluginFusioninventoryTaskjoblog::convertComment($datas['comment']);
+         $datas['comment'] = PluginGlpiinventoryTaskjoblog::convertComment($datas['comment']);
          $text .= $datas['comment'];
          $text .= "</td>";
       }
@@ -600,7 +600,7 @@ function appear_array(id) {
       global $DB;
       $this->getEmpty();
       unset($this->fields['id']);
-      $this->fields['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
+      $this->fields['plugin_glpiinventory_taskjobstates_id'] = $taskjobstates_id;
       $this->fields['date']      = $_SESSION['glpi_currenttime'];
       $this->fields['items_id']  = $items_id;
       $this->fields['itemtype']  = $itemtype;
@@ -622,18 +622,18 @@ function appear_array(id) {
 
       $finishState = [2 => 0, 3 => 0, 4 => 0, 5 => 0];
 
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.`state`
-         FROM glpi_plugin_fusioninventory_taskjobstates
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
-            ON plugin_fusioninventory_taskjobstates_id=".
-               "`glpi_plugin_fusioninventory_taskjobstates`.`id`
-         WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
-         AND (`glpi_plugin_fusioninventory_taskjoblogs`.`state` = '2'
-            OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '3'
-            OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '4'
-            OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '5')
-         GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid, ".
-              "plugin_fusioninventory_agents_id";
+      $query = "SELECT `glpi_plugin_glpiinventory_taskjoblogs`.`state`
+         FROM glpi_plugin_glpiinventory_taskjobstates
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjoblogs`
+            ON plugin_glpiinventory_taskjobstates_id=".
+               "`glpi_plugin_glpiinventory_taskjobstates`.`id`
+         WHERE `plugin_glpiinventory_taskjobs_id`='".$taskjobs_id."'
+         AND (`glpi_plugin_glpiinventory_taskjoblogs`.`state` = '2'
+            OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '3'
+            OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '4'
+            OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '5')
+         GROUP BY glpi_plugin_glpiinventory_taskjobstates.uniqid, ".
+              "plugin_glpiinventory_agents_id";
       $result=$DB->query($query);
       if ($result) {
          while ($datajob=$DB->fetchArray($result)) {
@@ -660,10 +660,10 @@ function appear_array(id) {
     * Get taskjobstate by uniqid
     *
     * @param string $uuid value uniqid
-    * @return array with data of table glpi_plugin_fusioninventory_taskjobstates
+    * @return array with data of table glpi_plugin_glpiinventory_taskjobstates
     */
    static function getByUniqID($uuid) {
-      $a_datas = getAllDataFromTable('glpi_plugin_fusioninventory_taskjobstates',
+      $a_datas = getAllDataFromTable('glpi_plugin_glpiinventory_taskjobstates',
                                       ['uniqid' => $uuid],
                                       "1");
       foreach ($a_datas as $a_data) {

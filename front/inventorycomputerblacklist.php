@@ -35,14 +35,14 @@ include ("../../../inc/includes.php");
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "inventorycomputerblacklist");
 
-Session::checkRight('plugin_fusioninventory_blacklist', READ);
+Session::checkRight('plugin_glpiinventory_blacklist', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryInventoryComputerBlacklist');
+Search::show('PluginGlpiinventoryInventoryComputerBlacklist');
 
 Html::footer();
 

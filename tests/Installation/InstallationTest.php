@@ -94,7 +94,7 @@ class InstallationTest extends TestCase {
       $FusinvDBTest = new FusinvDB();
       $FusinvDBTest->checkInstall("glpiinventory", "install new version");
 
-      PluginFusioninventoryConfig::loadCache();
+      PluginGlpiinventoryConfig::loadCache();
 
    }
 }

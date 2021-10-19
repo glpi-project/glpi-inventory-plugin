@@ -40,7 +40,7 @@ class GetTaskByFiltersTest extends TestCase {
     */
    public function GetTaskWithoutJobs() {
 
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
 
       // create task
       $input = [

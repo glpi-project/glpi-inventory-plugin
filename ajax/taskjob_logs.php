@@ -39,5 +39,5 @@ if (!isset($_SERVER['PHP_SELF'])
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
-$pfTask = new PluginFusioninventoryTask();
+$pfTask = new PluginGlpiinventoryTask();
 $pfTask->ajaxGetJobLogs($_GET);

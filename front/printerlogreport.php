@@ -38,38 +38,38 @@ include ("../../../inc/includes.php");
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "printerlogreport");
 
-Session::checkRight('plugin_fusioninventory_reportprinter', READ);
+Session::checkRight('plugin_glpiinventory_reportprinter', READ);
 
-if (isset($_POST['glpi_plugin_fusioninventory_date_start'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_start'] =
-                                 $_POST['glpi_plugin_fusioninventory_date_start'];
+if (isset($_POST['glpi_plugin_glpiinventory_date_start'])) {
+   $_SESSION['glpi_plugin_glpiinventory_date_start'] =
+                                 $_POST['glpi_plugin_glpiinventory_date_start'];
 }
-if (isset($_POST['glpi_plugin_fusioninventory_date_end'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_end'] =
-                                 $_POST['glpi_plugin_fusioninventory_date_end'];
+if (isset($_POST['glpi_plugin_glpiinventory_date_end'])) {
+   $_SESSION['glpi_plugin_glpiinventory_date_end'] =
+                                 $_POST['glpi_plugin_glpiinventory_date_end'];
 }
 
 if (isset($_POST['reset'])) {
-   unset($_SESSION['glpi_plugin_fusioninventory_date_start']);
-   unset($_SESSION['glpi_plugin_fusioninventory_date_end']);
+   unset($_SESSION['glpi_plugin_glpiinventory_date_start']);
+   unset($_SESSION['glpi_plugin_glpiinventory_date_end']);
 }
 
-if ((!isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
-       OR (empty($_SESSION['glpi_plugin_fusioninventory_date_start']))) {
-   $_SESSION['glpi_plugin_fusioninventory_date_start'] = "2000-01-01";
+if ((!isset($_SESSION['glpi_plugin_glpiinventory_date_start']))
+       OR (empty($_SESSION['glpi_plugin_glpiinventory_date_start']))) {
+   $_SESSION['glpi_plugin_glpiinventory_date_start'] = "2000-01-01";
 }
-if (!isset($_SESSION['glpi_plugin_fusioninventory_date_end'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_end'] = date("Y-m-d");
+if (!isset($_SESSION['glpi_plugin_glpiinventory_date_end'])) {
+   $_SESSION['glpi_plugin_glpiinventory_date_end'] = date("Y-m-d");
 }
 
 displaySearchForm();
 
 $_GET['target']="printerlogreport.php";
 
-Search::show('PluginFusioninventoryPrinterLogReport');
+Search::show('PluginGlpiinventoryPrinterLogReport');
 
 
 /**
@@ -87,16 +87,16 @@ function displaySearchForm() {
    echo __('Starting date', 'glpiinventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateField("glpi_plugin_fusioninventory_date_start",
-                       ['value' => $_SESSION['glpi_plugin_fusioninventory_date_start']]);
+   Html::showDateField("glpi_plugin_glpiinventory_date_start",
+                       ['value' => $_SESSION['glpi_plugin_glpiinventory_date_start']]);
    echo "</td>";
 
    echo "<td>";
    echo __('Ending date', 'glpiinventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateField("glpi_plugin_fusioninventory_date_end",
-                       ['value' => $_SESSION['glpi_plugin_fusioninventory_date_end']]);
+   Html::showDateField("glpi_plugin_glpiinventory_date_end",
+                       ['value' => $_SESSION['glpi_plugin_glpiinventory_date_end']]);
    echo "</td>";
 
    echo "<td>";

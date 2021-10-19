@@ -37,21 +37,21 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the visibility of package by entity.
  */
-class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
+class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation {
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1 = 'PluginFusioninventoryDeployPackage';
+   static public $itemtype_1 = 'PluginGlpiinventoryDeployPackage';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1 = 'plugin_fusioninventory_deploypackages_id';
+   static public $items_id_1 = 'plugin_glpiinventory_deploypackages_id';
 
    /**
     * Itemtype for the second part of relation
@@ -93,9 +93,9 @@ class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
       global $DB;
 
       $ent   = [];
-      $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_entities`.*
-                FROM `glpi_plugin_fusioninventory_deploypackages_entities`
-                WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
+      $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_entities`.*
+                FROM `glpi_plugin_glpiinventory_deploypackages_entities`
+                WHERE `plugin_glpiinventory_deploypackages_id` = '$deploypackages_id'";
 
       foreach ($DB->request($query) as $data) {
          $ent[$data['entities_id']][] = $data;

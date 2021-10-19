@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the functions used in many classes.
  **/
-class PluginFusioninventoryToolbox {
+class PluginGlpiinventoryToolbox {
 
 
    /**
@@ -49,8 +49,8 @@ class PluginFusioninventoryToolbox {
     * @param string $message
     */
    static function logIfExtradebug($file, $message) {
-      $config = new PluginFusioninventoryConfig();
-      if (PluginFusioninventoryConfig::isExtradebugActive()) {
+      $config = new PluginGlpiinventoryConfig();
+      if (PluginGlpiinventoryConfig::isExtradebugActive()) {
          if (is_array($message)) {
             $message = print_r($message, true);
          }
@@ -326,7 +326,7 @@ class PluginFusioninventoryToolbox {
     * @param integer $p_id Authenticate id
     **/
    function addAuth($p_sxml_node, $p_id) {
-      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
+      $pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
       if ($pfConfigSecurity->getFromDB($p_id)) {
 
          $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
@@ -471,7 +471,7 @@ class PluginFusioninventoryToolbox {
          echo "<td>";
          if (is_array($value)) {
             echo "<table class='tab_cadre' width='100%'>";
-            PluginFusioninventoryToolbox::displaySerializedValues($value);
+            PluginGlpiinventoryToolbox::displaySerializedValues($value);
             echo "</table>";
          } else {
             echo $value;
@@ -623,7 +623,7 @@ class PluginFusioninventoryToolbox {
 
       $p['step'] = $p['step'] * 60; // to have in seconds
       for ($s=$p['begin']; $s<=$p['end']; $s+=$p['step']) {
-         $values[$s] = PluginFusioninventoryToolbox::getHourMinute($s);
+         $values[$s] = PluginGlpiinventoryToolbox::getHourMinute($s);
       }
       return Dropdown::showFromArray($name, $values, $p);
    }
@@ -680,7 +680,7 @@ class PluginFusioninventoryToolbox {
     */
    function executeAsFusioninventoryUser($function, array $args = []) {
 
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       $user = new User();
 
       // Backup _SESSION environment
@@ -727,17 +727,17 @@ class PluginFusioninventoryToolbox {
       $table = '';
       switch ($item->getType()) {
          case 'Computer':
-            $table = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+            $table = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
             $fk    = 'computers_id';
             break;
 
          case 'NetworkEquipment':
-            $table = 'glpi_plugin_fusioninventory_networkequipments';
+            $table = 'glpi_plugin_glpiinventory_networkequipments';
             $fk    = 'networkequipments_id';
             break;
 
          case 'Printer':
-            $table = 'glpi_plugin_fusioninventory_printers';
+            $table = 'glpi_plugin_glpiinventory_printers';
             $fk    = 'printers_id';
             break;
 
@@ -746,9 +746,9 @@ class PluginFusioninventoryToolbox {
          return $item->isDynamic()
             && countElementsInTable($table, [$fk => $item->getID()]);
       } else {
-         // check if device has data in glpi_plugin_fusioninventory_rulematchedlogs table
+         // check if device has data in glpi_plugin_glpiinventory_rulematchedlogs table
          return $item->isDynamic()
-            && countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
+            && countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs',
                                     ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]);
       }
    }
@@ -762,7 +762,7 @@ class PluginFusioninventoryToolbox {
     * @return array the fields with the states_id filled, is necessary
     */
    static function addDefaultStateIfNeeded($type, $input) {
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       switch ($type) {
          case 'computer':
             if ($states_id_default = $config->getValue("states_id_default")) {
@@ -793,7 +793,7 @@ class PluginFusioninventoryToolbox {
     */
    static function addLocation($input, $output = false) {
       //manage location
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
 
       // * Reload rules (required for unit tests)
       $ruleLocation->getCollectionPart();
@@ -818,7 +818,7 @@ class PluginFusioninventoryToolbox {
       }
 
       $dbutils = new DbUtils();
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
 
       $autonum = $config->getValue('auto_inventory_number_'.strtolower($itemtype));
       $autonum = str_replace('<', '&lt;', $autonum);

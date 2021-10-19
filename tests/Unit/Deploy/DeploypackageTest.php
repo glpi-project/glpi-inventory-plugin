@@ -39,9 +39,9 @@ class DeploypackageTest extends TestCase {
     * @test
     */
    public function testGetTypeName() {
-      $this->assertEquals('Package', PluginFusioninventoryDeployPackage::getTypeName());
-      $this->assertEquals('Package', PluginFusioninventoryDeployPackage::getTypeName(1));
-      $this->assertEquals('Package', PluginFusioninventoryDeployPackage::getTypeName(3));
+      $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName());
+      $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName(1));
+      $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName(3));
    }
 
 
@@ -51,9 +51,9 @@ class DeploypackageTest extends TestCase {
    public function testIsDeployEnabled() {
 
       $computer = new Computer();
-      $pfAgent  = new PluginFusioninventoryAgent();
-      $module   = new PluginFusioninventoryAgentmodule();
-      $package  = new PluginFusioninventoryDeployPackage();
+      $pfAgent  = new PluginGlpiinventoryAgent();
+      $module   = new PluginGlpiinventoryAgentmodule();
+      $package  = new PluginGlpiinventoryDeployPackage();
 
       //Enable deploy feature for all agents
       $module->getFromDBByCrit(['modulename' => 'DEPLOY']);

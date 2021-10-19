@@ -57,7 +57,7 @@ class UnmanagedImportTest extends TestCase {
     */
    public function ImportNetworkEquipment() {
 
-      $pfUnmanaged      = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged      = new PluginGlpiinventoryUnmanaged();
       $networkEquipment = new NetworkEquipment();
       $networkPort      = new NetworkPort();
       $networkName      = new NetworkName();
@@ -72,13 +72,13 @@ class UnmanagedImportTest extends TestCase {
           'is_dynamic'  => 1,
           'serial'      => 'XXS6BEF3',
           'comment'     => 'this is a comment',
-          'plugin_fusioninventory_configsecurities_id' => 1
+          'plugin_glpiinventory_configsecurities_id' => 1
       ];
       $unmanageds_id = $pfUnmanaged->add($input);
 
       // * Add networkport
       $input = [];
-      $input['itemtype']            = 'PluginFusioninventoryUnmanaged';
+      $input['itemtype']            = 'PluginGlpiinventoryUnmanaged';
       $input['items_id']            = $unmanageds_id;
       $input['instantiation_type']  = 'NetworkPortEthernet';
       $input['name']                = 'general';
@@ -107,7 +107,7 @@ class UnmanagedImportTest extends TestCase {
 
       $this->assertEquals(1, $cnt, "May have network equipment added");
 
-      $cnt = countElementsInTable("glpi_plugin_fusioninventory_unmanageds");
+      $cnt = countElementsInTable("glpi_plugin_glpiinventory_unmanageds");
 
       $this->assertEquals(0, $cnt, "Unknown device may be deleted");
 

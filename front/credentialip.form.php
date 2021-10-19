@@ -32,8 +32,8 @@
 
 include ("../../../inc/includes.php");
 
-$dropdown = new PluginFusioninventoryCredentialIp();
-if (empty($_POST['plugin_fusioninventory_credentials_id'])) {
-   $_POST['plugin_fusioninventory_credentials_id'] = -1;
+$dropdown = new PluginGlpiinventoryCredentialIp();
+if (empty($_POST['plugin_glpiinventory_credentials_id'])) {
+   $_POST['plugin_glpiinventory_credentials_id'] = -1;
 }
 include (GLPI_ROOT . "/front/dropdown.common.form.php");

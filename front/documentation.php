@@ -33,7 +33,7 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "documentation");
+             "pluginglpiinventorymenu", "documentation");
 
 echo "<meta http-equiv='refresh' content='0;URL=http://fusioninventory.org/documentation/'>";
 

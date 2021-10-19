@@ -37,21 +37,21 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the static groups (add manually computers in the group).
  */
-class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
+class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_group";
+   static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1 = 'PluginFusioninventoryDeployGroup';
+   static public $itemtype_1 = 'PluginGlpiinventoryDeployGroup';
 
    /**
     * id field name for the first part of relation
@@ -85,14 +85,14 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if (!$withtemplate
-          && ($item->getType() == 'PluginFusioninventoryDeployGroup')
-             && $item->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP) {
+          && ($item->getType() == 'PluginGlpiinventoryDeployGroup')
+             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP) {
 
          $tabs[1] = _n('Criterion', 'Criteria', 2);
          $count = countElementsInTable(getTableForItemType(__CLASS__),
             [
                'itemtype'                               => 'Computer',
-               'plugin_fusioninventory_deploygroups_id' => $item->fields['id'],
+               'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
             ]);
          if ($_SESSION['glpishow_count_on_tabs']) {
             $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
@@ -137,31 +137,31 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    /**
     * Display criteria form + list of computers
     *
-    * @param object $item PluginFusioninventoryDeployGroup instance
+    * @param object $item PluginGlpiinventoryDeployGroup instance
     */
-   static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
+   static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item) {
       // WITH checking post values
-      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
+      $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, true);
       //If metacriteria array is empty, remove it as it displays the metacriteria form,
       //and it's is not we want !
       if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
          unset($search_params['metacriteria']);
       }
-      PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
+      PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
 
       //Add extra parameters for massive action display : only the Add action should be displayed
       $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
       $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+      $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
       $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
-      PluginFusioninventorySearch::constructDatas($data);
-      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-      $data['itemtype'] = 'PluginFusioninventoryComputer';
+      PluginGlpiinventorySearch::constructDatas($data);
+      $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
+      $data['itemtype'] = 'PluginGlpiinventoryComputer';
       Search::displayData($data);
    }
 
@@ -170,30 +170,30 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * Display result, so list of computers
     */
    static function showResults() {
-      if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
-              && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
-         $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
+      if (isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'])
+              && isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']['show_results'])) {
+         $computers_params = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'];
       }
       $computers_params['metacriteria'] = [];
       $computers_params['criteria'][]   = ['searchtype' => 'equals',
                                                 'value' => $_GET['id'],
                                                 'field' => 5171];
 
-      $search_params = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
+      $search_params = Search::manageParams('PluginGlpiinventoryComputer', $computers_params);
 
       //Add extra parameters for massive action display : only the Delete action should be displayed
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
-      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+      $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
 
       $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
-      PluginFusioninventorySearch::constructDatas($data);
-      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
-      $data['itemtype'] = 'PluginFusioninventoryComputer';
+      PluginGlpiinventorySearch::constructDatas($data);
+      $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
+      $data['itemtype'] = 'PluginGlpiinventoryComputer';
       Search::displayData($data);
    }
 
@@ -208,10 +208,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $result        = true;
       $pfStaticGroup = new self();
 
-      $groups = $pfStaticGroup->find(['plugin_fusioninventory_deploygroups_id' => $source_deploygroups_id]);
+      $groups = $pfStaticGroup->find(['plugin_glpiinventory_deploygroups_id' => $source_deploygroups_id]);
       foreach ($groups as $group) {
          unset($group['id']);
-         $group['plugin_fusioninventory_deploygroups_id']
+         $group['plugin_glpiinventory_deploygroups_id']
             = $target_deploygroups_id;
          if (!$pfStaticGroup->add($group)) {
             $result |= false;
@@ -226,11 +226,11 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     *
     * @since 9.2+2.0
     *
-    * @param object $item it's an instance of PluginFusioninventoryDeployGroup class
+    * @param object $item it's an instance of PluginGlpiinventoryDeployGroup class
     *
     * @return boolean
     */
-   static function csvImportForm(PluginFusioninventoryDeployGroup $item) {
+   static function csvImportForm(PluginGlpiinventoryDeployGroup $item) {
 
       echo "<form action='' method='post' enctype='multipart/form-data'>";
 
@@ -271,7 +271,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $pfDeployGroup_static = new self();
       $computer = new Computer();
       $input = [
-         'plugin_fusioninventory_deploygroups_id' => $post_data['groups_id'],
+         'plugin_glpiinventory_deploygroups_id' => $post_data['groups_id'],
          'itemtype' => 'Computer'
       ];
       if (isset($files_data['importcsvfile']['tmp_name'])) {

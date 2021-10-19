@@ -39,5 +39,5 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
-PluginFusioninventoryDeployFile::getServerFileTree(filter_input(INPUT_POST, "node"));
+PluginGlpiinventoryDeployFile::getServerFileTree(filter_input(INPUT_POST, "node"));
 

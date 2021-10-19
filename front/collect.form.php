@@ -35,14 +35,14 @@ include ("../../../inc/includes.php");
 Html::header(__('Collect management', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "collect");
 
-$pfCollect = new PluginFusioninventoryCollect();
+$pfCollect = new PluginGlpiinventoryCollect();
 
 if (isset($_POST["add"])) {
    $collects_id = $pfCollect->add($_POST);
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryCollect').
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryCollect').
            "?id=".$collects_id);
 } else if (isset($_POST["update"])) {
    $pfCollect->update($_POST);
@@ -52,7 +52,7 @@ if (isset($_POST["add"])) {
    $pfCollect->redirectToList();
 }
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 if (!isset($_GET["id"])) {
    $_GET['id'] = '';

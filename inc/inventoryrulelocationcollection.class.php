@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the location rule collection.
  */
-class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollection {
+class PluginGlpiinventoryInventoryRuleLocationCollection extends RuleCollection {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_rulelocation";
+   static $rightname = "plugin_glpiinventory_rulelocation";
 
    /**
     * Set stop play rules when have the first rule of list match

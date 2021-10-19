@@ -37,7 +37,7 @@ class DeployactionTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all tasks
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
@@ -51,7 +51,7 @@ class DeployactionTest extends TestCase {
     * @test
     */
    public function testGetReturnActionNames() {
-      $action = new PluginFusioninventoryDeployAction();
+      $action = new PluginGlpiinventoryDeployAction();
       $this->assertEquals(5, count($action->getReturnActionNames()));
    }
 
@@ -60,7 +60,7 @@ class DeployactionTest extends TestCase {
     * @test
     */
    public function getGetTypes() {
-      $action = new PluginFusioninventoryDeployAction();
+      $action = new PluginGlpiinventoryDeployAction();
       $this->assertEquals(5, count($action->getTypes()));
    }
 
@@ -69,7 +69,7 @@ class DeployactionTest extends TestCase {
     * @test
     */
    public function testGetLabelForAType() {
-      $action = new PluginFusioninventoryDeployAction();
+      $action = new PluginGlpiinventoryDeployAction();
       $this->assertEquals(__('Command', 'glpiinventory'),
                           $action->getLabelForAType('cmd'));
       $this->assertEquals(__('Move', 'glpiinventory'),
@@ -91,12 +91,12 @@ class DeployactionTest extends TestCase {
    public function testAdd_item() {
       $_SESSION['glpiactiveentities_string'] = 0;
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0];
       $packages_id = $pfDeployPackage->add($input);
 
-      $action = new PluginFusioninventoryDeployAction();
+      $action = new PluginGlpiinventoryDeployAction();
       $params = ['id'                => $packages_id,
                  'actionstype'       => 'cmd',
                  'name'              => 'Command ls',
@@ -163,13 +163,13 @@ class DeployactionTest extends TestCase {
    public function testSave_item() {
       $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json];
       $packages_id = $pfDeployPackage->add($input);
 
-      $action = new PluginFusioninventoryDeployAction();
+      $action = new PluginGlpiinventoryDeployAction();
       $params = ['id'                => $packages_id,
                  'index'             => 0,
                  'actionstype'       => 'cmd',
@@ -192,14 +192,14 @@ class DeployactionTest extends TestCase {
    public function testRemove_item() {
       $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json
                ];
       $packages_id = $pfDeployPackage->add($input);
 
-      $action = new PluginFusioninventoryDeployAction();
+      $action = new PluginGlpiinventoryDeployAction();
       $action->remove_item(['packages_id'    => $packages_id,
                             'action_entries' => [0 => 'on']]);
       $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
@@ -221,13 +221,13 @@ class DeployactionTest extends TestCase {
    public function testMove_item() {
       $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json
                ];
       $packages_id = $pfDeployPackage->add($input);
-      $action      = new PluginFusioninventoryDeployAction();
+      $action      = new PluginGlpiinventoryDeployAction();
 
       $action->move_item(['id'        => $packages_id,
                           'old_index' => 0,
@@ -243,14 +243,14 @@ class DeployactionTest extends TestCase {
     */
    public function testRunCommand() {
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployCommon = new PluginFusioninventoryDeployCommon();
-      $pfTask = new PluginFusioninventoryTask();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+      $pfDeployCommon = new PluginGlpiinventoryDeployCommon();
+      $pfTask = new PluginGlpiinventoryTask();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
       $computer = new Computer();
-      $pfAgent = new PluginFusioninventoryAgent();
-      $action = new PluginFusioninventoryDeployAction();
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $action = new PluginGlpiinventoryDeployAction();
+      $pfEntity = new PluginGlpiinventoryEntity();
 
       $pfEntity->getFromDBByCrit(['entities_id' => 0]);
       $input = [
@@ -259,7 +259,7 @@ class DeployactionTest extends TestCase {
       ];
       $pfEntity->update($input);
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls","name":"echo","logLineLimit":"10"}}],"userinteractions":[]},"associatedFiles":[]}';
       $input = [
          'name'        => 'cmd test',
@@ -310,18 +310,18 @@ class DeployactionTest extends TestCase {
 
       // create takjob
       $input = [
-         'plugin_fusioninventory_tasks_id' => $tasks_id,
+         'plugin_glpiinventory_tasks_id' => $tasks_id,
          'entities_id'                     => 0,
          'name'                            => 'deploy',
          'method'                          => 'deployinstall',
-         'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id.'"}]',
+         'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"'.$packages_id.'"}]',
          'actors'                          => '[{"Computer":"'.$computers_id.'"}]'
       ];
       $taskjobId = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobId);
 
       // prepare task
-      PluginFusioninventoryTask::cronTaskscheduler();
+      PluginGlpiinventoryTask::cronTaskscheduler();
 
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
          $agents_id,

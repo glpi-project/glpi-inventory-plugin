@@ -38,14 +38,14 @@ if (!defined('GLPI_ROOT')) {
  * Manage user interactions templates.
  * @since 9.2
  */
-class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown {
+class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_userinteractiontemplate';
+   static $rightname = 'plugin_glpiinventory_userinteractiontemplate';
 
    const ALERT_WTS                = 'win32'; //Alerts for win32 platform (WTS API)
 

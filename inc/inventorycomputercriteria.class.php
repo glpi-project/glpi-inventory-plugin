@@ -37,6 +37,6 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the the criteria of blacklist.
  */
-class PluginFusioninventoryInventoryComputerCriteria extends CommonDBTM {
+class PluginGlpiinventoryInventoryComputerCriteria extends CommonDBTM {
 
 }

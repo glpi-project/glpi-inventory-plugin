@@ -36,7 +36,7 @@ ob_end_clean();
 
 //Agent communication using REST protocol
 
-$pfCollect = new PluginFusioninventoryCollect();
+$pfCollect = new PluginGlpiinventoryCollect();
 
 $response = $pfCollect->communication(filter_input(INPUT_GET, "action"), filter_input(INPUT_GET, "machineid"), filter_input(INPUT_GET, "uuid"));
 

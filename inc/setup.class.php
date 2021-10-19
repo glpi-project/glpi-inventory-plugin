@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the installation and uninstallation of the plugin.
  */
-class PluginFusioninventorySetup {
+class PluginGlpiinventorySetup {
 
 
    /**
@@ -50,13 +50,13 @@ class PluginFusioninventorySetup {
       global $DB;
 
       CronTask::Unregister('glpiinventory');
-      PluginFusioninventoryProfile::uninstallProfile();
+      PluginGlpiinventoryProfile::uninstallProfile();
 
-      $pfSetup  = new PluginFusioninventorySetup();
+      $pfSetup  = new PluginGlpiinventorySetup();
       $user     = new User();
 
-      if (class_exists('PluginFusioninventoryConfig')) {
-         $fusioninventory_config      = new PluginFusioninventoryConfig();
+      if (class_exists('PluginGlpiinventoryConfig')) {
+         $fusioninventory_config      = new PluginGlpiinventoryConfig();
          $users_id = $fusioninventory_config->getValue('users_id');
          $user->delete(['id'=>$users_id], 1);
       }
@@ -67,7 +67,7 @@ class PluginFusioninventorySetup {
 
       $result = $DB->query("SHOW TABLES;");
       while ($data = $DB->fetchArray($result)) {
-         if ((strstr($data[0], "glpi_plugin_fusioninventory_"))
+         if ((strstr($data[0], "glpi_plugin_glpiinventory_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvinventory_"))
                 OR (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
@@ -81,16 +81,16 @@ class PluginFusioninventorySetup {
 
       $DB->deleteOrDie(
          'glpi_displaypreferences', [
-            'itemtype' => ['LIKE', 'PluginFusioninventory%']
+            'itemtype' => ['LIKE', 'PluginGlpiinventory%']
          ]
       );
 
       // Delete rules
       $Rule = new Rule();
-      $Rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
+      $Rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleImport']);
 
       //Remove informations related to profiles from the session (to clean menu and breadcrumb)
-      PluginFusioninventoryProfile::removeRightsFromSession();
+      PluginGlpiinventoryProfile::removeRightsFromSession();
       return true;
    }
 
@@ -101,7 +101,7 @@ class PluginFusioninventorySetup {
     * @param string $dir name of the directory
     */
    function rrmdir($dir) {
-      $pfSetup = new PluginFusioninventorySetup();
+      $pfSetup = new PluginGlpiinventorySetup();
 
       if (is_dir($dir)) {
          $objects = scandir($dir);
@@ -131,7 +131,7 @@ class PluginFusioninventorySetup {
 
       if ($reset == 1) {
          $grule = new Rule();
-         $a_rules = $grule->find(['sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
+         $a_rules = $grule->find(['sub_type' => 'PluginGlpiinventoryInventoryRuleImport']);
          foreach ($a_rules as $data) {
             $grule->delete($data);
          }
@@ -1176,12 +1176,12 @@ class PluginFusioninventorySetup {
             continue;
          }
 
-         $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+         $rulecollection = new PluginGlpiinventoryInventoryRuleImportCollection();
          $input = [];
          $input['is_active'] = $rule['is_active'];
          $input['name']      = $rule['name'];
          $input['match']     = $rule['match'];
-         $input['sub_type']  = 'PluginFusioninventoryInventoryRuleImport';
+         $input['sub_type']  = 'PluginGlpiinventoryInventoryRuleImport';
          $input['ranking']   = $ranking;
          $rule_id = $rulecollection->add($input);
 

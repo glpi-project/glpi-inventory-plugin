@@ -38,7 +38,7 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowndefinitiontype.php")
 
 Session::checkCentralAccess();
 
-$pfTaskjob = new PluginFusioninventoryTaskjob;
+$pfTaskjob = new PluginGlpiinventoryTaskjob;
 $pfTaskjob->dropdownDefinitionType(
         "DefinitionType",
         filter_input(INPUT_POST, "method"),

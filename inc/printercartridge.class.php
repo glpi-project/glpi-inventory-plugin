@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the printer cartridge filled by inventory like type, state of
  * ink in cartridge, number pages...
  */
-class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
+class PluginGlpiinventoryPrinterCartridge extends CommonDBTM {
 
 
    /**
@@ -84,11 +84,11 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
       echo "</tr>";
 
       asort($mapping_name);
-      $mapping = new PluginFusioninventoryMapping();
+      $mapping = new PluginGlpiinventoryMapping();
       foreach ($a_cartridges as $a_cartridge) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         $mapping->getFromDB($a_cartridge['plugin_fusioninventory_mappings_id']);
+         $mapping->getFromDB($a_cartridge['plugin_glpiinventory_mappings_id']);
          echo $mapping->getTranslation($mapping->fields);
          echo " : ";
          echo "</td>";
@@ -118,7 +118,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
          } else if ($mapping->fields['name'] == 'paperrollcentimeters') {
             echo $a_cartridge['state']." centimeters";
          } else {
-            PluginFusioninventoryDisplay::bar($a_cartridge['state']);
+            PluginGlpiinventoryDisplay::bar($a_cartridge['state']);
          }
          echo "</td>";
          echo "</tr>";

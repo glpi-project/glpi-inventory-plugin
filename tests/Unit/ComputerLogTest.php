@@ -56,7 +56,7 @@ class ComputerLogTest extends TestCase {
     */
    public function getInventory() {
 
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
 
       $date = date('Y-m-d H:i:s');
 
@@ -266,7 +266,7 @@ class ComputerLogTest extends TestCase {
 
       $computer = new Computer();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
@@ -309,7 +309,7 @@ class ComputerLogTest extends TestCase {
     */
    public function noLogsWhenUpdateComputer($id, $inventory) {
 
-      $pfiComputerLib = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib = new PluginGlpiinventoryInventoryComputerLib();
 
       $pfiComputerLib->updateComputer($inventory, $id, true);
 
@@ -328,7 +328,7 @@ class ComputerLogTest extends TestCase {
    public function logsWhenUpdateComputerModifications($id, $inventory) {
       global $DB;
 
-      $pfiComputerLib = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib = new PluginGlpiinventoryInventoryComputerLib();
 
       $softwareVersion = new SoftwareVersion();
       $software = new Software();

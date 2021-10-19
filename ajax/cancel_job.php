@@ -37,9 +37,9 @@ header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
 if (isset($_REQUEST['jobstate_id'])) {
-   $jobstate = new PluginFusioninventoryTaskjobstate();
+   $jobstate = new PluginGlpiinventoryTaskjobstate();
    $jobstate->getFromDB($_REQUEST['jobstate_id']);
 
-   $job = new PluginFusioninventoryTaskjob();
-   $job->delete(['id' => $jobstate->fields['plugin_fusioninventory_taskjobs_id']], true);
+   $job = new PluginGlpiinventoryTaskjob();
+   $job->delete(['id' => $jobstate->fields['plugin_glpiinventory_taskjobs_id']], true);
 }

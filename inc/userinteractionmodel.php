@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Template for deploy user interactions
  */
-class PluginFusioninventoryUserinteractionModel extends CommonDBTM {
+class PluginGlpiinventoryUserinteractionModel extends CommonDBTM {
 
 
    /**

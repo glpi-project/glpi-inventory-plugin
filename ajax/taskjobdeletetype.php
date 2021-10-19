@@ -38,7 +38,7 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjobdeletetype.php")) {
 
 Session::checkCentralAccess();
 
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->deleteitemtodefatc(
         filter_input(INPUT_POST, "type"),
         filter_input(INPUT_POST, filter_input(INPUT_POST, "type").'item'),

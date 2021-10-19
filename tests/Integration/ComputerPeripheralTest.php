@@ -154,7 +154,7 @@ class ComputerPeripheralTest extends TestCase {
    public function PeripheralUniqueSerialimport() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $computer     = new Computer();
@@ -162,13 +162,13 @@ class ComputerPeripheralTest extends TestCase {
 
       $pxml = @simplexml_load_string($this->a_computer1_XML, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
+      $arrayinventory = PluginGlpiinventoryFormatconvert::XMLtoArray($pxml);
 
-      $agent = new PluginFusioninventoryAgent();
+      $agent = new PluginGlpiinventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
-      $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
+      $pfInventoryComputerInventory = new PluginGlpiinventoryInventoryComputerInventory();
       $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);

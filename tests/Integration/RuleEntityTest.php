@@ -48,7 +48,7 @@ class RuleEntityTest extends TestCase {
 
       // Delete all entityrules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => 'PluginFusioninventoryInventoryRuleEntity']);
+      $items = $rule->find(['sub_type' => 'PluginGlpiinventoryInventoryRuleEntity']);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -64,7 +64,7 @@ class RuleEntityTest extends TestCase {
    public static function tearDownAfterClass(): void {
       // Delete all entity rules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleEntity"]);
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleEntity"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -107,7 +107,7 @@ class RuleEntityTest extends TestCase {
          'is_active' => 1,
          'name'      => 'entity rule 1',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleEntity',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleEntity',
          'ranking'   => 1
       ];
       $rule1_id = $rule->add($input);
@@ -118,7 +118,7 @@ class RuleEntityTest extends TestCase {
          'rules_id'  => $rule1_id,
          'criteria'  => "name",
          'pattern'   => "/^([A-Za-z0-9]*) - ([A-Za-z0-9]*) - (.*)$/",
-         'condition' => PluginFusioninventoryInventoryRuleEntity::REGEX_MATCH
+         'condition' => PluginGlpiinventoryInventoryRuleEntity::REGEX_MATCH
       ];
       $rulecriteria->add($input);
 
@@ -138,7 +138,7 @@ class RuleEntityTest extends TestCase {
       'is_active' => 1,
       'name'      => 'entity rule 2',
       'match'     => 'AND',
-      'sub_type'  => 'PluginFusioninventoryInventoryRuleEntity',
+      'sub_type'  => 'PluginGlpiinventoryInventoryRuleEntity',
       'ranking'   => 2
       ];
       $rule2_id = $rule->add($input);
@@ -149,7 +149,7 @@ class RuleEntityTest extends TestCase {
          'rules_id'  => $rule2_id,
          'criteria'  => "name",
          'pattern'   => "/^([A-Za-z0-9]*) - (.*)$/",
-         'condition' => PluginFusioninventoryInventoryRuleEntity::REGEX_MATCH
+         'condition' => PluginGlpiinventoryInventoryRuleEntity::REGEX_MATCH
       ];
       $rulecriteria->add($input);
 
@@ -167,7 +167,7 @@ class RuleEntityTest extends TestCase {
       'name' => 'computer01 - entC'
       ];
 
-      $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
+      $ruleEntity = new PluginGlpiinventoryInventoryRuleEntityCollection();
       $ruleEntity->getCollectionPart();
       $ent = $ruleEntity->processAllRules($input, []);
 
@@ -182,7 +182,7 @@ class RuleEntityTest extends TestCase {
       'name' => 'computer01 - blabla - entB'
       ];
 
-      $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
+      $ruleEntity = new PluginGlpiinventoryInventoryRuleEntityCollection();
       $ruleEntity->getCollectionPart();
       $ent = $ruleEntity->processAllRules($input, []);
 

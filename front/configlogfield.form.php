@@ -35,7 +35,7 @@ include ("../../../inc/includes.php");
 Session::checkRight('config', UPDATE);
 
 Html::header(__('Features', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-        "pluginfusioninventorymenu", "configlogfield");
+        "pluginglpiinventorymenu", "configlogfield");
 
 if (isset($_POST['update'])) {
 
@@ -50,7 +50,7 @@ if (isset($_POST['update'])) {
          break;
 
       case 'history' :
-         $pfConfigLogField = new PluginFusioninventoryConfigLogField();
+         $pfConfigLogField = new PluginGlpiinventoryConfigLogField();
          foreach ($_POST as $key=>$val) {
             $split = explode("-", $key);
             if (isset($split[1]) AND is_numeric($split[1])) {
@@ -69,7 +69,7 @@ if (isset($_POST['update'])) {
    }
    Html::back();
 } else if ((isset($_POST['Clean_history']))) {
-   $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
+   $pfNetworkPortLog = new PluginGlpiinventoryNetworkPortLog();
    $pfNetworkPortLog->cronCleannetworkportlogs();
    Html::back();
 }

@@ -39,7 +39,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
-Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
+Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
 $FK_port = filter_input(INPUT_GET, "networkports_id");
 
@@ -83,7 +83,7 @@ Html::closeForm();
 
 $networkports_id = filter_input(INPUT_GET, "networkports_id");
 if ($networkports_id != '') {
-   echo PluginFusioninventoryNetworkPortLog::showHistory($networkports_id);
+   echo PluginGlpiinventoryNetworkPortLog::showHistory($networkports_id);
 }
 
 Html::closeForm();

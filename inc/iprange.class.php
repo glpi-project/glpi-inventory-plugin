@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the IP ranges for network discovery and network inventory.
  */
-class PluginFusioninventoryIPRange extends CommonDBTM {
+class PluginGlpiinventoryIPRange extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -51,7 +51,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_iprange';
+   static $rightname = 'plugin_glpiinventory_iprange';
 
 
    /**
@@ -144,7 +144,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $tab[] = [
          'id'            => '5',
-         'table'         => 'glpi_plugin_fusioninventory_configsecurities',
+         'table'         => 'glpi_plugin_glpiinventory_configsecurities',
          'field'         => 'name',
          'datatype'      => 'dropdown',
          'right'         => 'all',
@@ -153,7 +153,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          'massiveaction' => false,
          'joinparams'    => [
             'beforejoin' => [
-               'table'      => "glpi_plugin_fusioninventory_ipranges_configsecurities",
+               'table'      => "glpi_plugin_glpiinventory_ipranges_configsecurities",
                'joinparams' => [
                   'jointype' => 'child',
                ],
@@ -191,7 +191,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       if ($tabnum == 'task') {
-         $pfTask = new PluginFusioninventoryTask();
+         $pfTask = new PluginGlpiinventoryTask();
          $pfTask->showJobLogs();
          return true;
       }
@@ -355,9 +355,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * After purge item, delete SNMP credentials linked to this ip range
     */
    function post_purgeItem() {
-      $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
-         ['plugin_fusioninventory_ipranges_id' => $this->fields['id']]);
+      $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_ConfigSecurity();
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_ipranges_configsecurities',
+         ['plugin_glpiinventory_ipranges_id' => $this->fields['id']]);
       foreach ($a_data as $data) {
          $pfIPRange_ConfigSecurity->delete($data);
       }
@@ -374,8 +374,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    function getSpecificMassiveActions($checkitem = null) {
 
       $actions = [];
-      if (Session::haveRight("plugin_fusioninventory_task", UPDATE)) {
-         $actions['PluginFusioninventoryTask'.MassiveAction::CLASS_ACTION_SEPARATOR.'addtojob_target'] = __('Target a task', 'glpiinventory');
+      if (Session::haveRight("plugin_glpiinventory_task", UPDATE)) {
+         $actions['PluginGlpiinventoryTask'.MassiveAction::CLASS_ACTION_SEPARATOR.'addtojob_target'] = __('Target a task', 'glpiinventory');
       }
       return $actions;
    }

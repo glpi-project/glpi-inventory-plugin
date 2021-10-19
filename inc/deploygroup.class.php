@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the deploy groups.
  */
-class PluginFusioninventoryDeployGroup extends CommonDBTM {
+class PluginGlpiinventoryDeployGroup extends CommonDBTM {
 
    /**
     * Define constant name of static group
@@ -58,7 +58,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_group";
+   static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Define the array of itemtype allowed in static groups
@@ -107,7 +107,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $ong = [];
       $this->addDefaultFormTab($ong);
 
-      $count = self::getMatchingItemsCount("PluginFusionInventoryTaskjob");
+      $count = self::getMatchingItemsCount("PluginGlpiinventoryTaskjob");
       $ong[$this->getType().'$task'] = self::createTabEntry(_n('Associated task', 'Associated tasks', $count), $count);
 
       $this->addStandardTab('Log', $ong, $options);
@@ -118,10 +118,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    function getMatchingItemsCount($itemtype) {
       $count = 0;
-      if ($itemtype == 'PluginFusionInventoryTaskjob'
+      if ($itemtype == 'PluginGlpiinventoryTaskjob'
             && is_numeric($_GET['id'])) {
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginFusioninventoryDeployGroup":"'.$_GET['id'].'"%']]);
+         $pfTaskjob = new PluginGlpiinventoryTaskjob();
+         $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"'.$_GET['id'].'"%']]);
          $count = count($data);
       }
       return $count;
@@ -154,18 +154,18 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-         $modules_methods = PluginFusioninventoryStaticmisc::getModulesMethods();
-         $link = Toolbox::getItemTypeFormURL("PluginFusioninventoryTask");
+         $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
+         $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryTask");
 
          $query = "SELECT
-            glpi_plugin_fusioninventory_tasks.id as id,
-            glpi_plugin_fusioninventory_tasks.name as tname,
-            glpi_plugin_fusioninventory_tasks.is_active,
-            glpi_plugin_fusioninventory_taskjobs.method
-            FROM glpi_plugin_fusioninventory_taskjobs
-            LEFT JOIN glpi_plugin_fusioninventory_tasks on plugin_fusioninventory_tasks_id=glpi_plugin_fusioninventory_tasks.id
-            WHERE `actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'
-            ORDER BY glpi_plugin_fusioninventory_tasks.name";
+            glpi_plugin_glpiinventory_tasks.id as id,
+            glpi_plugin_glpiinventory_tasks.name as tname,
+            glpi_plugin_glpiinventory_tasks.is_active,
+            glpi_plugin_glpiinventory_taskjobs.method
+            FROM glpi_plugin_glpiinventory_taskjobs
+            LEFT JOIN glpi_plugin_glpiinventory_tasks on plugin_glpiinventory_tasks_id=glpi_plugin_glpiinventory_tasks.id
+            WHERE `actors` LIKE '%\"PluginGlpiinventoryDeployGroup\":\"".$_GET['id']."\"%'
+            ORDER BY glpi_plugin_glpiinventory_tasks.name";
          $res = $DB->query($query);
 
          while ($row = $DB->fetchAssoc($res)) {
@@ -211,8 +211,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
          case 'add_to_static_group':
-            Dropdown::show('PluginFusioninventoryDeployGroup',
-                            ['condition' => ['type' => PluginFusioninventoryDeployGroup::STATIC_GROUP]]);
+            Dropdown::show('PluginGlpiinventoryDeployGroup',
+                            ['condition' => ['type' => PluginGlpiinventoryDeployGroup::STATIC_GROUP]]);
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
          case 'duplicate':
@@ -236,16 +236,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
          case 'add_to_static_group' :
             if ($item->getType() == 'Computer') {
-               $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+               $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
                foreach ($ids as $id) {
                   if (!countElementsInTable($group_item->getTable(),
                      [
-                        'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+                        'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
                         'itemtype'                               => 'Computer',
                         'items_id'                               => $id,
                      ])) {
                      $values = [
-                          'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+                          'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
                           'itemtype' => 'Computer',
                           'items_id' => $id];
                      $group_item->add($values);
@@ -287,10 +287,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          if ($new_deploygroups_id) {
             if ($this->fields['type'] == self::STATIC_GROUP) {
                $result
-                  = PluginFusioninventoryDeployGroup_Staticdata::duplicate($deploygroups_id, $new_deploygroups_id);
+                  = PluginGlpiinventoryDeployGroup_Staticdata::duplicate($deploygroups_id, $new_deploygroups_id);
             } else {
                $result
-                  = PluginFusioninventoryDeployGroup_Dynamicdata::duplicate($deploygroups_id, $new_deploygroups_id);
+                  = PluginGlpiinventoryDeployGroup_Dynamicdata::duplicate($deploygroups_id, $new_deploygroups_id);
             }
          } else {
             $result = false;
@@ -486,13 +486,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    * @return string the target
    */
    static function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false) {
-      $target = PluginFusioninventoryDeployGroup::getFormURLWithID($deploygroup_id);
+      $target = PluginGlpiinventoryDeployGroup::getFormURLWithID($deploygroup_id);
       if ($is_dynamic) {
-         $target .= "&_glpi_tab=PluginFusioninventoryDeployGroup_Dynamicdata$1";
+         $target .= "&_glpi_tab=PluginGlpiinventoryDeployGroup_Dynamicdata$1";
       } else {
-         $target.= "&_glpi_tab=PluginFusioninventoryDeployGroup_Staticdata$1";
+         $target.= "&_glpi_tab=PluginGlpiinventoryDeployGroup_Staticdata$1";
       }
-      $target.= "&plugin_fusioninventory_deploygroups_id=".$deploygroup_id;
+      $target.= "&plugin_glpiinventory_deploygroups_id=".$deploygroup_id;
       return $target;
    }
 
@@ -500,19 +500,19 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    /**
     * Show criteria to search computers
     *
-    * @param object $item PluginFusioninventoryDeployGroup instance
+    * @param object $item PluginGlpiinventoryDeployGroup instance
     * @param array $p
     */
-   static function showCriteria(PluginFusioninventoryDeployGroup $item, $p) {
+   static function showCriteria(PluginGlpiinventoryDeployGroup $item, $p) {
 
       $is_dynamic = $item->isDynamicGroup();
-      $itemtype   = "PluginFusioninventoryComputer";
+      $itemtype   = "PluginGlpiinventoryComputer";
       $can_update = $item->canEdit($item->getID());
 
       $p['target'] = self::getSearchEngineTargetURL($item->getID(), $is_dynamic);
       if ($can_update) {
          $p['addhidden'] = [
-             'plugin_fusioninventory_deploygroups_id' => $item->getID(),
+             'plugin_glpiinventory_deploygroups_id' => $item->getID(),
              'id'                                     => $item->getID(),
              'start'                                  => 0
          ];
@@ -542,14 +542,14 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $results = [];
       if ($group->isStaticGroup()) {
-         $staticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
+         $staticgroup = new PluginGlpiinventoryDeployGroup_Staticdata();
          foreach ($staticgroup->find(
-               ['plugin_fusioninventory_deploygroups_id' => $groups_id,
+               ['plugin_glpiinventory_deploygroups_id' => $groups_id,
                 'itemtype'                               => 'Computer']) as $tmpgroup) {
             $results[$tmpgroup['items_id']] = $tmpgroup['items_id'];
          }
       } else {
-         $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group,
+         $results = PluginGlpiinventoryDeployGroup_Dynamicdata::getTargetsByGroup($group,
                                                                                     $use_cache);
       }
       return $results;
@@ -560,23 +560,23 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * Get search parameters as an array
     *
     * @global object $DB
-    * @param object $group PluginFusioninventoryDeployGroup instance
+    * @param object $group PluginGlpiinventoryDeployGroup instance
     * @param boolean $check_post_values
     * @param boolean $getAll
     * @return array
     */
-   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false, $getAll = false) {
+   static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false) {
       global $DB;
 
       $computers_params = [];
 
       //Check criteria from DB
       if (!$check_post_values) {
-         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-            unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+         if ($group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
+            unset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']);
             $query = "SELECT `fields_array`
-                     FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
-                     WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
+                     FROM `glpi_plugin_glpiinventory_deploygroups_dynamicdatas`
+                     WHERE `plugin_glpiinventory_deploygroups_id`='".$group->getID()."'";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {
                $fields_array     = $DB->result($result, 0, 'fields_array');
@@ -584,19 +584,19 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP
-                 && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
-                 && !isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
-            $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
+         if ($group->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
+                 && isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'])
+                 && !isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']['show_results'])) {
+            $computers_params = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'];
          } else {
-             unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+             unset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']);
              $computers_params = $_GET;
          }
       }
       if ($getAll) {
          $computers_params['export_all'] = true;
       }
-      return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
+      return Search::manageParams('PluginGlpiinventoryComputer', $computers_params);
    }
 
 
@@ -604,10 +604,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * Clean when purge a deploy group
     */
    function cleanDBOnPurge() {
-      $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
-      $static_group  = new PluginFusioninventoryDeployGroup_Staticdata();
+      $dynamic_group = new PluginGlpiinventoryDeployGroup_Dynamicdata();
+      $static_group  = new PluginGlpiinventoryDeployGroup_Staticdata();
 
-      $params = ['plugin_fusioninventory_deploygroups_id' => $this->getID()];
+      $params = ['plugin_glpiinventory_deploygroups_id' => $this->getID()];
       $dynamic_group->deleteByCriteria($params);
       $static_group->deleteByCriteria($params);
    }
@@ -632,17 +632,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $link = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup");
+      $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup");
 
       $iterator = $DB->request([
-         'FROM'   => PluginFusioninventoryDeployGroup_Staticdata::getTable(),
+         'FROM'   => PluginGlpiinventoryDeployGroup_Staticdata::getTable(),
          'WHERE'  => [
             'items_id' => $computers_id,
             'itemtype' => 'Computer',
          ],
       ]);
       foreach ($iterator as $data) {
-         $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
+         $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";
          echo "<a href='".$link."?id=".$this->fields['id']."'>".$this->fields['name']."</a>";
@@ -654,13 +654,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
 
       $iterator = $DB->request([
-         'FROM'   => PluginFusioninventoryDeployGroup_Dynamicdata::getTable(),
+         'FROM'   => PluginGlpiinventoryDeployGroup_Dynamicdata::getTable(),
          'WHERE'  => [
             'computers_id_cache' => ["LIKE", '%"'.$computers_id.'"%'],
          ],
       ]);
       foreach ($iterator as $data) {
-         $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
+         $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";
          echo "<a href='".$link."?id=".$this->fields['id']."'>".$this->fields['name']."</a>";

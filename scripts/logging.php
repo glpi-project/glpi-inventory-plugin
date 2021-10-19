@@ -64,7 +64,7 @@ class Logging {
       foreach ($messages as $message) {
          if (is_array($message) || is_object($message)) {
             //$msg[] = print_r($message, true);
-            $msg[] = PluginFusioninventoryToolbox::formatJson(json_encode($message));
+            $msg[] = PluginGlpiinventoryToolbox::formatJson(json_encode($message));
          } else if (is_null($message)) {
             $msg[] = ' NULL';
          } else if (is_bool($message)) {

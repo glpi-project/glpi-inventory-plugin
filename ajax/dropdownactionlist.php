@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->dropdownAction(
         "ActionList",
         filter_input(INPUT_POST, "ActionType"),

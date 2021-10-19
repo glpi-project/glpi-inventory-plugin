@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the history of network port connections.
  */
-class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
+class PluginGlpiinventoryNetworkPortConnectionLog extends CommonDBTM {
 
 
    /**
@@ -86,18 +86,18 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "</tr>";
 
       $condition = '';
-      if (!isset($input['plugin_fusioninventory_agentprocesses_id'])) {
+      if (!isset($input['plugin_glpiinventory_agentprocesses_id'])) {
          $condition = '';
       } else {
-         $condition = "WHERE `plugin_fusioninventory_agentprocesses_id`='".
-                           $input['plugin_fusioninventory_agentprocesses_id']."'";
+         $condition = "WHERE `plugin_glpiinventory_agentprocesses_id`='".
+                           $input['plugin_glpiinventory_agentprocesses_id']."'";
          if (isset($input['created'])) {
             $condition .= " AND `creation`='".$input['created']."' ";
          }
       }
       $query = "SELECT * FROM `".$this->getTable()."`
          ".$condition."
-         ORDER BY `date`DESC, `plugin_fusioninventory_agentprocesses_id` DESC";
+         ORDER BY `date`DESC, `plugin_glpiinventory_agentprocesses_id` DESC";
       if (!isset($input['process_number'])) {
          $query .= " LIMIT 0, 500";
       }
@@ -109,8 +109,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
             echo "<td>";
             echo "<a href='".$fi_path."/front/agentprocess.form.php?h_process_number=".
-                    $data['plugin_fusioninventory_agentprocesses_id']."'>".
-            $data['plugin_fusioninventory_agentprocesses_id']."</a>";
+                    $data['plugin_glpiinventory_agentprocesses_id']."'>".
+            $data['plugin_glpiinventory_agentprocesses_id']."</a>";
             echo "</td>";
 
             echo "<td>";

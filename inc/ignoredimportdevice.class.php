@@ -39,14 +39,14 @@ if (!defined('GLPI_ROOT')) {
  * Mean when device go in import rules, rules say "ignore import this device
  * because I don't want it"
  */
-class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
+class PluginGlpiinventoryIgnoredimportdevice extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_ignoredimportdevice';
+   static $rightname = 'plugin_glpiinventory_ignoredimportdevice';
 
 
    /**
@@ -88,7 +88,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          'field'         => 'id',
          'name'          => __('Rule name', 'glpiinventory'),
          'datatype'      => 'itemlink',
-         'itemlink_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'itemlink_type' => 'PluginGlpiinventoryInventoryRuleImport',
          'massiveaction' => false,
       ];
 
@@ -166,12 +166,12 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       $tab[] = [
          'id'            => '11',
-         'table'         => 'glpi_plugin_fusioninventory_agents',
+         'table'         => 'glpi_plugin_glpiinventory_agents',
          'field'         => 'name',
          'name'          => __('Agent', 'glpiinventory'),
          'datatype'      => 'itemlink',
          'massiveaction' => false,
-         'itemlink_type' => 'PluginFusioninventoryAgent',
+         'itemlink_type' => 'PluginGlpiinventoryAgent',
       ];
 
       return $tab;

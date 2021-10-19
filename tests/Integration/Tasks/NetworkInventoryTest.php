@@ -44,21 +44,21 @@ class NetworkInventoryTest extends TestCase {
       }
 
       // Delete all agents
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $items = $pfAgent->find();
       foreach ($items as $item) {
          $pfAgent->delete(['id' => $item['id']], true);
       }
 
       // Delete all ipranges
-      $pfIPRange = new PluginFusioninventoryIPRange();
+      $pfIPRange = new PluginGlpiinventoryIPRange();
       $items = $pfIPRange->find();
       foreach ($items as $item) {
          $pfIPRange->delete(['id' => $item['id']], true);
       }
 
       // Delete all tasks
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
@@ -99,17 +99,17 @@ class NetworkInventoryTest extends TestCase {
 
       $entity          = new Entity();
       $computer        = new Computer();
-      $pfAgent         = new PluginFusioninventoryAgent();
-      $pfTask          = new PluginFusioninventoryTask();
-      $pfTaskjob       = new PluginFusioninventoryTaskjob;
-      $pfIPRange       = new PluginFusioninventoryIPRange();
+      $pfAgent         = new PluginGlpiinventoryAgent();
+      $pfTask          = new PluginGlpiinventoryTask();
+      $pfTaskjob       = new PluginGlpiinventoryTaskjob;
+      $pfIPRange       = new PluginGlpiinventoryIPRange();
       $networkEquipment= new NetworkEquipment();
       $networkPort     = new NetworkPort();
       $networkName     = new NetworkName();
-      $pfPrinter       = new PluginFusioninventoryPrinter();
+      $pfPrinter       = new PluginGlpiinventoryPrinter();
       $iPAddress       = new IPAddress();
       $printer         = new Printer();
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
 
       // Create entities
       $entity1Id = $entity->add([
@@ -175,7 +175,7 @@ class NetworkInventoryTest extends TestCase {
       $networkPort->updateDependencies(true);
       $input = [
           'networkequipments_id'                       => $netequipId,
-          'plugin_fusioninventory_configsecurities_id' => 2
+          'plugin_glpiinventory_configsecurities_id' => 2
       ];
       $pfNetEquipId = $pfNetworkEquipment->add($input);
       $this->assertNotFalse($pfNetEquipId);
@@ -202,7 +202,7 @@ class NetworkInventoryTest extends TestCase {
       $networkPort->updateDependencies(true);
       $input = [
           'networkequipments_id'                       => $netequipId,
-          'plugin_fusioninventory_configsecurities_id' => 2
+          'plugin_glpiinventory_configsecurities_id' => 2
       ];
       $pfNetEquipId = $pfNetworkEquipment->add($input);
       $this->assertNotFalse($pfNetEquipId);
@@ -229,7 +229,7 @@ class NetworkInventoryTest extends TestCase {
       $networkPort->updateDependencies(true);
       $input = [
           'networkequipments_id'                       => $netequipId,
-          'plugin_fusioninventory_configsecurities_id' => 2
+          'plugin_glpiinventory_configsecurities_id' => 2
       ];
       $pfNetEquipId = $pfNetworkEquipment->add($input);
       $this->assertNotFalse($pfNetEquipId);
@@ -256,7 +256,7 @@ class NetworkInventoryTest extends TestCase {
       $networkPort->updateDependencies(true);
       $input = [
           'networkequipments_id'                       => 4,
-          'plugin_fusioninventory_configsecurities_id' => 2
+          'plugin_glpiinventory_configsecurities_id' => 2
       ];
       $pfNetEquipId = $pfNetworkEquipment->add($input);
       $this->assertNotFalse($pfNetEquipId);
@@ -295,7 +295,7 @@ class NetworkInventoryTest extends TestCase {
 
       $input = [
           'printers_id'                                => $printers_id,
-          'plugin_fusioninventory_configsecurities_id' => 2
+          'plugin_glpiinventory_configsecurities_id' => 2
       ];
       $pfPrinterId = $pfPrinter->add($input);
       $this->assertNotFalse($pfPrinterId);
@@ -311,7 +311,7 @@ class NetworkInventoryTest extends TestCase {
       $this->assertNotFalse($ipranges_id);
 
       // Allow all agents to do network discovery
-      $module = new PluginFusioninventoryAgentmodule();
+      $module = new PluginGlpiinventoryAgentmodule();
       $module->getFromDBByCrit(['modulename' => 'NETWORKINVENTORY']);
       $module->update([
          'id'        => $module->fields['id'],
@@ -329,17 +329,17 @@ class NetworkInventoryTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'inventory',
           'method'                          => 'networkinventory',
-          'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]',
-          'actors'                          => '[{"PluginFusioninventoryAgent":"'.$agent1Id.'"}]'
+          'targets'                         => '[{"PluginGlpiinventoryIPRange":"'.$ipranges_id.'"}]',
+          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$agent1Id.'"}]'
       ];
       $taskjobId = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobId);
 
-      PluginFusioninventoryTask::cronTaskscheduler();
+      PluginGlpiinventoryTask::cronTaskscheduler();
 
    }
 
@@ -349,8 +349,8 @@ class NetworkInventoryTest extends TestCase {
     */
    public function prepareTask() {
 
-      $pfTask  = new PluginFusioninventoryTask();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTask  = new PluginGlpiinventoryTask();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $pfTask->getFromDBByCrit(['name' => 'network inventory']);
       $pfAgent->getFromDBByCrit(['name' => 'computer1']);
@@ -371,8 +371,8 @@ class NetworkInventoryTest extends TestCase {
     */
    public function getDevicesToInventory() {
 
-      $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
-      $jobstate           = new PluginFusioninventoryTaskjobstate();
+      $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
+      $jobstate           = new PluginGlpiinventoryTaskjobstate();
       $jobstate->getFromDBByCrit(['itemtype' => 'NetworkEquipment']);
       $data = $pfNetworkinventory->run($jobstate);
 
@@ -390,11 +390,11 @@ class NetworkInventoryTest extends TestCase {
    public function PrinterToInventoryWithIp() {
 
       $printer       = new Printer();
-      $pfTask        = new PluginFusioninventoryTask();
-      $pfTaskjob     = new PluginFusioninventoryTaskjob();
-      $pfAgent       = new PluginFusioninventoryAgent();
-      $communication = new PluginFusioninventoryCommunication();
-      $jobstate      = new PluginFusioninventoryTaskjobstate();
+      $pfTask        = new PluginGlpiinventoryTask();
+      $pfTaskjob     = new PluginGlpiinventoryTaskjob();
+      $pfAgent       = new PluginGlpiinventoryAgent();
+      $communication = new PluginGlpiinventoryCommunication();
+      $jobstate      = new PluginGlpiinventoryTaskjobstate();
 
       $printer->getFromDBByCrit(['name' => 'printer 001']);
       $pfAgent->getFromDBByCrit(['name' => 'computer1']);
@@ -411,17 +411,17 @@ class NetworkInventoryTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'printer inventory',
           'method'                          => 'networkinventory',
           'targets'                         => '[{"Printer":"'.$printer->fields['id'].'"}]',
-          'actors'                          => '[{"PluginFusioninventoryAgent":"'.$pfAgent->fields['id'].'"}]'
+          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$pfAgent->fields['id'].'"}]'
       ];
       $taskjobId = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobId);
 
-      PluginFusioninventoryTask::cronTaskscheduler();
+      PluginGlpiinventoryTask::cronTaskscheduler();
 
       // Task is prepared
       // Agent will get data
@@ -480,14 +480,14 @@ class NetworkInventoryTest extends TestCase {
    public function PrinterToInventoryWithoutIp() {
 
       $printer       = new Printer();
-      $pfTask        = new PluginFusioninventoryTask();
-      $pfTaskjob     = new PluginFusioninventoryTaskjob();
-      $pfAgent       = new PluginFusioninventoryAgent();
-      $communication = new PluginFusioninventoryCommunication();
+      $pfTask        = new PluginGlpiinventoryTask();
+      $pfTaskjob     = new PluginGlpiinventoryTaskjob();
+      $pfAgent       = new PluginGlpiinventoryAgent();
+      $communication = new PluginGlpiinventoryCommunication();
       $iPAddress     = new IPAddress();
 
       // Delete all tasks
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
@@ -512,16 +512,16 @@ class NetworkInventoryTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'inventory',
           'method'                          => 'networkinventory',
           'targets'                         => '[{"Printer":"'.$printer->fields['id'].'"}]',
-          'actors'                          => '[{"PluginFusioninventoryAgent":"'.$pfAgent->fields['id'].'"}]'
+          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$pfAgent->fields['id'].'"}]'
       ];
       $pfTaskjob->add($input);
 
-      PluginFusioninventoryTask::cronTaskscheduler();
+      PluginGlpiinventoryTask::cronTaskscheduler();
 
       // Task is prepared
       // Agent will get data

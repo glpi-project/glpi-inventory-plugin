@@ -38,8 +38,8 @@ Html::header_nocache();
 
 if (isset($_REQUEST['params']) && is_array($_REQUEST['params'])) {
    foreach ($_REQUEST['params'] as $params) {
-      PluginFusioninventoryTaskjob::restartJob($params);
+      PluginGlpiinventoryTaskjob::restartJob($params);
    }
 } else {
-   PluginFusioninventoryTaskjob::restartJob($_REQUEST);
+   PluginGlpiinventoryTaskjob::restartJob($_REQUEST);
 }

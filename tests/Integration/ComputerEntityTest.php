@@ -55,7 +55,7 @@ class ComputerEntityTest extends TestCase {
 
       // Delete all entity rules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleEntity"]);
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleEntity"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -64,7 +64,7 @@ class ComputerEntityTest extends TestCase {
 
    public static function tearDownAfterClass(): void {
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
@@ -73,7 +73,7 @@ class ComputerEntityTest extends TestCase {
     * @test
     */
    public function testFusionEntityEmpty() {
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
       $items = $pfEntity->find(['entities_id' => ['>', 0]]);
       $this->assertEquals(0, count($items));
    }
@@ -103,9 +103,9 @@ class ComputerEntityTest extends TestCase {
       ]);
       $this->assertNotFalse($entity2Id);
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
       $computer = new Computer();
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
 
       $pfEntity->getFromDBByCrit(['entities_id' => 0]);
       if (isset($pfEntity->fields['id'])) {
@@ -135,7 +135,7 @@ class ComputerEntityTest extends TestCase {
          $ruleAction = new RuleAction();
 
          $input = [];
-         $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
+         $input['sub_type']   = 'PluginGlpiinventoryInventoryRuleEntity';
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
@@ -156,10 +156,10 @@ class ComputerEntityTest extends TestCase {
          $ruleAction->add($input);
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents_id = $pfAgent->add(['name'      => 'pc-2013-02-13',
                                     'device_id' => 'pc-2013-02-13']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $a_agents_id;
 
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
@@ -194,7 +194,7 @@ class ComputerEntityTest extends TestCase {
 
       $transfer       = new Transfer();
       $computer       = new Computer();
-      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv = new PluginGlpiinventoryInventoryComputerInventory();
 
       // Manual transfer computer to entity 2
 
@@ -240,8 +240,8 @@ class ComputerEntityTest extends TestCase {
 
       $transfer       = new Transfer();
       $computer       = new Computer();
-      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
-      $pfEntity       = new PluginFusioninventoryEntity();
+      $pfiComputerInv = new PluginGlpiinventoryInventoryComputerInventory();
+      $pfEntity       = new PluginGlpiinventoryEntity();
 
       // Manual transfer computer to entity 2
 
@@ -293,20 +293,20 @@ class ComputerEntityTest extends TestCase {
       global $DB;
 
       $computer = new Computer();
-      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv = new PluginGlpiinventoryInventoryComputerInventory();
 
       // Disable all rules
       $DB->query("UPDATE `glpi_rules`
          SET `is_active`='0'
-         WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
+         WHERE `sub_type`='PluginGlpiinventoryInventoryRuleImport'");
 
       // Add rule name + restrict entity search
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $rulecollection = new PluginGlpiinventoryInventoryRuleImportCollection();
       $input = [
          'is_active' => 1,
          'name'      => 'Computer name + restrict',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 1
       ];
       $rule_id = $rulecollection->add($input);
@@ -380,7 +380,7 @@ class ComputerEntityTest extends TestCase {
          return;
       }
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents_id = $pfAgent->getAgentWithComputerid($computers_id);
       $pfAgent->getFromDB($a_agents_id);
 

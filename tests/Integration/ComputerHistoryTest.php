@@ -245,7 +245,7 @@ class ComputerHistoryTest extends TestCase {
    public function checkComputerLogs($xml = "") {
       global $DB;
 
-      $pfCommunication = new PluginFusioninventoryCommunication();
+      $pfCommunication = new PluginGlpiinventoryCommunication();
       $log             = new Log();
       $computer        = new Computer();
 

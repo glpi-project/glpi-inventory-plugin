@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files found by the collect module of agent.
  */
-class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
+class PluginGlpiinventoryCollectContentCommon extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname        = 'plugin_fusioninventory_collect';
+   static $rightname        = 'plugin_glpiinventory_collect';
    public $collect_itemtype = '';
    public $collect_table    = '';
    public $type             = '';
@@ -84,7 +84,7 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
       $class            = get_called_class();
       $pfCollectContent = new $class();
       switch (get_class($item)) {
-         case 'PluginFusioninventoryCollect':
+         case 'PluginGlpiinventoryCollect':
             $pfCollectContent->showForCollect($item->fields['id']);
             break;
       }
@@ -104,10 +104,10 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
          $class   = $this->collect_itemtype;
          $collect = $this->getCollectClass();
          switch (get_class($item)) {
-            case 'PluginFusioninventoryCollect':
+            case 'PluginGlpiinventoryCollect':
                if ($item->fields['type'] == $this->type) {
                   $a_colfiles = getAllDataFromTable($collect::getTable(),
-                     ['plugin_fusioninventory_collects_id' => $item->fields['id']]);
+                     ['plugin_glpiinventory_collects_id' => $item->fields['id']]);
                   if (count($a_colfiles) == 0) {
                      return '';
                   }
@@ -150,7 +150,7 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
             'id'
          ],
          'WHERE'  => [
-            'plugin_fusioninventory_collects_id' => $collects_id
+            'plugin_glpiinventory_collects_id' => $collects_id
          ]
       ];
       $iterator = $DB->request($params);

@@ -40,13 +40,13 @@ class ImportRuleTest extends TestCase {
 
    public static function setUpBeforeClass(): void {
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
    public static function tearDownAfterClass(): void {
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
@@ -77,7 +77,7 @@ class ImportRuleTest extends TestCase {
       }
 
       // Delete all unmanaged items
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
       $items = $pfUnmanaged->find();
       foreach ($items as $item) {
          $pfUnmanaged->delete(['id' => $item['id']], true);
@@ -95,7 +95,7 @@ class ImportRuleTest extends TestCase {
    }
 
    function activeRule($name) {
-      $pfRule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $pfRule = new PluginGlpiinventoryInventoryRuleImportCollection();
       $rules = $pfRule->find([
          'name'      => ['LIKE', '%'.$name.'%'],
          'is_active' => 0
@@ -109,7 +109,7 @@ class ImportRuleTest extends TestCase {
    }
 
    function activateAllRules() {
-      $pfRule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $pfRule = new PluginGlpiinventoryInventoryRuleImportCollection();
       $rules = $pfRule->find();
       foreach ($rules as $rule) {
          $pfRule->update([
@@ -122,15 +122,15 @@ class ImportRuleTest extends TestCase {
    function addRule($name, $criteria = [], $action = [], $afterRuleName = '') {
       global $DB;
 
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $rulecriteria = new RuleCriteria();
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $rulecollection = new PluginGlpiinventoryInventoryRuleImportCollection();
 
       $input = [
          'is_active' => 1,
          'name'      => $name,
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport'
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport'
       ];
       if ($afterRuleName != '') {
          $ruleARN = $rule->find(['name' => $afterRuleName], [], 1);
@@ -139,7 +139,7 @@ class ImportRuleTest extends TestCase {
             $DB->query("UPDATE glpi_rules "
                   . "SET ranking = ranking + 1 "
                   . "WHERE ranking > '".$r['ranking']."' "
-                  . "   AND `sub_type`='PluginFusioninventoryInventoryRuleImport'");
+                  . "   AND `sub_type`='PluginGlpiinventoryInventoryRuleImport'");
 
             $input['ranking'] = ($r['ranking'] + 1);
          }
@@ -179,9 +179,9 @@ class ImportRuleTest extends TestCase {
          'itemtype' => 'Computer',
          'name'     => 'pc-01',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $data = $ruleCollection->processAllRules($input, [], ['class'=>$this]);
       $this->assertArrayHasKey('_ruleid', $data);
@@ -202,10 +202,10 @@ class ImportRuleTest extends TestCase {
          'itemtype' => 'Computer',
          'name'     => 'pc-01',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $computer = new Computer();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $computers_id = $computer->add([
          'entities_id' => 0,
@@ -234,10 +234,10 @@ class ImportRuleTest extends TestCase {
          'itemtype' => 'Computer',
          'name'     => 'pc-01',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $computer = new Computer();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $computers_id = $computer->add([
          'entities_id' => 0,
@@ -280,9 +280,9 @@ class ImportRuleTest extends TestCase {
          'serial'   => '75F4BF',
          'uuid'     => '01391796-50A4-0246-955B-417652A8AF14',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $data = $ruleCollection->processAllRules($input, [], ['class'=>$this]);
 
@@ -309,10 +309,10 @@ class ImportRuleTest extends TestCase {
          'serial'   => '75F4BF',
          'uuid'     => '01391796-50A4-0246-955B-417652A8AF14',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $computer = new Computer();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $computers_id = $computer->add([
          'entities_id' => 0,
@@ -343,10 +343,10 @@ class ImportRuleTest extends TestCase {
          'serial'   => '75F4BF',
          'uuid'     => '01391796-50A4-0246-955B-417652A8AF14',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $computer = new Computer();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $computers_id = $computer->add([
          'entities_id' => 0,
@@ -373,7 +373,7 @@ class ImportRuleTest extends TestCase {
    public function createComputerMac() {
 
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true);
       $this->activateAllRules();
 
@@ -382,9 +382,9 @@ class ImportRuleTest extends TestCase {
          'name'     => 'pc-01',
          'mac'      => ['d4:81:d7:7b:6c:21'],
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $this->activeRule('(by mac)');
       $data = $ruleCollection->processAllRules($input, [], ['class'=>$this]);
@@ -409,11 +409,11 @@ class ImportRuleTest extends TestCase {
          'name'     => 'pc-01',
          'mac'      => ['d4:81:d7:7b:6c:21'],
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $computer = new Computer();
       $networkPort = new NetworkPort();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $computers_id = $computer->add([
          'entities_id' => 0,
@@ -442,7 +442,7 @@ class ImportRuleTest extends TestCase {
       $this->assertEquals($ports_id, $this->ports_id);
 
       // Reinit rules by default
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
@@ -455,9 +455,9 @@ class ImportRuleTest extends TestCase {
          'name'     => 'pc-01',
          'ip'       => ['192.168.0.10'],
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       // Create rules
       $this->addRule(
@@ -469,12 +469,12 @@ class ImportRuleTest extends TestCase {
                   'pattern'   => 'Computer',
                ],
                [
-                  'condition' => PluginFusioninventoryInventoryRuleImport::PATTERN_FIND,
+                  'condition' => PluginGlpiinventoryInventoryRuleImport::PATTERN_FIND,
                   'criteria'  => 'ip',
                   'pattern'   => '1',
                ],
                [
-                  'condition' => PluginFusioninventoryInventoryRuleImport::PATTERN_EXISTS,
+                  'condition' => PluginGlpiinventoryInventoryRuleImport::PATTERN_EXISTS,
                   'criteria'  => 'ip',
                   'pattern'   => '1',
                ],
@@ -482,7 +482,7 @@ class ImportRuleTest extends TestCase {
             [
                'action_type' => 'assign',
                'field'       => '_fusion',
-               'value'       => PluginFusioninventoryInventoryRuleImport::RULE_ACTION_LINK,
+               'value'       => PluginGlpiinventoryInventoryRuleImport::RULE_ACTION_LINK,
             ],
             "Computer update (by mac)");
 
@@ -495,7 +495,7 @@ class ImportRuleTest extends TestCase {
                   'pattern'   => 'Computer',
                ],
                [
-                  'condition' => PluginFusioninventoryInventoryRuleImport::PATTERN_EXISTS,
+                  'condition' => PluginGlpiinventoryInventoryRuleImport::PATTERN_EXISTS,
                   'criteria'  => 'ip',
                   'pattern'   => '1',
                ],
@@ -503,7 +503,7 @@ class ImportRuleTest extends TestCase {
             [
                'action_type' => 'assign',
                'field'       => '_fusion',
-               'value'       => PluginFusioninventoryInventoryRuleImport::RULE_ACTION_LINK,
+               'value'       => PluginGlpiinventoryInventoryRuleImport::RULE_ACTION_LINK,
             ],
             "Computer import (by mac)");
 
@@ -528,11 +528,11 @@ class ImportRuleTest extends TestCase {
          'name'     => 'pc-01',
          'ip'       => ['192.168.0.10'],
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $computer = new Computer();
       $networkPort = new NetworkPort();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $computers_id = $computer->add([
          'entities_id' => 0,
@@ -563,12 +563,12 @@ class ImportRuleTest extends TestCase {
                   'pattern'   => 'Computer',
                ],
                [
-                  'condition' => PluginFusioninventoryInventoryRuleImport::PATTERN_FIND,
+                  'condition' => PluginGlpiinventoryInventoryRuleImport::PATTERN_FIND,
                   'criteria'  => 'ip',
                   'pattern'   => '1',
                ],
                [
-                  'condition' => PluginFusioninventoryInventoryRuleImport::PATTERN_EXISTS,
+                  'condition' => PluginGlpiinventoryInventoryRuleImport::PATTERN_EXISTS,
                   'criteria'  => 'ip',
                   'pattern'   => '1',
                ],
@@ -576,7 +576,7 @@ class ImportRuleTest extends TestCase {
             [
                'action_type' => 'assign',
                'field'       => '_fusion',
-               'value'       => PluginFusioninventoryInventoryRuleImport::RULE_ACTION_LINK,
+               'value'       => PluginGlpiinventoryInventoryRuleImport::RULE_ACTION_LINK,
             ],
             "Computer update (by mac)");
 
@@ -589,7 +589,7 @@ class ImportRuleTest extends TestCase {
                   'pattern'   => 'Computer',
                ],
                [
-                  'condition' => PluginFusioninventoryInventoryRuleImport::PATTERN_EXISTS,
+                  'condition' => PluginGlpiinventoryInventoryRuleImport::PATTERN_EXISTS,
                   'criteria'  => 'ip',
                   'pattern'   => '1',
                ],
@@ -597,7 +597,7 @@ class ImportRuleTest extends TestCase {
             [
                'action_type' => 'assign',
                'field'       => '_fusion',
-               'value'       => PluginFusioninventoryInventoryRuleImport::RULE_ACTION_LINK,
+               'value'       => PluginGlpiinventoryInventoryRuleImport::RULE_ACTION_LINK,
             ],
             "Computer import (by mac)");
 
@@ -614,7 +614,7 @@ class ImportRuleTest extends TestCase {
       $this->assertEquals($ports_id, $this->ports_id);
 
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
 
    }
@@ -630,9 +630,9 @@ class ImportRuleTest extends TestCase {
          'itemtype' => 'Computer',
          'name'     => 'pc-01',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $rules = $ruleCollection->find(['is_active' => 1]);
       foreach ($rules as $rule) {
@@ -657,9 +657,9 @@ class ImportRuleTest extends TestCase {
     */
    public function refuseImport() {
 
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       // only IP
       $data = $ruleCollection->processAllRules(['ip' => '192.168.0.10'], [], ['class'=>$this]);
@@ -719,9 +719,9 @@ class ImportRuleTest extends TestCase {
          'mac'      => '00:1a:6c:9a:fc:99',
          'name'     => 'network-01',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $data = $ruleCollection->processAllRules($input, [], ['class'=>$this]);
 
@@ -731,7 +731,7 @@ class ImportRuleTest extends TestCase {
       $rule->getFromDB($data['_ruleid']);
       $this->assertEquals("Device import (by mac+ifnumber)", $rule->fields['name']);
       $this->assertEquals(0, $this->items_id);
-      $this->assertEquals('PluginFusioninventoryUnmanaged', $this->itemtype);
+      $this->assertEquals('PluginGlpiinventoryUnmanaged', $this->itemtype);
       $this->assertEquals(0, $this->ports_id);
    }
 
@@ -747,11 +747,11 @@ class ImportRuleTest extends TestCase {
          'mac'      => '00:1a:6c:9a:fc:99',
          'name'     => 'network-01',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -801,12 +801,12 @@ class ImportRuleTest extends TestCase {
          'ifdescr' => 'FastEthernet0/1',
          'ip'      => '192.168.0.1',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $pfNetworkPort = new PluginGlpiinventoryNetworkPort();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -896,12 +896,12 @@ class ImportRuleTest extends TestCase {
          'ifdescr' => 'FastEthernet0/1',
          'ip'      => '192.168.0.2',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $pfNetworkPort = new PluginGlpiinventoryNetworkPort();
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -974,11 +974,11 @@ class ImportRuleTest extends TestCase {
       $input = [
          'mac' => 'd4:81:b4:5a:a6:19',
       ];
-      $ruleCollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $ruleCollection = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
       $printer = new Printer();
       $networkPort = new NetworkPort();
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "ImportRuleTest";
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = "ImportRuleTest";
 
       $printers_id = $printer->add([
          'entities_id' => 0,
@@ -1030,8 +1030,8 @@ class ImportRuleTest extends TestCase {
     */
    public function rulepassedNetworkEquipment_nodevice() {
 
-      $pf = new PluginFusioninventoryInventoryNetworkEquipmentLib();
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+      $pf = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
       $dbu = new DbUtils();
       $items = $pfUnmanaged->find();
       foreach ($items as $item) {
@@ -1056,7 +1056,7 @@ class ImportRuleTest extends TestCase {
     */
    public function rulepassedNetworkEquipment_device_noport() {
 
-      $pf = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pf = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkequipment = new NetworkEquipment();
       $networkport = new NetworkPort();
       $dbu = new DbUtils();
@@ -1085,7 +1085,7 @@ class ImportRuleTest extends TestCase {
     */
    public function rulepassedNetworkEquipment_device_port() {
 
-      $pf = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pf = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkequipment = new NetworkEquipment();
       $networkport = new NetworkPort();
       $dbu = new DbUtils();

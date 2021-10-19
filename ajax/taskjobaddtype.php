@@ -38,7 +38,7 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjobaddtype.php")) {
 
 Session::checkCentralAccess();
 
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->additemtodefatc(
         filter_input(INPUT_POST, "type"),
         filter_input(INPUT_POST, "itemtype"),

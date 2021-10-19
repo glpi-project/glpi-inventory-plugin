@@ -79,14 +79,14 @@ echo "\nScript to fill database with snmp tasks starting\n";
 
 $_SESSION["glpicronuserrunning"] = $_SESSION["glpiname"] = $params['user'];
 
-$entity = new PluginFusioninventoryEntity();
+$entity = new PluginGlpiinventoryEntity();
 if ($entity->update(['id' => 1, 'agent_base_url' => $params['url']])) {
    echo "agent_base_url set to ".$params['url']."\n";
 } else {
    echo "Error setting agent_base_url. Exiting\n";
 }
 
-$range        = new PluginFusioninventoryIPRange();
+$range        = new PluginGlpiinventoryIPRange();
 $params_range = $params;
 $result       = $range->getFromDBByCrit(['name' => $params['name']]);
 if ($result > 0) {
@@ -97,7 +97,7 @@ if ($result > 0) {
    echo "IP Range added, id=$ipranges_id\n";
 }
 
-$auth        = new PluginFusioninventoryConfigSecurity();
+$auth        = new PluginGlpiinventoryConfigSecurity();
 $params_auth = [
    'name'          => $params['name'],
    'community'     => $params['community'],
@@ -112,10 +112,10 @@ if ($result > 0) {
    echo "SNMP community added, id=$auths_id\n";
 }
 if ($auths_id && $ipranges_id) {
-   $authrange = new PluginFusioninventoryIPRange_ConfigSecurity();
+   $authrange = new PluginGlpiinventoryIPRange_ConfigSecurity();
    $params_iprange = [
-      'plugin_fusioninventory_ipranges_id'         => $ipranges_id,
-      'plugin_fusioninventory_configsecurities_id' => $auths_id
+      'plugin_glpiinventory_ipranges_id'         => $ipranges_id,
+      'plugin_glpiinventory_configsecurities_id' => $auths_id
    ];
    $result = $authrange->getFromDBByCrit($params_iprange);
    if ($result < 0 || !$result) {
@@ -134,9 +134,9 @@ if ($params['comp_name'] == '') {
    echo "Exiting: no computer_name set!\n";
 }
 
-$module = new PluginFusioninventoryAgentmodule();
+$module = new PluginGlpiinventoryAgentmodule();
 echo "Enabled modules netdiscovery & networkinventory by default\n";
-$DB->query("UPDATE `glpi_plugin_fusioninventory_agentmodules` SET `is_active`=1");
+$DB->query("UPDATE `glpi_plugin_glpiinventory_agentmodules` SET `is_active`=1");
 
 $computer        = new Computer();
 $params_computer = ['name' => $params['comp_name'], 'entities_id' => 0];
@@ -149,7 +149,7 @@ if ($result > 0) {
    echo "Computer ".$params['comp_name']." added with id $computers_id\n";
 }
 
-$agent  = new PluginFusioninventoryAgent();
+$agent  = new PluginGlpiinventoryAgent();
 $result = $agent->getFromDBByCrit(['device_id' => $params['device_id']]);
 if ($result > 0) {
    $agents_id = $agent->getID();
@@ -163,8 +163,8 @@ if ($result > 0) {
    echo "Agent ".$params['device_id']." added with id $agents_id\n";
 }
 
-$task      = new PluginFusioninventoryTask();
-$taskjob   = new PluginFusioninventoryTaskjob();
+$task      = new PluginGlpiinventoryTask();
+$taskjob   = new PluginGlpiinventoryTaskjob();
 $task_name = $params['name'].'-disco';
 $result    = $task->getFromDBByCrit(['name' => $task_name]);
 if ($result > 0) {
@@ -182,10 +182,10 @@ if ($result > 0) {
    if ($tasks_id_disco) {
       $taskjob->add([
          'name' => $task_name,
-         'plugin_fusioninventory_tasks_id' => $tasks_id_disco,
+         'plugin_glpiinventory_tasks_id' => $tasks_id_disco,
          'method'  => 'networkdiscovery',
-         'targets' => "[{\"PluginFusioninventoryIPRange\":\"$ipranges_id\"}]",
-         'actors'  => "[{\"PluginFusioninventoryAgent\":\"$agents_id\"}]"
+         'targets' => "[{\"PluginGlpiinventoryIPRange\":\"$ipranges_id\"}]",
+         'actors'  => "[{\"PluginGlpiinventoryAgent\":\"$agents_id\"}]"
       ]);
    }
 
@@ -208,10 +208,10 @@ if ($result > 0) {
    if ($tasks_id_inv) {
       $taskjob->add([
          'name' => $task_name,
-         'plugin_fusioninventory_tasks_id' => $tasks_id_inv,
+         'plugin_glpiinventory_tasks_id' => $tasks_id_inv,
          'method'  => 'networkdiscovery',
-         'targets' => "[{\"PluginFusioninventoryIPRange\":\"$ipranges_id\"}]",
-         'actors'  => "[{\"PluginFusioninventoryAgent\":\"$agents_id\"}]"
+         'targets' => "[{\"PluginGlpiinventoryIPRange\":\"$ipranges_id\"}]",
+         'actors'  => "[{\"PluginGlpiinventoryAgent\":\"$agents_id\"}]"
       ]);
    }
 

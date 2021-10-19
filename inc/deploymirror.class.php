@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the deploy mirror depend on location of computer.
  */
-class PluginFusioninventoryDeployMirror extends CommonDBTM {
+class PluginGlpiinventoryDeployMirror extends CommonDBTM {
    const MATCH_LOCATION = 0;
    const MATCH_ENTITY   = 1;
    const MATCH_BOTH     = 2;
@@ -54,7 +54,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_deploymirror';
+   static $rightname = 'plugin_glpiinventory_deploymirror';
 
 
    /**
@@ -99,7 +99,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          return [];
       }
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDB($agents_id);
       $agent = $pfAgent->fields;
       if (!isset($agent) || !isset($agent['computers_id'])) {
@@ -123,7 +123,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       //sorted by entity level in a descending way (going to the closest,
       //deepest entity, to the highest)
       $query     = "SELECT `mirror`.*, `glpi_entities`.`level`
-                    FROM `glpi_plugin_fusioninventory_deploymirrors` AS mirror
+                    FROM `glpi_plugin_glpiinventory_deploymirrors` AS mirror
                     LEFT JOIN `glpi_entities`
                      ON (`mirror`.`entities_id`=`glpi_entities`.`id`)
                     WHERE `mirror`.`is_active`='1'";
@@ -179,7 +179,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       //Add the server's url as the last url in the list
       if (isset($PF_CONFIG['server_as_mirror'])
          && $PF_CONFIG['server_as_mirror'] == true) {
-         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
+         $mirrors[] = PluginGlpiinventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
       return $mirrors;

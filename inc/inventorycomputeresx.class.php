@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the taskjob for VMWARE ESX / VCENTER remote inventory.
  */
-class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCommunication {
+class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommunication {
 
 
    /**
@@ -49,15 +49,15 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
     */
    function prepareRun($taskjobs_id) {
 
-      $task       = new PluginFusioninventoryTask();
-      $job        = new PluginFusioninventoryTaskjob();
-      $joblog     = new PluginFusioninventoryTaskjoblog();
-      $jobstate  = new PluginFusioninventoryTaskjobstate();
+      $task       = new PluginGlpiinventoryTask();
+      $job        = new PluginGlpiinventoryTaskjob();
+      $joblog     = new PluginGlpiinventoryTaskjoblog();
+      $jobstate  = new PluginGlpiinventoryTaskjobstate();
 
       $uniqid= uniqid();
 
       $job->getFromDB($taskjobs_id);
-      $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
+      $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
       $communication= $task->fields['communication'];
 
@@ -78,9 +78,9 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       // *** Add jobstate
       if (empty($agent_actionslist)) {
          $a_input= [];
-         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state']                              = 0;
-         $a_input['plugin_fusioninventory_agents_id']   = 0;
+         $a_input['plugin_glpiinventory_agents_id']   = 0;
          $a_input['uniqid']                             = $uniqid;
          $a_input['execution_id']                       = $task->fields['execution_id'];
 
@@ -90,14 +90,14 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
                $a_input['items_id'] = $task_items_id;
                $jobstates_id= $jobstate->add($a_input);
                //Add log of taskjob
-               $a_input['plugin_fusioninventory_taskjobstates_id']= $jobstates_id;
-               $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+               $a_input['plugin_glpiinventory_taskjobstates_id']= $jobstates_id;
+               $a_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
                $a_input['date']  = date("Y-m-d H:i:s");
                $joblog->add($a_input);
 
                $jobstate->changeStatusFinish($jobstates_id,
                                               0,
-                                              'PluginFusioninventoryInventoryComputerESX',
+                                              'PluginGlpiinventoryInventoryComputerESX',
                                               1,
                                               "Unable to find agent to run this job");
             }
@@ -108,15 +108,15 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
             foreach ($targets as $items_id) {
 
                if ($communication == "push") {
-                  $_SESSION['glpi_plugin_fusioninventory']['agents'][$items_id] = 1;
+                  $_SESSION['glpi_plugin_glpiinventory']['agents'][$items_id] = 1;
                }
 
                foreach ($task_definitions as $task_definition) {
                   foreach ($task_definition as $task_itemtype => $task_items_id) {
                      $a_input = [];
-                     $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+                     $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
                      $a_input['state']                              = 0;
-                     $a_input['plugin_fusioninventory_agents_id']   = $items_id;
+                     $a_input['plugin_glpiinventory_agents_id']   = $items_id;
                      $a_input['itemtype']                           = $task_itemtype;
                      $a_input['items_id']                           = $task_items_id;
                      $a_input['uniqid']                             = $uniqid;
@@ -125,8 +125,8 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
 
                      $jobstates_id = $jobstate->add($a_input);
                      //Add log of taskjob
-                     $a_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-                     $a_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                     $a_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                     $a_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
 
                      $joblog->add($a_input);
                      unset($a_input['state']);
@@ -149,11 +149,11 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
     * @return array
     */
    function run($taskjobstate) {
-      $credential     = new PluginFusioninventoryCredential();
-      $credentialip   = new PluginFusioninventoryCredentialIp();
+      $credential     = new PluginGlpiinventoryCredential();
+      $credentialip   = new PluginGlpiinventoryCredentialIp();
 
       $credentialip->getFromDB($taskjobstate->fields['items_id']);
-      $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
+      $credential->getFromDB($credentialip->fields['plugin_glpiinventory_credentials_id']);
 
       $order['uuid'] = $taskjobstate->fields['uniqid'];
       $order['host'] = $credentialip->fields['ip'];

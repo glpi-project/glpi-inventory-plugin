@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage user interactions.
  * @since 9.2
  */
-class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDeployPackageItem {
+class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeployPackageItem {
 
    public $shortname = 'userinteractions';
    public $json_name = 'userinteractions';
@@ -128,7 +128,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    function displayAjaxValues($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['orders_id']);
@@ -174,7 +174,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       echo "<tr>";
       echo "<th>{$values['template_label']}</th>";
       echo "<td>";
-      Dropdown::show('PluginFusioninventoryDeployUserinteractionTemplate',
+      Dropdown::show('PluginGlpiinventoryDeployUserinteractionTemplate',
                      ['value' => $values['template_value'], 'name' => 'template']);
       echo "</td>";
       echo "</tr>";
@@ -206,7 +206,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
          'description_type'    => "text",
          'description_value'   => "",
          'template_label'
-            => PluginFusioninventoryDeployUserinteractionTemplate::getTypeName(1)
+            => PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName(1)
                .$this->getMandatoryMark(),
          'template_value'      => "",
          'template_type'       => "dropdown",
@@ -230,11 +230,11 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
     * Display list of user interactions
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored checks
     * @param string $rand unique element id used to identify/update an element
     */
-   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
+   function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
       $interaction_types = $this->getTypes();
@@ -305,7 +305,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
 
       if ($interaction['template']) {
          $text .= ' (';
-         $text .= Dropdown::getDropdownName('glpi_plugin_fusioninventory_deployuserinteractiontemplates',
+         $text .= Dropdown::getDropdownName('glpi_plugin_glpiinventory_deployuserinteractiontemplates',
                                            $interaction['template']);
          $text.= ')';
       }
@@ -368,7 +368,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    }
 
 
-   function getTypesAlreadyInUse(PluginFusioninventoryDeployPackage $package) {
+   function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package) {
       $used_interactions = [];
       $json              = json_decode($package->fields['json'], true);
 

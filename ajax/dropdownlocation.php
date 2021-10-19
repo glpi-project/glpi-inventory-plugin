@@ -38,7 +38,7 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdownlocation.php")) {
 
 Session::checkCentralAccess();
 
-$pfDeployMirror= new PluginFusioninventoryDeployMirror();
+$pfDeployMirror= new PluginGlpiinventoryDeployMirror();
 $id = filter_input(INPUT_POST, "id");
 if ($id != '') {
    $pfDeployMirror->getFromDB($id);

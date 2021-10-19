@@ -40,10 +40,10 @@ class ComputerDynamicTest extends TestCase {
     */
    public function UpdateComputerManuallyAdded() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib  = new PluginGlpiinventoryInventoryComputerLib();
       $computer = new Computer();
       $itemDisk = new Item_Disk();
 
@@ -125,10 +125,10 @@ class ComputerDynamicTest extends TestCase {
 
       // Add manually a computerdisk
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib  = new PluginGlpiinventoryInventoryComputerLib();
       $computer = new Computer();
       $itemDisk = new Item_Disk();
 
@@ -224,7 +224,7 @@ class ComputerDynamicTest extends TestCase {
     */
    public function UpdateComputerRemoveProcessor() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
@@ -293,7 +293,7 @@ class ComputerDynamicTest extends TestCase {
           ];
 
       $computer         = new Computer();
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $item_DeviceProcessor = new Item_DeviceProcessor();
 
       $computers_id = $computer->add(['serial'      => 'XB63J7DH',

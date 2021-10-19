@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Common inventory methods (local or snmp)
  */
-class PluginFusioninventoryInventoryCommon extends CommonDBTM {
+class PluginGlpiinventoryInventoryCommon extends CommonDBTM {
 
    /**
     * Import firmwares
@@ -103,7 +103,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
    function importPorts($itemtype, $a_inventory, $items_id, $no_history = false) {
 
       $networkPort     = new NetworkPort();
-      $pfNetworkPort   = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort   = new PluginGlpiinventoryNetworkPort();
       $networkports_id = 0;
 
       foreach ($a_inventory['networkport'] as $a_port) {

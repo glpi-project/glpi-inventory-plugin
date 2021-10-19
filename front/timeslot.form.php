@@ -32,13 +32,13 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
 if (!isset($_GET["id"])) {
    $_GET["id"] = "";
 }
 
-$pfTimeslot = new PluginFusioninventoryTimeslot();
+$pfTimeslot = new PluginGlpiinventoryTimeslot();
 //Add a new timeslot
 if (isset($_POST["add"])) {
    $pfTimeslot->check(-1, CREATE, $_POST);
@@ -67,13 +67,13 @@ if (isset($_POST["add"])) {
    Html::back();
 
 } else {//print timeslot information
-   Html::header(PluginFusioninventoryTimeslot::getTypeName(2),
+   Html::header(PluginGlpiinventoryTimeslot::getTypeName(2),
                 $_SERVER['PHP_SELF'],
                 "admin",
-                "pluginfusioninventorymenu",
+                "pluginglpiinventorymenu",
                 "timeslot");
 
-   PluginFusioninventoryMenu::displayMenu("mini");
+   PluginGlpiinventoryMenu::displayMenu("mini");
    $pfTimeslot->display(['id' => $_GET["id"]]);
    Html::footer();
 }

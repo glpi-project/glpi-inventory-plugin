@@ -32,17 +32,17 @@
 
 include ("../../../inc/includes.php");
 
-$iprange = new PluginFusioninventoryIPRange();
+$iprange = new PluginGlpiinventoryIPRange();
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "iprange");
+             "pluginglpiinventorymenu", "iprange");
 
-Session::checkRight('plugin_fusioninventory_iprange', READ);
+Session::checkRight('plugin_glpiinventory_iprange', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_iprange', CREATE);
+   Session::checkRight('plugin_glpiinventory_iprange', CREATE);
    if ($iprange->checkip($_POST)) {
       $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
       $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
@@ -56,8 +56,8 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["update"])) {
    if (isset($_POST['communication'])) {
       //task permanent update
-      $task = new PluginFusioninventoryTask();
-      $taskjob = new PluginFusioninventoryTaskjob();
+      $task = new PluginGlpiinventoryTask();
+      $taskjob = new PluginGlpiinventoryTaskjob();
       $task->getFromDB($_POST['task_id']);
       $input_task = [];
       $input_task['id'] = $task->fields['id'];
@@ -69,20 +69,20 @@ if (isset ($_POST["add"])) {
       $input_task["periodicity_type"]  = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
          $a_actionDB                                 = [];
-         $a_actionDB[]['PluginFusioninventoryAgent'] = $_POST['action'];
+         $a_actionDB[]['PluginGlpiinventoryAgent'] = $_POST['action'];
          $input_taskjob["action"]                    = exportArrayToDB($a_actionDB);
       } else {
          $input_taskjob["action"] = '';
       }
       $a_definition = [];
-      $a_definition[]['PluginFusioninventoryIPRange'] = $_POST['iprange'];
+      $a_definition[]['PluginGlpiinventoryIPRange'] = $_POST['iprange'];
       $input_taskjob['definition'] = exportArrayToDB($a_definition);
       $input_task["communication"] = $_POST['communication'];
 
       $task->update($input_task);
       $taskjob->update($input_taskjob);
    } else {
-      Session::checkRight('plugin_fusioninventory_iprange', UPDATE);
+      Session::checkRight('plugin_glpiinventory_iprange', UPDATE);
       if ($iprange->checkip($_POST)) {
          $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
          $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
@@ -94,15 +94,15 @@ if (isset ($_POST["add"])) {
    Html::back();
 } else if (isset ($_POST["purge"])) {
    if (isset($_POST['communication'])) {
-      $task = new PluginFusioninventoryTask();
+      $task = new PluginGlpiinventoryTask();
       $task->delete(['id' => $_POST['task_id']], 1);
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
       Html::back();
    } else {
-      Session::checkRight('plugin_fusioninventory_iprange', PURGE);
+      Session::checkRight('plugin_glpiinventory_iprange', PURGE);
 
       $iprange->delete($_POST);
-      Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange'));
+      Html::redirect(Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange'));
    }
 }
 

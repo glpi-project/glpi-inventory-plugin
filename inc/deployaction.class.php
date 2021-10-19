@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the actions in package for deploy system.
  */
-class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPackageItem {
+class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageItem {
 
    public $shortname = 'actions';
    public $json_name = 'actions';
@@ -93,12 +93,12 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    /**
     * Display form
     *
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $request_data
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode possible values: init|edit|create
     */
-   function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
+   function displayForm(PluginGlpiinventoryDeployPackage $package, $request_data, $rand, $mode) {
 
       /*
        * Get element config in 'edit' mode
@@ -158,11 +158,11 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
     * Display list of actions
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored actions
     * @param string $rand unique element id used to identify/update an element
     */
-   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
+   function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
       $canedit    = $package->canUpdateContent();
@@ -259,7 +259,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       global $CFG_GLPI;
 
       $mandatory_mark  = $this->getMandatoryMark();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['packages_id']);
@@ -372,7 +372,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       if ($type == "cmd") {
          echo "<tr>";
          echo "<th>".__("Execution checks", 'glpiinventory');
-         PluginFusioninventoryDeployPackage::plusButton("retchecks", ".table_retchecks.template");
+         PluginGlpiinventoryDeployPackage::plusButton("retchecks", ".table_retchecks.template");
          echo "</th>";
          echo "<td>";
          echo "<span id='retchecks' style='display:block'>";

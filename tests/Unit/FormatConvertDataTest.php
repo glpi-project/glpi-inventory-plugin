@@ -66,7 +66,7 @@ class FormatConvertDataTest extends TestCase {
          "datelastloggeduser"   => "Wed Mar 30 19:29"
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->JSONtoArray(json_encode($a_inventory));
 
@@ -143,8 +143,8 @@ class FormatConvertDataTest extends TestCase {
          'computermodels_id'          => 'XPS 13 9350'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $manufacturer = new Manufacturer();
@@ -198,7 +198,7 @@ class FormatConvertDataTest extends TestCase {
 </REQUEST>';
       $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $a_xml = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
+      $a_xml = PluginGlpiinventoryFormatconvert::XMLtoArray($xml);
       $referecnce = [
          'CONTENT'  => [
             'DEVICE' => [
@@ -292,13 +292,13 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
   <DEVICEID>foo</DEVICEID>
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $a_xml = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
-      $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($a_xml['CONTENT']['DEVICE'][0]);
+      $a_xml = PluginGlpiinventoryFormatconvert::XMLtoArray($xml);
+      $a_inventory = PluginGlpiinventoryFormatconvert::networkequipmentInventoryTransformation($a_xml['CONTENT']['DEVICE'][0]);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'NetworkEquipment', 0);
 
       $a_reference = [
@@ -346,7 +346,7 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
 </REQUEST>';
       $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $array = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
+      $array = PluginGlpiinventoryFormatconvert::XMLtoArray($xml);
 
       $expected =  [
          'CONTENT' =>
@@ -417,7 +417,7 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
          'MODEL' => $model,
          'NAME' => $name
       ];
-      $result = PluginFusioninventoryFormatconvert::getTypeDrive($value);
+      $result = PluginGlpiinventoryFormatconvert::getTypeDrive($value);
       $this->assertEquals($return_expected, $result);
    }
 }

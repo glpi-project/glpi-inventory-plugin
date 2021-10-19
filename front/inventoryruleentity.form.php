@@ -35,13 +35,13 @@ include ("../../../inc/includes.php");
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "inventoryruleentity");
 Session::checkLoginUser();
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-$rulecollection = new PluginFusioninventoryInventoryRuleEntityCollection();
+$rulecollection = new PluginGlpiinventoryInventoryRuleEntityCollection();
 
 include (GLPI_ROOT . "/front/rule.common.form.php");
 

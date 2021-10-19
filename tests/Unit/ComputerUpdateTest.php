@@ -74,11 +74,11 @@ class ComputerUpdateTest extends TestCase {
          $monitor->delete(['id' => $item['id']], true);
       }
 
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = '';
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = '';
 
       $date = date('Y-m-d H:i:s');
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -292,9 +292,9 @@ class ComputerUpdateTest extends TestCase {
                 ]
           ];
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
@@ -409,7 +409,7 @@ class ComputerUpdateTest extends TestCase {
     */
    public function ComputerExtension($id) {
 
-      $pfiComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfiComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computer = current($pfiComputerComputer->find(['computers_id' => $id], [], 1));
       unset($a_computer['last_fusioninventory_update']);
       $serialized_inventory = $a_computer['serialized_inventory'];
@@ -1280,7 +1280,7 @@ class ComputerUpdateTest extends TestCase {
 
       $date = date('Y-m-d H:i:s');
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
@@ -1351,9 +1351,9 @@ class ComputerUpdateTest extends TestCase {
                 ]
           ];
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
       $software         = new Software();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);

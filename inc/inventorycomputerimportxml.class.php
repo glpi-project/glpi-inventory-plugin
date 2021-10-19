@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the manual import of XML inventory.
  */
-class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
+class PluginGlpiinventoryInventoryComputerImportXML extends CommonDBTM  {
 
 
    /**

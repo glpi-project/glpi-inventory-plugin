@@ -39,7 +39,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerGeneral() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -70,7 +70,7 @@ class ComputerTransformationTest extends TestCase {
                 'WORKGROUP'            => 'mydomain.local'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
@@ -150,7 +150,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerUsers() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -163,7 +163,7 @@ class ComputerTransformationTest extends TestCase {
       $a_computer['USERS'][] = ['LOGIN'  => 'admin',
                                      'DOMAIN' => 'local.com'];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
@@ -235,7 +235,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerOperatingSystem() {
       global $PF_CONFIG;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -265,7 +265,7 @@ class ComputerTransformationTest extends TestCase {
           'SERVICE_PACK'   => 'Service Pack 3',
           'ARCH'           => '32 bits'];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
@@ -949,7 +949,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerOperatingSystemOcsType() {
       global $PF_CONFIG;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
@@ -971,7 +971,7 @@ class ComputerTransformationTest extends TestCase {
                 'WORKGROUP'      => 'WORKGROUP'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
@@ -1040,7 +1040,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerProcessor() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1074,7 +1074,7 @@ class ComputerTransformationTest extends TestCase {
                 'STEPPING'       => 5
                 ]];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
@@ -1099,7 +1099,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerHook_addinventoryinfos() {
       global $PLUGIN_HOOKS;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [
@@ -1115,7 +1115,7 @@ class ComputerTransformationTest extends TestCase {
       };
       $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['glpiinventory'] = $callable;
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
       unset($PLUGIN_HOOKS['fusioninventory_addinventoryinfos']);
@@ -1132,7 +1132,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerMonitor() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1168,7 +1168,7 @@ class ComputerTransformationTest extends TestCase {
              ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
@@ -1194,7 +1194,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerLicenses() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1225,7 +1225,7 @@ class ComputerTransformationTest extends TestCase {
                 ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
@@ -1245,7 +1245,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerBiosVirtual() {
       global $PF_CONFIG;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
@@ -1281,7 +1281,7 @@ class ComputerTransformationTest extends TestCase {
           'SSN'           => '6PkkD1K'
           ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
@@ -1362,7 +1362,7 @@ class ComputerTransformationTest extends TestCase {
    public function ComputerBiosPhysical() {
       global $PF_CONFIG;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
@@ -1397,7 +1397,7 @@ class ComputerTransformationTest extends TestCase {
           'SMODEL'        => 'Dell DXP051',
           'SSN'           => '6PkkD1K'];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
@@ -1477,7 +1477,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerCdrom() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1512,7 +1512,7 @@ class ComputerTransformationTest extends TestCase {
                 ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
@@ -1532,7 +1532,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerNetworkport() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1602,7 +1602,7 @@ class ComputerTransformationTest extends TestCase {
             <VIRTUALDEV>0</VIRTUALDEV>
           </NETWORKS>
        */
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $a_reference = [
@@ -1663,7 +1663,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerNetworkportOldFormat() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1701,7 +1701,7 @@ class ComputerTransformationTest extends TestCase {
          ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $a_reference = [
@@ -1730,7 +1730,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerBattery() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1764,7 +1764,7 @@ class ComputerTransformationTest extends TestCase {
          ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
@@ -1789,7 +1789,7 @@ class ComputerTransformationTest extends TestCase {
          ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
@@ -1813,7 +1813,7 @@ class ComputerTransformationTest extends TestCase {
     */
    public function ComputerRemotemgmt() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -1841,7 +1841,7 @@ class ComputerTransformationTest extends TestCase {
                 ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
@@ -1860,7 +1860,7 @@ class ComputerTransformationTest extends TestCase {
    function ComputerBiosAssettag_filled() {
       global $PF_CONFIG;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
       $PF_CONFIG['manage_osname'] = '0';
 
@@ -1895,7 +1895,7 @@ class ComputerTransformationTest extends TestCase {
           'SMODEL'        => 'Dell DXP051',
           'SSN'           => '6PkkD1K'];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
@@ -1978,7 +1978,7 @@ class ComputerTransformationTest extends TestCase {
                 'TOTAL' =>'19066219',
                 'TYPE' => '/Volume/MyNetworkshare'
       ];
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       foreach (['afpfs' => true, 'nfs' => true, 'smbfs' => true,
                 'ext4' => false, 'fat32' => false] as $fs => $result) {
          $drive['FILESYSTEM'] = $fs;
@@ -1995,7 +1995,7 @@ class ComputerTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_computer = [];
@@ -2030,7 +2030,7 @@ class ComputerTransformationTest extends TestCase {
          ]
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
       $a_reference = [

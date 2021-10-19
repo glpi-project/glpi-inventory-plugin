@@ -39,8 +39,8 @@ class DeleteLinkedObjectsTest extends TestCase {
     */
    public function IpRangeDeleteConfigSecurity() {
 
-      $iprange = new PluginFusioninventoryIPRange();
-      $iprange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
+      $iprange = new PluginGlpiinventoryIPRange();
+      $iprange_ConfigSecurity = new PluginGlpiinventoryIPRange_ConfigSecurity();
 
       // Delete all IPRanges
       $items = $iprange->find();
@@ -60,8 +60,8 @@ class DeleteLinkedObjectsTest extends TestCase {
       $this->assertEquals(1, count($list_iprange), "IP Range not right added");
 
       $input = [
-          'plugin_fusioninventory_ipranges_id' => $ipranges_id,
-          'plugin_fusioninventory_configsecurities_id' => 1,
+          'plugin_glpiinventory_ipranges_id' => $ipranges_id,
+          'plugin_glpiinventory_configsecurities_id' => 1,
           'rank' => 1
       ];
       $iprange_ConfigSecurity->add($input);

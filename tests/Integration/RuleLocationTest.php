@@ -37,8 +37,8 @@ class RuleLocationTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all locationrules
-      $rule = new PluginFusioninventoryInventoryRuleLocation();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleLocation"]);
+      $rule = new PluginGlpiinventoryInventoryRuleLocation();
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleLocation"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -54,7 +54,7 @@ class RuleLocationTest extends TestCase {
       $location = new Location();
 
       $location->deleteByCriteria(['name' => 'Monsols04'], true);
-      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleLocation'], true);
       $input = [
          'name'        => 'Monsols04',
          'entities_id' => 0
@@ -65,7 +65,7 @@ class RuleLocationTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Location regexp',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleLocation',
          'ranking'   => 1
       ];
       $rules_id = $rule->add($input);
@@ -77,7 +77,7 @@ class RuleLocationTest extends TestCase {
          'rules_id'  => $rules_id,
          'criteria'  => "name",
          'pattern'   => "/Item (.*)/",
-         'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
+         'condition' => PluginGlpiinventoryInventoryRuleLocation::REGEX_MATCH
       ];
       $ret = $rulecriteria->add($input);
       $this->assertNotFalse($ret);
@@ -109,8 +109,8 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -146,7 +146,7 @@ class RuleLocationTest extends TestCase {
    public function RegexpRuleResultRegexpTest() {
 
       $rule = new Rule();
-      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleLocation'], true);
       $location = new Location;
       $location->getFromDBByCrit(['completename' => 'Monsols04']);;
 
@@ -154,7 +154,7 @@ class RuleLocationTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Location regexp pc',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleLocation',
          'ranking'   => 1
       ];
       $rules_id = $rule->add($input);
@@ -166,7 +166,7 @@ class RuleLocationTest extends TestCase {
          'rules_id'  => $rules_id,
          'criteria'  => "name",
          'pattern'   => "/pc (.*)/",
-         'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
+         'condition' => PluginGlpiinventoryInventoryRuleLocation::REGEX_MATCH
       ];
       $ret = $rulecriteria->add($input);
       $this->assertNotFalse($ret);
@@ -193,14 +193,14 @@ class RuleLocationTest extends TestCase {
       $ret = $ruleaction->add($input);
       $this->assertNotFalse($ret);
 
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
 
       $input = [
          'name'     => 'pc Monsols04',
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -216,7 +216,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Monitor'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
       $a_references = [
          '_no_rule_matches' => 1,
@@ -234,7 +234,7 @@ class RuleLocationTest extends TestCase {
     */
    public function RegexpRuleByIPTest() {
       $rule = new Rule();
-      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleLocation'], true);
       $location = new Location;
       $location->getFromDBByCrit(['completename' => 'Monsols04']);;
 
@@ -242,7 +242,7 @@ class RuleLocationTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Location by IP',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleLocation',
          'ranking'   => 1
       ];
       $rules_id = $rule->add($input);
@@ -281,7 +281,7 @@ class RuleLocationTest extends TestCase {
       $ret = $ruleaction->add($input);
       $this->assertNotFalse($ret);
 
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
 
       $input = [
          'name'     => 'pc Monsols04',
@@ -289,7 +289,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -306,7 +306,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -323,7 +323,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Monitor'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
       $a_references = [
          '_no_rule_matches' => 1,
@@ -342,7 +342,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Peripheral'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
       $a_references = [
          '_no_rule_matches' => 1,

@@ -31,10 +31,10 @@
  */
 
 include ("../../../inc/includes.php");
-$db_cfg_sec = new PluginFusioninventoryConfigSecurity();
-$db_ip_range = new PluginFusioninventoryIPRange();
-$db_ip_range_snmp = new PluginFusioninventoryIPRange_ConfigSecurity();
-$db_agent = new PluginFusioninventoryAgent();
+$db_cfg_sec = new PluginGlpiinventoryConfigSecurity();
+$db_ip_range = new PluginGlpiinventoryIPRange();
+$db_ip_range_snmp = new PluginGlpiinventoryIPRange_ConfigSecurity();
+$db_agent = new PluginGlpiinventoryAgent();
 $db_entity = new Entity();
 
 $file = './import_ip_ranges.csv';
@@ -199,11 +199,11 @@ if (($handle = fopen($file, "r")) !== false) {
       foreach ($ar_snmp_auth as $snmp_auth_id) {
          // Relation between IP range and SNMP credentials (if it exists...)
          $input = [
-             'plugin_fusioninventory_ipranges_id'            => $ipranges_id,
-             'plugin_fusioninventory_configsecurities_id'    => $snmp_auth_id
+             'plugin_glpiinventory_ipranges_id'            => $ipranges_id,
+             'plugin_glpiinventory_configsecurities_id'    => $snmp_auth_id
          ];
          if ($ipranges_id != -1) {
-            $ipranges_snmp = $db_ip_range_snmp->find(['plugin_fusioninventory_ipranges_id' => $ipranges_id]);
+            $ipranges_snmp = $db_ip_range_snmp->find(['plugin_glpiinventory_ipranges_id' => $ipranges_id]);
             if (count($ipranges_snmp) > 0) {
                if ($snmp_auth_id == -1) {
                   echo "-> deleting an existing IP addresses range / SNMP credentials relation...";

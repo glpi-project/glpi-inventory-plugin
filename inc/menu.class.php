@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage plugin menu
  */
-class PluginFusioninventoryMenu extends CommonGLPI {
+class PluginGlpiinventoryMenu extends CommonGLPI {
 
 
    /**
@@ -60,7 +60,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     */
    static function canView() {
       $can_display = false;
-      $profile = new PluginFusioninventoryProfile();
+      $profile = new PluginGlpiinventoryProfile();
 
       foreach ($profile->getAllRights() as $right) {
          if (Session::haveRight($right['field'], READ)) {
@@ -102,32 +102,32 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $fi_full_path = Plugin::getWebDir('glpiinventory');
 
       $elements = [
-          'iprange'                    => 'PluginFusioninventoryIPRange',
-          'config'                     => 'PluginFusioninventoryConfig',
-          'task'                       => 'PluginFusioninventoryTask',
-          'timeslot'                   => 'PluginFusioninventoryTimeslot',
-          'unmanaged'                  => 'PluginFusioninventoryUnmanaged',
-          'inventoryruleimport'        => 'PluginFusioninventoryInventoryRuleImport',
-          'inventoryruleentity'        => 'PluginFusioninventoryInventoryRuleEntity',
-          'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
-          'collectrule'                => 'PluginFusioninventoryCollectRule',
-          'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
-          'configsecurity'             => 'PluginFusioninventoryConfigSecurity',
-          'credential'                 => 'PluginFusioninventoryCredential',
-          'credentialip'               => 'PluginFusioninventoryCredentialIp',
-          'collect'                    => 'PluginFusioninventoryCollect',
-          'deploypackage'              => 'PluginFusioninventoryDeployPackage',
-          'deploymirror'               => 'PluginFusioninventoryDeployMirror',
-          'deploygroup'                => 'PluginFusioninventoryDeployGroup',
-          'deployuserinteractiontemplate' => 'PluginFusioninventoryDeployUserinteractionTemplate',
-          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
+          'iprange'                    => 'PluginGlpiinventoryIPRange',
+          'config'                     => 'PluginGlpiinventoryConfig',
+          'task'                       => 'PluginGlpiinventoryTask',
+          'timeslot'                   => 'PluginGlpiinventoryTimeslot',
+          'unmanaged'                  => 'PluginGlpiinventoryUnmanaged',
+          'inventoryruleimport'        => 'PluginGlpiinventoryInventoryRuleImport',
+          'inventoryruleentity'        => 'PluginGlpiinventoryInventoryRuleEntity',
+          'inventoryrulelocation'      => 'PluginGlpiinventoryInventoryRuleLocation',
+          'collectrule'                => 'PluginGlpiinventoryCollectRule',
+          'inventorycomputerblacklist' => 'PluginGlpiinventoryInventoryComputerBlacklist',
+          'configsecurity'             => 'PluginGlpiinventoryConfigSecurity',
+          'credential'                 => 'PluginGlpiinventoryCredential',
+          'credentialip'               => 'PluginGlpiinventoryCredentialIp',
+          'collect'                    => 'PluginGlpiinventoryCollect',
+          'deploypackage'              => 'PluginGlpiinventoryDeployPackage',
+          'deploymirror'               => 'PluginGlpiinventoryDeployMirror',
+          'deploygroup'                => 'PluginGlpiinventoryDeployGroup',
+          'deployuserinteractiontemplate' => 'PluginGlpiinventoryDeployUserinteractionTemplate',
+          'ignoredimportdevice'        => 'PluginGlpiinventoryIgnoredimportdevice'
       ];
       $options = [];
 
       $options['menu']['title'] = self::getTypeName();
       $options['menu']['page']  = self::getSearchURL(false);
-      if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
-         $options['menu']['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
+      if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
+         $options['menu']['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
       }
       foreach ($elements as $type => $itemtype) {
          $options[$type] = [
@@ -139,12 +139,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                $options[$type]['links']['add'] = $itemtype::getFormURL(false);
             }
          }
-         if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
-            $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
+         if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
+            $options[$type]['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
          }
       }
       // hack for config
-      $options['config']['page'] = PluginFusioninventoryConfig::getFormURL(false);
+      $options['config']['page'] = PluginGlpiinventoryConfig::getFormURL(false);
 
       // Add icon for import package
       $img = Html::image($fi_full_path . "/pics/menu_import.png",
@@ -161,13 +161,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $options['menu']['links'][$img] = '/plugins/glpiinventory/front/documentation.php';
 
       $options['agent'] = [
-           'title' => PluginFusioninventoryAgent::getTypeName(),
-           'page'  => PluginFusioninventoryAgent::getSearchURL(false),
+           'title' => PluginGlpiinventoryAgent::getTypeName(),
+           'page'  => PluginGlpiinventoryAgent::getSearchURL(false),
            'links' => [
-               'search' => PluginFusioninventoryAgent::getSearchURL(false)
+               'search' => PluginGlpiinventoryAgent::getSearchURL(false)
            ]];
-      if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
-         $options['agent']['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
+      if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
+         $options['agent']['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
       }
       return $options;
    }
@@ -187,19 +187,19 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        * General
        */
       $general_menu = [];
-      if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
          $general_menu[0]['name'] = __('Agents management', 'glpiinventory');
          $general_menu[0]['pic']  = $fi_path."/pics/menu_agents.png";
-         $general_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
+         $general_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryAgent');
       }
 
-      if (Session::haveRight('plugin_fusioninventory_group', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_group', READ)) {
          $general_menu[2]['name'] = __('Groups of computers', 'glpiinventory');
          $general_menu[2]['pic']  = $fi_path."/pics/menu_group.png";
          $general_menu[2]['link'] = $fi_path."/front/deploygroup.php";
       }
 
-      if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+      if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
          $general_menu[3]['name'] = __('General configuration', 'glpiinventory');
          $general_menu[3]['pic']  = $fi_path."/pics/menu_agents.png";
          $general_menu[3]['link'] = $fi_path."/front/config.form.php";
@@ -216,32 +216,32 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        * Tasks
        */
       $tasks_menu = [];
-      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_task', READ)) {
          $tasks_menu[2]['name'] = __('Task management', 'glpiinventory');
          $tasks_menu[2]['pic']  = $fi_path."/pics/menu_task.png";
-         $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
+         $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTask');
 
          $tasks_menu[3]['name'] = __('Monitoring / Logs', 'glpiinventory');
          $tasks_menu[3]['pic']  = $fi_path."/pics/menu_runningjob.png";
-         $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
+         $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTaskJob');
       }
 
-      if (Session::haveRight('plugin_fusioninventory_importxml', CREATE)) {
+      if (Session::haveRight('plugin_glpiinventory_importxml', CREATE)) {
          $tasks_menu[0]['name'] = __('Import agent XML file', 'glpiinventory');
          $tasks_menu[0]['pic']  = $fi_path."/pics/menu_importxml.png";
          $tasks_menu[0]['link'] = $fi_path."/front/inventorycomputerimportxml.php";
       }
 
-      if (Session::haveRight("plugin_fusioninventory_collect", READ)) {
+      if (Session::haveRight("plugin_glpiinventory_collect", READ)) {
          $tasks_menu[11]['name'] = __('Computer information', 'glpiinventory');
          $tasks_menu[11]['pic']  = $fi_path."/pics/menu_task.png";
-         $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
+         $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCollect');
       }
 
-      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_task', READ)) {
          $tasks_menu[12]['name'] = __('Time slot', 'glpiinventory');
          $tasks_menu[12]['pic']  = $fi_path."/pics/menu_timeslot.png";
-         $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');
+         $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTimeslot');
       }
 
       if (!empty($tasks_menu)) {
@@ -255,41 +255,41 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        * Rules
        */
       $rules_menu = [];
-      if (Session::haveRight('plugin_fusioninventory_ruleimport', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_ruleimport', READ)) {
          $rules_menu[1]['name'] = __('Equipment import and link rules', 'glpiinventory');
          $rules_menu[1]['pic']  = $fi_path."/pics/menu_rules.png";
          $rules_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
-                    'PluginFusioninventoryInventoryRuleImport'
+                    'PluginGlpiinventoryInventoryRuleImport'
                  );
       }
 
-      if (Session::haveRight('plugin_fusioninventory_ignoredimportdevice', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_ignoredimportdevice', READ)) {
          $rules_menu[2]['name'] = __('Asset skipped during import', 'glpiinventory');
          $rules_menu[2]['pic']  = $fi_path."/pics/menu_rules.png";
          $rules_menu[2]['link'] = Toolbox::getItemTypeSearchURL(
-                    'PluginFusioninventoryIgnoredimportdevice'
+                    'PluginGlpiinventoryIgnoredimportdevice'
                  );
       }
 
-      if (Session::haveRight('plugin_fusioninventory_ruleentity', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_ruleentity', READ)) {
          $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
          $rules_menu[3]['pic']  = $fi_path."/pics/menu_rules.png";
          $rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
       }
 
-      if (Session::haveRight('plugin_fusioninventory_rulelocation', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_rulelocation', READ)) {
          $rules_menu[4]['name'] = __('Location rules', 'glpiinventory');
          $rules_menu[4]['pic']  = $fi_path."/pics/menu_rules.png";
          $rules_menu[4]['link'] = $fi_path."/front/inventoryrulelocation.php";
       }
 
-      if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
+      if (Session::haveRight("plugin_glpiinventory_rulecollect", READ)) {
          $rules_menu[5]['name'] = __('Computer information rules', 'glpiinventory');
          $rules_menu[5]['pic']  = $fi_path."/pics/menu_rules.png";
          $rules_menu[5]['link'] = $fi_path."/front/collectrule.php";
       }
 
-      if (Session::haveRight('plugin_fusioninventory_blacklist', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_blacklist', READ)) {
          $rules_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
          $rules_menu[6]['pic']  = $fi_path."/pics/menu_blacklist.png";
          $rules_menu[6]['link'] = $fi_path."/front/inventorycomputerblacklist.php";
@@ -307,23 +307,23 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        */
       $network_menu = [];
 
-      if (Session::haveRight('plugin_fusioninventory_iprange', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_iprange', READ)) {
          $network_menu[] = [
             'name' => __('IP Ranges', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_rangeip.png",
-            'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange')
+            'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange')
          ];
       }
 
-      if (Session::haveRight('plugin_fusioninventory_credentialip', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_credentialip', READ)) {
          $network_menu[] = [
             'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_credentialips.png",
-            'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip')
+            'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredentialip')
          ];
       }
 
-      if (Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_configsecurity', READ)) {
          $network_menu[] = [
             'name' => __('SNMP credentials', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_authentification.png",
@@ -331,15 +331,15 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          ];
       }
 
-      if (Session::haveRight('plugin_fusioninventory_credential', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_credential', READ)) {
          $network_menu[] = [
             'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_authentification.png",
-            'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential')
+            'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredential')
          ];
       }
 
-      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_task', READ)) {
          $network_menu[] = [
             'name' => __('Discovery status', 'glpiinventory'),
             'pic'  =>   $fi_path."/pics/menu_discovery_status.png",
@@ -353,7 +353,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          ];
       }
 
-      if (Session::haveRight('plugin_fusioninventory_model', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_model', READ)) {
          $network_menu[] = [
             'name' => __('SNMP models creation', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_constructmodel.png",
@@ -373,7 +373,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        */
       $deploy_menu = [];
 
-      if (Session::haveRight('plugin_fusioninventory_package', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_package', READ)) {
          $deploy_menu[] =[
             'name' => __('Package management', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_package.png",
@@ -381,13 +381,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          ];
       }
 
-      if (Session::haveRight('plugin_fusioninventory_deploymirror', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_deploymirror', READ)) {
          $deploy_menu[1]['name'] = __('Mirror servers', 'glpiinventory');
          $deploy_menu[1]['pic']  = $fi_path."/pics/menu_files.png";
          $deploy_menu[1]['link'] = $fi_path."/front/deploymirror.php";
       }
 
-      if (Session::haveRight('plugin_fusioninventory_userinteractiontemplate', READ)) {
+      if (Session::haveRight('plugin_glpiinventory_userinteractiontemplate', READ)) {
          $deploy_menu[2]['name'] = _n('User interaction template',
                                  'User interaction templates', 2, 'glpiinventory');
          $deploy_menu[2]['pic']  = $fi_path."/pics/menu_files.png";
@@ -445,7 +445,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo __('Statistics', 'glpiinventory')." / ".__('Number of computer inventories of last hours', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
-      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      $dataInventory = PluginGlpiinventoryInventoryComputerStat::getLastHours(23);
       echo "<tr class='tab_bg_1' height='280'>";
       echo "<td colspan='2' height='280'>";
       self::showChartBar('nbinventory', $dataInventory, '', 940);
@@ -461,11 +461,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $a_steps = [
           [
               'text' => __('Configure frequency of agent contact (and so each inventory)', 'glpiinventory'),
-              'url'  => $fi_path."/front/config.form.php?forcetab=PluginFusioninventoryConfig$0"
+              'url'  => $fi_path."/front/config.form.php?forcetab=PluginGlpiinventoryConfig$0"
           ],
           [
               'text' => __('Configure inventory options', 'glpiinventory'),
-              'url'  => $fi_path."/front/config.form.php?forcetab=PluginFusioninventoryConfig$1"
+              'url'  => $fi_path."/front/config.form.php?forcetab=PluginGlpiinventoryConfig$1"
           ],
           [
               'text' => __('Define rules for entity', 'glpiinventory'),
@@ -511,8 +511,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo __('Statistics', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
-      $networkequipment = countElementsInTable('glpi_plugin_fusioninventory_networkequipments');
-      $printer    = countElementsInTable('glpi_plugin_fusioninventory_printers');
+      $networkequipment = countElementsInTable('glpi_plugin_glpiinventory_networkequipments');
+      $printer    = countElementsInTable('glpi_plugin_glpiinventory_printers');
 
       $dataSNMP = [];
       $dataSNMP[] = [
@@ -557,7 +557,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           ],
           [
               'text' => __('Define an agent allowed to discover the network', 'glpiinventory'),
-              'url'  => $fi_path."/front/config.form.php?forcetab=PluginFusioninventoryAgentmodule$1"
+              'url'  => $fi_path."/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
           ],
           [
               'text' => __('Create a new Task with discovery module and the agent defined previously', 'glpiinventory'),
@@ -574,7 +574,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           ],
           [
               'text' => __('Define an agent allowed to inventory the network by SNMP', 'glpiinventory'),
-              'url'  => $fi_path."/front/config.form.php?forcetab=PluginFusioninventoryAgentmodule$1"
+              'url'  => $fi_path."/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
           ],
           [
               'text' => __('Create a new Task with network inventory module and the agent defined previously', 'glpiinventory'),
@@ -622,7 +622,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $restrict_entity    = getEntitiesRestrictRequest(" AND", 'comp');
       $query_fi_computers = "SELECT COUNT(comp.`id`) as nb_computers
                              FROM glpi_computers comp
-                             LEFT JOIN glpi_plugin_fusioninventory_inventorycomputercomputers fi_comp
+                             LEFT JOIN glpi_plugin_glpiinventory_inventorycomputercomputers fi_comp
                                ON fi_comp.`computers_id` = comp.`id`
                              WHERE comp.`is_deleted`  = '0'
                                AND comp.`is_template` = '0'
@@ -654,7 +654,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $restrict_entity  = getEntitiesRestrictRequest(" AND", 'net');
       $query_fi_net = "SELECT COUNT(net.`id`) as nb_net
                              FROM glpi_networkequipments net
-                             LEFT JOIN glpi_plugin_fusioninventory_networkequipments fi_net
+                             LEFT JOIN glpi_plugin_glpiinventory_networkequipments fi_net
                                ON fi_net.`networkequipments_id` = net.`id`
                              WHERE net.`is_deleted`  = '0'
                                AND net.`is_template` = '0'
@@ -669,7 +669,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $restrict_entity = getEntitiesRestrictRequest(" AND", 'printers');
       $query_fi_printers = "SELECT COUNT(printers.`id`) as nb_printers
                              FROM glpi_printers printers
-                             LEFT JOIN glpi_plugin_fusioninventory_printers fi_printer
+                             LEFT JOIN glpi_plugin_glpiinventory_printers fi_printer
                                ON fi_printer.`printers_id` = printers.`id`
                              WHERE printers.`is_deleted`  = '0'
                                AND printers.`is_template` = '0'
@@ -697,7 +697,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $restrict_entity     = getEntitiesRestrictRequest(" AND", 'networkports');
       $query_fi_networkports = "SELECT COUNT(networkports.`id`) as nb_networkports
                              FROM glpi_networkports networkports
-                             LEFT JOIN glpi_plugin_fusioninventory_networkports fi_networkports
+                             LEFT JOIN glpi_plugin_glpiinventory_networkports fi_networkports
                                ON fi_networkports.`networkports_id` = networkports.`id`
                              WHERE networkports.`is_deleted`  = '0'
                                AND fi_networkports.`id` IS NOT NULL
@@ -708,12 +708,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       $query = "SELECT networkports.`id` FROM `glpi_networkports` networkports
-              LEFT JOIN `glpi_plugin_fusioninventory_networkports`
-                 ON `glpi_plugin_fusioninventory_networkports`.`networkports_id` = networkports.`id`
+              LEFT JOIN `glpi_plugin_glpiinventory_networkports`
+                 ON `glpi_plugin_glpiinventory_networkports`.`networkports_id` = networkports.`id`
               LEFT JOIN glpi_networkports_networkports
                   ON (`networkports_id_1`=networkports.`id`
                      OR `networkports_id_2`=networkports.`id`)
-              WHERE `glpi_plugin_fusioninventory_networkports`.`id` IS NOT NULL
+              WHERE `glpi_plugin_glpiinventory_networkports`.`id` IS NOT NULL
                   AND `glpi_networkports_networkports`.`id` IS NOT NULL
                   $restrict_entity";
       $result = $DB->query($query);
@@ -736,7 +736,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $restrict_entity     = getEntitiesRestrictRequest(" AND", 'networkports');
       $query_fi_networkports = "SELECT COUNT(networkports.`id`) as nb_networkports
                              FROM glpi_networkports networkports
-                             LEFT JOIN glpi_plugin_fusioninventory_networkports fi_networkports
+                             LEFT JOIN glpi_plugin_glpiinventory_networkports fi_networkports
                                ON fi_networkports.`networkports_id` = networkports.`id`
                              WHERE networkports.`is_deleted`  = '0'
                                AND (fi_networkports.`ifstatus`='1'
@@ -761,21 +761,21 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       ];
 
       // Number of computer inventories in last hour, 6 hours, 24 hours
-      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
+      $dataInventory = PluginGlpiinventoryInventoryComputerStat::getLastHours();
 
       // Deploy
-      $restrict_entity = getEntitiesRestrictRequest(" AND", 'glpi_plugin_fusioninventory_taskjobs');
-      $query = "SELECT `plugin_fusioninventory_tasks_id`
-                FROM glpi_plugin_fusioninventory_taskjobs
+      $restrict_entity = getEntitiesRestrictRequest(" AND", 'glpi_plugin_glpiinventory_taskjobs');
+      $query = "SELECT `plugin_glpiinventory_tasks_id`
+                FROM glpi_plugin_glpiinventory_taskjobs
                 WHERE method LIKE '%deploy%'
                   $restrict_entity
-                GROUP BY `plugin_fusioninventory_tasks_id`";
+                GROUP BY `plugin_glpiinventory_tasks_id`";
       $result = $DB->query($query);
       $a_tasks = [];
       while ($data=$DB->fetchArray($result)) {
-         $a_tasks[] = $data['plugin_fusioninventory_tasks_id'];
+         $a_tasks[] = $data['plugin_glpiinventory_tasks_id'];
       }
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       // Do not get logs with the jobs states, this to avoid long request time
       // and this is not useful on the plugin home page
       $data = $pfTask->getJoblogs($a_tasks, $with_logs = false);

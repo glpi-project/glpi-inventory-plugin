@@ -32,13 +32,13 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
 if (!isset($_GET["id"])) {
    $_GET["id"] = "";
 }
 
-$pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
+$pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
 foreach ($_POST as $key=>$value) {
    if (strstr($key, 'purge-')) {
       $split = explode('-', $key);
@@ -49,7 +49,7 @@ foreach ($_POST as $key=>$value) {
    }
 }
 
-$pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
+$pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
 
 $pfTimeslotEntry->addEntry($_POST);
 

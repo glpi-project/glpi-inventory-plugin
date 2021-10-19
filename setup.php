@@ -91,122 +91,122 @@ function plugin_init_glpiinventory() {
 
       // Register classes into GLPI plugin factory
 
-      $Plugin->registerClass('PluginFusioninventoryAgent',
+      $Plugin->registerClass('PluginGlpiinventoryAgent',
          [
             'addtabon' => [
                'Printer',
                'NetworkEquipment',
-               'PluginFusioninventoryCredentialIp'
+               'PluginGlpiinventoryCredentialIp'
             ]
          ]
       );
-      $Plugin->registerClass('PluginFusioninventoryAgentmodule');
-      $Plugin->registerClass('PluginFusioninventoryConfig');
-      $Plugin->registerClass('PluginFusioninventoryTask');
+      $Plugin->registerClass('PluginGlpiinventoryAgentmodule');
+      $Plugin->registerClass('PluginGlpiinventoryConfig');
+      $Plugin->registerClass('PluginGlpiinventoryTask');
 
-      $Plugin->registerClass('PluginFusioninventoryTaskjob',
+      $Plugin->registerClass('PluginGlpiinventoryTaskjob',
          [
             'addtabon' => [
-               'PluginFusioninventoryTask',
+               'PluginGlpiinventoryTask',
             ]
          ]
       );
 
-      $Plugin->registerClass('PluginFusioninventoryTaskjobstate',
+      $Plugin->registerClass('PluginGlpiinventoryTaskjobstate',
          [
             'addtabon' => [
-               'PluginFusioninventoryTask',
+               'PluginGlpiinventoryTask',
                'Computer',
             ]
          ]
       );
 
-      $Plugin->registerClass('PluginFusioninventoryUnmanaged');
-      $Plugin->registerClass('PluginFusioninventoryModule');
-      $Plugin->registerClass('PluginFusioninventoryProfile',
+      $Plugin->registerClass('PluginGlpiinventoryUnmanaged');
+      $Plugin->registerClass('PluginGlpiinventoryModule');
+      $Plugin->registerClass('PluginGlpiinventoryProfile',
               ['addtabon' => ['Profile']]);
-      $Plugin->registerClass('PluginFusioninventoryEntity',
+      $Plugin->registerClass('PluginGlpiinventoryEntity',
               ['addtabon' => ['Entity']]);
-      $Plugin->registerClass('PluginFusioninventorySetup');
-      $Plugin->registerClass('PluginFusioninventoryIPRange');
-      $Plugin->registerClass('PluginFusioninventoryIPRange_ConfigSecurity',
-              ['addtabon' => 'PluginFusioninventoryIPRange']);
-      $Plugin->registerClass('PluginFusioninventoryCredential');
-      $Plugin->registerClass('PluginFusioninventoryTimeslot');
-      $Plugin->registerClass('PluginFusioninventoryLock',
+      $Plugin->registerClass('PluginGlpiinventorySetup');
+      $Plugin->registerClass('PluginGlpiinventoryIPRange');
+      $Plugin->registerClass('PluginGlpiinventoryIPRange_ConfigSecurity',
+              ['addtabon' => 'PluginGlpiinventoryIPRange']);
+      $Plugin->registerClass('PluginGlpiinventoryCredential');
+      $Plugin->registerClass('PluginGlpiinventoryTimeslot');
+      $Plugin->registerClass('PluginGlpiinventoryLock',
               ['addtabon' => ['Computer', 'Printer', 'NetworkEquipment']]);
 
-      $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
+      $Plugin->registerClass('PluginGlpiinventoryInventoryComputerComputer',
               ['addtabon' => ['Computer']]);
-      $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
-      $Plugin->registerClass('PluginFusioninventoryCollect',
+      $Plugin->registerClass('PluginGlpiinventoryInventoryComputerInventory');
+      $Plugin->registerClass('PluginGlpiinventoryCollect',
                               ['addtabon' => ['Computer']]);
-      $Plugin->registerClass('PluginFusioninventoryCollect_Registry',
-              ['addtabon' => ['PluginFusioninventoryCollect']]);
-      $Plugin->registerClass('PluginFusioninventoryCollect_Registry_Content',
-              ['addtabon' => ['PluginFusioninventoryCollect']]);
-      $Plugin->registerClass('PluginFusioninventoryCollect_Wmi',
-              ['addtabon' => ['PluginFusioninventoryCollect']]);
-      $Plugin->registerClass('PluginFusioninventoryCollect_Wmi_Content',
-              ['addtabon' => ['PluginFusioninventoryCollect']]);
-      $Plugin->registerClass('PluginFusioninventoryCollect_File',
-              ['addtabon' => ['PluginFusioninventoryCollect']]);
-      $Plugin->registerClass('PluginFusioninventoryCollect_File_Content',
-              ['addtabon' => ['PluginFusioninventoryCollect']]);
-      $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
+      $Plugin->registerClass('PluginGlpiinventoryCollect_Registry',
+              ['addtabon' => ['PluginGlpiinventoryCollect']]);
+      $Plugin->registerClass('PluginGlpiinventoryCollect_Registry_Content',
+              ['addtabon' => ['PluginGlpiinventoryCollect']]);
+      $Plugin->registerClass('PluginGlpiinventoryCollect_Wmi',
+              ['addtabon' => ['PluginGlpiinventoryCollect']]);
+      $Plugin->registerClass('PluginGlpiinventoryCollect_Wmi_Content',
+              ['addtabon' => ['PluginGlpiinventoryCollect']]);
+      $Plugin->registerClass('PluginGlpiinventoryCollect_File',
+              ['addtabon' => ['PluginGlpiinventoryCollect']]);
+      $Plugin->registerClass('PluginGlpiinventoryCollect_File_Content',
+              ['addtabon' => ['PluginGlpiinventoryCollect']]);
+      $Plugin->registerClass('PluginGlpiinventoryComputerLicenseInfo',
               ['addtabon' => ['Computer']]);
-      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement');
+      $Plugin->registerClass('PluginGlpiinventoryComputerRemoteManagement');
 
          //Classes for rulesengine
-      $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocation');
-      $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
+      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleLocation');
+      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleLocationCollection',
               ['rulecollections_types'=>true]);
-      $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntity');
-      $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
+      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleEntity');
+      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleEntityCollection',
               ['rulecollections_types'=>true]);
-      $Plugin->registerClass('PluginFusioninventoryRulematchedlog',
+      $Plugin->registerClass('PluginGlpiinventoryRulematchedlog',
               ['addtabon' => ['Computer',
                               'Monitor',
                               'NetworkEquipment',
                               'Peripheral',
                               'Phone',
-                              'PluginFusioninventoryAgent',
-                              'PluginFusioninventoryUnmanaged',
+                              'PluginGlpiinventoryAgent',
+                              'PluginGlpiinventoryUnmanaged',
                               'Printer']]);
 
       //Classes for rulesengine
-      $Plugin->registerClass('PluginFusioninventoryInventoryRuleImport');
-      $Plugin->registerClass('PluginFusioninventoryInventoryRuleImportCollection',
+      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleImport');
+      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleImportCollection',
               ['rulecollections_types'=>true]);
-      $Plugin->registerClass('PluginFusioninventoryConstructDevice');
+      $Plugin->registerClass('PluginGlpiinventoryConstructDevice');
 
       // Networkinventory and networkdiscovery
-      $Plugin->registerClass('PluginFusioninventorySnmpmodel');
-      $Plugin->registerClass('PluginFusioninventoryNetworkEquipment',
+      $Plugin->registerClass('PluginGlpiinventorySnmpmodel');
+      $Plugin->registerClass('PluginGlpiinventoryNetworkEquipment',
               ['addtabon' => ['NetworkEquipment']]);
-      $Plugin->registerClass('PluginFusioninventoryPrinter',
+      $Plugin->registerClass('PluginGlpiinventoryPrinter',
               ['addtabon' => ['Printer']]);
-      $Plugin->registerClass('PluginFusioninventoryPrinterCartridge');
-      $Plugin->registerClass('PluginFusioninventoryConfigSecurity');
-      $Plugin->registerClass('PluginFusioninventoryNetworkPortLog',
+      $Plugin->registerClass('PluginGlpiinventoryPrinterCartridge');
+      $Plugin->registerClass('PluginGlpiinventoryConfigSecurity');
+      $Plugin->registerClass('PluginGlpiinventoryNetworkPortLog',
               ['addtabon' => ['NetworkPort']]);
       $Plugin->registerClass('PluginFusinvsnmpAgentconfig');
-      $Plugin->registerClass('PluginFusioninventoryNetworkPort');
-      $Plugin->registerClass('PluginFusioninventoryStateDiscovery');
-      $Plugin->registerClass('PluginFusioninventoryPrinterLogReport');
-      $Plugin->registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
+      $Plugin->registerClass('PluginGlpiinventoryNetworkPort');
+      $Plugin->registerClass('PluginGlpiinventoryStateDiscovery');
+      $Plugin->registerClass('PluginGlpiinventoryPrinterLogReport');
+      $Plugin->registerClass('PluginGlpiinventorySnmpmodelConstructdevice_User',
               ['addtabon' => ['User']]);
-      $Plugin->registerClass('PluginFusioninventoryDeployGroup');
-      $Plugin->registerClass('PluginFusioninventoryDeployGroup_Staticdata',
-              ['addtabon' => ['PluginFusioninventoryDeployGroup']]);
-      $Plugin->registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
-              ['addtabon' => ['PluginFusioninventoryDeployGroup']]);
-      $Plugin->registerClass('PluginFusioninventoryDeployPackage',
+      $Plugin->registerClass('PluginGlpiinventoryDeployGroup');
+      $Plugin->registerClass('PluginGlpiinventoryDeployGroup_Staticdata',
+              ['addtabon' => ['PluginGlpiinventoryDeployGroup']]);
+      $Plugin->registerClass('PluginGlpiinventoryDeployGroup_Dynamicdata',
+              ['addtabon' => ['PluginGlpiinventoryDeployGroup']]);
+      $Plugin->registerClass('PluginGlpiinventoryDeployPackage',
               ['addtabon' => ['Computer']]);
 
-      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
-                                                      "glpi_plugin_fusioninventory_printers";
-      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryComputer"] =
+      $CFG_GLPI['glpitablesitemtype']["PluginGlpiinventoryPrinterLogReport"] =
+                                                      "glpi_plugin_glpiinventory_printers";
+      $CFG_GLPI['glpitablesitemtype']["PluginGlpiinventoryComputer"] =
                                                       "glpi_computers";
 
       // ##### 3. get informations of the plugin #####
@@ -215,33 +215,33 @@ function plugin_init_glpiinventory() {
       $moduleId = $Plugin->fields['id'];
 
       // Load config
-      PluginFusioninventoryConfig::loadCache();
+      PluginGlpiinventoryConfig::loadCache();
 
       // ##### 5. Set in session XMLtags of methods #####
 
-      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
-      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
-                                             = 'PluginFusioninventoryInventoryComputerInventory';
-      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKDISCOVERY']
-                                             = 'PluginFusioninventoryCommunicationNetworkDiscovery';
-      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY']
-                                             = 'PluginFusioninventoryCommunicationNetworkInventory';
+      $_SESSION['glpi_plugin_glpiinventory']['xmltags']['WAKEONLAN'] = '';
+      $_SESSION['glpi_plugin_glpiinventory']['xmltags']['INVENTORY']
+                                             = 'PluginGlpiinventoryInventoryComputerInventory';
+      $_SESSION['glpi_plugin_glpiinventory']['xmltags']['NETWORKDISCOVERY']
+                                             = 'PluginGlpiinventoryCommunicationNetworkDiscovery';
+      $_SESSION['glpi_plugin_glpiinventory']['xmltags']['NETWORKINVENTORY']
+                                             = 'PluginGlpiinventoryCommunicationNetworkInventory';
 
       // set default values for task view
-      if (!isset($_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'])) {
-         $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'] = 2;
+      if (!isset($_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'])) {
+         $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] = 2;
       }
-      if (!isset($_SESSION['glpi_plugin_fusioninventory']['refresh'])) {
-         $_SESSION['glpi_plugin_fusioninventory']['refresh'] = 'off';
+      if (!isset($_SESSION['glpi_plugin_glpiinventory']['refresh'])) {
+         $_SESSION['glpi_plugin_glpiinventory']['refresh'] = 'off';
       }
 
       $PLUGIN_HOOKS['import_item']['glpiinventory'] = [
           'Computer' => ['Plugin']];
 
-      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
+      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_glpiinventory_ipranges';
 
-      $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnmanaged';
-      $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryComputer';
+      $CFG_GLPI["networkport_types"][] = 'PluginGlpiinventoryUnmanaged';
+      $CFG_GLPI["networkport_types"][] = 'PluginGlpiinventoryComputer';
 
       /**
        * Load the relevant javascript/css files only on pages that need them.
@@ -289,18 +289,18 @@ function plugin_init_glpiinventory() {
          $PLUGIN_HOOKS['add_javascript']['glpiinventory'][] = "js/stats".($debug_mode || !file_exists('js/stats.min.js')?"":".min").".js";
       }
 
-      if (Session::haveRight('plugin_fusioninventory_configuration', READ)
+      if (Session::haveRight('plugin_glpiinventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page
          $PLUGIN_HOOKS['config_page']['glpiinventory'] = 'front/config.form.php'.
                  '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
       }
 
       $PLUGIN_HOOKS['autoinventory_information']['glpiinventory'] = [
-            'Computer' =>  ['PluginFusioninventoryInventoryComputerComputer',
+            'Computer' =>  ['PluginGlpiinventoryInventoryComputerComputer',
                                  'showComputerInfo'],
-            'NetworkEquipment' => ['PluginFusioninventoryNetworkEquipment',
+            'NetworkEquipment' => ['PluginGlpiinventoryNetworkEquipment',
                                         'showInfo'],
-            'Printer' => ['PluginFusioninventoryPrinter',
+            'Printer' => ['PluginGlpiinventoryPrinter',
                                         'showInfo']];
 
       $PLUGIN_HOOKS['post_item_form']['glpiinventory']
@@ -328,40 +328,40 @@ function plugin_init_glpiinventory() {
          'Peripheral'       => 'plugin_item_update_fusioninventory',
          'Phone'            => 'plugin_item_update_fusioninventory',
          'NetworkPort'      => 'plugin_item_update_fusioninventory',
-         'PluginFusioninventoryLock' => ['PluginFusioninventoryLock', 'deleteLock']
+         'PluginGlpiinventoryLock' => ['PluginGlpiinventoryLock', 'deleteLock']
       ];
 
       $PLUGIN_HOOKS['pre_item_purge']['glpiinventory'] = [
          'Computer'                 =>'plugin_pre_item_purge_fusioninventory',
          'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
-         'PluginFusioninventoryLock'=> ['PluginFusioninventoryLock', 'deleteLock']
+         'PluginGlpiinventoryLock'=> ['PluginGlpiinventoryLock', 'deleteLock']
          ];
       $p = [
          'NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
-         'PluginFusioninventoryTask'          => ['PluginFusioninventoryTask', 'purgeTask'],
-         'PluginFusioninventoryTaskjob'       => ['PluginFusioninventoryTaskjob', 'purgeTaskjob'],
-         'PluginFusioninventoryUnmanaged'     => ['PluginFusioninventoryUnmanaged', 'purgeUnmanagedDevice'],
+         'PluginGlpiinventoryTask'          => ['PluginGlpiinventoryTask', 'purgeTask'],
+         'PluginGlpiinventoryTaskjob'       => ['PluginGlpiinventoryTaskjob', 'purgeTaskjob'],
+         'PluginGlpiinventoryUnmanaged'     => ['PluginGlpiinventoryUnmanaged', 'purgeUnmanagedDevice'],
          'NetworkEquipment'                   => 'plugin_item_purge_fusioninventory',
          'Printer'                            => 'plugin_item_purge_fusioninventory',
-         'PluginFusioninventoryTimeslot'      => 'plugin_item_purge_fusioninventory',
+         'PluginGlpiinventoryTimeslot'      => 'plugin_item_purge_fusioninventory',
          'Entity'                             => 'plugin_item_purge_fusioninventory',
-         'PluginFusioninventoryDeployPackage' => 'plugin_item_purge_fusioninventory'
+         'PluginGlpiinventoryDeployPackage' => 'plugin_item_purge_fusioninventory'
       ];
       $PLUGIN_HOOKS['item_purge']['glpiinventory'] = $p;
 
       $PLUGIN_HOOKS['item_transfer']['glpiinventory'] = 'plugin_item_transfer_fusioninventory';
 
-      if (Session::haveRight('plugin_fusioninventory_unmanaged', READ)) {
-         $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['assets'] = 'PluginFusioninventoryUnmanaged';
+      if (Session::haveRight('plugin_glpiinventory_unmanaged', READ)) {
+         $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['assets'] = 'PluginGlpiinventoryUnmanaged';
       }
-      if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
-         $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['admin'] = 'PluginFusioninventoryMenu';
+      if (Session::haveRight('plugin_glpiinventory_menu', READ)) {
+         $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['admin'] = 'PluginGlpiinventoryMenu';
       }
 
       // For end users
       if (isset($_SESSION['glpiactiveprofile']['interface'])
               && $_SESSION['glpiactiveprofile']['interface'] == 'helpdesk') {
-         $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
          if ($pfDeployPackage->canUserDeploySelf()) {
             $PLUGIN_HOOKS['helpdesk_menu_entry']['glpiinventory'] = '/front/deploypackage.public.php';
             $PLUGIN_HOOKS['add_css']['glpiinventory'][]="css/views.css";
@@ -375,11 +375,11 @@ function plugin_init_glpiinventory() {
 
       if (isset($_SESSION["glpiname"])) {
          $report_list = [];
-         if (Session::haveRight('plugin_fusioninventory_reportprinter', READ)) {
+         if (Session::haveRight('plugin_glpiinventory_reportprinter', READ)) {
             $report_list["front/printerlogreport.php"] = __('Printed page counter', 'glpiinventory');
 
          }
-         if (Session::haveRight('plugin_fusioninventory_reportnetworkequipment', READ)) {
+         if (Session::haveRight('plugin_glpiinventory_reportnetworkequipment', READ)) {
             $report_list["report/switch_ports.history.php"] = __('Switch ports history', 'glpiinventory');
 
             $report_list["report/ports_date_connections.php"] = __('Unused switch ports', 'glpiinventory');
@@ -396,7 +396,7 @@ function plugin_init_glpiinventory() {
           * Deploy submenu entries
           */
 
-         if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {// Config page
+         if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {// Config page
             $PLUGIN_HOOKS['submenu_entry']['glpiinventory']['config'] = 'front/config.form.php';
          }
 
@@ -408,8 +408,8 @@ function plugin_init_glpiinventory() {
                     && filter_input(INPUT_GET, "_itemtype") == 'NetworkEquipment') {
 
                if (filter_input(INPUT_GET, "_glpi_tab") == 'NetworkPort$1') {
-                  $_UGET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
-               } else if (filter_input(INPUT_GET, "_glpi_tab") == 'PluginFusioninventoryNetworkEquipment$1') {
+                  $_UGET['_glpi_tab'] = 'PluginGlpiinventoryNetworkEquipment$1';
+               } else if (filter_input(INPUT_GET, "_glpi_tab") == 'PluginGlpiinventoryNetworkEquipment$1') {
                   $_GET['displaysnmpinfo'] = 1;
                }
             }
@@ -434,11 +434,11 @@ function plugin_init_glpiinventory() {
       }
 
       // Hack for use meta in group search engine
-      $CFG_GLPI['PluginFusioninventoryComputer_types'] = $CFG_GLPI['link_types'];
+      $CFG_GLPI['PluginGlpiinventoryComputer_types'] = $CFG_GLPI['link_types'];
 
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(PLUGIN_GLPI_INVENTORY_DIR.'/inc/module.class.php');
-      $moduleId = PluginFusioninventoryModule::getModuleId('glpiinventory');
+      $moduleId = PluginGlpiinventoryModule::getModuleId('glpiinventory');
    }
 
    // Check for uninstall
@@ -448,7 +448,7 @@ function plugin_init_glpiinventory() {
            && $action == 'uninstall'
            && (strstr(filter_input(INPUT_SERVER, "HTTP_REFERER"), "front/plugin.php"))) {
 
-      if (PluginFusioninventoryModule::getAll(true)) {
+      if (PluginGlpiinventoryModule::getAll(true)) {
           Session::addMessageAfterRedirect(__('Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin'));
 
          Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
@@ -457,8 +457,8 @@ function plugin_init_glpiinventory() {
    }
 
    // Add unmanaged devices in list of devices with networkport
-   //$CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnmanaged";
-   $CFG_GLPI["networkport_types"][] = "PluginFusioninventoryUnmanaged";
+   //$CFG_GLPI["netport_types"][] = "PluginGlpiinventoryUnmanaged";
+   $CFG_GLPI["networkport_types"][] = "PluginGlpiinventoryUnmanaged";
 
    // exclude some pages from splitted layout
    if (isset($CFG_GLPI['layout_excluded_pages'])) { // to be compatible with glpi 0.85
@@ -568,7 +568,7 @@ function plugin_glpiinventory_check_config() {
  * @param string $right
  * @return boolean
  */
-function plugin_fusioninventory_haveTypeRight($type, $right) {
+function plugin_glpiinventory_haveTypeRight($type, $right) {
    return true;
 }
 

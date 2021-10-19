@@ -47,10 +47,10 @@ if (!empty($fi_machineid)) {
    switch (filter_input(INPUT_GET, "action")) {
 
       case 'getJobs':
-         $pfAgent        = new PluginFusioninventoryAgent();
-         $pfTask         = new PluginFusioninventoryTask();
-         $pfTaskjob      = new PluginFusioninventoryTaskjob();
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+         $pfAgent        = new PluginGlpiinventoryAgent();
+         $pfTask         = new PluginGlpiinventoryTask();
+         $pfTaskjob      = new PluginGlpiinventoryTaskjob();
+         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
          $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep(filter_input(INPUT_GET, "machineid")));
 
@@ -64,7 +64,7 @@ if (!empty($fi_machineid)) {
             $order = new stdClass;
             $order->jobs = [];
 
-            $module = new PluginFusioninventoryInventoryComputerESX();
+            $module = new PluginGlpiinventoryInventoryComputerESX();
             foreach ($taskjobstates as $taskjobstate) {
                $order->jobs[] = $module->run($taskjobstate);
 
@@ -86,7 +86,7 @@ if (!empty($fi_machineid)) {
 
       case 'setLog':
          //Generic method to update logs
-         PluginFusioninventoryCommunicationRest::updateLog($_GET);
+         PluginGlpiinventoryCommunicationRest::updateLog($_GET);
          break;
    }
 

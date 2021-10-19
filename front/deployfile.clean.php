@@ -34,19 +34,19 @@ include ("../../../inc/includes.php");
 
 Session::checkLoginUser();
 
-Session::checkRight('plugin_fusioninventory_package', PURGE);
+Session::checkRight('plugin_glpiinventory_package', PURGE);
 
 Html::header(__('GLPI Inventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
-   "pluginfusioninventorymenu", "deploypackage");
+   "pluginglpiinventorymenu", "deploypackage");
 
-$pfDeployfile = new PluginFusioninventoryDeployFile();
+$pfDeployfile = new PluginGlpiinventoryDeployFile();
 
 if (isset($_GET['delete'])) {
    $pfDeployfile->deleteUnusedFiles();
    Html::back();
 }
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 $pfDeployfile->numberUnusedFiles();
 

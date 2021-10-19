@@ -38,20 +38,20 @@ if (!defined('GLPI_ROOT')) {
  * Manage the hooks for computer inventory. It's some other things we can do
  * with inventory information.
  */
-class PluginFusioninventoryInventoryComputerLibhook {
+class PluginGlpiinventoryInventoryComputerLibhook {
 
 
    /**
     * __contruct function where initilize sessions variables
     */
    function __construct() {
-      if (!isset($_SESSION["plugin_fusioninventory_history_add"])) {
-         $_SESSION["plugin_fusioninventory_history_add"] = true;
+      if (!isset($_SESSION["plugin_glpiinventory_history_add"])) {
+         $_SESSION["plugin_glpiinventory_history_add"] = true;
       }
-      if (!isset($_SESSION["plugin_fusioninventory_no_history_add"])) {
-         $_SESSION["plugin_fusioninventory_no_history_add"] = false;
+      if (!isset($_SESSION["plugin_glpiinventory_no_history_add"])) {
+         $_SESSION["plugin_glpiinventory_no_history_add"] = false;
       }
-      $_SESSION["plugin_fusioninventory_userdefined"] = 0;
+      $_SESSION["plugin_glpiinventory_userdefined"] = 0;
    }
 
 

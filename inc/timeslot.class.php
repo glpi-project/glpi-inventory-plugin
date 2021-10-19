@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the timeslot for tasks. It's the time in the week the task run.
  */
-class PluginFusioninventoryTimeslot extends CommonDBTM {
+class PluginGlpiinventoryTimeslot extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -51,7 +51,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_task';
+   static $rightname = 'plugin_glpiinventory_task';
 
 
    /**
@@ -162,7 +162,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $condition = [];
 
       if (count($timeslot_ids)) {
-         $condition['plugin_fusioninventory_timeslots_id'] = $timeslot_ids;
+         $condition['plugin_glpiinventory_timeslots_id'] = $timeslot_ids;
       }
 
       if (!is_null($weekdays)) {
@@ -172,13 +172,13 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $results = [];
 
       $timeslot_entries = getAllDataFromTable(
-         "glpi_plugin_fusioninventory_timeslotentries",
+         "glpi_plugin_glpiinventory_timeslotentries",
          $condition,
          false, ''
       );
 
       foreach ($timeslot_entries as $timeslot_entry) {
-         $timeslot_id = $timeslot_entry['plugin_fusioninventory_timeslots_id'];
+         $timeslot_id = $timeslot_entry['plugin_glpiinventory_timeslots_id'];
          $timeslot_entry_id = $timeslot_entry['id'];
          $results[$timeslot_id][$timeslot_entry_id] = $timeslot_entry;
       }
@@ -207,9 +207,9 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       //Get all timeslots currently active
       $query_timeslot = "SELECT `t`.`id`
-                         FROM `glpi_plugin_fusioninventory_timeslots` as t
-                         INNER JOIN `glpi_plugin_fusioninventory_timeslotentries` as te
-                           ON (`te`.`plugin_fusioninventory_timeslots_id`=`t`.`id`)
+                         FROM `glpi_plugin_glpiinventory_timeslots` as t
+                         INNER JOIN `glpi_plugin_glpiinventory_timeslotentries` as te
+                           ON (`te`.`plugin_glpiinventory_timeslots_id`=`t`.`id`)
                          WHERE $timeinsecs BETWEEN `te`.`begin`
                             AND `te`.`end`
                             AND `day`='".$day_of_week."'";
@@ -271,7 +271,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $this->showFormButtons($options);
 
       if ($ID > 0) {
-         $pf = new PluginFusioninventoryTimeslotEntry();
+         $pf = new PluginGlpiinventoryTimeslotEntry();
          $pf->formEntry($ID);
       }
       return true;

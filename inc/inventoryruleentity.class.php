@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage entity rules for computer.
  */
-class PluginFusioninventoryInventoryRuleEntity extends Rule {
+class PluginGlpiinventoryInventoryRuleEntity extends Rule {
 
    /**
     * Set these rules can be sorted
@@ -58,7 +58,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_ruleentity';
+   static $rightname = 'plugin_glpiinventory_ruleentity';
 
    const PATTERN_CIDR     = 333;
    const PATTERN_NOT_CIDR = 334;
@@ -104,27 +104,27 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     */
    function executeActions($output, $params, array $input = []) {
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules-entity",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules-entity",
          "execute actions, data:\n". print_r($output, true). "\n" . print_r($params, true)
       );
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules-entity",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules-entity",
          "execute actions: ". count($this->actions) ."\n"
       );
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-rules-entity",
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-rules-entity",
                "- action: ". $action->fields["action_type"] ." for: ". $action->fields["field"] ."\n"
             );
 
             switch ($action->fields["action_type"]) {
                case "assign" :
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-rules-entity",
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-rules-entity",
                      "- value ".$action->fields["value"]."\n"
                   );
                   // todo: If always for an entity, use entities_id, no?
@@ -134,8 +134,8 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                case "regex_result" :
                   //Assign entity using the regex's result
                   if ($action->fields["field"] == "_affect_entity_by_tag") {
-                     PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-rules-entity",
+                     PluginGlpiinventoryToolbox::logIfExtradebug(
+                        "pluginGlpiinventory-rules-entity",
                         "- value ".$action->fields["value"]."\n"
                      );
                      //Get the TAG from the regex's results
@@ -146,8 +146,8 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                         $target_entity = Entity::getEntityIDByTag($res);
                         if ($target_entity != '') {
                            $output["entities_id"]=$target_entity;
-                           PluginFusioninventoryToolbox::logIfExtradebug(
-                              "pluginFusioninventory-rules-entity",
+                           PluginGlpiinventoryToolbox::logIfExtradebug(
+                              "pluginGlpiinventory-rules-entity",
                               "- set entity: ".$target_entity."\n"
                            );
                         } else {
@@ -249,7 +249,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          case Rule::PATTERN_FIND:
             return false;
 
-         case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
+         case PluginGlpiinventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
             return true;
 

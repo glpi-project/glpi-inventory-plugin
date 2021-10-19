@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the search in groups (static and dynamic).
  */
-class PluginFusioninventoryComputer extends Computer {
+class PluginGlpiinventoryComputer extends Computer {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_group";
+   static $rightname = "plugin_glpiinventory_group";
 
    function rawSearchOptions() {
       $computer = new Computer();
@@ -89,7 +89,7 @@ class PluginFusioninventoryComputer extends Computer {
       } else {
          $id = $_POST['id'];
       }
-      $group = new PluginFusioninventoryDeployGroup();
+      $group = new PluginGlpiinventoryDeployGroup();
       $group->getFromDB($id);
 
       //There's no massive action associated with a dynamic group !
@@ -98,16 +98,16 @@ class PluginFusioninventoryComputer extends Computer {
       }
 
       if (!isset($_POST['custom_action'])) {
-            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
+            $actions['PluginGlpiinventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
                = _x('button', 'Add to associated items of the group');
-            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
+            $actions['PluginGlpiinventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
                = _x('button', 'Remove from associated items of the group');
       } else {
          if ($_POST['custom_action'] == 'add_to_group') {
-            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
+            $actions['PluginGlpiinventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
                = _x('button', 'Add to associated items of the group');
          } else if ($_POST['custom_action'] == 'delete_from_group') {
-            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
+            $actions['PluginGlpiinventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
                = _x('button', 'Remove from associated items of the group');
          }
       }
@@ -139,7 +139,7 @@ class PluginFusioninventoryComputer extends Computer {
     */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids) {
 
-      $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+      $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
       switch ($ma->getAction()) {
 
          case 'add' :
@@ -147,12 +147,12 @@ class PluginFusioninventoryComputer extends Computer {
                if ($item->can($key, UPDATE)) {
                   if (!countElementsInTable($group_item->getTable(),
                      [
-                        'plugin_fusioninventory_deploygroups_id' => $_POST['id'],
+                        'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
                         'itemtype'                               => 'Computer',
                         'items_id'                               => $key,
                      ])) {
                      $group_item->add([
-                        'plugin_fusioninventory_deploygroups_id'
+                        'plugin_glpiinventory_deploygroups_id'
                            => $_POST['id'],
                         'itemtype' => 'Computer',
                         'items_id' => $key]);
@@ -171,7 +171,7 @@ class PluginFusioninventoryComputer extends Computer {
             foreach ($ids as $key) {
                if ($group_item->deleteByCriteria(['items_id' => $key,
                                                        'itemtype' => 'Computer',
-                                                       'plugin_fusioninventory_deploygroups_id'
+                                                       'plugin_glpiinventory_deploygroups_id'
                                                           => $_POST['id']])) {
                   $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                } else {

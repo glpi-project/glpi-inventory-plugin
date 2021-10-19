@@ -35,7 +35,7 @@ include ("../../../inc/includes.php");
 if (isset($_GET['id'])
         && isset($_GET['lock'])) {
 
-   $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+   $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
    $input = [];
    $input['id'] = $_GET['id'];
    $input['is_entitylocked'] = $_GET['lock'];

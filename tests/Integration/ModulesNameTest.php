@@ -151,29 +151,29 @@ class ModulesNameTest extends TestCase {
   <QUERY>INVENTORY</QUERY>
 </REQUEST>';
 
-      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $pfCommunication  = new PluginGlpiinventoryCommunication();
 
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+         'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
       ]);
 
-      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs'));
       foreach ($iterator as $data) {
          $this->assertEquals('inventory', $data['method']);
       }
 
       // second run (update)
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+         'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
       ]);
 
-      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs'));
       foreach ($iterator as $data) {
          $this->assertEquals('inventory', $data['method']);
       }
@@ -233,15 +233,15 @@ class ModulesNameTest extends TestCase {
   <QUERY>MODULENAMETEST</QUERY>
 </REQUEST>';
 
-      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $pfCommunication  = new PluginGlpiinventoryCommunication();
       $versions = ['SNMPQUERY', 'SNMPINVENTORY'];
       foreach ($versions as $versionName) {
-         $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+         $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
          $xmlNew = str_replace('MODULENAMETEST', $versionName, $xml);
          $pfCommunication->handleOCSCommunication('', $xmlNew, 'glpi');
 
          $iterator = $DB->request([
-            'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+            'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
          ]);
          $this->assertEquals(2, count($iterator), 'Must have 2, 1 for the switch and 1 for the device found on port');
          foreach ($iterator as $data) {
@@ -284,13 +284,13 @@ class ModulesNameTest extends TestCase {
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $pfCommunication  = new PluginGlpiinventoryCommunication();
       $computer        = new Computer();
-      $pfAgent         = new PluginFusioninventoryAgent();
-      $pfTask          = new PluginFusioninventoryTask();
-      $pfTaskjob       = new PluginFusioninventoryTaskjob;
-      $pfIPRange       = new PluginFusioninventoryIPRange();
-      $pfTaskjobstate  = new PluginFusioninventoryTaskjobstate();
+      $pfAgent         = new PluginGlpiinventoryAgent();
+      $pfTask          = new PluginGlpiinventoryTask();
+      $pfTaskjob       = new PluginGlpiinventoryTaskjob;
+      $pfIPRange       = new PluginGlpiinventoryIPRange();
+      $pfTaskjobstate  = new PluginGlpiinventoryTaskjobstate();
 
       // Create computers + agents
       $input = [
@@ -319,7 +319,7 @@ class ModulesNameTest extends TestCase {
       $ipranges_id = $pfIPRange->add($input);
 
       // Allow all agents to do network discovery
-      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules` "
+      $query = "UPDATE `glpi_plugin_glpiinventory_agentmodules` "
               . " SET `is_active`='1' "
               . " WHERE `modulename`='NETWORKDISCOVERY'";
       $DB->query($query);
@@ -334,28 +334,28 @@ class ModulesNameTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
-          'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]',
-          'actors'                          => '[{"PluginFusioninventoryAgent":"'.$pfAgent->fields['id'].'"}]'
+          'targets'                         => '[{"PluginGlpiinventoryIPRange":"'.$ipranges_id.'"}]',
+          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$pfAgent->fields['id'].'"}]'
       ];
       $pfTaskjob->add($input);
 
       // Prepare job
-      PluginFusioninventoryTask::cronTaskscheduler();
+      PluginGlpiinventoryTask::cronTaskscheduler();
 
       $jobstates = $pfTaskjobstate->find([], [], 1);
       foreach ($jobstates as $jobstate) {
          $xml = str_replace("<PROCESSNUMBER>1</PROCESSNUMBER>", "<PROCESSNUMBER>".$jobstate['id']."</PROCESSNUMBER>", $xml);
       }
 
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+         'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
       ]);
       $this->assertEquals(1, count($iterator));
       foreach ($iterator as $data) {

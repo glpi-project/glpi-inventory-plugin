@@ -63,12 +63,12 @@ $logger->setLevelFromArgs($args['--quiet'], $args['--debug']);
 
 $logger->debug($args);
 
-$agent = new PluginFusioninventoryAgent();
+$agent = new PluginGlpiinventoryAgent();
 $computer = new Computer();
 
 
-$task = new PluginFusioninventoryTask();
-$staticmisc_methods = PluginFusioninventoryStaticmisc::getmethods();
+$task = new PluginGlpiinventoryTask();
+$staticmisc_methods = PluginGlpiinventoryStaticmisc::getmethods();
 
 $methods = [];
 foreach ($staticmisc_methods as $method) {

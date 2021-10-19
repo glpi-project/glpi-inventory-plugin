@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the printer extended information.
  */
-class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
+class PluginGlpiinventoryPrinter extends PluginGlpiinventoryItem {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_printer';
+   static $rightname = 'plugin_glpiinventory_printer';
 
    public $itemtype  = 'Printer';
 
@@ -97,16 +97,16 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
       $fi_path = Plugin::getWebDir('glpiinventory');
 
       if ($item->fields['id'] > 0) {
-         $pfPrinter = new PluginFusioninventoryPrinter();
+         $pfPrinter = new PluginGlpiinventoryPrinter();
          $pfPrinter->showItemForm($item,
                      ['target' => $fi_path.'/front/printer_info.form.php']);
          echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
-         $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+         $pfPrinterCartridge = new PluginGlpiinventoryPrinterCartridge();
          $pfPrinterCartridge->showItemForm($item,
                      ['target' => $fi_path.'/front/printer_info.form.php']);
 
-         $pfPrinterLog = new PluginFusioninventoryPrinterLog();
+         $pfPrinterLog = new PluginGlpiinventoryPrinterLog();
          $pfPrinterLog->showGraph($item->getID(),
                      ['target' => $fi_path.'/front/printer_info.form.php']);
          return true;
@@ -134,9 +134,9 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
    static function showInfo($item) {
 
       // Manage locks pictures
-      PluginFusioninventoryLock::showLockIcon('Printer');
+      PluginGlpiinventoryLock::showLockIcon('Printer');
 
-      $pfPrinter = new PluginFusioninventoryPrinter();
+      $pfPrinter = new PluginGlpiinventoryPrinter();
       $a_printerextend = current($pfPrinter->find(['printers_id' => $item->getID()], [], 1));
       if (empty($a_printerextend)) {
          return;

@@ -42,7 +42,7 @@ $typename = filter_input(INPUT_POST, "typename");
 $method = filter_input(INPUT_POST, "method");
 $taskjobs_id = filter_input(INPUT_POST, "taskjobs_id");
 
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 if (!empty($typename)
         && !empty($method)
         && !empty($taskjobs_id)) {

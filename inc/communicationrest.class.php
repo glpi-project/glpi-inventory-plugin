@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the communication in REST with the agents.
  */
-class PluginFusioninventoryCommunicationRest {
+class PluginGlpiinventoryCommunicationRest {
 
 
    /**
@@ -49,7 +49,7 @@ class PluginFusioninventoryCommunicationRest {
    static function communicate($params = []) {
       $response = [];
       if (isset ($params['action']) && isset($params['machineid'])) {
-         if (PluginFusioninventoryAgent::getByDeviceID($params['machineid'])) {
+         if (PluginGlpiinventoryAgent::getByDeviceID($params['machineid'])) {
             switch ($params['action']) {
 
                case 'getConfig':
@@ -84,20 +84,20 @@ class PluginFusioninventoryCommunicationRest {
       $schedule = [];
 
       if (isset($params['task'])) {
-         $pfAgentModule = new PluginFusioninventoryAgentmodule();
-         $a_agent       = PluginFusioninventoryAgent::getByDeviceID($params['machineid']);
+         $pfAgentModule = new PluginGlpiinventoryAgentmodule();
+         $a_agent       = PluginGlpiinventoryAgent::getByDeviceID($params['machineid']);
 
          foreach (array_keys($params['task']) as $task) {
-            foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+            foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
                switch (strtolower($task)) {
                   case 'deploy':
-                     $classname = 'PluginFusioninventoryDeployPackage';
+                     $classname = 'PluginGlpiinventoryDeployPackage';
                      break;
                   case 'esx':
-                     $classname = 'PluginFusioninventoryCredentialIp';
+                     $classname = 'PluginGlpiinventoryCredentialIp';
                      break;
                   case 'collect':
-                     $classname = 'PluginFusioninventoryCollect';
+                     $classname = 'PluginGlpiinventoryCollect';
                      break;
                   default:
                      $classname = '';
@@ -107,14 +107,14 @@ class PluginFusioninventoryCommunicationRest {
                if (strstr($taskname, 'deploy')) {
                   $taskname = $method['task'];
                }
-               $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($method['module']);
+               $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($method['module']);
                if ((isset($method['task']) && strtolower($method['task']) == strtolower($task))
                   && (isset($method['use_rest']) && $method['use_rest'])
                   && method_exists($class, self::getMethodForParameters($task))
                   && $pfAgentModule->isAgentCanDo($taskname, $a_agent['id'])
-                  && countElementsInTable('glpi_plugin_fusioninventory_taskjobstates',
+                  && countElementsInTable('glpi_plugin_glpiinventory_taskjobstates',
                      [
-                        'plugin_fusioninventory_agents_id' => $a_agent['id'],
+                        'plugin_glpiinventory_agents_id' => $a_agent['id'],
                         'itemtype'                         => $classname,
                         'state'                            => 0,
                      ]) > 0) {
@@ -145,7 +145,7 @@ class PluginFusioninventoryCommunicationRest {
     */
    static function getJobsByAgent($params = []) {
       //      $jobs = [];
-      //      $methods = PluginFusioninventoryStaticmisc::getmethods();
+      //      $methods = PluginGlpiinventoryStaticmisc::getmethods();
       //      if (isset($params['task'])) {
       //         foreach (array_keys($params['task']) as $task) {
       //
@@ -204,7 +204,7 @@ class PluginFusioninventoryCommunicationRest {
       }
 
       //Get the agent ID by its deviceid
-      $agent = PluginFusioninventoryAgent::getByDeviceID($p['machineid']);
+      $agent = PluginGlpiinventoryAgent::getByDeviceID($p['machineid']);
 
       //No need to continue since the requested agent doesn't exists in database
       if ($agent === false) {
@@ -214,10 +214,10 @@ class PluginFusioninventoryCommunicationRest {
          return;
       }
 
-      $taskjobstate = new PluginFusioninventoryTaskjobstate();
+      $taskjobstate = new PluginGlpiinventoryTaskjobstate();
 
       //Get task job status : identifier is the uuid given by the agent
-      $params = ['FROM' => getTableForItemType("PluginFusioninventoryTaskjobstate"),
+      $params = ['FROM' => getTableForItemType("PluginGlpiinventoryTaskjobstate"),
                  'FIELDS' => 'id',
                  'WHERE' => ['uniqid' => $p['uuid']]
                 ];
@@ -225,7 +225,7 @@ class PluginFusioninventoryCommunicationRest {
          $taskjobstate->getFromDB($jobstate['id']);
 
          //Get taskjoblog associated
-         $taskjoblog = new PluginFusioninventoryTaskjoblog();
+         $taskjoblog = new PluginGlpiinventoryTaskjoblog();
          switch ($p['code']) {
 
             case 'running':
@@ -233,7 +233,7 @@ class PluginFusioninventoryCommunicationRest {
                   $taskjobstate->fields['id'],
                   $taskjobstate->fields['items_id'],
                   $taskjobstate->fields['itemtype'],
-                  PluginFusioninventoryTaskjoblog::TASK_RUNNING,
+                  PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
                   $p['msg']
                );
                break;
@@ -283,11 +283,11 @@ class PluginFusioninventoryCommunicationRest {
     * Manage REST parameters
     **/
    static function handleFusionCommunication() {
-      $response = PluginFusioninventoryCommunicationRest::communicate($_GET);
+      $response = PluginGlpiinventoryCommunicationRest::communicate($_GET);
       if ($response) {
          echo json_encode($response);
       } else {
-         PluginFusioninventoryCommunicationRest::sendError();
+         PluginGlpiinventoryCommunicationRest::sendError();
       }
    }
 }

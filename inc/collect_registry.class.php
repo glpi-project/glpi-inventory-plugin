@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the windows registry to get in collect module.
  */
-class PluginFusioninventoryCollect_Registry extends PluginFusioninventoryCollectCommon {
+class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectCommon {
 
    public $type = 'registry';
 
@@ -85,7 +85,7 @@ class PluginFusioninventoryCollect_Registry extends PluginFusioninventoryCollect
       echo "<td>".__('Hive', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showFromArray('hive',
-                              PluginFusioninventoryCollect_Registry::getHives());
+                              PluginGlpiinventoryCollect_Registry::getHives());
       echo "</td>";
       echo "</tr>\n";
 

@@ -37,7 +37,7 @@ class CollectsTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all tasks
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
@@ -51,14 +51,14 @@ class CollectsTest extends TestCase {
       }
 
       // Delete all agents
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $items = $pfAgent->find();
       foreach ($items as $item) {
          $pfAgent->delete(['id' => $item['id']], true);
       }
 
       // Delete all collects
-      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect = new PluginGlpiinventoryCollect();
       $items = $pfCollect->find();
       foreach ($items as $item) {
          $pfCollect->delete(['id' => $item['id']], true);
@@ -72,10 +72,10 @@ class CollectsTest extends TestCase {
     */
    public function prepareDb() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect = new PluginGlpiinventoryCollect();
 
       $input = [
          'name'         => 'Registry collect',
@@ -89,29 +89,29 @@ class CollectsTest extends TestCase {
 
       $input = [
          'name'                                 => 'Registry collection',
-         'plugin_fusioninventory_collects_id'   => $collects_id,
+         'plugin_glpiinventory_collects_id'   => $collects_id,
          'hive'                                 => 'HKEY_LOCAL_MACHINE',
          'path'                                 => '/',
          'key'                                  => 'daKey'
       ];
 
-      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
       $collectRegistryId = $pfCollect_Registry->add($input);
       $this->assertNotFalse($collectRegistryId);
 
       $input = [
           'name'                                => 'WMI',
-          'plugin_fusioninventory_collects_id'  => $collects_id,
+          'plugin_glpiinventory_collects_id'  => $collects_id,
           'moniker'                             => 'DaWMI'
       ];
 
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       $collectWmiId = $pfCollect_Wmi->add($input);
       $this->assertNotFalse($collectWmiId);
 
       $input = [
          'name'                                 => 'PHP files',
-         'plugin_fusioninventory_collects_id'   => $collects_id,
+         'plugin_glpiinventory_collects_id'   => $collects_id,
          'dir'                                  => '/var/www',
          'is_recursive'                         => 1,
          'filter_regex'                         => '*\.php',
@@ -119,7 +119,7 @@ class CollectsTest extends TestCase {
          'filter_is_dir'                        => 0
       ];
 
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
       $collectFileId = $pfCollect_File->add($input);
       $this->assertNotFalse($collectFileId);
    }
@@ -130,10 +130,10 @@ class CollectsTest extends TestCase {
     */
    public function getSearchOptionsToAdd() {
 
-      $pfCollect = new PluginFusioninventoryCollect();
-      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect = new PluginGlpiinventoryCollect();
+      $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
       $sopts = $pfCollect->getSearchOptionsToAdd();
 
@@ -144,7 +144,7 @@ class CollectsTest extends TestCase {
       $pfCollect_File->getFromDBByCrit(['name' => 'PHP files']);
 
       $expected = [
-         'table'            => 'glpi_plugin_fusioninventory_collects_registries_contents',
+         'table'            => 'glpi_plugin_glpiinventory_collects_registries_contents',
          'field'            => 'value',
          'linkfield'        => '',
          'name'             => __('Registry', 'glpiinventory')." - Registry collection",
@@ -154,14 +154,14 @@ class CollectsTest extends TestCase {
          'massiveaction'    => false,
          'nodisplay'        => true,
          'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_registries_id` = ".$pfCollect_Registry->fields['id'],
+            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = ".$pfCollect_Registry->fields['id'],
             'jointype'  => 'child'
          ]
       ];
       $this->assertEquals($expected, $sopts[5200]);
 
       $expected = [
-         'table'            => 'glpi_plugin_fusioninventory_collects_wmis_contents',
+         'table'            => 'glpi_plugin_glpiinventory_collects_wmis_contents',
          'field'            => 'value',
          'linkfield'        => '',
          'name'             => __('WMI', 'glpiinventory')." - WMI",
@@ -171,14 +171,14 @@ class CollectsTest extends TestCase {
          'massiveaction'    => false,
          'nodisplay'        => true,
          'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_wmis_id` = ".$pfCollect_Wmi->fields['id'],
+            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = ".$pfCollect_Wmi->fields['id'],
             'jointype'  => 'child'
          ]
       ];
       $this->assertEquals($expected, $sopts[5201]);
 
       $expected = [
-         'table'            => 'glpi_plugin_fusioninventory_collects_files_contents',
+         'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
          'field'            => 'pathfile',
          'linkfield'        => '',
          'name'             => __('Find file', 'glpiinventory')." - PHP files".
@@ -189,14 +189,14 @@ class CollectsTest extends TestCase {
          'massiveaction'    => false,
          'nodisplay'        => true,
          'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$pfCollect_File->fields['id'],
+            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = ".$pfCollect_File->fields['id'],
             'jointype'  => 'child'
          ]
       ];
       $this->assertEquals($expected, $sopts[5202]);
 
       $expected = [
-         'table'            => 'glpi_plugin_fusioninventory_collects_files_contents',
+         'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
          'field'            => 'size',
          'linkfield'        => '',
          'name'             => __('Find file', 'glpiinventory'). " - PHP files".
@@ -207,7 +207,7 @@ class CollectsTest extends TestCase {
          'massiveaction'    => false,
          'nodisplay'        => true,
          'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$pfCollect_File->fields['id'],
+            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = ".$pfCollect_File->fields['id'],
             'jointype'  => 'child'
          ]
       ];
@@ -220,15 +220,15 @@ class CollectsTest extends TestCase {
     */
    public function registryProcessWithAgent() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfAgent            = new PluginFusioninventoryAgent();
-      $pfCollect          = new PluginFusioninventoryCollect();
-      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-      $pfTask             = new PluginFusioninventoryTask();
-      $pfTaskjob          = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstate     = new PluginFusioninventoryTaskjobstate();
+      $pfAgent            = new PluginGlpiinventoryAgent();
+      $pfCollect          = new PluginGlpiinventoryCollect();
+      $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+      $pfTask             = new PluginGlpiinventoryTask();
+      $pfTaskjob          = new PluginGlpiinventoryTaskjob();
+      $pfTaskjobstate     = new PluginGlpiinventoryTaskjobstate();
       $computer           = new Computer();
 
       // Create a registry task with 2 paths to get
@@ -243,7 +243,7 @@ class CollectsTest extends TestCase {
 
       $input = [
           'name' => 'Teamviewer',
-          'plugin_fusioninventory_collects_id' => $collects_id,
+          'plugin_glpiinventory_collects_id' => $collects_id,
           'hive' => 'HKEY_LOCAL_MACHINE',
           'path' => '/software/Wow6432Node/TeamViewer/',
           'key'  => '*',
@@ -253,7 +253,7 @@ class CollectsTest extends TestCase {
 
       $input = [
           'name' => 'FusionInventory',
-          'plugin_fusioninventory_collects_id' => $collects_id,
+          'plugin_glpiinventory_collects_id' => $collects_id,
           'hive' => 'HKEY_LOCAL_MACHINE',
           'path' => '/software/FusionInventory-Agent/',
           'key'  => '*',
@@ -288,18 +288,18 @@ class CollectsTest extends TestCase {
       $this->assertNotFalse($tasks_id);
 
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id' => 0,
           'name'    => 'collectjob',
           'method'  => 'collect',
-          'targets' => exportArrayToDB([['PluginFusioninventoryCollect' => $collects_id]]),
+          'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
           'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
       ];
       $taskjobs_id = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobs_id);
 
       $methods = [];
-      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
       $pfTask->prepareTaskjobs($methods);
@@ -381,22 +381,22 @@ class CollectsTest extends TestCase {
    public function wmiProcessWithAgent() {
 
       // Delete all tasks
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
       }
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfCollect = new PluginFusioninventoryCollect();
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-      $pfCollect_Wmi_Content = new PluginFusioninventoryCollect_Wmi_Content();
-      $pfTask = new PluginFusioninventoryTask();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $pfCollect = new PluginGlpiinventoryCollect();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+      $pfCollect_Wmi_Content = new PluginGlpiinventoryCollect_Wmi_Content();
+      $pfTask = new PluginGlpiinventoryTask();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $computer = new Computer();
 
       // Create a registry task with 2 paths to get
@@ -411,7 +411,7 @@ class CollectsTest extends TestCase {
 
       $input = [
           'name'       => 'keyboad name',
-          'plugin_fusioninventory_collects_id' => $collects_id,
+          'plugin_glpiinventory_collects_id' => $collects_id,
           'moniker'    => '',
           'class'      => 'Win32_Keyboard',
           'properties' => 'Name',
@@ -421,7 +421,7 @@ class CollectsTest extends TestCase {
 
       $input = [
           'name'       => 'keyboad description',
-          'plugin_fusioninventory_collects_id' => $collects_id,
+          'plugin_glpiinventory_collects_id' => $collects_id,
           'moniker'    => '',
           'class'      => 'Win32_Keyboard',
           'properties' => 'Description',
@@ -445,18 +445,18 @@ class CollectsTest extends TestCase {
       $this->assertNotFalse($tasks_id);
 
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id' => 0,
           'name'    => 'collectjob',
           'method'  => 'collect',
-          'targets' => exportArrayToDB([['PluginFusioninventoryCollect' => $collects_id]]),
+          'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
           'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
       ];
       $taskjobs_id = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobs_id);
 
       $methods = [];
-      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
       $pfTask->prepareTaskjobs($methods);
@@ -524,13 +524,13 @@ class CollectsTest extends TestCase {
       $reference = [
          [
             'computers_id' => $computers_id,
-            'plugin_fusioninventory_collects_wmis_id' => $registry_kn,
+            'plugin_glpiinventory_collects_wmis_id' => $registry_kn,
             'property'     => 'Name',
             'value'        => 'Enhanced (101- or 102-key)'
          ],
          [
             'computers_id' => $computers_id,
-            'plugin_fusioninventory_collects_wmis_id' => $registry_kd,
+            'plugin_glpiinventory_collects_wmis_id' => $registry_kd,
             'property'     => 'Description',
             'value'        => 'Standard PS/2 Keyboard'
          ]
@@ -545,22 +545,22 @@ class CollectsTest extends TestCase {
    public function filesProcessWithAgent() {
 
       // Delete all tasks
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
       }
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfCollect = new PluginFusioninventoryCollect();
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
-      $pfCollect_File_Content = new PluginFusioninventoryCollect_File_Content();
-      $pfTask = new PluginFusioninventoryTask();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $pfCollect = new PluginGlpiinventoryCollect();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
+      $pfCollect_File_Content = new PluginGlpiinventoryCollect_File_Content();
+      $pfTask = new PluginGlpiinventoryTask();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $computer = new Computer();
 
       // Create a registry task with 2 paths to get
@@ -575,7 +575,7 @@ class CollectsTest extends TestCase {
 
       $input = [
           'name'           => 'desktop',
-          'plugin_fusioninventory_collects_id' => $collects_id,
+          'plugin_glpiinventory_collects_id' => $collects_id,
           'dir'            => 'C:\Users\toto\Desktop',
           'limit'          => 10,
           'is_recursive'   => 1,
@@ -586,7 +586,7 @@ class CollectsTest extends TestCase {
 
       $input = [
           'name'           => 'downloads',
-          'plugin_fusioninventory_collects_id' => $collects_id,
+          'plugin_glpiinventory_collects_id' => $collects_id,
           'dir'            => 'C:\Users\toto\Downloads',
           'limit'          => 10,
           'is_recursive'   => 1,
@@ -611,17 +611,17 @@ class CollectsTest extends TestCase {
       $this->assertNotFalse($tasks_id);
 
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id' => 0,
           'name'    => 'collectjob',
           'method'  => 'collect',
-          'targets' => exportArrayToDB([['PluginFusioninventoryCollect' => $collects_id]]),
+          'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
           'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
       ];
       $taskjobs_id = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobs_id);
       $methods = [];
-      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
       $pfTask->prepareTaskjobs($methods);
@@ -738,31 +738,31 @@ class CollectsTest extends TestCase {
       $reference = [
          [
             'computers_id' => "$computers_id",
-            'plugin_fusioninventory_collects_files_id' => "$registry_desktop",
+            'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
             'pathfile'     => 'C:/Users/toto/Desktop/06_import_tickets.php',
             'size'         => '5053'
          ],
          [
             'computers_id' => "$computers_id",
-            'plugin_fusioninventory_collects_files_id' => "$registry_desktop",
+            'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
             'pathfile'     => 'C:/Users/toto/Desktop/fusioninventory.txt',
             'size'         => '28'
          ],
          [
             'computers_id' => "$computers_id",
-            'plugin_fusioninventory_collects_files_id' => "$registry_desktop",
+            'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
             'pathfile'     => 'C:/Users/toto/Desktop/desktop.ini',
             'size'         => '282'
          ],
          [
             'computers_id' => "$computers_id",
-            'plugin_fusioninventory_collects_files_id' => "$registry_down",
+            'plugin_glpiinventory_collects_files_id' => "$registry_down",
             'pathfile'     => 'C:/Users/toto/Downloads/jxpiinstall.exe',
             'size'         => '738368'
          ],
          [
             'computers_id' => "$computers_id",
-            'plugin_fusioninventory_collects_files_id' => "$registry_down",
+            'plugin_glpiinventory_collects_files_id' => "$registry_down",
             'pathfile'     => 'C:/Users/toto/Downloads/npp.6.9.2.Installer.exe',
             'size'         => '4211112'
          ]
@@ -776,10 +776,10 @@ class CollectsTest extends TestCase {
     */
    public function testFilesCleanComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfCollect = new PluginFusioninventoryCollect_File();
+      $pfCollect = new PluginGlpiinventoryCollect_File();
       $computer = new Computer();
 
       $input = [
@@ -800,28 +800,28 @@ class CollectsTest extends TestCase {
       $collects_id = $pfCollect->add($input);
       $this->assertNotFalse($collects_id);
 
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
       $pfCollect_File->getFromDBByCrit(['name' => 'PHP files']);
       $file_id = $pfCollect_File->fields['id'];
 
       $input = [
          'computers_id'                                     => $computerId,
-         'plugin_fusioninventory_collects_registries_id'    => $file_id,
+         'plugin_glpiinventory_collects_registries_id'    => $file_id,
          'key'                                              => 'test_key',
          'value'                                            => 'test_value'
       ];
-      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
       $collectFileContentId = $pfCollect_File_Contents->add($input);
       $this->assertNotFalse($collectFileContentId);
 
       //First, check if file contents does exist
-      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
       $pfCollect_File_Contents->getFromDB($collectFileContentId);
 
       $this->assertEquals(5, count($pfCollect_File_Contents->fields));
 
       //Second, clean and check if it has been removed
-      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
       $pfCollect_File_Contents->cleanComputer($computerId);
 
       $pfCollect_File_Contents->getFromDB($collectFileContentId);
@@ -834,11 +834,11 @@ class CollectsTest extends TestCase {
     */
    public function testRegistryCleanComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfCollect = new PluginFusioninventoryCollect();
-      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      $pfCollect = new PluginGlpiinventoryCollect();
+      $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
       $computer = new Computer();
 
       $pfCollect_Registry->getFromDBByCrit(['name' => 'Registry collection']);
@@ -846,22 +846,22 @@ class CollectsTest extends TestCase {
 
       $input = [
          'computers_id'                                     => $computer->fields['id'],
-         'plugin_fusioninventory_collects_registries_id'    => $pfCollect_Registry->fields['id'],
+         'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Registry->fields['id'],
          'key'                                              => 'test_key',
          'value'                                            => 'test_value'
       ];
-      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
       $collectRegistryContentId = $pfCollect_Registry_Contents->add($input);
       $this->assertNotFalse($collectRegistryContentId);
 
       //First, check if registry contents does exist
-      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
       $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
       $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
 
       //Second, clean and check if it has been removed
-      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
       $pfCollect_Registry_Contents->cleanComputer($computer->fields['id']);
 
       $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
@@ -874,11 +874,11 @@ class CollectsTest extends TestCase {
     */
    public function testWmiCleanComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfCollect = new PluginFusioninventoryCollect();
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect = new PluginGlpiinventoryCollect();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       $computer = new Computer();
 
       $pfCollect_Wmi->getFromDBByCrit(['name' => 'WMI']);
@@ -886,22 +886,22 @@ class CollectsTest extends TestCase {
 
       $input = [
          'computers_id'                                     => $computer->fields['id'],
-         'plugin_fusioninventory_collects_registries_id'    => $pfCollect_Wmi->fields['id'],
+         'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Wmi->fields['id'],
          'key'                                              => 'test_key',
          'value'                                            => 'test_value'
       ];
-      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
       $collectWmiContentId = $pfCollect_Wmi_Contents->add($input);
       $this->assertNotFalse($collectWmiContentId);
 
       //First, check if wmi contents does exist
-      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
       $pfCollect_Wmi_Contents->getFromDB($collectWmiContentId);
 
       $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
 
       //Second, clean and check if it has been removed
-      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
       $pfCollect_Wmi_Contents->cleanComputer($computer->fields['id']);
 
       $pfCollect_Wmi_Contents->getFromDB($collectWmiContentId);
@@ -914,7 +914,7 @@ class CollectsTest extends TestCase {
     */
    public function testDeleteComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       // Create computer
@@ -923,7 +923,7 @@ class CollectsTest extends TestCase {
       $computer->getFromDBByCrit(['name' => 'pc01']);
       $computers_id = $computer->fields['id'];
 
-      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect = new PluginGlpiinventoryCollect();
 
       //populate wmi data
       $input = [
@@ -938,25 +938,25 @@ class CollectsTest extends TestCase {
 
       $input = [
           'name'                                => 'WMI',
-          'plugin_fusioninventory_collects_id'  => $collects_id,
+          'plugin_glpiinventory_collects_id'  => $collects_id,
           'moniker'                             => 'DaWMI'
       ];
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       $wmi_id = $pfCollect_Wmi->add($input);
       $this->assertNotFalse($wmi_id);
 
       $input = [
          'computers_id'                                     => $computers_id,
-         'plugin_fusioninventory_collects_registries_id'    => $wmi_id,
+         'plugin_glpiinventory_collects_registries_id'    => $wmi_id,
          'key'                                              => 'test_key',
          'value'                                            => 'test_value'
       ];
-      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
       $collectWmiContectId = $pfCollect_Wmi_Contents->add($input);
       $this->assertNotFalse($collectWmiContectId);
 
       //check if wmi contents does exist
-      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
       $pfCollect_Wmi_Contents->getFromDB($collectWmiContectId);
 
       $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
@@ -972,22 +972,22 @@ class CollectsTest extends TestCase {
       $collects_id = $pfCollect->add($input);
       $this->assertNotFalse($collects_id);
 
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
       $pfCollect_File->getFromDBByCrit(['name' => 'PHP files']);
       $file_id = $pfCollect_File->fields['id'];
 
       $input = [
          'computers_id'                                     => $computers_id,
-         'plugin_fusioninventory_collects_registries_id'    => $file_id,
+         'plugin_glpiinventory_collects_registries_id'    => $file_id,
          'key'                                              => 'test_key',
          'value'                                            => 'test_value'
       ];
-      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
       $collectFileContentId = $pfCollect_File_Contents->add($input);
       $this->assertNotFalse($collectFileContentId);
 
       //check if file contents does exist
-      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
       $pfCollect_File_Contents->getFromDB($collectFileContentId);
 
       $this->assertEquals(5, count($pfCollect_File_Contents->fields));
@@ -1005,27 +1005,27 @@ class CollectsTest extends TestCase {
 
       $input = [
          'name'                                 => 'Registry collection',
-         'plugin_fusioninventory_collects_id'   => $collects_id,
+         'plugin_glpiinventory_collects_id'   => $collects_id,
          'hive'                                 => 'HKEY_LOCAL_MACHINE',
          'path'                                 => '/',
          'key'                                  => 'daKey'
       ];
-      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
       $registry_id = $pfCollect_Registry->add($input);
       $this->assertNotFalse($registry_id);
 
       $input = [
          'computers_id'                                     => $computers_id,
-         'plugin_fusioninventory_collects_registries_id'    => $registry_id,
+         'plugin_glpiinventory_collects_registries_id'    => $registry_id,
          'key'                                              => 'test_key',
          'value'                                            => 'test_value'
       ];
-      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
       $collectRegistryContentId = $pfCollect_Registry_Contents->add($input);
       $this->assertNotFalse($collectRegistryContentId);
 
       // check if registry contents does exist
-      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
       $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
       $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
@@ -1034,15 +1034,15 @@ class CollectsTest extends TestCase {
       $computer->delete(['id' => $computers_id]);
       $this->assertTrue($computer->getFromDB($computers_id));
 
-      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
       $pfCollect_Wmi_Contents->getFromDB($collectWmiContectId);
       $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
 
-      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
       $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
       $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
 
-      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
       $pfCollect_File_Contents->getFromDB($collectFileContentId);
       $this->assertEquals(5, count($pfCollect_File_Contents->fields));
 
@@ -1050,15 +1050,15 @@ class CollectsTest extends TestCase {
       $computer->delete(['id' => $computers_id], true);
       $this->assertFalse($computer->getFromDB($computers_id));
 
-      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
       $pfCollect_Wmi_Contents->getFromDB($collectWmiContectId);
       $this->assertEquals(0, count($pfCollect_Wmi_Contents->fields));
 
-      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
       $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
       $this->assertEquals(0, count($pfCollect_Registry_Contents->fields));
 
-      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
       $pfCollect_File_Contents->getFromDB($collectFileContentId);
       $this->assertEquals(0, count($pfCollect_File_Contents->fields));
    }

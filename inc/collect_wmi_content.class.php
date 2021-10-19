@@ -38,11 +38,11 @@ if (!defined('GLPI_ROOT')) {
  * Manage the wmi information found by the collect module of agent.
  */
 
-class PluginFusioninventoryCollect_Wmi_Content
-   extends PluginFusioninventoryCollectContentCommon {
+class PluginGlpiinventoryCollect_Wmi_Content
+   extends PluginGlpiinventoryCollectContentCommon {
 
-   public $collect_itemtype = 'PluginFusioninventoryCollect_Wmi';
-   public $collect_table    = 'glpi_plugin_fusioninventory_collects_wmis';
+   public $collect_itemtype = 'PluginGlpiinventoryCollect_Wmi';
+   public $collect_table    = 'glpi_plugin_glpiinventory_collects_wmis';
 
    public $type = 'wmi';
 
@@ -56,16 +56,16 @@ class PluginFusioninventoryCollect_Wmi_Content
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
-         if (get_class($item) == 'PluginFusioninventoryCollect') {
+         if (get_class($item) == 'PluginGlpiinventoryCollect') {
             if ($item->fields['type'] == 'wmi') {
-               $a_colregs = getAllDataFromTable('glpi_plugin_fusioninventory_collects_wmis',
-                                                 "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
+               $a_colregs = getAllDataFromTable('glpi_plugin_glpiinventory_collects_wmis',
+                                                 "`plugin_glpiinventory_collects_id`='".$item->getID()."'");
                if (count($a_colregs) == 0) {
                   return '';
                }
                $in = array_keys($a_colregs);
-               if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
-                                "`plugin_fusioninventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
+               if (countElementsInTable('glpi_plugin_glpiinventory_collects_wmis_contents',
+                                "`plugin_glpiinventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
                   return __('Windows WMI content', 'glpiinventory');
                }
             }
@@ -88,9 +88,9 @@ class PluginFusioninventoryCollect_Wmi_Content
 
       $db_wmis = [];
       $query = "SELECT `id`, `property`, `value`
-                FROM `glpi_plugin_fusioninventory_collects_wmis_contents`
+                FROM `glpi_plugin_glpiinventory_collects_wmis_contents`
                 WHERE `computers_id` = '".$computers_id."'
-                  AND `plugin_fusioninventory_collects_wmis_id` =
+                  AND `plugin_glpiinventory_collects_wmis_id` =
                   '".$collects_wmis_id."'";
       $result = $DB->query($query);
       while ($data = $DB->fetchAssoc($result)) {
@@ -121,7 +121,7 @@ class PluginFusioninventoryCollect_Wmi_Content
       foreach ($wmi_data as $key => $value) {
          $input = [
             'computers_id' => $computers_id,
-            'plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id,
+            'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
             'property'     => $key,
             'value'        => $value
          ];
@@ -136,7 +136,7 @@ class PluginFusioninventoryCollect_Wmi_Content
     */
    function showForComputer($computers_id) {
 
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr>";
@@ -147,11 +147,11 @@ class PluginFusioninventoryCollect_Wmi_Content
       echo "</tr>";
 
       $a_data = $this->find(['computers_id' => $computers_id],
-                            ['plugin_fusioninventory_collects_wmis_id', 'property']);
+                            ['plugin_glpiinventory_collects_wmis_id', 'property']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
          echo '<td>';
-         $pfCollect_Wmi->getFromDB($data['plugin_fusioninventory_collects_wmis_id']);
+         $pfCollect_Wmi->getFromDB($data['plugin_glpiinventory_collects_wmis_id']);
          echo $pfCollect_Wmi->fields['moniker'];
          echo '</td>';
          echo '<td>';
@@ -175,7 +175,7 @@ class PluginFusioninventoryCollect_Wmi_Content
     * @param integer $collects_wmis_id
     */
    function showContent($collects_wmis_id) {
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       $computer = new Computer();
 
       $pfCollect_Wmi->getFromDB($collects_wmis_id);
@@ -194,7 +194,7 @@ class PluginFusioninventoryCollect_Wmi_Content
       echo "<th>".__('Value', 'glpiinventory')."</th>";
       echo "</tr>";
 
-      $a_data = $this->find(['plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id],
+      $a_data = $this->find(['plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id],
                             ['property']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";

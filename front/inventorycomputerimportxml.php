@@ -35,14 +35,14 @@ include ("../../../inc/includes.php");
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "inventorycomputerimportxml");
 
-Session::checkRight('plugin_fusioninventory_importxml', CREATE);
+Session::checkRight('plugin_glpiinventory_importxml', CREATE);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-$pfCommunication = new PluginFusioninventoryCommunication();
+$pfCommunication = new PluginGlpiinventoryCommunication();
 
 if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
 
@@ -87,7 +87,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
    Html::back();
 }
 
-$pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
+$pfInventoryComputerImportXML = new PluginGlpiinventoryInventoryComputerImportXML();
 $pfInventoryComputerImportXML->showImportForm();
 
 Html::footer();

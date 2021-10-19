@@ -47,7 +47,7 @@ class ComputerAutoInventoryNumberTest extends TestCase {
 
 
    public static function tearDownAfterClass(): void {
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
 
       // Update config
       $pfConfig->updateValue('auto_inventory_number_computer', '');
@@ -97,12 +97,12 @@ class ComputerAutoInventoryNumberTest extends TestCase {
     */
    public function testInventoryNumberGenerationNewComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfConfig         = new PluginFusioninventoryConfig();
+      $pfConfig         = new PluginGlpiinventoryConfig();
 
       // Update config
       $pfConfig->updateValue('auto_inventory_number_computer', '<PC#####\Y>');
@@ -130,12 +130,12 @@ class ComputerAutoInventoryNumberTest extends TestCase {
    public function testInventoryNumberGenerationUpdateComputer() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfConfig         = new PluginFusioninventoryConfig();
+      $pfConfig         = new PluginGlpiinventoryConfig();
 
       $computer->getFromDBByCrit(['name' => 'pc001']);
       $computer->update([
@@ -144,8 +144,8 @@ class ComputerAutoInventoryNumberTest extends TestCase {
       ]);
 
       // Because update, delete lock
-      $pfLock = new PluginFusioninventoryLock();
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $pfLock = new PluginGlpiinventoryLock();
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
 
       $computer = new Computer();
       $computer->getFromDBByCrit(['name' => 'pc001']);

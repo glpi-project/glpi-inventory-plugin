@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 * in a package
 * @since 9.2
 */
-class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
+class PluginGlpiinventoryDeployPackageItem extends CommonDBTM {
 
    //Display modes
    const CREATE      = 'create';
@@ -73,7 +73,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    * @param $package the package to check
    * @return the types already in used
    */
-   function getTypesAlreadyInUse(PluginFusioninventoryDeployPackage $package) {
+   function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package) {
       return [];
    }
 
@@ -87,7 +87,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
-   function displayDropdownType(PluginFusioninventoryDeployPackage $package,
+   function displayDropdownType(PluginGlpiinventoryDeployPackage $package,
                                 $config, $rand, $mode) {
       global $CFG_GLPI;
 
@@ -149,7 +149,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    *
    * @since 9.2
    */
-   public function getItemConfig(PluginFusioninventoryDeployPackage $package, $request_data) {
+   public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data) {
       $config  = [];
       $element = $package->getSubElement($this->json_name, $request_data['index']);
       if (is_array($element) && count($element)) {
@@ -163,12 +163,12 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    /**
     * Display form
     *
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $request_data
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode possible values: init|edit|create
     */
-   function displayForm(PluginFusioninventoryDeployPackage $package,
+   function displayForm(PluginGlpiinventoryDeployPackage $package,
                                $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
@@ -255,7 +255,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
     * @return boolean|string the string is in json format
     */
    function getJson($packages_id) {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployPackage->getFromDB($packages_id);
       if (!empty($pfDeployPackage->fields['json'])) {
          return $pfDeployPackage->fields['json'];
@@ -289,7 +289,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
     * @return integer error number
     */
    function updateOrderJson($packages_id, $data) {
-      $pfDeployPackage   = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage   = new PluginGlpiinventoryDeployPackage();
       $options           = JSON_UNESCAPED_SLASHES;
       $json              = json_encode($data, $options);
       $json_error_consts = [
@@ -401,7 +401,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    * @param pfDeployPackage the package in use
    * @param mode the mode (edit or create)
    */
-   function addOrSaveButton(PluginFusioninventoryDeployPackage $pfDeployPackage, $mode) {
+   function addOrSaveButton(PluginGlpiinventoryDeployPackage $pfDeployPackage, $mode) {
       echo "<tr>";
       echo "<td>";
       echo "</td>";

@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage db locks during inventory.
  */
-class PluginFusioninventoryDBLock {
+class PluginGlpiinventoryDBLock {
 
    //Number of milliseconds to wait each time we check if the lock is set
    const MILLISECOND_LOCK_WAIT        = 100000;
@@ -61,7 +61,7 @@ class PluginFusioninventoryDBLock {
       global $DB, $CFG_GLPI;
 
       $result = true;
-      $table  = "glpi_plugin_fusioninventory_dblock".$type;
+      $table  = "glpi_plugin_glpiinventory_dblock".$type;
       if ($DB->tableExists($table)) {
 
          $start_time = date('U');
@@ -96,12 +96,12 @@ class PluginFusioninventoryDBLock {
    */
    function checkLockForAgents($start_time) {
       if ((date('U') - $start_time) > self::SECONDS_BEFORE_SENDING_ERROR) {
-         $communication = new PluginFusioninventoryCommunication();
+         $communication = new PluginGlpiinventoryCommunication();
          $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
       <REPLY>
       <ERROR>ERROR: Timeout for DB lock based on name</ERROR>
       </REPLY>");
-         $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+         $communication->sendMessage($_SESSION['plugin_glpiinventory_compressmode']);
          return false;
       }
       return true;
@@ -120,7 +120,7 @@ class PluginFusioninventoryDBLock {
       if (empty($where)) {
          $where = ['value' => '1'];
       }
-      $table = "glpi_plugin_fusioninventory_dblock".$type;
+      $table = "glpi_plugin_glpiinventory_dblock".$type;
       if ($DB->tableExists($table)) {
          //Release the lock
          $DB->delete(

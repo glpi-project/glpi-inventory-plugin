@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage collect rule collection.
  */
-class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
+class PluginGlpiinventoryCollectRuleCollection extends RuleCollection {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_rulecollect";
+   static $rightname = "plugin_glpiinventory_rulecollect";
 
    /**
     * Set we check all rules

@@ -122,11 +122,11 @@ class ComputerDeviceBatteryTest extends TestCase {
     */
    public function BatteryWithFullInfos() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory = $this->a_computer1;
@@ -225,11 +225,11 @@ class ComputerDeviceBatteryTest extends TestCase {
     */
    public function BatteryWithoutFullInfos() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $computer->getFromDBByCrit(['serial' => 'ggheb7ne7']);

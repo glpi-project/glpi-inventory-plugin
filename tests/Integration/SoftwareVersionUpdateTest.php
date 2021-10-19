@@ -51,12 +51,12 @@ class SoftwareVersionUpdateTest extends TestCase {
    public function updateVersionWithOs() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $computer        = new Computer();
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfAgent         = new PluginFusioninventoryAgent();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
+      $pfAgent         = new PluginGlpiinventoryAgent();
       $software        = new Software();
       $version         = new SoftwareVersion();
       $installation    = new Item_SoftwareVersion();
@@ -90,7 +90,7 @@ class SoftwareVersionUpdateTest extends TestCase {
       //Add agent for this computer
       $a_agents_id = $pfAgent->add(['name'      => 'computer1-2018-01-01',
                                     'device_id' => 'computer1-2018-01-01']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $a_agents_id;
 
       //Import a simple inventory WITHOUT OS infos
       $a_inventory = [];

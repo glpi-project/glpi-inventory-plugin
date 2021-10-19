@@ -63,6 +63,6 @@ $args = $docopt->handle($doc);
 $logger = new Logging();
 $logger->setLevelFromArgs($args['--quiet'], $args['--debug']);
 
-$task = new PluginFusioninventoryTask();
+$task = new PluginGlpiinventoryTask();
 
 $task->cronTaskscheduler();

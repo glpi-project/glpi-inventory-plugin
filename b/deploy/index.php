@@ -49,11 +49,11 @@ switch (filter_input(INPUT_GET, "action")) {
    case 'getJobs':
       $machineid = filter_input(INPUT_GET, "machineid");
       if (isset($machineid)) {
-         $pfAgent        = new PluginFusioninventoryAgent();
-         $pfAgentModule  = new PluginFusioninventoryAgentmodule();
-         $pfTask         = new PluginFusioninventoryTask();
-         $pfTaskjob      = new PluginFusioninventoryTaskjob();
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+         $pfAgent        = new PluginGlpiinventoryAgent();
+         $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
+         $pfTask         = new PluginGlpiinventoryTask();
+         $pfTaskjob      = new PluginGlpiinventoryTaskjob();
+         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
          $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($machineid));
 
@@ -71,8 +71,8 @@ switch (filter_input(INPUT_GET, "action")) {
                }
                $response = "{}";
             } else {
-               $package      = new PluginFusioninventoryDeployPackage();
-               $deploycommon = new PluginFusioninventoryDeployCommon();
+               $package      = new PluginGlpiinventoryDeployPackage();
+               $deploycommon = new PluginGlpiinventoryDeployCommon();
 
                //sort taskjobs by key id
                /**
@@ -130,7 +130,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
    case 'getFilePart':
       $DB->close();
-      PluginFusioninventoryDeployFilepart::httpSendFile(filter_input(INPUT_GET, "file"));
+      PluginGlpiinventoryDeployFilepart::httpSendFile(filter_input(INPUT_GET, "file"));
       exit;
       break;
 
@@ -198,7 +198,7 @@ switch (filter_input(INPUT_GET, "action")) {
       }
 
       //Generic method to update logs
-      PluginFusioninventoryCommunicationRest::updateLog($params);
+      PluginGlpiinventoryCommunicationRest::updateLog($params);
       break;
 
    case 'setUserEvent':
@@ -226,37 +226,37 @@ switch (filter_input(INPUT_GET, "action")) {
       //the user parameter is not mandatory
       if ($behavior !== false && $type !== false
          && $event !== false && $user !== false) {
-         $interaction    = new PluginFusioninventoryDeployUserinteraction();
+         $interaction    = new PluginGlpiinventoryDeployUserinteraction();
          $cancel         = false;
          $postpone       = false;
          $params['msg']  = $interaction->getLogMessage($behavior, $type, $event,
                                                        $user);
          switch ($behavior) {
-            case PluginFusioninventoryDeployUserinteraction::RESPONSE_STOP:
+            case PluginGlpiinventoryDeployUserinteraction::RESPONSE_STOP:
                $params['code'] = 'ko';
                $cancel         = true;
                break;
 
-            case PluginFusioninventoryDeployUserinteraction::RESPONSE_CONTINUE:
+            case PluginGlpiinventoryDeployUserinteraction::RESPONSE_CONTINUE:
                $params['code'] = 'running';
                break;
 
-            case PluginFusioninventoryDeployUserinteraction::RESPONSE_POSTPONE:
+            case PluginGlpiinventoryDeployUserinteraction::RESPONSE_POSTPONE:
                $params['code'] = 'running';
                $postpone       = true;
                break;
 
-            case PluginFusioninventoryDeployUserinteraction::RESPONSE_BAD_EVENT:
+            case PluginGlpiinventoryDeployUserinteraction::RESPONSE_BAD_EVENT:
                $params['code'] = 'ko';
                break;
          }
 
          //Generic method to update logs
-         PluginFusioninventoryCommunicationRest::updateLog($params);
+         PluginGlpiinventoryCommunicationRest::updateLog($params);
 
          //If needed : cancel or postpone the job
          if ($cancel || $postpone) {
-            $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+            $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
             $pfTaskjobstate->getFromDBByUniqID($params['uuid']);
             if ($cancel) {
                $pfTaskjobstate->cancel(__('User canceled the job', 'glpiinventory'));

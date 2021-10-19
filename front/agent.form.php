@@ -32,12 +32,12 @@
 
 include ("../../../inc/includes.php");
 
-$agent = new PluginFusioninventoryAgent();
+$agent = new PluginGlpiinventoryAgent();
 
-Session::checkRight('plugin_fusioninventory_agent', READ);
+Session::checkRight('plugin_glpiinventory_agent', READ);
 
 if (isset ($_POST["update"])) {
-   Session::checkRight('plugin_fusioninventory_agent', UPDATE);
+   Session::checkRight('plugin_glpiinventory_agent', UPDATE);
    if (isset($_POST['items_id'])) {
       if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
          $_POST['itemtype'] = '1';
@@ -46,20 +46,20 @@ if (isset ($_POST["update"])) {
    $agent->update($_POST);
    Html::back();
 } else if (isset ($_POST["purge"])) {
-   Session::checkRight('plugin_fusioninventory_agent', PURGE);
+   Session::checkRight('plugin_glpiinventory_agent', PURGE);
    $agent->delete($_POST, true);
    $agent->redirectToList();
 } else if (isset ($_POST["disconnect"])) {
-   Session::checkRight('plugin_fusioninventory_agent', UPDATE);
+   Session::checkRight('plugin_glpiinventory_agent', UPDATE);
    $agent->disconnect($_POST);
    Html::back();
 }
 
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "agent");
+             "pluginglpiinventorymenu", "agent");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 if (isset($_GET["id"])) {
    $agent->display(

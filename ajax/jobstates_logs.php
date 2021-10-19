@@ -38,7 +38,7 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "jobstates_logs.php")) {
 session_write_close();
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
-$pfJobstate = new PluginFusioninventoryTaskjobstate();
+$pfJobstate = new PluginGlpiinventoryTaskjobstate();
 
 $params = [
     "id"        => filter_input(INPUT_GET, "id"),

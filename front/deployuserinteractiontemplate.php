@@ -34,11 +34,11 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('User interaction template', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "deployuserinteractiontemplate");
+             "pluginglpiinventorymenu", "deployuserinteractiontemplate");
 
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryDeployUserinteractionTemplate');
+Search::show('PluginGlpiinventoryDeployUserinteractionTemplate');
 
 Html::footer();

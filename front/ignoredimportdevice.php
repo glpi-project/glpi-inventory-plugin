@@ -33,13 +33,13 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "ignoredimportdevice");
+             "pluginglpiinventorymenu", "ignoredimportdevice");
 
-//PluginFusioninventoryProfile::checkRight("rules", "r");
+//PluginGlpiinventoryProfile::checkRight("rules", "r");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryIgnoredimportdevice');
+Search::show('PluginGlpiinventoryIgnoredimportdevice');
 
 Html::footer();
 

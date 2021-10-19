@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the network ports display and parse the  inventory to add / update
  * in database.
  */
-class PluginFusioninventoryNetworkPort extends CommonDBTM {
+class PluginGlpiinventoryNetworkPort extends CommonDBTM {
 
    /**
     * Initialize the port of database
@@ -331,8 +331,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       if ($opposite_port != ""
               && $opposite_port!= 0) {
          $networkPort->getFromDB($opposite_port);
-         if ($networkPort->fields["itemtype"] == 'PluginFusioninventoryUnmanaged') {
-            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+         if ($networkPort->fields["itemtype"] == 'PluginGlpiinventoryUnmanaged') {
+            $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
             if ($pfUnmanaged->getFromDB($networkPort->fields['items_id'])) {
                if ($pfUnmanaged->fields['hub'] == 1) {
                   $is_multiple = true;

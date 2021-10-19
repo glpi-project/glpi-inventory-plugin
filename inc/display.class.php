@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the general display in plugin.
  */
-class PluginFusioninventoryDisplay extends CommonDBTM {
+class PluginGlpiinventoryDisplay extends CommonDBTM {
 
 
    /**
@@ -121,7 +121,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
     */
    static function disableDebug() {
       error_reporting(0);
-      set_error_handler(['PluginFusioninventoryDisplay', 'error_handler']);
+      set_error_handler(['PluginGlpiinventoryDisplay', 'error_handler']);
    }
 
 

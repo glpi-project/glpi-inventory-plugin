@@ -49,9 +49,9 @@ class CommunicationTest extends TestCase {
     * @test
     */
    public function testNew() {
-      $communication = new PluginFusioninventoryCommunication();
+      $communication = new PluginGlpiinventoryCommunication();
       $this->assertInstanceOf(
-         'PluginFusioninventoryCommunication', $communication
+         'PluginGlpiinventoryCommunication', $communication
       );
       return $communication;
    }
@@ -63,7 +63,7 @@ class CommunicationTest extends TestCase {
     * @preserveGlobalState disabled
     */
    public function testGetMessage() {
-      $communication = new PluginFusioninventoryCommunication();
+      $communication = new PluginGlpiinventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
       $message = $communication->getMessage();
       $this->assertInstanceOf('SimpleXMLElement', $message);
@@ -77,7 +77,7 @@ class CommunicationTest extends TestCase {
     * @preserveGlobalState disabled
     */
    public function testSendMessage() {
-      $communication = new PluginFusioninventoryCommunication();
+      $communication = new PluginGlpiinventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
 
       $this->expectOutputString($this->output);
@@ -94,7 +94,7 @@ class CommunicationTest extends TestCase {
     * @preserveGlobalState disabled
     */
    public function testSendMessageNoCompression() {
-      $communication = new PluginFusioninventoryCommunication();
+      $communication = new PluginGlpiinventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
 
       $this->expectOutputString($this->output);
@@ -111,7 +111,7 @@ class CommunicationTest extends TestCase {
     * @preserveGlobalState disabled
     */
    public function testSendMessageZlibCompression() {
-      $communication = new PluginFusioninventoryCommunication();
+      $communication = new PluginGlpiinventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
 
       $this->expectOutputString(gzcompress($this->output));
@@ -128,7 +128,7 @@ class CommunicationTest extends TestCase {
     * @preserveGlobalState disabled
     */
    public function testSendMessageDeflate() {
-      $communication = new PluginFusioninventoryCommunication();
+      $communication = new PluginGlpiinventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
 
       $this->expectOutputString(gzdeflate($this->output));
@@ -145,7 +145,7 @@ class CommunicationTest extends TestCase {
     * @preserveGlobalState disabled
     */
    public function testSendMessageGzipCompression() {
-      $communication = new PluginFusioninventoryCommunication();
+      $communication = new PluginGlpiinventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
       $this->expectOutputString(gzencode($this->output));
       $communication->sendMessage('gzip');

@@ -156,7 +156,7 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareNormal() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
@@ -167,7 +167,7 @@ class SoftwareUpdateTest extends TestCase {
                 'SYSTEM_CATEGORY' => 'devel'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $manufacturer     = new Manufacturer();
@@ -205,7 +205,7 @@ class SoftwareUpdateTest extends TestCase {
       $a_software  = [];
       $a_reference = [];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 1;
+      $_SESSION["plugin_glpiinventory_entity"] = 1;
       $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $a_software['SOFTWARES'][] = [
@@ -214,7 +214,7 @@ class SoftwareUpdateTest extends TestCase {
                 'VERSION'   => '0.85'
                ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference['software'] = [];
@@ -229,7 +229,7 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareRename() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
@@ -240,7 +240,7 @@ class SoftwareUpdateTest extends TestCase {
                 'SYSTEM_CATEGORY' => 'devel'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
@@ -274,7 +274,7 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareRenameManufacturer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
@@ -284,7 +284,7 @@ class SoftwareUpdateTest extends TestCase {
                 'VERSION'   => '0.85'
              ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $manufacturer     = new Manufacturer();
@@ -317,7 +317,7 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareVersion() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
@@ -328,7 +328,7 @@ class SoftwareUpdateTest extends TestCase {
                 'SYSTEM_CATEGORY' => 'devel'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
@@ -361,7 +361,7 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function ProcessInstalldate() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
@@ -391,7 +391,7 @@ class SoftwareUpdateTest extends TestCase {
                 'SYSTEM_CATEGORY'  => 'application'
           ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 

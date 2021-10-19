@@ -32,7 +32,7 @@
 
 include ("../../../inc/includes.php");
 
-$pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+$pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
 
 if (isset($_POST["add"])) {
    if (!preg_match('/^\/()/', $_POST['path'])) {

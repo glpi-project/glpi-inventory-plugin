@@ -36,14 +36,14 @@ Session::checkLoginUser();
 Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "collectrule");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 RuleCollection::titleBackup();
 
-$rulecollection = new PluginFusioninventoryCollectRuleCollection();
+$rulecollection = new PluginGlpiinventoryCollectRuleCollection();
 
 include (GLPI_ROOT . "/front/rule.common.php");
 

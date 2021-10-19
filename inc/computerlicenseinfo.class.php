@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the software licenses found on the computer.
  */
-class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
+class PluginGlpiinventoryComputerLicenseInfo extends CommonDBTM {
 
 
    /**
@@ -70,7 +70,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    function showForm($computers_id, array $options = []) {
       global $CFG_GLPI, $DB;
 
-      $iterator = $DB->request('glpi_plugin_fusioninventory_computerlicenseinfos',
+      $iterator = $DB->request('glpi_plugin_glpiinventory_computerlicenseinfos',
                                ['computers_id' => $computers_id]);
 
       if ($iterator->numrows()) {
@@ -278,7 +278,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $computers_id
     */
    static function cleanLicense(Item_SoftwareLicense $license) {
-      $licenses = getAllDataFromTable('glpi_plugin_fusioninventory_computerlicenseinfos',
+      $licenses = getAllDataFromTable('glpi_plugin_glpiinventory_computerlicenseinfos',
          [
             'softwarelicenses_id' => $license->fields['softwarelicenses_id'],
             'computers_id'        => $license->fields['computers_id'],

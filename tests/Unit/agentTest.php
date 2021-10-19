@@ -38,7 +38,7 @@ class agentTest extends TestCase {
       * @test
       */
    public function addAgent() {
-      $agent = new PluginFusioninventoryAgent();
+      $agent = new PluginGlpiinventoryAgent();
 
       $agent_id = $agent->add(
          [
@@ -72,7 +72,7 @@ class agentTest extends TestCase {
     */
    public function agentExists() {
 
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfAgent  = new PluginGlpiinventoryAgent();
       $a_agents = $pfAgent->find(
          ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27']
       );
@@ -86,7 +86,7 @@ class agentTest extends TestCase {
     */
    public function newAgentLinkedToSameAsset() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $agent = $pfAgent->find(
          ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27'],
          [], 1);
@@ -106,7 +106,7 @@ class agentTest extends TestCase {
     */
    public function newAgentCheckEntity() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents = current($pfAgent->find(['computers_id' => 100]));
 
       $this->assertEquals(1, $a_agents['entities_id']);
@@ -118,7 +118,7 @@ class agentTest extends TestCase {
     */
    public function newAgentChangeEntity() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       // Load Agent
       $this->assertTrue(
          $pfAgent->getFromDBByCrit([
@@ -131,7 +131,7 @@ class agentTest extends TestCase {
                                        'port004.bureau.siprossii.com-2013-01-01-16-27-27',
                                        0);
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents = current($pfAgent->find(['computers_id' => 100]));
 
       $this->assertEquals(0, $a_agents['entities_id']);
@@ -147,8 +147,8 @@ class agentTest extends TestCase {
 
       $DB->connect();
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $query = "UPDATE glpi_plugin_fusioninventory_agents SET `last_contact`='2015-01-01 00:00:01'";
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $query = "UPDATE glpi_plugin_glpiinventory_agents SET `last_contact`='2015-01-01 00:00:01'";
       $DB->query($query);
       $arrayinventory = [
           'DEVICEID' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27',
@@ -173,7 +173,7 @@ class agentTest extends TestCase {
     */
    public function disconnectAgent() {
 
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfAgent  = new PluginGlpiinventoryAgent();
       $agent    = $pfAgent->find(
          ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27']
       );
@@ -183,7 +183,7 @@ class agentTest extends TestCase {
 
       //Disconnect the agent from the computer
       $pfAgent->disconnect(['computers_id' => 100, 'id' => $agent_id]);
-      $count = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
+      $count = countElementsInTable('glpi_plugin_glpiinventory_inventorycomputercomputers',
                                     ['computers_id' => '100']);
       $this->assertEquals(0, $count);
 

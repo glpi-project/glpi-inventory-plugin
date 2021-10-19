@@ -237,7 +237,7 @@ class ComputerPrinterTest extends TestCase {
     */
    public function testPrinterDicoIgnoreImport() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $manufacturer = new Manufacturer();
@@ -326,9 +326,9 @@ class ComputerPrinterTest extends TestCase {
       $input['value'] = '0';
       $ruleaction->add($input);
 
-      $pfici = new PluginFusioninventoryInventoryComputerInventory();
+      $pfici = new PluginGlpiinventoryInventoryComputerInventory();
 
-      $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+      $_SESSION['plugin_glpiinventory_agents_id'] = 1;
       $pfici->sendCriteria("toto", $this->a_computer1_beforeformat);
 
       $computer->getFromDBByCrit(['name' => 'pc001']);
@@ -347,13 +347,13 @@ class ComputerPrinterTest extends TestCase {
     */
    public function PrinterDicoRename() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $computer = new Computer();
-      $pfici    = new PluginFusioninventoryInventoryComputerInventory();
+      $pfici    = new PluginGlpiinventoryInventoryComputerInventory();
 
-      $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+      $_SESSION['plugin_glpiinventory_agents_id'] = 1;
 
       $this->a_computer1_beforeformat["CONTENT"]['PRINTERS'][1]['NAME'] = 'p3';
 
@@ -409,7 +409,7 @@ class ComputerPrinterTest extends TestCase {
    //    return;
 
    //    $printer = new Printer();
-   //    $pfici    = new PluginFusioninventoryInventoryComputerInventory();
+   //    $pfici    = new PluginGlpiinventoryInventoryComputerInventory();
    //    $config = new Config();
 
    //    $printer->getFromDBByCrit(['name' => 'p3bis']);
@@ -419,7 +419,7 @@ class ComputerPrinterTest extends TestCase {
    //    $CFG_GLPI["printers_management_restrict"] = 1;
    //    $config->setConfigurationValues('core', ['printers_management_restrict' => 1]);
 
-   //    $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+   //    $_SESSION['plugin_glpiinventory_agents_id'] = 1;
 
    //    $this->a_computer1_beforeformat["CONTENT"]['PRINTERS'][1]['NAME'] = 'p3';
 

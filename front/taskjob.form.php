@@ -32,12 +32,12 @@
 
 include ("../../../inc/includes.php");
 
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "taskjob");
+             "pluginglpiinventorymenu", "taskjob");
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
 $pfTaskjob->submitForm($_POST);
 

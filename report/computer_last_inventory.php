@@ -98,7 +98,7 @@ if (($state != "") AND ($state != "0")) {
 }
 
 $query = "SELECT `last_fusioninventory_update`, `computers_id`
-      FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`
+      FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
    LEFT JOIN `glpi_computers` ON `computers_id`=`glpi_computers`.`id`
 WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY)
       OR last_fusioninventory_update IS NULL)

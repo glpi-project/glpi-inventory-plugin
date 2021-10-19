@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files to deploy.
  */
-class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackageItem {
+class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem {
 
    public $shortname = 'files';
    public $json_name = 'associatedFiles';
@@ -47,7 +47,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_package';
+   static $rightname = 'plugin_glpiinventory_package';
 
    const REGISTRY_NO_DB_ENTRY = 0x1;
    const REGISTRY_NO_MANIFEST = 0x2;
@@ -70,11 +70,11 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * Display list of files
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored actions
     * @param string $rand unique element id used to identify/update an element
     */
-   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
+   function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
       $package_id = $package->getID();
@@ -244,7 +244,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    function displayAjaxValues($config, $request_data, $rand, $mode) {
       $fi_path = Plugin::getWebDir('glpiinventory');
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['packages_id']);
@@ -405,7 +405,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    static function getServerFileTree($node) {
 
       $nodes            = [];
-      $pfConfig         = new PluginFusioninventoryConfig();
+      $pfConfig         = new PluginGlpiinventoryConfig();
       $dir              = $pfConfig->getValue('server_upload_path');
       $security_problem = false;
       if ($node != "-1") {
@@ -730,7 +730,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    *
    * @since 9.2
    */
-   public function getItemConfig(PluginFusioninventoryDeployPackage $package, $request_data) {
+   public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data) {
       $element = $package->getSubElement($this->json_name, $request_data['index']);
       $config  = [];
       if ($element) {
@@ -874,7 +874,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * @return boolean
     */
    function removeFileInRepo($sha512) {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       // try to find file in other packages
       $rows = $pfDeployPackage->find(
@@ -1014,7 +1014,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
       $a_files = $this->find();
       foreach ($a_files as $data) {
-         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
+         $cnt = countElementsInTable('glpi_plugin_glpiinventory_deploypackages',
             ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']]);
          if ($cnt == 0) {
             echo "<tr class='tab_bg_1'>";
@@ -1037,7 +1037,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    function deleteUnusedFiles() {
       $a_files = $this->find();
       foreach ($a_files as $data) {
-         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
+         $cnt = countElementsInTable('glpi_plugin_glpiinventory_deploypackages',
             ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']]);
          if ($cnt == 0) {
             $this->delete($data);

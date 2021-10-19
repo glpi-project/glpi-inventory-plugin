@@ -33,14 +33,14 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "admin", "pluginfusioninventorymenu", "stateinventory");
+        "admin", "pluginglpiinventorymenu", "stateinventory");
 
-Session::checkRight('plugin_fusioninventory_task', READ);
+Session::checkRight('plugin_glpiinventory_task', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 
-$pfStateInventory = new PluginFusioninventoryStateInventory();
+$pfStateInventory = new PluginGlpiinventoryStateInventory();
 $pfStateInventory->display();
 
 Html::footer();

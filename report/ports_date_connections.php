@@ -38,7 +38,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
-Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
+Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
 $reset_search = filter_input(INPUT_GET, "reset_search");
 if ($reset_search != '') {
@@ -66,9 +66,9 @@ if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
    $networkequipment = new NetworkEquipment();
 
    $query = "SELECT `glpi_networkports`.`id`, a.date_mod, `glpi_networkports`.`items_id` FROM `glpi_networkports`"
-           . " LEFT JOIN `glpi_plugin_fusioninventory_networkportconnectionlogs` a"
+           . " LEFT JOIN `glpi_plugin_glpiinventory_networkportconnectionlogs` a"
            . " ON a.id= (SELECT MAX(fn.id) a_id
-               FROM glpi_plugin_fusioninventory_networkportconnectionlogs fn
+               FROM glpi_plugin_glpiinventory_networkportconnectionlogs fn
                WHERE (fn.networkports_id_source = glpi_networkports.id
                       OR fn.networkports_id_destination = glpi_networkports.id))"
            . " WHERE a.id IS NOT NULL AND `glpi_networkports`.`itemtype`='NetworkEquipment'"
@@ -183,7 +183,7 @@ function displaySearchForm() {
    echo "<td>";
    //Add parameters to uri to be saved as SavedSearch
    $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
-   SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginFusioninventoryNetworkport2');
+   SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginGlpiinventoryNetworkport2');
    echo "</td>";
 
    echo "<td>";

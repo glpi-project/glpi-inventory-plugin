@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the extended information of a computer.
  */
-class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninventoryItem {
+class PluginGlpiinventoryInventoryComputerComputer extends PluginGlpiinventoryItem {
 
 
    /**
@@ -70,7 +70,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
    static function showAgentInfo($item) {
       global $CFG_GLPI;
 
-      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(['computers_id' => $item->getID()], [], 1));
       if (empty($a_computerextend)) {
          return;
@@ -78,7 +78,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       echo '<table class="tab_glpi" width="100%">';
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->showInfoForComputer($item);
 
       if ($a_computerextend['bios_date'] != '') {
@@ -145,7 +145,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
           || !empty($pfComputer->hasAutomaticInventory($id))) {
          return true;
       } else {
-         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent = new PluginGlpiinventoryAgent();
          if ($pfAgent->getAgentWithComputerid($id)) {
             echo '<tr>';
             echo '<td colspan=\'4\'></td>';
@@ -219,9 +219,9 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       $fi_path = Plugin::getWebDir('glpiinventory');
 
       // Manage locks pictures
-      PluginFusioninventoryLock::showLockIcon('Computer');
+      PluginGlpiinventoryLock::showLockIcon('Computer');
 
-      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($item->getID());
       if (empty($a_computerextend)) {
          return true;
@@ -233,7 +233,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<th colspan="4">'.__('GLPI Inventory', 'glpiinventory').'</th>';
       echo '</tr>';
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->showInfoForComputer($item, 4);
 
       echo '<tr class="tab_bg_1">';
@@ -257,7 +257,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       if (Session::isMultiEntitiesMode()) {
          echo '<td>'.__('Automatic entity transfer', 'glpiinventory').'</td>';
          echo '<td>';
-         $pfEntity = new PluginFusioninventoryEntity();
+         $pfEntity = new PluginGlpiinventoryEntity();
          if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
             echo __('No, locked (by entity configuration)', 'glpiinventory');
          } else {
@@ -283,7 +283,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '</td>';
       echo '</tr>';
 
-      $pfRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
+      $pfRemoteManagement = new PluginGlpiinventoryComputerRemoteManagement();
       $pfRemoteManagement->showInformation($item->getID());
       echo '</table>';
       return true;
@@ -309,7 +309,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
     */
    function getLock($computers_id) {
 
-      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
                                               ['computers_id' => $computers_id], [], 1));
       if (empty($a_computerextend)) {

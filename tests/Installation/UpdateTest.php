@@ -255,7 +255,7 @@ class UpdateTest extends TestCase {
       $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
 
       $cnt_new = countElementsInTable("glpi_rules",
-         ['sub_type' => 'PluginFusioninventoryInventoryRuleEntity']);
+         ['sub_type' => 'PluginGlpiinventoryInventoryRuleEntity']);
 
       $this->assertEquals($nbrules, $cnt_new, "May have ".$nbrules." entity rules");
 
@@ -266,7 +266,7 @@ class UpdateTest extends TestCase {
       global $DB;
       $DB->connect();
 
-      $a_configs = getAllDataFromTable('glpi_plugin_fusioninventory_configs',
+      $a_configs = getAllDataFromTable('glpi_plugin_glpiinventory_configs',
          ['type' => 'states_id_default']);
 
       $this->assertEquals(1, count($a_configs), "May have conf states_id_default");
@@ -280,7 +280,7 @@ class UpdateTest extends TestCase {
       global $DB;
 
       //check is the field is_active has correctly been added to mirror servers
-      $this->assertTrue($DB->fieldExists('glpi_plugin_fusioninventory_deploymirrors',
+      $this->assertTrue($DB->fieldExists('glpi_plugin_glpiinventory_deploymirrors',
                                     'is_active'));
 
    }

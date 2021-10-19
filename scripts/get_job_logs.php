@@ -69,6 +69,6 @@ $logger->debug($args);
  * Get Running Tasks
  */
 
-$pfTask = new PluginFusioninventoryTask();
+$pfTask = new PluginGlpiinventoryTask();
 $logs = $pfTask->getJoblogs();
 $logger->info($logs);

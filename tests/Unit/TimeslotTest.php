@@ -36,7 +36,7 @@ class TimeslotTest extends TestCase {
 
    public static function setUpBeforeClass(): void {
       // Delete all timeslots
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
       $items = $pfTimeslot->find();
       foreach ($items as $item) {
          $pfTimeslot->delete(['id' => $item['id']], true);
@@ -48,14 +48,14 @@ class TimeslotTest extends TestCase {
     * @test
     */
    public function addTimeslot() {
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
       $input = [
           'entities_id'  => 0,
           'is_recursive' => 0,
           'name'         => 'unitdefault'
       ];
       $pfTimeslot->add($input);
-      $cnt = countElementsInTable('glpi_plugin_fusioninventory_timeslots');
+      $cnt = countElementsInTable('glpi_plugin_glpiinventory_timeslots');
       $this->assertEquals(1, $cnt, "Timeslot may be added");
    }
 
@@ -64,13 +64,13 @@ class TimeslotTest extends TestCase {
     * @test
     */
    public function addSimpleEntrieslot() {
-      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
       $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
       $input = [
-          'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+          'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
           'entities_id'  => 0,
           'is_recursive' => 0,
           'day'          => 1,
@@ -80,7 +80,7 @@ class TimeslotTest extends TestCase {
       $pfTimeslotEntry->add($input);
 
       $input = [
-          'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+          'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
           'entities_id'  => 0,
           'is_recursive' => 0,
           'day'          => 1,
@@ -90,7 +90,7 @@ class TimeslotTest extends TestCase {
       $pfTimeslotEntry->add($input);
 
       $input = [
-          'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+          'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
           'entities_id'  => 0,
           'is_recursive' => 0,
           'day'          => 3,
@@ -102,7 +102,7 @@ class TimeslotTest extends TestCase {
       $references = [
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 7215,
@@ -110,7 +110,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 72000,
@@ -118,14 +118,14 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 3,
             'begin'        => 39600,
             'end'          => 79200
          ]
       ];
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
       $items = [];
       foreach ($a_data as $data) {
          unset($data['id']);
@@ -141,8 +141,8 @@ class TimeslotTest extends TestCase {
     */
    public function addEntriesTimeslotYetAdded() {
 
-      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
       $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
@@ -167,7 +167,7 @@ class TimeslotTest extends TestCase {
       $references = [
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 7215,
@@ -175,7 +175,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 72000,
@@ -183,14 +183,14 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 3,
             'begin'        => 39600,
             'end'          => 79200
          ]
       ];
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries', ['ORDER' => 'id']);
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries', ['ORDER' => 'id']);
       $items = [];
       foreach ($a_data as $data) {
          unset($data['id']);
@@ -205,8 +205,8 @@ class TimeslotTest extends TestCase {
     */
    public function addEntriesTimeslotNotInRanges() {
 
-      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
       $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
@@ -222,7 +222,7 @@ class TimeslotTest extends TestCase {
       $references = [
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 7215,
@@ -230,7 +230,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 72000,
@@ -238,7 +238,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 3,
             'begin'        => 39600,
@@ -246,14 +246,14 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 15,
             'end'          => 30
          ]
       ];
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
       $items = [];
       foreach ($a_data as $data) {
          unset($data['id']);
@@ -268,8 +268,8 @@ class TimeslotTest extends TestCase {
     */
    public function addEntryIn3Ranges() {
 
-      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
       $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
@@ -285,7 +285,7 @@ class TimeslotTest extends TestCase {
       $references = [
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 3,
             'begin'        => 39600,
@@ -293,14 +293,14 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 0,
             'end'          => 79215
          ]
       ];
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
       $items = [];
       foreach ($a_data as $data) {
          unset($data['id']);
@@ -315,8 +315,8 @@ class TimeslotTest extends TestCase {
     */
    public function addEntryForTwoDays() {
 
-      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
       $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
@@ -332,7 +332,7 @@ class TimeslotTest extends TestCase {
       $references = [
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 0,
@@ -340,7 +340,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 79230,
@@ -348,7 +348,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 2,
             'begin'        => 0,
@@ -356,7 +356,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 3,
             'begin'        => 0,
@@ -364,14 +364,14 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 4,
             'begin'        => 0,
             'end'          => 36000
          ],
       ];
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
       $items = [];
       foreach ($a_data as $data) {
          unset($data['id']);
@@ -386,8 +386,8 @@ class TimeslotTest extends TestCase {
     */
    public function addEntryForTwoDaysYetAdded() {
 
-      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
       $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
@@ -403,7 +403,7 @@ class TimeslotTest extends TestCase {
       $references = [
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 0,
@@ -411,7 +411,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 79230,
@@ -419,7 +419,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 2,
             'begin'        => 0,
@@ -427,7 +427,7 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 3,
             'begin'        => 0,
@@ -435,14 +435,14 @@ class TimeslotTest extends TestCase {
          ],
          [
             'entities_id'  => 0,
-            'plugin_fusioninventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
             'is_recursive' => 0,
             'day'          => 4,
             'begin'        => 0,
             'end'          => 36000
          ],
       ];
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
       $items = [];
       foreach ($a_data as $data) {
          unset($data['id']);

@@ -37,21 +37,21 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage SNMP credentials associated with IP ranges.
  */
-class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
+class PluginGlpiinventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1    = 'PluginFusioninventoryIPRange';
+   static public $itemtype_1    = 'PluginGlpiinventoryIPRange';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1    = 'plugin_fusioninventory_ipranges_id';
+   static public $items_id_1    = 'plugin_glpiinventory_ipranges_id';
 
    /**
     * Restrict the first item to the current entity
@@ -65,14 +65,14 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     *
     * @var string
     */
-   static public $itemtype_2    = 'PluginFusioninventoryConfigSecurity';
+   static public $itemtype_2    = 'PluginGlpiinventoryConfigSecurity';
 
    /**
     * id field name for the second part of relation
     *
     * @var string
     */
-   static public $items_id_2    = 'plugin_fusioninventory_configsecurities_id';
+   static public $items_id_2    = 'plugin_glpiinventory_configsecurities_id';
 
    /**
     * Not restrict the second item to the current entity
@@ -145,17 +145,17 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       }
       $rand = mt_rand();
 
-      $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
-                                     ['plugin_fusioninventory_ipranges_id' => $item->getID()],
+      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_ipranges_configsecurities',
+                                     ['plugin_glpiinventory_ipranges_id' => $item->getID()],
                                      false,
                                      '`rank`');
       $a_used = [];
       foreach ($a_data as $data) {
-         $a_used[] = $data['plugin_fusioninventory_configsecurities_id'];
+         $a_used[] = $data['plugin_glpiinventory_configsecurities_id'];
       }
       echo "<div class='firstbloc'>";
       echo "<form name='iprange_configsecurity_form$rand' id='iprange_configsecurity_form$rand' method='post'
-             action='".Toolbox::getItemTypeFormURL('PluginFusioninventoryIPRange_ConfigSecurity')."' >";
+             action='".Toolbox::getItemTypeFormURL('PluginGlpiinventoryIPRange_ConfigSecurity')."' >";
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_2'>";
@@ -163,10 +163,10 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</tr>";
       echo "<tr class='tab_bg_2'>";
       echo "<td>";
-      Dropdown::show('PluginFusioninventoryConfigSecurity', ['used' => $a_used]);
+      Dropdown::show('PluginGlpiinventoryConfigSecurity', ['used' => $a_used]);
       echo "</td>";
       echo "<td>";
-      echo Html::hidden('plugin_fusioninventory_ipranges_id',
+      echo Html::hidden('plugin_glpiinventory_ipranges_id',
                    ['value' => $item->getID()]);
       echo "<input type='submit' name='add' value=\"".
           _sx('button', 'Associate')."\" class='submit'>";
@@ -199,14 +199,14 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</th>";
       echo "</tr>";
 
-      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
+      $pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_2'>";
          echo "<td>";
          Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
          echo "</td>";
          echo "<td>";
-         $pfConfigSecurity->getFromDB($data['plugin_fusioninventory_configsecurities_id']);
+         $pfConfigSecurity->getFromDB($data['plugin_glpiinventory_configsecurities_id']);
          echo $pfConfigSecurity->getLink();
          echo "</td>";
          echo "<td>";

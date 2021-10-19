@@ -34,11 +34,11 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('GLPI Inventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "deploypackage");
+             "pluginglpiinventorymenu", "deploypackage");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-$package = new PluginFusioninventoryDeployPackage();
+$package = new PluginGlpiinventoryDeployPackage();
 $package->showList();
 
 Html::footer();

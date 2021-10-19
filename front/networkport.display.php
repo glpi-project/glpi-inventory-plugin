@@ -36,7 +36,7 @@ if (!defined('GLPI_ROOT')) {
 
 // Manage for networkport display in networkequipment (glpi or fusion view
 if (isset($_POST['selectview'])) {
-   $_SESSION['plugin_fusioninventory_networkportview'] = $_POST['selectview'];
+   $_SESSION['plugin_glpiinventory_networkportview'] = $_POST['selectview'];
    Html::back();
 }
 
@@ -50,5 +50,5 @@ if (isset($_POST["itemtype"])) {
 
 Session::checkRight('networking', READ);
 Session::checkRight('internet', READ);
-PluginFusioninventoryNetworkPort::showDislayOptions($itemtype);
+PluginGlpiinventoryNetworkPort::showDislayOptions($itemtype);
 Html::ajaxFooter();

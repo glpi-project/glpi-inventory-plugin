@@ -32,7 +32,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
+class PluginGlpiinventoryCommunicationNetworkInventoryTest extends TestCase {
 
    public $items_id = 0;
    public $datelatupdate = '';
@@ -133,7 +133,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
     */
    public function get_stacked_switches_information_teststacktype1() {
       $inventory = $this->stack1;
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->get_stacked_switches_information($inventory);
       $this->assertCount(2, $stack_detection);
    }
@@ -144,7 +144,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
    public function get_stacked_switches_information_testnostacktype1() {
       $inventory = $this->stack1;
       unset($inventory['components'][2001]);
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->get_stacked_switches_information($inventory);
       $this->assertCount(1, $stack_detection);
    }
@@ -154,7 +154,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
     */
    public function get_stacked_switches_information_teststacktype2() {
       $inventory = $this->stack2;
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->get_stacked_switches_information($inventory);
       $this->assertCount(2, $stack_detection);
    }
@@ -165,7 +165,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
    public function get_stacked_switches_information_testnostacktype2() {
       $inventory = $this->stack2;
       unset($inventory['components'][570]);
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->get_stacked_switches_information($inventory);
       $this->assertCount(1, $stack_detection);
    }
@@ -175,7 +175,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
     */
    public function is_stacked_switch_teststacktype1() {
       $inventory = $this->stack1;
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->is_stacked_switch($inventory);
       $this->assertTrue($stack_detection);
    }
@@ -186,7 +186,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
    public function is_stacked_switch_testnostacktype1() {
       $inventory = $this->stack1;
       unset($inventory['components'][2001]);
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->is_stacked_switch($inventory);
       $this->assertFalse($stack_detection);
    }
@@ -196,7 +196,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
     */
    public function is_stacked_switch_teststacktype2() {
       $inventory = $this->stack2;
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->is_stacked_switch($inventory);
       $this->assertTrue($stack_detection);
    }
@@ -207,7 +207,7 @@ class PluginFusioninventoryCommunicationNetworkInventoryTest extends TestCase {
    public function is_stacked_switch_testnostacktype2() {
       $inventory = $this->stack2;
       unset($inventory['components'][570]);
-      $pfcni = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfcni = new PluginGlpiinventoryCommunicationNetworkInventory();
       $stack_detection = $pfcni->is_stacked_switch($inventory);
       $this->assertFalse($stack_detection);
    }

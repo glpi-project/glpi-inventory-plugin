@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the mapping of network equipment and printer.
  */
-class PluginFusioninventoryMapping extends CommonDBTM {
+class PluginGlpiinventoryMapping extends CommonDBTM {
 
 
    /**
@@ -66,7 +66,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
    function set($parm) {
       global $DB;
 
-      $data = current(getAllDataFromTable("glpi_plugin_fusioninventory_mappings",
+      $data = current(getAllDataFromTable("glpi_plugin_glpiinventory_mappings",
          ['itemtype' => $parm['itemtype'], 'name' => $parm['name']]));
       if (empty($data)) {
          // Insert
@@ -80,7 +80,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          if (isset($parm['shortlocale'])) {
             $values['shortlocale'] = $parm['shortlocale'];
          }
-         $DB->insert('glpi_plugin_fusioninventory_mappings', $values);
+         $DB->insert('glpi_plugin_glpiinventory_mappings', $values);
       } else if ($data['table'] != $parm['table']
                 OR $data['tablefield'] != $parm['tablefield']
                 OR $data['locale'] != $parm['locale']) {

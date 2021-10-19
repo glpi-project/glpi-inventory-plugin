@@ -32,11 +32,11 @@
 
 include ("../../../inc/includes.php");
 
-if (PluginFusioninventoryMenu::canView()) {
+if (PluginGlpiinventoryMenu::canView()) {
    Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
                 "fusioninventory", "menu");
 
-   PluginFusioninventoryMenu::displayMenuSNMPInventory();
+   PluginGlpiinventoryMenu::displayMenuSNMPInventory();
 } else {
    Html::displayRightError();
 }

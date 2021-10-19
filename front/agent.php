@@ -33,13 +33,13 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "agent");
+             "pluginglpiinventorymenu", "agent");
 
-Session::checkRight('plugin_fusioninventory_agent', READ);
+Session::checkRight('plugin_glpiinventory_agent', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryAgent');
+Search::show('PluginGlpiinventoryAgent');
 
 Html::footer();
 

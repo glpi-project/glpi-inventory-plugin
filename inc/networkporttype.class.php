@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the differents type of network ports.
  */
-class PluginFusioninventoryNetworkporttype extends CommonDBTM {
+class PluginGlpiinventoryNetworkporttype extends CommonDBTM {
 
 
    /**
@@ -287,7 +287,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
       $install = 1;
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_networkporttypes',
+         'FROM'   => 'glpi_plugin_glpiinventory_networkporttypes',
          'WHERE'  => ['import' => 1]
       ]);
       if (count($iterator) > 0) {
@@ -296,7 +296,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
       $it = new DBmysqlIterator($DB);
       $it->buildQuery([
-         'FROM'   => 'glpi_plugin_fusioninventory_networkporttypes',
+         'FROM'   => 'glpi_plugin_glpiinventory_networkporttypes',
          'WHERE'  => ['number' => new QueryParam()]
       ]);
       $stmt_select = $DB->prepare($it->getSQL());
@@ -314,7 +314,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       if (count($to_import)) {
          $qparam = new \QueryParam();
          $insert_qry = $DB->buildInsert(
-            'glpi_plugin_fusioninventory_networkporttypes', [
+            'glpi_plugin_glpiinventory_networkporttypes', [
                'name'      => $qparam,
                'number'    => $qparam,
                'othername' => $qparam,
@@ -399,7 +399,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
 
-      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+      if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
 
          echo "<td class='right'>";
 

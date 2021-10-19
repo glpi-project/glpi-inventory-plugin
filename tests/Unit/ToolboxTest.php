@@ -69,7 +69,7 @@ JSON;
 
       $this->assertEquals(
          $this->formatJson_expected,
-         PluginFusioninventoryToolbox::formatJson(json_encode($this->formatJson_input))
+         PluginGlpiinventoryToolbox::formatJson(json_encode($this->formatJson_input))
       );
    }
 
@@ -80,7 +80,7 @@ JSON;
    public function isAnInventoryDevice() {
       $computer = new Computer();
 
-      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($computer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
       $values = ['name'         => 'comp',
                  'is_dynamic'   => 1,
@@ -89,11 +89,11 @@ JSON;
       $computers_id = $computer->add($values);
       $computer->getFromDB($computers_id);
 
-      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($computer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
-      $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $pfComputer->add(['computers_id' => $computers_id]);
-      $this->assertTrue(PluginFusioninventoryToolbox::isAnInventoryDevice($computer));
+      $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
       $printer = new Printer();
       $values  = ['name'         => 'printer',
@@ -102,11 +102,11 @@ JSON;
                   'is_recursive' => 0];
       $printers_id = $printer->add($values);
       $printer->getFromDB($printers_id);
-      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($printer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
-      $pfPrinter = new PluginFusioninventoryPrinter();
+      $pfPrinter = new PluginGlpiinventoryPrinter();
       $pfPrinter->add(['printers_id' => $printers_id]);
-      $this->assertTrue(PluginFusioninventoryToolbox::isAnInventoryDevice($printer));
+      $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
       $values  = ['name'         => 'printer2',
                   'is_dynamic'   => 0,
@@ -115,7 +115,7 @@ JSON;
       $printers_id_2 = $printer->add($values);
       $printer->getFromDB($printers_id_2);
       $pfPrinter->add(['printers_id' => $printers_id_2]);
-      $this->assertFalse(PluginFusioninventoryToolbox::isAnInventoryDevice($printer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
    }
 
@@ -130,17 +130,17 @@ JSON;
       $states_id_computer = $state->importExternal('state_computer');
       $states_id_snmp = $state->importExternal('state_snmp');
 
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       $config->updateValue('states_id_snmp_default', $states_id_snmp);
       $config->updateValue('states_id_default', $states_id_computer);
 
-      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
+      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('computer', $input);
       $this->assertEquals(['states_id' => $states_id_computer], $result);
 
-      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
       $this->assertEquals(['states_id' => $states_id_snmp], $result);
 
-      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('foo', $input);
+      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('foo', $input);
       $this->assertEquals([], $result);
 
       // Redo default

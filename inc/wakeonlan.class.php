@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the wake on lan of computers by the agent.
  */
-class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
+class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication {
 
 
    /**
@@ -52,16 +52,16 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    function prepareRun($taskjobs_id) {
       global $DB;
 
-      $pfTask = new PluginFusioninventoryTask();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTask = new PluginGlpiinventoryTask();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $uniqid = uniqid();
 
       $pfTaskjob->getFromDB($taskjobs_id);
-      $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
 
       $communication = $pfTask->fields['communication'];
       $a_definitions = importArrayFromDB($pfTaskjob->fields['definition']);
@@ -77,15 +77,15 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                $a_computers_to_wake[] = $items_id;
                break;
 
-            case 'PluginFusioninventoryDeployGroup':
-               $group = new PluginFusioninventoryDeployGroup;
+            case 'PluginGlpiinventoryDeployGroup':
+               $group = new PluginGlpiinventoryDeployGroup;
                $group->getFromDB($items_id);
 
                switch ($group->getField('type')) {
 
                   case 'STATIC':
                      $query = "SELECT items_id
-                     FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
+                     FROM glpi_plugin_glpiinventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
                      $res = $DB->query($query);
@@ -96,7 +96,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
                   case 'DYNAMIC':
                      $query = "SELECT fields_array
-                     FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
+                     FROM glpi_plugin_glpiinventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
                      $res = $DB->query($query);
@@ -119,7 +119,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                         $_GET["glpisearchcount2"] = count($_GET['field2']);
                      }
 
-                     $pfSearch = new PluginFusioninventorySearch();
+                     $pfSearch = new PluginGlpiinventorySearch();
                      Search::manageGetValues('Computer');
                      $glpilist_limit = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
@@ -189,15 +189,15 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
       if (count($a_agentList) == '0') {
          $a_input = [];
-         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
-         $a_input['plugin_fusioninventory_agents_id'] = 0;
+         $a_input['plugin_glpiinventory_agents_id'] = 0;
          $a_input['itemtype'] = 'Computer';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
          $Taskjobstates_id = $pfTaskjobstate->add($a_input);
             //Add log of taskjob
-            $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
+            $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
             $a_input['state'] = 7;
             $a_input['date'] = date("Y-m-d H:i:s");
             $pfTaskjoblog->add($a_input);
@@ -211,25 +211,25 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $nb_computers = ceil(count($a_computers_to_wake) / count($a_agentList));
 
          $a_input = [];
-         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 0;
          $a_input['itemtype'] = 'Computer';
          $a_input['uniqid'] = $uniqid;
          while (count($a_computers_to_wake) != 0) {
             $agent_id = array_pop($a_agentList);
-            $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
+            $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
             for ($i=0; $i < $nb_computers; $i++) {
                 //Add jobstate and put status
                 $a_input['items_id'] = array_pop($a_computers_to_wake);
                 $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                   //Add log of taskjob
-                  $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
+                  $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
                   $a_input['state'] = 7;
                   $a_input['date'] = date("Y-m-d H:i:s");
                   $pfTaskjoblog->add($a_input);
                   unset($a_input['state']);
                if ($communication == "push") {
-                  $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                  $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
                }
             }
          }
@@ -249,8 +249,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
     */
    function run($jobstate) {
 
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $NetworkPort                        = new NetworkPort();
 
       $sxml_option = $this->message->addChild('OPTION');
@@ -319,8 +319,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    function getAgentsSubnet($nb_computers, $communication, $subnet = '') {
       global $DB;
 
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+      $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
       $OperatingSystem = new OperatingSystem();
 
       // Number of computers min by agent
@@ -370,17 +370,17 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             return $a_agentList;
          }
 
-         $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
+         $where = " AND `glpi_plugin_glpiinventory_agents`.`ID` IN (";
          $where .= implode(', ', $a_agentsid);
          $where .= ")
             AND `ip` != '127.0.0.1' ";
 
-         $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token
-            FROM `glpi_plugin_fusioninventory_agents`
+         $query = "SELECT `glpi_plugin_glpiinventory_agents`.`id` as `a_id`, ip, subnet, token
+            FROM `glpi_plugin_glpiinventory_agents`
             LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` =
-               `glpi_plugin_fusioninventory_agents`.`items_id`
+               `glpi_plugin_glpiinventory_agents`.`items_id`
             LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` =
-               `glpi_plugin_fusioninventory_agents`.`items_id`
+               `glpi_plugin_glpiinventory_agents`.`items_id`
             WHERE `glpi_networkports`.`itemtype`='Computer'
                ".$subnet."
                ".$osfind."

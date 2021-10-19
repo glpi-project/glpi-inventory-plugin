@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the import rules used for each import / update into GLPI.
  */
-class PluginFusioninventoryRulematchedlog extends CommonDBTM {
+class PluginGlpiinventoryRulematchedlog extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_ruleimport';
+   static $rightname = 'plugin_glpiinventory_ruleimport';
 
 
    /**
@@ -65,7 +65,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @return integer
     */
    static function countForItem(CommonDBTM $item) {
-      return countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
+      return countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs',
          [
             'itemtype' => $item->getType(),
             'items_id' => $item->getField('id'),
@@ -84,22 +84,22 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       $array_ret = [];
 
-      if ($item->getType() == 'PluginFusioninventoryAgent') {
-         if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
+      if ($item->getType() == 'PluginGlpiinventoryAgent') {
+         if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
              $array_ret[0] = self::createTabEntry(__('Import information', 'glpiinventory'));
          }
       } else {
          $continue = true;
 
          switch ($item->getType()) {
-            case 'PluginFusioninventoryAgent':
-               if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
+            case 'PluginGlpiinventoryAgent':
+               if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
                    $array_ret[0] = self::createTabEntry(__('Import information', 'glpiinventory'));
                }
                break;
 
-            case 'PluginFusioninventoryUnmanaged':
-               $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
+            case 'PluginGlpiinventoryUnmanaged':
+               $cnt = PluginGlpiinventoryRulematchedlog::countForItem($item);
                $array_ret[1] = self::createTabEntry(__('Import information', 'glpiinventory'), $cnt);
                break;
 
@@ -109,7 +109,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             case 'Peripheral':
             case 'Phone':
             case 'Printer':
-               $continue = PluginFusioninventoryToolbox::isAnInventoryDevice($item);
+               $continue = PluginGlpiinventoryToolbox::isAnInventoryDevice($item);
                break;
 
             default:
@@ -119,7 +119,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          if (!$continue) {
             return [];
          } else if (empty($array_ret)) {
-            $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
+            $cnt = PluginGlpiinventoryRulematchedlog::countForItem($item);
             $array_ret[1] = self::createTabEntry(__('Import information', 'glpiinventory'), $cnt);
          }
          return $array_ret;
@@ -151,15 +151,15 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             switch (get_class($item)) {
 
                case 'Computer':
-                  $itemtype = new PluginFusioninventoryInventoryComputerComputer();
+                  $itemtype = new PluginGlpiinventoryInventoryComputerComputer();
                   break;
 
                case 'Printer':
-                  $itemtype = new PluginFusioninventoryPrinter();
+                  $itemtype = new PluginGlpiinventoryPrinter();
                   break;
 
                case 'NetworkEquipment':
-                  $itemtype = new PluginFusioninventoryNetworkEquipment();
+                  $itemtype = new PluginGlpiinventoryNetworkEquipment();
                   break;
 
             }
@@ -181,7 +181,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    function cleanOlddata($items_id, $itemtype) {
       global $DB;
 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_rulematchedlogs`
+      $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_rulematchedlogs`
             WHERE `items_id` = '".$items_id."'
                AND `itemtype` = '".$itemtype."'
             ORDER BY `date` DESC
@@ -203,10 +203,10 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    function showMatchedLogForm($items_id, $itemtype) {
       global $DB;
 
-      $rule    = new PluginFusioninventoryInventoryRuleImport();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $rule    = new PluginGlpiinventoryInventoryRuleImport();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
-      $class = PluginFusioninventoryItem::getFIItemClassInstance($itemtype);
+      $class = PluginGlpiinventoryItem::getFIItemClassInstance($itemtype);
       if ($class) {
          $class->showDownloadInventoryFile($items_id);
       }
@@ -216,7 +216,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          $start = 0;
       }
 
-      $params = ['FROM'  => 'glpi_plugin_fusioninventory_rulematchedlogs',
+      $params = ['FROM'  => 'glpi_plugin_glpiinventory_rulematchedlogs',
                  'WHERE' => ['itemtype' => $itemtype,
                              'items_id' => intval($items_id)],
                  'COUNT' => 'cpt'
@@ -259,7 +259,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $params = ['FROM'  => 'glpi_plugin_fusioninventory_rulematchedlogs',
+      $params = ['FROM'  => 'glpi_plugin_glpiinventory_rulematchedlogs',
                  'WHERE' => ['itemtype' => $itemtype, 'items_id' => intval($items_id)],
                  'ORDER' => 'date DESC',
                  'START' => intval($start),
@@ -276,12 +276,12 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          }
          echo "</td>";
          echo "<td align='center'>";
-         if ($pfAgent->getFromDB($data['plugin_fusioninventory_agents_id'])) {
+         if ($pfAgent->getFromDB($data['plugin_glpiinventory_agents_id'])) {
             echo $pfAgent->getLink(1);
          }
          echo "</td>";
          echo "<td>";
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
          foreach ($a_methods as $mdata) {
             if ($mdata['method'] == $data['method']) {
                echo $mdata['name'];
@@ -322,7 +322,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     */
    function showFormAgent($agents_id) {
 
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
 
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
 
@@ -356,7 +356,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $allData = $this->find(['plugin_fusioninventory_agents_id' => $agents_id], ['date DESC']);
+      $allData = $this->find(['plugin_glpiinventory_agents_id' => $agents_id], ['date DESC']);
       foreach ($allData as $data) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
@@ -378,7 +378,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          }
          echo "</td>";
          echo "<td>";
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
          foreach ($a_methods as $mdata) {
             if ($mdata['method'] == $data['method']) {
                echo $mdata['name'];

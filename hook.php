@@ -39,17 +39,17 @@
 function plugin_glpiinventory_getAddSearchOptions($itemtype) {
 
    $sopt = [];
-   if ($itemtype == 'Computer' or $itemtype == 'PluginFusioninventoryComputer') {
+   if ($itemtype == 'Computer' or $itemtype == 'PluginGlpiinventoryComputer') {
 
-      $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5150]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
       $sopt[5150]['field']     = 'last_fusioninventory_update';
       $sopt[5150]['name']      = __('FusInv', 'glpiinventory')." - ".
          __('Last inventory', 'glpiinventory');
       $sopt[5150]['datatype']  = 'datetime';
-      $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
+      $sopt[5150]['itemlink_type'] = 'PluginGlpiinventoryInventoryComputerLib';
       $sopt[5150]['massiveaction'] = false;
 
-      $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5157]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
       $sopt[5157]['field']     = 'operatingsystem_installationdate';
       $sopt[5157]['name']      = OperatingSystem::getTypeName(1)." - ".__('Installation')." (".
                                     strtolower(_n('Date', 'Dates', 1)).")";
@@ -57,78 +57,78 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
       $sopt[5157]['datatype']  = 'date';
       $sopt[5157]['massiveaction'] = false;
 
-      $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5158]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
       $sopt[5158]['field']     = 'winowner';
       $sopt[5158]['joinparams']  = ['jointype' => 'child'];
       $sopt[5158]['name']      = __('Owner', 'glpiinventory');
       $sopt[5158]['massiveaction'] = false;
 
-      $sopt[5159]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5159]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
       $sopt[5159]['field']     = 'wincompany';
       $sopt[5159]['name']      = __('Company', 'glpiinventory');
       $sopt[5159]['joinparams']  = ['jointype' => 'child'];
       $sopt[5159]['massiveaction'] = false;
 
-      $sopt[5160]['table']     = 'glpi_plugin_fusioninventory_agents';
+      $sopt[5160]['table']     = 'glpi_plugin_glpiinventory_agents';
       $sopt[5160]['field']     = 'useragent';
       $sopt[5160]['name']      = __('Useragent', 'glpiinventory');
       $sopt[5160]['joinparams']  = ['jointype' => 'child'];
       $sopt[5160]['massiveaction'] = false;
 
-      $sopt[5161]['table']     = 'glpi_plugin_fusioninventory_agents';
+      $sopt[5161]['table']     = 'glpi_plugin_glpiinventory_agents';
       $sopt[5161]['field']     = 'tag';
       $sopt[5161]['linkfield'] = '';
       $sopt[5161]['name']      = __('Inventory tag', 'glpiinventory');
 
-      $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5163]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
       $sopt[5163]['field']     = 'oscomment';
       $sopt[5163]['name']      = OperatingSystem::getTypeName(1).'/'.__('Comments');
       $sopt[5163]['joinparams']  = ['jointype' => 'child'];
       $sopt[5163]['massiveaction'] = false;
 
-      $sopt[5164]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5164]['table']         = "glpi_plugin_glpiinventory_agentmodules";
       $sopt[5164]['field']         = "DEPLOY";
       $sopt[5164]['linkfield']     = "DEPLOY";
       $sopt[5164]['name']          = __('Module', 'glpiinventory')."-".__('Deploy', 'glpiinventory');
       $sopt[5164]['datatype']      = 'bool';
       $sopt[5164]['massiveaction'] = false;
 
-      $sopt[5165]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5165]['table']         = "glpi_plugin_glpiinventory_agentmodules";
       $sopt[5165]['field']         = "WAKEONLAN";
       $sopt[5165]['linkfield']     = "WAKEONLAN";
       $sopt[5165]['name']          = __('Module', 'glpiinventory')."-".__('WakeOnLan', 'glpiinventory');
       $sopt[5165]['datatype']      = 'bool';
       $sopt[5165]['massiveaction'] = false;
 
-      $sopt[5166]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5166]['table']         = "glpi_plugin_glpiinventory_agentmodules";
       $sopt[5166]['field']         = "INVENTORY";
       $sopt[5166]['linkfield']     = "INVENTORY";
       $sopt[5166]['name']          = __('Module', 'glpiinventory')."-".__('Local inventory', 'glpiinventory');
       $sopt[5166]['datatype']      = 'bool';
       $sopt[5166]['massiveaction'] = false;
 
-      $sopt[5167]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5167]['table']         = "glpi_plugin_glpiinventory_agentmodules";
       $sopt[5167]['field']         = "InventoryComputerESX";
       $sopt[5167]['linkfield']     = "InventoryComputerESX";
       $sopt[5167]['name']          = __('Module', 'glpiinventory')."-".__('ESX/VMWare', 'glpiinventory');
       $sopt[5167]['datatype']      = 'bool';
       $sopt[5167]['massiveaction'] = false;
 
-      $sopt[5168]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5168]['table']         = "glpi_plugin_glpiinventory_agentmodules";
       $sopt[5168]['field']         = "NETWORKINVENTORY";
       $sopt[5168]['linkfield']     = "NETWORKINVENTORY";
       $sopt[5168]['name']          = __('Module', 'glpiinventory')."-".__('Network inventory', 'glpiinventory');
       $sopt[5168]['datatype']      = 'bool';
       $sopt[5168]['massiveaction'] = false;
 
-      $sopt[5169]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5169]['table']         = "glpi_plugin_glpiinventory_agentmodules";
       $sopt[5169]['field']         = "NETWORKDISCOVERY";
       $sopt[5169]['linkfield']     = "NETWORKDISCOVERY";
       $sopt[5169]['name']          = __('Module', 'glpiinventory')."-".__('Network discovery', 'glpiinventory');
       $sopt[5169]['datatype']      = 'bool';
       $sopt[5169]['massiveaction'] = false;
 
-      $sopt[5170]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5170]['table']         = "glpi_plugin_glpiinventory_agentmodules";
       $sopt[5170]['field']         = "Collect";
       $sopt[5170]['linkfield']     = "Collect";
       $sopt[5170]['name']          = __('Module', 'glpiinventory')."-".__('Collect', 'glpiinventory');
@@ -136,42 +136,42 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
       $sopt[5170]['massiveaction'] = false;
 
       $sopt[5171]['name']          = __('Static group', 'glpiinventory');
-      $sopt[5171]['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
+      $sopt[5171]['table']         = getTableForItemType('PluginGlpiinventoryDeployGroup');
       $sopt[5171]['massiveaction'] = false;
       $sopt[5171]['field']         = 'name';
       $sopt[5171]['forcegroupby']  = true;
       $sopt[5171]['usehaving']     = true;
       $sopt[5171]['datatype']      = 'dropdown';
       $sopt[5171]['joinparams']    = ['beforejoin'
-                                       => ['table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
+                                       => ['table'      => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
                                                 'joinparams' => ['jointype'          => 'itemtype_item',
                                                                         'specific_itemtype' => 'Computer']]];
 
-      $sopt[5178]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5178]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
       $sopt[5178]['field']     = 'hostid';
       $sopt[5178]['name']      = __('HostID', 'glpiinventory');
       $sopt[5178]['joinparams']  = ['jointype' => 'child'];
       $sopt[5178]['massiveaction'] = false;
 
-      $sopt[5179]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+      $sopt[5179]['table']     = 'glpi_plugin_glpiinventory_computerlicenseinfos';
       $sopt[5179]['field']     = 'serial';
       $sopt[5179]['name']      = __('License serial number', 'glpiinventory');
       $sopt[5179]['joinparams']  = ['jointype' => 'child'];
       $sopt[5179]['massiveaction'] = false;
 
-      $sopt[5180]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+      $sopt[5180]['table']     = 'glpi_plugin_glpiinventory_computerlicenseinfos';
       $sopt[5180]['field']     = 'fullname';
       $sopt[5180]['name']      = __('License full name', 'glpiinventory');
       $sopt[5180]['joinparams']  = ['jointype' => 'child'];
       $sopt[5180]['massiveaction'] = false;
 
-      $sopt[5181]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+      $sopt[5181]['table']     = 'glpi_plugin_glpiinventory_computerlicenseinfos';
       $sopt[5181]['field']     = 'name';
       $sopt[5181]['name']      = _n('License', 'Licenses', 2);
       $sopt[5181]['joinparams']  = ['jointype' => 'child'];
       $sopt[5181]['massiveaction'] = false;
 
-      $sopt[5182]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5182]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
       $sopt[5182]['field']     = 'last_boot';
       $sopt[5182]['name']      = __('FusInv', 'glpiinventory')." - ".__('Last boot', 'glpiinventory');
       $sopt[5182]['joinparams']  = ['jointype' => 'child'];
@@ -182,22 +182,22 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
 
    if ($itemtype == 'Computer') {
       // Switch
-      $sopt[5192]['table'] = 'glpi_plugin_fusioninventory_networkequipments';
+      $sopt[5192]['table'] = 'glpi_plugin_glpiinventory_networkequipments';
       $sopt[5192]['field'] = 'name';
       $sopt[5192]['linkfield'] = '';
       $sopt[5192]['name'] = __('FusInv', 'glpiinventory')." - ".__('Switch');
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
       // Port of switch
-      $sopt[5193]['table'] = 'glpi_plugin_fusioninventory_networkports';
+      $sopt[5193]['table'] = 'glpi_plugin_glpiinventory_networkports';
       $sopt[5193]['field'] = 'id';
       $sopt[5193]['linkfield'] = '';
       $sopt[5193]['name'] = __('FusInv', 'glpiinventory')." - ".__('Switch ports');
       $sopt[5193]['forcegroupby'] = '1';
 
-      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
+      $sopt += PluginGlpiinventoryCollect::getSearchOptionsToAdd();
 
-      $sopt[5197]['table']         = 'glpi_plugin_fusioninventory_agents';
+      $sopt[5197]['table']         = 'glpi_plugin_glpiinventory_agents';
       $sopt[5197]['field']         = 'last_contact';
       $sopt[5197]['linkfield']     = '';
       $sopt[5197]['joinparams']    = ['jointype' => 'child'];
@@ -207,7 +207,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
 
    if ($itemtype == 'Entity') {
       // Agent base URL
-      $sopt[6192]['table'] = 'glpi_plugin_fusioninventory_entities';
+      $sopt[6192]['table'] = 'glpi_plugin_glpiinventory_entities';
       $sopt[6192]['field'] = 'agent_base_url';
       $sopt[6192]['linkfield'] = '';
       $sopt[6192]['name'] = __('Agent base URL', 'glpiinventory');
@@ -217,29 +217,29 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
 
    if ($itemtype == 'Printer') {
       // Switch
-      $sopt[5192]['table'] = 'glpi_plugin_fusioninventory_networkequipments';
+      $sopt[5192]['table'] = 'glpi_plugin_glpiinventory_networkequipments';
       $sopt[5192]['field'] = 'name';
       $sopt[5192]['linkfield'] = '';
       $sopt[5192]['name'] = __('FusInv', 'glpiinventory')." - ".__('Switch');
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
       // Port of switch
-      $sopt[5193]['table'] = 'glpi_plugin_fusioninventory_networkports';
+      $sopt[5193]['table'] = 'glpi_plugin_glpiinventory_networkports';
       $sopt[5193]['field'] = 'id';
       $sopt[5193]['linkfield'] = '';
       $sopt[5193]['name'] = __('FusInv', 'glpiinventory')." - ".__('Hardware ports');
       $sopt[5193]['forcegroupby'] = '1';
 
-      $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_configsecurities';
+      $sopt[5191]['table'] = 'glpi_plugin_glpiinventory_configsecurities';
       $sopt[5191]['field'] = 'name';
-      $sopt[5191]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
+      $sopt[5191]['linkfield'] = 'plugin_glpiinventory_configsecurities_id';
       $sopt[5191]['name'] = __('FusInv', 'glpiinventory')." - ".
                              __('SNMP credentials', 'glpiinventory');
       $sopt[5191]['datatype'] = 'itemlink';
-      $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
+      $sopt[5191]['itemlink_type'] = 'PluginGlpiinventoryConfigSecurity';
       $sopt[5191]['massiveaction'] = false;
 
-      $sopt[5194]['table'] = 'glpi_plugin_fusioninventory_printers';
+      $sopt[5194]['table'] = 'glpi_plugin_glpiinventory_printers';
       $sopt[5194]['field'] = 'last_fusioninventory_update';
       $sopt[5194]['linkfield'] = '';
       $sopt[5194]['name'] = __('FusInv', 'glpiinventory')." - ".
@@ -247,7 +247,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
       $sopt[5194]['datatype'] = 'datetime';
       $sopt[5194]['massiveaction'] = false;
 
-      $sopt[5196]['table']         = 'glpi_plugin_fusioninventory_printers';
+      $sopt[5196]['table']         = 'glpi_plugin_glpiinventory_printers';
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
       $sopt[5196]['name']          = __('Sysdescr', 'glpiinventory');
@@ -256,16 +256,16 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
 
    if ($itemtype == 'NetworkEquipment') {
 
-      $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_configsecurities';
+      $sopt[5191]['table'] = 'glpi_plugin_glpiinventory_configsecurities';
       $sopt[5191]['field'] = 'name';
-      $sopt[5191]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
+      $sopt[5191]['linkfield'] = 'plugin_glpiinventory_configsecurities_id';
       $sopt[5191]['name'] = __('FusInv', 'glpiinventory')." - ".
                              __('SNMP credentials', 'glpiinventory');
       $sopt[5191]['datatype'] = 'itemlink';
-      $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
+      $sopt[5191]['itemlink_type'] = 'PluginGlpiinventoryConfigSecurity';
       $sopt[5191]['massiveaction'] = false;
 
-      $sopt[5194]['table'] = 'glpi_plugin_fusioninventory_networkequipments';
+      $sopt[5194]['table'] = 'glpi_plugin_glpiinventory_networkequipments';
       $sopt[5194]['field'] = 'last_fusioninventory_update';
       $sopt[5194]['linkfield'] = '';
       $sopt[5194]['name'] = __('FusInv', 'glpiinventory')." - ".
@@ -273,7 +273,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
       $sopt[5194]['datatype'] = 'datetime';
       $sopt[5194]['massiveaction'] = false;
 
-      $sopt[5195]['table'] = 'glpi_plugin_fusioninventory_networkequipments';
+      $sopt[5195]['table'] = 'glpi_plugin_glpiinventory_networkequipments';
       $sopt[5195]['field'] = 'cpu';
       $sopt[5195]['linkfield'] = '';
       $sopt[5195]['name'] = __('FusInv', 'glpiinventory')." - ".
@@ -281,7 +281,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
 
       $sopt[5195]['datatype'] = 'number';
 
-      $sopt[5196]['table']         = 'glpi_plugin_fusioninventory_networkequipments';
+      $sopt[5196]['table']         = 'glpi_plugin_glpiinventory_networkequipments';
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
       $sopt[5196]['name']          = __('Sysdescr', 'glpiinventory');
@@ -311,11 +311,11 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
 
    switch ($table.'.'.$field) {
 
-      case "glpi_plugin_fusioninventory_taskjobs.status":
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      case "glpi_plugin_glpiinventory_taskjobs.status":
+         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
          return $pfTaskjobstate->stateTaskjob($data['raw']['id'], '200', 'htmlvar', 'simple');
 
-      case "glpi_plugin_fusioninventory_agents.version":
+      case "glpi_plugin_glpiinventory_agents.version":
          $array = importArrayFromDB($data['raw']['ITEM_'.$num]);
          $input = "";
          foreach ($array as $name => $version) {
@@ -325,43 +325,43 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          $input = str_replace("<br/>*", "", $input);
          return $input;
 
-      case "glpi_plugin_fusioninventory_credentials.itemtype":
-         if ($label == PluginFusioninventoryCredential::getLabelByItemtype($data['raw']['ITEM_'.$num])) {
+      case "glpi_plugin_glpiinventory_credentials.itemtype":
+         if ($label == PluginGlpiinventoryCredential::getLabelByItemtype($data['raw']['ITEM_'.$num])) {
             return $label;
          } else {
             return '';
          }
         break;
 
-      case 'glpi_plugin_fusioninventory_taskjoblogs.state':
-         $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      case 'glpi_plugin_glpiinventory_taskjoblogs.state':
+         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
         return $pfTaskjoblog->getDivState($data['raw']['ITEM_'.$num]);
 
-      case 'glpi_plugin_fusioninventory_taskjoblogs.comment':
+      case 'glpi_plugin_glpiinventory_taskjoblogs.comment':
          $comment = $data['raw']['ITEM_'.$num];
-         return PluginFusioninventoryTaskjoblog::convertComment($comment);
+         return PluginGlpiinventoryTaskjoblog::convertComment($comment);
 
-      case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id':
-         $pfAgent = new PluginFusioninventoryAgent();
+      case 'glpi_plugin_glpiinventory_taskjobstates.plugin_glpiinventory_agents_id':
+         $pfAgent = new PluginGlpiinventoryAgent();
          $pfAgent->getFromDB($data['raw']['ITEM_'.$num]);
          if (!isset($pfAgent->fields['name'])) {
             return NOT_AVAILABLE;
          }
-         $itemtype = PluginFusioninventoryTaskjoblog::getStateItemtype($data['raw']['ITEM_0']);
-         if ($itemtype == 'PluginFusioninventoryDeployPackage') {
+         $itemtype = PluginGlpiinventoryTaskjoblog::getStateItemtype($data['raw']['ITEM_0']);
+         if ($itemtype == 'PluginGlpiinventoryDeployPackage') {
             $computer = new Computer();
             $computer->getFromDB($pfAgent->fields['computers_id']);
             return $computer->getLink(1);
          }
          return $pfAgent->getLink(1);
 
-      case 'glpi_plugin_fusioninventory_ignoredimportdevices.ip':
-      case 'glpi_plugin_fusioninventory_ignoredimportdevices.mac':
+      case 'glpi_plugin_glpiinventory_ignoredimportdevices.ip':
+      case 'glpi_plugin_glpiinventory_ignoredimportdevices.mac':
          $array = importArrayFromDB($data['raw']['ITEM_'.$num]);
          return implode("<br/>", $array);
 
-      case 'glpi_plugin_fusioninventory_ignoredimportdevices.method':
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      case 'glpi_plugin_glpiinventory_ignoredimportdevices.method':
+         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
          foreach ($a_methods as $mdata) {
             if ($mdata['method'] == $data['raw']['ITEM_'.$num]) {
                return $mdata['name'];
@@ -370,12 +370,12 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          break;
    }
 
-   if ($table == "glpi_plugin_fusioninventory_agentmodules") {
+   if ($table == "glpi_plugin_glpiinventory_agentmodules") {
       if ($type == 'Computer') {
-         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
          $a_modules = $pfAgentmodule->find(['modulename' => $field]);
          $data2 = current($a_modules);
-         if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
+         if ($table.".".$field == "glpi_plugin_glpiinventory_agentmodules.".$data2['modulename']) {
             if (strstr($data['raw']["ITEM_".$num."_0"], '"'.$data['raw']["ITEM_".$num."_1"].'"')) {
                if ($data['raw']['ITEM_'.$num] == '0') {
                   return Dropdown::getYesNo(true);
@@ -387,10 +387,10 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
             return Dropdown::getYesNo($data['raw']['ITEM_'.$num]);
          }
       } else {
-         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
          $a_modules = $pfAgentmodule->find(['modulename' => $field]);
          foreach ($a_modules as $data2) {
-            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
+            if ($table.".".$field == "glpi_plugin_glpiinventory_agentmodules.".$data2['modulename']) {
                if (strstr($data['raw']["ITEM_".$num."_0"], '"'.$data['raw']['id'].'"')) {
                   if ($data['raw']['ITEM_'.$num] == 0) {
                      return Dropdown::getYesNo('1');
@@ -407,7 +407,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
    switch ($type) {
 
       case 'Computer':
-         if ($table.'.'.$field == 'glpi_plugin_fusioninventory_networkports.id') {
+         if ($table.'.'.$field == 'glpi_plugin_glpiinventory_networkports.id') {
             if (strstr($data['raw']["ITEM_$num"], "$")) {
                $split = explode("$$$$", $data['raw']["ITEM_$num"]);
                $ports = [];
@@ -425,7 +425,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          break;
 
       case 'Printer':
-         if ($table.'.'.$field == 'glpi_plugin_fusioninventory_networkequipments.name') {
+         if ($table.'.'.$field == 'glpi_plugin_glpiinventory_networkequipments.name') {
             if (strstr($data['raw']["ITEM_$num"], "$")) {
                $split = explode("$$$$", $data['raw']["ITEM_$num"]);
                $out = implode("<br/>", $split);
@@ -435,11 +435,11 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          break;
 
       // * Authentification List (plugins/fusinvsnmp/front/configsecurity.php)
-      case 'PluginFusioninventoryConfigSecurity' :
+      case 'PluginGlpiinventoryConfigSecurity' :
          switch ($table.'.'.$field) {
 
             // ** Hidden auth passphrase (SNMP v3)
-            case "glpi_plugin_fusioninventory_configsecurities.auth_passphrase" :
+            case "glpi_plugin_glpiinventory_configsecurities.auth_passphrase" :
                $out = "";
                if (!empty($data['raw']["ITEM_$num"])) {
                   $out = "********";
@@ -447,7 +447,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
                return $out;
 
             // ** Hidden priv passphrase (SNMP v3)
-            case "glpi_plugin_fusioninventory_configsecurities.priv_passphrase" :
+            case "glpi_plugin_glpiinventory_configsecurities.priv_passphrase" :
                $out = "";
                if (!empty($data['raw']["ITEM_$num"])) {
                   $out = "********";
@@ -459,16 +459,16 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
 
       // * Unknown mac addresses connectd on switch - report
       //   (plugins/fusinvsnmp/report/unknown_mac.php)
-      case 'PluginFusioninventoryUnmanaged' :
+      case 'PluginGlpiinventoryUnmanaged' :
          switch ($table.'.'.$field) {
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.id" :
+            case "glpi_plugin_glpiinventory_networkequipments.id" :
                $out = '';
                $NetworkPort = new NetworkPort;
                $list = explode("$$$$", $data['raw']["ITEM_$num"]);
                foreach ($list as $numtmp => $vartmp) {
-                  $NetworkPort->getDeviceData($vartmp, 'PluginFusioninventoryUnmanaged');
+                  $NetworkPort->getDeviceData($vartmp, 'PluginGlpiinventoryUnmanaged');
 
                   $out .= "<a href=\"".Plugin::getWebDir('glpiinventory');
                   $out .= "/front/unmanaged.form.php?id=".$vartmp.
@@ -482,7 +482,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
                return "<center>".$out."</center>";
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                $out = '';
                if (!empty($data['raw']["ITEM_$num"])) {
                   $list = explode("$$$$", $data['raw']["ITEM_$num"]);
@@ -526,11 +526,11 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          break;
 
       // * Ports date connection - report (plugins/fusinvsnmp/report/ports_date_connections.php)
-      case 'PluginFusioninventoryNetworkPort' :
+      case 'PluginGlpiinventoryNetworkPort' :
          switch ($table.'.'.$field) {
 
             // ** Name and link of networking device (switch)
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                $data2 = $DB->request([
                   'SELECT'    => [
                      'glpi_networkequipments.name AS name',
@@ -544,15 +544,15 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
                            'glpi_networkports'        => 'items_id'
                         ]
                      ],
-                     'glpi_plugin_fusioninventory_networkports' => [
+                     'glpi_plugin_glpiinventory_networkports' => [
                         'FKEY' => [
                            'glpi_networkports'                          => 'id',
-                           'glpi_plugin_fusioninventory_networkports'   => 'items_id'
+                           'glpi_plugin_glpiinventory_networkports'   => 'items_id'
                         ]
                      ]
                   ],
                   'WHERE'     => [
-                     'glpi_plugin_fusioninventory_networkports.id' => $data['raw']["ITEM_$num"]
+                     'glpi_plugin_glpiinventory_networkports.id' => $data['raw']["ITEM_$num"]
                   ],
                   'START'     => 0,
                   'LIMIT'     => 1
@@ -563,7 +563,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
                return "<center>".$out."</center>";
 
             // ** Name and link of port of networking device (port of switch)
-            case "glpi_plugin_fusioninventory_networkports.networkports_id" :
+            case "glpi_plugin_glpiinventory_networkports.networkports_id" :
                $NetworkPort = new NetworkPort;
                $NetworkPort->getFromDB($data['raw']["ITEM_$num"]);
                $name = "";
@@ -584,7 +584,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          break;
 
       // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-      case 'PluginFusioninventoryIPRange' :
+      case 'PluginGlpiinventoryIPRange' :
          switch ($table.'.'.$field) {
 
             // ** Display entity name
@@ -598,12 +598,12 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          }
          break;
 
-      case 'PluginFusioninventoryNetworkPortLog' :
+      case 'PluginGlpiinventoryNetworkPortLog' :
          switch ($table.'.'.$field) {
 
             // ** Display switch and Port
             case "glpi_networkports.id" :
-               $Array_device = PluginFusioninventoryNetworkPort::getUniqueObjectfieldsByportID(
+               $Array_device = PluginGlpiinventoryNetworkPort::getUniqueObjectfieldsByportID(
                              $data['raw']["ITEM_$num"]
                           );
                $item = new $Array_device["itemtype"];
@@ -627,7 +627,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
             case "glpi_plugin_fusinvsnmp_networkportlogs.field" :
                //               $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data['raw']["ITEM_$num"]]['name'];
                $out = '';
-               $map = new PluginFusioninventoryMapping;
+               $map = new PluginGlpiinventoryMapping;
                $mapfields = $map->get('NetworkEquipment', $data['raw']["ITEM_$num"]);
                if ($mapfields != false) {
                   $out = _get('_LANG[\'plugin_fusinvsnmp\'][\'mapping\'][$mapfields["locale"]]');
@@ -654,40 +654,40 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          }
          break;
 
-      case "PluginFusioninventoryPrinterLog":
+      case "PluginGlpiinventoryPrinterLog":
          switch ($table.'.'.$field) {
 
             case 'glpi_printers.name':
 
                // Search pages in printer history to limit SQL queries
-               if (isset($_SESSION['glpi_plugin_fusioninventory_history_start'])) {
-                  unset($_SESSION['glpi_plugin_fusioninventory_history_start']);
+               if (isset($_SESSION['glpi_plugin_glpiinventory_history_start'])) {
+                  unset($_SESSION['glpi_plugin_glpiinventory_history_start']);
                }
-               if (isset($_SESSION['glpi_plugin_fusioninventory_history_end'])) {
-                  unset($_SESSION['glpi_plugin_fusioninventory_history_end']);
+               if (isset($_SESSION['glpi_plugin_glpiinventory_history_end'])) {
+                  unset($_SESSION['glpi_plugin_glpiinventory_history_end']);
                }
-               if ((isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
-                       AND (isset($_SESSION['glpi_plugin_fusioninventory_date_end']))) {
+               if ((isset($_SESSION['glpi_plugin_glpiinventory_date_start']))
+                       AND (isset($_SESSION['glpi_plugin_glpiinventory_date_end']))) {
 
-                  $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
+                  $query = "SELECT * FROM `glpi_plugin_glpiinventory_printerlogs`
                      WHERE `printers_id`='".$data['raw']['ITEM_0_2']."'
-                        AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
-                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
+                        AND `date`>= '".$_SESSION['glpi_plugin_glpiinventory_date_start']."'
+                        AND `date`<= '".$_SESSION['glpi_plugin_glpiinventory_date_end']." 23:59:59'
                      ORDER BY date asc
                      LIMIT 1";
                   $result = $DB->query($query);
                   while ($data2 = $DB->fetchArray($result)) {
-                     $_SESSION['glpi_plugin_fusioninventory_history_start'] = $data2;
+                     $_SESSION['glpi_plugin_glpiinventory_history_start'] = $data2;
                   }
-                  $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
+                  $query = "SELECT * FROM `glpi_plugin_glpiinventory_printerlogs`
                      WHERE `printers_id`='".$data['raw']['ITEM_0_2']."'
-                        AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
-                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
+                        AND `date`>= '".$_SESSION['glpi_plugin_glpiinventory_date_start']."'
+                        AND `date`<= '".$_SESSION['glpi_plugin_glpiinventory_date_end']." 23:59:59'
                      ORDER BY date desc
                      LIMIT 1";
                   $result = $DB->query($query);
                   while ($data2 = $DB->fetchArray($result)) {
-                     $_SESSION['glpi_plugin_fusioninventory_history_end'] = $data2;
+                     $_SESSION['glpi_plugin_glpiinventory_history_end'] = $data2;
                   }
                }
                return "";
@@ -696,12 +696,12 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
 
          switch ($table) {
 
-            case 'glpi_plugin_fusioninventory_printerlogs':
-               if ((isset($_SESSION['glpi_plugin_fusioninventory_history_start'][$field]))
-                      AND (isset($_SESSION['glpi_plugin_fusioninventory_history_end'][$field]))) {
-                  $counter_start = $_SESSION['glpi_plugin_fusioninventory_history_start'][$field];
-                  $counter_end = $_SESSION['glpi_plugin_fusioninventory_history_end'][$field];
-                  if ($_SESSION['glpi_plugin_fusioninventory_date_start'] == "1970-01-01") {
+            case 'glpi_plugin_glpiinventory_printerlogs':
+               if ((isset($_SESSION['glpi_plugin_glpiinventory_history_start'][$field]))
+                      AND (isset($_SESSION['glpi_plugin_glpiinventory_history_end'][$field]))) {
+                  $counter_start = $_SESSION['glpi_plugin_glpiinventory_history_start'][$field];
+                  $counter_end = $_SESSION['glpi_plugin_glpiinventory_history_end'][$field];
+                  if ($_SESSION['glpi_plugin_glpiinventory_date_start'] == "1970-01-01") {
                      $counter_start = 0;
                   }
                   $number = $counter_end - $counter_start;
@@ -719,7 +719,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
          }
          break;
 
-      case "PluginFusioninventoryIgnoredimportdevice":
+      case "PluginGlpiinventoryIgnoredimportdevice":
          switch ($table.'.'.$field) {
 
             case 'glpi_rules.id':
@@ -747,13 +747,13 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
 function plugin_glpiinventory_searchOptionsValues($item) {
    global $DB;
 
-   if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjoblogs'
+   if ($item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjoblogs'
            AND $item['searchoption']['field'] == 'state') {
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $elements = $pfTaskjoblog->dropdownStateValues();
       Dropdown::showFromArray($item['name'], $elements, ['value' => $item['value']]);
       return true;
-   } else if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjobstates'
+   } else if ($item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjobstates'
            AND $item['searchoption']['field'] == 'uniqid') {
       $elements = [];
       $iterator = $DB->request([
@@ -787,12 +787,12 @@ function plugin_glpiinventory_getDropdown() {
  */
 function cron_plugin_fusioninventory() {
    //   TODO :Disable for the moment (may be check if functions is good or not
-   //   $ptud = new PluginFusioninventoryUnmanaged;
+   //   $ptud = new PluginGlpiinventoryUnmanaged;
    //   $ptud->cleanOrphelinsConnections();
    //   $ptud->FusionUnknownKnownDevice();
    //   TODO : regarder les 2 lignes juste en dessous !!!!!
    //   #Clean server script processes history
-   //   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
+   //   $pfisnmph = new PluginGlpiinventoryNetworkPortLog;
    //   $pfisnmph->cronCleanHistory();
 
    return 1;
@@ -817,7 +817,7 @@ function plugin_glpiinventory_install() {
    }
 
    require_once (PLUGIN_GLPI_INVENTORY_DIR . "/install/update.php");
-   $version_detected = pluginFusioninventoryGetCurrentVersion();
+   $version_detected = pluginGlpiinventoryGetCurrentVersion();
 
    if (!defined('FORCE_INSTALL')
       &&
@@ -830,10 +830,10 @@ function plugin_glpiinventory_install() {
       )) {
       // note: if version detected = version found can have problem, so need
       //       pass in upgrade to be sure all OK
-      pluginFusioninventoryUpdate($version_detected, $migrationname);
+      pluginGlpiinventoryUpdate($version_detected, $migrationname);
    } else {
       require_once (PLUGIN_GLPI_INVENTORY_DIR . "/install/install.php");
-      pluginFusioninventoryInstall(PLUGIN_GLPI_INVENTORY_VERSION, $migrationname);
+      pluginGlpiinventoryInstall(PLUGIN_GLPI_INVENTORY_VERSION, $migrationname);
    }
    return true;
 }
@@ -848,7 +848,7 @@ function plugin_glpiinventory_uninstall() {
    require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/setup.class.php");
    require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/profile.class.php");
    require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/inventoryruleimport.class.php");
-   return PluginFusioninventorySetup::uninstall();
+   return PluginGlpiinventorySetup::uninstall();
 }
 
 
@@ -866,28 +866,28 @@ function plugin_glpiinventory_MassiveActions($type) {
    switch ($type) {
 
       case "Computer":
-         if (Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
-            $ma["PluginFusioninventoryLock".$sep."manage_locks"]
+         if (Session::haveRight('plugin_glpiinventory_lock', UPDATE)) {
+            $ma["PluginGlpiinventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'glpiinventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
-         if (Session::haveRight('plugin_fusioninventory_task', UPDATE)) {
-            $ma["PluginFusioninventoryTask".$sep."target_task"]
+         if (Session::haveRight('plugin_glpiinventory_task', UPDATE)) {
+            $ma["PluginGlpiinventoryTask".$sep."target_task"]
                = __('Target a task', 'glpiinventory');
          }
-         if (Session::haveRight('plugin_fusioninventory_group', UPDATE)) {
-            $ma["PluginFusioninventoryDeployGroup".$sep."add_to_static_group"]
+         if (Session::haveRight('plugin_glpiinventory_group', UPDATE)) {
+            $ma["PluginGlpiinventoryDeployGroup".$sep."add_to_static_group"]
                = __('Add to static group', 'glpiinventory');
          }
          break;
 
       case "NetworkEquipment":
       case "Printer":
-         if (Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
-            $ma["PluginFusioninventoryLock".$sep."manage_locks"]
+         if (Session::haveRight('plugin_glpiinventory_lock', UPDATE)) {
+            $ma["PluginGlpiinventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'glpiinventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
-         if (Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
-            $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"]
+         if (Session::haveRight('plugin_glpiinventory_configsecurity', UPDATE)) {
+            $ma["PluginGlpiinventoryConfigSecurity".$sep."assign_auth"]
                = __('Assign SNMP credentials', 'glpiinventory');
          }
 
@@ -911,7 +911,7 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = []) {
 
    switch ($table.".".$field) {
 
-      case "glpi_plugin_fusioninventory_unmanageds.item_type":
+      case "glpi_plugin_glpiinventory_unmanageds.item_type":
          $type_list = [];
          $type_list[] = 'Computer';
          $type_list[] = 'NetworkEquipment';
@@ -922,18 +922,18 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = []) {
                                           ['value' => 0]);
          return true;
 
-      case 'glpi_plugin_fusioninventory_configsecurities.name':
-         Dropdown::show("PluginFusioninventoryConfigSecurity",
+      case 'glpi_plugin_glpiinventory_configsecurities.name':
+         Dropdown::show("PluginGlpiinventoryConfigSecurity",
                         ['name' => $linkfield]);
          return true;
 
-      case 'glpi_plugin_fusioninventory_agents.id' :
+      case 'glpi_plugin_glpiinventory_agents.id' :
          Dropdown::show("PluginFusinvsnmpAgent",
                         ['name' => $linkfield,
                               'comment' => false]);
          return true;
 
-      case 'glpi_plugin_fusioninventory_agents.threads_networkdiscovery' :
+      case 'glpi_plugin_glpiinventory_agents.threads_networkdiscovery' :
          Dropdown::showNumber("threads_networkdiscovery", [
              'value' => $linkfield,
              'min' => 1,
@@ -941,7 +941,7 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = []) {
          );
          return true;
 
-      case 'glpi_plugin_fusioninventory_agents.threads_networkinventory' :
+      case 'glpi_plugin_glpiinventory_agents.threads_networkinventory' :
          Dropdown::showNumber("threads_networkinventory", [
              'value' => $linkfield,
              'min' => 1,
@@ -978,12 +978,12 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
 
    switch ($type) {
 
-      case 'PluginFusioninventoryAgent':
+      case 'PluginGlpiinventoryAgent':
 
-         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
          $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
-            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+            if ($table.".".$field == "glpi_plugin_glpiinventory_agentmodules.".$data['modulename']) {
                return " `FUSION_".$data['modulename']."`.`is_active` AS ITEM_$num, ".
                           "`FUSION_".$data['modulename']."`.`exceptions`  AS ITEM_".$num."_0, ";
             }
@@ -995,19 +995,19 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
          switch ($table.".".$field) {
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.name" :
+            case "glpi_plugin_glpiinventory_networkequipments.name" :
                return "GROUP_CONCAT(DISTINCT glpi_networkequipments.name SEPARATOR '$$$$') AS ITEM_$num, ";
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                return "GROUP_CONCAT( DISTINCT
                      CONCAT_WS('....', FUSIONINVENTORY_22.items_id, FUSIONINVENTORY_22.name)
                   SEPARATOR '$$$$') AS ITEM_$num, ";
 
          }
-         $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
+         $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
          foreach ($a_agent_modules as $module) {
-            if ($table.".".$field == 'glpi_plugin_fusioninventory_agentmodules.'.$module) {
+            if ($table.".".$field == 'glpi_plugin_glpiinventory_agentmodules.'.$module) {
 
                return " `FUSION_".$module."`.`is_active` AS ITEM_$num, ".
                           "`FUSION_".$module."`.`exceptions`  AS ITEM_".$num."_0, ".
@@ -1021,17 +1021,17 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
          switch ($table.".".$field) {
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.name" :
+            case "glpi_plugin_glpiinventory_networkequipments.name" :
                return "GROUP_CONCAT(glpi_networkequipments.name SEPARATOR '$$$$') AS ITEM_$num, ";
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                return "GROUP_CONCAT( FUSIONINVENTORY_22.name SEPARATOR '$$$$') AS ITEM_$num, ";
 
          }
          break;
 
-      case 'PluginFusioninventoryUnmanaged' :
+      case 'PluginGlpiinventoryUnmanaged' :
          switch ($table.".".$field) {
 
             case "glpi_networkequipments.device" :
@@ -1045,17 +1045,17 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
          }
          break;
 
-      case 'PluginFusioninventoryIPRange' :
+      case 'PluginGlpiinventoryIPRange' :
          switch ($table.".".$searchopt[$id]["linkfield"]) {
 
-            case "glpi_plugin_fusioninventory_agents.plugin_fusinvsnmp_agents_id_query" :
+            case "glpi_plugin_glpiinventory_agents.plugin_fusinvsnmp_agents_id_query" :
                return "GROUP_CONCAT( DISTINCT CONCAT(gpta.name, '$$', gpta.id) SEPARATOR '$$$$') ".
                           "AS ITEM_$num, ";
 
          }
          break;
 
-      case "PluginFusioninventoryPrinterLog":
+      case "PluginGlpiinventoryPrinterLog":
          if ($table.".".$field == "glpi_users.name") {
             return " `glpi_users`.`name` AS ITEM_$num, `glpi_users`.`realname` ".
                         "AS ITEM_".$num."_2, `glpi_users`.`id` AS ITEM_".$num."_3, ".
@@ -1063,19 +1063,19 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
          }
          break;
 
-      case 'PluginFusioninventoryPrinterLogReport':
+      case 'PluginGlpiinventoryPrinterLogReport':
 
-         if ($table == 'glpi_plugin_fusioninventory_printerlogs') {
+         if ($table == 'glpi_plugin_glpiinventory_printerlogs') {
             if (strstr($field, 'pages_') OR $field == 'scanned') {
                return " (
-                  (SELECT ".$field." FROM glpi_plugin_fusioninventory_printerlogs
+                  (SELECT ".$field." FROM glpi_plugin_glpiinventory_printerlogs
                      WHERE printers_id = glpi_printers.id
-                        AND date <= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
+                        AND date <= '".$_SESSION['glpi_plugin_glpiinventory_date_end']." 23:59:59'
                      ORDER BY date DESC LIMIT 1)
                   -
-                  (SELECT ".$field." FROM glpi_plugin_fusioninventory_printerlogs
+                  (SELECT ".$field." FROM glpi_plugin_glpiinventory_printerlogs
                      WHERE printers_id = glpi_printers.id
-                        AND date >= '".$_SESSION['glpi_plugin_fusioninventory_date_start'].
+                        AND date >= '".$_SESSION['glpi_plugin_glpiinventory_date_start'].
                            " 00:00:00'  ORDER BY date  LIMIT 1)
                   )  AS ITEM_$num, ";
             }
@@ -1113,12 +1113,12 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
 
    switch ($itemtype) {
 
-      case 'PluginFusioninventoryAgent':
-         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      case 'PluginGlpiinventoryAgent':
+         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
          $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
-            if ($new_table.".".$linkfield == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
-               return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".
+            if ($new_table.".".$linkfield == "glpi_plugin_glpiinventory_agentmodules.".$data['modulename']) {
+               return " LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` AS FUSION_".
                        $data['modulename']."
                           ON FUSION_".$data['modulename'].".`modulename`=".
                              "'".$data['modulename']."' ";
@@ -1126,92 +1126,92 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          }
          break;
 
-      case 'PluginFusioninventoryTaskjoblog':
+      case 'PluginGlpiinventoryTaskjoblog':
          //         echo $new_table.".".$linkfield."<br/>";
          $taskjob = 0;
          $already_link_tables_tmp = $already_link_tables;
          array_pop($already_link_tables_tmp);
          foreach ($already_link_tables_tmp AS $tmp_table) {
-            if ($tmp_table == "glpi_plugin_fusioninventory_tasks"
-                    OR $tmp_table == "glpi_plugin_fusioninventory_taskjobs"
-                    OR $tmp_table == "glpi_plugin_fusioninventory_taskjobstates") {
+            if ($tmp_table == "glpi_plugin_glpiinventory_tasks"
+                    OR $tmp_table == "glpi_plugin_glpiinventory_taskjobs"
+                    OR $tmp_table == "glpi_plugin_glpiinventory_taskjobstates") {
                $taskjob = 1;
             }
          }
 
          switch ($new_table.".".$linkfield) {
 
-            case 'glpi_plugin_fusioninventory_tasks.plugin_fusioninventory_tasks_id':
+            case 'glpi_plugin_glpiinventory_tasks.plugin_glpiinventory_tasks_id':
                $ret = '';
                if ($taskjob == '0') {
-                  $ret = ' LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON
-                     (`plugin_fusioninventory_taskjobstates_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobstates`.`id` )
-                  LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON
-                     (`plugin_fusioninventory_taskjobs_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobs`.`id` ) ';
+                  $ret = ' LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` ON
+                     (`plugin_glpiinventory_taskjobstates_id` = '.
+                          '`glpi_plugin_glpiinventory_taskjobstates`.`id` )
+                  LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` ON
+                     (`plugin_glpiinventory_taskjobs_id` = '.
+                          '`glpi_plugin_glpiinventory_taskjobs`.`id` ) ';
                }
-               $ret .= ' LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON
-                  (`plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`) ';
+               $ret .= ' LEFT JOIN `glpi_plugin_glpiinventory_tasks` ON
+                  (`plugin_glpiinventory_tasks_id` = `glpi_plugin_glpiinventory_tasks`.`id`) ';
                return $ret;
 
-            case 'glpi_plugin_fusioninventory_taskjobs.plugin_fusioninventory_taskjobs_id':
-            case 'glpi_plugin_fusioninventory_taskjobstates.'.
-                    'plugin_fusioninventory_taskjobstates_id':
+            case 'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_taskjobs_id':
+            case 'glpi_plugin_glpiinventory_taskjobstates.'.
+                    'plugin_glpiinventory_taskjobstates_id':
                if ($taskjob == '0') {
-                  return ' LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON
-                     (`plugin_fusioninventory_taskjobstates_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobstates`.`id` )
-                  LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON
-                     (`plugin_fusioninventory_taskjobs_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobs`.`id` ) ';
+                  return ' LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` ON
+                     (`plugin_glpiinventory_taskjobstates_id` = '.
+                          '`glpi_plugin_glpiinventory_taskjobstates`.`id` )
+                  LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` ON
+                     (`plugin_glpiinventory_taskjobs_id` = '.
+                          '`glpi_plugin_glpiinventory_taskjobs`.`id` ) ';
                }
                return ' ';
 
          }
          break;
 
-      case 'PluginFusioninventoryTask':
-         if ($new_table.".".$linkfield == 'glpi_plugin_fusioninventory_taskjoblogs.'.
-                 'plugin_fusioninventory_taskjoblogs_id') {
-            return "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs
-                     ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates
+      case 'PluginGlpiinventoryTask':
+         if ($new_table.".".$linkfield == 'glpi_plugin_glpiinventory_taskjoblogs.'.
+                 'plugin_glpiinventory_taskjoblogs_id') {
+            return "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS taskjobs
+                     ON `plugin_glpiinventory_tasks_id` = `glpi_plugin_glpiinventory_tasks`.`id`
+               LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` AS taskjobstates
                      ON taskjobstates.`id` =
                   (SELECT MAX(`id`)
-                     FROM glpi_plugin_fusioninventory_taskjobstates
-                   WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
+                     FROM glpi_plugin_glpiinventory_taskjobstates
+                   WHERE plugin_glpiinventory_taskjobs_id = taskjobs.`id`
                    ORDER BY id DESC
                    LIMIT 1
                   )
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
-                  ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` =
+               LEFT JOIN `glpi_plugin_glpiinventory_taskjoblogs`
+                  ON `glpi_plugin_glpiinventory_taskjoblogs`.`id` =
                   (SELECT MAX(`id`)
-                     FROM `glpi_plugin_fusioninventory_taskjoblogs`
-                   WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
+                     FROM `glpi_plugin_glpiinventory_taskjoblogs`
+                   WHERE `plugin_glpiinventory_taskjobstates_id`= taskjobstates.`id`
                    ORDER BY id DESC LIMIT 1
                   ) ";
          }
          break;
 
       case 'Computer':
-      case 'PluginFusioninventoryComputer':
+      case 'PluginGlpiinventoryComputer':
          switch ($new_table.".".$linkfield) {
 
-            case 'glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id':
-                return " LEFT JOIN `glpi_plugin_fusioninventory_agents`
-                  ON (`glpi_computers`.`id`=`glpi_plugin_fusioninventory_agents`.`computers_id`) ";
+            case 'glpi_plugin_glpiinventory_agents.plugin_glpiinventory_agents_id':
+                return " LEFT JOIN `glpi_plugin_glpiinventory_agents`
+                  ON (`glpi_computers`.`id`=`glpi_plugin_glpiinventory_agents`.`computers_id`) ";
                 break;
 
-            case 'glpi_plugin_fusioninventory_inventorycomputercomputers.plugin_fusioninventory_inventorycomputercomputers_id':
-               return " LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputercomputers`
-                    AS glpi_plugin_fusioninventory_inventorycomputercomputers
+            case 'glpi_plugin_glpiinventory_inventorycomputercomputers.plugin_glpiinventory_inventorycomputercomputers_id':
+               return " LEFT JOIN `glpi_plugin_glpiinventory_inventorycomputercomputers`
+                    AS glpi_plugin_glpiinventory_inventorycomputercomputers
                     ON (`glpi_computers`.`id` = ".
-                    "`glpi_plugin_fusioninventory_inventorycomputercomputers`.".
+                    "`glpi_plugin_glpiinventory_inventorycomputercomputers`.".
                     "`computers_id` ) ";
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_networkequipments_id" :
+            case "glpi_plugin_glpiinventory_networkequipments.plugin_glpiinventory_networkequipments_id" :
                $table_networking_ports = 0;
                foreach ($already_link_tables AS $num => $tmp_table) {
                   if ($tmp_table == "glpi_networkports.") {
@@ -1232,7 +1232,7 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                break;
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.plugin_fusioninventory_networkports_id" :
+            case "glpi_plugin_glpiinventory_networkports.plugin_glpiinventory_networkports_id" :
                $table_networking_ports = 0;
                $table_fusinvsnmp_networking = 0;
                foreach ($already_link_tables AS $num => $tmp_table) {
@@ -1256,12 +1256,12 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                break;
 
          }
-         $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
+         $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
          foreach ($a_agent_modules as $module) {
-            if ($new_table.".".$linkfield == 'glpi_plugin_fusioninventory_agentmodules.'.$module) {
-               return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$module."
+            if ($new_table.".".$linkfield == 'glpi_plugin_glpiinventory_agentmodules.'.$module) {
+               return " LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` AS FUSION_".$module."
                              ON FUSION_".$module.".`modulename`='".$module."'
-                          LEFT JOIN `glpi_plugin_fusioninventory_agents` as agent".strtolower($module)."
+                          LEFT JOIN `glpi_plugin_glpiinventory_agents` as agent".strtolower($module)."
                              ON (`glpi_computers`.`id`=`agent".strtolower($module)."`.`computers_id`) ";
             }
          }
@@ -1272,8 +1272,8 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          array_pop($already_link_tables_tmp);
 
          $leftjoin_fusioninventory_networkequipments = 1;
-         if ((in_array('glpi_plugin_fusioninventory_networkequipments', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusioninventory_configsecurities',
+         if ((in_array('glpi_plugin_glpiinventory_networkequipments', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_glpiinventory_configsecurities',
                          $already_link_tables_tmp))) {
 
             $leftjoin_fusioninventory_networkequipments = 0;
@@ -1281,44 +1281,44 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          switch ($new_table.".".$linkfield) {
 
             // ** last inventory
-            case "glpi_plugin_fusioninventory_networkequipments." :
+            case "glpi_plugin_glpiinventory_networkequipments." :
                if ($leftjoin_fusioninventory_networkequipments == "1") {
-                  return " LEFT JOIN glpi_plugin_fusioninventory_networkequipments
+                  return " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                      ON (glpi_networkequipments.id = ".
-                          "glpi_plugin_fusioninventory_networkequipments.networkequipments_id) ";
+                          "glpi_plugin_glpiinventory_networkequipments.networkequipments_id) ";
                }
                return " ";
 
             // ** cpu
-            case "glpi_plugin_fusioninventory_networkequipments.".
-                    "plugin_fusioninventory_networkequipments_id" :
+            case "glpi_plugin_glpiinventory_networkequipments.".
+                    "plugin_glpiinventory_networkequipments_id" :
                if ($leftjoin_fusioninventory_networkequipments == "1") {
-                     return " LEFT JOIN glpi_plugin_fusioninventory_networkequipments
+                     return " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                         ON (glpi_networkequipments.id = ".
-                             "glpi_plugin_fusioninventory_networkequipments.networkequipments_id) ";
+                             "glpi_plugin_glpiinventory_networkequipments.networkequipments_id) ";
                }
                return " ";
 
             // ** SNMP authentification
-            case "glpi_plugin_fusioninventory_configsecurities.".
-                    "plugin_fusioninventory_configsecurities_id":
+            case "glpi_plugin_glpiinventory_configsecurities.".
+                    "plugin_glpiinventory_configsecurities_id":
                $return = "";
                if ($leftjoin_fusioninventory_networkequipments == "1") {
-                  $return = " LEFT JOIN glpi_plugin_fusioninventory_networkequipments
+                  $return = " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                      ON glpi_networkequipments.id = ".
-                          "glpi_plugin_fusioninventory_networkequipments.networkequipments_id ";
+                          "glpi_plugin_glpiinventory_networkequipments.networkequipments_id ";
                }
-               return $return." LEFT JOIN glpi_plugin_fusioninventory_configsecurities
-                  ON glpi_plugin_fusioninventory_networkequipments.".
-                       "plugin_fusioninventory_configsecurities_id = ".
-                          "glpi_plugin_fusioninventory_configsecurities.id ";
+               return $return." LEFT JOIN glpi_plugin_glpiinventory_configsecurities
+                  ON glpi_plugin_glpiinventory_networkequipments.".
+                       "plugin_glpiinventory_configsecurities_id = ".
+                          "glpi_plugin_glpiinventory_configsecurities.id ";
 
-            case "glpi_plugin_fusioninventory_networkequipments.sysdescr":
+            case "glpi_plugin_glpiinventory_networkequipments.sysdescr":
                $return = " ";
                if ($leftjoin_fusioninventory_networkequipments == "1") {
-                  $return = " LEFT JOIN glpi_plugin_fusioninventory_networkequipments
+                  $return = " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                      ON glpi_networkequipments.id = ".
-                          "glpi_plugin_fusioninventory_networkequipments.networkequipments_id ";
+                          "glpi_plugin_glpiinventory_networkequipments.networkequipments_id ";
                }
                return $return;
 
@@ -1330,8 +1330,8 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          array_pop($already_link_tables_tmp);
 
          $leftjoin_fusioninventory_printers = 1;
-         if ((in_array('glpi_plugin_fusioninventory_printers', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusioninventory_configsecurities',
+         if ((in_array('glpi_plugin_glpiinventory_printers', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_glpiinventory_configsecurities',
                          $already_link_tables_tmp))) {
 
             $leftjoin_fusioninventory_printers = 0;
@@ -1339,27 +1339,27 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          switch ($new_table.".".$linkfield) {
 
             // ** last inventory
-            case "glpi_plugin_fusioninventory_printers.plugin_fusioninventory_printers_id" :
+            case "glpi_plugin_glpiinventory_printers.plugin_glpiinventory_printers_id" :
                if ($leftjoin_fusioninventory_printers == 1) {
-                  return " LEFT JOIN glpi_plugin_fusioninventory_printers
-                     ON (glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id) ";
+                  return " LEFT JOIN glpi_plugin_glpiinventory_printers
+                     ON (glpi_printers.id = glpi_plugin_glpiinventory_printers.printers_id) ";
                }
                return " ";
 
             // ** SNMP authentification
-            case "glpi_plugin_fusioninventory_configsecurities.".
-                    "plugin_fusioninventory_configsecurities_id":
+            case "glpi_plugin_glpiinventory_configsecurities.".
+                    "plugin_glpiinventory_configsecurities_id":
                $return = "";
                if ($leftjoin_fusioninventory_printers == "1") {
-                  $return = " LEFT JOIN glpi_plugin_fusioninventory_printers
-                     ON glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id ";
+                  $return = " LEFT JOIN glpi_plugin_glpiinventory_printers
+                     ON glpi_printers.id = glpi_plugin_glpiinventory_printers.printers_id ";
                }
-               return $return." LEFT JOIN glpi_plugin_fusioninventory_configsecurities
-                  ON glpi_plugin_fusioninventory_printers.plugin_fusioninventory_configsecurities_id
-                        = glpi_plugin_fusioninventory_configsecurities.id ";
+               return $return." LEFT JOIN glpi_plugin_glpiinventory_configsecurities
+                  ON glpi_plugin_glpiinventory_printers.plugin_glpiinventory_configsecurities_id
+                        = glpi_plugin_glpiinventory_configsecurities.id ";
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_networkequipments_id" :
+            case "glpi_plugin_glpiinventory_networkequipments.plugin_glpiinventory_networkequipments_id" :
                $table_networking_ports = 0;
                foreach ($already_link_tables AS $num => $tmp_table) {
                   if ($tmp_table == "glpi_networkports.") {
@@ -1380,7 +1380,7 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                break;
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.plugin_fusioninventory_networkports_id" :
+            case "glpi_plugin_glpiinventory_networkports.plugin_glpiinventory_networkports_id" :
                $table_networking_ports = 0;
                $table_fusinvsnmp_networking = 0;
                foreach ($already_link_tables AS $num => $tmp_table) {
@@ -1406,7 +1406,7 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          }
          break;
 
-      case 'PluginFusioninventoryPrinterLogReport':
+      case 'PluginGlpiinventoryPrinterLogReport':
          switch ($new_table.".".$linkfield) {
 
             case 'glpi_locations.locations_id':
@@ -1433,15 +1433,15 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                return " LEFT JOIN `glpi_networkports`
                   ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer') ";
 
-            case 'glpi_plugin_fusioninventory_printerlogs.plugin_fusioninventory_printerlogs_id':
-               return " LEFT JOIN `glpi_plugin_fusioninventory_printerlogs`
-                  ON (`glpi_plugin_fusioninventory_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
+            case 'glpi_plugin_glpiinventory_printerlogs.plugin_glpiinventory_printerlogs_id':
+               return " LEFT JOIN `glpi_plugin_glpiinventory_printerlogs`
+                  ON (`glpi_plugin_glpiinventory_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
 
             case 'glpi_networkports.networkports_id':
                return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer' ) ";
 
             case 'glpi_printers.printers_id':
-               return " LEFT JOIN `glpi_printers` ON (`glpi_plugin_fusioninventory_printers`.`printers_id` = `glpi_printers`.`id` AND `glpi_printers`.`id` IS NOT NULL ) ";
+               return " LEFT JOIN `glpi_printers` ON (`glpi_plugin_glpiinventory_printers`.`printers_id` = `glpi_printers`.`id` AND `glpi_printers`.`id` IS NOT NULL ) ";
 
          }
          break;
@@ -1472,9 +1472,9 @@ function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0) {
  * @return string
  */
 function plugin_glpiinventory_addDefaultWhere($type) {
-   if ($type == 'PluginFusioninventoryTaskjob' && !isAPI()) {
-      return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstates`
-         WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
+   if ($type == 'PluginGlpiinventoryTaskjob' && !isAPI()) {
+      return " ( select count(*) FROM `glpi_plugin_glpiinventory_taskjobstates`
+         WHERE plugin_glpiinventory_taskjobs_id= `glpi_plugin_glpiinventory_taskjobs`.`id`
          AND `state`!='3' )";
    }
 }
@@ -1498,7 +1498,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
 
    switch ($type) {
 
-      case 'PluginFusioninventoryTaskjob' :
+      case 'PluginGlpiinventoryTaskjob' :
          /*
           * WARNING: The following is some minor hack in order to select a range of ids.
           *
@@ -1506,7 +1506,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
           * This is used by the DeployPackage class when it comes to check running tasks on some
           * packages.
           */
-         if ($table == 'glpi_plugin_fusioninventory_tasks') {
+         if ($table == 'glpi_plugin_glpiinventory_tasks') {
             if ($field == 'id') {
                //check if this range is numeric
                $ids = explode(',', $val);
@@ -1540,11 +1540,11 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          }
          break;
 
-      case 'PluginFusioninventoryAgent':
-         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      case 'PluginGlpiinventoryAgent':
+         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
          $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
-            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".
+            if ($table.".".$field == "glpi_plugin_glpiinventory_agentmodules.".
                     $data['modulename']) {
                if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
                   $a_exceptions = importArrayFromDB($data['exceptions']);
@@ -1558,10 +1558,10 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
 
                   if ($val != $data['is_active']) {
                      return $link." (FUSION_".$data['modulename'].".`exceptions` LIKE '%\"".
-                             $current_id."\"%' ) AND `glpi_plugin_fusioninventory_agents`.`id` IN ".
+                             $current_id."\"%' ) AND `glpi_plugin_glpiinventory_agents`.`id` IN ".
                              $in." ";
                   } else {
-                     return $link." `glpi_plugin_fusioninventory_agents`.`id` NOT IN ".$in." ";
+                     return $link." `glpi_plugin_glpiinventory_agents`.`id` NOT IN ".$in." ";
                   }
                } else {
                   if ($val != $data['is_active']) {
@@ -1576,7 +1576,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          }
          break;
 
-      case 'PluginFusioninventoryTaskjoblog':
+      case 'PluginGlpiinventoryTaskjoblog':
          if ($field == 'uniqid') {
             return $link." (`".$table."`.`uniqid`='".$val."') ";
          }
@@ -1587,7 +1587,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          switch ($table.".".$field) {
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.name" :
+            case "glpi_plugin_glpiinventory_networkequipments.name" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR glpi_networkequipments.id IS NULL";
@@ -1597,7 +1597,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." (glpi_networkequipments.id  LIKE '%".$val."%' $ADD ) ";
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR FUSIONINVENTORY_22.name IS NULL";
@@ -1609,10 +1609,10 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
 
          }
 
-         $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
+         $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
          foreach ($a_agent_modules as $module) {
-            if ($table.".".$field == 'glpi_plugin_fusioninventory_agentmodules.'.$module) {
-               $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+            if ($table.".".$field == 'glpi_plugin_glpiinventory_agentmodules.'.$module) {
+               $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
                $a_modules = $pfAgentmodule->find(['modulename' => $module]);
                $data = current($a_modules);
                if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
@@ -1650,7 +1650,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          switch ($table.".".$field) {
 
             // ** last inventory
-            case "glpi_plugin_fusioninventory_networkequipments.networkequipments_id" :
+            case "glpi_plugin_glpiinventory_networkequipments.networkequipments_id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR $table.last_fusinvsnmp_update IS NULL";
@@ -1660,18 +1660,18 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." ($table.last_fusinvsnmp_update  LIKE '%".$val."%' $ADD ) ";
 
             // ** SNMP authentification
-            case "glpi_plugin_fusioninventory_networkequipments.plugin_fusinvsnmp_snmpauths_id" :
+            case "glpi_plugin_glpiinventory_networkequipments.plugin_fusinvsnmp_snmpauths_id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
-                  $ADD = " OR glpi_plugin_fusioninventory_configsecurities.name IS NULL";
+                  $ADD = " OR glpi_plugin_glpiinventory_configsecurities.name IS NULL";
                } else if ($nott == "1" && $val == "NULL") {
-                  $ADD = " OR glpi_plugin_fusioninventory_configsecurities.name IS NOT NULL";
+                  $ADD = " OR glpi_plugin_glpiinventory_configsecurities.name IS NOT NULL";
                }
-               return $link." (glpi_plugin_fusioninventory_configsecurities.name  LIKE '%".$val.
+               return $link." (glpi_plugin_glpiinventory_configsecurities.name  LIKE '%".$val.
                        "%' $ADD ) ";
 
             // ** CPU
-            case "glpi_plugin_fusioninventory_networkequipments.cpu":
+            case "glpi_plugin_glpiinventory_networkequipments.cpu":
                break;
 
          }
@@ -1682,7 +1682,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          switch ($table.".".$field) {
 
             // ** last inventory
-            case "glpi_plugin_fusioninventory_printers.printers_id" :
+            case "glpi_plugin_glpiinventory_printers.printers_id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR $table.last_fusinvsnmp_update IS NULL";
@@ -1692,7 +1692,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." ($table.last_fusinvsnmp_update  LIKE '%".$val."%' $ADD ) ";
 
             // ** SNMP authentification
-            case "glpi_plugin_fusioninventory_networkequipments.plugin_fusinvsnmp_snmpauths_id" :
+            case "glpi_plugin_glpiinventory_networkequipments.plugin_fusinvsnmp_snmpauths_id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR $table.name IS NULL";
@@ -1702,7 +1702,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.name" :
+            case "glpi_plugin_glpiinventory_networkequipments.name" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR glpi_networkequipments.id IS NULL";
@@ -1712,7 +1712,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." (glpi_networkequipments.id  LIKE '%".$val."%' $ADD ) ";
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR FUSIONINVENTORY_22.name IS NULL";
@@ -1726,11 +1726,11 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
 
       // * Unknown mac addresses connectd on switch - report
       // (plugins/fusinvsnmp/report/unknown_mac.php)
-      case 'PluginFusioninventoryUnmanaged' :
+      case 'PluginGlpiinventoryUnmanaged' :
          switch ($table.".".$field) {
 
             // ** switch
-            case "glpi_plugin_fusioninventory_networkequipments.id" :
+            case "glpi_plugin_glpiinventory_networkequipments.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR FUSIONINVENTORY_12.items_id IS NULL";
@@ -1740,7 +1740,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." (FUSIONINVENTORY_13.name  LIKE '%".$val."%' $ADD ) ";
 
             // ** switch port
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
                   $ADD = " OR FUSIONINVENTORY_22.name IS NULL";
@@ -1753,15 +1753,15 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          break;
 
       // * Ports date connection - report (plugins/fusinvsnmp/report/ports_date_connections.php)
-      case 'PluginFusioninventoryNetworkPort' :
+      case 'PluginGlpiinventoryNetworkPort' :
          switch ($table.".".$field) {
 
             // ** Name and link of networking device (switch)
-            case "glpi_plugin_fusioninventory_networkports.id" :
+            case "glpi_plugin_glpiinventory_networkports.id" :
                break;
 
             // ** Name and link of port of networking device (port of switch)
-            case "glpi_plugin_fusioninventory_networkports.networkports_id" :
+            case "glpi_plugin_glpiinventory_networkports.networkports_id" :
                break;
 
             // ** Location of switch
@@ -1777,7 +1777,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                }
                return $link." (glpi_networkequipments.location = '".$val."' $ADD ) ";
 
-            case "glpi_plugin_fusioninventory_networkports.lastup" :
+            case "glpi_plugin_glpiinventory_networkports.lastup" :
                $ADD = "";
                //$val = str_replace("&lt;", ">", $val);
                //$val = str_replace("\\", "", $val);
@@ -1792,11 +1792,11 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          break;
 
       // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-      case 'PluginFusioninventoryIPRange' :
+      case 'PluginGlpiinventoryIPRange' :
          switch ($table.".".$field) {
 
             // ** Name of range IP and link to form
-            case "glpi_plugin_fusioninventory_ipranges.name" :
+            case "glpi_plugin_glpiinventory_ipranges.name" :
                break;
 
             // ** Agent name associed to IP range and link to agent form
@@ -1824,7 +1824,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
          }
          break;
 
-      case 'PluginFusioninventoryNetworkPortLog' :
+      case 'PluginGlpiinventoryNetworkPortLog' :
          switch ($table.".".$field) {
 
             // ** Display switch and Port
@@ -1846,7 +1846,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
                   $ADD = " OR $table.$field IS NOT NULL ";
                }
                if (!empty($val)) {
-                  $map = new PluginFusioninventoryMapping;
+                  $map = new PluginGlpiinventoryMapping;
                   $mapfields = $map->get('NetworkEquipment', $val);
                   if ($mapfields != false) {
                      $val = $mapfields['tablefields'];
@@ -1873,7 +1873,7 @@ function plugin_pre_item_update_fusioninventory($parm) {
    if ($parm->fields['directory'] == 'glpiinventory') {
       $plugin = new Plugin();
 
-      $a_plugins = PluginFusioninventoryModule::getAll();
+      $a_plugins = PluginGlpiinventoryModule::getAll();
       foreach ($a_plugins as $datas) {
          $plugin->unactivate($datas['id']);
       }
@@ -1893,11 +1893,11 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 
    switch ($itemtype) {
       case 'Computer':
-         $pfAgent        = new PluginFusioninventoryAgent;
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate;
+         $pfAgent        = new PluginGlpiinventoryAgent;
+         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate;
          if ($agent_id = $pfAgent->getAgentWithComputerid($items_id)) {
             // count associated tasks to the agent
-            $states = $pfTaskjobstate->find(['plugin_fusioninventory_agents_id' => $agent_id], [], 1);
+            $states = $pfTaskjobstate->find(['plugin_glpiinventory_agents_id' => $agent_id], [], 1);
             if (count($states) > 0) {
                // Delete link between computer and agent fusion
                $pfAgent->update([
@@ -1911,11 +1911,11 @@ function plugin_pre_item_purge_fusioninventory($parm) {
          }
 
          $clean = [
-            'PluginFusioninventoryInventoryComputerComputer',
-            'PluginFusioninventoryComputerLicenseInfo',
-            'PluginFusioninventoryCollect_File_Content',
-            'PluginFusioninventoryCollect_Registry_Content',
-            'PluginFusioninventoryCollect_Wmi_Content'
+            'PluginGlpiinventoryInventoryComputerComputer',
+            'PluginGlpiinventoryComputerLicenseInfo',
+            'PluginGlpiinventoryCollect_File_Content',
+            'PluginGlpiinventoryCollect_Registry_Content',
+            'PluginGlpiinventoryCollect_Wmi_Content'
          ];
          foreach ($clean as $obj) {
             $obj::cleanComputer($items_id);
@@ -1926,12 +1926,12 @@ function plugin_pre_item_purge_fusioninventory($parm) {
          $networkPort = new NetworkPort();
          if ($networkPort->getFromDB($parm->fields['networkports_id_1'])) {
             if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-               PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
+               PluginGlpiinventoryNetworkPortLog::addLogConnection("remove",
                                                                 $parm->fields['networkports_id_1']);
             } else {
                $networkPort->getFromDB($parm->fields['networkports_id_2']);
                if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-                  PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
+                  PluginGlpiinventoryNetworkPortLog::addLogConnection("remove",
                                                                 $parm->fields['networkports_id_2']);
                }
             }
@@ -1940,10 +1940,10 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 
    }
 
-   $rule = new PluginFusioninventoryRulematchedlog();
+   $rule = new PluginGlpiinventoryRulematchedlog();
    $rule->deleteByCriteria(['itemtype' => $itemtype, 'items_id' => $items_id]);
 
-   PluginFusioninventoryLock::cleanForAsset($itemtype, $items_id);
+   PluginGlpiinventoryLock::cleanForAsset($itemtype, $items_id);
    return $parm;
 }
 
@@ -1963,7 +1963,7 @@ function plugin_pre_item_delete_fusioninventory($parm) {
 
          case 'NetworkPort':
             $DB->delete(
-               'glpi_plugin_fusioninventory_networkports', [
+               'glpi_plugin_glpiinventory_networkports', [
                   'networkports_id' => $param->getField('id')
                ]
             );
@@ -1990,7 +1990,7 @@ function plugin_item_update_fusioninventory($parm) {
          $type = get_class($parm);
          $id = $parm->getField('id');
          $fieldsToLock = $parm->updates;
-         PluginFusioninventoryLock::addLocks($type, $id, $fieldsToLock);
+         PluginGlpiinventoryLock::addLocks($type, $id, $fieldsToLock);
       }
    }
 }
@@ -2010,12 +2010,12 @@ function plugin_item_add_fusioninventory($parm) {
          $networkPort = new NetworkPort();
          $networkPort->getFromDB($parm->fields['networkports_id_1']);
          if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
-            PluginFusioninventoryNetworkPortLog::addLogConnection("make",
+            PluginGlpiinventoryNetworkPortLog::addLogConnection("make",
                                                                   $parm->fields['networkports_id_1']);
          } else {
             $networkPort->getFromDB($parm->fields['networkports_id_2']);
             if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
-               PluginFusioninventoryNetworkPortLog::addLogConnection("make",
+               PluginGlpiinventoryNetworkPortLog::addLogConnection("make",
                                                                   $parm->fields['networkports_id_2']);
             }
          }
@@ -2023,7 +2023,7 @@ function plugin_item_add_fusioninventory($parm) {
 
       case 'NetworkPort':
          if ($parm->fields['itemtype'] == 'NetworkEquipment') {
-            $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+            $pfNetworkPort = new PluginGlpiinventoryNetworkPort();
             $pfNetworkPort->add(['networkports_id' => $parm->fields['id']]);
          }
          break;
@@ -2048,14 +2048,14 @@ function plugin_item_purge_fusioninventory($parm) {
          // If remove connection of a hub port (unknown device), we must delete this port too
          $NetworkPort = new NetworkPort();
          $NetworkPort_Vlan = new NetworkPort_Vlan();
-         $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+         $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
          $networkPort_NetworkPort = new NetworkPort_NetworkPort();
 
          $a_hubs = [];
 
          $port_id = $NetworkPort->getContact($parm->getField('networkports_id_1'));
          $NetworkPort->getFromDB($parm->getField('networkports_id_1'));
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
+         if ($NetworkPort->fields['itemtype'] == 'PluginGlpiinventoryUnmanaged') {
             $pfUnmanaged->getFromDB($NetworkPort->fields['items_id']);
             if ($pfUnmanaged->fields['hub'] == '1') {
                $a_hubs[$NetworkPort->fields['items_id']] = 1;
@@ -2064,7 +2064,7 @@ function plugin_item_purge_fusioninventory($parm) {
          }
          $NetworkPort->getFromDB($port_id);
          if ($port_id) {
-            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
+            if ($NetworkPort->fields['itemtype'] == 'PluginGlpiinventoryUnmanaged') {
                $pfUnmanaged->getFromDB($NetworkPort->fields['items_id']);
                if ($pfUnmanaged->fields['hub'] == '1') {
                   $a_hubs[$NetworkPort->fields['items_id']] = 1;
@@ -2073,7 +2073,7 @@ function plugin_item_purge_fusioninventory($parm) {
          }
          $port_id = $NetworkPort->getContact($parm->getField('networkports_id_2'));
          $NetworkPort->getFromDB($parm->getField('networkports_id_2'));
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
+         if ($NetworkPort->fields['itemtype'] == 'PluginGlpiinventoryUnmanaged') {
             if ($pfUnmanaged->getFromDB($NetworkPort->fields['items_id'])) {
                if ($pfUnmanaged->fields['hub'] == '1') {
                   $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
@@ -2087,7 +2087,7 @@ function plugin_item_purge_fusioninventory($parm) {
          }
          if ($port_id) {
             $NetworkPort->getFromDB($port_id);
-            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
+            if ($NetworkPort->fields['itemtype'] == 'PluginGlpiinventoryUnmanaged') {
                $pfUnmanaged->getFromDB($NetworkPort->fields['items_id']);
                if ($pfUnmanaged->fields['hub'] == '1') {
                   $a_hubs[$NetworkPort->fields['items_id']] = 1;
@@ -2098,7 +2098,7 @@ function plugin_item_purge_fusioninventory($parm) {
          // If hub have no port, delete it
          foreach (array_keys($a_hubs) as $unknowndevice_id) {
             $a_networkports = $NetworkPort->find(
-                  ['itemtype' => 'PluginFusioninventoryUnmanaged',
+                  ['itemtype' => 'PluginGlpiinventoryUnmanaged',
                    'items_id' => $unknowndevice_id]);
             if (count($a_networkports) < 2) {
                $pfUnmanaged->delete(['id' => $unknowndevice_id], 1);
@@ -2127,22 +2127,22 @@ function plugin_item_purge_fusioninventory($parm) {
       case 'NetworkEquipment':
          // Delete all ports
          $DB->delete(
-            'glpi_plugin_fusioninventory_networkequipments', [
+            'glpi_plugin_glpiinventory_networkequipments', [
                'networkequipments_id' => $parm->fields['id']
             ]
          );
 
          $iterator = $DB->request([
             'SELECT'    => [
-               'glpi_plugin_fusioninventory_networkports.id',
+               'glpi_plugin_glpiinventory_networkports.id',
                'glpi_networkports.id AS nid'
             ],
-            'FROM'      => 'glpi_plugin_fusioninventory_networkports',
+            'FROM'      => 'glpi_plugin_glpiinventory_networkports',
             'LEFT JOIN' => [
                'glpi_networkports' => [
                   'FKEY' => [
                      'glpi_networkports'                          => 'id',
-                     'glpi_plugin_fusioninventory_networkports'   => 'networkports_id'
+                     'glpi_plugin_glpiinventory_networkports'   => 'networkports_id'
                   ]
                ]
             ],
@@ -2153,7 +2153,7 @@ function plugin_item_purge_fusioninventory($parm) {
          ]);
          foreach ($iterator as $data) {
             $DB->delete(
-               'glpi_plugin_fusioninventory_networkports', [
+               'glpi_plugin_glpiinventory_networkports', [
                   'id' => $data['id']
                ]
             );
@@ -2167,28 +2167,28 @@ function plugin_item_purge_fusioninventory($parm) {
 
       case "Printer":
          $DB->delete(
-            'glpi_plugin_fusioninventory_printers', [
+            'glpi_plugin_glpiinventory_printers', [
                'printers_id' => $parm->fields['id']
             ]
          );
          $DB->delete(
-            'glpi_plugin_fusioninventory_printercartridges', [
+            'glpi_plugin_glpiinventory_printercartridges', [
                'printers_id' => $parm->fields['id']
             ]
          );
          $DB->delete(
-            'glpi_plugin_fusioninventory_printerlogs', [
+            'glpi_plugin_glpiinventory_printerlogs', [
                'printers_id' => $parm->fields['id']
             ]
          );
          break;
 
-      case 'PluginFusioninventoryTimeslot';
-         $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
+      case 'PluginGlpiinventoryTimeslot';
+         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
          $dbentries = getAllDataFromTable(
-            'glpi_plugin_fusioninventory_timeslotentries', [
+            'glpi_plugin_glpiinventory_timeslotentries', [
                'WHERE'  => [
-                  'plugin_fusioninventory_timeslots_id' => $parm->fields['id']
+                  'plugin_glpiinventory_timeslots_id' => $parm->fields['id']
                ]
             ]
          );
@@ -2199,32 +2199,32 @@ function plugin_item_purge_fusioninventory($parm) {
 
       case 'Entity':
          $DB->delete(
-            'glpi_plugin_fusioninventory_entities', [
+            'glpi_plugin_glpiinventory_entities', [
                'entities_id' => $parm->fields['id']
             ]
          );
          break;
 
-      case 'PluginFusioninventoryDeployPackage':
+      case 'PluginGlpiinventoryDeployPackage':
          // Delete all linked items
          $DB->delete(
-            'glpi_plugin_fusioninventory_deploypackages_entities', [
-               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
+            'glpi_plugin_glpiinventory_deploypackages_entities', [
+               'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
             ]
          );
          $DB->delete(
-            'glpi_plugin_fusioninventory_deploypackages_groups', [
-               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
+            'glpi_plugin_glpiinventory_deploypackages_groups', [
+               'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
             ]
          );
          $DB->delete(
-            'glpi_plugin_fusioninventory_deploypackages_profiles', [
-               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
+            'glpi_plugin_glpiinventory_deploypackages_profiles', [
+               'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
             ]
          );
          $DB->delete(
-            'glpi_plugin_fusioninventory_deploypackages_users', [
-               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
+            'glpi_plugin_glpiinventory_deploypackages_users', [
+               'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
             ]
          );
          break;
@@ -2245,7 +2245,7 @@ function plugin_item_transfer_fusioninventory($parm) {
    switch ($parm['type']) {
 
       case 'Computer':
-         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent = new PluginGlpiinventoryAgent();
          $agent_id = $pfAgent->getAgentWithComputerid($parm['id']);
          if ($agent_id) {
             $input = [];
@@ -2271,10 +2271,10 @@ function plugin_glpiinventory_registerMethods() {
    global $WEBSERVICES_METHOD;
 
    $WEBSERVICES_METHOD['fusioninventory.test'] = [
-                     'PluginFusioninventoryInventoryComputerWebservice',
+                     'PluginGlpiinventoryInventoryComputerWebservice',
                      'methodTest'];
    $WEBSERVICES_METHOD['fusioninventory.computerextendedinfo'] = [
-       'PluginFusioninventoryInventoryComputerWebservice',
+       'PluginGlpiinventoryInventoryComputerWebservice',
          'methodExtendedInfo'];
 }
 
@@ -2290,35 +2290,35 @@ function plugin_glpiinventory_getDatabaseRelations() {
 
    if ($plugin->isActivated("glpiinventory")) {
       return ["glpi_locations"
-                        => ['glpi_plugin_fusioninventory_deploymirrors' => 'locations_id'],
+                        => ['glpi_plugin_glpiinventory_deploymirrors' => 'locations_id'],
                    "glpi_entities"
-                        => ["glpi_plugin_fusioninventory_agents"
+                        => ["glpi_plugin_glpiinventory_agents"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_collects"
+                                 "glpi_plugin_glpiinventory_collects"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_credentialips"
+                                 "glpi_plugin_glpiinventory_credentialips"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_credentials"
+                                 "glpi_plugin_glpiinventory_credentials"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_deployfiles"
+                                 "glpi_plugin_glpiinventory_deployfiles"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_deploymirrors"
+                                 "glpi_plugin_glpiinventory_deploymirrors"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_deploypackages"
+                                 "glpi_plugin_glpiinventory_deploypackages"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_ignoredimportdevices"
+                                 "glpi_plugin_glpiinventory_ignoredimportdevices"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_ipranges"
+                                 "glpi_plugin_glpiinventory_ipranges"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_tasks"
+                                 "glpi_plugin_glpiinventory_tasks"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_timeslotentries"
+                                 "glpi_plugin_glpiinventory_timeslotentries"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_timeslots"
+                                 "glpi_plugin_glpiinventory_timeslots"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_deployuserinteractiontemplates"
+                                 "glpi_plugin_glpiinventory_deployuserinteractiontemplates"
                                     => "entities_id",
-                                 "glpi_plugin_fusioninventory_unmanageds"
+                                 "glpi_plugin_glpiinventory_unmanageds"
                                     => "entities_id"]];
    }
    return [];
@@ -2338,11 +2338,11 @@ function plugin_glpiinventory_postItemForm($params) {
    if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
       switch (get_class($params['item'])) {
          case 'Computer':
-            PluginFusioninventoryInventoryComputerComputer::showFormForAgentWithNoInventory($params['item']);
+            PluginGlpiinventoryInventoryComputerComputer::showFormForAgentWithNoInventory($params['item']);
             break;
          case 'Item_OperatingSystem':
             if ($params['item']->fields['itemtype'] == 'Computer') {
-               PluginFusioninventoryInventoryComputerComputer::showFormOS($params['item']);
+               PluginGlpiinventoryInventoryComputerComputer::showFormOS($params['item']);
             }
       }
    }
@@ -2365,7 +2365,7 @@ function plugin_glpiinventory_postshowtab($params) {
          case 'Computer':
             switch (Session::getActiveTab('Computer')) {
                case 'Lock$1':
-                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  PluginGlpiinventoryLock::showLocksForAnItem($item);
                   break;
             }
 
@@ -2374,7 +2374,7 @@ function plugin_glpiinventory_postshowtab($params) {
          case 'NetworkEquipment':
             switch (Session::getActiveTab('NetworkEquipment')) {
                case 'Lock$1':
-                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  PluginGlpiinventoryLock::showLocksForAnItem($item);
                   break;
             }
             break;
@@ -2382,7 +2382,7 @@ function plugin_glpiinventory_postshowtab($params) {
          case 'Printer':
             switch (Session::getActiveTab('Printer')) {
                case 'Lock$1':
-                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  PluginGlpiinventoryLock::showLocksForAnItem($item);
                   break;
             }
 
@@ -2408,7 +2408,7 @@ function plugin_glpiinventory_preshowtab($params) {
       if (in_array($item->getType(), $CFG_GLPI['software_types'])) {
          switch (Session::getActiveTab($item->getType())) {
             case 'Item_SoftwareVersion$1':
-               $license = new PluginFusioninventoryComputerLicenseInfo();
+               $license = new PluginGlpiinventoryComputerLicenseInfo();
                $license->showForm($item->getID());
                break;
          }
@@ -2424,7 +2424,7 @@ function plugin_glpiinventory_preshowtab($params) {
  */
 function plugin_glpiinventory_dynamicReport($params) {
    switch ($params['item_type']) {
-      case "PluginFusioninventoryComputer";
+      case "PluginGlpiinventoryComputer";
          if ($url = parse_url($_SERVER['HTTP_REFERER'])) {
             $params = Search::manageParams($_GET["item_type"], $_GET);
 

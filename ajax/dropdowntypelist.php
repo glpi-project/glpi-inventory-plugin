@@ -43,7 +43,7 @@ Session::checkCentralAccess();
 $myname = filter_input(INPUT_POST, "myname");
 $myamemore = filter_input(INPUT_POST, $myname);
 if ($myamemore != '') {
-   $pfTaskjob = new PluginFusioninventoryTaskjob();
+   $pfTaskjob = new PluginGlpiinventoryTaskjob();
    $pfTaskjob->dropdownvalue($myname, $myamemore,
            filter_input(INPUT_POST, "method"),
            filter_input(INPUT_POST, filter_input(INPUT_POST, "name").'typeid'),

@@ -38,7 +38,7 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjob_moduleitems.php")) {
 
 Session::checkCentralAccess();
 
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 $params = [
     "moduletype" => filter_input(INPUT_GET, "moduletype"),

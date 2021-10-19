@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the printer changes (history).
  */
-class PluginFusioninventoryPrinterLog extends CommonDBTM {
+class PluginGlpiinventoryPrinterLog extends CommonDBTM {
 
 
    /**
@@ -174,7 +174,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $tab[] = [
          'id'        => '6',
-         'table'     => 'glpi_plugin_fusioninventory_printerlogs',
+         'table'     => 'glpi_plugin_glpiinventory_printerlogs',
          'field'     => 'pages_total',
          'linkfield' => 'id',
          'name'      => __('Total number of printed pages', 'glpiinventory'),
@@ -182,7 +182,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $tab[] = [
          'id'        => '7',
-         'table'     => 'glpi_plugin_fusioninventory_printerlogs',
+         'table'     => 'glpi_plugin_glpiinventory_printerlogs',
          'field'     => 'pages_n_b',
          'linkfield' => 'id',
          'name'      => __('Number of printed black and white pages', 'glpiinventory'),
@@ -190,7 +190,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $tab[] = [
          'id'        => '8',
-         'table'     => 'glpi_plugin_fusioninventory_printerlogs',
+         'table'     => 'glpi_plugin_glpiinventory_printerlogs',
          'field'     => 'pages_color',
          'linkfield' => 'id',
          'name'      => __('Number of printed color pages', 'glpiinventory'),
@@ -367,7 +367,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
     */
    function showForm($printers_id, $options = []) {
 
-      if (!Session::haveRight('plugin_fusioninventory_printer', READ)) {
+      if (!Session::haveRight('plugin_glpiinventory_printer', READ)) {
          return false;
       }
 
@@ -432,7 +432,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
       }
 
-      if (!Session::haveRight('plugin_fusioninventory_printer', UPDATE)) {
+      if (!Session::haveRight('plugin_glpiinventory_printer', UPDATE)) {
          return false;
       }
 
@@ -473,42 +473,42 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $timeUnit='day';
       $graphField='pages_total';
       $pagecounters = [];$graphType='day';
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
-         $begin = $_SESSION['glpi_plugin_fusioninventory_graph_begin'];
+      if (isset($_SESSION['glpi_plugin_glpiinventory_graph_begin'])) {
+         $begin = $_SESSION['glpi_plugin_glpiinventory_graph_begin'];
       }
       if ($begin == 'NULL' OR $begin == '') {
          $begin = date("Y-m-01"); // first day of current month
       }
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
-         $end=$_SESSION['glpi_plugin_fusioninventory_graph_end'];
+      if (isset($_SESSION['glpi_plugin_glpiinventory_graph_end'])) {
+         $end=$_SESSION['glpi_plugin_glpiinventory_graph_end'];
       }
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_type'])) {
-         $graphType = $_SESSION['glpi_plugin_fusioninventory_graph_type'];
+      if (isset($_SESSION['glpi_plugin_glpiinventory_graph_type'])) {
+         $graphType = $_SESSION['glpi_plugin_glpiinventory_graph_type'];
       }
       if ($end == 'NULL' OR $end == '') {
          $end = date("Y-m-d"); // today
       }
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) {
-         $timeUnit = $_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
+      if (isset($_SESSION['glpi_plugin_glpiinventory_graph_timeUnit'])) {
+         $timeUnit = $_SESSION['glpi_plugin_glpiinventory_graph_timeUnit'];
       }
-      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
-         $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=[];
+      if (!isset($_SESSION['glpi_plugin_glpiinventory_graph_printersComp'])) {
+         $_SESSION['glpi_plugin_glpiinventory_graph_printersComp']=[];
       }
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
-         $printerCompAdd = $_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
+      if (isset($_SESSION['glpi_plugin_glpiinventory_graph_printerCompAdd'])) {
+         $printerCompAdd = $_SESSION['glpi_plugin_glpiinventory_graph_printerCompAdd'];
          if (!key_exists($printerCompAdd,
-                         $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
+                         $_SESSION['glpi_plugin_glpiinventory_graph_printersComp'])) {
             $oPrinter = new Printer();
             if ($oPrinter->getFromDB($printerCompAdd)) {
-               $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] =
+               $_SESSION['glpi_plugin_glpiinventory_graph_printersComp'][$printerCompAdd] =
                      $oPrinter->getField('name');
             }
          }
-      } else if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
-         unset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove']]);
+      } else if (isset($_SESSION['glpi_plugin_glpiinventory_graph_printerCompRemove'])) {
+         unset($_SESSION['glpi_plugin_glpiinventory_graph_printersComp'][$_SESSION['glpi_plugin_glpiinventory_graph_printerCompRemove']]);
       }
       $oPrinter = new Printer();
-      $printers = $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'];
+      $printers = $_SESSION['glpi_plugin_glpiinventory_graph_printersComp'];
       $printersView = $printers; // printers without the current printer
       if (isset($printersView[$id])) {
          unset($printersView[$id]);
@@ -561,7 +561,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<form method='post' name='snmp_form' id='snmp_form' action='".
               Plugin::getWebDir('glpiinventory')."/front/printer_info.form.php'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-      $mapping = new PluginFusioninventoryMapping();
+      $mapping = new PluginGlpiinventoryMapping();
       $maps = $mapping->find(['itemtype' => 'Printer']);
       foreach ($maps as $mapfields) {
          if (!isset($mapfields["shortlocale"])) {
@@ -611,7 +611,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_2'>";
       echo "<td class='center' colspan='4'>
-              <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
+              <input type='submit' class='submit' name='graph_plugin_glpiinventory_printer_period'
                       value='" . __('Update') . "'/>";
       echo "</td>";
       echo "</tr>\n";
@@ -636,7 +636,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                                       'entity'  => $printer->fields['entities_id'],
                                       'used'    => $printersused]);
       echo "&nbsp;<input type='submit' value=\"".__('Add')."\" class='submit' ".
-              "name='graph_plugin_fusioninventory_printer_add'>";
+              "name='graph_plugin_glpiinventory_printer_add'>";
       echo "</td>";
       echo "</tr>\n";
 
@@ -648,7 +648,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       asort($printersTmp);
       Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
       echo "&nbsp;<input type='submit' value=\"".__('Delete', 'glpiinventory')."\" ".
-              "class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+              "class='submit' name='graph_plugin_glpiinventory_printer_remove'>";
       echo "</td>";
       echo "</tr>\n";
 
@@ -679,7 +679,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`,
                     `$graphField`
-             FROM `glpi_plugin_fusioninventory_printerlogs`"
+             FROM `glpi_plugin_glpiinventory_printerlogs`"
              .$where.
                 " AND `".$graphField."` > 0 "
              .$group;
@@ -692,7 +692,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`,
                     `$graphField`
-             FROM `glpi_plugin_fusioninventory_printerlogs`"
+             FROM `glpi_plugin_glpiinventory_printerlogs`"
              .$where
              .$group."
              ORDER BY `year`, `month`, `day`, `printers_id`";

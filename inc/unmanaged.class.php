@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the unmanaged devices (not manage into GLPI).
  */
-class PluginFusioninventoryUnmanaged extends CommonDBTM {
+class PluginGlpiinventoryUnmanaged extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -51,7 +51,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_unmanaged';
+   static $rightname = 'plugin_glpiinventory_unmanaged';
 
 
    /**
@@ -221,9 +221,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $tab[] = [
          'id'        => '17',
-         'table'     => 'glpi_plugin_fusioninventory_configsecurities',
+         'table'     => 'glpi_plugin_glpiinventory_configsecurities',
          'field'     => 'name',
-         'linkfield' => 'plugin_fusioninventory_configsecurities_id',
+         'linkfield' => 'plugin_glpiinventory_configsecurities_id',
          'name'      => __('SNMP credentials', 'glpiinventory'),
          'datatype'  => 'dropdown',
       ];
@@ -252,9 +252,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       if ($item->fields['id'] > 0) {
          $ong[1]=__('Import');
 
-         $pfConfig = new PluginFusioninventoryConfig();
+         $pfConfig = new PluginGlpiinventoryConfig();
          if (($pfConfig->isFieldActive('remotehttpagent'))
-                 && (Session::haveRight('plugin_fusioninventory_remotecontrol', UPDATE))) {
+                 && (Session::haveRight('plugin_glpiinventory_remotecontrol', UPDATE))) {
             $ong[2]=__('Job', 'glpiinventory');
          }
       }
@@ -293,7 +293,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $ong = [];
       $this->addDefaultFormTab($ong);
       $this->addStandardTab('NetworkPort', $ong, $options);
-      $this->addStandardTab('PluginFusioninventoryUnmanaged', $ong, $options);
+      $this->addStandardTab('PluginGlpiinventoryUnmanaged', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
@@ -308,11 +308,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    function getSpecificMassiveActions($checkitem = null) {
 
       $actions = [];
-      if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
-         $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'import']    = __('Import');
+      if (Session::haveRight('plugin_glpiinventory_unmanaged', UPDATE)) {
+         $actions['PluginGlpiinventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'import']    = __('Import');
       }
-      if (Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
-         $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'assign_auth']       =
+      if (Session::haveRight('plugin_glpiinventory_configsecurity', READ)) {
+         $actions['PluginGlpiinventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'assign_auth']       =
                                        __('Assign SNMP credentials', 'glpiinventory');
       }
       return $actions;
@@ -327,7 +327,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       if ($ma->getAction() == 'assign_auth') {
-         PluginFusioninventoryConfigSecurity::authDropdown();
+         PluginGlpiinventoryConfigSecurity::authDropdown();
          echo "<br><br>";
          return true;
       }
@@ -350,7 +350,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          case "import" :
             $Import = 0;
             $NoImport = 0;
-            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+            $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
             foreach ($ids as $key) {
                list($Import, $NoImport) = $pfUnmanaged->import($key, $Import, $NoImport);
                $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
@@ -484,8 +484,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP credentials', 'glpiinventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::authDropdown(
-               $this->fields['plugin_fusioninventory_configsecurities_id']);
+      PluginGlpiinventoryConfigSecurity::authDropdown(
+               $this->fields['plugin_glpiinventory_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
 
@@ -543,10 +543,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $query = "SELECT `glpi_networkports`.`id`
                 FROM `glpi_networkports`
-                     LEFT JOIN `glpi_plugin_fusioninventory_unmanageds`
-                               ON `items_id`=`glpi_plugin_fusioninventory_unmanageds`.`id`
-                     WHERE `itemtype`='PluginFusioninventoryUnmanaged'
-                           AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL;";
+                     LEFT JOIN `glpi_plugin_glpiinventory_unmanageds`
+                               ON `items_id`=`glpi_plugin_glpiinventory_unmanageds`.`id`
+                     WHERE `itemtype`='PluginGlpiinventoryUnmanaged'
+                           AND `glpi_plugin_glpiinventory_unmanageds`.`id` IS NULL;";
       $unmanaged_infos = [];
       $result=$DB->query($query);
       if ($result) {
@@ -654,7 +654,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
              ]);
       foreach ($a_ports as $data) {
          if (!isset($a_portUsed[$data['id']])) {
-            //plugin_fusioninventory_addLogConnection("remove", $port_id);
+            //plugin_glpiinventory_addLogConnection("remove", $port_id);
             $this->disconnectDB($data['id']);
             $Netport->deleteFromDB($data['id']);
          }
@@ -745,8 +745,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'hub'  => 1,
          'name' => 'hub',
       ];
-      if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-         $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
+      if (isset($_SESSION["plugin_glpiinventory_entity"])) {
+         $input['entities_id'] = $_SESSION["plugin_glpiinventory_entity"];
       }
       $hub_id = $this->add($input);
 
@@ -816,9 +816,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.
-              "/fusioninventory/xml/PluginFusioninventoryUnmanaged/".$folder."/".
+              "/fusioninventory/xml/PluginGlpiinventoryUnmanaged/".$folder."/".
               $parm->fields["id"])) {
-         unlink(GLPI_PLUGIN_DOC_DIR."/glpiinventory/xml/PluginFusioninventoryUnmanaged/".
+         unlink(GLPI_PLUGIN_DOC_DIR."/glpiinventory/xml/PluginGlpiinventoryUnmanaged/".
                  $folder."/".$parm->fields["id"]);
       }
 
@@ -826,7 +826,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $NetworkPort = new NetworkPort();
       $a_ports = $NetworkPort->find(
             ['items_id' => $parm->fields["id"],
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
       foreach ($a_ports as $a_port) {
          $NetworkPort->delete($a_port, 1);
       }
@@ -849,7 +849,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $a_NetworkPorts = $NetworkPort->find(
             ['items_id' => $items_id,
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
 
       $this->getFromDB($items_id);
       $this->fields = Toolbox::addslashes_deep($this->fields);
@@ -878,10 +878,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             }
 
             // Import SNMP
-            $pfPrinter = new PluginFusioninventoryPrinter();
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_printers";
+            $pfPrinter = new PluginGlpiinventoryPrinter();
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_glpiinventory_printers";
             $query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_printers`
+                      FROM `glpi_plugin_glpiinventory_printers`
                       WHERE `printers_id`='".$printer_id."' ";
             $result = $DB->query($query);
             $data = [];
@@ -889,8 +889,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $data = $DB->fetchAssoc($result);
             }
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_configsecurities_id'] =
-                           $this->fields['plugin_fusioninventory_configsecurities_id'];
+            $data['plugin_glpiinventory_configsecurities_id'] =
+                           $this->fields['plugin_glpiinventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['printers_id'] = $printer_id;
                $pfPrinter->add($data);
@@ -926,11 +926,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+            $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
             $_SESSION['glpi_plugins_fusinvsnmp_table'] =
-                           "glpi_plugin_fusioninventory_networkequipments";
+                           "glpi_plugin_glpiinventory_networkequipments";
             $query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_networkequipments`
+                      FROM `glpi_plugin_glpiinventory_networkequipments`
                       WHERE `networkequipments_id`='".$NetworkEquipment_id."' ";
             $result = $DB->query($query);
             $data = [];
@@ -939,8 +939,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             }
 
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_configsecurities_id'] =
-                           $this->fields['plugin_fusioninventory_configsecurities_id'];
+            $data['plugin_glpiinventory_configsecurities_id'] =
+                           $this->fields['plugin_glpiinventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['networkequipments_id'] = $NetworkEquipment_id;
                $pfNetworkEquipment->add($data);

@@ -41,7 +41,7 @@ include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/task.class.php");
 /**
  * Manage the deploy task.
  */
-class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
+class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask {
 
 
    /**
@@ -52,7 +52,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     */
    static function getTypeName($nb = 0) {
       if ($nb > 1) {
-         return PluginFusioninventoryDeployGroup::getTypeName();
+         return PluginGlpiinventoryDeployGroup::getTypeName();
       }
       return __('Task', 'glpiinventory');
    }
@@ -140,7 +140,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     */
    function showList() {
       self::title();
-      Search::show('PluginFusioninventoryDeployTask');
+      Search::show('PluginGlpiinventoryDeployTask');
    }
 
 
@@ -226,16 +226,16 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       $task_id = $this->getField('id');
 
-      $job = new PluginFusioninventoryTaskjob();
-      $status = new PluginFusioninventoryTaskjobstate();
-      $log = new PluginFusioninventoryTaskjoblog();
+      $job = new PluginGlpiinventoryTaskjob();
+      $status = new PluginGlpiinventoryTaskjobstate();
+      $log = new PluginGlpiinventoryTaskjoblog();
 
       // clean all sub-tables
-      $a_taskjobs = $job->find(['plugin_fusioninventory_tasks_id' => $task_id]);
+      $a_taskjobs = $job->find(['plugin_glpiinventory_tasks_id' => $task_id]);
       foreach ($a_taskjobs as $a_taskjob) {
-         $a_taskjobstatuss = $status->find(['plugin_fusioninventory_taskjobs_id' => $a_taskjob['id']]);
+         $a_taskjobstatuss = $status->find(['plugin_glpiinventory_taskjobs_id' => $a_taskjob['id']]);
          foreach ($a_taskjobstatuss as $a_taskjobstatus) {
-            $a_taskjoblogs = $log->find(['plugin_fusioninventory_taskjobstates_id' => $a_taskjobstatus['id']]);
+            $a_taskjoblogs = $log->find(['plugin_glpiinventory_taskjobstates_id' => $a_taskjobstatus['id']]);
             foreach ($a_taskjoblogs as $a_taskjoblog) {
                $log->delete($a_taskjoblog, 1);
             }

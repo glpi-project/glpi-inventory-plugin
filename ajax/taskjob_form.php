@@ -41,7 +41,7 @@ Session::checkCentralAccess();
 // $_GET['taskjobs_id'] => update taskjob
 // $_GET['tasks_id'] => add new taskjob
 
-$pfTaskjob = new PluginFusioninventoryTaskjob();
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 $params = [
     "id" => filter_input(INPUT_GET, "id"),

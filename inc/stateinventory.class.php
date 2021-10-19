@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the network inventory state.
  */
-class PluginFusioninventoryStateInventory extends CommonDBTM {
+class PluginGlpiinventoryStateInventory extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_task';
+   static $rightname = 'plugin_glpiinventory_task';
 
 
    /**
@@ -55,8 +55,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    function __construct() {
       global $CFG_GLPI;
 
-      $CFG_GLPI['glpitablesitemtype']['PluginFusioninventoryStateInventory'] =
-          'glpi_plugin_fusioninventory_taskjobstates';
+      $CFG_GLPI['glpitablesitemtype']['PluginGlpiinventoryStateInventory'] =
+          'glpi_plugin_glpiinventory_taskjobstates';
    }
 
 
@@ -70,10 +70,10 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    function display($options = []) {
       global $DB, $CFG_GLPI;
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -81,9 +81,9 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
       }
 
       // Total Number of events
-      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
-            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_glpiinventory_taskjobstates`
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
+            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
          WHERE `method` = 'networkinventory'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
@@ -109,10 +109,10 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
       echo "<th>".__('Error(s)', 'glpiinventory')."</th>";
       echo "</tr>";
 
-      $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
-            FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
-            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+      $sql = "SELECT `glpi_plugin_glpiinventory_taskjobstates`.*
+            FROM `glpi_plugin_glpiinventory_taskjobstates`
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
+            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
          WHERE `method` = 'networkinventory'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
@@ -121,13 +121,13 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
       while ($data=$DB->fetchArray($result)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";
-         $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
+         $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
          echo "<td>";
          $link = $pfTaskjob->getLink();
          $link = str_replace('.form', '', $link);
          echo $link;
          echo "</td>";
-         $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+         $pfAgent->getFromDB($data['plugin_glpiinventory_agents_id']);
          echo "<td>".$pfAgent->getLink(1)."</td>";
          $nb_query = 0;
          $nb_threads = 0;
@@ -136,7 +136,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          $nb_errors = 0;
          $a_taskjobstates = $pfTaskjobstate->find(['uniqid' => $data['uniqid']]);
          foreach ($a_taskjobstates as $datastate) {
-            $a_taskjoblog = $pfTaskjoblog->find(['plugin_fusioninventory_taskjobstates_id' => $datastate['id']]);
+            $a_taskjoblog = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $datastate['id']]);
             foreach ($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
                   $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);

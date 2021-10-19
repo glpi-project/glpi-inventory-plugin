@@ -39,7 +39,7 @@ use Glpi\Inventory\FilesToJSON;
 /**
  * Used to get the name of PCIID, USBID and PCIID.
  */
-class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
+class PluginGlpiinventoryInventoryExternalDB extends CommonDBTM {
 
 
    /**

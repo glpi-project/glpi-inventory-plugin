@@ -46,10 +46,10 @@ if (empty($rand) && (empty($type))) {
 //Only process class that are related to software deployment
 if (!class_exists($classname)
    || !in_array($classname,
-               ['PluginFusioninventoryDeployCheck',
-                'PluginFusioninventoryDeployFile',
-                'PluginFusioninventoryDeployAction',
-                'PluginFusioninventoryDeployUserinteraction'
+               ['PluginGlpiinventoryDeployCheck',
+                'PluginGlpiinventoryDeployFile',
+                'PluginGlpiinventoryDeployAction',
+                'PluginGlpiinventoryDeployUserinteraction'
                ])) {
    exit();
 }

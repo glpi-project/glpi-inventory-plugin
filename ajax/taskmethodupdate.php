@@ -39,7 +39,7 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskmethodupdate.php")) {
 Session::checkCentralAccess();
 
 if (filter_input(INPUT_POST, "method") != '') {
-    $pfTaskjob = new PluginFusioninventoryTaskjob();
+    $pfTaskjob = new PluginGlpiinventoryTaskjob();
     $pfTaskjob->updateMethod(
             filter_input(INPUT_POST, "method"),
             filter_input(INPUT_POST, "taskjobs_id"));

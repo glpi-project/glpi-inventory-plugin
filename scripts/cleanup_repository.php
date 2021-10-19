@@ -98,7 +98,7 @@ function getManifestsUsed($logger) {
 
    $result = [];
 
-   $orders = $DB->request('glpi_plugin_fusioninventory_deployorders');
+   $orders = $DB->request('glpi_plugin_glpiinventory_deployorders');
 
    foreach ($orders as $order_data) {
 
@@ -131,7 +131,7 @@ function getManifestsRegistered($logger) {
 
    $result = [];
 
-   $files = $DB->request('glpi_plugin_fusioninventory_deployfiles');
+   $files = $DB->request('glpi_plugin_glpiinventory_deployfiles');
 
    foreach ($files as $file_data) {
 
@@ -242,7 +242,7 @@ function unregisterInvalidManifests($logger, $dryrun, $invalid_manifests) {
 
    $logger->info("Unregistering ".count($invalid_manifests)." manifests from database.");
 
-   $pfDeployFile = new PluginFusioninventoryDeployFile();
+   $pfDeployFile = new PluginGlpiinventoryDeployFile();
 
    foreach ($invalid_manifests as $manifest) {
       $short_sha512 = substr($manifest, 0, 6);

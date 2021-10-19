@@ -32,7 +32,7 @@
 
 include ("../../../inc/includes.php");
 
-$pfEntity = new PluginFusioninventoryEntity();
+$pfEntity = new PluginGlpiinventoryEntity();
 
 if (isset($_POST["add"])) {
    $pfEntity->add($_POST);

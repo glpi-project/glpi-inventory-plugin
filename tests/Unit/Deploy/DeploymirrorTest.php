@@ -38,7 +38,7 @@ class DeploymirrorTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all mirrors
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $items = $pfDeploymirror->find();
       foreach ($items as $item) {
          $pfDeploymirror->delete(['id' => $item['id']], true);
@@ -57,7 +57,7 @@ class DeploymirrorTest extends TestCase {
     * @test
     */
    public function testAddMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $input = [
          'name'    => 'MyMirror',
          'comment' => 'MyComment',
@@ -76,7 +76,7 @@ class DeploymirrorTest extends TestCase {
     * @depends testAddMirror
     */
    public function testUpdateMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $pfDeploymirror->getFromDBByCrit(['name' => 'MyMirror']);
       $this->assertNotNull($pfDeploymirror->fields['id']);
       $input  = ['id'      => $pfDeploymirror->fields['id'],
@@ -97,7 +97,7 @@ class DeploymirrorTest extends TestCase {
     * @depends testUpdateMirror
     */
    public function testDeleteLocationFromMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $location       = new Location();
       $locations_id = $location->add(['name'         => 'MyLocation',
                                       'entities_id'  => 0,
@@ -124,7 +124,7 @@ class DeploymirrorTest extends TestCase {
     * @depends testDeleteLocationFromMirror
     */
    public function testDeleteMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $pfDeploymirror->getFromDBByCrit(['name' => 'Mirror 1']);
       $this->assertNotNull($pfDeploymirror->fields['id']);
       $this->assertTrue($pfDeploymirror->delete(['id' => $pfDeploymirror->fields['id']]));

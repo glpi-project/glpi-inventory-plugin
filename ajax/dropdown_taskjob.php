@@ -42,9 +42,9 @@ if (!defined('GLPI_ROOT')) {
 Session::checkCentralAccess();
 $id = filter_input(INPUT_POST, "id");
 if (!empty($id) AND $id > 0) {
-    Dropdown::show('PluginFusioninventoryTaskjob', [
+    Dropdown::show('PluginGlpiinventoryTaskjob', [
              'name' => "taskjobs_id",
-             'condition' => "`plugin_fusioninventory_tasks_id`='".$id."'"
+             'condition' => "`plugin_glpiinventory_tasks_id`='".$id."'"
     ]);
 }
 

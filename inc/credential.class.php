@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the credentials for inventory VMWARE ESX.
  */
-class PluginFusioninventoryCredential extends CommonDropdown {
+class PluginGlpiinventoryCredential extends CommonDropdown {
 
    /**
     * Define first level menu name
@@ -51,7 +51,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     *
     * @var string
     */
-   public $second_level_menu = "pluginfusioninventorymenu";
+   public $second_level_menu = "pluginglpiinventorymenu";
 
    /**
     * Define third level menu name
@@ -65,7 +65,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_credential';
+   static $rightname = 'plugin_glpiinventory_credential';
 
 
    /**
@@ -256,7 +256,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Get an itemtype label by the credential itemtype
     *
-    * @param string $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
+    * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
     * @return string|false
     */
    static function getLabelByItemtype($credential_itemtype) {
@@ -271,12 +271,12 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Find a credential by his itemtype
     *
-    * @param string $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
+    * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
     * @return array
     */
    static function findItemtypeType($credential_itemtype) {
 
-      $credential = ['itemtype' => 'PluginFusioninventoryInventoryComputerESX', //Credential itemtype
+      $credential = ['itemtype' => 'PluginGlpiinventoryInventoryComputerESX', //Credential itemtype
                            'name'    => __('VMware host', 'glpiinventory'), //Label
                            'targets' => ['Computer']];
       if ($credential['itemtype'] == $credential_itemtype) {
@@ -292,7 +292,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @return array
     */
    static function getCredentialsItemTypes() {
-      return ['PluginFusioninventoryInventoryComputerESX' =>
+      return ['PluginGlpiinventoryInventoryComputerESX' =>
                            __('VMware host', 'glpiinventory')];
    }
 
@@ -305,8 +305,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    static function getForItemtype($itemtype) {
       $itemtypes = [];
-      foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class= PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
+      foreach (PluginGlpiinventoryModule::getAll() as $data) {
+         $class= PluginGlpiinventoryStaticmisc::getStaticMiscClass($data['directory']);
          if (is_callable([$class, 'credential_types'])) {
             foreach (call_user_func([$class, 'credential_types']) as $credential) {
                if (in_array($itemtype, $credential['targets'])) {
@@ -334,7 +334,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          $p['itemtype'] = '';
          $p['id']       = 0;
       } else {
-         $credential = new PluginFusioninventoryCredential();
+         $credential = new PluginGlpiinventoryCredential();
          $credential->getFromDB($params['id']);
          if ($credential->getFromDB($params['id'])) {
             $p = $credential->fields;
@@ -347,12 +347,12 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $types     = self::getCredentialsItemTypes();
       $types[''] = Dropdown::EMPTY_VALUE;
-      $rand      = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types,
+      $rand      = Dropdown::showFromArray('plugin_glpiinventory_credentials_id', $types,
                                            ['value' => $p['itemtype']]);
       $ajparams = ['itemtype' => '__VALUE__',
                         'id'       => $p['id']];
       $url       = Plugin::getWebDir('glpiinventory')."/ajax/dropdownCredentials.php";
-      Ajax::updateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand",
+      Ajax::updateItemOnSelectEvent("dropdown_plugin_glpiinventory_credentials_id$rand",
                                   "span_credentials", $url, $ajparams);
 
       echo "&nbsp;<span name='span_credentials' id='span_credentials'>";
@@ -375,9 +375,9 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
 
       // params
-      // Array([itemtype] => PluginFusioninventoryInventoryComputerESX [id] => 0)
-      if ($params['itemtype'] == 'PluginFusioninventoryInventoryComputerESX') {
-         $params['itemtype'] = 'PluginFusioninventoryCredential';
+      // Array([itemtype] => PluginGlpiinventoryInventoryComputerESX [id] => 0)
+      if ($params['itemtype'] == 'PluginGlpiinventoryInventoryComputerESX') {
+         $params['itemtype'] = 'PluginGlpiinventoryCredential';
       }
       $value = 0;
       if (isset($params['id'])) {
@@ -407,6 +407,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       parent::displayHeader();
 
       //Fusioninventory menu
-      PluginFusioninventoryMenu::displayMenu("mini");
+      PluginGlpiinventoryMenu::displayMenu("mini");
    }
 }

@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the wmi to get in collect module.
  */
-class PluginFusioninventoryCollect_Wmi extends PluginFusioninventoryCollectCommon {
+class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon {
 
    public $type = 'wmi';
 

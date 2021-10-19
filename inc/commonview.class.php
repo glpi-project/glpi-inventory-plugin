@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * It's a common code for display information in GLPI.
  */
-class PluginFusioninventoryCommonView extends CommonDBTM {
+class PluginGlpiinventoryCommonView extends CommonDBTM {
 
    /**
     * Define the number for the message information constant

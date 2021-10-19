@@ -90,7 +90,7 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
       $a_reference = [
@@ -203,7 +203,7 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
       $a_reference = [
@@ -301,7 +301,7 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
       $a_reference = [
@@ -355,7 +355,7 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [];
@@ -380,16 +380,16 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 'MANUFACTURER'   => 'Cisco'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryNetworkEquipment'])
-              && isset($a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryNetworkEquipment'])
+              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryNetworkEquipment' => [
+          'PluginGlpiinventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
@@ -458,16 +458,16 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
          'VERSION'      => '12.2(55)SE',
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryNetworkEquipment'])
-              && isset($a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryNetworkEquipment'])
+              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryNetworkEquipment' => [
+          'PluginGlpiinventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
@@ -516,7 +516,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [];
@@ -560,7 +560,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
           'MAC'      => 'b4:39:d6:3a:7f:3e'
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
 

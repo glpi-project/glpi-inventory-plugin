@@ -39,7 +39,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetTypes() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $types = $check->getTypes();
       $this->assertEquals(4, count($types));
       $this->assertEquals(7, count($types[__('Registry', 'glpiinventory')]));
@@ -54,7 +54,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function getGetLabelForAType() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
 
       $this->assertEquals(__("Registry key exists", 'glpiinventory'),
                           $check->getLabelForAType('winkeyExists'));
@@ -69,7 +69,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetUnitLabel() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $units = $check->getUnitLabel();
       $this->assertEquals(4, count($units));
       $this->assertEquals($units, [ "B"  => __('o'),
@@ -85,7 +85,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetAuditDescription() {
-      $check       = new PluginFusioninventoryDeployCheck();
+      $check       = new PluginGlpiinventoryDeployCheck();
       $description = $check->getAuditDescription('winkeyEquals', 'skip');
       $this->assertEquals("Registry value equals to : continue, otherwise : skip job", $description);
 
@@ -104,7 +104,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetUnitSize() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $this->assertEquals($check->getUnitSize('B'), '1');
       $this->assertEquals($check->getUnitSize('KB'), '1024');
       $this->assertEquals($check->getUnitSize('MB'), '1048576');
@@ -116,7 +116,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetRegistryTypes() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $types = $check->getRegistryTypes();
       $this->assertEquals(8, count($types));
       $expected = ['REG_SZ'          => 'REG_SZ',
@@ -136,7 +136,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetValues() {
-      $check    = new PluginFusioninventoryDeployCheck();
+      $check    = new PluginGlpiinventoryDeployCheck();
       $values   = ['name'   => 'My check',
                    'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
                    'value'  => '',
@@ -205,7 +205,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetLabelsAndTypes() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
 
       //----------- winkeyExists --------------------------//
       $result   = $check->getLabelsAndTypes('winkeyExists', false);
@@ -409,7 +409,7 @@ class DeploycheckTest extends TestCase {
    * @test
    */
    public function testGetAllReturnValues() {
-      $check  = new PluginFusioninventoryDeployCheck();
+      $check  = new PluginGlpiinventoryDeployCheck();
       $values = $check->getAllReturnValues();
       $expected = ["error"    => __('abort job', 'glpiinventory'),
                    "skip"     => __("skip job", 'glpiinventory'),
@@ -425,7 +425,7 @@ class DeploycheckTest extends TestCase {
    * @test
    */
    public function testGetValueForReturn() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $this->assertEquals('abort job', $check->getValueForReturn('error'));
       $this->assertEquals('skip job', $check->getValueForReturn('skip'));
       $this->assertEquals('start job now', $check->getValueForReturn('startnow'));
@@ -440,8 +440,8 @@ class DeploycheckTest extends TestCase {
    * @test
    */
    public function testAdd_item() {
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       $input = ['name'        => 'test1',
                 'entities_id' => 0];
@@ -522,8 +522,8 @@ class DeploycheckTest extends TestCase {
    public function testSave_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json];
@@ -551,8 +551,8 @@ class DeploycheckTest extends TestCase {
    public function testRemove_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json
@@ -579,8 +579,8 @@ class DeploycheckTest extends TestCase {
    public function testMove_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json
