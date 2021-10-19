@@ -162,7 +162,7 @@ class PluginGlpiinventoryNetworkEquipment extends PluginGlpiinventoryItem {
       if ($_SESSION['plugin_glpiinventory_networkportview'] == 'glpiinventory') {
          echo '<input type="submit" class="submit" name="selectview" value="glpi" />';
       } else {
-         echo '<input type="submit" class="submit" name="selectview" value="fusioninventory" />';
+         echo '<input type="submit" class="submit" name="selectview" value="glpiinventory" />';
       }
       Html::closeForm();
 

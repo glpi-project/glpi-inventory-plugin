@@ -66,8 +66,8 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
       return [
          __('Name'),
          __('Hive', 'glpiinventory'),
-         __("Path", "fusioninventory"),
-         __("Key", "fusioninventory"),
+         __("Path", "glpiinventory"),
+         __("Key", "glpiinventory"),
          __("Action")
       ];
    }

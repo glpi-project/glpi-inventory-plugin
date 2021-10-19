@@ -725,7 +725,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
                break;
 
             case 'PluginGlpiinventoryDeployGroup':
-               $group_targets = $pfToolbox->executeAsFusioninventoryUser(
+               $group_targets = $pfToolbox->executeAsGlpiinventoryUser(
                   'PluginGlpiinventoryDeployGroup::getTargetsForGroup',
                   [$itemid, $use_cache]
                );

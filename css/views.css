@@ -150,7 +150,7 @@ td:not(#foo) > input[type=radio]:checked + label {
 
 
 /*
- * The following css is used with elements from PluginFusioninventoryCommonView
+ * The following css is used with elements from PluginGlpiinventoryCommonView
  */
 
 .fusinv_panel {

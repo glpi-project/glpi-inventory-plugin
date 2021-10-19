@@ -36,22 +36,17 @@ Session::checkLoginUser();
 Html::header(__('Mirror servers'), $_SERVER["PHP_SELF"], "admin",
    "pluginglpiinventorymenu", "deploymirror");
 
-//PluginGlpiinventoryProfile::checkRight("Fusioninventory", "agents", "r");
-
 PluginGlpiinventoryMenu::displayMenu("mini");
 
 $mirror = new PluginGlpiinventoryDeployMirror();
 
 if (isset ($_POST["add"])) {
-   // PluginGlpiinventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $newID = $mirror->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   // PluginGlpiinventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   // PluginGlpiinventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->delete($_POST);
    Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployMirror'));
 }

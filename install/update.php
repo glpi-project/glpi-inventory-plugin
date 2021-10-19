@@ -218,7 +218,7 @@ function pluginGlpiinventoryFlatArray($array) {
 
 
 /**
- * The main function to update the plugin FusionInventory
+ * The main function to update the plugin
  *
  * @global object $DB
  * @param string $current_version
@@ -252,7 +252,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
    $plugins_id = PluginGlpiinventoryModule::getModuleId($a_plugin['shortname']);
 
    $migration->displayMessage("Migration Classname : " . $migrationname);
-   $migration->displayMessage("Update of plugin FusionInventory");
+   $migration->displayMessage("Update of plugin GLPI Inventory");
 
    // ********* Check if folders are correctly created ********************** //
 
@@ -9781,7 +9781,7 @@ function migratePluginTables($migration, $a_table) {
 
 
 /**
- * Migrate tables from plugin fusinvdeploy to fusioninventory
+ * Migrate tables from plugin fusinvdeploy
  *    all datas in exploded tables are merged and stored in json in order table
  *
  * @global object $DB
@@ -10001,9 +10001,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
          $fp_res = $DB->query($fp_query);
          if ($DB->numrows($fp_res) > 0) {
-            //print("writing file : " . GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}" . "\n");
             $fhandle = fopen(
-               GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
+               GLPI_PLUGIN_DOC_DIR."/glpiinventory/files/manifests/{$sha}",
                'w+'
             );
             while ($fp_datas = $DB->fetchAssoc($fp_res)) {
@@ -10016,7 +10015,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       }
    }
 
-   //migrate fusinvdeploy_files to fusioninventory_deployfiles
+   //migrate fusinvdeploy_files
    if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
       $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_deployfiles`");
       if ($DB->fieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {

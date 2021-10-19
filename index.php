@@ -41,8 +41,6 @@ if ((!empty($action)
       || !empty($rawdata)) {
 
    include_once("front/communication.php");
-
-   //Fusioninventory plugin pages
 } else {
    Html::header(__('GLPI Inventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "plugins",
                 "glpiinventory");

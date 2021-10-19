@@ -55,16 +55,16 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon {
    function getListHeaders() {
       return [
          __("Name"),
-         __("Limit", "fusioninventory"),
-         __("Folder", "fusioninventory"),
-         __("Recursive", "fusioninventory"),
-         __("Regex", "fusioninventory"),
-         __("Size", "fusioninventory"),
-         __("Checksum SHA512", "fusioninventory"),
-         __("Checksum SHA2", "fusioninventory"),
-         __("Name", "fusioninventory"),
-         __("Iname", "fusioninventory"),
-         __("Type", "fusioninventory"),
+         __("Limit", "glpiinventory"),
+         __("Folder", "glpiinventory"),
+         __("Recursive", "glpiinventory"),
+         __("Regex", "glpiinventory"),
+         __("Size", "glpiinventory"),
+         __("Checksum SHA512", "glpiinventory"),
+         __("Checksum SHA2", "glpiinventory"),
+         __("Name", "glpiinventory"),
+         __("Iname", "glpiinventory"),
+         __("Type", "glpiinventory"),
          __("Action")
       ];
    }

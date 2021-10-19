@@ -34,15 +34,15 @@ include ("../../../inc/includes.php");
 
 Session::checkLoginUser();
 
-if (isset($_POST["unlock_field_fusioninventory"])) {
+if (isset($_POST["unlock_field_glpiinventory"])) {
    $typeright = strtolower($_POST['type']);
    if ($typeright == "networkequipment") {
       $typeright = "networking";
    }
    if (Session::haveRight($typeright, UPDATE)) {
-      if (isset($_POST["lockfield_fusioninventory"])
-              && count($_POST["lockfield_fusioninventory"])) {
-         $tab=PluginGlpiinventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
+      if (isset($_POST["lockfield_glpiinventory"])
+              && count($_POST["lockfield_glpiinventory"])) {
+         $tab=PluginGlpiinventoryLock::exportChecksToArray($_POST["lockfield_glpiinventory"]);
          PluginGlpiinventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);
       } else {
          PluginGlpiinventoryLock::setLockArray($_POST['type'], $_POST["id"], []);

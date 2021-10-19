@@ -672,13 +672,13 @@ class PluginGlpiinventoryToolbox {
 
 
    /**
-    * Execute a function as Fusioninventory user
+    * Execute a function as as pllugin user
     *
     * @param string|array $function
     * @param array $args
     * @return array the normaly returned value from executed callable
     */
-   function executeAsFusioninventoryUser($function, array $args = []) {
+   function executeAsGlpiinventoryUser($function, array $args = []) {
 
       $config = new PluginGlpiinventoryConfig();
       $user = new User();
@@ -717,11 +717,13 @@ class PluginGlpiinventoryToolbox {
 
 
    /**
-   * Check if an item is inventoried by FusionInventory
+   * Check if an item is inventoried by plugin
    *
    * @since 9.2
+   *
    * @param CommonDBTM $item the item to check
-   * @return boolean true if handle by FusionInventory
+   *
+   * @return boolean
    */
    static function isAnInventoryDevice($item) {
       $table = '';

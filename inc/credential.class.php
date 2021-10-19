@@ -406,7 +406,6 @@ class PluginGlpiinventoryCredential extends CommonDropdown {
       //Common dropdown header
       parent::displayHeader();
 
-      //Fusioninventory menu
       PluginGlpiinventoryMenu::displayMenu("mini");
    }
 }

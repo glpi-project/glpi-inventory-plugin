@@ -59,12 +59,12 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration') {
       require_once($file);
    }
 
-   $migration->displayMessage("Installation of plugin FusionInventory");
+   $migration->displayMessage("GLPI Inventory plugin installation");
 
    // Get informations of plugin
 
    /*
-    * Clean if Fusion / Tracker has been installed and uninstalled (not clean correctly)
+    * Clean if plugin has been installed and uninstalled (not clean correctly)
     */
    $migration->displayMessage("Clean data from old installation of the plugin");
 

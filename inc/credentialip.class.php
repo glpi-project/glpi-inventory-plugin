@@ -174,8 +174,6 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown {
    function displayHeader() {
       //Common dropdown header
       parent::displayHeader();
-
-      //Fusioninventory menu
       PluginGlpiinventoryMenu::displayMenu("mini");
    }
 }

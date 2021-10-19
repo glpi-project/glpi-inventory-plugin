@@ -765,7 +765,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
             $zip->addFromString('information.json', $json_string);
          }
          $zip->close();
-         Session::addMessageAfterRedirect(__("Package exported in", "fusioninventory")." ".GLPI_PLUGIN_DOC_DIR."/glpiinventory/files/export/".$this->fields['uuid'].".".$name.".zip");
+         Session::addMessageAfterRedirect(__("Package exported in", "glpiinventory")." ".GLPI_PLUGIN_DOC_DIR."/glpiinventory/files/export/".$this->fields['uuid'].".".$name.".zip");
       }
    }
 
@@ -961,7 +961,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
       if ($error_json != JSON_ERROR_NONE) {
          $error_msg = $json_error_consts[$error_json];
          Session::addMessageAfterRedirect(
-            __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
+            __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>" .
             $error_msg . "<br/>". $error_json_message, false, ERROR, false
          );
          $error = 1;

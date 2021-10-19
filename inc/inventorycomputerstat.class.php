@@ -36,7 +36,7 @@ if (!defined('GLPI_ROOT')) {
 
 /**
  * Manage the computer inventory stats (number of inventories arrived in
- * the plugin Fusioninventory and regroued by hour).
+ * the plugin and regroued by hour).
  */
 class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
 

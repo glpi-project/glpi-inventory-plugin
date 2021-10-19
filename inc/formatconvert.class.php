@@ -232,7 +232,7 @@ class PluginGlpiinventoryFormatconvert {
 
 
    /**
-    * Convert Fusioninventory Computer inventory to pre-prepared GLPI inventory
+    * Convert computer inventory to pre-prepared GLPI inventory
     *
     * @global object $DB
     * @global boolean $PF_ESXINVENTORY

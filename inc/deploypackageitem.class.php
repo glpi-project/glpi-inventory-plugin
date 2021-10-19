@@ -306,7 +306,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM {
       if ($error_json != JSON_ERROR_NONE) {
          $error_msg = $json_error_consts[$error_json];
          Session::addMessageAfterRedirect(
-            __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
+            __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>" .
             $error_msg . "<br/>". $error_json_message, false, ERROR, false
          );
          $error = 1;

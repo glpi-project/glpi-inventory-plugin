@@ -121,7 +121,7 @@ class ComputerDynamicTest extends TestCase {
    /**
     * @test
     */
-   public function UpdateComputerFusioninventoryAdded() {
+   public function UpdateComputerInventoryAdded() {
 
       // Add manually a computerdisk
 

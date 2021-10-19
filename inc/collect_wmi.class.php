@@ -54,9 +54,9 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon {
    function getListHeaders() {
       return [
          __("Name"),
-         __("Moniker", "fusioninventory"),
-         __("Class", "fusioninventory"),
-         __("Properties", "fusioninventory"),
+         __("Moniker", "glpiinventory"),
+         __("Class", "glpiinventory"),
+         __("Properties", "glpiinventory"),
          __("Action")
       ];
    }

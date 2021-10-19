@@ -78,7 +78,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
 
       // add an auto-refresh control
       $refresh_randid = $this->showDropdownFromArray(
-         __("refresh interval", "fusioninventory"),
+         __("refresh interval", "glpiinventory"),
          null,
          [
             "off"  => __('Off', 'glpiinventory'),
@@ -158,7 +158,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
                   <a class='toggle_details_type'
                      data-counter_type='{{counter_type}}'
                      data-chart_id='{{chart_id}}'
-                     title='".__("Show/Hide details", "fusioninventory")."'>
+                     title='".__("Show/Hide details", "glpiinventory")."'>
                      <div class='fold'></div>
                      <span class='counter_name'>{{counter_type_name}}</span>
                      <span class='counter_value'>{{counter_value}}</span>
@@ -318,7 +318,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
                                "reprepare_if_successful");
       if ($this->fields['is_deploy_on_demand']) {
          echo "<div class='input_wrap'>";
-         echo __("This is an on demand deployment task", "fusioninventory");
+         echo __("This is an on demand deployment task", "glpiinventory");
          echo "</div>";
       }
       echo "</div>";

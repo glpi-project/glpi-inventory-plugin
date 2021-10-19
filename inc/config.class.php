@@ -730,7 +730,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo _n('Removable medias', 'Removable medias', 2, "fusioninventory");
+      echo _n('Removable medias', 'Removable medias', 2, "glpiinventory");
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_removablemedia",

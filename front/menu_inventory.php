@@ -34,7 +34,7 @@ include ("../../../inc/includes.php");
 
 if (PluginGlpiinventoryMenu::canView()) {
    Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-                "fusioninventory", "menu");
+                "glpiinventory", "menu");
 
    PluginGlpiinventoryMenu::displayMenuInventory();
 } else {

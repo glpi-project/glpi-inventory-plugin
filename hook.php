@@ -785,7 +785,7 @@ function plugin_glpiinventory_getDropdown() {
  *
  * @return integer
  */
-function cron_plugin_fusioninventory() {
+function cron_plugin_glpiinventory() {
    //   TODO :Disable for the moment (may be check if functions is good or not
    //   $ptud = new PluginGlpiinventoryUnmanaged;
    //   $ptud->cleanOrphelinsConnections();

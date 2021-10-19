@@ -267,7 +267,7 @@ class PluginGlpiinventoryLock extends CommonDBTM{
                echo "</td>";
             }
             echo "<td align='center'>";
-            Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
+            Html::showCheckbox(['name'    => "lockfield_glpiinventory[$key_source]",
                                      'checked' => $checked]);
             echo "</td>";
             echo "</tr>";
@@ -294,7 +294,7 @@ class PluginGlpiinventoryLock extends CommonDBTM{
       if ($can == '1') {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
+         echo "<input class='submit' type='submit' name='unlock_field_glpiinventory'
                          value='" . __('Update') . "'>";
          echo "</td>";
          echo "</tr>";
@@ -386,7 +386,7 @@ class PluginGlpiinventoryLock extends CommonDBTM{
             }
             echo "<td>".$name."</td>";
             echo "<td align='center'>";
-            Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
+            Html::showCheckbox(['name'    => "lockfield_glpiinventory[$key_source]",
                                      'checked' => $checked]);
             echo "</td>";
             echo "</tr>";
@@ -396,7 +396,7 @@ class PluginGlpiinventoryLock extends CommonDBTM{
       if ($can == '1' && $show_button) {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo Html::submit(__('Update'), ['name' => 'unlock_field_fusioninventory']);
+         echo Html::submit(__('Update'), ['name' => 'unlock_field_glpiinventory']);
          echo "</td>";
          echo "</tr>";
       }
@@ -902,9 +902,9 @@ class PluginGlpiinventoryLock extends CommonDBTM{
                 || $itemtype == "Computer") {
 
                foreach ($ids as $key) {
-                  if (isset($_POST["lockfield_fusioninventory"])
-                      && count($_POST["lockfield_fusioninventory"])) {
-                     $tab=PluginGlpiinventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
+                  if (isset($_POST["lockfield_glpiinventory"])
+                      && count($_POST["lockfield_glpiinventory"])) {
+                     $tab=PluginGlpiinventoryLock::exportChecksToArray($_POST["lockfield_glpiinventory"]);
 
                      //lock current item
                      if (PluginGlpiinventoryLock::setLockArray($_POST['type'],

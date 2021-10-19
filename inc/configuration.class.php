@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Manage the general configuration tabs (display) in plugin Fusioninventory.
+ * Manage the general configuration tabs (display) in plugin.
  */
 class PluginGlpiinventoryConfiguration extends CommonDBTM {
 
