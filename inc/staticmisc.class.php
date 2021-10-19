@@ -50,14 +50,14 @@ class PluginGlpiinventoryStaticmisc {
    static function task_methods() {
 
       $a_tasks = [
-            [   'module'         => 'fusioninventory',
+            [   'module'         => 'glpiinventory',
                      'classname'      => 'PluginGlpiinventoryWakeonlan',
                      'method'         => 'wakeonlan',
                      'name'           => __('Wake On LAN', 'glpiinventory'),
                      'use_rest'       => false
             ],
 
-            [   'module'         => 'fusioninventory',
+            [   'module'         => 'glpiinventory',
                      'method'         => 'inventory',
                      'selection_type' => 'devices',
                      'hidetask'       => 1,
@@ -65,7 +65,7 @@ class PluginGlpiinventoryStaticmisc {
                      'use_rest'       => false
             ],
 
-            [   'module'         => 'fusioninventory',
+            [   'module'         => 'glpiinventory',
                      'classname'      => 'PluginGlpiinventoryInventoryComputerESX',
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
@@ -74,19 +74,19 @@ class PluginGlpiinventoryStaticmisc {
                      'use_rest'       => true
             ],
 
-            [   'module'         => 'fusioninventory',
+            [   'module'         => 'glpiinventory',
                      'classname'      => 'PluginGlpiinventoryNetworkDiscovery',
                      'method'         => 'networkdiscovery',
                      'name'           => __('Network discovery', 'glpiinventory')
             ],
 
-            [   'module'         => 'fusioninventory',
+            [   'module'         => 'glpiinventory',
                      'classname'      => 'PluginGlpiinventoryNetworkInventory',
                      'method'         => 'networkinventory',
                      'name'           => __('Network inventory (SNMP)', 'glpiinventory')
             ],
 
-            [   'module'         => 'fusioninventory',
+            [   'module'         => 'glpiinventory',
                      'classname'      => 'PluginGlpiinventoryDeployCommon',
                      'method'         => 'deployinstall',
                      'name'           => __('Package deploy', 'glpiinventory'),
@@ -94,7 +94,7 @@ class PluginGlpiinventoryStaticmisc {
                      'use_rest'       => true
             ],
 
-            [   'module'         => 'fusioninventory',
+            [   'module'         => 'glpiinventory',
                      'classname'      => 'PluginGlpiinventoryCollect',
                      'method'         => 'collect',
                      'name'           => __('Collect data', 'glpiinventory'),

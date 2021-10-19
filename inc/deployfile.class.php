@@ -143,7 +143,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
          }
          echo "<td class='filename'>";
          if (!empty($file_mimetype)
-                 && file_exists(PLUGIN_GLPI_INVENTORY_DIR."/pics/extensions/$file_mimetype.png")) {
+                 && file_exists($pics_path."extensions/$file_mimetype.png")) {
             echo "<img src='".$pics_path."extensions/$file_mimetype.png' />";
          } else {
             echo "<img src='".$pics_path."extensions/documents.png' />";

@@ -159,7 +159,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask {
          $buttons["task.form.php?new=1"] = __('Add task', 'glpiinventory');
          $title = "";
       }
-      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png",
+      Html::displayTitle(Plugin::getWebDir('glpiinventory') . "/pics/task.png",
                          $title, $title, $buttons);
    }
 
