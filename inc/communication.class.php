@@ -196,7 +196,7 @@ class PluginGlpiinventoryCommunication {
                "",
                ""
             ],
-           $this->message['CONTENT']['VERSIONCLIENT']
+            $this->message['CONTENT']['VERSIONCLIENT']
          );
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
