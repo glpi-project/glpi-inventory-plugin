@@ -118,4 +118,4 @@ jobs:
     - name: Activate plugin
       run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory
     - name: run tests
-      run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox tests/
+      run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit tests/
