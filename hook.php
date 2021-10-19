@@ -625,7 +625,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num) {
 
             // ** Display GLPI field of device
             case "glpi_plugin_fusinvsnmp_networkportlogs.field" :
-               //               $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data['raw']["ITEM_$num"]]['name'];
+               //               $out = $GLPIINVENTORY_MAPPING[NETWORKING_TYPE][$data['raw']["ITEM_$num"]]['name'];
                $out = '';
                $map = new PluginGlpiinventoryMapping;
                $mapfields = $map->get('NetworkEquipment', $data['raw']["ITEM_$num"]);
@@ -1001,7 +1001,7 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
             // ** switch port
             case "glpi_plugin_glpiinventory_networkports.id" :
                return "GROUP_CONCAT( DISTINCT
-                     CONCAT_WS('....', FUSIONINVENTORY_22.items_id, FUSIONINVENTORY_22.name)
+                     CONCAT_WS('....', GLPIINVENTORY_22.items_id, GLPIINVENTORY_22.name)
                   SEPARATOR '$$$$') AS ITEM_$num, ";
 
          }
@@ -1026,7 +1026,7 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
 
             // ** switch port
             case "glpi_plugin_glpiinventory_networkports.id" :
-               return "GROUP_CONCAT( FUSIONINVENTORY_22.name SEPARATOR '$$$$') AS ITEM_$num, ";
+               return "GROUP_CONCAT( GLPIINVENTORY_22.name SEPARATOR '$$$$') AS ITEM_$num, ";
 
          }
          break;
@@ -1035,11 +1035,11 @@ function plugin_glpiinventory_addSelect($type, $id, $num) {
          switch ($table.".".$field) {
 
             case "glpi_networkequipments.device" :
-               return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_12.items_id SEPARATOR '$$$$') ".
+               return "GROUP_CONCAT( DISTINCT GLPIINVENTORY_12.items_id SEPARATOR '$$$$') ".
                           "AS ITEM_$num, ";
 
             case "glpi_networkports.NetworkPort" :
-               return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_22.".$field." SEPARATOR '$$$$') ".
+               return "GROUP_CONCAT( DISTINCT GLPIINVENTORY_22.".$field." SEPARATOR '$$$$') ".
                           "AS ITEM_$num, ";
 
          }
@@ -1219,15 +1219,15 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                   }
                }
                if ($table_networking_ports == "1") {
-                  return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
+                  return " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_11 ON glpi_networkports.id = GLPIINVENTORY_11.networkports_id_1 OR glpi_networkports.id = GLPIINVENTORY_11.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_12 ON GLPIINVENTORY_12.id = CASE WHEN GLPIINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN GLPIINVENTORY_11.networkports_id_2 ELSE GLPIINVENTORY_11.networkports_id_1 END
+                     LEFT JOIN glpi_networkequipments ON GLPIINVENTORY_12.items_id=glpi_networkequipments.id ";
 
                } else {
-                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_10 ON (FUSIONINVENTORY_10.items_id = glpi_computers.id AND FUSIONINVENTORY_10.itemtype='Computer') ".
-                     " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_1 OR FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = FUSIONINVENTORY_10.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
+                  return " LEFT JOIN glpi_networkports AS GLPIINVENTORY_10 ON (GLPIINVENTORY_10.items_id = glpi_computers.id AND GLPIINVENTORY_10.itemtype='Computer') ".
+                     " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_11 ON GLPIINVENTORY_10.id = GLPIINVENTORY_11.networkports_id_1 OR GLPIINVENTORY_10.id = GLPIINVENTORY_11.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_12 ON GLPIINVENTORY_12.id = CASE WHEN GLPIINVENTORY_11.networkports_id_1 = GLPIINVENTORY_10.id THEN GLPIINVENTORY_11.networkports_id_2 ELSE GLPIINVENTORY_11.networkports_id_1 END
+                     LEFT JOIN glpi_networkequipments ON GLPIINVENTORY_12.items_id=glpi_networkequipments.id ";
                }
                break;
 
@@ -1244,14 +1244,14 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                   }
                }
                if ($table_fusinvsnmp_networking == "1") {
-                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id=FUSIONINVENTORY_12.id ";
+                  return " LEFT JOIN glpi_networkports AS GLPIINVENTORY_22 ON GLPIINVENTORY_22.id=GLPIINVENTORY_12.id ";
                } else if ($table_networking_ports == "1") {
-                  return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON glpi_networkports.id = FUSIONINVENTORY_21.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_21.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_21.networkports_id_2 ELSE FUSIONINVENTORY_21.networkports_id_1 END ";
+                  return " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_21 ON glpi_networkports.id = GLPIINVENTORY_21.networkports_id_1 OR glpi_networkports.id = GLPIINVENTORY_21.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_22 ON GLPIINVENTORY_22.id = CASE WHEN GLPIINVENTORY_21.networkports_id_1 = glpi_networkports.id THEN GLPIINVENTORY_21.networkports_id_2 ELSE GLPIINVENTORY_21.networkports_id_1 END ";
                } else {
-                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_20 ON (FUSIONINVENTORY_20.items_id = glpi_computers.id AND FUSIONINVENTORY_20.itemtype='Computer') ".
-                     " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_1 OR FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.networkports_id_1 = FUSIONINVENTORY_20.id THEN FUSIONINVENTORY_21.networkports_id_2 ELSE FUSIONINVENTORY_21.networkports_id_1 END ";
+                  return " LEFT JOIN glpi_networkports AS GLPIINVENTORY_20 ON (GLPIINVENTORY_20.items_id = glpi_computers.id AND GLPIINVENTORY_20.itemtype='Computer') ".
+                     " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_21 ON GLPIINVENTORY_20.id = GLPIINVENTORY_21.networkports_id_1 OR GLPIINVENTORY_20.id = GLPIINVENTORY_21.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_22 ON GLPIINVENTORY_22.id = CASE WHEN GLPIINVENTORY_21.networkports_id_1 = GLPIINVENTORY_20.id THEN GLPIINVENTORY_21.networkports_id_2 ELSE GLPIINVENTORY_21.networkports_id_1 END ";
                }
                break;
 
@@ -1367,15 +1367,15 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                   }
                }
                if ($table_networking_ports == "1") {
-                  return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
+                  return " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_11 ON glpi_networkports.id = GLPIINVENTORY_11.networkports_id_1 OR glpi_networkports.id = GLPIINVENTORY_11.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_12 ON GLPIINVENTORY_12.id = CASE WHEN GLPIINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN GLPIINVENTORY_11.networkports_id_2 ELSE GLPIINVENTORY_11.networkports_id_1 END
+                     LEFT JOIN glpi_networkequipments ON GLPIINVENTORY_12.items_id=glpi_networkequipments.id ";
 
                } else {
-                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_10 ON (FUSIONINVENTORY_10.items_id = glpi_printers.id AND FUSIONINVENTORY_10.itemtype='Printer') ".
-                     " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_1 OR FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = FUSIONINVENTORY_10.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
+                  return " LEFT JOIN glpi_networkports AS GLPIINVENTORY_10 ON (GLPIINVENTORY_10.items_id = glpi_printers.id AND GLPIINVENTORY_10.itemtype='Printer') ".
+                     " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_11 ON GLPIINVENTORY_10.id = GLPIINVENTORY_11.networkports_id_1 OR GLPIINVENTORY_10.id = GLPIINVENTORY_11.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_12 ON GLPIINVENTORY_12.id = CASE WHEN GLPIINVENTORY_11.networkports_id_1 = GLPIINVENTORY_10.id THEN GLPIINVENTORY_11.networkports_id_2 ELSE GLPIINVENTORY_11.networkports_id_1 END
+                     LEFT JOIN glpi_networkequipments ON GLPIINVENTORY_12.items_id=glpi_networkequipments.id ";
                }
                break;
 
@@ -1392,14 +1392,14 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
                   }
                }
                if ($table_fusinvsnmp_networking == "1") {
-                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id=FUSIONINVENTORY_12.id ";
+                  return " LEFT JOIN glpi_networkports AS GLPIINVENTORY_22 ON GLPIINVENTORY_22.id=GLPIINVENTORY_12.id ";
                } else if ($table_networking_ports == "1") {
-                  return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON glpi_networkports.id = FUSIONINVENTORY_21.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_21.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_21.networkports_id_2 ELSE FUSIONINVENTORY_21.networkports_id_1 END ";
+                  return " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_21 ON glpi_networkports.id = GLPIINVENTORY_21.networkports_id_1 OR glpi_networkports.id = GLPIINVENTORY_21.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_22 ON GLPIINVENTORY_22.id = CASE WHEN GLPIINVENTORY_21.networkports_id_1 = glpi_networkports.id THEN GLPIINVENTORY_21.networkports_id_2 ELSE GLPIINVENTORY_21.networkports_id_1 END ";
                } else {
-                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_20 ON (FUSIONINVENTORY_20.items_id = glpi_printers.id AND FUSIONINVENTORY_20.itemtype='Printer') ".
-                     " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_1 OR FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.networkports_id_1 = FUSIONINVENTORY_20.id THEN FUSIONINVENTORY_21.networkports_id_2 ELSE FUSIONINVENTORY_21.networkports_id_1 END ";
+                  return " LEFT JOIN glpi_networkports AS GLPIINVENTORY_20 ON (GLPIINVENTORY_20.items_id = glpi_printers.id AND GLPIINVENTORY_20.itemtype='Printer') ".
+                     " LEFT JOIN glpi_networkports_networkports AS GLPIINVENTORY_21 ON GLPIINVENTORY_20.id = GLPIINVENTORY_21.networkports_id_1 OR GLPIINVENTORY_20.id = GLPIINVENTORY_21.networkports_id_2 ".
+                     " LEFT JOIN glpi_networkports AS GLPIINVENTORY_22 ON GLPIINVENTORY_22.id = CASE WHEN GLPIINVENTORY_21.networkports_id_1 = GLPIINVENTORY_20.id THEN GLPIINVENTORY_21.networkports_id_2 ELSE GLPIINVENTORY_21.networkports_id_1 END ";
                }
                break;
 
@@ -1600,11 +1600,11 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
             case "glpi_plugin_glpiinventory_networkports.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_22.name IS NULL";
+                  $ADD = " OR GLPIINVENTORY_22.name IS NULL";
                } else if ($nott == "1" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_22.name IS NOT NULL";
+                  $ADD = " OR GLPIINVENTORY_22.name IS NOT NULL";
                }
-               return $link." (FUSIONINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
+               return $link." (GLPIINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
                break;
 
          }
@@ -1715,11 +1715,11 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
             case "glpi_plugin_glpiinventory_networkports.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_22.name IS NULL";
+                  $ADD = " OR GLPIINVENTORY_22.name IS NULL";
                } else if ($nott == "1" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_22.name IS NOT NULL";
+                  $ADD = " OR GLPIINVENTORY_22.name IS NOT NULL";
                }
-               return $link." (FUSIONINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
+               return $link." (GLPIINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
 
          }
          break;
@@ -1733,21 +1733,21 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
             case "glpi_plugin_glpiinventory_networkequipments.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_12.items_id IS NULL";
+                  $ADD = " OR GLPIINVENTORY_12.items_id IS NULL";
                } else if ($nott == "1" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_12.items_id IS NOT NULL";
+                  $ADD = " OR GLPIINVENTORY_12.items_id IS NOT NULL";
                }
-               return $link." (FUSIONINVENTORY_13.name  LIKE '%".$val."%' $ADD ) ";
+               return $link." (GLPIINVENTORY_13.name  LIKE '%".$val."%' $ADD ) ";
 
             // ** switch port
             case "glpi_plugin_glpiinventory_networkports.id" :
                $ADD = "";
                if ($nott == "0" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_22.name IS NULL";
+                  $ADD = " OR GLPIINVENTORY_22.name IS NULL";
                } else if ($nott == "1" && $val == "NULL") {
-                  $ADD = " OR FUSIONINVENTORY_22.name IS NOT NULL";
+                  $ADD = " OR GLPIINVENTORY_22.name IS NOT NULL";
                }
-               return $link." (FUSIONINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
+               return $link." (GLPIINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
 
          }
          break;

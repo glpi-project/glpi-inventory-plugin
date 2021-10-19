@@ -511,8 +511,6 @@ class PluginGlpiinventoryNetworkPortLog extends CommonDBTM {
             } else {
                // Changes values
                $text .= "<td align='center' colspan='2'></td>";
-               //               $text .= "<td align='center'>".
-               //                      $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
                $mapping = new PluginGlpiinventoryMapping();
                $mapfields = $mapping->get('NetworkEquipment', $data["field"]);
                if ($mapfields != false) {
