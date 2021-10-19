@@ -770,7 +770,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     */
    $config = new PluginGlpiinventoryConfig();
    $pfSetup = new PluginGlpiinventorySetup();
-   $users_id = $pfSetup->createFusionInventoryUser();
+   $users_id = $pfSetup->createGlpiInventoryUser();
    $a_input = [];
    $a_input['ssl_only'] = 0;
    $a_input['delete_task'] = 20;
@@ -815,7 +815,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
    $config->addValues($a_input, false);
 
    $pfSetup = new PluginGlpiinventorySetup();
-   $users_id = $pfSetup->createFusionInventoryUser();
+   $users_id = $pfSetup->createGlpiInventoryUser();
 
    $DB->update(
       'glpi_plugin_glpiinventory_configs', [
@@ -6676,7 +6676,7 @@ function do_rule_migration($migration) {
    */
    $config = new PluginGlpiinventoryConfig();
    $pfSetup = new PluginGlpiinventorySetup();
-   $users_id = $pfSetup->createFusionInventoryUser();
+   $users_id = $pfSetup->createGlpiInventoryUser();
    $a_input = [];
    $a_input['ssl_only'] = 0;
    $a_input['delete_task'] = 20;
@@ -6721,7 +6721,7 @@ function do_rule_migration($migration) {
    $config->addValues($a_input, false);
 
    $pfSetup = new PluginGlpiinventorySetup();
-   $users_id = $pfSetup->createFusionInventoryUser();
+   $users_id = $pfSetup->createGlpiInventoryUser();
    $DB->update(
       'glpi_plugin_glpiinventory_configs', [
          'value'  => $users_id

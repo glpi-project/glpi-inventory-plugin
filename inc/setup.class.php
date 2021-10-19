@@ -1221,7 +1221,7 @@ class PluginGlpiinventorySetup {
     *
     * @return integer id of the user "Plugin GLPI Inventory"
     */
-   function createFusionInventoryUser() {
+   function createGlpiInventoryUser() {
       $user = new User();
       $a_users = $user->find(['name' => 'Plugin_GLPI_Inventory']);
       if (count($a_users) == '0') {

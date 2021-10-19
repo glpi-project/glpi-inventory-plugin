@@ -77,7 +77,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
    function initConfigModule($getOnly = false) {
 
       $pfSetup  = new PluginGlpiinventorySetup();
-      $users_id = $pfSetup->createFusionInventoryUser();
+      $users_id = $pfSetup->createGlpiInventoryUser();
       $input    = [];
 
       $input['version']                = PLUGIN_GLPI_INVENTORY_VERSION;

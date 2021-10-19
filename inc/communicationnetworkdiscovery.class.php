@@ -292,7 +292,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery {
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
       PluginGlpiinventoryLogger::logIfExtradebugAndDebugMode(
-         'fusioninventorycommunication',
+         'glpiinventorycommunication',
          'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().'
       );
 
@@ -352,8 +352,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery {
    function importDevice($item) {
 
       PluginGlpiinventoryLogger::logIfExtradebugAndDebugMode(
-         'fusioninventorycommunication',
-         'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().'
+         'glpiinventorycommunication',
+         'Function ' . __METHOD__
       );
 
       $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
@@ -406,9 +406,11 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery {
          case 'Computer':
             // don't update this computer, if it is already handled by
             // its own agent
-            if (Dropdown::getDropdownName("glpi_autoupdatesystems",
-                                          $item->fields['autoupdatesystems_id'])
-                    == 'FusionInventory') {
+            $autoupdatesystems_name = Dropdown::getDropdownName(
+               "glpi_autoupdatesystems",
+               $item->fields['autoupdatesystems_id']
+            );
+            if ($autoupdatesystems_name == 'FusionInventory' || $autoupdatesystems_name == 'GlpiInventory') {
                return;
             }
 

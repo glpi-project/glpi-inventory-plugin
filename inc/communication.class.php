@@ -188,9 +188,16 @@ class PluginGlpiinventoryCommunication {
                                     $xmltag,
                                     $this->message['CONTENT']['MODULEVERSION']);
       } else if (isset($this->message['CONTENT']['VERSIONCLIENT'])) {
-         $version = str_replace("FusionInventory-Agent_",
-                                "",
-                                $this->message['CONTENT']['VERSIONCLIENT']);
+         $version = str_replace(
+            [
+               "FusionInventory-Agent_",
+               "GLPI-Agent_"
+            ], [
+               "",
+               ""
+            ],
+           $this->message['CONTENT']['VERSIONCLIENT']
+         );
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
@@ -199,9 +206,16 @@ class PluginGlpiinventoryCommunication {
                                     $xmltag,
                                     (string)$this->message->CONTENT->MODULEVERSION);
       } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_",
-                                "",
-                                (string)$this->message->CONTENT->VERSIONCLIENT);
+         $version = str_replace(
+            [
+               "FusionInventory-Agent_",
+               "GLPI-Agent_"
+            ], [
+               "",
+               ""
+            ],
+            (string)$this->message->CONTENT->VERSIONCLIENT
+         );
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 

@@ -59,7 +59,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
     */
    function __construct() {
       if (PluginGlpiinventoryConfig::isExtradebugActive()) {
-         $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
+         $this->logFile = GLPI_LOG_DIR.'/glpiinventorycommunication.log';
       }
    }
 
@@ -454,7 +454,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
       PluginGlpiinventoryLogger::logIfExtradebugAndDebugMode(
-         'fusioninventorycommunication',
+         'glpiinventorycommunication',
          'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().'
       );
 
