@@ -3037,6 +3037,7 @@ function do_configlogfield_migration($migration) {
                            $newTable);
    $migration->renameTable("glpi_plugin_fusinvsnmp_configlogfields",
                            $newTable);
+   renamePluginFields($migration, $newTable);
    if ($DB->tableExists($newTable)) {
       if ($DB->fieldExists($newTable, "field")) {
          $iterator = $DB->request(['FROM' => $newTable]);
@@ -3122,6 +3123,7 @@ function do_networkport_migration($migration) {
    $newTable = "glpi_plugin_glpiinventory_networkportconnectionlogs";
    $migration->renameTable("glpi_plugin_fusinvsnmp_networkportconnectionlogs",
                            $newTable);
+   renamePluginFields($migration, $newTable);
 
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
@@ -3205,6 +3207,8 @@ function do_networkport_migration($migration) {
    $newTable = "glpi_plugin_glpiinventory_networkporttypes";
    $migration->renameTable("glpi_plugin_fusinvsnmp_networkporttypes",
                               $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3254,8 +3258,11 @@ function do_networkport_migration($migration) {
    $newTable = "glpi_plugin_glpiinventory_networkports";
    $migration->renameTable("glpi_plugin_fusinvsnmp_networkports",
                            $newTable);
+
    $migration->renameTable("glpi_plugin_tracker_networking_ports",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3494,8 +3501,11 @@ function do_networkport_migration($migration) {
 
    $migration->renameTable("glpi_plugin_fusinvsnmp_networkportlogs",
                            $newTable);
+
    $migration->renameTable("glpi_plugin_tracker_snmp_history",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3777,6 +3787,8 @@ function do_printer_migration($migration) {
 
    $migration->renameTable("glpi_plugin_tracker_printers",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3877,6 +3889,8 @@ function do_printer_migration($migration) {
                            $newTable);
    $migration->renameTable("glpi_plugin_tracker_printers_history",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4012,6 +4026,8 @@ function do_printer_migration($migration) {
                            $newTable);
    $migration->renameTable("glpi_plugin_tracker_printers_cartridges",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` bigint(100) NOT NULL AUTO_INCREMENT,
@@ -4104,9 +4120,9 @@ function do_printer_migration($migration) {
    $DB->listFields($newTable, false);
 
    /*
-    * Clean for printer more informations again in DB when printer is purged
+    * Clean for printer more information again in DB when printer is purged
     */
-   //echo "Clean for printer more informations again in DB when printer is purged\n";
+   //echo "Clean for printer more information again in DB when printer is purged\n";
    $iterator = $DB->request([
       'SELECT'    => 'glpi_plugin_glpiinventory_printers.id',
       'FROM'      => 'glpi_plugin_glpiinventory_printers',
@@ -4326,6 +4342,8 @@ function do_networkequipment_migration($migration) {
                            $newTable);
    $migration->renameTable("glpi_plugin_tracker_networking",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4449,6 +4467,8 @@ function do_networkequipment_migration($migration) {
                               $newTable);
       $migration->renameTable("glpi_plugin_tracker_networking_ifaddr",
                               $newTable);
+      renamePluginFields($migration, $newTable);
+
       if (!$DB->tableExists($newTable)) {
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4694,6 +4714,8 @@ function do_configsecurity_migration($migration) {
                            $newTable);
    $migration->renameTable("glpi_plugin_tracker_snmp_connection",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4824,6 +4846,8 @@ function do_statediscovery_migration($migration) {
    $newTable = "glpi_plugin_glpiinventory_statediscoveries";
    $migration->renameTable("glpi_plugin_fusinvsnmp_statediscoveries",
                            $newTable);
+   renamePluginFields($migration, $newTable);
+
    if (!$DB->tableExists($newTable)) {
       $DB->query("CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -9730,6 +9754,7 @@ function migratePluginTables($migration, $a_table) {
 
    foreach ($a_table['oldname'] as $oldtable) {
       $migration->renameTable($oldtable, $a_table['name']);
+      renamePluginFields($migration, $a_table['name']);
    }
 
    if (!$DB->tableExists($a_table['name'])) {
@@ -10172,20 +10197,35 @@ function renamePlugin(Migration $migration) {
       $old_table = $table['TABLE_NAME'];
       $new_table = str_replace('fusioninventory', 'glpiinventory', $old_table);
       $migration->renameTable($old_table, $new_table);
-      $fields = $DB->listFields($new_table, false);
-      foreach ($fields as $field) {
-         $old_field = $field['Field'];
-         if (preg_match('/plugin_fusioninventory.*_id/', $old_field)) {
-            $new_field = str_replace('fusion', 'glpi', $old_field);
-            $migration->changeField(
-               $new_table,
-               $old_field,
-               $new_field,
-               'int'
-            );
-            $migration->dropKey($new_table, $old_field);
-            $migration->addKey($new_table, $new_field);
-         }
+      renamePluginFields($migration, $new_table);
+   }
+}
+
+function renamePluginFields(Migration $migration, string $table) {
+   global $DB;
+
+   if (!$DB->tableExists($table)) {
+      return;
+   }
+
+   $has_changes = false;
+   $fields = $DB->listFields($table, false);
+   foreach ($fields as $field) {
+      $old_field = $field['Field'];
+      if (preg_match('/plugin_fusioninventory.*_id/', $old_field)) {
+         $new_field = str_replace('fusion', 'glpi', $old_field);
+         $migration->changeField(
+            $table,
+            $old_field,
+            $new_field,
+            'int'
+         );
+         $migration->dropKey($table, $old_field);
+         $migration->addKey($table, $new_field);
+         $has_changes = true;
       }
+   }
+   if ($has_changes) {
+      $migration->migrationOneTable($table);
    }
 }

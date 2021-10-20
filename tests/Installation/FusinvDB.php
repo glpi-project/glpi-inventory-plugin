@@ -98,6 +98,7 @@ class FusinvDB extends Assert{
       $result = $DB->query($query);
       while ($data=$DB->fetchArray($result)) {
          if ((strstr($data[0], "tracker")
+                OR strstr($data[0], 'glpiinventory')
                 OR strstr($data[0], 'fusioninventory')
                 OR strstr($data[0], 'fusinvinventory')
                 OR strstr($data[0], 'fusinvsnmp')
