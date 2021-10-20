@@ -809,7 +809,7 @@ function plugin_glpiinventory_install() {
 
    if (basename(filter_input(INPUT_SERVER, "SCRIPT_NAME")) != "cli_install.php") {
       if (!isCommandLine()) {
-         Html::header(__('Setup'), filter_input(INPUT_SERVER, "PHP_SELF"), "config", "plugins");
+         Html::header(__('Setup', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "config", "plugins");
       }
       $migrationname = 'Migration';
    } else {
@@ -868,7 +868,7 @@ function plugin_glpiinventory_MassiveActions($type) {
       case "Computer":
          if (Session::haveRight('plugin_glpiinventory_lock', UPDATE)) {
             $ma["PluginGlpiinventoryLock".$sep."manage_locks"]
-               = _n('Lock', 'Locks', 2, 'glpiinventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
+               = _n('Lock', 'Locks', Session::getPluralNumber(), 'glpiinventory')." (".strtolower(_n('Field', 'Fields', Session::getPluralNumber())).")";
          }
          if (Session::haveRight('plugin_glpiinventory_task', UPDATE)) {
             $ma["PluginGlpiinventoryTask".$sep."target_task"]
@@ -884,7 +884,7 @@ function plugin_glpiinventory_MassiveActions($type) {
       case "Printer":
          if (Session::haveRight('plugin_glpiinventory_lock', UPDATE)) {
             $ma["PluginGlpiinventoryLock".$sep."manage_locks"]
-               = _n('Lock', 'Locks', 2, 'glpiinventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
+               = _n('Lock', 'Locks', Session::getPluralNumber(), 'glpiinventory')." (".strtolower(_n('Field', 'Fields', Session::getPluralNumber())).")";
          }
          if (Session::haveRight('plugin_glpiinventory_configsecurity', UPDATE)) {
             $ma["PluginGlpiinventoryConfigSecurity".$sep."assign_auth"]
