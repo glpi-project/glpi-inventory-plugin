@@ -182,7 +182,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
    ini_set("memory_limit", "-1");
 
    // load abstract classes before
-   require_once PLUGIN_GLPI_INVENTORY_DIR.'/inc/deploypackageitem.class.php';
+   /*require_once PLUGIN_GLPI_INVENTORY_DIR.'/inc/deploypackageitem.class.php';
    require_once PLUGIN_GLPI_INVENTORY_DIR.'/inc/commonview.class.php';
    require_once PLUGIN_GLPI_INVENTORY_DIR.'/inc/taskview.class.php';
    require_once PLUGIN_GLPI_INVENTORY_DIR.'/inc/taskjobview.class.php';
@@ -192,7 +192,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
 
    foreach (glob(PLUGIN_GLPI_INVENTORY_DIR.'/inc/*.php') as $file) {
       require_once($file);
-   }
+   }*/
 
    $migration = new $migrationname($current_version);
    $prepare_task = [];
