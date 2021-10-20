@@ -44,7 +44,8 @@ function pluginGlpiinventoryGetCurrentVersion() {
    require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/module.class.php");
 
    if ((!$DB->tableExists("glpi_plugin_tracker_config")) &&
-      (!$DB->tableExists("glpi_plugin_glpiinventory_config")) &&
+      (!$DB->tableExists("glpi_plugin_fusioninventory_config")) &&
+      (!$DB->tableExists("glpi_plugin_fusioninventory_configs")) &&
       (!$DB->tableExists("glpi_plugin_glpiinventory_configs"))) {
       return '0';
    } else if (($DB->tableExists("glpi_plugin_tracker_config")) ||
@@ -65,23 +66,23 @@ function pluginGlpiinventoryGetCurrentVersion() {
       }
 
       if ((!$DB->tableExists("glpi_plugin_tracker_agents")) &&
-         (!$DB->tableExists("glpi_plugin_glpiinventory_agents"))) {
+         (!$DB->tableExists("glpi_plugin_fusioninventory_agents"))) {
          return "1.1.0";
       }
       if ((!$DB->tableExists("glpi_plugin_tracker_config_discovery")) &&
-         (!$DB->tableExists("glpi_plugin_glpiinventory_config"))) {
+         (!$DB->tableExists("glpi_plugin_fusioninventory_config"))) {
          return "2.0.0";
       }
       if ((($DB->tableExists("glpi_plugin_tracker_agents")) &&
            (!$DB->fieldExists("glpi_plugin_tracker_config", "version"))) &&
-         (!$DB->tableExists("glpi_plugin_glpiinventory_config"))) {
+         (!$DB->tableExists("glpi_plugin_fusioninventory_config"))) {
          return "2.0.1";
       }
       if ((($DB->tableExists("glpi_plugin_tracker_agents")) &&
            ($DB->fieldExists("glpi_plugin_tracker_config", "version"))) ||
-         ($DB->tableExists("glpi_plugin_glpiinventory_config"))) {
+         ($DB->tableExists("glpi_plugin_fusioninventory_config"))) {
 
-         $querytable = 'glpi_plugin_glpiinventory_config';
+         $querytable = 'glpi_plugin_fusioninventory_config';
          if ($DB->tableExists("glpi_plugin_tracker_agents")) {
             $querytable = 'glpi_plugin_tracker_config';
          }
@@ -101,6 +102,67 @@ function pluginGlpiinventoryGetCurrentVersion() {
             return "2.0.2";
          } else {
             return $data['version'];
+         }
+      }
+   } else if ($DB->tableExists("glpi_plugin_fusioninventory_configs")) {
+      $iterator = $DB->request([
+         'SELECT' => ['value'],
+         'FROM'   => 'glpi_plugin_fusioninventory_configs',
+         'WHERE'  => ['type' => 'version'],
+         'LIMIT'  => 1
+      ]);
+
+      $data = [];
+      if (count($iterator)) {
+         $data = $iterator->current();
+         return $data['value'];
+      }
+      if ($DB->fieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')) {
+         $iterator = $DB->request([
+            'SELECT' => ['plugins_id'],
+            'FROM'   => 'glpi_plugin_fusioninventory_agentmodules',
+            'WHERE'  => ['modulename' => 'WAKEONLAN'],
+            'LIMIT'  => 1
+         ]);
+         if (count($iterator)) {
+            $ex_pluginid = $iterator->current();
+
+            $DB->update(
+               'glpi_plugin_fusioninventory_taskjobs', [
+                  'plugins_id'   => PluginGlpiinventoryModule::getModuleId('fusioninventory')
+               ], [
+                  'plugins_id'   => $ex_pluginid['plugins_id']
+               ]
+            );
+
+            $DB->update(
+               'glpi_plugin_fusioninventory_profiles', [
+                  'plugins_id'   => PluginGlpiinventoryModule::getModuleId('fusioninventory')
+               ], [
+                  'plugins_id'   => $ex_pluginid['plugins_id']
+               ]
+            );
+
+            $DB->update(
+               'glpi_plugin_fusioninventory_agentmodules', [
+                  'plugins_id'   => PluginGlpiinventoryModule::getModuleId('fusioninventory')
+               ], [
+                  'plugins_id'   => $ex_pluginid['plugins_id']
+               ]
+            );
+
+            $iterator = $DB->request([
+               'SELECT' => ['value'],
+               'FROM'   => 'glpi_plugin_fusioninventory_configs',
+               'WHERE'  => ['type' => 'version'],
+               'LIMIT'  => 1
+            ]);
+
+            $data = [];
+            if (count($iterator)) {
+               $data = $iterator->current();
+               return $data['value'];
+            }
          }
       }
    } else if ($DB->tableExists("glpi_plugin_glpiinventory_configs")) {
@@ -177,6 +239,8 @@ function pluginGlpiinventoryGetCurrentVersion() {
  */
 function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration') {
    global $DB;
+
+   $DB->disableTableCaching();
 
    ini_set("max_execution_time", "0");
    ini_set("memory_limit", "-1");
@@ -284,6 +348,8 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
       }
       unset($gzfiles);
    }
+
+   renamePlugin($migration);
 
    // conversion in very old version
    update213to220_ConvertField($migration);
@@ -10095,5 +10161,31 @@ function migrateTablesFromFusinvDeploy ($migration) {
    ];
    foreach ($old_deploy_views as $view) {
       $DB->query("DROP VIEW IF EXISTS $view");
+   }
+}
+
+function renamePlugin(Migration $migration) {
+   global $DB;
+
+   $tables = $DB->listTables('glpi_plugin_fusioninventory%');
+   foreach ($tables as $table) {
+      $old_table = $table['TABLE_NAME'];
+      $new_table = str_replace('fusioninventory', 'glpiinventory', $old_table);
+      $migration->renameTable($old_table, $new_table);
+      $fields = $DB->listFields($new_table, false);
+      foreach ($fields as $field) {
+         $old_field = $field['Field'];
+         if (preg_match('/plugin_fusioninventory.*_id/', $old_field)) {
+            $new_field = str_replace('fusion', 'glpi', $old_field);
+            $migration->changeField(
+               $new_table,
+               $old_field,
+               $new_field,
+               'int'
+            );
+            $migration->dropKey($new_table, $old_field);
+            $migration->addKey($new_table, $new_field);
+         }
+      }
    }
 }

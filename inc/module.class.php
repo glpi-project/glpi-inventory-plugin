@@ -68,7 +68,7 @@ class PluginGlpiinventoryModule extends CommonDBTM {
       if (!isset($_SESSION['glpi_plugins'])) {
          return $index;
       }
-      if ($p_name == 'glpiinventory') {
+      if ($p_name == 'fusioninventory' || $p_name == 'glpiinventory') {
          $index = array_search($p_name, $_SESSION['glpi_plugins']);
          if (!$index) {
             $plugin = new Plugin();
