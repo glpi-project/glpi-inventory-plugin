@@ -89,7 +89,6 @@ class PluginGlpiinventoryProfile extends Profile {
                      'credential'             => 'plugin_glpiinventory_credential',
                      'credentialip'           => 'plugin_glpiinventory_credentialip',
                      'existantrule'           => ['plugin_glpiinventory_ruleimport',
-                                                        'plugin_glpiinventory_ruleentity',
                                                         'plugin_glpiinventory_rulelocation'],
                      'importxml'              => 'plugin_glpiinventory_importxml',
                      'blacklist'              => 'plugin_glpiinventory_blacklist',
@@ -274,9 +273,9 @@ class PluginGlpiinventoryProfile extends Profile {
                 'label'     => __('Rules for import and link computers'),
                 'field'     => 'plugin_glpiinventory_ruleimport'
           ],
-          ['itemtype'  => 'PluginGlpiinventoryInventoryRuleEntity',
-                'label'     => __('Entity rules', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_ruleentity'
+          ['itemtype'  => RuleImportEntity::class,
+                'label'     => RuleImportEntity::getTypeName(Session::getPluralNumber()),
+                'field'     => 'inventory_ruleentity'
           ],
           ['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),

@@ -161,9 +161,6 @@ function plugin_init_glpiinventory() {
       $Plugin->registerClass('PluginGlpiinventoryInventoryRuleLocation');
       $Plugin->registerClass('PluginGlpiinventoryInventoryRuleLocationCollection',
               ['rulecollections_types'=>true]);
-      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleEntity');
-      $Plugin->registerClass('PluginGlpiinventoryInventoryRuleEntityCollection',
-              ['rulecollections_types'=>true]);
       $Plugin->registerClass('PluginGlpiinventoryRulematchedlog',
               ['addtabon' => ['Computer',
                               'Monitor',

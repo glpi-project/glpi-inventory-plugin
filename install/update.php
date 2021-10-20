@@ -6550,7 +6550,7 @@ function do_rule_migration($migration) {
 
    $DB->update(
       'glpi_rules', [
-         'sub_type'  => 'PluginGlpiinventoryInventoryRuleEntity'
+         'sub_type'  => 'RuleImportEntity'
       ], [
          'sub_type'  => 'PluginFusinvinventoryRuleEntity'
       ]

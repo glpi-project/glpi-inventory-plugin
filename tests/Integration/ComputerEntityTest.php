@@ -55,7 +55,7 @@ class ComputerEntityTest extends TestCase {
 
       // Delete all entity rules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleEntity"]);
+      $items = $rule->find(['sub_type' => RuleImportEntity::class]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -135,7 +135,7 @@ class ComputerEntityTest extends TestCase {
          $ruleAction = new RuleAction();
 
          $input = [];
-         $input['sub_type']   = 'PluginGlpiinventoryInventoryRuleEntity';
+         $input['sub_type']   = RuleImportEntity::class;
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;

@@ -108,7 +108,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
           'timeslot'                   => 'PluginGlpiinventoryTimeslot',
           'unmanaged'                  => 'PluginGlpiinventoryUnmanaged',
           'inventoryruleimport'        => 'PluginGlpiinventoryInventoryRuleImport',
-          'inventoryruleentity'        => 'PluginGlpiinventoryInventoryRuleEntity',
+          'inventoryruleentity'        => 'RuleImportEntity',
           'inventoryrulelocation'      => 'PluginGlpiinventoryInventoryRuleLocation',
           'collectrule'                => 'PluginGlpiinventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginGlpiinventoryInventoryComputerBlacklist',
@@ -271,10 +271,10 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
                  );
       }
 
-      if (Session::haveRight('plugin_glpiinventory_ruleentity', READ)) {
-         $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
-         $rules_menu[3]['pic']  = $fi_path."/pics/menu_rules.png";
-         $rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
+      if (Session::haveRight('inventory', READ)) {
+         $rules_menu[3]['name'] = RuleImportEntity::getTypeName(1);
+         $rules_menu[3]['pic']  = RuleImportEntity::getIcon();
+         $rules_menu[3]['link'] = RuleImportEntity::getSearchURL();
       }
 
       if (Session::haveRight('plugin_glpiinventory_rulelocation', READ)) {
@@ -469,7 +469,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
           ],
           [
               'text' => __('Define rules for entity', 'glpiinventory'),
-              'url'  => $fi_path."/front/inventoryruleentity.php"
+              'url'  => RuleImportEntity::getSearchURL()
           ],
           [
               'text' => __('Define rules for location', 'glpiinventory'),

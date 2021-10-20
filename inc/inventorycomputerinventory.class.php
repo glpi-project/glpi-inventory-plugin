@@ -280,7 +280,7 @@ class PluginGlpiinventoryInventoryComputerInventory {
       if (isset($inputent['serial'])) {
          $inputent['serialnumber'] = $inputent['serial'];
       }
-      $ruleEntity = new PluginGlpiinventoryInventoryRuleEntityCollection();
+      $ruleEntity = new RuleImportEntityCollection();
 
       // * Reload rules (required for unit tests)
       $ruleEntity->getCollectionPart();

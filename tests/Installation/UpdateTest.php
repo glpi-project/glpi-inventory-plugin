@@ -254,8 +254,13 @@ class UpdateTest extends TestCase {
 
       $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
 
+      $cnt_old = countElementsInTable("glpi_rules",
+         ['sub_type' => 'PluginGlpiinventoryRuleEntity']);
+
+      $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
+
       $cnt_new = countElementsInTable("glpi_rules",
-         ['sub_type' => 'PluginGlpiinventoryInventoryRuleEntity']);
+         ['sub_type' => RuleImportEntity::class]);
 
       $this->assertEquals($nbrules, $cnt_new, "May have ".$nbrules." entity rules");
 
