@@ -168,55 +168,6 @@ function pluginGlpiinventoryGetCurrentVersion() {
    return "1.1.0";
 }
 
-
-/**
- * Find files recursively filtered with pattern
- * (grabbed from http://rosettacode.org/wiki/Walk_a_directory/Recursively#PHP)
- *
- * @param string $dir
- * @param string $pattern
- * @return array
- */
-function pluginGlpiinventoryFindFiles($dir = '.', $pattern = '/./') {
-   $files = [];
-   $prefix = $dir . '/';
-   $dir = dir($dir);
-   while (false !== ($file = $dir->read())) {
-      if ($file === '.' || $file === '..') {
-         continue;
-      }
-      $file = $prefix . $file;
-      if (is_dir($file)) {
-         $files[] = pluginGlpiinventoryFindFiles($file, $pattern);
-         continue;
-      }
-      if (preg_match($pattern, $file)) {
-          $files[] = $file;
-      }
-   }
-   return pluginGlpiinventoryFlatArray($files);
-}
-
-
-/**
- * Flat a multi-dimensional array
- *
- * @param array $array
- * @return array
- */
-function pluginGlpiinventoryFlatArray($array) {
-   $tmp = [];
-   foreach ($array as $a) {
-      if (is_array($a)) {
-         $tmp = array_merge($tmp, pluginGlpiinventoryFlatArray($a));
-      } else {
-         $tmp[] = $a;
-      }
-   }
-   return $tmp;
-}
-
-
 /**
  * The main function to update the plugin
  *
@@ -319,18 +270,20 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
    }
 
    // ********* Rename fileparts without .gz extension (cf #1999) *********** //
-
    if (is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files')) {
-      $gzfiles = pluginGlpiinventoryFindFiles(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files', '/\.gz$/');
-      foreach ($gzfiles as $file) {
-         $fileWithoutExt =
-            pathinfo($file, PATHINFO_DIRNAME) .
-            '/' . pathinfo($file, PATHINFO_FILENAME);
+      $gzfiles = new \RegexIterator(
+         new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files')
+         ),
+         '/\.gz$/'
+      );
 
-         rename($file, $fileWithoutExt);
+      foreach ($gzfiles as $gzfile) {
+         $name = $gzfile->getFileName();
+         rename($name, str_replace('.' .$gzfile->getExtension(), '', $name));
       }
+      unset($gzfiles);
    }
-   unset($gzfiles);
 
    // conversion in very old version
    update213to220_ConvertField($migration);

@@ -8,10 +8,6 @@ This plugin makes GLPI to process various types of tasks for GLPI agents:
 * VMWare ESX host remote inventory
 * Collect data (files, Windows registry, WMI)
 
-## Third-party code
-
-* PluginGlpiinventoryFindFiles() is copyright [rosettacode.org](http://rosettacode.org/wiki/Walk_a_directory/Recursively#PHP) and made available under GNU Free Documentation License.
-
 ## Third-party icons and images
 
 Some icons used in the project comes from the following set of graphics licensed:
