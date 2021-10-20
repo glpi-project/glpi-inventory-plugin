@@ -34,6 +34,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage the deploy mirror depend on location of computer.
  */
@@ -195,61 +197,11 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM {
     * @return true
     */
    function showForm($id, array $options = []) {
-      global $CFG_GLPI;
-
       $this->initForm($id, $options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Name')."</td>";
-      echo "<td align='center'>";
-      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
-      echo "</td>";
-
-      echo "<td rowspan='3' class='middle right'>".__('Comments')."&nbsp;: </td>";
-      echo "<td class='center middle' rowspan='2'><textarea cols='45'
-      rows='4' name='comment' >".$this->fields["comment"]."</textarea></td></tr>";
-
-      echo "<tr class='tab_bg_1'><td>".__('Active')."</td><td align='center'>";
-      Dropdown::showYesNo("is_active", $this->fields["is_active"]);
-      echo "</td></tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror server address', 'glpiinventory')."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo Html::input('url', ['size' => 40, 'value' => $this->fields['url']]);
-      echo "</td></tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror location', 'glpiinventory')." (".__('Location').")"."&nbsp;:</td>";
-      echo "<td align='center'>";
-
-      //If
-      if ($this->can($id, UPDATE)) {
-         echo "<script type='text/javascript'>\n";
-         echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
-         echo "</script>";
-         $params = ['is_recursive' => '__VALUE__',
-                    'id'           => $id
-                   ];
-         Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
-                 Plugin::getWebDir('glpiinventory')."/ajax/dropdownlocation.php", $params);
-
-         echo "<div id='displaydropdownlocation'>";
-         // Location option
-         Location::dropdown([ 'value'       => $this->fields["locations_id"],
-                              'entity'      => $this->fields["entities_id"],
-                              'entity_sons' => $this->isRecursive(),
-                              'emptylabel'  => __('None')
-                            ]);
-         echo "</div>";
-
-      } else {
-         echo Dropdown::getDropdownName('glpi_locations', $this->fields['locations_id']);
-      }
-      echo "</td></tr>";
-
-      $this->showFormButtons($options);
+      TemplateRenderer::getInstance()->display('@glpiinventory/forms/deploymirror.html.twig', [
+         'item'   => $this,
+         'params' => $options,
+      ]);
 
       return true;
    }

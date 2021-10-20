@@ -337,12 +337,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo Html::input('name', ['size' => 40, 'value' => $this->fields['value']]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
       echo "<td rowspan='2' align='center'>";
-      echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<textarea cols='40' class='form-control' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
 

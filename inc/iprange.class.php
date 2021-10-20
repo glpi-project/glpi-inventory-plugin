@@ -34,6 +34,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage the IP ranges for network discovery and network inventory.
  */
@@ -207,96 +209,11 @@ class PluginGlpiinventoryIPRange extends CommonDBTM {
     * @return true
     */
    function showForm($id, array $options = []) {
-
       $this->initForm($id, $options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
-      echo "<td align='center' colspan='2'>";
-      echo Html::input('name', ['value' => $this->fields['name']]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('Start of IP range', 'glpiinventory') . "</td>";
-      echo "<td align='center' colspan='2'>";
-      if (empty($this->fields["ip_start"])) {
-         $this->fields["ip_start"] = "...";
-      }
-      $ipexploded = explode(".", $this->fields["ip_start"]);
-      $i = 0;
-      foreach ($ipexploded as $ipnum) {
-         if ($ipnum > 255) {
-            $ipexploded[$i] = '';
-         }
-         $i++;
-      }
-      echo "<input type='text' value='".$ipexploded[0].
-              "' name='ip_start0' id='ip_start0' size='3' maxlength='3' >.";
-      echo "<input type='text' value='".$ipexploded[1].
-              "' name='ip_start1' id='ip_start1' size='3' maxlength='3' >.";
-      echo "<input type='text' value='".$ipexploded[2].
-              "' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
-      echo "<input type='text' value='".$ipexploded[3].
-              "' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('End of IP range', 'glpiinventory') . "</td>";
-      echo "<td align='center' colspan='2'>";
-      unset($ipexploded);
-      if (empty($this->fields["ip_end"])) {
-         $this->fields["ip_end"] = "...";
-      }
-      $ipexploded = explode(".", $this->fields["ip_end"]);
-      $j = 0;
-      foreach ($ipexploded as $ipnum) {
-         if ($ipnum > 255) {
-            $ipexploded[$j] = '';
-         }
-         $j++;
-      }
-
-      echo "<script type='text/javascript'>
-      function test(id) {
-         if (document.getElementById('ip_end' + id).value == '') {
-            if (id == 3) {
-               document.getElementById('ip_end' + id).value = '254';
-            } else {
-               document.getElementById('ip_end' + id).value = ".
-                  "document.getElementById('ip_start' + id).value;
-            }
-         }
-      }
-      </script>";
-
-      echo "<input type='text' value='".$ipexploded[0].
-              "' name='ip_end0' id='ip_end0' size='3' maxlength='3' onfocus='test(0)'>.";
-      echo "<input type='text' value='".$ipexploded[1].
-              "' name='ip_end1' id='ip_end1' size='3' maxlength='3' onfocus='test(1)'>.";
-      echo "<input type='text' value='".$ipexploded[2].
-              "' name='ip_end2' id='ip_end2' size='3' maxlength='3' onfocus='test(2)'>.";
-      echo "<input type='text' value='".$ipexploded[3].
-              "' name='ip_end3' id='ip_end3' size='3' maxlength='3' onfocus='test(3)'>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      if (Session::isMultiEntitiesMode()) {
-         echo "<td align='center' colspan='2'>".Entity::getTypeName(1)."</td>";
-         echo "<td align='center' colspan='2'>";
-         Dropdown::show('Entity',
-                        ['name'=>'entities_id',
-                              'value'=>$this->fields["entities_id"]]);
-         echo "</td>";
-      } else {
-         echo "<td colspan='2'></td>";
-      }
-      echo "</tr>";
-
-      $this->showFormButtons($options);
+      TemplateRenderer::getInstance()->display('@glpiinventory/forms/iprange.html.twig', [
+         'item'   => $this,
+         'params' => $options,
+      ]);
 
       return true;
    }

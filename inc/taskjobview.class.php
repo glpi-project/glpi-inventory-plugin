@@ -454,7 +454,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView {
                  data-itemtype='$itemtype'
                  data-itemtype_name='$itemtype_name'
                  data-dropdown_rand_id='$dropdown_rand_id'>
-               <input type='button' class=submit
+               <input type='button' class='btn btn-secondary' role='button'
                       value='".__('Add')." $title' />
             </div>";
    }
@@ -661,18 +661,18 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView {
       if ($new_item) {
          echo "<tr>";
          echo "<td colspan='4' valign='top' align='center'>";
-         echo Html::submit(__('Add'), ['name' => 'add']);
+         echo Html::submit(__('Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
          echo "</td>";
          echo '</tr>';
       } else {
          echo "<tr>";
          echo "<td class='center'>";
-         echo Html::submit(__('Update'), ['name' => 'update']);
+         echo Html::submit(__('Update'), ['name' => 'update', 'class' => 'btn btn-primary']);
          echo "</td>";
 
          echo "<td class='center' colspan='2'>
                   <div id='cancel_job_changes_button' style='display:none'>
-                     <input type='button' class='submit'
+                     <input type='button' class='btn btn-secondary'
                             onclick='taskjobs.edit(\"".$this->getBaseUrlFor('fi.job.edit')."\", $id)'
                             value='".__('Cancel modifications', 'glpiinventory')."'/>
                   </div>
@@ -682,7 +682,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView {
          echo "<input type='submit'
                       name='delete'
                       value=\"".__('Purge', 'glpiinventory')."\"
-                      class='submit' ".
+                      class='btn btn-danger' ".
                       Html::addConfirmationOnAction(__('Confirm the final deletion ?',
                                                        'glpiinventory')).">";
          echo "</td>";

@@ -34,6 +34,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage user interactions templates.
  * @since 9.2
@@ -152,19 +154,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
 
 
    /**
-    * Display a dropdown with the list of alert types
-    *
-    * @since 9.2
-    * @param type the type of alert (if one already selected)
-    * @return rand
-    */
-   function dropdownTypes($type = self::ALERT_WTS) {
-      return Dropdown::showFromArray('platform', self::getTypes(),
-                                     ['value' => $type]);
-   }
-
-
-   /**
     * Get available buttons for alerts, by interaction type
     *
     * @since 9.2
@@ -194,20 +183,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
 
 
    /**
-    * Display a dropdown with the list of buttons available
-    *
-    * @since 9.2
-    * @param type the type of button (if one already selected)
-    * @return rand
-    */
-   public function dropdownButtons($button = self::WTS_BUTTON_OK_SYNC) {
-      return Dropdown::showFromArray('buttons',
-                                     self::getButtons(self::ALERT_WTS),
-                                     ['value' => $button]);
-   }
-
-
-   /**
     * Get available icons for alerts, by interaction type
     *
     * @since 9.2
@@ -229,20 +204,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
       } else {
          return false;
       }
-   }
-
-
-   /**
-    * Display a dropdown with the list of buttons available
-    *
-    * @since 9.2
-    * @param type the type of button (if one already selected)
-    * @return rand
-    */
-   function dropdownIcons($icon = self::WTS_ICON_NONE) {
-      return Dropdown::showFromArray('icon',
-                                     self::getIcons(),
-                                     ['value' => $icon]);
    }
 
 
@@ -376,94 +337,31 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @param $id id of a template to edit
    * @param options POST form options
    */
-   function showForm($ID, $options = []) {
-      $this->initForm($ID);
-      $this->showFormHeader();
+   function showForm($id, $options = []) {
+      $this->initForm($id, $options);
 
       $json_data = json_decode($this->fields['json'], true);
       $json_data = $this->initializeJsonFields($json_data);
 
-      echo "<tr class='tab_bg_1'>";
-
-      foreach ($this->getBehaviorsFields() as $field) {
-         echo Html::hidden($field, ['value' => $json_data[$field]]);
-      }
-
-      $rand    = mt_rand();
-      $tplmark = $this->getAutofillMark('name', $options);
-
-      //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
-      echo "<td><label for='textfield_name$rand'>".sprintf(__('%1$s%2$s'), __('Name'), $tplmark) .
-           "</label></td>";
-      echo "<td>";
-      $objectName = autoName($this->fields["name"], "name",
-                             (isset($options['withtemplate']) && ( $options['withtemplate']== 2)),
-                             $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, 'name', [ 'value'     => $objectName,
-                                                     'rand'      => $rand
-                                                   ]);
-      echo "</td>";
-
-      echo "<td>".__('Interaction format', 'glpiinventory')."</td>";
-      echo "<td>";
-      $this->dropdownTypes($json_data['platform']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-
-      echo "<td>".__('Interaction type', 'glpiinventory')."</td>";
-      echo "<td>";
-      $this->dropdownButtons($json_data['buttons']);
-      echo "</td>";
-
-      echo "<td>".__('Alert icon', 'glpiinventory')."</td>";
-      echo "<td>";
-      $this->dropdownIcons($json_data['icon']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Retry job after', 'glpiinventory')."</td>";
-      echo "<td>";
-      $this->dropdownRetry($json_data['retry_after']);
-      echo "</td>";
-
-      echo "<td>".__('Maximum number of retry allowed', 'glpiinventory')."</td>";
-      echo "<td>";
-      Dropdown::showNumber('nb_max_retry',
-                           ['value' => $json_data['nb_max_retry'],
-                            'min'   => 1,
-                            'max'   => 20,
-                            'step'  => 1
-                           ]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alert display timeout', 'glpiinventory')."</td>";
-      echo "<td>";
-      $this->dropdownTimeout($json_data['timeout']);
-      echo "</td>";
-      echo "<td colspan='2'></td>";
-      echo "</tr>";
-
-      $this->showFormButtons();
+      TemplateRenderer::getInstance()->display('@glpiinventory/forms/deployuserinteractiontemplate.html.twig', [
+         'item'      => $this,
+         'params'    => $options,
+         'json_data' => $json_data,
+      ]);
 
       return true;
-
    }
 
 
    /**
-    * Dropdown for frequency (interval between 2 actions)
+    * Array of Retries values
     *
-    * @param $name   select name
-    * @param $value  default value (default 0)
-   **/
-   function dropdownRetry($value = 0) {
-
-      $tab[0] = __('Never');
+    *  @return array
+    **/
+    static function getRetries() {
+      $tab = [
+         0 => __('Never')
+      ];
 
       $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
       $tab[2*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
@@ -489,19 +387,18 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
       $tab[WEEK_TIMESTAMP]  = __('Each week');
       $tab[MONTH_TIMESTAMP] = __('Each month');
 
-      Dropdown::showFromArray('retry_after', $tab, ['value' => $value]);
+      return $tab;
    }
 
-
    /**
-    * Dropdown for frequency (interval between 2 actions)
+    * Array of frequency (interval between 2 actions)
     *
-    * @param $name   select name
-    * @param $value  default value (default 0)
-   **/
-   function dropdownTimeout($value = 0) {
-
-      $tab[0] = __('Never');
+    *  @return array
+    **/
+   static function getTimeouts() {
+      $tab = [
+         0 => __('Never')
+      ];
 
       // Minutes
       for ($i=30; $i<60; $i+=5) {
@@ -523,7 +420,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
          $tab[$i*HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
       }
 
-      Dropdown::showFromArray('timeout', $tab, ['value' => $value]);
+      return $tab;
    }
 
 

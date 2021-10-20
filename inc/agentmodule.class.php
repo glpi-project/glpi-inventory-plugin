@@ -154,15 +154,15 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
                                                                "used" => $a_used]);
             echo "</td>";
             echo "<td align='center'>";
-            echo "<input type='submit' class='submit' name='agent_add' value='" .
+            echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='" .
                __s('Add') . " >>'>";
             echo "<br><br>";
-            echo "<input type='submit' class='submit' name='agent_delete' value='<< " .
+            echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< " .
                __s('Delete') . "'>";
             echo "</td>";
             echo "<td width='45%'>";
 
-            echo "<select size='6' name='agent_to_delete[]'>";
+            echo "<select class='form-select' size='6' name='agent_to_delete[]'>";
          foreach ($a_agentList as $agent_id) {
             $pfAgent->getFromDB($agent_id);
             echo "<option value='".$agent_id."'>".$pfAgent->getName()."</option>";
@@ -175,7 +175,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
 
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='3'>";
-         echo "<input type='submit' name='update' value=\"".__s('Update')."\" class='submit'>";
+         echo "<input type='submit' name='update' value=\"".__s('Update')."\" class='btn btn-primary'>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";

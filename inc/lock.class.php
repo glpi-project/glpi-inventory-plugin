@@ -294,7 +294,7 @@ class PluginGlpiinventoryLock extends CommonDBTM{
       if ($can == '1') {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo "<input class='submit' type='submit' name='unlock_field_glpiinventory'
+         echo "<input class='btn btn-primary' type='submit' name='unlock_field_glpiinventory'
                          value='" . __('Update') . "'>";
          echo "</td>";
          echo "</tr>";
@@ -396,7 +396,7 @@ class PluginGlpiinventoryLock extends CommonDBTM{
       if ($can == '1' && $show_button) {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo Html::submit(__('Update'), ['name' => 'unlock_field_glpiinventory']);
+         echo Html::submit(__('Update'), ['name' => 'unlock_field_glpiinventory', 'class' => 'btn btn-primary']);
          echo "</td>";
          echo "</tr>";
       }

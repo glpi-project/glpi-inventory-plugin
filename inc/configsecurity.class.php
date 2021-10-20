@@ -34,6 +34,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage SNMP credentials: v1, v2c and v3 support.
  */
@@ -62,6 +64,7 @@ class PluginGlpiinventoryConfigSecurity extends CommonDBTM {
     */
    function defineTabs($options = []) {
       $ong = [];
+      $this->addDefaultFormTab($ong);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
@@ -76,77 +79,12 @@ class PluginGlpiinventoryConfigSecurity extends CommonDBTM {
     */
    function showForm($id, array $options = []) {
       Session::checkRight('plugin_glpiinventory_configsecurity', READ);
+
       $this->initForm($id, $options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
-      echo "<td align='center' colspan='2'>";
-      echo Html::input('name');
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('SNMP version', 'glpiinventory') . "</td>";
-      echo "<td align='center' colspan='2'>";
-         $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>v 1 & v 2c</th>";
-      echo "<th colspan='2'>v 3</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Community', 'glpiinventory') . "</td>";
-      echo "<td align='center'>";
-      echo Html::input('community', ['value' => $this->fields['community']]);
-      echo "</td>";
-
-      echo "<td align='center'>" . __('User') . "</td>";
-      echo "<td align='center'>";
-      echo Html::input('username', ['value' => $this->fields['username']]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>".__('Encryption protocol for authentication ', 'glpiinventory').
-              "</td>";
-      echo "<td align='center'>";
-         $this->showDropdownSNMPAuth($this->fields["authentication"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Password') . "</td>";
-      echo "<td align='center'>";
-      echo Html::input('auth_passphrase', ['value' => $this->fields['auth_passphrase']]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Encryption protocol for data', 'glpiinventory') . "</td>";
-      echo "<td align='center'>";
-         $this->showDropdownSNMPEncryption($this->fields["encryption"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Password') . "</td>";
-      echo "<td align='center'>";
-      echo Html::input('priv_passphrase', ['value' => $this->fields['priv_passphrase']]);
-      echo "</td>";
-      echo "</tr>";
-
-      $this->showFormButtons($options);
-
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+      TemplateRenderer::getInstance()->display('@glpiinventory/forms/configsecurity.html.twig', [
+         'item'   => $this,
+         'params' => $options,
+      ]);
 
       return true;
    }

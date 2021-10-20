@@ -34,6 +34,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage agents
  */
@@ -378,13 +380,11 @@ class PluginGlpiinventoryAgent extends CommonDBTM {
     * @return boolean
     */
    function showForm($agents_id, array $options = []) {
-      global $CFG_GLPI;
-
+      $pfConfig = new PluginGlpiinventoryConfig();
       if ($agents_id!='') {
          $this->getFromDB($agents_id);
       } else {
          $this->getEmpty();
-         $pfConfig = new PluginGlpiinventoryConfig();
          unset($this->fields['id']);
          $this->fields['threads_networkdiscovery'] =
                  $pfConfig->getValue('threads_networkdiscovery');
@@ -396,140 +396,16 @@ class PluginGlpiinventoryAgent extends CommonDBTM {
                  $pfConfig->getValue('timeout_networkinventory');
          $this->fields['senddico'] = 0;
       }
+
       $this->initForm($agents_id, $options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Name')." :</td>";
-      echo "<td align='center'>";
-      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
-      echo "</td>";
-      echo "<td>".__('Device_id', 'glpiinventory')."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["device_id"];
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Computer link', 'glpiinventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      if (!empty($this->fields["computers_id"])) {
-         $oComputer = new Computer();
-         $oComputer->getFromDB($this->fields["computers_id"]);
-         echo $oComputer->getLink(1);
-         echo Html::hidden('computers_id',
-                           ['value' => $this->fields["computers_id"]]);
-         echo "&nbsp;<a class='pointer' onclick='submitGetLink(\"".
-               Plugin::getWebDir('glpiinventory')."/front/agent.form.php\", ".
-               "{\"disconnect\": \"disconnect\",
-                 \"computers_id\": ".$this->fields['computers_id'].",
-                 \"id\": ".$this->fields['id'].",
-                 \"_glpi_csrf_token\": \"".Session::getNewCSRFToken()."\"});'>".
-               "<img src='".$CFG_GLPI['root_doc']."/pics/delete.png' /></a>";
-      } else {
-         Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
-                                        $this->fields['entities_id']);
-      }
-      echo "</td>";
-      echo "<td>".__('Token')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["token"];
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('locked', 'glpiinventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      Dropdown::showYesNo('lock', $this->fields["lock"]);
-      echo "</td>";
-      echo "<td>"._n('Version', 'Versions', 1)."&nbsp:</td>";
-      echo "<td align='center'>";
-      $a_versions = importArrayFromDB($this->fields["version"]);
-      foreach ($a_versions as $module => $version) {
-         echo "<strong>".$module. "</strong>: ".$version."<br/>";
-      }
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number', 'glpiinventory')."&nbsp;".
-              "(".strtolower(__('Network discovery', 'glpiinventory')).")&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showNumber("threads_networkdiscovery", [
-             'value' => $this->fields["threads_networkdiscovery"],
-             'toadd' => [ __('General setup') ],
-             'min' => 1,
-             'max' => 400]
-         );
-
-      echo "</td>";
-      echo "<td>".__('Useragent', 'glpiinventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["useragent"];
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('SNMP timeout', 'glpiinventory')."&nbsp;".
-              "(".strtolower(__('Network discovery', 'glpiinventory')).")&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showNumber("timeout_networkdiscovery", [
-             'value' => $this->fields["timeout_networkdiscovery"],
-             'toadd' => [ __('General setup') ],
-             'min' => 1,
-             'max' => 60]
-         );
-      echo "</td>";
-      echo "<td>".__('Last contact', 'glpiinventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo Html::convDateTime($this->fields["last_contact"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number', 'glpiinventory')."&nbsp;".
-              "(".strtolower(__('Network inventory (SNMP)', 'glpiinventory')).")&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showNumber("threads_networkinventory", [
-             'value' => $this->fields["threads_networkinventory"],
-             'toadd' => [ __('General setup') ],
-             'min' => 1,
-             'max' => 400]
-      );
-      echo "</td>";
-      echo "<td>".__('Inventory tag', 'glpiinventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["tag"];
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<td>".__('SNMP timeout', 'glpiinventory')."&nbsp;".
-              "(".strtolower(__('Network inventory (SNMP)', 'glpiinventory')).")&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showNumber("timeout_networkinventory", [
-             'value' => $this->fields["timeout_networkinventory"],
-             'toadd' => [ __('General setup') ],
-             'min' => 1,
-             'max' => 60]
-      );
-      echo "</td>";
-      echo "<td colspan='2'>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      $pfConfig = new PluginGlpiinventoryConfig();
-      echo "<td>".__('Agent port', 'glpiinventory')." (".
-              __('if empty use port configured in general options', 'glpiinventory')
-              ." <i>".$pfConfig->getValue('agent_port')."</i>)&nbsp:</td>";
-      echo "<td align='center'>";
-      echo "<input type='text' name='agent_port' value='".$this->fields['agent_port']."'/>";
-      echo "</td>";
-      echo "<td colspan='2'>";
-      echo "</td>";
-      echo "</tr>";
-
-      $this->showFormButtons($options);
+      $f_version = $this->fields['version'];
+      unset($this->fields['version']);
+      TemplateRenderer::getInstance()->display('@glpiinventory/forms/agent.html.twig', [
+         'item'      => $this,
+         'params'    => $options,
+         'pfConfig'  => $pfConfig,
+         'f_version' => $f_version,
+      ]);
 
       return true;
    }

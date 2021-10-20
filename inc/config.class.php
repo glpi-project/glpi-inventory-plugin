@@ -357,7 +357,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
 
       echo "<td>".__('Agent port', 'glpiinventory')."</td>";
       echo "<td>";
-      echo "<input type='text' name='agent_port' value='".$this->getValue('agent_port')."'/>";
+      echo "<input type='text' class='form-control' name='agent_port' value='".$this->getValue('agent_port')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -444,11 +444,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Computer')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_computer' value='".$this->getValue('auto_inventory_number_computer')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_computer' value='".$this->getValue('auto_inventory_number_computer')."'/>";
       echo "</td>";
       echo "<td>".__('Monitor')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_monitor' value='".$this->getValue('auto_inventory_number_monitor')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_monitor' value='".$this->getValue('auto_inventory_number_monitor')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -459,18 +459,18 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Peripheral')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_peripheral' value='".$this->getValue('auto_inventory_number_peripheral')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_peripheral' value='".$this->getValue('auto_inventory_number_peripheral')."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Phone')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_phone' value='".$this->getValue('auto_inventory_number_phone')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_phone' value='".$this->getValue('auto_inventory_number_phone')."'/>";
       echo "</td>";
       echo "<td>".__('Printer')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_printer' value='".$this->getValue('auto_inventory_number_printer')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_printer' value='".$this->getValue('auto_inventory_number_printer')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -869,7 +869,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Root folder for sending files from server', 'glpiinventory')."</td>";
       echo "<td>";
-      echo "<input type='text' name='server_upload_path' value='".
+      echo "<input type='text' class='form-control' name='server_upload_path' value='".
          $pfConfig->getValue('server_upload_path')."' size='60' />";
       echo "</td>";
       echo "</tr>";

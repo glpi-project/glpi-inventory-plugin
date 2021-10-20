@@ -122,9 +122,11 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
     * @param string $varname
     */
    public function showTextField($title, $varname) {
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6'>";
       echo Html::input($varname, ['value' => $this->fields[$varname]]);
+      echo "</div>";
       echo "</div>";
    }
 
@@ -137,9 +139,11 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
     * @param array $options
     */
    public function showIntegerField($title, $varname, $options = []) {
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6'>";
       Dropdown::showNumber($varname, $options);
+      echo "</div>";
       echo "</div>";
    }
 
@@ -152,13 +156,15 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
     * @param array $options
     */
    public function showCheckboxField($title, $varname, $options = []) {
-      echo "<label>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='col-sm-6'>";
       $options['name'] = $varname;
       $options['checked'] = $this->fields[$varname];
       $options['zero_on_empty']= true;
 
-      echo "<div class='input_wrap'>";
       Html::showCheckbox($options);
+      echo "</div>";
       echo "</div>";
    }
 
@@ -172,8 +178,9 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
     * @return string the rand number can be used with ajax to update something
     */
    public function showDropdownForItemtype($title, $itemtype, $options = []) {
-      echo "<label>" . $title."&nbsp;:" . "</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='col-sm-6'>";
       $dropdown_options = array_merge(
          [
             'width'=>'90%',
@@ -182,6 +189,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
          $options
       );
       $rand = Dropdown::show($itemtype, $dropdown_options);
+      echo "</div>";
       echo "</div>";
       return $rand;
    }
@@ -197,8 +205,9 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
     * @return string the rand number can be used with ajax to update something
     */
    public function showDropdownFromArray($title, $varname, $values = [], $options = []) {
-      echo "<label>" . $title."&nbsp;:" . "</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='col-sm-6'>";
       if (!isset($options['width'])) {
          $options['width'] = '100%';
       }
@@ -210,6 +219,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
          $varname, $values,
          $options
       );
+      echo "</div>";
       echo "</div>";
       return $rand;
    }
@@ -238,12 +248,14 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
       }
       $options['value'] = $value;
 
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap datetime'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6 datetime'>";
       Html::showDateTimeField(
          $varname,
          $options
       );
+      echo "</div>";
       echo "</div>";
    }
 
@@ -255,12 +267,14 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
     * @param string $varname
     */
    public function showTextArea($title, $varname) {
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6'>";
       echo
-         "<textarea class='autogrow' name='".$varname."' >".
+         "<textarea class='autogrow form-control' name='".$varname."' >".
          $this->fields[$varname].
          "</textarea>";
+      echo "</div>";
       echo "</div>";
    }
 

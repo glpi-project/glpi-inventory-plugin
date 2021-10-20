@@ -1,0 +1,67 @@
+{% extends "generic_show_form.html.twig" %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+{% set params  = params ?? [] %}
+
+{% block more_fields %}
+   {{ fields.dropdownArrayField(
+      'snmpversion',
+      item.fields['snmpversion'],
+      {0: '-----', '1': '1', '2c': '2c', '3': '3'},
+      __('SNMP version', 'glpiinventory'),
+   ) }}
+
+   {{ fields.htmlField(
+      '',
+      '<h3 class="card-header">v 1 & v 2c</h3>',
+   ) }}
+   {{ fields.htmlField(
+      '',
+      '<h3 class="card-header">v 3</h3>',
+   ) }}
+
+   {{ fields.textField(
+      'community',
+      item.fields['community'],
+      __('Community', 'glpiinventory'),
+   ) }}
+
+   {{ fields.textField(
+      'username',
+      item.fields['username'],
+      __('User'),
+   ) }}
+
+   {{ fields.nullField() }}
+
+   {{ fields.dropdownArrayField(
+      'authentication',
+      item.fields['authentication'],
+      {0: '-----', 'MD5': 'MD5', 'SHA': 'SHA'},
+      __('Encryption protocol for authentication ', 'glpiinventory'),
+   ) }}
+
+   {{ fields.nullField() }}
+
+   {{ fields.passwordField(
+      'auth_passphrase',
+      item.fields['auth_passphrase'],
+      __('Password'),
+   ) }}
+
+   {{ fields.nullField() }}
+
+   {{ fields.dropdownArrayField(
+      'encryption',
+      item.fields['encryption'],
+      {0: '-----', 'DES': 'DES', 'AES128': 'AES128', 'Triple-DES': 'Triple-DES'},
+      __('Encryption protocol for data', 'glpiinventory'),
+   ) }}
+
+   {{ fields.nullField() }}
+
+   {{ fields.passwordField(
+      'priv_passphrase',
+      item.fields['priv_passphrase'],
+      __('Password'),
+   ) }}
+{% endblock %}

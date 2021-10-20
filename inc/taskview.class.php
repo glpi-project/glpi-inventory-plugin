@@ -276,7 +276,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
       echo "<div class='clear_states'></div>";
 
       echo Html::hidden('task_id', ['value' => $task_id]);
-      echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs']);
+      echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-primary']);
       Html::closeForm();
       echo "</div>"; // #fiTaskExport_modalWindow
    }
@@ -310,20 +310,18 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='4'>";
-      echo "<div class='fusinv_form'>";
+      echo "<div class='row'>";
 
       $this->showTextField( __('Name'), "name");
       $this->showTextArea(__('Comments'), "comment");
       $this->showCheckboxField(__('Re-prepare a target-actor if previous run is successful', 'glpiinventory'),
                                "reprepare_if_successful");
       if ($this->fields['is_deploy_on_demand']) {
-         echo "<div class='input_wrap'>";
+         echo "<div class='mb-2 row col-12 col-sm-6'>";
          echo __("This is an on demand deployment task", "glpiinventory");
          echo "</div>";
       }
-      echo "</div>";
       if (!$new_item) {
-         echo "<div class='fusinv_form'>";
          $this->showCheckboxField( __('Active'), "is_active" );
 
          $datetime_field_options = [
@@ -366,7 +364,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
                                   'step'  => 1
                                  ] );
 
-         echo "</div>";
       }
 
       echo "</div>";
@@ -389,23 +386,29 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
          echo Html::submit(_x('button', 'Add'), ['name' => 'add']);
       } else {
          echo Html::hidden('id', ['value' => $ID]);
-         echo Html::submit(_x('button', 'Save'), ['name' => 'update']);
+         echo Html::submit("<i class='fas fa-save me-1'></i>"._x('button', 'Save'), [
+            'name'  => 'update',
+            'class' => 'btn btn-primary'
+         ]);
       }
       echo "</td>";
 
       if ($this->fields['is_active']) {
          echo "<td>";
-         echo Html::submit(__('Force start', 'glpiinventory'),
-                           ['name' => 'forcestart']);
+         echo Html::submit("<i class='fas fa-bolt me-1'></i>".__('Force start', 'glpiinventory'), [
+            'name' => 'forcestart',
+            'class' => 'btn btn-warning',
+         ]);
          echo "</td>";
       }
 
       echo "<td>";
       if ($this->can($ID, PURGE)) {
-         echo Html::submit(_x('button', 'Delete permanently'),
-                           ['name'    => 'purge',
-                            'confirm' => __('Confirm the final deletion?')
-                           ]);
+         echo Html::submit("<i class='fas fa-trash me-1'></i>"._x('button', 'Delete permanently'), [
+            'name'    => 'purge',
+            'confirm' => __('Confirm the final deletion?'),
+            'class '  => 'btn btn-danger',
+         ]);
       }
       echo "</td>";
       echo "</tr>";

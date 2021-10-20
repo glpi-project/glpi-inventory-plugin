@@ -404,7 +404,7 @@ class PluginGlpiinventoryNetworkporttype extends CommonDBTM {
          echo "<td class='right'>";
 
          if (count($a_notimports) > 0) {
-            echo "<select name='type_to_add[]' multiple size='5'>";
+            echo "<select class='form-select' name='type_to_add[]' multiple size='5'>";
 
             foreach ($a_notimports as $key => $data) {
                echo "<option value='$key'>".$data['othername']."</option>";
@@ -416,13 +416,13 @@ class PluginGlpiinventoryNetworkporttype extends CommonDBTM {
          echo "</td><td class='center'>";
 
          if (count($a_notimports)) {
-            echo "<input type='submit' class='submit' name='type_add' value='".
+            echo "<input type='submit' class='btn btn-secondary' name='type_add' value='".
                   __('Add')." >>'>";
          }
          echo "<br><br>";
 
          if (count($a_imports)) {
-            echo "<input type='submit' class='submit' name='type_delete' value='<< ".
+            echo "<input type='submit' class='btn btn-secondary' name='type_delete' value='<< ".
                   __('Delete', 'glpiinventory')."'>";
          }
          echo "</td><td>";
@@ -431,7 +431,7 @@ class PluginGlpiinventoryNetworkporttype extends CommonDBTM {
          echo "<td class='center'>";
       }
       if (count($a_imports)) {
-         echo "<select name='type_to_delete[]' multiple size='5'>";
+         echo "<select class='form-select' name='type_to_delete[]' multiple size='5'>";
          foreach ($a_imports as $key => $data) {
             echo "<option value='$key'>".$data['othername']."</option>";
          }

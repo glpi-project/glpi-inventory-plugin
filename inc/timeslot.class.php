@@ -258,14 +258,11 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
                           (isset($options['withtemplate']) && $options['withtemplate']?"*":"")).
            "</td>";
       echo "<td>";
-      $objectName = autoName($this->fields["name"], "name",
-                             (isset($options['withtemplate']) && ( $options['withtemplate']== 2)),
-                             $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, 'name', ['value' => $objectName]);
+      echo Html::input('name', ['value' => $this->fields["name"]]);
       echo "</td>";
       echo "<td>".__('Comments')."</td>";
       echo "<td class='middle'>";
-      echo "<textarea cols='45' rows='4' name='comment' >".$this->fields["comment"];
+      echo "<textarea cols='45' class='form-control' name='comment' >".$this->fields["comment"];
       echo "</textarea></td></tr>\n";
 
       $this->showFormButtons($options);

@@ -93,8 +93,10 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM {
       // Display the pager
       Html::printPager($start, $number, Plugin::getWebDir('glpiinventory')."/front/stateinventory.php", '');
 
-      echo "<table class='tab_cadre_fixe'>";
+      echo "<div class='card'>";
+      echo "<table class='table table-hover card-table'>";
 
+      echo "<thead>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>".__('Unique id', 'glpiinventory')."</th>";
       echo "<th>".__('Task job', 'glpiinventory')."</th>";
@@ -108,6 +110,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM {
       echo "<th>".__('To inventory', 'glpiinventory')."</th>";
       echo "<th>".__('Error(s)', 'glpiinventory')."</th>";
       echo "</tr>";
+      echo "</thead>";
 
       $sql = "SELECT `glpi_plugin_glpiinventory_taskjobstates`.*
             FROM `glpi_plugin_glpiinventory_taskjobstates`
@@ -209,6 +212,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM {
       }
 
       echo "</table>";
+      echo "</div>";
 
    }
 

@@ -200,7 +200,7 @@ class PluginGlpiinventoryConfigLogField extends CommonDBTM {
       if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input type='hidden' name='tabs' value='history'/>
-               <input class='submit' type='submit' name='update'
+               <input class='btn btn-primary' type='submit' name='update'
                       value='" . __('Update') . "'></td></tr>";
       }
       echo "</table>";
@@ -210,7 +210,7 @@ class PluginGlpiinventoryConfigLogField extends CommonDBTM {
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
       if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
-         echo "<input type='submit' class=\"submit\" name='Clean_history' ".
+         echo "<input type='submit' class='btn btn-secondary' name='Clean_history' ".
                  "value='"._x('button', 'Clean')."' >";
       }
       echo "</td>";

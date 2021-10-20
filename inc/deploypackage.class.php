@@ -473,7 +473,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
 
       echo "<td>".__('Comments')."&nbsp;:</td>";
       echo "<td>";
-      echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<textarea cols='40' class='form-control' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
 
