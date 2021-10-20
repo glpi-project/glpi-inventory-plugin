@@ -30,7 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-define ("PLUGIN_GLPI_INVENTORY_VERSION", "9.5+3.0");
+define ("PLUGIN_GLPI_INVENTORY_VERSION", "10.0.0+1.0");
 // Minimal GLPI version, inclusive
 define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '9.5');
 // Maximum GLPI version, exclusive
