@@ -397,6 +397,7 @@ a.expanded > div.fold {
    color: inherit;
    font-family: monospace;
    font-weight: inherit;
+   width: 100%;
 }
 
 .counter_block {
@@ -439,6 +440,9 @@ a.expanded > div.fold {
    border-color: #EFEFEF;
    color: #777;
    font-weight: lighter;
+   padding: inherit;
+   text-align: left;
+   align-items: flex-start;
 }
 
 .target_block  div.target_stats .agents_success {
