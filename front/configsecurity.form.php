@@ -67,7 +67,7 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
    Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 
-$pfConfigSecurity->showForm($id);
+$pfConfigSecurity->display(['id' => $id]);
 
 Html::footer();
 
