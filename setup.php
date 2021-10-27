@@ -313,43 +313,43 @@ function plugin_init_glpiinventory() {
       $PLUGIN_HOOKS['use_massive_action']['glpiinventory'] = 1;
 
       $PLUGIN_HOOKS['item_add']['glpiinventory'] = [
-            'NetworkPort_NetworkPort' => 'plugin_item_add_fusioninventory',
-            'NetworkPort'             => 'plugin_item_add_fusioninventory'
+            'NetworkPort_NetworkPort' => 'plugin_item_add_glpiinventory',
+            'NetworkPort'             => 'plugin_item_add_glpiinventory'
           ];
 
       $PLUGIN_HOOKS['pre_item_update']['glpiinventory'] = [
-            'Plugin' => 'plugin_pre_item_update_fusioninventory'
+            'Plugin' => 'plugin_pre_item_update_glpiinventory'
           ];
       $PLUGIN_HOOKS['item_update']['glpiinventory'] = [
-         'Computer'         => 'plugin_item_update_fusioninventory',
-         'NetworkEquipment' => 'plugin_item_update_fusioninventory',
-         'Printer'          => 'plugin_item_update_fusioninventory',
-         'Monitor'          => 'plugin_item_update_fusioninventory',
-         'Peripheral'       => 'plugin_item_update_fusioninventory',
-         'Phone'            => 'plugin_item_update_fusioninventory',
-         'NetworkPort'      => 'plugin_item_update_fusioninventory',
+         'Computer'         => 'plugin_item_update_glpiinventory',
+         'NetworkEquipment' => 'plugin_item_update_glpiinventory',
+         'Printer'          => 'plugin_item_update_glpiinventory',
+         'Monitor'          => 'plugin_item_update_glpiinventory',
+         'Peripheral'       => 'plugin_item_update_glpiinventory',
+         'Phone'            => 'plugin_item_update_glpiinventory',
+         'NetworkPort'      => 'plugin_item_update_glpiinventory',
          'PluginGlpiinventoryLock' => ['PluginGlpiinventoryLock', 'deleteLock']
       ];
 
       $PLUGIN_HOOKS['pre_item_purge']['glpiinventory'] = [
-         'Computer'                 =>'plugin_pre_item_purge_fusioninventory',
-         'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
+         'Computer'                 =>'plugin_pre_item_purge_glpiinventory',
+         'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_glpiinventory',
          'PluginGlpiinventoryLock'=> ['PluginGlpiinventoryLock', 'deleteLock']
          ];
       $p = [
-         'NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
+         'NetworkPort_NetworkPort'            => 'plugin_item_purge_glpiinventory',
          'PluginGlpiinventoryTask'          => ['PluginGlpiinventoryTask', 'purgeTask'],
          'PluginGlpiinventoryTaskjob'       => ['PluginGlpiinventoryTaskjob', 'purgeTaskjob'],
          'PluginGlpiinventoryUnmanaged'     => ['PluginGlpiinventoryUnmanaged', 'purgeUnmanagedDevice'],
-         'NetworkEquipment'                   => 'plugin_item_purge_fusioninventory',
-         'Printer'                            => 'plugin_item_purge_fusioninventory',
-         'PluginGlpiinventoryTimeslot'      => 'plugin_item_purge_fusioninventory',
-         'Entity'                             => 'plugin_item_purge_fusioninventory',
-         'PluginGlpiinventoryDeployPackage' => 'plugin_item_purge_fusioninventory'
+         'NetworkEquipment'                   => 'plugin_item_purge_glpiinventory',
+         'Printer'                            => 'plugin_item_purge_glpiinventory',
+         'PluginGlpiinventoryTimeslot'      => 'plugin_item_purge_glpiinventory',
+         'Entity'                             => 'plugin_item_purge_glpiinventory',
+         'PluginGlpiinventoryDeployPackage' => 'plugin_item_purge_glpiinventory'
       ];
       $PLUGIN_HOOKS['item_purge']['glpiinventory'] = $p;
 
-      $PLUGIN_HOOKS['item_transfer']['glpiinventory'] = 'plugin_item_transfer_fusioninventory';
+      $PLUGIN_HOOKS['item_transfer']['glpiinventory'] = 'plugin_item_transfer_glpiinventory';
 
       if (Session::haveRight('plugin_glpiinventory_unmanaged', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['assets'] = 'PluginGlpiinventoryUnmanaged';

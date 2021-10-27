@@ -717,12 +717,12 @@ class PluginGlpiinventoryUnmanaged extends CommonDBTM {
       if ($nn->getOppositeContact($ports_id)
               && $nn->getFromDBForNetworkPort($nn->getOppositeContact($ports_id))) {
          if ($nn->delete($nn->fields)) {
-            plugin_item_purge_fusioninventory($nn);
+            plugin_item_purge_glpiinventory($nn);
          }
       }
       if ($nn->getFromDBForNetworkPort($ports_id)) {
          if ($nn->delete($nn->fields)) {
-            plugin_item_purge_fusioninventory($nn);
+            plugin_item_purge_glpiinventory($nn);
          }
       }
    }

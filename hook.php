@@ -1869,7 +1869,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val) {
  *
  * @param object $parm
  */
-function plugin_pre_item_update_fusioninventory($parm) {
+function plugin_pre_item_update_glpiinventory($parm) {
    if ($parm->fields['directory'] == 'glpiinventory') {
       $plugin = new Plugin();
 
@@ -1887,7 +1887,7 @@ function plugin_pre_item_update_fusioninventory($parm) {
  * @param object $parm
  * @return object
  */
-function plugin_pre_item_purge_fusioninventory($parm) {
+function plugin_pre_item_purge_glpiinventory($parm) {
    $itemtype = get_class($parm);
    $items_id = $parm->getID();
 
@@ -1955,7 +1955,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
  * @param object $parm
  * @return object
  */
-function plugin_pre_item_delete_fusioninventory($parm) {
+function plugin_pre_item_delete_glpiinventory($parm) {
    global $DB;
 
    if (isset($parm["_item_type_"])) {
@@ -1980,7 +1980,7 @@ function plugin_pre_item_delete_fusioninventory($parm) {
  *
  * @param object $parm
  */
-function plugin_item_update_fusioninventory($parm) {
+function plugin_item_update_glpiinventory($parm) {
    if (isset($_SESSION["glpiID"])
            && $_SESSION["glpiID"] != ''
            && !isset($_SESSION['glpi_glpiinventory_nolock'])) { // manual task
@@ -2002,7 +2002,7 @@ function plugin_item_update_fusioninventory($parm) {
  * @param object $parm
  * @return object
  */
-function plugin_item_add_fusioninventory($parm) {
+function plugin_item_add_glpiinventory($parm) {
 
    switch (get_class($parm)) {
 
@@ -2039,7 +2039,7 @@ function plugin_item_add_fusioninventory($parm) {
  * @param object $parm
  * @return object
  */
-function plugin_item_purge_fusioninventory($parm) {
+function plugin_item_purge_glpiinventory($parm) {
    global $DB;
 
    switch (get_class($parm)) {
@@ -2240,7 +2240,7 @@ function plugin_item_purge_fusioninventory($parm) {
  * @param object $parm
  * @return boolean
  */
-function plugin_item_transfer_fusioninventory($parm) {
+function plugin_item_transfer_glpiinventory($parm) {
 
    switch ($parm['type']) {
 
