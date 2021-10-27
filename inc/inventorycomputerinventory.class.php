@@ -140,8 +140,7 @@ class PluginGlpiinventoryInventoryComputerInventory {
          }
       }
 
-         // Hack to remove Memories with Flash types see ticket
-         // http://forge.fusioninventory.org/issues/1337
+         // Hack to remove Memories with Flash types
       if (isset($arrayinventory['CONTENT']['MEMORIES'])) {
          foreach ($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
             if ((isset($memory['TYPE']))
@@ -155,7 +154,7 @@ class PluginGlpiinventoryInventoryComputerInventory {
       $a_computerinventory = PluginGlpiinventoryFormatconvert::computerInventoryTransformation(
                                              $arrayinventory['CONTENT']);
 
-      // Get tag is defined and put it in fusioninventory_agent table
+      // Get tag is defined and put it in agent table
       $tagAgent = "";
       if (isset($a_computerinventory['ACCOUNTINFO'])) {
          if (isset($a_computerinventory['ACCOUNTINFO']['KEYNAME'])
@@ -237,17 +236,17 @@ class PluginGlpiinventoryInventoryComputerInventory {
          }
       }
 
-      if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))
-               AND (!empty($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))) {
-         $input['mskey'] = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number'];
+      if ((isset($a_computerinventory['inventorycomputer']['items_operatingsystems_id']['license_number']))
+               AND (!empty($a_computerinventory['inventorycomputer']['items_operatingsystems_id']['license_number']))) {
+         $input['mskey'] = $a_computerinventory['inventorycomputer']['items_operatingsystems_id']['license_number'];
       }
-      if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))
-               AND (!empty($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))) {
-         $input['osname'] = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
+      if ((isset($a_computerinventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))
+               AND (!empty($a_computerinventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))) {
+         $input['osname'] = $a_computerinventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
       }
-      if ((isset($a_computerinventory['fusioninventorycomputer']['oscomment']))
-               AND (!empty($a_computerinventory['fusioninventorycomputer']['oscomment']))) {
-         $input['oscomment'] = $a_computerinventory['fusioninventorycomputer']['oscomment'];
+      if ((isset($a_computerinventory['inventorycomputer']['oscomment']))
+               AND (!empty($a_computerinventory['inventorycomputer']['oscomment']))) {
+         $input['oscomment'] = $a_computerinventory['inventorycomputer']['oscomment'];
       }
       if ((isset($a_computerinventory['Computer']['computermodels_id']))
                  AND (!empty($a_computerinventory['Computer']['computermodels_id']))) {
@@ -269,7 +268,6 @@ class PluginGlpiinventoryInventoryComputerInventory {
       $input['itemtype'] = "Computer";
 
       // If transfer is disable, get entity and search only on this entity
-      // (see http://forge.fusioninventory.org/issues/1503)
 
       // * entity rules
       $inputent = $input;
@@ -514,7 +512,7 @@ class PluginGlpiinventoryInventoryComputerInventory {
          }
 
          $serialized = base64_encode(gzcompress(serialize($a_computerinventory)));
-         $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] =
+         $a_computerinventory['inventorycomputer']['serialized_inventory'] =
                   Toolbox::addslashes_deep($serialized);
 
          if (!$PF_ESXINVENTORY) {

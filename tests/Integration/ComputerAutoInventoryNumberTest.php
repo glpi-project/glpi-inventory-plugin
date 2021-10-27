@@ -62,7 +62,7 @@ class ComputerAutoInventoryNumberTest extends TestCase {
               "serial"      => "ggheb7ne7",
               "otherserial" => ""
           ],
-          "fusioninventorycomputer" => [
+          "inventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ],

@@ -52,7 +52,7 @@ class ComputerDynamicTest extends TestCase {
               "name"   => "pc002",
               "serial" => "ggheb7ne7"
           ],
-          "fusioninventorycomputer" => [
+          "inventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ],
@@ -137,7 +137,7 @@ class ComputerDynamicTest extends TestCase {
               "name"   => "pc002",
               "serial" => "ggheb7ne72"
           ],
-          "fusioninventorycomputer" => [
+          "inventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ],
@@ -241,7 +241,7 @@ class ComputerDynamicTest extends TestCase {
              'is_dynamic'                       => 1,
              'contact'                          => 'username'
           ],
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',

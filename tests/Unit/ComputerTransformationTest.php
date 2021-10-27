@@ -74,12 +74,12 @@ class ComputerTransformationTest extends TestCase {
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['fusioninventorycomputer'])
-              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
-         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      if (isset($a_return['inventorycomputer'])
+              && isset($a_return['inventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['inventorycomputer']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => '',
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
@@ -167,12 +167,12 @@ class ComputerTransformationTest extends TestCase {
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['fusioninventorycomputer'])
-              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
-         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      if (isset($a_return['inventorycomputer'])
+              && isset($a_return['inventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['inventorycomputer']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => '',
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
@@ -259,12 +259,12 @@ class ComputerTransformationTest extends TestCase {
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['fusioninventorycomputer'])
-              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
-         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      if (isset($a_return['inventorycomputer'])
+              && isset($a_return['inventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['inventorycomputer']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                                 => 'test',
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => '2012-10-16 08:12:56',
@@ -917,7 +917,7 @@ class ComputerTransformationTest extends TestCase {
          $a_reference['licenseid'] = '';
          $a_reference['license_number'] = '';
          $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
-         $this->assertEquals($a_reference, $a_return['fusioninventorycomputer']['items_operatingsystems_id']);
+         $this->assertEquals($a_reference, $a_return['inventorycomputer']['items_operatingsystems_id']);
 
          //test with unmanaged OS name
          $PF_CONFIG['manage_osname'] = '0';
@@ -928,7 +928,7 @@ class ComputerTransformationTest extends TestCase {
          $a_reference['licenseid'] = '';
          $a_reference['license_number'] = '';
          $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
-         $this->assertEquals($a_reference, $a_return['fusioninventorycomputer']['items_operatingsystems_id']);
+         $this->assertEquals($a_reference, $a_return['inventorycomputer']['items_operatingsystems_id']);
       }
    }
 
@@ -965,12 +965,12 @@ class ComputerTransformationTest extends TestCase {
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['fusioninventorycomputer'])
-              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
-         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      if (isset($a_return['inventorycomputer'])
+              && isset($a_return['inventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['inventorycomputer']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> 'NULL',
@@ -1103,12 +1103,12 @@ class ComputerTransformationTest extends TestCase {
             'Fedora release 23 (Twenty Three)';
          return $params;
       };
-      $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['glpiinventory'] = $callable;
+      $PLUGIN_HOOKS['glpiinventory_addinventoryinfos']['glpiinventory'] = $callable;
 
       $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
-      unset($PLUGIN_HOOKS['fusioninventory_addinventoryinfos']);
+      unset($PLUGIN_HOOKS['glpiinventory_addinventoryinfos']);
 
       $this->assertTrue(isset($a_return['OPERATINGSYSTEM']));
       $this->assertTrue(isset($a_return['OPERATINGSYSTEM']['FULL_NAME']));
@@ -1275,12 +1275,12 @@ class ComputerTransformationTest extends TestCase {
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['fusioninventorycomputer'])
-              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
-         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      if (isset($a_return['inventorycomputer'])
+              && isset($a_return['inventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['inventorycomputer']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                                 => 'test',
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => 'NULL',
@@ -1391,12 +1391,12 @@ class ComputerTransformationTest extends TestCase {
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['fusioninventorycomputer'])
-              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
-         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      if (isset($a_return['inventorycomputer'])
+              && isset($a_return['inventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['inventorycomputer']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                                 => 'test',
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => 'NULL',
@@ -1889,12 +1889,12 @@ class ComputerTransformationTest extends TestCase {
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['fusioninventorycomputer'])
-              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
-         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      if (isset($a_return['inventorycomputer'])
+              && isset($a_return['inventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['inventorycomputer']['last_fusioninventory_update'];
       }
       $a_reference = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                                 => 'test',
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => 'NULL',

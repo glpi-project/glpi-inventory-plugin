@@ -51,7 +51,7 @@ class VirtualmachineTest extends TestCase {
    function __construct() {
       parent::__construct();
       $a_inventory = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
@@ -98,7 +98,7 @@ class VirtualmachineTest extends TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'username'
       ];
-      $a_inventory['fusioninventorycomputer'] = [
+      $a_inventory['inventorycomputer'] = [
           'last_fusioninventory_update' => date('Y-m-d H:i:s'),
           'serialized_inventory'        => 'something'
       ];
@@ -137,7 +137,7 @@ class VirtualmachineTest extends TestCase {
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $serialized = base64_encode(gzcompress(serialize($a_inventory)));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $this->items_id = $computer->add(['serial' => 'XB63J7D',
@@ -207,7 +207,7 @@ class VirtualmachineTest extends TestCase {
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 1);
 
       $serialized = base64_encode(gzcompress(serialize($a_inventory)));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $computer = new Computer();

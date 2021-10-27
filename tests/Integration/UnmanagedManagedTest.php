@@ -145,7 +145,7 @@ class UnmanagedManagedTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
-         'fusioninventorycomputer' => [
+         'inventorycomputer' => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s')
          ],
          'soundcard'      => [],

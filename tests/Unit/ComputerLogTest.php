@@ -61,7 +61,7 @@ class ComputerLogTest extends TestCase {
       $date = date('Y-m-d H:i:s');
 
       $inventory = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
@@ -272,7 +272,7 @@ class ComputerLogTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $serialized = base64_encode(gzcompress(serialize($inventory)));
-      $inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $id = $computer->add(['serial' => 'XB63J7D',

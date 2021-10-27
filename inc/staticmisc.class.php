@@ -41,7 +41,7 @@ class PluginGlpiinventoryStaticmisc {
 
 
    /**
-    * Get task methods of this plugin fusioninventory
+    * Get task methods of this plugin
     *
     * @return array('module'=>'value', 'method'=>'value')
     *   module value name of plugin

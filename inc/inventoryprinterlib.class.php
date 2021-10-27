@@ -149,7 +149,7 @@ class PluginGlpiinventoryInventoryPrinterLib extends PluginGlpiinventoryInventor
       // Cartridges
       $this->importCartridges($a_inventory['cartridge'], $printers_id);
 
-      Plugin::doHook("fusioninventory_inventory",
+      Plugin::doHook("glpiinventory_inventory",
       ['inventory_data' => $a_inventory,
        'printers_id'   => $printers_id,
        'no_history'     => $no_history

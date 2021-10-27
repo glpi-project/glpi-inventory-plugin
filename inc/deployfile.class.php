@@ -766,7 +766,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
 
    /**
-    * Add file in the fusioninventory repository
+    * Add file in the repository
     *
     * @param array $params
     * @return boolean

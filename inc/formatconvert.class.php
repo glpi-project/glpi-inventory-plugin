@@ -246,7 +246,7 @@ class PluginGlpiinventoryFormatconvert {
       // Initialize
       $a_inventory = [
          'Computer'                => [],
-         'fusioninventorycomputer' => [],
+         'inventorycomputer' => [],
          'processor'               => [],
          'memory'                  => [],
          'harddrive'               => [],
@@ -357,27 +357,27 @@ class PluginGlpiinventoryFormatconvert {
          $array_tmp['remote_addr'] = $_SERVER['REMOTE_ADDR'];
       }
 
-      $a_inventory['fusioninventorycomputer'] = $array_tmp;
+      $a_inventory['inventorycomputer'] = $array_tmp;
       if (isset($array['OPERATINGSYSTEM']['INSTALL_DATE'])
               && !empty($array['OPERATINGSYSTEM']['INSTALL_DATE'])) {
-         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] =
+         $a_inventory['inventorycomputer']['operatingsystem_installationdate'] =
                      $array['OPERATINGSYSTEM']['INSTALL_DATE'];
       }
       if (isset($array['OPERATINGSYSTEM']['BOOT_TIME'])
               && !empty($array['OPERATINGSYSTEM']['BOOT_TIME'])) {
-         $a_inventory['fusioninventorycomputer']['last_boot'] = $array['OPERATINGSYSTEM']['BOOT_TIME'];
+         $a_inventory['inventorycomputer']['last_boot'] = $array['OPERATINGSYSTEM']['BOOT_TIME'];
       }
 
       if (isset($array['HARDWARE']['DESCRIPTION'])) {
-         $a_inventory['fusioninventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
+         $a_inventory['inventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
       }
 
-      if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
-         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = "NULL";
+      if (empty($a_inventory['inventorycomputer']['operatingsystem_installationdate'])) {
+         $a_inventory['inventorycomputer']['operatingsystem_installationdate'] = "NULL";
       }
 
-      if (empty($a_inventory['fusioninventorycomputer']['last_boot'])) {
-         $a_inventory['fusioninventorycomputer']['last_boot'] = "NULL";
+      if (empty($a_inventory['inventorycomputer']['last_boot'])) {
+         $a_inventory['inventorycomputer']['last_boot'] = "NULL";
       }
 
       // * BIOS
@@ -524,7 +524,7 @@ class PluginGlpiinventoryFormatconvert {
                     'KERNEL_VERSION' => 'operatingsystemkernelversions_id']);
 
          if (isset($array['OPERATINGSYSTEM']['HOSTID'])) {
-            $a_inventory['fusioninventorycomputer']['hostid'] = $array['OPERATINGSYSTEM']['HOSTID'];
+            $a_inventory['inventorycomputer']['hostid'] = $array['OPERATINGSYSTEM']['HOSTID'];
          }
 
          if (isset($a_inventory['Computer']['licenseid'])) {
@@ -611,7 +611,7 @@ class PluginGlpiinventoryFormatconvert {
          if ($array_tmp['operatingsystemservicepacks_id'] == '0') {
             $array_tmp['operatingsystemservicepacks_id'] = '';
          }
-         $a_inventory['fusioninventorycomputer']['items_operatingsystems_id'] = $array_tmp;
+         $a_inventory['inventorycomputer']['items_operatingsystems_id'] = $array_tmp;
       }
 
       // otherserial (on tag) if defined in config
@@ -633,8 +633,8 @@ class PluginGlpiinventoryFormatconvert {
       }
 
       // Hack for problems of ESX inventory with same deviceid than real computer inventory
-      if (isset($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])
-              && strstr($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'], 'VMware ESX')) {
+      if (isset($a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])
+              && strstr($a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'], 'VMware ESX')) {
          $PF_ESXINVENTORY = true;
       }
 
@@ -1525,7 +1525,7 @@ class PluginGlpiinventoryFormatconvert {
          'inventory' => $a_inventory,
          'source'    => $array
       ];
-      $plugin_values = Plugin::doHookFunction("fusioninventory_addinventoryinfos",
+      $plugin_values = Plugin::doHookFunction("glpiinventory_addinventoryinfos",
                                               $plugin_params);
 
       //Plugin_values is returned by plugins. We check if it's correct (an array)
@@ -1557,8 +1557,8 @@ class PluginGlpiinventoryFormatconvert {
       //By default, no operating system is set
       $operatingsystems_id = 0;
       //Get the operating system of the computer if set
-      if (isset($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])) {
-         $operatingsystems_id = $a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
+      if (isset($a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])) {
+         $operatingsystems_id = $a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
       }
 
       //Array to store softwares where the manufacturer is set

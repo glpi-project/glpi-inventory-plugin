@@ -83,7 +83,7 @@ class ComputerUpdateTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
@@ -299,7 +299,7 @@ class ComputerUpdateTest extends TestCase {
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $serialized = base64_encode(gzcompress(serialize($a_inventory)));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $id = $computer->add(['serial'      => 'XB63J7D',
@@ -1286,7 +1286,7 @@ class ComputerUpdateTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
@@ -1359,7 +1359,7 @@ class ComputerUpdateTest extends TestCase {
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $serialized = base64_encode(gzcompress(serialize($a_inventory)));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $this->items_id = $computer->add(['serial'      => 'XB63J7J1',

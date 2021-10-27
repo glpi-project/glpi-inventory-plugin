@@ -141,7 +141,7 @@ class PluginGlpiinventoryNetworkEquipment extends PluginGlpiinventoryItem {
          $_SESSION['plugin_glpiinventory_networkportview'] = 'glpiinventory';
       }
 
-      // Display glpi network port view if no fusionnetworkport
+      // Display glpi network port view if no plugin networkport
       $query = "SELECT glpi_plugin_glpiinventory_networkports.id
       FROM glpi_plugin_glpiinventory_networkports
       LEFT JOIN glpi_networkports
@@ -557,12 +557,6 @@ class PluginGlpiinventoryNetworkEquipment extends PluginGlpiinventoryItem {
                           $CFG_GLPI["root_doc"]."/pics/options_search.png' ";
       echo $tmp;
 
-      $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/".
-                        "En_VI_visualisationsdonnees_2_reseau";
-      if ($_SESSION["glpilanguage"] == "fr_FR") {
-         $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/".
-                           "Fr_VI_visualisationsdonnees_2_reseau";
-      }
       echo "<a href='legend'></a>";
       echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>".
               "[ ".__('Legend', 'glpiinventory')." ]</a></div>";
@@ -667,7 +661,7 @@ class PluginGlpiinventoryNetworkEquipment extends PluginGlpiinventoryItem {
 
 
    /**
-    * Display detail networkport based on glpi core networkport and fusioninventory
+    * Display detail networkport based on glpi core networkport and plugin
     * networkport
     *
     * @param array $data with id ant fusionid

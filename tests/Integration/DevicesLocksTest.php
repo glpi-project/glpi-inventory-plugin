@@ -113,7 +113,7 @@ class DevicesLocksTest extends TestCase {
               "computermodels_id" => "model xxx",
               "manufacturers_id"  => "Dell"
           ],
-          "fusioninventorycomputer" => [
+          "inventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ],
@@ -218,7 +218,7 @@ class DevicesLocksTest extends TestCase {
             "computermodels_id" => "model zzz",
             "manufacturers_id"  => "Dell2 inc."
          ],
-         "fusioninventorycomputer" => [
+         "inventorycomputer" => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],

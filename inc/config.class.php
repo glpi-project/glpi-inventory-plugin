@@ -69,7 +69,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
 
 
    /**
-    * Initialize config values of fusioninventory plugin
+    * Initialize config values of  plugin
     *
     * @param boolean $getOnly
     * @return array
@@ -301,7 +301,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
 
 
    /**
-    * Give state of a config field for a fusioninventory plugin
+    * Give state of a config field for plugin
     *
     * @param string $name name in configuration
     * @return boolean

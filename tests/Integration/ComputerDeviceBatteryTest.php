@@ -60,7 +60,7 @@ class ComputerDeviceBatteryTest extends TestCase {
             "name"   => "pc001",
             "serial" => "ggheb7ne7"
          ],
-         "fusioninventorycomputer" => [
+         "inventorycomputer" => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],

@@ -53,7 +53,7 @@ class ComputerDeviceSimcardTest extends TestCase {
             "name"   => "computer_simcard",
             "serial" => "1234567890"
          ],
-         "fusioninventorycomputer" => [
+         "inventorycomputer" => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
@@ -124,7 +124,7 @@ class ComputerDeviceSimcardTest extends TestCase {
             "name"   => "computer_simcard_2",
             "serial" => "2345678901"
          ],
-         "fusioninventorycomputer" => [
+         "inventorycomputer" => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],

@@ -76,7 +76,7 @@ class ComputerPrinterTest extends TestCase {
             "name"   => "pc001",
             "serial" => "ggheb7ne7"
          ],
-         "fusioninventorycomputer" => [
+         "inventorycomputer" => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
@@ -143,7 +143,7 @@ class ComputerPrinterTest extends TestCase {
             "name"   => "pc002",
             "serial" => "ggheb7ne8"
          ],
-         "fusioninventorycomputer" => [
+         "inventorycomputer" => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
@@ -189,7 +189,7 @@ class ComputerPrinterTest extends TestCase {
             "name"   => "pc003",
             "serial" => "ggheb7ne9"
          ],
-         "fusioninventorycomputer" => [
+         "inventorycomputer" => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],

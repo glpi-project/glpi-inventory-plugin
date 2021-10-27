@@ -56,8 +56,8 @@ class PluginGlpiinventorySetup {
       $user     = new User();
 
       if (class_exists('PluginGlpiinventoryConfig')) {
-         $fusioninventory_config      = new PluginGlpiinventoryConfig();
-         $users_id = $fusioninventory_config->getValue('users_id');
+         $inventory_config      = new PluginGlpiinventoryConfig();
+         $users_id = $inventory_config->getValue('users_id');
          $user->delete(['id'=>$users_id], 1);
       }
 

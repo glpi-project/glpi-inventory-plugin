@@ -1271,18 +1271,18 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          $already_link_tables_tmp = $already_link_tables;
          array_pop($already_link_tables_tmp);
 
-         $leftjoin_fusioninventory_networkequipments = 1;
+         $leftjoin_glpiinventory_networkequipments = 1;
          if ((in_array('glpi_plugin_glpiinventory_networkequipments', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_glpiinventory_configsecurities',
                          $already_link_tables_tmp))) {
 
-            $leftjoin_fusioninventory_networkequipments = 0;
+            $leftjoin_glpiinventory_networkequipments = 0;
          }
          switch ($new_table.".".$linkfield) {
 
             // ** last inventory
             case "glpi_plugin_glpiinventory_networkequipments." :
-               if ($leftjoin_fusioninventory_networkequipments == "1") {
+               if ($leftjoin_glpiinventory_networkequipments == "1") {
                   return " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                      ON (glpi_networkequipments.id = ".
                           "glpi_plugin_glpiinventory_networkequipments.networkequipments_id) ";
@@ -1292,7 +1292,7 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
             // ** cpu
             case "glpi_plugin_glpiinventory_networkequipments.".
                     "plugin_glpiinventory_networkequipments_id" :
-               if ($leftjoin_fusioninventory_networkequipments == "1") {
+               if ($leftjoin_glpiinventory_networkequipments == "1") {
                      return " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                         ON (glpi_networkequipments.id = ".
                              "glpi_plugin_glpiinventory_networkequipments.networkequipments_id) ";
@@ -1303,7 +1303,7 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
             case "glpi_plugin_glpiinventory_configsecurities.".
                     "plugin_glpiinventory_configsecurities_id":
                $return = "";
-               if ($leftjoin_fusioninventory_networkequipments == "1") {
+               if ($leftjoin_glpiinventory_networkequipments == "1") {
                   $return = " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                      ON glpi_networkequipments.id = ".
                           "glpi_plugin_glpiinventory_networkequipments.networkequipments_id ";
@@ -1315,7 +1315,7 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
 
             case "glpi_plugin_glpiinventory_networkequipments.sysdescr":
                $return = " ";
-               if ($leftjoin_fusioninventory_networkequipments == "1") {
+               if ($leftjoin_glpiinventory_networkequipments == "1") {
                   $return = " LEFT JOIN glpi_plugin_glpiinventory_networkequipments
                      ON glpi_networkequipments.id = ".
                           "glpi_plugin_glpiinventory_networkequipments.networkequipments_id ";
@@ -1329,18 +1329,18 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
          $already_link_tables_tmp = $already_link_tables;
          array_pop($already_link_tables_tmp);
 
-         $leftjoin_fusioninventory_printers = 1;
+         $leftjoin_glpiinventory_printers = 1;
          if ((in_array('glpi_plugin_glpiinventory_printers', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_glpiinventory_configsecurities',
                          $already_link_tables_tmp))) {
 
-            $leftjoin_fusioninventory_printers = 0;
+            $leftjoin_glpiinventory_printers = 0;
          }
          switch ($new_table.".".$linkfield) {
 
             // ** last inventory
             case "glpi_plugin_glpiinventory_printers.plugin_glpiinventory_printers_id" :
-               if ($leftjoin_fusioninventory_printers == 1) {
+               if ($leftjoin_glpiinventory_printers == 1) {
                   return " LEFT JOIN glpi_plugin_glpiinventory_printers
                      ON (glpi_printers.id = glpi_plugin_glpiinventory_printers.printers_id) ";
                }
@@ -1350,7 +1350,7 @@ function plugin_glpiinventory_addLeftJoin($itemtype, $ref_table, $new_table, $li
             case "glpi_plugin_glpiinventory_configsecurities.".
                     "plugin_glpiinventory_configsecurities_id":
                $return = "";
-               if ($leftjoin_fusioninventory_printers == "1") {
+               if ($leftjoin_glpiinventory_printers == "1") {
                   $return = " LEFT JOIN glpi_plugin_glpiinventory_printers
                      ON glpi_printers.id = glpi_plugin_glpiinventory_printers.printers_id ";
                }
@@ -2270,10 +2270,10 @@ function plugin_item_transfer_glpiinventory($parm) {
 function plugin_glpiinventory_registerMethods() {
    global $WEBSERVICES_METHOD;
 
-   $WEBSERVICES_METHOD['fusioninventory.test'] = [
+   $WEBSERVICES_METHOD['glpiinventory.test'] = [
                      'PluginGlpiinventoryInventoryComputerWebservice',
                      'methodTest'];
-   $WEBSERVICES_METHOD['fusioninventory.computerextendedinfo'] = [
+   $WEBSERVICES_METHOD['glpiinventory.computerextendedinfo'] = [
        'PluginGlpiinventoryInventoryComputerWebservice',
          'methodExtendedInfo'];
 }

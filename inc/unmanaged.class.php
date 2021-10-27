@@ -816,7 +816,7 @@ class PluginGlpiinventoryUnmanaged extends CommonDBTM {
       }
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.
-              "/fusioninventory/xml/PluginGlpiinventoryUnmanaged/".$folder."/".
+              "/glpiinventory/xml/PluginGlpiinventoryUnmanaged/".$folder."/".
               $parm->fields["id"])) {
          unlink(GLPI_PLUGIN_DOC_DIR."/glpiinventory/xml/PluginGlpiinventoryUnmanaged/".
                  $folder."/".$parm->fields["id"]);

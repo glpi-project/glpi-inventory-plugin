@@ -133,9 +133,9 @@ class PluginGlpiinventoryInventoryComputerLib extends PluginGlpiinventoryInvento
       $a_lockable = PluginGlpiinventoryLock::getLockFields('glpi_computers', $computers_id);
 
       // Manage operating system
-      if (isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'])) {
+      if (isset($a_computerinventory['inventorycomputer']['items_operatingsystems_id'])) {
          $ios = new Item_OperatingSystem();
-         $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
+         $pfos = $a_computerinventory['inventorycomputer']['items_operatingsystems_id'];
          $ios->getFromDBByCrit([
          'itemtype'                          => 'Computer',
          'items_id'                          => $computers_id
@@ -227,8 +227,8 @@ class PluginGlpiinventoryInventoryComputerLib extends PluginGlpiinventoryInvento
       }
 
       if (count($db_computer) == '0') { // Add
-         $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
-         $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'],
+         $a_computerinventory['inventorycomputer']['computers_id'] = $computers_id;
+         $pfInventoryComputerComputer->add($a_computerinventory['inventorycomputer'],
                                         [], false);
       } else { // Update
          if (!empty($db_computer['serialized_inventory'])) {
@@ -238,11 +238,11 @@ class PluginGlpiinventoryInventoryComputerLib extends PluginGlpiinventoryInvento
          unset($db_computer['id']);
          unset($db_computer['computers_id']);
          $a_ret = PluginGlpiinventoryToolbox::checkLock(
-                                    $a_computerinventory['fusioninventorycomputer'],
+                                    $a_computerinventory['inventorycomputer'],
                                     $db_computer);
-         $a_computerinventory['fusioninventorycomputer'] = $a_ret[0];
+         $a_computerinventory['inventorycomputer'] = $a_ret[0];
          $db_computer = $a_ret[1];
-         $input = $a_computerinventory['fusioninventorycomputer'];
+         $input = $a_computerinventory['inventorycomputer'];
          $input['id'] = $idtmp;
          $input['_no_history'] = $no_history;
          $pfInventoryComputerComputer->update($input, !$no_history);
@@ -1814,7 +1814,7 @@ class PluginGlpiinventoryInventoryComputerLib extends PluginGlpiinventoryInvento
       //
       //         }
 
-      Plugin::doHook("fusioninventory_inventory",
+      Plugin::doHook("glpiinventory_inventory",
                      ['inventory_data' => $a_computerinventory,
                       'computers_id'   => $computers_id,
                       'no_history'     => $no_history

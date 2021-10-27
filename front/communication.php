@@ -54,7 +54,7 @@ $_SESSION['glpiparententities'] = '';
 $_SESSION['glpishowallentities'] = true;
 
 ob_end_clean();
-header("server-type: glpi/fusioninventory ".PLUGIN_GLPI_INVENTORY_VERSION);
+header("server-type: glpi/glpiinventory ".PLUGIN_GLPI_INVENTORY_VERSION);
 
 if (!class_exists("PluginGlpiinventoryConfig")) {
    header("Content-Type: application/xml");
