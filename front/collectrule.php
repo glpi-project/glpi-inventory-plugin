@@ -46,4 +46,3 @@ RuleCollection::titleBackup();
 $rulecollection = new PluginGlpiinventoryCollectRuleCollection();
 
 include (GLPI_ROOT . "/front/rule.common.php");
-

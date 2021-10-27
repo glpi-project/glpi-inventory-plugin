@@ -50,4 +50,3 @@ $pfTask = new PluginGlpiinventoryTask();
 $pfTask->showList();
 
 Html::footer();
-

@@ -42,4 +42,3 @@ $package = new PluginGlpiinventoryDeployPackage();
 $package->showList();
 
 Html::footer();
-

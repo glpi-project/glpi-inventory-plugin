@@ -48,4 +48,3 @@ if (isset($_POST["add"])) {
    $pfCollect_Registry->delete($_POST);
    Html::back();
 }
-

@@ -107,4 +107,3 @@ if (isset($_GET['save'])) {
    $group->display($values);
    Html::footer();
 }
-

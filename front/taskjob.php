@@ -48,4 +48,3 @@ $pfTask->showJobLogs();
 echo "</div>";
 
 Html::footer();
-

@@ -70,4 +70,3 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
 $pfConfigSecurity->display(['id' => $id]);
 
 Html::footer();
-

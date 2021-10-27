@@ -47,4 +47,3 @@ if (isset ($_POST["add"])) {
    $pfIPRange_ConfigSecurity->add($_POST);
    Html::back();
 }
-

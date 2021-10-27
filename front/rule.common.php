@@ -200,4 +200,3 @@ if ($rulecollection->isRuleRecursive()) {
    echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
    Html::footer();
-

@@ -58,4 +58,3 @@ $pfConfig->getFromDB($a_config['id']);
 $pfConfig->display();
 
 Html::footer();
-

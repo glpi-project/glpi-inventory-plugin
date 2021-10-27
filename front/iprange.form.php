@@ -118,4 +118,3 @@ if (isset($_GET['allowcreate'])) {
 $iprange->display(['id' => $id]);
 
 Html::footer();
-

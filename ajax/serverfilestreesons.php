@@ -40,4 +40,3 @@ Html::header_nocache();
 Session::checkLoginUser();
 
 PluginGlpiinventoryDeployFile::getServerFileTree(filter_input(INPUT_POST, "node"));
-

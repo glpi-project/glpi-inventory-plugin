@@ -292,4 +292,3 @@ class PluginGlpiinventoryComputerLicenseInfo extends CommonDBTM {
 
 
 }
-

@@ -132,4 +132,3 @@ if (isset($_POST['graph_plugin_glpiinventory_printer_remove'])) {
 }
 
 Html::back();
-

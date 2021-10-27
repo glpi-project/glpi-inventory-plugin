@@ -44,4 +44,3 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 $rulecollection = new PluginGlpiinventoryInventoryRuleEntityCollection();
 
 include (GLPI_ROOT . "/front/rule.common.form.php");
-

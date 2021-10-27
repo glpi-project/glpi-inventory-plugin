@@ -51,4 +51,3 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 $package->listPackagesToImport();
 
 Html::footer();
-

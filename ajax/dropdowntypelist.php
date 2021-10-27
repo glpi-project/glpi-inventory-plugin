@@ -49,4 +49,3 @@ if ($myamemore != '') {
            filter_input(INPUT_POST, filter_input(INPUT_POST, "name").'typeid'),
            filter_input(INPUT_POST, "taskjobs_id"));
 }
-

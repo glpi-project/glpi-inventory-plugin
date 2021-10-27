@@ -33,4 +33,3 @@
 include ("../../../inc/includes.php");
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR."/front/communication.php");
-

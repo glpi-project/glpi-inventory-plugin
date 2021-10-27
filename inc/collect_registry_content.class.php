@@ -224,4 +224,3 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
 
 }
-

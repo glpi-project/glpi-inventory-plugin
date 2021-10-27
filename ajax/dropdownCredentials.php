@@ -42,4 +42,3 @@ $params = [
     'id'       => filter_input(INPUT_POST, "id")
 ];
 PluginGlpiinventoryCredential::dropdownCredentialsForItemtype($params);
-

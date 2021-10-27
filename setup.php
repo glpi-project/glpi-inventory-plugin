@@ -571,4 +571,3 @@ function plugin_glpiinventory_check_config() {
 function plugin_glpiinventory_haveTypeRight($type, $right) {
    return true;
 }
-

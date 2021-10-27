@@ -52,4 +52,3 @@ if (isset($_POST["unlock_field_glpiinventory"])) {
 }
 
 Html::footer();
-

@@ -54,4 +54,3 @@ echo __('Reset import rules (define only default rules)', 'glpiinventory');
 echo "</a></center><br/>";
 
 include (GLPI_ROOT . "/front/rule.common.php");
-

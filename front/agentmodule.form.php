@@ -120,4 +120,3 @@ if (isset($_POST["agent_add"])) {
 }
 
 Html::footer();
-

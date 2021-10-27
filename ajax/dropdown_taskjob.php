@@ -47,4 +47,3 @@ if (!empty($id) AND $id > 0) {
              'condition' => "`plugin_glpiinventory_tasks_id`='".$id."'"
     ]);
 }
-

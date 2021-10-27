@@ -41,4 +41,3 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 }
 
 Html::back();
-

@@ -60,4 +60,3 @@ if (!isset($_GET["id"])) {
 $pfCollect->display($_GET);
 
 Html::footer();
-

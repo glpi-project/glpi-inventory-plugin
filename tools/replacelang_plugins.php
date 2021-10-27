@@ -54,5 +54,3 @@ foreach (explode(";\n", "$sql_query") as $line) {
       }
    }
 }
-
-

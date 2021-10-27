@@ -44,4 +44,3 @@ if (isset($_POST["add"])) {
    $pfEntity->delete($_POST);
    Html::back();
 }
-

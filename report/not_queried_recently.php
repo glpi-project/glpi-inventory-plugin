@@ -192,4 +192,3 @@ if ($result=$DB->query($query)) {
 echo "</table>";
 
 Html::footer();
-

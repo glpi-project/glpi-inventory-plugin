@@ -257,4 +257,3 @@ function check_valid_ip($ip_address) {
 
     return $valid_address;
 }
-

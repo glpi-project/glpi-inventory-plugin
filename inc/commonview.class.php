@@ -328,4 +328,3 @@ class PluginGlpiinventoryCommonView extends CommonDBTM {
 
 
 }
-

@@ -91,4 +91,3 @@ $pfInventoryComputerImportXML = new PluginGlpiinventoryInventoryComputerImportXM
 $pfInventoryComputerImportXML->showImportForm();
 
 Html::footer();
-

@@ -140,4 +140,3 @@ while ($data=$DB->fetchArray($result)) {
 echo "</table>";
 
 Html::footer();
-

@@ -105,4 +105,3 @@ class PluginGlpiinventoryComputerRemoteManagement extends CommonDBTM {
 
 
 }
-

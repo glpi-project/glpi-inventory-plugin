@@ -122,4 +122,3 @@ if (isset($_GET["id"])) {
 }
 $package->display($_GET);
 Html::footer();
-

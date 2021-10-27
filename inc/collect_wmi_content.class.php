@@ -215,4 +215,3 @@ class PluginGlpiinventoryCollect_Wmi_Content
 
 
 }
-

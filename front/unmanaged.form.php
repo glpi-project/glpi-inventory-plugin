@@ -104,4 +104,3 @@ if (isset ($_POST["add"])) {
 $pfUnmanaged->display($_GET);
 
 Html::footer();
-

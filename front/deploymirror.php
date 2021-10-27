@@ -40,4 +40,3 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 
 Search::show('PluginGlpiinventoryDeployMirror');
 Html::footer();
-

@@ -44,4 +44,3 @@ $_GET['target']="configsecurity.php";
 Search::show('PluginGlpiinventoryConfigSecurity');
 
 Html::footer();
-

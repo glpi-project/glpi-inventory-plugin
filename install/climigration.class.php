@@ -84,4 +84,3 @@ class CliMigration extends Migration {
 
 
 }
-

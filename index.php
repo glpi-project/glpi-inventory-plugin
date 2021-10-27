@@ -48,4 +48,3 @@ if ((!empty($action)
    Html::redirect(Plugin::getWebDir('glpiinventory')."/front/menu.php");
    Html::footer();
 }
-

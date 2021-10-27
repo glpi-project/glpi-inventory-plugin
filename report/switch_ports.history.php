@@ -89,4 +89,3 @@ if ($networkports_id != '') {
 Html::closeForm();
 
 Html::footer();
-

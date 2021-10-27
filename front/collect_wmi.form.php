@@ -41,4 +41,3 @@ if (isset($_POST["add"])) {
    $pfCollect_Wmi->delete($_POST);
    Html::back();
 }
-

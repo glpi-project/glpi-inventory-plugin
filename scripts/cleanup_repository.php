@@ -338,4 +338,3 @@ unregisterInvalidManifests($logger, $dryrun, $invalid_manifests);
 
 $logger->info( 'Memory used : ' .number_format(memory_get_usage(true)/1024/1024, 3) . 'MiB');
 $logger->info( 'Memory used (emalloc): ' .number_format(memory_get_usage()/1024/1024, 3) . 'MiB');
-

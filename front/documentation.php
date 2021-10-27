@@ -38,4 +38,3 @@ Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin
 echo "<meta http-equiv='refresh' content='0;URL=http://fusioninventory.org/documentation/'>";
 
 Html::footer();
-

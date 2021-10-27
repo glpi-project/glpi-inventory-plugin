@@ -96,4 +96,3 @@ if (!empty($fi_machineid)) {
       echo json_encode((object)[]);
    }
 }
-

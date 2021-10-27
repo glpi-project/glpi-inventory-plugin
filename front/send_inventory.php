@@ -43,4 +43,3 @@ header('Content-type: text/plain');
 
 
 call_user_func(['PluginGlpiinventoryToolbox', 'sendXML'], $items_id, $itemtype);
-

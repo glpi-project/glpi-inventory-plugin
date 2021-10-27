@@ -42,4 +42,3 @@ if (PluginGlpiinventoryMenu::canView()) {
 }
 
 Html::footer();
-

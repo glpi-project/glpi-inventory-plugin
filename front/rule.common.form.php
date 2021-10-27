@@ -125,4 +125,3 @@ Html::header(__('Setup'), $_SERVER['PHP_SELF'], "admin",
 $rule->showForm($_GET["id"]);
 
 Html::footer();
-

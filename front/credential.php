@@ -34,4 +34,3 @@ include ("../../../inc/includes.php");
 
 $dropdown = new PluginGlpiinventoryCredential();
 include (GLPI_ROOT . "/front/dropdown.common.php");
-

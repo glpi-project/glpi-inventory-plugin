@@ -442,4 +442,3 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
 
 
 }
-

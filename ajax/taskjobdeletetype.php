@@ -43,4 +43,3 @@ $pfTaskjob->deleteitemtodefatc(
         filter_input(INPUT_POST, "type"),
         filter_input(INPUT_POST, filter_input(INPUT_POST, "type").'item'),
         filter_input(INPUT_POST, "taskjobs_id"));
-

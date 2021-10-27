@@ -52,4 +52,3 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 $pfTask->display($_GET);
 
 Html::footer();
-

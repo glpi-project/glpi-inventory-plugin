@@ -730,4 +730,3 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery {
 
 
 }
-

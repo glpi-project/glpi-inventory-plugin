@@ -42,4 +42,3 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 Search::show('PluginGlpiinventoryIPRange');
 
 Html::footer();
-

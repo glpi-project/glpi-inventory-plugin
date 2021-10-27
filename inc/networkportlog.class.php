@@ -533,4 +533,3 @@ class PluginGlpiinventoryNetworkPortLog extends CommonDBTM {
 
 
 }
-

@@ -38,4 +38,3 @@ include (GLPI_ROOT . "/front/dropdown.common.form.php");
 if (isset($_GET['popup'])) {
    Ajax::refreshDropdownPopupInMainWindow();
 }
-

@@ -412,4 +412,3 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication {
 
 
 }
-

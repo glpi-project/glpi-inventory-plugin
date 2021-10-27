@@ -155,4 +155,3 @@ class PluginGlpiinventoryCollect_File_Content
 
 
 }
-

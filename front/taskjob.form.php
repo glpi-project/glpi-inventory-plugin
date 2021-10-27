@@ -46,4 +46,3 @@ $pfTaskjob->submitForm($_POST);
  * used from within another Item Type.
  */
 Html::back();
-

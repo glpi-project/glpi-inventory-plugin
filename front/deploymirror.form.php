@@ -58,4 +58,3 @@ if (isset($_GET["id"])) {
 $mirror->display(['id' => $id]);
 //$mirror->showForm($id);
 Html::footer();
-

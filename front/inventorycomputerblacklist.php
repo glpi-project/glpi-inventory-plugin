@@ -45,4 +45,3 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 Search::show('PluginGlpiinventoryInventoryComputerBlacklist');
 
 Html::footer();
-

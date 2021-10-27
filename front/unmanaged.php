@@ -42,4 +42,3 @@ $_GET['target'] = "unmanaged.php";
 Search::show('PluginGlpiinventoryUnmanaged');
 
 Html::footer();
-

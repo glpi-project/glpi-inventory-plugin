@@ -46,4 +46,3 @@ echo $pftaskjoblog->showHistoryInDetail(
         filter_input(INPUT_POST, "agents_id"),
         filter_input(INPUT_POST, "uniqid"),
         "900")."</td>";
-

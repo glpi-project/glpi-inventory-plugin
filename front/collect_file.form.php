@@ -58,4 +58,3 @@ if (isset($_POST["add"])) {
    $pfCollect_File->delete($_POST);
    Html::back();
 }
-

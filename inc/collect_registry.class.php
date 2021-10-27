@@ -106,4 +106,3 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
 
 
 }
-

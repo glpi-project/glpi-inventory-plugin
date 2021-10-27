@@ -43,4 +43,3 @@ $pfStateDiscovery = new PluginGlpiinventoryStateDiscovery();
 $pfStateDiscovery->display();
 
 Html::footer();
-

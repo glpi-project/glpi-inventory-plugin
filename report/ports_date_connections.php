@@ -286,4 +286,3 @@ function resetSearch() {
    $_GET["dropdown_sup_inf"]="sup";
    $_GET["dropdown_calendar"]=date("Y-m-d H:i");
 }
-

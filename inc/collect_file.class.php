@@ -208,4 +208,3 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon {
       parent::post_deleteItem();
    }
 }
-
