@@ -66,11 +66,11 @@ class RepositoryTest extends TestCase {
       ]);
       $this->assertNotFalse($this->packages_2_id);
 
-      // get Fusion config
+      // get plugin config
       $config = new PluginGlpiinventoryConfig;
       $server_upload_path = $config->getValue("server_upload_path");
 
-      // create a file in fusion upload folder
+      // create a file in upload folder
       $this->filename = $server_upload_path."/file1";
       $file_created = file_put_contents($this->filename, "test repository");
       $this->assertNotFalse($file_created);

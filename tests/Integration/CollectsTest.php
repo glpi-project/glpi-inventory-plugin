@@ -252,10 +252,10 @@ class CollectsTest extends TestCase {
       $this->assertNotFalse($registry_tm);
 
       $input = [
-          'name' => 'FusionInventory',
+          'name' => 'GLPI Agent',
           'plugin_glpiinventory_collects_id' => $collects_id,
           'hive' => 'HKEY_LOCAL_MACHINE',
-          'path' => '/software/FusionInventory-Agent/',
+          'path' => '/software/GLPI-Agent/',
           'key'  => '*',
       ];
       $registry_fi = $pfCollect_Registry->add($input);
@@ -314,7 +314,7 @@ class CollectsTest extends TestCase {
       $matches = [];
       preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
       $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"'.$jobstate['uniqid'].'","_sid":'.$registry_tm.'},'
-                                          . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/FusionInventory-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":'.$registry_fi.'}],"postmethod":"POST","token":"'.$matches[1].'"}');
+                                          . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/GLPI-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":'.$registry_fi.'}],"postmethod":"POST","token":"'.$matches[1].'"}');
       // answer 1
       $params = [
           'action'                => 'setAnswer',
@@ -342,7 +342,7 @@ class CollectsTest extends TestCase {
           'httpd-port'              => '62354',
           'no-ssl-check'            => 1,
           'server'                  => 'http://10.0.2.2/glpi090/plugins/glpiinventory/',
-          'logfile'                 => 'C:\\Program Files\\FusionInventory-Agent\\fusioninventory-agent.log',
+          'logfile'                 => 'C:\\Program Files\\GLPI-Agent\\glpi-agent.log',
           'timeout'                 => 180,
           'httpd-trust'             => '127.0.0.1/32',
           'uuid'                    => $jobstate['uniqid'],
@@ -659,7 +659,7 @@ class CollectsTest extends TestCase {
           'uuid'   => $jobstate['uniqid'],
           '_sid'   => $registry_desktop,
           '_cpt'   => '2',
-          'path'   => 'C:\\Users\\toto\\Desktop/fusioninventory.txt',
+          'path'   => 'C:\\Users\\toto\\Desktop/glpiinventory.txt',
           'size'   => 28,
           'sendheaders' => false //for test
       ];
@@ -745,7 +745,7 @@ class CollectsTest extends TestCase {
          [
             'computers_id' => "$computers_id",
             'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
-            'pathfile'     => 'C:/Users/toto/Desktop/fusioninventory.txt',
+            'pathfile'     => 'C:/Users/toto/Desktop/glpiinventory.txt',
             'size'         => '28'
          ],
          [

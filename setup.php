@@ -441,21 +441,6 @@ function plugin_init_glpiinventory() {
       $moduleId = PluginGlpiinventoryModule::getModuleId('glpiinventory');
    }
 
-   // Check for uninstall
-   $id = filter_input(INPUT_GET, "id");
-   $action = filter_input(INPUT_GET, "action");
-   if ($id == $moduleId
-           && $action == 'uninstall'
-           && (strstr(filter_input(INPUT_SERVER, "HTTP_REFERER"), "front/plugin.php"))) {
-
-      if (PluginGlpiinventoryModule::getAll(true)) {
-          Session::addMessageAfterRedirect(__('Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin'));
-
-         Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
-         exit;
-      }
-   }
-
    // Add unmanaged devices in list of devices with networkport
    //$CFG_GLPI["netport_types"][] = "PluginGlpiinventoryUnmanaged";
    $CFG_GLPI["networkport_types"][] = "PluginGlpiinventoryUnmanaged";

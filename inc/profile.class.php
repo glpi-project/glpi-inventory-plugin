@@ -499,7 +499,7 @@ class PluginGlpiinventoryProfile extends Profile {
                $value = 0;
                break;
          }
-         //Write in glpi_profilerights the new fusioninventory right
+         //Write in glpi_profilerights the new right
          if (isset($oldrights[$profile['type']])) {
             //There's one new right corresponding to the old one
             if (!is_array($oldrights[$profile['type']])) {

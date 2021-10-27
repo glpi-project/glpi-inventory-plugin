@@ -36,7 +36,7 @@
 // This script should be called periodically via cron. Especially if you
 // synchronize multiple repositories.
 //
-// /<path to plugin fusioninventory>/scripts/cleanup_repository.php
+// /<path to plugin>/scripts/cleanup_repository.php
 
 $doc = <<<DOC
 cleanup_repository.php

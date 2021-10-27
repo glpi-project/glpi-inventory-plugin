@@ -64,7 +64,7 @@ class DeleteTaskTest extends TestCase {
       ];
       $$packageId = $pfDeployPackage->add($input);
 
-      // Create fusioninventory dynamic group
+      // Create dynamic group
       $input = [
           'name' => 'all computers have name computer',
           'type' => 'DYNAMIC'

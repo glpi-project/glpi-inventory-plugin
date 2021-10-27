@@ -117,7 +117,7 @@ class CronTaskTest extends TestCase {
       $packages_id = $pfDeployPackage->add($input);
       $this->assertNotFalse($packages_id);
 
-      // Create fusioninventory dynamic group
+      // Create dynamic group
       $input = [
           'name' => 'all computers have name computer',
           'type' => 'DYNAMIC'

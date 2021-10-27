@@ -161,9 +161,9 @@ class SoftwareUpdateTest extends TestCase {
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
-                'PUBLISHER' => 'fusioninventory team',
+                'PUBLISHER' => 'GLPI Team',
                 'NAME'      => 'glpiinventory',
-                'VERSION'   => '0.85+1.0',
+                'VERSION'   => '1.0.0',
                 'SYSTEM_CATEGORY' => 'devel'
             ];
 
@@ -171,15 +171,15 @@ class SoftwareUpdateTest extends TestCase {
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $manufacturer     = new Manufacturer();
-      $manufacturer->getFromDBByCrit(['name' => 'fusioninventory team']);
+      $manufacturer->getFromDBByCrit(['name' => 'GLPI Team']);
       $manufacturers_id = $manufacturer->fields['id'];
       $this->assertGreaterThan(0, $manufacturers_id);
 
       $a_reference = [];
-      $a_reference['software']["glpiinventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
+      $a_reference['software']["glpiinventory$$$$1.0.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
                'name'                  => 'glpiinventory',
                'manufacturers_id'      => $manufacturers_id,
-               'version'               => '0.85+1.0',
+               'version'               => '1.0.0',
                'is_template_item'  => 0,
                'is_deleted_item'   => 0,
                'entities_id'           => 0,
@@ -187,7 +187,7 @@ class SoftwareUpdateTest extends TestCase {
                'operatingsystems_id'   => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel',
-               'comp_key_noos'         => "glpiinventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0",
+               'comp_key_noos'         => "glpiinventory$$$$1.0.0$$$$".$manufacturers_id."$$$$0$$$$0",
                'comment'               => ''
             ];
 

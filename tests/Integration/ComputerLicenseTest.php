@@ -140,7 +140,7 @@ class ComputerLicenseTest extends TestCase {
 
       $this->assertEquals(1,
                           countElementsInTable('glpi_plugin_glpiinventory_computerlicenseinfos'),
-                          'License may be added in fusion table');
+                          'License may be added in table');
 
       $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);
