@@ -2,7 +2,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
-    "glpi-project/tools": "^0.1.0",
+    "glpi-project/tools": "^0.3.0",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {

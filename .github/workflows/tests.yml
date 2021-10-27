@@ -52,8 +52,9 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
     - name: Install dependencies
       run: composer install
-    - name: Lint
-      run: php vendor/bin/robo --no-interaction code:cs
+    - name: Check for coding standards violations
+      run: |
+        vendor/bin/phpcs -d memory_limit=512M -p --extensions=php --standard=vendor/glpi-project/coding-standard/GlpiStandard/ --ignore="/.git/,/lib/,/vendor/,/prototype.js,/effects.js" .
 
   phpunit:
     #runs-on: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
