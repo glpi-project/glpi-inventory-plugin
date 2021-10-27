@@ -61,10 +61,11 @@ class FusinvDB extends Assert{
                $s_line = explode("`", $line);
                $s_type = explode("COMMENT", $s_line[2]);
                $s_type[0] = trim($s_type[0]);
-               $s_type[0] = str_replace(
+
+               $s_type[0] = preg_replace(
                   [
-                     ' COLLATE utf8mb4_unicode_ci',
-                     ' CHARACTER SET utf8mb4'
+                     '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
+                     '/ CHARACTER SET utf8(mb3|mb4)?/'
                   ],
                   [
                      '',
@@ -109,16 +110,23 @@ class FusinvDB extends Assert{
             AND(!strstr($data[0], "glpi_plugin_glpiinventory_usbdevices"))
             AND(!strstr($data[0], "glpi_plugin_glpiinventory_usbvendors"))) {
 
-            $data[0] = str_replace(
+            $data[0] = preg_replace(
                [
-                  ' COLLATE utf8mb4_unicode_ci',
-                  ' CHARACTER SET utf8mb4',
-                  '( ',
-                  ' )'
+                  '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
+                  '/ CHARACTER SET utf8(mb3|mb4)?/'
                ],
                [
                   '',
                   '',
+               ],
+               $data[0]
+            );
+            $data[0] = str_replace(
+               [
+                  '( ',
+                  ' )'
+               ],
+               [
                   '(',
                   ')'
                ],
@@ -145,19 +153,20 @@ class FusinvDB extends Assert{
                   if (preg_match("/^`/", trim($line))) {
                      $s_line = explode("`", $line);
                      $s_type = explode("COMMENT", $s_line[2]);
-                     $s_type[0] = str_replace(
+                     $s_type[0] = preg_replace(
                         [
-                           ' COLLATE utf8mb4_unicode_ci',
-                           ' COLLATE utf8_unicode_ci',
-                           ' CHARACTER SET utf8mb4',
-                           ','
+                           '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
+                           '/ CHARACTER SET utf8(mb3|mb4)?/'
                         ],
                         [
-                           '',
-                           '',
                            '',
                            ''
                         ],
+                        trim($s_type[0])
+                     );
+                     $s_type[0] = str_replace(
+                        ',',
+                        '',
                         trim($s_type[0])
                      );
                      // Keeping DATETIME from old DB is considered as OK as DATETIME to TIMESTAMP

@@ -67,7 +67,7 @@ class ComputerHistoryTest extends TestCase {
       <DNS>192.168.43.1</DNS>
       <ETIME>4</ETIME>
       <IPADDR>10.0.20.254/10.0.20.1/10.0.20.2/10.0.20.3/10.0.20.4/10.0.20.5/10.0.20.6/10.0.20.7/10.0.20.8/10.0.20.9/10.0.20.10/10.0.20.11/10.0.20.12/10.0.20.13/10.0.20.14/10.0.20.15/192.168.43.151</IPADDR>
-      <LASTLOGGEDUSER>ddurieux</LASTLOGGEDUSER>
+      <LASTLOGGEDUSER>username</LASTLOGGEDUSER>
       <MEMORY>8067</MEMORY>
       <NAME>portdavid</NAME>
       <OSCOMMENTS>FreeBSD 10.3-RELEASE #0 r297264: Fri Mar 25 02:10:02 UTC 2016     root@releng1.nyi.freebsd.org:/usr/obj/usr/src/sys/GENERIC </OSCOMMENTS>
@@ -77,7 +77,7 @@ class ComputerHistoryTest extends TestCase {
       <PROCESSORS>2100</PROCESSORS>
       <PROCESSORT>Core i7</PROCESSORT>
       <SWAP>4096</SWAP>
-      <USERID>ddurieux</USERID>
+      <USERID>username</USERID>
       <UUID>4C4C4544-0048-3410-8050-B5C04F525931</UUID>
       <VMSYSTEM>Physical</VMSYSTEM>
     </HARDWARE>

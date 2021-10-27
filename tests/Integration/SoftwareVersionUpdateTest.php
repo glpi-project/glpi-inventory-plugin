@@ -61,6 +61,8 @@ class SoftwareVersionUpdateTest extends TestCase {
       $version         = new SoftwareVersion();
       $installation    = new Item_SoftwareVersion();
 
+      $DB->queryOrDie('DELETE FROM `glpi_plugin_glpiinventory_dblockinventorynames`');
+
       //Add a computer
       $computers_id = $computer->add(['name'        => 'computer1',
                                       'entities_id' => 0

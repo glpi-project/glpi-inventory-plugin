@@ -494,7 +494,7 @@ class PluginGlpiinventoryToolbox {
       if (call_user_func([$itemtype, 'canView'])) {
          $item = new $itemtype();
          $item->getFromDB($items_id);
-         echo gzuncompress($item->fields['serialized_inventory']);
+         echo base64_decode(gzuncompress($item->fields['serialized_inventory']));
       } else {
          Html::displayRightError();
       }

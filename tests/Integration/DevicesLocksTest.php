@@ -278,20 +278,19 @@ class DevicesLocksTest extends TestCase {
     * idem but with general lock on itemtype
     */
    public function switchLockItemtypeNotDuplicated() {
-      $pfLock = new PluginGlpiinventoryLock();
 
+      $this->expectException(\GlpitestSQLError::class);
+
+      $pfLock = new PluginGlpiinventoryLock();
       $input = [
          'tablename'   => 'glpi_computers',
          'items_id'    => 0,
          'tablefields' => exportArrayToDB(['computermodels_id'])
       ];
+      $pfLock->add($input);
 
-      ob_start();
-      $ret = $pfLock->add($input);
-      ob_end_clean();
       $items = getAllDataFromTable('glpi_plugin_glpiinventory_locks');
       $this->assertEquals(1, count($items), 'Lock must be unique '.print_r($items, true));
-      $this->assertFalse($ret);
    }
 
 

@@ -358,9 +358,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     *
     *  @return array
     **/
-    static function getRetries() {
+   static function getRetries() {
       $tab = [
-         0 => __('Never')
+        0 => __('Never')
       ];
 
       $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);

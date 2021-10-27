@@ -686,7 +686,7 @@ class CronTaskTest extends TestCase {
       $query = "SELECT DISTINCT `plugin_glpiinventory_taskjobstates_id`
                 FROM glpi_plugin_glpiinventory_taskjoblogs LIMIT 1";
       foreach ($DB->request($query) as $data) {
-         $pfTaskJobstate->changeStatusFinish($data['plugin_glpiinventory_taskjobstates_id'], '', 0);
+         $pfTaskJobstate->changeStatusFinish($data['plugin_glpiinventory_taskjobstates_id'], 0, '');
       }
 
       //No task & jobtates should be removed because ask for cleaning 5 days from now
@@ -745,7 +745,7 @@ class CronTaskTest extends TestCase {
       $query = "SELECT DISTINCT `plugin_glpiinventory_taskjobstates_id`
                 FROM glpi_plugin_glpiinventory_taskjoblogs";
       foreach ($DB->request($query) as $data) {
-         $pfTaskJobstate->changeStatusFinish($data['plugin_glpiinventory_taskjobstates_id'], '', 0);
+         $pfTaskJobstate->changeStatusFinish($data['plugin_glpiinventory_taskjobstates_id'], 0, '');
       }
 
       $query = "UPDATE `glpi_plugin_glpiinventory_taskjoblogs`

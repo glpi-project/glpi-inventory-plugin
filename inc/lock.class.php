@@ -747,9 +747,9 @@ class PluginGlpiinventoryLock extends CommonDBTM{
             unset($item_device->fields[$key]);
          }
       }
-      $_SESSION['glpi_fusionionventory_nolock'] = true;
+      $_SESSION['glpi_glpiinventory_nolock'] = true;
       $item_device->update(Toolbox::addslashes_deep($item_device->fields));
-      unset($_SESSION['glpi_fusionionventory_nolock']);
+      unset($_SESSION['glpi_glpiinventory_nolock']);
    }
 
 
@@ -806,7 +806,7 @@ class PluginGlpiinventoryLock extends CommonDBTM{
          if (count($a_lists) == 1) {
             $a_list = current($a_lists);
             if (!empty($a_list['serialized_inventory'])) {
-               $serialized = unserialize(gzuncompress($a_list['serialized_inventory']));
+               $serialized = unserialize(base64_decode(gzuncompress($a_list['serialized_inventory'])));
                return $serialized[$itemtype];
             }
          }

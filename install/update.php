@@ -1209,7 +1209,7 @@ function do_agent_migration($migration) {
    $a_table['keys']   = [];
    $a_table['keys'][] = ['field' => 'name', 'name' => '', 'type' => 'INDEX'];
    $a_table['keys'][] = ['field' => 'device_id', 'name' => '', 'type' => 'INDEX'];
-   $a_table['keys'][] = ['field' => 'computers_id', 'name' => '', 'type' => 'INDEX'];
+   //$a_table['keys'][] = ['field' => 'computers_id', 'name' => '', 'type' => 'INDEX'];
 
    $a_table['oldkeys'] = ['key'];
 
@@ -3874,8 +3874,8 @@ function do_printer_migration($migration) {
    $migration->addField($newTable,
                         "serialized_inventory",
                         "longblob");
-   $migration->addKey($newTable,
-                        "plugin_glpiinventory_configsecurities_id");
+   /*$migration->addKey($newTable,
+      "plugin_glpiinventory_configsecurities_id");*/
    $migration->addKey($newTable,
                         "printers_id");
    $migration->migrationOneTable($newTable);
@@ -5967,11 +5967,11 @@ function do_deploygroup_migration($migration) {
    ];
 
    $a_table['keys'] = [
-      [
+      /*[
          'field' => 'plugin_glpiinventory_deploygroups_id',
          'name' => '',
          'type' => 'KEY'
-      ],
+      ],*/
       [
          'field' => 'items_id',
          'name' => '',
@@ -6027,11 +6027,11 @@ function do_deploygroup_migration($migration) {
    ];
 
    $a_table['keys'] = [
-      [
+      /*[
          'field' => 'plugin_glpiinventory_deploygroups_id',
          'name' => '',
          'type' => 'KEY'
-      ],
+      ],*/
       [
          'field' => 'can_update_group',
          'name' => '',

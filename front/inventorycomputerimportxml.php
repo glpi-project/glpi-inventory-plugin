@@ -65,9 +65,9 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
             $filename = $zip->getNameIndex($n);
             $xml = $zip->getFromName($zip->getNameIndex($n));
             if (!empty($xml)) {
-               $_SESSION['glpi_fusionionventory_nolock'] = true;
+               $_SESSION['glpi_glpiinventory_nolock'] = true;
                $pfCommunication->handleOCSCommunication('', $xml);
-               unset($_SESSION['glpi_fusionionventory_nolock']);
+               unset($_SESSION['glpi_glpiinventory_nolock']);
             }
          }
          $zip->close();
@@ -75,9 +75,9 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
    } else if (preg_match('/\.(ocs|xml)/i', $_FILES['importfile']['name'])) {
 
       $xml = file_get_contents($_FILES['importfile']['tmp_name']);
-      $_SESSION['glpi_fusionionventory_nolock'] = true;
+      $_SESSION['glpi_glpiinventory_nolock'] = true;
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
-      unset($_SESSION['glpi_fusionionventory_nolock']);
+      unset($_SESSION['glpi_glpiinventory_nolock']);
    } else {
       Session::addMessageAfterRedirect(
          __('No file to import!', 'glpiinventory'),

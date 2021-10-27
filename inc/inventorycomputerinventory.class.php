@@ -487,7 +487,7 @@ class PluginGlpiinventoryInventoryComputerInventory {
             $items_id = $computer->add($input);
             $no_history = true;
             $setdynamic = 0;
-            $_SESSION['glpi_fusionionventory_nolock'] = true;
+            $_SESSION['glpi_glpiinventory_nolock'] = true;
 
             if (isset($_SESSION['plugin_glpiinventory_rules_id'])) {
                $pfRulematchedlog = new PluginGlpiinventoryRulematchedlog();
@@ -513,7 +513,7 @@ class PluginGlpiinventoryInventoryComputerInventory {
                unset($_SESSION['plugin_glpiinventory_locations_id']);
          }
 
-         $serialized = gzcompress(serialize($a_computerinventory));
+         $serialized = base64_encode(gzcompress(serialize($a_computerinventory)));
          $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] =
                   Toolbox::addslashes_deep($serialized);
 
@@ -554,8 +554,8 @@ class PluginGlpiinventoryInventoryComputerInventory {
                'value' => $items_id
             ]
          );
-         if (isset($_SESSION['glpi_fusionionventory_nolock'])) {
-            unset($_SESSION['glpi_fusionionventory_nolock']);
+         if (isset($_SESSION['glpi_glpiinventory_nolock'])) {
+            unset($_SESSION['glpi_glpiinventory_nolock']);
          }
 
          $plugin = new Plugin();

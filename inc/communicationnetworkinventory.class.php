@@ -276,7 +276,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
       $errors='';
       $this->deviceId=$items_id;
 
-      $serialized = gzcompress(serialize($a_inventory));
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
 
       if (isset($a_inventory['name'])
               && $a_inventory['name'] == '') {

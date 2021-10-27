@@ -96,7 +96,7 @@ class VirtualmachineTest extends TestCase {
           'serial'                           => 'XB63J7D',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
       $a_inventory['fusioninventorycomputer'] = [
           'last_fusioninventory_update' => date('Y-m-d H:i:s'),
@@ -136,7 +136,7 @@ class VirtualmachineTest extends TestCase {
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
-      $serialized = gzcompress(serialize($a_inventory));
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
@@ -206,7 +206,7 @@ class VirtualmachineTest extends TestCase {
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 1);
 
-      $serialized = gzcompress(serialize($a_inventory));
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 

@@ -133,7 +133,7 @@ class ComputerUpdateTest extends TestCase {
           'serial'                           => 'XB63J7D',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
 
       $a_inventory['processor'] = [
@@ -298,7 +298,7 @@ class ComputerUpdateTest extends TestCase {
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
-      $serialized = gzcompress(serialize($a_inventory));
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
@@ -335,7 +335,7 @@ class ComputerUpdateTest extends TestCase {
           'entities_id'                      => 0,
           'serial'                           => 'XB63J7D',
           'otherserial'                      => null,
-          'contact'                          => 'ddurieux',
+          'contact'                          => 'username',
           'contact_num'                      => null,
           'users_id_tech'                    => 0,
           'groups_id_tech'                   => 0,
@@ -1175,7 +1175,7 @@ class ComputerUpdateTest extends TestCase {
       $a_reference = [
           'entities_id'       => 0,
           'name'              => 'ThinkPad Display 1280x800',
-          'contact'           => 'ddurieux',
+          'contact'           => 'username',
           'contact_num'       => null,
           'users_id_tech'     => 0,
           'groups_id_tech'    => 0,
@@ -1236,7 +1236,7 @@ class ComputerUpdateTest extends TestCase {
           'entities_id'          => 0,
           'is_recursive'         => 0,
           'name'                 => 'HP Deskjet 5700 Series',
-          'contact'              => 'ddurieux',
+          'contact'              => 'username',
           'contact_num'          => null,
           'users_id_tech'        => 0,
           'groups_id_tech'       => 0,
@@ -1337,7 +1337,7 @@ class ComputerUpdateTest extends TestCase {
           'serial'                           => 'XB63J7J1',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
       $a_inventory['software'] = [
             'acrobat_reader_9.2$$$$1.0.0.0$$$$192$$$$0$$$$0' => [
@@ -1358,7 +1358,7 @@ class ComputerUpdateTest extends TestCase {
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
-      $serialized = gzcompress(serialize($a_inventory));
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 

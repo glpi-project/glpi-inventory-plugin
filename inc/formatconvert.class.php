@@ -292,18 +292,23 @@ class PluginGlpiinventoryFormatconvert {
                                         'serial' => 'serial',
                                         'computertypes_id' => 'computertypes_id']);
       if (!isset($array['OPERATINGSYSTEM']) || empty($array['OPERATINGSYSTEM'])) {
-         $array['OPERATINGSYSTEM'] = [];
+         $arrayos = [];
          if (isset($array['HARDWARE']['OSNAME'])) {
-            $array['OPERATINGSYSTEM']['FULL_NAME'] = $array['HARDWARE']['OSNAME'];
+            $arrayos['FULL_NAME'] = $array['HARDWARE']['OSNAME'];
          }
          if (isset($array['HARDWARE']['OSVERSION'])) {
-            $array['OPERATINGSYSTEM']['VERSION'] = $array['HARDWARE']['OSVERSION'];
+            $arrayos['VERSION'] = $array['HARDWARE']['OSVERSION'];
          }
          if (isset($array['HARDWARE']['OSCOMMENTS'])
                  && $array['HARDWARE']['OSCOMMENTS'] != ''
                  && !strstr($array['HARDWARE']['OSCOMMENTS'], 'UTC')) {
-            $array['OPERATINGSYSTEM']['SERVICE_PACK'] = $array['HARDWARE']['OSCOMMENTS'];
+            $arrayos['SERVICE_PACK'] = $array['HARDWARE']['OSCOMMENTS'];
          }
+
+         if (count($arrayos)) {
+            $array['OPERATINGSYSTEM'] = $arrayos;
+         }
+
       }
       if (isset($array_tmp['users_id'])) {
          if ($array_tmp['users_id'] == '') {

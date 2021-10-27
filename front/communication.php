@@ -46,7 +46,7 @@ $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
-$_SESSION['glpi_fusionionventory_nolock'] = true;
+$_SESSION['glpi_glpiinventory_nolock'] = true;
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $_SESSION['glpi_use_mode'] = 0;

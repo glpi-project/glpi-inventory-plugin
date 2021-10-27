@@ -239,7 +239,7 @@ class ComputerDynamicTest extends TestCase {
              'serial'                           => 'XB63J7DH',
              'computertypes_id'                 => 0,
              'is_dynamic'                       => 1,
-             'contact'                          => 'ddurieux'
+             'contact'                          => 'username'
           ],
           'fusioninventorycomputer' => [
               'winowner'                        => 'test',

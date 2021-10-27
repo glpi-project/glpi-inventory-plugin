@@ -1983,7 +1983,7 @@ function plugin_pre_item_delete_fusioninventory($parm) {
 function plugin_item_update_fusioninventory($parm) {
    if (isset($_SESSION["glpiID"])
            && $_SESSION["glpiID"] != ''
-           && !isset($_SESSION['glpi_fusionionventory_nolock'])) { // manual task
+           && !isset($_SESSION['glpi_glpiinventory_nolock'])) { // manual task
       $plugin = new Plugin;
       if ($plugin->isActivated('glpiinventory')) {
          // lock fields which have been updated

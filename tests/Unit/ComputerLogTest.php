@@ -113,7 +113,7 @@ class ComputerLogTest extends TestCase {
           'serial'                           => 'XB63J7D',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
 
       $inventory['processor'] = [
@@ -271,7 +271,7 @@ class ComputerLogTest extends TestCase {
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $serialized = gzcompress(serialize($inventory));
+      $serialized = base64_encode(gzcompress(serialize($inventory)));
       $inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 

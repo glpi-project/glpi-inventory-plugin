@@ -208,9 +208,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjobstates` (
   `max_retry` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_taskjobs_id` (`plugin_glpiinventory_taskjobs_id`),
-  KEY `plugin_glpiinventory_agents_id` (`plugin_glpiinventory_agents_id`,`state`),
-  KEY `plugin_glpiinventory_taskjob_2` (`plugin_glpiinventory_taskjobs_id`,`state`),
-  KEY `plugin_glpiinventory_agents_ids_states` (`plugin_glpiinventory_agents_id`, `plugin_glpiinventory_taskjobs_id`, `items_id`, `itemtype`, `id`, `state`),
+  KEY `plugin_glpiinventory_agents_id` (`plugin_glpiinventory_agents_id`),
   KEY `uniqid` (`uniqid`,`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 

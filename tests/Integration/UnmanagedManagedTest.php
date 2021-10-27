@@ -186,7 +186,7 @@ class UnmanagedManagedTest extends TestCase {
          'serial'                           => 'XB63J7D',
          'computertypes_id'                 => 1,
          'is_dynamic'                       => 1,
-         'contact'                          => 'ddurieux'
+         'contact'                          => 'username'
       ];
       $a_inventory['networkport'] = [
          'em0-cc:f9:54:a1:03:45' => [

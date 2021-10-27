@@ -53,7 +53,7 @@ class ComputerTransformationTest extends TestCase {
                 'DNS'                  => '8.8.8.8',
                 'ETIME'                => '1',
                 'IPADDR'               => '',
-                'LASTLOGGEDUSER'       => 'ddurieux',
+                'LASTLOGGEDUSER'       => 'username',
                 'MEMORY'               => '3802',
                 'NAME'                 => 'pc',
                 'OSCOMMENTS'           => 'GENERIC ()root@farrell.cse.buffalo.edu',
@@ -64,7 +64,7 @@ class ComputerTransformationTest extends TestCase {
                 'PROCESSORT'           => 'Core i3',
                 'SWAP'                 => '0',
                 'USERDOMAIN'           => '',
-                'USERID'               => 'ddurieux',
+                'USERID'               => 'username',
                 'UUID'                 => '68405E00-E5BE-11DF-801C-B05981201220',
                 'VMSYSTEM'             => 'Physical',
                 'WORKGROUP'            => 'mydomain.local'
@@ -139,7 +139,7 @@ class ComputerTransformationTest extends TestCase {
           'serial'                           => '',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
       $this->assertEquals($a_reference, $a_return);
    }
@@ -156,10 +156,10 @@ class ComputerTransformationTest extends TestCase {
       $a_computer = [];
       $a_computer['HARDWARE'] = [
                 'NAME'                 => 'pc',
-                'LASTLOGGEDUSER'       => 'ddurieux',
-                'USERID'               => 'ddurieux',
+                'LASTLOGGEDUSER'       => 'username',
+                'USERID'               => 'username',
             ];
-      $a_computer['USERS'][] = ['LOGIN'  => 'ddurieux'];
+      $a_computer['USERS'][] = ['LOGIN'  => 'username'];
       $a_computer['USERS'][] = ['LOGIN'  => 'admin',
                                      'DOMAIN' => 'local.com'];
 
@@ -178,18 +178,6 @@ class ComputerTransformationTest extends TestCase {
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date,
               'last_boot'                       => 'NULL',
-              'items_operatingsystems_id' => [
-                  'operatingsystems_id'              => '',
-                  'operatingsystemversions_id'       => '',
-                  'operatingsystemservicepacks_id'   => '',
-                  'operatingsystems_id'              => '',
-                  'operatingsystemarchitectures_id'  => '',
-                  'operatingsystemkernels_id'        => '',
-                  'operatingsystemkernelversions_id' => '',
-                  'operatingsystemeditions_id'       => '',
-                  'licenseid'                       => '',
-                  'license_number'                   => ''
-              ]
           ],
           'soundcard'      => [],
           'graphiccard'    => [],
@@ -223,7 +211,9 @@ class ComputerTransformationTest extends TestCase {
           'serial'                           => '',
           'computertypes_id'                 => '',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux/admin@local.com'
+          'contact'                          => 'username/admin@local.com',
+          'licenseid'                       => '',
+          'license_number'                   => ''
       ];
       $this->assertEquals($a_reference, $a_return);
    }
