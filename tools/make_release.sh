@@ -55,17 +55,17 @@ fi
 
 INIT_PWD=$PWD;
 
-if [ -e /tmp/fusioninventory ]
+if [ -e /tmp/glpiinventory ]
 then
  echo "Delete existing temp directory";
-\rm -rf /tmp/fusioninventory;
+\rm -rf /tmp/glpiinventory;
 fi
 
 echo "Copy to  /tmp directory";
-git checkout-index -a -f --prefix=/tmp/fusioninventory/
+git checkout-index -a -f --prefix=/tmp/glpiinventory/
 
 echo "Move to this directory";
-cd /tmp/fusioninventory;
+cd /tmp/glpiinventory;
 
 echo "Check version"
 if grep --quiet $RELEASE setup.php; then
@@ -74,15 +74,15 @@ else
   echo "$RELEASE has not been found in setup.php. Exiting."
   exit 1;
 fi
-if grep --quiet $RELEASE fusioninventory.xml; then
-  echo "$RELEASE found in fusioninventory.xml, OK."
+if grep --quiet $RELEASE glpiinventory.xml; then
+  echo "$RELEASE found in glpiinventory.xml, OK."
 else
-  echo "$RELEASE has not been found in fusioninventory.xml. Exiting."
+  echo "$RELEASE has not been found in glpiinventory.xml. Exiting."
   exit 1;
 fi
 
 echo "Check XML WF"
-if ! xmllint --noout fusioninventory.xml; then
+if ! xmllint --noout glpiinventory.xml; then
    echo "XML is *NOT* well formed. Exiting."
    exit 1;
 fi
@@ -97,14 +97,19 @@ sed \
    -i '' setup.php
 
 echo "Minify stylesheets and javascripts"
-$INIT_PWD/vendor/bin/robo minify
+find /tmp/glpiinventory/css /tmp/glpiinventory/lib \( -iname "*.css" ! -iname "*.min.css" \) \
+    -exec sh -c 'echo "> {}" && "'$INIT_PWD'"/../../node_modules/.bin/csso {} --output $(dirname {})/$(basename {} ".css").min.css' \;
+
+echo "Minify javascripts"
+find /tmp/glpiinventory/js /tmp/glpiinventory/lib \( -iname "*.js" ! -iname "*.min.js" \) \
+    -exec sh -c 'echo "> {}" && "'$INIT_PWD'"/../../node_modules/.bin/terser {} --mangle --output $(dirname {})/$(basename {} ".js").min.js' \;
 
 echo "Compile locale files"
 ./tools/update_mo.pl
 
 echo "Delete various scripts and directories"
+\rm -rf .github;
 \rm -rf vendor;
-\rm -rf RoboFile.php;
 \rm -rf tools;
 \rm -rf phpunit;
 \rm -rf tests;
@@ -118,17 +123,17 @@ echo "Delete various scripts and directories"
 \rm -rf ISSUE_TEMPLATE.md;
 \rm -rf PULL_REQUEST_TEMPLATE.md;
 \rm -rf .tx;
-\rm -rf fusioninventory.xml;
+\rm -rf glpiinventory.xml;
 \rm -rf screenshots;
 \find pics/ -type f -name "*.eps" -exec rm -rf {} \;
 
 echo "Creating tarball";
 cd ..;
-tar cjf "fusioninventory-$RELEASE.tar.bz2" fusioninventory
+tar cjf "glpiinventory-$RELEASE.tar.bz2" glpiinventory
 
 cd $INIT_PWD;
 
 echo "Deleting temp directory";
-\rm -rf /tmp/fusioninventory;
+\rm -rf /tmp/glpiinventory;
 
 echo "The Tarball is in the /tmp directory";
