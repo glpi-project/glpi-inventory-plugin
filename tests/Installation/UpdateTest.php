@@ -30,7 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-require_once("FusinvDB.php");
+require_once("DatabaseTestsCommons.php");
 
 use PHPUnit\Framework\TestCase;
 
@@ -160,8 +160,8 @@ class UpdateTest extends TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
-      $FusinvDB = new FusinvDB();
-      $FusinvDB->checkInstall("glpiinventory", "upgrade from ".$version);
+      $DatabaseTestsCommons = new DatabaseTestsCommons();
+      $DatabaseTestsCommons->checkInstall("glpiinventory", "upgrade from ".$version);
 
       $this->verifyEntityRules($nbrules);
       $this->checkDeployMirrors();

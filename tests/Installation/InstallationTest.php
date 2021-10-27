@@ -30,7 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-require_once("FusinvDB.php");
+require_once("DatabaseTestsCommons.php");
 
 use PHPUnit\Framework\TestCase;
 
@@ -91,8 +91,8 @@ class InstallationTest extends TestCase {
          implode("\n", $output)."\n".$command."\n"
       );
 
-      $FusinvDBTest = new FusinvDB();
-      $FusinvDBTest->checkInstall("glpiinventory", "install new version");
+      $DatabaseTestsCommonsTest = new DatabaseTestsCommons();
+      $DatabaseTestsCommonsTest->checkInstall("glpiinventory", "install new version");
 
       PluginGlpiinventoryConfig::loadCache();
 

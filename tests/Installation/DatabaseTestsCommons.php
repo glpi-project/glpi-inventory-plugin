@@ -32,7 +32,7 @@
 
 use PHPUnit\Framework\Assert;
 
-class FusinvDB extends Assert{
+class DatabaseTestsCommons extends Assert{
 
 
    public function checkInstall($pluginname = '', $when = '') {
