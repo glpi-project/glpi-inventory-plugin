@@ -1,13 +1,18 @@
 {
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  "require": {
+    "php": ">=7.4"
+  },
   "require-dev": {
-    "glpi-project/tools": "^0.3.0",
+    "glpi-project/tools": "^0.3",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "classmap": [
       "inc/"
     ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
   }
 }
