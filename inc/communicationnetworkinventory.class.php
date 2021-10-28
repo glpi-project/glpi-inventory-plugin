@@ -221,9 +221,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
             case 'AGENT' :
                if (isset($this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'])) {
                   $agent = $pfAgent->infoByKey($this->arrayinventory['DEVICEID']);
-                  $agent['fusioninventory_agent_version'] =
+                  $agent['version'] =
                                        $this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'];
-                  $agent['last_agent_update'] = date("Y-m-d H:i:s");
+                  $agent['last_contact'] = date("Y-m-d H:i:s");
                   $pfAgent->update($agent);
                }
                break;
