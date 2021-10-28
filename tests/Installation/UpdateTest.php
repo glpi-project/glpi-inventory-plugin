@@ -1,46 +1,36 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
-require_once("FusinvDB.php");
+require_once("DatabaseTestsCommons.php");
 
 use PHPUnit\Framework\TestCase;
 
@@ -55,41 +45,41 @@ class UpdateTest extends TestCase {
 
    public static function tearDownAfterClass(): void {
       // Creation of folders if not created in tests
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/tmp')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/tmp');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/computer')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/computer');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/printer')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/printer');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/networkequipment')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/xml/networkequipment');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/upload')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/upload');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/repository')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/repository');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/manifests')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/manifests');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/import')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/import');
       }
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/export')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory/files/export');
       }
    }
 
@@ -105,9 +95,9 @@ class UpdateTest extends TestCase {
    function update($version = '', $verify = false, $nbrules = 0) {
       global $DB;
 
-      // uninstall the plugin FusionInventory
+      // uninstall the plugin
       $plugin = new Plugin();
-      $plugin->getFromDBByCrit(['directory' => 'fusioninventory']);
+      $plugin->getFromDBByCrit(['directory' => 'glpiinventory']);
       $plugin->uninstall($plugin->fields['id']);
 
       $query = "SHOW TABLES";
@@ -122,7 +112,7 @@ class UpdateTest extends TestCase {
          WHERE `itemtype` LIKE 'PluginFus%'";
       $DB->query($query);
 
-      // Delete all fusion rules
+      // Delete all plugin rules
       $rule = new Rule();
       $items = $rule->find(['sub_type' => ['like', "PluginFusion%"]]);
       foreach ($items as $item) {
@@ -134,7 +124,7 @@ class UpdateTest extends TestCase {
 
       if ($version != '') {
          $sqlfile = "tests/Installation/mysql/i-".$version.".sql";
-         // Load specific FusionInventory version in database
+         // Load specific plugin version in database
          $result = $this->load_mysql_file(
             $DB->dbuser,
             $DB->dbhost,
@@ -143,18 +133,25 @@ class UpdateTest extends TestCase {
             $sqlfile
          );
          $this->assertEquals( 0, $result['returncode'],
-            "Failed to install Fusioninventory ".$sqlfile.":\n".
+            "Failed to install plugin ".$sqlfile.":\n".
             implode("\n", $result['output'])
          );
+
+         $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -vvv -n --config-dir=tests/config --no-interaction";
+         $outputMy = [];
+         $returncodeMy = 0;
+         exec($commandMy, $outputMy, $returncodeMy);
+         $this->assertEquals(0, $returncodeMy, implode("\n", $outputMy));
+
       }
       $output = [];
       $returncode = 0;
       $outputActivate     = [];
       $returncodeActivate = 0;
-      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory";
+      $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory";
       exec($command, $output, $returncode);
 
-      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory";
+      $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory";
       exec($commandActivate, $outputActivate, $returncodeActivate);
 
       $this->assertEquals(0, $returncode, implode("\n", $output));
@@ -163,8 +160,8 @@ class UpdateTest extends TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
-      $FusinvDB = new FusinvDB();
-      $FusinvDB->checkInstall("fusioninventory", "upgrade from ".$version);
+      $DatabaseTestsCommons = new DatabaseTestsCommons();
+      $DatabaseTestsCommons->checkInstall("glpiinventory", "upgrade from ".$version);
 
       $this->verifyEntityRules($nbrules);
       $this->checkDeployMirrors();
@@ -265,7 +262,7 @@ class UpdateTest extends TestCase {
       $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
 
       $cnt_new = countElementsInTable("glpi_rules",
-         ['sub_type' => 'PluginFusioninventoryInventoryRuleEntity']);
+         ['sub_type' => 'PluginGlpiinventoryInventoryRuleEntity']);
 
       $this->assertEquals($nbrules, $cnt_new, "May have ".$nbrules." entity rules");
 
@@ -276,7 +273,7 @@ class UpdateTest extends TestCase {
       global $DB;
       $DB->connect();
 
-      $a_configs = getAllDataFromTable('glpi_plugin_fusioninventory_configs',
+      $a_configs = getAllDataFromTable('glpi_plugin_glpiinventory_configs',
          ['type' => 'states_id_default']);
 
       $this->assertEquals(1, count($a_configs), "May have conf states_id_default");
@@ -290,7 +287,7 @@ class UpdateTest extends TestCase {
       global $DB;
 
       //check is the field is_active has correctly been added to mirror servers
-      $this->assertTrue($DB->fieldExists('glpi_plugin_fusioninventory_deploymirrors',
+      $this->assertTrue($DB->fieldExists('glpi_plugin_glpiinventory_deploymirrors',
                                     'is_active'));
 
    }

@@ -1,49 +1,36 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to convert inventory from agent to inventory ready to
- * inject in GLPI.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
+
+use Glpi\Toolbox\Sanitizer;
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -52,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Used to convert inventory from agent to inventory ready to inject in GLPI.
  */
-class PluginFusioninventoryFormatconvert {
+class PluginGlpiinventoryFormatconvert {
 
    const FI_SOFTWARE_SEPARATOR = "$$$$";
    /**
@@ -73,14 +60,14 @@ class PluginFusioninventoryFormatconvert {
    /**
     * Convert XML into php array
     *
-    * @global string $PLUGIN_FUSIONINVENTORY_XML
+    * @global string $PLUGIN_GLPI_INVENTORY_XML
     * @param object $xml
     * @return array
     */
    static function XMLtoArray($xml) {
-      global $PLUGIN_FUSIONINVENTORY_XML;
+      global $PLUGIN_GLPI_INVENTORY_XML;
 
-      $PLUGIN_FUSIONINVENTORY_XML = $xml;
+      $PLUGIN_GLPI_INVENTORY_XML = $xml;
       $datainventory = json_decode(json_encode((array)$xml), true);
 
       //TODO: factorize this code with older one (need to find a suitable solution for all)
@@ -106,7 +93,7 @@ class PluginFusioninventoryFormatconvert {
       if (isset($datainventory['CONTENT']['PORTS'])) {
          unset($datainventory['CONTENT']['PORTS']);
       }
-      $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
+      $datainventory = PluginGlpiinventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
          $a_fields = ['SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES',
                            'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS',
@@ -209,7 +196,7 @@ class PluginFusioninventoryFormatconvert {
     */
    static function JSONtoArray($json) {
       $datainventory = json_decode($json, true);
-      $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
+      $datainventory = PluginGlpiinventoryFormatconvert::cleanArray($datainventory);
       return $datainventory;
    }
 
@@ -226,7 +213,7 @@ class PluginFusioninventoryFormatconvert {
             if (count($value) == 0) {
                $value = '';
             } else {
-               $value = PluginFusioninventoryFormatconvert::cleanArray($value);
+               $value = PluginGlpiinventoryFormatconvert::cleanArray($value);
             }
          } else {
             if (strpos($value, "\'")) {
@@ -236,7 +223,7 @@ class PluginFusioninventoryFormatconvert {
             if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $value)) {
                $value = Toolbox::addslashes_deep($value);
             }
-            $value = Toolbox::clean_cross_side_scripting_deep($value);
+            $value = Sanitizer::sanitize($value);
          }
          $data[$key] = $value;
       }
@@ -245,7 +232,7 @@ class PluginFusioninventoryFormatconvert {
 
 
    /**
-    * Convert Fusioninventory Computer inventory to pre-prepared GLPI inventory
+    * Convert computer inventory to pre-prepared GLPI inventory
     *
     * @global object $DB
     * @global boolean $PF_ESXINVENTORY
@@ -259,7 +246,7 @@ class PluginFusioninventoryFormatconvert {
       // Initialize
       $a_inventory = [
          'Computer'                => [],
-         'fusioninventorycomputer' => [],
+         'inventorycomputer' => [],
          'processor'               => [],
          'memory'                  => [],
          'harddrive'               => [],
@@ -283,7 +270,7 @@ class PluginFusioninventoryFormatconvert {
          'remote_mgmt'             => []
       ];
       $thisc = new self();
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
 
       $ignorecontrollers = [];
 
@@ -305,18 +292,23 @@ class PluginFusioninventoryFormatconvert {
                                         'serial' => 'serial',
                                         'computertypes_id' => 'computertypes_id']);
       if (!isset($array['OPERATINGSYSTEM']) || empty($array['OPERATINGSYSTEM'])) {
-         $array['OPERATINGSYSTEM'] = [];
+         $arrayos = [];
          if (isset($array['HARDWARE']['OSNAME'])) {
-            $array['OPERATINGSYSTEM']['FULL_NAME'] = $array['HARDWARE']['OSNAME'];
+            $arrayos['FULL_NAME'] = $array['HARDWARE']['OSNAME'];
          }
          if (isset($array['HARDWARE']['OSVERSION'])) {
-            $array['OPERATINGSYSTEM']['VERSION'] = $array['HARDWARE']['OSVERSION'];
+            $arrayos['VERSION'] = $array['HARDWARE']['OSVERSION'];
          }
          if (isset($array['HARDWARE']['OSCOMMENTS'])
                  && $array['HARDWARE']['OSCOMMENTS'] != ''
                  && !strstr($array['HARDWARE']['OSCOMMENTS'], 'UTC')) {
-            $array['OPERATINGSYSTEM']['SERVICE_PACK'] = $array['HARDWARE']['OSCOMMENTS'];
+            $arrayos['SERVICE_PACK'] = $array['HARDWARE']['OSCOMMENTS'];
          }
+
+         if (count($arrayos)) {
+            $array['OPERATINGSYSTEM'] = $arrayos;
+         }
+
       }
       if (isset($array_tmp['users_id'])) {
          if ($array_tmp['users_id'] == '') {
@@ -346,7 +338,7 @@ class PluginFusioninventoryFormatconvert {
                                         'OSINSTALLDATE'  => 'operatingsystem_installationdate',
                                         'WINOWNER'       => 'winowner',
                                         'WINCOMPANY'     => 'wincompany']);
-      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
+      $array_tmp['last_inventory_update'] = date('Y-m-d H:i:s');
 
       // * Determine "Public contact address"
       if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) { // Try "X-Forwarded-For" HTTP header
@@ -365,27 +357,27 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp['remote_addr'] = $_SERVER['REMOTE_ADDR'];
       }
 
-      $a_inventory['fusioninventorycomputer'] = $array_tmp;
+      $a_inventory['inventorycomputer'] = $array_tmp;
       if (isset($array['OPERATINGSYSTEM']['INSTALL_DATE'])
               && !empty($array['OPERATINGSYSTEM']['INSTALL_DATE'])) {
-         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] =
+         $a_inventory['inventorycomputer']['operatingsystem_installationdate'] =
                      $array['OPERATINGSYSTEM']['INSTALL_DATE'];
       }
       if (isset($array['OPERATINGSYSTEM']['BOOT_TIME'])
               && !empty($array['OPERATINGSYSTEM']['BOOT_TIME'])) {
-         $a_inventory['fusioninventorycomputer']['last_boot'] = $array['OPERATINGSYSTEM']['BOOT_TIME'];
+         $a_inventory['inventorycomputer']['last_boot'] = $array['OPERATINGSYSTEM']['BOOT_TIME'];
       }
 
       if (isset($array['HARDWARE']['DESCRIPTION'])) {
-         $a_inventory['fusioninventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
+         $a_inventory['inventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
       }
 
-      if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
-         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = "NULL";
+      if (empty($a_inventory['inventorycomputer']['operatingsystem_installationdate'])) {
+         $a_inventory['inventorycomputer']['operatingsystem_installationdate'] = "NULL";
       }
 
-      if (empty($a_inventory['fusioninventorycomputer']['last_boot'])) {
-         $a_inventory['fusioninventorycomputer']['last_boot'] = "NULL";
+      if (empty($a_inventory['inventorycomputer']['last_boot'])) {
+         $a_inventory['inventorycomputer']['last_boot'] = "NULL";
       }
 
       // * BIOS
@@ -489,7 +481,7 @@ class PluginFusioninventoryFormatconvert {
       //   $a_inventory['BIOS']['PARTNUMBER'] = $array['BIOS']['SKUNUMBER'];
       //}
 
-      $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
+      $CFG_GLPI['plugin_glpiinventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
 
       // * BIOS
       if (isset($array['BIOS'])) {
@@ -532,7 +524,7 @@ class PluginFusioninventoryFormatconvert {
                     'KERNEL_VERSION' => 'operatingsystemkernelversions_id']);
 
          if (isset($array['OPERATINGSYSTEM']['HOSTID'])) {
-            $a_inventory['fusioninventorycomputer']['hostid'] = $array['OPERATINGSYSTEM']['HOSTID'];
+            $a_inventory['inventorycomputer']['hostid'] = $array['OPERATINGSYSTEM']['HOSTID'];
          }
 
          if (isset($a_inventory['Computer']['licenseid'])) {
@@ -619,7 +611,7 @@ class PluginFusioninventoryFormatconvert {
          if ($array_tmp['operatingsystemservicepacks_id'] == '0') {
             $array_tmp['operatingsystemservicepacks_id'] = '';
          }
-         $a_inventory['fusioninventorycomputer']['items_operatingsystems_id'] = $array_tmp;
+         $a_inventory['inventorycomputer']['items_operatingsystems_id'] = $array_tmp;
       }
 
       // otherserial (on tag) if defined in config
@@ -641,8 +633,8 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // Hack for problems of ESX inventory with same deviceid than real computer inventory
-      if (isset($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])
-              && strstr($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'], 'VMware ESX')) {
+      if (isset($a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])
+              && strstr($a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'], 'VMware ESX')) {
          $PF_ESXINVENTORY = true;
       }
 
@@ -752,7 +744,7 @@ class PluginFusioninventoryFormatconvert {
                                                        'MACADDR'       => 'mac']);
                      if (isset($a_found['PCIID'])) {
                         $a_PCIData =
-                              PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
+                              PluginGlpiinventoryInventoryExternalDB::getDataFromPCIID(
                                 $a_found['PCIID']
                               );
                         if (isset($a_PCIData['manufacturer'])) {
@@ -908,7 +900,7 @@ class PluginFusioninventoryFormatconvert {
                                                     'type'          => 'interfacetypes_id']);
                   if (isset($a_controllers['PCIID'])) {
                      $a_PCIData =
-                           PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
+                           PluginGlpiinventoryInventoryExternalDB::getDataFromPCIID(
                              $a_controllers['PCIID']
                            );
                      if (isset($a_PCIData['manufacturer'])) {
@@ -1153,7 +1145,7 @@ class PluginFusioninventoryFormatconvert {
                      AND $a_peripherals['VENDORID'] != ''
                      AND isset($a_peripherals['PRODUCTID'])) {
 
-               $dataArray = PluginFusioninventoryInventoryExternalDB::getDataFromUSBID(
+               $dataArray = PluginGlpiinventoryInventoryExternalDB::getDataFromUSBID(
                           $a_peripherals['VENDORID'],
                           $a_peripherals['PRODUCTID']
                        );
@@ -1227,7 +1219,7 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['harddrive'] = [];
       if (isset($array['STORAGES'])) {
          foreach ($array['STORAGES']  as $a_storage) {
-            $type_tmp = PluginFusioninventoryFormatconvert::getTypeDrive($a_storage);
+            $type_tmp = PluginGlpiinventoryFormatconvert::getTypeDrive($a_storage);
             if ($type_tmp == "Drive") {
                // it's cd-rom / dvd
                //               if ($pfConfig->getValue(,
@@ -1323,7 +1315,7 @@ class PluginFusioninventoryFormatconvert {
                      ] + $where_add,
                      'LIMIT'  => 1
                   ]);
-                  if ($row = $iterator->next()) {
+                  foreach ($iterator as $row) {
                      $a_inventory['Computer']['users_id'] = $row['id'];
                   }
                }
@@ -1533,7 +1525,7 @@ class PluginFusioninventoryFormatconvert {
          'inventory' => $a_inventory,
          'source'    => $array
       ];
-      $plugin_values = Plugin::doHookFunction("fusioninventory_addinventoryinfos",
+      $plugin_values = Plugin::doHookFunction("glpiinventory_addinventoryinfos",
                                               $plugin_params);
 
       //Plugin_values is returned by plugins. We check if it's correct (an array)
@@ -1565,8 +1557,8 @@ class PluginFusioninventoryFormatconvert {
       //By default, no operating system is set
       $operatingsystems_id = 0;
       //Get the operating system of the computer if set
-      if (isset($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])) {
-         $operatingsystems_id = $a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
+      if (isset($a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])) {
+         $operatingsystems_id = $a_inventory['inventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
       }
 
       //Array to store softwares where the manufacturer is set
@@ -1685,8 +1677,8 @@ class PluginFusioninventoryFormatconvert {
                      //Add the current manufacturer to the cache of manufacturers
                      if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
                         $entities_id = 0;
-                        if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-                           $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                        if (isset($_SESSION["plugin_glpiinventory_entity"])) {
+                           $entities_id = $_SESSION["plugin_glpiinventory_entity"];
                         }
                         $new_value = Dropdown::importExternal(
                            'Manufacturer', $array_tmp['manufacturers_id'], $entities_id);
@@ -1792,12 +1784,12 @@ class PluginFusioninventoryFormatconvert {
    function extraCollectInfo($a_inventory, $computers_id) {
       global $DB;
 
-      $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
+      $pfCollectRuleCollection = new PluginGlpiinventoryCollectRuleCollection();
 
       // Get data from rules / collect registry, wmi, find files
       $data_collect = [];
 
-      $data_registries = getAllDataFromTable('glpi_plugin_fusioninventory_collects_registries_contents',
+      $data_registries = getAllDataFromTable('glpi_plugin_glpiinventory_collects_registries_contents',
          ['computers_id' => $computers_id]);
 
       foreach ($data_registries as $data) {
@@ -1812,7 +1804,7 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-      $data_wmis = getAllDataFromTable('glpi_plugin_fusioninventory_collects_wmis_contents',
+      $data_wmis = getAllDataFromTable('glpi_plugin_glpiinventory_collects_wmis_contents',
          ['computers_id' => $computers_id]);
 
       foreach ($data_wmis as $data) {
@@ -1827,7 +1819,7 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-      $data_files = getAllDataFromTable('glpi_plugin_fusioninventory_collects_files_contents',
+      $data_files = getAllDataFromTable('glpi_plugin_glpiinventory_collects_files_contents',
          ['computers_id' => $computers_id]);
 
       foreach ($data_files as $data) {
@@ -1948,7 +1940,7 @@ class PluginFusioninventoryFormatconvert {
    function replaceids($array, $itemtype, $items_id, $level = 0) {
       global $CFG_GLPI;
 
-      $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype),
+      $a_lockable = PluginGlpiinventoryLock::getLockFields(getTableForItemType($itemtype),
                                                              $items_id);
 
       // save raw manufacture name before its replacement by id for importing model
@@ -1973,7 +1965,7 @@ class PluginFusioninventoryFormatconvert {
                }
                $array[$key] = $this->replaceids($value, $new_itemtype, $items_id, $level + 1);
             } else {
-               if (!PluginFusioninventoryLock::isFieldLocked($a_lockable, $key)) {
+               if (!PluginGlpiinventoryLock::isFieldLocked($a_lockable, $key)) {
                   if (!is_numeric($key)
                           && ($key == "manufacturers_id"
                               || $key == 'bios_manufacturers_id')) {
@@ -1982,15 +1974,15 @@ class PluginFusioninventoryFormatconvert {
                      if ($key == 'bios_manufacturers_id') {
                         $this->foreignkey_itemtype[$key] = getItemtypeForForeignKeyField('manufacturers_id');
                      } else {
-                        if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value])) {
-                           $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value] = $array[$key];
+                        if (isset($CFG_GLPI['plugin_glpiinventory_computermanufacturer'][$value])) {
+                           $CFG_GLPI['plugin_glpiinventory_computermanufacturer'][$value] = $array[$key];
                         }
                      }
                   }
                   if (!is_numeric($key)) {
                      $entities_id = 0;
-                     if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-                        $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                     if (isset($_SESSION["plugin_glpiinventory_entity"])) {
+                        $entities_id = $_SESSION["plugin_glpiinventory_entity"];
                      }
                      if ($key == "locations_id") {
                         $array[$key] = Dropdown::importExternal('Location', $value, $entities_id);
@@ -2181,8 +2173,8 @@ class PluginFusioninventoryFormatconvert {
             break;
       }
       $array_tmp = $this->addValues($array['INFO'], $infos);
-      $array_tmp['last_fusioninventory_update']       = date('Y-m-d H:i:s');
-      $a_inventory['PluginFusioninventory'.ucfirst($itemtype)] = $array_tmp;
+      $array_tmp['last_inventory_update']       = date('Y-m-d H:i:s');
+      $a_inventory['PluginGlpiinventory'.ucfirst($itemtype)] = $array_tmp;
    }
 
    /**
@@ -2378,23 +2370,23 @@ class PluginFusioninventoryFormatconvert {
       // CARTRIDGES
       $a_inventory['cartridge'] = [];
       if (isset($array['CARTRIDGES'])) {
-         $pfMapping = new PluginFusioninventoryMapping();
+         $pfMapping = new PluginGlpiinventoryMapping();
 
          foreach ($array['CARTRIDGES'] as $name => $value) {
             // Special case for paper roll
             if (is_array($value)) {
                if ($name == 'PAPERROLL') {
-                  $plugin_fusioninventory_mappings = $pfMapping->get("Printer", 'paperrollinches');
-                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value['INCHES'];
+                  $plugin_glpiinventory_mappings = $pfMapping->get("Printer", 'paperrollinches');
+                  $a_inventory['cartridge'][$plugin_glpiinventory_mappings['id']] = $value['INCHES'];
 
-                  $plugin_fusioninventory_mappings = $pfMapping->get("Printer", 'paperrollcentimeters');
-                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value['CENTIMETERS'];
+                  $plugin_glpiinventory_mappings = $pfMapping->get("Printer", 'paperrollcentimeters');
+                  $a_inventory['cartridge'][$plugin_glpiinventory_mappings['id']] = $value['CENTIMETERS'];
                }
                continue;
             }
 
-            $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
-            if ($plugin_fusioninventory_mappings) {
+            $plugin_glpiinventory_mappings = $pfMapping->get("Printer", strtolower($name));
+            if ($plugin_glpiinventory_mappings) {
                if (strstr($value, 'pages')) { // 30pages
                   $value = str_replace('pages', '', $value);
                   $value = 0 - $value;
@@ -2405,7 +2397,7 @@ class PluginFusioninventoryFormatconvert {
                   $value = '';
                }
                if ($value != '') {
-                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value;
+                  $a_inventory['cartridge'][$plugin_glpiinventory_mappings['id']] = $value;
                }
             }
          }

@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the deploy task job.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @author    Alexandre Delaunay
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,9 +37,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the deploy task job.
  *
- * @todo This class should inherit the PluginFusioninventoryTaskjob
+ * @todo This class should inherit the PluginGlpiinventoryTaskjob
  */
-class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
+class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
 
 
    /**
@@ -91,7 +76,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
       $sql = " SELECT *
                FROM `".$this->getTable()."`
-               WHERE `plugin_fusioninventory_deploytasks_id` = '$tasks_id'
+               WHERE `plugin_glpiinventory_deploytasks_id` = '$tasks_id'
                AND method = 'deployinstall'";
 
       $res  = $DB->query($sql);
@@ -112,7 +97,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                $tmp         = array_keys($action);
                $action_type = $tmp[0];
 
-               $json['tasks'][$i]['package_id']       = $package['PluginFusioninventoryDeployPackage'];
+               $json['tasks'][$i]['package_id']       = $package['PluginGlpiinventoryDeployPackage'];
                $json['tasks'][$i]['method']           = $task['method'];
                $json['tasks'][$i]['comment']          = $task['comment'];
                $json['tasks'][$i]['retry_nb']         = $task['retry_nb'];
@@ -145,7 +130,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $tasks = json_decode($params['tasks']);
 
       //remove old jobs from task
-      $this->deleteByCriteria(['plugin_fusioninventory_deploytasks_id' => $tasks_id], true);
+      $this->deleteByCriteria(['plugin_glpiinventory_deploytasks_id' => $tasks_id], true);
 
       //get plugin id
       $plug = new Plugin();
@@ -159,7 +144,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $qparam = new QueryParam();
       $query = $DB::buildInsert(
          $this->getTable(), [
-            'plugin_fusioninventory_deploytasks_id'   => $qparam,
+            'plugin_glpiinventory_deploytasks_id'   => $qparam,
             'name'                                    => $qparam,
             'date_creation'                           => $qparam,
             'entities_id'                             => $qparam,
@@ -183,7 +168,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          //    $task['action_type'] => $task['action_selection'])));
          $action = exportArrayToDB($task['action']);
          $definition = exportArrayToDB([[
-            'PluginFusioninventoryDeployPackage' => $task['package_id']]]);
+            'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
 
          $stmt->bind_param(
             'ssssssssssss',
@@ -200,7 +185,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
             'minutes',
             '0'
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -223,8 +208,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
             'value' => 'Group',
          ],
          [
-            'name' => __('Groups of computers', 'fusioninventory'),
-            'value' => 'PluginFusioninventoryDeployGroup',
+            'name' => __('Groups of computers', 'glpiinventory'),
+            'value' => 'PluginGlpiinventoryDeployGroup',
          ]
       ];
    }
@@ -289,8 +274,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                   $res = json_encode($res);
                   break;
 
-               case 'PluginFusioninventoryDeployGroup':
-                  $res = PluginFusioninventoryDeployGroup::getAllDatas('action_selections');
+               case 'PluginGlpiinventoryDeployGroup':
+                  $res = PluginGlpiinventoryDeployGroup::getAllDatas('action_selections');
                   break;
 
             }

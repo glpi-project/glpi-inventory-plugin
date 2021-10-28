@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the import rules used for each import /
- * update into GLPI.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the import rules used for each import / update into GLPI.
  */
-class PluginFusioninventoryRulematchedlog extends CommonDBTM {
+class PluginGlpiinventoryRulematchedlog extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_ruleimport';
+   static $rightname = 'plugin_glpiinventory_ruleimport';
 
 
    /**
@@ -80,7 +65,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @return integer
     */
    static function countForItem(CommonDBTM $item) {
-      return countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
+      return countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs',
          [
             'itemtype' => $item->getType(),
             'items_id' => $item->getField('id'),
@@ -99,23 +84,23 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       $array_ret = [];
 
-      if ($item->getType() == 'PluginFusioninventoryAgent') {
-         if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-             $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
+      if ($item->getType() == 'PluginGlpiinventoryAgent') {
+         if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
+             $array_ret[0] = self::createTabEntry(__('Import information', 'glpiinventory'));
          }
       } else {
          $continue = true;
 
          switch ($item->getType()) {
-            case 'PluginFusioninventoryAgent':
-               if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-                   $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
+            case 'PluginGlpiinventoryAgent':
+               if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
+                   $array_ret[0] = self::createTabEntry(__('Import information', 'glpiinventory'));
                }
                break;
 
-            case 'PluginFusioninventoryUnmanaged':
-               $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
-               $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
+            case 'PluginGlpiinventoryUnmanaged':
+               $cnt = PluginGlpiinventoryRulematchedlog::countForItem($item);
+               $array_ret[1] = self::createTabEntry(__('Import information', 'glpiinventory'), $cnt);
                break;
 
             case 'Computer':
@@ -124,7 +109,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             case 'Peripheral':
             case 'Phone':
             case 'Printer':
-               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+               $continue = PluginGlpiinventoryToolbox::isAnInventoryDevice($item);
                break;
 
             default:
@@ -134,8 +119,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          if (!$continue) {
             return [];
          } else if (empty($array_ret)) {
-            $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
-            $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
+            $cnt = PluginGlpiinventoryRulematchedlog::countForItem($item);
+            $array_ret[1] = self::createTabEntry(__('Import information', 'glpiinventory'), $cnt);
          }
          return $array_ret;
       }
@@ -160,21 +145,21 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          }
       } else if ($tabnum == '1') {
          if ($item->fields['id'] > 0) {
-            $pfRulematchedlog->showForm($item->fields['id'], $item->getType());
+            $pfRulematchedlog->showMatchedLogForm($item->fields['id'], $item->getType());
 
             $itemtype = '';
             switch (get_class($item)) {
 
                case 'Computer':
-                  $itemtype = new PluginFusioninventoryInventoryComputerComputer();
+                  $itemtype = new PluginGlpiinventoryInventoryComputerComputer();
                   break;
 
                case 'Printer':
-                  $itemtype = new PluginFusioninventoryPrinter();
+                  $itemtype = new PluginGlpiinventoryPrinter();
                   break;
 
                case 'NetworkEquipment':
-                  $itemtype = new PluginFusioninventoryNetworkEquipment();
+                  $itemtype = new PluginGlpiinventoryNetworkEquipment();
                   break;
 
             }
@@ -196,7 +181,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    function cleanOlddata($items_id, $itemtype) {
       global $DB;
 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_rulematchedlogs`
+      $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_rulematchedlogs`
             WHERE `items_id` = '".$items_id."'
                AND `itemtype` = '".$itemtype."'
             ORDER BY `date` DESC
@@ -215,13 +200,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @param string $itemtype
     * @return true
     */
-   function showForm($items_id, $itemtype) {
+   function showMatchedLogForm($items_id, $itemtype) {
       global $DB;
 
-      $rule    = new PluginFusioninventoryInventoryRuleImport();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $rule    = new PluginGlpiinventoryInventoryRuleImport();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
-      $class = PluginFusioninventoryItem::getFIItemClassInstance($itemtype);
+      $class = PluginGlpiinventoryItem::getFIItemClassInstance($itemtype);
       if ($class) {
          $class->showDownloadInventoryFile($items_id);
       }
@@ -231,13 +216,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          $start = 0;
       }
 
-      $params = ['FROM'  => 'glpi_plugin_fusioninventory_rulematchedlogs',
+      $params = ['FROM'  => 'glpi_plugin_glpiinventory_rulematchedlogs',
                  'WHERE' => ['itemtype' => $itemtype,
                              'items_id' => intval($items_id)],
                  'COUNT' => 'cpt'
                 ];
       $iterator = $DB->request($params);
-      $number   = $iterator->next()['cpt'];
+      $number   = $iterator->current()['cpt'];
 
       // Display the pager
       Html::printAjaxPager(self::getTypeName(2), $start, $number);
@@ -246,7 +231,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='5'>";
-      echo __('Rule import logs', 'fusioninventory');
+      echo __('Rule import logs', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
@@ -257,15 +242,15 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Rule name', 'fusioninventory');
+      echo __('Rule name', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
-      echo __('Agent', 'fusioninventory');
+      echo __('Agent', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
-      echo __('Module', 'fusioninventory');
+      echo __('Module', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
@@ -274,7 +259,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $params = ['FROM'  => 'glpi_plugin_fusioninventory_rulematchedlogs',
+      $params = ['FROM'  => 'glpi_plugin_glpiinventory_rulematchedlogs',
                  'WHERE' => ['itemtype' => $itemtype, 'items_id' => intval($items_id)],
                  'ORDER' => 'date DESC',
                  'START' => intval($start),
@@ -291,12 +276,12 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          }
          echo "</td>";
          echo "<td align='center'>";
-         if ($pfAgent->getFromDB($data['plugin_fusioninventory_agents_id'])) {
+         if ($pfAgent->getFromDB($data['plugin_glpiinventory_agents_id'])) {
             echo $pfAgent->getLink(1);
          }
          echo "</td>";
          echo "<td>";
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
          foreach ($a_methods as $mdata) {
             if ($mdata['method'] == $data['method']) {
                echo $mdata['name'];
@@ -337,13 +322,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     */
    function showFormAgent($agents_id) {
 
-      $rule = new PluginFusioninventoryInventoryRuleImport();
+      $rule = new PluginGlpiinventoryInventoryRuleImport();
 
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
 
       echo "<tr>";
       echo "<th colspan='5'>";
-      echo __('Rule import logs', 'fusioninventory');
+      echo __('Rule import logs', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
@@ -354,7 +339,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Rule name', 'fusioninventory');
+      echo __('Rule name', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
@@ -366,12 +351,12 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Module', 'fusioninventory');
+      echo __('Module', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
 
-      $allData = $this->find(['plugin_fusioninventory_agents_id' => $agents_id], ['date DESC']);
+      $allData = $this->find(['plugin_glpiinventory_agents_id' => $agents_id], ['date DESC']);
       foreach ($allData as $data) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
@@ -393,7 +378,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          }
          echo "</td>";
          echo "<td>";
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
          foreach ($a_methods as $mdata) {
             if ($mdata['method'] == $data['method']) {
                echo $mdata['name'];

@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the devices not ueried recently.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
@@ -52,9 +38,9 @@ $NEEDED_ITEMS=["search", "computer", "infocom", "setup", "networking", "printer"
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
+Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
-Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
+Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
 $nbdays = filter_input(INPUT_GET, "nbdays");
 if ($nbdays == '') {
@@ -67,7 +53,7 @@ echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo __('Number of days since last inventory', 'fusioninventory')." :&nbsp;";
+echo __('Number of days since last inventory', 'glpiinventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", [
@@ -101,7 +87,7 @@ Html::closeForm();
 
 $FK_networking_ports = filter_input(INPUT_GET, "FK_networking_ports");
 if ($FK_networking_ports != '') {
-   echo PluginFusioninventoryNetworkPortLog::showHistory($FK_networking_ports);
+   echo PluginGlpiinventoryNetworkPortLog::showHistory($FK_networking_ports);
 }
 
 Html::closeForm();
@@ -112,11 +98,11 @@ if (($state != "") AND ($state != "0")) {
 }
 
 $query = "SELECT * FROM (
-SELECT `glpi_networkequipments`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
+SELECT `glpi_networkequipments`.`name`, `last_inventory_update`, `serial`, `otherserial`,
    `networkequipmentmodels_id`, `glpi_networkequipments`.`id` as `network_id`, 0 as `printer_id`,
-   `plugin_fusioninventory_configsecurities_id`,
+   `plugin_glpiinventory_configsecurities_id`,
    `glpi_ipaddresses`.`name` as ip, `states_id`
-   FROM `glpi_plugin_fusioninventory_networkequipments`
+   FROM `glpi_plugin_glpiinventory_networkequipments`
 JOIN `glpi_networkequipments` on `networkequipments_id` = `glpi_networkequipments`.`id`
 LEFT JOIN `glpi_networkports`
    ON (`glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
@@ -127,14 +113,14 @@ LEFT JOIN `glpi_networknames`
 LEFT JOIN `glpi_ipaddresses`
      ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
         AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
+WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL ".$nbdays." DAY) OR last_inventory_update IS NULL)
    ".$state_sql.")
 UNION
-SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
+SELECT `glpi_printers`.`name`, `last_inventory_update`, `serial`, `otherserial`,
    `printermodels_id`, 0 as `network_id`, `glpi_printers`.`id` as `printer_id`,
-   `plugin_fusioninventory_configsecurities_id`,
+   `plugin_glpiinventory_configsecurities_id`,
    `glpi_ipaddresses`.`name` as ip, `states_id`
-   FROM `glpi_plugin_fusioninventory_printers`
+   FROM `glpi_plugin_glpiinventory_printers`
 JOIN `glpi_printers` on `printers_id` = `glpi_printers`.`id`
 LEFT JOIN `glpi_networkports`
    ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id`
@@ -145,15 +131,15 @@ LEFT JOIN `glpi_networknames`
 LEFT JOIN `glpi_ipaddresses`
      ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
         AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
+WHERE (NOW() > ADDDATE(last_inventory_update, INTERVAL ".$nbdays." DAY) OR last_inventory_update IS NULL)
 AND `glpi_networkports`.`items_id`='Printer' ".$state_sql.") as `table`
 
-ORDER BY last_fusioninventory_update DESC";
+ORDER BY last_inventory_update DESC";
 
 echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 echo "<tr class='tab_bg_1'>";
 echo "<th>".__('Name')."</th>";
-echo "<th>".__('Last inventory', 'fusioninventory')."</th>";
+echo "<th>".__('Last inventory', 'glpiinventory')."</th>";
 echo "<th>".__('Item type')."</th>";
 echo "<th>".__('IP')."</th>";
 echo "<th>".__('Serial Number')."</th>";
@@ -176,7 +162,7 @@ if ($result=$DB->query($query)) {
       }
       echo $class->getLink(1);
       echo "</td>";
-      echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
+      echo "<td>".Html::convDateTime($data['last_inventory_update'])."</td>";
       echo "<td>";
       if ($data['network_id'] > 0) {
          echo __('Networks');
@@ -195,7 +181,7 @@ if ($result=$DB->query($query)) {
          echo "<td>".Dropdown::getDropdownName("glpi_printermodels", $data['printermodels_id'])."</td>";
       }
       echo "<td>";
-      echo Dropdown::getDropdownName('glpi_plugin_fusioninventory_configsecurities', $data['plugin_fusioninventory_configsecurities_id']);
+      echo Dropdown::getDropdownName('glpi_plugin_glpiinventory_configsecurities', $data['plugin_glpiinventory_configsecurities_id']);
       echo "</td>";
       echo "<td>";
       echo Dropdown::getDropdownName(getTableForItemType("State"), $data['states_id']);
@@ -206,4 +192,3 @@ if ($result=$DB->query($query)) {
 echo "</table>";
 
 Html::footer();
-

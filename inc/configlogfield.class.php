@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the configuration of logs of network
- * inventory (network equipment and printer).
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the configuration of logs of network inventory (network equipment
  * and printer).
  */
-class PluginFusioninventoryConfigLogField extends CommonDBTM {
+class PluginGlpiinventoryConfigLogField extends CommonDBTM {
 
 
    /**
@@ -89,32 +74,32 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
           ]
       ];
 
-      $mapping = new PluginFusioninventoryMapping();
+      $mapping = new PluginGlpiinventoryMapping();
       foreach ($logs as $itemtype=>$fields) {
          foreach ($fields as $name=>$value) {
             $input = [];
             $mapfields = $mapping->get($itemtype, $name);
             if ($mapfields != false) {
                if (!$this->getValue($mapfields['id'])) {
-                  $input['plugin_fusioninventory_mappings_id'] = $mapfields['id'];
+                  $input['plugin_glpiinventory_mappings_id'] = $mapfields['id'];
                   $input['days']  = $value;
                   $this->add($input);
                } else {
                   // On old version, can have many times same value in DB
-                  $query = "SELECT *  FROM `glpi_plugin_fusioninventory_configlogfields`
-                     WHERE `plugin_fusioninventory_mappings_id` = '".$mapfields['id']."'
+                  $query = "SELECT *  FROM `glpi_plugin_glpiinventory_configlogfields`
+                     WHERE `plugin_glpiinventory_mappings_id` = '".$mapfields['id']."'
                      LIMIT 1,1000";
                   $result=$DB->query($query);
 
                   $delete = $DB->buildDelete(
-                     'glpi_plugin_fusioninventory_configlogfields', [
+                     'glpi_plugin_glpiinventory_configlogfields', [
                         'id' => new \QueryParam()
                      ]
                   );
                   $stmt = $DB->prepare($delete);
                   while ($data=$DB->fetchArray($result)) {
                      $stmt->bind_param('s', $data['id']);
-                     $stmt->execute();
+                     $DB->executeStatement($stmt);
                   }
                   mysqli_stmt_close($stmt);
                }
@@ -136,7 +121,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
       $query = "SELECT days
                 FROM ".$this->getTable()."
-                WHERE `plugin_fusioninventory_mappings_id`='".$field."'
+                WHERE `plugin_glpiinventory_mappings_id`='".$field."'
                 LIMIT 1;";
       $result = $DB->query($query);
       if ($result) {
@@ -157,10 +142,10 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options = []) {
+   function showConfigForm($options = []) {
       global $DB;
 
-      $mapping = new PluginFusioninventoryMapping();
+      $mapping = new PluginGlpiinventoryMapping();
 
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<div class='center' id='tabsbody'>";
@@ -168,18 +153,18 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo __('History configuration', 'fusioninventory');
+      echo __('History configuration', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
-      echo __('List of fields for which to keep history', 'fusioninventory');
+      echo __('List of fields for which to keep history', 'glpiinventory');
 
       echo "</th>";
       echo "<th>";
-      echo __('Retention in days', 'fusioninventory');
+      echo __('Retention in days', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
@@ -192,9 +177,9 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       }
 
       $query = "SELECT `".$this->getTable()."`.`id`, `locale`, `days`, `itemtype`, `name`
-                FROM `".$this->getTable()."`, `glpi_plugin_fusioninventory_mappings`
-                WHERE `".$this->getTable()."`.`plugin_fusioninventory_mappings_id`=
-                         `glpi_plugin_fusioninventory_mappings`.`id`
+                FROM `".$this->getTable()."`, `glpi_plugin_glpiinventory_mappings`
+                WHERE `".$this->getTable()."`.`plugin_glpiinventory_mappings_id`=
+                         `glpi_plugin_glpiinventory_mappings`.`id`
                 ORDER BY `itemtype`, `name`;";
       $result=$DB->query($query);
       if ($result) {
@@ -212,10 +197,10 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          }
       }
 
-      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+      if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input type='hidden' name='tabs' value='history'/>
-               <input class='submit' type='submit' name='update'
+               <input class='btn btn-primary' type='submit' name='update'
                       value='" . __('Update') . "'></td></tr>";
       }
       echo "</table>";
@@ -224,8 +209,8 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
-      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
-         echo "<input type='submit' class=\"submit\" name='Clean_history' ".
+      if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
+         echo "<input type='submit' class='btn btn-secondary' name='Clean_history' ".
                  "value='"._x('button', 'Clean')."' >";
       }
       echo "</td>";

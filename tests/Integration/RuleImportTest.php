@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -49,7 +39,7 @@ class RuleImportTest extends TestCase {
 
       // Delete all inventoryrules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleImport"]);
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleImport"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -57,7 +47,7 @@ class RuleImportTest extends TestCase {
 
    public static function tearDownAfterClass(): void {
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
@@ -91,7 +81,7 @@ class RuleImportTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Printer model',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 198,
       ];
       $rule_id = $rule->add($input);
@@ -125,7 +115,7 @@ class RuleImportTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Import printer',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 199,
       ];
       $rule_id = $rule->add($input);
@@ -185,7 +175,7 @@ class RuleImportTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Import printer',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 200,
       ];
       $rule_id = $rule->add($input);
@@ -237,7 +227,7 @@ class RuleImportTest extends TestCase {
           'TYPE'         => 'PRINTER'
       ];
 
-      $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCommunicationNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
 
       $printer->add([
@@ -245,11 +235,11 @@ class RuleImportTest extends TestCase {
           'serial'      => 'E8J596100'
       ]);
 
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Printer';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
 
       $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
@@ -285,21 +275,21 @@ class RuleImportTest extends TestCase {
           'TYPE'         => 'PRINTER'
       ];
 
-      $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCommunicationNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
 
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Printer';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
 
       $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
       $a_printers = $printer->find();
       $this->assertEquals(0, count($a_printers), 'May have only one Printer');
 
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $a_logs = $pfTaskjoblog->find(['comment' => ['LIKE', '%importdenied%']], ['id DESC'], 1);
       $a_log = current($a_logs);
       $this->assertEquals('==importdenied== [serial]:E8J596100A, '.

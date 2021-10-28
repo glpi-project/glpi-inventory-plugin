@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -54,21 +44,21 @@ class NetworkDiscoveryTest extends TestCase {
       }
 
       // Delete all agents
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $items = $pfAgent->find();
       foreach ($items as $item) {
          $pfAgent->delete(['id' => $item['id']], true);
       }
 
       // Delete all ipranges
-      $pfIPRange = new PluginFusioninventoryIPRange();
+      $pfIPRange = new PluginGlpiinventoryIPRange();
       $items = $pfIPRange->find();
       foreach ($items as $item) {
          $pfIPRange->delete(['id' => $item['id']], true);
       }
 
       // Delete all tasks
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
@@ -81,10 +71,10 @@ class NetworkDiscoveryTest extends TestCase {
    public function prepareDb() {
 
       $computer        = new Computer();
-      $pfAgent         = new PluginFusioninventoryAgent();
-      $pfTask          = new PluginFusioninventoryTask();
-      $pfTaskjob       = new PluginFusioninventoryTaskjob();
-      $pfIPRange       = new PluginFusioninventoryIPRange();
+      $pfAgent         = new PluginGlpiinventoryAgent();
+      $pfTask          = new PluginGlpiinventoryTask();
+      $pfTaskjob       = new PluginGlpiinventoryTaskjob();
+      $pfIPRange       = new PluginGlpiinventoryIPRange();
 
       // Create computers + agents
       $input = [
@@ -161,7 +151,7 @@ class NetworkDiscoveryTest extends TestCase {
       $this->assertNotFalse($ipranges_id2);
 
       // Allow all agents to do network discovery
-      $module = new PluginFusioninventoryAgentmodule();
+      $module = new PluginGlpiinventoryAgentmodule();
       $module->getFromDBByCrit(['modulename' => 'NETWORKDISCOVERY']);
       $module->update([
          'id'        => $module->fields['id'],
@@ -179,12 +169,12 @@ class NetworkDiscoveryTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
-          'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]',
-          'actors'                          => '[{"PluginFusioninventoryAgent":"'.$agent2Id.'"}]'
+          'targets'                         => '[{"PluginGlpiinventoryIPRange":"'.$ipranges_id.'"}]',
+          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$agent2Id.'"}]'
       ];
       $taskjobId = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobId);
@@ -200,17 +190,17 @@ class NetworkDiscoveryTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks2_id,
+          'plugin_glpiinventory_tasks_id' => $tasks2_id,
           'entities_id'                     => 0,
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
-          'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id2.'"}]',
-          'actors'                          => '[{"PluginFusioninventoryAgent":"'.$agent3Id.'"}]'
+          'targets'                         => '[{"PluginGlpiinventoryIPRange":"'.$ipranges_id2.'"}]',
+          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$agent3Id.'"}]'
       ];
       $taskjobId = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobId);
 
-      PluginFusioninventoryTask::cronTaskscheduler();
+      PluginGlpiinventoryTask::cronTaskscheduler();
    }
 
 
@@ -218,8 +208,8 @@ class NetworkDiscoveryTest extends TestCase {
     * @test
     */
    public function prepareTask() {
-      $pfTask  = new PluginFusioninventoryTask();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTask  = new PluginGlpiinventoryTask();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $pfTask->getFromDBByCrit(['name' => 'network discovery']);
       $pfAgent->getFromDBByCrit(['name' => 'computer2']);
@@ -238,8 +228,8 @@ class NetworkDiscoveryTest extends TestCase {
     * @test
     */
    public function prepareTask2() {
-      $pfTask = new PluginFusioninventoryTask();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTask = new PluginGlpiinventoryTask();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $pfTask->getFromDBByCrit(['name' => 'network discovery2']);
       $pfAgent->getFromDBByCrit(['name' => 'computer3']);

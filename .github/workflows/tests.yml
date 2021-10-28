@@ -8,15 +8,18 @@ on: [push, pull_request]
 jobs:
 
   lint:
+    #runs-on: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
+        php-versions: ['7.4', '8.0']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
-      key: cache-v1    
+      key: cache-v1
     steps:
+    - name: Change dir owner to working user
+      run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
     - uses: actions/checkout@v1
     - name: Setup cache environment
       id: extcache
@@ -35,6 +38,9 @@ jobs:
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
+      env:
+        #runner: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
+        runner: ubuntu-latest
       with:
         php-version: ${{ matrix.php-versions }}
         extensions: ${{ env.extensions }}
@@ -43,26 +49,51 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /tmp/composer-cache
-        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
-    - uses: php-actions/composer@v5
-      with:
-        php_version: 7.4
-    - name: Lint
-      run: php vendor/bin/robo --no-interaction code:cs
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+    - name: Install dependencies
+      run: composer install
+    - name: Check for coding standards violations
+      run: |
+        vendor/bin/phpcs -d memory_limit=512M -p --extensions=php --standard=vendor/glpi-project/coding-standard/GlpiStandard/ --ignore="/.git/,/lib/,/vendor/" .
 
   phpunit:
+    #runs-on: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
-    name: phpunit (${{ matrix.php-versions }})
+        php-versions: ['7.4', '8.0']
+        db-image: ['mysql:5.7', 'mysql:8.0', 'mariadb:10.2', 'mariadb:10.6']
+    name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
       key: cache-v1
+      DB: ${{ matrix.db-image }}
+
+    services:
+      # Label used to access the service container
+      db:
+        # Docker Hub image
+        image: ${{ matrix.db-image }}
+        # Provide env variables for both mysql and pgsql
+        env:
+          MYSQL_USER: glpiinventory
+          MYSQL_PASSWORD: glpi1iventory
+          MYSQL_ROOT_PASSWORD: glpi1iventory
+          MYSQL_DATABASE: glpi
+        # Open network ports
+        ports:
+          - 3306:3306
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd="bash -c 'mysqladmin ping'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
     steps:
-    - uses: ankane/setup-mariadb@v1
-      with:
-        mariadb-version: 10.5
+    - name: Install gettext, npm and mysql-client
+      run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext npm mysql-client
+    - name: Change dir owner to working user
+      run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
     - uses: actions/checkout@v1
     - name: Setup cache environment
       id: extcache
@@ -81,33 +112,42 @@ jobs:
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
+      env:
+        #runner: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
+        runner: ubuntu-latest
       with:
         php-version: ${{ matrix.php-versions }}
         extensions: ${{ env.extensions }}
-
     - name: Cache Composer dependencies
       uses: actions/cache@v2
       with:
         path: /tmp/composer-cache
-        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
-    - uses: php-actions/composer@v5
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+    - name: Install dependencies
+      run: composer install
+    - name: Checkout GLPI
+      uses: actions/checkout@v2
       with:
-        php_version: 7.4
-    - name: Get GLPI
-      run: wget https://github.com/glpi-project/glpi/releases/download/9.5.3/glpi-9.5.3.tgz
-    - name: Uncompress GLPI
-      run: tar zxvf glpi-9.5.3.tgz
-    - name: Copy Plugin FusionInventory
-      run: rsync -avr --exclude='glpi' ./* glpi/plugins/fusioninventory/
-    - name: Create the database
-      run: mysqladmin create glpi
-    - name: Check php dependencies
-      run: cd glpi && php bin/console glpi:system:check_requirements
+        repository: glpi-project/glpi
+        path: glpi
+        fetch-depth: 1
+        ref: master
+    - name: Copy plugin
+      run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
+    - name: Install dependencies
+      run: |
+        cd glpi
+        php bin/console dependencies install
+        php bin/console locales:compile
+
+    - name: Init database
+      run: |
+        mysql -e 'create database IF NOT EXISTS glpi;' -u root --password=glpi1iventory -h 127.0.0.1 -P 3306
     - name: Install GLPI
-      run: cd glpi && mkdir tests && php bin/console glpi:database:install -n --config-dir=tests --db-name=glpi --db-user=root
-    - name: Install plugin FusionInventory
-      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory
-    - name: Activate plugin FusionInventory
-      run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory
+      run: cd glpi && php bin/console glpi:database:install -n --ansi --config-dir=tests/config --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306
+    - name: Install plugin
+      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --ansi --config-dir=tests/config --username=glpi glpiinventory
+    - name: Activate plugin
+      run: cd glpi && php bin/console glpi:plugin:activate -n --ansi --config-dir=tests/config glpiinventory
     - name: run tests
-      run: cd glpi/plugins/fusioninventory/ && php vendor/bin/phpunit --testdox tests/
+      run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/

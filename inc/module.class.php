@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the agent modules.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the agent modules.
  */
-class PluginFusioninventoryModule extends CommonDBTM {
+class PluginGlpiinventoryModule extends CommonDBTM {
 
 
    /**
@@ -72,18 +57,17 @@ class PluginFusioninventoryModule extends CommonDBTM {
 
 
    /**
-    * Get module id or fusioninventory plugin id
+    * Get module id or plugin id
     *
     * @param string $p_name the module name
-    * @return integer|false plugin id or FALSE if module is not active or not a
-    *                       fusioninventory module
+    * @return integer|false plugin id or FALSE if module is not active or not a module
     */
    static function getModuleId($p_name) {
       $index = false;
       if (!isset($_SESSION['glpi_plugins'])) {
          return $index;
       }
-      if ($p_name == 'fusioninventory') {
+      if ($p_name == 'fusioninventory' || $p_name == 'glpiinventory') {
          $index = array_search($p_name, $_SESSION['glpi_plugins']);
          if (!$index) {
             $plugin = new Plugin();
@@ -102,12 +86,12 @@ class PluginFusioninventoryModule extends CommonDBTM {
     * Get module name
     *
     * @param integer $p_id the module id
-    * @return string|false false if module is not active or not a fusioninventory module
+    * @return string|false false if module is not active or not a module
     */
    static function getModuleName($p_id) {
       if (isset($_SESSION['glpi_plugins'][$p_id])) {
          if ((substr($_SESSION['glpi_plugins'][$p_id], 0, 6) == 'fusinv')
-              OR ($_SESSION['glpi_plugins'][$p_id] == 'fusioninventory')) {
+              OR ($_SESSION['glpi_plugins'][$p_id] == 'glpiinventory')) {
             return $_SESSION['glpi_plugins'][$p_id];
          } else {
             return false;

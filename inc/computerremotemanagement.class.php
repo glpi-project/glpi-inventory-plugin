@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the remote management information of
- * softwares installed on computer.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the remote management information of softwares installed on computer.
  */
-class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
+class PluginGlpiinventoryComputerRemoteManagement extends CommonDBTM {
 
 
    /**
@@ -70,7 +55,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Remote management', 'fusioninventory');
+      return __('Remote management', 'glpiinventory');
    }
 
 
@@ -88,7 +73,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       if (count($a_remotemanagement)) {
 
          echo '<tr>';
-         echo '<th colspan="4">'.__('Remote management', 'fusioninventory').'</th>';
+         echo '<th colspan="4">'.__('Remote management', 'glpiinventory').'</th>';
          echo '</tr>';
 
          foreach ($a_remotemanagement as $remotemanagement) {
@@ -120,4 +105,3 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
 
 
 }
-

@@ -1,50 +1,34 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the agents
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @author    Kevin Roy
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
-
 
 /**
  * Manage update the task system
@@ -53,14 +37,14 @@
  * @param object $migration
  * @param integer $plugin_id
  */
-function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
+function pluginGlpiinventoryUpdateTasks($migration, $plugin_id) {
    global $DB;
 
    /*
-    * Table glpi_plugin_fusioninventory_tasks
+    * Table glpi_plugin_glpiinventory_tasks
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_tasks';
+   $table['name'] = 'glpi_plugin_glpiinventory_tasks';
    $table['oldname'] = [];
 
    $table['fields']  = [
@@ -96,11 +80,11 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type'    => 'datetime',
          'value'   => null
       ],
-      'plugin_fusioninventory_timeslots_prep_id' => [
+      'plugin_glpiinventory_timeslots_prep_id' => [
          'type'    => 'integer',
          'value'   => null
       ],
-      'plugin_fusioninventory_timeslots_exec_id' => [
+      'plugin_glpiinventory_timeslots_exec_id' => [
          'type'    => 'integer',
          'value'   => null
       ],
@@ -117,24 +101,24 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
 
    $table['renamefields'] = [
       'date_scheduled'                      => 'datetime_start',
-      'plugin_fusioninventory_timeslots_id' => 'plugin_fusioninventory_timeslots_prep_id'
+      'plugin_glpiinventory_timeslots_id' => 'plugin_glpiinventory_timeslots_prep_id'
    ];
 
    $table['keys']   = [];
    $table['keys'][] = ['field' => 'entities_id', 'name' => '', 'type' => 'INDEX'];
    $table['keys'][] = ['field' => 'is_active', 'name' => '', 'type' => 'INDEX'];
-   $table['keys'][] = ['field' => 'plugin_fusioninventory_timeslots_prep_id', 'name' => '', 'type' => 'INDEX'];
-   $table['keys'][] = ['field' => 'plugin_fusioninventory_timeslots_exec_id', 'name' => '', 'type' => 'INDEX'];
+   $table['keys'][] = ['field' => 'plugin_glpiinventory_timeslots_prep_id', 'name' => '', 'type' => 'INDEX'];
+   $table['keys'][] = ['field' => 'plugin_glpiinventory_timeslots_exec_id', 'name' => '', 'type' => 'INDEX'];
 
    $table['oldkeys'] = [];
 
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
    /*
-    * Table glpi_plugin_fusioninventory_taskjobs
+    * Table glpi_plugin_glpiinventory_taskjobs
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_taskjobs';
+   $table['name'] = 'glpi_plugin_glpiinventory_taskjobs';
    $table['oldname'] = [];
 
    $table['oldfields'] = [
@@ -160,7 +144,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type'    => 'autoincrement',
          'value'   => ''
       ],
-      'plugin_fusioninventory_tasks_id' => [
+      'plugin_glpiinventory_tasks_id' => [
          'type'    => 'integer',
          'value'   => null
       ],
@@ -196,7 +180,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
 
    $table['keys']   = [];
    $table['keys'][] = [
-      'field' => 'plugin_fusioninventory_tasks_id',
+      'field' => 'plugin_glpiinventory_tasks_id',
       'name' => '', 'type' => 'INDEX'
    ];
    $table['keys'][] = [
@@ -216,25 +200,25 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
       'rescheduled_taskjob_id'
    ];
 
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
    // * Update method name changed
    $DB->update(
-      'glpi_plugin_fusioninventory_taskjobs', [
+      'glpi_plugin_glpiinventory_taskjobs', [
          'method' => 'InventoryComputerESX'
       ], [
          'method' => 'ESX'
       ]
    );
    $DB->update(
-      'glpi_plugin_fusioninventory_taskjobs', [
+      'glpi_plugin_glpiinventory_taskjobs', [
          'method' => 'networkinventory'
       ], [
          'method' => 'snmpinventory'
       ]
    );
    $DB->update(
-      'glpi_plugin_fusioninventory_taskjobs', [
+      'glpi_plugin_glpiinventory_taskjobs', [
          'method' => 'networkdiscovery'
       ], [
          'method' => 'netdiscovery'
@@ -242,10 +226,10 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    );
 
    /*
-    * Table glpi_plugin_fusioninventory_taskjoblogs
+    * Table glpi_plugin_glpiinventory_taskjoblogs
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_taskjoblogs';
+   $table['name'] = 'glpi_plugin_glpiinventory_taskjoblogs';
    $table['oldname'] = [];
 
    $table['fields']  = [
@@ -253,7 +237,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT',
          'value' => ''
       ],
-      'plugin_fusioninventory_taskjobstates_id' => [
+      'plugin_glpiinventory_taskjobstates_id' => [
          'type' => 'integer',
          'value' => null
       ],
@@ -266,7 +250,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value' => null
       ],
       'itemtype' => [
-         'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+         'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
       'state' => [
@@ -282,19 +266,19 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    $table['oldfields']  = [];
 
    $table['renamefields'] = [
-      'plugin_fusioninventory_taskjobstatus_id' => 'plugin_fusioninventory_taskjobstates_id'
+      'plugin_glpiinventory_taskjobstatus_id' => 'plugin_glpiinventory_taskjobstates_id'
    ];
 
    $table['keys']   = [
-      ['field' => ['plugin_fusioninventory_taskjobstates_id', 'state', 'date'],
-      'name' => 'plugin_fusioninventory_taskjobstates_id', 'type' => 'INDEX']
+      ['field' => ['plugin_glpiinventory_taskjobstates_id', 'state', 'date'],
+      'name' => 'plugin_glpiinventory_taskjobstates_id', 'type' => 'INDEX']
    ];
 
    $table['oldkeys'] = [
-      'plugin_fusioninventory_taskjobstatus_id'
+      'plugin_glpiinventory_taskjobstatus_id'
    ];
 
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
    // rename comments for new lang system (gettext in 0.84)
    $texts = [
@@ -323,7 +307,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $comment = $data['comment'];
          foreach ($texts as $key=>$value) {
             $comment = str_replace("==".$key."==", "==".$value."==", $comment);
@@ -340,12 +324,12 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    }
 
    /*
-    * Table glpi_plugin_fusioninventory_taskjobstates
+    * Table glpi_plugin_glpiinventory_taskjobstates
     */
    $table = [];
-   $table['name'] = 'glpi_plugin_fusioninventory_taskjobstates';
+   $table['name'] = 'glpi_plugin_glpiinventory_taskjobstates';
    $table['oldname'] = [
-      'glpi_plugin_fusioninventory_taskjobstatus'
+      'glpi_plugin_glpiinventory_taskjobstatus'
    ];
 
    $table['fields'] = [
@@ -353,7 +337,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'type' => 'bigint(20) not null auto_increment',
          'value' => '0'
       ],
-      'plugin_fusioninventory_taskjobs_id' => [
+      'plugin_glpiinventory_taskjobs_id' => [
          'type' => 'integer',
          'value' => null
       ],
@@ -362,10 +346,10 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value' => null
       ],
       'itemtype' => [
-         'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+         'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
-      'plugin_fusioninventory_agents_id' => [
+      'plugin_glpiinventory_agents_id' => [
          'type' => 'integer',
          'value' => null
       ],
@@ -403,32 +387,32 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    $table['keys'] = [
       [
          'field' => [
-            'plugin_fusioninventory_taskjobs_id'
+            'plugin_glpiinventory_taskjobs_id'
          ],
          'name' => '', 'type' => 'INDEX'
       ],
       [
          'field' => [
-            'plugin_fusioninventory_agents_id',
+            'plugin_glpiinventory_agents_id',
             'state'
          ],
          'name' => '', 'type' => 'INDEX'
       ],
       [
          'field' => [
-            'plugin_fusioninventory_agents_id',
-            'plugin_fusioninventory_taskjobs_id',
+            'plugin_glpiinventory_agents_id',
+            'plugin_glpiinventory_taskjobs_id',
             'items_id',
             'itemtype',
             'id',
             'state'
          ],
-         'name' => 'plugin_fusioninventory_agents_items_states',
+         'name' => 'plugin_glpiinventory_agents_items_states',
          'type' => 'INDEX'
       ]
 
    ];
    $table['oldkeys'] = [];
-   migrateTablesFusionInventory($migration, $table);
+   migratePluginTables($migration, $table);
 
 }

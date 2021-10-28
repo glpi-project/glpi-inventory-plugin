@@ -1,11 +1,42 @@
 #!/usr/bin/php
 <?php
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
+ */
+
 // Drop unused files from the internal repository.
 //
 // This script should be called periodically via cron. Especially if you
 // synchronize multiple repositories.
 //
-// /<path to plugin fusioninventory>/scripts/cleanup_repository.php
+// /<path to plugin>/scripts/cleanup_repository.php
 
 $doc = <<<DOC
 cleanup_repository.php
@@ -36,13 +67,13 @@ require ("./logging.php");
 define ( 'MANIFESTS_PATH',
    implode(
       DIRECTORY_SEPARATOR,
-      [ GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files' , 'manifests' ]
+      [ GLPI_PLUGIN_DOC_DIR, 'glpiinventory', 'files' , 'manifests' ]
    )
 );
 define ( 'REPOSITORY_PATH',
    implode(
       DIRECTORY_SEPARATOR,
-      [ GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files', 'repository' ]
+      [ GLPI_PLUGIN_DOC_DIR, 'glpiinventory', 'files', 'repository' ]
    )
 );
 
@@ -67,7 +98,7 @@ function getManifestsUsed($logger) {
 
    $result = [];
 
-   $orders = $DB->request('glpi_plugin_fusioninventory_deployorders');
+   $orders = $DB->request('glpi_plugin_glpiinventory_deployorders');
 
    foreach ($orders as $order_data) {
 
@@ -100,7 +131,7 @@ function getManifestsRegistered($logger) {
 
    $result = [];
 
-   $files = $DB->request('glpi_plugin_fusioninventory_deployfiles');
+   $files = $DB->request('glpi_plugin_glpiinventory_deployfiles');
 
    foreach ($files as $file_data) {
 
@@ -211,7 +242,7 @@ function unregisterInvalidManifests($logger, $dryrun, $invalid_manifests) {
 
    $logger->info("Unregistering ".count($invalid_manifests)." manifests from database.");
 
-   $pfDeployFile = new PluginFusioninventoryDeployFile();
+   $pfDeployFile = new PluginGlpiinventoryDeployFile();
 
    foreach ($invalid_manifests as $manifest) {
       $short_sha512 = substr($manifest, 0, 6);
@@ -307,4 +338,3 @@ unregisterInvalidManifests($logger, $dryrun, $invalid_manifests);
 
 $logger->info( 'Memory used : ' .number_format(memory_get_usage(true)/1024/1024, 3) . 'MiB');
 $logger->info( 'Memory used (emalloc): ' .number_format(memory_get_usage()/1024/1024, 3) . 'MiB');
-

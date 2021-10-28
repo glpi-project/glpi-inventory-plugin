@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the files to deploy.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Alexandre Delaunay
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files to deploy.
  */
-class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackageItem {
+class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem {
 
    public $shortname = 'files';
    public $json_name = 'associatedFiles';
@@ -62,7 +47,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_package';
+   static $rightname = 'plugin_glpiinventory_package';
 
    const REGISTRY_NO_DB_ENTRY = 0x1;
    const REGISTRY_NO_MANIFEST = 0x2;
@@ -75,8 +60,8 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     */
    function getTypes() {
       return [
-         'Computer' => __("Upload from computer", 'fusioninventory'),
-         'Server'   => __("Upload from server", 'fusioninventory')
+         'Computer' => __("Upload from computer", 'glpiinventory'),
+         'Server'   => __("Upload from server", 'glpiinventory')
       ];
    }
 
@@ -85,11 +70,11 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * Display list of files
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored actions
     * @param string $rand unique element id used to identify/update an element
     */
-   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
+   function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
       $package_id = $package->getID();
@@ -149,7 +134,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
             $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
          // start new line
-         $pics_path = Plugin::getWebDir('fusioninventory')."/pics/";
+         $pics_path = Plugin::getWebDir('glpiinventory')."/pics/";
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($canedit) {
             echo "<td class='control'>";
@@ -158,7 +143,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          }
          echo "<td class='filename'>";
          if (!empty($file_mimetype)
-                 && file_exists(PLUGIN_FUSIONINVENTORY_DIR."/pics/extensions/$file_mimetype.png")) {
+                 && file_exists($pics_path."extensions/$file_mimetype.png")) {
             echo "<img src='".$pics_path."extensions/$file_mimetype.png' />";
          } else {
             echo "<img src='".$pics_path."extensions/documents.png' />";
@@ -178,10 +163,10 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          //p2p icon
          if (isset($file_p2p)
             && $file_p2p != 0) {
-            echo "<a title='".__('p2p', 'fusioninventory').", "
-               .__("retention", 'fusioninventory')." : ".
+            echo "<a title='".__('p2p', 'glpiinventory').", "
+               .__("retention", 'glpiinventory')." : ".
                $file_p2p_retention_duration." ".
-               __("Minute(s)", 'fusioninventory')."' class='more'>";
+               __("Minute(s)", 'glpiinventory')."' class='more'>";
             echo "<img src='".$pics_path."p2p.png' />";
             echo "<sup>".$file_p2p_retention_duration."</sup>";
             echo "</a>";
@@ -191,7 +176,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          if (isset($file_uncompress)
                  && $file_uncompress != 0) {
             echo "<a title='".
-                     __('uncompress', 'fusioninventory').
+                     __('uncompress', 'glpiinventory').
                      "' class='more'><img src='".
                      $pics_path.
                      "uncompress.png' /></a>";
@@ -227,7 +212,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          echo "</td>";
          if ($canedit) {
             echo "<td class='rowhandler control' title='".
-                    __('drag', 'fusioninventory').
+                    __('drag', 'glpiinventory').
                     "'><div class='drag row'></div></td>";
          }
          $i++;
@@ -241,7 +226,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
-            __('Delete', 'fusioninventory')."\" class='submit'>";
+            __('Delete', 'glpiinventory')."\" class='submit'>";
       }
    }
 
@@ -257,9 +242,9 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * @return boolean
     */
    function displayAjaxValues($config, $request_data, $rand, $mode) {
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['packages_id']);
@@ -290,25 +275,25 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
        * Display file upload input only in 'create' mode
        */
       echo "<tr>";
-      echo "<th>".__("File", 'fusioninventory')."</th>";
+      echo "<th>".__("File", 'glpiinventory')."</th>";
       echo "<td>";
       if ($mode === self::CREATE) {
          switch ($source) {
 
             case "Computer":
                echo "<input type='file' name='file' value='".
-                  __("filename", 'fusioninventory')."' />";
+                  __("filename", 'glpiinventory')."' />";
                echo " <i>".$this->getMaxUploadSize()."</i>";
                break;
 
             case "Server":
                echo "<input type='text' name='filename' id='server_filename$rand'".
                   " style='width:500px;float:left' />";
-               echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
+               echo "<input type='button' class='submit' value='".__("Choose", 'glpiinventory').
                   "' onclick='fileModal$rand.dialog(\"open\");' />";
                Ajax::createModalWindow("fileModal$rand",
                         $fi_path."/ajax/deployfilemodal.php",
-                        ['title' => __('Select the file on server', 'fusioninventory'),
+                        ['title' => __('Select the file on server', 'glpiinventory'),
                         'extraparams' => [
                            'rand' => $rand
                         ]]);
@@ -325,7 +310,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       echo "</tr>";
 
       echo "<tr>";
-      echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
+      echo "<th>".__("Uncompress", 'glpiinventory')."<img style='float:right' ".
          "src='".$fi_path."/pics/uncompress.png' /></th>";
       echo "<td>";
       Html::showCheckbox(['name' => 'uncompress', 'checked' => $uncompress]);
@@ -333,7 +318,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       echo "</tr>";
 
       echo "<tr>";
-      echo "<th>".__("P2P", 'fusioninventory').
+      echo "<th>".__("P2P", 'glpiinventory').
               "<img style='float:right' src='".$fi_path.
               "/pics/p2p.png' /></th>";
       echo "<td>";
@@ -342,8 +327,8 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       echo "</tr>";
 
       echo "<tr>";
-      echo "<th>".__("retention", 'fusioninventory').
-                  " - ".__("Minute(s)", 'fusioninventory')."</th>";
+      echo "<th>".__("retention", 'glpiinventory').
+                  " - ".__("Minute(s)", 'glpiinventory')."</th>";
       echo "<td>";
       echo "<input type='number' name='p2p-retention-duration' value='$p2p_retention_duration' />";
       echo "</td>";
@@ -365,7 +350,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    static function showServerFileTree($rand) {
       echo "<script type='text/javascript'>";
       echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
-         dataUrl:'".Plugin::getWebDir('fusioninventory')."/ajax/serverfilestreesons.php'
+         dataUrl:'".Plugin::getWebDir('glpiinventory')."/ajax/serverfilestreesons.php'
       });";
 
       echo "var Tree_Category$rand = new Ext.tree.TreePanel({
@@ -420,7 +405,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    static function getServerFileTree($node) {
 
       $nodes            = [];
-      $pfConfig         = new PluginFusioninventoryConfig();
+      $pfConfig         = new PluginGlpiinventoryConfig();
       $dir              = $pfConfig->getValue('server_upload_path');
       $security_problem = false;
       if ($node != "-1") {
@@ -609,27 +594,27 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  $msg = __("Transfer error: the file size is too big", 'fusioninventory');
+                  $msg = __("Transfer error: the file size is too big", 'glpiinventory');
                   break;
 
                case UPLOAD_ERR_PARTIAL:
-                  $msg = __("The uploaded file was only partially uploaded", 'fusioninventory');
+                  $msg = __("The uploaded file was only partially uploaded", 'glpiinventory');
                   break;
 
                case UPLOAD_ERR_NO_FILE:
-                  $msg = __("No file was uploaded", 'fusioninventory');
+                  $msg = __("No file was uploaded", 'glpiinventory');
                   break;
 
                case UPLOAD_ERR_NO_TMP_DIR:
-                  $msg = __("Missing a temporary folder", 'fusioninventory');
+                  $msg = __("Missing a temporary folder", 'glpiinventory');
                   break;
 
                case UPLOAD_ERR_CANT_WRITE:
-                  $msg = __("Failed to write file to disk", 'fusioninventory');
+                  $msg = __("Failed to write file to disk", 'glpiinventory');
                   break;
 
                case UPLOAD_ERR_EXTENSION:
-                  $msg = __("PHP extension stopped the file upload", 'fusioninventory');
+                  $msg = __("PHP extension stopped the file upload", 'glpiinventory');
                   break;
 
                case UPLOAD_ERR_OK:
@@ -658,14 +643,14 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
+            Session::addMessageAfterRedirect(__('File saved!', 'glpiinventory'));
             return true;
          } else {
-            Session::addMessageAfterRedirect(__('Failed to copy file', 'fusioninventory'));
+            Session::addMessageAfterRedirect(__('Failed to copy file', 'glpiinventory'));
             return false;
          }
       }
-      Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
+      Session::addMessageAfterRedirect(__('File missing', 'glpiinventory'));
       return false;
    }
 
@@ -714,14 +699,14 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
+            Session::addMessageAfterRedirect(__('File saved!', 'glpiinventory'));
             return true;
          } else {
-            Session::addMessageAfterRedirect(__('Failed to copy file', 'fusioninventory'));
+            Session::addMessageAfterRedirect(__('Failed to copy file', 'glpiinventory'));
             return false;
          }
       }
-      Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
+      Session::addMessageAfterRedirect(__('File missing', 'glpiinventory'));
       return false;
    }
 
@@ -745,7 +730,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    *
    * @since 9.2
    */
-   public function getItemConfig(PluginFusioninventoryDeployPackage $package, $request_data) {
+   public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data) {
       $element = $package->getSubElement($this->json_name, $request_data['index']);
       $config  = [];
       if ($element) {
@@ -769,7 +754,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       $sha512 = hash_file('sha512', $filePath);
 
       if (!$skip_creation) {
-         $dir = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.$this->getDirBySha512($sha512);
+         $dir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR.$this->getDirBySha512($sha512);
 
          if (!file_exists ($dir)) {
             mkdir($dir, 0777, true);
@@ -781,7 +766,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
 
    /**
-    * Add file in the fusioninventory repository
+    * Add file in the repository
     *
     * @param array $params
     * @return boolean
@@ -790,7 +775,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       $filename      = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
       $maxPartSize   = 1024*1024;
-      $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR."/fusioninventory/", "filestore");
+      $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR."/glpiinventory/", "filestore");
       $sha512        = hash_file('sha512', $file_tmp_name);
       $short_sha512  = substr($sha512, 0, 6);
 
@@ -840,7 +825,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       //create manifest file
       if (!$file_present_in_repo) {
          $handle = fopen(
-           PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512, "w+"
+           PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$sha512, "w+"
          );
          if ($handle) {
             foreach ($multiparts as $sha) {
@@ -889,7 +874,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * @return boolean
     */
    function removeFileInRepo($sha512) {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       // try to find file in other packages
       $rows = $pfDeployPackage->find(
@@ -902,15 +887,15 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
 
       //get sha512 parts in manifest
-      if (!file_exists(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512)) {
+      if (!file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$sha512)) {
          return true;
       }
-      $multiparts = file(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
+      $multiparts = file(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$sha512);
 
       //parse all files part
       foreach ($multiparts as $part_sha512) {
-         $firstdir = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.substr($part_sha512, 0, 1)."/";
-         $fulldir  = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.$this->getDirBySha512($part_sha512).'/';
+         $firstdir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR.substr($part_sha512, 0, 1)."/";
+         $fulldir  = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR.$this->getDirBySha512($part_sha512).'/';
 
          //delete file parts
          unlink(trim($fulldir.$part_sha512));
@@ -931,8 +916,8 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
 
       //remove manifest
-      if (file_exists(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512)) {
-         unlink(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
+      if (file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$sha512)) {
+         unlink(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$sha512);
       }
 
       return true;
@@ -946,7 +931,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * @return boolean
     */
    function checkPresenceManifest($sha512) {
-      if (!file_exists(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512)) {
+      if (!file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$sha512)) {
          return false;
       }
       return true;
@@ -970,13 +955,13 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       // the manifest file is created
       $fileparts_ok = true;
       $fileparts_cnt = 0;
-      $handle = fopen(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512, "r");
+      $handle = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$sha512, "r");
       if ($handle) {
          while (($buffer = fgets($handle)) !== false) {
             $fileparts_cnt++;
             $path = $this->getDirBySha512($buffer)."/".trim($buffer, "\n");
             //Check if the filepart exists
-            if (!file_exists(PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.$path)) {
+            if (!file_exists(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR.$path)) {
                $fileparts_ok = false;
                break;
             }
@@ -1007,8 +992,8 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       $max_post     = (int)(ini_get('post_max_size'));
       $memory_limit = (int)(ini_get('memory_limit'));
 
-      return __('Max file size', 'fusioninventory')
-         ." : ".min($max_upload, $max_post, $memory_limit).__('Mio', 'fusioninventory');
+      return __('Max file size', 'glpiinventory')
+         ." : ".min($max_upload, $max_post, $memory_limit).__('Mio', 'glpiinventory');
    }
 
 
@@ -1020,16 +1005,16 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
       echo "<tr>";
       echo "<th>";
-      echo __('Unused file', 'fusioninventory');
+      echo __('Unused file', 'glpiinventory');
       echo "</th>";
       echo "<th>";
-      echo __('Size', 'fusioninventory');
+      echo __('Size', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
 
       $a_files = $this->find();
       foreach ($a_files as $data) {
-         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
+         $cnt = countElementsInTable('glpi_plugin_glpiinventory_deploypackages',
             ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']]);
          if ($cnt == 0) {
             echo "<tr class='tab_bg_1'>";
@@ -1052,11 +1037,11 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    function deleteUnusedFiles() {
       $a_files = $this->find();
       foreach ($a_files as $data) {
-         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
+         $cnt = countElementsInTable('glpi_plugin_glpiinventory_deploypackages',
             ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']]);
          if ($cnt == 0) {
             $this->delete($data);
-            $manifest_filename = PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$data['sha512'];
+            $manifest_filename = PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR.$data['sha512'];
             if (file_exists($manifest_filename)) {
                $handle = @fopen($manifest_filename, "r");
                if ($handle) {
@@ -1064,7 +1049,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
                      $buffer = trim(fgets($handle));
                      if ($buffer != '') {
                         $part_path = $this->getDirBySha512($buffer)."/".$buffer;
-                        unlink(PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.$part_path);
+                        unlink(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR.$part_path);
                      }
                   }
                   fclose($handle);

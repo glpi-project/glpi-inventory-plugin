@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the credentials for inventory VMWARE ESX.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the credentials for inventory VMWARE ESX.
  */
-class PluginFusioninventoryCredential extends CommonDropdown {
+class PluginGlpiinventoryCredential extends CommonDropdown {
 
    /**
     * Define first level menu name
@@ -65,7 +51,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     *
     * @var string
     */
-   public $second_level_menu = "pluginfusioninventorymenu";
+   public $second_level_menu = "pluginglpiinventorymenu";
 
    /**
     * Define third level menu name
@@ -79,7 +65,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_credential';
+   static $rightname = 'plugin_glpiinventory_credential';
 
 
    /**
@@ -89,7 +75,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Authentication for remote devices (VMware)', 'fusioninventory');
+      return __('Authentication for remote devices (VMware)', 'glpiinventory');
    }
 
 
@@ -118,7 +104,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @param integer $ID
     * @param array $field
     */
-   function displaySpecificTypeField($ID, $field = []) {
+   function displaySpecificTypeField($ID, $field = [], array $options = []) {
 
       switch ($field['type']) {
 
@@ -184,7 +170,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $tab[] = [
          'id'   => 'common',
-         'name' => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+         'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -270,7 +256,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Get an itemtype label by the credential itemtype
     *
-    * @param string $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
+    * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
     * @return string|false
     */
    static function getLabelByItemtype($credential_itemtype) {
@@ -285,13 +271,13 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Find a credential by his itemtype
     *
-    * @param string $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
+    * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
     * @return array
     */
    static function findItemtypeType($credential_itemtype) {
 
-      $credential = ['itemtype' => 'PluginFusioninventoryInventoryComputerESX', //Credential itemtype
-                           'name'    => __('VMware host', 'fusioninventory'), //Label
+      $credential = ['itemtype' => 'PluginGlpiinventoryInventoryComputerESX', //Credential itemtype
+                           'name'    => __('VMware host', 'glpiinventory'), //Label
                            'targets' => ['Computer']];
       if ($credential['itemtype'] == $credential_itemtype) {
          return $credential;
@@ -306,8 +292,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @return array
     */
    static function getCredentialsItemTypes() {
-      return ['PluginFusioninventoryInventoryComputerESX' =>
-                           __('VMware host', 'fusioninventory')];
+      return ['PluginGlpiinventoryInventoryComputerESX' =>
+                           __('VMware host', 'glpiinventory')];
    }
 
 
@@ -319,8 +305,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    static function getForItemtype($itemtype) {
       $itemtypes = [];
-      foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class= PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
+      foreach (PluginGlpiinventoryModule::getAll() as $data) {
+         $class= PluginGlpiinventoryStaticmisc::getStaticMiscClass($data['directory']);
          if (is_callable([$class, 'credential_types'])) {
             foreach (call_user_func([$class, 'credential_types']) as $credential) {
                if (in_array($itemtype, $credential['targets'])) {
@@ -348,7 +334,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          $p['itemtype'] = '';
          $p['id']       = 0;
       } else {
-         $credential = new PluginFusioninventoryCredential();
+         $credential = new PluginGlpiinventoryCredential();
          $credential->getFromDB($params['id']);
          if ($credential->getFromDB($params['id'])) {
             $p = $credential->fields;
@@ -361,12 +347,12 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $types     = self::getCredentialsItemTypes();
       $types[''] = Dropdown::EMPTY_VALUE;
-      $rand      = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types,
+      $rand      = Dropdown::showFromArray('plugin_glpiinventory_credentials_id', $types,
                                            ['value' => $p['itemtype']]);
       $ajparams = ['itemtype' => '__VALUE__',
                         'id'       => $p['id']];
-      $url       = Plugin::getWebDir('fusioninventory')."/ajax/dropdownCredentials.php";
-      Ajax::updateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand",
+      $url       = Plugin::getWebDir('glpiinventory')."/ajax/dropdownCredentials.php";
+      Ajax::updateItemOnSelectEvent("dropdown_plugin_glpiinventory_credentials_id$rand",
                                   "span_credentials", $url, $ajparams);
 
       echo "&nbsp;<span name='span_credentials' id='span_credentials'>";
@@ -389,9 +375,9 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
 
       // params
-      // Array([itemtype] => PluginFusioninventoryInventoryComputerESX [id] => 0)
-      if ($params['itemtype'] == 'PluginFusioninventoryInventoryComputerESX') {
-         $params['itemtype'] = 'PluginFusioninventoryCredential';
+      // Array([itemtype] => PluginGlpiinventoryInventoryComputerESX [id] => 0)
+      if ($params['itemtype'] == 'PluginGlpiinventoryInventoryComputerESX') {
+         $params['itemtype'] = 'PluginGlpiinventoryCredential';
       }
       $value = 0;
       if (isset($params['id'])) {
@@ -420,7 +406,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       //Common dropdown header
       parent::displayHeader();
 
-      //Fusioninventory menu
-      PluginFusioninventoryMenu::displayMenu("mini");
+      PluginGlpiinventoryMenu::displayMenu("mini");
    }
 }

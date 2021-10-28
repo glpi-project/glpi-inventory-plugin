@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the actions in package for deploy system.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Alexandre Delaunay
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the actions in package for deploy system.
  */
-class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPackageItem {
+class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageItem {
 
    public $shortname = 'actions';
    public $json_name = 'actions';
@@ -66,10 +51,10 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    function getReturnActionNames() {
       return [
          0              => Dropdown::EMPTY_VALUE,
-         'okCode'       => __("Return code is equal to", 'fusioninventory'),
-         'errorCode'    => __("Return code is not equal to", 'fusioninventory'),
-         'okPattern'    => __("Command output contains", 'fusioninventory'),
-         'errorPattern' => __("Command output does not contains", 'fusioninventory')
+         'okCode'       => __("Return code is equal to", 'glpiinventory'),
+         'errorCode'    => __("Return code is not equal to", 'glpiinventory'),
+         'okPattern'    => __("Command output contains", 'glpiinventory'),
+         'errorPattern' => __("Command output does not contains", 'glpiinventory')
       ];
    }
 
@@ -81,11 +66,11 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
     */
    function getTypes() {
        return [
-         'cmd'     => __('Command', 'fusioninventory'),
-         'move'    => __('Move', 'fusioninventory'),
-         'copy'    => __('Copy', 'fusioninventory'),
-         'delete'  => __('Delete directory', 'fusioninventory'),
-         'mkdir'   => __('Create directory', 'fusioninventory')
+         'cmd'     => __('Command', 'glpiinventory'),
+         'move'    => __('Move', 'glpiinventory'),
+         'copy'    => __('Copy', 'glpiinventory'),
+         'delete'  => __('Delete directory', 'glpiinventory'),
+         'mkdir'   => __('Create directory', 'glpiinventory')
        ];
    }
 
@@ -108,12 +93,12 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    /**
     * Display form
     *
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $request_data
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode possible values: init|edit|create
     */
-   function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
+   function displayForm(PluginGlpiinventoryDeployPackage $package, $request_data, $rand, $mode) {
 
       /*
        * Get element config in 'edit' mode
@@ -173,11 +158,11 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
     * Display list of actions
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored actions
     * @param string $rand unique element id used to identify/update an element
     */
-   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
+   function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
       $canedit    = $package->canUpdateContent();
@@ -215,7 +200,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             } else {
                echo "<b>";
                if ($key == 'exec') {
-                  echo __('Command to execute', 'fusioninventory');
+                  echo __('Command to execute', 'glpiinventory');
                } else {
                   echo $key;
                }
@@ -229,7 +214,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             }
          }
          if (isset($action[$action_type]['retChecks'])) {
-            echo "<br><b>".__("return codes saved for this command", 'fusioninventory').
+            echo "<br><b>".__("return codes saved for this command", 'glpiinventory').
                "</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
@@ -242,7 +227,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          echo "</td>";
          echo "</td>";
          if ($canedit) {
-            echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+            echo "<td class='rowhandler control' title='".__('drag', 'glpiinventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
@@ -257,7 +242,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
-         __('Delete', 'fusioninventory')."\" class='submit'>";
+         __('Delete', 'glpiinventory')."\" class='submit'>";
       }
    }
 
@@ -274,7 +259,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       global $CFG_GLPI;
 
       $mandatory_mark  = $this->getMandatoryMark();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['packages_id']);
@@ -301,7 +286,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       $value_1      = "";
       $value_2      = "";
       $retChecks    = null;
-      $name_label   = __('Action label', 'fusioninventory');
+      $name_label   = __('Action label', 'glpiinventory');
       $name_value   = (isset($config_data['name']))?$config_data['name']:"";
       $name_type    = "input";
       $logLineLimit = (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:100;
@@ -313,9 +298,9 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
          case 'move':
          case 'copy':
-            $value_label_1 = __("From", 'fusioninventory');
+            $value_label_1 = __("From", 'glpiinventory');
             $name_label_1  = "from";
-            $value_label_2 = __("To", 'fusioninventory');
+            $value_label_2 = __("To", 'glpiinventory');
             $name_label_2  = "to";
             if ($mode === self::EDIT) {
                $value_1 = $config_data['from'];
@@ -324,7 +309,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             break;
 
          case 'cmd':
-            $value_label_1 = __("exec", 'fusioninventory');
+            $value_label_1 = __("exec", 'glpiinventory');
             $name_label_1  = "exec";
             $value_label_2 = false;
             $value_type_1  = "textarea";
@@ -338,7 +323,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
          case 'delete':
          case 'mkdir':
-            $value_label_1 = __("path", 'fusioninventory');
+            $value_label_1 = __("path", 'glpiinventory');
             $name_label_1  = "list[]";
             $value_label_2 = false;
             if ($mode === self::EDIT) {
@@ -357,7 +342,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__('Action label', 'fusioninventory')."</th>";
+      echo "<th>".__('Action label', 'glpiinventory')."</th>";
       echo "<td><input type='text' name='name' id='check_name' value=\"{$name_value}\" /></td>";
       echo "</tr>";
       echo "<tr>";
@@ -386,8 +371,8 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       //specific case for cmd : add retcheck form
       if ($type == "cmd") {
          echo "<tr>";
-         echo "<th>".__("Execution checks", 'fusioninventory');
-         PluginFusioninventoryDeployPackage::plusButton("retchecks", ".table_retchecks.template");
+         echo "<th>".__("Execution checks", 'glpiinventory');
+         PluginGlpiinventoryDeployPackage::plusButton("retchecks", ".table_retchecks.template");
          echo "</th>";
          echo "<td>";
          echo "<span id='retchecks' style='display:block'>";
@@ -434,7 +419,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
 
       if ($type == 'cmd') {
          echo "<tr>";
-         echo "<th>".__('Number of output lines to retrieve', 'fusioninventory')."</th>";
+         echo "<th>".__('Number of output lines to retrieve', 'glpiinventory')."</th>";
          echo "<td>";
          $options = ['min'   => 0,
                      'max'   => 5000,

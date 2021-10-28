@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the network equipment port not have
- * connection since xx days.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
@@ -51,9 +36,9 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
+Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
-Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
+Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
 $reset_search = filter_input(INPUT_GET, "reset_search");
 if ($reset_search != '') {
@@ -81,9 +66,9 @@ if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
    $networkequipment = new NetworkEquipment();
 
    $query = "SELECT `glpi_networkports`.`id`, a.date_mod, `glpi_networkports`.`items_id` FROM `glpi_networkports`"
-           . " LEFT JOIN `glpi_plugin_fusioninventory_networkportconnectionlogs` a"
+           . " LEFT JOIN `glpi_plugin_glpiinventory_networkportconnectionlogs` a"
            . " ON a.id= (SELECT MAX(fn.id) a_id
-               FROM glpi_plugin_fusioninventory_networkportconnectionlogs fn
+               FROM glpi_plugin_glpiinventory_networkportconnectionlogs fn
                WHERE (fn.networkports_id_source = glpi_networkports.id
                       OR fn.networkports_id_destination = glpi_networkports.id))"
            . " WHERE a.id IS NOT NULL AND `glpi_networkports`.`itemtype`='NetworkEquipment'"
@@ -192,13 +177,13 @@ function displaySearchForm() {
 
    // Display Reset search
    echo "<td>";
-   echo "<a href='".Plugin::getWebDir('fusioninventory')."/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"".__('Blank')."\" alt=\"".__('Blank')."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
+   echo "<a href='".Plugin::getWebDir('glpiinventory')."/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"".__('Blank')."\" alt=\"".__('Blank')."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
    echo "</td>";
 
    echo "<td>";
    //Add parameters to uri to be saved as SavedSearch
    $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
-   SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginFusioninventoryNetworkport2');
+   SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginGlpiinventoryNetworkport2');
    echo "</td>";
 
    echo "<td>";
@@ -301,4 +286,3 @@ function resetSearch() {
    $_GET["dropdown_sup_inf"]="sup";
    $_GET["dropdown_calendar"]=date("Y-m-d H:i");
 }
-

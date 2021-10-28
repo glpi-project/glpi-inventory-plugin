@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the history of network port connections.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the history of network port connections.
  */
-class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
+class PluginGlpiinventoryNetworkPortConnectionLog extends CommonDBTM {
 
 
    /**
@@ -61,10 +47,10 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
     * @global array $CFG_GLPI
     * @param array $input
     */
-   function showForm($input = []) {
+   function showLogForm($input = []) {
       global $DB, $CFG_GLPI;
 
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       $NetworkPort = new NetworkPort();
 
@@ -72,7 +58,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th>";
-      echo __('PID', 'fusioninventory');
+      echo __('PID', 'glpiinventory');
 
       echo " <a href='".$fi_path."/front/agentprocess.form.php'>(".__('All').")</a>";
       echo "</th>";
@@ -100,18 +86,18 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "</tr>";
 
       $condition = '';
-      if (!isset($input['plugin_fusioninventory_agentprocesses_id'])) {
+      if (!isset($input['plugin_glpiinventory_agentprocesses_id'])) {
          $condition = '';
       } else {
-         $condition = "WHERE `plugin_fusioninventory_agentprocesses_id`='".
-                           $input['plugin_fusioninventory_agentprocesses_id']."'";
+         $condition = "WHERE `plugin_glpiinventory_agentprocesses_id`='".
+                           $input['plugin_glpiinventory_agentprocesses_id']."'";
          if (isset($input['created'])) {
             $condition .= " AND `creation`='".$input['created']."' ";
          }
       }
       $query = "SELECT * FROM `".$this->getTable()."`
          ".$condition."
-         ORDER BY `date`DESC, `plugin_fusioninventory_agentprocesses_id` DESC";
+         ORDER BY `date`DESC, `plugin_glpiinventory_agentprocesses_id` DESC";
       if (!isset($input['process_number'])) {
          $query .= " LIMIT 0, 500";
       }
@@ -123,8 +109,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
             echo "<td>";
             echo "<a href='".$fi_path."/front/agentprocess.form.php?h_process_number=".
-                    $data['plugin_fusioninventory_agentprocesses_id']."'>".
-            $data['plugin_fusioninventory_agentprocesses_id']."</a>";
+                    $data['plugin_glpiinventory_agentprocesses_id']."'>".
+            $data['plugin_glpiinventory_agentprocesses_id']."</a>";
             echo "</td>";
 
             echo "<td>";
@@ -145,7 +131,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
                $link .= __('Without name');
             }
             $link .= "</a>";
-            echo $link." ".__('on', 'fusioninventory')." ".$link1;
+            echo $link." ".__('on', 'glpiinventory')." ".$link1;
             echo "</td>";
 
             echo "<td>";
@@ -169,7 +155,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
                $link .= __('Without name');
             }
             $link .= "</a>";
-            echo $link." ".__('on', 'fusioninventory')." ".$link1;
+            echo $link." ".__('on', 'glpiinventory')." ".$link1;
             echo "</td>";
 
             echo "</tr>";

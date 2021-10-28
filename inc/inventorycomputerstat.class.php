@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the computer inventory stats (number of
- * inventories arrived in the plugin Fusioninventory and regroued by hour).
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,16 +36,16 @@ if (!defined('GLPI_ROOT')) {
 
 /**
  * Manage the computer inventory stats (number of inventories arrived in
- * the plugin Fusioninventory and regroued by hour).
+ * the plugin and regroued by hour).
  */
-class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
+class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_agent';
+   static $rightname = 'plugin_glpiinventory_agent';
 
 
    /**
@@ -83,7 +68,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       global $DB;
 
       $insert = $DB->buildInsert(
-         'glpi_plugin_fusioninventory_inventorycomputerstats', [
+         'glpi_plugin_glpiinventory_inventorycomputerstats', [
             'day'    => new \QueryParam(),
             'hour'   => new \QueryParam()
          ]
@@ -98,7 +83,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
                $d,
                $h
             );
-            $stmt->execute();
+            $DB->executeStatement($stmt);
          }
       }
       mysqli_stmt_close($stmt);
@@ -114,7 +99,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       global $DB;
 
       $DB->update(
-         'glpi_plugin_fusioninventory_inventorycomputerstats', [
+         'glpi_plugin_glpiinventory_inventorycomputerstats', [
             'counter'   => new \QueryExpression($DB->quoteName('counter') . ' + 1')
          ], [
             'day'    => date('z'),
@@ -140,7 +125,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       $timestamp = date('U');
       for ($i=$nb; $i>=0; $i--) {
          $timestampSearch = $timestamp - ($i * 3600);
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputerstats` "
+         $query = "SELECT * FROM `glpi_plugin_glpiinventory_inventorycomputerstats` "
                     ."WHERE `day`='".date('z', $timestampSearch)."' "
                     ."   AND `hour`='".date('G', $timestampSearch)."' "
                     ."LIMIT 1";

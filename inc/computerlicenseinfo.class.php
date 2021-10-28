@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the software licenses found on the computer.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Gonéri Le Bouder
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the software licenses found on the computer.
  */
-class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
+class PluginGlpiinventoryComputerLicenseInfo extends CommonDBTM {
 
 
    /**
@@ -70,7 +55,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('FusionInventory', 'fusioninventory')
+      return __('GLPI Inventory', 'glpiinventory')
          .' - '._n('License', 'Licenses', $nb);
    }
 
@@ -82,10 +67,10 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $computers_id id of the computer
     * @return true
     */
-   function showForm($computers_id) {
+   function showForm($computers_id, array $options = []) {
       global $CFG_GLPI, $DB;
 
-      $iterator = $DB->request('glpi_plugin_fusioninventory_computerlicenseinfos',
+      $iterator = $DB->request('glpi_plugin_glpiinventory_computerlicenseinfos',
                                ['computers_id' => $computers_id]);
 
       if ($iterator->numrows()) {
@@ -109,14 +94,14 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   || $licenseInfo['is_oem']) {
                $options = [];
                $fields = ['is_update' => _sx('name', 'Update'),
-                          'is_trial'  => __('Trial', 'fusioninventory'),
-                          'is_oem'    => __('OEM', 'fusioninventory')];
+                          'is_trial'  => __('Trial', 'glpiinventory'),
+                          'is_oem'    => __('OEM', 'glpiinventory')];
                foreach ($fields as $field => $label) {
                   if ($licenseInfo[$field]) {
                      array_push($options, $label);
                   }
                }
-               $license_options = __('Option', 'fusioninventory')
+               $license_options = __('Option', 'glpiinventory')
                   ."&nbsp;(".implode(', ', $options).")";
             }
             echo "<td>";
@@ -293,7 +278,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $computers_id
     */
    static function cleanLicense(Item_SoftwareLicense $license) {
-      $licenses = getAllDataFromTable('glpi_plugin_fusioninventory_computerlicenseinfos',
+      $licenses = getAllDataFromTable('glpi_plugin_glpiinventory_computerlicenseinfos',
          [
             'softwarelicenses_id' => $license->fields['softwarelicenses_id'],
             'computers_id'        => $license->fields['computers_id'],
@@ -307,4 +292,3 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
 
 }
-

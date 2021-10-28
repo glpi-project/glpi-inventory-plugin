@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2021
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -48,7 +38,7 @@ class agentTest extends TestCase {
       * @test
       */
    public function addAgent() {
-      $agent = new PluginFusioninventoryAgent();
+      $agent = new PluginGlpiinventoryAgent();
 
       $agent_id = $agent->add(
          [
@@ -82,7 +72,7 @@ class agentTest extends TestCase {
     */
    public function agentExists() {
 
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfAgent  = new PluginGlpiinventoryAgent();
       $a_agents = $pfAgent->find(
          ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27']
       );
@@ -96,7 +86,7 @@ class agentTest extends TestCase {
     */
    public function newAgentLinkedToSameAsset() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $agent = $pfAgent->find(
          ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27'],
          [], 1);
@@ -116,7 +106,7 @@ class agentTest extends TestCase {
     */
    public function newAgentCheckEntity() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents = current($pfAgent->find(['computers_id' => 100]));
 
       $this->assertEquals(1, $a_agents['entities_id']);
@@ -128,7 +118,7 @@ class agentTest extends TestCase {
     */
    public function newAgentChangeEntity() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       // Load Agent
       $this->assertTrue(
          $pfAgent->getFromDBByCrit([
@@ -141,7 +131,7 @@ class agentTest extends TestCase {
                                        'port004.bureau.siprossii.com-2013-01-01-16-27-27',
                                        0);
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents = current($pfAgent->find(['computers_id' => 100]));
 
       $this->assertEquals(0, $a_agents['entities_id']);
@@ -157,8 +147,8 @@ class agentTest extends TestCase {
 
       $DB->connect();
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $query = "UPDATE glpi_plugin_fusioninventory_agents SET `last_contact`='2015-01-01 00:00:01'";
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $query = "UPDATE glpi_plugin_glpiinventory_agents SET `last_contact`='2015-01-01 00:00:01'";
       $DB->query($query);
       $arrayinventory = [
           'DEVICEID' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27',
@@ -183,7 +173,7 @@ class agentTest extends TestCase {
     */
    public function disconnectAgent() {
 
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfAgent  = new PluginGlpiinventoryAgent();
       $agent    = $pfAgent->find(
          ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27']
       );
@@ -193,7 +183,7 @@ class agentTest extends TestCase {
 
       //Disconnect the agent from the computer
       $pfAgent->disconnect(['computers_id' => 100, 'id' => $agent_id]);
-      $count = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
+      $count = countElementsInTable('glpi_plugin_glpiinventory_inventorycomputercomputers',
                                     ['computers_id' => '100']);
       $this->assertEquals(0, $count);
 

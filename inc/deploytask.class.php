@@ -1,62 +1,47 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the deploy task.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Alexandre Delaunay
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/taskjobview.class.php");
-include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/taskview.class.php");
-include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/task.class.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskjobview.class.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskview.class.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/task.class.php");
 
 /**
  * Manage the deploy task.
  */
-class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
+class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask {
 
 
    /**
@@ -67,9 +52,9 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     */
    static function getTypeName($nb = 0) {
       if ($nb > 1) {
-         return PluginFusioninventoryDeployGroup::getTypeName();
+         return PluginGlpiinventoryDeployGroup::getTypeName();
       }
-      return __('Task', 'fusioninventory');
+      return __('Task', 'glpiinventory');
    }
 
 
@@ -122,7 +107,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       switch (get_class($item)) {
 
          case __CLASS__:
-            return __('Order list', 'fusioninventory');
+            return __('Order list', 'glpiinventory');
 
       }
       return '';
@@ -155,7 +140,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     */
    function showList() {
       self::title();
-      Search::show('PluginFusioninventoryDeployTask');
+      Search::show('PluginGlpiinventoryDeployTask');
    }
 
 
@@ -168,13 +153,13 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       global  $CFG_GLPI;
 
       $buttons = [];
-      $title = __('Task', 'fusioninventory');
+      $title = __('Task', 'glpiinventory');
 
       if ($this->canCreate()) {
-         $buttons["task.form.php?new=1"] = __('Add task', 'fusioninventory');
+         $buttons["task.form.php?new=1"] = __('Add task', 'glpiinventory');
          $title = "";
       }
-      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png",
+      Html::displayTitle(Plugin::getWebDir('glpiinventory') . "/pics/task.png",
                          $title, $title, $buttons);
    }
 
@@ -198,7 +183,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
          echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
          echo "</div></div></div>";
          echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
-         echo __('Edit impossible, this task is active', 'fusioninventory');
+         echo __('Edit impossible, this task is active', 'glpiinventory');
 
          echo "</div></div></div>";
          echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
@@ -232,7 +217,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
          Session::addMessageAfterRedirect(
-            __('This task is active. delete denied', 'fusioninventory'));
+            __('This task is active. delete denied', 'glpiinventory'));
 
          Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id=".
             $this->getField('id'));
@@ -241,16 +226,16 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       $task_id = $this->getField('id');
 
-      $job = new PluginFusioninventoryTaskjob();
-      $status = new PluginFusioninventoryTaskjobstate();
-      $log = new PluginFusioninventoryTaskjoblog();
+      $job = new PluginGlpiinventoryTaskjob();
+      $status = new PluginGlpiinventoryTaskjobstate();
+      $log = new PluginGlpiinventoryTaskjoblog();
 
       // clean all sub-tables
-      $a_taskjobs = $job->find(['plugin_fusioninventory_tasks_id' => $task_id]);
+      $a_taskjobs = $job->find(['plugin_glpiinventory_tasks_id' => $task_id]);
       foreach ($a_taskjobs as $a_taskjob) {
-         $a_taskjobstatuss = $status->find(['plugin_fusioninventory_taskjobs_id' => $a_taskjob['id']]);
+         $a_taskjobstatuss = $status->find(['plugin_glpiinventory_taskjobs_id' => $a_taskjob['id']]);
          foreach ($a_taskjobstatuss as $a_taskjobstatus) {
-            $a_taskjoblogs = $log->find(['plugin_fusioninventory_taskjobstates_id' => $a_taskjobstatus['id']]);
+            $a_taskjoblogs = $log->find(['plugin_glpiinventory_taskjobstates_id' => $a_taskjobstatus['id']]);
             foreach ($a_taskjoblogs as $a_taskjoblog) {
                $log->delete($a_taskjoblog, 1);
             }

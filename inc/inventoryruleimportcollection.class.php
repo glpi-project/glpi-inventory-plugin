@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage import rule collection for inventory.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage import rule collection for inventory.
  */
-class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection {
+class PluginGlpiinventoryInventoryRuleImportCollection extends RuleCollection {
 
 
    /**
@@ -73,7 +59,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     *
     * @var string
     */
-   static $rightname           = "plugin_fusioninventory_ruleimport";
+   static $rightname           = "plugin_glpiinventory_ruleimport";
 
 
    /**
@@ -82,7 +68,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     * @return string name of this type
     */
    function getTitle() {
-      return __('Equipment import and link rules', 'fusioninventory');
+      return __('Equipment import and link rules', 'glpiinventory');
    }
 
 
@@ -111,18 +97,18 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
          echo "<td>";
 
          switch ($output["action"]) {
-            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_LINK :
+            case PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_LINK :
                echo __('Link');
 
                break;
 
-            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE:
-               echo __('Device created', 'fusioninventory');
+            case PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_CREATE:
+               echo __('Device created', 'glpiinventory');
 
                break;
 
-            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
-               echo __('Import denied', 'fusioninventory');
+            case PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_DENIED:
+               echo __('Import denied', 'glpiinventory');
 
                break;
 
@@ -130,7 +116,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
          echo "</td>";
          echo "</tr>";
-         if ($output["action"] != PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED
+         if ($output["action"] != PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_DENIED
              && isset($output["found_equipment"])) {
             echo "<tr class='tab_bg_2'>";
             $className = $output["found_equipment"][1];
@@ -168,7 +154,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       $iterator = $DB->request($criteria);
 
       $this->RuleList->list = [];
-      while ($rule = $iterator->next()) {
+      foreach ($iterator as $rule) {
          //For each rule, get a Rule object with all the criterias and actions
          $tempRule = $this->getRuleClass();
 

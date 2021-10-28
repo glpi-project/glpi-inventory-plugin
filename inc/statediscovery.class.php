@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the network discovery state.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the network discovery state.
  */
-class PluginFusioninventoryStateDiscovery extends CommonDBTM {
+class PluginGlpiinventoryStateDiscovery extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_task';
+   static $rightname = 'plugin_glpiinventory_task';
 
 
    /**
@@ -70,12 +56,12 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
     */
    function updateState($p_number, $a_input, $agent_id) {
       $data = $this->find(
-            ['plugin_fusioninventory_taskjob_id' => $p_number,
-             'plugin_fusioninventory_agents_id'  => $agent_id]);
+            ['plugin_glpiinventory_taskjob_id' => $p_number,
+             'plugin_glpiinventory_agents_id'  => $agent_id]);
       if (count($data) == "0") {
          $input = [];
-         $input['plugin_fusioninventory_taskjob_id'] = $p_number;
-         $input['plugin_fusioninventory_agents_id'] = $agent_id;
+         $input['plugin_glpiinventory_taskjob_id'] = $p_number;
+         $input['plugin_glpiinventory_agents_id'] = $agent_id;
          $id = $this->add($input);
          $this->getFromDB($id);
          $data[$id] = $this->fields;
@@ -119,8 +105,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
     */
    function endState($p_number, $date_end, $agent_id) {
       $data = $this->find(
-            ['plugin_fusioninventory_taskjob_id' => $p_number,
-             'plugin_fusioninventory_agents_id'  => $agent_id]);
+            ['plugin_glpiinventory_taskjob_id' => $p_number,
+             'plugin_glpiinventory_agents_id'  => $agent_id]);
       foreach ($data as $input) {
          $input['end_time'] = $date_end;
          $this->update($input);
@@ -138,11 +124,11 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
    function display($options = []) {
       global $DB, $CFG_GLPI;
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfStateInventory = new PluginFusioninventoryStateInventory();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+      $pfStateInventory = new PluginGlpiinventoryStateInventory();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -150,9 +136,9 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       }
 
       // Total Number of events
-      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
-            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_glpiinventory_taskjobstates`
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
+            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
          WHERE `method` = 'networkdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
@@ -161,29 +147,32 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       $number = $DB->numrows($resultcount);
 
       // Display the pager
-      Html::printPager($start, $number, Plugin::getWebDir('fusioninventory')."/front/statediscovery.php", '');
+      Html::printPager($start, $number, Plugin::getWebDir('glpiinventory')."/front/statediscovery.php", '');
 
-      echo "<table class='tab_cadre_fixe'>";
+      echo "<div class='card'>";
+      echo "<table class='table table-hover card-table'>";
 
+      echo "<thead>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th>".__('Unique id', 'fusioninventory')."</th>";
-      echo "<th>".__('Task job', 'fusioninventory')."</th>";
-      echo "<th>".__('Agent', 'fusioninventory')."</th>";
+      echo "<th>".__('Unique id', 'glpiinventory')."</th>";
+      echo "<th>".__('Task job', 'glpiinventory')."</th>";
+      echo "<th>".__('Agent', 'glpiinventory')."</th>";
       echo "<th>".__('Status')."</th>";
-      echo "<th>".__('Starting date', 'fusioninventory')."</th>";
-      echo "<th>".__('Ending date', 'fusioninventory')."</th>";
+      echo "<th>".__('Starting date', 'glpiinventory')."</th>";
+      echo "<th>".__('Ending date', 'glpiinventory')."</th>";
       echo "<th>".__('Total duration')."</th>";
-      echo "<th>".__('Threads number', 'fusioninventory')."</th>";
-      echo "<th>".__('Total discovery devices', 'fusioninventory')."</th>";
-      echo "<th>".__('Devices not imported', 'fusioninventory')."</th>";
-      echo "<th>".__('Devices linked', 'fusioninventory')."</th>";
-      echo "<th>".__('Devices imported', 'fusioninventory')."</th>";
+      echo "<th>".__('Threads number', 'glpiinventory')."</th>";
+      echo "<th>".__('Total discovery devices', 'glpiinventory')."</th>";
+      echo "<th>".__('Devices not imported', 'glpiinventory')."</th>";
+      echo "<th>".__('Devices linked', 'glpiinventory')."</th>";
+      echo "<th>".__('Devices imported', 'glpiinventory')."</th>";
       echo "</tr>";
+      echo "</thead>";
 
-      $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
-            FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
-            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+      $sql = "SELECT `glpi_plugin_glpiinventory_taskjobstates`.*
+            FROM `glpi_plugin_glpiinventory_taskjobstates`
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
+            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
          WHERE `method` = 'networkdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
@@ -193,13 +182,13 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       while ($data=$DB->fetchArray($result)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";
-         $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
+         $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
          echo "<td>";
          $link = $pfTaskjob->getLink();
          $link = str_replace('.form', '', $link);
          echo $link;
          echo "</td>";
-         $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+         $pfAgent->getFromDB($data['plugin_glpiinventory_agents_id']);
          echo "<td>".$pfAgent->getLink(1)."</td>";
          $nb_found = 0;
          $nb_threads = 0;
@@ -210,7 +199,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          $createddevices = 0;
          $a_taskjobstates = $pfTaskjobstate->find(['uniqid' => $data['uniqid']]);
          foreach ($a_taskjobstates as $datastate) {
-            $a_taskjoblog = $pfTaskjoblog->find(['plugin_fusioninventory_taskjobstates_id' => $datastate['id']]);
+            $a_taskjoblog = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $datastate['id']]);
             foreach ($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
                   $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);
@@ -241,16 +230,16 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          switch ($data['state']) {
 
             case 0:
-               echo __('Prepared', 'fusioninventory');
+               echo __('Prepared', 'glpiinventory');
                break;
 
             case 1:
             case 2:
-               echo __('Started', 'fusioninventory');
+               echo __('Started', 'glpiinventory');
                break;
 
             case 3:
-               echo __('Finished tasks', 'fusioninventory');
+               echo __('Finished tasks', 'glpiinventory');
                break;
 
          }
@@ -289,5 +278,6 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          echo "</tr>";
       }
       echo "</table>";
+      echo "</div>";
    }
 }

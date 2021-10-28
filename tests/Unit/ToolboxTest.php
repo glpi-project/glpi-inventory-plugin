@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2021
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -79,7 +69,7 @@ JSON;
 
       $this->assertEquals(
          $this->formatJson_expected,
-         PluginFusioninventoryToolbox::formatJson(json_encode($this->formatJson_input))
+         PluginGlpiinventoryToolbox::formatJson(json_encode($this->formatJson_input))
       );
    }
 
@@ -87,10 +77,10 @@ JSON;
    /**
     * @test
     */
-   public function isAFusionInventoryDevice() {
+   public function isAnInventoryDevice() {
       $computer = new Computer();
 
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
       $values = ['name'         => 'comp',
                  'is_dynamic'   => 1,
@@ -99,11 +89,11 @@ JSON;
       $computers_id = $computer->add($values);
       $computer->getFromDB($computers_id);
 
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
-      $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $pfComputer->add(['computers_id' => $computers_id]);
-      $this->assertTrue(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+      $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
       $printer = new Printer();
       $values  = ['name'         => 'printer',
@@ -112,11 +102,11 @@ JSON;
                   'is_recursive' => 0];
       $printers_id = $printer->add($values);
       $printer->getFromDB($printers_id);
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
-      $pfPrinter = new PluginFusioninventoryPrinter();
+      $pfPrinter = new PluginGlpiinventoryPrinter();
       $pfPrinter->add(['printers_id' => $printers_id]);
-      $this->assertTrue(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+      $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
       $values  = ['name'         => 'printer2',
                   'is_dynamic'   => 0,
@@ -125,7 +115,7 @@ JSON;
       $printers_id_2 = $printer->add($values);
       $printer->getFromDB($printers_id_2);
       $pfPrinter->add(['printers_id' => $printers_id_2]);
-      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
    }
 
@@ -140,17 +130,17 @@ JSON;
       $states_id_computer = $state->importExternal('state_computer');
       $states_id_snmp = $state->importExternal('state_snmp');
 
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       $config->updateValue('states_id_snmp_default', $states_id_snmp);
       $config->updateValue('states_id_default', $states_id_computer);
 
-      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
+      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('computer', $input);
       $this->assertEquals(['states_id' => $states_id_computer], $result);
 
-      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
       $this->assertEquals(['states_id' => $states_id_snmp], $result);
 
-      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('foo', $input);
+      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('foo', $input);
       $this->assertEquals([], $result);
 
       // Redo default

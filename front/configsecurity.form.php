@@ -1,73 +1,59 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the configuration security form.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 include ("../../../inc/includes.php");
 
-Session::checkRight('plugin_fusioninventory_configsecurity', READ);
+Session::checkRight('plugin_glpiinventory_configsecurity', READ);
 
-$pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
-$config = new PluginFusioninventoryConfig();
+$pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
+$config = new PluginGlpiinventoryConfig();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
-         "pluginfusioninventorymenu", "configsecurity");
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
+         "pluginglpiinventorymenu", "configsecurity");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_configsecurity', CREATE);
+   Session::checkRight('plugin_glpiinventory_configsecurity', CREATE);
    $new_ID = 0;
    $new_ID = $pfConfigSecurity->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   Session::checkRight('plugin_fusioninventory_configsecurity', UPDATE);
+   Session::checkRight('plugin_glpiinventory_configsecurity', UPDATE);
    $pfConfigSecurity->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   Session::checkRight('plugin_fusioninventory_configsecurity', PURGE);
+   Session::checkRight('plugin_glpiinventory_configsecurity', PURGE);
    $pfConfigSecurity->delete($_POST);
    Html::redirect("configsecurity.php");
 }
@@ -81,7 +67,6 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
    Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 
-$pfConfigSecurity->showForm($id);
+$pfConfigSecurity->display(['id' => $id]);
 
 Html::footer();
-

@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the extended information of a computer.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the extended information of a computer.
  */
-class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninventoryItem {
+class PluginGlpiinventoryInventoryComputerComputer extends PluginGlpiinventoryItem {
 
 
    /**
@@ -84,7 +70,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
    static function showAgentInfo($item) {
       global $CFG_GLPI;
 
-      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(['computers_id' => $item->getID()], [], 1));
       if (empty($a_computerextend)) {
          return;
@@ -92,19 +78,19 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       echo '<table class="tab_glpi" width="100%">';
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->showInfoForComputer($item);
 
       if ($a_computerextend['bios_date'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
+         echo '<td>'.__('BIOS date', 'glpiinventory').'</td>';
          echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
          echo '</tr>';
       }
 
       if ($a_computerextend['bios_version'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
+         echo '<td>'.__('BIOS version', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['bios_version'].'</td>';
          echo '</tr>';
       }
@@ -129,14 +115,14 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       if ($a_computerextend['winowner'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+         echo '<td>'.__('Owner', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['winowner'].'</td>';
          echo '</tr>';
       }
 
       if ($a_computerextend['wincompany'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Company', 'fusioninventory').'</td>';
+         echo '<td>'.__('Company', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
          echo '</tr>';
       }
@@ -159,14 +145,14 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
           || !empty($pfComputer->hasAutomaticInventory($id))) {
          return true;
       } else {
-         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent = new PluginGlpiinventoryAgent();
          if ($pfAgent->getAgentWithComputerid($id)) {
             echo '<tr>';
             echo '<td colspan=\'4\'></td>';
             echo '</tr>';
 
             echo '<tr>';
-            echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+            echo '<th colspan="4">'.__('GLPI Inventory', 'glpiinventory').'</th>';
             echo '</tr>';
             $pfAgent->showInfoForComputer($item, 4);
          }
@@ -197,10 +183,10 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo "</tr>";
 
       echo '<tr class="tab_bg_1">';
-      echo '<td>'.__('Company', 'fusioninventory').'</td>';
+      echo '<td>'.__('Company', 'glpiinventory').'</td>';
       echo '<td>'.$a_computerextend['wincompany'].'</td>';
 
-      echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+      echo '<td>'.__('Owner', 'glpiinventory').'</td>';
       echo '<td>'.$a_computerextend['winowner'].'</td>';
       echo '</tr>';
 
@@ -212,7 +198,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('HostID', 'fusioninventory')."</td>";
+      echo "<td>".__('HostID', 'glpiinventory')."</td>";
       echo "<td>";
       echo $a_computerextend['hostid'];
       echo "</td><colspan='2'></td>";
@@ -230,12 +216,12 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
     * @return true
     */
    static function showComputerInfo($item) {
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       // Manage locks pictures
-      PluginFusioninventoryLock::showLockIcon('Computer');
+      PluginGlpiinventoryLock::showLockIcon('Computer');
 
-      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($item->getID());
       if (empty($a_computerextend)) {
          return true;
@@ -244,45 +230,45 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<table class="tab_glpi" width="100%">';
 
       echo '<tr>';
-      echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '<th colspan="4">'.__('GLPI Inventory', 'glpiinventory').'</th>';
       echo '</tr>';
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->showInfoForComputer($item, 4);
 
       echo '<tr class="tab_bg_1">';
       if ($a_computerextend['remote_addr'] != '') {
-         echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
+         echo '<td>'.__('Public contact address', 'glpiinventory').'</td>';
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
       } else {
          echo "<td colspan='2'></td>";
       }
 
       echo '<td>';
-      echo __('Last inventory', 'fusioninventory');
+      echo __('Last inventory', 'glpiinventory');
       echo '</td>';
       echo '<td>';
-      echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
+      echo Html::convDateTime($a_computerextend['last_inventory_update']);
       echo '</td>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {
-         echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
+         echo '<td>'.__('Automatic entity transfer', 'glpiinventory').'</td>';
          echo '<td>';
-         $pfEntity = new PluginFusioninventoryEntity();
+         $pfEntity = new PluginGlpiinventoryEntity();
          if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
-            echo __('No, locked (by entity configuration)', 'fusioninventory');
+            echo __('No, locked (by entity configuration)', 'glpiinventory');
          } else {
             if ($a_computerextend['is_entitylocked'] == 1) {
-               echo __('No, locked manually', 'fusioninventory');
+               echo __('No, locked manually', 'glpiinventory');
                echo " [ <a href='".$fi_path."/front/computerentitylock.form.php?id=".
-                     $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
+                     $a_computerextend['id']."&lock=0'>".__('Unlock it', 'glpiinventory')."</a> ]";
             } else {
                echo __('Yes');
                echo " [ <a href='".$fi_path."/front/computerentitylock.form.php?id=".
-                     $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
+                     $a_computerextend['id']."&lock=1'>".__('Lock it', 'glpiinventory')."</a> ]";
             }
          }
          echo '</td>';
@@ -290,14 +276,14 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
          echo "<td colspan='2'></td>";
       }
       echo '<td>';
-      echo __('Last boot', 'fusioninventory');
+      echo __('Last boot', 'glpiinventory');
       echo '</td>';
       echo '<td>';
       echo Html::convDateTime($a_computerextend['last_boot']);
       echo '</td>';
       echo '</tr>';
 
-      $pfRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
+      $pfRemoteManagement = new PluginGlpiinventoryComputerRemoteManagement();
       $pfRemoteManagement->showInformation($item->getID());
       echo '</table>';
       return true;
@@ -323,7 +309,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
     */
    function getLock($computers_id) {
 
-      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
                                               ['computers_id' => $computers_id], [], 1));
       if (empty($a_computerextend)) {

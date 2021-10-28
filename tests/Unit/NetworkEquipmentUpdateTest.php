@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -63,16 +53,16 @@ class NetworkEquipmentUpdateTest extends TestCase {
    public function AddNetworkEquipment() {
       global $DB;
 
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+      $DB->query("UPDATE `glpi_plugin_glpiinventory_networkporttypes`"
               ." SET `import`='1'"
               ." WHERE `number`='54'");
 
       $this->datelatupdate = date('Y-m-d H:i:s');
 
       $a_inventory = [
-          'PluginFusioninventoryNetworkEquipment' => [
+          'PluginGlpiinventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
-                  'last_fusioninventory_update' => $this->datelatupdate,
+                  'last_inventory_update' => $this->datelatupdate,
                   'cpu'                         => 5,
                   'memory'                      => 18,
                   'uptime'                      => '157 days, 02:14:44.00'
@@ -212,7 +202,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
           '5005' => ['10001', '10002']
       ];
 
-      $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
 
       $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJEU4',
@@ -222,7 +212,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
 
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 1);
 
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+      $DB->query("UPDATE `glpi_plugin_glpiinventory_networkporttypes`"
               ." SET `import`='0'"
               ." WHERE `number`='54'");
 
@@ -248,7 +238,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
           'serial'               => 'FOC147UJEU4',
           'entities_id'          => 0,
           'is_recursive'         => 0,
-          'ram'                  => 64,
+          'ram'                  => '64',
           'otherserial'          => null,
           'contact'              => null,
           'contact_num'          => null,
@@ -267,7 +257,10 @@ class NetworkEquipmentUpdateTest extends TestCase {
           'groups_id'            => 0,
           'states_id'            => 0,
           'ticket_tco'           => '0.0000',
-          'is_dynamic'           => 1
+          'is_dynamic'           => 1,
+          'uuid'                 => null,
+          'autoupdatesystems_id' => 0,
+          'sysdescr'             => null
       ];
 
       $this->assertEquals($a_reference, $networkEquipment->fields);
@@ -278,12 +271,12 @@ class NetworkEquipmentUpdateTest extends TestCase {
     * @test
     */
    public function NetworkEquipmentSnmpExtension() {
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
       $networkEquipment = new NetworkEquipment();
       $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
 
       $a_networkequipment = current($pfNetworkEquipment->find(['networkequipments_id' => $networkEquipment->fields['id']], [], 1));
-      unset($a_networkequipment['last_fusioninventory_update']);
+      unset($a_networkequipment['last_inventory_update']);
       unset($a_networkequipment['id']);
       $a_reference = [
           'networkequipments_id'                        => $networkEquipment->fields['id'],
@@ -291,7 +284,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
-          'plugin_fusioninventory_configsecurities_id'  => 0,
+          'plugin_glpiinventory_configsecurities_id'  => 0,
           'uptime'                                      => '157 days, 02:14:44.00',
           'cpu'                                         => 5,
           'memory'                                      => 18,
@@ -352,7 +345,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $a_networkports = $networkPort->find(
             ['mac'      => 'cc:f9:54:a1:03:35',
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
 
@@ -369,7 +362,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
    public function NetworkPortConnection() {
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
 
       $a_networkports = $networkPort->find(['logical_number' => 10001]);
 
@@ -385,7 +378,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $a_networkports = $networkPort->find(
             ['items_id' => $pfUnmanaged->fields['id'],
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
    }

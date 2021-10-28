@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the modules of agents
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage (enable or not) the modules in the agent.
  */
-class PluginFusioninventoryAgentmodule extends CommonDBTM {
+class PluginGlpiinventoryAgentmodule extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_agent";
+   static $rightname = "plugin_glpiinventory_agent";
 
 
    /**
@@ -70,10 +56,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if ($item->getType()=='PluginFusioninventoryConfig') {
-         return __('Agents modules', 'fusioninventory');
-      } else if ($item->getType()=='PluginFusioninventoryAgent') {
-         return __('Agents modules', 'fusioninventory');
+      if ($item->getType()=='PluginGlpiinventoryConfig') {
+         return __('Agents modules', 'glpiinventory');
+      } else if ($item->getType()=='PluginGlpiinventoryAgent') {
+         return __('Agents modules', 'glpiinventory');
       }
       return '';
    }
@@ -89,11 +75,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-      if ($item->getType()=='PluginFusioninventoryConfig') {
+      if ($item->getType()=='PluginGlpiinventoryConfig') {
          $pfAgentmodule = new self();
-         $pfAgentmodule->showForm();
+         $pfAgentmodule->showModuleForm();
          return true;
-      } else if ($item->getType()=='PluginFusioninventoryAgent') {
+      } else if ($item->getType()=='PluginGlpiinventoryAgent') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showFormAgentException($item->fields['id']);
          return true;
@@ -107,9 +93,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     *
     * @return boolean true if no problem
     */
-   function showForm() {
+   function showModuleForm() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
@@ -117,13 +103,13 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                  Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<th width='130'>".__('Module', 'fusioninventory')."</th>";
-         echo "<th width='180'>".__('Activation (by default)', 'fusioninventory')."</th>";
-         echo "<th>".__('Exceptions', 'fusioninventory')."</th>";
+         echo "<th width='130'>".__('Module', 'glpiinventory')."</th>";
+         echo "<th width='180'>".__('Activation (by default)', 'glpiinventory')."</th>";
+         echo "<th>".__('Exceptions', 'glpiinventory')."</th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
          $modulename = $data["modulename"];
 
          foreach ($a_methods as $datamod) {
@@ -138,12 +124,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
          // Hack for snmpquery
          if ($data["modulename"] == 'SNMPQUERY') {
-            $modulename = __('Network inventory (SNMP)', 'fusioninventory');
+            $modulename = __('Network inventory (SNMP)', 'glpiinventory');
 
          }
          // Hack for deploy
          if ($data["modulename"] == 'DEPLOY') {
-            $modulename = __('Package deployment', 'fusioninventory');
+            $modulename = __('Package deployment', 'glpiinventory');
 
          }
 
@@ -164,19 +150,19 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          foreach ($a_agentList as $agent_id) {
             $a_used[] = $agent_id;
          }
-            Dropdown::show("PluginFusioninventoryAgent", ["name" => "agent_to_add[]",
+            Dropdown::show("PluginGlpiinventoryAgent", ["name" => "agent_to_add[]",
                                                                "used" => $a_used]);
             echo "</td>";
             echo "<td align='center'>";
-            echo "<input type='submit' class='submit' name='agent_add' value='" .
+            echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='" .
                __s('Add') . " >>'>";
             echo "<br><br>";
-            echo "<input type='submit' class='submit' name='agent_delete' value='<< " .
+            echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< " .
                __s('Delete') . "'>";
             echo "</td>";
             echo "<td width='45%'>";
 
-            echo "<select size='6' name='agent_to_delete[]'>";
+            echo "<select class='form-select' size='6' name='agent_to_delete[]'>";
          foreach ($a_agentList as $agent_id) {
             $pfAgent->getFromDB($agent_id);
             echo "<option value='".$agent_id."'>".$pfAgent->getName()."</option>";
@@ -189,7 +175,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='3'>";
-         echo "<input type='submit' name='update' value=\"".__s('Update')."\" class='submit'>";
+         echo "<input type='submit' name='update' value=\"".__s('Update')."\" class='btn btn-primary'>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";
@@ -208,26 +194,26 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @param integer $agents_id id of the agent
     */
    function showFormAgentException($agents_id) {
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDB($agents_id);
       $canedit = $pfAgent->can($agents_id, UPDATE);
 
       echo "<br/>";
       if ($canedit) {
-         echo "<form name='form_ic' method='post' action='".Plugin::getWebDir('fusioninventory').
+         echo "<form name='form_ic' method='post' action='".Plugin::getWebDir('glpiinventory').
                "/front/agentmodule.form.php'>";
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>".__('Module', 'fusioninventory')."</th>";
+      echo "<th>".__('Module', 'glpiinventory')."</th>";
       echo "<th>Activation</th>";
-      echo "<th>".__('Module', 'fusioninventory')."</th>";
+      echo "<th>".__('Module', 'glpiinventory')."</th>";
       echo "<th>Activation</th>";
       echo "</tr>";
 
       $a_modules = $this->find();
       $i = 0;
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
       foreach ($a_modules as $data) {
          if ($i == 0) {
             echo "<tr class='tab_bg_1'>";
@@ -245,12 +231,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
          // Hack for snmpquery
          if ($data["modulename"] == 'SNMPQUERY') {
-            $modulename = __('Network inventory (SNMP)', 'fusioninventory');
+            $modulename = __('Network inventory (SNMP)', 'glpiinventory');
 
          }
          // Hack for deploy
          if ($data["modulename"] == 'DEPLOY') {
-            $modulename = __('Package deployment', 'fusioninventory');
+            $modulename = __('Package deployment', 'glpiinventory');
 
          }
 
@@ -317,7 +303,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    function getAgentsCanDo($module_name) {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       if ($module_name == 'SNMPINVENTORY') {
          $module_name = 'SNMPQUERY';
@@ -406,14 +392,14 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @return string the URL generated
     */
    static function getUrlForModule($modulename, $entities_id = -1) {
-      $fi_dir = '/'.Plugin::getWebDir('fusioninventory', false);
+      $fi_dir = '/'.Plugin::getWebDir('glpiinventory', false);
 
       // Get current entity URL if it exists ...
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
       $baseUrl = $pfEntity->getValue('agent_base_url', $entities_id);
       if (! empty($baseUrl)) {
-         PluginFusioninventoryToolbox::logIfExtradebug(
-            "pluginFusioninventory-agent-url",
+         PluginGlpiinventoryToolbox::logIfExtradebug(
+            "pluginGlpiinventory-agent-url",
             "Entity ".$entities_id.", agent base URL: ".$baseUrl
          );
 
@@ -424,13 +410,13 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       // ... else use global plugin configuration parameter.
       if (strlen($pfEntity->getValue('agent_base_url', $entities_id))<10) {
-         PluginFusioninventoryCommunicationRest::sendError();
+         PluginGlpiinventoryCommunicationRest::sendError();
          exit;
          // die ("agent_base_url is unset!\n");
       }
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-agent-url",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-agent-url",
          "Global configuration URL: ".$pfEntity->getValue('agent_base_url', $entities_id)
       );
 
@@ -447,7 +433,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    static function getModules() {
       $a_modules = [];
-      $a_data = getAllDataFromTable(PluginFusioninventoryAgentmodule::getTable());
+      $a_data = getAllDataFromTable(PluginGlpiinventoryAgentmodule::getTable());
       foreach ($a_data as $data) {
          $a_modules[] = $data['modulename'];
       }
@@ -456,4 +442,3 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
 }
-

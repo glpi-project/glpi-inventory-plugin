@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the deploy groups.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Alexandre Delaunay
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the deploy groups.
  */
-class PluginFusioninventoryDeployGroup extends CommonDBTM {
+class PluginGlpiinventoryDeployGroup extends CommonDBTM {
 
    /**
     * Define constant name of static group
@@ -73,7 +58,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_group";
+   static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Define the array of itemtype allowed in static groups
@@ -95,8 +80,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    public function __construct() {
       $this->grouptypes = [
-            self::STATIC_GROUP  => __('Static group', 'fusioninventory'),
-            self::DYNAMIC_GROUP => __('Dynamic group', 'fusioninventory')
+            self::STATIC_GROUP  => __('Static group', 'glpiinventory'),
+            self::DYNAMIC_GROUP => __('Dynamic group', 'glpiinventory')
       ];
    }
 
@@ -108,7 +93,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('FusionInventory group', 'fusioninventory');
+      return __('Inventory group', 'glpiinventory');
    }
 
 
@@ -122,7 +107,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $ong = [];
       $this->addDefaultFormTab($ong);
 
-      $count = self::getMatchingItemsCount("PluginFusionInventoryTaskjob");
+      $count = self::getMatchingItemsCount("PluginGlpiinventoryTaskjob");
       $ong[$this->getType().'$task'] = self::createTabEntry(_n('Associated task', 'Associated tasks', $count), $count);
 
       $this->addStandardTab('Log', $ong, $options);
@@ -133,10 +118,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    function getMatchingItemsCount($itemtype) {
       $count = 0;
-      if ($itemtype == 'PluginFusionInventoryTaskjob'
+      if ($itemtype == 'PluginGlpiinventoryTaskjob'
             && is_numeric($_GET['id'])) {
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginFusioninventoryDeployGroup":"'.$_GET['id'].'"%']]);
+         $pfTaskjob = new PluginGlpiinventoryTaskjob();
+         $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"'.$_GET['id'].'"%']]);
          $count = count($data);
       }
       return $count;
@@ -169,18 +154,18 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-         $modules_methods = PluginFusioninventoryStaticmisc::getModulesMethods();
-         $link = Toolbox::getItemTypeFormURL("PluginFusioninventoryTask");
+         $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
+         $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryTask");
 
          $query = "SELECT
-            glpi_plugin_fusioninventory_tasks.id as id,
-            glpi_plugin_fusioninventory_tasks.name as tname,
-            glpi_plugin_fusioninventory_tasks.is_active,
-            glpi_plugin_fusioninventory_taskjobs.method
-            FROM glpi_plugin_fusioninventory_taskjobs
-            LEFT JOIN glpi_plugin_fusioninventory_tasks on plugin_fusioninventory_tasks_id=glpi_plugin_fusioninventory_tasks.id
-            WHERE `actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'
-            ORDER BY glpi_plugin_fusioninventory_tasks.name";
+            glpi_plugin_glpiinventory_tasks.id as id,
+            glpi_plugin_glpiinventory_tasks.name as tname,
+            glpi_plugin_glpiinventory_tasks.is_active,
+            glpi_plugin_glpiinventory_taskjobs.method
+            FROM glpi_plugin_glpiinventory_taskjobs
+            LEFT JOIN glpi_plugin_glpiinventory_tasks on plugin_glpiinventory_tasks_id=glpi_plugin_glpiinventory_tasks.id
+            WHERE `actors` LIKE '%\"PluginGlpiinventoryDeployGroup\":\"".$_GET['id']."\"%'
+            ORDER BY glpi_plugin_glpiinventory_tasks.name";
          $res = $DB->query($query);
 
          while ($row = $DB->fetchAssoc($res)) {
@@ -211,7 +196,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    function getSpecificMassiveActions($checkitem = null) {
       $actions = [];
-      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'targettask'] = __('Target a task', 'fusioninventory');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'targettask'] = __('Target a task', 'glpiinventory');
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'duplicate']  = _sx('button', 'Duplicate');
       return $actions;
    }
@@ -226,8 +211,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
          case 'add_to_static_group':
-            Dropdown::show('PluginFusioninventoryDeployGroup',
-                            ['condition' => ['type' => PluginFusioninventoryDeployGroup::STATIC_GROUP]]);
+            Dropdown::show('PluginGlpiinventoryDeployGroup',
+                            ['condition' => ['type' => PluginGlpiinventoryDeployGroup::STATIC_GROUP]]);
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
          case 'duplicate':
@@ -251,16 +236,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
          case 'add_to_static_group' :
             if ($item->getType() == 'Computer') {
-               $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+               $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
                foreach ($ids as $id) {
                   if (!countElementsInTable($group_item->getTable(),
                      [
-                        'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+                        'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
                         'itemtype'                               => 'Computer',
                         'items_id'                               => $id,
                      ])) {
                      $values = [
-                          'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+                          'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
                           'itemtype' => 'Computer',
                           'items_id' => $id];
                      $group_item->add($values);
@@ -302,10 +287,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          if ($new_deploygroups_id) {
             if ($this->fields['type'] == self::STATIC_GROUP) {
                $result
-                  = PluginFusioninventoryDeployGroup_Staticdata::duplicate($deploygroups_id, $new_deploygroups_id);
+                  = PluginGlpiinventoryDeployGroup_Staticdata::duplicate($deploygroups_id, $new_deploygroups_id);
             } else {
                $result
-                  = PluginFusioninventoryDeployGroup_Dynamicdata::duplicate($deploygroups_id, $new_deploygroups_id);
+                  = PluginGlpiinventoryDeployGroup_Dynamicdata::duplicate($deploygroups_id, $new_deploygroups_id);
             }
          } else {
             $result = false;
@@ -329,7 +314,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $title   = self::getTypeName();
 
       if ($this->canCreate()) {
-         $buttons["group.form.php?new=1"] = __('Add group', 'fusioninventory');
+         $buttons["group.form.php?new=1"] = __('Add group', 'glpiinventory');
          $title = "";
       }
       Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png",
@@ -344,7 +329,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($ID, $options = []) {
+   function showForm($ID, array $options = []) {
 
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -352,12 +337,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
       echo "<td rowspan='2' align='center'>";
-      echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<textarea cols='40' class='form-control' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
 
@@ -393,8 +378,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          'field'         => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
-         'massiveaction' => false,
-         'autocomplete'  => true,
+         'massiveaction' => false
       ];
 
       $tab[] = [
@@ -502,13 +486,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    * @return string the target
    */
    static function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false) {
-      $target = PluginFusioninventoryDeployGroup::getFormURLWithID($deploygroup_id);
+      $target = PluginGlpiinventoryDeployGroup::getFormURLWithID($deploygroup_id);
       if ($is_dynamic) {
-         $target .= "&_glpi_tab=PluginFusioninventoryDeployGroup_Dynamicdata$1";
+         $target .= "&_glpi_tab=PluginGlpiinventoryDeployGroup_Dynamicdata$1";
       } else {
-         $target.= "&_glpi_tab=PluginFusioninventoryDeployGroup_Staticdata$1";
+         $target.= "&_glpi_tab=PluginGlpiinventoryDeployGroup_Staticdata$1";
       }
-      $target.= "&plugin_fusioninventory_deploygroups_id=".$deploygroup_id;
+      $target.= "&plugin_glpiinventory_deploygroups_id=".$deploygroup_id;
       return $target;
    }
 
@@ -516,19 +500,19 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    /**
     * Show criteria to search computers
     *
-    * @param object $item PluginFusioninventoryDeployGroup instance
+    * @param object $item PluginGlpiinventoryDeployGroup instance
     * @param array $p
     */
-   static function showCriteria(PluginFusioninventoryDeployGroup $item, $p) {
+   static function showCriteria(PluginGlpiinventoryDeployGroup $item, $p) {
 
       $is_dynamic = $item->isDynamicGroup();
-      $itemtype   = "PluginFusioninventoryComputer";
+      $itemtype   = "PluginGlpiinventoryComputer";
       $can_update = $item->canEdit($item->getID());
 
       $p['target'] = self::getSearchEngineTargetURL($item->getID(), $is_dynamic);
       if ($can_update) {
          $p['addhidden'] = [
-             'plugin_fusioninventory_deploygroups_id' => $item->getID(),
+             'plugin_glpiinventory_deploygroups_id' => $item->getID(),
              'id'                                     => $item->getID(),
              'start'                                  => 0
          ];
@@ -558,14 +542,14 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $results = [];
       if ($group->isStaticGroup()) {
-         $staticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
+         $staticgroup = new PluginGlpiinventoryDeployGroup_Staticdata();
          foreach ($staticgroup->find(
-               ['plugin_fusioninventory_deploygroups_id' => $groups_id,
+               ['plugin_glpiinventory_deploygroups_id' => $groups_id,
                 'itemtype'                               => 'Computer']) as $tmpgroup) {
             $results[$tmpgroup['items_id']] = $tmpgroup['items_id'];
          }
       } else {
-         $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group,
+         $results = PluginGlpiinventoryDeployGroup_Dynamicdata::getTargetsByGroup($group,
                                                                                     $use_cache);
       }
       return $results;
@@ -576,23 +560,23 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * Get search parameters as an array
     *
     * @global object $DB
-    * @param object $group PluginFusioninventoryDeployGroup instance
+    * @param object $group PluginGlpiinventoryDeployGroup instance
     * @param boolean $check_post_values
     * @param boolean $getAll
     * @return array
     */
-   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false, $getAll = false) {
+   static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false) {
       global $DB;
 
       $computers_params = [];
 
       //Check criteria from DB
       if (!$check_post_values) {
-         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-            unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+         if ($group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
+            unset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']);
             $query = "SELECT `fields_array`
-                     FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
-                     WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
+                     FROM `glpi_plugin_glpiinventory_deploygroups_dynamicdatas`
+                     WHERE `plugin_glpiinventory_deploygroups_id`='".$group->getID()."'";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {
                $fields_array     = $DB->result($result, 0, 'fields_array');
@@ -600,19 +584,19 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP
-                 && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
-                 && !isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
-            $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
+         if ($group->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
+                 && isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'])
+                 && !isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']['show_results'])) {
+            $computers_params = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'];
          } else {
-             unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+             unset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']);
              $computers_params = $_GET;
          }
       }
       if ($getAll) {
          $computers_params['export_all'] = true;
       }
-      return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
+      return Search::manageParams('PluginGlpiinventoryComputer', $computers_params);
    }
 
 
@@ -620,10 +604,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * Clean when purge a deploy group
     */
    function cleanDBOnPurge() {
-      $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
-      $static_group  = new PluginFusioninventoryDeployGroup_Staticdata();
+      $dynamic_group = new PluginGlpiinventoryDeployGroup_Dynamicdata();
+      $static_group  = new PluginGlpiinventoryDeployGroup_Staticdata();
 
-      $params = ['plugin_fusioninventory_deploygroups_id' => $this->getID()];
+      $params = ['plugin_glpiinventory_deploygroups_id' => $this->getID()];
       $dynamic_group->deleteByCriteria($params);
       $static_group->deleteByCriteria($params);
    }
@@ -648,41 +632,41 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $link = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup");
+      $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup");
 
       $iterator = $DB->request([
-         'FROM'   => PluginFusioninventoryDeployGroup_Staticdata::getTable(),
+         'FROM'   => PluginGlpiinventoryDeployGroup_Staticdata::getTable(),
          'WHERE'  => [
             'items_id' => $computers_id,
             'itemtype' => 'Computer',
          ],
       ]);
-      while ($data = $iterator->next()) {
-         $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
+      foreach ($iterator as $data) {
+         $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";
          echo "<a href='".$link."?id=".$this->fields['id']."'>".$this->fields['name']."</a>";
          echo "</td>";
          echo "<td>";
-         echo __('Static group', 'fusioninventory');
+         echo __('Static group', 'glpiinventory');
          echo "</td>";
          echo "</tr>";
       }
 
       $iterator = $DB->request([
-         'FROM'   => PluginFusioninventoryDeployGroup_Dynamicdata::getTable(),
+         'FROM'   => PluginGlpiinventoryDeployGroup_Dynamicdata::getTable(),
          'WHERE'  => [
             'computers_id_cache' => ["LIKE", '%"'.$computers_id.'"%'],
          ],
       ]);
-      while ($data = $iterator->next()) {
-         $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
+      foreach ($iterator as $data) {
+         $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";
          echo "<a href='".$link."?id=".$this->fields['id']."'>".$this->fields['name']."</a>";
          echo "</td>";
          echo "<td>";
-         echo __('Dynamic group', 'fusioninventory');
+         echo __('Dynamic group', 'glpiinventory');
          echo "</td>";
          echo "</tr>";
       }

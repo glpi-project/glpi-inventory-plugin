@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the wmi content found by agent and linked
- * to the computer
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,11 +38,11 @@ if (!defined('GLPI_ROOT')) {
  * Manage the wmi information found by the collect module of agent.
  */
 
-class PluginFusioninventoryCollect_Wmi_Content
-   extends PluginFusioninventoryCollectContentCommon {
+class PluginGlpiinventoryCollect_Wmi_Content
+   extends PluginGlpiinventoryCollectContentCommon {
 
-   public $collect_itemtype = 'PluginFusioninventoryCollect_Wmi';
-   public $collect_table    = 'glpi_plugin_fusioninventory_collects_wmis';
+   public $collect_itemtype = 'PluginGlpiinventoryCollect_Wmi';
+   public $collect_table    = 'glpi_plugin_glpiinventory_collects_wmis';
 
    public $type = 'wmi';
 
@@ -71,17 +56,17 @@ class PluginFusioninventoryCollect_Wmi_Content
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
-         if (get_class($item) == 'PluginFusioninventoryCollect') {
+         if (get_class($item) == 'PluginGlpiinventoryCollect') {
             if ($item->fields['type'] == 'wmi') {
-               $a_colregs = getAllDataFromTable('glpi_plugin_fusioninventory_collects_wmis',
-                                                 "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
+               $a_colregs = getAllDataFromTable('glpi_plugin_glpiinventory_collects_wmis',
+                                                 "`plugin_glpiinventory_collects_id`='".$item->getID()."'");
                if (count($a_colregs) == 0) {
                   return '';
                }
                $in = array_keys($a_colregs);
-               if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
-                                "`plugin_fusioninventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
-                  return __('Windows WMI content', 'fusioninventory');
+               if (countElementsInTable('glpi_plugin_glpiinventory_collects_wmis_contents',
+                                "`plugin_glpiinventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
+                  return __('Windows WMI content', 'glpiinventory');
                }
             }
          }
@@ -103,9 +88,9 @@ class PluginFusioninventoryCollect_Wmi_Content
 
       $db_wmis = [];
       $query = "SELECT `id`, `property`, `value`
-                FROM `glpi_plugin_fusioninventory_collects_wmis_contents`
+                FROM `glpi_plugin_glpiinventory_collects_wmis_contents`
                 WHERE `computers_id` = '".$computers_id."'
-                  AND `plugin_fusioninventory_collects_wmis_id` =
+                  AND `plugin_glpiinventory_collects_wmis_id` =
                   '".$collects_wmis_id."'";
       $result = $DB->query($query);
       while ($data = $DB->fetchAssoc($result)) {
@@ -136,7 +121,7 @@ class PluginFusioninventoryCollect_Wmi_Content
       foreach ($wmi_data as $key => $value) {
          $input = [
             'computers_id' => $computers_id,
-            'plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id,
+            'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
             'property'     => $key,
             'value'        => $value
          ];
@@ -151,22 +136,22 @@ class PluginFusioninventoryCollect_Wmi_Content
     */
    function showForComputer($computers_id) {
 
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr>";
-      echo "<th>".__('Moniker', 'fusioninventory')."</th>";
-      echo "<th>".__('Class', 'fusioninventory')."</th>";
-      echo "<th>".__('Property', 'fusioninventory')."</th>";
-      echo "<th>".__('Value', 'fusioninventory')."</th>";
+      echo "<th>".__('Moniker', 'glpiinventory')."</th>";
+      echo "<th>".__('Class', 'glpiinventory')."</th>";
+      echo "<th>".__('Property', 'glpiinventory')."</th>";
+      echo "<th>".__('Value', 'glpiinventory')."</th>";
       echo "</tr>";
 
       $a_data = $this->find(['computers_id' => $computers_id],
-                            ['plugin_fusioninventory_collects_wmis_id', 'property']);
+                            ['plugin_glpiinventory_collects_wmis_id', 'property']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
          echo '<td>';
-         $pfCollect_Wmi->getFromDB($data['plugin_fusioninventory_collects_wmis_id']);
+         $pfCollect_Wmi->getFromDB($data['plugin_glpiinventory_collects_wmis_id']);
          echo $pfCollect_Wmi->fields['moniker'];
          echo '</td>';
          echo '<td>';
@@ -190,7 +175,7 @@ class PluginFusioninventoryCollect_Wmi_Content
     * @param integer $collects_wmis_id
     */
    function showContent($collects_wmis_id) {
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       $computer = new Computer();
 
       $pfCollect_Wmi->getFromDB($collects_wmis_id);
@@ -205,11 +190,11 @@ class PluginFusioninventoryCollect_Wmi_Content
 
       echo "<tr>";
       echo "<th>".__('Computer')."</th>";
-      echo "<th>".__('Property', 'fusioninventory')."</th>";
-      echo "<th>".__('Value', 'fusioninventory')."</th>";
+      echo "<th>".__('Property', 'glpiinventory')."</th>";
+      echo "<th>".__('Value', 'glpiinventory')."</th>";
       echo "</tr>";
 
-      $a_data = $this->find(['plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id],
+      $a_data = $this->find(['plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id],
                             ['property']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
@@ -230,4 +215,3 @@ class PluginFusioninventoryCollect_Wmi_Content
 
 
 }
-

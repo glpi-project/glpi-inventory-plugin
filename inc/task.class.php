@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the task system.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the task system.
  */
-class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
+class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_task';
+   static $rightname = 'plugin_glpiinventory_task';
 
    /**
     * Get name of this type by language of the user connected
@@ -67,7 +53,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Task management', 'fusioninventory');
+      return __('Task management', 'glpiinventory');
    }
 
 
@@ -109,7 +95,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'id'        => '2',
          'table'     => $this->getTable(),
          'field'     => 'datetime_start',
-         'name'      => __('Schedule start', 'fusioninventory'),
+         'name'      => __('Schedule start', 'glpiinventory'),
          'datatype'  => 'datetime',
       ];
 
@@ -117,7 +103,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'id'        => '8',
          'table'     => $this->getTable(),
          'field'     => 'datetime_end',
-         'name'      => __('Schedule end', 'fusioninventory'),
+         'name'      => __('Schedule end', 'glpiinventory'),
          'datatype'  => 'datetime',
       ];
 
@@ -150,7 +136,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'table'     => $this->getTable(),
          'field'     => 'reprepare_if_successful',
          'name'      => __('Re-prepare a target-actor if previous run is successful',
-            'fusioninventory'),
+            'glpiinventory'),
          'datatype'  => 'bool',
       ];
 
@@ -158,7 +144,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'id'       => '7',
          'table'    => $this->getTable(),
          'field'    => 'is_deploy_on_demand',
-         'name'     => __('deploy on demand task', 'fusioninventory'),
+         'name'     => __('deploy on demand task', 'glpiinventory'),
          'datatype' => 'bool',
       ];
 
@@ -188,28 +174,28 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       //clean jobslogs
       //DB::delete() does not supports subqueries
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
-                  WHERE plugin_fusioninventory_taskjobstates_id IN (
+      $DB->query("DELETE FROM glpi_plugin_glpiinventory_taskjoblogs
+                  WHERE plugin_glpiinventory_taskjobstates_id IN (
                      SELECT states.id
-                     FROM glpi_plugin_fusioninventory_taskjobstates AS states
-                     INNER JOIN glpi_plugin_fusioninventory_taskjobs AS jobs
-                        ON jobs.id = states.plugin_fusioninventory_taskjobs_id
-                        AND jobs.plugin_fusioninventory_tasks_id = '$tasks_id'
+                     FROM glpi_plugin_glpiinventory_taskjobstates AS states
+                     INNER JOIN glpi_plugin_glpiinventory_taskjobs AS jobs
+                        ON jobs.id = states.plugin_glpiinventory_taskjobs_id
+                        AND jobs.plugin_glpiinventory_tasks_id = '$tasks_id'
                   ) ");
 
       //clean states
       //DB::delete() does not supports subqueries
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobstates
-                  WHERE plugin_fusioninventory_taskjobs_id IN (
+      $DB->query("DELETE FROM glpi_plugin_glpiinventory_taskjobstates
+                  WHERE plugin_glpiinventory_taskjobs_id IN (
                      SELECT jobs.id
-                     FROM glpi_plugin_fusioninventory_taskjobs AS jobs
-                     WHERE jobs.plugin_fusioninventory_tasks_id = '$tasks_id'
+                     FROM glpi_plugin_glpiinventory_taskjobs AS jobs
+                     WHERE jobs.plugin_glpiinventory_tasks_id = '$tasks_id'
                   )");
 
       //clean jobs
       $DB->delete(
-         'glpi_plugin_fusioninventory_taskjobs', [
-            'plugin_fusioninventory_tasks_id' => $tasks_id
+         'glpi_plugin_glpiinventory_taskjobs', [
+            'plugin_glpiinventory_tasks_id' => $tasks_id
          ]
       );
    }
@@ -222,28 +208,28 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @param string $method
     */
    static function cleanTasksbyMethod($method) {
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+      $pfTask = new PluginGlpiinventoryTask();
 
       $a_taskjobs = $pfTaskjob->find(['method' => $method]);
       $task_id = 0;
       foreach ($a_taskjobs as $a_taskjob) {
          $pfTaskjob->delete($a_taskjob, 1);
-         if (($task_id != $a_taskjob['plugin_fusioninventory_tasks_id'])
+         if (($task_id != $a_taskjob['plugin_glpiinventory_tasks_id'])
             AND ($task_id != '0')) {
 
             // Search if this task have other taskjobs, if not, we will delete it
-            $findtaskjobs = $pfTaskjob->find(['plugin_fusioninventory_tasks_id' => $task_id]);
+            $findtaskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $task_id]);
             if (count($findtaskjobs) == '0') {
                $pfTask->delete(['id'=>$task_id], 1);
             }
          }
-         $task_id = $a_taskjob['plugin_fusioninventory_tasks_id'];
+         $task_id = $a_taskjob['plugin_glpiinventory_tasks_id'];
       }
       if ($task_id != '0') {
 
          // Search if this task have other taskjobs, if not, we will delete it
-         $findtaskjobs = $pfTaskjob->find(['plugin_fusioninventory_tasks_id' => $task_id]);
+         $findtaskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $task_id]);
          if (count($findtaskjobs) == '0') {
             $pfTask->delete(['id'=>$task_id], 1);
          }
@@ -264,7 +250,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    function getTaskjobstatesForAgent($agent_id, $methods = [], $options = []) {
       global $DB;
 
-      $pfTimeslot = new PluginFusioninventoryTimeslot();
+      $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
       $jobstates = [];
 
@@ -278,23 +264,23 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "SELECT",
          "     task.`id`, task.`name`, task.`is_active`,",
          "     task.`datetime_start`, task.`datetime_end`,",
-         "     task.`plugin_fusioninventory_timeslots_exec_id` as timeslot_id,",
+         "     task.`plugin_glpiinventory_timeslots_exec_id` as timeslot_id,",
          "     job.`id`, job.`name`, job.`method`, job.`actors`,",
          "     run.`itemtype`, run.`items_id`, run.`state`,",
-         "     run.`id`, run.`plugin_fusioninventory_agents_id`",
-         "FROM `glpi_plugin_fusioninventory_taskjobstates` run",
-         "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` job",
-         "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
-         "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
-         "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
+         "     run.`id`, run.`plugin_glpiinventory_agents_id`",
+         "FROM `glpi_plugin_glpiinventory_taskjobstates` run",
+         "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` job",
+         "  ON job.`id` = run.`plugin_glpiinventory_taskjobs_id`",
+         "LEFT JOIN `glpi_plugin_glpiinventory_tasks` task",
+         "  ON task.`id` = job.`plugin_glpiinventory_tasks_id`",
          "WHERE",
          "  job.`method` IN ('".implode("','", $methods)."')",
          "  AND run.`state` IN ('". implode("','", [
-            PluginFusioninventoryTaskjobstate::PREPARED,
-            PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA,
-            PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA,
+            PluginGlpiinventoryTaskjobstate::PREPARED,
+            PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA,
+            PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA,
          ])."')",
-         "  AND run.`plugin_fusioninventory_agents_id` = " . $agent_id,
+         "  AND run.`plugin_glpiinventory_agents_id` = " . $agent_id,
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag AND drop
          // feature will be properly activated in the taskjobs list.
@@ -304,7 +290,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $query_result = $DB->query($query);
       $results = [];
       if ($query_result) {
-         $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+         $results = PluginGlpiinventoryToolbox::fetchAssocByTable($query_result);
       }
 
       // Fetch a list of unique actors since the same actor can be assigned to many jobs.
@@ -355,16 +341,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
        */
       foreach ($results as $result) {
 
-         $jobstate = new PluginFusioninventoryTaskjobstate();
+         $jobstate = new PluginGlpiinventoryTaskjobstate();
          $jobstate->getFromDB($result['run']['id']);
 
          // Cancel the job if has already been sent to the agent but the agent did not replied
-         if ($result['run']['state'] == PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA
-                 or $result['run']['state'] == PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA) {
+         if ($result['run']['state'] == PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                 or $result['run']['state'] == PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA) {
             $jobstates_to_cancel[$jobstate->fields['id']] = [
                'jobstate' => $jobstate,
                'reason'   => __("The agent is requesting a configuration that has already been sent to him by the server. It is more likely that the agent is subject to a critical error.",
-                                'fusioninventory'),
+                                'glpiinventory'),
                'code'     => $jobstate::IN_ERROR
             ];
             continue;
@@ -375,7 +361,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = [
                'jobstate' => $jobstate,
                'reason'   => __('The task has been deactivated after preparation of this job.',
-                                'fusioninventory')
+                                'glpiinventory')
             ];
             continue;
          };
@@ -394,7 +380,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = [
                   'jobstate' => $jobstate,
                   'reason'   => __("This job can not be executed anymore due to the task's schedule.",
-                                   'fusioninventory')
+                                   'glpiinventory')
                ];
                continue;
             }
@@ -425,7 +411,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = [
                   'jobstate' => $jobstate,
                   'reason'   => __("This job can not be executed anymore due to the task's timeslot.",
-                                   'fusioninventory')
+                                   'glpiinventory')
                ];
                continue;
             }
@@ -442,7 +428,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = [
                'jobstate' => $jobstate,
                'reason'   => __('This agent does not belong anymore in the actors defined in the job.',
-                                'fusioninventory')
+                                'glpiinventory')
             ];
             continue;
          }
@@ -458,11 +444,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       //Remove the list of jobstates previously filtered for removal.
       foreach ($jobstates_to_cancel as $jobstate) {
          if (!isset($jobstate['code'])) {
-            $jobstate['code'] = PluginFusioninventoryTaskjobstate::CANCELLED;
+            $jobstate['code'] = PluginGlpiinventoryTaskjobstate::CANCELLED;
          }
          switch ($jobstate['code']) {
 
-            case PluginFusioninventoryTaskjobstate::IN_ERROR:
+            case PluginGlpiinventoryTaskjobstate::IN_ERROR:
                $jobstate['jobstate']->fail($jobstate['reason']);
                break;
 
@@ -489,17 +475,17 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $now = new DateTime();
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-jobs",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-jobs",
          "Preparing tasks jobs, task id: ". $tasks_id);
 
       //Get all active timeslots
-      $timeslot  = new PluginFusioninventoryTimeslot();
+      $timeslot  = new PluginGlpiinventoryTimeslot();
       $timeslots = $timeslot->getCurrentActiveTimeslots();
       if (empty($timeslots)) {
          $query_timeslot = '';
       } else {
-         $query_timeslot = "OR (`plugin_fusioninventory_timeslots_prep_id` IN (".implode(',', $timeslots)."))";
+         $query_timeslot = "OR (`plugin_glpiinventory_timeslots_prep_id` IN (".implode(',', $timeslots)."))";
       }
 
       //transform methods array into string for database query
@@ -516,9 +502,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "     task.`id`, task.`name`, task.`reprepare_if_successful`, ",
          "     job.`id`, job.`name`, job.`method`, ",
          "     job.`targets`, job.`actors`",
-         "FROM `glpi_plugin_fusioninventory_taskjobs` job",
-         "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
-         "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
+         "FROM `glpi_plugin_glpiinventory_taskjobs` job",
+         "LEFT JOIN `glpi_plugin_glpiinventory_tasks` task",
+         "  ON task.`id` = job.`plugin_glpiinventory_tasks_id`",
          "WHERE task.`is_active` = 1",
          $sql_task_id,
          "AND (",
@@ -539,7 +525,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "        ( task.`datetime_start` IS NULL AND task.`datetime_end` IS NULL )",
          ")",
          "AND job.`method` IN (".$methods.")
-         AND (`plugin_fusioninventory_timeslots_prep_id`='0'
+         AND (`plugin_glpiinventory_timeslots_prep_id`='0'
               $query_timeslot)",
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
@@ -550,7 +536,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $query_result = $DB->query($query);
       $results      = [];
       if ($query_result) {
-         $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+         $results = PluginGlpiinventoryToolbox::fetchAssocByTable($query_result);
       }
 
       // Fetch a list of actors to be prepared. We may have the same actors for each job so this
@@ -559,16 +545,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       // Set basic elements of jobstates
       $run_base = [
-         'state' => PluginFusioninventoryTaskjobstate::PREPARED,
+         'state' => PluginGlpiinventoryTaskjobstate::PREPARED,
       ];
       $log_base = [
          'date'    => $_SESSION['glpi_currenttime'],
-         'state'   => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
+         'state'   => PluginGlpiinventoryTaskjoblog::TASK_PREPARED,
          'comment' => ''
       ];
 
-      $jobstate = new PluginFusioninventoryTaskjobstate();
-      $joblog   = new PluginFusioninventoryTaskjoblog();
+      $jobstate = new PluginGlpiinventoryTaskjobstate();
+      $joblog   = new PluginGlpiinventoryTaskjoblog();
 
       foreach ($results as $result) {
 
@@ -590,11 +576,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $targets = importArrayFromDB($result['job']['targets']);
          if ($result['job']['method'] == 'networkinventory') {
             $newtargets = [];
-            $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
+            $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
             foreach ($targets as $keyt=>$target) {
                $item_type = key($target);
                $items_id = current($target);
-               if ($item_type == 'PluginFusioninventoryIPRange') {
+               if ($item_type == 'PluginGlpiinventoryIPRange') {
                   unset($targets[$keyt]);
                   // In this case get devices of this iprange
                   $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
@@ -614,15 +600,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_running = $jobstate->find(
                   ['itemtype' => $item_type,
                    'items_id' => $item_id,
-                   'plugin_fusioninventory_taskjobs_id' => $job_id,
+                   'plugin_glpiinventory_taskjobs_id' => $job_id,
                    'NOT'      => ['state' => [
-                      PluginFusioninventoryTaskjobstate::FINISHED,
-                      PluginFusioninventoryTaskjobstate::IN_ERROR,
-                      PluginFusioninventoryTaskjobstate::POSTPONED,
-                      PluginFusioninventoryTaskjobstate::CANCELLED]],
-                   'plugin_fusioninventory_agents_id' => array_keys($agent_ids)]);
+                      PluginGlpiinventoryTaskjobstate::FINISHED,
+                      PluginGlpiinventoryTaskjobstate::IN_ERROR,
+                      PluginGlpiinventoryTaskjobstate::POSTPONED,
+                      PluginGlpiinventoryTaskjobstate::CANCELLED]],
+                   'plugin_glpiinventory_agents_id' => array_keys($agent_ids)]);
             foreach ($jobstates_running as $jobstate_running) {
-               $jobstate_agent_id = $jobstate_running['plugin_fusioninventory_agents_id'];
+               $jobstate_agent_id = $jobstate_running['plugin_glpiinventory_agents_id'];
                if (isset( $agent_ids[$jobstate_agent_id])) {
                   $agent_ids[$jobstate_agent_id] = false;
                }
@@ -634,12 +620,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_running = $jobstate->find(
                   ['itemtype' => $item_type,
                    'items_id' => $item_id,
-                   'plugin_fusioninventory_taskjobs_id' => $job_id,
-                   'state'    => PluginFusioninventoryTaskjobstate::FINISHED,
-                   'plugin_fusioninventory_agents_id'   => array_keys($agent_ids)]);
+                   'plugin_glpiinventory_taskjobs_id' => $job_id,
+                   'state'    => PluginGlpiinventoryTaskjobstate::FINISHED,
+                   'plugin_glpiinventory_agents_id'   => array_keys($agent_ids)]);
 
                foreach ($jobstates_running as $jobstate_running) {
-                  $jobstate_agent_id = $jobstate_running['plugin_fusioninventory_agents_id'];
+                  $jobstate_agent_id = $jobstate_running['plugin_glpiinventory_agents_id'];
                   if (isset( $agent_ids[$jobstate_agent_id])) {
                      $agent_ids[$jobstate_agent_id] = false;
                   }
@@ -651,19 +637,19 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_tocancel = $jobstate->find(
                   ['itemtype' => $item_type,
                    'items_id' => $item_id,
-                   'plugin_fusioninventory_taskjobs_id' => $job_id,
+                   'plugin_glpiinventory_taskjobs_id' => $job_id,
                    'NOT'      => [
                       'state' => [
-                         PluginFusioninventoryTaskjobstate::FINISHED,
-                         PluginFusioninventoryTaskjobstate::IN_ERROR,
-                         PluginFusioninventoryTaskjobstate::CANCELLED,
+                         PluginGlpiinventoryTaskjobstate::FINISHED,
+                         PluginGlpiinventoryTaskjobstate::IN_ERROR,
+                         PluginGlpiinventoryTaskjobstate::CANCELLED,
                       ]],
                    'NOT' => [
-                     'plugin_fusioninventory_agents_id' => array_keys($agent_ids)]
+                     'plugin_glpiinventory_agents_id' => array_keys($agent_ids)]
                    ]);
             foreach ($jobstates_tocancel as $jobstate_tocancel) {
                $jobstate->getFromDB($jobstate_tocancel['id']);
-               $jobstate->cancel(__('Device no longer defined in definition of job', 'fusioninventory'));
+               $jobstate->cancel(__('Device no longer defined in definition of job', 'glpiinventory'));
             }
 
             foreach ($agent_ids as $agent_id => $agent_not_running) {
@@ -678,21 +664,21 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      [
                         'itemtype'                           => $item_type,
                         'items_id'                           => $item_id,
-                        'plugin_fusioninventory_taskjobs_id' => $job_id,
-                        'plugin_fusioninventory_agents_id'   => $agent_id,
+                        'plugin_glpiinventory_taskjobs_id' => $job_id,
+                        'plugin_glpiinventory_agents_id'   => $agent_id,
                         'uniqid'                             => uniqid(),
                      ]
                   );
 
                   $run_id = $jobstate->add($run);
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-jobs",
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-jobs",
                      "- prepared a job execution: ". print_r($run, true));
                   if ($run_id !== false) {
                      $log = array_merge(
                         $log_base,
                         [
-                           'plugin_fusioninventory_taskjobstates_id' => $run_id
+                           'plugin_glpiinventory_taskjobstates_id' => $run_id
                         ]
                      );
                      $joblog->add($log);
@@ -719,8 +705,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $agents    = [];
       $computers = [];
       $computer  = new Computer();
-      $agent     = new PluginFusioninventoryAgent();
-      $pfToolbox = new PluginFusioninventoryToolbox();
+      $agent     = new PluginGlpiinventoryAgent();
+      $pfToolbox = new PluginGlpiinventoryToolbox();
       foreach ($actors as $actor) {
          $itemtype = key($actor);
          $itemid   = $actor[$itemtype];
@@ -738,9 +724,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $computers[$itemid] = 1;
                break;
 
-            case 'PluginFusioninventoryDeployGroup':
-               $group_targets = $pfToolbox->executeAsFusioninventoryUser(
-                  'PluginFusioninventoryDeployGroup::getTargetsForGroup',
+            case 'PluginGlpiinventoryDeployGroup':
+               $group_targets = $pfToolbox->executeAsGlpiinventoryUser(
+                  'PluginGlpiinventoryDeployGroup::getTargetsForGroup',
                   [$itemid, $use_cache]
                );
                foreach ($group_targets as $computerid) {
@@ -771,7 +757,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             /**
              * TODO: The following should be replaced with Dynamic groups
              */
-            case 'PluginFusioninventoryAgent':
+            case 'PluginGlpiinventoryAgent':
                $agents[$itemid] = 1;
                break;
          }
@@ -800,7 +786,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $task    = new self();
       $methods = [];
-      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
 
@@ -816,7 +802,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    static function cronCleanOnDemand($task = null) {
       global $DB;
 
-      $config   = new PluginFusioninventoryConfig();
+      $config   = new PluginGlpiinventoryConfig();
       $interval = $config->getValue('clean_on_demand_tasks');
 
       //If crontask is disabled, quit method
@@ -838,20 +824,20 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    function cleanTasksAndJobs($interval) {
       global $DB;
 
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTask         = new PluginFusioninventoryTask();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfTask         = new PluginGlpiinventoryTask();
 
       $index = 0;
 
       //Delete taskstates that are too old
       $date  = "SELECT DISTINCT state.`id` as 'id'
-                FROM `glpi_plugin_fusioninventory_taskjoblogs` AS log
-                LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS state
-                  ON (state.`id` = log.`plugin_fusioninventory_taskjobstates_id`)
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS job
-                 ON (job.`id` = state.`plugin_fusioninventory_taskjobs_id`)
-                LEFT JOIN `glpi_plugin_fusioninventory_tasks` AS task
-                  ON (task.`id` = job.`plugin_fusioninventory_tasks_id`)
+                FROM `glpi_plugin_glpiinventory_taskjoblogs` AS log
+                LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` AS state
+                  ON (state.`id` = log.`plugin_glpiinventory_taskjobstates_id`)
+               LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS job
+                 ON (job.`id` = state.`plugin_glpiinventory_taskjobs_id`)
+                LEFT JOIN `glpi_plugin_glpiinventory_tasks` AS task
+                  ON (task.`id` = job.`plugin_glpiinventory_tasks_id`)
                 WHERE task.`is_deploy_on_demand`='1'
                    AND DATEDIFF(ADDDATE(log.`date`,
                                 INTERVAL ".$interval." DAY),
@@ -864,14 +850,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       //Check if a task has jobstates. In case not, delete the task
-      foreach ($DB->request('glpi_plugin_fusioninventory_tasks',
+      foreach ($DB->request('glpi_plugin_glpiinventory_tasks',
                             ['is_deploy_on_demand' => 1]) as $task) {
 
          $query = "SELECT COUNT(*) as cpt
-                   FROM `glpi_plugin_fusioninventory_taskjobstates` as state
-                   LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS job
-                      ON (job.`id` = state.`plugin_fusioninventory_taskjobs_id`)
-                   WHERE job.`plugin_fusioninventory_tasks_id`='".$task['id']."'";
+                   FROM `glpi_plugin_glpiinventory_taskjobstates` as state
+                   LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS job
+                      ON (job.`id` = state.`plugin_glpiinventory_taskjobs_id`)
+                   WHERE job.`plugin_glpiinventory_tasks_id`='".$task['id']."'";
          $result = $DB->query($query);
 
          if ($DB->result($result, 0, "cpt") == 0) {
@@ -894,7 +880,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       switch ($name) {
          case 'taskScheduler' :
-            return ['description' => __('FusionInventory task scheduler')];
+            return ['description' => __('Inventory task scheduler')];
 
          case 'cleanOnDemand' :
             return ['description' => __('Clean on demand deployment tasks')];
@@ -924,7 +910,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    **/
    function forceRunning() {
       $methods = [];
-      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
       $this->prepareTaskjobs($methods, $this->getID());
@@ -967,8 +953,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $entity_restrict_task = getEntitiesRestrictRequest("AND", 'task');
       }
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          "Get tasks jobs log, tasks list: ". implode(",", $task_ids));
 
       $prepare_chrono = [
@@ -987,9 +973,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             `job`.`targets` as 'job.targets',
             `task`.`id` as 'task.id',
             `task`.`name` as 'task.name'
-            FROM `glpi_plugin_fusioninventory_taskjobs` as job
-            LEFT JOIN `glpi_plugin_fusioninventory_tasks` as task
-              ON job.`plugin_fusioninventory_tasks_id` = task.`id` $active_task $tasks_list $entity_restrict_task
+            FROM `glpi_plugin_glpiinventory_taskjobs` as job
+            LEFT JOIN `glpi_plugin_glpiinventory_tasks` as task
+              ON job.`plugin_glpiinventory_tasks_id` = task.`id` $active_task $tasks_list $entity_restrict_task
             WHERE task.`id` IS NOT NULL ",
          'result' => null,
          "start" => microtime(true),
@@ -998,8 +984,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $data_structure['result'] = $DB->query($data_structure['query']);
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          "Preparing query: " . print_r($data_structure, true));
 
       if ($data_structure['result']->num_rows <= 0) {
@@ -1010,8 +996,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       // Target cache (used to speed up data formatting)
       $expanded = [];
-      if (isset($_SESSION['plugin_fusioninventory_tasks_expanded'])) {
-         $expanded = $_SESSION['plugin_fusioninventory_tasks_expanded'];
+      if (isset($_SESSION['plugin_glpiinventory_tasks_expanded'])) {
+         $expanded = $_SESSION['plugin_glpiinventory_tasks_expanded'];
       }
 
       $agent_state_types = [
@@ -1026,8 +1012,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
          // ***** Begin loop for each taskjob ***** //
 
-         PluginFusioninventoryToolbox::logIfExtradebug(
-            "pluginFusioninventory-tasks",
+         PluginGlpiinventoryToolbox::logIfExtradebug(
+            "pluginGlpiinventory-tasks",
             "Job: " . print_r($result, true));
 
          $task_id = $result['task.id'];
@@ -1061,11 +1047,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
          if ($result['job.method'] == 'networkinventory') {
             $newtargets = [];
-            $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
+            $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
             foreach ($targets as $keyt=>$target) {
                $item_type = key($target);
                $items_id  = current($target);
-               if ($item_type == 'PluginFusioninventoryIPRange') {
+               if ($item_type == 'PluginGlpiinventoryIPRange') {
                   unset($targets[$keyt]);
                   // In this case get devices of this iprange
                   $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
@@ -1078,8 +1064,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // ***** loop on each target of the job ***** //
 
          foreach ($targets as $target) {
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-tasks",
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-tasks",
                "- target: " . print_r($target, true));
 
             $item_type = key($target);
@@ -1114,19 +1100,19 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $prepare_chrono['end'] = microtime(true);
       $prepare_chrono['duration'] = self::formatChrono($prepare_chrono);
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          "Prepared: " . print_r($logs, true));
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          $prepare_chrono);
 
       // How many run log must we provide ?
       $max_runs = 1;
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'])) {
-         if ($_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'] >= 1) {
-            $max_runs = $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'];
+      if (isset($_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'])) {
+         if ($_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] >= 1) {
+            $max_runs = $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'];
          }
       }
 
@@ -1139,10 +1125,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
              `log`.`id` as 'log.last_id',
              `log`.`date` as 'log.last_date',
              `log`.`comment` as 'log.last_comment',
-              log.`plugin_fusioninventory_taskjobstates_id` as run_id,
+              log.`plugin_glpiinventory_taskjobstates_id` as run_id,
              UNIX_TIMESTAMP(log.`date`) as 'log.last_timestamp'
-             FROM `glpi_plugin_fusioninventory_taskjoblogs` AS log
-             WHERE log.`plugin_fusioninventory_taskjobstates_id` in ('RUN.ID')
+             FROM `glpi_plugin_glpiinventory_taskjoblogs` AS log
+             WHERE log.`plugin_glpiinventory_taskjobstates_id` in ('RUN.ID')
              ORDER BY log.`id` DESC",
          'result' => null,
          "start" => microtime(true),
@@ -1150,28 +1136,28 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       // Get all jobs id of this tasks_id
-      $pftaskjob = new PluginFusioninventoryTaskjob();
+      $pftaskjob = new PluginGlpiinventoryTaskjob();
 
       // Parse the query result to update the data to return
       $tasks_list1 = [];
       if (is_array($task_ids) && count($task_ids) > 0) {
-         $tasks_list1 += ['plugin_fusioninventory_tasks_id' => $task_ids];
+         $tasks_list1 += ['plugin_glpiinventory_tasks_id' => $task_ids];
       }
       $taskjobs = $pftaskjob->find($tasks_list1);
       $counter_agents = [];
       foreach ($taskjobs as $taskjob) {
 
          // get taskjobstates
-          $query_job_state = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.id, state,
-             glpi_plugin_fusioninventory_taskjobstates.itemtype, glpi_plugin_fusioninventory_taskjobstates.items_id,
-             `plugin_fusioninventory_agents_id` as 'agent.id',
+          $query_job_state = "SELECT `glpi_plugin_glpiinventory_taskjobstates`.id, state,
+             glpi_plugin_glpiinventory_taskjobstates.itemtype, glpi_plugin_glpiinventory_taskjobstates.items_id,
+             `plugin_glpiinventory_agents_id` as 'agent.id',
              `agent`.`name` as 'agent.name',
              `agent`.`computers_id` as 'agent.computers_id'
-             FROM `glpi_plugin_fusioninventory_taskjobstates`
-             LEFT JOIN `glpi_plugin_fusioninventory_agents` AS agent
-                ON agent.`id` = `plugin_fusioninventory_agents_id`
-             WHERE `glpi_plugin_fusioninventory_taskjobstates`.`plugin_fusioninventory_taskjobs_id` = '".$taskjob['id']."'
-             ORDER BY glpi_plugin_fusioninventory_taskjobstates.id desc";
+             FROM `glpi_plugin_glpiinventory_taskjobstates`
+             LEFT JOIN `glpi_plugin_glpiinventory_agents` AS agent
+                ON agent.`id` = `plugin_glpiinventory_agents_id`
+             WHERE `glpi_plugin_glpiinventory_taskjobstates`.`plugin_glpiinventory_taskjobs_id` = '".$taskjob['id']."'
+             ORDER BY glpi_plugin_glpiinventory_taskjobstates.id desc";
 
          // Execute query to get all jobs states - log the query result
          $q_task_job_state['start'] = microtime(true);
@@ -1179,8 +1165,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $q_task_job_state['end'] = microtime(true);
          $q_task_job_state['duration'] = self::formatChrono($q_task_job_state);
 
-         PluginFusioninventoryToolbox::logIfExtradebug(
-           "pluginFusioninventory-tasks",
+         PluginGlpiinventoryToolbox::logIfExtradebug(
+           "pluginGlpiinventory-tasks",
            $q_task_job_state);
 
          $runs_id = [];
@@ -1189,8 +1175,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $count_results = 0;
          while ($result = $q_task_job_state['result']->fetch_assoc()) {
 
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-tasks",
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-tasks",
                "Result: " . print_r($result, true));
 
             // ***** create a unique key ***** //
@@ -1206,7 +1192,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             // We need to check if the results are consistent with the view's structure gathered
             // by the first query
-            $task_id = $taskjob['plugin_fusioninventory_tasks_id'];
+            $task_id = $taskjob['plugin_glpiinventory_tasks_id'];
             if (!isset($logs[$task_id])) {
                continue;
             }
@@ -1237,7 +1223,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             // Update counters
 
             switch ($result['state']) {
-               case PluginFusioninventoryTaskjobstate::CANCELLED :
+               case PluginGlpiinventoryTaskjobstate::CANCELLED :
                   // We put this agent in the cancelled counter
                   // if it does not have any other job states.
                   if (!isset($counters['agents_prepared'][$agent_id])
@@ -1247,7 +1233,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   }
                   break;
 
-               case PluginFusioninventoryTaskjobstate::PREPARED :
+               case PluginGlpiinventoryTaskjobstate::PREPARED :
                   // We put this agent in the prepared counter
                   // if it has not yet completed any job.
                   $counters['agents_prepared'][$agent_id] = $run_id;
@@ -1266,8 +1252,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   }
                   break;
 
-               case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :
-               case PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA :
+               case PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA :
+               case PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA :
                   // This agent is running so it must not be in any other counter
                   // remove older counters
                   foreach ($agent_state_types as $type) {
@@ -1280,7 +1266,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $agent_state = 'running';
                   break;
 
-               case PluginFusioninventoryTaskjobstate::IN_ERROR :
+               case PluginGlpiinventoryTaskjobstate::IN_ERROR :
                   // drop older success
                   if (isset($counters['agents_success'][$agent_id])
                      && $counters['agents_success'][$agent_id] < $run_id) {
@@ -1297,7 +1283,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $agent_state = 'error';
                   break;
 
-               case PluginFusioninventoryTaskjobstate::FINISHED :
+               case PluginGlpiinventoryTaskjobstate::FINISHED :
                   // drop older error
                   if (isset($counters['agents_error'][$agent_id])
                      && $counters['agents_error'][$agent_id] < $run_id) {
@@ -1343,14 +1329,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $q_job_state_last_log['end'] = microtime(true);
             $q_job_state_last_log['duration'] = self::formatChrono($q_job_state_last_log);
 
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-tasks",
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-tasks",
                "Log query: " . print_r($q_job_state_last_log, true));
 
             while ($log_result = $q_job_state_last_log['result']->fetch_assoc()) {
 
-               PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-tasks",
+               PluginGlpiinventoryToolbox::logIfExtradebug(
+                  "pluginGlpiinventory-tasks",
                   "Log: " . print_r($log_result, true));
 
                $run_id = $log_result['run_id'];
@@ -1374,12 +1360,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
       }
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          "Got $count_results results");
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          ['tasks' => $logs, 'agents' => $agents]);
 
       return ['tasks' => $logs, 'agents' => $agents];
@@ -1409,26 +1395,26 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       if (isset($options['includeoldjobs'])) {
-         $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'] = $options['includeoldjobs'];
+         $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] = $options['includeoldjobs'];
       }
 
       if (isset($options['refresh'])) {
-         $_SESSION['glpi_plugin_fusioninventory']['refresh'] = $options['refresh'];
+         $_SESSION['glpi_plugin_glpiinventory']['refresh'] = $options['refresh'];
       }
 
       //unlock session since access checks have been done (to avoid lock another page)
       session_write_close();
 
       $logs = $this->getJoblogs($task_ids, true, false);
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          "ajaxGetJobLogs, agents: " . count($logs['agents']));
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          "ajaxGetJobLogs, tasks: " . count($logs['tasks']));
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-tasks",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-tasks",
          "ajaxGetJobLogs: " . print_r($logs, true));
       $out = json_encode($logs);
       if (isset($options['display'])
@@ -1462,10 +1448,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       // Include tasks that are not active
       $active_task = $only_active ? "AND `is_active`='1'" : "";
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
+      $query = "SELECT * FROM `glpi_plugin_glpiinventory_tasks` as task
          WHERE execution_id =
-            (SELECT execution_id FROM glpi_plugin_fusioninventory_taskjobs as taskjob
-               WHERE taskjob.`plugin_fusioninventory_tasks_id`=task.`id`
+            (SELECT execution_id FROM glpi_plugin_glpiinventory_taskjobs as taskjob
+               WHERE taskjob.`plugin_glpiinventory_tasks_id`=task.`id`
                ORDER BY execution_id DESC
                LIMIT 1
             )
@@ -1503,7 +1489,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // add taskjobs table JOIN statement if not already set
          if (!isset( $leftjoin['taskjobs'])) {
                $leftjoin_bak = $leftjoin;
-               $leftjoin_tmp = PluginFusioninventoryTaskjob::getJoinQuery();
+               $leftjoin_tmp = PluginGlpiinventoryTaskjob::getJoinQuery();
                $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
             if (!isset( $select["taskjobs"])) {
                $select['taskjobs'] = "taskjob.*";
@@ -1534,7 +1520,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             // add taskjobs table JOIN statement if not already set
             if (!isset($leftjoin['taskjobs'])) {
                $leftjoin_bak = $leftjoin;
-               $leftjoin_tmp = PluginFusioninventoryTaskjob::getJoinQuery();
+               $leftjoin_tmp = PluginGlpiinventoryTaskjob::getJoinQuery();
                $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
             }
             if (!isset($select["taskjobs"])) {
@@ -1568,7 +1554,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             // add taskjobs table JOIN statement if not already set
             if (!isset($leftjoin['taskjobs'])) {
                $leftjoin_bak = $leftjoin;
-               $leftjoin_tmp = PluginFusioninventoryTaskjob::getJoinQuery();
+               $leftjoin_tmp = PluginGlpiinventoryTaskjob::getJoinQuery();
                $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
             }
             if (!isset($select["taskjobs"])) {
@@ -1588,7 +1574,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          implode(
             "\n", [
                "SELECT ".implode(',', $select),
-               "FROM `glpi_plugin_fusioninventory_tasks` as task",
+               "FROM `glpi_plugin_glpiinventory_tasks` as task",
                implode("\n", $leftjoin),
                "WHERE\n    ".implode("\nAND ", $where)
             ]
@@ -1597,7 +1583,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $results = [];
       $r = $DB->query($query);
       if ($r) {
-         $results = PluginFusioninventoryToolbox::fetchAssocByTable($r);
+         $results = PluginGlpiinventoryToolbox::fetchAssocByTable($r);
       }
       return $results;
    }
@@ -1614,30 +1600,30 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       global $DB;
 
       $where = '';
-      $where .= getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks');
+      $where .= getEntitiesRestrictRequest("AND", 'glpi_plugin_glpiinventory_tasks');
 
-      $query = "SELECT `glpi_plugin_fusioninventory_tasks`.*
-         FROM `glpi_plugin_fusioninventory_tasks`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs
-            ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates
+      $query = "SELECT `glpi_plugin_glpiinventory_tasks`.*
+         FROM `glpi_plugin_glpiinventory_tasks`
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS taskjobs
+            ON `plugin_glpiinventory_tasks_id` = `glpi_plugin_glpiinventory_tasks`.`id`
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` AS taskjobstates
             ON taskjobstates.`id` =
             (SELECT MAX(`id`)
-             FROM glpi_plugin_fusioninventory_taskjobstates
-             WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
+             FROM glpi_plugin_glpiinventory_taskjobstates
+             WHERE plugin_glpiinventory_taskjobs_id = taskjobs.`id`
              ORDER BY id DESC
              LIMIT 1
             )
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
-            ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` =
+         LEFT JOIN `glpi_plugin_glpiinventory_taskjoblogs`
+            ON `glpi_plugin_glpiinventory_taskjoblogs`.`id` =
             (SELECT MAX(`id`)
-            FROM `glpi_plugin_fusioninventory_taskjoblogs`
-            WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
+            FROM `glpi_plugin_glpiinventory_taskjoblogs`
+            WHERE `plugin_glpiinventory_taskjobstates_id`= taskjobstates.`id`
             ORDER BY id DESC LIMIT 1 )
-         WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`state`='4'
+         WHERE `glpi_plugin_glpiinventory_taskjoblogs`.`state`='4'
          ".$where."
-         GROUP BY plugin_fusioninventory_tasks_id
-         ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`date` DESC";
+         GROUP BY plugin_glpiinventory_tasks_id
+         ORDER BY `glpi_plugin_glpiinventory_taskjoblogs`.`date` DESC";
 
       return $DB->query($query);
    }
@@ -1656,23 +1642,23 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       if (isset($this->oldvalues['is_active'])
               AND $this->oldvalues['is_active'] == 1) {
          // If disable task, must end all taskjobstates prepared
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
          $query = implode(" \n", [
             "SELECT",
             "     task.`id`, task.`name`, task.`is_active`,",
             "     task.`datetime_start`, task.`datetime_end`,",
-            "     task.`plugin_fusioninventory_timeslots_prep_id` as timeslot_id,",
+            "     task.`plugin_glpiinventory_timeslots_prep_id` as timeslot_id,",
             "     job.`id`, job.`name`, job.`method`, job.`actors`,",
             "     run.`itemtype`, run.`items_id`, run.`state`,",
-            "     run.`id`, run.`plugin_fusioninventory_agents_id`",
-            "FROM `glpi_plugin_fusioninventory_taskjobstates` run",
-            "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` job",
-            "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
-            "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
-            "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
+            "     run.`id`, run.`plugin_glpiinventory_agents_id`",
+            "FROM `glpi_plugin_glpiinventory_taskjobstates` run",
+            "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` job",
+            "  ON job.`id` = run.`plugin_glpiinventory_taskjobs_id`",
+            "LEFT JOIN `glpi_plugin_glpiinventory_tasks` task",
+            "  ON task.`id` = job.`plugin_glpiinventory_tasks_id`",
             "WHERE",
             "  run.`state` IN ('". implode("','", [
-               PluginFusioninventoryTaskjobstate::PREPARED,
+               PluginGlpiinventoryTaskjobstate::PREPARED,
             ])."')",
             "  AND task.`id` = " . $this->fields['id'],
             // order the result by job.id
@@ -1683,11 +1669,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $query_result = $DB->query($query);
          $results = [];
          if ($query_result) {
-            $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+            $results = PluginGlpiinventoryToolbox::fetchAssocByTable($query_result);
          }
          foreach ($results as $data) {
             $pfTaskjobstate->getFromDB($data['run']['id']);
-            $pfTaskjobstate->cancel(__('Task has been disabled', 'fusioninventory'));
+            $pfTaskjobstate->cancel(__('Task has been disabled', 'glpiinventory'));
          }
       }
       parent::post_updateItem($history);
@@ -1716,7 +1702,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
       $params = array_merge($default_params, $params);
 
-      $includeoldjobs    = $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'];
+      $includeoldjobs    = $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'];
       $agent_state_types = ['prepared', 'cancelled', 'running', 'success', 'error' ];
       if (isset($params['agent_state_types'])) {
          $agent_state_types = $params['agent_state_types'];
@@ -1734,7 +1720,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       $params['display'] = false;
-      $pfTask            = new PluginFusioninventoryTask();
+      $pfTask            = new PluginGlpiinventoryTask();
       $data              = json_decode($pfTask->ajaxGetJobLogs($params), true);
 
       //clean line with state_types with unwanted states
@@ -1778,7 +1764,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       echo "Status".SEP;
       echo "Last Message".NL;
 
-      $agent_obj = new PluginFusioninventoryAgent();
+      $agent_obj = new PluginGlpiinventoryAgent();
       $computer  = new Computer();
 
       // prepare an anonymous (and temporory) function
@@ -1904,17 +1890,17 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "<table class='tab_cadre' width='600'>";
             echo "<tr>";
             echo "<td>";
-            echo __('Task', 'fusioninventory')."&nbsp;:";
+            echo __('Task', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
             $rand = mt_rand();
-            Dropdown::show('PluginFusioninventoryTask', [
+            Dropdown::show('PluginGlpiinventoryTask', [
                   'name'      => "tasks_id",
                   'condition' => ['is_active' => 0],
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
-                        'url'             => Plugin::getWebDir('fusioninventory')."/ajax/dropdown_taskjob.php"
+                        'url'             => Plugin::getWebDir('glpiinventory')."/ajax/dropdown_taskjob.php"
                   ]
             ]);
             echo "</td>";
@@ -1922,10 +1908,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             echo "<tr>";
             echo "<td>";
-            echo __('Package', 'fusioninventory')."&nbsp;:";
+            echo __('Package', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
-            Dropdown::show('PluginFusioninventoryDeployPackage', [
+            Dropdown::show('PluginGlpiinventoryDeployPackage', [
                      'name' => "packages_id",
                      'rand' => $rand
             ]);
@@ -1944,16 +1930,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "<table class='tab_cadre' width='600'>";
             echo "<tr>";
             echo "<td>";
-            echo __('Task', 'fusioninventory')."&nbsp;:";
+            echo __('Task', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
             $rand = mt_rand();
-            Dropdown::show('PluginFusioninventoryTask', [
+            Dropdown::show('PluginGlpiinventoryTask', [
                   'name'      => "tasks_id",
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "taskjob$rand",
-                        'url'             => Plugin::getWebDir('fusioninventory')."/ajax/dropdown_taskjob.php"
+                        'url'             => Plugin::getWebDir('glpiinventory')."/ajax/dropdown_taskjob.php"
                   ]
             ]);
             echo "</td>";
@@ -1961,7 +1947,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             echo "<tr>";
             echo "<td>";
-            echo __('Job', 'fusioninventory')."&nbsp;:";
+            echo __('Job', 'glpiinventory')."&nbsp;:";
             echo "</td>";
             echo "<td>";
             echo "<div id='taskjob$rand'>";
@@ -1993,7 +1979,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                                                        array $ids) {
 
       $pfTask    = new self();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
       switch ($ma->getAction()) {
 
@@ -2014,7 +2000,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          case "transfert" :
             foreach ($ids as $computer_id) {
                if ($pfTask->getFromDB($computer_id)) {
-                  $a_taskjobs = $pfTaskjob->find(['plugin_fusioninventory_tasks_id' => $computer_id]);
+                  $a_taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $computer_id]);
                   foreach ($a_taskjobs as $data1) {
                      $input = [];
                      $input['id'] = $data1['id'];
@@ -2039,7 +2025,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
          case 'target_task':
             $computer = new Computer();
-            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+            $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
             // Get the task and the package
             $got_task = $pfTask->getFromDB($ma->POST['tasks_id']);
@@ -2052,35 +2038,35 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
                Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
                   __('You must choose a task and a package to target a task with a deployment package.',
-                     'fusioninventory')), false, ERROR);
-               PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-tasks", "Missing task and/or package for targeting a task"
+                     'glpiinventory')), false, ERROR);
+               PluginGlpiinventoryToolbox::logIfExtradebug(
+                  "pluginGlpiinventory-tasks", "Missing task and/or package for targeting a task"
                );
                return;
             }
 
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-tasks", "Target a task: " . $pfTask->getName() .
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-tasks", "Target a task: " . $pfTask->getName() .
                   ", id: " . $pfTask->getId()
             );
 
-            $job_name = __('Deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName();
+            $job_name = __('Deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName();
 
             // Prepare base data
             $input = [
-               'plugin_fusioninventory_tasks_id' => $pfTask->getId(),
+               'plugin_glpiinventory_tasks_id' => $pfTask->getId(),
                'entities_id'                     => 0,
                'name'                            => $job_name,
                'method'                          => 'deployinstall',
-               'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$ma->POST['packages_id'].'"}]',
+               'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"'.$ma->POST['packages_id'].'"}]',
                'actor'                           => []
             ];
 
-            if ($pfTaskjob->getFromDBByCrit(['plugin_fusioninventory_tasks_id' => $ma->POST['tasks_id'], 'name' => $job_name])) {
+            if ($pfTaskjob->getFromDBByCrit(['plugin_glpiinventory_tasks_id' => $ma->POST['tasks_id'], 'name' => $job_name])) {
                // The task already has a job with the same name - update the job actors
                $message = sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
-                  __('Updated a deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName() .
-                  __(', actors: ', 'fusioninventory'));
+                  __('Updated a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName() .
+                  __(', actors: ', 'glpiinventory'));
                foreach ($ids as $computer_id) {
                   $computer->getFromDB($computer_id);
                   $message .= $computer->getName() . ",";
@@ -2091,28 +2077,28 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                Session::addMessageAfterRedirect($message, false, INFO);
                $input['id'] = $pfTaskjob->getID();
                $input['actors'] = json_encode($input['actors']);
-               PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-tasks", "Update the task job: " . serialize($input)
+               PluginGlpiinventoryToolbox::logIfExtradebug(
+                  "pluginGlpiinventory-tasks", "Update the task job: " . serialize($input)
                );
                $pfTaskjob->update($input);
             } else {
-               if ($pfTaskjob->getFromDBByCrit(['plugin_fusioninventory_tasks_id' => $pfTask->getID()])) {
+               if ($pfTaskjob->getFromDBByCrit(['plugin_glpiinventory_tasks_id' => $pfTask->getID()])) {
                   // The task already has a job - do not replace!
                   foreach ($ids as $computer_id) {
                      $computer->getFromDB($computer_id);
                      $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
                   }
                   Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
-                     __('The selected task already has a deployment job for another package: ' . $pfTaskjob->getName(), 'fusioninventory')),
+                     __('The selected task already has a deployment job for another package: ' . $pfTaskjob->getName(), 'glpiinventory')),
                      false, ERROR);
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-tasks", "Not allowed to update the task job"
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-tasks", "Not allowed to update the task job"
                   );
                } else {
                   // The task do not have a job - create a new one
                   $message = sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
-                     __('Created a deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName() .
-                     __(', actors: ', 'fusioninventory'));
+                     __('Created a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName() .
+                     __(', actors: ', 'glpiinventory'));
                   foreach ($ids as $computer_id) {
                      $computer->getFromDB($computer_id);
                      $message .= $computer->getName() . ",";
@@ -2122,8 +2108,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $input['actors'] = json_encode($input['actors']);
                   //                  $ma->addMessage($message);
                   Session::addMessageAfterRedirect($message, false, INFO);
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-tasks", "Create the task job: " . serialize($input)
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-tasks", "Create the task job: " . serialize($input)
                   );
                   $pfTaskjob->add($input);
                }
@@ -2131,7 +2117,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             break;
 
          case 'addtojob_target':
-            $taskjob = new PluginFusioninventoryTaskjob();
+            $taskjob = new PluginGlpiinventoryTaskjob();
             foreach ($ids as $items_id) {
                $taskjob->additemtodefatc('targets', $item->getType(), $items_id, $ma->POST['taskjobs_id']);
                $ma->itemDone($item->getType(), $items_id, MassiveAction::ACTION_OK);
@@ -2152,13 +2138,13 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $input              = $this->fields;
          $input['name']      = sprintf(__('Copy of %s'),
                                        $this->fields['name']);
-         $input['is_active'] = false;
+         $input['is_active'] = 0;
          unset($input['id']);
          $input              = Toolbox::addslashes_deep($input);
          if ($target_task_id = $this->add($input)) {
             //Clone taskjobs
             $result
-               = PluginFusioninventoryTaskjob::duplicate($source_tasks_id, $target_task_id);
+               = PluginGlpiinventoryTaskjob::duplicate($source_tasks_id, $target_task_id);
          } else {
             $result = false;
          }

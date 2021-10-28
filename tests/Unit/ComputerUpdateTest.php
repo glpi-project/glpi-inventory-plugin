@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -84,20 +74,20 @@ class ComputerUpdateTest extends TestCase {
          $monitor->delete(['id' => $item['id']], true);
       }
 
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = '';
+      $_SESSION['plugin_glpiinventory_classrulepassed'] = '';
 
       $date = date('Y-m-d H:i:s');
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION['glpishowallentities'] = 1;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => $date,
+              'last_inventory_update'     => $date,
               'last_boot'                       => '2018-06-11 08:03:32',
               'items_operatingsystems_id'       => [
                   'operatingsystems_id'              => 'freebsd',
@@ -143,7 +133,7 @@ class ComputerUpdateTest extends TestCase {
           'serial'                           => 'XB63J7D',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
 
       $a_inventory['processor'] = [
@@ -302,14 +292,14 @@ class ComputerUpdateTest extends TestCase {
                 ]
           ];
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
-      $serialized = gzcompress(serialize($a_inventory));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $id = $computer->add(['serial'      => 'XB63J7D',
@@ -345,7 +335,7 @@ class ComputerUpdateTest extends TestCase {
           'entities_id'                      => 0,
           'serial'                           => 'XB63J7D',
           'otherserial'                      => null,
-          'contact'                          => 'ddurieux',
+          'contact'                          => 'username',
           'contact_num'                      => null,
           'users_id_tech'                    => 0,
           'groups_id_tech'                   => 0,
@@ -419,9 +409,9 @@ class ComputerUpdateTest extends TestCase {
     */
    public function ComputerExtension($id) {
 
-      $pfiComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfiComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computer = current($pfiComputerComputer->find(['computers_id' => $id], [], 1));
-      unset($a_computer['last_fusioninventory_update']);
+      unset($a_computer['last_inventory_update']);
       $serialized_inventory = $a_computer['serialized_inventory'];
       unset($a_computer['serialized_inventory']);
       $a_reference = [
@@ -491,6 +481,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -536,6 +527,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -582,6 +574,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -618,7 +611,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $soft['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -650,7 +644,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $software['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -682,7 +677,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $software['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -1098,7 +1094,22 @@ class ComputerUpdateTest extends TestCase {
             'name'                  => 'em0',
             'instantiation_type'    => 'NetworkPortEthernet',
             'mac'                   => '00:23:18:cf:0d:93',
-            'comment'               => null
+            'comment'               => null,
+            'ifmtu' => 0,
+            'ifspeed' => 0,
+            'ifinternalstatus' => null,
+            'ifconnectionstatus' => 0,
+            'iflastchange' => null,
+            'ifinbytes' => 0,
+            'ifinerrors' => 0,
+            'ifoutbytes' => 0,
+            'ifouterrors' => 0,
+            'ifstatus' => null,
+            'ifdescr' => null,
+            'ifalias' => null,
+            'portduplex' => null,
+            'trunk' => 0,
+            'lastup' => null
          ],
          [
             'items_id'              => $id,
@@ -1111,7 +1122,22 @@ class ComputerUpdateTest extends TestCase {
             'name'                  => 'lo0',
             'instantiation_type'    => 'NetworkPortLocal',
             'mac'                   => '',
-            'comment'               => null
+            'comment'               => null,
+            'ifmtu' => 0,
+            'ifspeed' => 0,
+            'ifinternalstatus' => null,
+            'ifconnectionstatus' => 0,
+            'iflastchange' => null,
+            'ifinbytes' => 0,
+            'ifinerrors' => 0,
+            'ifoutbytes' => 0,
+            'ifouterrors' => 0,
+            'ifstatus' => null,
+            'ifdescr' => null,
+            'ifalias' => null,
+            'portduplex' => null,
+            'trunk' => 0,
+            'lastup' => null
          ]
       ];
 
@@ -1149,7 +1175,7 @@ class ComputerUpdateTest extends TestCase {
       $a_reference = [
           'entities_id'       => 0,
           'name'              => 'ThinkPad Display 1280x800',
-          'contact'           => 'ddurieux',
+          'contact'           => 'username',
           'contact_num'       => null,
           'users_id_tech'     => 0,
           'groups_id_tech'    => 0,
@@ -1178,7 +1204,8 @@ class ComputerUpdateTest extends TestCase {
           'states_id'         => 0,
           'ticket_tco'        => '0.0000',
           'is_dynamic'        => 1,
-          'is_recursive'      => 0
+          'is_recursive'      => 0,
+          'uuid'              => null
       ];
 
       $this->assertEquals($a_reference, $monitor->fields);
@@ -1209,12 +1236,12 @@ class ComputerUpdateTest extends TestCase {
           'entities_id'          => 0,
           'is_recursive'         => 0,
           'name'                 => 'HP Deskjet 5700 Series',
-          'contact'              => 'ddurieux',
+          'contact'              => 'username',
           'contact_num'          => null,
           'users_id_tech'        => 0,
           'groups_id_tech'       => 0,
           'serial'               => 'MY47L1W1JHEB6',
-          'otherserial'          => null,
+          'otherserial'          => '',
           'have_serial'          => 0,
           'have_parallel'        => 0,
           'have_usb'             => 1,
@@ -1238,6 +1265,8 @@ class ComputerUpdateTest extends TestCase {
           'states_id'            => 0,
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => 1,
+          'uuid'                 => null,
+          'sysdescr'             => null
       ];
 
       $this->assertEquals($a_reference, $printer->fields);
@@ -1251,17 +1280,17 @@ class ComputerUpdateTest extends TestCase {
 
       $date = date('Y-m-d H:i:s');
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => $date,
+              'last_inventory_update'     => $date,
               'last_boot'                       => 'NULL',
               'items_operatingsystems_id'       => [
                   'operatingsystems_id'              => 'freebsd',
@@ -1308,7 +1337,7 @@ class ComputerUpdateTest extends TestCase {
           'serial'                           => 'XB63J7J1',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
       $a_inventory['software'] = [
             'acrobat_reader_9.2$$$$1.0.0.0$$$$192$$$$0$$$$0' => [
@@ -1322,15 +1351,15 @@ class ComputerUpdateTest extends TestCase {
                 ]
           ];
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
       $software         = new Software();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
-      $serialized = gzcompress(serialize($a_inventory));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $this->items_id = $computer->add(['serial'      => 'XB63J7J1',

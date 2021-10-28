@@ -1,0 +1,172 @@
+{% extends "generic_show_form.html.twig" %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+{% set params  = params ?? [] %}
+
+{% block more_fields %}
+
+   {{ fields.readOnlyField(
+      'device_id',
+      item.fields['device_id'],
+      __('Device_id', 'glpiinventory'),
+   ) }}
+
+   {% set computer_link = "" %}
+   {% if item.fields['computers_id'] != 0 %}
+      {% set computer = get_item("Computer", item.fields['computers_id']) %}
+      {% set computer_link %}
+         {{ computer.getLink()|raw }}
+         <input type="hidden" name="computers_id" value="{{ item.fields['computers_id'] }}">
+         &nbsp;
+         <a id="delete_computer_link" role="button">
+            <img src="{{ path('/pics/delete.png') }}" /></a>
+         </a>
+         <script type='text/javascript'>
+            $(function() {
+               $("#delete_computer_link").click(function() {
+                  submitGetLink(
+                     "agent.form.php",
+                     {
+                        'disconnect': 'disconnect',
+                        'computers_id': '{{ item.fields['computers_id'] }}',
+                        'id': '{{ item.fields['id'] }}',
+                        '_glpi_csrf_token': '{{ csrf_token() }}'
+                     }
+                  );
+               });
+            });
+         </script>
+      {% endset %}
+   {% else %}
+      {% set computer_link %}
+         {% do call("Computer_Item::dropdownConnect", [
+            "Computer",
+            "Computer",
+            'computers_id',
+            item.fields['entities_id']
+         ]) %}
+      {% endset %}
+   {% endif %}
+   {{ fields.htmlField(
+      '',
+      computer_link,
+      __('Computer link', 'glpiinventory'),
+   ) }}
+
+   {{ fields.readOnlyField(
+      'token',
+      item.fields['token'],
+      __('Token', 'glpiinventory'),
+   ) }}
+
+   {{ fields.dropdownYesNo(
+      'lock',
+      item.fields['lock'],
+      __('locked', 'glpiinventory'),
+   ) }}
+
+   {% set version_html %}
+      <ul>
+      {% for module, version in call("importArrayFromDB", [item.fields['version']]) %}
+         <li><strong>{{ module }}</strong>: {{ version }}</li>
+      {% endfor %}
+      </ul>
+   {% endset %}
+   {{ fields.htmlField(
+      '',
+      version_html,
+      _n('Version', 'Versions', 1),
+   ) }}
+
+   {{ fields.htmlField(
+      '',
+      call("Dropdown::showNumber", [
+         "threads_networkdiscovery",
+         {
+            'display': false,
+            'value': item.fields["threads_networkdiscovery"],
+            'toadd': [__('General setup')],
+            'min': 1,
+            'max': 400
+         }
+      ]),
+      __('Threads number', 'glpiinventory') ~ "&nbsp;" ~
+         "(" ~ __('Network discovery', 'glpiinventory')|lower() ~ ")",
+   ) }}
+
+   {{ fields.readOnlyField(
+      'useragent',
+      item.fields['useragent'],
+      __('Useragent', 'glpiinventory'),
+   ) }}
+
+   {{ fields.htmlField(
+      '',
+      call("Dropdown::showNumber", [
+         "timeout_networkdiscovery",
+         {
+            'display': false,
+            'value': item.fields["timeout_networkdiscovery"],
+            'toadd': [__('General setup')],
+            'min': 1,
+            'max': 60
+         }
+      ]),
+      __('SNMP timeout', 'glpiinventory') ~ "&nbsp;" ~
+         "(" ~ __('Network discovery', 'glpiinventory')|lower() ~ ")",
+   ) }}
+
+   {{ fields.readOnlyField(
+      'last_contact',
+      item.fields['last_contact']|formatted_datetime,
+      __('Last contact', 'glpiinventory'),
+   ) }}
+
+   {{ fields.htmlField(
+      '',
+      call("Dropdown::showNumber", [
+         "threads_networkinventory",
+         {
+            'display': false,
+            'value': item.fields["threads_networkinventory"],
+            'toadd': [__('General setup')],
+            'min': 1,
+            'max': 400
+         }
+      ]),
+      __('Threads number', 'glpiinventory') ~ "&nbsp;" ~
+         "(" ~ __('Network inventory (SNMP)', 'glpiinventory')|lower() ~ ")",
+   ) }}
+
+   {{ fields.readOnlyField(
+      'tag',
+      item.fields['tag'],
+      __('Inventory tag', 'glpiinventory'),
+   ) }}
+
+   {{ fields.htmlField(
+      '',
+      call("Dropdown::showNumber", [
+         "timeout_networkinventory",
+         {
+            'display': false,
+            'value': item.fields["timeout_networkinventory"],
+            'toadd': [__('General setup')],
+            'min': 1,
+            'max': 60
+         }
+      ]),
+      __('SNMP timeout', 'glpiinventory') ~ "&nbsp;" ~
+         "(" ~ __('Network inventory (SNMP)', 'glpiinventory')|lower() ~ ")",
+   ) }}
+
+   {{ fields.nullField() }}
+
+   {{ fields.textField(
+      'agent_port',
+      item.fields['agent_port'],
+      __('Agent port', 'glpiinventory') ~ " ("
+         ~ __('if empty use port configured in general options', 'glpiinventory')
+         ~ " <i>" ~ pfConfig.getValue('agent_port') ~ "</i>)",
+   ) }}
+
+{% endblock %}

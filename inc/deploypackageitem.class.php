@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the deploy packages.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Walid Nouh
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 * in a package
 * @since 9.2
 */
-class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
+class PluginGlpiinventoryDeployPackageItem extends CommonDBTM {
 
    //Display modes
    const CREATE      = 'create';
@@ -87,7 +73,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    * @param $package the package to check
    * @return the types already in used
    */
-   function getTypesAlreadyInUse(PluginFusioninventoryDeployPackage $package) {
+   function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package) {
       return [];
    }
 
@@ -101,7 +87,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
-   function displayDropdownType(PluginFusioninventoryDeployPackage $package,
+   function displayDropdownType(PluginGlpiinventoryDeployPackage $package,
                                 $config, $rand, $mode) {
       global $CFG_GLPI;
 
@@ -141,7 +127,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
          Ajax::updateItemOnEvent(
             "dropdown_".$type_field.$rand,
             "show_".$this->shortname."_value$rand",
-            Plugin::getWebDir('fusioninventory').
+            Plugin::getWebDir('glpiinventory').
             "/ajax/deploy_displaytypevalue.php",
             $params,
             ["change", "load"]
@@ -163,7 +149,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    *
    * @since 9.2
    */
-   public function getItemConfig(PluginFusioninventoryDeployPackage $package, $request_data) {
+   public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data) {
       $config  = [];
       $element = $package->getSubElement($this->json_name, $request_data['index']);
       if (is_array($element) && count($element)) {
@@ -177,12 +163,12 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    /**
     * Display form
     *
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $request_data
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode possible values: init|edit|create
     */
-   function displayForm(PluginFusioninventoryDeployPackage $package,
+   function displayForm(PluginGlpiinventoryDeployPackage $package,
                                $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
@@ -269,7 +255,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
     * @return boolean|string the string is in json format
     */
    function getJson($packages_id) {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployPackage->getFromDB($packages_id);
       if (!empty($pfDeployPackage->fields['json'])) {
          return $pfDeployPackage->fields['json'];
@@ -303,7 +289,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
     * @return integer error number
     */
    function updateOrderJson($packages_id, $data) {
-      $pfDeployPackage   = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage   = new PluginGlpiinventoryDeployPackage();
       $options           = JSON_UNESCAPED_SLASHES;
       $json              = json_encode($data, $options);
       $json_error_consts = [
@@ -320,7 +306,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       if ($error_json != JSON_ERROR_NONE) {
          $error_msg = $json_error_consts[$error_json];
          Session::addMessageAfterRedirect(
-            __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
+            __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>" .
             $error_msg . "<br/>". $error_json_message, false, ERROR, false
          );
          $error = 1;
@@ -415,7 +401,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    * @param pfDeployPackage the package in use
    * @param mode the mode (edit or create)
    */
-   function addOrSaveButton(PluginFusioninventoryDeployPackage $pfDeployPackage, $mode) {
+   function addOrSaveButton(PluginGlpiinventoryDeployPackage $pfDeployPackage, $mode) {
       echo "<tr>";
       echo "<td>";
       echo "</td>";

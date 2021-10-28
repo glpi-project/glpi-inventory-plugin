@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -61,15 +51,17 @@ class SoftwareVersionUpdateTest extends TestCase {
    public function updateVersionWithOs() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"]                      = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $computer        = new Computer();
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfAgent         = new PluginFusioninventoryAgent();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
+      $pfAgent         = new PluginGlpiinventoryAgent();
       $software        = new Software();
       $version         = new SoftwareVersion();
       $installation    = new Item_SoftwareVersion();
+
+      $DB->queryOrDie('DELETE FROM `glpi_plugin_glpiinventory_dblockinventorynames`');
 
       //Add a computer
       $computers_id = $computer->add(['name'        => 'computer1',
@@ -100,7 +92,7 @@ class SoftwareVersionUpdateTest extends TestCase {
       //Add agent for this computer
       $a_agents_id = $pfAgent->add(['name'      => 'computer1-2018-01-01',
                                     'device_id' => 'computer1-2018-01-01']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $a_agents_id;
 
       //Import a simple inventory WITHOUT OS infos
       $a_inventory = [];
@@ -118,7 +110,7 @@ class SoftwareVersionUpdateTest extends TestCase {
       //There must be only one version 2.4 for FusionInventory-Agent software
       $this->assertEquals(1, countElementsInTable('glpi_softwareversions',
          ['softwares_id' => $softwares_id, 'name' => '2.4']));
-      //The computer is still linked to the software version
+      //The computer is linked to the existing software version
       $this->assertEquals(
          1,
          countElementsInTable(
@@ -146,7 +138,7 @@ class SoftwareVersionUpdateTest extends TestCase {
       //There must be a second version 2.4 for FusionInventory-Agent software, with OS infos
       $this->assertEquals(2, countElementsInTable('glpi_softwareversions',
          ['softwares_id' => $softwares_id, 'name' => '2.4']));
-      //The computer is still linked to the software version
+      //The computer is no longer linked to the existing software version
       $this->assertEquals(
          0,
          countElementsInTable(
@@ -161,7 +153,7 @@ class SoftwareVersionUpdateTest extends TestCase {
       //Load the software version
       $iterator = $DB->request('glpi_items_softwareversions', ['items_id' => $computers_id, 'itemtype' => 'Computer']);
       $this->assertEquals(1, $iterator->numrows());
-      $data = $iterator->next();
+      $data = $iterator->current();
       //Check that it's not the same version as the one we have manually created
       $this->assertNotEquals($data['softwareversions_id'], $versions_id);
 

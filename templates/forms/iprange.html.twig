@@ -1,0 +1,84 @@
+{% extends "generic_show_form.html.twig" %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+{% set params  = params ?? [] %}
+
+{% block more_fields %}
+   {{ fields.nullField() }}
+
+   {{ _self.ipField(
+      'ip_start',
+      item.fields['ip_start'],
+      __('Start of IP range', 'glpiinventory'),
+   ) }}
+
+   {{ _self.ipField(
+      'ip_end',
+      item.fields['ip_end'],
+      __('End of IP range', 'glpiinventory'),
+   ) }}
+
+   <script type='text/javascript'>
+      function endip(index) {
+         if ($('#ip_end' + index).val() == '') {
+            if (index == 3) {
+               $('#ip_end' + index).val('254');
+            } else {
+               $('#ip_end' + index).val($('#ip_start' + index).val());
+            }
+         }
+      }
+
+      $(function() {
+         $("input[name^='ip_end']").focus(function() {
+            endip($(this).data('index'));
+         });
+      });
+
+   </script>
+
+   {% if is_multi_entities_mode() %}
+      {{ fields.dropdownField(
+         'Entity',
+         'entities_id',
+         item.fields['entities_id'],
+         'Entity'|itemtype_name,
+      ) }}
+   {% endif %}
+
+{% endblock %}
+
+{% macro ipField(name, value, label = '', options = {}) %}
+   {% set field %}
+      {% if value|length == 0 %}
+         {% set value = '...' %}
+      {% endif %}
+
+      {% set ipexploded = value|split('.') %}
+      {% for ipnum in ipexploded %}
+         {% if ipnum > 255 %}
+            {% set ipexploded = ipexploded|merge({(loop.index0): ''}) %}
+         {% endif %}
+      {% endfor %}
+
+      <div class="row">
+         <div class="col-auto">
+            <input type="text" class="form-control" value="{{ ipexploded[0] }}"
+                   name="{{ name }}0" id="{{ name }}0" data-index="0" size="3" maxlength="3">
+         </div>
+         <div class="col-auto">
+            <input type="text" class="form-control" value="{{ ipexploded[1] }}"
+                   name="{{ name }}1" id="{{ name }}1" data-index="1" size="3" maxlength="3">
+         </div>
+         <div class="col-auto">
+            <input type="text" class="form-control" value="{{ ipexploded[2] }}"
+                   name="{{ name }}2" id="{{ name }}2" data-index="2" size="3" maxlength="3" >
+         </div>
+         <div class="col-auto">
+            <input type="text" class="form-control" value="{{ ipexploded[3] }}"
+                   name="{{ name }}3" id="{{ name }}3" data-index="3" size="3" maxlength="3">
+         </div>
+      </div>
+   {% endset %}
+
+   {{ fields.field(name, field, label, options) }}
+{% endmacro %}

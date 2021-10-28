@@ -1,49 +1,36 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the functions used in many classes.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
+
+use Glpi\Toolbox\Sanitizer;
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -52,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the functions used in many classes.
  **/
-class PluginFusioninventoryToolbox {
+class PluginGlpiinventoryToolbox {
 
 
    /**
@@ -62,8 +49,8 @@ class PluginFusioninventoryToolbox {
     * @param string $message
     */
    static function logIfExtradebug($file, $message) {
-      $config = new PluginFusioninventoryConfig();
-      if (PluginFusioninventoryConfig::isExtradebugActive()) {
+      $config = new PluginGlpiinventoryConfig();
+      if (PluginGlpiinventoryConfig::isExtradebugActive()) {
          if (is_array($message)) {
             $message = print_r($message, true);
          }
@@ -247,11 +234,11 @@ class PluginFusioninventoryToolbox {
             if (count($value->children()) > 0) {
                $this->cleanXML($value);
             } else if (isset($nodes[$key])) {
-               $xml->$key->$i = Toolbox::clean_cross_side_scripting_deep(
+               $xml->$key->$i = Sanitizer::sanitize(
                                     Toolbox::addslashes_deep($value));
                $i++;
             } else {
-               $xml->$key = Toolbox::clean_cross_side_scripting_deep(
+               $xml->$key = Sanitizer::sanitize(
                                  Toolbox::addslashes_deep($value));
             }
          }
@@ -312,13 +299,13 @@ class PluginFusioninventoryToolbox {
       if (empty($folder)) {
          $folder = '0';
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory")) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory");
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/glpiinventory")) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/glpiinventory");
       }
-      if (!file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR)) {
-         mkdir(PLUGIN_FUSIONINVENTORY_XML_DIR);
+      if (!file_exists(PLUGIN_GLPI_INVENTORY_XML_DIR)) {
+         mkdir(PLUGIN_GLPI_INVENTORY_XML_DIR);
       }
-      $itemtype_dir = PLUGIN_FUSIONINVENTORY_XML_DIR.strtolower($itemtype);
+      $itemtype_dir = PLUGIN_GLPI_INVENTORY_XML_DIR.strtolower($itemtype);
       if (!file_exists($itemtype_dir)) {
          mkdir($itemtype_dir);
       }
@@ -339,7 +326,7 @@ class PluginFusioninventoryToolbox {
     * @param integer $p_id Authenticate id
     **/
    function addAuth($p_sxml_node, $p_id) {
-      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
+      $pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
       if ($pfConfigSecurity->getFromDB($p_id)) {
 
          $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
@@ -484,7 +471,7 @@ class PluginFusioninventoryToolbox {
          echo "<td>";
          if (is_array($value)) {
             echo "<table class='tab_cadre' width='100%'>";
-            PluginFusioninventoryToolbox::displaySerializedValues($value);
+            PluginGlpiinventoryToolbox::displaySerializedValues($value);
             echo "</table>";
          } else {
             echo $value;
@@ -507,7 +494,7 @@ class PluginFusioninventoryToolbox {
       if (call_user_func([$itemtype, 'canView'])) {
          $item = new $itemtype();
          $item->getFromDB($items_id);
-         echo gzuncompress($item->fields['serialized_inventory']);
+         echo base64_decode(gzuncompress($item->fields['serialized_inventory']));
       } else {
          Html::displayRightError();
       }
@@ -523,7 +510,7 @@ class PluginFusioninventoryToolbox {
    static function sendXML($items_id, $itemtype) {
       if (preg_match("/^([a-zA-Z]+)\/(\d+)\/(\d+)\.xml$/", $items_id)
          && call_user_func([$itemtype, 'canView'])) {
-         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
+         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/glpiinventory/xml/".$items_id);
          echo $xml;
       } else {
          Html::displayRightError();
@@ -636,7 +623,7 @@ class PluginFusioninventoryToolbox {
 
       $p['step'] = $p['step'] * 60; // to have in seconds
       for ($s=$p['begin']; $s<=$p['end']; $s+=$p['step']) {
-         $values[$s] = PluginFusioninventoryToolbox::getHourMinute($s);
+         $values[$s] = PluginGlpiinventoryToolbox::getHourMinute($s);
       }
       return Dropdown::showFromArray($name, $values, $p);
    }
@@ -685,15 +672,15 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-    * Execute a function as Fusioninventory user
+    * Execute a function as as pllugin user
     *
     * @param string|array $function
     * @param array $args
     * @return array the normaly returned value from executed callable
     */
-   function executeAsFusioninventoryUser($function, array $args = []) {
+   function executeAsGlpiinventoryUser($function, array $args = []) {
 
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       $user = new User();
 
       // Backup _SESSION environment
@@ -730,27 +717,29 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-   * Check if an item is inventoried by FusionInventory
+   * Check if an item is inventoried by plugin
    *
    * @since 9.2
+   *
    * @param CommonDBTM $item the item to check
-   * @return boolean true if handle by FusionInventory
+   *
+   * @return boolean
    */
-   static function isAFusionInventoryDevice($item) {
+   static function isAnInventoryDevice($item) {
       $table = '';
       switch ($item->getType()) {
          case 'Computer':
-            $table = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+            $table = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
             $fk    = 'computers_id';
             break;
 
          case 'NetworkEquipment':
-            $table = 'glpi_plugin_fusioninventory_networkequipments';
+            $table = 'glpi_plugin_glpiinventory_networkequipments';
             $fk    = 'networkequipments_id';
             break;
 
          case 'Printer':
-            $table = 'glpi_plugin_fusioninventory_printers';
+            $table = 'glpi_plugin_glpiinventory_printers';
             $fk    = 'printers_id';
             break;
 
@@ -759,9 +748,9 @@ class PluginFusioninventoryToolbox {
          return $item->isDynamic()
             && countElementsInTable($table, [$fk => $item->getID()]);
       } else {
-         // check if device has data in glpi_plugin_fusioninventory_rulematchedlogs table
+         // check if device has data in glpi_plugin_glpiinventory_rulematchedlogs table
          return $item->isDynamic()
-            && countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
+            && countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs',
                                     ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]);
       }
    }
@@ -775,7 +764,7 @@ class PluginFusioninventoryToolbox {
     * @return array the fields with the states_id filled, is necessary
     */
    static function addDefaultStateIfNeeded($type, $input) {
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       switch ($type) {
          case 'computer':
             if ($states_id_default = $config->getValue("states_id_default")) {
@@ -806,7 +795,7 @@ class PluginFusioninventoryToolbox {
     */
    static function addLocation($input, $output = false) {
       //manage location
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
 
       // * Reload rules (required for unit tests)
       $ruleLocation->getCollectionPart();
@@ -831,7 +820,7 @@ class PluginFusioninventoryToolbox {
       }
 
       $dbutils = new DbUtils();
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
 
       $autonum = $config->getValue('auto_inventory_number_'.strtolower($itemtype));
       $autonum = str_replace('<', '&lt;', $autonum);

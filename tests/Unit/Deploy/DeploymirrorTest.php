@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Walid Nouh <wnouh@teclib.com>
-   @co-author David Durieux
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -48,7 +38,7 @@ class DeploymirrorTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all mirrors
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $items = $pfDeploymirror->find();
       foreach ($items as $item) {
          $pfDeploymirror->delete(['id' => $item['id']], true);
@@ -67,11 +57,14 @@ class DeploymirrorTest extends TestCase {
     * @test
     */
    public function testAddMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
-      $input = ['name'    => 'MyMirror',
-                'comment' => 'MyComment',
-                'url'     => 'http://localhost:8080/mirror',
-               ];
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
+      $input = [
+         'name'    => 'MyMirror',
+         'comment' => 'MyComment',
+         'url'     => 'http://localhost:8080/mirror',
+         'entities_id' => 0,
+         'locations_id' => 0
+      ];
       $mirrors_id = $pfDeploymirror->add($input);
       $this->assertGreaterThan(0, $mirrors_id);
       $this->assertTrue($pfDeploymirror->getFromDB($mirrors_id));
@@ -83,7 +76,7 @@ class DeploymirrorTest extends TestCase {
     * @depends testAddMirror
     */
    public function testUpdateMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $pfDeploymirror->getFromDBByCrit(['name' => 'MyMirror']);
       $this->assertNotNull($pfDeploymirror->fields['id']);
       $input  = ['id'      => $pfDeploymirror->fields['id'],
@@ -104,7 +97,7 @@ class DeploymirrorTest extends TestCase {
     * @depends testUpdateMirror
     */
    public function testDeleteLocationFromMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $location       = new Location();
       $locations_id = $location->add(['name'         => 'MyLocation',
                                       'entities_id'  => 0,
@@ -131,7 +124,7 @@ class DeploymirrorTest extends TestCase {
     * @depends testDeleteLocationFromMirror
     */
    public function testDeleteMirror() {
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $pfDeploymirror->getFromDBByCrit(['name' => 'Mirror 1']);
       $this->assertNotNull($pfDeploymirror->fields['id']);
       $this->assertTrue($pfDeploymirror->delete(['id' => $pfDeploymirror->fields['id']]));

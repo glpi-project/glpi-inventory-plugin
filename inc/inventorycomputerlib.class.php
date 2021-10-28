@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the update / add information of computer
- * inventory into GLPI database.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the update / add information of computer inventory into GLPI database.
  */
-class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInventoryCommon {
+class PluginGlpiinventoryInventoryComputerLib extends PluginGlpiinventoryInventoryCommon {
 
    /**
     * Define the name of the table
     *
     * @var string
     */
-   var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
+   var $table = "glpi_plugin_glpiinventory_inventorycomputerlibserialization";
 
    /**
     * Initialize the list of software
@@ -113,10 +98,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
     * @param integer $setdynamic
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic = 0) {
-      global $DB, $CFG_GLPI;
+      global $DB;
 
       $computer                     = new Computer();
-      $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
+      $pfInventoryComputerComputer  = new PluginGlpiinventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
       $deviceProcessor              = new DeviceProcessor();
       $item_DeviceMemory            = new Item_DeviceMemory();
@@ -133,24 +118,24 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
       $item_DeviceBios              = new Item_DeviceFirmware();
       $pfInventoryComputerAntivirus = new ComputerAntivirus();
-      $pfConfig                     = new PluginFusioninventoryConfig();
-      $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
+      $pfConfig                     = new PluginGlpiinventoryConfig();
+      $pfComputerLicenseInfo        = new PluginGlpiinventoryComputerLicenseInfo();
       $computer_Item                = new Computer_Item();
       $monitor                      = new Monitor();
       $printer                      = new Printer();
       $peripheral                   = new Peripheral();
-      $pfComputerRemotemgmt         = new PluginFusioninventoryComputerRemoteManagement();
+      $pfComputerRemotemgmt         = new PluginGlpiinventoryComputerRemoteManagement();
       $devicePowerSupply            = new DevicePowerSupply();
       $item_DevicePowerSupply       = new Item_DevicePowerSupply();
 
       $computer->getFromDB($computers_id);
 
-      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
+      $a_lockable = PluginGlpiinventoryLock::getLockFields('glpi_computers', $computers_id);
 
       // Manage operating system
-      if (isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'])) {
+      if (isset($a_computerinventory['inventorycomputer']['items_operatingsystems_id'])) {
          $ios = new Item_OperatingSystem();
-         $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
+         $pfos = $a_computerinventory['inventorycomputer']['items_operatingsystems_id'];
          $ios->getFromDBByCrit([
          'itemtype'                          => 'Computer',
          'items_id'                          => $computers_id
@@ -201,11 +186,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          && (!isset($a_computerinventory['Computer']['otherserial'])
             || $a_computerinventory['Computer']['otherserial'] == '')) {
 
-         $a_computerinventory['Computer']['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+         $a_computerinventory['Computer']['otherserial'] = PluginGlpiinventoryToolbox::setInventoryNumber(
             'Computer', '', $computer->fields['entities_id']);
       }
 
-      $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
+      $a_ret = PluginGlpiinventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                          $db_computer, $a_lockable);
       $a_computerinventory['Computer'] = $a_ret[0];
 
@@ -218,7 +203,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
       $input['_no_history'] = $no_history;
       if (!in_array('states_id', $a_lockable)) {
-         $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
+         $input = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('computer', $input);
       }
       $computer->update($input, !$no_history);
 
@@ -228,12 +213,12 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $db_computer = [];
       if ($no_history === false) {
          $iterator = $DB->request([
-            'FROM'   => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+            'FROM'   => 'glpi_plugin_glpiinventory_inventorycomputercomputers',
             'WHERE'  => ['computers_id' => $computers_id],
             'START'  => 0,
             'LIMIT'  => 1
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             foreach ($data as $key=>$value) {
                $data[$key] = Toolbox::addslashes_deep($value);
             }
@@ -242,8 +227,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
 
       if (count($db_computer) == '0') { // Add
-         $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
-         $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'],
+         $a_computerinventory['inventorycomputer']['computers_id'] = $computers_id;
+         $pfInventoryComputerComputer->add($a_computerinventory['inventorycomputer'],
                                         [], false);
       } else { // Update
          if (!empty($db_computer['serialized_inventory'])) {
@@ -252,12 +237,12 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $idtmp = $db_computer['id'];
          unset($db_computer['id']);
          unset($db_computer['computers_id']);
-         $a_ret = PluginFusioninventoryToolbox::checkLock(
-                                    $a_computerinventory['fusioninventorycomputer'],
+         $a_ret = PluginGlpiinventoryToolbox::checkLock(
+                                    $a_computerinventory['inventorycomputer'],
                                     $db_computer);
-         $a_computerinventory['fusioninventorycomputer'] = $a_ret[0];
+         $a_computerinventory['inventorycomputer'] = $a_ret[0];
          $db_computer = $a_ret[1];
-         $input = $a_computerinventory['fusioninventorycomputer'];
+         $input = $a_computerinventory['inventorycomputer'];
          $input['id'] = $idtmp;
          $input['_no_history'] = $no_history;
          $pfInventoryComputerComputer->update($input, !$no_history);
@@ -293,7 +278,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                'is_dynamic'   => 1
             ]
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -363,7 +348,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $db_processors[$idtmp] = Toolbox::addslashes_deep($data);
@@ -443,15 +428,17 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic' => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $db_powersupplies[$idtmp] = Toolbox::addslashes_deep($data);
             }
          }
          if (count($db_powersupplies) == 0) {
-            foreach ($a_computerinventory['powersupply'] as $a_powersupply) {
-               $this->addPowerSupply($a_powersupply, $computers_id, $no_history);
+            if (isset($a_computerinventory['powersupply'])) {
+               foreach ($a_computerinventory['powersupply'] as $a_powersupply) {
+                  $this->addPowerSupply($a_powersupply, $computers_id, $no_history);
+               }
             }
          } else {
             foreach ($a_computerinventory['powersupply'] as $key_inv => $array_inv) {
@@ -513,7 +500,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                ]
             ]);
 
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -581,7 +568,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -662,7 +649,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -738,7 +725,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
@@ -808,7 +795,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
@@ -878,7 +865,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -946,7 +933,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1005,7 +992,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1067,7 +1054,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
       if ($pfConfig->getValue("create_vm") == 1) {
          // Create VM based on information of section VIRTUALMACHINE
-         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent = new PluginGlpiinventoryAgent();
 
          // Use ComputerVirtualMachine::getUUIDRestrictRequest to get existant
          // vm in computer list
@@ -1090,7 +1077,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'LIMIT'  => 1
                   ]);
                   $computers_vm_id = 0;
-                  while ($data = $iterator->next()) {
+                  foreach ($iterator as $data) {
                      $computers_vm_id = $data['id'];
                   }
                   if ($computers_vm_id == 0) {
@@ -1126,7 +1113,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   'is_dynamic'   => 1
                ]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1230,7 +1217,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                'FROM'   => $pfInventoryComputerAntivirus->getTable(),
                'WHERE'  => ['computers_id' => $computers_id]
             ]);
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1284,10 +1271,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($no_history === false) {
          $iterator = $DB->request([
             'SELECT' => ['id', 'name', 'fullname', 'serial'],
-            'FROM'   => 'glpi_plugin_fusioninventory_computerlicenseinfos',
+            'FROM'   => 'glpi_plugin_glpiinventory_computerlicenseinfos',
             'WHERE'  => ['computers_id' => $computers_id]
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -1324,10 +1311,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($no_history === false) {
          $iterator = $DB->request([
             'SELECT' => ['id', 'type', 'number'],
-            'FROM'   => 'glpi_plugin_fusioninventory_computerremotemanagements',
+            'FROM'   => 'glpi_plugin_glpiinventory_computerremotemanagements',
             'WHERE'  => ['computers_id' => $computers_id]
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -1386,7 +1373,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                ]
             ]);
 
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data = Toolbox::addslashes_deep($data);
@@ -1439,9 +1426,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
-      $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+      $entities_id = $_SESSION["plugin_glpiinventory_entity"];
       // * Monitors
-      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
       $a_monitors = [];
       foreach ($a_computerinventory['monitor'] as $key => $arrays) {
          $input = [];
@@ -1456,27 +1443,27 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add monitor
                $arrays['entities_id'] = $entities_id;
-               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+               $arrays['otherserial'] = PluginGlpiinventoryToolbox::setInventoryNumber(
                   'Monitor', '', $entities_id);
                $a_monitors[] = $monitor->add($arrays);
             } else {
                $a_monitors[] = $data['found_equipment'][0];
             }
-            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            if (isset($_SESSION['plugin_glpiinventory_rules_id'])) {
+               $pfRulematchedlog = new PluginGlpiinventoryRulematchedlog();
                $inputrulelog = [];
                $inputrulelog['date'] = date('Y-m-d H:i:s');
-               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-                  $inputrulelog['plugin_fusioninventory_agents_id'] =
-                                 $_SESSION['plugin_fusioninventory_agents_id'];
+               $inputrulelog['rules_id'] = $_SESSION['plugin_glpiinventory_rules_id'];
+               if (isset($_SESSION['plugin_glpiinventory_agents_id'])) {
+                  $inputrulelog['plugin_glpiinventory_agents_id'] =
+                                 $_SESSION['plugin_glpiinventory_agents_id'];
                }
                $inputrulelog['items_id'] = end($a_monitors);
                $inputrulelog['itemtype'] = "Monitor";
                $inputrulelog['method'] = 'inventory';
                $pfRulematchedlog->add($inputrulelog, [], false);
                $pfRulematchedlog->cleanOlddata(end($a_monitors), "Monitor");
-               unset($_SESSION['plugin_fusioninventory_rules_id']);
+               unset($_SESSION['plugin_glpiinventory_rules_id']);
             }
          }
       }
@@ -1504,7 +1491,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'glpi_monitors.is_global'           => 0
          ]
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_monitors[$idtmp] = $data['id'];
@@ -1554,7 +1541,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
 
       // * Printers
-      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
       $a_printers = [];
       foreach ($a_computerinventory['printer'] as $key => $arrays) {
          $input = [];
@@ -1568,27 +1555,27 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add printer
                $arrays['entities_id'] = $entities_id;
-               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+               $arrays['otherserial'] = PluginGlpiinventoryToolbox::setInventoryNumber(
                   'Printer', '', $entities_id);
                $a_printers[] = $printer->add($arrays);
             } else {
                $a_printers[] = $data['found_equipment'][0];
             }
-            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            if (isset($_SESSION['plugin_glpiinventory_rules_id'])) {
+               $pfRulematchedlog = new PluginGlpiinventoryRulematchedlog();
                $inputrulelog = [];
                $inputrulelog['date'] = date('Y-m-d H:i:s');
-               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-                  $inputrulelog['plugin_fusioninventory_agents_id'] =
-                                 $_SESSION['plugin_fusioninventory_agents_id'];
+               $inputrulelog['rules_id'] = $_SESSION['plugin_glpiinventory_rules_id'];
+               if (isset($_SESSION['plugin_glpiinventory_agents_id'])) {
+                  $inputrulelog['plugin_glpiinventory_agents_id'] =
+                                 $_SESSION['plugin_glpiinventory_agents_id'];
                }
                $inputrulelog['items_id'] = end($a_printers);
                $inputrulelog['itemtype'] = "Printer";
                $inputrulelog['method'] = 'inventory';
                $pfRulematchedlog->add($inputrulelog, [], false);
                $pfRulematchedlog->cleanOlddata(end($a_printers), "Printer");
-               unset($_SESSION['plugin_fusioninventory_rules_id']);
+               unset($_SESSION['plugin_glpiinventory_rules_id']);
             }
 
          }
@@ -1617,7 +1604,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          ]
       ]);
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_printers[$idtmp] = $data['id'];
@@ -1665,7 +1652,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
 
       // * Peripheral
-      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
       $a_peripherals = [];
       foreach ($a_computerinventory['peripheral'] as $key => $arrays) {
          $input = [];
@@ -1679,27 +1666,27 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add peripheral
                $arrays['entities_id'] = $entities_id;
-               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+               $arrays['otherserial'] = PluginGlpiinventoryToolbox::setInventoryNumber(
                   'Peripheral', '', $entities_id);
                $a_peripherals[] = $peripheral->add(\Toolbox::addslashes_deep($arrays));
             } else {
                $a_peripherals[] = $data['found_equipment'][0];
             }
-            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            if (isset($_SESSION['plugin_glpiinventory_rules_id'])) {
+               $pfRulematchedlog = new PluginGlpiinventoryRulematchedlog();
                $inputrulelog = [];
                $inputrulelog['date'] = date('Y-m-d H:i:s');
-               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-                  $inputrulelog['plugin_fusioninventory_agents_id'] =
-                                 $_SESSION['plugin_fusioninventory_agents_id'];
+               $inputrulelog['rules_id'] = $_SESSION['plugin_glpiinventory_rules_id'];
+               if (isset($_SESSION['plugin_glpiinventory_agents_id'])) {
+                  $inputrulelog['plugin_glpiinventory_agents_id'] =
+                                 $_SESSION['plugin_glpiinventory_agents_id'];
                }
                $inputrulelog['items_id'] = end($a_peripherals);
                $inputrulelog['itemtype'] = "Peripheral";
                $inputrulelog['method'] = 'inventory';
                $pfRulematchedlog->add($inputrulelog, [], false);
                $pfRulematchedlog->cleanOlddata(end($a_peripherals), "Peripheral");
-               unset($_SESSION['plugin_fusioninventory_rules_id']);
+               unset($_SESSION['plugin_glpiinventory_rules_id']);
             }
          }
       }
@@ -1727,7 +1714,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          ]
       ]);
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_peripherals[$idtmp] = $data['id'];
@@ -1781,7 +1768,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       //         $db_storage = array();
       //         if ($no_history === FALSE) {
       //            $query = "SELECT `id`, `uuid` FROM ".
-      //                "`glpi_plugin_fusioninventory_inventorycomputerstorages`
+      //                "`glpi_plugin_glpiinventory_inventorycomputerstorages`
       //                WHERE `computers_id` = '$computers_id'";
       //            $result = $DB->query($query);
       //            while ($data = $DB->fetchAssoc($result)) {
@@ -1817,8 +1804,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       //            foreach ($a_links as $id=>$data) {
       //               foreach ($data as $id2) {
       //                  $input = array();
-      //                  $input['plugin_fusioninventory_inventorycomputerstorages_id_1'] = $id;
-      //                  $input['plugin_fusioninventory_inventorycomputerstorages_id_2'] = $id2;
+      //                  $input['plugin_glpiinventory_inventorycomputerstorages_id_1'] = $id;
+      //                  $input['plugin_glpiinventory_inventorycomputerstorages_id_2'] = $id2;
       //                  $pfInventoryComputerStorage_Storage->add($input);
       //               }
       //            }
@@ -1827,7 +1814,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       //
       //         }
 
-      Plugin::doHook("fusioninventory_inventory",
+      Plugin::doHook("glpiinventory_inventory",
                      ['inventory_data' => $a_computerinventory,
                       'computers_id'   => $computers_id,
                       'no_history'     => $no_history
@@ -1858,7 +1845,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          if ($a_networkport['mac'] != '') {
             $a_networkports = $networkPort->find(
                   ['mac'      => $a_networkport['mac'],
-                   'itemtype' => 'PluginFusioninventoryUnmanaged'],
+                   'itemtype' => 'PluginGlpiinventoryUnmanaged'],
                   [], 1);
             if (count($a_networkports) > 0) {
                $input = current($a_networkports);
@@ -1869,7 +1856,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                $input['is_dynamic'] = 1;
                $input['name'] = $a_networkport['name'];
                $networkPort->update($input, !$no_history);
-               $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+               $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
                $pfUnmanaged->delete(['id'=>$unmanageds_id], 1);
             }
          }
@@ -1886,7 +1873,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'is_dynamic'   => 1
          ]
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $idtmp = $data['id'];
          unset($data['id']);
          if (is_null($data['mac'])) {
@@ -1908,7 +1895,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'address'     => $a_networkport['subnet'],
                      'netmask'     => $a_networkport['netmask'],
                      'gateway'     => $a_networkport['gateway'],
-                     'entities_id' => $_SESSION["plugin_fusioninventory_entity"],
+                     'entities_id' => $_SESSION["plugin_glpiinventory_entity"],
                   ]) == 0) {
 
                $input_ipanetwork = [
@@ -1918,7 +1905,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                    'network' => $a_networkport['subnet'].' / '.
                                 $a_networkport['netmask'],
                    'gateway' => $a_networkport['gateway'],
-                   'entities_id' => $_SESSION["plugin_fusioninventory_entity"]
+                   'entities_id' => $_SESSION["plugin_glpiinventory_entity"]
                ];
                $iPNetwork->add($input_ipanetwork, [], !$no_history);
             }
@@ -1995,7 +1982,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                       'itemtype' => 'NetworkPort'],
                      [], 1));
                if (!isset($a_networknames_find['id'])) {
-                  $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
+                  $a_networkport['entities_id'] = $_SESSION["plugin_glpiinventory_entity"];
                   $a_networkport['items_id'] = $computers_id;
                   $a_networkport['itemtype'] = "Computer";
                   $a_networkport['is_dynamic'] = 1;
@@ -2020,7 +2007,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'itemtype'  => 'NetworkName'
                   ]
                ]);
-               while ($data = $iterator->next()) {
+               foreach ($iterator as $data) {
                   $db_addresses[$data['id']] = $data['name'];
                }
                $a_computerinventory_ipaddress =
@@ -2075,7 +2062,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
          if (count($inventory_networkports) != 0) {
             foreach ($inventory_networkports as $a_networkport) {
-               $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
+               $a_networkport['entities_id'] = $_SESSION["plugin_glpiinventory_entity"];
                $a_networkport['items_id'] = $computers_id;
                $a_networkport['itemtype'] = "Computer";
                $a_networkport['is_dynamic'] = 1;
@@ -2368,13 +2355,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       if (empty($data['designation'])) {
          //Placebo designation; sometimes missing from agent
-         $data['designation'] = __('Internal battery', 'fusioninventory');
+         $data['designation'] = __('Internal battery', 'glpiinventory');
       }
 
       $data['capacity']           = $data['capacity'];
       $data['voltage']            = $data['voltage'];
       $batteries_id = $deviceBattery->import($data);
-      if (!isset($data['real_capacity'])) {
+      if (!isset($data['real_capacity']) || empty($data['real_capacity'])) {
          $data['real_capacity'] = '0';
       }
       $data['devicebatteries_id'] = $batteries_id;
@@ -2561,7 +2548,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             $input['entities_id'],
             $input['date_install']
          );
-         $stmt->execute();
+         $DB->executeStatement($stmt);
       }
       mysqli_stmt_close($stmt);
    }
@@ -2594,10 +2581,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       //Check if historical has been disabled for this software only
       $comp_key = strtolower($a_software['name']).
-                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($a_software['version']).
-                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id'].
-                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['entities_id'].
-                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id'];
+                   PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($a_software['version']).
+                   PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id'].
+                   PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['entities_id'].
+                   PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id'];
       if (isset($a_software['no_history']) && $a_software['no_history']) {
          $no_history_for_this_software = true;
       } else {
@@ -2705,7 +2692,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                $new_value,
                $username
             );
-            $stmt->execute();
+            $DB->executeStatement($stmt);
          }
 
          $this->log_add = [];
@@ -2724,7 +2711,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       $computer = new Computer();
       $input = ['id' => $computers_id];
-      $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
+      $input = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('computer', $input);
       $computer->update($input);
 
       $a_tables = [
@@ -2833,10 +2820,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                $data['version'] = Toolbox::addslashes_deep($data['version']);
             }
             $comp_key = strtolower($data['name']).
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($data['version']).
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['manufacturers_id'].
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['entities_id'].
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['operatingsystems_id'];
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($data['version']).
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['manufacturers_id'].
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['entities_id'].
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['operatingsystems_id'];
             $db_software[$comp_key] = $idtmp;
          }
       }
@@ -2859,7 +2846,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       *
       */
 
-      $dbLock = new PluginFusioninventoryDBLock();
+      $dbLock = new PluginGlpiinventoryDBLock();
 
       if (count($db_software) == 0) { // there are no software associated with computer
          $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
@@ -2903,10 +2890,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                      $lastSoftwareVid);
          foreach ($a_inventory['software'] as $a_software) {
             $softwares_id = $this->softList[$a_software['name']
-               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
+               .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
             if (!isset($this->softVersionList[strtolower($a_software['version'])
-            .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
-            .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']])) {
+            .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
+            .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']])) {
                $this->addSoftwareVersion($a_software, $softwares_id, $no_history);
             }
          }
@@ -2915,10 +2902,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $a_toinsert = [];
          foreach ($a_inventory['software'] as $a_software) {
             $softwares_id = $this->softList[$a_software['name']
-               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
+               .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
             $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])
-               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
-               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
+               .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
+               .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
             $a_tmp = [
                'itemtype'            => 'Computer',
                'items_id'            => $computers_id,
@@ -2939,10 +2926,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
             //Check if historical has been disabled for this software only
             $comp_key = strtolower($a_software['name']).
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($a_software['version']).
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id'].
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['entities_id'].
-                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id'];
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($a_software['version']).
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id'].
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['entities_id'].
+                         PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id'];
             if (isset($a_software['no_history']) && $a_software['no_history']) {
                $no_history_for_this_software = true;
             } else {
@@ -2952,10 +2939,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if (!$no_history && !$no_history_for_this_software) {
                foreach ($a_inventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']
-                     .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
+                     .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
                   $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])
-                     .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
-                     .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
+                     .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
+                     .PluginGlpiinventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
 
                   $changes[0] = '0';
                   $changes[1] = "";
@@ -3073,7 +3060,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'softwareversions_id' => $softwareversions_id,
                      'is_dynamic'          => 1,
                      'entities_id'         => $computer->fields['entities_id'],
-                     'date_install'        => 'NULL'
+                     'date_install'        => null
                   ];
                   if (isset($a_software['date_install'])) {
                      $a_tmp['date_install'] = $a_software['date_install'];

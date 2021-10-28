@@ -1,62 +1,48 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the IP range form.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 include ("../../../inc/includes.php");
 
-$iprange = new PluginFusioninventoryIPRange();
+$iprange = new PluginGlpiinventoryIPRange();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "iprange");
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
+             "pluginglpiinventorymenu", "iprange");
 
-Session::checkRight('plugin_fusioninventory_iprange', READ);
+Session::checkRight('plugin_glpiinventory_iprange', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_iprange', CREATE);
+   Session::checkRight('plugin_glpiinventory_iprange', CREATE);
    if ($iprange->checkip($_POST)) {
       $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
       $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
@@ -70,8 +56,8 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["update"])) {
    if (isset($_POST['communication'])) {
       //task permanent update
-      $task = new PluginFusioninventoryTask();
-      $taskjob = new PluginFusioninventoryTaskjob();
+      $task = new PluginGlpiinventoryTask();
+      $taskjob = new PluginGlpiinventoryTaskjob();
       $task->getFromDB($_POST['task_id']);
       $input_task = [];
       $input_task['id'] = $task->fields['id'];
@@ -83,20 +69,20 @@ if (isset ($_POST["add"])) {
       $input_task["periodicity_type"]  = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
          $a_actionDB                                 = [];
-         $a_actionDB[]['PluginFusioninventoryAgent'] = $_POST['action'];
+         $a_actionDB[]['PluginGlpiinventoryAgent'] = $_POST['action'];
          $input_taskjob["action"]                    = exportArrayToDB($a_actionDB);
       } else {
          $input_taskjob["action"] = '';
       }
       $a_definition = [];
-      $a_definition[]['PluginFusioninventoryIPRange'] = $_POST['iprange'];
+      $a_definition[]['PluginGlpiinventoryIPRange'] = $_POST['iprange'];
       $input_taskjob['definition'] = exportArrayToDB($a_definition);
       $input_task["communication"] = $_POST['communication'];
 
       $task->update($input_task);
       $taskjob->update($input_taskjob);
    } else {
-      Session::checkRight('plugin_fusioninventory_iprange', UPDATE);
+      Session::checkRight('plugin_glpiinventory_iprange', UPDATE);
       if ($iprange->checkip($_POST)) {
          $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
          $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
@@ -108,15 +94,15 @@ if (isset ($_POST["add"])) {
    Html::back();
 } else if (isset ($_POST["purge"])) {
    if (isset($_POST['communication'])) {
-      $task = new PluginFusioninventoryTask();
+      $task = new PluginGlpiinventoryTask();
       $task->delete(['id' => $_POST['task_id']], 1);
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
       Html::back();
    } else {
-      Session::checkRight('plugin_fusioninventory_iprange', PURGE);
+      Session::checkRight('plugin_glpiinventory_iprange', PURGE);
 
       $iprange->delete($_POST);
-      Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange'));
+      Html::redirect(Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange'));
    }
 }
 
@@ -132,4 +118,3 @@ if (isset($_GET['allowcreate'])) {
 $iprange->display(['id' => $id]);
 
 Html::footer();
-

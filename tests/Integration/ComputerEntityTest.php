@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -65,7 +55,7 @@ class ComputerEntityTest extends TestCase {
 
       // Delete all entity rules
       $rule = new Rule();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleEntity"]);
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleEntity"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -74,7 +64,7 @@ class ComputerEntityTest extends TestCase {
 
    public static function tearDownAfterClass(): void {
       // Reinit rules
-      $setup = new PluginFusioninventorySetup();
+      $setup = new PluginGlpiinventorySetup();
       $setup->initRules(true, true);
    }
 
@@ -83,7 +73,7 @@ class ComputerEntityTest extends TestCase {
     * @test
     */
    public function testFusionEntityEmpty() {
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
       $items = $pfEntity->find(['entities_id' => ['>', 0]]);
       $this->assertEquals(0, count($items));
    }
@@ -95,7 +85,7 @@ class ComputerEntityTest extends TestCase {
     * @test
     */
    public function AddComputer() {
-      plugin_init_fusioninventory();
+      plugin_init_glpiinventory();
 
       $entity = new Entity();
 
@@ -113,9 +103,9 @@ class ComputerEntityTest extends TestCase {
       ]);
       $this->assertNotFalse($entity2Id);
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
       $computer = new Computer();
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
 
       $pfEntity->getFromDBByCrit(['entities_id' => 0]);
       if (isset($pfEntity->fields['id'])) {
@@ -145,7 +135,7 @@ class ComputerEntityTest extends TestCase {
          $ruleAction = new RuleAction();
 
          $input = [];
-         $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
+         $input['sub_type']   = 'PluginGlpiinventoryInventoryRuleEntity';
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
@@ -166,10 +156,10 @@ class ComputerEntityTest extends TestCase {
          $ruleAction->add($input);
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents_id = $pfAgent->add(['name'      => 'pc-2013-02-13',
                                     'device_id' => 'pc-2013-02-13']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $a_agents_id;
 
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
@@ -204,7 +194,7 @@ class ComputerEntityTest extends TestCase {
 
       $transfer       = new Transfer();
       $computer       = new Computer();
-      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv = new PluginGlpiinventoryInventoryComputerInventory();
 
       // Manual transfer computer to entity 2
 
@@ -250,8 +240,8 @@ class ComputerEntityTest extends TestCase {
 
       $transfer       = new Transfer();
       $computer       = new Computer();
-      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
-      $pfEntity       = new PluginFusioninventoryEntity();
+      $pfiComputerInv = new PluginGlpiinventoryInventoryComputerInventory();
+      $pfEntity       = new PluginGlpiinventoryEntity();
 
       // Manual transfer computer to entity 2
 
@@ -303,20 +293,20 @@ class ComputerEntityTest extends TestCase {
       global $DB;
 
       $computer = new Computer();
-      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv = new PluginGlpiinventoryInventoryComputerInventory();
 
       // Disable all rules
       $DB->query("UPDATE `glpi_rules`
          SET `is_active`='0'
-         WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
+         WHERE `sub_type`='PluginGlpiinventoryInventoryRuleImport'");
 
       // Add rule name + restrict entity search
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $rulecollection = new PluginGlpiinventoryInventoryRuleImportCollection();
       $input = [
          'is_active' => 1,
          'name'      => 'Computer name + restrict',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleImport',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleImport',
          'ranking'   => 1
       ];
       $rule_id = $rulecollection->add($input);
@@ -390,7 +380,7 @@ class ComputerEntityTest extends TestCase {
          return;
       }
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $a_agents_id = $pfAgent->getAgentWithComputerid($computers_id);
       $pfAgent->getFromDB($a_agents_id);
 

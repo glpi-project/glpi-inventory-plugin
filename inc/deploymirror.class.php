@@ -1,59 +1,45 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the deploy mirror depend on location of
- * computer.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Walid Nouh
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage the deploy mirror depend on location of computer.
  */
-class PluginFusioninventoryDeployMirror extends CommonDBTM {
+class PluginGlpiinventoryDeployMirror extends CommonDBTM {
    const MATCH_LOCATION = 0;
    const MATCH_ENTITY   = 1;
    const MATCH_BOTH     = 2;
@@ -70,7 +56,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_deploymirror';
+   static $rightname = 'plugin_glpiinventory_deploymirror';
 
 
    /**
@@ -80,7 +66,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Mirror servers', 'fusioninventory');
+      return __('Mirror servers', 'glpiinventory');
    }
 
 
@@ -115,7 +101,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          return [];
       }
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDB($agents_id);
       $agent = $pfAgent->fields;
       if (!isset($agent) || !isset($agent['computers_id'])) {
@@ -139,7 +125,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       //sorted by entity level in a descending way (going to the closest,
       //deepest entity, to the highest)
       $query     = "SELECT `mirror`.*, `glpi_entities`.`level`
-                    FROM `glpi_plugin_fusioninventory_deploymirrors` AS mirror
+                    FROM `glpi_plugin_glpiinventory_deploymirrors` AS mirror
                     LEFT JOIN `glpi_entities`
                      ON (`mirror`.`entities_id`=`glpi_entities`.`id`)
                     WHERE `mirror`.`is_active`='1'";
@@ -195,7 +181,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       //Add the server's url as the last url in the list
       if (isset($PF_CONFIG['server_as_mirror'])
          && $PF_CONFIG['server_as_mirror'] == true) {
-         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
+         $mirrors[] = PluginGlpiinventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
       return $mirrors;
@@ -210,62 +196,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options = []) {
-      global $CFG_GLPI;
-
+   function showForm($id, array $options = []) {
       $this->initForm($id, $options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Name')."</td>";
-      echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
-      echo "</td>";
-
-      echo "<td rowspan='3' class='middle right'>".__('Comments')."&nbsp;: </td>";
-      echo "<td class='center middle' rowspan='2'><textarea cols='45'
-      rows='4' name='comment' >".$this->fields["comment"]."</textarea></td></tr>";
-
-      echo "<tr class='tab_bg_1'><td>".__('Active')."</td><td align='center'>";
-      Dropdown::showYesNo("is_active", $this->fields["is_active"]);
-      echo "</td></tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'url', ['size' => 40]);
-      echo "</td></tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror location', 'fusioninventory')." (".__('Location').")"."&nbsp;:</td>";
-      echo "<td align='center'>";
-
-      //If
-      if ($this->can($id, UPDATE)) {
-         echo "<script type='text/javascript'>\n";
-         echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
-         echo "</script>";
-         $params = ['is_recursive' => '__VALUE__',
-                    'id'           => $id
-                   ];
-         Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
-                 Plugin::getWebDir('fusioninventory')."/ajax/dropdownlocation.php", $params);
-
-         echo "<div id='displaydropdownlocation'>";
-         // Location option
-         Location::dropdown([ 'value'       => $this->fields["locations_id"],
-                              'entity'      => $this->fields["entities_id"],
-                              'entity_sons' => $this->isRecursive(),
-                              'emptylabel'  => __('None')
-                            ]);
-         echo "</div>";
-
-      } else {
-         echo Dropdown::getDropdownName('glpi_locations', $this->fields['locations_id']);
-      }
-      echo "</td></tr>";
-
-      $this->showFormButtons($options);
+      TemplateRenderer::getInstance()->display('@glpiinventory/forms/deploymirror.html.twig', [
+         'item'   => $this,
+         'params' => $options,
+      ]);
 
       return true;
    }
@@ -291,8 +227,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          'field'         => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
-         'itemlink_type' => $this->getType(),
-         'autocomplete'  => true,
+         'itemlink_type' => $this->getType()
       ];
 
       $tab[] = [
@@ -307,9 +242,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          'id'           => '2',
          'table'        => $this->getTable(),
          'field'        => 'url',
-         'name'         => __('Mirror server address', 'fusioninventory'),
-         'datatype'     => 'string',
-         'autocomplete' => true,
+         'name'         => __('Mirror server address', 'glpiinventory'),
+         'datatype'     => 'string'
       ];
 
       $tab[] = [

@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the extended information of a computer.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Common class to manage informations FI display on an asset
  */
-class PluginFusioninventoryItem extends CommonDBTM {
+class PluginGlpiinventoryItem extends CommonDBTM {
 
    /**
     * The right name for this class
@@ -95,13 +81,13 @@ class PluginFusioninventoryItem extends CommonDBTM {
 
       $file_found     = false;
       //Check if the file exists with the .xml extension (new format)
-      $file           = PLUGIN_FUSIONINVENTORY_XML_DIR;
+      $file           = PLUGIN_GLPI_INVENTORY_XML_DIR;
       $filename       = $items_id.'.xml';
       $file_shortname = strtolower($this->itemtype)."/".$folder."/".$filename;
       $file          .= $file_shortname;
       if (!file_exists($file)) {
          //The file doesn't exists, check without the extension (old format)
-         $file           = PLUGIN_FUSIONINVENTORY_XML_DIR;
+         $file           = PLUGIN_GLPI_INVENTORY_XML_DIR;
          $filename       = $items_id;
          $file_shortname = strtolower($this->itemtype)."/".$folder."/".$filename;
          $file          .= $file_shortname;
@@ -115,11 +101,11 @@ class PluginFusioninventoryItem extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
-         $url = Plugin::getWebDir('fusioninventory')."/front/send_inventory.php";
+         $url = Plugin::getWebDir('glpiinventory')."/front/send_inventory.php";
          $url.= "?itemtype=".get_class($this)
             ."&function=sendXML&items_id=".$file_shortname."&filename=".$filename;
          echo "<a href='$url' target='_blank'>";
-         $message = __('Download inventory file', 'fusioninventory');
+         $message = __('Download inventory file', 'glpiinventory');
          echo "<img src=\"".$CFG_GLPI["root_doc"].
                  "/pics/icones/csv-dist.png\" alt='$message' title='$message'>";
          echo "&nbsp;$message</a>";
@@ -133,14 +119,14 @@ class PluginFusioninventoryItem extends CommonDBTM {
     * @param CommonDBTM $item CommonDBTM instance
     * @param array $options optional parameters to be used for display purpose
     */
-   function showForm(CommonDBTM $item, $options = []) {
+   function showItemForm(CommonDBTM $item, array $options = []) {
       Session::checkRight($this::$rightname, READ);
 
       $fk     = getForeignKeyFieldForItemType($this->itemtype);
       $params = [$fk => $item->getID()];
       if (!$this->getFromDBByCrit($params)) {
          // Add in database if not exist
-         $_SESSION['glpi_plugins_fusinvsnmp_table']
+         $_SESSION['glpi_plugins_glpiinventory_table']
                 = getTableForItemType($this->itemtype);
          $ID_tn = $this->add($params);
          $this->getFromDB($ID_tn);
@@ -155,14 +141,14 @@ class PluginFusioninventoryItem extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo __('SNMP information', 'fusioninventory');
+      echo __('SNMP information', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Sysdescr', 'fusioninventory');
+      echo __('Sysdescr', 'glpiinventory');
 
       echo "</td>";
       echo "<td>";
@@ -173,20 +159,20 @@ class PluginFusioninventoryItem extends CommonDBTM {
 
       echo "<table><tr>";
       echo "<td align='center'>";
-      echo __('Last inventory', 'fusioninventory');
+      echo __('Last inventory', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       echo Html::convDateTime(
-              $this->fields['last_fusioninventory_update']);
+              $this->fields['last_inventory_update']);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "</td>";
-      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."</td>";
+      echo "<td align='center'>".__('SNMP authentication', 'glpiinventory')."</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::authDropdown(
-              $this->fields["plugin_fusioninventory_configsecurities_id"]);
+      PluginGlpiinventoryConfigSecurity::authDropdown(
+              $this->fields["plugin_glpiinventory_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";
       echo "</table></td></tr>";
@@ -226,13 +212,13 @@ class PluginFusioninventoryItem extends CommonDBTM {
    static function getFIItemClassInstance($itemtype) {
       switch ($itemtype) {
          case 'Computer':
-            return new PluginFusioninventoryInventoryComputerComputer();
+            return new PluginGlpiinventoryInventoryComputerComputer();
 
          case 'NetworkEquipment':
-            return new PluginFusioninventoryNetworkEquipment();
+            return new PluginGlpiinventoryNetworkEquipment();
 
          case 'Printer':
-            return new PluginFusioninventoryPrinter();
+            return new PluginGlpiinventoryPrinter();
 
          default:
             // Toolbox::logDebug("getFIItemClassInstance: there's no FI class for itemtype $itemtype");
@@ -296,7 +282,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
          ._n('Minute', 'Minutes', $uptime_values['minute'])." ";
       $output.=__('and');
       $output.= "<b>".$uptime_values['second']."</b> "
-         .__('sec(s)', 'fusioninventory')." ";
+         .__('sec(s)', 'glpiinventory')." ";
       return $output;
    }
 }

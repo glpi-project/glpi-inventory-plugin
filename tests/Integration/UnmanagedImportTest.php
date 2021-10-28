@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -67,7 +57,7 @@ class UnmanagedImportTest extends TestCase {
     */
    public function ImportNetworkEquipment() {
 
-      $pfUnmanaged      = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged      = new PluginGlpiinventoryUnmanaged();
       $networkEquipment = new NetworkEquipment();
       $networkPort      = new NetworkPort();
       $networkName      = new NetworkName();
@@ -82,13 +72,13 @@ class UnmanagedImportTest extends TestCase {
           'is_dynamic'  => 1,
           'serial'      => 'XXS6BEF3',
           'comment'     => 'this is a comment',
-          'plugin_fusioninventory_configsecurities_id' => 1
+          'plugin_glpiinventory_configsecurities_id' => 1
       ];
       $unmanageds_id = $pfUnmanaged->add($input);
 
       // * Add networkport
       $input = [];
-      $input['itemtype']            = 'PluginFusioninventoryUnmanaged';
+      $input['itemtype']            = 'PluginGlpiinventoryUnmanaged';
       $input['items_id']            = $unmanageds_id;
       $input['instantiation_type']  = 'NetworkPortEthernet';
       $input['name']                = 'general';
@@ -117,7 +107,7 @@ class UnmanagedImportTest extends TestCase {
 
       $this->assertEquals(1, $cnt, "May have network equipment added");
 
-      $cnt = countElementsInTable("glpi_plugin_fusioninventory_unmanageds");
+      $cnt = countElementsInTable("glpi_plugin_glpiinventory_unmanageds");
 
       $this->assertEquals(0, $cnt, "Unknown device may be deleted");
 
@@ -144,7 +134,22 @@ class UnmanagedImportTest extends TestCase {
           'mac'                  => '00:00:00:43:ae:0f',
           'comment'              => null,
           'is_deleted'           => 0,
-          'is_dynamic'           => 1
+          'is_dynamic'           => 1,
+          'ifmtu' => 0,
+          'ifspeed' => 0,
+          'ifinternalstatus' => null,
+          'ifconnectionstatus' => 0,
+          'iflastchange' => null,
+          'ifinbytes' => 0,
+          'ifinerrors' => 0,
+          'ifoutbytes' => 0,
+          'ifouterrors' => 0,
+          'ifstatus' => null,
+          'ifdescr' => null,
+          'ifalias' => null,
+          'portduplex' => null,
+          'trunk' => 0,
+          'lastup' => null
       ];
       $this->assertEquals($a_reference, $networkPort->fields, "Networkport");
       $networkName->getFromDBByCrit(['items_id' => $networkPortId]);

@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -59,7 +49,7 @@ class PrinterUpdateTest extends TestCase {
       $_SESSION["glpiID"] = 0;
 
       // delete locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
    }
 
    public static function tearDownAfterClass(): void {
@@ -74,9 +64,9 @@ class PrinterUpdateTest extends TestCase {
       $this->update_time = date('Y-m-d H:i:s');
 
       $a_inventory = [
-         'PluginFusioninventoryPrinter' => [
+         'PluginGlpiinventoryPrinter' => [
             'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
-            'last_fusioninventory_update' => $this->update_time
+            'last_inventory_update' => $this->update_time
          ],
          'networkport' => [],
          'cartridge'   => [
@@ -114,7 +104,7 @@ class PrinterUpdateTest extends TestCase {
 
       ];
 
-      $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
+      $pfiPrinterLib = new PluginGlpiinventoryInventoryPrinterLib();
       $printer = new Printer();
 
       $this->items_id = $printer->add([
@@ -150,7 +140,7 @@ class PrinterUpdateTest extends TestCase {
          'manufacturers_id'     => 10,
          'locations_id'         => 102,
          'printermodels_id'     => 15,
-         'memory_size'          => 64,
+         'memory_size'          => '64',
          'entities_id'          => 0,
          'is_recursive'         => 0,
          'contact'              => null,
@@ -176,6 +166,8 @@ class PrinterUpdateTest extends TestCase {
          'states_id'            => 0,
          'ticket_tco'           => '0.0000',
          'is_dynamic'           => 1,
+         'uuid'                 => null,
+         'sysdescr'             => null
       ];
 
       $this->assertEquals($a_reference, $printer->fields);
@@ -197,17 +189,17 @@ class PrinterUpdateTest extends TestCase {
     */
    public function PrinterSnmpExtension() {
 
-      $pfPrinter = new PluginFusioninventoryPrinter();
+      $pfPrinter = new PluginGlpiinventoryPrinter();
       $printer = new Printer();
       $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
       $a_printer = current($pfPrinter->find(['printers_id' => $printer->fields['id']], [], 1));
       unset($a_printer['id']);
-      unset($a_printer['last_fusioninventory_update']);
+      unset($a_printer['last_inventory_update']);
       $a_reference = [
          'printers_id'                                  => $printer->fields['id'],
          'sysdescr'                                     => 'HP ETHERNET MULTI-ENVIRONMENT',
-         'plugin_fusioninventory_configsecurities_id'   => 0,
+         'plugin_glpiinventory_configsecurities_id'   => 0,
          'frequence_days'                               => 1,
          'serialized_inventory'                         => null
       ];
@@ -222,7 +214,7 @@ class PrinterUpdateTest extends TestCase {
     */
    public function PrinterPageCounter() {
 
-      $pfPrinterLog = new PluginFusioninventoryPrinterLog();
+      $pfPrinterLog = new PluginGlpiinventoryPrinterLog();
       $printer = new Printer();
       $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
@@ -238,13 +230,13 @@ class PrinterUpdateTest extends TestCase {
     */
    public function PrinterCartridgeBlack() {
 
-      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      $pfPrinterCartridge = new PluginGlpiinventoryPrinterCartridge();
       $printer = new Printer();
       $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
       $a_cartridge = $pfPrinterCartridge->find(
             ['printers_id'                        => $printer->fields['id'],
-             'plugin_fusioninventory_mappings_id' => 63,
+             'plugin_glpiinventory_mappings_id' => 63,
              'state'                              => 60]);
 
       $this->assertEquals(1, count($a_cartridge));
@@ -256,13 +248,13 @@ class PrinterUpdateTest extends TestCase {
     */
    public function PrinterCartridgeCyan() {
 
-      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      $pfPrinterCartridge = new PluginGlpiinventoryPrinterCartridge();
       $printer = new Printer();
       $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
       $a_cartridge = $pfPrinterCartridge->find(
             ['printers_id'                        => $printer->fields['id'],
-             'plugin_fusioninventory_mappings_id' => 71,
+             'plugin_glpiinventory_mappings_id' => 71,
              'state'                              => 40]);
 
       $this->assertEquals(1, count($a_cartridge));
@@ -274,13 +266,13 @@ class PrinterUpdateTest extends TestCase {
     */
    public function PrinterCartridgeYellow() {
 
-      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      $pfPrinterCartridge = new PluginGlpiinventoryPrinterCartridge();
       $printer = new Printer();
       $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
       $a_cartridge = $pfPrinterCartridge->find(
             ['printers_id'                        => $printer->fields['id'],
-             'plugin_fusioninventory_mappings_id' => 79,
+             'plugin_glpiinventory_mappings_id' => 79,
              'state'                              => 80]);
 
       $this->assertEquals(1, count($a_cartridge));
@@ -292,13 +284,13 @@ class PrinterUpdateTest extends TestCase {
     */
    public function PrinterCartridgeMagenta() {
 
-      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      $pfPrinterCartridge = new PluginGlpiinventoryPrinterCartridge();
       $printer = new Printer();
       $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
       $a_cartridge = $pfPrinterCartridge->find(
             ['printers_id'                        => $printer->fields['id'],
-             'plugin_fusioninventory_mappings_id' => 75,
+             'plugin_glpiinventory_mappings_id' => 75,
              'state'                              => 100]);
 
       $this->assertEquals(1, count($a_cartridge));
@@ -310,7 +302,7 @@ class PrinterUpdateTest extends TestCase {
     */
    public function PrinterAllCartridges() {
 
-      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      $pfPrinterCartridge = new PluginGlpiinventoryPrinterCartridge();
 
       $a_cartridge = $pfPrinterCartridge->find();
 
@@ -323,7 +315,7 @@ class PrinterUpdateTest extends TestCase {
     */
    public function NewPrinterFromNetdiscovery() {
 
-      $pfCNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $networkName = new NetworkName();
       $iPAddress = new IPAddress();
 
@@ -352,14 +344,14 @@ class PrinterUpdateTest extends TestCase {
       $printer->getFromDB($printers_id);
       $this->assertEquals('HP0BBBC4', $printer->fields['name'], 'Name must be updated');
 
-      $a_printerextends = getAllDataFromTable('glpi_plugin_fusioninventory_printers',
+      $a_printerextends = getAllDataFromTable('glpi_plugin_glpiinventory_printers',
          ['printers_id' => $printers_id]);
 
       $this->assertEquals('1', count($a_printerextends),
          'May have one printer extend line for this printer');
 
       $a_printerextend = current($a_printerextends);
-      $this->assertEquals('1', $a_printerextend['plugin_fusioninventory_configsecurities_id'],
+      $this->assertEquals('1', $a_printerextend['plugin_glpiinventory_configsecurities_id'],
          'SNMPauth may be with id 1');
       $this->assertEquals('Photosmart D7200 series', $a_printerextend['sysdescr'],
          'Sysdescr not updated correctly');
@@ -397,7 +389,7 @@ class PrinterUpdateTest extends TestCase {
    public function updatePrinterFromNetdiscovery() {
       global $DB;
 
-      $pfCNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $networkName = new NetworkName();
       $iPAddress = new IPAddress();
 
@@ -424,7 +416,7 @@ class PrinterUpdateTest extends TestCase {
       $this->assertArrayHasKey('id', $printer->fields);
 
       // delete locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
 
       $pfCNetworkDiscovery->importDevice($printer);
 
@@ -434,14 +426,14 @@ class PrinterUpdateTest extends TestCase {
 
       $this->assertEquals('HP0BBBC4new', $printer->fields['name'], 'Name must be updated');
 
-      $a_printerextends = getAllDataFromTable('glpi_plugin_fusioninventory_printers',
+      $a_printerextends = getAllDataFromTable('glpi_plugin_glpiinventory_printers',
          ['printers_id' => $printer->fields['id']]);
 
       $this->assertEquals('1', count($a_printerextends),
          'May have one printer extend line for this printer');
 
       $a_printerextend = current($a_printerextends);
-      $this->assertEquals('1', $a_printerextend['plugin_fusioninventory_configsecurities_id'],
+      $this->assertEquals('1', $a_printerextend['plugin_glpiinventory_configsecurities_id'],
          'SNMPauth may be with id 1');
       $this->assertEquals('Photosmart D7200 series', $a_printerextend['sysdescr'],
          'Sysdescr not updated correctly');
@@ -477,9 +469,9 @@ class PrinterUpdateTest extends TestCase {
     */
    public function updatePrinterFromNetdiscoveryToInventory() {
 
-      $pfCNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $pfCNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
       $_SESSION['SOURCE_XMLDEVICE'] = [
          'AUTHSNMP'     => '1',
@@ -522,9 +514,9 @@ class PrinterUpdateTest extends TestCase {
       $this->assertEquals(0, $a_port['logical_number'], 'Logical number equals 0');
 
       $a_inventory = [
-         'PluginFusioninventoryPrinter' => [
+         'PluginGlpiinventoryPrinter' => [
             'sysdescr'                    => 'SHARP MX-5140N',
-            'last_fusioninventory_update' => $_SESSION['glpi_currenttime'],
+            'last_inventory_update' => $_SESSION['glpi_currenttime'],
 
          ],
          'networkport'  => [
@@ -549,7 +541,7 @@ class PrinterUpdateTest extends TestCase {
          'have_ethernet'      => 1
       ];
 
-      $pfCNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfCNetworkInventory = new PluginGlpiinventoryCommunicationNetworkInventory();
       $pfCNetworkInventory->importDevice('Printer', $printers_id, $a_inventory, 0);
 
       $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);

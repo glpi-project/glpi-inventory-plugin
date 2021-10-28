@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the lock fields in itemtype.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the lock fields in itemtype.
  */
-class PluginFusioninventoryLock extends CommonDBTM{
+class PluginGlpiinventoryLock extends CommonDBTM{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_lock';
+   static $rightname = 'plugin_glpiinventory_lock';
 
 
    /**
@@ -105,8 +90,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $itemtype = $item->getType();
 
       switch ($itemtype) {
-         case 'PluginFusioninventoryConfig':
-            return PluginFusioninventoryLock::getTypeName(2);
+         case 'PluginGlpiinventoryConfig':
+            return PluginGlpiinventoryLock::getTypeName(2);
 
          case 'NetworkEquipment':
             $itemtype = 'networking';
@@ -114,10 +99,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
          default:
             if (Session::haveRight(strtolower($itemtype), UPDATE)) {
                if ($_SESSION['glpishow_count_on_tabs']) {
-                  return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
+                  return self::createTabEntry(PluginGlpiinventoryLock::getTypeName(2),
                                            self::countForLock($item));
                }
-               return PluginFusioninventoryLock::getTypeName(2);
+               return PluginGlpiinventoryLock::getTypeName(2);
             }
       }
       return '';
@@ -135,7 +120,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       $pflock = new self();
-      if ($item->getType()=='PluginFusioninventoryConfig') {
+      if ($item->getType()=='PluginGlpiinventoryConfig') {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<td>";
@@ -161,10 +146,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
          return true;
       }
       if ($item->fields['id'] < 1) {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
+         $pflock->showLockForm(Toolbox::getItemTypeFormURL('PluginGlpiinventoryLock'),
                            $item->getType());
       } else {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.
+         $pflock->showLockForm(Toolbox::getItemTypeFormURL('PluginGlpiinventoryLock').'?id='.
                               $item->fields['id'],
                            $item->getType(), $item->fields['id']);
       }
@@ -182,7 +167,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $p_items_id Line id.
     * @return true
     */
-   function showForm($p_target, $p_itemtype, $p_items_id = 0) {
+   function showLockForm($p_target, $p_itemtype, $p_items_id = 0) {
 
       $can = 0;
       $typeright = strtolower($p_itemtype);
@@ -195,7 +180,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $tableName = getTableForItemType($p_itemtype);
       echo "<div width='50%'>";
-      $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
+      $locked = PluginGlpiinventoryLock::getLockFields($tableName, $p_items_id);
 
       if (!count($locked)) {
          $locked = [];
@@ -220,14 +205,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='4'>".__('FusionInventory', 'fusioninventory')."</th></tr>";
+      echo "<tr><th colspan='4'>".__('GLPI Inventory', 'glpiinventory')."</th></tr>";
 
       echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
       if ($p_items_id != '0') {
-         echo "<th>".__('Values GLPI', 'fusioninventory')."</th>";
-         echo "<th>".__('Values of last inventory', 'fusioninventory')."</th>";
+         echo "<th>".__('Values GLPI', 'glpiinventory')."</th>";
+         echo "<th>".__('Values of last inventory', 'glpiinventory')."</th>";
       }
-      echo "<th>"._n('Lock', 'Locks', 2, 'fusioninventory')."</th>";
+      echo "<th>"._n('Lock', 'Locks', 2, 'glpiinventory')."</th>";
       echo "</tr>";
 
       $checked = false;
@@ -282,7 +267,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                echo "</td>";
             }
             echo "<td align='center'>";
-            Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
+            Html::showCheckbox(['name'    => "lockfield_glpiinventory[$key_source]",
                                      'checked' => $checked]);
             echo "</td>";
             echo "</tr>";
@@ -292,24 +277,24 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($p_items_id == '0') {
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
-         echo "<th colspan='2'>".__('Job', 'fusioninventory')."</th>";
+         echo "<th colspan='2'>".__('Job', 'glpiinventory')."</th>";
          echo "<tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Add locks', 'fusioninventory')."</td>";
+         echo "<td>".__('Add locks', 'glpiinventory')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='addLock' ".
                  "checked/></td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Delete locks', 'fusioninventory')."</td>";
+         echo "<td>".__('Delete locks', 'glpiinventory')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='deleteLock' /></td>";
          echo "</tr>";
       }
       if ($can == '1') {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
+         echo "<input class='btn btn-primary' type='submit' name='unlock_field_glpiinventory'
                          value='" . __('Update') . "'>";
          echo "</td>";
          echo "</tr>";
@@ -341,7 +326,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $tableName = getTableForItemType($itemtype);
       echo "<div width='50%'>";
-      $locked = PluginFusioninventoryLock::getLockFields($tableName, 0);
+      $locked = PluginGlpiinventoryLock::getLockFields($tableName, 0);
       if (!count($locked)) {
          $locked = [];
       }
@@ -351,7 +336,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $item->getEmpty();
 
       if ($start_form) {
-         echo "<form method='post' action='".PluginFusioninventoryLock::getFormURL()."'>";
+         echo "<form method='post' action='".PluginGlpiinventoryLock::getFormURL()."'>";
          echo "<input type='hidden' name='id' value='0'>";
          echo "<input type='hidden' name='type' value='$itemtype'>";
       }
@@ -362,7 +347,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "</tr>";
 
       echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
-      echo "<th>"._n('Lock', 'Locks', 2, 'fusioninventory')."</th>";
+      echo "<th>"._n('Lock', 'Locks', 2, 'glpiinventory')."</th>";
       echo "</tr>";
 
       $checked = false;
@@ -401,7 +386,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
             echo "<td>".$name."</td>";
             echo "<td align='center'>";
-            Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
+            Html::showCheckbox(['name'    => "lockfield_glpiinventory[$key_source]",
                                      'checked' => $checked]);
             echo "</td>";
             echo "</tr>";
@@ -411,7 +396,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($can == '1' && $show_button) {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo Html::submit(__('Update'), ['name' => 'unlock_field_fusioninventory']);
+         echo Html::submit(__('Update'), ['name' => 'unlock_field_glpiinventory', 'class' => 'btn btn-primary']);
          echo "</td>";
          echo "</tr>";
       }
@@ -432,7 +417,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function cleanForAsset($itemtype, $items_id) {
       global $DB;
       $DB->delete(
-         'glpi_plugin_fusioninventory_locks', [
+         'glpi_plugin_glpiinventory_locks', [
             'tablename' => getTableForItemType($itemtype),
             'items_id'  => $items_id
          ]
@@ -451,8 +436,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    static function deleteInLockArray($p_table, $p_items_id, $p_fieldToDel) {
 
-      $pfLock = new PluginFusioninventoryLock();
-      $fieldsToLock = PluginFusioninventoryLock::getLockFields($p_table, $p_items_id);
+      $pfLock = new PluginGlpiinventoryLock();
+      $fieldsToLock = PluginGlpiinventoryLock::getLockFields($p_table, $p_items_id);
       if (count($fieldsToLock)) {
          $fieldToDel=array_search($p_fieldToDel, $fieldsToLock);
          if (isset($fieldsToLock[$fieldToDel])) {
@@ -491,14 +476,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
       global $DB;
 
       $query = "SELECT `items_id`
-                FROM `glpi_plugin_fusioninventory_locks`
+                FROM `glpi_plugin_glpiinventory_locks`
                 WHERE `tablename`='".$p_table."'
                       AND `tablefields` LIKE '%".$p_fieldToDel."%';";
       $result = $DB->query($query);
       while ($data=$DB->fetchArray($result)) {
          // TODO improve the lock deletion by transmiting the old locked fields to the
          // deletion function
-         PluginFusioninventoryLock::deleteInLockArray($p_table, $data['items_id'], $p_fieldToDel);
+         PluginGlpiinventoryLock::deleteInLockArray($p_table, $data['items_id'], $p_fieldToDel);
       }
    }
 
@@ -521,10 +506,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $success = false;
 
-      $pfl = new PluginFusioninventoryLock();
+      $pfl = new PluginGlpiinventoryLock();
 
       $tableName = getTableForItemType($p_itemtype);
-      $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
+      $result = PluginGlpiinventoryLock::getLock($tableName, $p_items_id);
       if ($DB->numrows($result)) {
          $a_lines = $pfl->find(['tablename' => $tableName, 'items_id' => $p_items_id]);
          $a_line = current($a_lines);
@@ -583,11 +568,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $tableName = getTableForItemType($p_itemtype);
 
-      $pfl = new PluginFusioninventoryLock();
+      $pfl = new PluginGlpiinventoryLock();
       $a_exclude = $pfl->excludeFields();
       $p_fieldsToLock = array_diff($p_fieldsToLock, $a_exclude);
 
-      $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
+      $result = PluginGlpiinventoryLock::getLock($tableName, $p_items_id);
       if ($DB->numrows($result)) {
          $row = $DB->fetchAssoc($result);
          $lockedFields = importArrayFromDB($row['tablefields']);
@@ -625,7 +610,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       global $DB;
 
       $query = "SELECT `id`, `tablefields`
-                FROM `glpi_plugin_fusioninventory_locks`
+                FROM `glpi_plugin_glpiinventory_locks`
                 WHERE `tablename`='".$p_table."'
                       AND `items_id`='".$p_items_id."';";
       $result = $DB->query($query);
@@ -646,7 +631,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function getLockFields($p_table, $p_items_id) {
       global $DB;
 
-      $db_lock = $DB->fetchAssoc(PluginFusioninventoryLock::getLock($p_table, $p_items_id));
+      $db_lock = $DB->fetchAssoc(PluginGlpiinventoryLock::getLock($p_table, $p_items_id));
       if ($db_lock !== null) {
          $lock_fields = $db_lock["tablefields"];
          $lock = importArrayFromDB($lock_fields);
@@ -655,7 +640,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       if ($p_items_id != 0) {
-         $db_lock = $DB->fetchAssoc(PluginFusioninventoryLock::getLock($p_table, 0));
+         $db_lock = $DB->fetchAssoc(PluginGlpiinventoryLock::getLock($p_table, 0));
          if ($db_lock !== null) {
             $lock_fields = $db_lock["tablefields"];
             $lockItemtype = importArrayFromDB($lock_fields);
@@ -718,7 +703,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($item->fields['items_id'] == 0) {
          return;
       }
-      $pfLock = new PluginFusioninventoryLock();
+      $pfLock = new PluginGlpiinventoryLock();
 
       $itemtype = getItemTypeForTable($item->fields['tablename']);
       $items_id = $item->fields['items_id'];
@@ -739,7 +724,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       // load general lock configuration
-      $generalLocks = PluginFusioninventoryLock::getLockFields($item->fields['tablename'], 0);
+      $generalLocks = PluginGlpiinventoryLock::getLockFields($item->fields['tablename'], 0);
       $a_fieldList = array_unique(array_merge($a_fieldList, $generalLocks));
 
       //delete all lock case (no more lock)
@@ -762,9 +747,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
             unset($item_device->fields[$key]);
          }
       }
-      $_SESSION['glpi_fusionionventory_nolock'] = true;
+      $_SESSION['glpi_glpiinventory_nolock'] = true;
       $item_device->update(Toolbox::addslashes_deep($item_device->fields));
-      unset($_SESSION['glpi_fusionionventory_nolock']);
+      unset($_SESSION['glpi_glpiinventory_nolock']);
    }
 
 
@@ -806,22 +791,22 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    function getSerializedInventoryArray($itemtype, $items_id) {
 
-      $item_extend = new PluginFusioninventoryLock();
+      $item_extend = new PluginGlpiinventoryLock();
       if ($itemtype == 'Computer') {
-         $item_extend = new PluginFusioninventoryInventoryComputerComputer();
+         $item_extend = new PluginGlpiinventoryInventoryComputerComputer();
       } else if ($itemtype == 'NetworkEquipment') {
-         $item_extend = new PluginFusioninventoryNetworkEquipment;
+         $item_extend = new PluginGlpiinventoryNetworkEquipment;
       } else if ($itemtype == 'Printer') {
-         $item_extend = new PluginFusioninventoryPrinter();
+         $item_extend = new PluginGlpiinventoryPrinter();
       }
 
-      if ($item_extend->getType() != 'PluginFusioninventoryLock') {
+      if ($item_extend->getType() != 'PluginGlpiinventoryLock') {
          // Get device info + field 'serialized_inventory'
          $a_lists = $item_extend->find([getForeignKeyFieldForItemType($itemtype) => $items_id], [], 1);
          if (count($a_lists) == 1) {
             $a_list = current($a_lists);
             if (!empty($a_list['serialized_inventory'])) {
-               $serialized = unserialize(gzuncompress($a_list['serialized_inventory']));
+               $serialized = unserialize(base64_decode(gzuncompress($a_list['serialized_inventory'])));
                return $serialized[$itemtype];
             }
          }
@@ -917,12 +902,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
                 || $itemtype == "Computer") {
 
                foreach ($ids as $key) {
-                  if (isset($_POST["lockfield_fusioninventory"])
-                      && count($_POST["lockfield_fusioninventory"])) {
-                     $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
+                  if (isset($_POST["lockfield_glpiinventory"])
+                      && count($_POST["lockfield_glpiinventory"])) {
+                     $tab=PluginGlpiinventoryLock::exportChecksToArray($_POST["lockfield_glpiinventory"]);
 
                      //lock current item
-                     if (PluginFusioninventoryLock::setLockArray($_POST['type'],
+                     if (PluginGlpiinventoryLock::setLockArray($_POST['type'],
                                                              $key,
                                                              $tab,
                                                              $_POST['actionlock'])) {

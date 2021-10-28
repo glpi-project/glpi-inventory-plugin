@@ -1,62 +1,48 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the computer import inventry XML form.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),
+Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "inventorycomputerimportxml");
 
-Session::checkRight('plugin_fusioninventory_importxml', CREATE);
+Session::checkRight('plugin_glpiinventory_importxml', CREATE);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu("mini");
 
-$pfCommunication = new PluginFusioninventoryCommunication();
+$pfCommunication = new PluginGlpiinventoryCommunication();
 
 if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
 
@@ -71,7 +57,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
       if (!$zip) {
          error_log("Zip failure");
          Session::addMessageAfterRedirect(
-            __("Can't read zip file!", 'fusioninventory'),
+            __("Can't read zip file!", 'glpiinventory'),
             ERROR
          );
       } else {
@@ -79,9 +65,9 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
             $filename = $zip->getNameIndex($n);
             $xml = $zip->getFromName($zip->getNameIndex($n));
             if (!empty($xml)) {
-               $_SESSION['glpi_fusionionventory_nolock'] = true;
+               $_SESSION['glpi_glpiinventory_nolock'] = true;
                $pfCommunication->handleOCSCommunication('', $xml);
-               unset($_SESSION['glpi_fusionionventory_nolock']);
+               unset($_SESSION['glpi_glpiinventory_nolock']);
             }
          }
          $zip->close();
@@ -89,20 +75,19 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
    } else if (preg_match('/\.(ocs|xml)/i', $_FILES['importfile']['name'])) {
 
       $xml = file_get_contents($_FILES['importfile']['tmp_name']);
-      $_SESSION['glpi_fusionionventory_nolock'] = true;
+      $_SESSION['glpi_glpiinventory_nolock'] = true;
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
-      unset($_SESSION['glpi_fusionionventory_nolock']);
+      unset($_SESSION['glpi_glpiinventory_nolock']);
    } else {
       Session::addMessageAfterRedirect(
-         __('No file to import!', 'fusioninventory'),
+         __('No file to import!', 'glpiinventory'),
          ERROR
       );
    }
    Html::back();
 }
 
-$pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
-$pfInventoryComputerImportXML->showForm();
+$pfInventoryComputerImportXML = new PluginGlpiinventoryInventoryComputerImportXML();
+$pfInventoryComputerImportXML->showImportForm();
 
 Html::footer();
-

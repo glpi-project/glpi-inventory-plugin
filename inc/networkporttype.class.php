@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the differents type of network ports.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the differents type of network ports.
  */
-class PluginFusioninventoryNetworkporttype extends CommonDBTM {
+class PluginGlpiinventoryNetworkporttype extends CommonDBTM {
 
 
    /**
@@ -302,7 +287,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
       $install = 1;
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_networkporttypes',
+         'FROM'   => 'glpi_plugin_glpiinventory_networkporttypes',
          'WHERE'  => ['import' => 1]
       ]);
       if (count($iterator) > 0) {
@@ -311,7 +296,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
       $it = new DBmysqlIterator($DB);
       $it->buildQuery([
-         'FROM'   => 'glpi_plugin_fusioninventory_networkporttypes',
+         'FROM'   => 'glpi_plugin_glpiinventory_networkporttypes',
          'WHERE'  => ['number' => new QueryParam()]
       ]);
       $stmt_select = $DB->prepare($it->getSQL());
@@ -319,7 +304,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       $to_import = [];
       foreach ($input as $number=>$name) {
          $stmt_select->bind_param('s', $number);
-         $stmt_select->execute();
+         $DB->executeStatement($stmt_select);
          if ($DB->numrows($stmt_select) == '0') {
             $to_import[$number] = $name;
          }
@@ -329,7 +314,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       if (count($to_import)) {
          $qparam = new \QueryParam();
          $insert_qry = $DB->buildInsert(
-            'glpi_plugin_fusioninventory_networkporttypes', [
+            'glpi_plugin_glpiinventory_networkporttypes', [
                'name'      => $qparam,
                'number'    => $qparam,
                'othername' => $qparam,
@@ -365,7 +350,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
                $othername,
                $import
             );
-            $stmt_insert->execute();
+            $DB->executeStatement($stmt_insert);
          }
          mysqli_stmt_close($stmt_insert);
       }
@@ -410,16 +395,16 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='3'>".
-              __('Ports types to import (for network equipments)', 'fusioninventory')."</th>";
+              __('Ports types to import (for network equipments)', 'glpiinventory')."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
 
-      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+      if (Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
 
          echo "<td class='right'>";
 
          if (count($a_notimports) > 0) {
-            echo "<select name='type_to_add[]' multiple size='5'>";
+            echo "<select class='form-select' name='type_to_add[]' multiple size='5'>";
 
             foreach ($a_notimports as $key => $data) {
                echo "<option value='$key'>".$data['othername']."</option>";
@@ -431,14 +416,14 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
          echo "</td><td class='center'>";
 
          if (count($a_notimports)) {
-            echo "<input type='submit' class='submit' name='type_add' value='".
+            echo "<input type='submit' class='btn btn-secondary' name='type_add' value='".
                   __('Add')." >>'>";
          }
          echo "<br><br>";
 
          if (count($a_imports)) {
-            echo "<input type='submit' class='submit' name='type_delete' value='<< ".
-                  __('Delete', 'fusioninventory')."'>";
+            echo "<input type='submit' class='btn btn-secondary' name='type_delete' value='<< ".
+                  __('Delete', 'glpiinventory')."'>";
          }
          echo "</td><td>";
       } else {
@@ -446,7 +431,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
          echo "<td class='center'>";
       }
       if (count($a_imports)) {
-         echo "<select name='type_to_delete[]' multiple size='5'>";
+         echo "<select class='form-select' name='type_to_delete[]' multiple size='5'>";
          foreach ($a_imports as $key => $data) {
             echo "<option value='$key'>".$data['othername']."</option>";
          }

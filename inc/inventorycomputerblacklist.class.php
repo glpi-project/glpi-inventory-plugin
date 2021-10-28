@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the fields values to backend on computer
- * inventory. If have serial xxxxx, so delete it.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,14 +38,14 @@ if (!defined('GLPI_ROOT')) {
  * Manage the fields values to backend on computer inventory. If have serial
  * xxxxx, so delete it.
  */
-class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
+class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_blacklist';
+   static $rightname = 'plugin_glpiinventory_blacklist';
 
 
    /**
@@ -92,18 +77,17 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
          'id'           => '1',
          'table'        => $this->getTable(),
          'field'        => 'value',
-         'name'         => __('blacklisted value', 'fusioninventory'),
-         'autocomplete' => true,
+         'name'         => __('blacklisted value', 'glpiinventory')
       ];
 
       $tab[] = [
          'id'            => '2',
-         'table'         => 'glpi_plugin_fusioninventory_inventorycomputercriterias',
+         'table'         => 'glpi_plugin_glpiinventory_inventorycomputercriterias',
          'field'         => 'name',
-         'linkfield'     => 'plugin_fusioninventory_criterium_id',
+         'linkfield'     => 'plugin_glpiinventory_criterium_id',
          'name'          => __('Type'),
          'datatype'      => 'dropdown',
-         'itemlink_type' => 'PluginFusioninventoryInventoryComputerCriteria',
+         'itemlink_type' => 'PluginGlpiinventoryInventoryComputerCriteria',
       ];
 
       return $tab;
@@ -118,7 +102,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     */
    function defineTabs($options = []) {
 
-      $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
+      $pfInventoryComputerCriteria = new PluginGlpiinventoryInventoryComputerCriteria();
 
       $ong = [];
       $i = 1;
@@ -138,7 +122,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($items_id, $options = []) {
+   function showForm($items_id, array $options = []) {
 
       if ($items_id!='') {
          $this->getFromDB($items_id);
@@ -149,15 +133,15 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('blacklisted value', 'fusioninventory')."</td>";
+      echo "<td>".__('blacklisted value', 'glpiinventory')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, 'value');
+      echo Html::input('value', ['value' => $this->fields['value']]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";
-      Dropdown::show('PluginFusioninventoryInventoryComputerCriteria',
-                     ['name' => 'plugin_fusioninventory_criterium_id',
-                           'value' => $this->fields['plugin_fusioninventory_criterium_id']]);
+      Dropdown::show('PluginGlpiinventoryInventoryComputerCriteria',
+                     ['name' => 'plugin_glpiinventory_criterium_id',
+                           'value' => $this->fields['plugin_glpiinventory_criterium_id']]);
       echo "</td>";
       echo "</tr>";
 
@@ -175,14 +159,14 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     */
    function cleanBlacklist($a_computerinventory) {
 
-      $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
+      $pfInventoryComputerCriteria = new PluginGlpiinventoryInventoryComputerCriteria();
       $fields = $pfInventoryComputerCriteria->find();
       foreach ($fields as $id=>$data) {
 
          switch ($data['comment']) {
 
             case 'ssn':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['serial']))
@@ -213,7 +197,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'uuid':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['uuid']))
@@ -225,7 +209,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'macAddress':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($a_computerinventory['networkport'])) {
@@ -241,19 +225,19 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'winProdKey':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))
-                          && (strtolower($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number'])
+                  if ((isset($a_computerinventory['inventorycomputer']['items_operatingsystems_id']['license_number']))
+                          && (strtolower($a_computerinventory['inventorycomputer']['items_operatingsystems_id']['license_number'])
                                   == strtolower($blacklist_data['value']))) {
-                     $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number'] = "";
+                     $a_computerinventory['inventorycomputer']['items_operatingsystems_id']['license_number'] = "";
                   }
                }
               break;
 
             case 'smodel':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['computermodels_id']))
@@ -282,7 +266,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'storagesSerial':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                //                  if (isset($arrayinventory['CONTENT']['STORAGES'])) {
@@ -297,7 +281,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'drivesSerial':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                //                  if (isset($arrayinventory['CONTENT']['DRIVES'])) {
@@ -312,7 +296,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'assetTag':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                //                  if ((isset($arrayinventory['CONTENT']['BIOS']['ASSETTAG']))
@@ -324,7 +308,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'manufacturer':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['manufacturers_id']))
@@ -369,7 +353,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'IP':
-               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
+               $a_blacklist = $this->find(['plugin_glpiinventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($a_computerinventory['networkport'])) {

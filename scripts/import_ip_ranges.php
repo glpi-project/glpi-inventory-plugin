@@ -1,54 +1,40 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the agents
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Frédéric Mohier
- * @copyright Copyright (c) 2010-2017 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 include ("../../../inc/includes.php");
-$db_cfg_sec = new PluginFusioninventoryConfigSecurity();
-$db_ip_range = new PluginFusioninventoryIPRange();
-$db_ip_range_snmp = new PluginFusioninventoryIPRange_ConfigSecurity();
-$db_agent = new PluginFusioninventoryAgent();
+$db_cfg_sec = new PluginGlpiinventoryConfigSecurity();
+$db_ip_range = new PluginGlpiinventoryIPRange();
+$db_ip_range_snmp = new PluginGlpiinventoryIPRange_ConfigSecurity();
+$db_agent = new PluginGlpiinventoryAgent();
 $db_entity = new Entity();
 
 $file = './import_ip_ranges.csv';
@@ -213,11 +199,11 @@ if (($handle = fopen($file, "r")) !== false) {
       foreach ($ar_snmp_auth as $snmp_auth_id) {
          // Relation between IP range and SNMP credentials (if it exists...)
          $input = [
-             'plugin_fusioninventory_ipranges_id'            => $ipranges_id,
-             'plugin_fusioninventory_configsecurities_id'    => $snmp_auth_id
+             'plugin_glpiinventory_ipranges_id'            => $ipranges_id,
+             'plugin_glpiinventory_configsecurities_id'    => $snmp_auth_id
          ];
          if ($ipranges_id != -1) {
-            $ipranges_snmp = $db_ip_range_snmp->find(['plugin_fusioninventory_ipranges_id' => $ipranges_id]);
+            $ipranges_snmp = $db_ip_range_snmp->find(['plugin_glpiinventory_ipranges_id' => $ipranges_id]);
             if (count($ipranges_snmp) > 0) {
                if ($snmp_auth_id == -1) {
                   echo "-> deleting an existing IP addresses range / SNMP credentials relation...";
@@ -271,4 +257,3 @@ function check_valid_ip($ip_address) {
 
     return $valid_address;
 }
-

@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -76,9 +66,9 @@ class UnmanagedManagedTest extends TestCase {
       $this->update_time = date('Y-m-d H:i:s');
 
       $a_inventory = [
-         'PluginFusioninventoryNetworkEquipment' => [
+         'PluginGlpiinventoryNetworkEquipment' => [
             'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
-            'last_fusioninventory_update' => $this->update_time,
+            'last_inventory_update' => $this->update_time,
             'cpu'                         => 5,
             'memory'                      => 18,
             'uptime'                      => '157 days, 02:14:44.00'
@@ -131,7 +121,7 @@ class UnmanagedManagedTest extends TestCase {
       $a_inventory['vlans'] = [];
       $a_inventory['connection-lldp'] = [];
 
-      $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
 
       $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJXXX',
@@ -151,12 +141,12 @@ class UnmanagedManagedTest extends TestCase {
     */
    public function NewComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [
-         'fusioninventorycomputer' => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s')
+         'inventorycomputer' => [
+            'last_inventory_update' => date('Y-m-d H:i:s')
          ],
          'soundcard'      => [],
          'graphiccard'    => [],
@@ -196,7 +186,7 @@ class UnmanagedManagedTest extends TestCase {
          'serial'                           => 'XB63J7D',
          'computertypes_id'                 => 1,
          'is_dynamic'                       => 1,
-         'contact'                          => 'ddurieux'
+         'contact'                          => 'username'
       ];
       $a_inventory['networkport'] = [
          'em0-cc:f9:54:a1:03:45' => [
@@ -221,7 +211,7 @@ class UnmanagedManagedTest extends TestCase {
       $a_networkport = current($a_networkports);
       $networkports_id = $a_networkport['id'];
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $computers_id = $computer->add(['serial'      => 'XB63J7D',

@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -56,7 +46,7 @@ class RestURLTest extends TestCase {
       }
 
       // Delete all agents
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $items = $pfAgent->find();
       foreach ($items as $item) {
          $pfAgent->delete(['id' => $item['id']], true);
@@ -70,13 +60,13 @@ class RestURLTest extends TestCase {
    public function prepareDb() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $entity   = new Entity();
-      $pfAgent  = new PluginFusioninventoryAgent();
-      $config   = new PluginFusioninventoryConfig();
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfAgent  = new PluginGlpiinventoryAgent();
+      $config   = new PluginGlpiinventoryConfig();
+      $pfEntity = new PluginGlpiinventoryEntity();
 
       $entityId = $entity->add([
          'name'        => 'ent1',
@@ -113,7 +103,7 @@ class RestURLTest extends TestCase {
       $this->assertNotFalse($ret);
 
       // active all modules
-      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`"
+      $query = "UPDATE `glpi_plugin_glpiinventory_agentmodules`"
               . " SET `is_active`='1'";
       $DB->query($query);
    }
@@ -124,16 +114,16 @@ class RestURLTest extends TestCase {
     */
    public function getCollectUrlEnt1Entity() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfAgent  = new PluginGlpiinventoryAgent();
 
       $pfAgent->getFromDBByCrit(['name' => 'toto']);
       $input = [
-         'itemtype'                         => 'PluginFusioninventoryCollect',
-         'plugin_fusioninventory_agents_id' => $pfAgent->fields['id']
+         'itemtype'                         => 'PluginGlpiinventoryCollect',
+         'plugin_glpiinventory_agents_id' => $pfAgent->fields['id']
       ];
       $ret = $pfTaskjobstate->add($input);
       $this->assertNotFalse($ret);
@@ -145,9 +135,9 @@ class RestURLTest extends TestCase {
           'machineid' => 'toto-device'
       ];
 
-      $response = PluginFusioninventoryCommunicationRest::communicate($input);
+      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/collect/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/collect/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
@@ -158,16 +148,16 @@ class RestURLTest extends TestCase {
     */
    public function getDeployUrlRootEntity() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfAgent  = new PluginGlpiinventoryAgent();
 
       $pfAgent->getFromDBByCrit(['name' => 'toto']);
       $input = [
-         'itemtype'                         => 'PluginFusioninventoryDeployPackage',
-         'plugin_fusioninventory_agents_id' => $pfAgent->fields['id']
+         'itemtype'                         => 'PluginGlpiinventoryDeployPackage',
+         'plugin_glpiinventory_agents_id' => $pfAgent->fields['id']
       ];
       $pfTaskjobstate->add($input);
 
@@ -178,9 +168,9 @@ class RestURLTest extends TestCase {
           'machineid' => 'toto-device'
       ];
 
-      $response = PluginFusioninventoryCommunicationRest::communicate($input);
+      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/deploy/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/deploy/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
@@ -191,16 +181,16 @@ class RestURLTest extends TestCase {
     */
    public function getEsxUrlRootEntity() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfAgent  = new PluginGlpiinventoryAgent();
 
       $pfAgent->getFromDBByCrit(['name' => 'toto']);
       $input = [
-         'itemtype'                         => 'PluginFusioninventoryCredentialIp',
-         'plugin_fusioninventory_agents_id' => $pfAgent->fields['id']
+         'itemtype'                         => 'PluginGlpiinventoryCredentialIp',
+         'plugin_glpiinventory_agents_id' => $pfAgent->fields['id']
       ];
       $pfTaskjobstate->add($input);
 
@@ -211,9 +201,9 @@ class RestURLTest extends TestCase {
           'machineid' => 'toto-device'
       ];
 
-      $response = PluginFusioninventoryCommunicationRest::communicate($input);
+      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/esx/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/esx/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
@@ -224,13 +214,13 @@ class RestURLTest extends TestCase {
     */
    public function getCollectUrlRootEntity() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $config = new PluginFusioninventoryConfig();
+      $config = new PluginGlpiinventoryConfig();
       $config->loadCache();
 
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
       $entity = new Entity();
       $entity->getFromDBByCrit(['name' => 'ent1']);
       $this->assertArrayHasKey('id', $entity->fields);
@@ -248,8 +238,8 @@ class RestURLTest extends TestCase {
           'machineid' => 'toto-device'
       ];
 
-      $response = PluginFusioninventoryCommunicationRest::communicate($input);
-      $this->assertEquals('http://127.0.0.1/glpi085/plugins/fusioninventory/b/collect/',
+      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
+      $this->assertEquals('http://127.0.0.1/glpi085/plugins/glpiinventory/b/collect/',
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }

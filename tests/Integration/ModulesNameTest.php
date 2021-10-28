@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 /**
@@ -90,7 +80,7 @@ class ModulesNameTest extends TestCase {
       <DNS>192.168.43.1</DNS>
       <ETIME>4</ETIME>
       <IPADDR>10.0.20.254/10.0.20.1/10.0.20.2/10.0.20.3/10.0.20.4/10.0.20.5/10.0.20.6/10.0.20.7/10.0.20.8/10.0.20.9/10.0.20.10/10.0.20.11/10.0.20.12/10.0.20.13/10.0.20.14/10.0.20.15/192.168.43.151</IPADDR>
-      <LASTLOGGEDUSER>ddurieux</LASTLOGGEDUSER>
+      <LASTLOGGEDUSER>username</LASTLOGGEDUSER>
       <MEMORY>8067</MEMORY>
       <NAME>portdavid</NAME>
       <OSCOMMENTS>FreeBSD 10.3-RELEASE #0 r297264: Fri Mar 25 02:10:02 UTC 2016     root@releng1.nyi.freebsd.org:/usr/obj/usr/src/sys/GENERIC </OSCOMMENTS>
@@ -100,7 +90,7 @@ class ModulesNameTest extends TestCase {
       <PROCESSORS>2100</PROCESSORS>
       <PROCESSORT>Core i7</PROCESSORT>
       <SWAP>4096</SWAP>
-      <USERID>ddurieux</USERID>
+      <USERID>username</USERID>
       <UUID>4C4C4544-0048-3410-8050-B5C04F525931</UUID>
       <VMSYSTEM>Physical</VMSYSTEM>
     </HARDWARE>
@@ -161,30 +151,30 @@ class ModulesNameTest extends TestCase {
   <QUERY>INVENTORY</QUERY>
 </REQUEST>';
 
-      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $pfCommunication  = new PluginGlpiinventoryCommunication();
 
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+         'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
       ]);
 
-      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
-      while ($data = $iterator->next()) {
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs'));
+      foreach ($iterator as $data) {
          $this->assertEquals('inventory', $data['method']);
       }
 
       // second run (update)
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+         'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
       ]);
 
-      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
-      while ($data = $iterator->next()) {
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs'));
+      foreach ($iterator as $data) {
          $this->assertEquals('inventory', $data['method']);
       }
 
@@ -243,18 +233,18 @@ class ModulesNameTest extends TestCase {
   <QUERY>MODULENAMETEST</QUERY>
 </REQUEST>';
 
-      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $pfCommunication  = new PluginGlpiinventoryCommunication();
       $versions = ['SNMPQUERY', 'SNMPINVENTORY'];
       foreach ($versions as $versionName) {
-         $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+         $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
          $xmlNew = str_replace('MODULENAMETEST', $versionName, $xml);
          $pfCommunication->handleOCSCommunication('', $xmlNew, 'glpi');
 
          $iterator = $DB->request([
-            'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+            'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
          ]);
          $this->assertEquals(2, count($iterator), 'Must have 2, 1 for the switch and 1 for the device found on port');
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $this->assertEquals("networkinventory", $data['method'], "Problem with agent query: ".$versionName);
          }
       }
@@ -294,13 +284,13 @@ class ModulesNameTest extends TestCase {
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $pfCommunication  = new PluginGlpiinventoryCommunication();
       $computer        = new Computer();
-      $pfAgent         = new PluginFusioninventoryAgent();
-      $pfTask          = new PluginFusioninventoryTask();
-      $pfTaskjob       = new PluginFusioninventoryTaskjob;
-      $pfIPRange       = new PluginFusioninventoryIPRange();
-      $pfTaskjobstate  = new PluginFusioninventoryTaskjobstate();
+      $pfAgent         = new PluginGlpiinventoryAgent();
+      $pfTask          = new PluginGlpiinventoryTask();
+      $pfTaskjob       = new PluginGlpiinventoryTaskjob;
+      $pfIPRange       = new PluginGlpiinventoryIPRange();
+      $pfTaskjobstate  = new PluginGlpiinventoryTaskjobstate();
 
       // Create computers + agents
       $input = [
@@ -329,7 +319,7 @@ class ModulesNameTest extends TestCase {
       $ipranges_id = $pfIPRange->add($input);
 
       // Allow all agents to do network discovery
-      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules` "
+      $query = "UPDATE `glpi_plugin_glpiinventory_agentmodules` "
               . " SET `is_active`='1' "
               . " WHERE `modulename`='NETWORKDISCOVERY'";
       $DB->query($query);
@@ -344,31 +334,31 @@ class ModulesNameTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'plugin_glpiinventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
-          'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]',
-          'actors'                          => '[{"PluginFusioninventoryAgent":"'.$pfAgent->fields['id'].'"}]'
+          'targets'                         => '[{"PluginGlpiinventoryIPRange":"'.$ipranges_id.'"}]',
+          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$pfAgent->fields['id'].'"}]'
       ];
       $pfTaskjob->add($input);
 
       // Prepare job
-      PluginFusioninventoryTask::cronTaskscheduler();
+      PluginGlpiinventoryTask::cronTaskscheduler();
 
       $jobstates = $pfTaskjobstate->find([], [], 1);
       foreach ($jobstates as $jobstate) {
          $xml = str_replace("<PROCESSNUMBER>1</PROCESSNUMBER>", "<PROCESSNUMBER>".$jobstate['id']."</PROCESSNUMBER>", $xml);
       }
 
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
-         'FROM'   => 'glpi_plugin_fusioninventory_rulematchedlogs',
+         'FROM'   => 'glpi_plugin_glpiinventory_rulematchedlogs',
       ]);
       $this->assertEquals(1, count($iterator));
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->assertEquals('networkdiscovery', $data['method']);
       }
    }

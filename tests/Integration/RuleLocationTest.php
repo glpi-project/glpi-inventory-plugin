@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2015
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -47,8 +37,8 @@ class RuleLocationTest extends TestCase {
    public static function setUpBeforeClass(): void {
 
       // Delete all locationrules
-      $rule = new PluginFusioninventoryInventoryRuleLocation();
-      $items = $rule->find(['sub_type' => "PluginFusioninventoryInventoryRuleLocation"]);
+      $rule = new PluginGlpiinventoryInventoryRuleLocation();
+      $items = $rule->find(['sub_type' => "PluginGlpiinventoryInventoryRuleLocation"]);
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
@@ -64,7 +54,7 @@ class RuleLocationTest extends TestCase {
       $location = new Location();
 
       $location->deleteByCriteria(['name' => 'Monsols04'], true);
-      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleLocation'], true);
       $input = [
          'name'        => 'Monsols04',
          'entities_id' => 0
@@ -75,7 +65,7 @@ class RuleLocationTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Location regexp',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleLocation',
          'ranking'   => 1
       ];
       $rules_id = $rule->add($input);
@@ -87,7 +77,7 @@ class RuleLocationTest extends TestCase {
          'rules_id'  => $rules_id,
          'criteria'  => "name",
          'pattern'   => "/Item (.*)/",
-         'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
+         'condition' => PluginGlpiinventoryInventoryRuleLocation::REGEX_MATCH
       ];
       $ret = $rulecriteria->add($input);
       $this->assertNotFalse($ret);
@@ -119,8 +109,8 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -156,7 +146,7 @@ class RuleLocationTest extends TestCase {
    public function RegexpRuleResultRegexpTest() {
 
       $rule = new Rule();
-      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleLocation'], true);
       $location = new Location;
       $location->getFromDBByCrit(['completename' => 'Monsols04']);;
 
@@ -164,7 +154,7 @@ class RuleLocationTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Location regexp pc',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleLocation',
          'ranking'   => 1
       ];
       $rules_id = $rule->add($input);
@@ -176,7 +166,7 @@ class RuleLocationTest extends TestCase {
          'rules_id'  => $rules_id,
          'criteria'  => "name",
          'pattern'   => "/pc (.*)/",
-         'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
+         'condition' => PluginGlpiinventoryInventoryRuleLocation::REGEX_MATCH
       ];
       $ret = $rulecriteria->add($input);
       $this->assertNotFalse($ret);
@@ -203,14 +193,14 @@ class RuleLocationTest extends TestCase {
       $ret = $ruleaction->add($input);
       $this->assertNotFalse($ret);
 
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
 
       $input = [
          'name'     => 'pc Monsols04',
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -226,7 +216,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Monitor'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
       $a_references = [
          '_no_rule_matches' => 1,
@@ -244,7 +234,7 @@ class RuleLocationTest extends TestCase {
     */
    public function RegexpRuleByIPTest() {
       $rule = new Rule();
-      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleLocation'], true);
       $location = new Location;
       $location->getFromDBByCrit(['completename' => 'Monsols04']);;
 
@@ -252,7 +242,7 @@ class RuleLocationTest extends TestCase {
          'is_active' => 1,
          'name'      => 'Location by IP',
          'match'     => 'AND',
-         'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
+         'sub_type'  => 'PluginGlpiinventoryInventoryRuleLocation',
          'ranking'   => 1
       ];
       $rules_id = $rule->add($input);
@@ -291,7 +281,7 @@ class RuleLocationTest extends TestCase {
       $ret = $ruleaction->add($input);
       $this->assertNotFalse($ret);
 
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
 
       $input = [
          'name'     => 'pc Monsols04',
@@ -299,7 +289,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -316,7 +306,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Computer'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
@@ -333,7 +323,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Monitor'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
       $a_references = [
          '_no_rule_matches' => 1,
@@ -352,7 +342,7 @@ class RuleLocationTest extends TestCase {
          'itemtype' => 'Peripheral'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
       $a_references = [
          '_no_rule_matches' => 1,

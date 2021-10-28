@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the collect (registry, file, wmi) module of
- * the agents
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the collect information by the agent.
  */
-class PluginFusioninventoryCollect extends CommonDBTM {
+class PluginGlpiinventoryCollect extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_collect';
+   static $rightname = 'plugin_glpiinventory_collect';
 
 
    /**
@@ -69,7 +54,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Collect information', 'fusioninventory');
+      return __('Collect information', 'glpiinventory');
    }
 
 
@@ -104,13 +89,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $id = $item->fields['id'];
       if ($item->getType() == 'Computer'
          && $pfComputer->hasAutomaticInventory($id)) {
-         foreach (['PluginFusioninventoryCollect_File_Content',
-                   'PluginFusioninventoryCollect_Wmi_Content',
-                   'PluginFusioninventoryCollect_Registry_Content'] as $itemtype) {
+         foreach (['PluginGlpiinventoryCollect_File_Content',
+                   'PluginGlpiinventoryCollect_Wmi_Content',
+                   'PluginGlpiinventoryCollect_Registry_Content'] as $itemtype) {
             $collect_item = new $itemtype();
             $collect_item->showForComputer($id);
          }
@@ -127,9 +112,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    * @return the number of collects for this computer
    */
    static function getNumberOfCollectsForAComputer($computers_id) {
-      $tables = ['glpi_plugin_fusioninventory_collects_registries_contents',
-                 'glpi_plugin_fusioninventory_collects_wmis_contents',
-                 'glpi_plugin_fusioninventory_collects_files_contents',
+      $tables = ['glpi_plugin_glpiinventory_collects_registries_contents',
+                 'glpi_plugin_glpiinventory_collects_wmis_contents',
+                 'glpi_plugin_glpiinventory_collects_files_contents',
                 ];
       $total = 0;
       foreach ($tables as $table) {
@@ -146,9 +131,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     */
    static function getTypes() {
       return [
-         'registry' => __('Registry', 'fusioninventory'),
-         'wmi'      => __('WMI', 'fusioninventory'),
-         'file'     => __('Find file', 'fusioninventory')
+         'registry' => __('Registry', 'glpiinventory'),
+         'wmi'      => __('WMI', 'glpiinventory'),
+         'file'     => __('Find file', 'glpiinventory')
       ];
    }
 
@@ -166,8 +151,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
          'table'        => $this->getTable(),
          'field'        => 'name',
          'name'         => __('Name'),
-         'datatype'     => 'itemlink',
-         'autocomplete' => true,
+         'datatype'     => 'itemlink'
       ];
 
       return $tab;
@@ -184,77 +168,77 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       $i = 5200;
 
-      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect = new PluginGlpiinventoryCollect();
       foreach ($pfCollect->find(getEntitiesRestrictCriteria($pfCollect->getTable(), '', '', true), ['id ASC']) as $collect) {
 
          //registries
-         $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-         $registries = $pfCollect_Registry->find(['plugin_fusioninventory_collects_id' => $collect['id']], ['id ASC']);
+         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+         $registries = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
          foreach ($registries as $registry) {
-            $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_registries_contents';
+            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_registries_contents';
             $tab[$i]['field']         = 'value';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Registry', 'fusioninventory')." - ".$registry['name'];
+            $tab[$i]['name']          = __('Registry', 'glpiinventory')." - ".$registry['name'];
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_registries_id` = ".$registry['id'],
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = ".$registry['id'],
                                           'jointype' => 'child'];
             $i++;
          }
 
          //WMIs
-         $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-         $wmis = $pfCollect_Wmi->find(['plugin_fusioninventory_collects_id'  => $collect['id']], ['id ASC']);
+         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+         $wmis = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id'  => $collect['id']], ['id ASC']);
          foreach ($wmis as $wmi) {
-            $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_wmis_contents';
+            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_wmis_contents';
             $tab[$i]['field']         = 'value';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('WMI', 'fusioninventory')." - ".$wmi['name'];
+            $tab[$i]['name']          = __('WMI', 'glpiinventory')." - ".$wmi['name'];
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_wmis_id` = ".$wmi['id'],
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = ".$wmi['id'],
                                           'jointype' => 'child'];
             $i++;
          }
 
          //Files
-         $pfCollect_File = new PluginFusioninventoryCollect_File();
-         $files = $pfCollect_File->find(['plugin_fusioninventory_collects_id' => $collect['id']], ['id ASC']);
+         $pfCollect_File = new PluginGlpiinventoryCollect_File();
+         $files = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
          foreach ($files as $file) {
 
-            $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_files_contents';
+            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
             $tab[$i]['field']         = 'pathfile';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Find file', 'fusioninventory').
+            $tab[$i]['name']          = __('Find file', 'glpiinventory').
                                     " - ".$file['name'].
-                                    " - ".__('pathfile', 'fusioninventory');
+                                    " - ".__('pathfile', 'glpiinventory');
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = ".$file['id'],
                                           'jointype' => 'child'];
             $i++;
 
-            $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_files_contents';
+            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
             $tab[$i]['field']         = 'size';
             $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Find file', 'fusioninventory').
+            $tab[$i]['name']          = __('Find file', 'glpiinventory').
                                     " - ".$file['name'].
-                                    " - ".__('Size', 'fusioninventory');
+                                    " - ".__('Size', 'glpiinventory');
             $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = ".$file['id'],
                                           'jointype' => 'child'];
             $i++;
          }
@@ -270,7 +254,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($ID, $options = []) {
+   function showForm($ID, array $options = []) {
 
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -280,12 +264,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, 'name');
+      echo Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";
       Dropdown::showFromArray('type',
-                              PluginFusioninventoryCollect::getTypes(),
+                              PluginGlpiinventoryCollect::getTypes(),
                               ['value' => $this->fields['type']]);
       echo "</td>";
       echo "</tr>\n";
@@ -320,14 +304,14 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    function prepareRun($taskjobs_id) {
       global $DB;
 
-      $task       = new PluginFusioninventoryTask();
-      $job        = new PluginFusioninventoryTaskjob();
-      $joblog     = new PluginFusioninventoryTaskjoblog();
-      $jobstate   = new PluginFusioninventoryTaskjobstate();
-      $agent      = new PluginFusioninventoryAgent();
+      $task       = new PluginGlpiinventoryTask();
+      $job        = new PluginGlpiinventoryTaskjob();
+      $joblog     = new PluginGlpiinventoryTaskjoblog();
+      $jobstate   = new PluginGlpiinventoryTaskjobstate();
+      $agent      = new PluginGlpiinventoryAgent();
 
       $job->getFromDB($taskjobs_id);
-      $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
+      $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
       $communication = $task->fields['communication'];
       $actions       = importArrayFromDB($job->fields['action']);
@@ -375,15 +359,15 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
                break;
 
-            case 'PluginFusioninventoryDeployGroup':
-               $group = new PluginFusioninventoryDeployGroup;
+            case 'PluginGlpiinventoryDeployGroup':
+               $group = new PluginGlpiinventoryDeployGroup;
                $group->getFromDB($items_id);
 
                switch ($group->getField('type')) {
 
                   case 'STATIC':
                      $query = "SELECT items_id
-                     FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
+                     FROM glpi_plugin_glpiinventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
                      $res = $DB->query($query);
@@ -394,7 +378,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                   case 'DYNAMIC':
                      $query = "SELECT fields_array
-                     FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
+                     FROM glpi_plugin_glpiinventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
                      $res = $DB->query($query);
@@ -417,7 +401,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                         $_GET["glpisearchcount2"] = count($_GET['field2']);
                      }
 
-                     $pfSearch = new PluginFusioninventorySearch();
+                     $pfSearch = new PluginGlpiinventorySearch();
                      $glpilist_limit = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
                      $result = $pfSearch->constructSQL('Computer',
@@ -438,12 +422,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       }
 
       $c_input= [];
-      $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+      $c_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
       $c_input['state']                              = 0;
-      $c_input['plugin_fusioninventory_agents_id']   = 0;
+      $c_input['plugin_glpiinventory_agents_id']   = 0;
       $c_input['execution_id']                       = $task->fields['execution_id'];
 
-      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect = new PluginGlpiinventoryCollect();
 
       foreach ($computers as $computer_id) {
          //get agent if for this computer
@@ -457,35 +441,35 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                                           "No agent found for [[Computer::".$computer_id."]]");
          } else {
             foreach ($definitions as $definition) {
-               $pfCollect->getFromDB($definition['PluginFusioninventoryCollect']);
+               $pfCollect->getFromDB($definition['PluginGlpiinventoryCollect']);
 
                switch ($pfCollect->fields['type']) {
 
                   case 'registry':
                      // get all registry
-                     $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+                     $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
                      $a_registries = $pfCollect_Registry->find(
-                             ['plugin_fusioninventory_collects_id' => $pfCollect->fields['id']]);
+                             ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]);
                      foreach ($a_registries as $data_r) {
                         $uniqid= uniqid();
                         $c_input['state'] = 0;
-                        $c_input['itemtype'] = 'PluginFusioninventoryCollect_Registry';
+                        $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Registry';
                         $c_input['items_id'] = $data_r['id'];
                         $c_input['date'] = date("Y-m-d H:i:s");
                         $c_input['uniqid'] = $uniqid;
 
-                        $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+                        $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
 
                         // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
-                           $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                           $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
                         }
 
                         $jobstates_id= $jobstate->add($c_input);
 
                         //Add log of taskjob
-                        $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-                        $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                        $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                        $c_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
                         $taskvalid++;
                         $joblog->add($c_input);
                      }
@@ -493,29 +477,29 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                   case 'wmi':
                      // get all wmi
-                     $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+                     $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
                      $a_wmies = $pfCollect_Wmi->find(
-                             ['plugin_fusioninventory_collects_id' => $pfCollect->fields['id']]);
+                             ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]);
                      foreach ($a_wmies as $data_r) {
                         $uniqid= uniqid();
                         $c_input['state'] = 0;
-                        $c_input['itemtype'] = 'PluginFusioninventoryCollect_Wmi';
+                        $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Wmi';
                         $c_input['items_id'] = $data_r['id'];
                         $c_input['date'] = date("Y-m-d H:i:s");
                         $c_input['uniqid'] = $uniqid;
 
-                        $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+                        $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
 
                         // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
-                           $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                           $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
                         }
 
                         $jobstates_id= $jobstate->add($c_input);
 
                         //Add log of taskjob
-                        $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-                        $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                        $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                        $c_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
                         $taskvalid++;
                         $joblog->add($c_input);
                      }
@@ -523,29 +507,29 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                   case 'file':
                      // find files
-                     $pfCollect_File = new PluginFusioninventoryCollect_File();
+                     $pfCollect_File = new PluginGlpiinventoryCollect_File();
                      $a_files = $pfCollect_File->find(
-                             ['plugin_fusioninventory_collects_id' => $pfCollect->fields['id']]);
+                             ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]);
                      foreach ($a_files as $data_r) {
                         $uniqid= uniqid();
                         $c_input['state'] = 0;
-                        $c_input['itemtype'] = 'PluginFusioninventoryCollect_File';
+                        $c_input['itemtype'] = 'PluginGlpiinventoryCollect_File';
                         $c_input['items_id'] = $data_r['id'];
                         $c_input['date'] = date("Y-m-d H:i:s");
                         $c_input['uniqid'] = $uniqid;
 
-                        $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+                        $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
 
                         // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
-                           $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                           $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
                         }
 
                         $jobstates_id= $jobstate->add($c_input);
 
                         //Add log of taskjob
-                        $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-                        $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                        $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                        $c_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
                         $taskvalid++;
                         $joblog->add($c_input);
                      }
@@ -560,7 +544,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
          $job->fields['status']= 1;
          $job->update($job->fields);
       } else {
-         $job->reinitializeTaskjobs($job->fields['plugin_fusioninventory_tasks_id']);
+         $job->reinitializeTaskjobs($job->fields['plugin_glpiinventory_tasks_id']);
       }
    }
 
@@ -568,7 +552,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    /**
     * run function, so return data to send to the agent for collect information
     *
-    * @param object $taskjobstate PluginFusioninventoryTaskjobstate instance
+    * @param object $taskjobstate PluginGlpiinventoryTaskjobstate instance
     * @param array $agent agent information from agent table in database
     * @return array
     */
@@ -578,12 +562,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $output = [];
 
       $this->getFromDB($taskjobstate->fields['items_id']);
-      $sql_where = ['plugin_fusioninventory_collects_id' => $this->fields['id']];
+      $sql_where = ['plugin_glpiinventory_collects_id' => $this->fields['id']];
 
       switch ($this->fields['type']) {
 
          case 'registry':
-            $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+            $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
             $reg_db = $pfCollect_Registry->find($sql_where);
             foreach ($reg_db as $reg) {
                $output[] = [
@@ -596,7 +580,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             break;
 
          case 'wmi':
-            $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+            $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
             $wmi_db = $pfCollect_Wmi->find($sql_where);
             foreach ($wmi_db as $wmi) {
                $datawmi = [
@@ -614,7 +598,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             break;
 
          case 'file':
-            $pfCollect_File = new PluginFusioninventoryCollect_File();
+            $pfCollect_File = new PluginGlpiinventoryCollect_File();
             $files_db = $pfCollect_File->find($sql_where);
             foreach ($files_db as $files) {
                $datafile = [
@@ -655,8 +639,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                //clean old files
                $DB->delete(
-                  'glpi_plugin_fusioninventory_collects_files_contents', [
-                     'plugin_fusioninventory_collects_files_id'   => $files['id'],
+                  'glpi_plugin_glpiinventory_collects_files_contents', [
+                     'plugin_glpiinventory_collects_files_id'   => $files['id'],
                      'computers_id'                               => $agent['computers_id']
                   ]
                );
@@ -675,9 +659,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
          return $response;
       }
 
-      $pfAgent        = new PluginFusioninventoryAgent();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
+      $pfAgent        = new PluginGlpiinventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
 
       switch ($action) {
 
@@ -685,8 +669,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             if (empty($machineId)) {
                return $response;
             }
-            $pfAgentModule  = new PluginFusioninventoryAgentmodule();
-            $pfTask         = new PluginFusioninventoryTask();
+            $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
+            $pfTask         = new PluginGlpiinventoryTask();
 
             $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($machineId));
             if (isset($agent['id'])) {
@@ -700,7 +684,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                foreach ($taskjobstates as $taskjobstate) {
                   if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
                      $taskjobstate->cancel(
-                        __("Collect module has been disabled for this agent", 'fusioninventory')
+                        __("Collect module has been disabled for this agent", 'glpiinventory')
                      );
                   } else {
                      $out = $this->run($taskjobstate, $agent);
@@ -711,16 +695,16 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      // change status of state table row
                      $pfTaskjobstate->changeStatus(
                            $taskjobstate->fields['id'],
-                           PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                           PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
                      );
 
                      $a_input = [
-                           'plugin_fusioninventory_taskjobstates_id'    => $taskjobstate->fields['id'],
+                           'plugin_glpiinventory_taskjobstates_id'    => $taskjobstate->fields['id'],
                            'items_id'                                   => $agent['id'],
-                           'itemtype'                                   => 'PluginFusioninventoryAgent',
+                           'itemtype'                                   => 'PluginGlpiinventoryAgent',
                            'date'                                       => date("Y-m-d H:i:s"),
                            'comment'                                    => '',
-                           'state'                                      => PluginFusioninventoryTaskjoblog::TASK_STARTED
+                           'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED
                      ];
                      $pfTaskjoblog->add($a_input);
 
@@ -745,17 +729,17 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $jobstate = current($pfTaskjobstate->find(
                [
                   'uniqid' => $uuid,
-                  'state'  => ['!=', PluginFusioninventoryTaskjobstate::FINISHED]
+                  'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
                ],
                [],
                1)
             );
 
-            if (isset($jobstate['plugin_fusioninventory_agents_id'])) {
+            if (isset($jobstate['plugin_glpiinventory_agents_id'])) {
 
                $add_value = true;
 
-               $pfAgent->getFromDB($jobstate['plugin_fusioninventory_agents_id']);
+               $pfAgent->getFromDB($jobstate['plugin_glpiinventory_agents_id']);
                $computers_id = $pfAgent->fields['computers_id'];
 
                $a_values = $_GET;
@@ -777,12 +761,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                switch ($this->fields['type']) {
                   case 'registry':
                      // update registry content
-                     $pfCollect_subO = new PluginFusioninventoryCollect_Registry_Content();
+                     $pfCollect_subO = new PluginGlpiinventoryCollect_Registry_Content();
                      break;
 
                   case 'wmi':
                      // update wmi content
-                     $pfCollect_subO = new PluginFusioninventoryCollect_Wmi_Content();
+                     $pfCollect_subO = new PluginGlpiinventoryCollect_Wmi_Content();
                      break;
 
                   case 'file':
@@ -797,8 +781,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                         if (isset($a_values['sendheaders'])) {
                            $params['sendheaders'] = $a_values['sendheaders'];
                         }
-                        PluginFusioninventoryCommunicationRest::updateLog($params);
-                        $pfCollect_subO = new PluginFusioninventoryCollect_File_Content();
+                        PluginGlpiinventoryCommunicationRest::updateLog($params);
+                        $pfCollect_subO = new PluginGlpiinventoryCollect_File_Content();
                         $a_values = [$sid => $a_values];
                      } else {
                         $add_value = false;
@@ -822,15 +806,15 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                // change status of state table row
                $pfTaskjobstate->changeStatus($jobstate['id'],
-                        PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+                        PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
                // add logs to job
                if (count($a_values)) {
-                  $flag    = PluginFusioninventoryTaskjoblog::TASK_INFO;
+                  $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
                   $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
                } else {
-                  $flag    = PluginFusioninventoryTaskjoblog::TASK_ERROR;
-                  $message = __('Path not found', 'fusioninventory');
+                  $flag    = PluginGlpiinventoryTaskjoblog::TASK_ERROR;
+                  $message = __('Path not found', 'glpiinventory');
                }
                   $pfTaskjoblog->addTaskjoblog($jobstate['id'],
                                              $jobstate['items_id'],
@@ -844,7 +828,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $jobstate = current($pfTaskjobstate->find(
                [
                   'uniqid' => $uuid,
-                  'state'  => ['!=', PluginFusioninventoryTaskjobstate::FINISHED]
+                  'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
                ],
                [],
                1)
@@ -867,22 +851,22 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    function post_purgeItem() {
 
       // Delete all registry
-      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-      $items = $pfCollect_Registry->find(['plugin_fusioninventory_collects_id' => $this->fields['id']]);
+      $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+      $items = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
       foreach ($items as $item) {
          $pfCollect_Registry->delete(['id' => $item['id']], true);
       }
 
       // Delete all WMI
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-      $items = $pfCollect_Wmi->find(['plugin_fusioninventory_collects_id' => $this->fields['id']]);
+      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+      $items = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
       foreach ($items as $item) {
          $pfCollect_Wmi->delete(['id' => $item['id']], true);
       }
 
       // Delete all File
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
-      $items = $pfCollect_File->find(['plugin_fusioninventory_collects_id' => $this->fields['id']]);
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
+      $items = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
       foreach ($items as $item) {
          $pfCollect_File->delete(['id' => $item['id']], true);
       }

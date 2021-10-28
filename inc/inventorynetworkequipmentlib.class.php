@@ -1,49 +1,36 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the update of information into network
- * equipment in GLPI.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
+
+use Glpi\Toolbox\Sanitizer;
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -52,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the update of information into network equipment in GLPI.
  */
-class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninventoryInventoryCommon {
+class PluginGlpiinventoryInventoryNetworkEquipmentLib extends PluginGlpiinventoryInventoryCommon {
 
    public $data_device = [];
    public $found_ports = [];
@@ -70,7 +57,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       global $DB;
 
       $networkEquipment   = new NetworkEquipment();
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
 
       $networkEquipment->getFromDB($items_id);
 
@@ -87,9 +74,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       // * NetworkEquipment
       $db_networkequipment =  $networkEquipment->fields;
 
-      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $items_id);
+      $a_lockable = PluginGlpiinventoryLock::getLockFields('glpi_networkequipments', $items_id);
 
-      $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['NetworkEquipment'],
+      $a_ret = PluginGlpiinventoryToolbox::checkLock($a_inventory['NetworkEquipment'],
                                                        $db_networkequipment, $a_lockable);
       $a_inventory['NetworkEquipment'] = $a_ret[0];
 
@@ -103,20 +90,20 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
       //Add defaut status if there's one defined in the configuration
       //If we're here it's because we've manually injected an snmpinventory xml file
-      $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+      $input = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
 
       //Add ips to the rule criteria array
       $input['ip'] = $a_inventory['internalport'];
 
       //Add the location if needed (play rule locations engine)
-      $input = PluginFusioninventoryToolbox::addLocation($input);
+      $input = PluginGlpiinventoryToolbox::addLocation($input);
 
       // Manage inventory number
       if ($networkEquipment->fields['otherserial'] == ''
          && (!isset($input['otherserial'])
             || $input['otherserial'] == '')) {
 
-         $input['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+         $input['otherserial'] = PluginGlpiinventoryToolbox::setInventoryNumber(
             'NetworkEquipment', '', $networkEquipment->fields['entities_id']);
       }
 
@@ -131,30 +118,30 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $db_networkequipment = [];
 
       $params = [
-         'FROM'  => getTableForItemType("PluginFusioninventoryNetworkEquipment"),
+         'FROM'  => getTableForItemType("PluginGlpiinventoryNetworkEquipment"),
          'WHERE' => ['networkequipments_id' => $items_id]
       ];
       $iterator = $DB->request($params);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          foreach ($data as $key=>$value) {
             $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
          }
       }
       if (count($db_networkequipment) == '0') { // Add
-         $a_inventory['PluginFusioninventoryNetworkEquipment']['networkequipments_id'] =
+         $a_inventory['PluginGlpiinventoryNetworkEquipment']['networkequipments_id'] =
             $items_id;
-         $pfNetworkEquipment->add($a_inventory['PluginFusioninventoryNetworkEquipment']);
+         $pfNetworkEquipment->add($a_inventory['PluginGlpiinventoryNetworkEquipment']);
       } else { // Update
          $idtmp = $db_networkequipment['id'];
          unset($db_networkequipment['id']);
          unset($db_networkequipment['networkequipments_id']);
-         unset($db_networkequipment['plugin_fusioninventory_configsecurities_id']);
+         unset($db_networkequipment['plugin_glpiinventory_configsecurities_id']);
 
-         $a_ret = PluginFusioninventoryToolbox::checkLock(
-                     $a_inventory['PluginFusioninventoryNetworkEquipment'],
+         $a_ret = PluginGlpiinventoryToolbox::checkLock(
+                     $a_inventory['PluginGlpiinventoryNetworkEquipment'],
                      $db_networkequipment);
-         $a_inventory['PluginFusioninventoryNetworkEquipment'] = $a_ret[0];
-         $input                = $a_inventory['PluginFusioninventoryNetworkEquipment'];
+         $a_inventory['PluginGlpiinventoryNetworkEquipment'] = $a_ret[0];
+         $input                = $a_inventory['PluginGlpiinventoryNetworkEquipment'];
          $input['id']          = $idtmp;
          $pfNetworkEquipment->update($input);
       }
@@ -168,7 +155,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       //Import simcards
       $this->importSimcards('NetworkEquipment', $a_inventory, $items_id, $no_history);
 
-      Plugin::doHook("fusioninventory_inventory",
+      Plugin::doHook("glpiinventory_inventory",
       ['inventory_data' => $a_inventory,
        'networkequipments_id'   => $items_id,
        'no_history'     => $no_history
@@ -187,7 +174,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
    function internalPorts($a_ips, $networkequipments_id, $mac, $networkname_name) {
       $networkPort = new NetworkPort();
       $iPAddress = new IPAddress();
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
       $networkName = new NetworkName();
 
       // Get agregated ports
@@ -282,10 +269,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @param integer $items_id
     */
    function importPorts($itemtype, $a_inventory, $items_id, $no_history = false) {
-      //TODO : try to report this code in PluginFusioninventoryInventoryCommon::importPorts
-      $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
+      //TODO : try to report this code in PluginGlpiinventoryInventoryCommon::importPorts
+      $pfNetworkporttype = new PluginGlpiinventoryNetworkporttype();
       $networkPort       = new NetworkPort();
-      $pfNetworkPort     = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort     = new PluginGlpiinventoryNetworkPort();
       $networkports_id   = 0;
       $pfArrayPortInfos  = [];
       foreach ($a_inventory['networkport'] as $a_port) {
@@ -398,7 +385,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
    function importConnectionLLDP($a_lldp, $networkports_id) {
 
       $this->found_ports = [];
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort = new PluginGlpiinventoryNetworkPort();
       $this->data_device = $a_lldp;
       // Prepare data to import rule
       $input_crit = [];
@@ -426,13 +413,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       }
 
       // Entity?
-      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input_crit);
+      $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
+      $_SESSION['plugin_glpiinventory_datacriteria'] = serialize($input_crit);
 
       // * Reload rules (required for unit tests)
       $rule->getCollectionPart();
       $data = $rule->processAllRules($input_crit, [], ['class'=>$this]);
-      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
+      PluginGlpiinventoryToolbox::logIfExtradebug("pluginGlpiinventory-rules",
                                                    $data);
       $rule->getFromDB($data['_ruleid']);
 
@@ -465,14 +452,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $this->found_ports = [];
       $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
-      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $pfNetworkPort = new PluginGlpiinventoryNetworkPort();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
+      $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
 
       // Pass all MAC addresses in the import rules
       foreach ($a_portconnection as $ifmac) {
          $this->data_device = ['mac' => $ifmac];
-         $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize(['mac' => $ifmac]);
+         $_SESSION['plugin_glpiinventory_datacriteria'] = serialize(['mac' => $ifmac]);
          $data = $rule->processAllRules(['mac' => $ifmac], [], ['class'=>$this]);
       }
       $list_all_ports_found = [];
@@ -719,13 +706,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @param string $itemtype
     */
    function rulepassed($items_id, $itemtype, $ports_id = 0) {
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
       $NetworkPort = new NetworkPort();
       if ($itemtype == "") {
-         $itemtype = "PluginFusioninventoryUnmanaged";
+         $itemtype = "PluginGlpiinventoryUnmanaged";
       }
       $class = new $itemtype;
       $dbu   = new DbUtils();
@@ -734,28 +721,28 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          $input = $this->data_device;
          if (!isset($input['name'])
                && isset($input['mac'])) {
-            $manufacturer = PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($input['mac']);
+            $manufacturer = PluginGlpiinventoryInventoryExternalDB::getManufacturerWithMAC($input['mac']);
             $manufacturer = Toolbox::addslashes_deep($manufacturer);
-            $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
+            $manufacturer = Sanitizer::sanitize($manufacturer);
             $input['name'] = $manufacturer;
          }
          $items_id = $class->add($input);
 
-         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+         if (isset($_SESSION['plugin_glpiinventory_rules_id'])) {
+            $pfRulematchedlog = new PluginGlpiinventoryRulematchedlog();
             $inputrulelog = [];
             $inputrulelog['date'] = date('Y-m-d H:i:s');
-            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-               $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+            $inputrulelog['rules_id'] = $_SESSION['plugin_glpiinventory_rules_id'];
+            if (isset($_SESSION['plugin_glpiinventory_agents_id'])) {
+               $inputrulelog['plugin_glpiinventory_agents_id'] = $_SESSION['plugin_glpiinventory_agents_id'];
             }
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
             $inputrulelog['method'] = 'networkinventory';
-            $inputrulelog['criteria'] = $dbu->exportArrayToDB(Toolbox::addslashes_deep(unserialize($_SESSION['plugin_fusinvsnmp_datacriteria'])));
+            $inputrulelog['criteria'] = $dbu->exportArrayToDB(Toolbox::addslashes_deep(unserialize($_SESSION['plugin_glpiinventory_datacriteria'])));
             $pfRulematchedlog->add($inputrulelog);
             $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
-            unset($_SESSION['plugin_fusioninventory_rules_id']);
+            unset($_SESSION['plugin_glpiinventory_rules_id']);
          }
 
          // Create the network port
@@ -777,9 +764,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          }
          if (!isset($input['name'])
                && isset($this->data_device['mac'])) {
-            $manufacturer = PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($this->data_device['mac']);
+            $manufacturer = PluginGlpiinventoryInventoryExternalDB::getManufacturerWithMAC($this->data_device['mac']);
             $manufacturer = Toolbox::addslashes_deep($manufacturer);
-            $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
+            $manufacturer = Sanitizer::sanitize($manufacturer);
             $input['name'] = $manufacturer;
          }
          if (isset($this->data_device['mac'])
@@ -825,10 +812,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                ];
             }
             $ports_id = $NetworkPort->add($input);
-            if (!isset($this->found_ports['PluginFusioninventoryUnmanaged'])) {
-               $this->found_ports['PluginFusioninventoryUnmanaged'] = [];
+            if (!isset($this->found_ports['PluginGlpiinventoryUnmanaged'])) {
+               $this->found_ports['PluginGlpiinventoryUnmanaged'] = [];
             }
-            $this->found_ports['PluginFusioninventoryUnmanaged'][$ports_id] = $ports_id;
+            $this->found_ports['PluginGlpiinventoryUnmanaged'][$ports_id] = $ports_id;
          }
       }
    }
@@ -839,7 +826,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @return string
     */
    static function getMethod() {
-      return PluginFusioninventoryCommunicationNetworkInventory::getMethod();
+      return PluginGlpiinventoryCommunicationNetworkInventory::getMethod();
    }
 
 }

@@ -1,5 +1,36 @@
 #!/usr/bin/php
 <?php
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
+ */
+
 // Generate snmpwalk of unknown devices
 // requires: snmpwalk from Net-SNMP
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
@@ -11,7 +42,7 @@ $snmpwalkCmd = "snmpwalk";
 // you can launch snmpwalk on a remote machine through ssh:
 // tunnel="0",command="/usr/bin/snmpwalk $SSH_ORIGINAL_COMMAND" ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA0FqlGjmx6IxuPihc1B1zN1gTnGZoQs1SenUaRkmUD+gbUWbfhUBbPRJIIFicNjsr6toerAQM/YKfZnmYG5BnYKgJPbKdkpdrSTMwSUqccDFH8tu6lIoRFiqZgajIznUls3Mhz5B4JXErapbQN/7cWnpvuG8vdZu56N19T0/gYdlTf8a71liva20zBk+y+pdWWsd4l2zBLm6tkmMWqYL/Xj/jY92gLzY0Dm0IFiBfV9gk4UBWh6jycLBZGbdqx25XqK8L8Ob9oyhJhtsCNeft1c6xzNAM21WYH4/trtwYgHaEA1LLN4IbY9+lJfJamN9ii4acyfMz/J+lQsnw3yTlOw== root@mysnmpmachine
 
-$outputDir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walk';
+$outputDir = GLPI_PLUGIN_DOC_DIR.'/glpiinventory/walk';
 
 if (mkdir($outputDir) && !is_dir($outputDir)) {
    echo("Failed to create $outputDir\n");
@@ -31,19 +62,19 @@ SELECT
 FROM
   glpi_plugin_fusinvsnmp_unmanageds,
   glpi_networkports,
-  glpi_plugin_fusioninventory_configsecurities
+  glpi_plugin_glpiinventory_configsecurities
 WHERE
-  glpi_plugin_fusinvsnmp_unmanageds.plugin_fusioninventory_snmpmodels_id<1
+  glpi_plugin_fusinvsnmp_unmanageds.plugin_glpiinventory_snmpmodels_id<1
  AND
   sysdescr IS NOT NULL
  AND
-  glpi_networkports.itemtype='PluginFusioninventoryUnmanaged'
+  glpi_networkports.itemtype='PluginGlpiinventoryUnmanaged'
  AND
-  glpi_networkports.items_id=plugin_fusioninventory_unmanageds_id
+  glpi_networkports.items_id=plugin_glpiinventory_unmanageds_id
  AND
   length(glpi_networkports.ip)>1
  AND
-  glpi_plugin_fusioninventory_configsecurities.id=glpi_plugin_fusinvsnmp_unmanageds.plugin_fusinvsnmp_configsecurities_id
+  glpi_plugin_glpiinventory_configsecurities.id=glpi_plugin_fusinvsnmp_unmanageds.plugin_fusinvsnmp_configsecurities_id
 
 ";
 $result = $DB->query($sql);

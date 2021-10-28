@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -86,8 +76,8 @@ class ComputerPrinterTest extends TestCase {
             "name"   => "pc001",
             "serial" => "ggheb7ne7"
          ],
-         "fusioninventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+         "inventorycomputer" => [
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],
@@ -153,8 +143,8 @@ class ComputerPrinterTest extends TestCase {
             "name"   => "pc002",
             "serial" => "ggheb7ne8"
          ],
-         "fusioninventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+         "inventorycomputer" => [
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],
@@ -199,8 +189,8 @@ class ComputerPrinterTest extends TestCase {
             "name"   => "pc003",
             "serial" => "ggheb7ne9"
          ],
-         "fusioninventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+         "inventorycomputer" => [
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],
@@ -247,8 +237,8 @@ class ComputerPrinterTest extends TestCase {
     */
    public function testPrinterDicoIgnoreImport() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $manufacturer = new Manufacturer();
       $computer     = new Computer();
@@ -258,7 +248,7 @@ class ComputerPrinterTest extends TestCase {
       /*
        * TODO: maybe we could use some dataProvider here ?
        */
-      // Add dictionnary rule for ignore import for printer p2
+      // Add dictionary rule for ignore import for printer p2
       $rulecollection = new RuleDictionnaryPrinterCollection();
       $rule = $rulecollection->getRuleClass();
       $input = [];
@@ -288,7 +278,7 @@ class ComputerPrinterTest extends TestCase {
       $input['value'] = '1';
       $ruleaction->add($input);
 
-      // Add dictionnary rule for ignore import for printer p3
+      // Add dictionary rule for ignore import for printer p3
       $rulecollection = new RuleDictionnaryPrinterCollection();
       $rule = $rulecollection->getRuleClass();
       $input = [];
@@ -324,7 +314,7 @@ class ComputerPrinterTest extends TestCase {
       $input['rules_id'] = $rule_id;
       $input['action_type'] = 'assign';
       $input['field'] = 'manufacturer';
-      $input['value'] = 'HP inc.';
+      $input['value'] = $manufacturer->fields['id'];
       $ruleaction->add($input);
 
       // Add action
@@ -336,9 +326,9 @@ class ComputerPrinterTest extends TestCase {
       $input['value'] = '0';
       $ruleaction->add($input);
 
-      $pfici = new PluginFusioninventoryInventoryComputerInventory();
+      $pfici = new PluginGlpiinventoryInventoryComputerInventory();
 
-      $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+      $_SESSION['plugin_glpiinventory_agents_id'] = 1;
       $pfici->sendCriteria("toto", $this->a_computer1_beforeformat);
 
       $computer->getFromDBByCrit(['name' => 'pc001']);
@@ -357,13 +347,13 @@ class ComputerPrinterTest extends TestCase {
     */
    public function PrinterDicoRename() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $computer = new Computer();
-      $pfici    = new PluginFusioninventoryInventoryComputerInventory();
+      $pfici    = new PluginGlpiinventoryInventoryComputerInventory();
 
-      $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+      $_SESSION['plugin_glpiinventory_agents_id'] = 1;
 
       $this->a_computer1_beforeformat["CONTENT"]['PRINTERS'][1]['NAME'] = 'p3';
 
@@ -392,7 +382,7 @@ class ComputerPrinterTest extends TestCase {
    /**
     * @test
     */
-   public function PrinterDicoManufacturer() {
+   /*public function PrinterDicoManufacturer() {
       $printer = new Printer();
       $manufacturer = new Manufacturer();
       $printer->getFromDBByCrit(['name' => 'p3bis']);
@@ -401,7 +391,7 @@ class ComputerPrinterTest extends TestCase {
       $this->assertEquals($manufacturer->fields['id'],
          $printer->fields['manufacturers_id'], 'Printer p3 may have manufacturer'
       );
-   }
+   }*/
 
 
    /**
@@ -419,7 +409,7 @@ class ComputerPrinterTest extends TestCase {
    //    return;
 
    //    $printer = new Printer();
-   //    $pfici    = new PluginFusioninventoryInventoryComputerInventory();
+   //    $pfici    = new PluginGlpiinventoryInventoryComputerInventory();
    //    $config = new Config();
 
    //    $printer->getFromDBByCrit(['name' => 'p3bis']);
@@ -429,7 +419,7 @@ class ComputerPrinterTest extends TestCase {
    //    $CFG_GLPI["printers_management_restrict"] = 1;
    //    $config->setConfigurationValues('core', ['printers_management_restrict' => 1]);
 
-   //    $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+   //    $_SESSION['plugin_glpiinventory_agents_id'] = 1;
 
    //    $this->a_computer1_beforeformat["CONTENT"]['PRINTERS'][1]['NAME'] = 'p3';
 

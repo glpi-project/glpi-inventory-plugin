@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the computer last inventory.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
@@ -50,7 +36,7 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight('computer', READ);
 
@@ -69,13 +55,13 @@ echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";
 echo "<th colspan='2'>";
-echo __('Computers not inventoried since xx days', 'fusioninventory');
+echo __('Computers not inventoried since xx days', 'glpiinventory');
 echo "</th>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo __('Number of days (minimum) since last inventory', 'fusioninventory')." :&nbsp;";
+echo __('Number of days (minimum) since last inventory', 'glpiinventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", [
@@ -111,14 +97,14 @@ if (($state != "") AND ($state != "0")) {
    $state_sql = " AND `states_id` = '".$state."' ";
 }
 
-$query = "SELECT `last_fusioninventory_update`, `computers_id`
-      FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`
+$query = "SELECT `last_inventory_update`, `computers_id`
+      FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
    LEFT JOIN `glpi_computers` ON `computers_id`=`glpi_computers`.`id`
-WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY)
-      OR last_fusioninventory_update IS NULL)
+WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL ".$nbdays." DAY)
+      OR last_inventory_update IS NULL)
    ".$state_sql.")".getEntitiesRestrictRequest("AND", "glpi_computers")."
 
-ORDER BY last_fusioninventory_update DESC";
+ORDER BY last_inventory_update DESC";
 
 $result = $DB->query($query);
 
@@ -130,7 +116,7 @@ echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<th>".__('Name')."</th>";
-echo "<th>".__('Last inventory', 'fusioninventory')."</th>";
+echo "<th>".__('Last inventory', 'glpiinventory')."</th>";
 echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
 echo "<th>".__('Status')."</th>";
@@ -142,7 +128,7 @@ while ($data=$DB->fetchArray($result)) {
    $computer->getFromDB($data['computers_id']);
    echo $computer->getLink(1);
    echo "</td>";
-   echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
+   echo "<td>".Html::convDateTime($data['last_inventory_update'])."</td>";
    echo "<td>".$computer->fields['serial']."</td>";
    echo "<td>".$computer->fields['otherserial']."</td>";
    echo "<td>";
@@ -154,4 +140,3 @@ while ($data=$DB->fetchArray($result)) {
 echo "</table>";
 
 Html::footer();
-

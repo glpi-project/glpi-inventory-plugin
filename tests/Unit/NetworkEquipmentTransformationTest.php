@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -100,7 +90,7 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
       $a_reference = [
@@ -213,7 +203,7 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
       $a_reference = [
@@ -311,7 +301,7 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
       $a_reference = [
@@ -365,8 +355,8 @@ class NetworkEquipmentTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [];
       $a_inventory['INFO'] = [
@@ -390,21 +380,21 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 'MANUFACTURER'   => 'Cisco'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryNetworkEquipment'])
-              && isset($a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryNetworkEquipment'])
+              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryNetworkEquipment' => [
+          'PluginGlpiinventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
-                  'last_fusioninventory_update' => $date,
+                  'last_inventory_update' => $date,
                   'cpu'                         => 6,
                   'memory'                      => 33,
                   'uptime'                      => '41 days, 06:53:36.46'
@@ -468,21 +458,21 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
          'VERSION'      => '12.2(55)SE',
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryNetworkEquipment'])
-              && isset($a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryNetworkEquipment'])
+              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryNetworkEquipment' => [
+          'PluginGlpiinventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
-                  'last_fusioninventory_update' => $date,
+                  'last_inventory_update' => $date,
                   'cpu'                         => 6,
                   'memory'                      => 33,
                   'uptime'                      => '41 days, 06:53:36.46'
@@ -526,8 +516,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = [];
       $a_inventory['INFO'] = [
@@ -570,7 +560,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
           'MAC'      => 'b4:39:d6:3a:7f:3e'
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
 

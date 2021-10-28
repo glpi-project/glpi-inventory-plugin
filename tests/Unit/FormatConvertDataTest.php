@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -76,7 +66,7 @@ class FormatConvertDataTest extends TestCase {
          "datelastloggeduser"   => "Wed Mar 30 19:29"
       ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->JSONtoArray(json_encode($a_inventory));
 
@@ -153,8 +143,8 @@ class FormatConvertDataTest extends TestCase {
          'computermodels_id'          => 'XPS 13 9350'
       ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $manufacturer = new Manufacturer();
@@ -208,7 +198,7 @@ class FormatConvertDataTest extends TestCase {
 </REQUEST>';
       $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $a_xml = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
+      $a_xml = PluginGlpiinventoryFormatconvert::XMLtoArray($xml);
       $referecnce = [
          'CONTENT'  => [
             'DEVICE' => [
@@ -302,13 +292,13 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
   <DEVICEID>foo</DEVICEID>
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $a_xml = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
-      $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($a_xml['CONTENT']['DEVICE'][0]);
+      $a_xml = PluginGlpiinventoryFormatconvert::XMLtoArray($xml);
+      $a_inventory = PluginGlpiinventoryFormatconvert::networkequipmentInventoryTransformation($a_xml['CONTENT']['DEVICE'][0]);
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'NetworkEquipment', 0);
 
       $a_reference = [
@@ -356,7 +346,7 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
 </REQUEST>';
       $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $array = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
+      $array = PluginGlpiinventoryFormatconvert::XMLtoArray($xml);
 
       $expected =  [
          'CONTENT' =>
@@ -427,7 +417,7 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
          'MODEL' => $model,
          'NAME' => $name
       ];
-      $result = PluginFusioninventoryFormatconvert::getTypeDrive($value);
+      $result = PluginGlpiinventoryFormatconvert::getTypeDrive($value);
       $this->assertEquals($return_expected, $result);
    }
 }

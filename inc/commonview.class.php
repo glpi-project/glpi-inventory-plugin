@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to display elements in the plugin.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Kevin Roy
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * It's a common code for display information in GLPI.
  */
-class PluginFusioninventoryCommonView extends CommonDBTM {
+class PluginGlpiinventoryCommonView extends CommonDBTM {
 
    /**
     * Define the number for the message information constant
@@ -92,7 +77,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       global $CFG_GLPI;
       parent::__construct();
 
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       $this->base_urls = [
          'fi.base'   => $fi_path,
@@ -137,9 +122,11 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param string $varname
     */
    public function showTextField($title, $varname) {
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap'>";
-      Html::autocompletionTextField ($this, $varname, $this->fields['name']);
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6'>";
+      echo Html::input($varname, ['value' => $this->fields[$varname]]);
+      echo "</div>";
       echo "</div>";
    }
 
@@ -152,9 +139,11 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param array $options
     */
    public function showIntegerField($title, $varname, $options = []) {
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6'>";
       Dropdown::showNumber($varname, $options);
+      echo "</div>";
       echo "</div>";
    }
 
@@ -167,13 +156,15 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param array $options
     */
    public function showCheckboxField($title, $varname, $options = []) {
-      echo "<label>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='col-sm-6'>";
       $options['name'] = $varname;
       $options['checked'] = $this->fields[$varname];
       $options['zero_on_empty']= true;
 
-      echo "<div class='input_wrap'>";
       Html::showCheckbox($options);
+      echo "</div>";
       echo "</div>";
    }
 
@@ -187,8 +178,9 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @return string the rand number can be used with ajax to update something
     */
    public function showDropdownForItemtype($title, $itemtype, $options = []) {
-      echo "<label>" . $title."&nbsp;:" . "</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='col-sm-6'>";
       $dropdown_options = array_merge(
          [
             'width'=>'90%',
@@ -197,6 +189,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
          $options
       );
       $rand = Dropdown::show($itemtype, $dropdown_options);
+      echo "</div>";
       echo "</div>";
       return $rand;
    }
@@ -212,8 +205,9 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @return string the rand number can be used with ajax to update something
     */
    public function showDropdownFromArray($title, $varname, $values = [], $options = []) {
-      echo "<label>" . $title."&nbsp;:" . "</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='col-sm-6'>";
       if (!isset($options['width'])) {
          $options['width'] = '100%';
       }
@@ -225,6 +219,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
          $varname, $values,
          $options
       );
+      echo "</div>";
       echo "</div>";
       return $rand;
    }
@@ -253,12 +248,14 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       }
       $options['value'] = $value;
 
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap datetime'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6 datetime'>";
       Html::showDateTimeField(
          $varname,
          $options
       );
+      echo "</div>";
       echo "</div>";
    }
 
@@ -270,15 +267,15 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param string $varname
     */
    public function showTextArea($title, $varname) {
-      echo "<label>".$title."&nbsp;:</label>";
-      echo "<div class='input_wrap'>";
+      echo "<div class='mb-2 row col-12 col-sm-6'>";
+      echo "<label class='form-label col-sm-4 col-form-label'>".$title."&nbsp;:</label>";
+      echo "<div class='col-sm-6'>";
       echo
-         "<textarea class='autogrow' name='".$varname."' >".
+         "<textarea class='autogrow form-control' name='".$varname."' >".
          $this->fields[$varname].
          "</textarea>";
       echo "</div>";
-
-      echo Html::scriptBlock("$('.autogrow').autogrow();");
+      echo "</div>";
    }
 
 
@@ -293,12 +290,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       switch ($type) {
 
          case self::MSG_WARNING:
-            $msg = __('Warning:', 'fusioninventory') . " $msg";
+            $msg = __('Warning:', 'glpiinventory') . " $msg";
             $class_msg = 'warning';
             break;
 
          case self::MSG_ERROR:
-            $msg = __('Error:', 'fusioninventory') . " $msg";
+            $msg = __('Error:', 'glpiinventory') . " $msg";
             $class_msg = 'error';
             break;
 
@@ -331,4 +328,3 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
 }
-

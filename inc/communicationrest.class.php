@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the communication in REST with the agents.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the communication in REST with the agents.
  */
-class PluginFusioninventoryCommunicationRest {
+class PluginGlpiinventoryCommunicationRest {
 
 
    /**
@@ -64,7 +49,7 @@ class PluginFusioninventoryCommunicationRest {
    static function communicate($params = []) {
       $response = [];
       if (isset ($params['action']) && isset($params['machineid'])) {
-         if (PluginFusioninventoryAgent::getByDeviceID($params['machineid'])) {
+         if (PluginGlpiinventoryAgent::getByDeviceID($params['machineid'])) {
             switch ($params['action']) {
 
                case 'getConfig':
@@ -99,20 +84,20 @@ class PluginFusioninventoryCommunicationRest {
       $schedule = [];
 
       if (isset($params['task'])) {
-         $pfAgentModule = new PluginFusioninventoryAgentmodule();
-         $a_agent       = PluginFusioninventoryAgent::getByDeviceID($params['machineid']);
+         $pfAgentModule = new PluginGlpiinventoryAgentmodule();
+         $a_agent       = PluginGlpiinventoryAgent::getByDeviceID($params['machineid']);
 
          foreach (array_keys($params['task']) as $task) {
-            foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+            foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
                switch (strtolower($task)) {
                   case 'deploy':
-                     $classname = 'PluginFusioninventoryDeployPackage';
+                     $classname = 'PluginGlpiinventoryDeployPackage';
                      break;
                   case 'esx':
-                     $classname = 'PluginFusioninventoryCredentialIp';
+                     $classname = 'PluginGlpiinventoryCredentialIp';
                      break;
                   case 'collect':
-                     $classname = 'PluginFusioninventoryCollect';
+                     $classname = 'PluginGlpiinventoryCollect';
                      break;
                   default:
                      $classname = '';
@@ -122,14 +107,14 @@ class PluginFusioninventoryCommunicationRest {
                if (strstr($taskname, 'deploy')) {
                   $taskname = $method['task'];
                }
-               $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($method['module']);
+               $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($method['module']);
                if ((isset($method['task']) && strtolower($method['task']) == strtolower($task))
                   && (isset($method['use_rest']) && $method['use_rest'])
                   && method_exists($class, self::getMethodForParameters($task))
                   && $pfAgentModule->isAgentCanDo($taskname, $a_agent['id'])
-                  && countElementsInTable('glpi_plugin_fusioninventory_taskjobstates',
+                  && countElementsInTable('glpi_plugin_glpiinventory_taskjobstates',
                      [
-                        'plugin_fusioninventory_agents_id' => $a_agent['id'],
+                        'plugin_glpiinventory_agents_id' => $a_agent['id'],
                         'itemtype'                         => $classname,
                         'state'                            => 0,
                      ]) > 0) {
@@ -152,7 +137,7 @@ class PluginFusioninventoryCommunicationRest {
    /**
     * Get jobs for an agent
     * TODO: This methods must be used inplace of other methods in order to mutualize code and
-    * to fully support FusionInventory REST API for every task's types
+    * to fully support agent REST API for every task's types
     *       -- kiniou
     *
     * @param array $params
@@ -160,7 +145,7 @@ class PluginFusioninventoryCommunicationRest {
     */
    static function getJobsByAgent($params = []) {
       //      $jobs = [];
-      //      $methods = PluginFusioninventoryStaticmisc::getmethods();
+      //      $methods = PluginGlpiinventoryStaticmisc::getmethods();
       //      if (isset($params['task'])) {
       //         foreach (array_keys($params['task']) as $task) {
       //
@@ -219,7 +204,7 @@ class PluginFusioninventoryCommunicationRest {
       }
 
       //Get the agent ID by its deviceid
-      $agent = PluginFusioninventoryAgent::getByDeviceID($p['machineid']);
+      $agent = PluginGlpiinventoryAgent::getByDeviceID($p['machineid']);
 
       //No need to continue since the requested agent doesn't exists in database
       if ($agent === false) {
@@ -229,10 +214,10 @@ class PluginFusioninventoryCommunicationRest {
          return;
       }
 
-      $taskjobstate = new PluginFusioninventoryTaskjobstate();
+      $taskjobstate = new PluginGlpiinventoryTaskjobstate();
 
       //Get task job status : identifier is the uuid given by the agent
-      $params = ['FROM' => getTableForItemType("PluginFusioninventoryTaskjobstate"),
+      $params = ['FROM' => getTableForItemType("PluginGlpiinventoryTaskjobstate"),
                  'FIELDS' => 'id',
                  'WHERE' => ['uniqid' => $p['uuid']]
                 ];
@@ -240,7 +225,7 @@ class PluginFusioninventoryCommunicationRest {
          $taskjobstate->getFromDB($jobstate['id']);
 
          //Get taskjoblog associated
-         $taskjoblog = new PluginFusioninventoryTaskjoblog();
+         $taskjoblog = new PluginGlpiinventoryTaskjoblog();
          switch ($p['code']) {
 
             case 'running':
@@ -248,7 +233,7 @@ class PluginFusioninventoryCommunicationRest {
                   $taskjobstate->fields['id'],
                   $taskjobstate->fields['items_id'],
                   $taskjobstate->fields['itemtype'],
-                  PluginFusioninventoryTaskjoblog::TASK_RUNNING,
+                  PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
                   $p['msg']
                );
                break;
@@ -298,11 +283,11 @@ class PluginFusioninventoryCommunicationRest {
     * Manage REST parameters
     **/
    static function handleFusionCommunication() {
-      $response = PluginFusioninventoryCommunicationRest::communicate($_GET);
+      $response = PluginGlpiinventoryCommunicationRest::communicate($_GET);
       if ($response) {
          echo json_encode($response);
       } else {
-         PluginFusioninventoryCommunicationRest::sendError();
+         PluginGlpiinventoryCommunicationRest::sendError();
       }
    }
 }

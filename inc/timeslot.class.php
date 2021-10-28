@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the timeslot for tasks. It's the time in
- * the week the task run.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the timeslot for tasks. It's the time in the week the task run.
  */
-class PluginFusioninventoryTimeslot extends CommonDBTM {
+class PluginGlpiinventoryTimeslot extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -66,7 +51,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_task';
+   static $rightname = 'plugin_glpiinventory_task';
 
 
    /**
@@ -76,7 +61,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Time slot', 'fusioninventory');
+      return __('Time slot', 'glpiinventory');
    }
 
 
@@ -91,7 +76,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       $tab[] = [
          'id' => 'common',
-         'name' => __('Time slot', 'fusioninventory')
+         'name' => __('Time slot', 'glpiinventory')
       ];
 
       $tab[] = [
@@ -177,7 +162,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $condition = [];
 
       if (count($timeslot_ids)) {
-         $condition['plugin_fusioninventory_timeslots_id'] = $timeslot_ids;
+         $condition['plugin_glpiinventory_timeslots_id'] = $timeslot_ids;
       }
 
       if (!is_null($weekdays)) {
@@ -187,13 +172,13 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $results = [];
 
       $timeslot_entries = getAllDataFromTable(
-         "glpi_plugin_fusioninventory_timeslotentries",
+         "glpi_plugin_glpiinventory_timeslotentries",
          $condition,
          false, ''
       );
 
       foreach ($timeslot_entries as $timeslot_entry) {
-         $timeslot_id = $timeslot_entry['plugin_fusioninventory_timeslots_id'];
+         $timeslot_id = $timeslot_entry['plugin_glpiinventory_timeslots_id'];
          $timeslot_entry_id = $timeslot_entry['id'];
          $results[$timeslot_id][$timeslot_entry_id] = $timeslot_entry;
       }
@@ -222,9 +207,9 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       //Get all timeslots currently active
       $query_timeslot = "SELECT `t`.`id`
-                         FROM `glpi_plugin_fusioninventory_timeslots` as t
-                         INNER JOIN `glpi_plugin_fusioninventory_timeslotentries` as te
-                           ON (`te`.`plugin_fusioninventory_timeslots_id`=`t`.`id`)
+                         FROM `glpi_plugin_glpiinventory_timeslots` as t
+                         INNER JOIN `glpi_plugin_glpiinventory_timeslotentries` as te
+                           ON (`te`.`plugin_glpiinventory_timeslots_id`=`t`.`id`)
                          WHERE $timeinsecs BETWEEN `te`.`begin`
                             AND `te`.`end`
                             AND `day`='".$day_of_week."'";
@@ -273,20 +258,17 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
                           (isset($options['withtemplate']) && $options['withtemplate']?"*":"")).
            "</td>";
       echo "<td>";
-      $objectName = autoName($this->fields["name"], "name",
-                             (isset($options['withtemplate']) && ( $options['withtemplate']== 2)),
-                             $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, 'name', ['value' => $objectName]);
+      echo Html::input('name', ['value' => $this->fields["name"]]);
       echo "</td>";
       echo "<td>".__('Comments')."</td>";
       echo "<td class='middle'>";
-      echo "<textarea cols='45' rows='4' name='comment' >".$this->fields["comment"];
+      echo "<textarea cols='45' class='form-control' name='comment' >".$this->fields["comment"];
       echo "</textarea></td></tr>\n";
 
       $this->showFormButtons($options);
 
       if ($ID > 0) {
-         $pf = new PluginFusioninventoryTimeslotEntry();
+         $pf = new PluginGlpiinventoryTimeslotEntry();
          $pf->formEntry($ID);
       }
       return true;

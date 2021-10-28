@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -53,8 +43,8 @@ class PrinterTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
       $a_printer['INFO'] = [
@@ -69,18 +59,18 @@ class PrinterTransformationTest extends TestCase {
                 'MEMORY'         => 64
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryPrinter'])
-              && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryPrinter'])
+              && isset($a_return['PluginGlpiinventoryPrinter']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryPrinter']['last_inventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryPrinter' => [
+          'PluginGlpiinventoryPrinter' => [
                   'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
-                  'last_fusioninventory_update' => $date
+                  'last_inventory_update' => $date
                 ],
           'networkport'    => [],
           'cartridge'      => [],
@@ -111,8 +101,8 @@ class PrinterTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
       $a_printer['INFO'] = [
@@ -128,18 +118,18 @@ class PrinterTransformationTest extends TestCase {
                 'COPYTOTAL'   => ''
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
-      if (isset($a_return['PluginFusioninventoryPrinter'])
-              && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'];
+      if (isset($a_return['PluginGlpiinventoryPrinter'])
+              && isset($a_return['PluginGlpiinventoryPrinter']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryPrinter']['last_inventory_update'];
       }
       $a_reference = [
-          'PluginFusioninventoryPrinter' => [
+          'PluginGlpiinventoryPrinter' => [
                   'sysdescr'                    => '',
-                  'last_fusioninventory_update' => $date
+                  'last_inventory_update' => $date
                 ],
           'networkport' => [],
           'cartridge'   => [],
@@ -183,8 +173,8 @@ class PrinterTransformationTest extends TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_printer = [];
       $a_printer['INFO'] = [
@@ -199,8 +189,8 @@ class PrinterTransformationTest extends TestCase {
                 'CARTRIDGEYELLOW'  => '30pages' //define number pages remaining
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      $pfMapping       = new PluginFusioninventoryMapping();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
+      $pfMapping       = new PluginGlpiinventoryMapping();
 
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
 

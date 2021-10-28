@@ -1,5 +1,35 @@
 #!/usr/bin/php
 <?php
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
+ */
 
 $doc = <<<DOC
 get_agent_jobs.php
@@ -33,12 +63,12 @@ $logger->setLevelFromArgs($args['--quiet'], $args['--debug']);
 
 $logger->debug($args);
 
-$agent = new PluginFusioninventoryAgent();
+$agent = new PluginGlpiinventoryAgent();
 $computer = new Computer();
 
 
-$task = new PluginFusioninventoryTask();
-$staticmisc_methods = PluginFusioninventoryStaticmisc::getmethods();
+$task = new PluginGlpiinventoryTask();
+$staticmisc_methods = PluginGlpiinventoryStaticmisc::getmethods();
 
 $methods = [];
 foreach ($staticmisc_methods as $method) {
@@ -62,7 +92,7 @@ foreach ($device_ids as $device_id) {
    //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods, array('read_only'=>true));
    //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods);
    $time = microtime(true);
-   file_get_contents("http://glpi.kroy-laptop.sandbox/glpi/plugins/fusioninventory/b/deploy/?action=getJobs&machineid=".$device_id);
+   file_get_contents("http://glpi.kroy-laptop.sandbox/glpi/plugins/glpiinventory/b/deploy/?action=getJobs&machineid=".$device_id);
    $time = microtime(true) - $time;
    $logger->info("Get prepared jobs for Agent '$device_id' : $time s");
 }

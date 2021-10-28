@@ -1,49 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the network ports display and parse the
- * inventory to add / update in database.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -54,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage the network ports display and parse the  inventory to add / update
  * in database.
  */
-class PluginFusioninventoryNetworkPort extends CommonDBTM {
+class PluginGlpiinventoryNetworkPort extends CommonDBTM {
 
    /**
     * Initialize the port of database
@@ -111,7 +95,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          'id'    => '3',
          'table' => $this->getTable(),
          'field' => 'ifmtu',
-         'name'  => __('MTU', 'fusioninventory'),
+         'name'  => __('MTU', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -125,42 +109,42 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          'id'    => '6',
          'table' => $this->getTable(),
          'field' => 'ifinternalstatus',
-         'name'  => __('Internal status', 'fusioninventory'),
+         'name'  => __('Internal status', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '7',
          'table' => $this->getTable(),
          'field' => 'iflastchange',
-         'name'  => __('Last change', 'fusioninventory'),
+         'name'  => __('Last change', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '8',
          'table' => $this->getTable(),
          'field' => 'ifinoctets',
-         'name'  => __('Number of bytes received / Number of bytes sent', 'fusioninventory'),
+         'name'  => __('Number of bytes received / Number of bytes sent', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '9',
          'table' => $this->getTable(),
          'field' => 'ifinerrors',
-         'name'  => __('Number of input errors / Number of errors in reception', 'fusioninventory'),
+         'name'  => __('Number of input errors / Number of errors in reception', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '10',
          'table' => $this->getTable(),
          'field' => 'portduplex',
-         'name'  => __('Duplex', 'fusioninventory'),
+         'name'  => __('Duplex', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '11',
          'table' => $this->getTable(),
          'field' => 'mac',
-         'name'  => __('Internal MAC address', 'fusioninventory'),
+         'name'  => __('Internal MAC address', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -188,14 +172,14 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          'id'    => '15',
          'table' => $this->getTable(),
          'field' => 'lastup',
-         'name'  => __('Port not connected since', 'fusioninventory'),
+         'name'  => __('Port not connected since', 'glpiinventory'),
       ];
 
       $tab[] = [
          'id'    => '16',
          'table' => $this->getTable(),
          'field' => 'ifalias',
-         'name'  => __('Alias', 'fusioninventory'),
+         'name'  => __('Alias', 'glpiinventory'),
       ];
 
       $tab[] = [
@@ -347,8 +331,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       if ($opposite_port != ""
               && $opposite_port!= 0) {
          $networkPort->getFromDB($opposite_port);
-         if ($networkPort->fields["itemtype"] == 'PluginFusioninventoryUnmanaged') {
-            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+         if ($networkPort->fields["itemtype"] == 'PluginGlpiinventoryUnmanaged') {
+            $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
             if ($pfUnmanaged->getFromDB($networkPort->fields['items_id'])) {
                if ($pfUnmanaged->fields['hub'] == 1) {
                   $is_multiple = true;

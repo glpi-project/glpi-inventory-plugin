@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the update of information into printer in
- * GLPI.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the update of information into printer in GLPI.
  */
-class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInventoryCommon {
+class PluginGlpiinventoryInventoryPrinterLib extends PluginGlpiinventoryInventoryCommon {
 
 
    /**
@@ -67,7 +52,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       global $DB;
 
       $printer   = new Printer();
-      $pfPrinter = new PluginFusioninventoryPrinter();
+      $pfPrinter = new PluginGlpiinventoryPrinter();
 
       $printer->getFromDB($printers_id);
 
@@ -83,8 +68,8 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
 
       // * Printer
       $db_printer =  $printer->fields;
-      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $printers_id);
-      $a_ret      = PluginFusioninventoryToolbox::checkLock($a_inventory['Printer'],
+      $a_lockable = PluginGlpiinventoryLock::getLockFields('glpi_printers', $printers_id);
+      $a_ret      = PluginGlpiinventoryToolbox::checkLock($a_inventory['Printer'],
                                                             $db_printer,
                                                             $a_lockable);
 
@@ -100,14 +85,14 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
          }
       }
       //Add the location if needed (play rule locations engine)
-      $input = PluginFusioninventoryToolbox::addLocation($input);
+      $input = PluginGlpiinventoryToolbox::addLocation($input);
 
       // manage auto inventory number
       if ($printer->fields['otherserial'] == ''
          && (!isset($input['otherserial'])
             || $input['otherserial'] == '')) {
 
-         $input['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+         $input['otherserial'] = PluginGlpiinventoryToolbox::setInventoryNumber(
             'Printer', '', $printer->fields['entities_id']);
       }
 
@@ -117,31 +102,31 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
 
       // * Printer fusion (ext)
       $params = [
-         'FROM'  => getTableForItemType("PluginFusioninventoryPrinter"),
+         'FROM'  => getTableForItemType("PluginGlpiinventoryPrinter"),
          'WHERE' => ['printers_id' => $printers_id]
       ];
       $iterator = $DB->request($params);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          foreach ($data as $key=>$value) {
             $db_printer[$key] = Toolbox::addslashes_deep($value);
          }
       }
 
       if (count($db_printer) == '0') { // Add
-         $a_inventory['PluginFusioninventoryPrinter']['printers_id'] =
+         $a_inventory['PluginGlpiinventoryPrinter']['printers_id'] =
             $printers_id;
-         $pfPrinter->add($a_inventory['PluginFusioninventoryPrinter']);
+         $pfPrinter->add($a_inventory['PluginGlpiinventoryPrinter']);
       } else { // Update
          $idtmp      = $db_printer['id'];
          unset($db_printer['id']);
          unset($db_printer['printers_id']);
-         unset($db_printer['plugin_fusioninventory_configsecurities_id']);
+         unset($db_printer['plugin_glpiinventory_configsecurities_id']);
 
-         $a_ret = PluginFusioninventoryToolbox::checkLock(
-                     $a_inventory['PluginFusioninventoryPrinter'],
+         $a_ret = PluginGlpiinventoryToolbox::checkLock(
+                     $a_inventory['PluginGlpiinventoryPrinter'],
                      $db_printer);
-         $a_inventory['PluginFusioninventoryPrinter'] = $a_ret[0];
-         $input = $a_inventory['PluginFusioninventoryPrinter'];
+         $a_inventory['PluginGlpiinventoryPrinter'] = $a_ret[0];
+         $input = $a_inventory['PluginGlpiinventoryPrinter'];
          $input['id'] = $idtmp;
          $pfPrinter->update($input);
       }
@@ -164,7 +149,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       // Cartridges
       $this->importCartridges($a_inventory['cartridge'], $printers_id);
 
-      Plugin::doHook("fusioninventory_inventory",
+      Plugin::doHook("glpiinventory_inventory",
       ['inventory_data' => $a_inventory,
        'printers_id'   => $printers_id,
        'no_history'     => $no_history
@@ -181,7 +166,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
     */
    function importPageCounters($a_pagecounters, $printers_id) {
 
-      $pfPrinterLog = new PluginFusioninventoryPrinterLog();
+      $pfPrinterLog = new PluginGlpiinventoryPrinterLog();
       //See if have an entry today
       $a_entires = $pfPrinterLog->find(
             ['printers_id' => $printers_id,
@@ -225,12 +210,12 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
     */
    function importCartridges($a_cartridges, $printers_id) {
 
-      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      $pfPrinterCartridge = new PluginGlpiinventoryPrinterCartridge();
 
       $a_db = $pfPrinterCartridge->find(['printers_id' => $printers_id]);
       $a_dbcartridges = [];
       foreach ($a_db as $data) {
-         $a_dbcartridges[$data['plugin_fusioninventory_mappings_id']] = $data;
+         $a_dbcartridges[$data['plugin_glpiinventory_mappings_id']] = $data;
       }
 
       foreach ($a_cartridges as $mappings_id=>$value) {
@@ -240,7 +225,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
          } else {
             $input = [];
             $input['printers_id'] = $printers_id;
-            $input['plugin_fusioninventory_mappings_id'] = $mappings_id;
+            $input['plugin_glpiinventory_mappings_id'] = $mappings_id;
             $input['state'] = $value;
             $pfPrinterCartridge->add($input);
          }

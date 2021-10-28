@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -164,21 +154,21 @@ class ComputerPeripheralTest extends TestCase {
    public function PeripheralUniqueSerialimport() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $computer     = new Computer();
       $manufacturer = new Manufacturer();
 
       $pxml = @simplexml_load_string($this->a_computer1_XML, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
+      $arrayinventory = PluginGlpiinventoryFormatconvert::XMLtoArray($pxml);
 
-      $agent = new PluginFusioninventoryAgent();
+      $agent = new PluginGlpiinventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
-      $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
+      $pfInventoryComputerInventory = new PluginGlpiinventoryInventoryComputerInventory();
       $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
@@ -186,11 +176,11 @@ class ComputerPeripheralTest extends TestCase {
       $computer->getFromDBByCrit(['name' => 'pc001']);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
 
-      $manufacturer->getFromDBByCrit(['name' => 'DisplayLink']);
+      $this->assertTrue($manufacturer->getFromDBByCrit(['name' => 'DisplayLink']), 'Cannot find manufacturer DisplayLink');
       $manufacturerFirst = $manufacturer->fields['id'];
-      $manufacturer->getFromDBByCrit(['name' => 'Ericsson Business Mobile Networks BV']);
+      $this->assertTrue($manufacturer->getFromDBByCrit(['name' => 'Ericsson Business Mobile Networks BV']), 'Cannot find manufacturer Ericsson Business Mobile Networks BV');
       $manufacturerSecond = $manufacturer->fields['id'];
-      $manufacturer->getFromDBByCrit(['name' => 'STMicroelectronics']);
+      $this->assertTrue($manufacturer->getFromDBByCrit(['name' => 'STMicroelectronics']), 'Cannot find manufacturer STMicroelectronics');
       $manufacturerThird = $manufacturer->fields['id'];
 
       $reference = [
@@ -218,7 +208,8 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'uuid'                => null
          ],
          [
             'name' => 'H5321 gw Mobile Broadband Module',
@@ -244,10 +235,11 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'uuid'                => null
          ],
          [
-            'name' => 'Sensor Hub',
+            'name'                => 'Sensor Hub',
             'serial'              => 'STM32_EMOTION2',
             'peripheraltypes_id'  => 0,
             'peripheralmodels_id' => 0,
@@ -270,7 +262,8 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'uuid'                => null
          ]
       ];
 

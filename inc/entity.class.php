@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the entity configuration.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the entity configuration.
  */
-class PluginFusioninventoryEntity extends CommonDBTM {
+class PluginGlpiinventoryEntity extends CommonDBTM {
 
    /**
     * The right name for this class
@@ -83,7 +69,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       if ($item->fields['id'] > -1) {
          if (Session::haveRight("config", READ)) {
-            return self::createTabEntry('Fusioninventory');
+            return self::createTabEntry(__('GLPI Inventory', 'glpiinventory'));
          }
       }
       return '';
@@ -101,7 +87,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       if ($item->fields['id'] > -1) {
-         $pmEntity = new PluginFusioninventoryEntity();
+         $pmEntity = new PluginGlpiinventoryEntity();
          $pmEntity->showForm($item->fields['id']);
          return true;
       }
@@ -117,7 +103,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($entities_id, $options = []) {
+   function showForm($entities_id, array $options = []) {
       global $CFG_GLPI;
 
       $a_configs = $this->find(['entities_id' => $entities_id], [], 1);
@@ -132,7 +118,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       echo "<tr>";
       echo "<td colspan='2'>";
-      echo __('Model for automatic computers transfer in an other entity', 'fusioninventory').
+      echo __('Model for automatic computers transfer in an other entity', 'glpiinventory').
               "&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
@@ -177,7 +163,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
       echo "<td colspan='2'>";
       $value = $this->fields["agent_base_url"];
       $inheritedValue = $this->getValueAncestor('agent_base_url', $entities_id);
-      echo __('Service URL', 'fusioninventory').'&nbsp;';
+      echo __('Service URL', 'glpiinventory').'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo " : ";
 

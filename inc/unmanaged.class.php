@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the unmanaged devices (not manage into GLPI).
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the unmanaged devices (not manage into GLPI).
  */
-class PluginFusioninventoryUnmanaged extends CommonDBTM {
+class PluginGlpiinventoryUnmanaged extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -65,7 +51,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_unmanaged';
+   static $rightname = 'plugin_glpiinventory_unmanaged';
 
 
    /**
@@ -75,7 +61,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Unmanaged device', 'fusioninventory');
+      return __('Unmanaged device', 'glpiinventory');
    }
 
 
@@ -126,7 +112,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $tab[] = [
          'id' => 'common',
-         'name' => __('Unmanaged device', 'fusioninventory')
+         'name' => __('Unmanaged device', 'glpiinventory')
       ];
 
       $tab[] = [
@@ -135,8 +121,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'field'         => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
-         'itemlink_type' => $this->getType(),
-         'autocomplete'  => true,
+         'itemlink_type' => $this->getType()
       ];
 
       $tab[] = [
@@ -159,31 +144,28 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'id'           => '4',
          'table'        => $this->getTable(),
          'field'        => 'serial',
-         'name'         => __('Serial Number'),
-         'autocomplete' => true,
+         'name'         => __('Serial Number')
       ];
 
       $tab[] = [
          'id'           => '5',
          'table'        => $this->getTable(),
          'field'        => 'otherserial',
-         'name'         => __('Inventory number'),
-         'autocomplete' => true,
+         'name'         => __('Inventory number')
       ];
 
       $tab[] = [
          'id'           => '6',
          'table'        => $this->getTable(),
          'field'        => 'contact',
-         'name'         => __('Contact'),
-         'autocomplete' => true,
+         'name'         => __('Contact')
       ];
 
       $tab[] = [
          'id'        => '7',
          'table'     => $this->getTable(),
          'field'     => 'hub',
-         'name'      => __('Network hub', 'fusioninventory'),
+         'name'      => __('Network hub', 'glpiinventory'),
          'datatype'  => 'bool',
       ];
 
@@ -233,16 +215,16 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'id'        => '15',
          'table'     => $this->getTable(),
          'field'     => 'sysdescr',
-         'name'      => __('Sysdescr', 'fusioninventory'),
+         'name'      => __('Sysdescr', 'glpiinventory'),
          'datatype'  => 'text',
       ];
 
       $tab[] = [
          'id'        => '17',
-         'table'     => 'glpi_plugin_fusioninventory_configsecurities',
+         'table'     => 'glpi_plugin_glpiinventory_configsecurities',
          'field'     => 'name',
-         'linkfield' => 'plugin_fusioninventory_configsecurities_id',
-         'name'      => __('SNMP credentials', 'fusioninventory'),
+         'linkfield' => 'plugin_glpiinventory_configsecurities_id',
+         'name'      => __('SNMP credentials', 'glpiinventory'),
          'datatype'  => 'dropdown',
       ];
 
@@ -250,8 +232,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'id'           => '18',
          'table'        => $this->getTable(),
          'field'        => 'ip',
-         'name'         => __('IP'),
-         'autocomplete' => true,
+         'name'         => __('IP')
       ];
 
       return $tab;
@@ -271,10 +252,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       if ($item->fields['id'] > 0) {
          $ong[1]=__('Import');
 
-         $pfConfig = new PluginFusioninventoryConfig();
+         $pfConfig = new PluginGlpiinventoryConfig();
          if (($pfConfig->isFieldActive('remotehttpagent'))
-                 && (Session::haveRight('plugin_fusioninventory_remotecontrol', UPDATE))) {
-            $ong[2]=__('Job', 'fusioninventory');
+                 && (Session::haveRight('plugin_glpiinventory_remotecontrol', UPDATE))) {
+            $ong[2]=__('Job', 'glpiinventory');
          }
       }
       return $ong;
@@ -292,7 +273,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       if ($tabnum == 1) {
          $pfUnmanaged = new self();
-         $pfUnmanaged->importForm(Plugin::getWebDir('fusioninventory') .
+         $pfUnmanaged->importForm(Plugin::getWebDir('glpiinventory') .
                '/front/unmanaged.form.php?id='.$item->fields["id"],
                                    $item->fields["id"]);
          return true;
@@ -312,7 +293,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $ong = [];
       $this->addDefaultFormTab($ong);
       $this->addStandardTab('NetworkPort', $ong, $options);
-      $this->addStandardTab('PluginFusioninventoryUnmanaged', $ong, $options);
+      $this->addStandardTab('PluginGlpiinventoryUnmanaged', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
@@ -327,12 +308,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    function getSpecificMassiveActions($checkitem = null) {
 
       $actions = [];
-      if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
-         $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'import']    = __('Import');
+      if (Session::haveRight('plugin_glpiinventory_unmanaged', UPDATE)) {
+         $actions['PluginGlpiinventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'import']    = __('Import');
       }
-      if (Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
-         $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'assign_auth']       =
-                                       __('Assign SNMP credentials', 'fusioninventory');
+      if (Session::haveRight('plugin_glpiinventory_configsecurity', READ)) {
+         $actions['PluginGlpiinventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'assign_auth']       =
+                                       __('Assign SNMP credentials', 'glpiinventory');
       }
       return $actions;
    }
@@ -346,7 +327,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       if ($ma->getAction() == 'assign_auth') {
-         PluginFusioninventoryConfigSecurity::authDropdown();
+         PluginGlpiinventoryConfigSecurity::authDropdown();
          echo "<br><br>";
          return true;
       }
@@ -369,13 +350,13 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          case "import" :
             $Import = 0;
             $NoImport = 0;
-            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+            $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
             foreach ($ids as $key) {
                list($Import, $NoImport) = $pfUnmanaged->import($key, $Import, $NoImport);
                $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
             }
-            $ma->addMessage(__('Number of imported devices', 'fusioninventory')." : ".$Import);
-            $ma->addMessage(__('Number of devices not imported because type not defined', 'fusioninventory').
+            $ma->addMessage(__('Number of imported devices', 'glpiinventory')." : ".$Import);
+            $ma->addMessage(__('Number of devices not imported because type not defined', 'glpiinventory').
                      " : ".$NoImport);
             break;
 
@@ -398,7 +379,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Name') . "&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 35]);
+      echo Html::input('name', ['size' => 35, 'value' => $this->fields['name']]);
       echo "</td>";
 
       if (Session::isMultiEntitiesMode()) {
@@ -434,7 +415,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<td align='center'>" . __('Alternate username') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'contact', ['size' => 35]);
+      echo Html::input('contact', ['size' => 35, 'value' => $this->fields['contact']]);
       echo "</td>";
       echo "</tr>";
 
@@ -455,26 +436,26 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Approved devices', 'fusioninventory') . " :</td>";
+      echo "<td align='center'>" . __('Approved devices', 'glpiinventory') . " :</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo("accepted", $this->fields["accepted"]);
       echo "</td>";
       echo "<td align='center'>" . __('Serial Number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'serial', ['size' => 35]);
+      echo Html::input('serial', ['size' => 35, 'value' => $this->fields['serial']]);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Network hub', 'fusioninventory') . " :</td>";
+      echo "<td align='center'>" . __('Network hub', 'glpiinventory') . " :</td>";
       echo "<td align='center'>";
       echo Dropdown::getYesNo($this->fields["hub"]);
       echo "</td>";
       echo "<td align='center'>" . __('Inventory number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'otherserial', ['size' => 35]);
+      echo Html::input('otherserial', ['size' => 35, 'value' => $this->fields['otherserial']]);
       echo "</td>";
       echo "</tr>";
 
@@ -482,7 +463,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . __('IP') . " :</td>";
          echo "<td align='center'>";
-         Html::autocompletionTextField($this, 'ip', ['size' => 35]);
+         echo Html::input('ip', ['size' => 35, 'value' => $this->fields['ip']]);
          echo "</td>";
 
          echo "<td colspan='2'></td>";
@@ -491,7 +472,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' rowspan='2'>";
-      echo __('Sysdescr', 'fusioninventory')."&nbsp;:";
+      echo __('Sysdescr', 'glpiinventory')."&nbsp;:";
       echo "</td>";
       echo "<td rowspan='2'>";
       echo "<textarea name='sysdescr'  cols='45' rows='5'>".$this->fields["sysdescr"]."</textarea>";
@@ -501,10 +482,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".__('SNMP credentials', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP credentials', 'glpiinventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::authDropdown(
-               $this->fields['plugin_fusioninventory_configsecurities_id']);
+      PluginGlpiinventoryConfigSecurity::authDropdown(
+               $this->fields['plugin_glpiinventory_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
 
@@ -534,7 +515,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<table  class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center'>";
-      echo __('Import unmanaged device into asset', 'fusioninventory');
+      echo __('Import unmanaged device into asset', 'glpiinventory');
 
       echo "</th>";
       echo "</tr>";
@@ -562,10 +543,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $query = "SELECT `glpi_networkports`.`id`
                 FROM `glpi_networkports`
-                     LEFT JOIN `glpi_plugin_fusioninventory_unmanageds`
-                               ON `items_id`=`glpi_plugin_fusioninventory_unmanageds`.`id`
-                     WHERE `itemtype`='PluginFusioninventoryUnmanaged'
-                           AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL;";
+                     LEFT JOIN `glpi_plugin_glpiinventory_unmanageds`
+                               ON `items_id`=`glpi_plugin_glpiinventory_unmanageds`.`id`
+                     WHERE `itemtype`='PluginGlpiinventoryUnmanaged'
+                           AND `glpi_plugin_glpiinventory_unmanageds`.`id` IS NULL;";
       $unmanaged_infos = [];
       $result=$DB->query($query);
       if ($result) {
@@ -673,7 +654,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
              ]);
       foreach ($a_ports as $data) {
          if (!isset($a_portUsed[$data['id']])) {
-            //plugin_fusioninventory_addLogConnection("remove", $port_id);
+            //plugin_glpiinventory_addLogConnection("remove", $port_id);
             $this->disconnectDB($data['id']);
             $Netport->deleteFromDB($data['id']);
          }
@@ -736,12 +717,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       if ($nn->getOppositeContact($ports_id)
               && $nn->getFromDBForNetworkPort($nn->getOppositeContact($ports_id))) {
          if ($nn->delete($nn->fields)) {
-            plugin_item_purge_fusioninventory($nn);
+            plugin_item_purge_glpiinventory($nn);
          }
       }
       if ($nn->getFromDBForNetworkPort($ports_id)) {
          if ($nn->delete($nn->fields)) {
-            plugin_item_purge_fusioninventory($nn);
+            plugin_item_purge_glpiinventory($nn);
          }
       }
    }
@@ -764,8 +745,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'hub'  => 1,
          'name' => 'hub',
       ];
-      if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-         $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
+      if (isset($_SESSION["plugin_glpiinventory_entity"])) {
+         $input['entities_id'] = $_SESSION["plugin_glpiinventory_entity"];
       }
       $hub_id = $this->add($input);
 
@@ -835,9 +816,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.
-              "/fusioninventory/xml/PluginFusioninventoryUnmanaged/".$folder."/".
+              "/glpiinventory/xml/PluginGlpiinventoryUnmanaged/".$folder."/".
               $parm->fields["id"])) {
-         unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnmanaged/".
+         unlink(GLPI_PLUGIN_DOC_DIR."/glpiinventory/xml/PluginGlpiinventoryUnmanaged/".
                  $folder."/".$parm->fields["id"]);
       }
 
@@ -845,7 +826,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $NetworkPort = new NetworkPort();
       $a_ports = $NetworkPort->find(
             ['items_id' => $parm->fields["id"],
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
       foreach ($a_ports as $a_port) {
          $NetworkPort->delete($a_port, 1);
       }
@@ -868,7 +849,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $a_NetworkPorts = $NetworkPort->find(
             ['items_id' => $items_id,
-             'itemtype' => 'PluginFusioninventoryUnmanaged']);
+             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
 
       $this->getFromDB($items_id);
       $this->fields = Toolbox::addslashes_deep($this->fields);
@@ -897,10 +878,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             }
 
             // Import SNMP
-            $pfPrinter = new PluginFusioninventoryPrinter();
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_printers";
+            $pfPrinter = new PluginGlpiinventoryPrinter();
+            $_SESSION['glpi_plugins_glpiinventory_table'] = "glpi_plugin_glpiinventory_printers";
             $query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_printers`
+                      FROM `glpi_plugin_glpiinventory_printers`
                       WHERE `printers_id`='".$printer_id."' ";
             $result = $DB->query($query);
             $data = [];
@@ -908,8 +889,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $data = $DB->fetchAssoc($result);
             }
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_configsecurities_id'] =
-                           $this->fields['plugin_fusioninventory_configsecurities_id'];
+            $data['plugin_glpiinventory_configsecurities_id'] =
+                           $this->fields['plugin_glpiinventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['printers_id'] = $printer_id;
                $pfPrinter->add($data);
@@ -945,11 +926,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] =
-                           "glpi_plugin_fusioninventory_networkequipments";
+            $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
+            $_SESSION['glpi_plugins_glpiinventory_table'] =
+                           "glpi_plugin_glpiinventory_networkequipments";
             $query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_networkequipments`
+                      FROM `glpi_plugin_glpiinventory_networkequipments`
                       WHERE `networkequipments_id`='".$NetworkEquipment_id."' ";
             $result = $DB->query($query);
             $data = [];
@@ -958,8 +939,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             }
 
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_configsecurities_id'] =
-                           $this->fields['plugin_fusioninventory_configsecurities_id'];
+            $data['plugin_glpiinventory_configsecurities_id'] =
+                           $this->fields['plugin_glpiinventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['networkequipments_id'] = $NetworkEquipment_id;
                $pfNetworkEquipment->add($data);

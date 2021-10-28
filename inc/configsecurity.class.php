@@ -1,58 +1,45 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage SNMP credentials: v1, v2c and v3
- * support.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage SNMP credentials: v1, v2c and v3 support.
  */
-class PluginFusioninventoryConfigSecurity extends CommonDBTM {
+class PluginGlpiinventoryConfigSecurity extends CommonDBTM {
 
    /**
     * We activate the history.
@@ -66,7 +53,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_configsecurity';
+   static $rightname = 'plugin_glpiinventory_configsecurity';
 
 
    /**
@@ -77,6 +64,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     */
    function defineTabs($options = []) {
       $ong = [];
+      $this->addDefaultFormTab($ong);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
@@ -89,85 +77,14 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options = []) {
-      Session::checkRight('plugin_fusioninventory_configsecurity', READ);
+   function showForm($id, array $options = []) {
+      Session::checkRight('plugin_glpiinventory_configsecurity', READ);
+
       $this->initForm($id, $options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
-      echo "<td align='center' colspan='2'>";
-      Html::autocompletionTextField($this, 'name');
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('SNMP version', 'fusioninventory') . "</td>";
-      echo "<td align='center' colspan='2'>";
-         $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>v 1 & v 2c</th>";
-      echo "<th colspan='2'>v 3</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Community', 'fusioninventory') . "</td>";
-      echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'community');
-      echo "</td>";
-
-      echo "<td align='center'>" . __('User') . "</td>";
-      echo "<td align='center'>";
-      // FIXME This is a credential field so it is not in autocomplete whitelist.
-      // Replace with a simple text input.
-      Html::autocompletionTextField($this, 'username');
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>".__('Encryption protocol for authentication ', 'fusioninventory').
-              "</td>";
-      echo "<td align='center'>";
-         $this->showDropdownSNMPAuth($this->fields["authentication"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Password') . "</td>";
-      echo "<td align='center'>";
-      // FIXME This is a credential field so it is not in autocomplete whitelist.
-      // Replace with a password text input, crypt it, and handle ability to "blank" it.
-      Html::autocompletionTextField($this, 'auth_passphrase');
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Encryption protocol for data', 'fusioninventory') . "</td>";
-      echo "<td align='center'>";
-         $this->showDropdownSNMPEncryption($this->fields["encryption"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Password') . "</td>";
-      echo "<td align='center'>";
-      // FIXME This is a credential field so it is not in autocomplete whitelist.
-      // Replace with a password text input, crypt it, and handle ability to "blank" it.
-      Html::autocompletionTextField($this, 'priv_passphrase');
-      echo "</td>";
-      echo "</tr>";
-
-      $this->showFormButtons($options);
-
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+      TemplateRenderer::getInstance()->display('@glpiinventory/forms/configsecurity.html.twig', [
+         'item'   => $this,
+         'params' => $options,
+      ]);
 
       return true;
    }
@@ -291,8 +208,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     */
    static function authDropdown($selected = "") {
 
-      Dropdown::show("PluginFusioninventoryConfigSecurity",
-                      ['name' => "plugin_fusioninventory_configsecurities_id",
+      Dropdown::show("PluginGlpiinventoryConfigSecurity",
+                      ['name' => "plugin_glpiinventory_configsecurities_id",
                            'value' => $selected,
                            'comment' => false]);
    }
@@ -306,7 +223,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       if ($ma->getAction() == 'assign_auth') {
-         PluginFusioninventoryConfigSecurity::authDropdown();
+         PluginGlpiinventoryConfigSecurity::authDropdown();
          echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
          return true;
       }
@@ -332,15 +249,15 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
             switch ($itemtype) {
 
                case 'NetworkEquipment':
-                  $equipement = new PluginFusioninventoryNetworkEquipment();
+                  $equipement = new PluginGlpiinventoryNetworkEquipment();
                   break;
 
                case 'Printer':
-                  $equipement = new PluginFusioninventoryPrinter();
+                  $equipement = new PluginGlpiinventoryPrinter();
                   break;
 
-               case 'PluginFusioninventoryUnmanaged':
-                  $equipement = new PluginFusioninventoryUnmanaged();
+               case 'PluginGlpiinventoryUnmanaged':
+                  $equipement = new PluginGlpiinventoryUnmanaged();
                   break;
 
             }
@@ -352,13 +269,13 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                   $current = current($found);
                   $equipement->getFromDB($current['id']);
                   $input['id'] = $equipement->fields['id'];
-                  $input['plugin_fusioninventory_configsecurities_id'] =
-                              $_POST['plugin_fusioninventory_configsecurities_id'];
+                  $input['plugin_glpiinventory_configsecurities_id'] =
+                              $_POST['plugin_glpiinventory_configsecurities_id'];
                   $return = $equipement->update($input);
                } else {
                   $input[$fk] = $key;
-                  $input['plugin_fusioninventory_configsecurities_id'] =
-                              $_POST['plugin_fusioninventory_configsecurities_id'];
+                  $input['plugin_glpiinventory_configsecurities_id'] =
+                              $_POST['plugin_glpiinventory_configsecurities_id'];
                   $return = $equipement->add($input);
                }
 
@@ -390,18 +307,16 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
          'table'         => $this->getTable(),
          'field'         => 'name',
          'name'          => __('Name'),
-         'datatype'      => 'itemlink',
-         'autocomplete'  => true,
+         'datatype'      => 'itemlink'
       ];
 
       $tab[] = [
          'id'            => '2',
          'table'         => $this->getTable(),
          'field'         => 'community',
-         'name'          => __('Community', 'fusioninventory'),
+         'name'          => __('Community', 'glpiinventory'),
          'datatype'      => 'string',
-         'massiveaction' => false,
-         'autocomplete'  => true,
+         'massiveaction' => false
       ];
 
       return $tab;

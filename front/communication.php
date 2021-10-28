@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the communication with the agent.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 ob_start();
@@ -61,7 +46,7 @@ $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
-$_SESSION['glpi_fusionionventory_nolock'] = true;
+$_SESSION['glpi_glpiinventory_nolock'] = true;
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $_SESSION['glpi_use_mode'] = 0;
@@ -69,28 +54,27 @@ $_SESSION['glpiparententities'] = '';
 $_SESSION['glpishowallentities'] = true;
 
 ob_end_clean();
-header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);
+header("server-type: glpi/glpiinventory ".PLUGIN_GLPI_INVENTORY_VERSION);
 
-if (!class_exists("PluginFusioninventoryConfig")) {
+if (!class_exists("PluginGlpiinventoryConfig")) {
    header("Content-Type: application/xml");
    echo "<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
-   <ERROR>Plugin FusionInventory not installed!</ERROR>
+   <ERROR>Plugin GLPI Inventory not installed!</ERROR>
 </REPLY>";
    session_destroy();
    exit();
 }
 
-$pfCommunication  = new PluginFusioninventoryCommunication();
+$pfCommunication  = new PluginGlpiinventoryCommunication();
 
 if (!isset($rawdata)) {
    $rawdata = file_get_contents("php://input");
 }
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   PluginFusioninventoryCommunicationRest::handleFusionCommunication();
+   PluginGlpiinventoryCommunicationRest::handleFusionCommunication();
 } else if (!empty($rawdata)) {
    $pfCommunication->handleOCSCommunication($rawdata);
 }
 
 session_destroy();
-

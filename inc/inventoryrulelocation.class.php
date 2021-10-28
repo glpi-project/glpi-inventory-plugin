@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the location rules for computer.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Walid Nouh
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the location rules for computer.
  */
-class PluginFusioninventoryInventoryRuleLocation extends Rule {
+class PluginGlpiinventoryInventoryRuleLocation extends Rule {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_rulelocation";
+   static $rightname = "plugin_glpiinventory_rulelocation";
 
    /**
     * Set these rules can be sorted
@@ -85,7 +70,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     * @return string name of this type
     */
    function getTitle() {
-      return __('Location rules', 'fusioninventory');
+      return __('Location rules', 'glpiinventory');
    }
 
 
@@ -119,27 +104,27 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     */
    function executeActions($output, $params, array $input = []) {
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules-location",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules-location",
          "execute actions, data:\n". print_r($output, true). "\n" . print_r($params, true)
       );
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules-location",
+      PluginGlpiinventoryToolbox::logIfExtradebug(
+         "pluginGlpiinventory-rules-location",
          "execute actions: ". count($this->actions) ."\n"
       );
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
-            PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-rules-location",
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+               "pluginGlpiinventory-rules-location",
                "- action: ". $action->fields["action_type"] ." for: ". $action->fields["field"] ."\n"
             );
 
             switch ($action->fields["action_type"]) {
                case "assign" :
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-rules-location",
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-rules-location",
                      "- value ".$action->fields["value"]."\n"
                   );
                   $output[$action->fields["field"]] = $action->fields["value"];
@@ -148,14 +133,14 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
                case "regex_result" :
                   $res = '';
                   if (isset($this->regex_results[0])) {
-                     PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-rules-collect",
+                     PluginGlpiinventoryToolbox::logIfExtradebug(
+                        "pluginGlpiinventory-rules-collect",
                         "- regex ".print_r($this->regex_results[0], true)."\n"
                      );
                      $res .= RuleAction::getRegexResultById($action->fields["value"],
                                                             $this->regex_results[0]);
-                     PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-rules-collect",
+                     PluginGlpiinventoryToolbox::logIfExtradebug(
+                        "pluginGlpiinventory-rules-collect",
                         "- regex result: ".$res."\n"
                      );
                   } else {
@@ -163,14 +148,14 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
                   }
                   if ($res != '') {
                      $entities_id = 0;
-                     if (isset($_SESSION["plugin_fusioninventory_entity"])
-                             && $_SESSION["plugin_fusioninventory_entity"] > 0) {
-                        $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                     if (isset($_SESSION["plugin_glpiinventory_entity"])
+                             && $_SESSION["plugin_glpiinventory_entity"] > 0) {
+                        $entities_id = $_SESSION["plugin_glpiinventory_entity"];
                      }
                      $res = Dropdown::importExternal(getItemtypeForForeignKeyField($action->fields['field']), $res, $entities_id);
                   }
-                  PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-rules-location",
+                  PluginGlpiinventoryToolbox::logIfExtradebug(
+                     "pluginGlpiinventory-rules-location",
                      "- value ".$res."\n"
                   );
                   $output[$action->fields["field"]] = $res;
@@ -191,7 +176,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       $criterias = [];
 
-      $criterias['itemtype']['name'] = __('Assets', 'fusioninventory').' : '.
+      $criterias['itemtype']['name'] = __('Assets', 'glpiinventory').' : '.
                                           __('Item type');
       $criterias['itemtype']['type']            = 'dropdown_itemtype';
       $criterias['itemtype']['is_global']       = false;
@@ -202,7 +187,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
                                                   ];
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
+      $criterias['tag']['name']      = __('Inventory tag', 'glpiinventory');
 
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = __('Domain');
@@ -242,7 +227,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       $actions['locations_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['_ignore_import']['name'] =
-                     __('Ignore in FusionInventory import', 'fusioninventory');
+                     __('Ignore in inventory import', 'glpiinventory');
 
       $actions['_ignore_import']['type'] = 'yesonly';
 
@@ -268,7 +253,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
          case Rule::PATTERN_FIND:
             return false;
 
-         case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
+         case PluginGlpiinventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
             return true;
 
@@ -306,8 +291,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    static function addMoreCriteria($criterion = '') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
-         return [self::PATTERN_CIDR => __('is CIDR', 'fusioninventory'),
-                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'fusioninventory')];
+         return [self::PATTERN_CIDR => __('is CIDR', 'glpiinventory'),
+                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'glpiinventory')];
       }
       return [];
    }
@@ -403,7 +388,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
             $types[$itemtype] = $item->getTypeName();
          }
       }
-      $types[""] = __('No itemtype defined', 'fusioninventory');
+      $types[""] = __('No itemtype defined', 'glpiinventory');
       ksort($types);
       return $types;
    }

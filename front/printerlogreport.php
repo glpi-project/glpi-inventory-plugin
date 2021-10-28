@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to display the printer log report page.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 $USEDBREPLICATE=1;
@@ -49,41 +35,41 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),
+Html::header(__('GLPI Inventory', 'glpiinventory'),
              $_SERVER["PHP_SELF"],
              "admin",
-             "pluginfusioninventorymenu",
+             "pluginglpiinventorymenu",
              "printerlogreport");
 
-Session::checkRight('plugin_fusioninventory_reportprinter', READ);
+Session::checkRight('plugin_glpiinventory_reportprinter', READ);
 
-if (isset($_POST['glpi_plugin_fusioninventory_date_start'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_start'] =
-                                 $_POST['glpi_plugin_fusioninventory_date_start'];
+if (isset($_POST['glpi_plugin_glpiinventory_date_start'])) {
+   $_SESSION['glpi_plugin_glpiinventory_date_start'] =
+                                 $_POST['glpi_plugin_glpiinventory_date_start'];
 }
-if (isset($_POST['glpi_plugin_fusioninventory_date_end'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_end'] =
-                                 $_POST['glpi_plugin_fusioninventory_date_end'];
+if (isset($_POST['glpi_plugin_glpiinventory_date_end'])) {
+   $_SESSION['glpi_plugin_glpiinventory_date_end'] =
+                                 $_POST['glpi_plugin_glpiinventory_date_end'];
 }
 
 if (isset($_POST['reset'])) {
-   unset($_SESSION['glpi_plugin_fusioninventory_date_start']);
-   unset($_SESSION['glpi_plugin_fusioninventory_date_end']);
+   unset($_SESSION['glpi_plugin_glpiinventory_date_start']);
+   unset($_SESSION['glpi_plugin_glpiinventory_date_end']);
 }
 
-if ((!isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
-       OR (empty($_SESSION['glpi_plugin_fusioninventory_date_start']))) {
-   $_SESSION['glpi_plugin_fusioninventory_date_start'] = "2000-01-01";
+if ((!isset($_SESSION['glpi_plugin_glpiinventory_date_start']))
+       OR (empty($_SESSION['glpi_plugin_glpiinventory_date_start']))) {
+   $_SESSION['glpi_plugin_glpiinventory_date_start'] = "2000-01-01";
 }
-if (!isset($_SESSION['glpi_plugin_fusioninventory_date_end'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_end'] = date("Y-m-d");
+if (!isset($_SESSION['glpi_plugin_glpiinventory_date_end'])) {
+   $_SESSION['glpi_plugin_glpiinventory_date_end'] = date("Y-m-d");
 }
 
 displaySearchForm();
 
 $_GET['target']="printerlogreport.php";
 
-Search::show('PluginFusioninventoryPrinterLogReport');
+Search::show('PluginGlpiinventoryPrinterLogReport');
 
 
 /**
@@ -98,19 +84,19 @@ function displaySearchForm() {
    echo "<table class='tab_cadre' cellpadding='5'>";
    echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-   echo __('Starting date', 'fusioninventory')." :";
+   echo __('Starting date', 'glpiinventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateField("glpi_plugin_fusioninventory_date_start",
-                       ['value' => $_SESSION['glpi_plugin_fusioninventory_date_start']]);
+   Html::showDateField("glpi_plugin_glpiinventory_date_start",
+                       ['value' => $_SESSION['glpi_plugin_glpiinventory_date_start']]);
    echo "</td>";
 
    echo "<td>";
-   echo __('Ending date', 'fusioninventory')." :";
+   echo __('Ending date', 'glpiinventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateField("glpi_plugin_fusioninventory_date_end",
-                       ['value' => $_SESSION['glpi_plugin_fusioninventory_date_end']]);
+   Html::showDateField("glpi_plugin_glpiinventory_date_end",
+                       ['value' => $_SESSION['glpi_plugin_glpiinventory_date_end']]);
    echo "</td>";
 
    echo "<td>";
@@ -128,4 +114,3 @@ function displaySearchForm() {
 
 
 Html::footer();
-

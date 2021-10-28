@@ -1,50 +1,40 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Walid Nouh <wnouh@teclib.com>
-   @co-author David Durieux
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
 
 class DeploymirrorIntTest extends TestCase {
 
-   private $serverUrl = 'http://localhost:8080/glpi/plugins/fusioninventory/b/deploy/?action=getFilePart&file=';
+   private $serverUrl = 'http://localhost:8080/glpi/plugins/glpiinventory/b/deploy/?action=getFilePart&file=';
 
    public static function setUpBeforeClass(): void {
 
@@ -58,7 +48,7 @@ class DeploymirrorIntTest extends TestCase {
       }
 
       // Delete all deploymirrors
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $items = $pfDeploymirror->find();
       foreach ($items as $item) {
          $pfDeploymirror->delete(['id' => $item['id']], true);
@@ -78,7 +68,7 @@ class DeploymirrorIntTest extends TestCase {
    public function testDefineEntitiesConfiguration() {
 
       $entity   = new Entity();
-      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity = new PluginGlpiinventoryEntity();
 
       $entityAId = $entity->add([
          'name'        => 'entity A',
@@ -150,7 +140,7 @@ class DeploymirrorIntTest extends TestCase {
 
       $entity = new Entity();
 
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $input = [
          'name'         => 'Mirror Location',
          'comment'      => 'MyComment',
@@ -163,7 +153,7 @@ class DeploymirrorIntTest extends TestCase {
       $mirrors_locations_id = $pfDeploymirror->add($input);
       $this->assertNotFalse($mirrors_locations_id);
 
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $entity->getFromDBByCrit(['name' => 'entity A']);
       $input = [
          'name'         => 'Mirror Entity A',
@@ -177,7 +167,7 @@ class DeploymirrorIntTest extends TestCase {
       $this->assertNotFalse($mirrors2_id);
 
       $computer = new Computer();
-      $agent    = new PluginFusioninventoryAgent();
+      $agent    = new PluginGlpiinventoryAgent();
 
       $computerRootId = $computer->add([
          'name'         => 'computer root',
@@ -233,14 +223,14 @@ class DeploymirrorIntTest extends TestCase {
 
       //Add the server's url at the end of the mirrors list
       $PF_CONFIG['server_as_mirror'] = true;
-      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_LOCATION;
+      $PF_CONFIG['mirror_match'] = PluginGlpiinventoryDeployMirror::MATCH_LOCATION;
 
       // The location mirror is disabled, so return the server's download url
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDBByCrit(['name' => 'computer-root']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
       $result = [ 0 => $this->serverUrl ];
       $this->assertEquals($result, $mirrors);
 
@@ -254,7 +244,7 @@ class DeploymirrorIntTest extends TestCase {
 
       //We enable the mirror
 
-      $pfDeploymirror = new PluginFusioninventoryDeployMirror();
+      $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
       $pfDeploymirror->getFromDBByCrit(['name' => 'Mirror Location']);
 
       $input = [
@@ -264,10 +254,10 @@ class DeploymirrorIntTest extends TestCase {
       $ret = $pfDeploymirror->update($input);
       $this->assertNotFalse($ret);
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDBByCrit(['name' => 'computer-root']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
       $result = [
          0 => $this->serverUrl
       ];
@@ -292,10 +282,10 @@ class DeploymirrorIntTest extends TestCase {
       $this->assertNotFalse($ret);
 
       //In this case, the method must return the mirror location url
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDBByCrit(['name' => 'computer-root']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
       $result  = [
          0 => "http://localhost:8085/mirror",
          1 => $this->serverUrl
@@ -309,10 +299,10 @@ class DeploymirrorIntTest extends TestCase {
     */
    public function testEntityAMirrorWithLocation() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDBByCrit(['name' => 'computer-EntityA']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
       $result  = [
          0 => "http://localhost:8088/mirror",
          1 => "http://localhost:8085/mirror",
@@ -327,10 +317,10 @@ class DeploymirrorIntTest extends TestCase {
     */
    public function testEntityBMirrorWithLocation() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $pfAgent->getFromDBByCrit(['name' => 'computer-EntityB']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
 
       $result  = [
          0 => "http://localhost:8085/mirror",
@@ -346,9 +336,9 @@ class DeploymirrorIntTest extends TestCase {
    public function testRootEntityMirrorWithEntity() {
       global $PF_CONFIG;
 
-      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_ENTITY;
+      $PF_CONFIG['mirror_match'] = PluginGlpiinventoryDeployMirror::MATCH_ENTITY;
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $computer = new Computer();
 
       $computer->getFromDBByCrit(['name' => 'computer root']);
@@ -359,7 +349,7 @@ class DeploymirrorIntTest extends TestCase {
 
       $pfAgent->getFromDBByCrit(['name' => 'computer-root']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
       $result  = [
          0 => 'http://localhost:8085/mirror',
          1 => $this->serverUrl
@@ -374,9 +364,9 @@ class DeploymirrorIntTest extends TestCase {
    public function testEntityAMirrorWithEntity() {
       global $PF_CONFIG;
 
-      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_ENTITY;
+      $PF_CONFIG['mirror_match'] = PluginGlpiinventoryDeployMirror::MATCH_ENTITY;
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $computer = new Computer();
 
       $computer->getFromDBByCrit(['name' => 'computer EntityA']);
@@ -387,7 +377,7 @@ class DeploymirrorIntTest extends TestCase {
 
       $pfAgent->getFromDBByCrit(['name' => 'computer-EntityA']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
       $result  = [
          0 => "http://localhost:8088/mirror",
          1 => "http://localhost:8085/mirror",
@@ -403,9 +393,9 @@ class DeploymirrorIntTest extends TestCase {
    public function testEntityBMirrorWithEntity() {
       global $PF_CONFIG;
 
-      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_ENTITY;
+      $PF_CONFIG['mirror_match'] = PluginGlpiinventoryDeployMirror::MATCH_ENTITY;
 
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $computer = new Computer();
 
       $computer->getFromDBByCrit(['name' => 'computer EntityB']);
@@ -416,7 +406,7 @@ class DeploymirrorIntTest extends TestCase {
 
       $pfAgent->getFromDBByCrit(['name' => 'computer-EntityB']);
 
-      $mirrors = PluginFusioninventoryDeployMirror::getList($pfAgent->fields['id']);
+      $mirrors = PluginGlpiinventoryDeployMirror::getList($pfAgent->fields['id']);
       $result  = [
          0 => "http://localhost:8085/mirror",
          1 => $this->serverUrl

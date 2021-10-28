@@ -1,49 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the installation and uninstallation of the
- * plugin.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,11 +37,11 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the installation and uninstallation of the plugin.
  */
-class PluginFusioninventorySetup {
+class PluginGlpiinventorySetup {
 
 
    /**
-    * Uninstall process when uninstall the plugin FusionInventory
+    * Uninstall process when uninstall the plugin
     *
     * @global object $DB
     * @return true
@@ -65,25 +49,25 @@ class PluginFusioninventorySetup {
    static function uninstall() {
       global $DB;
 
-      CronTask::Unregister('fusioninventory');
-      PluginFusioninventoryProfile::uninstallProfile();
+      CronTask::Unregister('glpiinventory');
+      PluginGlpiinventoryProfile::uninstallProfile();
 
-      $pfSetup  = new PluginFusioninventorySetup();
+      $pfSetup  = new PluginGlpiinventorySetup();
       $user     = new User();
 
-      if (class_exists('PluginFusioninventoryConfig')) {
-         $fusioninventory_config      = new PluginFusioninventoryConfig();
-         $users_id = $fusioninventory_config->getValue('users_id');
+      if (class_exists('PluginGlpiinventoryConfig')) {
+         $inventory_config      = new PluginGlpiinventoryConfig();
+         $users_id = $inventory_config->getValue('users_id');
          $user->delete(['id'=>$users_id], 1);
       }
 
-      if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+      if (file_exists(GLPI_PLUGIN_DOC_DIR.'/glpiinventory')) {
+         $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory');
       }
 
       $result = $DB->query("SHOW TABLES;");
       while ($data = $DB->fetchArray($result)) {
-         if ((strstr($data[0], "glpi_plugin_fusioninventory_"))
+         if ((strstr($data[0], "glpi_plugin_glpiinventory_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvinventory_"))
                 OR (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
@@ -97,16 +81,16 @@ class PluginFusioninventorySetup {
 
       $DB->deleteOrDie(
          'glpi_displaypreferences', [
-            'itemtype' => ['LIKE', 'PluginFusioninventory%']
+            'itemtype' => ['LIKE', 'PluginGlpiinventory%']
          ]
       );
 
       // Delete rules
       $Rule = new Rule();
-      $Rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
+      $Rule->deleteByCriteria(['sub_type' => 'PluginGlpiinventoryInventoryRuleImport']);
 
       //Remove informations related to profiles from the session (to clean menu and breadcrumb)
-      PluginFusioninventoryProfile::removeRightsFromSession();
+      PluginGlpiinventoryProfile::removeRightsFromSession();
       return true;
    }
 
@@ -117,7 +101,7 @@ class PluginFusioninventorySetup {
     * @param string $dir name of the directory
     */
    function rrmdir($dir) {
-      $pfSetup = new PluginFusioninventorySetup();
+      $pfSetup = new PluginGlpiinventorySetup();
 
       if (is_dir($dir)) {
          $objects = scandir($dir);
@@ -147,7 +131,7 @@ class PluginFusioninventorySetup {
 
       if ($reset == 1) {
          $grule = new Rule();
-         $a_rules = $grule->find(['sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
+         $a_rules = $grule->find(['sub_type' => 'PluginGlpiinventoryInventoryRuleImport']);
          foreach ($a_rules as $data) {
             $grule->delete($data);
          }
@@ -1192,12 +1176,12 @@ class PluginFusioninventorySetup {
             continue;
          }
 
-         $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+         $rulecollection = new PluginGlpiinventoryInventoryRuleImportCollection();
          $input = [];
          $input['is_active'] = $rule['is_active'];
          $input['name']      = $rule['name'];
          $input['match']     = $rule['match'];
-         $input['sub_type']  = 'PluginFusioninventoryInventoryRuleImport';
+         $input['sub_type']  = 'PluginGlpiinventoryInventoryRuleImport';
          $input['ranking']   = $ranking;
          $rule_id = $rulecollection->add($input);
 
@@ -1233,18 +1217,18 @@ class PluginFusioninventorySetup {
 
 
    /**
-    * Creation of FusionInventory user
+    * Creation of user
     *
-    * @return integer id of the user "plugin FusionInventory"
+    * @return integer id of the user "Plugin GLPI Inventory"
     */
-   function createFusionInventoryUser() {
+   function createGlpiInventoryUser() {
       $user = new User();
-      $a_users = $user->find(['name' => 'Plugin_FusionInventory']);
+      $a_users = $user->find(['name' => 'Plugin_GLPI_Inventory']);
       if (count($a_users) == '0') {
          $input = [];
-         $input['name'] = 'Plugin_FusionInventory';
+         $input['name'] = 'Plugin_GLPI_Inventory';
          $input['password'] = mt_rand(30, 39);
-         $input['firstname'] = "Plugin FusionInventory";
+         $input['firstname'] = "Plugin GLPI Inventory";
          return $user->add($input);
       } else {
          $user = current($a_users);

@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author David Durieux
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -52,16 +42,16 @@ class DeleteTaskTest extends TestCase {
 
    public static function setUpBeforeClass(): void {
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployGroup   = new PluginFusioninventoryDeployGroup();
-      $pfTask          = new PluginFusioninventoryTask();
-      $pfTaskjob       = new PluginFusioninventoryTaskjob;
-      $pfTaskjobState  = new PluginFusioninventoryTaskjobstate;
-      $pfTaskjoblog    = new PluginFusioninventoryTaskjoblog;
-      $pfDeployGrDyndata = new PluginFusioninventoryDeployGroup_Dynamicdata();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+      $pfDeployGroup   = new PluginGlpiinventoryDeployGroup();
+      $pfTask          = new PluginGlpiinventoryTask();
+      $pfTaskjob       = new PluginGlpiinventoryTaskjob;
+      $pfTaskjobState  = new PluginGlpiinventoryTaskjobstate;
+      $pfTaskjoblog    = new PluginGlpiinventoryTaskjoblog;
+      $pfDeployGrDyndata = new PluginGlpiinventoryDeployGroup_Dynamicdata();
 
       // Delete all task
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginGlpiinventoryTask();
       $items = $pfTask->find();
       foreach ($items as $item) {
          $pfTask->delete(['id' => $item['id']], true);
@@ -74,7 +64,7 @@ class DeleteTaskTest extends TestCase {
       ];
       $$packageId = $pfDeployPackage->add($input);
 
-      // Create fusioninventory dynamic group
+      // Create dynamic group
       $input = [
           'name' => 'all computers have name computer',
           'type' => 'DYNAMIC'
@@ -82,7 +72,7 @@ class DeleteTaskTest extends TestCase {
       $groupId = $pfDeployGroup->add($input);
 
       $input = [
-          'plugin_fusioninventory_deploygroups_id' => $groupId,
+          'plugin_glpiinventory_deploygroups_id' => $groupId,
           'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:8:"computer";}}s:12:"metacriteria";s:0:"";}'
       ];
       $pfDeployGrDyndata->add($input);
@@ -97,22 +87,22 @@ class DeleteTaskTest extends TestCase {
 
       // create taskjob
       $input = [
-          'plugin_fusioninventory_tasks_id' => self::$taskId,
+          'plugin_glpiinventory_tasks_id' => self::$taskId,
           'entities_id'                     => 0,
           'name'                            => 'deploy',
           'method'                          => 'deployinstall',
-          'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$$packageId.'"}]',
-          'actors'                          => '[{"PluginFusioninventoryDeployGroup":"'.self::$taskId.'"}]'
+          'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"'.$$packageId.'"}]',
+          'actors'                          => '[{"PluginGlpiinventoryDeployGroup":"'.self::$taskId.'"}]'
       ];
       self::$taskjobId = $pfTaskjob->add($input);
 
       //create taskjobstate
       $input = [
-          'plugin_fusioninventory_taskjobs_id' => self::$taskjobId,
+          'plugin_glpiinventory_taskjobs_id' => self::$taskjobId,
           'items_id'                           => 0,
           'itemtype'                           => 'Computer',
-          'state'                              => PluginFusioninventoryTaskjobstate::FINISHED,
-          'plugin_fusioninventory_agents_id'   => 0,
+          'state'                              => PluginGlpiinventoryTaskjobstate::FINISHED,
+          'plugin_glpiinventory_agents_id'   => 0,
           'specificity'                        => 0,
           'uniqid'                             => 0,
 
@@ -121,11 +111,11 @@ class DeleteTaskTest extends TestCase {
 
       //crfeate taskjoblogR
       $input = [
-         'plugin_fusioninventory_taskjobstates_id' => self::$taskjobstateId,
+         'plugin_glpiinventory_taskjobstates_id' => self::$taskjobstateId,
          'date '                                   => date('Y-m-d H:i:s'),
          'items_id'                                => 0,
          'itemtype'                                => 'Computer',
-         'state'                                   => PluginFusioninventoryTaskjoblog::TASK_RUNNING,
+         'state'                                   => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
          'comment'                                 => "1 ==devicesfound=="
       ];
       self::$taskjoblogId = $pfTaskjoblog->add($input);
@@ -137,10 +127,10 @@ class DeleteTaskTest extends TestCase {
     */
    public function deleteTask() {
 
-      $pfTask         = new PluginFusioninventoryTask();
-      $pfTaskjob      = new PluginFusioninventoryTaskjob;
-      $pfTaskjobState = new PluginFusioninventoryTaskjobstate;
-      $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog;
+      $pfTask         = new PluginGlpiinventoryTask();
+      $pfTaskjob      = new PluginGlpiinventoryTaskjob;
+      $pfTaskjobState = new PluginGlpiinventoryTaskjobstate;
+      $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog;
 
       //delete task
       $return = $pfTask->delete(['id' => self::$taskId]);

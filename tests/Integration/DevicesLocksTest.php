@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2016
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -90,7 +80,7 @@ class DevicesLocksTest extends TestCase {
       }
 
       // Delete all locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
 
    }
 
@@ -99,7 +89,7 @@ class DevicesLocksTest extends TestCase {
       global $DB;
 
       // Delete all locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
    }
 
 
@@ -109,12 +99,12 @@ class DevicesLocksTest extends TestCase {
     * lock model, import, field may not change and model may not be created
     */
    public function computerLockItem() {
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
+      $pfInventoryComputerInventory = new PluginGlpiinventoryInventoryComputerInventory();
       $computer = new Computer();
-      $pfLock = new PluginFusioninventoryLock();
+      $pfLock = new PluginGlpiinventoryLock();
 
       $a_computerinventory = [
           "Computer" => [
@@ -123,8 +113,8 @@ class DevicesLocksTest extends TestCase {
               "computermodels_id" => "model xxx",
               "manufacturers_id"  => "Dell"
           ],
-          "fusioninventorycomputer" => [
-              'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+          "inventorycomputer" => [
+              'last_inventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ],
           'soundcard'      => [],
@@ -174,7 +164,7 @@ class DevicesLocksTest extends TestCase {
       ];
 
       $pfLock->add($input);
-      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_locks'), 'Lock not right added');
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_glpiinventory_locks'), 'Lock not right added');
 
       $a_computerinventory['Computer']['computermodels_id'] = "model yyy";
       $a_computerinventory['Computer']['manufacturers_id'] = "Dell inc.";
@@ -206,10 +196,10 @@ class DevicesLocksTest extends TestCase {
    public function computerLockItemtype() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
+      $pfInventoryComputerInventory = new PluginGlpiinventoryInventoryComputerInventory();
       $computer = new Computer();
 
       // Delete all computers
@@ -218,8 +208,8 @@ class DevicesLocksTest extends TestCase {
          $computer->delete(['id' => $item['id']], true);
       }
       // Delete all locks
-      $pfLock = new PluginFusioninventoryLock();
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $pfLock = new PluginGlpiinventoryLock();
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
 
       $a_computerinventory = [
          "Computer" => [
@@ -228,8 +218,8 @@ class DevicesLocksTest extends TestCase {
             "computermodels_id" => "model zzz",
             "manufacturers_id"  => "Dell2 inc."
          ],
-         "fusioninventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+         "inventorycomputer" => [
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],
@@ -264,7 +254,7 @@ class DevicesLocksTest extends TestCase {
       ];
 
       $pfLock->add($input);
-      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_locks'), 'Lock not right added');
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_glpiinventory_locks'), 'Lock not right added');
 
       $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
       $pfInventoryComputerInventory->rulepassed(0, 'Computer');
@@ -288,20 +278,19 @@ class DevicesLocksTest extends TestCase {
     * idem but with general lock on itemtype
     */
    public function switchLockItemtypeNotDuplicated() {
-      $pfLock = new PluginFusioninventoryLock();
 
+      $this->expectException(\GlpitestSQLError::class);
+
+      $pfLock = new PluginGlpiinventoryLock();
       $input = [
          'tablename'   => 'glpi_computers',
          'items_id'    => 0,
          'tablefields' => exportArrayToDB(['computermodels_id'])
       ];
+      $pfLock->add($input);
 
-      ob_start();
-      $ret = $pfLock->add($input);
-      ob_end_clean();
-      $items = getAllDataFromTable('glpi_plugin_fusioninventory_locks');
+      $items = getAllDataFromTable('glpi_plugin_glpiinventory_locks');
       $this->assertEquals(1, count($items), 'Lock must be unique '.print_r($items, true));
-      $this->assertFalse($ret);
    }
 
 
@@ -313,12 +302,12 @@ class DevicesLocksTest extends TestCase {
    public function switchLockItemtype() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfLock = new PluginFusioninventoryLock();
+      $pfLock = new PluginGlpiinventoryLock();
       $networkEquipment = new NetworkEquipment();
-      $pfCommunicationNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfCommunicationNetworkInventory = new PluginGlpiinventoryCommunicationNetworkInventory();
 
       // Delete all networkequipments
       $items = $networkEquipment->find();
@@ -326,8 +315,8 @@ class DevicesLocksTest extends TestCase {
          $networkEquipment->delete(['id' => $item['id']], true);
       }
       // Delete all locks
-      $pfLock = new PluginFusioninventoryLock();
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $pfLock = new PluginGlpiinventoryLock();
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
 
       $input = [
           'tablename'   => 'glpi_networkequipments',
@@ -345,9 +334,9 @@ class DevicesLocksTest extends TestCase {
       $this->assertNotFalse($networkEquipmentId);
 
       $a_inventory = [
-         'PluginFusioninventoryNetworkEquipment' => [
+         'PluginGlpiinventoryNetworkEquipment' => [
             'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
-            'last_fusioninventory_update' => '2016-03-24 09:41:25',
+            'last_inventory_update' => '2016-03-24 09:41:25',
             'cpu'                         => 5,
             'memory'                      => 18,
             'uptime'                      => '157 days, 02:14:44.00'
@@ -373,7 +362,7 @@ class DevicesLocksTest extends TestCase {
          'mac'                          => '6c:50:4d:39:59:80'
       ];
 
-      $PLUGIN_FUSIONINVENTORY_XML = '';
+      $PLUGIN_GLPI_INVENTORY_XML = '';
       $pfCommunicationNetworkInventory->importDevice('NetworkEquipment', $networkEquipmentId, $a_inventory, 1);
 
       $this->assertEquals(0, countElementsInTable('glpi_locations'), 'Location has been created :/');
@@ -390,12 +379,12 @@ class DevicesLocksTest extends TestCase {
    public function testLockMonitor() {
       global $DB;
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $pfCommunication  = new PluginGlpiinventoryCommunication();
       $monitor = new Monitor();
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       // Delete all monitors
       $items = $monitor->find();
@@ -409,7 +398,7 @@ class DevicesLocksTest extends TestCase {
          $computer->delete(['id' => $item['id']], true);
       }
       // Delete all locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->query('DELETE FROM glpi_plugin_glpiinventory_locks');
 
       $computer_xml =
       '<?xml version="1.0" encoding="UTF-8"?>

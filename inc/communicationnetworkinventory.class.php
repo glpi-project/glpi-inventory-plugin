@@ -1,49 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the communication for the network inventory
- * with the agents.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the communication of network inventory feature with the agents.
  */
-class PluginFusioninventoryCommunicationNetworkInventory {
+class PluginGlpiinventoryCommunicationNetworkInventory {
 
    /**
     * Define protected variables
@@ -67,15 +51,15 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_networkequipment';
+   static $rightname = 'plugin_glpiinventory_networkequipment';
 
 
    /**
     * __contruct function where fill logFile if extradebug enabled
     */
    function __construct() {
-      if (PluginFusioninventoryConfig::isExtradebugActive()) {
-         $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
+      if (PluginGlpiinventoryConfig::isExtradebugActive()) {
+         $this->logFile = GLPI_LOG_DIR.'/glpiinventorycommunication.log';
       }
    }
 
@@ -89,11 +73,11 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     */
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->import().');
+      PluginGlpiinventoryCommunication::addLog(
+              'Function PluginGlpiinventoryCommunicationNetworkInventory->import().');
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
       $this->agent = $pfAgent->infoByKey($p_DEVICEID);
       $this->arrayinventory = $arrayinventory;
@@ -101,7 +85,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       if (!isset($a_CONTENT['PROCESSNUMBER'])) {
          $a_CONTENT['PROCESSNUMBER'] = 1;
       }
-      $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
+      $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
       if ((!isset($a_CONTENT['AGENT']['START'])) AND (!isset($a_CONTENT['AGENT']['END']))) {
           $nb_devices = 0;
          if (isset($a_CONTENT['DEVICE'])) {
@@ -112,12 +96,12 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             }
          }
 
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
+          $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
               $a_CONTENT['PROCESSNUMBER'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.
+          $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $this->agent['id'];
+          $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'PluginGlpiinventoryAgent';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices.
               ' ==devicesqueried==';
           $this->addtaskjoblog();
       }
@@ -125,26 +109,26 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $this->importContent($a_CONTENT);
 
       if (isset($a_CONTENT['AGENT']['END'])) {
-         $cnt = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+         $cnt = countElementsInTable('glpi_plugin_glpiinventory_taskjoblogs',
             [
-               'plugin_fusioninventory_taskjobstates_id' => $a_CONTENT['PROCESSNUMBER'],
+               'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT['PROCESSNUMBER'],
                'comment'                                 => ["LIKE", '%[==detail==] Update %'],
             ]);
 
           $pfTaskjobstate->changeStatusFinish(
                   $a_CONTENT['PROCESSNUMBER'],
                   $this->agent['id'],
-                  'PluginFusioninventoryAgent',
+                  'PluginGlpiinventoryAgent',
                   '0',
                   'Total updated:'.$cnt);
       }
       if (isset($a_CONTENT['AGENT']['START'])) {
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
+          $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
               $a_CONTENT['PROCESSNUMBER'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==inventorystarted==';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $this->agent['id'];
+          $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'PluginGlpiinventoryAgent';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
           $this->addtaskjoblog();
       }
    }
@@ -158,14 +142,14 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     */
    function importContent($arrayinventory) {
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->importContent().');
-      $pfAgent = new PluginFusioninventoryAgent();
+      PluginGlpiinventoryCommunication::addLog(
+              'Function PluginGlpiinventoryCommunicationNetworkInventory->importContent().');
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $errors='';
       $nbDevices = 0;
       foreach ($arrayinventory as $childname=>$child) {
-         PluginFusioninventoryCommunication::addLog($childname);
+         PluginGlpiinventoryCommunication::addLog($childname);
          switch ($childname) {
 
             case 'DEVICE' :
@@ -177,13 +161,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                }
                $xml_num = 0;
                foreach ($a_devices as $dchild) {
-                  $_SESSION['plugin_fusioninventory_xmlnum'] = $xml_num;
+                  $_SESSION['plugin_glpiinventory_xmlnum'] = $xml_num;
                   $a_inventory = [];
                   if (isset($dchild['INFO'])) {
                      if ($dchild['INFO']['TYPE'] == "NETWORKING" || $dchild['INFO']['TYPE'] == "STORAGE") {
-                        $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
+                        $a_inventory = PluginGlpiinventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
                      } else if ($dchild['INFO']['TYPE'] == "PRINTER") {
-                        $a_inventory = PluginFusioninventoryFormatconvert::printerInventoryTransformation($dchild);
+                        $a_inventory = PluginGlpiinventoryFormatconvert::printerInventoryTransformation($dchild);
                      }
                   }
                   if (isset($dchild['ERROR'])) {
@@ -193,15 +177,15 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      } else if ($dchild['ERROR']['TYPE'] == "PRINTER") {
                         $itemtype = "Printer";
                      }
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '.
                              $dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.
                              $dchild['ERROR']['ID'].']]';
                      $this->addtaskjoblog();
-                  } else if ($a_inventory['PluginFusioninventory'.$a_inventory['itemtype']]['sysdescr'] == ''
+                  } else if ($a_inventory['PluginGlpiinventory'.$a_inventory['itemtype']]['sysdescr'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['name'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
 
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
                               '[==detail==] No informations [['.$a_inventory['itemtype'].'::'.$dchild['INFO']['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
@@ -237,9 +221,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             case 'AGENT' :
                if (isset($this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'])) {
                   $agent = $pfAgent->infoByKey($this->arrayinventory['DEVICEID']);
-                  $agent['fusioninventory_agent_version'] =
+                  $agent['version'] =
                                        $this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'];
-                  $agent['last_agent_update'] = date("Y-m-d H:i:s");
+                  $agent['last_contact'] = date("Y-m-d H:i:s");
                   $pfAgent->update($agent);
                }
                break;
@@ -251,8 +235,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                break;
 
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.
-                           __('Unattended element in', 'fusioninventory').' CONTENT : '.$childname;
+               $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '.
+                           __('Unattended element in', 'glpiinventory').' CONTENT : '.$childname;
                $this->addtaskjoblog();
          }
       }
@@ -263,7 +247,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    /**
     * import process of one device
     *
-    * @global SimpleXMLElement $PLUGIN_FUSIONINVENTORY_XML
+    * @global SimpleXMLElement $PLUGIN_GLPI_INVENTORY_XML
     * @param string $itemtype
     * @param integer $items_id
     * @param array $a_inventory
@@ -271,19 +255,19 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @return string errors or empty string
     */
    function importDevice($itemtype, $items_id, $a_inventory, $no_history) {
-      global $PLUGIN_FUSIONINVENTORY_XML;
+      global $PLUGIN_GLPI_INVENTORY_XML;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
+      PluginGlpiinventoryCommunication::addLog(
+              'Function PluginGlpiinventoryCommunicationNetworkInventory->importDevice().');
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, $itemtype, $items_id);
 
       // Write XML file
       if (count($a_inventory) > 0
-              AND isset($_SESSION['plugin_fusioninventory_xmlnum'])) {
-         $xml = $PLUGIN_FUSIONINVENTORY_XML->CONTENT->DEVICE[$_SESSION['plugin_fusioninventory_xmlnum']]->asXML();
-         PluginFusioninventoryToolbox::writeXML(
+              AND isset($_SESSION['plugin_glpiinventory_xmlnum'])) {
+         $xml = $PLUGIN_GLPI_INVENTORY_XML->CONTENT->DEVICE[$_SESSION['plugin_glpiinventory_xmlnum']]->asXML();
+         PluginGlpiinventoryToolbox::writeXML(
                  $items_id,
                  $xml,
                  $itemtype);
@@ -292,7 +276,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $errors='';
       $this->deviceId=$items_id;
 
-      $serialized = gzcompress(serialize($a_inventory));
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
 
       if (isset($a_inventory['name'])
               && $a_inventory['name'] == '') {
@@ -306,21 +290,21 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       switch ($itemtype) {
 
          case 'Printer':
-            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
-            $a_inventory['PluginFusioninventoryPrinter']['serialized_inventory'] =
+            $pfiPrinterLib = new PluginGlpiinventoryInventoryPrinterLib();
+            $a_inventory['PluginGlpiinventoryPrinter']['serialized_inventory'] =
                         Toolbox::addslashes_deep($serialized);
             $pfiPrinterLib->updatePrinter($a_inventory, $items_id, $no_history);
             break;
 
          case 'NetworkEquipment':
-            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
-            $a_inventory['PluginFusioninventoryNetworkEquipment']['serialized_inventory'] =
+            $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
+            $a_inventory['PluginGlpiinventoryNetworkEquipment']['serialized_inventory'] =
                         Toolbox::addslashes_deep($serialized);
             $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id, $no_history);
             break;
 
          default:
-            return __('Unattended element in', 'fusioninventory').' TYPE : '.$a_inventory['itemtype']."\n";
+            return __('Unattended element in', 'glpiinventory').' TYPE : '.$a_inventory['itemtype']."\n";
       }
       return '';
    }
@@ -334,8 +318,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     */
    function sendCriteria($a_inventory) {
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->sendCriteria().');
+      PluginGlpiinventoryCommunication::addLog(
+              'Function PluginGlpiinventoryCommunicationNetworkInventory->sendCriteria().');
 
       $errors = '';
 
@@ -384,17 +368,17 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
       }
 
-      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
-      $_SESSION['plugin_fusioninventory_classrulepassed'] =
-                                 "PluginFusioninventoryCommunicationNetworkInventory";
-      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
+      $_SESSION['plugin_glpiinventory_datacriteria'] = serialize($input);
+      $_SESSION['plugin_glpiinventory_classrulepassed'] =
+                                 "PluginGlpiinventoryCommunicationNetworkInventory";
+      $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
+      PluginGlpiinventoryConfig::logIfExtradebug("pluginGlpiinventory-rules",
                                                    "Input data : ".print_r($input, true));
       $data = $rule->processAllRules($input, []);
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
+      PluginGlpiinventoryConfig::logIfExtradebug("pluginGlpiinventory-rules",
                                                    $data);
       if (isset($data['action'])
-             && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
+             && ($data['action'] == PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
          $a_text = [];
          foreach ($input as $key=>$data) {
@@ -404,11 +388,11 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $a_text[] = "[".$key."]:".$data;
             }
          }
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==importdenied== '.
+         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== '.
                  implode(", ", $a_text);
          $this->addtaskjoblog();
 
-         $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $pfIgnoredimportdevice = new PluginGlpiinventoryIgnoredimportdevice();
          $inputdb = [];
          if (isset($input['name'])) {
             $inputdb['name'] = $input['name'];
@@ -424,15 +408,15 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if (isset($input['mac'])) {
             $inputdb['mac'] = exportArrayToDB($input['mac']);
          }
-         $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+         $inputdb['rules_id'] = $_SESSION['plugin_glpiinventory_rules_id'];
          $inputdb['method'] = 'networkinventory';
          $pfIgnoredimportdevice->add($inputdb);
-         unset($_SESSION['plugin_fusioninventory_rules_id']);
+         unset($_SESSION['plugin_glpiinventory_rules_id']);
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (isset($input['itemtype'])
              && isset($data['action'])
-             && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
+             && ($data['action'] == PluginGlpiinventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
             $errors .= $this->rulepassed(0, $input['itemtype']);
          } else if (isset($input['itemtype'])
@@ -446,7 +430,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $errors .= $this->rulepassed(0, $input['itemtype']);
             }
          } else {
-            $errors .= $this->rulepassed(0, "PluginFusioninventoryUnmanaged");
+            $errors .= $this->rulepassed(0, "PluginGlpiinventoryUnmanaged");
          }
       }
       return $errors;
@@ -465,21 +449,21 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $no_history = false;
 
-      PluginFusioninventoryLogger::logIfExtradebug(
-         "pluginFusioninventory-rules",
+      PluginGlpiinventoryLogger::logIfExtradebug(
+         "pluginGlpiinventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
-      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
-         'fusioninventorycommunication',
+      PluginGlpiinventoryLogger::logIfExtradebugAndDebugMode(
+         'glpiinventorycommunication',
          'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().'
       );
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
+      PluginGlpiinventoryConfig::logIfExtradebug("pluginGlpiinventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->rulepassed().');
+      PluginGlpiinventoryCommunication::addLog(
+              'Function PluginGlpiinventoryCommunicationNetworkInventory->rulepassed().');
 
       $a_inventory = $_SESSION['SOURCE_XMLDEVICE'];
 
@@ -496,31 +480,31 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
          }
-         $_SESSION["plugin_fusioninventory_entity"] = $input['entities_id'];
+         $_SESSION["plugin_glpiinventory_entity"] = $input['entities_id'];
 
          //Add defaut status if there's one defined in the configuration
-         $input      = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+         $input      = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
          $items_id   = $class->add($input);
          $no_history = true;
-         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+         if (isset($_SESSION['plugin_glpiinventory_rules_id'])) {
+            $pfRulematchedlog = new PluginGlpiinventoryRulematchedlog();
             $inputrulelog = [];
             $inputrulelog['date'] = date('Y-m-d H:i:s');
-            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-               $inputrulelog['plugin_fusioninventory_agents_id'] =
-                                                   $_SESSION['plugin_fusioninventory_agents_id'];
+            $inputrulelog['rules_id'] = $_SESSION['plugin_glpiinventory_rules_id'];
+            if (isset($_SESSION['plugin_glpiinventory_agents_id'])) {
+               $inputrulelog['plugin_glpiinventory_agents_id'] =
+                                                   $_SESSION['plugin_glpiinventory_agents_id'];
             }
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
             $inputrulelog['method'] = 'networkinventory';
-            $inputrulelog['criteria'] = exportArrayToDB(unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']));
+            $inputrulelog['criteria'] = exportArrayToDB(unserialize($_SESSION['plugin_glpiinventory_datacriteria']));
             $pfRulematchedlog->add($inputrulelog);
             $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
-            unset($_SESSION['plugin_fusioninventory_rules_id']);
+            unset($_SESSION['plugin_glpiinventory_rules_id']);
          }
       }
-      if ($itemtype == "PluginFusioninventoryUnmanaged") {
+      if ($itemtype == "PluginGlpiinventoryUnmanaged") {
          $class->getFromDB($items_id);
          $input = [];
          $input['id'] = $class->fields['id'];
@@ -534,17 +518,17 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $input['itemtype'] = $a_inventory['itemtype'];
          }
          // TODO : add import ports
-         PluginFusioninventoryToolbox::writeXML($items_id,
+         PluginGlpiinventoryToolbox::writeXML($items_id,
                                                 serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                                'PluginFusioninventoryUnmanaged');
+                                                'PluginGlpiinventoryUnmanaged');
          $class->update($input);
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
             '[==detail==] ==updatetheitem== Update '.
-                 PluginFusioninventoryUnmanaged::getTypeName().
-                 ' [[PluginFusioninventoryUnmanaged::'.$items_id.']]';
+                 PluginGlpiinventoryUnmanaged::getTypeName().
+                 ' [[PluginGlpiinventoryUnmanaged::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
                '[==detail==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
          $errors .= $this->importDevice($itemtype, $items_id, $a_inventory, $no_history);
@@ -558,17 +542,17 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     */
    function addtaskjoblog() {
 
-      if (!isset($_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'])) {
+      if (!isset($_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'])) {
          return;
       }
 
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $pfTaskjoblog->addTaskjoblog(
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment']);
    }
 
 
@@ -637,7 +621,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          $devices[$num] = [
             'NetworkEquipment'                      => $a_inventory['NetworkEquipment'],
             'itemtype'                              => 'NetworkEquipment',
-            'PluginFusioninventoryNetworkEquipment' => $a_inventory['PluginFusioninventoryNetworkEquipment'],
+            'PluginGlpiinventoryNetworkEquipment' => $a_inventory['PluginGlpiinventoryNetworkEquipment'],
             'firmwares'                             => $a_inventory['firmwares'],
             'internalport'                          => $a_inventory['internalport'],
             'networkport'                           => [],
@@ -730,8 +714,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   'is_dynamic'                => 1
                ],
                'itemtype'  => 'NetworkEquipment',
-               'PluginFusioninventoryNetworkEquipment' => [
-                  'last_fusioninventory_update' => $a_inventory['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update']
+               'PluginGlpiinventoryNetworkEquipment' => [
+                  'last_inventory_update' => $a_inventory['PluginGlpiinventoryNetworkEquipment']['last_inventory_update']
                ],
                'firmwares' => [
                   [

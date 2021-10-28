@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -49,10 +39,10 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetTypes() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $types = $check->getTypes();
       $this->assertEquals(4, count($types));
-      $this->assertEquals(7, count($types[__('Registry', 'fusioninventory')]));
+      $this->assertEquals(7, count($types[__('Registry', 'glpiinventory')]));
       $this->assertEquals(7, count($types[__('File')]));
       $this->assertEquals(2, count($types[__('Directory')]));
       $this->assertEquals(1, count($types[__('Other')]));
@@ -64,11 +54,11 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function getGetLabelForAType() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
 
-      $this->assertEquals(__("Registry key exists", 'fusioninventory'),
+      $this->assertEquals(__("Registry key exists", 'glpiinventory'),
                           $check->getLabelForAType('winkeyExists'));
-      $this->assertEquals(__("Free space is greater than", 'fusioninventory'),
+      $this->assertEquals(__("Free space is greater than", 'glpiinventory'),
                           $check->getLabelForAType('freespaceGreater'));
       $this->assertEquals('', $check->getLabelForAType('foo'));
 
@@ -79,7 +69,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetUnitLabel() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $units = $check->getUnitLabel();
       $this->assertEquals(4, count($units));
       $this->assertEquals($units, [ "B"  => __('o'),
@@ -95,7 +85,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetAuditDescription() {
-      $check       = new PluginFusioninventoryDeployCheck();
+      $check       = new PluginGlpiinventoryDeployCheck();
       $description = $check->getAuditDescription('winkeyEquals', 'skip');
       $this->assertEquals("Registry value equals to : continue, otherwise : skip job", $description);
 
@@ -114,7 +104,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetUnitSize() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $this->assertEquals($check->getUnitSize('B'), '1');
       $this->assertEquals($check->getUnitSize('KB'), '1024');
       $this->assertEquals($check->getUnitSize('MB'), '1048576');
@@ -126,7 +116,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetRegistryTypes() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $types = $check->getRegistryTypes();
       $this->assertEquals(8, count($types));
       $expected = ['REG_SZ'          => 'REG_SZ',
@@ -146,7 +136,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetValues() {
-      $check    = new PluginFusioninventoryDeployCheck();
+      $check    = new PluginGlpiinventoryDeployCheck();
       $values   = ['name'   => 'My check',
                    'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
                    'value'  => '',
@@ -215,7 +205,7 @@ class DeploycheckTest extends TestCase {
     * @test
     */
    public function testGetLabelsAndTypes() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
 
       //----------- winkeyExists --------------------------//
       $result   = $check->getLabelsAndTypes('winkeyExists', false);
@@ -419,13 +409,13 @@ class DeploycheckTest extends TestCase {
    * @test
    */
    public function testGetAllReturnValues() {
-      $check  = new PluginFusioninventoryDeployCheck();
+      $check  = new PluginGlpiinventoryDeployCheck();
       $values = $check->getAllReturnValues();
-      $expected = ["error"    => __('abort job', 'fusioninventory'),
-                   "skip"     => __("skip job", 'fusioninventory'),
-                   "startnow" => __("start job now", 'fusioninventory'),
-                   "info"     => __("report info", 'fusioninventory'),
-                   "warning"  => __("report warning", 'fusioninventory')
+      $expected = ["error"    => __('abort job', 'glpiinventory'),
+                   "skip"     => __("skip job", 'glpiinventory'),
+                   "startnow" => __("start job now", 'glpiinventory'),
+                   "info"     => __("report info", 'glpiinventory'),
+                   "warning"  => __("report warning", 'glpiinventory')
                ];
       $this->assertEquals($values, $expected);
    }
@@ -435,7 +425,7 @@ class DeploycheckTest extends TestCase {
    * @test
    */
    public function testGetValueForReturn() {
-      $check = new PluginFusioninventoryDeployCheck();
+      $check = new PluginGlpiinventoryDeployCheck();
       $this->assertEquals('abort job', $check->getValueForReturn('error'));
       $this->assertEquals('skip job', $check->getValueForReturn('skip'));
       $this->assertEquals('start job now', $check->getValueForReturn('startnow'));
@@ -450,8 +440,8 @@ class DeploycheckTest extends TestCase {
    * @test
    */
    public function testAdd_item() {
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       $input = ['name'        => 'test1',
                 'entities_id' => 0];
@@ -532,8 +522,8 @@ class DeploycheckTest extends TestCase {
    public function testSave_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json];
@@ -561,8 +551,8 @@ class DeploycheckTest extends TestCase {
    public function testRemove_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json
@@ -589,8 +579,8 @@ class DeploycheckTest extends TestCase {
    public function testMove_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
-      $check           = new PluginFusioninventoryDeployCheck();
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $check           = new PluginGlpiinventoryDeployCheck();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'json'        => $json

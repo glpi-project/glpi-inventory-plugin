@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the wake up the agents
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Walid Nouh
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the wake up the agents remotely.
  */
-class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
+class PluginGlpiinventoryAgentWakeup extends  CommonDBTM {
 
 
    /**
@@ -60,7 +45,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_taskjob';
+   static $rightname = 'plugin_glpiinventory_taskjob';
 
 
    /**
@@ -70,7 +55,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Job', 'fusioninventory');
+      return __('Job', 'glpiinventory');
    }
 
 
@@ -104,27 +89,27 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       $tasks       = [];
       //Get the maximum number of agent to wakeup,
       //as allowed in the general configuration
-      $config = new PluginFusioninventoryConfig();
-      $agent  = new PluginFusioninventoryAgent();
+      $config = new PluginGlpiinventoryConfig();
+      $agent  = new PluginGlpiinventoryAgent();
 
       $maxWakeUp   = $config->getValue('wakeup_agent_max');
 
       //Get all active timeslots
-      $timeslot = new PluginFusioninventoryTimeslot();
+      $timeslot = new PluginGlpiinventoryTimeslot();
       $timeslots = $timeslot->getCurrentActiveTimeslots();
       $query_timeslots = [
-         'plugin_fusioninventory_timeslots_exec_id'   => 0
+         'plugin_glpiinventory_timeslots_exec_id'   => 0
       ];
       if (!empty($timeslots)) {
          array_push($query_timeslots, [
-            'plugin_fusioninventory_timeslots_exec_id' => $timeslots
+            'plugin_glpiinventory_timeslots_exec_id' => $timeslots
          ]);
       }
       //Get all active task requiring an agent wakeup
       //Check all tasks without timeslot or task with a current active timeslot
       $iterator = $DB->request([
          'SELECT' => ['id', 'wakeup_agent_counter', 'wakeup_agent_time', 'last_agent_wakeup'],
-         'FROM'   => 'glpi_plugin_fusioninventory_tasks',
+         'FROM'   => 'glpi_plugin_glpiinventory_tasks',
          'WHERE'  => [
             'wakeup_agent_counter'  => ['>', 0],
             'wakeup_agent_time'     => ['>', 0],
@@ -135,7 +120,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
          ]
       ]);
 
-      while ($task = $iterator->next()) {
+      foreach ($iterator as $task) {
          if (!is_null($task['wakeup_agent_time'])) {
             //Do not wake up is last wake up in inferior to the minimum wake up interval
             $interval   = time() - strtotime($task['last_agent_wakeup']);
@@ -157,30 +142,30 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
          //(the maximum is defined in wakeup_agent_counter)
          $iterator2 = $DB->request([
             'SELECT'    => [
-               'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id',
+               'glpi_plugin_glpiinventory_taskjobstates.plugin_glpiinventory_agents_id',
             ],
             'FROM'      => [
-               'glpi_plugin_fusioninventory_taskjobstates'
+               'glpi_plugin_glpiinventory_taskjobstates'
             ],
             'LEFT JOIN' => [
-               'glpi_plugin_fusioninventory_taskjobs' => [
+               'glpi_plugin_glpiinventory_taskjobs' => [
                   'FKEY' => [
-                     'glpi_plugin_fusioninventory_taskjobs'    => 'id',
-                     'glpi_plugin_fusioninventory_taskjobstates' => 'plugin_fusioninventory_taskjobs_id'
+                     'glpi_plugin_glpiinventory_taskjobs'    => 'id',
+                     'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
                   ]
                ]
             ],
             'WHERE'     => [
-               'glpi_plugin_fusioninventory_taskjobs.plugin_fusioninventory_tasks_id' => $task['id'],
-               'glpi_plugin_fusioninventory_taskjobstates.state'  => PluginFusioninventoryTaskjobstate::PREPARED
+               'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_tasks_id' => $task['id'],
+               'glpi_plugin_glpiinventory_taskjobstates.state'  => PluginGlpiinventoryTaskjobstate::PREPARED
             ],
-            'ORDER'     => 'glpi_plugin_fusioninventory_taskjobstates.id',
+            'ORDER'     => 'glpi_plugin_glpiinventory_taskjobstates.id',
             'START'     => 0,
          ]);
          $counter = 0;
 
-         while ($state = $iterator2->next()) {
-            $agents_id = $state['plugin_fusioninventory_agents_id'];
+         foreach ($iterator2 as $state) {
+            $agents_id = $state['plugin_glpiinventory_agents_id'];
             if (isset($wakeupArray[$agents_id])) {
                $counter++;
             } else {
@@ -204,7 +189,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       if (!empty($tasks)) {
          //Update last wake up time each task
          $DB->update(
-            'glpi_plugin_fusioninventory_tasks', [
+            'glpi_plugin_glpiinventory_tasks', [
                'last_agent_wakeup' => $_SESSION['glpi_currenttime']
             ], [
                'id' => $tasks

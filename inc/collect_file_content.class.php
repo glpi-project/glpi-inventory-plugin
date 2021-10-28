@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the files found on computr by agent and
- * linked to the computer
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,11 +37,11 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files found by the collect module of agent.
  */
-class PluginFusioninventoryCollect_File_Content
-   extends PluginFusioninventoryCollectContentCommon {
+class PluginGlpiinventoryCollect_File_Content
+   extends PluginGlpiinventoryCollectContentCommon {
 
-   public $collect_itemtype = 'PluginFusioninventoryCollect_File';
-   public $collect_table    = 'glpi_plugin_fusioninventory_collects_files';
+   public $collect_itemtype = 'PluginGlpiinventoryCollect_File';
+   public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
    public $type             = 'file';
 
    /**
@@ -72,7 +57,7 @@ class PluginFusioninventoryCollect_File_Content
       foreach ($file_data as $key => $value) {
          $input = [
             'computers_id' => $computers_id,
-            'plugin_fusioninventory_collects_files_id' => $collects_files_id,
+            'plugin_glpiinventory_collects_files_id' => $collects_files_id,
             'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
             'size'         => $value['size']
          ];
@@ -87,16 +72,16 @@ class PluginFusioninventoryCollect_File_Content
     * @param integer $computers_id id of the computer
     */
    function showForComputer($computers_id) {
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
       echo "<table class='tab_cadre_fixe'>";
 
       $a_data = $this->find(['computers_id' => $computers_id],
-                            ['plugin_fusioninventory_collects_files_id', 'pathfile']);
+                            ['plugin_glpiinventory_collects_files_id', 'pathfile']);
       $previous_key = 0;
       foreach ($a_data as $data) {
-         $pfCollect_File->getFromDB($data['plugin_fusioninventory_collects_files_id']);
-         if ($previous_key != $data['plugin_fusioninventory_collects_files_id']) {
+         $pfCollect_File->getFromDB($data['plugin_glpiinventory_collects_files_id']);
+         if ($previous_key != $data['plugin_glpiinventory_collects_files_id']) {
             echo "<tr class='tab_bg_1'>";
             echo '<th colspan="3">';
             echo $pfCollect_File->fields['name']. ": ".$pfCollect_File->fields['dir'];
@@ -104,11 +89,11 @@ class PluginFusioninventoryCollect_File_Content
             echo '</tr>';
 
             echo "<tr>";
-            echo "<th>".__('Path/file', 'fusioninventory')."</th>";
-            echo "<th>".__('Size', 'fusioninventory')."</th>";
+            echo "<th>".__('Path/file', 'glpiinventory')."</th>";
+            echo "<th>".__('Size', 'glpiinventory')."</th>";
             echo "</tr>";
 
-            $previous_key = $data['plugin_fusioninventory_collects_files_id'];
+            $previous_key = $data['plugin_glpiinventory_collects_files_id'];
          }
 
          echo "<tr class='tab_bg_1'>";
@@ -130,7 +115,7 @@ class PluginFusioninventoryCollect_File_Content
     * @param integer $collects_files_id id of collect_file
     */
    function showContent($collects_files_id) {
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File = new PluginGlpiinventoryCollect_File();
       $computer = new Computer();
 
       $pfCollect_File->getFromDB($collects_files_id);
@@ -145,11 +130,11 @@ class PluginFusioninventoryCollect_File_Content
 
       echo "<tr>";
       echo "<th>".__('Computer')."</th>";
-      echo "<th>".__('pathfile', 'fusioninventory')."</th>";
-      echo "<th>".__('Size', 'fusioninventory')."</th>";
+      echo "<th>".__('pathfile', 'glpiinventory')."</th>";
+      echo "<th>".__('Size', 'glpiinventory')."</th>";
       echo "</tr>";
 
-      $a_data = $this->find(['plugin_fusioninventory_collects_files_id' => $collects_files_id],
+      $a_data = $this->find(['plugin_glpiinventory_collects_files_id' => $collects_files_id],
                             ['pathfile']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
@@ -170,4 +155,3 @@ class PluginFusioninventoryCollect_File_Content
 
 
 }
-

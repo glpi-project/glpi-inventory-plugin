@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -166,30 +156,30 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareNormal() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"]                      = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
-                'PUBLISHER' => 'fusioninventory team',
-                'NAME'      => 'fusioninventory',
-                'VERSION'   => '0.85+1.0',
+                'PUBLISHER' => 'GLPI Team',
+                'NAME'      => 'glpiinventory',
+                'VERSION'   => '1.0.0',
                 'SYSTEM_CATEGORY' => 'devel'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $manufacturer     = new Manufacturer();
-      $manufacturer->getFromDBByCrit(['name' => 'fusioninventory team']);
+      $manufacturer->getFromDBByCrit(['name' => 'GLPI Team']);
       $manufacturers_id = $manufacturer->fields['id'];
       $this->assertGreaterThan(0, $manufacturers_id);
 
       $a_reference = [];
-      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
-               'name'                  => 'fusioninventory',
+      $a_reference['software']["glpiinventory$$$$1.0.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
+               'name'                  => 'glpiinventory',
                'manufacturers_id'      => $manufacturers_id,
-               'version'               => '0.85+1.0',
+               'version'               => '1.0.0',
                'is_template_item'  => 0,
                'is_deleted_item'   => 0,
                'entities_id'           => 0,
@@ -197,7 +187,7 @@ class SoftwareUpdateTest extends TestCase {
                'operatingsystems_id'   => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel',
-               'comp_key_noos'         => "fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0",
+               'comp_key_noos'         => "glpiinventory$$$$1.0.0$$$$".$manufacturers_id."$$$$0$$$$0",
                'comment'               => ''
             ];
 
@@ -207,7 +197,7 @@ class SoftwareUpdateTest extends TestCase {
 
 
    /**
-   * This tests ignore the import of a computer, based on the software dictionnary
+   * This test ignores the import of a computer, based on the software dictionary
     * @test
     */
    public function AddSoftwareIgnore() {
@@ -215,8 +205,8 @@ class SoftwareUpdateTest extends TestCase {
       $a_software  = [];
       $a_reference = [];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 1;
-      $_SESSION["glpiname"]                      = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 1;
+      $_SESSION["glpiname"]                      = 'Plugin_GLPI_Inventory';
 
       $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'indepnet',
@@ -224,7 +214,7 @@ class SoftwareUpdateTest extends TestCase {
                 'VERSION'   => '0.85'
                ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference['software'] = [];
@@ -239,8 +229,8 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareRename() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -250,7 +240,7 @@ class SoftwareUpdateTest extends TestCase {
                 'SYSTEM_CATEGORY' => 'devel'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
@@ -284,8 +274,8 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareRenameManufacturer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -294,7 +284,7 @@ class SoftwareUpdateTest extends TestCase {
                 'VERSION'   => '0.85'
              ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $manufacturer     = new Manufacturer();
@@ -327,8 +317,8 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function AddSoftwareVersion() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -338,7 +328,7 @@ class SoftwareUpdateTest extends TestCase {
                 'SYSTEM_CATEGORY' => 'devel'
             ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
@@ -371,8 +361,8 @@ class SoftwareUpdateTest extends TestCase {
     */
    public function ProcessInstalldate() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -401,7 +391,7 @@ class SoftwareUpdateTest extends TestCase {
                 'SYSTEM_CATEGORY'  => 'application'
           ];
 
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert = new PluginGlpiinventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 

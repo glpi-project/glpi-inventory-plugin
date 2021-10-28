@@ -1,44 +1,34 @@
 <?php
-
-/*
- ------------------------------------------------------------------------
-FusionInventory
-Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-------------------------------------------------------------------------
-
-LICENSE
-
-This file is part of FusionInventory project.
-
-FusionInventory is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-FusionInventory is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-------------------------------------------------------------------------
-
-@package   FusionInventory
-@author    David Durieux
-@co-author
-@copyright Copyright (C) 2010-2021 FusionInventory team
-@license   AGPL License 3.0 or (at your option) any later version
-           http://www.gnu.org/licenses/agpl-3.0-standalone.html
-@link      http://www.fusioninventory.org/
-@link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-@since     2013
-
-------------------------------------------------------------------------
-*/
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
+ */
 
 use PHPUnit\Framework\TestCase;
 
@@ -76,18 +66,18 @@ class RemovableMediaImportTest extends TestCase {
       $_SESSION['glpiname'] = 'glpi';
 
       unset($PF_CONFIG['component_removablemedia']);
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $pfConfig->updateValue('component_removablemedia', '1');
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
 
       $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $agents_id = $pfAgent->add($data['inventory']['AGENT']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
       // ** Add
       $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation
@@ -107,18 +97,18 @@ class RemovableMediaImportTest extends TestCase {
       $_SESSION['glpiname'] = 'glpi';
 
       unset($PF_CONFIG['component_removablemedia']);
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $pfConfig->updateValue('component_removablemedia', '0');
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv  = new PluginGlpiinventoryInventoryComputerInventory();
 
       $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
 
       // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginGlpiinventoryAgent();
       $agents_id = $pfAgent->add($data['inventory']['AGENT']);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
+      $_SESSION['plugin_glpiinventory_agents_id'] = $agents_id;
 
       // ** Add
       $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation

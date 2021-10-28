@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -60,7 +50,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
       }
 
       // Delete all unmanaged items
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
       $items = $pfUnmanaged->find();
       foreach ($items as $item) {
          $pfUnmanaged->delete(['id' => $item['id']], true);
@@ -155,7 +145,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
           'name'           => ''
       ];
 
-      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
 
@@ -230,10 +220,10 @@ class NetworkEquipmentLLDPTest extends TestCase {
           'name'           => ''
       ];
 
-      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $pfUnmanaged            = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged            = new PluginGlpiinventoryUnmanaged();
 
       // Nortel switch
       $networkequipments_id = $networkEquipment->add([
@@ -254,7 +244,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
       ]);
 
       $networkports_unknown_id = $networkport->add([
-          'itemtype'       => 'PluginFusioninventoryUnmanaged',
+          'itemtype'       => 'PluginGlpiinventoryUnmanaged',
           'items_id'       => $unmanageds_id,
           'entities_id'    => 0,
           'mac'            => '00:24:b5:bd:c8:01',
@@ -304,7 +294,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
           'name'           => ''
       ];
 
-      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkPort            = new NetworkPort();
 
@@ -365,12 +355,12 @@ class NetworkEquipmentLLDPTest extends TestCase {
           'name'           => ''
       ];
 
-      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
       $networkName            = new NetworkName();
       $iPAddress              = new IPAddress();
-      $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort          = new PluginGlpiinventoryNetworkPort();
 
       // Nortel switch
       $networkequipments_id = $networkEquipment->add([
@@ -466,12 +456,12 @@ class NetworkEquipmentLLDPTest extends TestCase {
           'name'           => ''
       ];
 
-      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
       $networkName            = new NetworkName();
       $iPAddress              = new IPAddress();
-      $pfUnmanaged            = new PluginFusioninventoryUnmanaged();
+      $pfUnmanaged            = new PluginGlpiinventoryUnmanaged();
 
       // Nortel switch
       $networkequipments_id = $networkEquipment->add([
@@ -492,7 +482,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
       ]);
 
       $networkports_unknown_id = $networkport->add([
-          'itemtype'       => 'PluginFusioninventoryUnmanaged',
+          'itemtype'       => 'PluginGlpiinventoryUnmanaged',
           'items_id'       => $unmanageds_id,
           'entities_id'    => 0
       ]);
@@ -523,7 +513,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
                           count($a_networkports),
                           'May have 3 network ports ('.print_r($a_networkports, true).')');
 
-      $a_unknowns = getAllDataFromTable('glpi_plugin_fusioninventory_unmanageds');
+      $a_unknowns = getAllDataFromTable('glpi_plugin_glpiinventory_unmanageds');
 
       $this->assertEquals(1,
                           count($a_unknowns),
@@ -531,7 +521,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
 
       $a_networkport_ref = [
           'items_id'           => $unmanageds_id,
-          'itemtype'           => 'PluginFusioninventoryUnmanaged',
+          'itemtype'           => 'PluginGlpiinventoryUnmanaged',
           'entities_id'        => 0,
           'is_recursive'       => 0,
           'logical_number'     => 0,
@@ -578,7 +568,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
           'name'           => ''
       ];
 
-      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkPort            = new NetworkPort();
 
@@ -641,10 +631,10 @@ class NetworkEquipmentLLDPTest extends TestCase {
           'name'           => 'juniperswitch3'
       ];
 
-      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort          = new PluginGlpiinventoryNetworkPort();
 
       // Cisco switch
       $networkequipments_id = $networkEquipment->add([
@@ -768,11 +758,11 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginFusioninventoryCommunication();
+      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -882,11 +872,11 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginFusioninventoryCommunication();
+      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1034,11 +1024,11 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginFusioninventoryCommunication();
+      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1186,11 +1176,11 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginFusioninventoryCommunication();
+      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1327,11 +1317,11 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginFusioninventoryCommunication();
+      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1461,11 +1451,11 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginFusioninventoryCommunication();
+      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1597,11 +1587,11 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginFusioninventoryCommunication();
+      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,

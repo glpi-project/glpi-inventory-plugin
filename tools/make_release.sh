@@ -1,34 +1,35 @@
 #!/bin/bash
-# /**
-#  * ---------------------------------------------------------------------
-#  * GLPI - Gestionnaire Libre de Parc Informatique
-#  * Copyright (C) 2015-2018 Teclib' and contributors.
-#  *
-#  * http://glpi-project.org
-#  *
-#  * based on GLPI - Gestionnaire Libre de Parc Informatique
-#  * Copyright (C) 2003-2014 by the INDEPNET Development Team.
-#  *
-#  * ---------------------------------------------------------------------
-#  *
-#  * LICENSE
-#  *
-#  * This file is part of GLPI.
-#  *
-#  * GLPI is free software; you can redistribute it and/or modify
-#  * it under the terms of the GNU General Public License as published by
-#  * the Free Software Foundation; either version 2 of the License, or
-#  * (at your option) any later version.
-#  *
-#  * GLPI is distributed in the hope that it will be useful,
-#  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  * GNU General Public License for more details.
-#  *
-#  * You should have received a copy of the GNU General Public License
-#  * along with GLPI. If not, see <http://www.gnu.org/licenses/>.
-#  * ---------------------------------------------------------------------
-# */
+#
+# ---------------------------------------------------------------------
+# GLPI Inventory Plugin
+# Copyright (C) 2021 Teclib' and contributors.
+#
+# http://glpi-project.org
+#
+# based on FusionInventory for GLPI
+# Copyright (C) 2010-2021 by the FusionInventory Development Team.
+#
+# ---------------------------------------------------------------------
+#
+# LICENSE
+#
+# This file is part of GLPI Inventory Plugin.
+#
+# GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+# ---------------------------------------------------------------------
+#
+
 if [ ! "$#" -eq 2 ]
 then
  echo "Usage $0 fi_git_dir release";
@@ -54,17 +55,17 @@ fi
 
 INIT_PWD=$PWD;
 
-if [ -e /tmp/fusioninventory ]
+if [ -e /tmp/glpiinventory ]
 then
  echo "Delete existing temp directory";
-\rm -rf /tmp/fusioninventory;
+\rm -rf /tmp/glpiinventory;
 fi
 
 echo "Copy to  /tmp directory";
-git checkout-index -a -f --prefix=/tmp/fusioninventory/
+git checkout-index -a -f --prefix=/tmp/glpiinventory/
 
 echo "Move to this directory";
-cd /tmp/fusioninventory;
+cd /tmp/glpiinventory;
 
 echo "Check version"
 if grep --quiet $RELEASE setup.php; then
@@ -73,21 +74,15 @@ else
   echo "$RELEASE has not been found in setup.php. Exiting."
   exit 1;
 fi
-if grep --quiet $RELEASE fusioninventory.xml; then
-  echo "$RELEASE found in fusioninventory.xml, OK."
+if grep --quiet $RELEASE glpiinventory.xml; then
+  echo "$RELEASE found in glpiinventory.xml, OK."
 else
-  echo "$RELEASE has not been found in fusioninventory.xml. Exiting."
-  exit 1;
-fi
-if grep --quiet $RELEASE js/footer.js; then
-  echo "$RELEASE found in js/footer.js, OK."
-else
-  echo "$RELEASE has not been found in js/footer.js. Exiting."
+  echo "$RELEASE has not been found in glpiinventory.xml. Exiting."
   exit 1;
 fi
 
 echo "Check XML WF"
-if ! xmllint --noout fusioninventory.xml; then
+if ! xmllint --noout glpiinventory.xml; then
    echo "XML is *NOT* well formed. Exiting."
    exit 1;
 fi
@@ -97,19 +92,24 @@ composer install --no-dev --optimize-autoloader --prefer-dist --quiet
 
 echo "Set version and official release"
 sed \
-   -e 's/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0"/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1"/' \
+   -e 's/"PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE", "0"/"PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE", "1"/' \
    -e 's/ SNAPSHOT//' \
    -i '' setup.php
 
 echo "Minify stylesheets and javascripts"
-$INIT_PWD/vendor/bin/robo minify
+find /tmp/glpiinventory/css /tmp/glpiinventory/lib \( -iname "*.css" ! -iname "*.min.css" \) \
+    -exec sh -c 'echo "> {}" && "'$INIT_PWD'"/../../node_modules/.bin/csso {} --output $(dirname {})/$(basename {} ".css").min.css' \;
+
+echo "Minify javascripts"
+find /tmp/glpiinventory/js /tmp/glpiinventory/lib \( -iname "*.js" ! -iname "*.min.js" \) \
+    -exec sh -c 'echo "> {}" && "'$INIT_PWD'"/../../node_modules/.bin/terser {} --mangle --output $(dirname {})/$(basename {} ".js").min.js' \;
 
 echo "Compile locale files"
 ./tools/update_mo.pl
 
 echo "Delete various scripts and directories"
+\rm -rf .github;
 \rm -rf vendor;
-\rm -rf RoboFile.php;
 \rm -rf tools;
 \rm -rf phpunit;
 \rm -rf tests;
@@ -123,17 +123,17 @@ echo "Delete various scripts and directories"
 \rm -rf ISSUE_TEMPLATE.md;
 \rm -rf PULL_REQUEST_TEMPLATE.md;
 \rm -rf .tx;
-\rm -rf fusioninventory.xml;
+\rm -rf glpiinventory.xml;
 \rm -rf screenshots;
 \find pics/ -type f -name "*.eps" -exec rm -rf {} \;
 
 echo "Creating tarball";
 cd ..;
-tar cjf "fusioninventory-$RELEASE.tar.bz2" fusioninventory
+tar cjf "glpiinventory-$RELEASE.tar.bz2" glpiinventory
 
 cd $INIT_PWD;
 
 echo "Deleting temp directory";
-\rm -rf /tmp/fusioninventory;
+\rm -rf /tmp/glpiinventory;
 
 echo "The Tarball is in the /tmp directory";

@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Johan Cwiklinski
-   @co-author David Durieux
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2016
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -70,8 +60,8 @@ class ComputerDeviceBatteryTest extends TestCase {
             "name"   => "pc001",
             "serial" => "ggheb7ne7"
          ],
-         "fusioninventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+         "inventorycomputer" => [
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],
@@ -132,11 +122,11 @@ class ComputerDeviceBatteryTest extends TestCase {
     */
    public function BatteryWithFullInfos() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory = $this->a_computer1;
@@ -218,7 +208,8 @@ class ComputerDeviceBatteryTest extends TestCase {
          'serial'             => '0E52B',
          'otherserial'        => null,
          'locations_id'       => 0,
-         'states_id'          => 0
+         'states_id'          => 0,
+         'real_capacity'      => 31478
       ];
 
       $this->assertEquals(
@@ -234,11 +225,11 @@ class ComputerDeviceBatteryTest extends TestCase {
     */
    public function BatteryWithoutFullInfos() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $computer->getFromDBByCrit(['serial' => 'ggheb7ne7']);
@@ -332,7 +323,8 @@ class ComputerDeviceBatteryTest extends TestCase {
          'serial'             => '00000000',
          'otherserial'        => null,
          'locations_id'       => 0,
-         'states_id'          => 0
+         'states_id'          => 0,
+         'real_capacity'      => 0
       ];
 
       $this->assertEquals(

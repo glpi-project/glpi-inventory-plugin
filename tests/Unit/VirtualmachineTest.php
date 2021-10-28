@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2014
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -61,11 +51,11 @@ class VirtualmachineTest extends TestCase {
    function __construct() {
       parent::__construct();
       $a_inventory = [
-          'fusioninventorycomputer' => [
+          'inventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => date('Y-m-d H:i:s'),
+              'last_inventory_update'     => date('Y-m-d H:i:s'),
               'last_boot'                       => '2018-06-11 08:03:32',
           ],
           'soundcard'      => [],
@@ -106,10 +96,10 @@ class VirtualmachineTest extends TestCase {
           'serial'                           => 'XB63J7D',
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+          'contact'                          => 'username'
       ];
-      $a_inventory['fusioninventorycomputer'] = [
-          'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+      $a_inventory['inventorycomputer'] = [
+          'last_inventory_update' => date('Y-m-d H:i:s'),
           'serialized_inventory'        => 'something'
       ];
 
@@ -134,20 +124,20 @@ class VirtualmachineTest extends TestCase {
     */
    public function AddComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION['glpishowallentities'] = 1;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $a_inventory = $this->computer_inventory;
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
-      $serialized = gzcompress(serialize($a_inventory));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $this->items_id = $computer->add(['serial' => 'XB63J7D',
@@ -211,13 +201,13 @@ class VirtualmachineTest extends TestCase {
 
       $a_inventory['virtualmachine'][0]['ram'] = '2048';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
+      $pfFormatconvert  = new PluginGlpiinventoryFormatconvert();
 
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 1);
 
-      $serialized = gzcompress(serialize($a_inventory));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
+      $serialized = base64_encode(gzcompress(serialize($a_inventory)));
+      $a_inventory['inventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
       $computer = new Computer();

@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the configuration of the plugin.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the configuration of the plugin.
  */
-class PluginFusioninventoryConfig extends CommonDBTM {
+class PluginGlpiinventoryConfig extends CommonDBTM {
 
    /**
     * Initialize the displaylist public variable
@@ -65,7 +51,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_configuration';
+   static $rightname = 'plugin_glpiinventory_configuration';
 
    /**
     * Define number to the action 'clean' of agents
@@ -83,18 +69,18 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Initialize config values of fusioninventory plugin
+    * Initialize config values of  plugin
     *
     * @param boolean $getOnly
     * @return array
     */
    function initConfigModule($getOnly = false) {
 
-      $pfSetup  = new PluginFusioninventorySetup();
-      $users_id = $pfSetup->createFusionInventoryUser();
+      $pfSetup  = new PluginGlpiinventorySetup();
+      $users_id = $pfSetup->createGlpiInventoryUser();
       $input    = [];
 
-      $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
+      $input['version']                = PLUGIN_GLPI_INVENTORY_VERSION;
       $input['ssl_only']               = '0';
       $input['delete_task']            = '20';
       $input['inventory_frequence']    = '24';
@@ -146,7 +132,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                      DIRECTORY_SEPARATOR,
                      [
                         GLPI_PLUGIN_DOC_DIR,
-                        'fusioninventory',
+                        'glpiinventory',
                         'upload'
                      ]
                   )
@@ -216,23 +202,23 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $ong        = [];
       $moduleTabs = [];
-      $this->addStandardTab("PluginFusioninventoryConfig", $ong, $options);
-      $this->addStandardTab("PluginFusioninventoryAgentmodule", $ong, $options);
-      $this->addStandardTab("PluginFusioninventoryLock", $ong, $options);
+      $this->addStandardTab("PluginGlpiinventoryConfig", $ong, $options);
+      $this->addStandardTab("PluginGlpiinventoryAgentmodule", $ong, $options);
+      $this->addStandardTab("PluginGlpiinventoryLock", $ong, $options);
 
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
-         $fusionTabs = $ong;
+      if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
+         $plugin_tabs = $ong;
          $moduleTabForms =
-                  $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+                  $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
             foreach ($moduleTabForms as $module=>$form) {
                if ($plugin->isActivated($module)) {
                   $this->addStandardTab($form[key($form)]['class'], $ong, $options);
                }
             }
-            $moduleTabs = array_diff($ong, $fusionTabs);
+            $moduleTabs = array_diff($ong, $plugin_tabs);
          }
-         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+         $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabs'] = $moduleTabs;
       }
       return $ong;
    }
@@ -250,9 +236,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       if ($item->getType()==__CLASS__) {
          return [
              __('General setup'),
-             __('Computer Inventory', 'fusioninventory'),
-             __('Network Inventory', 'fusioninventory'),
-             __('Package management', 'fusioninventory')
+             __('Computer Inventory', 'glpiinventory'),
+             __('Network Inventory', 'glpiinventory'),
+             __('Package management', 'glpiinventory')
          ];
       }
       return '';
@@ -272,7 +258,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       switch ($tabnum) {
 
          case 0:
-            $item->showForm();
+            $item->showConfigForm();
             return true;
 
          case 1:
@@ -315,7 +301,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Give state of a config field for a fusioninventory plugin
+    * Give state of a config field for plugin
     *
     * @param string $name name in configuration
     * @return boolean
@@ -335,16 +321,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options = []) {
+   function showConfigForm($options = []) {
 
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('SSL-only for agent', 'fusioninventory')."</td>";
+      echo "<td>".__('SSL-only for agent', 'glpiinventory')."</td>";
       echo "<td width='20%'>";
       Dropdown::showYesNo("ssl_only", $this->isFieldActive('ssl_only'));
       echo "</td>";
-      echo "<td>".__('Inventory frequency (in hours)', 'fusioninventory')."</td>";
+      echo "<td>".__('Inventory frequency (in hours)', 'glpiinventory')."</td>";
       echo "<td width='20%'>";
       Dropdown::showNumber("inventory_frequence",
                            [
@@ -357,7 +343,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Delete tasks logs after', 'fusioninventory')."</td>";
+      echo "<td>".__('Delete tasks logs after', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showNumber("delete_task",
                            [
@@ -369,19 +355,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       );
       echo "</td>";
 
-      echo "<td>".__('Agent port', 'fusioninventory')."</td>";
+      echo "<td>".__('Agent port', 'glpiinventory')."</td>";
       echo "<td>";
-      echo "<input type='text' name='agent_port' value='".$this->getValue('agent_port')."'/>";
+      echo "<input type='text' class='form-control' name='agent_port' value='".$this->getValue('agent_port')."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Extra-debug', 'fusioninventory')."</td>";
+      echo "<td>".__('Extra-debug', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->isFieldActive('extradebug'));
       echo "</td>";
 
-      echo "<td>".__('Re-prepare successful jobs', 'fusioninventory')."</td>";
+      echo "<td>".__('Re-prepare successful jobs', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showYesNo("reprepare_job", $this->isFieldActive('reprepare_job'));
       echo "</td>";
@@ -389,7 +375,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan =2></td>";
-      echo "<td>".__('Maximum number of agents to wake up in a task', 'fusioninventory')."</td>";
+      echo "<td>".__('Maximum number of agents to wake up in a task', 'glpiinventory')."</td>";
       echo "<td width='20%'>";
       Dropdown::showNumber("wakeup_agent_max",
                            [
@@ -402,9 +388,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan=4 >" . __('Update agents', 'fusioninventory') . "</th></tr>";
+      echo "<th colspan=4 >" . __('Update agents', 'glpiinventory') . "</th></tr>";
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __('Update agents not have contacted server since (in days)', 'fusioninventory') . "</td>";
+      echo "<td>" . __('Update agents not have contacted server since (in days)', 'glpiinventory') . "</td>";
       echo "<td width='20%'>";
       Dropdown::showNumber("agents_old_days", [
          'value' => $this->getValue('agents_old_days'),
@@ -439,7 +425,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'><td colspan=2></td>";
       echo "<td>";
       echo "<span id='blocaction1' style='display:none'>";
-      echo __('Change the status', 'fusioninventory');
+      echo __('Change the status', 'glpiinventory');
       echo "</span>";
       echo "</td>";
       echo "<td width='20%'>";
@@ -452,39 +438,39 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan=4 >".__('Automatic inventory number', 'fusioninventory')."<i class='fa fa-magic' title='".__s('You can define an autofill template')."'></i></th>";
+      echo "<th colspan=4 >".__('Automatic inventory number', 'glpiinventory')."<i class='fa fa-magic' title='".__s('You can define an autofill template')."'></i></th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Computer')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_computer' value='".$this->getValue('auto_inventory_number_computer')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_computer' value='".$this->getValue('auto_inventory_number_computer')."'/>";
       echo "</td>";
       echo "<td>".__('Monitor')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_monitor' value='".$this->getValue('auto_inventory_number_monitor')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_monitor' value='".$this->getValue('auto_inventory_number_monitor')."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Network equipment', 'fusioninventory')."</td>";
+      echo "<td>".__('Network equipment', 'glpiinventory')."</td>";
       echo "<td>";
       echo "<input type='text' name='auto_inventory_number_networkequipment' value='".$this->getValue('auto_inventory_number_networkequipment')."'/>";
       echo "</td>";
       echo "<td>".__('Peripheral')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_peripheral' value='".$this->getValue('auto_inventory_number_peripheral')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_peripheral' value='".$this->getValue('auto_inventory_number_peripheral')."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Phone')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_phone' value='".$this->getValue('auto_inventory_number_phone')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_phone' value='".$this->getValue('auto_inventory_number_phone')."'/>";
       echo "</td>";
       echo "<td>".__('Printer')."</td>";
       echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_printer' value='".$this->getValue('auto_inventory_number_printer')."'/>";
+      echo "<input type='text' class='form-control' name='auto_inventory_number_printer' value='".$this->getValue('auto_inventory_number_printer')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -505,10 +491,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       switch ($action) {
 
          case self::ACTION_STATUS:
-              return __('Change the status', 'fusioninventory');
+              return __('Change the status', 'glpiinventory');
 
          case self::ACTION_CLEAN:
-              return __('Clean agents', 'fusioninventory');
+              return __('Clean agents', 'glpiinventory');
 
       }
    }
@@ -522,7 +508,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function showFormInventory($options = []) {
 
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
 
       $pfConfig->fields['id'] = 1;
       if (!isset($options['formtitle'])) {
@@ -535,7 +521,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo __('Import options', 'fusioninventory');
+      echo __('Import options', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
 
@@ -564,7 +550,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
 
       echo "<td>";
-      echo __('Antivirus', 'fusioninventory');
+      echo __('Antivirus', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_antivirus",
@@ -579,7 +565,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("location",
                               ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'fusioninventory')],
+                                    "1"=>__('Inventory tag', 'glpiinventory')],
                               ['value'=>$pfConfig->getValue('location')]);
       echo "</td>";
 
@@ -589,13 +575,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("group",
                               ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'fusioninventory')],
+                                    "1"=>__('Inventory tag', 'glpiinventory')],
                               ['value'=>$pfConfig->getValue('group')]);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Default status', 'fusioninventory')."</td>";
+      echo "<td>".__('Default status', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::show('State',
                      ['name'   => 'states_id_default',
@@ -617,12 +603,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("otherserial",
                               ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'fusioninventory')],
+                                    "1"=>__('Inventory tag', 'glpiinventory')],
                               ['value'=>$pfConfig->getValue('otherserial')]);
       echo "</td>";
 
       echo "<td>";
-      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'fusioninventory');
+      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'glpiinventory');
       echo "</td>";
 
       echo "<td>";
@@ -632,13 +618,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Manage operating system name:', 'fusioninventory');
+      echo __('Manage operating system name:', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("manage_osname", $pfConfig->getValue('manage_osname'));
       echo "</td>";
       echo "<td>";
-      echo __('Import monitor on serial partial match:', 'fusioninventory');
+      echo __('Import monitor on serial partial match:', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_monitor_on_partial_sn", $pfConfig->getValue('import_monitor_on_partial_sn'));
@@ -697,7 +683,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
 
       echo "<td>";
-      echo __('Virtual network card', 'fusioninventory');
+      echo __('Virtual network card', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkcardvirtual",
@@ -715,7 +701,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
 
       echo "<td>";
-      echo __('Network drives', 'fusioninventory');
+      echo __('Network drives', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkdrive",
@@ -744,7 +730,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo _n('Removable medias', 'Removable medias', 2, "fusioninventory");
+      echo _n('Removable medias', 'Removable medias', 2, "glpiinventory");
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_removablemedia",
@@ -789,7 +775,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function showFormNetworkInventory($options = []) {
       global $CFG_GLPI;
 
-      $pfConfig     = new PluginFusioninventoryConfig();
+      $pfConfig     = new PluginGlpiinventoryConfig();
       $pfsnmpConfig = new self();
 
       $pfsnmpConfig->fields['id'] = 1;
@@ -797,12 +783,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo __('Network options', 'fusioninventory');
+      echo __('Network options', 'glpiinventory');
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Default status', 'fusioninventory')."</td>";
+      echo "<td>".__('Default status', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::show('State',
                      ['name'   => 'states_id_snmp_default',
@@ -810,8 +796,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td><td colspan='2'></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
-              "(".strtolower(__('Network discovery', 'fusioninventory')).")</td>";
+      echo "<td>".__('Threads number', 'glpiinventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'glpiinventory')).")</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkdiscovery", [
              'value' => $pfConfig->getValue('threads_networkdiscovery'),
@@ -820,8 +806,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       );
       echo "</td>";
 
-      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
-              "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")</td>";
+      echo "<td>".__('Threads number', 'glpiinventory')."&nbsp;".
+              "(".strtolower(__('Network inventory (SNMP)', 'glpiinventory')).")</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkinventory", [
              'value' => $pfConfig->getValue('threads_networkinventory'),
@@ -832,8 +818,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
-              "(".strtolower(__('Network discovery', 'fusioninventory')).")</td>";
+      echo "<td>".__('SNMP timeout', 'glpiinventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'glpiinventory')).")</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkdiscovery", [
              'value' => $pfConfig->getValue('timeout_networkdiscovery'),
@@ -841,8 +827,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'max'   => 60]
       );
       echo "</td>";
-      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
-              "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")</td>";
+      echo "<td>".__('SNMP timeout', 'glpiinventory')."&nbsp;".
+              "(".strtolower(__('Network inventory (SNMP)', 'glpiinventory')).")</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkinventory", [
              'value' => $pfConfig->getValue('timeout_networkinventory'),
@@ -855,12 +841,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $options['candel'] = false;
       $pfsnmpConfig->showFormButtons($options);
 
-      $pfConfigLogField = new PluginFusioninventoryConfigLogField();
-      $pfConfigLogField->showForm([
-          'target'=>Plugin::getWebDir('fusioninventory')."/front/configlogfield.form.php"]
+      $pfConfigLogField = new PluginGlpiinventoryConfigLogField();
+      $pfConfigLogField->showConfigForm([
+          'target'=>Plugin::getWebDir('glpiinventory')."/front/configlogfield.form.php"]
           );
 
-      $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
+      $pfNetworkporttype = new PluginGlpiinventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
 
       return true;
@@ -875,33 +861,33 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function showFormDeploy($options = []) {
 
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginGlpiinventoryConfig();
       $pfConfig->fields['id'] = 1;
       $options['colspan'] = 1;
       $pfConfig->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Root folder for sending files from server', 'fusioninventory')."</td>";
+      echo "<td>".__('Root folder for sending files from server', 'glpiinventory')."</td>";
       echo "<td>";
-      echo "<input type='text' name='server_upload_path' value='".
+      echo "<input type='text' class='form-control' name='server_upload_path' value='".
          $pfConfig->getValue('server_upload_path')."' size='60' />";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr>";
-      echo "<td>".__('Use this GLPI server as a mirror server', 'fusioninventory')."</td>";
+      echo "<td>".__('Use this GLPI server as a mirror server', 'glpiinventory')."</td>";
       echo "<td>";
       Dropdown::showYesNo("server_as_mirror", $pfConfig->getValue('server_as_mirror'));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr>";
-      echo "<td>".__('Match mirrors to agents', 'fusioninventory')."</td>";
+      echo "<td>".__('Match mirrors to agents', 'glpiinventory')."</td>";
       echo "<td>";
       $mirror_options = [
-         PluginFusioninventoryDeployMirror::MATCH_LOCATION => __('with location', 'fusioninventory'),
-         PluginFusioninventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'fusioninventory'),
-         PluginFusioninventoryDeployMirror::MATCH_BOTH     => __('with both', 'fusioninventory')
+         PluginGlpiinventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
+         PluginGlpiinventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'glpiinventory'),
+         PluginGlpiinventoryDeployMirror::MATCH_BOTH     => __('with both', 'glpiinventory')
       ];
       Dropdown::showFromArray('mirror_match',
                               $mirror_options,
@@ -910,7 +896,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr>";
-      echo "<td>".__('Delete successful on demand tasks after (in days)', 'fusioninventory')."</td>";
+      echo "<td>".__('Delete successful on demand tasks after (in days)', 'glpiinventory')."</td>";
       echo "<td width='20%'>";
       $toadd = [-1 => __('Never')];
       Dropdown::showNumber("clean_on_demand_tasks", [
@@ -1016,9 +1002,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function loadCache() {
       global $DB, $PF_CONFIG;
 
-      if ($DB->tableExists('glpi_plugin_fusioninventory_configs')) {
+      if ($DB->tableExists('glpi_plugin_glpiinventory_configs')) {
          $PF_CONFIG = [];
-         foreach ($DB->request('glpi_plugin_fusioninventory_configs') as $data) {
+         foreach ($DB->request('glpi_plugin_glpiinventory_configs') as $data) {
             $PF_CONFIG[$data['type']] = $data['value'];
          }
       }

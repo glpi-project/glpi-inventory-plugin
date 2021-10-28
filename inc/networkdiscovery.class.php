@@ -1,48 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage network discovery prepare the task and give
- * the configuration to the agent.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage network discovery prepare the task and give the configuration to the
  * agent.
  */
-class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommunication {
+class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunication {
 
 
    /**
@@ -66,18 +51,18 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
     */
    function prepareRun($taskjobs_id) {
 
-      $pfTask = new PluginFusioninventoryTask();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $pfIPRange = new PluginFusioninventoryIPRange();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTask = new PluginGlpiinventoryTask();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
+      $pfIPRange = new PluginGlpiinventoryIPRange();
+      $pfAgent = new PluginGlpiinventoryAgent();
 
       $uniqid = uniqid();
 
       $pfTaskjob->getFromDB($taskjobs_id);
-      $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
 
       $communication = $pfTask->fields['communication'];
 
@@ -140,7 +125,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
       if ($dynagent == '2') {
          // Dynamic with subnet
-         $pfSnmpinventory = new PluginFusioninventoryNetworkinventory();
+         $pfSnmpinventory = new PluginGlpiinventoryNetworkinventory();
          $taskvalid = 0;
          foreach ($a_subnet_nbip as $iprange_id=>$nbips) {
             //$maxagentpossible = $nbips/10;
@@ -155,24 +140,24 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
             if (!isset($a_agentListComplete) or empty($a_agentListComplete)) {
                $a_input = [];
-               $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-               $a_input['plugin_fusioninventory_agents_id'] = 0;
+               $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
+               $a_input['plugin_glpiinventory_agents_id'] = 0;
                $a_input['state']        = 1;
-               $a_input['itemtype']     = 'PluginFusioninventoryIPRange';
+               $a_input['itemtype']     = 'PluginGlpiinventoryIPRange';
                $a_input['items_id']     = $iprange_id;
                $a_input['uniqid']       = $uniqid;
                $a_input['execution_id'] = $task->fields['execution_id'];
 
                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                   //Add log of taskjob
-                  $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
+                  $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
                   $a_input['state'] = 7;
                   $a_input['date'] = date("Y-m-d H:i:s");
                   $pfTaskjoblog->add($a_input);
 
                $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                                    0,
-                                                   'PluginFusioninventoryIPRange',
+                                                   'PluginGlpiinventoryIPRange',
                                                    1,
                                                    "Unable to find agent to run this job");
                $input_taskjob = [];
@@ -187,13 +172,13 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
                foreach ($a_agentListComplete as $agent_id) {
 
-                  $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                  $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
                   //Add jobstate and put status (waiting on server = 0)
                   $a_input = [];
-                  $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+                  $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
                   $a_input['state'] = 0;
-                  $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
-                  $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
+                  $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
+                  $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
                   $a_input['uniqid'] = $uniqid;
                   $a_input['execution_id'] = $task->fields['execution_id'];
 
@@ -206,7 +191,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   $taskvalid++;
                   $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                      //Add log of taskjob
-                     $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
+                     $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
                      $a_input['state'] = 7;
                      $a_input['date'] = date("Y-m-d H:i:s");
                      $pfTaskjoblog->add($a_input);
@@ -223,29 +208,29 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             }
          }
          if ($taskvalid == "0") {
-            $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+            $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
          }
          // *** Add jobstate
       } else if (count($a_agentlist) == 0) {
          $a_input = [];
-         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
-         $a_input['plugin_fusioninventory_agents_id'] = 0;
-         $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
+         $a_input['plugin_glpiinventory_agents_id'] = 0;
+         $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
          $a_input['execution_id'] = $task->fields['execution_id'];
 
          $Taskjobstates_id = $pfTaskjobstate->add($a_input);
             //Add log of taskjob
-            $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
+            $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
             $a_input['state'] = 7;
             $a_input['date'] = date("Y-m-d H:i:s");
             $pfTaskjoblog->add($a_input);
 
          $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                              0,
-                                             'PluginFusioninventoryIPRange',
+                                             'PluginGlpiinventoryIPRange',
                                              1,
                                              "Unable to find agent to run this job");
          $input_taskjob = [];
@@ -263,10 +248,10 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
             //Add jobstate and put status (waiting on server = 0)
             $a_input = [];
-            $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+            $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 0;
-            $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
-            $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
+            $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
+            $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
             $a_input['uniqid'] = $uniqid;
             $a_input['execution_id'] = $task->fields['execution_id'];
 
@@ -278,7 +263,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   $s = $pfIPRange->getIp2long($pfIPRange->fields['ip_start']);
                   $e = $pfIPRange->getIp2long($pfIPRange->fields['ip_end']);
                   if ($communication == "push") {
-                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                     $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
                   }
 
                   $a_input['items_id'] = $iprange_id;
@@ -296,7 +281,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   }
                   $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                      //Add log of taskjob
-                     $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
+                     $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
                      $a_input['state'] = 7;
                      $a_input['date'] = date("Y-m-d H:i:s");
                      $pfTaskjoblog->add($a_input);
@@ -316,20 +301,20 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
    /**
     * When agent contact server, this function send job data to agent
     *
-    * @param object $jobstate PluginFusioninventoryTaskjobstate instance
+    * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
     * @return string
     */
    function run($jobstate) {
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfIPRange = new PluginFusioninventoryIPRange();
-      $pfToolbox = new PluginFusioninventoryToolbox();
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfAgent = new PluginGlpiinventoryAgent();
+      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+      $pfIPRange = new PluginGlpiinventoryIPRange();
+      $pfToolbox = new PluginGlpiinventoryToolbox();
+      $pfConfig = new PluginGlpiinventoryConfig();
 
-      $pfAgent->getFromDB($jobstate->fields['plugin_fusioninventory_agents_id']);
+      $pfAgent->getFromDB($jobstate->fields['plugin_glpiinventory_agents_id']);
 
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
@@ -356,7 +341,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $changestate = 0;
       $taskjobstatedatas = $jobstate->fields;
       $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-      $pfTaskjob->getFromDB($taskjobstatedatas['plugin_fusioninventory_taskjobs_id']);
+      $pfTaskjob->getFromDB($taskjobstatedatas['plugin_glpiinventory_taskjobs_id']);
       $pfTaskjobstate->getFromDB($taskjobstatedatas['id']);
       $pfIPRange->getFromDB($taskjobstatedatas['items_id']);
 
@@ -384,7 +369,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
          $pfTaskjoblog->addTaskjoblog($pfTaskjobstate->fields['id'],
                                  '0',
-                                 'PluginFusioninventoryAgent',
+                                 'PluginGlpiinventoryAgent',
                                  '1',
                                  $pfAgent->fields["threads_networkdiscovery"].' threads '.
                                  $pfAgent->fields["timeout_networkdiscovery"].' timeout'
@@ -397,12 +382,12 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
              0,
              "Merged with ".$changestate);
       }
-      $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
+      $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_ConfigSecurity();
       $a_auths = $pfIPRange_ConfigSecurity->find(
-            ['plugin_fusioninventory_ipranges_id' => $pfIPRange->fields['id']],
+            ['plugin_glpiinventory_ipranges_id' => $pfIPRange->fields['id']],
             ['rank']);
       foreach ($a_auths as $dataAuth) {
-         $pfToolbox->addAuth($sxml_option, $dataAuth['plugin_fusioninventory_configsecurities_id']);
+         $pfToolbox->addAuth($sxml_option, $dataAuth['plugin_glpiinventory_configsecurities_id']);
       }
       return $this->message;
    }

@@ -1,49 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage and display extended information of
- * network equipments.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Vincent Mazzoni
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage and display extended information of network equipments.
  */
-class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
+class PluginGlpiinventoryNetworkEquipment extends PluginGlpiinventoryItem {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_networkequipment';
+   static $rightname = 'plugin_glpiinventory_networkequipment';
 
    public $itemtype  = 'NetworkEquipment';
 
@@ -73,7 +57,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if ($this->canView()) {
-         return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
+         return self::createTabEntry(__('GLPI Inventory SNMP', 'glpiinventory'));
       }
       return '';
    }
@@ -92,12 +76,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       if ($item->fields['id'] > 0) {
          $pfNetworkEquipment = new self();
          $options = [
-            'target' => Plugin::getWebDir('fusioninventory').'/front/switch_info.form.php'
+            'target' => Plugin::getWebDir('glpiinventory').'/front/switch_info.form.php'
          ];
 
          switch (Session::getActiveTab('NetworkEquipment')) {
-            case 'PluginFusioninventoryNetworkEquipment$1':
-               $pfNetworkEquipment->showForm($item, $options);
+            case 'PluginGlpiinventoryNetworkEquipment$1':
+               $pfNetworkEquipment->showItemForm($item, $options);
                break;
 
             case 'NetworkPort$1':
@@ -130,12 +114,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
    function showExtendedInfos(CommonDBTM $item, $options = []) {
       global $DB, $CFG_GLPI;
 
-      if (!Session::haveRight('plugin_fusioninventory_networkequipment', READ)) {
+      if (!Session::haveRight('plugin_glpiinventory_networkequipment', READ)) {
          NetworkPort::showForItem($item);
          return;
       }
       $canedit = false;
-      if (Session::haveRight('plugin_fusioninventory_networkequipment', UPDATE)) {
+      if (Session::haveRight('plugin_glpiinventory_networkequipment', UPDATE)) {
          $canedit = true;
       }
 
@@ -144,7 +128,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          // Add in database if not exist
          $input = [];
          $input['networkequipments_id'] = $id;
-         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
+         $_SESSION['glpi_plugins_glpiinventory_table'] = 'glpi_networkequipments';
          $ID_tn = $this->add($input);
          $this->getFromDB($ID_tn);
       } else {
@@ -153,15 +137,15 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          }
       }
 
-      if (!isset($_SESSION['plugin_fusioninventory_networkportview'])) {
-         $_SESSION['plugin_fusioninventory_networkportview'] = 'fusioninventory';
+      if (!isset($_SESSION['plugin_glpiinventory_networkportview'])) {
+         $_SESSION['plugin_glpiinventory_networkportview'] = 'glpiinventory';
       }
 
-      // Display glpi network port view if no fusionnetworkport
-      $query = "SELECT glpi_plugin_fusioninventory_networkports.id
-      FROM glpi_plugin_fusioninventory_networkports
+      // Display glpi network port view if no plugin networkport
+      $query = "SELECT glpi_plugin_glpiinventory_networkports.id
+      FROM glpi_plugin_glpiinventory_networkports
       LEFT JOIN glpi_networkports
-      ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
+      ON glpi_plugin_glpiinventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
          AND glpi_networkports.itemtype='NetworkEquipment'";
       $result = $DB->query($query);
@@ -170,19 +154,19 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          return;
       }
 
-      echo "<form action='".Plugin::getWebDir('fusioninventory')."/front/networkport.display.php' method='post'>";
-      echo __('Display the view', 'fusioninventory');
-      echo ' <i>'.$_SESSION['plugin_fusioninventory_networkportview']."</i>. ";
-      echo __('If you prefer, you can display the view', 'fusioninventory');
+      echo "<form action='".Plugin::getWebDir('glpiinventory')."/front/networkport.display.php' method='post'>";
+      echo __('Display the view', 'glpiinventory');
+      echo ' <i>'.$_SESSION['plugin_glpiinventory_networkportview']."</i>. ";
+      echo __('If you prefer, you can display the view', 'glpiinventory');
       echo ' ';
-      if ($_SESSION['plugin_fusioninventory_networkportview'] == 'fusioninventory') {
+      if ($_SESSION['plugin_glpiinventory_networkportview'] == 'glpiinventory') {
          echo '<input type="submit" class="submit" name="selectview" value="glpi" />';
       } else {
-         echo '<input type="submit" class="submit" name="selectview" value="fusioninventory" />';
+         echo '<input type="submit" class="submit" name="selectview" value="glpiinventory" />';
       }
       Html::closeForm();
 
-      if ($_SESSION['plugin_fusioninventory_networkportview'] == 'glpi') {
+      if ($_SESSION['plugin_glpiinventory_networkportview'] == 'glpi') {
          NetworkPort::showForItem($item);
          return;
       }
@@ -218,10 +202,10 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       // * Get all ports compose tha aggregat
       $a_aggregated_ports = [];
-      $query = "SELECT *, glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
-      FROM glpi_plugin_fusioninventory_networkports
+      $query = "SELECT *, glpi_plugin_glpiinventory_networkports.mac as ifmacinternal
+      FROM glpi_plugin_glpiinventory_networkports
       LEFT JOIN glpi_networkports
-      ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
+      ON glpi_plugin_glpiinventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
          AND glpi_networkports.itemtype='NetworkEquipment'
          AND `instantiation_type`='NetworkPortAggregate'
@@ -249,11 +233,11 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       $query = "SELECT `glpi_networkports`.`id`, `instantiation_type`,
          `ifdescr`,
-         `glpi_plugin_fusioninventory_networkports`.`id` as `fusionid`
-      FROM glpi_plugin_fusioninventory_networkports
+         `glpi_plugin_glpiinventory_networkports`.`id` as `fusionid`
+      FROM glpi_plugin_glpiinventory_networkports
 
       LEFT JOIN glpi_networkports
-         ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
+         ON glpi_plugin_glpiinventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
          AND `glpi_networkports`.`itemtype`='NetworkEquipment'
          ".$where."
@@ -271,7 +255,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          $nbcol++;
       }
 
-      $a_pref = DisplayPreference::getForTypeUser('PluginFusioninventoryNetworkport',
+      $a_pref = DisplayPreference::getForTypeUser('PluginGlpiinventoryNetworkport',
                                                   Session::getLoginUserID());
 
       echo "<table class='tab_cadre' cellpadding='".$nbcol."' width='1100'>";
@@ -300,12 +284,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                   foreach ($a_ports as $port_id) {
                      $query_agp = "
                      SELECT `glpi_networkports`.`id`, `instantiation_type`,
-                        `glpi_plugin_fusioninventory_networkports`.`id` as `fusionid`
+                        `glpi_plugin_glpiinventory_networkports`.`id` as `fusionid`
 
-                     FROM glpi_plugin_fusioninventory_networkports
+                     FROM glpi_plugin_glpiinventory_networkports
 
                      LEFT JOIN glpi_networkports
-                     ON glpi_plugin_fusioninventory_networkports.networkports_id =
+                     ON glpi_plugin_glpiinventory_networkports.networkports_id =
                            glpi_networkports.id
                      WHERE `glpi_networkports`.`id`='".$port_id."'
                      LIMIT 1 ";
@@ -379,7 +363,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       $NetworkPort = new NetworkPort();
 
       $a_ports = $NetworkPort->find(
-            ['itemtype' => 'PluginFusioninventoryUnmanaged',
+            ['itemtype' => 'PluginGlpiinventoryUnmanaged',
              'items_id' => $items_id]);
       echo "<table width='100%' class='tab_cadre' cellpadding='5'>";
       foreach ($a_ports as $a_port) {
@@ -390,7 +374,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                $link = '';
                $link1 = '';
                $link2 = '';
-               if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
+               if ($NetworkPort->fields['itemtype'] == 'PluginGlpiinventoryUnmanaged') {
                   $classname = $NetworkPort->fields['itemtype'];
                   $item = new $classname;
                   $item->getFromDB($NetworkPort->fields['items_id']);
@@ -398,8 +382,8 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                   $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
                                       $item->getLink());
                   // Get ips
-                  $a_ips = PluginFusioninventoryToolbox::getIPforDevice(
-                             'PluginFusioninventoryUnmanaged',
+                  $a_ips = PluginGlpiinventoryToolbox::getIPforDevice(
+                             'PluginGlpiinventoryUnmanaged',
                              $item->getID()
                           );
                   $link2 = str_replace($item->getName(0), implode(", ", $a_ips),
@@ -463,12 +447,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       global $DB;
 
       $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_networkequipments`
+                FROM `glpi_plugin_glpiinventory_networkequipments`
                 WHERE `networkequipments_id`='".$id."';";
       $result = $DB->query($query);
       if ($DB->numrows($result) == "0") {
          $DB->insert(
-            'glpi_plugin_fusioninventory_networkequipments', [
+            'glpi_plugin_glpiinventory_networkequipments', [
                'networkequipments_id' => $id
             ]
          );
@@ -477,8 +461,8 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          $configsecurities_id = 0;
       }
       $DB->update(
-         'glpi_plugin_fusioninventory_networkequipments', [
-            'plugin_fusioninventory_configsecurities_id' => $configsecurities_id,
+         'glpi_plugin_glpiinventory_networkequipments', [
+            'plugin_glpiinventory_configsecurities_id' => $configsecurities_id,
             'sysdescr'                                   => $sysdescr
          ], [
             'networkequipments_id' => $id
@@ -494,9 +478,9 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
    static function showInfo($item) {
 
       // Manage locks pictures
-      PluginFusioninventoryLock::showLockIcon('NetworkEquipment');
+      PluginGlpiinventoryLock::showLockIcon('NetworkEquipment');
 
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
 
       $params = ['networkequipments_id' => $item->getID()];
       if ($pfNetworkEquipment->getFromDBByCrit($params) === false) {
@@ -505,21 +489,21 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       echo '<table class="tab_glpi" width="100%">';
       echo '<tr>';
-      echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '<th colspan="2">'.__('GLPI Inventory', 'glpiinventory').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
       echo '<td>';
-      echo __('Last inventory', 'fusioninventory');
+      echo __('Last inventory', 'glpiinventory');
       echo '</td>';
       echo '<td>';
-      echo Html::convDateTime($pfNetworkEquipment->fields['last_fusioninventory_update']);
+      echo Html::convDateTime($pfNetworkEquipment->fields['last_inventory_update']);
       echo '</td>';
       echo '</tr>';
 
       if ($pfNetworkEquipment->fields['uptime'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Uptime', 'fusioninventory').'</td>';
+         echo '<td>'.__('Uptime', 'glpiinventory').'</td>';
          echo '<td>';
          echo $pfNetworkEquipment->displayUptimeAsString($pfNetworkEquipment->fields['uptime']);
          echo '</td>';
@@ -542,15 +526,15 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
    function showNetworkPortDetailHeader($monitoring, $query) {
       global $DB, $CFG_GLPI;
 
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
-      $a_pref = DisplayPreference::getForTypeUser('PluginFusioninventoryNetworkport',
+      $a_pref = DisplayPreference::getForTypeUser('PluginGlpiinventoryNetworkport',
                                                   Session::getLoginUserID());
 
       echo "<tr class='tab_bg_1'>";
 
       echo "<th colspan='".(count($a_pref) + 3)."'>";
-      echo __('Ports array', 'fusioninventory');
+      echo __('Ports array', 'glpiinventory');
 
       $result = $DB->query($query);
       echo ' ('.$DB->numrows($result).')';
@@ -560,7 +544,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                                              ".dialog('open');\">";
       $tmp .= Ajax::createIframeModalWindow('search_config_top',
                                           $CFG_GLPI["root_doc"].
-                                             "/front/displaypreference.form.php?itemtype=PluginFusioninventoryNetworkPort",
+                                             "/front/displaypreference.form.php?itemtype=PluginGlpiinventoryNetworkPort",
                                           ['title'
                                                    => __('Select default items to show'),
                                                 'reloadonclose'
@@ -573,15 +557,9 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                           $CFG_GLPI["root_doc"]."/pics/options_search.png' ";
       echo $tmp;
 
-      $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/".
-                        "En_VI_visualisationsdonnees_2_reseau";
-      if ($_SESSION["glpilanguage"] == "fr_FR") {
-         $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/".
-                           "Fr_VI_visualisationsdonnees_2_reseau";
-      }
       echo "<a href='legend'></a>";
       echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>".
-              "[ ".__('Legend', 'fusioninventory')." ]</a></div>";
+              "[ ".__('Legend', 'glpiinventory')." ]</a></div>";
       echo "</th>";
       echo "</tr>";
 
@@ -591,13 +569,13 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          <td colspan='".(count($a_pref) + 4)."'>
          <ul>
             <li>".
-             __('Connection with a switch or a server in trunk or tagged mode', 'fusioninventory').
+             __('Connection with a switch or a server in trunk or tagged mode', 'glpiinventory').
              "&nbsp;:</li>
          </ul>
          <img src='".$fi_path."/pics/port_trunk.png' ".
               "width='750' />
          <ul>
-            <li>".__('Other connections (with a computer, a printer...)', 'fusioninventory').
+            <li>".__('Other connections (with a computer, a printer...)', 'glpiinventory').
               "&nbsp;:</li>
          </ul>
          <img src='".$fi_path."/pics/connected_trunk.png' ".
@@ -611,7 +589,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       echo "<th colspan='2'>".__('Name')."</th>";
 
       if ($monitoring == '1') {
-         echo "<th>".__('Monitoring', 'fusioninventory')."</th>";
+         echo "<th>".__('Monitoring', 'glpiinventory')."</th>";
       }
 
       foreach ($a_pref as $data_array) {
@@ -619,7 +597,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          echo "<th>";
          switch ($data_array) {
             case 3:
-               echo __('MTU', 'fusioninventory');
+               echo __('MTU', 'glpiinventory');
                break;
 
             case 5:
@@ -627,27 +605,27 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                break;
 
             case 6:
-               echo __('Internal status', 'fusioninventory');
+               echo __('Internal status', 'glpiinventory');
                break;
 
             case 7:
-               echo __('Last Change', 'fusioninventory');
+               echo __('Last Change', 'glpiinventory');
                break;
 
             case 8:
-               echo __('Traffic received/sent', 'fusioninventory');
+               echo __('Traffic received/sent', 'glpiinventory');
                break;
 
             case 9:
-               echo __('Errors received/sent', 'fusioninventory');
+               echo __('Errors received/sent', 'glpiinventory');
                break;
 
             case 10 :
-               echo __('Duplex', 'fusioninventory');
+               echo __('Duplex', 'glpiinventory');
                break;
 
             case 11 :
-               echo __('Internal MAC address', 'fusioninventory');
+               echo __('Internal MAC address', 'glpiinventory');
                break;
 
             case 12:
@@ -663,11 +641,11 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                break;
 
             case 15:
-               echo __('Port not connected since', 'fusioninventory');
+               echo __('Port not connected since', 'glpiinventory');
                break;
 
             case 16:
-               echo __('Alias', 'fusioninventory');
+               echo __('Alias', 'glpiinventory');
                break;
 
             case 17:
@@ -683,7 +661,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
 
    /**
-    * Display detail networkport based on glpi core networkport and fusioninventory
+    * Display detail networkport based on glpi core networkport and plugin
     * networkport
     *
     * @param array $data with id ant fusionid
@@ -695,12 +673,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
    function showNetworkPortDetail($data, $monitoring, $aggrega = 0) {
       global $CFG_GLPI, $DB;
 
-      $fi_path = Plugin::getWebDir('fusioninventory');
+      $fi_path = Plugin::getWebDir('glpiinventory');
 
       $nw            = new NetworkPort_NetworkPort();
       $networkName   = new NetworkName();
       $networkPort   = new NetworkPort();
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      $pfNetworkPort = new PluginGlpiinventoryNetworkPort();
       $networkPortEthernet   = new NetworkPortEthernet();
       $iPAddress = new IPAddress();
 
@@ -712,7 +690,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                  && (strstr($pfNetworkPort->fields["ifstatus"], "up")
               || $pfNetworkPort->fields["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$fi_path."/pics/port_trunk.png\"); '";
-      } else if (PluginFusioninventoryNetworkPort::isPortHasMultipleMac($data['id'])
+      } else if (PluginGlpiinventoryNetworkPort::isPortHasMultipleMac($data['id'])
               && (strstr($pfNetworkPort->fields["ifstatus"], "up")
               || $pfNetworkPort->fields["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$fi_path."/pics/multiple_mac_addresses.png\"); '";
@@ -754,7 +732,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          echo "</td>";
       }
 
-      $a_pref = DisplayPreference::getForTypeUser('PluginFusioninventoryNetworkport',
+      $a_pref = DisplayPreference::getForTypeUser('PluginGlpiinventoryNetworkport',
                                                   Session::getLoginUserID());
       foreach ($a_pref as $data_array) {
 
@@ -827,11 +805,11 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
             case 10:
                if ($pfNetworkPort->fields["portduplex"] == 2) {
                   echo "<td class='tab_bg_1_2' style='background-color:#cf9b9b'>";
-                  echo __('Half', 'fusioninventory');
+                  echo __('Half', 'glpiinventory');
                   echo '</td>';
                } else if ($pfNetworkPort->fields["portduplex"] == 3) {
                   echo '<td>';
-                  echo __('Full', 'fusioninventory');
+                  echo __('Full', 'glpiinventory');
                   echo '</td>';
                } else {
                   echo "<td></td>";
@@ -871,7 +849,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                                           $item->getLink());
                      }
 
-                     if ($data_device["itemtype"] == 'PluginFusioninventoryUnmanaged') {
+                     if ($data_device["itemtype"] == 'PluginGlpiinventoryUnmanaged') {
                         $icon = $this->getItemtypeIcon($item->fields["item_type"]);
                         if ($item->getField("accepted") == "1") {
                            echo "<td style='background:#bfec75'
@@ -995,8 +973,8 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                                 "/front/networkport.form.php?unassign_vlan=unassigned&amp;id=".
                                 $line["id"] . "'>";
                         echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete.png\" alt='".
-                                __('Delete', 'fusioninventory') . "' title='" .
-                                __('Delete', 'fusioninventory') . "'></a>";
+                                __('Delete', 'glpiinventory') . "' title='" .
+                                __('Delete', 'glpiinventory') . "'></a>";
                      } else {
                         echo "&nbsp;";
                      }
@@ -1067,7 +1045,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
             break;
       }
       if ($icon) {
-         return "<img src='".Plugin::getWebDir('fusioninventory')."/pics/$icon' ".
+         return "<img src='".Plugin::getWebDir('glpiinventory')."/pics/$icon' ".
                  "style='float:left'/> ";
       } else {
          return '';
@@ -1080,7 +1058,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('CPU usage (in %)', 'fusioninventory');
+      echo __('CPU usage (in %)', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       Html::displayProgressBar(250, $this->fields['cpu'],
@@ -1090,7 +1068,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Memory usage (in %)', 'fusioninventory');
+      echo __('Memory usage (in %)', 'glpiinventory');
       echo "</td>";
       echo "<td>";
       $params = [
@@ -1104,14 +1082,14 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       $iterator = $DB->request($params);
       if ($iterator->numrows()) {
          $ram_pourcentage = 0;
-         $data            = $iterator->next();
+         $data            = $iterator->current();
          if (!empty($data["ram"])
             && !empty($this->fields['memory'])) {
             $ram_pourcentage = ceil((100 * ($data["ram"] - $this->fields['memory'])) / $data["ram"]);
          }
          if ((($data["ram"] - $this->fields['memory']) < 0)
               || (empty($this->fields['memory']))) {
-            echo "<center><strong>".__('No data available', 'fusioninventory')."</strong></center>";
+            echo "<center><strong>".__('No data available', 'glpiinventory')."</strong></center>";
          } else {
             Html::displayProgressBar(250, $ram_pourcentage,
                            ['title' => " (".($data["ram"] - $this->fields['memory']).__('Mio')." / ".

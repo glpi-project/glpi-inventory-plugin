@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the extended information of a computer.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Walid Nouh
- * @copyright Copyright (c) 2010-2018 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
@@ -93,14 +79,14 @@ echo "\nScript to fill database with snmp tasks starting\n";
 
 $_SESSION["glpicronuserrunning"] = $_SESSION["glpiname"] = $params['user'];
 
-$entity = new PluginFusioninventoryEntity();
+$entity = new PluginGlpiinventoryEntity();
 if ($entity->update(['id' => 1, 'agent_base_url' => $params['url']])) {
    echo "agent_base_url set to ".$params['url']."\n";
 } else {
    echo "Error setting agent_base_url. Exiting\n";
 }
 
-$range        = new PluginFusioninventoryIPRange();
+$range        = new PluginGlpiinventoryIPRange();
 $params_range = $params;
 $result       = $range->getFromDBByCrit(['name' => $params['name']]);
 if ($result > 0) {
@@ -111,7 +97,7 @@ if ($result > 0) {
    echo "IP Range added, id=$ipranges_id\n";
 }
 
-$auth        = new PluginFusioninventoryConfigSecurity();
+$auth        = new PluginGlpiinventoryConfigSecurity();
 $params_auth = [
    'name'          => $params['name'],
    'community'     => $params['community'],
@@ -126,10 +112,10 @@ if ($result > 0) {
    echo "SNMP community added, id=$auths_id\n";
 }
 if ($auths_id && $ipranges_id) {
-   $authrange = new PluginFusioninventoryIPRange_ConfigSecurity();
+   $authrange = new PluginGlpiinventoryIPRange_ConfigSecurity();
    $params_iprange = [
-      'plugin_fusioninventory_ipranges_id'         => $ipranges_id,
-      'plugin_fusioninventory_configsecurities_id' => $auths_id
+      'plugin_glpiinventory_ipranges_id'         => $ipranges_id,
+      'plugin_glpiinventory_configsecurities_id' => $auths_id
    ];
    $result = $authrange->getFromDBByCrit($params_iprange);
    if ($result < 0 || !$result) {
@@ -148,9 +134,9 @@ if ($params['comp_name'] == '') {
    echo "Exiting: no computer_name set!\n";
 }
 
-$module = new PluginFusioninventoryAgentmodule();
+$module = new PluginGlpiinventoryAgentmodule();
 echo "Enabled modules netdiscovery & networkinventory by default\n";
-$DB->query("UPDATE `glpi_plugin_fusioninventory_agentmodules` SET `is_active`=1");
+$DB->query("UPDATE `glpi_plugin_glpiinventory_agentmodules` SET `is_active`=1");
 
 $computer        = new Computer();
 $params_computer = ['name' => $params['comp_name'], 'entities_id' => 0];
@@ -163,7 +149,7 @@ if ($result > 0) {
    echo "Computer ".$params['comp_name']." added with id $computers_id\n";
 }
 
-$agent  = new PluginFusioninventoryAgent();
+$agent  = new PluginGlpiinventoryAgent();
 $result = $agent->getFromDBByCrit(['device_id' => $params['device_id']]);
 if ($result > 0) {
    $agents_id = $agent->getID();
@@ -177,8 +163,8 @@ if ($result > 0) {
    echo "Agent ".$params['device_id']." added with id $agents_id\n";
 }
 
-$task      = new PluginFusioninventoryTask();
-$taskjob   = new PluginFusioninventoryTaskjob();
+$task      = new PluginGlpiinventoryTask();
+$taskjob   = new PluginGlpiinventoryTaskjob();
 $task_name = $params['name'].'-disco';
 $result    = $task->getFromDBByCrit(['name' => $task_name]);
 if ($result > 0) {
@@ -196,10 +182,10 @@ if ($result > 0) {
    if ($tasks_id_disco) {
       $taskjob->add([
          'name' => $task_name,
-         'plugin_fusioninventory_tasks_id' => $tasks_id_disco,
+         'plugin_glpiinventory_tasks_id' => $tasks_id_disco,
          'method'  => 'networkdiscovery',
-         'targets' => "[{\"PluginFusioninventoryIPRange\":\"$ipranges_id\"}]",
-         'actors'  => "[{\"PluginFusioninventoryAgent\":\"$agents_id\"}]"
+         'targets' => "[{\"PluginGlpiinventoryIPRange\":\"$ipranges_id\"}]",
+         'actors'  => "[{\"PluginGlpiinventoryAgent\":\"$agents_id\"}]"
       ]);
    }
 
@@ -222,10 +208,10 @@ if ($result > 0) {
    if ($tasks_id_inv) {
       $taskjob->add([
          'name' => $task_name,
-         'plugin_fusioninventory_tasks_id' => $tasks_id_inv,
+         'plugin_glpiinventory_tasks_id' => $tasks_id_inv,
          'method'  => 'networkdiscovery',
-         'targets' => "[{\"PluginFusioninventoryIPRange\":\"$ipranges_id\"}]",
-         'actors'  => "[{\"PluginFusioninventoryAgent\":\"$agents_id\"}]"
+         'targets' => "[{\"PluginGlpiinventoryIPRange\":\"$ipranges_id\"}]",
+         'actors'  => "[{\"PluginGlpiinventoryAgent\":\"$agents_id\"}]"
       ]);
    }
 

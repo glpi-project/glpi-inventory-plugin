@@ -1,43 +1,33 @@
 <?php
-
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2021 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (C) 2010-2021 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 use PHPUnit\Framework\TestCase;
@@ -67,8 +57,8 @@ class ComputerLicenseTest extends TestCase {
               "name"   => "pc001",
               "serial" => "ggheb7ne7"
           ],
-          "fusioninventorycomputer" => [
-              'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+          "inventorycomputer" => [
+              'last_inventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ],
           'soundcard'      => [],
@@ -129,10 +119,10 @@ class ComputerLicenseTest extends TestCase {
     */
    public function testAddLicensesWhenInventory() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory = $this->a_computer1;
@@ -149,10 +139,10 @@ class ComputerLicenseTest extends TestCase {
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
 
       $this->assertEquals(1,
-                          countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos'),
-                          'License may be added in fusion table');
+                          countElementsInTable('glpi_plugin_glpiinventory_computerlicenseinfos'),
+                          'License may be added in table');
 
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);
       $a_ref = [
           'id'                   => $pfComputerLicenseInfo->fields['id'],
@@ -178,11 +168,11 @@ class ComputerLicenseTest extends TestCase {
     */
    public function testCleanComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       //First, check if license does exist
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $computer = new Computer();
       $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);
       $computer->getFromDBByCrit(['name' => 'pc001']);
@@ -205,7 +195,7 @@ class ComputerLicenseTest extends TestCase {
                           'License data');
 
       //Second, clean and check if it has been removed
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->cleanComputer($computer->fields['id']);
 
       $ret = $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);
@@ -218,10 +208,10 @@ class ComputerLicenseTest extends TestCase {
     */
    public function testDeleteComputer() {
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["plugin_glpiinventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
       $computer         = new Computer();
 
       $a_computerinventory = $this->a_computer1;
@@ -234,7 +224,7 @@ class ComputerLicenseTest extends TestCase {
       $computer->getFromDB(1);
 
       //First, check if license does exist
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo = new PluginGlpiinventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDBByCrit(['name' => 'Microsoft Office 2003']);;
 
       $a_ref = [

@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the actions in package for deploy system.
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Walid Nouh
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -52,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * Manage user interactions.
  * @since 9.2
  */
-class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDeployPackageItem {
+class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeployPackageItem {
 
    public $shortname = 'userinteractions';
    public $json_name = 'userinteractions';
@@ -96,7 +82,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
     */
    static function getTypeName($nb = 0) {
          return _n('User interaction',
-                   'User interactions', $nb, 'fusioninventory');
+                   'User interactions', $nb, 'glpiinventory');
    }
 
 
@@ -106,11 +92,11 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
     * @return array
     */
    function getTypes() {
-      return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'fusioninventory'),
-              self::EVENT_AFTER_DOWNLOAD   => __("After download", 'fusioninventory'),
-              self::EVENT_AFTER_ACTIONS    => __("After actions", 'fusioninventory'),
-              self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'fusioninventory'),
-              self::EVENT_ACTION_FAILURE   => __("On actions failure", 'fusioninventory')
+      return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'glpiinventory'),
+              self::EVENT_AFTER_DOWNLOAD   => __("After download", 'glpiinventory'),
+              self::EVENT_AFTER_ACTIONS    => __("After actions", 'glpiinventory'),
+              self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'glpiinventory'),
+              self::EVENT_ACTION_FAILURE   => __("On actions failure", 'glpiinventory')
              ];
    }
 
@@ -142,7 +128,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    function displayAjaxValues($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['orders_id']);
@@ -188,7 +174,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       echo "<tr>";
       echo "<th>{$values['template_label']}</th>";
       echo "<td>";
-      Dropdown::show('PluginFusioninventoryDeployUserinteractionTemplate',
+      Dropdown::show('PluginGlpiinventoryDeployUserinteractionTemplate',
                      ['value' => $values['template_value'], 'name' => 'template']);
       echo "</td>";
       echo "</tr>";
@@ -211,7 +197,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    function getValues($type, $data, $mode) {
       $values = [
          'name_value'          => "",
-         'name_label'          => __('Interaction label', 'fusioninventory'),
+         'name_label'          => __('Interaction label', 'glpiinventory'),
          'name_type'           => "input",
          'title_label'         => __('Title').$this->getMandatoryMark(),
          'title_value'         => "",
@@ -220,7 +206,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
          'description_type'    => "text",
          'description_value'   => "",
          'template_label'
-            => PluginFusioninventoryDeployUserinteractionTemplate::getTypeName(1)
+            => PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName(1)
                .$this->getMandatoryMark(),
          'template_value'      => "",
          'template_type'       => "dropdown",
@@ -244,11 +230,11 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
     * Display list of user interactions
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param object $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored checks
     * @param string $rand unique element id used to identify/update an element
     */
-   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
+   function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
       $interaction_types = $this->getTypes();
@@ -280,7 +266,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
 
          echo "</td>";
          if ($canedit) {
-            echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+            echo "<td class='rowhandler control' title='".__('drag', 'glpiinventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
@@ -295,7 +281,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt='' />";
          echo "<input type='submit' name='delete' value=\"".
-            __('Delete', 'fusioninventory')."\" class='submit' />";
+            __('Delete', 'glpiinventory')."\" class='submit' />";
       }
    }
 
@@ -319,7 +305,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
 
       if ($interaction['template']) {
          $text .= ' (';
-         $text .= Dropdown::getDropdownName('glpi_plugin_fusioninventory_deployuserinteractiontemplates',
+         $text .= Dropdown::getDropdownName('glpi_plugin_glpiinventory_deployuserinteractiontemplates',
                                            $interaction['template']);
          $text.= ')';
       }
@@ -382,7 +368,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    }
 
 
-   function getTypesAlreadyInUse(PluginFusioninventoryDeployPackage $package) {
+   function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package) {
       $used_interactions = [];
       $json              = json_decode($package->fields['json'], true);
 
@@ -416,21 +402,21 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       switch ($behavior) {
          case self::RESPONSE_STOP:
             $message .= sprintf(__('Job cancelled by the user %1$s',
-                                   'fusioninventory'), $user);
+                                   'glpiinventory'), $user);
             break;
 
          case self::RESPONSE_CONTINUE:
             $message .= sprintf(__('User %1$s agreed to continue the job',
-                                   'fusioninventory'), $user);
+                                   'glpiinventory'), $user);
             break;
 
          case self::RESPONSE_POSTPONE:
-            $message .= sprintf(__('Job postponed by the user %1$s', 'fusioninventory'),
+            $message .= sprintf(__('Job postponed by the user %1$s', 'glpiinventory'),
                                 $user);
             break;
 
          case self::RESPONSE_BAD_EVENT:
-            $message .= __('Bad event sent to the agent', 'fusioninventory');
+            $message .= __('Bad event sent to the agent', 'glpiinventory');
             break;
 
       }
@@ -449,34 +435,34 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
             return sprintf($message, __('Yes'));
 
          case 'on_async':
-            return __('Alert displayed, no input required', 'fusioninventory');
+            return __('Alert displayed, no input required', 'glpiinventory');
 
          case 'on_no':
             return sprintf($message, __('No'));
 
          case 'on_retry':
-            return sprintf($message, __('Retry', 'fusioninventory'));
+            return sprintf($message, __('Retry', 'glpiinventory'));
 
          case 'on_cancel':
             return sprintf($message, __('Cancel'));
 
          case 'on_abort':
-            return sprintf($message, __('Abort', 'fusioninventory'));
+            return sprintf($message, __('Abort', 'glpiinventory'));
 
          case 'on_ignore':
-            return sprintf($message, __('Ignore', 'fusioninventory'));
+            return sprintf($message, __('Ignore', 'glpiinventory'));
 
          case 'on_continue':
             return sprintf($message, __('Continue'));
 
          case 'on_timeout':
-            return __('Alert duration exceeded', 'fusioninventory');
+            return __('Alert duration exceeded', 'glpiinventory');
 
          case 'on_nouser':
-            return __('No user connected', 'fusioninventory');
+            return __('No user connected', 'glpiinventory');
 
          case 'on_multiusers':
-            return __('Multiple users connected', 'fusioninventory');
+            return __('Multiple users connected', 'glpiinventory');
       }
    }
 }

@@ -1,47 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the windows registry collect on agent
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -51,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the windows registry to get in collect module.
  */
-class PluginFusioninventoryCollectCommon extends CommonDBTM {
+class PluginGlpiinventoryCollectCommon extends CommonDBTM {
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_fusioninventory_collect';
+   static $rightname = 'plugin_glpiinventory_collect';
 
    public $type = '';
 
@@ -141,7 +127,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       global $DB;
       $params = [
          'FROM'  => $this->getTable(),
-         'WHERE' => ['plugin_fusioninventory_collects_id' => $collects_id]
+         'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id]
       ];
       $iterator = $DB->request($params);
 
@@ -153,14 +139,14 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
       echo "<th colspan=".count($headers).">"
-         .__('Windows registry associated', 'fusioninventory')."</th>";
+         .__('Windows registry associated', 'glpiinventory')."</th>";
       echo "</tr>";
       echo "<tr>";
       foreach ($headers as $label) {
          echo "<th>".$label."</th>";
       }
       echo "</tr>";
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          echo "<tr>";
          $row_data = $this->displayOneRow($data);
          foreach ($row_data as $value) {
@@ -170,7 +156,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
          echo "<form name='form_bundle_item' action='".$class::getFormURL().
                    "' method='post'>";
          echo Html::hidden('id', ['value' => $data['id']]);
-         echo "<input type='image' name='delete' src='../pics/drop.png'>";
+         echo "<input type='image' name='delete' src='".Plugin::getWebDir('glpiinventory')."/pics/drop.png'>";
          Html::closeForm();
          echo "</td>";
          echo "</tr>";
@@ -191,7 +177,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($collects_id, $options = []) {
+   function showForm($collects_id, array $options = []) {
       $this->initForm(0, $options);
       $this->showFormHeader($options);
 
@@ -200,9 +186,9 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      echo Html::hidden('plugin_fusioninventory_collects_id',
+      echo Html::hidden('plugin_glpiinventory_collects_id',
                         ['value' => $collects_id]);
-      Html::autocompletionTextField($this, 'name');
+      echo Html::input('name', ['value' => $this->fields['name']]);
       echo "</td>";
       $this->displayNewSpecificities();
 
@@ -227,8 +213,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
          'table'        => $this->getTable(),
          'field'        => 'name',
          'name'         => __('Name'),
-         'datatype'     => 'itemlink',
-         'autocomplete' => true,
+         'datatype'     => 'itemlink'
       ];
 
       return $tab;

@@ -1,0 +1,53 @@
+{% extends "generic_show_form.html.twig" %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+{% set params  = params ?? [] %}
+
+{% block more_fields %}
+   {{ fields.dropdownArrayField(
+      'platform',
+      json_data['platform'],
+      call("PluginGlpiinventoryDeployUserinteractionTemplate::getTypes"),
+      __('Interaction format', 'glpiinventory'),
+   ) }}
+
+   {{ fields.dropdownArrayField(
+      'buttons',
+      json_data['buttons'],
+      call("PluginGlpiinventoryDeployUserinteractionTemplate::getButtons", [
+         constant("PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS")
+      ]),
+      __('Interaction type', 'glpiinventory'),
+   ) }}
+
+   {{ fields.dropdownArrayField(
+      'icon',
+      json_data['icon'],
+      call("PluginGlpiinventoryDeployUserinteractionTemplate::getIcons"),
+      __('Alert icon', 'glpiinventory'),
+   ) }}
+
+   {{ fields.dropdownArrayField(
+      'retry_after',
+      json_data['retry_after'],
+      call("PluginGlpiinventoryDeployUserinteractionTemplate::getRetries"),
+      __('Retry job after', 'glpiinventory'),
+   ) }}
+
+   {{ fields.numberField(
+      'nb_max_retry',
+      json_data['nb_max_retry'],
+      __('Maximum number of retry allowed', 'glpiinventory'),
+      {
+         'min': 1,
+         'max': 20,
+         'step': 1,
+      }
+   ) }}
+
+   {{ fields.dropdownArrayField(
+      'timeout',
+      json_data['timeout'],
+      call("PluginGlpiinventoryDeployUserinteractionTemplate::getTimeouts"),
+      __('Alert display timeout', 'glpiinventory'),
+   ) }}
+{% endblock %}

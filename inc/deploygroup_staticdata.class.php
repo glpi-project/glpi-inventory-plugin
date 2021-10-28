@@ -1,49 +1,33 @@
 <?php
-
 /**
- * FusionInventory
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * http://glpi-project.org
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-for-glpi
- * http://forge.fusioninventory.org/
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
- * ------------------------------------------------------------------------
+ * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of FusionInventory project.
+ * This file is part of GLPI Inventory Plugin.
  *
- * FusionInventory is free software: you can redistribute it and/or modify
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FusionInventory is distributed in the hope that it will be useful,
+ * GLPI Inventoruy Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
- *
- * ------------------------------------------------------------------------
- *
- * This file is used to manage the static groups (add manually computers
- * in the group).
- *
- * ------------------------------------------------------------------------
- *
- * @package   FusionInventory
- * @author    Alexandre Delaunay
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
- * @license   AGPL License 3.0 or (at your option) any later version
- *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
- * @link      http://www.fusioninventory.org/
- * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
- *
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -53,21 +37,21 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the static groups (add manually computers in the group).
  */
-class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
+class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_fusioninventory_group";
+   static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1 = 'PluginFusioninventoryDeployGroup';
+   static public $itemtype_1 = 'PluginGlpiinventoryDeployGroup';
 
    /**
     * id field name for the first part of relation
@@ -101,21 +85,21 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if (!$withtemplate
-          && ($item->getType() == 'PluginFusioninventoryDeployGroup')
-             && $item->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP) {
+          && ($item->getType() == 'PluginGlpiinventoryDeployGroup')
+             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP) {
 
          $tabs[1] = _n('Criterion', 'Criteria', 2);
          $count = countElementsInTable(getTableForItemType(__CLASS__),
             [
                'itemtype'                               => 'Computer',
-               'plugin_fusioninventory_deploygroups_id' => $item->fields['id'],
+               'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
             ]);
          if ($_SESSION['glpishow_count_on_tabs']) {
             $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
          } else {
             $tabs[2] = _n('Associated item', 'Associated items', $count);
          }
-         $tabs[3] = __('CSV import', 'fusioninventory');
+         $tabs[3] = __('CSV import', 'glpiinventory');
          return $tabs;
       }
       return '';
@@ -153,31 +137,31 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    /**
     * Display criteria form + list of computers
     *
-    * @param object $item PluginFusioninventoryDeployGroup instance
+    * @param object $item PluginGlpiinventoryDeployGroup instance
     */
-   static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
+   static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item) {
       // WITH checking post values
-      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
+      $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, true);
       //If metacriteria array is empty, remove it as it displays the metacriteria form,
       //and it's is not we want !
       if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
          unset($search_params['metacriteria']);
       }
-      PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
+      PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
 
       //Add extra parameters for massive action display : only the Add action should be displayed
       $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
       $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+      $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
       $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
-      PluginFusioninventorySearch::constructDatas($data);
-      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-      $data['itemtype'] = 'PluginFusioninventoryComputer';
+      PluginGlpiinventorySearch::constructDatas($data);
+      $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
+      $data['itemtype'] = 'PluginGlpiinventoryComputer';
       Search::displayData($data);
    }
 
@@ -186,30 +170,30 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * Display result, so list of computers
     */
    static function showResults() {
-      if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
-              && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
-         $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
+      if (isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'])
+              && isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']['show_results'])) {
+         $computers_params = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'];
       }
       $computers_params['metacriteria'] = [];
       $computers_params['criteria'][]   = ['searchtype' => 'equals',
                                                 'value' => $_GET['id'],
                                                 'field' => 5171];
 
-      $search_params = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
+      $search_params = Search::manageParams('PluginGlpiinventoryComputer', $computers_params);
 
       //Add extra parameters for massive action display : only the Delete action should be displayed
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
-      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+      $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
 
       $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
-      PluginFusioninventorySearch::constructDatas($data);
-      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
-      $data['itemtype'] = 'PluginFusioninventoryComputer';
+      PluginGlpiinventorySearch::constructDatas($data);
+      $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
+      $data['itemtype'] = 'PluginGlpiinventoryComputer';
       Search::displayData($data);
    }
 
@@ -224,10 +208,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $result        = true;
       $pfStaticGroup = new self();
 
-      $groups = $pfStaticGroup->find(['plugin_fusioninventory_deploygroups_id' => $source_deploygroups_id]);
+      $groups = $pfStaticGroup->find(['plugin_glpiinventory_deploygroups_id' => $source_deploygroups_id]);
       foreach ($groups as $group) {
          unset($group['id']);
-         $group['plugin_fusioninventory_deploygroups_id']
+         $group['plugin_glpiinventory_deploygroups_id']
             = $target_deploygroups_id;
          if (!$pfStaticGroup->add($group)) {
             $result |= false;
@@ -242,11 +226,11 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     *
     * @since 9.2+2.0
     *
-    * @param object $item it's an instance of PluginFusioninventoryDeployGroup class
+    * @param object $item it's an instance of PluginGlpiinventoryDeployGroup class
     *
     * @return boolean
     */
-   static function csvImportForm(PluginFusioninventoryDeployGroup $item) {
+   static function csvImportForm(PluginGlpiinventoryDeployGroup $item) {
 
       echo "<form action='' method='post' enctype='multipart/form-data'>";
 
@@ -254,7 +238,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       echo "<table class='tab_cadre_fixe' cellpadding='1' width='600'>";
       echo "<tr>";
       echo "<th>";
-      echo __('Import a list of computers from a CSV file (the first column must contain the computer ID)', 'fusioninventory')." :";
+      echo __('Import a list of computers from a CSV file (the first column must contain the computer ID)', 'glpiinventory')." :";
       echo "</th>";
       echo "</tr>";
 
@@ -287,7 +271,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $pfDeployGroup_static = new self();
       $computer = new Computer();
       $input = [
-         'plugin_fusioninventory_deploygroups_id' => $post_data['groups_id'],
+         'plugin_glpiinventory_deploygroups_id' => $post_data['groups_id'],
          'itemtype' => 'Computer'
       ];
       if (isset($files_data['importcsvfile']['tmp_name'])) {
@@ -298,10 +282,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
                    $pfDeployGroup_static->add($input);
                }
             }
-            Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'fusioninventory'), false, INFO);
+            Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'glpiinventory'), false, INFO);
             fclose($handle);
          } else {
-            Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'fusioninventory'), false, ERROR);
+            Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'glpiinventory'), false, ERROR);
             return false;
          }
       } else {
