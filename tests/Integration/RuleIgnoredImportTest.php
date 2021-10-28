@@ -178,11 +178,11 @@ class RuleIgnoredImportTest extends TestCase {
       $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
       $pfIgnoredimportdevice = new PluginGlpiinventoryIgnoredimportdevice();
 
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Computer';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Computer';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
 
       $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 

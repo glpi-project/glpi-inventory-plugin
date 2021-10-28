@@ -414,7 +414,7 @@ class PluginGlpiinventoryInventoryNetworkEquipmentLib extends PluginGlpiinventor
 
       // Entity?
       $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
-      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input_crit);
+      $_SESSION['plugin_glpiinventory_datacriteria'] = serialize($input_crit);
 
       // * Reload rules (required for unit tests)
       $rule->getCollectionPart();
@@ -459,7 +459,7 @@ class PluginGlpiinventoryInventoryNetworkEquipmentLib extends PluginGlpiinventor
       // Pass all MAC addresses in the import rules
       foreach ($a_portconnection as $ifmac) {
          $this->data_device = ['mac' => $ifmac];
-         $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize(['mac' => $ifmac]);
+         $_SESSION['plugin_glpiinventory_datacriteria'] = serialize(['mac' => $ifmac]);
          $data = $rule->processAllRules(['mac' => $ifmac], [], ['class'=>$this]);
       }
       $list_all_ports_found = [];
@@ -739,7 +739,7 @@ class PluginGlpiinventoryInventoryNetworkEquipmentLib extends PluginGlpiinventor
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
             $inputrulelog['method'] = 'networkinventory';
-            $inputrulelog['criteria'] = $dbu->exportArrayToDB(Toolbox::addslashes_deep(unserialize($_SESSION['plugin_fusinvsnmp_datacriteria'])));
+            $inputrulelog['criteria'] = $dbu->exportArrayToDB(Toolbox::addslashes_deep(unserialize($_SESSION['plugin_glpiinventory_datacriteria'])));
             $pfRulematchedlog->add($inputrulelog);
             $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
             unset($_SESSION['plugin_glpiinventory_rules_id']);

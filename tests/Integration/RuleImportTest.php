@@ -235,11 +235,11 @@ class RuleImportTest extends TestCase {
           'serial'      => 'E8J596100'
       ]);
 
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Printer';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
 
       $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
@@ -278,11 +278,11 @@ class RuleImportTest extends TestCase {
       $pfCommunicationNetworkDiscovery = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
 
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Printer';
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
-      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
+      $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
+      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
 
       $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 

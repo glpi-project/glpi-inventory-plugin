@@ -128,7 +128,7 @@ class PluginGlpiinventoryNetworkEquipment extends PluginGlpiinventoryItem {
          // Add in database if not exist
          $input = [];
          $input['networkequipments_id'] = $id;
-         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
+         $_SESSION['glpi_plugins_glpiinventory_table'] = 'glpi_networkequipments';
          $ID_tn = $this->add($input);
          $this->getFromDB($ID_tn);
       } else {

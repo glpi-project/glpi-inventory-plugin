@@ -185,7 +185,7 @@ class ImportRuleTest extends TestCase {
       $pf->data_device = [
          "name" => "test03"
       ];
-      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize(["name" => "test01"]);
+      $_SESSION['plugin_glpiinventory_datacriteria'] = serialize(["name" => "test01"]);
       $pf->rulepassed(0, '', 0);
       $this->assertEquals(0, $dbu->countElementsInTable('glpi_networkports'));
 

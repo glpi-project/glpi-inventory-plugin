@@ -879,7 +879,7 @@ class PluginGlpiinventoryUnmanaged extends CommonDBTM {
 
             // Import SNMP
             $pfPrinter = new PluginGlpiinventoryPrinter();
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_glpiinventory_printers";
+            $_SESSION['glpi_plugins_glpiinventory_table'] = "glpi_plugin_glpiinventory_printers";
             $query = "SELECT *
                       FROM `glpi_plugin_glpiinventory_printers`
                       WHERE `printers_id`='".$printer_id."' ";
@@ -927,7 +927,7 @@ class PluginGlpiinventoryUnmanaged extends CommonDBTM {
             }
 
             $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] =
+            $_SESSION['glpi_plugins_glpiinventory_table'] =
                            "glpi_plugin_glpiinventory_networkequipments";
             $query = "SELECT *
                       FROM `glpi_plugin_glpiinventory_networkequipments`

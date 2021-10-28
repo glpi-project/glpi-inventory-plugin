@@ -126,7 +126,7 @@ class PluginGlpiinventoryItem extends CommonDBTM {
       $params = [$fk => $item->getID()];
       if (!$this->getFromDBByCrit($params)) {
          // Add in database if not exist
-         $_SESSION['glpi_plugins_fusinvsnmp_table']
+         $_SESSION['glpi_plugins_glpiinventory_table']
                 = getTableForItemType($this->itemtype);
          $ID_tn = $this->add($params);
          $this->getFromDB($ID_tn);

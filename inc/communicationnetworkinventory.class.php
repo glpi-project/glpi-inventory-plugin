@@ -96,12 +96,12 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
             }
          }
 
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
+          $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
               $a_CONTENT['PROCESSNUMBER'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginGlpiinventoryAgent';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.
+          $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $this->agent['id'];
+          $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'PluginGlpiinventoryAgent';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices.
               ' ==devicesqueried==';
           $this->addtaskjoblog();
       }
@@ -123,12 +123,12 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
                   'Total updated:'.$cnt);
       }
       if (isset($a_CONTENT['AGENT']['START'])) {
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
+          $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
               $a_CONTENT['PROCESSNUMBER'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginGlpiinventoryAgent';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==inventorystarted==';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $this->agent['id'];
+          $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'PluginGlpiinventoryAgent';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
+          $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
           $this->addtaskjoblog();
       }
    }
@@ -177,7 +177,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
                      } else if ($dchild['ERROR']['TYPE'] == "PRINTER") {
                         $itemtype = "Printer";
                      }
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '.
                              $dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.
                              $dchild['ERROR']['ID'].']]';
                      $this->addtaskjoblog();
@@ -185,7 +185,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
                               && $a_inventory[$a_inventory['itemtype']]['name'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
 
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
                               '[==detail==] No informations [['.$a_inventory['itemtype'].'::'.$dchild['INFO']['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
@@ -235,7 +235,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
                break;
 
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.
+               $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '.
                            __('Unattended element in', 'glpiinventory').' CONTENT : '.$childname;
                $this->addtaskjoblog();
          }
@@ -368,7 +368,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
          $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
       }
 
-      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
+      $_SESSION['plugin_glpiinventory_datacriteria'] = serialize($input);
       $_SESSION['plugin_glpiinventory_classrulepassed'] =
                                  "PluginGlpiinventoryCommunicationNetworkInventory";
       $rule = new PluginGlpiinventoryInventoryRuleImportCollection();
@@ -388,7 +388,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
                $a_text[] = "[".$key."]:".$data;
             }
          }
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==importdenied== '.
+         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== '.
                  implode(", ", $a_text);
          $this->addtaskjoblog();
 
@@ -498,7 +498,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
             $inputrulelog['method'] = 'networkinventory';
-            $inputrulelog['criteria'] = exportArrayToDB(unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']));
+            $inputrulelog['criteria'] = exportArrayToDB(unserialize($_SESSION['plugin_glpiinventory_datacriteria']));
             $pfRulematchedlog->add($inputrulelog);
             $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
             unset($_SESSION['plugin_glpiinventory_rules_id']);
@@ -522,13 +522,13 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
                                                 serialize($_SESSION['SOURCE_XMLDEVICE']),
                                                 'PluginGlpiinventoryUnmanaged');
          $class->update($input);
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
             '[==detail==] ==updatetheitem== Update '.
                  PluginGlpiinventoryUnmanaged::getTypeName().
                  ' [[PluginGlpiinventoryUnmanaged::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
                '[==detail==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
          $errors .= $this->importDevice($itemtype, $items_id, $a_inventory, $no_history);
@@ -542,17 +542,17 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
     */
    function addtaskjoblog() {
 
-      if (!isset($_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'])) {
+      if (!isset($_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'])) {
          return;
       }
 
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $pfTaskjoblog->addTaskjoblog(
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'],
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
+                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment']);
    }
 
 
