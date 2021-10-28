@@ -54,7 +54,7 @@ jobs:
       run: composer install
     - name: Check for coding standards violations
       run: |
-        vendor/bin/phpcs -d memory_limit=512M -p --extensions=php --standard=vendor/glpi-project/coding-standard/GlpiStandard/ --ignore="/.git/,/lib/,/vendor/,/prototype.js,/effects.js" .
+        vendor/bin/phpcs -d memory_limit=512M -p --extensions=php --standard=vendor/glpi-project/coding-standard/GlpiStandard/ --ignore="/.git/,/lib/,/vendor/" .
 
   phpunit:
     #runs-on: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
