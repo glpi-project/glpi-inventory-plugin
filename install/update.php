@@ -2815,7 +2815,7 @@ function do_computercomputer_migration($migration) {
                                                    'value'   => null];
    $a_table['fields']['wincompany']             = ['type'    => 'string',
                                                    'value'   => null];
-   $a_table['fields']['last_fusioninventory_update']     = ['type'    => 'datetime',
+   $a_table['fields']['last_inventory_update']     = ['type'    => 'datetime',
                                                             'value'   => null];
    $a_table['fields']['remote_addr']            = ['type'    => 'string',
                                                    'value'   => null];
@@ -2840,7 +2840,7 @@ function do_computercomputer_migration($migration) {
 
    $a_table['keys']   = [];
    $a_table['keys'][] = ['field' => 'computers_id', 'name' => '', 'type' => 'INDEX'];
-   $a_table['keys'][] = ['field' => 'last_fusioninventory_update', 'name' => '', 'type' => 'INDEX'];
+   $a_table['keys'][] = ['field' => 'last_inventory_update', 'name' => '', 'type' => 'INDEX'];
 
    $a_table['oldkeys'] = [];
 
@@ -2863,12 +2863,12 @@ function do_computercomputer_migration($migration) {
                   ['id' => $data['computers_id']]) > 0) {
                $input = [];
                $input['computers_id'] = $data['computers_id'];
-               $input['last_fusioninventory_update'] = $data['last_fusioninventory_update'];
+               $input['last_inventory_update'] = $data['last_fusioninventory_update'];
                $pfInventoryComputerComputer->add($input);
             }
          } else {
             // Update
-            $a_pfcomputer['last_fusioninventory_update'] = $data['last_fusioninventory_update'];
+            $a_pfcomputer['last_inventory_update'] = $data['last_fusioninventory_update'];
             $pfInventoryComputerComputer->update($a_pfcomputer);
          }
       }
@@ -3821,7 +3821,7 @@ function do_printer_migration($migration) {
                            "int(5) NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "last_fusioninventory_update",
-                           "last_fusioninventory_update",
+                           "last_inventory_update",
                            "datetime DEFAULT NULL");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
@@ -3838,7 +3838,7 @@ function do_printer_migration($migration) {
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "last_tracker_update",
-                           "last_fusioninventory_update",
+                           "last_inventory_update",
                            "datetime DEFAULT NULL");
    $migration->dropKey($newTable,
                         "FK_printers");
@@ -3869,7 +3869,7 @@ function do_printer_migration($migration) {
                            "frequence_days",
                            "int(5) NOT NULL DEFAULT '1'");
    $migration->addField($newTable,
-                           "last_fusioninventory_update",
+                           "last_inventory_update",
                            "datetime DEFAULT NULL");
    $migration->addField($newTable,
                         "serialized_inventory",
@@ -4380,7 +4380,7 @@ function do_networkequipment_migration($migration) {
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "last_fusioninventory_update",
-                           "last_fusioninventory_update",
+                           "last_inventory_update",
                            "datetime DEFAULT NULL");
    $migration->changeField($newTable,
                            "last_PID_update",
@@ -4401,7 +4401,7 @@ function do_networkequipment_migration($migration) {
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "last_tracker_update",
-                           "last_fusioninventory_update",
+                           "last_inventory_update",
                            "datetime DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusinvsnmp_configsecurities_id",
@@ -4442,7 +4442,7 @@ function do_networkequipment_migration($migration) {
                            "memory",
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
-                           "last_fusioninventory_update",
+                           "last_inventory_update",
                            "datetime DEFAULT NULL");
    $migration->addField($newTable,
                            "last_PID_update",

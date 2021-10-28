@@ -62,7 +62,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
       $a_inventory = [
           'PluginGlpiinventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
-                  'last_fusioninventory_update' => $this->datelatupdate,
+                  'last_inventory_update' => $this->datelatupdate,
                   'cpu'                         => 5,
                   'memory'                      => 18,
                   'uptime'                      => '157 days, 02:14:44.00'
@@ -276,7 +276,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
       $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
 
       $a_networkequipment = current($pfNetworkEquipment->find(['networkequipments_id' => $networkEquipment->fields['id']], [], 1));
-      unset($a_networkequipment['last_fusioninventory_update']);
+      unset($a_networkequipment['last_inventory_update']);
       unset($a_networkequipment['id']);
       $a_reference = [
           'networkequipments_id'                        => $networkEquipment->fields['id'],

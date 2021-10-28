@@ -66,7 +66,7 @@ class PrinterUpdateTest extends TestCase {
       $a_inventory = [
          'PluginGlpiinventoryPrinter' => [
             'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
-            'last_fusioninventory_update' => $this->update_time
+            'last_inventory_update' => $this->update_time
          ],
          'networkport' => [],
          'cartridge'   => [
@@ -195,7 +195,7 @@ class PrinterUpdateTest extends TestCase {
 
       $a_printer = current($pfPrinter->find(['printers_id' => $printer->fields['id']], [], 1));
       unset($a_printer['id']);
-      unset($a_printer['last_fusioninventory_update']);
+      unset($a_printer['last_inventory_update']);
       $a_reference = [
          'printers_id'                                  => $printer->fields['id'],
          'sysdescr'                                     => 'HP ETHERNET MULTI-ENVIRONMENT',
@@ -516,7 +516,7 @@ class PrinterUpdateTest extends TestCase {
       $a_inventory = [
          'PluginGlpiinventoryPrinter' => [
             'sysdescr'                    => 'SHARP MX-5140N',
-            'last_fusioninventory_update' => $_SESSION['glpi_currenttime'],
+            'last_inventory_update' => $_SESSION['glpi_currenttime'],
 
          ],
          'networkport'  => [

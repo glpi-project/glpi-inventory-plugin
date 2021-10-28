@@ -64,13 +64,13 @@ class PrinterTransformationTest extends TestCase {
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginGlpiinventoryPrinter'])
-              && isset($a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'];
+              && isset($a_return['PluginGlpiinventoryPrinter']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryPrinter']['last_inventory_update'];
       }
       $a_reference = [
           'PluginGlpiinventoryPrinter' => [
                   'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
-                  'last_fusioninventory_update' => $date
+                  'last_inventory_update' => $date
                 ],
           'networkport'    => [],
           'cartridge'      => [],
@@ -123,13 +123,13 @@ class PrinterTransformationTest extends TestCase {
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginGlpiinventoryPrinter'])
-              && isset($a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginGlpiinventoryPrinter']['last_fusioninventory_update'];
+              && isset($a_return['PluginGlpiinventoryPrinter']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryPrinter']['last_inventory_update'];
       }
       $a_reference = [
           'PluginGlpiinventoryPrinter' => [
                   'sysdescr'                    => '',
-                  'last_fusioninventory_update' => $date
+                  'last_inventory_update' => $date
                 ],
           'networkport' => [],
           'cartridge'   => [],

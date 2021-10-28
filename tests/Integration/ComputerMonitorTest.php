@@ -65,7 +65,7 @@ class ComputerMonitorTest extends TestCase {
             "serial" => "ggheb7ne7"
          ],
          "inventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],
@@ -125,7 +125,7 @@ class ComputerMonitorTest extends TestCase {
             "serial" => "ggheb7ne8"
          ],
          "inventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],

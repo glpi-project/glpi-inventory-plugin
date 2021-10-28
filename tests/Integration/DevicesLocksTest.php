@@ -114,7 +114,7 @@ class DevicesLocksTest extends TestCase {
               "manufacturers_id"  => "Dell"
           ],
           "inventorycomputer" => [
-              'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+              'last_inventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ],
           'soundcard'      => [],
@@ -219,7 +219,7 @@ class DevicesLocksTest extends TestCase {
             "manufacturers_id"  => "Dell2 inc."
          ],
          "inventorycomputer" => [
-            'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+            'last_inventory_update' => date('Y-m-d H:i:s'),
             'serialized_inventory'        => 'something'
          ],
          'soundcard'      => [],
@@ -336,7 +336,7 @@ class DevicesLocksTest extends TestCase {
       $a_inventory = [
          'PluginGlpiinventoryNetworkEquipment' => [
             'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
-            'last_fusioninventory_update' => '2016-03-24 09:41:25',
+            'last_inventory_update' => '2016-03-24 09:41:25',
             'cpu'                         => 5,
             'memory'                      => 18,
             'uptime'                      => '157 days, 02:14:44.00'

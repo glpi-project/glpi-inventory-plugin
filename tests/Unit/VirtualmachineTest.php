@@ -55,7 +55,7 @@ class VirtualmachineTest extends TestCase {
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => date('Y-m-d H:i:s'),
+              'last_inventory_update'     => date('Y-m-d H:i:s'),
               'last_boot'                       => '2018-06-11 08:03:32',
           ],
           'soundcard'      => [],
@@ -99,7 +99,7 @@ class VirtualmachineTest extends TestCase {
           'contact'                          => 'username'
       ];
       $a_inventory['inventorycomputer'] = [
-          'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+          'last_inventory_update' => date('Y-m-d H:i:s'),
           'serialized_inventory'        => 'something'
       ];
 

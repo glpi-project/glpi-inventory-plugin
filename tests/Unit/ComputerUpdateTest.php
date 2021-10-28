@@ -87,7 +87,7 @@ class ComputerUpdateTest extends TestCase {
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => $date,
+              'last_inventory_update'     => $date,
               'last_boot'                       => '2018-06-11 08:03:32',
               'items_operatingsystems_id'       => [
                   'operatingsystems_id'              => 'freebsd',
@@ -411,7 +411,7 @@ class ComputerUpdateTest extends TestCase {
 
       $pfiComputerComputer = new PluginGlpiinventoryInventoryComputerComputer();
       $a_computer = current($pfiComputerComputer->find(['computers_id' => $id], [], 1));
-      unset($a_computer['last_fusioninventory_update']);
+      unset($a_computer['last_inventory_update']);
       $serialized_inventory = $a_computer['serialized_inventory'];
       unset($a_computer['serialized_inventory']);
       $a_reference = [
@@ -1290,7 +1290,7 @@ class ComputerUpdateTest extends TestCase {
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => $date,
+              'last_inventory_update'     => $date,
               'last_boot'                       => 'NULL',
               'items_operatingsystems_id'       => [
                   'operatingsystems_id'              => 'freebsd',

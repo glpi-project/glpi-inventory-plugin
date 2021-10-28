@@ -116,12 +116,12 @@ class PluginGlpiinventoryPrinter extends PluginGlpiinventoryItem {
 
 
    /**
-    * Update an existing printer with last_fusioninventory_update value
+    * Update an existing printer with last_inventory_update value
     */
    function updateDB() {
       parent::updateDB();
-      // update last_fusioninventory_update even if no other update
-      $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
+      // update last_inventory_update even if no other update
+      $this->setValue('last_inventory_update', date("Y-m-d H:i:s"));
       $this->updateDB();
    }
 
@@ -152,7 +152,7 @@ class PluginGlpiinventoryPrinter extends PluginGlpiinventoryItem {
       echo __('Last inventory', 'glpiinventory');
       echo '</td>';
       echo '<td>';
-      echo Html::convDateTime($a_printerextend['last_fusioninventory_update']);
+      echo Html::convDateTime($a_printerextend['last_inventory_update']);
       echo '</td>';
       echo '</tr>';
 

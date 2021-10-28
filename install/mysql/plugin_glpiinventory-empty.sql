@@ -410,7 +410,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputercomputers` (
   `operatingsystem_installationdate` timestamp NULL DEFAULT NULL,
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,
-  `last_fusioninventory_update` timestamp NULL DEFAULT NULL,
+  `last_inventory_update` timestamp NULL DEFAULT NULL,
   `remote_addr` varchar(255) DEFAULT NULL,
   `serialized_inventory` longblob DEFAULT NULL,
   `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
@@ -419,7 +419,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputercomputers` (
   `last_boot` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
-  KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
+  KEY `last_inventory_update` (`last_inventory_update`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -474,7 +474,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_networkequipments` (
    `uptime` varchar(255) NOT NULL DEFAULT '0',
    `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
    `memory` int(11) NOT NULL DEFAULT '0',
-   `last_fusioninventory_update` timestamp NULL DEFAULT NULL,
+   `last_inventory_update` timestamp NULL DEFAULT NULL,
    `last_PID_update` int(11) NOT NULL DEFAULT '0',
    `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
@@ -503,7 +503,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_printers` (
    `sysdescr` text DEFAULT NULL,
    `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
-   `last_fusioninventory_update` timestamp NULL DEFAULT NULL,
+   `last_inventory_update` timestamp NULL DEFAULT NULL,
    `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`printers_id`),

@@ -98,7 +98,7 @@ if (($state != "") AND ($state != "0")) {
 }
 
 $query = "SELECT * FROM (
-SELECT `glpi_networkequipments`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
+SELECT `glpi_networkequipments`.`name`, `last_inventory_update`, `serial`, `otherserial`,
    `networkequipmentmodels_id`, `glpi_networkequipments`.`id` as `network_id`, 0 as `printer_id`,
    `plugin_glpiinventory_configsecurities_id`,
    `glpi_ipaddresses`.`name` as ip, `states_id`
@@ -113,10 +113,10 @@ LEFT JOIN `glpi_networknames`
 LEFT JOIN `glpi_ipaddresses`
      ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
         AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
+WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL ".$nbdays." DAY) OR last_inventory_update IS NULL)
    ".$state_sql.")
 UNION
-SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
+SELECT `glpi_printers`.`name`, `last_inventory_update`, `serial`, `otherserial`,
    `printermodels_id`, 0 as `network_id`, `glpi_printers`.`id` as `printer_id`,
    `plugin_glpiinventory_configsecurities_id`,
    `glpi_ipaddresses`.`name` as ip, `states_id`
@@ -131,10 +131,10 @@ LEFT JOIN `glpi_networknames`
 LEFT JOIN `glpi_ipaddresses`
      ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
         AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
+WHERE (NOW() > ADDDATE(last_inventory_update, INTERVAL ".$nbdays." DAY) OR last_inventory_update IS NULL)
 AND `glpi_networkports`.`items_id`='Printer' ".$state_sql.") as `table`
 
-ORDER BY last_fusioninventory_update DESC";
+ORDER BY last_inventory_update DESC";
 
 echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 echo "<tr class='tab_bg_1'>";
@@ -162,7 +162,7 @@ if ($result=$DB->query($query)) {
       }
       echo $class->getLink(1);
       echo "</td>";
-      echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
+      echo "<td>".Html::convDateTime($data['last_inventory_update'])."</td>";
       echo "<td>";
       if ($data['network_id'] > 0) {
          echo __('Networks');

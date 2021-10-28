@@ -42,7 +42,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
    if ($itemtype == 'Computer' or $itemtype == 'PluginGlpiinventoryComputer') {
 
       $sopt[5150]['table']     = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
-      $sopt[5150]['field']     = 'last_fusioninventory_update';
+      $sopt[5150]['field']     = 'last_inventory_update';
       $sopt[5150]['name']      = __('FusInv', 'glpiinventory')." - ".
          __('Last inventory', 'glpiinventory');
       $sopt[5150]['datatype']  = 'datetime';
@@ -240,7 +240,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['massiveaction'] = false;
 
       $sopt[5194]['table'] = 'glpi_plugin_glpiinventory_printers';
-      $sopt[5194]['field'] = 'last_fusioninventory_update';
+      $sopt[5194]['field'] = 'last_inventory_update';
       $sopt[5194]['linkfield'] = '';
       $sopt[5194]['name'] = __('FusInv', 'glpiinventory')." - ".
          __('Last inventory', 'glpiinventory');
@@ -266,7 +266,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['massiveaction'] = false;
 
       $sopt[5194]['table'] = 'glpi_plugin_glpiinventory_networkequipments';
-      $sopt[5194]['field'] = 'last_fusioninventory_update';
+      $sopt[5194]['field'] = 'last_inventory_update';
       $sopt[5194]['linkfield'] = '';
       $sopt[5194]['name'] = __('FusInv', 'glpiinventory')." - ".
          __('Last inventory', 'glpiinventory');

@@ -163,7 +163,7 @@ class PluginGlpiinventoryItem extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo Html::convDateTime(
-              $this->fields['last_fusioninventory_update']);
+              $this->fields['last_inventory_update']);
       echo "</td>";
       echo "</tr>";
 

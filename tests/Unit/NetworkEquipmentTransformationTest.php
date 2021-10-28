@@ -385,8 +385,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginGlpiinventoryNetworkEquipment'])
-              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'];
+              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'];
       }
       $a_reference = [
           'PluginGlpiinventoryNetworkEquipment' => [
@@ -394,7 +394,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
-                  'last_fusioninventory_update' => $date,
+                  'last_inventory_update' => $date,
                   'cpu'                         => 6,
                   'memory'                      => 33,
                   'uptime'                      => '41 days, 06:53:36.46'
@@ -463,8 +463,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginGlpiinventoryNetworkEquipment'])
-              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'])) {
-         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update'];
+              && isset($a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'])) {
+         $date = $a_return['PluginGlpiinventoryNetworkEquipment']['last_inventory_update'];
       }
       $a_reference = [
           'PluginGlpiinventoryNetworkEquipment' => [
@@ -472,7 +472,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
-                  'last_fusioninventory_update' => $date,
+                  'last_inventory_update' => $date,
                   'cpu'                         => 6,
                   'memory'                      => 33,
                   'uptime'                      => '41 days, 06:53:36.46'

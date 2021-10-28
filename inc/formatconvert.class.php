@@ -338,7 +338,7 @@ class PluginGlpiinventoryFormatconvert {
                                         'OSINSTALLDATE'  => 'operatingsystem_installationdate',
                                         'WINOWNER'       => 'winowner',
                                         'WINCOMPANY'     => 'wincompany']);
-      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
+      $array_tmp['last_inventory_update'] = date('Y-m-d H:i:s');
 
       // * Determine "Public contact address"
       if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) { // Try "X-Forwarded-For" HTTP header
@@ -2173,7 +2173,7 @@ class PluginGlpiinventoryFormatconvert {
             break;
       }
       $array_tmp = $this->addValues($array['INFO'], $infos);
-      $array_tmp['last_fusioninventory_update']       = date('Y-m-d H:i:s');
+      $array_tmp['last_inventory_update']       = date('Y-m-d H:i:s');
       $a_inventory['PluginGlpiinventory'.ucfirst($itemtype)] = $array_tmp;
    }
 

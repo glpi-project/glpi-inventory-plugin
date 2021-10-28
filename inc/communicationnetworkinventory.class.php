@@ -715,7 +715,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
                ],
                'itemtype'  => 'NetworkEquipment',
                'PluginGlpiinventoryNetworkEquipment' => [
-                  'last_fusioninventory_update' => $a_inventory['PluginGlpiinventoryNetworkEquipment']['last_fusioninventory_update']
+                  'last_inventory_update' => $a_inventory['PluginGlpiinventoryNetworkEquipment']['last_inventory_update']
                ],
                'firmwares' => [
                   [

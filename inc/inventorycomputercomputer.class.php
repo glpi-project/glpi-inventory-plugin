@@ -248,7 +248,7 @@ class PluginGlpiinventoryInventoryComputerComputer extends PluginGlpiinventoryIt
       echo __('Last inventory', 'glpiinventory');
       echo '</td>';
       echo '<td>';
-      echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
+      echo Html::convDateTime($a_computerextend['last_inventory_update']);
       echo '</td>';
       echo '</tr>';
 

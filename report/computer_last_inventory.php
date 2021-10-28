@@ -97,14 +97,14 @@ if (($state != "") AND ($state != "0")) {
    $state_sql = " AND `states_id` = '".$state."' ";
 }
 
-$query = "SELECT `last_fusioninventory_update`, `computers_id`
+$query = "SELECT `last_inventory_update`, `computers_id`
       FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
    LEFT JOIN `glpi_computers` ON `computers_id`=`glpi_computers`.`id`
-WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY)
-      OR last_fusioninventory_update IS NULL)
+WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL ".$nbdays." DAY)
+      OR last_inventory_update IS NULL)
    ".$state_sql.")".getEntitiesRestrictRequest("AND", "glpi_computers")."
 
-ORDER BY last_fusioninventory_update DESC";
+ORDER BY last_inventory_update DESC";
 
 $result = $DB->query($query);
 
@@ -128,7 +128,7 @@ while ($data=$DB->fetchArray($result)) {
    $computer->getFromDB($data['computers_id']);
    echo $computer->getLink(1);
    echo "</td>";
-   echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
+   echo "<td>".Html::convDateTime($data['last_inventory_update'])."</td>";
    echo "<td>".$computer->fields['serial']."</td>";
    echo "<td>".$computer->fields['otherserial']."</td>";
    echo "<td>";

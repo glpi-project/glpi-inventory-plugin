@@ -497,7 +497,7 @@ class PluginGlpiinventoryNetworkEquipment extends PluginGlpiinventoryItem {
       echo __('Last inventory', 'glpiinventory');
       echo '</td>';
       echo '<td>';
-      echo Html::convDateTime($pfNetworkEquipment->fields['last_fusioninventory_update']);
+      echo Html::convDateTime($pfNetworkEquipment->fields['last_inventory_update']);
       echo '</td>';
       echo '</tr>';
 
