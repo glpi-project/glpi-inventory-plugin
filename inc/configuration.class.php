@@ -61,7 +61,7 @@ class PluginGlpiinventoryConfiguration extends CommonDBTM {
       $tabs[2]=__('Agents modules', 'glpiinventory');
 
       if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
-         $fusionTabs = $tabs;
+         $plugin_tabs = $tabs;
          $moduleTabForms =
                $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
@@ -71,7 +71,7 @@ class PluginGlpiinventoryConfiguration extends CommonDBTM {
                   $tabs[] = key($form);
                }
             }
-            $moduleTabs = array_diff($tabs, $fusionTabs);
+            $moduleTabs = array_diff($tabs, $plugin_tabs);
          }
          $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabs'] = $moduleTabs;
       }

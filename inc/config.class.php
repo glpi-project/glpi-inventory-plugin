@@ -207,7 +207,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
       $this->addStandardTab("PluginGlpiinventoryLock", $ong, $options);
 
       if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
-         $fusionTabs = $ong;
+         $plugin_tabs = $ong;
          $moduleTabForms =
                   $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
@@ -216,7 +216,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
                   $this->addStandardTab($form[key($form)]['class'], $ong, $options);
                }
             }
-            $moduleTabs = array_diff($ong, $fusionTabs);
+            $moduleTabs = array_diff($ong, $plugin_tabs);
          }
          $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabs'] = $moduleTabs;
       }
