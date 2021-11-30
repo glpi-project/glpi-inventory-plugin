@@ -6,6 +6,9 @@
     "glpi-project/tools": "^0.3",
     "phpunit/phpunit": "^9.5"
   },
+  "conflict": {
+    "psr/container": "^2.0"
+  },
   "autoload": {
     "classmap": [
       "inc/"
