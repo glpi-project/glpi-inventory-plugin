@@ -63,7 +63,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     *
     * @return true
     */
-    publicstatic  function canCreate()
+    public static  function canCreate()
     {
         return true;
     }
@@ -75,7 +75,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
 
         if (isset($_SERVER['HTTP_REFERER']) and strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
@@ -198,7 +198,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         if ($tabnum == 'task') {
             $pfTask = new PluginGlpiinventoryTask();

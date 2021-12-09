@@ -141,7 +141,7 @@ class PluginGlpiinventoryCommunication
     *
     * @param string $p_logs log message to write
     */
-    publicstatic  function addLog($p_logs)
+    public static  function addLog($p_logs)
     {
 
         if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {

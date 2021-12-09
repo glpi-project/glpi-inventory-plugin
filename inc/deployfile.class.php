@@ -357,7 +357,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @global array $CFG_GLPI
     * @param string $rand unique element id used to identify/update an element
     */
-    publicstatic  function showServerFileTree($rand)
+    public static  function showServerFileTree($rand)
     {
         echo "<script type='text/javascript'>";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -413,7 +413,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     *
     * @param string $node
     */
-    publicstatic  function getServerFileTree($node)
+    public static  function getServerFileTree($node)
     {
 
         $nodes            = [];

@@ -190,7 +190,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     *
     * @return string
     */
-    publicstatic  function getMethod()
+    public static  function getMethod()
     {
         return 'networkinventory';
     }

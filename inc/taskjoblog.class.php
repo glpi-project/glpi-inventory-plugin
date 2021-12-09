@@ -90,7 +90,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     *
     * @return array with all elements
     */
-    publicstatic  function dropdownStateValues()
+    public static  function dropdownStateValues()
     {
 
         $elements = [
@@ -112,7 +112,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     * @param integer $state
     * @return string
     */
-    publicstatic  function getStateName($state = -1)
+    public static  function getStateName($state = -1)
     {
         $state_names = self::dropdownStateValues();
         if (isset($state_names[$state])) {
@@ -129,7 +129,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     * @param integer $taskjoblogs_id
     * @return string
     */
-    publicstatic  function getStateItemtype($taskjoblogs_id)
+    public static  function getStateItemtype($taskjoblogs_id)
     {
         global $DB;
 
@@ -680,7 +680,7 @@ function appear_array(id) {
     * @param string $uuid value uniqid
     * @return array with data of table glpi_plugin_glpiinventory_taskjobstates
     */
-    publicstatic  function getByUniqID($uuid)
+    public static  function getByUniqID($uuid)
     {
         $a_datas = getAllDataFromTable(
             'glpi_plugin_glpiinventory_taskjobstates',
@@ -747,7 +747,7 @@ function appear_array(id) {
     * @param string $comment
     * @return string
     */
-    publicstatic  function convertComment($comment)
+    public static  function convertComment($comment)
     {
         $matches = [];
        // Search for replace [[itemtype::items_id]] by link

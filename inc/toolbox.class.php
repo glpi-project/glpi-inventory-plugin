@@ -48,7 +48,7 @@ class PluginGlpiinventoryToolbox
     * @param string $file
     * @param string $message
     */
-    publicstatic  function logIfExtradebug($file, $message)
+    public static  function logIfExtradebug($file, $message)
     {
         $config = new PluginGlpiinventoryConfig();
         if (PluginGlpiinventoryConfig::isExtradebugActive()) {
@@ -66,7 +66,7 @@ class PluginGlpiinventoryToolbox
     * @param object $xml simplexml instance
     * @return string
     */
-    publicstatic  function formatXML($xml)
+    public static  function formatXML($xml)
     {
         $string     = str_replace("><", ">\n<", $xml->asXML());
         $token      = strtok($string, "\n");
@@ -143,7 +143,7 @@ class PluginGlpiinventoryToolbox
     * @param integer $items_id
     * @return array
     */
-    publicstatic  function getIPforDevice($itemtype, $items_id)
+    public static  function getIPforDevice($itemtype, $items_id)
     {
         $NetworkPort = new NetworkPort();
         $networkName = new NetworkName();
@@ -189,7 +189,7 @@ class PluginGlpiinventoryToolbox
     * @param integer $items_id
     * @param string $itemtype
     */
-    publicstatic  function sendXML($items_id, $itemtype)
+    public static  function sendXML($items_id, $itemtype)
     {
         if (
             preg_match("/^([a-zA-Z]+)\/(\d+)\/(\d+)\.xml$/", $items_id)
@@ -235,7 +235,7 @@ class PluginGlpiinventoryToolbox
     * @param object $mysql_result
     * @return array
     */
-    publicstatic  function fetchAssocByTable($mysql_result)
+    public static  function fetchAssocByTable($mysql_result)
     {
         $results = [];
        //get fields header infos
@@ -265,7 +265,7 @@ class PluginGlpiinventoryToolbox
     * @param string $json
     * @return string
     */
-    publicstatic  function formatJson($json)
+    public static  function formatJson($json)
     {
         $version = phpversion();
 
@@ -287,7 +287,7 @@ class PluginGlpiinventoryToolbox
     * @param array $options
     * @return string unique html element id
     */
-    publicstatic  function showHours($name, $options = [])
+    public static  function showHours($name, $options = [])
     {
 
         $p['value']          = '';
@@ -322,7 +322,7 @@ class PluginGlpiinventoryToolbox
     * @param integer $seconds
     * @return string
     */
-    publicstatic  function getHourMinute($seconds)
+    public static  function getHourMinute($seconds)
     {
         $hour = floor($seconds / 3600);
         $minute = (($seconds - ((floor($seconds / 3600)) * 3600)) / 60);
@@ -336,7 +336,7 @@ class PluginGlpiinventoryToolbox
     * @param integer $wakecomputer (1 if it's for wakeonlan, 0 if it's for task)
     * @return boolean
     */
-    publicstatic  function isAllowurlfopen($wakecomputer = 0)
+    public static  function isAllowurlfopen($wakecomputer = 0)
     {
 
         if (!ini_get('allow_url_fopen')) {
@@ -417,7 +417,7 @@ class PluginGlpiinventoryToolbox
    *
    * @return boolean
    */
-    publicstatic  function isAnInventoryDevice($item)
+    public static  function isAnInventoryDevice($item)
     {
         switch ($item->getType()) {
             case 'Computer':

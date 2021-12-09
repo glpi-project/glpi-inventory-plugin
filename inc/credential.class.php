@@ -76,7 +76,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
         return __('Authentication for remote devices (VMware)', 'glpiinventory');
     }
@@ -223,7 +223,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     * @param array $input the values to insert in DB
     * @return array
     */
-    publicstatic  function checkBeforeInsert($input)
+    public static  function checkBeforeInsert($input)
     {
 
         if ($input['password'] == '') {
@@ -272,7 +272,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
     * @return string|false
     */
-    publicstatic  function getLabelByItemtype($credential_itemtype)
+    public static  function getLabelByItemtype($credential_itemtype)
     {
         $credentialtypes = self::findItemtypeType($credential_itemtype);
         if (!empty($credentialtypes)) {
@@ -288,7 +288,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
     * @return array
     */
-    publicstatic  function findItemtypeType($credential_itemtype)
+    public static  function findItemtypeType($credential_itemtype)
     {
 
         $credential = ['itemtype' => 'PluginGlpiinventoryInventoryComputerESX', //Credential itemtype
@@ -306,7 +306,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     *
     * @return array
     */
-    publicstatic  function getCredentialsItemTypes()
+    public static  function getCredentialsItemTypes()
     {
         return ['PluginGlpiinventoryInventoryComputerESX' =>
                            __('VMware host', 'glpiinventory')];
@@ -319,7 +319,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     * @param string $itemtype
     * @return array
     */
-    publicstatic  function getForItemtype($itemtype)
+    public static  function getForItemtype($itemtype)
     {
         $itemtypes = [];
         foreach (PluginGlpiinventoryModule::getAll() as $data) {
@@ -342,7 +342,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     * @global array $CFG_GLPI
     * @param array $params
     */
-    publicstatic  function dropdownCredentials($params = [])
+    public static  function dropdownCredentials($params = [])
     {
         global $CFG_GLPI;
 
@@ -393,7 +393,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     *
     * @param array $params
     */
-    publicstatic  function dropdownCredentialsForItemtype($params = [])
+    public static  function dropdownCredentialsForItemtype($params = [])
     {
 
         if (empty($params['itemtype'])) {
@@ -419,7 +419,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     *
     * @return boolean
     */
-    publicstatic  function hasAlLeastOneType()
+    public static  function hasAlLeastOneType()
     {
         $types = self::getCredentialsItemTypes();
         return (!empty($types));

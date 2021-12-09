@@ -82,7 +82,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
         $pfTaskJob = new PluginGlpiinventoryTaskjob();

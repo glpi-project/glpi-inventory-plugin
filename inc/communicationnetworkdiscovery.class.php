@@ -162,7 +162,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
     *
     * @return string
     */
-    publicstatic  function getMethod()
+    public static  function getMethod()
     {
         return 'networkdiscovery';
     }

@@ -48,7 +48,7 @@ class PluginGlpiinventorySetup
     * @global object $DB
     * @return true
     */
-    publicstatic  function uninstall()
+    public static  function uninstall()
     {
         global $DB;
 

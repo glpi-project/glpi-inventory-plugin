@@ -160,7 +160,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
 
         return __('General setup');
@@ -249,7 +249,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem($item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem($item, $tabnum = 1, $withtemplate = 0)
     {
 
         switch ($tabnum) {
@@ -448,7 +448,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param integer $action
     * @return string
     */
-    publicstatic  function getActions($action)
+    public static  function getActions($action)
     {
         switch ($action) {
             case self::ACTION_STATUS:
@@ -466,7 +466,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param array $options
     * @return true
     */
-    publicstatic  function showFormNetworkInventory($options = [])
+    public static  function showFormNetworkInventory($options = [])
     {
         global $CFG_GLPI;
 
@@ -544,7 +544,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param array $options
     * @return true
     */
-    publicstatic  function showFormDeploy($options = [])
+    public static  function showFormDeploy($options = [])
     {
 
         $pfConfig = new PluginGlpiinventoryConfig();
@@ -656,7 +656,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     *
     * @return null|integer the integer is 1 or 0 (it's like boolean)
     */
-    publicstatic  function isExtradebugActive()
+    public static  function isExtradebugActive()
     {
         $fConfig = new self();
         return $fConfig->getValue('extradebug');
@@ -669,7 +669,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param string $file name of log file to update
     * @param string $message the message to put in log file
     */
-    publicstatic  function logIfExtradebug($file, $message)
+    public static  function logIfExtradebug($file, $message)
     {
         if (self::isExtradebugActive()) {
             if (is_array($message)) {
@@ -690,7 +690,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @global object $DB
     * @global array $PF_CONFIG
     */
-    publicstatic  function loadCache()
+    public static  function loadCache()
     {
         global $DB, $PF_CONFIG;
 

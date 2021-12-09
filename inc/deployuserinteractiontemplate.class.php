@@ -115,7 +115,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param $tabnum       (default 1)
     * @param $withtemplate (default 0)
    **/
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         global $CFG_GLPI;
 
@@ -140,7 +140,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
          return _n(
              'User interaction template',
@@ -157,7 +157,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @since 9.2
     * @return array
     */
-    publicstatic  function getTypes()
+    public static  function getTypes()
     {
         return [self::ALERT_WTS
                => __("Windows system alert (WTS)", 'glpiinventory')];
@@ -171,7 +171,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param interaction_type the type of interaction
     * @return array
     */
-    publicstatic  function getButtons($interaction_type = '')
+    public static  function getButtons($interaction_type = '')
     {
         $interactions = [
          self::ALERT_WTS => [
@@ -201,7 +201,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param interaction_type the type of interaction
     * @return array
     */
-    publicstatic  function getIcons($interaction_type = self::ALERT_WTS)
+    public static  function getIcons($interaction_type = self::ALERT_WTS)
     {
         $icons = [
          self::ALERT_WTS => [
@@ -226,7 +226,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @since 9.2
     * @return array
     */
-    publicstatic  function getBehaviors()
+    public static  function getBehaviors()
     {
         return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction', 'glpiinventory'),
               self::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'glpiinventory'),
@@ -381,7 +381,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     *
     *  @return array
     **/
-    publicstatic  function getRetries()
+    public static  function getRetries()
     {
         $tab = [
         0 => __('Never')
@@ -419,7 +419,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     *
     *  @return array
     **/
-    publicstatic  function getTimeouts()
+    public static  function getTimeouts()
     {
         $tab = [
          0 => __('Never')

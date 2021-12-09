@@ -109,7 +109,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     * @param integer $withtemplate 1 if is a template form
     * @return true
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pfIPRange_credentials = new self();
         $pfIPRange_credentials->showItemForm($item);

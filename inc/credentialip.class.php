@@ -77,7 +77,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
         return __('Remote device inventory', 'glpiinventory');
     }

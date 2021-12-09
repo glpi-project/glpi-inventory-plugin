@@ -55,7 +55,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
         return __('Collect information', 'glpiinventory');
     }
@@ -92,7 +92,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         if ($item->getType() != 'Computer') {
             return false;
@@ -124,7 +124,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
    * @param integer $computers_id the computer ID
    * @return the number of collects for this computer
    */
-    publicstatic  function getNumberOfCollectsForAComputer($computers_id)
+    public static  function getNumberOfCollectsForAComputer($computers_id)
     {
         $tables = ['glpi_plugin_glpiinventory_collects_registries_contents',
                  'glpi_plugin_glpiinventory_collects_wmis_contents',
@@ -143,7 +143,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     *
     * @return array [name] => description
     */
-    publicstatic  function getTypes()
+    public static  function getTypes()
     {
         return [
          'registry' => __('Registry', 'glpiinventory'),
@@ -179,7 +179,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     *
     * @return array
     */
-    publicstatic  function getSearchOptionsToAdd($itemtype = null)
+    public static  function getSearchOptionsToAdd($itemtype = null)
     {
         $tab = [];
 

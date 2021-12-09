@@ -606,7 +606,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
    * @param params the check's parameters
    * @return array the array to be encoded in json and serialized
    */
-    publicstatic  function formatCheckForJson($params)
+    public static  function formatCheckForJson($params)
     {
         if (!isset($params['value'])) {
             $params['value'] = "";

@@ -56,7 +56,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
         return '';
     }
@@ -89,7 +89,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $class     = get_called_class();
         $pfCollect = new $class();

@@ -52,7 +52,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
         if ($nb > 1) {
             return PluginGlpiinventoryDeployGroup::getTypeName();
@@ -66,7 +66,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     *
     * @return boolean
     */
-    publicstatic  function canCreate()
+    public static  function canCreate()
     {
         return true;
     }
@@ -77,7 +77,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     *
     * @return boolean
     */
-    publicstatic  function canView()
+    public static  function canView()
     {
         return true;
     }
@@ -127,7 +127,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         switch (get_class($item)) {
             case __CLASS__:

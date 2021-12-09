@@ -49,7 +49,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
         return _n('Found entry', 'Found entries', $nb, 'glpiinventory');
     }
@@ -59,7 +59,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
     *
     * @return array list of hives
     */
-    publicstatic  function getHives()
+    public static  function getHives()
     {
         return [
          "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",

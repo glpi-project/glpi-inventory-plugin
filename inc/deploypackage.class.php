@@ -90,7 +90,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    publicstatic  function getTypeName($nb = 0)
+    public static  function getTypeName($nb = 0)
     {
         return __('Package', 'glpiinventory');
     }
@@ -181,7 +181,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param object $ma MassiveAction instance
     * @return boolean
     */
-    publicstatic  function showMassiveActionsSubForm(MassiveAction $ma)
+    public static  function showMassiveActionsSubForm(MassiveAction $ma)
     {
         switch ($ma->getAction()) {
             case 'transfert':
@@ -207,7 +207,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    publicstatic  function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
+    public static  function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
 
         switch ($ma->getAction()) {
@@ -646,7 +646,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param string $dom_id
     * @param boolean $clone
     */
-    publicstatic  function plusButton($dom_id, $clone = false)
+    public static  function plusButton($dom_id, $clone = false)
     {
         global $CFG_GLPI;
 
@@ -688,7 +688,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param string $action_type type of action
     * @param array $params data used to update the json
     */
-    publicstatic  function alterJSON($action_type, $params)
+    public static  function alterJSON($action_type, $params)
     {
        //route to sub class
         $item_type = $params['itemtype'];
@@ -949,7 +949,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param integer $packages_id id of the order
     * @return boolean|string the string is in json format
     */
-    publicstatic  function getJson($packages_id)
+    public static  function getJson($packages_id)
     {
         $pfDeployPackage = new self();
         $pfDeployPackage->getFromDB($packages_id);
@@ -968,7 +968,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param array $datas
     * @return integer error number
     */
-    publicstatic  function updateOrderJson($packages_id, $datas)
+    public static  function updateOrderJson($packages_id, $datas)
     {
         $pfDeployPackage = new self();
         $options = JSON_UNESCAPED_SLASHES;
@@ -1078,7 +1078,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
         if ($item->getType() == __CLASS__) {
@@ -1362,7 +1362,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    * Get all available states for a package
    * @return an array of states and their labels
    */
-    publicstatic  function getPackageDeploymentStates()
+    public static  function getPackageDeploymentStates()
     {
         return [
               'agents_notdone'   => __('Not done yet', 'glpiinventory'),
@@ -1379,7 +1379,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    * @param state the state
    * @return the label associated to a state
    */
-    publicstatic  function getDeploymentLabelForAState($state)
+    public static  function getDeploymentLabelForAState($state)
     {
         $states = self::getPackageDeploymentStates();
         if (isset($states[$state])) {
@@ -1697,7 +1697,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param integer $computers_id the ID of the computer to check
     * @return boolean true if deploy is enabled for the agent
     */
-    publicstatic  function isDeployEnabled($computers_id)
+    public static  function isDeployEnabled($computers_id)
     {
         $agent = new Agent();
        //If the agent associated with the computer has not the

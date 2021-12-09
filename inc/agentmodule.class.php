@@ -76,7 +76,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
         if ($item->getType() == 'PluginGlpiinventoryConfig') {
@@ -400,7 +400,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param integer $entities_id id of the entity
     * @return string the URL generated
     */
-    publicstatic  function getUrlForModule($modulename, $entities_id = -1)
+    public static  function getUrlForModule($modulename, $entities_id = -1)
     {
         $plugin_dir = '/' . Plugin::getWebDir('glpiinventory', false);
 
@@ -434,7 +434,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     *
     * @return array list of name of modules
     */
-    publicstatic  function getModules()
+    public static  function getModules()
     {
         $a_modules = [];
         $a_data = getAllDataFromTable(PluginGlpiinventoryAgentmodule::getTable());

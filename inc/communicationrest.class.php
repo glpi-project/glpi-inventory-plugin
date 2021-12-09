@@ -48,7 +48,7 @@ class PluginGlpiinventoryCommunicationRest
     * @param array $params
     * @return array|false array return jobs ready for the agent
     */
-    publicstatic  function communicate($params = [])
+    public static  function communicate($params = [])
     {
         $response = [];
         if (isset($params['action']) && isset($params['machineid'])) {
@@ -83,7 +83,7 @@ class PluginGlpiinventoryCommunicationRest
     * @param array $params
     * @return array
     */
-    publicstatic  function getConfigByAgent($params = [])
+    public static  function getConfigByAgent($params = [])
     {
         $schedule = [];
 
@@ -153,7 +153,7 @@ class PluginGlpiinventoryCommunicationRest
     * @param array $params
     * @return false
     */
-    publicstatic  function getJobsByAgent($params = [])
+    public static  function getJobsByAgent($params = [])
     {
        //      $jobs = [];
        //      $methods = PluginGlpiinventoryStaticmisc::getmethods();
@@ -169,7 +169,7 @@ class PluginGlpiinventoryCommunicationRest
    /**
     * Send to the agent an OK code
     */
-    publicstatic  function sendOk()
+    public static  function sendOk()
     {
         header("HTTP/1.1 200", true, 200);
     }
@@ -179,7 +179,7 @@ class PluginGlpiinventoryCommunicationRest
     * Send to the agent an error code
     * when the request sent by the agent is invalid
     */
-    publicstatic  function sendError()
+    public static  function sendError()
     {
         header("HTTP/1.1 400", true, 400);
     }
@@ -191,7 +191,7 @@ class PluginGlpiinventoryCommunicationRest
     * @param string $task
     * @return string
     */
-    publicstatic  function getMethodForParameters($task)
+    public static  function getMethodForParameters($task)
     {
         return "task_" . strtolower($task) . "_getParameters";
     }
@@ -203,7 +203,7 @@ class PluginGlpiinventoryCommunicationRest
     * @global object $DB
     * @param array $params
     */
-    publicstatic  function updateLog($params = [])
+    public static  function updateLog($params = [])
     {
         global $DB;
 
@@ -276,7 +276,7 @@ class PluginGlpiinventoryCommunicationRest
     * @param string $url
     * @return boolean
     */
-    publicstatic  function testRestURL($url)
+    public static  function testRestURL($url)
     {
 
        //If fopen is not allowed, we cannot check and then return true...
@@ -297,7 +297,7 @@ class PluginGlpiinventoryCommunicationRest
    /**
     * Manage REST parameters
     **/
-    publicstatic  function handleFusionCommunication()
+    public static  function handleFusionCommunication()
     {
         $response = PluginGlpiinventoryCommunicationRest::communicate($_GET);
         if ($response) {
