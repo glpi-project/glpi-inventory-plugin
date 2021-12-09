@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,35 +32,36 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Rules for collect information.
  * The goal is to fill inventory with collect information.
  */
-class PluginGlpiinventoryCollectRule extends Rule {
+class PluginGlpiinventoryCollectRule extends Rule
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_glpiinventory_rulecollect";
+    static $rightname = "plugin_glpiinventory_rulecollect";
 
    /**
     * Set these rules can be sorted
     *
     * @var boolean
     */
-   public $can_sort=true;
+    public $can_sort = true;
 
    /**
     * Set these rules not have specific parameters
     *
     * @var boolean
     */
-   public $specific_parameters = false;
+    public $specific_parameters = false;
 
 
    /**
@@ -67,9 +69,10 @@ class PluginGlpiinventoryCollectRule extends Rule {
     *
     * @return string name of this type
     */
-   function getTitle() {
-      return __('Computer information rules', 'glpiinventory');
-   }
+    function getTitle()
+    {
+        return __('Computer information rules', 'glpiinventory');
+    }
 
 
    /**
@@ -78,9 +81,10 @@ class PluginGlpiinventoryCollectRule extends Rule {
     * @param array $output
     * @return array
     */
-   function preProcessPreviewResults($output) {
-      return $output;
-   }
+    function preProcessPreviewResults($output)
+    {
+        return $output;
+    }
 
 
    /**
@@ -88,9 +92,10 @@ class PluginGlpiinventoryCollectRule extends Rule {
     *
     * @return integer
     */
-   function maxActionsCount() {
-      return 8;
-   }
+    function maxActionsCount()
+    {
+        return 8;
+    }
 
 
    /**
@@ -100,80 +105,84 @@ class PluginGlpiinventoryCollectRule extends Rule {
     * @param array $params
     * @return array
     */
-   function executeActions($output, $params, array $input = []) {
+    function executeActions($output, $params, array $input = [])
+    {
 
-      PluginGlpiinventoryToolbox::logIfExtradebug(
-         "pluginGlpiinventory-rules-collect",
-         "execute actions, data:\n". print_r($output, true). "\n" . print_r($params, true)
-      );
+        PluginGlpiinventoryToolbox::logIfExtradebug(
+            "pluginGlpiinventory-rules-collect",
+            "execute actions, data:\n" . print_r($output, true) . "\n" . print_r($params, true)
+        );
 
-      PluginGlpiinventoryToolbox::logIfExtradebug(
-         "pluginGlpiinventory-rules-collect",
-         "execute actions: ". count($this->actions) ."\n"
-      );
+        PluginGlpiinventoryToolbox::logIfExtradebug(
+            "pluginGlpiinventory-rules-collect",
+            "execute actions: " . count($this->actions) . "\n"
+        );
 
-      if (count($this->actions)) {
-         foreach ($this->actions as $action) {
-            PluginGlpiinventoryToolbox::logIfExtradebug(
-               "pluginGlpiinventory-rules-collect",
-               "- action: ". $action->fields["action_type"] ." for: ". $action->fields["field"] ."\n"
-            );
+        if (count($this->actions)) {
+            foreach ($this->actions as $action) {
+                PluginGlpiinventoryToolbox::logIfExtradebug(
+                    "pluginGlpiinventory-rules-collect",
+                    "- action: " . $action->fields["action_type"] . " for: " . $action->fields["field"] . "\n"
+                );
 
-            switch ($action->fields["action_type"]) {
-               case "assign" :
-                  PluginGlpiinventoryToolbox::logIfExtradebug(
-                     "pluginGlpiinventory-rules-collect",
-                     "- value ".$action->fields["value"]."\n"
-                  );
-                  $output[$action->fields["field"]] = $action->fields["value"];
-                  break;
+                switch ($action->fields["action_type"]) {
+                    case "assign":
+                        PluginGlpiinventoryToolbox::logIfExtradebug(
+                            "pluginGlpiinventory-rules-collect",
+                            "- value " . $action->fields["value"] . "\n"
+                        );
+                        $output[$action->fields["field"]] = $action->fields["value"];
+                        break;
 
-               case "regex_result" :
+                    case "regex_result":
                   //Regex result : assign value from the regex
-                  $res = "";
-                  if (isset($this->regex_results[0])) {
-                     PluginGlpiinventoryToolbox::logIfExtradebug(
-                        "pluginGlpiinventory-rules-collect",
-                        "- regex ".print_r($this->regex_results[0], true)."\n"
-                     );
-                     $res .= RuleAction::getRegexResultById($action->fields["value"],
-                                                            $this->regex_results[0]);
-                     PluginGlpiinventoryToolbox::logIfExtradebug(
-                        "pluginGlpiinventory-rules-collect",
-                        "- regex result: ".$res."\n"
-                     );
-                  } else {
-                     $res .= $action->fields["value"];
-                  }
-                  if ($res != ''
-                          && ($action->fields["field"] != 'user'
-                              && $action->fields["field"] != 'otherserial'
-                              && $action->fields["field"] != 'software'
-                              && $action->fields["field"] != 'softwareversion')) {
-                     $entities_id = 0;
-                     if (isset($_SESSION["plugin_glpiinventory_entity"])) {
-                        $entities_id = $_SESSION["plugin_glpiinventory_entity"];
-                     }
-                     $res = Dropdown::importExternal(getItemtypeForForeignKeyField($action->fields['field']), $res, $entities_id);
-                  }
-                  PluginGlpiinventoryToolbox::logIfExtradebug(
-                     "pluginGlpiinventory-rules-collect",
-                     "- value ".$res."\n"
-                  );
-                  $output[$action->fields["field"]] = $res;
-                  break;
+                        $res = "";
+                        if (isset($this->regex_results[0])) {
+                            PluginGlpiinventoryToolbox::logIfExtradebug(
+                                "pluginGlpiinventory-rules-collect",
+                                "- regex " . print_r($this->regex_results[0], true) . "\n"
+                            );
+                            $res .= RuleAction::getRegexResultById(
+                                $action->fields["value"],
+                                $this->regex_results[0]
+                            );
+                            PluginGlpiinventoryToolbox::logIfExtradebug(
+                                "pluginGlpiinventory-rules-collect",
+                                "- regex result: " . $res . "\n"
+                            );
+                        } else {
+                            $res .= $action->fields["value"];
+                        }
+                        if (
+                            $res != ''
+                            && ($action->fields["field"] != 'user'
+                            && $action->fields["field"] != 'otherserial'
+                            && $action->fields["field"] != 'software'
+                            && $action->fields["field"] != 'softwareversion')
+                        ) {
+                            $entities_id = 0;
+                            if (isset($_SESSION["plugin_glpiinventory_entity"])) {
+                                $entities_id = $_SESSION["plugin_glpiinventory_entity"];
+                            }
+                            $res = Dropdown::importExternal(getItemtypeForForeignKeyField($action->fields['field']), $res, $entities_id);
+                        }
+                        PluginGlpiinventoryToolbox::logIfExtradebug(
+                            "pluginGlpiinventory-rules-collect",
+                            "- value " . $res . "\n"
+                        );
+                        $output[$action->fields["field"]] = $res;
+                        break;
 
-               default:
-                  //plugins actions
-                  $executeaction = clone $this;
-                  $output = $executeaction->executePluginsActions($action, $output, $params);
-                  break;
-
+                    default:
+                          //plugins actions
+                          $executeaction = clone $this;
+                          $output = $executeaction->executePluginsActions($action, $output, $params);
+                        break;
+                }
             }
-         }
-      }
-      return $output;
-   }
+        }
+        return $output;
+    }
 
 
    /**
@@ -181,35 +190,36 @@ class PluginGlpiinventoryCollectRule extends Rule {
     *
     * @return array
     */
-   function getCriterias() {
+    function getCriterias()
+    {
 
-      $criterias = [];
+        $criterias = [];
 
-      $criterias['regkey']['field']       = 'name';
-      $criterias['regkey']['name']        = __('Registry key', 'glpiinventory');
-      $criterias['regkey']['table']       = 'glpi_plugin_glpiinventory_collects_registries';
+        $criterias['regkey']['field']       = 'name';
+        $criterias['regkey']['name']        = __('Registry key', 'glpiinventory');
+        $criterias['regkey']['table']       = 'glpi_plugin_glpiinventory_collects_registries';
 
-      $criterias['regvalue']['field']     = 'name';
-      $criterias['regvalue']['name']      = __('Registry value', 'glpiinventory');
+        $criterias['regvalue']['field']     = 'name';
+        $criterias['regvalue']['name']      = __('Registry value', 'glpiinventory');
 
-      $criterias['wmiproperty']['field']  = 'name';
-      $criterias['wmiproperty']['name']   = __('WMI property', 'glpiinventory');
-      $criterias['wmiproperty']['table']  = 'glpi_plugin_glpiinventory_collects_wmis';
+        $criterias['wmiproperty']['field']  = 'name';
+        $criterias['wmiproperty']['name']   = __('WMI property', 'glpiinventory');
+        $criterias['wmiproperty']['table']  = 'glpi_plugin_glpiinventory_collects_wmis';
 
-      $criterias['wmivalue']['field']     = 'name';
-      $criterias['wmivalue']['name']      = __('WMI value', 'glpiinventory');
+        $criterias['wmivalue']['field']     = 'name';
+        $criterias['wmivalue']['name']      = __('WMI value', 'glpiinventory');
 
-      $criterias['filename']['field']     = 'name';
-      $criterias['filename']['name']      = __('File name', 'glpiinventory');
+        $criterias['filename']['field']     = 'name';
+        $criterias['filename']['name']      = __('File name', 'glpiinventory');
 
-      $criterias['filepath']['field']     = 'name';
-      $criterias['filepath']['name']      = __('File path', 'glpiinventory');
+        $criterias['filepath']['field']     = 'name';
+        $criterias['filepath']['name']      = __('File path', 'glpiinventory');
 
-      $criterias['filesize']['field']     = 'name';
-      $criterias['filesize']['name']      = __('File size', 'glpiinventory');
+        $criterias['filesize']['field']     = 'name';
+        $criterias['filesize']['name']      = __('File size', 'glpiinventory');
 
-      return $criterias;
-   }
+        return $criterias;
+    }
 
 
    /**
@@ -217,57 +227,56 @@ class PluginGlpiinventoryCollectRule extends Rule {
     *
     * @return array
     */
-   function getActions() {
+    function getActions()
+    {
 
-      $actions = [];
+        $actions = [];
 
-      $actions['computertypes_id']['name']  = __('Type');
-      $actions['computertypes_id']['type']  = 'dropdown';
-      $actions['computertypes_id']['table'] = 'glpi_computertypes';
-      $actions['computertypes_id']['force_actions'] = ['assign', 'regex_result'];
+        $actions['computertypes_id']['name']  = __('Type');
+        $actions['computertypes_id']['type']  = 'dropdown';
+        $actions['computertypes_id']['table'] = 'glpi_computertypes';
+        $actions['computertypes_id']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['computermodels_id']['name']  = __('Model');
-      $actions['computermodels_id']['type']  = 'dropdown';
-      $actions['computermodels_id']['table'] = 'glpi_computermodels';
-      $actions['computermodels_id']['force_actions'] = ['assign', 'regex_result'];
+        $actions['computermodels_id']['name']  = __('Model');
+        $actions['computermodels_id']['type']  = 'dropdown';
+        $actions['computermodels_id']['table'] = 'glpi_computermodels';
+        $actions['computermodels_id']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['operatingsystems_id']['name']  = OperatingSystem::getTypeName(1);
-      $actions['operatingsystems_id']['type']  = 'dropdown';
-      $actions['operatingsystems_id']['table'] = 'glpi_operatingsystems';
-      $actions['operatingsystems_id']['force_actions'] = ['assign', 'regex_result'];
+        $actions['operatingsystems_id']['name']  = OperatingSystem::getTypeName(1);
+        $actions['operatingsystems_id']['type']  = 'dropdown';
+        $actions['operatingsystems_id']['table'] = 'glpi_operatingsystems';
+        $actions['operatingsystems_id']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['operatingsystemversions_id']['name']  = _n('Version of the operating system', 'Versions of the operating system', 1);
-      $actions['operatingsystemversions_id']['type']  = 'dropdown';
-      $actions['operatingsystemversions_id']['table'] = 'glpi_operatingsystemversions';
-      $actions['operatingsystemversions_id']['force_actions'] = ['assign', 'regex_result'];
+        $actions['operatingsystemversions_id']['name']  = _n('Version of the operating system', 'Versions of the operating system', 1);
+        $actions['operatingsystemversions_id']['type']  = 'dropdown';
+        $actions['operatingsystemversions_id']['table'] = 'glpi_operatingsystemversions';
+        $actions['operatingsystemversions_id']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['user']['name']  = __('User');
-      $actions['user']['force_actions'] = ['assign', 'regex_result'];
+        $actions['user']['name']  = __('User');
+        $actions['user']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['locations_id']['name']  = __('Location');
-      $actions['locations_id']['type']  = 'dropdown';
-      $actions['locations_id']['table'] = 'glpi_locations';
-      $actions['locations_id']['force_actions'] = ['assign', 'regex_result'];
+        $actions['locations_id']['name']  = __('Location');
+        $actions['locations_id']['type']  = 'dropdown';
+        $actions['locations_id']['table'] = 'glpi_locations';
+        $actions['locations_id']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['states_id']['name']  = __('Status');
-      $actions['states_id']['type']  = 'dropdown';
-      $actions['states_id']['table'] = 'glpi_states';
-      $actions['states_id']['force_actions'] = ['assign', 'regex_result'];
+        $actions['states_id']['name']  = __('Status');
+        $actions['states_id']['type']  = 'dropdown';
+        $actions['states_id']['table'] = 'glpi_states';
+        $actions['states_id']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['software']['name']  = __('Software');
-      $actions['software']['force_actions'] = ['assign', 'regex_result'];
+        $actions['software']['name']  = __('Software');
+        $actions['software']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['softwareversion']['name']  = __('Software version', 'glpiinventory');
-      $actions['softwareversion']['force_actions'] = ['assign', 'regex_result'];
+        $actions['softwareversion']['name']  = __('Software version', 'glpiinventory');
+        $actions['softwareversion']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['otherserial']['name']  = __('Inventory number');
-      $actions['otherserial']['force_actions'] = ['assign', 'regex_result'];
+        $actions['otherserial']['name']  = __('Inventory number');
+        $actions['otherserial']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['comment']['name']  = _n('Comment', 'Comments', 2);
-      $actions['comment']['force_actions'] = ['assign', 'regex_result'];
+        $actions['comment']['name']  = _n('Comment', 'Comments', 2);
+        $actions['comment']['force_actions'] = ['assign', 'regex_result'];
 
-      return $actions;
-   }
-
-
+        return $actions;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,11 +31,16 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('User interaction template', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginglpiinventorymenu", "deployuserinteractiontemplate");
+Html::header(
+    __('User interaction template', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "deployuserinteractiontemplate"
+);
 
 
 PluginGlpiinventoryMenu::displayMenu("mini");

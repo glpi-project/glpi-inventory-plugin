@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,11 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 $dropdown = new PluginGlpiinventoryCredential();
-include (GLPI_ROOT . "/front/dropdown.common.form.php");
+include(GLPI_ROOT . "/front/dropdown.common.form.php");
 
 if (isset($_GET['popup'])) {
-   Ajax::refreshDropdownPopupInMainWindow();
+    Ajax::refreshDropdownPopupInMainWindow();
 }

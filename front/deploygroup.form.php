@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 $group = new PluginGlpiinventoryDeployGroup();
@@ -40,70 +41,78 @@ if (isset($_GET['plugin_glpiinventory_deploygroups_id'])) {
 }
 
 if (isset($_GET['save'])) {
-   $group_item = new PluginGlpiinventoryDeployGroup_Dynamicdata();
-   if (!countElementsInTable($group_item->getTable(),
-                             ['plugin_glpiinventory_deploygroups_id' => $_GET['id']])) {
-      $criteria  = ['criteria'     => $_GET['criteria'],
+    $group_item = new PluginGlpiinventoryDeployGroup_Dynamicdata();
+    if (
+        !countElementsInTable(
+            $group_item->getTable(),
+            ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
+        )
+    ) {
+        $criteria  = ['criteria'     => $_GET['criteria'],
                          'metacriteria' => $_GET['metacriteria']];
-      $values['fields_array'] = serialize($criteria);
-      $values['plugin_glpiinventory_deploygroups_id'] = $_GET['id'];
-      $group_item->add($values);
-   } else {
-      $item = getAllDataFromTable($group_item->getTable(),
-                                   ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]);
-      $values                 = array_pop($item);
+        $values['fields_array'] = serialize($criteria);
+        $values['plugin_glpiinventory_deploygroups_id'] = $_GET['id'];
+        $group_item->add($values);
+    } else {
+        $item = getAllDataFromTable(
+            $group_item->getTable(),
+            ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
+        );
+        $values                 = array_pop($item);
 
-      $criteria = ['criteria'     => $_GET['criteria'],
+        $criteria = ['criteria'     => $_GET['criteria'],
                         'metacriteria' => $_GET['metacriteria']];
-      $values['fields_array'] = serialize($criteria);
-      $group_item->update($values);
-   }
+        $values['fields_array'] = serialize($criteria);
+        $group_item->update($values);
+    }
 
-   Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup")."?id=".$_GET['id']);
-} else if (isset($_FILES['importcsvfile'])) {
-   PluginGlpiinventoryDeployGroup_Staticdata::csvImport($_POST, $_FILES);
-   Html::back();
-} else if (isset($_POST["add"])) {
-   $group->check(-1, UPDATE, $_POST);
-   $newID = $group->add($_POST);
-   Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup")."?id=".$newID);
-
-} else if (isset($_POST["delete"])) {
+    Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup") . "?id=" . $_GET['id']);
+} elseif (isset($_FILES['importcsvfile'])) {
+    PluginGlpiinventoryDeployGroup_Staticdata::csvImport($_POST, $_FILES);
+    Html::back();
+} elseif (isset($_POST["add"])) {
+    $group->check(-1, UPDATE, $_POST);
+    $newID = $group->add($_POST);
+    Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup") . "?id=" . $newID);
+} elseif (isset($_POST["delete"])) {
    //   $group->check($_POST['id'], DELETE);
-   $ok = $group->delete($_POST);
+    $ok = $group->delete($_POST);
 
-   $group->redirectToList();
-
-} else if (isset($_POST["purge"])) {
+    $group->redirectToList();
+} elseif (isset($_POST["purge"])) {
    //   $group->check($_POST['id'], DELETE);
-   $ok = $group->delete($_REQUEST, 1);
+    $ok = $group->delete($_REQUEST, 1);
 
-   $group->redirectToList();
+    $group->redirectToList();
+} elseif (isset($_POST["update"])) {
+    $group->check($_POST['id'], UPDATE);
+    $group->update($_POST);
 
-} else if (isset($_POST["update"])) {
-   $group->check($_POST['id'], UPDATE);
-   $group->update($_POST);
-
-   Html::back();
+    Html::back();
 } else {
-   Html::header(__('GLPI Inventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
-                "pluginglpiinventorymenu", "deploygroup");
+    Html::header(
+        __('GLPI Inventory DEPLOY'),
+        $_SERVER["PHP_SELF"],
+        "admin",
+        "pluginglpiinventorymenu",
+        "deploygroup"
+    );
 
-   PluginGlpiinventoryMenu::displayMenu("mini");
-   $values       = $_POST;
-   if (!isset($_GET['id'])) {
-      $id = '';
-   } else {
-      $id = $_GET['id'];
-      if (isset($_GET['sort']) AND isset($_GET['order'])) {
-         $group->getFromDB($id);
-         PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($group, true);
-      }
-   }
-   $values['id'] = $id;
-   if (isset($_GET['preview'])) {
-      $values['preview'] = $_GET['preview'];
-   }
-   $group->display($values);
-   Html::footer();
+    PluginGlpiinventoryMenu::displayMenu("mini");
+    $values       = $_POST;
+    if (!isset($_GET['id'])) {
+        $id = '';
+    } else {
+        $id = $_GET['id'];
+        if (isset($_GET['sort']) and isset($_GET['order'])) {
+            $group->getFromDB($id);
+            PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($group, true);
+        }
+    }
+    $values['id'] = $id;
+    if (isset($_GET['preview'])) {
+        $values['preview'] = $_GET['preview'];
+    }
+    $group->display($values);
+    Html::footer();
 }

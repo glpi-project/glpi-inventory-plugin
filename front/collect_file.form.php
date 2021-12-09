@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,31 +31,35 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
 if (isset($_POST["add"])) {
    // conversions
-   if ($_POST['sizetype'] != 'none'
-           && $_POST['size'] != '') {
-      $_POST['filter_size'.$_POST['sizetype']] = $_POST['size'];
-   }
-   if ($_POST['filter_nametype'] != 'none'
-           && $_POST['filter_name'] != '') {
-      $_POST['filter_'.$_POST['filter_nametype']] = $_POST['filter_name'];
-   }
-   if ($_POST['type'] == 'file') {
-      $_POST['filter_is_file'] = 1;
-      $_POST['filter_is_dir'] = 0;
-   } else {
-      $_POST['filter_is_file'] = 0;
-      $_POST['filter_is_dir'] = 1;
-   }
+    if (
+        $_POST['sizetype'] != 'none'
+           && $_POST['size'] != ''
+    ) {
+        $_POST['filter_size' . $_POST['sizetype']] = $_POST['size'];
+    }
+    if (
+        $_POST['filter_nametype'] != 'none'
+           && $_POST['filter_name'] != ''
+    ) {
+        $_POST['filter_' . $_POST['filter_nametype']] = $_POST['filter_name'];
+    }
+    if ($_POST['type'] == 'file') {
+        $_POST['filter_is_file'] = 1;
+        $_POST['filter_is_dir'] = 0;
+    } else {
+        $_POST['filter_is_file'] = 0;
+        $_POST['filter_is_dir'] = 1;
+    }
 
-   $pfCollect_File->add($_POST);
-   Html::back();
-} else if (isset($_POST["delete_x"])) {
-   $pfCollect_File->delete($_POST);
-   Html::back();
+    $pfCollect_File->add($_POST);
+    Html::back();
+} elseif (isset($_POST["delete_x"])) {
+    $pfCollect_File->delete($_POST);
+    Html::back();
 }

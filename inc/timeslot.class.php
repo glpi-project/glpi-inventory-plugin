@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,27 +32,28 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the timeslot for tasks. It's the time in the week the task run.
  */
-class PluginGlpiinventoryTimeslot extends CommonDBTM {
+class PluginGlpiinventoryTimeslot extends CommonDBTM
+{
 
    /**
     * We activate the history.
     *
     * @var boolean
     */
-   public $dohistory = true;
+    public $dohistory = true;
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_task';
+    static $rightname = 'plugin_glpiinventory_task';
 
 
    /**
@@ -60,9 +62,10 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb = 0) {
-      return __('Time slot', 'glpiinventory');
-   }
+    static function getTypeName($nb = 0)
+    {
+        return __('Time slot', 'glpiinventory');
+    }
 
 
    /**
@@ -70,49 +73,50 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
     *
     * @return array
     */
-   function rawSearchOptions() {
+    function rawSearchOptions()
+    {
 
-      $tab = [];
+        $tab = [];
 
-      $tab[] = [
+        $tab[] = [
          'id' => 'common',
          'name' => __('Time slot', 'glpiinventory')
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'name',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'       => '2',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => Entity::getTypeName(1),
          'datatype' => 'dropdown',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '3',
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
          'name'      => __('Child entities'),
          'datatype'  => 'bool',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '4',
          'table'     => $this->getTable(),
          'field'     => 'name',
          'name'      => __('Name'),
          'datatype'  => 'string',
-      ];
+        ];
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
    /**
@@ -121,13 +125,14 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options = []) {
+    function defineTabs($options = [])
+    {
 
-      $ong = [];
-      $this->addDefaultFormTab($ong);
+        $ong = [];
+        $this->addDefaultFormTab($ong);
 
-      return $ong;
-   }
+        return $ong;
+    }
 
 
    /**
@@ -157,34 +162,36 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
     *       )
     *    )
     */
-   function getTimeslotEntries($timeslot_ids = [], $weekdays = null) {
+    function getTimeslotEntries($timeslot_ids = [], $weekdays = null)
+    {
 
-      $condition = [];
+        $condition = [];
 
-      if (count($timeslot_ids)) {
-         $condition['plugin_glpiinventory_timeslots_id'] = $timeslot_ids;
-      }
+        if (count($timeslot_ids)) {
+            $condition['plugin_glpiinventory_timeslots_id'] = $timeslot_ids;
+        }
 
-      if (!is_null($weekdays)) {
-         $condition['day'] = $weekdays;
-      }
+        if (!is_null($weekdays)) {
+            $condition['day'] = $weekdays;
+        }
 
-      $results = [];
+        $results = [];
 
-      $timeslot_entries = getAllDataFromTable(
-         "glpi_plugin_glpiinventory_timeslotentries",
-         $condition,
-         false, ''
-      );
+        $timeslot_entries = getAllDataFromTable(
+            "glpi_plugin_glpiinventory_timeslotentries",
+            $condition,
+            false,
+            ''
+        );
 
-      foreach ($timeslot_entries as $timeslot_entry) {
-         $timeslot_id = $timeslot_entry['plugin_glpiinventory_timeslots_id'];
-         $timeslot_entry_id = $timeslot_entry['id'];
-         $results[$timeslot_id][$timeslot_entry_id] = $timeslot_entry;
-      }
+        foreach ($timeslot_entries as $timeslot_entry) {
+            $timeslot_id = $timeslot_entry['plugin_glpiinventory_timeslots_id'];
+            $timeslot_entry_id = $timeslot_entry['id'];
+            $results[$timeslot_id][$timeslot_entry_id] = $timeslot_entry;
+        }
 
-      return $results;
-   }
+        return $results;
+    }
 
 
    /**
@@ -195,30 +202,31 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
     * @global object $DB
     * @return array
     */
-   function getCurrentActiveTimeslots() {
-      global $DB;
+    function getCurrentActiveTimeslots()
+    {
+        global $DB;
 
-      $timeslots   = [];
-      $date        = new DateTime('NOW');
-      $day_of_week = $date->format("N");
-      $timeinsecs  = $date->format('H') * HOUR_TIMESTAMP
+        $timeslots   = [];
+        $date        = new DateTime('NOW');
+        $day_of_week = $date->format("N");
+        $timeinsecs  = $date->format('H') * HOUR_TIMESTAMP
                         + $date->format('i') * MINUTE_TIMESTAMP
                         + $date->format('s');
 
-      //Get all timeslots currently active
-      $query_timeslot = "SELECT `t`.`id`
+       //Get all timeslots currently active
+        $query_timeslot = "SELECT `t`.`id`
                          FROM `glpi_plugin_glpiinventory_timeslots` as t
                          INNER JOIN `glpi_plugin_glpiinventory_timeslotentries` as te
                            ON (`te`.`plugin_glpiinventory_timeslots_id`=`t`.`id`)
                          WHERE $timeinsecs BETWEEN `te`.`begin`
                             AND `te`.`end`
-                            AND `day`='".$day_of_week."'";
-      foreach ($DB->request($query_timeslot) as $timeslot) {
-         $timeslots[] = $timeslot['id'];
-      }
+                            AND `day`='" . $day_of_week . "'";
+        foreach ($DB->request($query_timeslot) as $timeslot) {
+            $timeslots[] = $timeslot['id'];
+        }
 
-      return $timeslots;
-   }
+        return $timeslots;
+    }
 
 
    /**
@@ -230,14 +238,15 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
     *                              cursor. If null the default value is now()
     * @return integer
     */
-   function getTimeslotCursor(DateTime $datetime = null) {
-      if (is_null($datetime)) {
-         $datetime = new DateTime();
-      }
-      $dateday = new DateTime( $datetime->format("Y-m-d 0:0:0") );
-      $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime, true))->getTimestamp();
-      return $timeslot_cursor;
-   }
+    function getTimeslotCursor(DateTime $datetime = null)
+    {
+        if (is_null($datetime)) {
+            $datetime = new DateTime();
+        }
+        $dateday = new DateTime($datetime->format("Y-m-d 0:0:0"));
+        $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime, true))->getTimestamp();
+        return $timeslot_cursor;
+    }
 
 
    /**
@@ -248,29 +257,33 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM {
     * @return true
     *
     */
-   function showForm($ID, $options = []) {
-      $this->initForm($ID, $options);
-      $this->showFormHeader($options);
+    function showForm($ID, $options = [])
+    {
+        $this->initForm($ID, $options);
+        $this->showFormHeader($options);
 
-      echo "<tr class='tab_bg_1'>";
-      //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
-      echo "<td>".sprintf(__('%1$s%2$s'), __('Name'),
-                          (isset($options['withtemplate']) && $options['withtemplate']?"*":"")).
+        echo "<tr class='tab_bg_1'>";
+       //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
+        echo "<td>" . sprintf(
+            __('%1$s%2$s'),
+            __('Name'),
+            (isset($options['withtemplate']) && $options['withtemplate'] ? "*" : "")
+        ) .
            "</td>";
-      echo "<td>";
-      echo Html::input('name', ['value' => $this->fields["name"]]);
-      echo "</td>";
-      echo "<td>".__('Comments')."</td>";
-      echo "<td class='middle'>";
-      echo "<textarea cols='45' class='form-control' name='comment' >".$this->fields["comment"];
-      echo "</textarea></td></tr>\n";
+        echo "<td>";
+        echo Html::input('name', ['value' => $this->fields["name"]]);
+        echo "</td>";
+        echo "<td>" . __('Comments') . "</td>";
+        echo "<td class='middle'>";
+        echo "<textarea cols='45' class='form-control' name='comment' >" . $this->fields["comment"];
+        echo "</textarea></td></tr>\n";
 
-      $this->showFormButtons($options);
+        $this->showFormButtons($options);
 
-      if ($ID > 0) {
-         $pf = new PluginGlpiinventoryTimeslotEntry();
-         $pf->formEntry($ID);
-      }
-      return true;
-   }
+        if ($ID > 0) {
+            $pf = new PluginGlpiinventoryTimeslotEntry();
+            $pf->formEntry($ID);
+        }
+        return true;
+    }
 }

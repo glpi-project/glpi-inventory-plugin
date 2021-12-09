@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,59 +33,62 @@
 
 use PHPUnit\Framework\TestCase;
 
-class DeploypackageTest extends TestCase {
+class DeploypackageTest extends TestCase
+{
 
 
    /**
     * @test
     */
-   public function testGetTypeName() {
-      $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName());
-      $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName(1));
-      $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName(3));
-   }
+    public function testGetTypeName()
+    {
+        $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName());
+        $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName(1));
+        $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName(3));
+    }
 
 
    /**
     * @test
     */
-   public function testIsDeployEnabled() {
-      global $DB;
+    public function testIsDeployEnabled()
+    {
+        global $DB;
 
-      $computer = new Computer();
-      $agent  = new Agent();
-      $module   = new PluginGlpiinventoryAgentmodule();
-      $package  = new PluginGlpiinventoryDeployPackage();
+        $computer = new Computer();
+        $agent  = new Agent();
+        $module   = new PluginGlpiinventoryAgentmodule();
+        $package  = new PluginGlpiinventoryDeployPackage();
 
-      //Enable deploy feature for all agents
-      $module->getFromDBByCrit(['modulename' => 'DEPLOY']);
-      $module->update(['id' => $module->fields['id'], 'is_active' => 1]);
+       //Enable deploy feature for all agents
+        $module->getFromDBByCrit(['modulename' => 'DEPLOY']);
+        $module->update(['id' => $module->fields['id'], 'is_active' => 1]);
 
-      // Create a computer
-      $input = [
+       // Create a computer
+        $input = [
           'entities_id' => 0,
           'name'        => 'computer1'
-      ];
-      $computers_id = $computer->add($input);
+        ];
+        $computers_id = $computer->add($input);
 
-      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
-      $input = [
+        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $input = [
           'entities_id' => 0,
           'name'        => 'computer',
           'version'     => '{"INVENTORY":"v2.3.21"}',
-          'deviceid'   => Computer::getType().$computers_id,
+          'deviceid'   => Computer::getType() . $computers_id,
           'useragent'   => 'FusionInventory-Agent_v2.3.21',
           'itemtype' => Computer::getType(),
           'items_id' => $computers_id,
           'agenttypes_id' => $agenttype['id']
-      ];
-      $this->assertNotFalse($agent->add($input));
+        ];
+        $this->assertNotFalse($agent->add($input));
 
-      $this->assertTrue($package->isDeployEnabled($computers_id));
+        $this->assertTrue($package->isDeployEnabled($computers_id));
 
-      //Disable deploy feature for all agents
-      $module->update(['id' => $module->fields['id'], 'is_active' => 0]);
+       //Disable deploy feature for all agents
+        $module->update(['id' => $module->fields['id'], 'is_active' => 0]);
 
-      $this->assertFalse($package->isDeployEnabled($computers_id));
-   }
+        $this->assertFalse($package->isDeployEnabled($computers_id));
+    }
 }

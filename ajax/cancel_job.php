@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,16 +31,16 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 Session::checkCentralAccess();
 
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
 if (isset($_REQUEST['jobstate_id'])) {
-   $jobstate = new PluginGlpiinventoryTaskjobstate();
-   $jobstate->getFromDB($_REQUEST['jobstate_id']);
+    $jobstate = new PluginGlpiinventoryTaskjobstate();
+    $jobstate->getFromDB($_REQUEST['jobstate_id']);
 
-   $job = new PluginGlpiinventoryTaskjob();
-   $job->delete(['id' => $jobstate->fields['plugin_glpiinventory_taskjobs_id']], true);
+    $job = new PluginGlpiinventoryTaskjob();
+    $job->delete(['id' => $jobstate->fields['plugin_glpiinventory_taskjobs_id']], true);
 }

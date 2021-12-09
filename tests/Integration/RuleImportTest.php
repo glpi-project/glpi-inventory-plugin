@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,109 +33,114 @@
 
 use PHPUnit\Framework\TestCase;
 
-class RuleImportTest extends TestCase {
+class RuleImportTest extends TestCase
+{
 
 
-   public static function setUpBeforeClass(): void {
-      // Reinit rules
-      \RuleImportAsset::initRules();
+    public static function setUpBeforeClass(): void
+    {
+       // Reinit rules
+        \RuleImportAsset::initRules();
+    }
 
-   }
+    public static function tearDownAfterClass(): void
+    {
+       // Reinit rules
+        \RuleImportAsset::initRules();
+    }
 
-   public static function tearDownAfterClass(): void {
-      // Reinit rules
-      \RuleImportAsset::initRules();
-   }
-
-   function setUp(): void {
-      // Delete all printers
-      $printer = new Printer();
-      $items = $printer->find();
-      foreach ($items as $item) {
-         $printer->delete(['id' => $item['id']], true);
-      }
-   }
+    function setUp(): void
+    {
+       // Delete all printers
+        $printer = new Printer();
+        $items = $printer->find();
+        foreach ($items as $item) {
+            $printer->delete(['id' => $item['id']], true);
+        }
+    }
 
 
    /**
     * @test
     */
-   function changeRulesForPrinterRules() {
+    function changeRulesForPrinterRules()
+    {
 
-      $rule = new Rule();
-      // Add a rule test check model
-      $input = [
+        $rule = new Rule();
+       // Add a rule test check model
+        $input = [
          'is_active' => 1,
          'name'      => 'Printer model',
          'match'     => 'AND',
          'sub_type'  => \RuleImportAsset::class,
          'ranking'   => 1,
-      ];
-      $rule_id = $rule->add($input);
-      $this->assertNotFalse($rule_id);
+        ];
+        $rule_id = $rule->add($input);
+        $this->assertNotFalse($rule_id);
 
-      // Add criteria
-      $rulecriteria = new RuleCriteria();
-      $input = [
+       // Add criteria
+        $rulecriteria = new RuleCriteria();
+        $input = [
          'rules_id'  => $rule_id,
          'criteria'  => 'serial',
          'pattern'   => '1',
          'condition' => \RuleImportAsset::PATTERN_FIND
-      ];
-      $ret = $rulecriteria->add($input);
-      $this->assertNotFalse($ret);
+        ];
+        $ret = $rulecriteria->add($input);
+        $this->assertNotFalse($ret);
 
-      // Add action
-      $ruleaction = new RuleAction();
-      $input = [
+       // Add action
+        $ruleaction = new RuleAction();
+        $input = [
          'rules_id'    => $rule_id,
          'action_type' => 'assign',
          'field'       => '_inventory',
          'value'       => \RuleImportAsset::RULE_ACTION_LINK_OR_IMPORT
-      ];
-      $ret = $ruleaction->add($input);
-      $this->assertNotFalse($ret);
+        ];
+        $ret = $ruleaction->add($input);
+        $this->assertNotFalse($ret);
 
-      // Denied import
-      $input = [
+       // Denied import
+        $input = [
          'is_active' => 1,
          'name'      => 'Deny printer import',
          'match'     => 'AND',
          'sub_type'  => \RuleImportAsset::class,
          'ranking'   => 3,
-      ];
-      $rule_id = $rule->add($input);
-      $this->assertNotFalse($rule_id);
+        ];
+        $rule_id = $rule->add($input);
+        $this->assertNotFalse($rule_id);
 
-      // Add criteria
-      $input = [
+       // Add criteria
+        $input = [
          'rules_id'  => $rule_id,
          'criteria'  => 'name',
          'pattern'   => '0',
          'condition' => \RuleImportAsset::PATTERN_EXISTS
-      ];
-      $ret = $rulecriteria->add($input);
-      $this->assertNotFalse($ret);
+        ];
+        $ret = $rulecriteria->add($input);
+        $this->assertNotFalse($ret);
 
-      // Add action
-      $input = [
+       // Add action
+        $input = [
          'rules_id'    => $rule_id,
          'action_type' => 'assign',
          'field'       => '_inventory',
          'value'       => \RuleImportAsset::RULE_ACTION_DENIED
-      ];
-      $ret = $ruleaction->add($input);
-      $this->assertNotFalse($ret);
-   }
+        ];
+        $ret = $ruleaction->add($input);
+        $this->assertNotFalse($ret);
+    }
 
 
    /**
     * @test
     */
-   public function PrinterDiscoveryImport() {
-      $this->changeRulesForPrinterRules();
+    public function PrinterDiscoveryImport()
+    {
+        $this->changeRulesForPrinterRules();
 
-      $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+        $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
     <DEVICE>
@@ -157,43 +163,44 @@ class RuleImportTest extends TestCase {
 </REQUEST>
 ";
 
-      $printer = new Printer();
-      $this->assertNotFalse(
-         $printer->add([
+        $printer = new Printer();
+        $this->assertNotFalse(
+            $printer->add([
             'entities_id' => '0',
             'serial'      => 'E8J596100'
-         ])
-      );
+            ])
+        );
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($xml_source);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($xml_source);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
-      $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
-      $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
-      $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
-      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
+        $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
+        $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
+        $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
+        $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
+        $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
 
-      /*$pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);*/
+       /*$pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);*/
 
-      $a_printers = $printer->find();
-      $this->assertEquals(1, count($a_printers), 'May have only one Printer');
+        $a_printers = $printer->find();
+        $this->assertEquals(1, count($a_printers), 'May have only one Printer');
 
-      $a_printer = current($a_printers);
-      $this->assertEquals('UH4DLPT01', $a_printer['name'], 'Hostname of printer may be updated');
-   }
+        $a_printer = current($a_printers);
+        $this->assertEquals('UH4DLPT01', $a_printer['name'], 'Hostname of printer may be updated');
+    }
 
 
    /**
     * @test
     */
-   public function PrinterDiscoveryImportDenied() {
-      $this->changeRulesForPrinterRules();
+    public function PrinterDiscoveryImportDenied()
+    {
+        $this->changeRulesForPrinterRules();
 
-      $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+        $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
     <DEVICE>
@@ -215,31 +222,31 @@ class RuleImportTest extends TestCase {
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>
 ";
-      $printer = new Printer();
-      $a_printers = $printer->find();
-      $this->assertEquals(0, count($a_printers), 'There should be no printer');
+        $printer = new Printer();
+        $a_printers = $printer->find();
+        $this->assertEquals(0, count($a_printers), 'There should be no printer');
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($xml_source);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($xml_source);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
-      $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
-      $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
-      $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
-      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
-      $a_printers = $printer->find();
-      $this->assertEquals(0, count($a_printers), 'May have no Printer');
+        $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
+        $_SESSION['plugin_glpiinventory_taskjoblog']['items_id']    = '1';
+        $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype']    = 'Printer';
+        $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
+        $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
+        $a_printers = $printer->find();
+        $this->assertEquals(0, count($a_printers), 'May have no Printer');
 
-      /* task is squeezed :/
-      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-      $a_logs = $pfTaskjoblog->find(['comment' => ['LIKE', '%importdenied%']], ['id DESC'], 1);
-      $a_log = current($a_logs);
-      $this->assertEquals('==importdenied== [serial]:E8J596100A, '.
+       /* task is squeezed :/
+       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+       $a_logs = $pfTaskjoblog->find(['comment' => ['LIKE', '%importdenied%']], ['id DESC'], 1);
+       $a_log = current($a_logs);
+       $this->assertEquals('==importdenied== [serial]:E8J596100A, '.
               '[mac]:00:80:77:d9:51:c3, [ip]:10.36.4.29, [model]:Printer0442, '.
               '[name]:UH4DLPT01, [entities_id]:0, [itemtype]:Printer',
               $a_log['comment'], 'Import denied message');*/
-   }
+    }
 }

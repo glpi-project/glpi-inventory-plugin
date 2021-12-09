@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,11 +32,11 @@
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
-$USEDBREPLICATE=1;
-$DBCONNECTION_REQUIRED=0;
+$USEDBREPLICATE = 1;
+$DBCONNECTION_REQUIRED = 0;
 
 define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+include(GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
@@ -43,12 +44,12 @@ Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
 $FK_port = filter_input(INPUT_GET, "networkports_id");
 
-echo "<form action='".filter_input(INPUT_SERVER, "PHP_SELF")."' method='get'>";
+echo "<form action='" . filter_input(INPUT_SERVER, "PHP_SELF") . "' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 echo "<tr class='tab_bg_1' align='center'>";
 
 echo "<td>";
-echo _n('Network port', 'Network ports', 1)." :&nbsp;";
+echo _n('Network port', 'Network ports', 1) . " :&nbsp;";
 
 $query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.`name` as `pname`,
                  `glpi_networkports`.`id` as `id`
@@ -57,18 +58,20 @@ $query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.
           WHERE `itemtype`='NetworkEquipment'
           ORDER BY `glpi_networkequipments`.`name`, `glpi_networkports`.`logical_number`;";
 
-$result=$DB->query($query);
+$result = $DB->query($query);
       $selected = '';
-while ($data=$DB->fetchArray($result)) {
-
-   if (($data['id'] == $FK_port)) {
-      $selected = $data['id'];
-   }
-   $ports[$data['id']] = $data['name']." - ".$data['pname'];
+while ($data = $DB->fetchArray($result)) {
+    if (($data['id'] == $FK_port)) {
+        $selected = $data['id'];
+    }
+    $ports[$data['id']] = $data['name'] . " - " . $data['pname'];
 }
 
-Dropdown::showFromArray("networkports_id", $ports,
-                        ['value'=>$selected]);
+Dropdown::showFromArray(
+    "networkports_id",
+    $ports,
+    ['value' => $selected]
+);
 echo "</td>";
 echo "</tr>";
 

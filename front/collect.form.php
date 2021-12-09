@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,32 +31,34 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
-Html::header(__('Collect management', 'glpiinventory'),
-             $_SERVER["PHP_SELF"],
-             "admin",
-             "pluginglpiinventorymenu",
-             "collect");
+Html::header(
+    __('Collect management', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "collect"
+);
 
 $pfCollect = new PluginGlpiinventoryCollect();
 
 if (isset($_POST["add"])) {
-   $collects_id = $pfCollect->add($_POST);
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryCollect').
-           "?id=".$collects_id);
-} else if (isset($_POST["update"])) {
-   $pfCollect->update($_POST);
-   Html::back();
-} else if (isset($_REQUEST["purge"])) {
-   $pfCollect->delete($_POST);
-   $pfCollect->redirectToList();
+    $collects_id = $pfCollect->add($_POST);
+    Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryCollect') .
+           "?id=" . $collects_id);
+} elseif (isset($_POST["update"])) {
+    $pfCollect->update($_POST);
+    Html::back();
+} elseif (isset($_REQUEST["purge"])) {
+    $pfCollect->delete($_POST);
+    $pfCollect->redirectToList();
 }
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
 if (!isset($_GET["id"])) {
-   $_GET['id'] = '';
+    $_GET['id'] = '';
 }
 $pfCollect->display($_GET);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,30 +33,32 @@
 
 use PHPUnit\Framework\TestCase;
 
-class GetTaskByFiltersTest extends TestCase {
+class GetTaskByFiltersTest extends TestCase
+{
 
 
    /**
     * @test
     */
-   public function GetTaskWithoutJobs() {
+    public function GetTaskWithoutJobs()
+    {
 
-      $pfTask = new PluginGlpiinventoryTask();
+        $pfTask = new PluginGlpiinventoryTask();
 
-      // create task
-      $input = [
+       // create task
+        $input = [
           'entities_id' => 0,
           'name'        => 'deploy',
           'is_active'   => 1
-      ];
-      $pfTask->add($input);
+        ];
+        $pfTask->add($input);
 
-      $running_tasks = $pfTask->getItemsFromDB(
-         [
+        $running_tasks = $pfTask->getItemsFromDB(
+            [
             'is_running'  => true,
             'is_active'   => true
-         ]
-      );
-      $this->assertEquals([], $running_tasks, 'Not find task because not have job');
-   }
+            ]
+        );
+        $this->assertEquals([], $running_tasks, 'Not find task because not have job');
+    }
 }

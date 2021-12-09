@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,19 +32,20 @@
  */
 
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowndefinitiontypelist.php")) {
-   include ("../../../inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+    include("../../../inc/includes.php");
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 if (!defined('GLPI_ROOT')) {
-   die("Can not acces directly to this file");
+    die("Can not acces directly to this file");
 }
 
 Session::checkCentralAccess();
-$pfTaskjob = new PluginGlpiinventoryTaskjob;
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->dropdownDefinition(
-        "DefinitionList",
-        filter_input(INPUT_POST, "DefinitionType"),
-        filter_input(INPUT_POST, "method"),
-        filter_input(INPUT_POST, "deftypeid"),
-        filter_input(INPUT_POST, "taskjobs_id"));
+    "DefinitionList",
+    filter_input(INPUT_POST, "DefinitionType"),
+    filter_input(INPUT_POST, "method"),
+    filter_input(INPUT_POST, "deftypeid"),
+    filter_input(INPUT_POST, "taskjobs_id")
+);

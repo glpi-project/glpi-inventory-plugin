@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,35 +33,39 @@
 
 use PHPUnit\Framework\TestCase;
 
-class PrinterUpdateTest extends TestCase {
+class PrinterUpdateTest extends TestCase
+{
 
-   public $items_id = 0;
-   public $update_time = '';
+    public $items_id = 0;
+    public $update_time = '';
 
-   public static function setUpBeforeClass(): void {
-      global $DB;
+    public static function setUpBeforeClass(): void
+    {
+        global $DB;
 
-      // Delete all printers
-      $printer = new Printer();
-      $items = $printer->find();
-      foreach ($items as $item) {
-         $printer->delete(['id' => $item['id']], true);
-      }
-      $_SESSION["glpiID"] = 0;
-   }
+       // Delete all printers
+        $printer = new Printer();
+        $items = $printer->find();
+        foreach ($items as $item) {
+            $printer->delete(['id' => $item['id']], true);
+        }
+        $_SESSION["glpiID"] = 0;
+    }
 
-   public static function tearDownAfterClass(): void {
-      $_SESSION["glpiID"] = 2;
-   }
+    public static function tearDownAfterClass(): void
+    {
+        $_SESSION["glpiID"] = 2;
+    }
 
    /**
     * @test
     */
-   public function AddPrinter() {
-      $this->update_time = date('Y-m-d H:i:s');
-      $_SESSION['glpi_currenttime'] = $this->update_time;
+    public function AddPrinter()
+    {
+        $this->update_time = date('Y-m-d H:i:s');
+        $_SESSION['glpi_currenttime'] = $this->update_time;
 
-      $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+        $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST><CONTENT><DEVICE>
       <CARTRIDGES>
         <TONERBLACK>60</TONERBLACK>
@@ -85,53 +90,54 @@ class PrinterUpdateTest extends TestCase {
       </PAGECOUNTERS>
     </DEVICE></CONTENT><QUERY>SNMP</QUERY><DEVICEID>foo</DEVICEID></REQUEST>";
 
-      $printer = new Printer();
+        $printer = new Printer();
 
-      $this->items_id = $printer->add([
+        $this->items_id = $printer->add([
          'serial'      => 'VRG5XUT5',
          'entities_id' => 0
-      ]);
+        ]);
 
-      $this->assertGreaterThan(0, $this->items_id);
+        $this->assertGreaterThan(0, $this->items_id);
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($xml_source);
-      //$json = json_decode($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($xml_source);
+       //$json = json_decode($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      // To be sure not have 2 same information
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
-   }
+       // To be sure not have 2 same information
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+    }
 
 
    /**
     * @test
     */
-   public function PrinterGeneral() {
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
-      $printerId = $printer->fields['id'];
-      unset($printer->fields['id']);
-      unset($printer->fields['date_mod']);
-      unset($printer->fields['date_creation']);
+    public function PrinterGeneral()
+    {
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+        $printerId = $printer->fields['id'];
+        unset($printer->fields['id']);
+        unset($printer->fields['date_mod']);
+        unset($printer->fields['date_creation']);
 
-      $manufacturer = new Manufacturer();
-      $manufacturer->getFromDBByCrit(['name' => 'Hewlett-Packard']);
+        $manufacturer = new Manufacturer();
+        $manufacturer->getFromDBByCrit(['name' => 'Hewlett-Packard']);
 
-      $model = new PrinterModel();
-      $model->getFromDBByCrit(['name' => 'HP Unknown']);
+        $model = new PrinterModel();
+        $model->getFromDBByCrit(['name' => 'HP Unknown']);
 
-      $type = new PrinterType();
-      $type->getFromDBByCrit(['name' => 'Printer']);
+        $type = new PrinterType();
+        $type->getFromDBByCrit(['name' => 'Printer']);
 
-      $autoupdate = new AutoUpdateSystem();
-      $autoupdate->getFromDBByCrit(['name' => 'GLPI Native Inventory']);
+        $autoupdate = new AutoUpdateSystem();
+        $autoupdate->getFromDBByCrit(['name' => 'GLPI Native Inventory']);
 
-      $a_reference = [
+        $a_reference = [
          'name'                 => 'ARC12-B09-N',
          'serial'               => 'VRG5XUT5',
          'otherserial'          => null,
@@ -169,138 +175,146 @@ class PrinterUpdateTest extends TestCase {
          'last_inventory_update' => $_SESSION['glpi_currenttime'],
          'snmpcredentials_id' => 0,
          'autoupdatesystems_id' => $autoupdate->fields['id']
-      ];
+        ];
 
-      $this->assertEquals($a_reference, $printer->fields);
+        $this->assertEquals($a_reference, $printer->fields);
 
-      //Check if no log has been added for the counter's update
-      /*$nb = countElementsInTable('glpi_logs',
+       //Check if no log has been added for the counter's update
+       /*$nb = countElementsInTable('glpi_logs',
                                  ['itemtype'         => 'Printer',
                                   'items_id'         => $printerId,
                                   'linked_action'    => 0,
                                   'id_search_option' => 12
                                   ]);
-      $logs = new Log();
-      var_dump($logs->find(['itemtype'         => 'Printer',
+       $logs = new Log();
+       var_dump($logs->find(['itemtype'         => 'Printer',
          'items_id'         => $printerId,
          'linked_action'    => 0,
          'id_search_option' => 12
-      ]));
-      $this->assertEquals($nb, 0);*/
-   }
+       ]));
+       $this->assertEquals($nb, 0);*/
+    }
 
 
    /**
     * @test
     */
-   public function PrinterSnmpExtension() {
+    public function PrinterSnmpExtension()
+    {
 
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
-      $this->assertEquals($printer->fields['sysdescr'], 'HP ETHERNET MULTI-ENVIRONMENT');
-   }
-
-
-   /**
-    * @test
-    */
-   public function PrinterPageCounter() {
-
-      $printerlog = new PrinterLog();
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
-      $a_pages = $printerlog->find(['printers_id' => $printer->fields['id']]);
-
-      $this->assertEquals(1, count($a_pages), print_r($a_pages, true));
-   }
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+        $this->assertEquals($printer->fields['sysdescr'], 'HP ETHERNET MULTI-ENVIRONMENT');
+    }
 
 
    /**
     * @test
     */
-   public function PrinterCartridgeBlack() {
-      $cartridge_info = new Printer_CartridgeInfo();
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+    public function PrinterPageCounter()
+    {
 
-      $a_cartridge = $cartridge_info->find([
+        $printerlog = new PrinterLog();
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+        $a_pages = $printerlog->find(['printers_id' => $printer->fields['id']]);
+
+        $this->assertEquals(1, count($a_pages), print_r($a_pages, true));
+    }
+
+
+   /**
+    * @test
+    */
+    public function PrinterCartridgeBlack()
+    {
+        $cartridge_info = new Printer_CartridgeInfo();
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+
+        $a_cartridge = $cartridge_info->find([
          'printers_id' => $printer->fields['id'],
          'property' => 'tonerblack',
          'value' => 60
-      ]);
-      $this->assertEquals(1, count($a_cartridge));
-   }
+        ]);
+        $this->assertEquals(1, count($a_cartridge));
+    }
 
 
    /**
     * @test
     */
-   public function PrinterCartridgeCyan() {
-      $cartridge_info = new Printer_CartridgeInfo();
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+    public function PrinterCartridgeCyan()
+    {
+        $cartridge_info = new Printer_CartridgeInfo();
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
-      $a_cartridge = $cartridge_info->find([
+        $a_cartridge = $cartridge_info->find([
          'printers_id' => $printer->fields['id'],
          'property' => 'tonercyan',
          'value' => 40
-      ]);
-      $this->assertEquals(1, count($a_cartridge));
-   }
+        ]);
+        $this->assertEquals(1, count($a_cartridge));
+    }
 
 
    /**
     * @test
     */
-   public function PrinterCartridgeYellow() {
-      $cartridge_info = new Printer_CartridgeInfo();
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+    public function PrinterCartridgeYellow()
+    {
+        $cartridge_info = new Printer_CartridgeInfo();
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
-      $a_cartridge = $cartridge_info->find([
+        $a_cartridge = $cartridge_info->find([
          'printers_id' => $printer->fields['id'],
          'property' => 'toneryellow',
          'value' => 80
-      ]);
-      $this->assertEquals(1, count($a_cartridge));
-   }
+        ]);
+        $this->assertEquals(1, count($a_cartridge));
+    }
 
 
    /**
     * @test
     */
-   public function PrinterCartridgeMagenta() {
-      $cartridge_info = new Printer_CartridgeInfo();
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
-      $a_cartridge = $cartridge_info->find([
+    public function PrinterCartridgeMagenta()
+    {
+        $cartridge_info = new Printer_CartridgeInfo();
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
+        $a_cartridge = $cartridge_info->find([
          'printers_id' => $printer->fields['id'],
          'property' => 'tonermagenta',
          'value' => 100
-      ]);
-      $this->assertEquals(1, count($a_cartridge));
-   }
+        ]);
+        $this->assertEquals(1, count($a_cartridge));
+    }
 
 
    /**
     * @test
     */
-   public function PrinterAllCartridges() {
-      $cartridge_info = new Printer_CartridgeInfo();
-      $a_cartridge = $cartridge_info->find();
-      $this->assertEquals(4, count($a_cartridge));
-   }
+    public function PrinterAllCartridges()
+    {
+        $cartridge_info = new Printer_CartridgeInfo();
+        $a_cartridge = $cartridge_info->find();
+        $this->assertEquals(4, count($a_cartridge));
+    }
 
 
    /**
     * @test
     */
-   public function NewPrinterFromNetdiscovery() {
+    public function NewPrinterFromNetdiscovery()
+    {
 
-      $networkName = new NetworkName();
-      $iPAddress = new IPAddress();
+        $networkName = new NetworkName();
+        $iPAddress = new IPAddress();
 
-      $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+        $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
     <DEVICE>
@@ -324,69 +338,93 @@ class PrinterUpdateTest extends TestCase {
 </REQUEST>
 ";
 
-      $printer = new Printer();
-      $printers_id = $printer->add([
+        $printer = new Printer();
+        $printers_id = $printer->add([
          'serial' => 'MY89AQG0V9050N',
          'entities_id' => 0
-      ]);
-      $this->assertNotFalse($printers_id);
-      $this->assertTrue($printer->getFromDB($printers_id));
+        ]);
+        $this->assertNotFalse($printers_id);
+        $this->assertTrue($printer->getFromDB($printers_id));
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($xml_source);
-      //$json = json_decode($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($xml_source);
+       //$json = json_decode($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $printer->getFromDB($printers_id);
-      $this->assertEquals('HP0BBBC4', $printer->fields['name'], 'Name must be updated');
+        $printer->getFromDB($printers_id);
+        $this->assertEquals('HP0BBBC4', $printer->fields['name'], 'Name must be updated');
 
-      $this->assertEquals('1', $printer->fields['snmpcredentials_id'],
-         'SNMPauth may be with id 1');
-      $this->assertEquals('Photosmart D7200 series', $printer->fields['sysdescr'],
-         'Sysdescr not updated correctly');
+        $this->assertEquals(
+            '1',
+            $printer->fields['snmpcredentials_id'],
+            'SNMPauth may be with id 1'
+        );
+        $this->assertEquals(
+            'Photosmart D7200 series',
+            $printer->fields['sysdescr'],
+            'Sysdescr not updated correctly'
+        );
 
-      // Check mac
-      $networkPort = new NetworkPort();
-      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
-      $this->assertEquals('1', count($a_ports),
-         'May have one network port');
-      $a_port = current($a_ports);
-      $this->assertEquals('00:21:5a:0b:bb:c4', $a_port['mac'],
-         'Mac address');
+       // Check mac
+        $networkPort = new NetworkPort();
+        $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
+        $this->assertEquals(
+            '1',
+            count($a_ports),
+            'May have one network port'
+        );
+        $a_port = current($a_ports);
+        $this->assertEquals(
+            '00:21:5a:0b:bb:c4',
+            $a_port['mac'],
+            'Mac address'
+        );
 
-      // check ip
-      $a_networknames = $networkName->find(
+       // check ip
+        $a_networknames = $networkName->find(
             ['itemtype' => 'NetworkPort',
-             'items_id' => $a_port['id']]);
-      $this->assertEquals('1', count($a_networknames),
-         'May have one networkname');
-      $a_networkname = current($a_networknames);
-      $a_ipaddresses = $iPAddress->find(
+            'items_id' => $a_port['id']]
+        );
+        $this->assertEquals(
+            '1',
+            count($a_networknames),
+            'May have one networkname'
+        );
+        $a_networkname = current($a_networknames);
+        $a_ipaddresses = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-             'items_id' => $a_networkname['id']]);
-      $this->assertEquals('1', count($a_ipaddresses),
-         'May have one IP address');
-      $a_ipaddress = current($a_ipaddresses);
-      $this->assertEquals('192.168.20.100', $a_ipaddress['name'],
-         'IP address');
-   }
+            'items_id' => $a_networkname['id']]
+        );
+        $this->assertEquals(
+            '1',
+            count($a_ipaddresses),
+            'May have one IP address'
+        );
+        $a_ipaddress = current($a_ipaddresses);
+        $this->assertEquals(
+            '192.168.20.100',
+            $a_ipaddress['name'],
+            'IP address'
+        );
+    }
 
 
    /**
     * @test
     * @depends NewPrinterFromNetdiscovery
     */
-   public function updatePrinterFromNetdiscovery() {
-      global $DB;
+    public function updatePrinterFromNetdiscovery()
+    {
+        global $DB;
 
-      $networkName = new NetworkName();
-      $iPAddress = new IPAddress();
+        $networkName = new NetworkName();
+        $iPAddress = new IPAddress();
 
-      $_SESSION["glpiID"] = 0;
+        $_SESSION["glpiID"] = 0;
 
-      $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+        $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
     <DEVICE>
@@ -410,62 +448,86 @@ class PrinterUpdateTest extends TestCase {
 </REQUEST>
 ";
 
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['serial' => 'MY89AQG0V9050N']);
-      $this->assertArrayHasKey('id', $printer->fields);
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['serial' => 'MY89AQG0V9050N']);
+        $this->assertArrayHasKey('id', $printer->fields);
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($xml_source);
-      //$json = json_decode($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($xml_source);
+       //$json = json_decode($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $printer = new Printer();
-      $printer->getFromDBByCrit(['serial' => 'MY89AQG0V9050N']);
-      $this->assertArrayHasKey('id', $printer->fields);
+        $printer = new Printer();
+        $printer->getFromDBByCrit(['serial' => 'MY89AQG0V9050N']);
+        $this->assertArrayHasKey('id', $printer->fields);
 
-      $this->assertEquals('HP0BBBC4new', $printer->fields['name'], 'Name must be updated');
+        $this->assertEquals('HP0BBBC4new', $printer->fields['name'], 'Name must be updated');
 
-      $this->assertEquals('1', $printer->fields['snmpcredentials_id'],
-         'SNMPauth may be with id 1');
-      $this->assertEquals('Photosmart D7200 series', $printer->fields['sysdescr'],
-         'Sysdescr not updated correctly');
+        $this->assertEquals(
+            '1',
+            $printer->fields['snmpcredentials_id'],
+            'SNMPauth may be with id 1'
+        );
+        $this->assertEquals(
+            'Photosmart D7200 series',
+            $printer->fields['sysdescr'],
+            'Sysdescr not updated correctly'
+        );
 
-      // Check mac
-      $networkPort = new NetworkPort();
-      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printer->fields['id']]);
-      $this->assertEquals('1', count($a_ports),
-         'May have one network port');
-      $a_port = current($a_ports);
-      $this->assertEquals('00:21:5a:0b:bb:c4', $a_port['mac'],
-         'Mac address');
+       // Check mac
+        $networkPort = new NetworkPort();
+        $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printer->fields['id']]);
+        $this->assertEquals(
+            '1',
+            count($a_ports),
+            'May have one network port'
+        );
+        $a_port = current($a_ports);
+        $this->assertEquals(
+            '00:21:5a:0b:bb:c4',
+            $a_port['mac'],
+            'Mac address'
+        );
 
-      // check ip
-      $a_networknames = $networkName->find(
+       // check ip
+        $a_networknames = $networkName->find(
             ['itemtype' => 'NetworkPort',
-             'items_id' => $a_port['id']]);
-      $this->assertEquals('1', count($a_networknames),
-         'May have one networkname');
-      $a_networkname = current($a_networknames);
-      $a_ipaddresses = $iPAddress->find(
+            'items_id' => $a_port['id']]
+        );
+        $this->assertEquals(
+            '1',
+            count($a_networknames),
+            'May have one networkname'
+        );
+        $a_networkname = current($a_networknames);
+        $a_ipaddresses = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-             'items_id' => $a_networkname['id']]);
-      $this->assertEquals('1', count($a_ipaddresses),
-         'May have one IP address');
-      $a_ipaddress = current($a_ipaddresses);
-      $this->assertEquals('192.168.20.102', $a_ipaddress['name'],
-         'IP address');
-   }
+            'items_id' => $a_networkname['id']]
+        );
+        $this->assertEquals(
+            '1',
+            count($a_ipaddresses),
+            'May have one IP address'
+        );
+        $a_ipaddress = current($a_ipaddresses);
+        $this->assertEquals(
+            '192.168.20.102',
+            $a_ipaddress['name'],
+            'IP address'
+        );
+    }
 
    /**
     * @test
     * @depends NewPrinterFromNetdiscovery
     */
-   public function updatePrinterFromNetdiscoveryToInventory() {
-      $_SESSION["plugin_glpiinventory_entity"] = 0;
+    public function updatePrinterFromNetdiscoveryToInventory()
+    {
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
 
-      $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+        $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
     <DEVICE>
@@ -488,42 +550,45 @@ class PrinterUpdateTest extends TestCase {
 </REQUEST>
 ";
 
-      //First: discover the device
-      $printer     = new Printer();
-      $printers_id = $printer->add([
+       //First: discover the device
+        $printer     = new Printer();
+        $printers_id = $printer->add([
          'serial'      => '8512418234',
          'entities_id' => 0
-      ]);
-      $printer->getFromDB($printers_id);
+        ]);
+        $printer->getFromDB($printers_id);
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($xml_source);
-      //$json = json_decode($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($xml_source);
+       //$json = json_decode($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $this->assertGreaterThan(0, $printer->getFromDBByCrit(['serial' => '8512418234']));
-      $this->assertEquals('SHARP MX-5140N', $printer->fields['name'], 'Name must be updated');
+        $this->assertGreaterThan(0, $printer->getFromDBByCrit(['serial' => '8512418234']));
+        $this->assertEquals('SHARP MX-5140N', $printer->fields['name'], 'Name must be updated');
 
-      // Check mac
-      $networkPort = new NetworkPort();
-      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
-      $this->assertEquals('1', count($a_ports),
-         'May have one network port');
-      $a_port = current($a_ports);
-      $this->assertEquals('24:26:42:1e:5a:90', $a_port['mac'], 'Mac address');
+       // Check mac
+        $networkPort = new NetworkPort();
+        $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
+        $this->assertEquals(
+            '1',
+            count($a_ports),
+            'May have one network port'
+        );
+        $a_port = current($a_ports);
+        $this->assertEquals('24:26:42:1e:5a:90', $a_port['mac'], 'Mac address');
 
-      //Logical number should be 0
-      $this->assertEquals(0, $a_port['logical_number'], 'Logical number equals 0');
+       //Logical number should be 0
+        $this->assertEquals(0, $a_port['logical_number'], 'Logical number equals 0');
 
-      $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+        $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
     <DEVICE>
       <INFO>
         <COMMENTS>SHARP MX-5140N</COMMENTS>
-        <ID>".$printers_id."</ID>
+        <ID>" . $printers_id . "</ID>
         <MANUFACTURER>Sharp</MANUFACTURER>
         <MEMORY>32</MEMORY>
         <MODEL>SHARP MX series</MODEL>
@@ -563,24 +628,24 @@ class PrinterUpdateTest extends TestCase {
   <DEVICEID>foo</DEVICEID>
 </REQUEST>";
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($xml_source);
-      //$json = json_decode($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      $inventory = new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($xml_source);
+       //$json = json_decode($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        $inventory = new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
-      $expected = 1 + 1; //1 port + 1 management port
-      $this->assertEquals($expected, count($a_ports), 'Should have ' . $expected . 'ports');
+        $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
+        $expected = 1 + 1; //1 port + 1 management port
+        $this->assertEquals($expected, count($a_ports), 'Should have ' . $expected . 'ports');
 
-      $a_port = array_pop($a_ports);
-      $mgmt_port = array_pop($a_ports);
-      $this->assertEquals('Management', $mgmt_port['name']);
-      $this->assertEquals('Management', $mgmt_port['name']);
+        $a_port = array_pop($a_ports);
+        $mgmt_port = array_pop($a_ports);
+        $this->assertEquals('Management', $mgmt_port['name']);
+        $this->assertEquals('Management', $mgmt_port['name']);
 
-      //Logical number should be 1
-      $this->assertEquals(1, $a_port['logical_number'], 'Logical number changed to 1');
-      $this->assertEquals('NC-6800h', $a_port['name'], 'Name has changed');
-   }
+       //Logical number should be 1
+        $this->assertEquals(1, $a_port['logical_number'], 'Logical number changed to 1');
+        $this->assertEquals('NC-6800h', $a_port['name'], 'Name has changed');
+    }
 }

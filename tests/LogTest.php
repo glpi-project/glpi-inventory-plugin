@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,29 +33,34 @@
 
 use PHPUnit\Framework\TestCase;
 
-class GLPIlogs extends TestCase {
+class GLPIlogs extends TestCase
+{
 
-   public function testSQLlogs() {
-      $filecontent = file_get_contents("../../files/_log/sql-errors.log");
+    public function testSQLlogs()
+    {
+        $filecontent = file_get_contents("../../files/_log/sql-errors.log");
 
-      $this->assertEmpty($filecontent, 'sql-errors.log not empty: '.$filecontent);
-      // Reinitialize file
-      file_put_contents("../../files/_log/sql-errors.log", '');
-   }
+        $this->assertEmpty($filecontent, 'sql-errors.log not empty: ' . $filecontent);
+       // Reinitialize file
+        file_put_contents("../../files/_log/sql-errors.log", '');
+    }
 
 
-   public function testPHPlogs() {
-      $filecontent = file("../../files/_log/php-errors.log");
-      $lines = [];
-      foreach ($filecontent as $line) {
-         if (!strstr($line, 'apc.')
-            && !strstr($line, 'glpiphplog.DEBUG: Config::getCache()')
-            && !strstr($line, 'Test logger')) {
-            $lines[] = $line;
-         }
-      }
-      $this->assertEmpty(implode("", $lines), 'php-errors.log not empty: '.implode("", $lines));
-      // Reinitialize file
-      file_put_contents("../../files/_log/php-errors.log", '');
-   }
+    public function testPHPlogs()
+    {
+        $filecontent = file("../../files/_log/php-errors.log");
+        $lines = [];
+        foreach ($filecontent as $line) {
+            if (
+                !strstr($line, 'apc.')
+                && !strstr($line, 'glpiphplog.DEBUG: Config::getCache()')
+                && !strstr($line, 'Test logger')
+            ) {
+                $lines[] = $line;
+            }
+        }
+        $this->assertEmpty(implode("", $lines), 'php-errors.log not empty: ' . implode("", $lines));
+       // Reinitialize file
+        file_put_contents("../../files/_log/php-errors.log", '');
+    }
 }

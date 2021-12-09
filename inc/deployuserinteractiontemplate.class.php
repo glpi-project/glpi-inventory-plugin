@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,7 +32,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 use Glpi\Application\View\TemplateRenderer;
@@ -40,16 +41,17 @@ use Glpi\Application\View\TemplateRenderer;
  * Manage user interactions templates.
  * @since 9.2
  */
-class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
+class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_userinteractiontemplate';
+    static $rightname = 'plugin_glpiinventory_userinteractiontemplate';
 
-   const ALERT_WTS                = 'win32'; //Alerts for win32 platform (WTS API)
+    const ALERT_WTS                = 'win32'; //Alerts for win32 platform (WTS API)
 
    //Behaviors (to sent to the agent) :
    //in two parts :
@@ -57,53 +59,55 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    //- right part is the code that the agent returns to the server
 
    //Continue a software deployment
-   const BEHAVIOR_CONTINUE_DEPLOY = 'continue:continue';
+    const BEHAVIOR_CONTINUE_DEPLOY = 'continue:continue';
 
    //Cancel a software deployment
-   const BEHAVIOR_STOP_DEPLOY     = 'stop:stop';
+    const BEHAVIOR_STOP_DEPLOY     = 'stop:stop';
 
    //Postpone a software deployment
-   const BEHAVIOR_POSTPONE_DEPLOY = 'stop:postpone';
+    const BEHAVIOR_POSTPONE_DEPLOY = 'stop:postpone';
 
    //Available buttons for Windows WTS API
-   const WTS_BUTTON_OK_SYNC             = 'ok';
-   const WTS_BUTTON_OK_ASYNC            = 'ok_async';
-   const WTS_BUTTON_OK_CANCEL           = 'okcancel';
-   const WTS_BUTTON_YES_NO              = 'yesno';
-   const WTS_BUTTON_ABORT_RETRY_IGNORE  = 'abortretryignore';
-   const WTS_BUTTON_RETRY_CANCEL        = 'retrycancel';
-   const WTS_BUTTON_YES_NO_CANCEL       = 'yesnocancel';
-   const WTS_BUTTON_CANCEL_TRY_CONTINUE = 'canceltrycontinue';
+    const WTS_BUTTON_OK_SYNC             = 'ok';
+    const WTS_BUTTON_OK_ASYNC            = 'ok_async';
+    const WTS_BUTTON_OK_CANCEL           = 'okcancel';
+    const WTS_BUTTON_YES_NO              = 'yesno';
+    const WTS_BUTTON_ABORT_RETRY_IGNORE  = 'abortretryignore';
+    const WTS_BUTTON_RETRY_CANCEL        = 'retrycancel';
+    const WTS_BUTTON_YES_NO_CANCEL       = 'yesnocancel';
+    const WTS_BUTTON_CANCEL_TRY_CONTINUE = 'canceltrycontinue';
 
    //Icons to be displayed
-   const WTS_ICON_NONE                = 'none';
-   const WTS_ICON_WARNING             = 'warn';
-   const WTS_ICON_QUESTION            = 'question';
-   const WTS_ICON_INFO                = 'info';
-   const WTS_ICON_ERROR               = 'error';
+    const WTS_ICON_NONE                = 'none';
+    const WTS_ICON_WARNING             = 'warn';
+    const WTS_ICON_QUESTION            = 'question';
+    const WTS_ICON_INFO                = 'info';
+    const WTS_ICON_ERROR               = 'error';
 
 
    /**
     * @see CommonGLPI::defineTabs()
    **/
-   function defineTabs($options = []) {
+    function defineTabs($options = [])
+    {
 
-      $ong = [];
-      $this->addStandardTab(__CLASS__, $ong, $options)
+        $ong = [];
+        $this->addStandardTab(__CLASS__, $ong, $options)
          ->addStandardTab('Log', $ong, $options);
 
-      return $ong;
-   }
+        return $ong;
+    }
 
 
    /**
     * @see CommonGLPI::getTabNameForItem()
    **/
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      $tabs[1] = __('General');
-      $tabs[2] = _n('Behavior', 'Behaviors', 2, 'glpiinventory');
-      return $tabs;
-   }
+    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
+        $tabs[1] = __('General');
+        $tabs[2] = _n('Behavior', 'Behaviors', 2, 'glpiinventory');
+        return $tabs;
+    }
 
 
    /**
@@ -111,22 +115,23 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     * @param $tabnum       (default 1)
     * @param $withtemplate (default 0)
    **/
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      global $CFG_GLPI;
+    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        global $CFG_GLPI;
 
-      if ($item->getType() == __CLASS__) {
-         switch ($tabnum) {
-            case 1 :
-               $item->showForm($item->fields['id']);
-               break;
+        if ($item->getType() == __CLASS__) {
+            switch ($tabnum) {
+                case 1:
+                    $item->showForm($item->fields['id']);
+                    break;
 
-            case 2 :
-               $item->showBehaviors($item->fields['id']);
-               break;
-         }
-      }
-      return true;
-   }
+                case 2:
+                    $item->showBehaviors($item->fields['id']);
+                    break;
+            }
+        }
+        return true;
+    }
 
 
    /**
@@ -135,10 +140,15 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb = 0) {
-         return _n('User interaction template',
-                   'User interaction templates', $nb, 'glpiinventory');
-   }
+    static function getTypeName($nb = 0)
+    {
+         return _n(
+             'User interaction template',
+             'User interaction templates',
+             $nb,
+             'glpiinventory'
+         );
+    }
 
 
    /**
@@ -147,10 +157,11 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     * @since 9.2
     * @return array
     */
-   static function getTypes() {
-      return [self::ALERT_WTS
+    static function getTypes()
+    {
+        return [self::ALERT_WTS
                => __("Windows system alert (WTS)", 'glpiinventory')];
-   }
+    }
 
 
    /**
@@ -160,8 +171,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     * @param interaction_type the type of interaction
     * @return array
     */
-   static function getButtons($interaction_type = '') {
-      $interactions = [
+    static function getButtons($interaction_type = '')
+    {
+        $interactions = [
          self::ALERT_WTS => [
             self::WTS_BUTTON_OK_SYNC             => __('OK', 'glpiinventory'),
             self::WTS_BUTTON_OK_ASYNC            => __('OK (asynchronous)', 'glpiinventory'),
@@ -173,13 +185,13 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
             self::WTS_BUTTON_CANCEL_TRY_CONTINUE => __('Cancel - Try - Continue', 'glpiinventory'),
             self::WTS_BUTTON_YES_NO_CANCEL       => __('Yes - No - Cancel', 'glpiinventory')
          ]
-      ];
-      if (isset($interactions[$interaction_type])) {
-         return $interactions[$interaction_type];
-      } else {
-         return false;
-      }
-   }
+        ];
+        if (isset($interactions[$interaction_type])) {
+            return $interactions[$interaction_type];
+        } else {
+            return false;
+        }
+    }
 
 
    /**
@@ -189,8 +201,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     * @param interaction_type the type of interaction
     * @return array
     */
-   static function getIcons($interaction_type = self::ALERT_WTS) {
-      $icons = [
+    static function getIcons($interaction_type = self::ALERT_WTS)
+    {
+        $icons = [
          self::ALERT_WTS => [
             self::WTS_ICON_NONE     => __('None'),
             self::WTS_ICON_WARNING  => __('Warning'),
@@ -198,13 +211,13 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
             self::WTS_ICON_ERROR    => __('Error'),
             self::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
          ]
-      ];
-      if (isset($icons[$interaction_type])) {
-         return $icons[$interaction_type];
-      } else {
-         return false;
-      }
-   }
+        ];
+        if (isset($icons[$interaction_type])) {
+            return $icons[$interaction_type];
+        } else {
+            return false;
+        }
+    }
 
 
    /**
@@ -213,12 +226,13 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     * @since 9.2
     * @return array
     */
-   static function getBehaviors() {
-      return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction', 'glpiinventory'),
+    static function getBehaviors()
+    {
+        return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction', 'glpiinventory'),
               self::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'glpiinventory'),
               self::BEHAVIOR_STOP_DEPLOY     => __('Cancel job', 'glpiinventory')
              ];
-   }
+    }
 
 
    /**
@@ -228,11 +242,14 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     * @param type the type of bahaviors (if one already selected)
     * @return rand
     */
-   function dropdownBehaviors($name, $behavior = self::BEHAVIOR_CONTINUE_DEPLOY) {
-      return Dropdown::showFromArray($name,
-                                     self::getBehaviors(),
-                                     ['value' => $behavior]);
-   }
+    function dropdownBehaviors($name, $behavior = self::BEHAVIOR_CONTINUE_DEPLOY)
+    {
+        return Dropdown::showFromArray(
+            $name,
+            self::getBehaviors(),
+            ['value' => $behavior]
+        );
+    }
 
 
    /**
@@ -240,11 +257,13 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @since 9.2
    * @return an array of field names
    */
-   function getJsonFields() {
-      return  array_merge($this->getMainFormFields(),
-                          $this->getBehaviorsFields());
-
-   }
+    function getJsonFields()
+    {
+        return  array_merge(
+            $this->getMainFormFields(),
+            $this->getBehaviorsFields()
+        );
+    }
 
 
    /**
@@ -252,11 +271,11 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @since 9.2
    * @return an array of field names
    */
-   function getMainFormFields() {
-      return  ['platform', 'timeout', 'buttons', 'icon',
+    function getMainFormFields()
+    {
+        return  ['platform', 'timeout', 'buttons', 'icon',
                'retry_after', 'nb_max_retry'];
-
-   }
+    }
 
 
    /**
@@ -264,12 +283,12 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @since 9.2
    * @return an array of field names
    */
-   function getBehaviorsFields() {
-      return  ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
+    function getBehaviorsFields()
+    {
+        return  ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
                'on_yes', 'on_cancel', 'on_abort', 'on_retry', 'on_tryagain',
                'on_ignore', 'on_continue', 'on_async'];
-
-   }
+    }
 
 
    /**
@@ -278,14 +297,15 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    *
    * @return an array of field names
    */
-   function initializeJsonFields($json_fields) {
-      foreach ($this->getJsonFields() as $field) {
-         if (!isset($json_fields[$field])) {
-            $json_fields[$field] = $this->getDefaultBehaviorForAButton($field);
-         }
-      }
-      return $json_fields;
-   }
+    function initializeJsonFields($json_fields)
+    {
+        foreach ($this->getJsonFields() as $field) {
+            if (!isset($json_fields[$field])) {
+                $json_fields[$field] = $this->getDefaultBehaviorForAButton($field);
+            }
+        }
+        return $json_fields;
+    }
 
 
    /**
@@ -294,15 +314,16 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @param params form parameters
    * @return json encoded array
    */
-   function saveToJson($params = []) {
-      $result = [];
-      foreach ($this->getJsonFields() as $field) {
-         if (isset($params[$field])) {
-            $result[$field] = $params[$field];
-         }
-      }
-      return json_encode($result);
-   }
+    function saveToJson($params = [])
+    {
+        $result = [];
+        foreach ($this->getJsonFields() as $field) {
+            if (isset($params[$field])) {
+                $result[$field] = $params[$field];
+            }
+        }
+        return json_encode($result);
+    }
 
 
    /**
@@ -312,23 +333,24 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @param the input array
    * @param array now containing input data + data from the template
    */
-   function addJsonFieldsToArray($params = []) {
-      $fields = json_decode($this->fields['json'], true);
-      foreach ($this->getJsonFields() as $field) {
-         if (isset($fields[$field])) {
-            $params[$field] = $fields[$field];
-         }
-      }
-      //If we deal with an asynchronous OK, then wait must be set to 0
-      if ($params['buttons'] == self::WTS_BUTTON_OK_ASYNC) {
-         $params['buttons'] = self::WTS_BUTTON_OK_SYNC;
-         $params['wait']    = 'no';
-      } else {
-         //Otherwise wait is 1
-         $params['wait'] = 'yes';
-      }
-      return $params;
-   }
+    function addJsonFieldsToArray($params = [])
+    {
+        $fields = json_decode($this->fields['json'], true);
+        foreach ($this->getJsonFields() as $field) {
+            if (isset($fields[$field])) {
+                $params[$field] = $fields[$field];
+            }
+        }
+       //If we deal with an asynchronous OK, then wait must be set to 0
+        if ($params['buttons'] == self::WTS_BUTTON_OK_ASYNC) {
+            $params['buttons'] = self::WTS_BUTTON_OK_SYNC;
+            $params['wait']    = 'no';
+        } else {
+           //Otherwise wait is 1
+            $params['wait'] = 'yes';
+        }
+        return $params;
+    }
 
 
    /**
@@ -337,20 +359,21 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @param $id id of a template to edit
    * @param options POST form options
    */
-   function showForm($id, $options = []) {
-      $this->initForm($id, $options);
+    function showForm($id, $options = [])
+    {
+        $this->initForm($id, $options);
 
-      $json_data = json_decode($this->fields['json'], true);
-      $json_data = $this->initializeJsonFields($json_data);
+        $json_data = json_decode($this->fields['json'], true);
+        $json_data = $this->initializeJsonFields($json_data);
 
-      TemplateRenderer::getInstance()->display('@glpiinventory/forms/deployuserinteractiontemplate.html.twig', [
+        TemplateRenderer::getInstance()->display('@glpiinventory/forms/deployuserinteractiontemplate.html.twig', [
          'item'      => $this,
          'params'    => $options,
          'json_data' => $json_data,
-      ]);
+        ]);
 
-      return true;
-   }
+        return true;
+    }
 
 
    /**
@@ -358,70 +381,72 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
     *
     *  @return array
     **/
-   static function getRetries() {
-      $tab = [
+    static function getRetries()
+    {
+        $tab = [
         0 => __('Never')
-      ];
+        ];
 
-      $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
-      $tab[2*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
-      $tab[3*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 3), 3);
-      $tab[4*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 4), 4);
+        $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
+        $tab[2 * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
+        $tab[3 * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 3), 3);
+        $tab[4 * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 4), 4);
 
-      // Minutes
-      for ($i=5; $i<60; $i+=5) {
-         $tab[$i*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
-      }
+       // Minutes
+        for ($i = 5; $i < 60; $i += 5) {
+            $tab[$i * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
+        }
 
-      // Heures
-      for ($i=1; $i<24; $i++) {
-         $tab[$i*HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
-      }
+       // Heures
+        for ($i = 1; $i < 24; $i++) {
+            $tab[$i * HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
+        }
 
-      // Jours
-      $tab[DAY_TIMESTAMP] = __('Each day');
-      for ($i=2; $i<7; $i++) {
-         $tab[$i*DAY_TIMESTAMP] = sprintf(_n('%d day', '%d days', $i), $i);
-      }
+       // Jours
+        $tab[DAY_TIMESTAMP] = __('Each day');
+        for ($i = 2; $i < 7; $i++) {
+            $tab[$i * DAY_TIMESTAMP] = sprintf(_n('%d day', '%d days', $i), $i);
+        }
 
-      $tab[WEEK_TIMESTAMP]  = __('Each week');
-      $tab[MONTH_TIMESTAMP] = __('Each month');
+        $tab[WEEK_TIMESTAMP]  = __('Each week');
+        $tab[MONTH_TIMESTAMP] = __('Each month');
 
-      return $tab;
-   }
+        return $tab;
+    }
 
    /**
     * Array of frequency (interval between 2 actions)
     *
     *  @return array
     **/
-   static function getTimeouts() {
-      $tab = [
+    static function getTimeouts()
+    {
+        $tab = [
          0 => __('Never')
-      ];
+        ];
 
-      // Minutes
-      for ($i=30; $i<60; $i+=5) {
-         $tab[$i] = sprintf(_n('%d second', '%d seconds', $i), $i);
-      }
+       // Minutes
+        for ($i = 30; $i < 60; $i += 5) {
+            $tab[$i] = sprintf(_n('%d second', '%d seconds', $i), $i);
+        }
 
-      $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
-      $tab[2*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
-      $tab[3*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 3), 3);
-      $tab[4*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 4), 4);
+        $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
+        $tab[2 * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
+        $tab[3 * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 3), 3);
+        $tab[4 * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 4), 4);
 
-      // Minutes
-      for ($i=5; $i<60; $i+=5) {
-         $tab[$i*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
-      }
+       // Minutes
+        for ($i = 5; $i < 60; $i += 5) {
+            $tab[$i * MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
+        }
 
-      // Hours
-      for ($i=1; $i<13; $i++) {
-         $tab[$i*HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
-      }
+       // Hours
+        for ($i = 1; $i < 13; $i++) {
+            $tab[$i * HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
+        }
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
    /**
@@ -430,8 +455,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @since 9.2
    * @return array an array of event => event label
    */
-   public function getEvents() {
-      return ['on_ok'       => __('Button ok', 'glpiinventory'),
+    public function getEvents()
+    {
+        return ['on_ok'       => __('Button ok', 'glpiinventory'),
               'on_yes'      => __('Button yes', 'glpiinventory'),
               'on_continue' => __('Button continue', 'glpiinventory'),
               'on_retry'    => __('Button retry', 'glpiinventory'),
@@ -444,8 +470,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
               'on_timeout'  => __('Alert timeout exceeded', 'glpiinventory'),
               'on_multiusers' => __('Several active sessions', 'glpiinventory')
              ];
-
-   }
+    }
 
 
    /**
@@ -455,50 +480,50 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @param $param the button selected in the interaction template form
    * @return array an array of needed interaction behaviors
    */
-   public function getBehaviorsToDisplay($button) {
-      $display = ['on_timeout', 'on_nouser', 'on_multiusers'];
-      switch ($button) {
-         case self::WTS_BUTTON_OK_SYNC:
-         case self::WTS_BUTTON_OK_ASYNC:
-            $display[] = 'on_ok';
-            break;
+    public function getBehaviorsToDisplay($button)
+    {
+        $display = ['on_timeout', 'on_nouser', 'on_multiusers'];
+        switch ($button) {
+            case self::WTS_BUTTON_OK_SYNC:
+            case self::WTS_BUTTON_OK_ASYNC:
+                $display[] = 'on_ok';
+                break;
 
-         case self::WTS_BUTTON_YES_NO:
-            $display[] = 'on_yes';
-            $display[] = 'on_no';
-            break;
+            case self::WTS_BUTTON_YES_NO:
+                $display[] = 'on_yes';
+                $display[] = 'on_no';
+                break;
 
-         case self::WTS_BUTTON_YES_NO_CANCEL:
-            $display[] = 'on_yes';
-            $display[] = 'on_no';
-            $display[] = 'on_cancel';
-            break;
+            case self::WTS_BUTTON_YES_NO_CANCEL:
+                $display[] = 'on_yes';
+                $display[] = 'on_no';
+                $display[] = 'on_cancel';
+                break;
 
-         case self::WTS_BUTTON_OK_CANCEL:
-            $display[] = 'on_ok';
-            $display[] = 'on_cancel';
-            break;
+            case self::WTS_BUTTON_OK_CANCEL:
+                $display[] = 'on_ok';
+                $display[] = 'on_cancel';
+                break;
 
-         case self::WTS_BUTTON_ABORT_RETRY_IGNORE:
-            $display[] = 'on_abort';
-            $display[] = 'on_retry';
-            $display[] = 'on_ignore';
-            break;
+            case self::WTS_BUTTON_ABORT_RETRY_IGNORE:
+                $display[] = 'on_abort';
+                $display[] = 'on_retry';
+                $display[] = 'on_ignore';
+                break;
 
-         case self::WTS_BUTTON_RETRY_CANCEL:
-            $display[] = 'on_retry';
-            $display[] = 'on_cancel';
-            break;
+            case self::WTS_BUTTON_RETRY_CANCEL:
+                $display[] = 'on_retry';
+                $display[] = 'on_cancel';
+                break;
 
-         case self::WTS_BUTTON_CANCEL_TRY_CONTINUE:
-            $display[] = 'on_tryagain';
-            $display[] = 'on_cancel';
-            $display[] = 'on_continue';
-            break;
-
-      }
-      return $display;
-   }
+            case self::WTS_BUTTON_CANCEL_TRY_CONTINUE:
+                $display[] = 'on_tryagain';
+                $display[] = 'on_cancel';
+                $display[] = 'on_continue';
+                break;
+        }
+        return $display;
+    }
 
 
    /**
@@ -507,32 +532,32 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @param string $button the button for which the default behavior is request
    * @return string the behavior
    */
-   public function getDefaultBehaviorForAButton($button) {
-      $behavior = '';
-      switch ($button) {
-         case 'on_yes':
-         case 'on_ok':
-         case 'on_multiusers':
-         case 'on_timeout':
-         case 'on_nouser':
-            $behavior = self::BEHAVIOR_CONTINUE_DEPLOY;
-            break;
+    public function getDefaultBehaviorForAButton($button)
+    {
+        $behavior = '';
+        switch ($button) {
+            case 'on_yes':
+            case 'on_ok':
+            case 'on_multiusers':
+            case 'on_timeout':
+            case 'on_nouser':
+                $behavior = self::BEHAVIOR_CONTINUE_DEPLOY;
+                break;
 
-         case 'on_no':
-         case 'on_cancel':
-         case 'on_abort':
-            $behavior = self::BEHAVIOR_STOP_DEPLOY;
-            break;
+            case 'on_no':
+            case 'on_cancel':
+            case 'on_abort':
+                $behavior = self::BEHAVIOR_STOP_DEPLOY;
+                break;
 
-         case 'on_retry':
-         case 'on_ignore':
-         case 'on_tryagain':
-            $behavior = self::BEHAVIOR_POSTPONE_DEPLOY;
-            break;
-
-      }
-      return $behavior;
-   }
+            case 'on_retry':
+            case 'on_ignore':
+            case 'on_tryagain':
+                $behavior = self::BEHAVIOR_POSTPONE_DEPLOY;
+                break;
+        }
+        return $behavior;
+    }
 
 
    /**
@@ -541,59 +566,65 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @since 9.2
    * @param ID the template's ID
    */
-   public function showBehaviors($ID) {
+    public function showBehaviors($ID)
+    {
 
-      $json_data = json_decode($this->fields['json'], true);
-      $json_data = $this->initializeJsonFields($json_data);
+        $json_data = json_decode($this->fields['json'], true);
+        $json_data = $this->initializeJsonFields($json_data);
 
-      $this->initForm($ID);
-      $this->showFormHeader();
+        $this->initForm($ID);
+        $this->showFormHeader();
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>".__('Behaviors', 'glpiinventory')."</th>";
-      echo "</tr>";
+        echo "<tr class='tab_bg_1'>";
+        echo "<th colspan='4'>" . __('Behaviors', 'glpiinventory') . "</th>";
+        echo "</tr>";
 
-      foreach ($this->getMainFormFields() as $field) {
-         echo Html::hidden($field, ['value' => $json_data[$field]]);
-      }
+        foreach ($this->getMainFormFields() as $field) {
+            echo Html::hidden($field, ['value' => $json_data[$field]]);
+        }
 
-      foreach ($this->getEvents() as $event => $label) {
-         if (in_array($event,
-                      $this->getBehaviorsToDisplay($json_data['buttons']))) {
-            echo "<tr class='tab_bg_1'>";
+        foreach ($this->getEvents() as $event => $label) {
+            if (
+                in_array(
+                    $event,
+                    $this->getBehaviorsToDisplay($json_data['buttons'])
+                )
+            ) {
+                echo "<tr class='tab_bg_1'>";
 
-            echo "<td>$label</td>";
-            echo "<td>";
-            if (empty($json_data[$event])) {
-               $value = $this->getDefaultBehaviorForAButton($event);
+                echo "<td>$label</td>";
+                echo "<td>";
+                if (empty($json_data[$event])) {
+                    $value = $this->getDefaultBehaviorForAButton($event);
+                } else {
+                    $value = $json_data[$event];
+                }
+                $this->dropdownBehaviors($event, $value);
+                echo "</td>";
+                echo "</tr>";
             } else {
-               $value = $json_data[$event];
+                echo Html::hidden($event, $json_data[$event]);
             }
-            $this->dropdownBehaviors($event, $value);
-            echo "</td>";
-            echo "</tr>";
-         } else {
-            echo Html::hidden($event, $json_data[$event]);
-         }
+        }
 
-      }
+        $this->showFormButtons();
 
-      $this->showFormButtons();
-
-      return true;
-   }
+        return true;
+    }
 
 
-   public function prepareInputForAdd($input) {
-      //Save params as a json array, ready to be saved in db
-      $input['json'] = $this->saveToJson($input);
-      return $input;
-   }
+    public function prepareInputForAdd($input)
+    {
+       //Save params as a json array, ready to be saved in db
+        $input['json'] = $this->saveToJson($input);
+        return $input;
+    }
 
 
-   public function prepareInputForUpdate($input) {
-      return $this->prepareInputForAdd($input);
-   }
+    public function prepareInputForUpdate($input)
+    {
+        return $this->prepareInputForAdd($input);
+    }
 
 
    /**
@@ -601,7 +632,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown {
    * @since 9.2
    * @return array the template values as an array
    */
-   public function getValues() {
-      return json_decode($this->fields['json'], true);
-   }
+    public function getValues()
+    {
+        return json_decode($this->fields['json'], true);
+    }
 }

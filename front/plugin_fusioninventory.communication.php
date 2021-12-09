@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,6 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
-include_once(PLUGIN_GLPI_INVENTORY_DIR."/front/communication.php");
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/front/communication.php");

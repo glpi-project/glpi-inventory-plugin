@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,7 +32,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
@@ -39,7 +40,8 @@ if (!defined('GLPI_ROOT')) {
  *
  * @todo This class should inherit the PluginGlpiinventoryTaskjob
  */
-class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
+class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
+{
 
 
    /**
@@ -47,9 +49,10 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
     *
     * @return boolean
     */
-   static function canCreate() {
-      return true;
-   }
+    static function canCreate()
+    {
+        return true;
+    }
 
 
    /**
@@ -57,9 +60,10 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
     *
     * @return boolean
     */
-   static function canView() {
-      return true;
-   }
+    static function canView()
+    {
+        return true;
+    }
 
 
    /**
@@ -69,52 +73,52 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
     * @param array $params
     * @return string in JSON format
     */
-   function getAllDatas($params) {
-      global $DB;
+    function getAllDatas($params)
+    {
+        global $DB;
 
-      $tasks_id = $params['tasks_id'];
+        $tasks_id = $params['tasks_id'];
 
-      $sql = " SELECT *
-               FROM `".$this->getTable()."`
+        $sql = " SELECT *
+               FROM `" . $this->getTable() . "`
                WHERE `plugin_glpiinventory_deploytasks_id` = '$tasks_id'
                AND method = 'deployinstall'";
 
-      $res  = $DB->query($sql);
-      $json  = [];
-      $temp_tasks = [];
-      while ($row = $DB->fetchAssoc($res)) {
-         $row['packages'] = importArrayFromDB($row['definition']);
-         $row['actions'] = importArrayFromDB($row['action']);
+        $res  = $DB->query($sql);
+        $json  = [];
+        $temp_tasks = [];
+        while ($row = $DB->fetchAssoc($res)) {
+            $row['packages'] = importArrayFromDB($row['definition']);
+            $row['actions'] = importArrayFromDB($row['action']);
 
-         $temp_tasks[] = $row;
-      }
+            $temp_tasks[] = $row;
+        }
 
-      $i = 0;
-      foreach ($temp_tasks as $task) {
-         foreach ($task['actions'] as $action) {
-            foreach ($task['packages'] as $package) {
+        $i = 0;
+        foreach ($temp_tasks as $task) {
+            foreach ($task['actions'] as $action) {
+                foreach ($task['packages'] as $package) {
+                    $tmp         = array_keys($action);
+                    $action_type = $tmp[0];
 
-               $tmp         = array_keys($action);
-               $action_type = $tmp[0];
+                    $json['tasks'][$i]['package_id']       = $package['PluginGlpiinventoryDeployPackage'];
+                    $json['tasks'][$i]['method']           = $task['method'];
+                    $json['tasks'][$i]['comment']          = $task['comment'];
+                    $json['tasks'][$i]['retry_nb']         = $task['retry_nb'];
+                    $json['tasks'][$i]['retry_time']       = $task['retry_time'];
+                    $json['tasks'][$i]['action_type']      = $action_type;
+                    $json['tasks'][$i]['action_selection'] = $action[$action_type];
 
-               $json['tasks'][$i]['package_id']       = $package['PluginGlpiinventoryDeployPackage'];
-               $json['tasks'][$i]['method']           = $task['method'];
-               $json['tasks'][$i]['comment']          = $task['comment'];
-               $json['tasks'][$i]['retry_nb']         = $task['retry_nb'];
-               $json['tasks'][$i]['retry_time']       = $task['retry_time'];
-               $json['tasks'][$i]['action_type']      = $action_type;
-               $json['tasks'][$i]['action_selection'] = $action[$action_type];
+                    $obj_action = new $action_type();
+                    $obj_action->getFromDB($action[$action_type]);
+                    $json['tasks'][$i]['action_name'] = $obj_action->getField('name');
 
-               $obj_action = new $action_type();
-               $obj_action->getFromDB($action[$action_type]);
-               $json['tasks'][$i]['action_name'] = $obj_action->getField('name');
-
-               $i++;
+                    $i++;
+                }
             }
-         }
-      }
-      return json_encode($json);
-   }
+        }
+        return json_encode($json);
+    }
 
 
    /**
@@ -123,27 +127,29 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
     * @global object $DB
     * @param array $params
     */
-   function saveDatas($params) {
-      global $DB;
+    function saveDatas($params)
+    {
+        global $DB;
 
-      $tasks_id = $params['tasks_id'];
-      $tasks = json_decode($params['tasks']);
+        $tasks_id = $params['tasks_id'];
+        $tasks = json_decode($params['tasks']);
 
-      //remove old jobs from task
-      $this->deleteByCriteria(['plugin_glpiinventory_deploytasks_id' => $tasks_id], true);
+       //remove old jobs from task
+        $this->deleteByCriteria(['plugin_glpiinventory_deploytasks_id' => $tasks_id], true);
 
-      //get plugin id
-      $plug = new Plugin();
-      $plug->getFromDBbyDir('fusinvdeploy');
-      $plugins_id = $plug->getField('id');
+       //get plugin id
+        $plug = new Plugin();
+        $plug->getFromDBbyDir('fusinvdeploy');
+        $plugins_id = $plug->getField('id');
 
-      //insert new rows
-      $sql_tasks = [];
-      $i = 0;
+       //insert new rows
+        $sql_tasks = [];
+        $i = 0;
 
-      $qparam = new QueryParam();
-      $query = $DB::buildInsert(
-         $this->getTable(), [
+        $qparam = new QueryParam();
+        $query = $DB::buildInsert(
+            $this->getTable(),
+            [
             'plugin_glpiinventory_deploytasks_id'   => $qparam,
             'name'                                    => $qparam,
             'date_creation'                           => $qparam,
@@ -156,39 +162,39 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
             'retry_time'                              => $qparam,
             'periodicity_type'                        => $qparam,
             'periodicity_count'                       => $qparam
-         ]
-      );
-      $stmt = $DB->prepare($query);
+            ]
+        );
+        $stmt = $DB->prepare($query);
 
-      foreach ($tasks as $task) {
-         $task = get_object_vars($task);
+        foreach ($tasks as $task) {
+            $task = get_object_vars($task);
 
-         //encode action and definition
-         //$action = exportArrayToDB(array(array(
-         //    $task['action_type'] => $task['action_selection'])));
-         $action = exportArrayToDB($task['action']);
-         $definition = exportArrayToDB([[
-            'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
+            //encode action and definition
+            //$action = exportArrayToDB(array(array(
+            //    $task['action_type'] => $task['action_selection'])));
+            $action = exportArrayToDB($task['action']);
+            $definition = exportArrayToDB([[
+              'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
 
-         $stmt->bind_param(
-            'ssssssssssss',
-            $tasks_id,
-            "job_".$tasks_id."_".$i,
-            'NOW()',
-            '0',
-            $plugins_id,
-            $task['method'],
-            $definition,
-            $action,
-            $task['retry_nb'],
-            $task['retry_time'],
-            'minutes',
-            '0'
-         );
-         $DB->executeStatement($stmt);
-      }
-      mysqli_stmt_close($stmt);
-   }
+            $stmt->bind_param(
+                'ssssssssssss',
+                $tasks_id,
+                "job_" . $tasks_id . "_" . $i,
+                'NOW()',
+                '0',
+                $plugins_id,
+                $task['method'],
+                $definition,
+                $action,
+                $task['retry_nb'],
+                $task['retry_time'],
+                'minutes',
+                '0'
+            );
+            $DB->executeStatement($stmt);
+        }
+        mysqli_stmt_close($stmt);
+    }
 
 
    /**
@@ -196,9 +202,10 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
     *
     * @return array
     */
-   static function getActionTypes() {
+    static function getActionTypes()
+    {
 
-      return [
+        return [
          [
             'name' => __('Computers'),
             'value' => 'Computer',
@@ -211,8 +218,8 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
             'name' => __('Groups of computers', 'glpiinventory'),
             'value' => 'PluginGlpiinventoryDeployGroup',
          ]
-      ];
-   }
+        ];
+    }
 
 
    /**
@@ -222,73 +229,69 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM {
     * @param array $params
     * @return string in JSON format
     */
-   static function getActions($params) {
-      global $DB;
+    static function getActions($params)
+    {
+        global $DB;
 
-      $res = '';
-      if (!isset($params['get'])) {
-         exit;
-      }
-      switch ($params['get']) {
+        $res = '';
+        if (!isset($params['get'])) {
+            exit;
+        }
+        switch ($params['get']) {
+            case "type";
+                $res = json_encode([
+                'action_types' => self::getActionTypes()
+                ]);
+              break;
+            case "selection";
 
-         case "type";
-            $res = json_encode([
-               'action_types' =>self::getActionTypes()
-            ]);
-            break;
-         case "selection";
+                switch ($params['type']) {
+                    case 'Computer':
+                        $query = "SELECT id, name FROM glpi_computers";
+                        if (isset($params['query'])) {
+                            $like = $DB->escape($params['query']);
+                            $query .= " WHERE name LIKE '%$like'";
+                        }
+                        $query .= " ORDER BY name ASC";
+                        $query_res = $DB->query($query);
+                        $i = 0;
+                        while ($row = $DB->fetchArray($query_res)) {
+                            $res['action_selections'][$i]['id'] = $row['id'];
+                            $res['action_selections'][$i]['name'] = $row['name'];
+                            $i++;
+                        }
 
-            switch ($params['type']) {
+                        $res = json_encode($res);
+                        break;
 
-               case 'Computer':
-                  $query = "SELECT id, name FROM glpi_computers";
-                  if (isset($params['query'])) {
-                     $like = $DB->escape($params['query']);
-                     $query .= " WHERE name LIKE '%$like'";
-                  }
-                  $query .= " ORDER BY name ASC";
-                  $query_res = $DB->query($query);
-                  $i = 0;
-                  while ($row = $DB->fetchArray($query_res)) {
-                     $res['action_selections'][$i]['id'] = $row['id'];
-                     $res['action_selections'][$i]['name'] = $row['name'];
-                     $i++;
-                  }
+                    case 'Group':
+                        $like = [];
+                        if (isset($params['query'])) {
+                            $like += ['name' => ['LIKE', '%' . $DB->escape($params['query'])]];
+                        }
+                        $group = new Group();
+                        $group_datas = $group->find($like);
+                        $i = 0;
+                        foreach ($group_datas as $group_data) {
+                            $res['action_selections'][$i]['id'] = $group_data['id'];
+                            $res['action_selections'][$i]['name'] = $group_data['name'];
+                            $i++;
+                        }
+                        $res = json_encode($res);
+                        break;
 
-                  $res = json_encode($res);
-                  break;
+                    case 'PluginGlpiinventoryDeployGroup':
+                        $res = PluginGlpiinventoryDeployGroup::getAllDatas('action_selections');
+                        break;
+                }
+              break;
 
-               case 'Group':
-                  $like = [];
-                  if (isset($params['query'])) {
-                     $like += ['name' => ['LIKE', '%'.$DB->escape($params['query'])]];
-                  }
-                  $group = new Group;
-                  $group_datas = $group->find($like);
-                  $i=0;
-                  foreach ($group_datas as $group_data) {
-                     $res['action_selections'][$i]['id'] = $group_data['id'];
-                     $res['action_selections'][$i]['name'] = $group_data['name'];
-                     $i++;
-                  }
-                  $res = json_encode($res);
-                  break;
+            case "oneSelection":
+                break;
 
-               case 'PluginGlpiinventoryDeployGroup':
-                  $res = PluginGlpiinventoryDeployGroup::getAllDatas('action_selections');
-                  break;
-
-            }
-            break;
-
-         case "oneSelection":
-            break;
-
-         default:
-            $res = '';
-      }
-      return $res;
-   }
-
-
+            default:
+                $res = '';
+        }
+        return $res;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,12 +32,13 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the the criteria of blacklist.
  */
-class PluginGlpiinventoryInventoryComputerCriteria extends CommonDBTM {
+class PluginGlpiinventoryInventoryComputerCriteria extends CommonDBTM
+{
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,14 +31,14 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 $loggedin = [];
 $loggedin['result'] = 1;
 if (!isset($_SESSION["glpiname"])) {
-   if (!getLoginUserID()) {
-      $loggedin['result'] = 0;
-   }
+    if (!getLoginUserID()) {
+        $loggedin['result'] = 0;
+    }
 }
 
 echo json_encode($loggedin);

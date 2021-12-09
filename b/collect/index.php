@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,7 +32,7 @@
  */
 
 ob_start();
-include ("../../../../inc/includes.php");
+include("../../../../inc/includes.php");
 ob_end_clean();
 
 //Agent communication using REST protocol

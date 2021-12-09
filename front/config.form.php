@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,12 +31,17 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_configuration', READ);
 
-Html::header(__('Features', 'glpiinventory'), $_SERVER["PHP_SELF"],
-             "admin", "pluginglpiinventorymenu", "config");
+Html::header(
+    __('Features', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "config"
+);
 
 
 PluginGlpiinventoryMenu::displayMenu("mini");
@@ -43,14 +49,14 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 $pfConfig = new PluginGlpiinventoryConfig();
 
 if (isset($_POST['update'])) {
-   $data = $_POST;
-   unset($data['update']);
-   unset($data['id']);
-   unset($data['_glpi_csrf_token']);
-   foreach ($data as $key=>$value) {
-      $pfConfig->updateValue($key, $value);
-   }
-   Html::back();
+    $data = $_POST;
+    unset($data['update']);
+    unset($data['id']);
+    unset($data['_glpi_csrf_token']);
+    foreach ($data as $key => $value) {
+        $pfConfig->updateValue($key, $value);
+    }
+    Html::back();
 }
 
 $a_config = current($pfConfig->find([], [], 1));

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,66 +32,64 @@
  */
 
 //This call is to check that the ESX inventory service is up and running
-$fi_status =filter_input(INPUT_GET, "status");
+$fi_status = filter_input(INPUT_GET, "status");
 if (!empty($fi_status)) {
-   return 'ok';
+    return 'ok';
 }
 ob_start();
-include ("../../../../inc/includes.php");
+include("../../../../inc/includes.php");
 ob_end_clean();
 
 $response = false;
 //Agent communication using REST protocol
 $fi_machineid = filter_input(INPUT_GET, "machineid");
 if (!empty($fi_machineid)) {
+    switch (filter_input(INPUT_GET, "action")) {
+        case 'getJobs':
+            $agent        = new Agent();
+            $pfTask         = new PluginGlpiinventoryTask();
+            $pfTaskjob      = new PluginGlpiinventoryTaskjob();
+            $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-   switch (filter_input(INPUT_GET, "action")) {
+            if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep(filter_input(INPUT_GET, "machineid"))])) {
+                $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+                    $agent->fields['id'],
+                    ['InventoryComputerESX']
+                );
 
-      case 'getJobs':
-         $agent        = new Agent();
-         $pfTask         = new PluginGlpiinventoryTask();
-         $pfTaskjob      = new PluginGlpiinventoryTaskjob();
-         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+                ////start of json response
+                $order = new stdClass();
+                $order->jobs = [];
 
-         if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep(filter_input(INPUT_GET, "machineid"))])) {
-            $taskjobstates = $pfTask->getTaskjobstatesForAgent(
-               $agent->fields['id'],
-               ['InventoryComputerESX']
-            );
+                $module = new PluginGlpiinventoryInventoryComputerESX();
+                foreach ($taskjobstates as $taskjobstate) {
+                     $order->jobs[] = $module->run($taskjobstate);
 
-            ////start of json response
-            $order = new stdClass;
-            $order->jobs = [];
+                     $taskjobstate->changeStatus(
+                         $taskjobstate->fields['id'],
+                         $taskjobstate::SERVER_HAS_SENT_DATA
+                     );
+                }
 
-            $module = new PluginGlpiinventoryInventoryComputerESX();
-            foreach ($taskjobstates as $taskjobstate) {
-               $order->jobs[] = $module->run($taskjobstate);
-
-               $taskjobstate->changeStatus(
-                  $taskjobstate->fields['id'],
-                  $taskjobstate::SERVER_HAS_SENT_DATA
-               );
+                // return an empty dictionnary if there are no jobs.
+                if (count($order->jobs) == 0) {
+                    $response = "{}";
+                } else {
+                    $response = json_encode($order);
+                }
             }
 
-            // return an empty dictionnary if there are no jobs.
-            if (count($order->jobs) == 0) {
-               $response = "{}";
-            } else {
-               $response = json_encode($order);
-            }
-         }
+            break;
 
-         break;
+        case 'setLog':
+           //Generic method to update logs
+            PluginGlpiinventoryCommunicationRest::updateLog($_GET);
+            break;
+    }
 
-      case 'setLog':
-         //Generic method to update logs
-         PluginGlpiinventoryCommunicationRest::updateLog($_GET);
-         break;
-   }
-
-   if ($response !== false) {
-      echo $response;
-   } else {
-      echo json_encode((object)[]);
-   }
+    if ($response !== false) {
+        echo $response;
+    } else {
+        echo json_encode((object)[]);
+    }
 }

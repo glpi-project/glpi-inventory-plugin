@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,18 +32,19 @@
  */
 
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "showtaskjoblogdetail.php")) {
-   include ("../../../inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+    include("../../../inc/includes.php");
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 if (!defined('GLPI_ROOT')) {
-   die("Can not acces directly to this file");
+    die("Can not acces directly to this file");
 }
 
 Session::checkCentralAccess();
 
 $pftaskjoblog = new PluginGlpiinventoryTaskjoblog();
 echo $pftaskjoblog->showHistoryInDetail(
-        filter_input(INPUT_POST, "agents_id"),
-        filter_input(INPUT_POST, "uniqid"),
-        "900")."</td>";
+    filter_input(INPUT_POST, "agents_id"),
+    filter_input(INPUT_POST, "uniqid"),
+    "900"
+) . "</td>";

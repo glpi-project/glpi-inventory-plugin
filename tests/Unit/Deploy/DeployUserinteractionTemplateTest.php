@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,92 +33,107 @@
 
 use PHPUnit\Framework\TestCase;
 
-class DeployUserinteractionTemplateTest extends TestCase {
+class DeployUserinteractionTemplateTest extends TestCase
+{
 
-   public static function setUpBeforeClass(): void {
+    public static function setUpBeforeClass(): void
+    {
 
-      // Delete all Interactions
-      $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $items = $interaction->find();
-      foreach ($items as $item) {
-         $interaction->delete(['id' => $item['id']], true);
-      }
-   }
+       // Delete all Interactions
+        $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $items = $interaction->find();
+        foreach ($items as $item) {
+            $interaction->delete(['id' => $item['id']], true);
+        }
+    }
 
 
    /**
     * @test
     */
-   public function testDefineTabs() {
-      $expected = [
+    public function testDefineTabs()
+    {
+        $expected = [
                    'PluginGlpiinventoryDeployUserinteractionTemplate$1' => 'General',
                    'PluginGlpiinventoryDeployUserinteractionTemplate$2' => 'Behaviors',
                    'Log$1' => 'Historical'
                   ];
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $this->assertEquals($expected, $template->defineTabs());
-   }
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $this->assertEquals($expected, $template->defineTabs());
+    }
 
 
    /**
     * @test
     */
-   public function testGetTabNameForItem() {
-      $expected = [  1 => 'General', 2 => 'Behaviors'];
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $this->assertEquals($expected, $template->getTabNameForItem($template));
-   }
+    public function testGetTabNameForItem()
+    {
+        $expected = [  1 => 'General', 2 => 'Behaviors'];
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $this->assertEquals($expected, $template->getTabNameForItem($template));
+    }
 
 
    /**
     * @test
     */
-   public function testGetTypeName() {
-      $this->assertEquals('User interaction templates',
-                           PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName());
-      $this->assertEquals('User interaction template',
-                           PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName(1));
-      $this->assertEquals('User interaction templates',
-                           PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName(2));
-   }
+    public function testGetTypeName()
+    {
+        $this->assertEquals(
+            'User interaction templates',
+            PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName()
+        );
+        $this->assertEquals(
+            'User interaction template',
+            PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName(1)
+        );
+        $this->assertEquals(
+            'User interaction templates',
+            PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName(2)
+        );
+    }
 
 
    /**
     * @test
     */
-   public function testGetTypes() {
-      $types = PluginGlpiinventoryDeployUserinteractionTemplate::getTypes();
-      $this->assertEquals($types,
-                          [PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS => __("Windows system alert (WTS)", 'glpiinventory')]);
-   }
+    public function testGetTypes()
+    {
+        $types = PluginGlpiinventoryDeployUserinteractionTemplate::getTypes();
+        $this->assertEquals(
+            $types,
+            [PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS => __("Windows system alert (WTS)", 'glpiinventory')]
+        );
+    }
 
 
    /**
     * @test
     */
-   public function testGetButtons() {
-      $buttons  = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons(PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS);
-      $this->assertEquals(8, count($buttons));
+    public function testGetButtons()
+    {
+        $buttons  = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons(PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS);
+        $this->assertEquals(8, count($buttons));
 
-      $buttons = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons('foo');
-      $this->assertFalse($buttons);
+        $buttons = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons('foo');
+        $this->assertFalse($buttons);
 
-      $buttons = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons();
-      $this->assertFalse($buttons);
-
-   }
+        $buttons = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons();
+        $this->assertFalse($buttons);
+    }
 
 
    /**
     * @test
     */
-   public function testAddJsonFieldsToArray() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $template->fields['json'] = '{"platform":"wts","timeout":4,"buttons":"ok","retry_after":4,"nb_max_retry":4,"on_timeout":"continue","on_nouser":"continue","on_multiusers":"cancel"}';
-      $result = ['name' => 'foo'];
-      $result = $template->addJsonFieldsToArray($result);
+    public function testAddJsonFieldsToArray()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $template->fields['json'] = '{"platform":"wts","timeout":4,"buttons":"ok","retry_after":4,"nb_max_retry":4,"on_timeout":"continue","on_nouser":"continue","on_multiusers":"cancel"}';
+        $result = ['name' => 'foo'];
+        $result = $template->addJsonFieldsToArray($result);
 
-      $expected = ['name'          => 'foo',
+        $expected = ['name'          => 'foo',
                    'platform'      => 'wts',
                    'timeout'      => 4,
                    'buttons'       => 'ok',
@@ -127,13 +143,13 @@ class DeployUserinteractionTemplateTest extends TestCase {
                    'on_nouser'     => 'continue',
                    'on_multiusers' => 'cancel',
                    'wait'          => 'yes'];
-      $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result);
 
-      $template->fields['json'] = '{"platform":"wts","timeout":4,"buttons":"ok_async","retry_after":4,"nb_max_retry":4,"on_timeout":"continue","on_nouser":"continue","on_multiusers":"cancel"}';
-      $result = ['name' => 'foo'];
-      $result = $template->addJsonFieldsToArray($result);
+        $template->fields['json'] = '{"platform":"wts","timeout":4,"buttons":"ok_async","retry_after":4,"nb_max_retry":4,"on_timeout":"continue","on_nouser":"continue","on_multiusers":"cancel"}';
+        $result = ['name' => 'foo'];
+        $result = $template->addJsonFieldsToArray($result);
 
-      $expected = ['name'          => 'foo',
+        $expected = ['name'          => 'foo',
                    'platform'      => 'wts',
                    'timeout'      => 4,
                    'buttons'       => 'ok',
@@ -143,66 +159,67 @@ class DeployUserinteractionTemplateTest extends TestCase {
                    'on_nouser'     => 'continue',
                    'on_multiusers' => 'cancel',
                    'wait'          => 'no'];
-      $this->assertEquals($expected, $result);
-
-   }
+        $this->assertEquals($expected, $result);
+    }
 
 
    /**
     * @test
     */
-   public function testGetIcons() {
-      $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons(PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS);
-      $this->assertEquals(5, count($icons));
-      $this->assertEquals($icons, [ PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_NONE     => __('None'),
+    public function testGetIcons()
+    {
+        $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons(PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS);
+        $this->assertEquals(5, count($icons));
+        $this->assertEquals($icons, [ PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_NONE     => __('None'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_WARNING  => __('Warning'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_ERROR    => __('Error'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
                                    ]);
 
-      $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons('foo');
-      $this->assertFalse($icons);
+        $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons('foo');
+        $this->assertFalse($icons);
 
-      $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons();
-      $this->assertEquals($icons, [ PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_NONE     => __('None'),
+        $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons();
+        $this->assertEquals($icons, [ PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_NONE     => __('None'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_WARNING  => __('Warning'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_ERROR    => __('Error'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
                                    ]);
-
-   }
+    }
 
 
    /**
     * @test
     */
-   public function testGetBehaviors() {
-      $behaviors = PluginGlpiinventoryDeployUserinteractionTemplate::getBehaviors();
-      $expected  = [PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction'),
+    public function testGetBehaviors()
+    {
+        $behaviors = PluginGlpiinventoryDeployUserinteractionTemplate::getBehaviors();
+        $expected  = [PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction'),
                     PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'glpiinventory'),
                     PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_STOP_DEPLOY   => __('Cancel job')
                    ];
-      $this->assertEquals($expected, $behaviors);
-   }
+        $this->assertEquals($expected, $behaviors);
+    }
 
 
    /**
     * @test
     */
-   public function testAdd() {
-      $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $tmp = ['name'         => 'test',
+    public function testAdd()
+    {
+        $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $tmp = ['name'         => 'test',
               'entities_id'  => 0,
               'is_recursive' => 0,
               'json'         => ''
              ];
-      $this->assertNotNull($interaction->add($tmp));
-      $interaction->getFromDB(1);
-      $this->assertEquals('[]', $interaction->fields['json']);
+        $this->assertNotNull($interaction->add($tmp));
+        $interaction->getFromDB(1);
+        $this->assertEquals('[]', $interaction->fields['json']);
 
-      $tmp = ['name'         => 'test2',
+        $tmp = ['name'         => 'test2',
               'entities_id'  => 0,
               'is_recursive' => 0,
               'platform'     => PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS,
@@ -215,35 +232,35 @@ class DeployUserinteractionTemplateTest extends TestCase {
               'on_nouser'    => PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_CONTINUE_DEPLOY,
               'on_multiusers' => PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_STOP_DEPLOY
              ];
-      $this->assertNotNull($interaction->add($tmp));
-      $expected = '{"platform":"win32","timeout":4,"buttons":"ok","icon":"warning","retry_after":4,"nb_max_retry":4,"on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"stop:stop"}';
-      $this->assertEquals($expected, $interaction->fields['json']);
-
-   }
+        $this->assertNotNull($interaction->add($tmp));
+        $expected = '{"platform":"win32","timeout":4,"buttons":"ok","icon":"warning","retry_after":4,"nb_max_retry":4,"on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"stop:stop"}';
+        $this->assertEquals($expected, $interaction->fields['json']);
+    }
 
 
    /**
     * @test
     */
-   public function testUpdate() {
-      $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $interaction->getFromDBByCrit(['name' => 'test']);
-      $tmp = [
+    public function testUpdate()
+    {
+        $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $interaction->getFromDBByCrit(['name' => 'test']);
+        $tmp = [
          'id'   => $interaction->fields['id'],
          'name' => 'test_update',
          'json' => ''
-      ];
-      $this->assertTrue($interaction->update($tmp));
-      $this->assertEquals('test_update', $interaction->fields['name']);
-
-   }
+        ];
+        $this->assertTrue($interaction->update($tmp));
+        $this->assertEquals('test_update', $interaction->fields['name']);
+    }
 
 
    /**
     * @test
     */
-   public function testSaveToJson() {
-      $values = ['name'          => 'interaction',
+    public function testSaveToJson()
+    {
+        $values = ['name'          => 'interaction',
                  'platform'      => PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS,
                  'timeout'       => 4,
                  'buttons'       => PluginGlpiinventoryDeployUserinteractionTemplate::WTS_BUTTON_OK_SYNC,
@@ -254,142 +271,164 @@ class DeployUserinteractionTemplateTest extends TestCase {
                  'on_nouser'     => PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_CONTINUE_DEPLOY,
                  'on_multiusers' => PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_STOP_DEPLOY
                 ];
-      $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $result      = $interaction->saveToJson($values);
-      $expected    = '{"platform":"win32","timeout":4,"buttons":"ok","icon":"warning","retry_after":4,"nb_max_retry":4,"on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"stop:stop"}';
-      $this->assertEquals($expected, $result);
+        $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $result      = $interaction->saveToJson($values);
+        $expected    = '{"platform":"win32","timeout":4,"buttons":"ok","icon":"warning","retry_after":4,"nb_max_retry":4,"on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"stop:stop"}';
+        $this->assertEquals($expected, $result);
 
-      $result      = $interaction->saveToJson([]);
-      $this->assertEquals($result, "[]");
-
-   }
+        $result      = $interaction->saveToJson([]);
+        $this->assertEquals($result, "[]");
+    }
 
 
    /**
     * @test
     */
-   function testGestMainFormFields() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $expected = ['platform', 'timeout', 'buttons', 'icon',
+    function testGestMainFormFields()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $expected = ['platform', 'timeout', 'buttons', 'icon',
                    'retry_after', 'nb_max_retry'];
-      $this->assertEquals($expected, $template->getMainFormFields());
-   }
+        $this->assertEquals($expected, $template->getMainFormFields());
+    }
 
 
    /**
     * @test
     */
-   function testGetBehaviorsFields() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $expected = ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
+    function testGetBehaviorsFields()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $expected = ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
                    'on_yes', 'on_cancel', 'on_abort', 'on_retry', 'on_tryagain',
                    'on_ignore', 'on_continue', 'on_async'];
-      $this->assertEquals($expected, $template->getBehaviorsFields());
-   }
+        $this->assertEquals($expected, $template->getBehaviorsFields());
+    }
 
 
    /**
     * @test
     */
-   function testGetJsonFields() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $expected = ['platform', 'timeout', 'buttons', 'icon',
+    function testGetJsonFields()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $expected = ['platform', 'timeout', 'buttons', 'icon',
                    'retry_after', 'nb_max_retry',
                    'on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
                    'on_yes', 'on_cancel', 'on_abort', 'on_retry', 'on_tryagain',
                    'on_ignore', 'on_continue', 'on_async'];
-      $this->assertEquals($expected, $template->getJsonFields());
-   }
+        $this->assertEquals($expected, $template->getJsonFields());
+    }
 
 
    /**
     * @test
     */
-   public function testInitializeJsonFields() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $this->assertEquals(19, count($template->initializeJsonFields([])));
-   }
+    public function testInitializeJsonFields()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $this->assertEquals(19, count($template->initializeJsonFields([])));
+    }
 
 
    /**
     * @test
     */
-   public function testGetEvents() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $this->assertEquals(12, count($template->getEvents()));
-   }
+    public function testGetEvents()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $this->assertEquals(12, count($template->getEvents()));
+    }
 
 
    /**
     * @test
     */
-   public function testGetBehaviorsToDisplay() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+    public function testGetBehaviorsToDisplay()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok'],
-                           $template->getBehaviorsToDisplay('ok'));
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok'],
+            $template->getBehaviorsToDisplay('ok')
+        );
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok'],
-                           $template->getBehaviorsToDisplay('ok_async'));
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok'],
+            $template->getBehaviorsToDisplay('ok_async')
+        );
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers',
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers',
                             'on_ok', 'on_cancel'],
-                           $template->getBehaviorsToDisplay('okcancel'));
+            $template->getBehaviorsToDisplay('okcancel')
+        );
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers',
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers',
                             'on_yes', 'on_no'],
-                           $template->getBehaviorsToDisplay('yesno'));
+            $template->getBehaviorsToDisplay('yesno')
+        );
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers',
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers',
                             'on_yes', 'on_no', 'on_cancel'],
-                           $template->getBehaviorsToDisplay('yesnocancel'));
+            $template->getBehaviorsToDisplay('yesnocancel')
+        );
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers',
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers',
                             'on_abort', 'on_retry', 'on_ignore'],
-                           $template->getBehaviorsToDisplay('abortretryignore'));
+            $template->getBehaviorsToDisplay('abortretryignore')
+        );
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers',
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers',
                            'on_retry', 'on_cancel'],
-                           $template->getBehaviorsToDisplay('retrycancel'));
+            $template->getBehaviorsToDisplay('retrycancel')
+        );
 
-      $this->assertEquals(['on_timeout', 'on_nouser', 'on_multiusers',
+        $this->assertEquals(
+            ['on_timeout', 'on_nouser', 'on_multiusers',
                            'on_tryagain', 'on_cancel', 'on_continue'],
-                           $template->getBehaviorsToDisplay('canceltrycontinue'));
-
-   }
+            $template->getBehaviorsToDisplay('canceltrycontinue')
+        );
+    }
 
 
    /**
     * @test
     */
-   public function testPrepareInputForAdd() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $input = ['name'       => 'foo',
+    public function testPrepareInputForAdd()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $input = ['name'       => 'foo',
                 'button'     => PluginGlpiinventoryDeployUserinteractionTemplate::WTS_BUTTON_CANCEL_TRY_CONTINUE,
                 'icon'       => PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION,
                 'on_timeout' => PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_CONTINUE_DEPLOY
                ];
-      $expected = '{"icon":"question","on_timeout":"continue:continue"}';
-      $modified = $template->prepareInputForAdd($input);
-      $this->assertEquals($expected, $modified['json']);
-   }
+        $expected = '{"icon":"question","on_timeout":"continue:continue"}';
+        $modified = $template->prepareInputForAdd($input);
+        $this->assertEquals($expected, $modified['json']);
+    }
 
 
    /**
     * @test
     */
-   public function testGetDefaultBehaviorForAButton() {
-      $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-      $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_ok'));
-      $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_yes'));
-      $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_multiusers'));
-      $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_timeout'));
+    public function testGetDefaultBehaviorForAButton()
+    {
+        $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
+        $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_ok'));
+        $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_yes'));
+        $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_multiusers'));
+        $this->assertEquals('continue:continue', $template->getDefaultBehaviorForAButton('on_timeout'));
 
-      $this->assertEquals('stop:stop', $template->getDefaultBehaviorForAButton('on_no'));
-      $this->assertEquals('stop:stop', $template->getDefaultBehaviorForAButton('on_cancel'));
-      $this->assertEquals('stop:stop', $template->getDefaultBehaviorForAButton('on_abort'));
+        $this->assertEquals('stop:stop', $template->getDefaultBehaviorForAButton('on_no'));
+        $this->assertEquals('stop:stop', $template->getDefaultBehaviorForAButton('on_cancel'));
+        $this->assertEquals('stop:stop', $template->getDefaultBehaviorForAButton('on_abort'));
 
-      $this->assertEquals('stop:postpone', $template->getDefaultBehaviorForAButton('on_retry'));
-      $this->assertEquals('stop:postpone', $template->getDefaultBehaviorForAButton('on_ignore'));
-   }
+        $this->assertEquals('stop:postpone', $template->getDefaultBehaviorForAButton('on_retry'));
+        $this->assertEquals('stop:postpone', $template->getDefaultBehaviorForAButton('on_ignore'));
+    }
 }

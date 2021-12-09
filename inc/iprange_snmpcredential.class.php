@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,55 +32,56 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage SNMP credentials associated with IP ranges.
  */
-class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation {
+class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
+{
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1    = 'PluginGlpiinventoryIPRange';
+    public static $itemtype_1    = 'PluginGlpiinventoryIPRange';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1    = 'plugin_glpiinventory_ipranges_id';
+    public static $items_id_1    = 'plugin_glpiinventory_ipranges_id';
 
    /**
     * Restrict the first item to the current entity
     *
     * @var string
     */
-   static public $take_entity_1 = true;
+    public static $take_entity_1 = true;
 
    /**
     * Itemtype for the second part of relation
     *
     * @var string
     */
-   static public $itemtype_2    = 'SNMPCredential';
+    public static $itemtype_2    = 'SNMPCredential';
 
    /**
     * id field name for the second part of relation
     *
     * @var string
     */
-   static public $items_id_2    = 'snmpcredentials_id';
+    public static $items_id_2    = 'snmpcredentials_id';
 
    /**
     * Not restrict the second item to the current entity
     *
     * @var string
     */
-   static public $take_entity_2 = false;
+    public static $take_entity_2 = false;
 
 
    /**
@@ -89,13 +91,14 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
+    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
 
-      if ($item->fields['id'] > 0) {
-         return __('Associated SNMP credentials', 'glpiinventory');
-      }
-      return '';
-   }
+        if ($item->fields['id'] > 0) {
+            return __('Associated SNMP credentials', 'glpiinventory');
+        }
+        return '';
+    }
 
 
    /**
@@ -106,11 +109,12 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation {
     * @param integer $withtemplate 1 if is a template form
     * @return true
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $pfIPRange_credentials = new self();
-      $pfIPRange_credentials->showItemForm($item);
-      return true;
-   }
+    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        $pfIPRange_credentials = new self();
+        $pfIPRange_credentials->showItemForm($item);
+        return true;
+    }
 
 
    /**
@@ -118,11 +122,12 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation {
     *
     * @return array
     */
-   function getForbiddenStandardMassiveAction() {
-      $forbidden = parent::getForbiddenStandardMassiveAction();
-      $forbidden[] = 'update';
-      return $forbidden;
-   }
+    function getForbiddenStandardMassiveAction()
+    {
+        $forbidden = parent::getForbiddenStandardMassiveAction();
+        $forbidden[] = 'update';
+        return $forbidden;
+    }
 
 
    /**
@@ -132,100 +137,103 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation {
     * @param array $options
     * @return boolean
     */
-   function showItemForm(CommonDBTM $item, array $options = []) {
+    function showItemForm(CommonDBTM $item, array $options = [])
+    {
 
-      $ID = $item->getField('id');
+        $ID = $item->getField('id');
 
-      if ($item->isNewID($ID)) {
-         return false;
-      }
+        if ($item->isNewID($ID)) {
+            return false;
+        }
 
-      if (!$item->can($item->fields['id'], READ)) {
-         return false;
-      }
-      $rand = mt_rand();
+        if (!$item->can($item->fields['id'], READ)) {
+            return false;
+        }
+        $rand = mt_rand();
 
-      $a_data = getAllDataFromTable(
-         self::getTable(),
-         [
+        $a_data = getAllDataFromTable(
+            self::getTable(),
+            [
             'WHERE' => [
                'plugin_glpiinventory_ipranges_id' => $item->getID()
             ],
             'ORDER' => 'rank'
-         ]
-      );
-      $a_used = [];
-      foreach ($a_data as $data) {
-         $a_used[] = $data['snmpcredentials_id'];
-      }
-      echo "<div class='firstbloc'>";
-      echo "<form name='iprange_snmpcredential_form$rand' id='iprange_snmpcredential_form$rand' method='post'
-             action='".self::getFormURL()."' >";
+            ]
+        );
+        $a_used = [];
+        foreach ($a_data as $data) {
+            $a_used[] = $data['snmpcredentials_id'];
+        }
+        echo "<div class='firstbloc'>";
+        echo "<form name='iprange_snmpcredential_form$rand' id='iprange_snmpcredential_form$rand' method='post'
+             action='" . self::getFormURL() . "' >";
 
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_2'>";
-      echo "<th colspan='2'>".__('Add SNMP credentials')."</th>";
-      echo "</tr>";
-      echo "<tr class='tab_bg_2'>";
-      echo "<td>";
-      Dropdown::show(SNMPCredential::getType(), ['used' => $a_used]);
-      echo "</td>";
-      echo "<td>";
-      echo Html::hidden('plugin_glpiinventory_ipranges_id',
-                   ['value' => $item->getID()]);
-      echo "<input type='submit' name='add' value=\"".
-          _sx('button', 'Associate')."\" class='submit'>";
-      echo "</td>";
-      echo "</tr>";
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tr class='tab_bg_2'>";
+        echo "<th colspan='2'>" . __('Add SNMP credentials') . "</th>";
+        echo "</tr>";
+        echo "<tr class='tab_bg_2'>";
+        echo "<td>";
+        Dropdown::show(SNMPCredential::getType(), ['used' => $a_used]);
+        echo "</td>";
+        echo "<td>";
+        echo Html::hidden(
+            'plugin_glpiinventory_ipranges_id',
+            ['value' => $item->getID()]
+        );
+        echo "<input type='submit' name='add' value=\"" .
+          _sx('button', 'Associate') . "\" class='submit'>";
+        echo "</td>";
+        echo "</tr>";
 
-      echo "</table>";
-      Html::closeForm();
-      echo "</div>";
+        echo "</table>";
+        Html::closeForm();
+        echo "</div>";
 
-      // Display list of auth associated with IP range
-      $rand = mt_rand();
+       // Display list of auth associated with IP range
+        $rand = mt_rand();
 
-      echo "<div class='spaced'>";
-      Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
-      $massiveactionparams = ['container' => 'mass'.__CLASS__.$rand];
-      Html::showMassiveActions($massiveactionparams);
+        echo "<div class='spaced'>";
+        Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
+        $massiveactionparams = ['container' => 'mass' . __CLASS__ . $rand];
+        Html::showMassiveActions($massiveactionparams);
 
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_2'>";
-      echo "<th width='10'>".Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand)."</th>";
-      echo "<th>";
-      echo __('SNMP credentials', 'glpiinventory');
-      echo "</th>";
-      echo "<th>";
-      echo __('Version', 'glpiinventory');
-      echo "</th>";
-      echo "<th>";
-      echo __('By order of priority', 'glpiinventory');
-      echo "</th>";
-      echo "</tr>";
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tr class='tab_bg_2'>";
+        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
+        echo "<th>";
+        echo __('SNMP credentials', 'glpiinventory');
+        echo "</th>";
+        echo "<th>";
+        echo __('Version', 'glpiinventory');
+        echo "</th>";
+        echo "<th>";
+        echo __('By order of priority', 'glpiinventory');
+        echo "</th>";
+        echo "</tr>";
 
-      $credentials = new SNMPCredential();
-      foreach ($a_data as $data) {
-         echo "<tr class='tab_bg_2'>";
-         echo "<td>";
-         Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
-         echo "</td>";
-         echo "<td>";
-         $credentials->getFromDB($data['snmpcredentials_id']);
-         echo $credentials->getLink();
-         echo "</td>";
-         echo "<td>";
-         echo $credentials->getRealVersion();
-         echo "</td>";
-         echo "<td>";
-         echo $data['rank'];
-         echo "</td>";
-         echo "</tr>";
-      }
-      echo "</table>";
-      $massiveactionparams['ontop'] =false;
-      Html::showMassiveActions($massiveactionparams);
-      echo "</div>";
-      return true;
-   }
+        $credentials = new SNMPCredential();
+        foreach ($a_data as $data) {
+            echo "<tr class='tab_bg_2'>";
+            echo "<td>";
+            Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
+            echo "</td>";
+            echo "<td>";
+            $credentials->getFromDB($data['snmpcredentials_id']);
+            echo $credentials->getLink();
+            echo "</td>";
+            echo "<td>";
+            echo $credentials->getRealVersion();
+            echo "</td>";
+            echo "<td>";
+            echo $data['rank'];
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        $massiveactionparams['ontop'] = false;
+        Html::showMassiveActions($massiveactionparams);
+        echo "</div>";
+        return true;
+    }
 }

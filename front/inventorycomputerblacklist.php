@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,13 +31,15 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
-Html::header(__('GLPI Inventory', 'glpiinventory'),
-             $_SERVER["PHP_SELF"],
-             "admin",
-             "pluginglpiinventorymenu",
-             "inventorycomputerblacklist");
+Html::header(
+    __('GLPI Inventory', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "inventorycomputerblacklist"
+);
 
 Session::checkRight('plugin_glpiinventory_blacklist', READ);
 

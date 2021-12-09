@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,13 +32,14 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the taskjob for VMWARE ESX / VCENTER remote inventory.
  */
-class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommunication {
+class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommunication
+{
 
 
    /**
@@ -47,99 +49,101 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
     * @param integer $taskjobs_id id of taskjob esx
     * @return string uniqid value
     */
-   function prepareRun($taskjobs_id) {
+    function prepareRun($taskjobs_id)
+    {
 
-      $task       = new PluginGlpiinventoryTask();
-      $job        = new PluginGlpiinventoryTaskjob();
-      $joblog     = new PluginGlpiinventoryTaskjoblog();
-      $jobstate  = new PluginGlpiinventoryTaskjobstate();
+        $task       = new PluginGlpiinventoryTask();
+        $job        = new PluginGlpiinventoryTaskjob();
+        $joblog     = new PluginGlpiinventoryTaskjoblog();
+        $jobstate  = new PluginGlpiinventoryTaskjobstate();
 
-      $uniqid= uniqid();
+        $uniqid = uniqid();
 
-      $job->getFromDB($taskjobs_id);
-      $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
+        $job->getFromDB($taskjobs_id);
+        $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
-      $communication= $task->fields['communication'];
+        $communication = $task->fields['communication'];
 
-      //list all agents
-      $agent_actions     = importArrayFromDB($job->fields['action']);
-      $task_definitions  = importArrayFromDB($job->fields['definition']);
-      $agent_actionslist = [];
-      foreach ($agent_actions as $targets) {
-         foreach ($targets as $itemtype => $items_id) {
-            $item = new $itemtype();
-            // Detect if agent exists
-            if ($item->getFromDB($items_id)) {
-               $agent_actionslist[$items_id] = 1;
+       //list all agents
+        $agent_actions     = importArrayFromDB($job->fields['action']);
+        $task_definitions  = importArrayFromDB($job->fields['definition']);
+        $agent_actionslist = [];
+        foreach ($agent_actions as $targets) {
+            foreach ($targets as $itemtype => $items_id) {
+                $item = new $itemtype();
+                // Detect if agent exists
+                if ($item->getFromDB($items_id)) {
+                    $agent_actionslist[$items_id] = 1;
+                }
             }
-         }
-      }
+        }
 
-      // *** Add jobstate
-      if (empty($agent_actionslist)) {
-         $a_input= [];
-         $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-         $a_input['state']                              = 0;
-         $a_input['agents_id'] = 0;
-         $a_input['uniqid']                             = $uniqid;
-         $a_input['execution_id']                       = $task->fields['execution_id'];
+       // *** Add jobstate
+        if (empty($agent_actionslist)) {
+            $a_input = [];
+            $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
+            $a_input['state']                              = 0;
+            $a_input['agents_id'] = 0;
+            $a_input['uniqid']                             = $uniqid;
+            $a_input['execution_id']                       = $task->fields['execution_id'];
 
-         foreach ($task_definitions as $task_definition) {
-            foreach ($task_definition as $task_itemtype => $task_items_id) {
-               $a_input['itemtype'] = $task_itemtype;
-               $a_input['items_id'] = $task_items_id;
-               $jobstates_id= $jobstate->add($a_input);
-               //Add log of taskjob
-               $a_input['plugin_glpiinventory_taskjobstates_id']= $jobstates_id;
-               $a_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
-               $a_input['date']  = date("Y-m-d H:i:s");
-               $joblog->add($a_input);
+            foreach ($task_definitions as $task_definition) {
+                foreach ($task_definition as $task_itemtype => $task_items_id) {
+                    $a_input['itemtype'] = $task_itemtype;
+                    $a_input['items_id'] = $task_items_id;
+                    $jobstates_id = $jobstate->add($a_input);
+                    //Add log of taskjob
+                    $a_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                    $a_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
+                    $a_input['date']  = date("Y-m-d H:i:s");
+                    $joblog->add($a_input);
 
-               $jobstate->changeStatusFinish($jobstates_id,
-                                              0,
-                                              'PluginGlpiinventoryInventoryComputerESX',
-                                              1,
-                                              "Unable to find agent to run this job");
+                    $jobstate->changeStatusFinish(
+                        $jobstates_id,
+                        0,
+                        'PluginGlpiinventoryInventoryComputerESX',
+                        1,
+                        "Unable to find agent to run this job"
+                    );
+                }
             }
-         }
-         $job->update($job->fields);
-      } else {
-         foreach ($agent_actions as $targets) {
-            foreach ($targets as $items_id) {
+            $job->update($job->fields);
+        } else {
+            foreach ($agent_actions as $targets) {
+                foreach ($targets as $items_id) {
+                    if ($communication == "push") {
+                        $_SESSION['glpi_plugin_glpiinventory']['agents'][$items_id] = 1;
+                    }
 
-               if ($communication == "push") {
-                  $_SESSION['glpi_plugin_glpiinventory']['agents'][$items_id] = 1;
-               }
+                    foreach ($task_definitions as $task_definition) {
+                        foreach ($task_definition as $task_itemtype => $task_items_id) {
+                            $a_input = [];
+                            $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
+                            $a_input['state']                              = 0;
+                            $a_input['agents_id']   = $items_id;
+                            $a_input['itemtype']                           = $task_itemtype;
+                            $a_input['items_id']                           = $task_items_id;
+                            $a_input['uniqid']                             = $uniqid;
+                            $a_input['date']                               = date("Y-m-d H:i:s");
+                            $a_input['execution_id']                       = $task->fields['execution_id'];
 
-               foreach ($task_definitions as $task_definition) {
-                  foreach ($task_definition as $task_itemtype => $task_items_id) {
-                     $a_input = [];
-                     $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-                     $a_input['state']                              = 0;
-                     $a_input['agents_id']   = $items_id;
-                     $a_input['itemtype']                           = $task_itemtype;
-                     $a_input['items_id']                           = $task_items_id;
-                     $a_input['uniqid']                             = $uniqid;
-                     $a_input['date']                               = date("Y-m-d H:i:s");
-                     $a_input['execution_id']                       = $task->fields['execution_id'];
+                            $jobstates_id = $jobstate->add($a_input);
+                          //Add log of taskjob
+                            $a_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                            $a_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
 
-                     $jobstates_id = $jobstate->add($a_input);
-                     //Add log of taskjob
-                     $a_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
-                     $a_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
-
-                     $joblog->add($a_input);
-                     unset($a_input['state']);
-                  }
-               }
+                            $joblog->add($a_input);
+                            unset($a_input['state']);
+                        }
+                    }
+                }
             }
-         }
 
-         $job->fields['status']= 1;
-         $job->update($job->fields);
-      }
-      return $uniqid;
-   }
+            $job->fields['status'] = 1;
+            $job->update($job->fields);
+        }
+        return $uniqid;
+    }
 
 
    /**
@@ -148,17 +152,18 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
     * @param object $taskjobstate
     * @return array
     */
-   function run($taskjobstate) {
-      $credential     = new PluginGlpiinventoryCredential();
-      $credentialip   = new PluginGlpiinventoryCredentialIp();
+    function run($taskjobstate)
+    {
+        $credential     = new PluginGlpiinventoryCredential();
+        $credentialip   = new PluginGlpiinventoryCredentialIp();
 
-      $credentialip->getFromDB($taskjobstate->fields['items_id']);
-      $credential->getFromDB($credentialip->fields['plugin_glpiinventory_credentials_id']);
+        $credentialip->getFromDB($taskjobstate->fields['items_id']);
+        $credential->getFromDB($credentialip->fields['plugin_glpiinventory_credentials_id']);
 
-      $order['uuid'] = $taskjobstate->fields['uniqid'];
-      $order['host'] = $credentialip->fields['ip'];
-      $order['user'] = $credential->fields['username'];
-      $order['password'] = $credential->fields['password'];
-      return $order;
-   }
+        $order['uuid'] = $taskjobstate->fields['uniqid'];
+        $order['host'] = $credentialip->fields['ip'];
+        $order['user'] = $credential->fields['username'];
+        $order['password'] = $credential->fields['password'];
+        return $order;
+    }
 }

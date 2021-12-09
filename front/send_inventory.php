@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 //Session::checkRight('config', "w");
 
@@ -38,7 +39,7 @@ $itemtype = $_GET['itemtype'];
 $items_id = $_GET['items_id'];
 
 header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
-header('Content-disposition: attachment; filename='.$_GET['filename']);
+header('Content-disposition: attachment; filename=' . $_GET['filename']);
 header('Content-type: text/plain');
 
 

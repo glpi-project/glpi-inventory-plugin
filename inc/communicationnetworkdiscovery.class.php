@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -33,13 +34,14 @@
 use Glpi\Inventory\Inventory;
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access this file directly");
+    die("Sorry. You can't access this file directly");
 }
 
 /**
  * Manage the communication of network discovery feature with the agents.
  */
-class PluginGlpiinventoryCommunicationNetworkDiscovery {
+class PluginGlpiinventoryCommunicationNetworkDiscovery
+{
 
    /**
     * Import data, so get data from agent to put in GLPI
@@ -49,103 +51,110 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery {
     * @param Inventory $inventory
     * @return array
     */
-   function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array {
-      $response = [];
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $agent = new Agent();
+    function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array
+    {
+        $response = [];
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $agent = new Agent();
 
-      PluginGlpiinventoryCommunication::addLog(
-         'Function PluginGlpiinventoryCommunicationNetworkDiscovery->import().'
-      );
+        PluginGlpiinventoryCommunication::addLog(
+            'Function PluginGlpiinventoryCommunicationNetworkDiscovery->import().'
+        );
 
-      $agent->getFromDBByCrit(['deviceid' => $p_DEVICEID]);
+        $agent->getFromDBByCrit(['deviceid' => $p_DEVICEID]);
 
-      if (!isset($a_CONTENT->jobid)) {
-         $a_CONTENT->jobid = $a_CONTENT->content->processnumber;
-      }
+        if (!isset($a_CONTENT->jobid)) {
+            $a_CONTENT->jobid = $a_CONTENT->content->processnumber;
+        }
 
-      $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
-      if ($pfTaskjobstate->getFromDB($a_CONTENT->jobid)) {
-         if ($pfTaskjobstate->fields['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
-            $pfTaskjobstate->changeStatus($a_CONTENT->jobid, 2);
-            if ((!isset($a_CONTENT->content->agent->start))
-               AND (!isset($a_CONTENT->content->agent->end))) {
-               $nb_devices = 1;
-               $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
-               $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-               $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
-               $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
-               $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices.' ==devicesfound==';
-               $this->addtaskjoblog();
+        $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
+        if ($pfTaskjobstate->getFromDB($a_CONTENT->jobid)) {
+            if ($pfTaskjobstate->fields['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
+                $pfTaskjobstate->changeStatus($a_CONTENT->jobid, 2);
+                if (
+                    (!isset($a_CONTENT->content->agent->start))
+                    and (!isset($a_CONTENT->content->agent->end))
+                ) {
+                    $nb_devices = 1;
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devicesfound==';
+                    $this->addtaskjoblog();
+                }
             }
-         }
-      }
+        }
 
-      if ($pfTaskjobstate->getFromDB($a_CONTENT->jobid)) {
-         if ($pfTaskjobstate->fields['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
-            if (isset($a_CONTENT->content->agent->end)) {
-               $updated = countElementsInTable(
-                  'glpi_plugin_glpiinventory_taskjoblogs', [
-                     'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                     'comment' => ['LIKE', '%==updatetheitem==%'],
-                  ]
-               );
-               $created = countElementsInTable(
-                  'glpi_plugin_glpiinventory_taskjoblogs', [
-                     'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                     'comment' => ['LIKE', '%==addtheitem==%'],
-                  ]
-               );
+        if ($pfTaskjobstate->getFromDB($a_CONTENT->jobid)) {
+            if ($pfTaskjobstate->fields['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
+                if (isset($a_CONTENT->content->agent->end)) {
+                    $updated = countElementsInTable(
+                        'glpi_plugin_glpiinventory_taskjoblogs',
+                        [
+                        'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                        'comment' => ['LIKE', '%==updatetheitem==%'],
+                        ]
+                    );
+                     $created = countElementsInTable(
+                         'glpi_plugin_glpiinventory_taskjoblogs',
+                         [
+                         'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                         'comment' => ['LIKE', '%==addtheitem==%'],
+                         ]
+                     );
 
-               $message = sprintf(
-                  __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory'),
-                  $updated + $created,
-                  $created,
-                  $updated
-               );
-               $pfTaskjobstate->changeStatusFinish(
-                  $a_CONTENT->jobid,
-                  $agent->fields['id'],
-                  'Agent',
-                  '0',
-                  $message
-               );
-               $response['response'] = ['RESPONSE' => 'SEND'];
-            } else if (!isset($a_CONTENT->content->agent->start) && !isset($a_CONTENT->content->agent->end) && !isset($a_CONTENT->content->agent->nbip)) {
-               $inventory->doInventory();
-               if ($inventory->inError()) {
-                  foreach ($inventory->getErrors() as $error) {
-                     $response = ['response' => ['ERROR' => $error]];
-                  }
-               } else {
-                  //nothing to do.
-                  $response = ['response' => ['RESPONSE' => 'SEND']];
-               }
+                     $message = sprintf(
+                         __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory'),
+                         $updated + $created,
+                         $created,
+                         $updated
+                     );
+                    $pfTaskjobstate->changeStatusFinish(
+                        $a_CONTENT->jobid,
+                        $agent->fields['id'],
+                        'Agent',
+                        '0',
+                        $message
+                    );
+                    $response['response'] = ['RESPONSE' => 'SEND'];
+                } elseif (!isset($a_CONTENT->content->agent->start) && !isset($a_CONTENT->content->agent->end) && !isset($a_CONTENT->content->agent->nbip)) {
+                    $inventory->doInventory();
+                    if ($inventory->inError()) {
+                        foreach ($inventory->getErrors() as $error) {
+                            $response = ['response' => ['ERROR' => $error]];
+                        }
+                    } else {
+                     //nothing to do.
+                        $response = ['response' => ['RESPONSE' => 'SEND']];
+                    }
+                } else {
+                    $response['response'] = ['RESPONSE' => 'SEND'];
+                }
+            } elseif (isset($a_CONTENT->content->agent->start) || isset($a_CONTENT->content->agent->end)) {
+                $response['response'] = ['RESPONSE' => 'SEND'];
             } else {
-               $response['response'] = ['RESPONSE' => 'SEND'];
+                $response = ['response' => ['ERROR' => 'Task is already finished!']];
             }
-         } else if (isset($a_CONTENT->content->agent->start) || isset($a_CONTENT->content->agent->end)) {
-            $response['response'] = ['RESPONSE' => 'SEND'];
-         } else {
-            $response = ['response' => ['ERROR' => 'Task is already finished!']];
-         }
-      }
-      return $response;
-   }
+        }
+        return $response;
+    }
 
    /**
     * Used to add log in the taskjob
     */
-   function addtaskjoblog() {
+    function addtaskjoblog()
+    {
 
-      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-      $pfTaskjoblog->addTaskjoblog(
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment']);
-   }
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $pfTaskjoblog->addTaskjoblog(
+            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
+        );
+    }
 
 
    /**
@@ -153,9 +162,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery {
     *
     * @return string
     */
-   static function getMethod() {
-      return 'networkdiscovery';
-   }
-
-
+    static function getMethod()
+    {
+        return 'networkdiscovery';
+    }
 }

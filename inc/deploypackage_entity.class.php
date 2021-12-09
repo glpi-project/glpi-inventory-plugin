@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,55 +32,56 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the visibility of package by entity.
  */
-class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation {
+class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
+{
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1 = 'PluginGlpiinventoryDeployPackage';
+    public static $itemtype_1 = 'PluginGlpiinventoryDeployPackage';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1 = 'plugin_glpiinventory_deploypackages_id';
+    public static $items_id_1 = 'plugin_glpiinventory_deploypackages_id';
 
    /**
     * Itemtype for the second part of relation
     *
     * @var string
     */
-   static public $itemtype_2 = 'Entity';
+    public static $itemtype_2 = 'Entity';
 
    /**
     * id field name for the second part of relation
     *
     * @var string
     */
-   static public $items_id_2 = 'entities_id';
+    public static $items_id_2 = 'entities_id';
 
    /**
     * Set we don't check parent right of the second item
     *
     * @var integer
     */
-   static public $checkItem_2_Rights = self::DONT_CHECK_ITEM_RIGHTS;
+    public static $checkItem_2_Rights = self::DONT_CHECK_ITEM_RIGHTS;
 
    /**
     * Logs for the second item are disabled
     *
     * @var type
     */
-   static public $logs_for_item_2 = false;
+    public static $logs_for_item_2 = false;
 
 
    /**
@@ -89,17 +91,18 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation {
     * @param integer $deploypackages_id ID of the deploypackage
     * @return array list of of entities linked to a deploypackage
    **/
-   static function getEntities($deploypackages_id) {
-      global $DB;
+    static function getEntities($deploypackages_id)
+    {
+        global $DB;
 
-      $ent   = [];
-      $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_entities`.*
+        $ent   = [];
+        $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_entities`.*
                 FROM `glpi_plugin_glpiinventory_deploypackages_entities`
                 WHERE `plugin_glpiinventory_deploypackages_id` = '$deploypackages_id'";
 
-      foreach ($DB->request($query) as $data) {
-         $ent[$data['entities_id']][] = $data;
-      }
-      return $ent;
-   }
+        foreach ($DB->request($query) as $data) {
+            $ent[$data['entities_id']][] = $data;
+        }
+        return $ent;
+    }
 }

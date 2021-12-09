@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,55 +32,56 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the visibility of package by group.
  */
-class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation {
+class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation
+{
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1          = 'PluginGlpiinventoryDeployPackage';
+    public static $itemtype_1          = 'PluginGlpiinventoryDeployPackage';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1          = 'plugin_glpiinventory_deploypackages_id';
+    public static $items_id_1          = 'plugin_glpiinventory_deploypackages_id';
 
    /**
     * Itemtype for the second part of relation
     *
     * @var string
     */
-   static public $itemtype_2          = 'Group';
+    public static $itemtype_2          = 'Group';
 
    /**
     * id field name for the second part of relation
     *
     * @var string
     */
-   static public $items_id_2          = 'groups_id';
+    public static $items_id_2          = 'groups_id';
 
    /**
     * Set we don't check parent right of the second item
     *
     * @var integer
     */
-   static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
+    public static $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
 
    /**
     * Logs for the second item are disabled
     *
     * @var type
     */
-   static public $logs_for_item_2     = false;
+    public static $logs_for_item_2     = false;
 
 
    /**
@@ -89,17 +91,18 @@ class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation {
     * @param integer $deploypackages_id ID of the deploypackage
     * @return array list of groups linked to a deploypackage
    **/
-   static function getGroups($deploypackages_id) {
-      global $DB;
+    static function getGroups($deploypackages_id)
+    {
+        global $DB;
 
-      $groups = [];
-      $query  = "SELECT `glpi_plugin_glpiinventory_deploypackages_groups`.*
+        $groups = [];
+        $query  = "SELECT `glpi_plugin_glpiinventory_deploypackages_groups`.*
                  FROM `glpi_plugin_glpiinventory_deploypackages_groups`
                  WHERE plugin_glpiinventory_deploypackages_id = '$deploypackages_id'";
 
-      foreach ($DB->request($query) as $data) {
-         $groups[$data['groups_id']][] = $data;
-      }
-      return $groups;
-   }
+        foreach ($DB->request($query) as $data) {
+            $groups[$data['groups_id']][] = $data;
+        }
+        return $groups;
+    }
 }

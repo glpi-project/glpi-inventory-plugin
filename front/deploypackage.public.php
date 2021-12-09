@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,52 +31,62 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::helpHeader(__('GLPI Inventory'), $_SERVER["PHP_SELF"], "plugins",
-                 "pluginglpiinventorymenu", "deploypackage");
+Html::helpHeader(
+    __('GLPI Inventory'),
+    $_SERVER["PHP_SELF"],
+    "plugins",
+    "pluginglpiinventorymenu",
+    "deploypackage"
+);
 $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
 if (isset($_POST['prepareinstall'])) {
-   $computers_id = false;
+    $computers_id = false;
 
-   foreach ($_POST as $key => $data) {
-      if (strstr($key, 'deploypackages_')) {
-         $computers_id = str_replace('deploypackages_', '', $key);
-         foreach ($data as $packages_id) {
-            $pfDeployPackage->deployToComputer($computers_id, $packages_id, $_SESSION['glpiID']);
-         }
-      }
-   }
+    foreach ($_POST as $key => $data) {
+        if (strstr($key, 'deploypackages_')) {
+            $computers_id = str_replace('deploypackages_', '', $key);
+            foreach ($data as $packages_id) {
+                $pfDeployPackage->deployToComputer($computers_id, $packages_id, $_SESSION['glpiID']);
+            }
+        }
+    }
 
    //Try to wakeup the agent to perform the deployment task
    //If it's a local wakeup, local call to the agent RPC service
-   switch ($_POST['wakeup_type']) {
-      case 'local':
-         echo '<link rel="import" href="http://127.0.0.1:62354/now">';
-         echo Html::scriptBlock("setTimeout(function(){
+    switch ($_POST['wakeup_type']) {
+        case 'local':
+            echo '<link rel="import" href="http://127.0.0.1:62354/now">';
+            echo Html::scriptBlock("setTimeout(function(){
             window.location='{$_SERVER['HTTP_REFERER']}';
          }, 500);");
-         exit;
+            exit;
          break;
-      case 'remote':
-         if ($computers_id) {
-            //Remote call to wakeup the agent, from the server
-            $agent = new Agent();
-            $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
-            PluginGlpiinventoryAgentWakeup::wakeUp($agent);
-         }
-         break;
-      default:
-         break;
-   }
+        case 'remote':
+            if ($computers_id) {
+               //Remote call to wakeup the agent, from the server
+                $agent = new Agent();
+                $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+                PluginGlpiinventoryAgentWakeup::wakeUp($agent);
+            }
+            break;
+        default:
+            break;
+    }
 
-   Html::back();
+    Html::back();
 } else {
-   Html::header(__('GLPI Inventory'), $_SERVER["PHP_SELF"], "plugins",
-                "pluginglpiinventorymenu", "deploypackage");
+    Html::header(
+        __('GLPI Inventory'),
+        $_SERVER["PHP_SELF"],
+        "plugins",
+        "pluginglpiinventorymenu",
+        "deploypackage"
+    );
 
-   $pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
-   Html::footer();
+    $pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
+    Html::footer();
 }

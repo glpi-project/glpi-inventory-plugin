@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,8 +32,8 @@
  */
 
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "jobstates_logs.php")) {
-   include ("../../../inc/includes.php");
-   Session::checkCentralAccess();
+    include("../../../inc/includes.php");
+    Session::checkCentralAccess();
 }
 //unlock session since access checks have been done
 session_write_close();

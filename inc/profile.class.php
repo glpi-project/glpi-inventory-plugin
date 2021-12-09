@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,20 +32,21 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the profiles in plugin.
  */
-class PluginGlpiinventoryProfile extends Profile {
+class PluginGlpiinventoryProfile extends Profile
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "config";
+    static $rightname = "config";
 
       /*
        * Old profile names:
@@ -79,8 +81,9 @@ class PluginGlpiinventoryProfile extends Profile {
     *
     * @return array
     */
-   static function getOldRightsMappings() {
-      $types = ['agent'                  => 'plugin_glpiinventory_agent',
+    static function getOldRightsMappings()
+    {
+        $types = ['agent'                  => 'plugin_glpiinventory_agent',
                      'remotecontrol'          => 'plugin_glpiinventory_remotecontrol',
                      'configuration'          => 'plugin_glpiinventory_configuration',
                      'wol'                    => 'plugin_glpiinventory_wol',
@@ -104,8 +107,8 @@ class PluginGlpiinventoryProfile extends Profile {
                      'collect'                => ['plugin_glpiinventory_collect',
                                                        'plugin_glpiinventory_rulecollect']];
 
-      return $types;
-   }
+        return $types;
+    }
 
 
    /**
@@ -115,9 +118,10 @@ class PluginGlpiinventoryProfile extends Profile {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      return self::createTabEntry('GLPI Inventory');
-   }
+    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
+        return self::createTabEntry('GLPI Inventory');
+    }
 
 
    /**
@@ -128,15 +132,16 @@ class PluginGlpiinventoryProfile extends Profile {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $pfProfile = new self();
-      if ($item->fields['interface'] == 'central') {
-         $pfProfile->showForm($item->fields['id']);
-      } else {
-         $pfProfile->showFormSelf($item->fields['id']);
-      }
-      return true;
-   }
+    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        $pfProfile = new self();
+        if ($item->fields['interface'] == 'central') {
+            $pfProfile->showForm($item->fields['id']);
+        } else {
+            $pfProfile->showFormSelf($item->fields['id']);
+        }
+        return true;
+    }
 
 
    /**
@@ -146,53 +151,58 @@ class PluginGlpiinventoryProfile extends Profile {
     * @param array $options
     * @return boolean
     */
-   function showForm($profiles_id, $options = []) {
+    function showForm($profiles_id, $options = [])
+    {
 
-      $openform = true;
-      $closeform = true;
+        $openform = true;
+        $closeform = true;
 
-      echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
-          && $openform) {
-         $profile = new Profile();
-         echo "<form method='post' action='".$profile->getFormURL()."'>";
-      }
+        echo "<div class='firstbloc'>";
+        if (
+            ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
+            && $openform
+        ) {
+            $profile = new Profile();
+            echo "<form method='post' action='" . $profile->getFormURL() . "'>";
+        }
 
-      $profile = new Profile();
-      $profile->getFromDB($profiles_id);
+        $profile = new Profile();
+        $profile->getFromDB($profiles_id);
 
-      $rights = $this->getRightsGeneral();
-      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
+        $rights = $this->getRightsGeneral();
+        $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('General', 'glpiinventory')]);
 
-      $rights = $this->getRightsRules();
-      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
+        $rights = $this->getRightsRules();
+        $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => _n('Rule', 'Rules', 2)]);
 
-      $rights = $this->getRightsInventory();
-      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
+        $rights = $this->getRightsInventory();
+        $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('Inventory', 'glpiinventory')]);
 
-      $rights = $this->getRightsDeploy();
-      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
+        $rights = $this->getRightsDeploy();
+        $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('Software deployment', 'glpiinventory')]);
-      if ($canedit
-          && $closeform) {
-         echo "<div class='center'>";
-         echo Html::hidden('id', ['value' => $profiles_id]);
-         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
-         echo "</div>\n";
-         Html::closeForm();
-      }
-      echo "</div>";
+        if (
+            $canedit
+            && $closeform
+        ) {
+            echo "<div class='center'>";
+            echo Html::hidden('id', ['value' => $profiles_id]);
+            echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
+            echo "</div>\n";
+            Html::closeForm();
+        }
+        echo "</div>";
 
-      $this->showLegend();
-      return true;
-   }
+        $this->showLegend();
+        return true;
+    }
 
 
    /**
@@ -202,50 +212,56 @@ class PluginGlpiinventoryProfile extends Profile {
     * @param boolean $openform
     * @param boolean $closeform
     */
-   function showFormSelf($profiles_id = 0, $openform = true, $closeform = true) {
+    function showFormSelf($profiles_id = 0, $openform = true, $closeform = true)
+    {
 
-      echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
-          && $openform) {
-         $profile = new Profile();
-         echo "<form method='post' action='".$profile->getFormURL()."'>";
-      }
+        echo "<div class='firstbloc'>";
+        if (
+            ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
+            && $openform
+        ) {
+            $profile = new Profile();
+            echo "<form method='post' action='" . $profile->getFormURL() . "'>";
+        }
 
-      $profile = new Profile();
-      $profile->getFromDB($profiles_id);
+        $profile = new Profile();
+        $profile->getFromDB($profiles_id);
 
-      $rights = [
+        $rights = [
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Deploy packages on demand', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_selfpackage']
-      ];
-      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
+        ];
+        $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('Software deployment', 'glpiinventory')]);
-      if ($canedit
-          && $closeform) {
-         echo "<div class='center'>";
-         echo Html::hidden('id', ['value' => $profiles_id]);
-         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
-         echo "</div>\n";
-         Html::closeForm();
-      }
-      echo "</div>";
+        if (
+            $canedit
+            && $closeform
+        ) {
+            echo "<div class='center'>";
+            echo Html::hidden('id', ['value' => $profiles_id]);
+            echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
+            echo "</div>\n";
+            Html::closeForm();
+        }
+        echo "</div>";
 
-      $this->showLegend();
-   }
+        $this->showLegend();
+    }
 
 
    /**
     * Delete profiles
     */
-   static function uninstallProfile() {
-      $pfProfile = new self();
-      $a_rights = $pfProfile->getAllRights();
-      foreach ($a_rights as $data) {
-         ProfileRight::deleteProfileRights([$data['field']]);
-      }
-   }
+    static function uninstallProfile()
+    {
+        $pfProfile = new self();
+        $a_rights = $pfProfile->getAllRights();
+        foreach ($a_rights as $data) {
+            ProfileRight::deleteProfileRights([$data['field']]);
+        }
+    }
 
 
    /**
@@ -253,14 +269,15 @@ class PluginGlpiinventoryProfile extends Profile {
     *
     * @return array
     */
-   function getAllRights() {
-      $a_rights = [];
-      $a_rights = array_merge($a_rights, $this->getRightsGeneral());
-      $a_rights = array_merge($a_rights, $this->getRightsInventory());
-      $a_rights = array_merge($a_rights, $this->getRightsRules());
-      $a_rights = array_merge($a_rights, $this->getRightsDeploy());
-      return $a_rights;
-   }
+    function getAllRights()
+    {
+        $a_rights = [];
+        $a_rights = array_merge($a_rights, $this->getRightsGeneral());
+        $a_rights = array_merge($a_rights, $this->getRightsInventory());
+        $a_rights = array_merge($a_rights, $this->getRightsRules());
+        $a_rights = array_merge($a_rights, $this->getRightsDeploy());
+        return $a_rights;
+    }
 
 
    /**
@@ -268,8 +285,9 @@ class PluginGlpiinventoryProfile extends Profile {
     *
     * @return array
     */
-   function getRightsRules() {
-      $rights = [
+    function getRightsRules()
+    {
+        $rights = [
           /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),
                 'field'     => 'plugin_glpiinventory_ruleimport'
@@ -294,9 +312,9 @@ class PluginGlpiinventoryProfile extends Profile {
                 'label'     =>  __('Equipment ignored on import', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_ignoredimportdevice'
           ],*/
-      ];
-      return $rights;
-   }
+        ];
+        return $rights;
+    }
 
 
    /**
@@ -304,8 +322,9 @@ class PluginGlpiinventoryProfile extends Profile {
     *
     * @return array
     */
-   function getRightsDeploy() {
-      $rights = [
+    function getRightsDeploy()
+    {
+        $rights = [
           ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
                 'label'     => __('Manage packages', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_package'],
@@ -319,9 +338,9 @@ class PluginGlpiinventoryProfile extends Profile {
                 'label'     => __('Deploy packages on demand', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_selfpackage',
                 'rights'    => [READ => __('Read')]]
-      ];
-      return $rights;
-   }
+        ];
+        return $rights;
+    }
 
 
    /**
@@ -329,8 +348,9 @@ class PluginGlpiinventoryProfile extends Profile {
     *
     * @return array
     */
-   function getRightsInventory() {
-      $rights = [
+    function getRightsInventory()
+    {
+        $rights = [
           ['itemtype'  => 'PluginGlpiinventoryIprange',
                 'label'     => __('IP range configuration', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_iprange'],
@@ -364,9 +384,9 @@ class PluginGlpiinventoryProfile extends Profile {
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Network report'),
                 'field'     => 'plugin_glpiinventory_reportnetworkequipment']
-      ];
-      return $rights;
-   }
+        ];
+        return $rights;
+    }
 
 
    /**
@@ -374,8 +394,9 @@ class PluginGlpiinventoryProfile extends Profile {
     *
     * @return array
     */
-   function getRightsGeneral() {
-      $rights = [
+    function getRightsGeneral()
+    {
+        $rights = [
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Menu', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_menu'],
@@ -401,10 +422,10 @@ class PluginGlpiinventoryProfile extends Profile {
           ['itemtype'  => 'PluginGlpiinventoryCollect',
                 'label'     => __('Computer information', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_collect']
-      ];
+        ];
 
-      return $rights;
-   }
+        return $rights;
+    }
 
 
    /**
@@ -413,21 +434,26 @@ class PluginGlpiinventoryProfile extends Profile {
     * @param integer $profiles_id
     * @param array $rights
     */
-   static function addDefaultProfileInfos($profiles_id, $rights) {
-      $profileRight = new ProfileRight();
-      foreach ($rights as $right => $value) {
-         if (!countElementsInTable('glpi_profilerights',
-            ['profiles_id' => $profiles_id, 'name' => $right])) {
-            $myright['profiles_id'] = $profiles_id;
-            $myright['name']        = $right;
-            $myright['rights']      = $value;
-            $profileRight->add($myright);
+    static function addDefaultProfileInfos($profiles_id, $rights)
+    {
+        $profileRight = new ProfileRight();
+        foreach ($rights as $right => $value) {
+            if (
+                !countElementsInTable(
+                    'glpi_profilerights',
+                    ['profiles_id' => $profiles_id, 'name' => $right]
+                )
+            ) {
+                $myright['profiles_id'] = $profiles_id;
+                $myright['name']        = $right;
+                $myright['rights']      = $value;
+                $profileRight->add($myright);
 
-            //Add right to the current session
-            $_SESSION['glpiactiveprofile'][$right] = $value;
-         }
-      }
-   }
+                //Add right to the current session
+                $_SESSION['glpiactiveprofile'][$right] = $value;
+            }
+        }
+    }
 
 
    /**
@@ -435,83 +461,92 @@ class PluginGlpiinventoryProfile extends Profile {
     *
     * @param integer $profiles_id id of profile
     */
-   static function createFirstAccess($profiles_id) {
-      include_once(PLUGIN_GLPI_INVENTORY_DIR."/inc/profile.class.php");
-      $profile = new self();
-      foreach ($profile->getAllRights() as $right) {
-         self::addDefaultProfileInfos($profiles_id,
-                                      [$right['field'] => ALLSTANDARDRIGHT]);
-      }
-   }
+    static function createFirstAccess($profiles_id)
+    {
+        include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/profile.class.php");
+        $profile = new self();
+        foreach ($profile->getAllRights() as $right) {
+            self::addDefaultProfileInfos(
+                $profiles_id,
+                [$right['field'] => ALLSTANDARDRIGHT]
+            );
+        }
+    }
 
 
    /**
     * Delete rights stored in session
     */
-   static function removeRightsFromSession() {
-      $profile = new self();
-      foreach ($profile->getAllRights() as $right) {
-         if (isset($_SESSION['glpiactiveprofile'][$right['field']])) {
-            unset($_SESSION['glpiactiveprofile'][$right['field']]);
-         }
-      }
-      ProfileRight::deleteProfileRights([$right['field']]);
+    static function removeRightsFromSession()
+    {
+        $profile = new self();
+        foreach ($profile->getAllRights() as $right) {
+            if (isset($_SESSION['glpiactiveprofile'][$right['field']])) {
+                unset($_SESSION['glpiactiveprofile'][$right['field']]);
+            }
+        }
+        ProfileRight::deleteProfileRights([$right['field']]);
 
-      if (isset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu'])) {
-         unset ($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu']);
-      }
-      if (isset($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu'])) {
-         unset ($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu']);
-      }
-      if (isset($_SESSION['glpimenu']['assets']['types']['PluginGlpiinventoryUnmanaged'])) {
-         unset ($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryUnmanaged']);
-      }
-      if (isset($_SESSION['glpimenu']['assets']['content']['pluginglpiinventoryunmanaged'])) {
-         unset ($_SESSION['glpimenu']['assets']['content']['pluginglpiinventoryunmanaged']);
-      }
-   }
+        if (isset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu'])) {
+            unset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu']);
+        }
+        if (isset($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu'])) {
+            unset($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu']);
+        }
+        if (isset($_SESSION['glpimenu']['assets']['types']['PluginGlpiinventoryUnmanaged'])) {
+            unset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryUnmanaged']);
+        }
+        if (isset($_SESSION['glpimenu']['assets']['content']['pluginglpiinventoryunmanaged'])) {
+            unset($_SESSION['glpimenu']['assets']['content']['pluginglpiinventoryunmanaged']);
+        }
+    }
 
 
    /**
     * Migration script for old rights from old version of plugin
     */
-   static function migrateProfiles() {
-      //Get all rights from the old table
-      $profiles = getAllDataFromTable(getTableForItemType(__CLASS__));
+    static function migrateProfiles()
+    {
+       //Get all rights from the old table
+        $profiles = getAllDataFromTable(getTableForItemType(__CLASS__));
 
-      //Load mapping of old rights to their new equivalent
-      $oldrights = self::getOldRightsMappings();
+       //Load mapping of old rights to their new equivalent
+        $oldrights = self::getOldRightsMappings();
 
-      //For each old profile : translate old right the new one
-      foreach ($profiles as $profile) {
-         switch ($profile['right']) {
-            case 'r' :
-               $value = READ;
-               break;
-            case 'w':
-               $value = ALLSTANDARDRIGHT;
-               break;
-            case 0:
-            default:
-               $value = 0;
-               break;
-         }
-         //Write in glpi_profilerights the new right
-         if (isset($oldrights[$profile['type']])) {
-            //There's one new right corresponding to the old one
-            if (!is_array($oldrights[$profile['type']])) {
-               self::addDefaultProfileInfos($profile['profiles_id'],
-                                            [$oldrights[$profile['type']] => $value]);
-            } else {
-               //One old right has been splitted into serveral new ones
-               foreach ($oldrights[$profile['type']] as $newtype) {
-                  self::addDefaultProfileInfos($profile['profiles_id'],
-                                               [$newtype => $value]);
-               }
+       //For each old profile : translate old right the new one
+        foreach ($profiles as $profile) {
+            switch ($profile['right']) {
+                case 'r':
+                    $value = READ;
+                    break;
+                case 'w':
+                    $value = ALLSTANDARDRIGHT;
+                    break;
+                case 0:
+                default:
+                    $value = 0;
+                    break;
             }
-         }
-      }
-   }
+           //Write in glpi_profilerights the new right
+            if (isset($oldrights[$profile['type']])) {
+               //There's one new right corresponding to the old one
+                if (!is_array($oldrights[$profile['type']])) {
+                    self::addDefaultProfileInfos(
+                        $profile['profiles_id'],
+                        [$oldrights[$profile['type']] => $value]
+                    );
+                } else {
+                   //One old right has been splitted into serveral new ones
+                    foreach ($oldrights[$profile['type']] as $newtype) {
+                        self::addDefaultProfileInfos(
+                            $profile['profiles_id'],
+                            [$newtype => $value]
+                        );
+                    }
+                }
+            }
+        }
+    }
 
 
    /**
@@ -519,40 +554,46 @@ class PluginGlpiinventoryProfile extends Profile {
     * - add rights in profile table for the current user's profile
     * - current profile has all rights on the plugin
     */
-   static function initProfile() {
-      $pfProfile = new self();
-      $profile   = new Profile();
-      $a_rights  = $pfProfile->getAllRights();
-      foreach ($a_rights as $data) {
-         if (countElementsInTable("glpi_profilerights",
-               ['name' => $data['field']]) == 0) {
-            ProfileRight::addProfileRights([$data['field']]);
-            $_SESSION['glpiactiveprofile'][$data['field']] = 0;
-         }
-      }
-
-      // Add all rights to current profile of the user
-      if (isset($_SESSION['glpiactiveprofile'])) {
-         $dataprofile       = [];
-         $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
-         $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
-         foreach ($a_rights as $info) {
-            if (is_array($info)
-                && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
-                  && (!empty($info['label'])) && (!empty($info['field']))) {
-
-               if (isset($info['rights'])) {
-                  $rights = $info['rights'];
-               } else {
-                  $rights = $profile->getRightsFor($info['itemtype']);
-               }
-               foreach ($rights as $right => $label) {
-                  $dataprofile['_'.$info['field']][$right] = 1;
-                  $_SESSION['glpiactiveprofile'][$data['field']] = $right;
-               }
+    static function initProfile()
+    {
+        $pfProfile = new self();
+        $profile   = new Profile();
+        $a_rights  = $pfProfile->getAllRights();
+        foreach ($a_rights as $data) {
+            if (
+                countElementsInTable(
+                    "glpi_profilerights",
+                    ['name' => $data['field']]
+                ) == 0
+            ) {
+                ProfileRight::addProfileRights([$data['field']]);
+                $_SESSION['glpiactiveprofile'][$data['field']] = 0;
             }
-         }
-         $profile->update($dataprofile);
-      }
-   }
+        }
+
+       // Add all rights to current profile of the user
+        if (isset($_SESSION['glpiactiveprofile'])) {
+            $dataprofile       = [];
+            $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
+            $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
+            foreach ($a_rights as $info) {
+                if (
+                    is_array($info)
+                    && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
+                    && (!empty($info['label'])) && (!empty($info['field']))
+                ) {
+                    if (isset($info['rights'])) {
+                        $rights = $info['rights'];
+                    } else {
+                        $rights = $profile->getRightsFor($info['itemtype']);
+                    }
+                    foreach ($rights as $right => $label) {
+                         $dataprofile['_' . $info['field']][$right] = 1;
+                         $_SESSION['glpiactiveprofile'][$data['field']] = $right;
+                    }
+                }
+            }
+            $profile->update($dataprofile);
+        }
+    }
 }

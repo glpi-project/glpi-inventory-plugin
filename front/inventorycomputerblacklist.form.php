@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,13 +31,15 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
-Html::header(__('GLPI Inventory', 'glpiinventory'),
-             $_SERVER["PHP_SELF"],
-             "admin",
-             "pluginglpiinventorymenu",
-             "inventorycomputerblacklist");
+Html::header(
+    __('GLPI Inventory', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "inventorycomputerblacklist"
+);
 
 Session::checkRight('plugin_glpiinventory_blacklist', READ);
 
@@ -44,26 +47,26 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 
 $pfInventoryComputerBlacklist = new PluginGlpiinventoryInventoryComputerBlacklist();
 
-if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_glpiinventory_blacklist', CREATE);
-   if (!empty($_POST['value'])) {
-      $pfInventoryComputerBlacklist->add($_POST);
-   }
-   Html::back();
-} else if (isset ($_POST["update"])) {
-   Session::checkRight('plugin_glpiinventory_blacklist', UPDATE);
-   $pfInventoryComputerBlacklist->update($_POST);
-   Html::back();
-} else if (isset ($_POST["delete"])) {
-   Session::checkRight('plugin_glpiinventory_blacklist', PURGE);
-   $pfInventoryComputerBlacklist->delete($_POST);
-   Html::redirect("blacklist.php");
+if (isset($_POST["add"])) {
+    Session::checkRight('plugin_glpiinventory_blacklist', CREATE);
+    if (!empty($_POST['value'])) {
+        $pfInventoryComputerBlacklist->add($_POST);
+    }
+    Html::back();
+} elseif (isset($_POST["update"])) {
+    Session::checkRight('plugin_glpiinventory_blacklist', UPDATE);
+    $pfInventoryComputerBlacklist->update($_POST);
+    Html::back();
+} elseif (isset($_POST["delete"])) {
+    Session::checkRight('plugin_glpiinventory_blacklist', PURGE);
+    $pfInventoryComputerBlacklist->delete($_POST);
+    Html::redirect("blacklist.php");
 }
 
 if (isset($_GET["id"])) {
-   $pfInventoryComputerBlacklist->showForm($_GET["id"]);
+    $pfInventoryComputerBlacklist->showForm($_GET["id"]);
 } else {
-   $pfInventoryComputerBlacklist->showForm("");
+    $pfInventoryComputerBlacklist->showForm("");
 }
 
 Html::footer();

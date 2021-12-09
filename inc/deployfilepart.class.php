@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,13 +32,14 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Used to get the deploy file in many parts.
  */
-class PluginGlpiinventoryDeployFilepart {
+class PluginGlpiinventoryDeployFilepart
+{
 
 
    /**
@@ -45,46 +47,47 @@ class PluginGlpiinventoryDeployFilepart {
     *
     * @param string $file
     */
-   static function httpSendFile($file) {
-      if (empty($file)) {
-         header("HTTP/1.1 500");
-         exit;
-      }
-      $matches = [];
-      preg_match('/.\/..\/([^\/]+)/', $file, $matches);
+    static function httpSendFile($file)
+    {
+        if (empty($file)) {
+            header("HTTP/1.1 500");
+            exit;
+        }
+        $matches = [];
+        preg_match('/.\/..\/([^\/]+)/', $file, $matches);
 
-      $sha512 = $matches[1];
-      //      $short_sha512 = substr($sha512, 0, 6);
+        $sha512 = $matches[1];
+       //      $short_sha512 = substr($sha512, 0, 6);
 
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/glpiinventory/files/repository/";
+        $repoPath = GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository/";
 
-      $pfDeployFile = new PluginGlpiinventoryDeployFile();
-      $filePath     = $repoPath.$pfDeployFile->getDirBySha512($sha512).'/'.$sha512;
+        $pfDeployFile = new PluginGlpiinventoryDeployFile();
+        $filePath     = $repoPath . $pfDeployFile->getDirBySha512($sha512) . '/' . $sha512;
 
-      if (!is_file($filePath)) {
-         header("HTTP/1.1 404");
-         print "\n".$filePath."\n\n";
-         exit;
-      } else if (!is_readable($filePath)) {
-         header("HTTP/1.1 403");
-         exit;
-      }
+        if (!is_file($filePath)) {
+            header("HTTP/1.1 404");
+            print "\n" . $filePath . "\n\n";
+            exit;
+        } elseif (!is_readable($filePath)) {
+            header("HTTP/1.1 403");
+            exit;
+        }
 
-      error_reporting(0);
+        error_reporting(0);
 
-      header('Content-Description: File Transfer');
-      header('Content-Type: application/octet-stream');
-      header('Content-Disposition: attachment; filename='.$sha512);
-      header('Content-Transfer-Encoding: binary');
-      header('Expires: 0');
-      header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-      header('Pragma: public');
-      header('Content-Length: ' . filesize($filePath));
-      if (ob_get_level() > 0) {
-         ob_clean();
-      }
-      flush();
-      readfile($filePath);
-      exit;
-   }
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename=' . $sha512);
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($filePath));
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
+        flush();
+        readfile($filePath);
+        exit;
+    }
 }
