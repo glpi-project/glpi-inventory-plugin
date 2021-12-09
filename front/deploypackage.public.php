@@ -62,9 +62,9 @@ if (isset($_POST['prepareinstall'])) {
       case 'remote':
          if ($computers_id) {
             //Remote call to wakeup the agent, from the server
-            $agent = new PluginGlpiinventoryAgent();
-            $agent->getAgentWithComputerid($computers_id);
-            $agent->wakeUp();
+            $agent = new Agent();
+            $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+            PluginGlpiinventoryAgentWakeup::wakeUp($agent);
          }
          break;
       default:

@@ -47,16 +47,14 @@ if (!empty($fi_machineid)) {
    switch (filter_input(INPUT_GET, "action")) {
 
       case 'getJobs':
-         $pfAgent        = new PluginGlpiinventoryAgent();
+         $agent        = new Agent();
          $pfTask         = new PluginGlpiinventoryTask();
          $pfTaskjob      = new PluginGlpiinventoryTaskjob();
          $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-         $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep(filter_input(INPUT_GET, "machineid")));
-
-         if (isset($agent['id'])) {
+         if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep(filter_input(INPUT_GET, "machineid"))])) {
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(
-               $agent['id'],
+               $agent->fields['id'],
                ['InventoryComputerESX']
             );
 

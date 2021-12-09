@@ -397,28 +397,28 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView {
       // filter actor list with active agent and with current module active
       $condition = [];
       if ($moduletype == "actors"
-          && in_array($itemtype, ["Computer", "PluginGlpiinventoryAgent"])) {
+          && in_array($itemtype, ["Computer", "Agent"])) {
          // remove install suffix from deploy
          $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
-         // prepare a query to retrive agent's & computer's id
+         // prepare a query to retrieve agent's & computer's id
          $query_filter = "SELECT agents.`id` as agents_id,
-                                 agents.`computers_id`
-                          FROM `glpi_plugin_glpiinventory_agents` as agents
+                                 agents.`items_id`
+                          FROM `glpi_agents` as agents
                           LEFT JOIN `glpi_computers` as computers
-                             ON computers.id = agents.computers_id
+                             ON computers.id = agents.items_id AND agents.itemtype = 'Computer'
                           LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as modules
                              ON modules.`exceptions` LIKE CONCAT('%\"', agents.`id`, '\"%')
                              OR modules.`is_active` = 1
                           WHERE UPPER(modules.`modulename`) = '$modulename'
                              AND computers.is_deleted = 0
                              AND computers.is_template = 0
-                          GROUP BY agents.`id`, agents.`computers_id`";
+                          GROUP BY agents.`id`, agents.`items_id`";
          $res_filter = $DB->query($query_filter);
          $filter_id = [];
          while ($data_filter = $DB->fetchAssoc($res_filter)) {
             if ($itemtype == 'Computer') {
-               $filter_id[] =  $data_filter['computers_id'];
+               $filter_id[] =  $data_filter['items_id'];
             } else {
                $filter_id[] =  $data_filter['agents_id'];
             }
@@ -428,8 +428,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView {
          // else prepare a false condition for dropdown
          if (count($filter_id)) {
             $condition = ['id' => $filter_id];
-         } else {
-            $condition = ['0'];
          }
       }
 

@@ -36,7 +36,7 @@ Session::checkLoginUser();
 $group = new PluginGlpiinventoryDeployGroup();
 
 if (isset($_GET['plugin_glpiinventory_deploygroups_id'])) {
-    $_SESSION['glpisearch']['PluginGlpiinventoryComputer'] = $_GET;
+    $_SESSION['glpisearch']['Computer'] = $_GET;
 }
 
 if (isset($_GET['save'])) {

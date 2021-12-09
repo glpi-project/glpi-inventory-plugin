@@ -100,8 +100,8 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild {
       // Save pagination parameters
       $pagination_params = [];
       foreach (['sort', 'order', 'start'] as $field) {
-         if (isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'][$field])) {
-            $pagination_params[$field] = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'][$field];
+         if (isset($_SESSION['glpisearch']['Computer'][$field])) {
+            $pagination_params[$field] = $_SESSION['glpisearch']['Computer'][$field];
          }
       }
 
@@ -120,7 +120,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       // Restore pagination parameters
       foreach ($pagination_params as $key => $value) {
-         $_SESSION['glpisearch']['PluginGlpiinventoryComputer'][$field] = $pagination_params[$field];
+         $_SESSION['glpisearch']['Computer'][$field] = $pagination_params[$field];
       }
       return $data['data']['totalcount'];
    }
@@ -146,8 +146,8 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild {
             // Save pagination parameters
             $pagination_params = [];
             foreach (['sort', 'order', 'start'] as $field) {
-               if (isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'][$field])) {
-                  $pagination_params[$field] = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'][$field];
+               if (isset($_SESSION['glpisearch']['Computer'][$field])) {
+                  $pagination_params[$field] = $_SESSION['glpisearch']['Computer'][$field];
                }
             }
             $params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
@@ -160,7 +160,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild {
                $params['metacriteria'] = [];
             }
             $params['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
-            self::showList('PluginGlpiinventoryComputer', $params, ['1', '2']);
+            self::showList('Computer', $params, ['1', '2']);
             return true;
 
       }
@@ -178,8 +178,8 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild {
       // Save pagination parameters
       $pagination_params = [];
       foreach (['sort', 'order', 'start'] as $field) {
-         if (isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'][$field])) {
-            $pagination_params[$field] = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'][$field];
+         if (isset($_SESSION['glpisearch']['Computer'][$field])) {
+            $pagination_params[$field] = $_SESSION['glpisearch']['Computer'][$field];
          }
       }
       // WITHOUT checking post values
@@ -203,7 +203,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild {
       $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-      $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
+      $data = Search::prepareDatasForSearch('Computer', $search_params);
       Search::constructSQL($data);
       Search::constructDatas($data);
       $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
@@ -279,7 +279,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
          //Only retrieve computers IDs
          $results = self::getDatas(
-            'PluginGlpiinventoryComputer',
+            'Computer',
             $search_params,
             ['2']
          );

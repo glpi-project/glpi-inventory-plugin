@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.0']
+        #php-versions: ['7.4', '8.0']
+        php-versions: ['8.0']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -61,8 +62,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.0']
-        db-image: ['mysql:5.7', 'mysql:8.0', 'mariadb:10.2', 'mariadb:10.6']
+        #php-versions: ['7.4', '8.0']
+        php-versions: ['8.0']
+          #db-image: ['mysql:5.7', 'mysql:8.0', 'mariadb:10.2', 'mariadb:10.6']
+        db-image: ['mysql:8.0']
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
@@ -90,8 +93,8 @@ jobs:
           --health-timeout=5s
           --health-retries=10
     steps:
-    - name: Install gettext, npm and mysql-client
-      run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext npm mysql-client
+    - name: Install gettext and mysql-client
+      run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext mysql-client
     - name: Change dir owner to working user
       run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
     - uses: actions/checkout@v1
@@ -137,7 +140,9 @@ jobs:
     - name: Install dependencies
       run: |
         cd glpi
-        php bin/console dependencies install
+        composer install --ansi --no-interaction
+        php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
+        mkdir --parents public/lib
         php bin/console locales:compile
 
     - name: Init database

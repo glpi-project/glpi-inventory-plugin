@@ -33,12 +33,13 @@
 use PHPUnit\Framework\TestCase;
 
 class TaskDeployDynamicGroupTest extends TestCase {
+   private $computers_ids = [];
 
    public static function setUpBeforeClass(): void {
 
       // Delete all computers
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
@@ -61,47 +62,67 @@ class TaskDeployDynamicGroupTest extends TestCase {
 
 
    protected function setUp(): void {
+      global $DB;
 
       // Add some computers
       $computer = new Computer();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $computerId = $computer->add(['name' => 'pc01', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc02', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc03', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc04', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc05', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc06', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc07', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc08', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc09', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc10', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc11', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc12', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'pc13', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'srv01', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'srv02', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'srv03', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'srv04', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
       $computerId = $computer->add(['name' => 'srv05', 'entities_id' => 0]);
-      $pfAgent->add(['computers_id'=> $computerId, 'entities_id' => 0]);
+      $this->computers_ids[] = $computerId;
+      $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id'=> $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
    }
 
 
@@ -116,7 +137,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
       $pfDeployPackage           = new PluginGlpiinventoryDeployPackage();
       $pfTask                    = new PluginGlpiinventoryTask();
       $pfTaskJob                 = new PluginGlpiinventoryTaskjob();
-      $pfAgent                   = new PluginGlpiinventoryAgent();
+      $agent                     = new Agent();
 
       $input = [
          'name' => 'test',
@@ -171,7 +192,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
          unset($data['id']);
          $items[] = $data;
       }
-      $agentsId = array_keys($pfAgent->find(['computers_id' => ['>', '0']]));
+      $agentsId = array_keys($agent->find(['itemtype' => Computer::getType(), 'items_id' => $this->computers_ids]));
 
       $a_reference = [
          [
@@ -179,7 +200,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -190,7 +211,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -201,7 +222,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -212,7 +233,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -223,7 +244,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -234,7 +255,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -245,7 +266,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -256,7 +277,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -267,7 +288,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -278,7 +299,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -289,7 +310,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -300,7 +321,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,
@@ -311,7 +332,7 @@ class TaskDeployDynamicGroupTest extends TestCase {
             'items_id'                           => $packageId,
             'itemtype'                           => "PluginGlpiinventoryDeployPackage",
             'state'                              => 0,
-            'plugin_glpiinventory_agents_id'   => array_shift($agentsId),
+            'agents_id'   => array_shift($agentsId),
             'specificity'                        => null,
             'date_start'                         => null,
             'nb_retry'                           => 0,

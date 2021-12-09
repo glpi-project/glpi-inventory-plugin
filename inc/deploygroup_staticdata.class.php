@@ -154,14 +154,14 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-      $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
+      $data = Search::prepareDatasForSearch('Computer', $search_params);
       $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
       PluginGlpiinventorySearch::constructDatas($data);
       $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-      $data['itemtype'] = 'PluginGlpiinventoryComputer';
+      $data['itemtype'] = 'Computer';
       Search::displayData($data);
    }
 
@@ -170,22 +170,22 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
     * Display result, so list of computers
     */
    static function showResults() {
-      if (isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'])
-              && isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']['show_results'])) {
-         $computers_params = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'];
+      if (isset($_SESSION['glpisearch']['Computer'])
+              && isset($_SESSION['glpisearch']['Computer']['show_results'])) {
+         $computers_params = $_SESSION['glpisearch']['Computer'];
       }
       $computers_params['metacriteria'] = [];
       $computers_params['criteria'][]   = ['searchtype' => 'equals',
                                                 'value' => $_GET['id'],
                                                 'field' => 5171];
 
-      $search_params = Search::manageParams('PluginGlpiinventoryComputer', $computers_params);
+      $search_params = Search::manageParams('Computer', $computers_params);
 
       //Add extra parameters for massive action display : only the Delete action should be displayed
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
-      $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
+      $data = Search::prepareDatasForSearch('Computer', $search_params);
 
       $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
@@ -193,7 +193,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
       // Use our specific constructDatas function rather than Glpi function
       PluginGlpiinventorySearch::constructDatas($data);
       $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
-      $data['itemtype'] = 'PluginGlpiinventoryComputer';
+      $data['itemtype'] = 'Computer';
       Search::displayData($data);
    }
 

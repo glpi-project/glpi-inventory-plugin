@@ -40,7 +40,7 @@ class DeleteLinkedObjectsTest extends TestCase {
    public function IpRangeDeleteConfigSecurity() {
 
       $iprange = new PluginGlpiinventoryIPRange();
-      $iprange_ConfigSecurity = new PluginGlpiinventoryIPRange_ConfigSecurity();
+      $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
 
       // Delete all IPRanges
       $items = $iprange->find();
@@ -61,12 +61,12 @@ class DeleteLinkedObjectsTest extends TestCase {
 
       $input = [
           'plugin_glpiinventory_ipranges_id' => $ipranges_id,
-          'plugin_glpiinventory_configsecurities_id' => 1,
+          'snmpcredentials_id' => 1,
           'rank' => 1
       ];
-      $iprange_ConfigSecurity->add($input);
+      $iprange_credentials->add($input);
 
-      $list_security = $iprange_ConfigSecurity->find();
+      $list_security = $iprange_credentials->find();
       $this->assertEquals(1, count($list_security), "SNMP community not added to iprange");
 
       $iprange->delete(['id' => $ipranges_id]);
@@ -74,7 +74,7 @@ class DeleteLinkedObjectsTest extends TestCase {
       $list_iprange = $iprange->find();
       $this->assertEquals(0, count($list_iprange), "IP Range not right deleted");
 
-      $list_security = $iprange_ConfigSecurity->find();
+      $list_security = $iprange_credentials->find();
       $this->assertEquals(0, count($list_security), "SNMP community not deleted with iprange");
    }
 }

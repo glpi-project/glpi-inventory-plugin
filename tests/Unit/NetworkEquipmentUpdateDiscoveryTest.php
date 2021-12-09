@@ -35,8 +35,6 @@ use PHPUnit\Framework\TestCase;
 class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
 
    public $item_id = 0;
-   public $datelatupdate = '';
-
 
    public $networkports_reference = [
       [
@@ -45,12 +43,12 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
          'entities_id'         => 0,
          'is_recursive'        => 0,
          'logical_number'      => 0,
-         'name'                => 'management',
+         'name'                => 'Management',
          'instantiation_type'  => 'NetworkPortAggregate',
          'mac'                 => '38:22:d6:3c:da:e7',
          'comment'             => null,
          'is_deleted'          => 0,
-         'is_dynamic'          => 0,
+         'is_dynamic'          => 1,
          'ifmtu' => 0,
          'ifspeed' => 0,
          'ifinternalstatus' => null,
@@ -81,21 +79,33 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
          'binary_2'      => 65535,
          'binary_3'      => 1667435018,
          'is_deleted'    => 0,
-         'is_dynamic'    => 0,
+         'is_dynamic'    => 1,
          'mainitems_id'  => 1,
          'mainitemtype'  => 'NetworkEquipment'
 
       ]
    ];
 
-   public $source_xmldevice = [
-      'SNMPHOSTNAME' => 'switch H3C',
-      'DESCRIPTION' => 'H3C Comware Platform Software, Software Version 5.20 Release 2208',
-      'AUTHSNMP' => '1',
-      'IP' => '99.99.10.10',
-      'MAC' => '38:22:d6:3c:da:e7',
-      'MANUFACTURER' => 'H3C'
-   ];
+   protected $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+<REQUEST>
+  <CONTENT>
+    <DEVICE>
+      <SNMPHOSTNAME>switch H3C</SNMPHOSTNAME>
+      <DESCRIPTION>H3C Comware Platform Software, Software Version 5.20 Release 2208</DESCRIPTION>
+      <AUTHSNMP>1</AUTHSNMP>
+      <SERIAL>042ff</SERIAL>
+      <IP>99.99.10.10</IP>
+      <MAC>38:22:d6:3c:da:e7</MAC>
+      <MANUFACTURER>H3C</MANUFACTURER>
+      <TYPE>NETWORKING</TYPE>
+    </DEVICE>
+    <MODULEVERSION>4.2</MODULEVERSION>
+    <PROCESSNUMBER>85</PROCESSNUMBER>
+  </CONTENT>
+  <DEVICEID>foo</DEVICEID>
+  <QUERY>NETDISCOVERY</QUERY>
+</REQUEST>
+";
 
    public static function setUpBeforeClass(): void {
       // Delete all network equipments
@@ -114,7 +124,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
 
       // Delete all computer
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
@@ -132,6 +142,8 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
       foreach ($items as $item) {
          $networkName->delete(['id' => $item['id']], true);
       }
+
+      \RuleImportAsset::initRules();
    }
 
 
@@ -139,40 +151,46 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
     * @test
     */
    public function AddNetworkEquipment() {
-
       // Load session rights
       $_SESSION['glpidefault_entity'] = 0;
       Session::initEntityProfiles(2);
       Session::changeProfile(4);
       plugin_init_glpiinventory();
 
-      $pfCND = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
 
       $input = [
-          'name'        => 'switch H3C',
+          'name' => 'switch H3C',
+          'serial' => '042ff',
           'entities_id' => '0'
       ];
       $this->item_id = $networkEquipment->add($input);
       $this->assertNotFalse($this->item_id, "Add network equipment failed");
       $networkEquipment->getFromDB($this->item_id);
 
-      $_SESSION['SOURCE_XMLDEVICE'] = $this->source_xmldevice;
-      $pfCND->importDevice($networkEquipment);
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($this->xml_source);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
       $this->assertEquals(1, count($networkEquipment->find()));
+
+      $this->assertGreaterThan(0, $networkEquipment->getFromDBByCrit(['serial' => '042ff']));
+      $this->assertEquals('switch H3C', $networkEquipment->fields['name'], 'Name must be updated');
    }
 
 
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function NewNetworkEquipmentHasPorts() {
       $networkports = getAllDataFromTable('glpi_networkports');
 
       $networkEquipment = new NetworkEquipment();
-      $item = current($networkEquipment->find([], [], 1));
-      $this->networkports_reference[0]['items_id'] = $item['id'];
+      $this->assertTrue($networkEquipment->getFromDBByCrit(['serial' => '042ff']));
+      $this->networkports_reference[0]['items_id'] = $networkEquipment->fields['id'];
 
       $reference = [];
       foreach ($networkports as $data) {
@@ -182,15 +200,17 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
          $reference[] = $data;
       }
 
-      $this->assertEquals($this->networkports_reference,
-                          $reference,
-                          "Network ports does not match reference on first update");
-
+      $this->assertEquals(
+         $this->networkports_reference,
+         $reference,
+         "Network ports does not match reference on first update"
+      );
    }
 
 
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function NewNetworkEquipmentHasIpAdresses() {
       $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
@@ -204,7 +224,9 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
       }
 
       $networkName = new NetworkName();
-      $item = current($networkName->find([], [], 1));
+      $netnames = $networkName->find([], [], 1);
+      $this->assertEquals(1, count($netnames), 'No network name created');
+      $item = current($netnames);
       $this->ipaddresses_reference[0]['items_id'] = $item['id'];
 
       $networkEquipment = new NetworkEquipment();
@@ -220,6 +242,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
 
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function UpdateNetworkEquipment() {
 
@@ -230,20 +253,23 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
       plugin_init_glpiinventory();
 
       // Update 2nd time
-      $pfCND = new PluginGlpiinventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
       $item = current($networkEquipment->find([], [], 1));
 
       $networkEquipment->getFromDB($item['id']);
 
-      $_SESSION['SOURCE_XMLDEVICE'] = $this->source_xmldevice;
-      $pfCND->importDevice($networkEquipment);
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($this->xml_source);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
       $this->assertEquals(1, count($networkEquipment->find()));
    }
 
    /**
     * @test
+    * @depends UpdateNetworkEquipment
     */
    public function UpdateNetworkEquipmentOnlyOneNetworkName() {
       $networkNames = getAllDataFromTable('glpi_networknames');
@@ -253,6 +279,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
 
    /**
     * @test
+    * @depends UpdateNetworkEquipment
     */
    public function UpdateNetworkEquipmentOnlyOneIpaddress() {
       $Ips = getAllDataFromTable('glpi_ipaddresses');
@@ -262,6 +289,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
 
    /**
     * @test
+    * @depends UpdateNetworkEquipment
     */
    public function UpdatedNetworkEquipmentHasPorts() {
       $networkports = getAllDataFromTable('glpi_networkports');
@@ -288,6 +316,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
 
    /**
     * @test
+    * @depends UpdateNetworkEquipment
     */
    public function UpdateNetworkEquipmentHasIpAdresses() {
       $ipaddresses = getAllDataFromTable('glpi_ipaddresses');

@@ -222,7 +222,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM {
 
       $tab[] = [
          'id'           => '8',
-         'table'        => "glpi_plugin_glpiinventory_agents",
+         'table'        => "glpi_agents",
          'field'        => 'name',
          'name'         => __('Agent', 'glpiinventory'),
          'datatype'     => 'itemlink',
@@ -283,7 +283,7 @@ function appear_array(id) {
       $fi_path = Plugin::getWebDir('glpiinventory');
 
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfAgent        = new PluginGlpiinventoryAgent();
+      $agent        = new Agent();
 
       $pfTaskjobstate->getFromDB($taskjobstates_id);
 
@@ -317,14 +317,14 @@ function appear_array(id) {
          echo "</td>";
       }
       echo "<td>";
-      $pfAgent->getFromDB($pfTaskjobstate->fields['plugin_glpiinventory_agents_id']);
-      echo $pfAgent->getLink(1);
+      $agent->getFromDB($pfTaskjobstate->fields['agents_id']);
+      echo $agent->getLink(1);
 
       Ajax::updateItemOnEvent('plusmoins'.$pfTaskjobstate->fields["id"],
                       'viewfollowup'.$pfTaskjobstate->fields["id"],
                       $fi_path."/ajax/showtaskjoblogdetail.php",
                       ['agents_id' =>
-                                 $pfTaskjobstate->fields['plugin_glpiinventory_agents_id'],
+                                 $pfTaskjobstate->fields['agents_id'],
                           'uniqid' => $pfTaskjobstate->fields['uniqid']],
                       ["click"]);
 
@@ -368,13 +368,13 @@ function appear_array(id) {
    function showHistoryInDetail($agents_id, $uniqid, $width = 950) {
       global $CFG_GLPI, $DB;
 
-      $pfAgent          = new PluginGlpiinventoryAgent();
+      $agent          = new Agent();
       $a_devices_merged = [];
 
       $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
       $params = ['FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
-                 'WHERE' => ['plugin_glpiinventory_agents_id' => $agents_id, 'uniqid' => $uniqid],
+                 'WHERE' => ['agents_id' => $agents_id, 'uniqid' => $uniqid],
                  'ORDER' => 'id DESC'
                 ];
       foreach ($DB->request($params) as $data) {
@@ -417,8 +417,8 @@ function appear_array(id) {
 
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<td colspan='2'>";
-            $pfAgent->getFromDB($data['plugin_glpiinventory_agents_id']);
-            $text .= $pfAgent->getLink(1);
+            $agent->getFromDB($data['agents_id']);
+            $text .= $agent->getLink(1);
             $text .= "</td>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
             $count = $a_return[0];
@@ -633,7 +633,7 @@ function appear_array(id) {
             OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '4'
             OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '5')
          GROUP BY glpi_plugin_glpiinventory_taskjobstates.uniqid, ".
-              "plugin_glpiinventory_agents_id";
+              "agents_id";
       $result=$DB->query($query);
       if ($result) {
          while ($datajob=$DB->fetchArray($result)) {

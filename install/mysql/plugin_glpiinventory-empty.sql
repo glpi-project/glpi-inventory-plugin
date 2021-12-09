@@ -54,35 +54,6 @@ DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_lock`;
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_task`;
 -- DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_unknown_device`;
 
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agents`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_agents` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `is_recursive` tinyint(1) NOT NULL DEFAULT '1',
-   `name` varchar(255) DEFAULT NULL,
-   `last_contact` timestamp NULL DEFAULT NULL,
-   `version` varchar(255) DEFAULT NULL,
-   `lock` tinyint(1) NOT NULL DEFAULT '0',
-   `device_id` varchar(255) DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE',
-   `computers_id` int(11) NOT NULL DEFAULT '0',
-   `token` varchar(255) DEFAULT NULL,
-   `useragent` varchar(255) DEFAULT NULL,
-   `tag` varchar(255) DEFAULT NULL,
-   `threads_networkdiscovery` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
-   `threads_networkinventory` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
-   `senddico` tinyint(1) NOT NULL DEFAULT '0',
-   `timeout_networkdiscovery` int(4) NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout (disabled by default)',
-   `timeout_networkinventory` int(4) NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout (disabled by default)',
-   `agent_port` varchar(6) DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `name` (`name`),
-   KEY `device_id` (`device_id`),
-   KEY `computers_id` (`computers_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_configs`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_configs` (
@@ -92,35 +63,6 @@ CREATE TABLE `glpi_plugin_glpiinventory_configs` (
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_entities`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_entities` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `transfers_id_auto` int(11) NOT NULL DEFAULT '0',
-   `agent_base_url` varchar(255) NOT NULL DEFAULT '',
-   PRIMARY KEY (`id`),
-   KEY `entities_id` (`entities_id`,`transfers_id_auto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_locks`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_locks` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `tablename` varchar(64) NOT NULL DEFAULT '',
-   `items_id` int(11) NOT NULL DEFAULT '0',
-   `tablefields` text DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `tablename` (`tablename`),
-   KEY `items_id` (`items_id`),
-   UNIQUE KEY `unicity` (`tablename`,`items_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
 
 
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_tasks`;
@@ -200,7 +142,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjobstates` (
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
-  `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `agents_id` int(11) NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
   `uniqid` varchar(255) DEFAULT NULL,
   `date_start` timestamp NULL DEFAULT NULL,
@@ -208,63 +150,10 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjobstates` (
   `max_retry` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_taskjobs_id` (`plugin_glpiinventory_taskjobs_id`),
-  KEY `plugin_glpiinventory_agents_id` (`plugin_glpiinventory_agents_id`),
+  KEY `agents_id` (`agents_id`),
   KEY `uniqid` (`uniqid`,`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_mappings`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_mappings` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `itemtype` varchar(100) DEFAULT NULL,
-   `name` varchar(255) DEFAULT NULL,
-   `table` varchar(255) DEFAULT NULL,
-   `tablefield` varchar(255) DEFAULT NULL,
-   `locale` int(4) NOT NULL DEFAULT '0',
-   `shortlocale` int(4) DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `name` (`name`),
-   KEY `itemtype` (`itemtype`),
-   KEY `table` (`table`),
-   KEY `tablefield` (`tablefield`)
---   UNIQUE KEY `unicity` (`name`, `itemtype`) -- Specified key was too long; max key length is 1000 bytes
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_unmanageds`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_unmanageds` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) DEFAULT NULL,
-   `date_mod` timestamp NULL DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `locations_id` int(11) NOT NULL DEFAULT '0',
-   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-   `users_id` int(11) NOT NULL DEFAULT '0',
-   `serial` varchar(255) DEFAULT NULL,
-   `otherserial` varchar(255) DEFAULT NULL,
-   `contact` varchar(255) DEFAULT NULL,
-   `domain` int(11) NOT NULL DEFAULT '0',
-   `comment` text DEFAULT NULL,
-   `item_type` varchar(255) DEFAULT NULL,
-   `accepted` tinyint(1) NOT NULL DEFAULT '0',
-   `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
-   `ip` varchar(255) DEFAULT NULL,
-   `hub` tinyint(1) NOT NULL DEFAULT '0',
-   `states_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text DEFAULT NULL,
-   `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
-   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
-   `serialized_inventory` longblob DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `entities_id` (`entities_id`),
-   KEY `plugin_glpiinventory_agents_id` (`plugin_glpiinventory_agents_id`),
-   KEY `is_deleted` (`is_deleted`),
-   KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agentmodules`;
@@ -295,15 +184,15 @@ CREATE TABLE `glpi_plugin_glpiinventory_ipranges` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ipranges_configsecurities`;
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ipranges_snmpcredentials`;
 
-CREATE TABLE `glpi_plugin_glpiinventory_ipranges_configsecurities` (
+CREATE TABLE `glpi_plugin_glpiinventory_ipranges_snmpcredentials` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_glpiinventory_ipranges_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+  `snmpcredentials_id` int(11) NOT NULL DEFAULT '0',
   `rank` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `unicity` (`plugin_glpiinventory_ipranges_id`,`plugin_glpiinventory_configsecurities_id`)
+  KEY `unicity` (`plugin_glpiinventory_ipranges_id`,`snmpcredentials_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -336,43 +225,6 @@ CREATE TABLE  `glpi_plugin_glpiinventory_credentialips` (
    `ip` varchar(255) NOT NULL DEFAULT '',
    `date_mod` timestamp NULL DEFAULT NULL,
    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ignoredimportdevices`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_ignoredimportdevices` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) DEFAULT NULL,
-   `date` timestamp NULL DEFAULT NULL,
-   `itemtype` varchar(100) DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `ip` varchar(255) DEFAULT NULL,
-   `mac` varchar(255) DEFAULT NULL,
-   `rules_id` int(11) NOT NULL DEFAULT '0',
-   `method` varchar(255) DEFAULT NULL,
-   `serial` varchar(255) DEFAULT NULL,
-   `uuid` varchar(255) DEFAULT NULL,
-   `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_rulematchedlogs`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_rulematchedlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `date` timestamp NULL DEFAULT NULL,
-   `items_id` int(11) NOT NULL DEFAULT '0',
-   `itemtype` varchar(100) DEFAULT NULL,
-   `rules_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
-   `method` varchar(255) DEFAULT NULL,
-   `criteria` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `item` (`itemtype`,`items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -436,195 +288,12 @@ CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputerstats` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_configlogfields`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_configlogfields` (
-   `id` int(8) NOT NULL AUTO_INCREMENT,
-   `plugin_glpiinventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   `days` int(255) NOT NULL DEFAULT '-1',
-   PRIMARY KEY ( `id` ) ,
-   KEY `plugin_glpiinventory_mappings_id` ( `plugin_glpiinventory_mappings_id` )
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkportconnectionlogs`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_networkportconnectionlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `date_mod` timestamp NULL DEFAULT NULL,
-   `creation` tinyint(1) NOT NULL DEFAULT '0',
-   `networkports_id_source` int(11) NOT NULL DEFAULT '0',
-   `networkports_id_destination` int(11) NOT NULL DEFAULT '0',
-   `plugin_glpiinventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_glpiinventory_agentprocesses_id` ),
-   KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkequipments`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_networkequipments` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkequipments_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text DEFAULT NULL,
-   `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
-   `uptime` varchar(255) NOT NULL DEFAULT '0',
-   `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
-   `memory` int(11) NOT NULL DEFAULT '0',
-   `last_inventory_update` timestamp NULL DEFAULT NULL,
-   `last_PID_update` int(11) NOT NULL DEFAULT '0',
-   `serialized_inventory` longblob DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `networkequipments_id` (`networkequipments_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkporttypes`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_networkporttypes` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) DEFAULT NULL,
-   `number` int(4) NOT NULL DEFAULT '0',
-   `othername` varchar(255) DEFAULT NULL,
-   `import` tinyint(1) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_printers`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_printers` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `printers_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text DEFAULT NULL,
-   `plugin_glpiinventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
-   `frequence_days` int(5) NOT NULL DEFAULT '1',
-   `last_inventory_update` timestamp NULL DEFAULT NULL,
-   `serialized_inventory` longblob DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` (`printers_id`),
-   KEY `plugin_glpiinventory_configsecurities_id` (`plugin_glpiinventory_configsecurities_id`),
-   KEY `printers_id` (`printers_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_printerlogs`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_printerlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `printers_id` int(11) NOT NULL DEFAULT '0',
-   `date` timestamp NULL DEFAULT NULL,
-   `pages_total` int(11) NOT NULL DEFAULT '0',
-   `pages_n_b` int(11) NOT NULL DEFAULT '0',
-   `pages_color` int(11) NOT NULL DEFAULT '0',
-   `pages_recto_verso` int(11) NOT NULL DEFAULT '0',
-   `scanned` int(11) NOT NULL DEFAULT '0',
-   `pages_total_print` int(11) NOT NULL DEFAULT '0',
-   `pages_n_b_print` int(11) NOT NULL DEFAULT '0',
-   `pages_color_print` int(11) NOT NULL DEFAULT '0',
-   `pages_total_copy` int(11) NOT NULL DEFAULT '0',
-   `pages_n_b_copy` int(11) NOT NULL DEFAULT '0',
-   `pages_color_copy` int(11) NOT NULL DEFAULT '0',
-   `pages_total_fax` int(11) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   KEY `printers_id` (`printers_id`,`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_printercartridges`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_printercartridges` (
-   `id` bigint(100) NOT NULL AUTO_INCREMENT,
-   `printers_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_glpiinventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   `cartridges_id` int(11) NOT NULL DEFAULT '0',
-   `state` int(3) NOT NULL DEFAULT '100',
-   PRIMARY KEY (`id`),
-   KEY `printers_id` (`printers_id`),
-   KEY `plugin_glpiinventory_mappings_id` (`plugin_glpiinventory_mappings_id`),
-   KEY `cartridges_id` (`cartridges_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkports`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_networkports` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkports_id` int(11) NOT NULL DEFAULT '0',
-   `ifmtu` int(8) NOT NULL DEFAULT '0',
-   `ifspeed` bigint(50) NOT NULL DEFAULT '0',
-   `ifinternalstatus` varchar(255) DEFAULT NULL,
-   `ifconnectionstatus` int(8) NOT NULL DEFAULT '0',
-   `iflastchange` varchar(255) DEFAULT NULL,
-   `ifinoctets` bigint(50) NOT NULL DEFAULT '0',
-   `ifinerrors` bigint(50) NOT NULL DEFAULT '0',
-   `ifoutoctets` bigint(50) NOT NULL DEFAULT '0',
-   `ifouterrors` bigint(50) NOT NULL DEFAULT '0',
-   `ifstatus` varchar(255) DEFAULT NULL,
-   `mac` varchar(255) DEFAULT NULL,
-   `ifdescr` varchar(255) DEFAULT NULL,
-   `ifalias` varchar(255) DEFAULT NULL,
-   `portduplex` varchar(255) DEFAULT NULL,
-   `trunk` tinyint(1) NOT NULL DEFAULT '0',
-   `lastup` timestamp NULL DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `networkports_id` (`networkports_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_configsecurities`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_configsecurities` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(64) DEFAULT NULL,
-   `snmpversion` varchar(8) NOT NULL DEFAULT '1',
-   `community` varchar(255) DEFAULT NULL,
-   `username` varchar(255) DEFAULT NULL,
-   `authentication` varchar(255) DEFAULT NULL,
-   `auth_passphrase` varchar(255) DEFAULT NULL,
-   `encryption` varchar(255) DEFAULT NULL,
-   `priv_passphrase` varchar(255) DEFAULT NULL,
-   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   KEY `snmpversion` (`snmpversion`),
-   KEY `is_deleted` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_networkportlogs`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_networkportlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkports_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_glpiinventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   `date_mod` timestamp NULL DEFAULT NULL,
-   `value_old` varchar(255) DEFAULT NULL,
-   `value_new` varchar(255) DEFAULT NULL,
-   `plugin_glpiinventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   KEY `networkports_id` (`networkports_id`,`date_mod`),
-   KEY `plugin_glpiinventory_mappings_id` (`plugin_glpiinventory_mappings_id`),
-   KEY `plugin_glpiinventory_agentprocesses_id` (`plugin_glpiinventory_agentprocesses_id`),
-   KEY `date_mod` (`date_mod`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_statediscoveries`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_statediscoveries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_glpiinventory_taskjob_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_glpiinventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `agents_id` int(11) NOT NULL DEFAULT '0',
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
@@ -636,40 +305,6 @@ CREATE TABLE `glpi_plugin_glpiinventory_statediscoveries` (
   `nb_import` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_computerlicenseinfos`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_computerlicenseinfos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `softwarelicenses_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) DEFAULT NULL,
-  `fullname` varchar(255) DEFAULT NULL,
-  `serial` varchar(255) DEFAULT NULL,
-  `is_trial` tinyint(1) NOT NULL DEFAULT '0',
-  `is_update` tinyint(1) NOT NULL DEFAULT '0',
-  `is_oem` tinyint(1) NOT NULL DEFAULT '0',
-  `activation_date` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`),
-  KEY `fullname` (`fullname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_computerremotemanagements`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_computerremotemanagements` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `number` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `computers_id` (`computers_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
 
 
 --
@@ -997,86 +632,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_timeslotentries` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblockinventorynames`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_dblockinventorynames` (
-  `value` varchar(100) NOT NULL DEFAULT '',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-   PRIMARY KEY (`value`),
-   UNIQUE KEY `value` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblockinventories`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_dblockinventories` (
-  `value` int(11) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-   PRIMARY KEY (`value`),
-   UNIQUE KEY `value` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblocksoftwares`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_dblocksoftwares` (
-  `value` tinyint(1) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-   PRIMARY KEY (`value`),
-   UNIQUE KEY `value` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_dblocksoftwareversions`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_dblocksoftwareversions` (
-  `value` tinyint(1) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-   PRIMARY KEY (`value`),
-   UNIQUE KEY `value` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
-
-
--- INSERT
--- glpi_plugin_glpiinventory_configsecurities
-INSERT INTO `glpi_plugin_glpiinventory_configsecurities`
-      (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`, `encryption`, `priv_passphrase`, `is_deleted`)
-   VALUES (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', '0'),
-          (2, 'Public community v2c', '2', 'public', '', '0', '', '0', '', '0');
-
-
--- glpi_plugin_glpiinventory_entities
-INSERT INTO `glpi_plugin_glpiinventory_entities`
-      (`entities_id`, `transfers_id_auto`)
-   VALUES ('0', '0');
-
-
 -- glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-   VALUES (NULL,'PluginGlpiinventoryAgent', '2', '1', '0'),
-          (NULL,'PluginGlpiinventoryAgent', '4', '2', '0'),
-          (NULL,'PluginGlpiinventoryAgent', '5', '3', '0'),
-          (NULL,'PluginGlpiinventoryAgent', '6', '4', '0'),
-          (NULL,'PluginGlpiinventoryAgent', '7', '5', '0'),
-          (NULL,'PluginGlpiinventoryAgent', '8', '6', '0'),
-          (NULL,'PluginGlpiinventoryAgent', '9', '7', '0'),
-
-          (NULL, 'PluginGlpiinventoryUnmanaged', '2', '1', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '4', '2', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '3', '3', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '5', '4', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '7', '5', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '10', '6', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '18', '8', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '14', '9', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '15', '10', '0'),
-          (NULL, 'PluginGlpiinventoryUnmanaged', '9', '11', '0'),
-
+   VALUES
           (NULL, 'PluginGlpiinventoryTask', '2', '1', '0'),
           (NULL, 'PluginGlpiinventoryTask', '3', '2', '0'),
           (NULL, 'PluginGlpiinventoryTask', '4', '3', '0'),
@@ -1104,46 +662,6 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginGlpiinventoryTaskjoblog', '6', '5', '0'),
           (NULL,'PluginGlpiinventoryTaskjoblog', '7', '6', '0'),
           (NULL,'PluginGlpiinventoryTaskjoblog', '8', '7', '0'),
-
-          (NULL, 'PluginGlpiinventoryConfigSecurity', '3', '1', '0'),
-          (NULL, 'PluginGlpiinventoryConfigSecurity', '4', '2', '0'),
-          (NULL, 'PluginGlpiinventoryConfigSecurity', '5', '3', '0'),
-          (NULL, 'PluginGlpiinventoryConfigSecurity', '7', '4', '0'),
-          (NULL, 'PluginGlpiinventoryConfigSecurity', '8', '5', '0'),
-          (NULL, 'PluginGlpiinventoryConfigSecurity', '9', '6', '0'),
-          (NULL, 'PluginGlpiinventoryConfigSecurity', '10', '7', '0'),
-
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '2', '1', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '3', '2', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '4', '3', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '5', '4', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '6', '5', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '7', '6', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '8', '7', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '9', '8', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '10', '9', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '11', '10', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '14', '11', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '12', '12', '0'),
-          (NULL,'PluginGlpiinventoryNetworkEquipment', '13', '13', '0'),
-
-          (NULL,'PluginGlpiinventoryNetworkPortLog', '2', '1', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPortLog', '3', '2', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPortLog', '4', '3', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPortLog', '5', '4', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPortLog', '6', '5', '0'),
-
-          (NULL,'PluginGlpiinventoryNetworkPort', '3', '1', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '5', '2', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '6', '3', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '7', '4', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '8', '5', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '9', '6', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '10', '7', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '11', '8', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '12', '9', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '13', '10', '0'),
-          (NULL,'PluginGlpiinventoryNetworkPort', '14', '11', '0'),
 
           (NULL,'PluginGlpiinventoryStateDiscovery', '2', '1', '0'),
           (NULL,'PluginGlpiinventoryStateDiscovery', '4', '2', '0'),
@@ -1238,209 +756,3 @@ INSERT INTO `glpi_plugin_glpiinventory_inventorycomputerblacklists`
 (62, 3, '24:b6:20:52:41:53'),
 (63, 1, 'Not Specified'),
 (64, 5, 'All Series');
-
-
-
--- glpi_plugin_glpiinventory_mappings
-INSERT INTO `glpi_plugin_glpiinventory_mappings`
-      (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
-   VALUES ('NetworkEquipment','location','glpi_networkequipments','locations_id',1,NULL),
-          ('NetworkEquipment','firmware','glpi_networkequipments',
-             'networkequipmentfirmwares_id',2,NULL),
-          ('NetworkEquipment','firmware1','','',2,NULL),
-          ('NetworkEquipment','firmware2','','',2,NULL),
-          ('NetworkEquipment','contact','glpi_networkequipments','contact',403,NULL),
-          ('NetworkEquipment','comments','glpi_networkequipments','comment',404,NULL),
-          ('NetworkEquipment','uptime','glpi_plugin_glpiinventory_networkequipments',
-             'uptime',3,NULL),
-          ('NetworkEquipment','cpu','glpi_plugin_glpiinventory_networkequipments',
-             'cpu',12,NULL),
-          ('NetworkEquipment','cpuuser','glpi_plugin_glpiinventory_networkequipments',
-             'cpu',401,NULL),
-          ('NetworkEquipment','cpusystem','glpi_plugin_glpiinventory_networkequipments',
-             'cpu',402,NULL),
-          ('NetworkEquipment','serial','glpi_networkequipments','serial',13,NULL),
-          ('NetworkEquipment','otherserial','glpi_networkequipments','otherserial',419,NULL),
-          ('NetworkEquipment','name','glpi_networkequipments','name',20,NULL),
-          ('NetworkEquipment','ram','glpi_networkequipments','ram',21,NULL),
-          ('NetworkEquipment','memory','glpi_plugin_glpiinventory_networkequipments',
-             'memory',22,NULL),
-          ('NetworkEquipment','vtpVlanName','','',19,NULL),
-          ('NetworkEquipment','vmvlan','','',430,NULL),
-          ('NetworkEquipment','entPhysicalModelName','glpi_networkequipments',
-             'networkequipmentmodels_id',17,NULL),
-          ('NetworkEquipment','macaddr','glpi_networkequipments','ip',417,NULL),
--- Network CDP (Walk)
-          ('NetworkEquipment','cdpCacheAddress','','',409,NULL),
-          ('NetworkEquipment','cdpCacheDevicePort','','',410,NULL),
-          ('NetworkEquipment','cdpCacheVersion','','',435,NULL),
-          ('NetworkEquipment','cdpCacheDeviceId','','',436,NULL),
-          ('NetworkEquipment','cdpCachePlatform','','',437,NULL),
-          ('NetworkEquipment','lldpRemChassisId','','',431,NULL),
-          ('NetworkEquipment','lldpRemPortId','','',432,NULL),
-          ('NetworkEquipment','lldpLocChassisId','','',432,NULL),
-          ('NetworkEquipment','lldpRemSysDesc','','',438,NULL),
-          ('NetworkEquipment','lldpRemSysName','','',439,NULL),
-          ('NetworkEquipment','lldpRemPortDesc','','',440,NULL),
-          ('NetworkEquipment','vlanTrunkPortDynamicStatus','','',411,NULL),
-          ('NetworkEquipment','dot1dTpFdbAddress','','',412,NULL),
-          ('NetworkEquipment','ipNetToMediaPhysAddress','','',413,NULL),
-          ('NetworkEquipment','dot1dTpFdbPort','','',414,NULL),
-          ('NetworkEquipment','dot1dBasePortIfIndex','','',415,NULL),
-          ('NetworkEquipment','ipAdEntAddr','','',421,NULL),
-          ('NetworkEquipment','PortVlanIndex','','',422,NULL),
--- NetworkPorts
-          ('NetworkEquipment','ifIndex','','',408,NULL),
-          ('NetworkEquipment','ifmtu','glpi_plugin_glpiinventory_networkports',
-             'ifmtu',4,NULL),
-          ('NetworkEquipment','ifspeed','glpi_plugin_glpiinventory_networkports',
-             'ifspeed',5,NULL),
-          ('NetworkEquipment','ifinternalstatus','glpi_plugin_glpiinventory_networkports',
-             'ifinternalstatus',6,NULL),
-          ('NetworkEquipment','iflastchange','glpi_plugin_glpiinventory_networkports',
-             'iflastchange',7,NULL),
-          ('NetworkEquipment','ifinoctets','glpi_plugin_glpiinventory_networkports',
-             'ifinoctets',8,NULL),
-          ('NetworkEquipment','ifoutoctets','glpi_plugin_glpiinventory_networkports',
-             'ifoutoctets',9,NULL),
-          ('NetworkEquipment','ifinerrors','glpi_plugin_glpiinventory_networkports',
-             'ifinerrors',10,NULL),
-          ('NetworkEquipment','ifouterrors','glpi_plugin_glpiinventory_networkports',
-             'ifouterrors',11,NULL),
-          ('NetworkEquipment','ifstatus','glpi_plugin_glpiinventory_networkports',
-             'ifstatus',14,NULL),
-          ('NetworkEquipment','ifPhysAddress','glpi_networkports','mac',15,NULL),
-          ('NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
-          ('NetworkEquipment','ifType','','',18,NULL),
-          ('NetworkEquipment','ifdescr','glpi_plugin_glpiinventory_networkports',
-             'ifdescr',23,NULL),
-          ('NetworkEquipment','portDuplex','glpi_plugin_glpiinventory_networkports',
-             'portduplex',33,NULL),
-          ('NetworkEquipment','ifalias','glpi_plugin_glpiinventory_networkports',
-             'ifalias',120,NULL),
--- Printers
-          ('Printer','model','glpi_printers','printermodels_id',25,NULL),
-          ('Printer','enterprise','glpi_printers','manufacturers_id',420,NULL),
-          ('Printer','serial','glpi_printers','serial',27,NULL),
-          ('Printer','contact','glpi_printers','contact',405,NULL),
-          ('Printer','comments','glpi_printers','comment',406,NULL),
-          ('Printer','name','glpi_printers','comment',24,NULL),
-          ('Printer','otherserial','glpi_printers','otherserial',418,NULL),
-          ('Printer','memory','glpi_printers','memory_size',26,NULL),
-          ('Printer','location','glpi_printers','locations_id',56,NULL),
-          ('Printer','informations','','',165,165),
--- Cartridges
-          ('Printer','tonerblack','','',157,157),
-          ('Printer','tonerblackmax','','',166,166),
-          ('Printer','tonerblackused','','',167,167),
-          ('Printer','tonerblackremaining','','',168,168),
-          ('Printer','tonerblack2','','',157,157),
-          ('Printer','tonerblack2max','','',166,166),
-          ('Printer','tonerblack2used','','',167,167),
-          ('Printer','tonerblack2remaining','','',168,168),
-          ('Printer','tonercyan','','',158,158),
-          ('Printer','tonercyanmax','','',169,169),
-          ('Printer','tonercyanused','','',170,170),
-          ('Printer','tonercyanremaining','','',171,171),
-          ('Printer','tonermagenta','','',159,159),
-          ('Printer','tonermagentamax','','',172,172),
-          ('Printer','tonermagentaused','','',173,173),
-          ('Printer','tonermagentaremaining','','',174,174),
-          ('Printer','toneryellow','','',160,160),
-          ('Printer','toneryellowmax','','',175,175),
-          ('Printer','toneryellowused','','',176,176),
-          ('Printer','toneryellowremaining','','',177,177),
-          ('Printer','wastetoner','','',151,151),
-          ('Printer','wastetonermax','','',190,190),
-          ('Printer','wastetonerused','','',191,191),
-          ('Printer','wastetonerremaining','','',192,192),
-          ('Printer','cartridgeblackmatte','','',133,133),
-          ('Printer','cartridgematteblack','','',133,133),
-          ('Printer','cartridgeblack','','',134,134),
-          ('Printer','cartridgeblackphoto','','',135,135),
-          ('Printer','cartridgephotoblack','','',135,135),
-          ('Printer','cartridgecyan','','',136,136),
-          ('Printer','cartridgecyanlight','','',139,139),
-          ('Printer','cartridgelightcyan','','',139,139),
-          ('Printer','cartridgemagenta','','',138,138),
-          ('Printer','cartridgemagentalight','','',140,140),
-          ('Printer','cartridgelightmagenta','','',140,140),
-          ('Printer','cartridgeyellow','','',137,137),
-          ('Printer','cartridgegrey','','',196,196),
-          ('Printer','cartridgegray','','',196,196),
-          ('Printer','cartridgegreylight','','',211,211),
-          ('Printer','cartridgegraylight','','',211,211),
-          ('Printer','cartridgelightgrey','','',211,211),
-          ('Printer','cartridgelightgray','','',211,211),
-          ('Printer','cartridgeglossenhancer','','',206,206),
-          ('Printer','cartridgeblue','','',207,207),
-          ('Printer','cartridgegreen','','',208,208),
-          ('Printer','cartridgered','','',209,209),
-          ('Printer','cartridgechromaticred','','',210,210),
-          ('Printer','maintenancekit','','',156,156),
-          ('Printer','maintenancekitmax','','',193,193),
-          ('Printer','maintenancekitused','','',194,194),
-          ('Printer','maintenancekitremaining','','',195,195),
-          ('Printer','transferkit','','',212,212),
-          ('Printer','transferkitmax','','',199,199),
-          ('Printer','transferkitused','','',200,200),
-          ('Printer','transferkitremaining','','',201,201),
-          ('Printer','fuserkit','','',202,202),
-          ('Printer','fuserkitmax','','',203,203),
-          ('Printer','fuserkitused','','',204,204),
-          ('Printer','fuserkitremaining','','',205,205),
-          ('Printer','drumblack','','',161,161),
-          ('Printer','drumblackmax','','',178,178),
-          ('Printer','drumblackused','','',179,179),
-          ('Printer','drumblackremaining','','',180,180),
-          ('Printer','drumcyan','','',162,162),
-          ('Printer','drumcyanmax','','',181,181),
-          ('Printer','drumcyanused','','',182,182),
-          ('Printer','drumcyanremaining','','',183,183),
-          ('Printer','drummagenta','','',163,163),
-          ('Printer','drummagentamax','','',184,184),
-          ('Printer','drummagentaused','','',185,185),
-          ('Printer','drummagentaremaining','','',186,186),
-          ('Printer','drumyellow','','',164,164),
-          ('Printer','drumyellowmax','','',187,187),
-          ('Printer','drumyellowused','','',188,188),
-          ('Printer','drumyellowremaining','','',189,189),
-          ('Printer','paperrollinches','','',197,197),
-          ('Printer','paperrollcentimeters','','',198,198),
--- Printers : Counter pages
-          ('Printer','pagecountertotalpages','glpi_plugin_glpiinventory_printerlogs',
-             'pages_total',28,128),
-          ('Printer','pagecounterblackpages','glpi_plugin_glpiinventory_printerlogs',
-             'pages_n_b',29,129),
-          ('Printer','pagecountercolorpages','glpi_plugin_glpiinventory_printerlogs',
-             'pages_color',30,130),
-          ('Printer','pagecounterrectoversopages','glpi_plugin_glpiinventory_printerlogs',
-             'pages_recto_verso',54,154),
-          ('Printer','pagecounterscannedpages','glpi_plugin_glpiinventory_printerlogs',
-             'scanned',55,155),
-          ('Printer','pagecountertotalpages_print','glpi_plugin_glpiinventory_printerlogs',
-             'pages_total_print',423,1423),
-          ('Printer','pagecounterblackpages_print','glpi_plugin_glpiinventory_printerlogs',
-             'pages_n_b_print',424,1424),
-          ('Printer','pagecountercolorpages_print','glpi_plugin_glpiinventory_printerlogs',
-             'pages_color_print',425,1425),
-          ('Printer','pagecountertotalpages_copy','glpi_plugin_glpiinventory_printerlogs',
-             'pages_total_copy',426,1426),
-          ('Printer','pagecounterblackpages_copy','glpi_plugin_glpiinventory_printerlogs',
-             'pages_n_b_copy',427,1427),
-          ('Printer','pagecountercolorpages_copy','glpi_plugin_glpiinventory_printerlogs',
-             'pages_color_copy',428,1428),
-          ('Printer','pagecountertotalpages_fax','glpi_plugin_glpiinventory_printerlogs',
-             'pages_total_fax',429,1429),
-          ('Printer','pagecounterlargepages','glpi_plugin_glpiinventory_printerlogs',
-             'pages_total_large',434,1434),
--- Printers : NetworkPort
-          ('Printer','ifPhysAddress','glpi_networkports','mac',58,NULL),
-          ('Printer','ifName','glpi_networkports','name',57,NULL),
-          ('Printer','ifaddr','glpi_networkports','ip',407,NULL),
-          ('Printer','ifType','','',97,NULL),
-          ('Printer','ifIndex','','',416,NULL),
--- Computer
-          ('Computer','serial','','serial',13,NULL),
-          ('Computer','ifPhysAddress','','mac',15,NULL),
-          ('Computer','ifaddr','','ip',407,NULL);

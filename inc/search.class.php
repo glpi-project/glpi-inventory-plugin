@@ -75,12 +75,6 @@ class PluginGlpiinventorySearch extends CommonDBTM {
     * @return boolean
     */
    static function constructDatas(array &$data, $onlycount = false) {
-      // Hack the built SQL query to use Computer rather than GlpiinventoryComputer
-      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginGlpiinventoryComputer'",
-         "`mainitemtype` = 'Computer'", $data['sql']['search']);
-      $data['sql']['search'] = str_replace("`itemtype` = 'PluginGlpiinventoryComputer'",
-         "`itemtype` = 'Computer'", $data['sql']['search']);
-
       Search::constructData($data, $onlycount);
    }
 

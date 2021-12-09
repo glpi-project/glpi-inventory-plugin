@@ -79,7 +79,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication {
       $job        = new PluginGlpiinventoryTaskjob();
       $joblog     = new PluginGlpiinventoryTaskjoblog();
       $jobstate   = new PluginGlpiinventoryTaskjobstate();
-      $agent      = new PluginGlpiinventoryAgent();
+      $agent      = new Agent();
       $agentmodule= new PluginGlpiinventoryAgentmodule();
 
       $job->getFromDB($taskjob_id);
@@ -237,7 +237,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication {
       $c_input= [];
       $c_input['plugin_glpiinventory_taskjobs_id'] = $job->fields['id'];
       $c_input['state']                              = 0;
-      $c_input['plugin_glpiinventory_agents_id']   = 0;
+      $c_input['agents_id']   = 0;
       $c_input['execution_id']                       = $task->fields['execution_id'];
 
       $package = new PluginGlpiinventoryDeployPackage();
@@ -256,7 +256,8 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication {
             $c_input['uniqid']   = $uniqid;
 
             //get agent for this computer
-            $agents_id = $agent->getAgentWithComputerid($computer_id);
+            $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer_id]);
+            $agents_id = $agent->fields['id'] ?? false;
             if ($agents_id === false) {
                $jobstates_id = $jobstate->add($c_input);
                $jobstate->changeStatusFinish($jobstates_id,
@@ -266,13 +267,13 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication {
                                              "No agent found for [[Computer::".$computer_id."]]");
             } else {
                if ($agentmodule->isAgentCanDo('DEPLOY', $agents_id)) {
-                  $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
+                  $c_input['agents_id'] = $agents_id;
 
                   $jobstates_running = $jobstate->find(
                         ['itemtype'                         => 'PluginGlpiinventoryDeployPackage',
                          'items_id'                         => $package->fields['id'],
                          'state'                            => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED],
-                         'plugin_glpiinventory_agents_id' => $agents_id
+                         'agents_id' => $agents_id
                         ]);
 
                   if (count($jobstates_running) == 0) {
@@ -289,7 +290,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication {
                      $taskvalid++;
                      $joblog->add($c_input);
                      unset($c_input['state']);
-                     unset($c_input['plugin_glpiinventory_agents_id']);
+                     unset($c_input['agents_id']);
                   }
                }
             }
@@ -350,7 +351,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication {
 
       //Add mirrors to associatedFiles
       $mirrors = PluginGlpiinventoryDeployMirror::getList(
-         $taskjobstate->fields['plugin_glpiinventory_agents_id']
+         $taskjobstate->fields['agents_id']
       );
       foreach ($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;

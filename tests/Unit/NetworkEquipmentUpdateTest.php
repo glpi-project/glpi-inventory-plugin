@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 class NetworkEquipmentUpdateTest extends TestCase {
 
    public $items_id = 0;
-   public $datelatupdate = '';
 
    public static function setUpBeforeClass(): void {
       // Delete all network equipments
@@ -46,210 +45,205 @@ class NetworkEquipmentUpdateTest extends TestCase {
       }
    }
 
+   public static function tearDownAfterClass(): void {
+      global $DB, $GLPI_CACHE;
+      $DB->update(
+         NetworkPortType::getTable(),
+         [
+            'is_importable' => 0,
+            'instantiation_type' => null
+         ], [
+            'value_decimal' => [53, 54]
+         ]
+      );
+
+      $GLPI_CACHE->set('glpi_inventory_ports_types', null);
+   }
 
    /**
     * @test
     */
    public function AddNetworkEquipment() {
-      global $DB;
+      global $DB, $GLPI_CACHE;
 
-      $DB->query("UPDATE `glpi_plugin_glpiinventory_networkporttypes`"
-              ." SET `import`='1'"
-              ." WHERE `number`='54'");
+      $this->assertTrue(
+         $DB->update(
+            NetworkPortType::getTable(),
+            [
+               'is_importable' => 1,
+               'instantiation_type' => 'NetworkPortEthernet'
+            ], [
+               'value_decimal' => [53, 54]
+            ]
+         )
+      );
 
-      $this->datelatupdate = date('Y-m-d H:i:s');
+      $GLPI_CACHE->set('glpi_inventory_ports_types', null);
 
-      $a_inventory = [
-          'PluginGlpiinventoryNetworkEquipment' => [
-                  'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
-                  'last_inventory_update' => $this->datelatupdate,
-                  'cpu'                         => 5,
-                  'memory'                      => 18,
-                  'uptime'                      => '157 days, 02:14:44.00'
-                ],
-          'networkport'       => [],
-          'connection-mac'    => [],
-          'vlans'             => [],
-          'connection-lldp'   => [],
-          'internalport'      => ['192.168.30.67', '192.168.40.67', '192.168.50.67'],
-          'itemtype'          => 'NetworkEquipment'
-          ];
-      $a_inventory['NetworkEquipment'] = [
-               'name'               => 'switchr2d2',
-               'id'                 => 96,
-               'serial'             => 'FOC147UJEU4',
-               'manufacturers_id'   => 29,
-               'locations_id'       => 3,
-               'networkequipmentmodels_id' => 3,
-               'networkequipmentfirmwares_id' => 3,
-               'memory'             => 18,
-               'ram'                => 64,
-               'is_dynamic'         => 1,
-               'mac'                => '6c:50:4d:39:59:80'
-      ];
+      $xml_source = '<?xml version="1.0" encoding="UTF-8" ?>
+<REQUEST>
+  <CONTENT>
+    <DEVICE>
+      <INFO>
+        <TYPE>NETWORKING</TYPE>
+        <MANUFACTURER>Cisco</MANUFACTURER>
+        <DESCRIPTION>Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
+        <NAME>switchr2d2</NAME>
+        <SERIAL>FOC147UJEU4</SERIAL>
+        <UPTIME>157 days, 02:14:44.00</UPTIME>
+        <MAC>6c:50:4d:39:59:80</MAC>
+        <ID>0</ID>
+        <IPS>
+          <IP>192.168.30.67</IP>
+          <IP>192.168.40.67</IP>
+          <IP>192.168.50.67</IP>
+        </IPS>
+      </INFO>
+      <PORTS>
+        <PORT>
+          <CONNECTIONS>
+            <CONNECTION>
+              <MAC>cc:f9:54:a1:03:35</MAC>
+            </CONNECTION>
+          </CONNECTIONS>
+          <IFDESCR>FastEthernet0/1</IFDESCR>
+          <IFNAME>Fa0/1</IFNAME>
+          <IFNUMBER>10001</IFNUMBER>
+          <IFSPEED>100000000</IFSPEED>
+          <IFSTATUS>1</IFSTATUS>
+          <IFINTERNALSTATUS>1</IFINTERNALSTATUS>
+          <IFTYPE>6</IFTYPE>
+          <MAC>6c:50:4d:39:59:81</MAC>
+          <VLANS>
+            <VLAN>
+              <NAME>printer</NAME>
+              <NUMBER>281</NUMBER>
+              <TAGGED>1</TAGGED>
+            </VLAN>
+          </VLANS>
+        </PORT>
+        <PORT>
+          <CONNECTIONS>
+            <CONNECTION>
+              <MAC>cc:f9:54:a1:03:36</MAC>
+            </CONNECTION>
+          </CONNECTIONS>
+          <IFDESCR>FastEthernet0/2</IFDESCR>
+          <IFNAME>Fa0/2</IFNAME>
+          <IFNUMBER>10002</IFNUMBER>
+          <IFSPEED>10000000</IFSPEED>
+          <IFSTATUS>1</IFSTATUS>
+          <IFINTERNALSTATUS>1</IFINTERNALSTATUS>
+          <IFTYPE>6</IFTYPE>
+          <MAC>6c:50:4d:39:59:82</MAC>
+          <TRUNK>1</TRUNK>
+          <VLANS>
+            <VLAN>
+              <NAME>printer</NAME>
+              <NUMBER>281</NUMBER>
+              <TAGGED>1</TAGGED>
+            </VLAN>
+            <VLAN>
+              <NAME>admin</NAME>
+              <NUMBER>280</NUMBER>
+              <TAGGED>1</TAGGED>
+            </VLAN>
+          </VLANS>
+        </PORT>
+        <PORT>
+          <IFDESCR>Port-channel10</IFDESCR>
+          <IFNAME>Po10</IFNAME>
+          <IFNUMBER>5005</IFNUMBER>
+          <IFSPEED>4294967295</IFSPEED>
+          <IFSTATUS>1</IFSTATUS>
+          <IFINTERNALSTATUS>1</IFINTERNALSTATUS>
+          <IFTYPE>53</IFTYPE>
+          <MAC>6c:50:4d:39:59:88</MAC>
+          <TRUNK>1</TRUNK>
+          <AGGREGATE>
+            <PORT>10001</PORT>
+            <PORT>10002</PORT>
+          </AGGREGATE>
+        </PORT>
+        <PORT>
+          <IFDESCR>vlan0</IFDESCR>
+          <IFNAME>vlan0</IFNAME>
+          <IFNUMBER>5006</IFNUMBER>
+          <IFSPEED>4294967295</IFSPEED>
+          <IFSTATUS>1</IFSTATUS>
+          <IFINTERNALSTATUS>1</IFINTERNALSTATUS>
+          <IFTYPE>54</IFTYPE>
+          <MAC>6c:50:4d:39:59:89</MAC>
+          <TRUNK>1</TRUNK>
+        </PORT>
+      </PORTS>
+    </DEVICE>
+    <MODULEVERSION>3.0</MODULEVERSION>
+    <PROCESSNUMBER>1</PROCESSNUMBER>
+  </CONTENT>
+  <DEVICEID>foo</DEVICEID>
+  <QUERY>SNMPQUERY</QUERY>
+</REQUEST>';
 
-      $a_inventory['networkport'] = [
-          '10001' => [
-              'ifdescr'          => 'FastEthernet0/1',
-              'ifinerrors'       => 869,
-              'ifinoctets'       => 1953319640,
-              'ifinternalstatus' => 1,
-              'iflastchange'     => '156 days, 08:37:22.84',
-              'ifmtu'            => 1500,
-              'name'             => 'Fa0/1',
-              'logical_number'   => 10001,
-              'ifouterrors'      => 0,
-              'ifoutoctets'      => 554008368,
-              'speed'            => 100000000,
-              'ifstatus'         => 1,
-              'iftype'           => 6,
-              'mac'              => '6c:50:4d:39:59:81',
-              'trunk'            => 0,
-              'ifspeed'          => 100000000
-          ],
-          '10002' => [
-              'ifdescr'          => 'FastEthernet0/2',
-              'ifinerrors'       => 0,
-              'ifinoctets'       => 1953319640,
-              'ifinternalstatus' => 1,
-              'iflastchange'     => '53.53 seconds',
-              'ifmtu'            => 1500,
-              'name'             => 'Fa0/2',
-              'logical_number'   => 10002,
-              'ifouterrors'      => 0,
-              'ifoutoctets'      => 554008368,
-              'speed'            => 10000000,
-              'ifstatus'         => 1,
-              'iftype'           => 6,
-              'mac'              => '6c:50:4d:39:59:82',
-              'trunk'            => 1,
-              'ifspeed'          => 10000000
-          ],
-          '5005' => [
-              'ifdescr'          => 'Port-channel10',
-              'ifinerrors'       => 0,
-              'ifinoctets'       => 1076823325,
-              'ifinternalstatus' => 1,
-              'iflastchange'     => '53.53 seconds',
-              'ifmtu'            => 1500,
-              'name'             => 'Po10',
-              'logical_number'   => 5005,
-              'ifouterrors'      => 0,
-              'ifoutoctets'      => 2179528910,
-              'speed'            => 4294967295,
-              'ifstatus'         => 1,
-              'iftype'           => 53,
-              'mac'              => '6c:50:4d:39:59:88',
-              'trunk'            => 1,
-              'ifspeed'          => 4294967295
-          ],
-          '5006' => [
-              'ifdescr'          => 'vlan0',
-              'ifinerrors'       => 0,
-              'ifinoctets'       => 1076823325,
-              'ifinternalstatus' => 1,
-              'iflastchange'     => '53.53 seconds',
-              'ifmtu'            => 1500,
-              'name'             => 'vlan0',
-              'logical_number'   => 5006,
-              'ifouterrors'      => 0,
-              'ifoutoctets'      => 2179528910,
-              'speed'            => 4294967295,
-              'ifstatus'         => 1,
-              'iftype'           => 54,
-              'mac'              => '6c:50:4d:39:59:89',
-              'trunk'            => 1,
-              'ifspeed'          => 4294967295
-          ]
-      ];
-      $a_inventory['connection-mac'] = [
-          '10001' => ['cc:f9:54:a1:03:35'],
-          '10002' => ['cc:f9:54:a1:03:36']
-      ];
-      $a_inventory['vlans'] = [
-          '10001' => [
-              '281' => [
-                  'name'   => 'printer',
-                  'tag'    => 281,
-                  'tagged' => 1
-              ]
-          ],
-          '10002' => [
-              '281' => [
-                  'name'   => 'printer',
-                  'tag'    => 281,
-                  'tagged' => 1
-              ],
-              '280' => [
-                  'name'   => 'admin',
-                  'tag'    => 280,
-                  'tagged' => 1
-              ]
-          ]
-      ];
-      $a_inventory['connection-lldp'] = [
-          '10002' => [
-              'ifdescr'          => 'GigabitEthernet1/0/2',
-              'ip'               => '192.168.100.100',
-              'model'            => 'cisco WS-C3750G-24PS',
-              'sysdescr'         => 'Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)\nCopyright (c) 1986-2008 by Cisco Systems, Inc.\nCompiled Thu 21-Aug-08 15:43 by nachen',
-              'name'             => 'CENTRALSWITCH',
-              'logical_number'   => '',
-              'mac'              => ''
-          ]
-      ];
-      $a_inventory['aggregate'] = [
-          '5005' => ['10001', '10002']
-      ];
-
-      $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
 
-      $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJEU4',
-                                                     'entities_id' => 0]);
+      $this->items_id = $networkEquipment->add([
+         'serial'      => 'FOC147UJEU4',
+         'entities_id' => 0
+      ]);
 
       $this->assertGreaterThan(0, $this->items_id);
 
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 1);
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $DB->query("UPDATE `glpi_plugin_glpiinventory_networkporttypes`"
-              ." SET `import`='0'"
-              ." WHERE `number`='54'");
-
-      // To be sure not have 2 sme informations
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 0);
-
+      $this->assertEquals(1, count($networkEquipment->find()));
    }
-
 
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function NetworkEquipmentGeneral() {
 
       $networkEquipment = new NetworkEquipment();
       $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
 
-      unset($networkEquipment->fields['id']);
-      unset($networkEquipment->fields['date_mod']);
-      unset($networkEquipment->fields['date_creation']);
+      $this->assertGreaterThan(0, $networkEquipment->fields['networkequipmenttypes_id']);
+      $this->assertGreaterThan(0, $networkEquipment->fields['manufacturers_id']);
+      $this->assertGreaterThan(0, $networkEquipment->fields['autoupdatesystems_id']);
+
+      unset(
+         $networkEquipment->fields['id'],
+         $networkEquipment->fields['date_mod'],
+         $networkEquipment->fields['date_creation'],
+         $networkEquipment->fields['networkequipmenttypes_id'],
+         $networkEquipment->fields['manufacturers_id'],
+         $networkEquipment->fields['autoupdatesystems_id'],
+         $networkEquipment->fields['last_inventory_update']
+      );
+
       $a_reference = [
           'name'                 => 'switchr2d2',
           'serial'               => 'FOC147UJEU4',
           'entities_id'          => 0,
           'is_recursive'         => 0,
-          'ram'                  => '64',
+          'ram'                  => null,
           'otherserial'          => null,
           'contact'              => null,
           'contact_num'          => null,
           'users_id_tech'        => 0,
           'groups_id_tech'       => 0,
           'comment'              => null,
-          'locations_id'         => 3,
+          'locations_id'         => 0,
           'networks_id'          => 0,
-          'networkequipmenttypes_id' => 0,
-          'networkequipmentmodels_id' => 3,
-          'manufacturers_id'     => 29,
+          'networkequipmentmodels_id' => 0,
           'is_deleted'           => 0,
           'is_template'          => 0,
           'template_name'        => null,
@@ -259,46 +253,21 @@ class NetworkEquipmentUpdateTest extends TestCase {
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => 1,
           'uuid'                 => null,
-          'autoupdatesystems_id' => 0,
-          'sysdescr'             => null
+          'sysdescr'             => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
+         'cpu'                   => 0,
+         'uptime'                => '157 days, 02:14:44.00',
+         'snmpcredentials_id'    => 0
       ];
 
       $this->assertEquals($a_reference, $networkEquipment->fields);
    }
 
-
    /**
     * @test
-    */
-   public function NetworkEquipmentSnmpExtension() {
-      $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
-      $networkEquipment = new NetworkEquipment();
-      $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
-
-      $a_networkequipment = current($pfNetworkEquipment->find(['networkequipments_id' => $networkEquipment->fields['id']], [], 1));
-      unset($a_networkequipment['last_inventory_update']);
-      unset($a_networkequipment['id']);
-      $a_reference = [
-          'networkequipments_id'                        => $networkEquipment->fields['id'],
-          'sysdescr'                                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
-Technical Support: http://www.cisco.com/techsupport
-Copyright (c) 1986-2010 by Cisco Systems, Inc.
-Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
-          'plugin_glpiinventory_configsecurities_id'  => 0,
-          'uptime'                                      => '157 days, 02:14:44.00',
-          'cpu'                                         => 5,
-          'memory'                                      => 18,
-          'last_PID_update'                             => 0,
-          'serialized_inventory'                        => null
-      ];
-
-      $this->assertEquals($a_reference, $a_networkequipment);
-
-   }
-
-
-   /**
-    * @test
+    * @depends AddNetworkEquipment
     */
    public function NetworkEquipmentInternalPorts() {
       $networkPort = new NetworkPort();
@@ -336,16 +305,16 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
    }
 
-
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function UnmanagedNetworkPort() {
       $networkPort = new NetworkPort();
 
       $a_networkports = $networkPort->find(
             ['mac'      => 'cc:f9:54:a1:03:35',
-             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
+             'itemtype' => 'Unmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
 
@@ -355,14 +324,14 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
    }
 
-
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function NetworkPortConnection() {
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
+      $unmanaged = new Unmanaged();
 
       $a_networkports = $networkPort->find(['logical_number' => 10001]);
 
@@ -372,20 +341,20 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $opposites_id = $networkPort_NetworkPort->getOppositeContact($a_networkport['id']);
 
       $this->assertTrue($networkPort->getFromDB($opposites_id), 'Cannot load opposite');
-      $pfUnmanaged->getFromDB($networkPort->fields['items_id']);
+      $unmanaged->getFromDB($networkPort->fields['items_id']);
 
-      $this->assertEquals(0, $pfUnmanaged->fields['hub'], 'May not be a hub');
+      $this->assertEquals(0, $unmanaged->fields['hub'], 'May not be a hub');
 
       $a_networkports = $networkPort->find(
-            ['items_id' => $pfUnmanaged->fields['id'],
-             'itemtype' => 'PluginGlpiinventoryUnmanaged']);
+            ['items_id' => $unmanaged->fields['id'],
+             'itemtype' => 'Unmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
    }
 
-
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function NetworkPortAggregation() {
       $networkPort = new NetworkPort();
@@ -413,6 +382,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function VlansPort10002() {
       $networkPort = new NetworkPort();
@@ -438,12 +408,14 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
    /**
     * @test
+    * @depends AddNetworkEquipment
     */
    public function NetworkPortCreated() {
 
       $networkPort = new NetworkPort();
       $a_networkports = $networkPort->find(['itemtype' => 'NetworkEquipment']);
 
-      $this->assertEquals(4, count($a_networkports), 'Number of networkport must be 4');
+      $expected = 4 + 1; //4 standard ports (10001, 10002, 5005, 5006) + 1 management port
+      $this->assertEquals($expected, count($a_networkports), 'Number of network ports must be ' . $expected);
    }
 }

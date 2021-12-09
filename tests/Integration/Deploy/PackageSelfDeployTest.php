@@ -35,6 +35,7 @@ use PHPUnit\Framework\TestCase;
 class PackageSelfDeployTest extends TestCase {
 
    public static function setUpBeforeClass(): void {
+      global $DB;
 
       // Delete all packages
       $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -59,14 +60,21 @@ class PackageSelfDeployTest extends TestCase {
 
       // Delete all computers
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
 
+      // Delete all agents
+      $agent = new Agent();
+      $items = $agent->find();
+      foreach ($items as $item) {
+         $agent->delete(['id' => $item['id']], true);
+      }
+
       $computer      = new Computer();
       $user          = new User();
-      $pfAgent       = new PluginGlpiinventoryAgent();
+      $agent         = new Agent();
       $pfDeployGroup = new PluginGlpiinventoryDeployGroup();
       $profile       = new Profile();
 
@@ -81,9 +89,13 @@ class PackageSelfDeployTest extends TestCase {
          'entities_id' => 0,
          'users_id'    => $userId
       ]);
-      $pfAgent->add([
-         'computers_id'=> $computerId,
-         'entities_id' => 0
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+      $agent->add([
+         'itemtype' => Computer::getType(),
+         'items_id'=> $computerId,
+         'entities_id' => 0,
+         'agenttypes_id' => $agenttype['id'],
+         'deviceid' => "Computer$computerId"
       ]);
       $pfDeployGroup->add([
          'name' => 'all',
@@ -107,7 +119,7 @@ class PackageSelfDeployTest extends TestCase {
       $auth->auth_succeded = true;
       $user->getFromDB(2);
       $auth->user = $user;
-      Session::init($auth);
+      //Session::init($auth);
       Session::initEntityProfiles(2);
       Session::changeProfile(4);
       plugin_init_glpiinventory();
@@ -314,6 +326,7 @@ class PackageSelfDeployTest extends TestCase {
     * @test
     */
    public function ReportMyPackage() {
+      global $DB;
 
       // Enable deploy feature for all agents
       $module = new PluginGlpiinventoryAgentmodule();
@@ -325,7 +338,7 @@ class PackageSelfDeployTest extends TestCase {
 
       $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $computer        = new Computer();
-      $pfAgent         = new PluginGlpiinventoryAgent();
+      $agent           = new Agent();
       $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
       $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
       $user = new User();
@@ -344,9 +357,13 @@ class PackageSelfDeployTest extends TestCase {
       ]);
       $this->assertNotFalse($computerId2);
 
-      $agentId = $pfAgent->add([
-         'computers_id'=> $computerId2,
-         'entities_id' => 0
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+      $agentId = $agent->add([
+         'itemtype' => Computer::getType(),
+         'items_id'=> $computerId2,
+         'entities_id' => 0,
+         'agenttypes_id' => $agenttype['id'],
+         'deviceid' => "Computer$computerId2"
       ]);
       $this->assertNotFalse($agentId);
 
@@ -363,7 +380,7 @@ class PackageSelfDeployTest extends TestCase {
       $this->assertNotFalse($packageEntityId);
 
       // The second package, test2, is not in the same entity, and is not recursive
-      // It should not be visible when requesting the list of packages the the user
+      // It should not be visible when requesting the list of packages the user
       // can deploy
       $input = [
          'name'        => 'test2',
@@ -406,10 +423,11 @@ class PackageSelfDeployTest extends TestCase {
     * @test
     */
    public function ReportComputerPackages() {
+      global $DB;
 
       $pfDeployPackage        = new PluginGlpiinventoryDeployPackage();
       $computer               = new Computer();
-      $pfAgent                = new PluginGlpiinventoryAgent();
+      $agent                  = new Agent();
       $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
       $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
 
@@ -423,9 +441,13 @@ class PackageSelfDeployTest extends TestCase {
          'entities_id' => 0
       ]);
       $this->assertNotFalse($computerId3);
-      $pfAgent->add([
-         'computers_id'=> $computerId3,
-         'entities_id' => 0
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+      $agent->add([
+         'itemtype' => Computer::getType(),
+         'items_id'=> $computerId3,
+         'entities_id' => 0,
+         'agenttypes_id' => $agenttype['id'],
+         'deviceid' => "Computer$computerId3"
       ]);
 
       $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);

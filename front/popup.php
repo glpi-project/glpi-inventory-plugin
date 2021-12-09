@@ -55,11 +55,6 @@ if (isset($_SESSION["glpipopup"]["name"])) {
          include "../../../front/rule.cache.php";
          break;
 
-      case "pluginglpiinventory_networkport_display_options" :
-         Html::popHeader(__('Network ports display options', 'glpiinventory'), $_SERVER['PHP_SELF']);
-         include "networkport.display.php";
-         break;
-
    }
    echo "<div class='center'><br><a href='javascript:window.close()'>".__('Back')."</a>";
    echo "</div>";

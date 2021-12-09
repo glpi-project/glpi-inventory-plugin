@@ -57,7 +57,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
       $pfIPRange = new PluginGlpiinventoryIPRange();
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
 
       $uniqid = uniqid();
 
@@ -93,7 +93,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             $dynagent = 2;
          } else {
             // Detect if agent exists
-            if ($pfAgent->getFromDB($agent_id)) {
+            if ($agent->getFromDB($agent_id)) {
                if ($pfTask->fields['communication'] == 'pull') {
                   $a_agentlist[$agent_id] = 1;
                } else {
@@ -108,8 +108,8 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
          $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
          foreach ($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
-               $pfAgent->getFromDB($data['id']);
-               $a_ip = $pfAgent->getIPs();
+               $agent->getFromDB($data['id']);
+               $a_ip = PluginGlpiinventoryToolbox::getIPforDevice('Computer', $agent->fields['itemss_id']);
                foreach ($a_ip as $ip) {
                   if ($pfTask->fields['communication'] == 'push') {
                      if ($pfTaskjob->isAgentAlive('1', $data['id'])) {
@@ -141,12 +141,12 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             if (!isset($a_agentListComplete) or empty($a_agentListComplete)) {
                $a_input = [];
                $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-               $a_input['plugin_glpiinventory_agents_id'] = 0;
+               $a_input['agents_id'] = 0;
                $a_input['state']        = 1;
                $a_input['itemtype']     = 'PluginGlpiinventoryIPRange';
                $a_input['items_id']     = $iprange_id;
                $a_input['uniqid']       = $uniqid;
-               $a_input['execution_id'] = $task->fields['execution_id'];
+               $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                   //Add log of taskjob
@@ -177,10 +177,10 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                   $a_input = [];
                   $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
                   $a_input['state'] = 0;
-                  $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
+                  $a_input['agents_id'] = $agent_id;
                   $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
                   $a_input['uniqid'] = $uniqid;
-                  $a_input['execution_id'] = $task->fields['execution_id'];
+                  $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
                   $a_input['items_id'] = $iprange_id;
                   if (($iptimes + $nbIpAgent) > ($e-$s)) {
@@ -215,11 +215,11 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
          $a_input = [];
          $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
-         $a_input['plugin_glpiinventory_agents_id'] = 0;
+         $a_input['agents_id'] = 0;
          $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
-         $a_input['execution_id'] = $task->fields['execution_id'];
+         $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
          $Taskjobstates_id = $pfTaskjobstate->add($a_input);
             //Add log of taskjob
@@ -250,10 +250,10 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             $a_input = [];
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 0;
-            $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
+            $a_input['agents_id'] = $agent_id;
             $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
             $a_input['uniqid'] = $uniqid;
-            $a_input['execution_id'] = $task->fields['execution_id'];
+            $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
             //            $nbIpAgent = $numberIpByAgent;
             $nbIpadded = 0;
@@ -302,11 +302,10 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
     * When agent contact server, this function send job data to agent
     *
     * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
-    * @return string
+    * @return array
     */
    function run($jobstate) {
-
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfTaskjob = new PluginGlpiinventoryTaskjob();
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
@@ -314,38 +313,30 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
       $pfToolbox = new PluginGlpiinventoryToolbox();
       $pfConfig = new PluginGlpiinventoryConfig();
 
-      $pfAgent->getFromDB($jobstate->fields['plugin_glpiinventory_agents_id']);
+      $agent->getFromDB($jobstate->fields['agents_id']);
 
-      $sxml_option = $this->message->addChild('OPTION');
-      $sxml_option->addChild('NAME', 'NETDISCOVERY');
+      $param_attrs = [];
 
-      $sxml_param = $sxml_option->addChild('PARAM');
       // Use general config when threads number is set to 0 on the agent
-      if ($pfAgent->fields["threads_networkdiscovery"] == 0) {
-         $sxml_param->addAttribute('THREADS_DISCOVERY',
-            $pfConfig->getValue('threads_networkdiscovery'));
-      } else {
-         $sxml_param->addAttribute('THREADS_DISCOVERY',
-            $pfAgent->fields["threads_networkdiscovery"]);
-      }
-      // Use general config when timeout is set to 0 on the agent
-      if ($pfAgent->fields["timeout_networkdiscovery"] == 0) {
-         $sxml_param->addAttribute('TIMEOUT',
-            $pfConfig->getValue('timeout_networkdiscovery'));
-      } else {
-         $sxml_param->addAttribute('TIMEOUT',
-            $pfAgent->fields["timeout_networkdiscovery"]);
-      }
-       $sxml_param->addAttribute('PID', $jobstate->fields['id']);
+      $param_attrs['THREADS_DISCOVERY'] = $agent->fields["threads_networkdiscovery"] == 0 ?
+         $pfConfig->getValue('threads_networkdiscovery') :
+         $agent->fields["threads_networkdiscovery"];
 
+      // Use general config when timeout is set to 0 on the agent
+      $param_attrs['TIMEOUT'] = $agent->fields["timeout_networkdiscovery"] == 0 ?
+         $pfConfig->getValue('timeout_networkdiscovery') :
+         $agent->fields["timeout_networkdiscovery"];
+
+      $param_attrs['PID'] = $jobstate->fields['id'];
+
+      $iprange_attrs = [];
       $changestate = 0;
       $taskjobstatedatas = $jobstate->fields;
-      $sxml_rangeip = $sxml_option->addChild('RANGEIP');
       $pfTaskjob->getFromDB($taskjobstatedatas['plugin_glpiinventory_taskjobs_id']);
       $pfTaskjobstate->getFromDB($taskjobstatedatas['id']);
       $pfIPRange->getFromDB($taskjobstatedatas['items_id']);
 
-      $sxml_rangeip->addAttribute('ID', $pfIPRange->fields['id']);
+      $iprange_attrs['ID'] = $pfIPRange->fields['id'];
 
       if (!is_null($pfTaskjobstate->fields['specificity'])) {
          $a_split = explode("-", $pfTaskjobstate->fields['specificity']);
@@ -354,25 +345,25 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
 
          $last_ip = long2ip($first_ip + $a_split[1]);
          $first_ip = long2ip($first_ip + $a_split[0]);
-         if ($first_ip != '0.0.0.0'
-                 && $last_ip != '0.0.0.0') {
-            $sxml_rangeip->addAttribute('IPSTART', $first_ip);
-            $sxml_rangeip->addAttribute('IPEND', $last_ip);
+         if ($first_ip != '0.0.0.0' && $last_ip != '0.0.0.0') {
+            $iprange_attrs['IPSTART'] = $first_ip;
+            $iprange_attrs['IPEND'] = $last_ip;
          }
       } else {
-         $sxml_rangeip->addAttribute('IPSTART', $pfIPRange->fields["ip_start"]);
-         $sxml_rangeip->addAttribute('IPEND', $pfIPRange->fields["ip_end"]);
+         $iprange_attrs['IPSTART'] = $pfIPRange->fields["ip_start"];
+         $iprange_attrs['IPEND'] = $pfIPRange->fields["ip_end"];
       }
-      $sxml_rangeip->addAttribute('ENTITY', $pfIPRange->fields["entities_id"]);
+
+      $iprange_attrs['ENTITY'] = $pfIPRange->fields["entities_id"];
 
       if ($changestate == '0') {
          $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
          $pfTaskjoblog->addTaskjoblog($pfTaskjobstate->fields['id'],
                                  '0',
-                                 'PluginGlpiinventoryAgent',
+                                 'Agent',
                                  '1',
-                                 $pfAgent->fields["threads_networkdiscovery"].' threads '.
-                                 $pfAgent->fields["timeout_networkdiscovery"].' timeout'
+                                 $agent->fields["threads_networkdiscovery"].' threads '.
+                                 $agent->fields["timeout_networkdiscovery"].' timeout'
                               );
          $changestate = $pfTaskjobstate->fields['id'];
       } else {
@@ -382,13 +373,30 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
              0,
              "Merged with ".$changestate);
       }
-      $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_ConfigSecurity();
-      $a_auths = $pfIPRange_ConfigSecurity->find(
+      $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
+      $a_auths = $iprange_credentials->find(
             ['plugin_glpiinventory_ipranges_id' => $pfIPRange->fields['id']],
             ['rank']);
+      $auth_nodes = [];
       foreach ($a_auths as $dataAuth) {
-         $pfToolbox->addAuth($sxml_option, $dataAuth['plugin_glpiinventory_configsecurities_id']);
+         $auth_node = $pfToolbox->addAuth($dataAuth['snmpcredentials_id']);
+         if (count($auth_node)) {
+            $auth_nodes[] = $auth_node;
+         }
       }
-      return $this->message;
+
+      return [
+         'OPTION' => [
+            'NAME' => 'NETDISCOVERY',
+            'PARAM' => [
+               'content' => '',
+               'attributes' => $param_attrs
+            ],
+            'RANGEIP' => [
+               'content'   => '',
+               'attributes' => $iprange_attrs
+            ]
+         ] + $auth_nodes
+      ];
    }
 }

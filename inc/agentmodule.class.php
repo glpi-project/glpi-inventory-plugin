@@ -58,7 +58,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
 
       if ($item->getType()=='PluginGlpiinventoryConfig') {
          return __('Agents modules', 'glpiinventory');
-      } else if ($item->getType()=='PluginGlpiinventoryAgent') {
+      } else if ($item->getType()=='Agent') {
          return __('Agents modules', 'glpiinventory');
       }
       return '';
@@ -79,7 +79,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
          $pfAgentmodule = new self();
          $pfAgentmodule->showModuleForm();
          return true;
-      } else if ($item->getType()=='PluginGlpiinventoryAgent') {
+      } else if ($item->getType()=='Agent') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showFormAgentException($item->fields['id']);
          return true;
@@ -95,7 +95,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
     */
    function showModuleForm() {
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
@@ -130,7 +130,6 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
          // Hack for deploy
          if ($data["modulename"] == 'DEPLOY') {
             $modulename = __('Package deployment', 'glpiinventory');
-
          }
 
          echo "<td align='center'><strong>".$modulename."</strong></td>";
@@ -150,7 +149,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
          foreach ($a_agentList as $agent_id) {
             $a_used[] = $agent_id;
          }
-            Dropdown::show("PluginGlpiinventoryAgent", ["name" => "agent_to_add[]",
+            Dropdown::show("Agent", ["name" => "agent_to_add[]",
                                                                "used" => $a_used]);
             echo "</td>";
             echo "<td align='center'>";
@@ -164,8 +163,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
 
             echo "<select class='form-select' size='6' name='agent_to_delete[]'>";
          foreach ($a_agentList as $agent_id) {
-            $pfAgent->getFromDB($agent_id);
-            echo "<option value='".$agent_id."'>".$pfAgent->getName()."</option>";
+            $agent->getFromDB($agent_id);
+            echo "<option value='".$agent_id."'>".$agent->getName()."</option>";
          }
             echo "</select>";
             echo "</td>";
@@ -194,9 +193,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
     * @param integer $agents_id id of the agent
     */
    function showFormAgentException($agents_id) {
-      $pfAgent = new PluginGlpiinventoryAgent();
-      $pfAgent->getFromDB($agents_id);
-      $canedit = $pfAgent->can($agents_id, UPDATE);
+      $agent = new Agent();
+      $agent->getFromDB($agents_id);
+      $canedit = $agent->can($agents_id, UPDATE);
 
       echo "<br/>";
       if ($canedit) {
@@ -237,7 +236,6 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
          // Hack for deploy
          if ($data["modulename"] == 'DEPLOY') {
             $modulename = __('Package deployment', 'glpiinventory');
-
          }
 
          echo "<td width='50%'>".$modulename." :</td>";
@@ -269,10 +267,10 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
       }
       if ($canedit) {
          echo "<tr>";
-         echo "<td class='tab_bg_2 center' colspan='4'>";
+         echo "<td class='tab_bg_2 card-body mx-n2 mb-4  border-top' colspan='4'>";
          echo Html::hidden('id', ['value' => $agents_id]);
          echo "<input type='submit' name='updateexceptions' ".
-                 "value=\"".__('Update')."\" class='submit'>";
+                 "value=\"".__('Update')."\" class='btn btn-primary'>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";
@@ -303,7 +301,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
     */
    function getAgentsCanDo($module_name) {
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
 
       if ($module_name == 'SNMPINVENTORY') {
          $module_name = 'SNMPQUERY';
@@ -326,7 +324,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
                $where = ['id' => $ips];
             }
             if (isset($_SESSION['glpiactiveentities_string'])) {
-               $where += getEntitiesRestrictCriteria($pfAgent->getTable());
+               $where += getEntitiesRestrictCriteria($agent->getTable());
             }
          } else {
             return [];
@@ -346,11 +344,11 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
                $where = ['id' => ['NOT' => $ips]];
             }
             if (isset($_SESSION['glpiactiveentities_string'])) {
-               $where += getEntitiesRestrictCriteria($pfAgent->getTable());
+               $where += getEntitiesRestrictCriteria($agent->getTable());
             }
          }
       }
-      $a_agents = $pfAgent->find($where);
+      $a_agents = $agent->find($where);
       return $a_agents;
    }
 
@@ -392,37 +390,30 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM {
     * @return string the URL generated
     */
    static function getUrlForModule($modulename, $entities_id = -1) {
-      $fi_dir = '/'.Plugin::getWebDir('glpiinventory', false);
+      $plugin_dir = '/'.Plugin::getWebDir('glpiinventory', false);
 
-      // Get current entity URL if it exists ...
-      $pfEntity = new PluginGlpiinventoryEntity();
-      $baseUrl = $pfEntity->getValue('agent_base_url', $entities_id);
-      if (! empty($baseUrl)) {
+      $entity = new Entity();
+      $base_url = $entity->getUsedConfig('agent_base_url', $entities_id, 'agent_base_url', '');
+
+      if (!empty($base_url)) {
          PluginGlpiinventoryToolbox::logIfExtradebug(
             "pluginGlpiinventory-agent-url",
-            "Entity ".$entities_id.", agent base URL: ".$baseUrl
+            "Entity ".$entities_id.", agent base URL: ".$base_url
          );
+      } else {
+         // ... else use global GLPI configuration parameter.
+         global $CFG_GLPI;
+         $base_url = $CFG_GLPI['url_base'];
 
-         if ($baseUrl != 'N/A') {
-            return $baseUrl.$fi_dir.'/b/'.strtolower($modulename).'/';
-         }
+         PluginGlpiinventoryToolbox::logIfExtradebug(
+            "pluginGlpiinventory-agent-url",
+            "Global configuration URL: " . $base_url
+         );
       }
-
-      // ... else use global plugin configuration parameter.
-      if (strlen($pfEntity->getValue('agent_base_url', $entities_id))<10) {
-         PluginGlpiinventoryCommunicationRest::sendError();
-         exit;
-         // die ("agent_base_url is unset!\n");
-      }
-
-      PluginGlpiinventoryToolbox::logIfExtradebug(
-         "pluginGlpiinventory-agent-url",
-         "Global configuration URL: ".$pfEntity->getValue('agent_base_url', $entities_id)
-      );
 
       // Construct the path to the JSON back from the agent_base_url.
       // agent_base_url is the initial URL used by the agent
-      return $pfEntity->getValue('agent_base_url', $entities_id).$fi_dir.'/b/'.strtolower($modulename).'/';
+      return $base_url . $plugin_dir . '/b/' . strtolower($modulename) . '/';
    }
 
 

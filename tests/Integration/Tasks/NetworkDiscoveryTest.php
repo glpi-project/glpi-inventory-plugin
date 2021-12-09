@@ -38,16 +38,16 @@ class NetworkDiscoveryTest extends TestCase {
 
       // Delete all computers
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
 
       // Delete all agents
-      $pfAgent = new PluginGlpiinventoryAgent();
-      $items = $pfAgent->find();
+      $agent = new Agent();
+      $items = $agent->find();
       foreach ($items as $item) {
-         $pfAgent->delete(['id' => $item['id']], true);
+         $agent->delete(['id' => $item['id']], true);
       }
 
       // Delete all ipranges
@@ -69,9 +69,10 @@ class NetworkDiscoveryTest extends TestCase {
     * @test
     */
    public function prepareDb() {
+      global $DB;
 
       $computer        = new Computer();
-      $pfAgent         = new PluginGlpiinventoryAgent();
+      $agent           = new Agent();
       $pfTask          = new PluginGlpiinventoryTask();
       $pfTaskjob       = new PluginGlpiinventoryTaskjob();
       $pfIPRange       = new PluginGlpiinventoryIPRange();
@@ -84,15 +85,18 @@ class NetworkDiscoveryTest extends TestCase {
       $computers_id = $computer->add($input);
       $this->assertNotFalse($computers_id);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
           'entities_id' => 0,
           'name'        => 'computer1',
           'version'     => '{"INVENTORY":"v2.3.11"}',
-          'device_id'   => 'computer1',
+          'deviceid'   => 'computer1',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id'=> $computers_id,
+         'agenttypes_id' => $agenttype['id']
       ];
-      $agentId = $pfAgent->add($input);
+      $agentId = $agent->add($input);
       $this->assertNotFalse($agentId);
 
       $input = [
@@ -106,11 +110,13 @@ class NetworkDiscoveryTest extends TestCase {
           'entities_id' => 0,
           'name'        => 'computer2',
           'version'     => '{"INVENTORY":"v2.3.11"}',
-          'device_id'   => 'computer2',
+          'deviceid'    => 'computer2',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id'=> $computers_id,
+          'agenttypes_id' => $agenttype['id']
       ];
-      $agent2Id = $pfAgent->add($input);
+      $agent2Id = $agent->add($input);
       $this->assertNotFalse($agent2Id);
 
       $input = [
@@ -124,11 +130,13 @@ class NetworkDiscoveryTest extends TestCase {
           'entities_id' => 0,
           'name'        => 'computer3',
           'version'     => '{"INVENTORY":"v2.3.11"}',
-          'device_id'   => 'computer3',
+          'deviceid'   => 'computer3',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id'=> $computers_id,
+          'agenttypes_id' => $agenttype['id']
       ];
-      $agent3Id = $pfAgent->add($input);
+      $agent3Id = $agent->add($input);
       $this->assertNotFalse($agent3Id);
 
       // Add IPRange
@@ -174,7 +182,7 @@ class NetworkDiscoveryTest extends TestCase {
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
           'targets'                         => '[{"PluginGlpiinventoryIPRange":"'.$ipranges_id.'"}]',
-          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$agent2Id.'"}]'
+          'actors'                          => '[{"Agent":"'.$agent2Id.'"}]'
       ];
       $taskjobId = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobId);
@@ -195,7 +203,7 @@ class NetworkDiscoveryTest extends TestCase {
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
           'targets'                         => '[{"PluginGlpiinventoryIPRange":"'.$ipranges_id2.'"}]',
-          'actors'                          => '[{"PluginGlpiinventoryAgent":"'.$agent3Id.'"}]'
+          'actors'                          => '[{"Agent":"'.$agent3Id.'"}]'
       ];
       $taskjobId = $pfTaskjob->add($input);
       $this->assertNotFalse($taskjobId);
@@ -209,15 +217,15 @@ class NetworkDiscoveryTest extends TestCase {
     */
    public function prepareTask() {
       $pfTask  = new PluginGlpiinventoryTask();
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
 
       $pfTask->getFromDBByCrit(['name' => 'network discovery']);
-      $pfAgent->getFromDBByCrit(['name' => 'computer2']);
+      $agent->getFromDBByCrit(['name' => 'computer2']);
 
       $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
       $ref = [
-         $pfAgent->fields['id'] => 'computer2',
+         $agent->fields['id'] => 'computer2',
       ];
 
       $this->assertEquals($ref, $data['agents']);
@@ -229,15 +237,15 @@ class NetworkDiscoveryTest extends TestCase {
     */
    public function prepareTask2() {
       $pfTask = new PluginGlpiinventoryTask();
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
 
       $pfTask->getFromDBByCrit(['name' => 'network discovery2']);
-      $pfAgent->getFromDBByCrit(['name' => 'computer3']);
+      $agent->getFromDBByCrit(['name' => 'computer3']);
 
       $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
       $ref = [
-         $pfAgent->fields['id'] => 'computer3',
+         $agent->fields['id'] => 'computer3',
       ];
 
       $this->assertEquals($ref, $data['agents']);

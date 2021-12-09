@@ -90,7 +90,7 @@ class PluginGlpiinventoryAgentWakeup extends  CommonDBTM {
       //Get the maximum number of agent to wakeup,
       //as allowed in the general configuration
       $config = new PluginGlpiinventoryConfig();
-      $agent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
 
       $maxWakeUp   = $config->getValue('wakeup_agent_max');
 
@@ -142,7 +142,7 @@ class PluginGlpiinventoryAgentWakeup extends  CommonDBTM {
          //(the maximum is defined in wakeup_agent_counter)
          $iterator2 = $DB->request([
             'SELECT'    => [
-               'glpi_plugin_glpiinventory_taskjobstates.plugin_glpiinventory_agents_id',
+               'glpi_plugin_glpiinventory_taskjobstates.agents_id',
             ],
             'FROM'      => [
                'glpi_plugin_glpiinventory_taskjobstates'
@@ -165,13 +165,13 @@ class PluginGlpiinventoryAgentWakeup extends  CommonDBTM {
          $counter = 0;
 
          foreach ($iterator2 as $state) {
-            $agents_id = $state['plugin_glpiinventory_agents_id'];
+            $agents_id = $state['agents_id'];
             if (isset($wakeupArray[$agents_id])) {
                $counter++;
             } else {
                $agent->getFromDB($agents_id);
-               $statusAgent = $agent->getStatus();
-               if ($statusAgent['message'] == 'waiting') {
+               $statusAgent = $agent->requestStatus();
+               if ($statusAgent['answer'] == 'waiting') {
                   $wakeupArray[$agents_id] = $agents_id;
                   $counter++;
                }
@@ -199,7 +199,7 @@ class PluginGlpiinventoryAgentWakeup extends  CommonDBTM {
          //Try to wake up agents one by one
          foreach ($wakeupArray as $ID) {
             $agent->getFromDB($ID);
-            if ($agent->wakeUp()) {
+            if (self::wakeUp($agent)) {
                $wokeup++;
             }
          }
@@ -209,5 +209,29 @@ class PluginGlpiinventoryAgentWakeup extends  CommonDBTM {
       return true;
    }
 
+   /**
+    * Send a request to the remotely agent to run now
+    *
+    * @return boolean true if send successfully, otherwise false
+    */
+   static function wakeUp(Agent $agent) {
+      $ret = false;
+
+      PluginGlpiinventoryDisplay::disableDebug();
+      $urls = $agent->getAgentURLs();
+
+      $ctx = stream_context_create(['http' => ['timeout' => 2]]);
+      foreach ($urls as $url) {
+         if (!$ret) {
+            if (@file_get_contents($url, 0, $ctx) !== false) {
+               $ret = true;
+               break;
+            }
+         }
+      }
+      PluginGlpiinventoryDisplay::reenableusemode();
+
+      return $ret;
+   }
 
 }

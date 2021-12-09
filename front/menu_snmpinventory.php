@@ -36,6 +36,7 @@ if (PluginGlpiinventoryMenu::canView()) {
    Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
                 "glpiinventory", "menu");
 
+   PluginGlpiinventoryMenu::displayMenu();
    PluginGlpiinventoryMenu::displayMenuSNMPInventory();
 } else {
    Html::displayRightError();

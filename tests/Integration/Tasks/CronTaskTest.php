@@ -38,16 +38,16 @@ class CronTaskTest extends TestCase {
 
       // Delete all computers
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
 
       // Delete all agents (force)
-      $pfAgent = new PluginGlpiinventoryAgent();
-      $items = $pfAgent->find();
+      $agent = new Agent();
+      $items = $agent->find();
       foreach ($items as $item) {
-         $pfAgent->delete(['id' => $item['id']], true);
+         $agent->delete(['id' => $item['id']], true);
       }
 
       // Delete all tasks
@@ -84,30 +84,24 @@ class CronTaskTest extends TestCase {
     * @test
     */
    public function prepareDb() {
+      global $DB;
 
       $computer        = new Computer();
-      $pfAgent         = new PluginGlpiinventoryAgent();
+      $agent         = new Agent();
+      $entity = new Entity();
       $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployGroup   = new PluginGlpiinventoryDeployGroup();
       $pfTask          = new PluginGlpiinventoryTask();
       $pfTaskjob       = new PluginGlpiinventoryTaskjob;
       $pfDeployGroup_Dynamicdata = new PluginGlpiinventoryDeployGroup_Dynamicdata();
-      $pfEntity        = new PluginGlpiinventoryEntity();
 
-      $pfEntity = new PluginGlpiinventoryEntity();
-
-      $pfEntity->getFromDBByCrit(['entities_id' => 0]);
-      if (isset($pfEntity->fields['id'])) {
-         $pfEntity->update([
-            'id'                => $pfEntity->fields['id'],
+      $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
+      $this->assertTrue(
+         $entity->update([
+            'id'                => $entity->fields['id'],
             'agent_base_url' => 'http://127.0.0.1/glpi'
-         ]);
-      } else {
-         $pfEntity->add([
-            'entities_id'       => 0,
-            'agent_base_url' => 'http://127.0.0.1/glpi'
-         ]);
-      }
+         ])
+      );
 
       // Create package
       $input = [
@@ -161,15 +155,18 @@ class CronTaskTest extends TestCase {
       $computers_id = $computer->add($input);
       $this->assertNotFalse($computers_id);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
           'entities_id' => 0,
           'name'        => 'computer1',
           'version'     => '{"INVENTORY":"v2.3.11"}',
-          'device_id'   => 'computer1',
+          'deviceid'    => 'computer1',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id'=> $computers_id,
+          'agenttypes_id' => $agenttype['id']
       ];
-      $agentId = $pfAgent->add($input);
+      $agentId = $agent->add($input);
       $this->assertNotFalse($agentId);
 
       $input = [
@@ -183,11 +180,13 @@ class CronTaskTest extends TestCase {
           'entities_id' => 0,
           'name'        => 'computer2',
           'version'     => '{"INVENTORY":"v2.3.11"}',
-          'device_id'   => 'computer2',
+          'deviceid'   => 'computer2',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id'=> $computers_id,
+          'agenttypes_id' => $agenttype['id']
       ];
-      $agentId = $pfAgent->add($input);
+      $agentId = $agent->add($input);
       $this->assertNotFalse($agentId);
 
       $input = [
@@ -201,11 +200,13 @@ class CronTaskTest extends TestCase {
           'entities_id' => 0,
           'name'        => 'computer3',
           'version'     => '{"INVENTORY":"v2.3.11"}',
-          'device_id'   => 'computer3',
+          'deviceid'    => 'computer3',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id'=> $computers_id,
+         'agenttypes_id' => $agenttype['id']
       ];
-      $agentId = $pfAgent->add($input);
+      $agentId = $agent->add($input);
       $this->assertNotFalse($agentId);
 
       // Create package
@@ -258,14 +259,14 @@ class CronTaskTest extends TestCase {
       $this->assertArrayHasKey('id', $pfTask->fields);
       $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $reference = [];
-      $pfAgent->getFromDBByCrit(['name' => 'computer1']);
-      $reference[$pfAgent->fields['id']] = 'computer1';
-      $pfAgent->getFromDBByCrit(['name' => 'computer2']);
-      $reference[$pfAgent->fields['id']] = 'computer2';
-      $pfAgent->getFromDBByCrit(['name' => 'computer3']);
-      $reference[$pfAgent->fields['id']] = 'computer3';
+      $agent->getFromDBByCrit(['name' => 'computer1']);
+      $reference[$agent->fields['id']] = 'computer1';
+      $agent->getFromDBByCrit(['name' => 'computer2']);
+      $reference[$agent->fields['id']] = 'computer2';
+      $agent->getFromDBByCrit(['name' => 'computer3']);
+      $reference[$agent->fields['id']] = 'computer3';
 
       $this->assertEquals($reference, $data['agents']);
       foreach ($data['tasks'] as $task_id => &$task) {
@@ -301,9 +302,10 @@ class CronTaskTest extends TestCase {
     * @test
     */
    public function prepareTaskWithNewComputer() {
+      global $DB;
 
       $computer = new Computer();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
 
       $input = [
           'entities_id' => 0,
@@ -312,15 +314,18 @@ class CronTaskTest extends TestCase {
       $computers_id = $computer->add($input);
       $this->assertNotFalse($computers_id);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
           'entities_id' => 0,
           'name'        => 'computer4',
           'version'     => '{"INVENTORY":"v2.3.11"}',
-          'device_id'   => 'computer4',
+          'deviceid'    => 'computer4',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id'=> $computers_id,
+          'agenttypes_id' => $agenttype['id']
       ];
-      $agentId = $pfAgent->add($input);
+      $agentId = $agent->add($input);
       $this->assertNotFalse($agentId);
 
       PluginGlpiinventoryTask::cronTaskscheduler();
@@ -332,16 +337,16 @@ class CronTaskTest extends TestCase {
       $this->assertArrayHasKey('id', $pfTask->fields);
       $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $reference = [];
-      $pfAgent->getFromDBByCrit(['name' => 'computer1']);
-      $reference[$pfAgent->fields['id']] = 'computer1';
-      $pfAgent->getFromDBByCrit(['name' => 'computer2']);
-      $reference[$pfAgent->fields['id']] = 'computer2';
-      $pfAgent->getFromDBByCrit(['name' => 'computer3']);
-      $reference[$pfAgent->fields['id']] = 'computer3';
-      $pfAgent->getFromDBByCrit(['name' => 'computer4']);
-      $reference[$pfAgent->fields['id']] = 'computer4';
+      $agent->getFromDBByCrit(['name' => 'computer1']);
+      $reference[$agent->fields['id']] = 'computer1';
+      $agent->getFromDBByCrit(['name' => 'computer2']);
+      $reference[$agent->fields['id']] = 'computer2';
+      $agent->getFromDBByCrit(['name' => 'computer3']);
+      $reference[$agent->fields['id']] = 'computer3';
+      $agent->getFromDBByCrit(['name' => 'computer4']);
+      $reference[$agent->fields['id']] = 'computer4';
 
       $this->assertEquals($reference, $data['agents']);
    }
@@ -366,23 +371,23 @@ class CronTaskTest extends TestCase {
       $this->assertArrayHasKey('id', $pfTask->fields);
       $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $reference = [];
       $ref_prepared = [];
-      $pfAgent->getFromDBByCrit(['name' => 'computer1']);
-      $reference[$pfAgent->fields['id']] = 'computer1';
-      $agentId1 = $pfAgent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'computer1']);
+      $reference[$agent->fields['id']] = 'computer1';
+      $agentId1 = $agent->fields['id'];
 
-      $pfAgent->getFromDBByCrit(['name' => 'computer2']);
-      $reference[$pfAgent->fields['id']] = 'computer2';
+      $agent->getFromDBByCrit(['name' => 'computer2']);
+      $reference[$agent->fields['id']] = 'computer2';
 
-      $pfAgent->getFromDBByCrit(['name' => 'computer3']);
-      $reference[$pfAgent->fields['id']] = 'computer3';
-      $agentId2 = $pfAgent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'computer3']);
+      $reference[$agent->fields['id']] = 'computer3';
+      $agentId2 = $agent->fields['id'];
 
-      $pfAgent->getFromDBByCrit(['name' => 'computer4']);
-      $reference[$pfAgent->fields['id']] = 'computer4';
-      $ref_prepared[] = $pfAgent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'computer4']);
+      $reference[$agent->fields['id']] = 'computer4';
+      $ref_prepared[] = $agent->fields['id'];
       $ref_prepared[] = $agentId2;
       $ref_prepared[] = $agentId1;
 
@@ -445,16 +450,16 @@ class CronTaskTest extends TestCase {
 
       $data = $pfTask->getJoblogs([$pfTask->fields['id']], false, false);
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $reference = [];
-      $pfAgent->getFromDBByCrit(['name' => 'computer1']);
-      $reference[$pfAgent->fields['id']] = 'computer1';
-      $pfAgent->getFromDBByCrit(['name' => 'computer2']);
-      $reference[$pfAgent->fields['id']] = 'computer2';
-      $pfAgent->getFromDBByCrit(['name' => 'computer3']);
-      $reference[$pfAgent->fields['id']] = 'computer3';
-      $pfAgent->getFromDBByCrit(['name' => 'computer4']);
-      $reference[$pfAgent->fields['id']] = 'computer4';
+      $agent->getFromDBByCrit(['name' => 'computer1']);
+      $reference[$agent->fields['id']] = 'computer1';
+      $agent->getFromDBByCrit(['name' => 'computer2']);
+      $reference[$agent->fields['id']] = 'computer2';
+      $agent->getFromDBByCrit(['name' => 'computer3']);
+      $reference[$agent->fields['id']] = 'computer3';
+      $agent->getFromDBByCrit(['name' => 'computer4']);
+      $reference[$agent->fields['id']] = 'computer4';
 
       $this->assertEquals($reference, $data['agents']);
 
@@ -480,7 +485,7 @@ class CronTaskTest extends TestCase {
 
       $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] = 2;
 
-      $pfAgent      = new PluginGlpiinventoryAgent();
+      $agent        = new Agent();
       $pfTask       = new PluginGlpiinventoryTask();
       $deploycommon = new PluginGlpiinventoryDeployCommon();
 
@@ -504,14 +509,14 @@ class CronTaskTest extends TestCase {
       $pfTaskjob->getFromDBByCrit(['plugin_glpiinventory_tasks_id' => $pfTask->fields['id']]);
       $pfDeployPackage->getFromDBByCrit(['name' => 'package']);
 
-      $pfAgent->getFromDBByCrit(['name' => 'computer1']);
-      $agentComputer1Id = $pfAgent->fields['id'];
-      $pfAgent->getFromDBByCrit(['name' => 'computer2']);
-      $agentComputer2Id = $pfAgent->fields['id'];
-      $pfAgent->getFromDBByCrit(['name' => 'computer3']);
-      $agentComputer3Id = $pfAgent->fields['id'];
-      $pfAgent->getFromDBByCrit(['name' => 'computer4']);
-      $agentComputer4Id = $pfAgent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'computer1']);
+      $agentComputer1Id = $agent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'computer2']);
+      $agentComputer2Id = $agent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'computer3']);
+      $agentComputer3Id = $agent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'computer4']);
+      $agentComputer4Id = $agent->fields['id'];
 
       $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
@@ -536,9 +541,9 @@ class CronTaskTest extends TestCase {
       $this->assertEquals($reference, $counters);
 
       // 1 computer deploy successfully
-      $agent = $pfAgent->infoByKey('computer1');
+      $this->assertTrue($agent->getFromDBByCrit(['deviceid' => 'computer1']));
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
-         $agent['id'],
+         $agent->fields['id'],
          ['deployinstall']
       );
       foreach ($taskjobstates as $taskjobstate) {
@@ -554,9 +559,9 @@ class CronTaskTest extends TestCase {
       }
 
       // 1 computer in error
-      $agent = $pfAgent->infoByKey('computer3');
+      $agent->getFromDBByCrit(['deviceid' => 'computer3']);
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
-         $agent['id'],
+         $agent->fields['id'],
          ['deployinstall']
       );
       foreach ($taskjobstates as $taskjobstate) {
@@ -709,7 +714,7 @@ class CronTaskTest extends TestCase {
       $this->assertEquals(true, $pfTask->getFromDB($tasks_id));
 
       $computer = new Computer();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
 
       //Add a new computer into the dynamic group
       $input = [
@@ -719,15 +724,18 @@ class CronTaskTest extends TestCase {
       $computers_id = $computer->add($input);
       $this->assertNotFalse($computers_id);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
           'entities_id'  => 0,
           'name'         => 'computer5',
           'version'      => '{"INVENTORY":"v2.3.21"}',
-          'device_id'    => 'computer5',
+          'deviceid'     => 'computer5',
           'useragent'    => 'FusionInventory-Agent_v2.3.21',
-          'computers_id' => $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id' => $computers_id,
+          'agenttypes_id' => $agenttype['id']
       ];
-      $pfAgent->add($input);
+      $agent->add($input);
 
       //Reprepare the task
       PluginGlpiinventoryTask::cronTaskscheduler();

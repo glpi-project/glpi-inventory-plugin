@@ -146,16 +146,16 @@ class PluginGlpiinventoryIPRange extends CommonDBTM {
 
       $tab[] = [
          'id'            => '5',
-         'table'         => 'glpi_plugin_glpiinventory_configsecurities',
+         'table'         => SNMPCredential::getTable(),
          'field'         => 'name',
          'datatype'      => 'dropdown',
          'right'         => 'all',
-         'name'          => __('SNMP credentials', 'glpiinventory'),
+         'name'          => SNMPCredential::getTypeName(1),
          'forcegroupby'  => true,
          'massiveaction' => false,
          'joinparams'    => [
             'beforejoin' => [
-               'table'      => "glpi_plugin_glpiinventory_ipranges_configsecurities",
+               'table'      => PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
                'joinparams' => [
                   'jointype' => 'child',
                ],
@@ -272,11 +272,11 @@ class PluginGlpiinventoryIPRange extends CommonDBTM {
     * After purge item, delete SNMP credentials linked to this ip range
     */
    function post_purgeItem() {
-      $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_ConfigSecurity();
-      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_ipranges_configsecurities',
+      $pfIPRange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
+      $a_data = getAllDataFromTable(PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
          ['plugin_glpiinventory_ipranges_id' => $this->fields['id']]);
       foreach ($a_data as $data) {
-         $pfIPRange_ConfigSecurity->delete($data);
+         $pfIPRange_credentials->delete($data);
       }
       parent::post_deleteItem();
    }

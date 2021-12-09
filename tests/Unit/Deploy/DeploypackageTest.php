@@ -49,9 +49,10 @@ class DeploypackageTest extends TestCase {
     * @test
     */
    public function testIsDeployEnabled() {
+      global $DB;
 
       $computer = new Computer();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
       $module   = new PluginGlpiinventoryAgentmodule();
       $package  = new PluginGlpiinventoryDeployPackage();
 
@@ -66,15 +67,18 @@ class DeploypackageTest extends TestCase {
       ];
       $computers_id = $computer->add($input);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
           'entities_id' => 0,
           'name'        => 'computer',
           'version'     => '{"INVENTORY":"v2.3.21"}',
-          'device_id'   => 'portdavid',
+          'deviceid'   => Computer::getType().$computers_id,
           'useragent'   => 'FusionInventory-Agent_v2.3.21',
-          'computers_id'=> $computers_id
+          'itemtype' => Computer::getType(),
+          'items_id' => $computers_id,
+          'agenttypes_id' => $agenttype['id']
       ];
-      $pfAgent->add($input);
+      $this->assertNotFalse($agent->add($input));
 
       $this->assertTrue($package->isDeployEnabled($computers_id));
 

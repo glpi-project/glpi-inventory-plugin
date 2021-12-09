@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage SNMP credentials associated with IP ranges.
  */
-class PluginGlpiinventoryIPRange_ConfigSecurity extends CommonDBRelation {
+class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation {
 
    /**
     * Itemtype for the first part of relation
@@ -65,14 +65,14 @@ class PluginGlpiinventoryIPRange_ConfigSecurity extends CommonDBRelation {
     *
     * @var string
     */
-   static public $itemtype_2    = 'PluginGlpiinventoryConfigSecurity';
+   static public $itemtype_2    = 'SNMPCredential';
 
    /**
     * id field name for the second part of relation
     *
     * @var string
     */
-   static public $items_id_2    = 'plugin_glpiinventory_configsecurities_id';
+   static public $items_id_2    = 'snmpcredentials_id';
 
    /**
     * Not restrict the second item to the current entity
@@ -107,8 +107,8 @@ class PluginGlpiinventoryIPRange_ConfigSecurity extends CommonDBRelation {
     * @return true
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $pfIPRange_ConfigSecurity = new self();
-      $pfIPRange_ConfigSecurity->showItemForm($item);
+      $pfIPRange_credentials = new self();
+      $pfIPRange_credentials->showItemForm($item);
       return true;
    }
 
@@ -145,17 +145,22 @@ class PluginGlpiinventoryIPRange_ConfigSecurity extends CommonDBRelation {
       }
       $rand = mt_rand();
 
-      $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_ipranges_configsecurities',
-                                     ['plugin_glpiinventory_ipranges_id' => $item->getID()],
-                                     false,
-                                     '`rank`');
+      $a_data = getAllDataFromTable(
+         self::getTable(),
+         [
+            'WHERE' => [
+               'plugin_glpiinventory_ipranges_id' => $item->getID()
+            ],
+            'ORDER' => 'rank'
+         ]
+      );
       $a_used = [];
       foreach ($a_data as $data) {
-         $a_used[] = $data['plugin_glpiinventory_configsecurities_id'];
+         $a_used[] = $data['snmpcredentials_id'];
       }
       echo "<div class='firstbloc'>";
-      echo "<form name='iprange_configsecurity_form$rand' id='iprange_configsecurity_form$rand' method='post'
-             action='".Toolbox::getItemTypeFormURL('PluginGlpiinventoryIPRange_ConfigSecurity')."' >";
+      echo "<form name='iprange_snmpcredential_form$rand' id='iprange_snmpcredential_form$rand' method='post'
+             action='".self::getFormURL()."' >";
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_2'>";
@@ -163,7 +168,7 @@ class PluginGlpiinventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</tr>";
       echo "<tr class='tab_bg_2'>";
       echo "<td>";
-      Dropdown::show('PluginGlpiinventoryConfigSecurity', ['used' => $a_used]);
+      Dropdown::show(SNMPCredential::getType(), ['used' => $a_used]);
       echo "</td>";
       echo "<td>";
       echo Html::hidden('plugin_glpiinventory_ipranges_id',
@@ -199,18 +204,18 @@ class PluginGlpiinventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</th>";
       echo "</tr>";
 
-      $pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
+      $credentials = new SNMPCredential();
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_2'>";
          echo "<td>";
          Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
          echo "</td>";
          echo "<td>";
-         $pfConfigSecurity->getFromDB($data['plugin_glpiinventory_configsecurities_id']);
-         echo $pfConfigSecurity->getLink();
+         $credentials->getFromDB($data['snmpcredentials_id']);
+         echo $credentials->getLink();
          echo "</td>";
          echo "<td>";
-         echo $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']);
+         echo $credentials->getRealVersion();
          echo "</td>";
          echo "<td>";
          echo $data['rank'];

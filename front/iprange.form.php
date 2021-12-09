@@ -69,7 +69,7 @@ if (isset ($_POST["add"])) {
       $input_task["periodicity_type"]  = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
          $a_actionDB                                 = [];
-         $a_actionDB[]['PluginGlpiinventoryAgent'] = $_POST['action'];
+         $a_actionDB[]['Agent'] = $_POST['action'];
          $input_taskjob["action"]                    = exportArrayToDB($a_actionDB);
       } else {
          $input_taskjob["action"] = '';

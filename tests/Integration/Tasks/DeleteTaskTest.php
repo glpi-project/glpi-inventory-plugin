@@ -62,7 +62,7 @@ class DeleteTaskTest extends TestCase {
           'entities_id' => 0,
           'name'        => 'package'
       ];
-      $$packageId = $pfDeployPackage->add($input);
+      $packageId = $pfDeployPackage->add($input);
 
       // Create dynamic group
       $input = [
@@ -91,7 +91,7 @@ class DeleteTaskTest extends TestCase {
           'entities_id'                     => 0,
           'name'                            => 'deploy',
           'method'                          => 'deployinstall',
-          'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"'.$$packageId.'"}]',
+          'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"'.$packageId.'"}]',
           'actors'                          => '[{"PluginGlpiinventoryDeployGroup":"'.self::$taskId.'"}]'
       ];
       self::$taskjobId = $pfTaskjob->add($input);
@@ -102,7 +102,7 @@ class DeleteTaskTest extends TestCase {
           'items_id'                           => 0,
           'itemtype'                           => 'Computer',
           'state'                              => PluginGlpiinventoryTaskjobstate::FINISHED,
-          'plugin_glpiinventory_agents_id'   => 0,
+          'agents_id'   => 0,
           'specificity'                        => 0,
           'uniqid'                             => 0,
 

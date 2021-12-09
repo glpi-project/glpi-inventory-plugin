@@ -104,20 +104,20 @@ class UpdateTest extends TestCase {
       $result = $DB->query($query);
       while ($data=$DB->fetchArray($result)) {
          if (strstr($data[0], "tracker")
-                 OR strstr($data[0], "fusi")) {
+            || strstr($data[0], "fusi")
+            || strstr($data[0], "glpiinventory")
+         ) {
             $DB->query("DROP TABLE ".$data[0]);
          }
       }
       $query = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype` LIKE 'PluginFus%'";
-      $DB->query($query);
+         WHERE `itemtype` LIKE 'PluginFus%' OR `itemtype` LIKE 'PluginGlpiinventory%'";
+      $DB->queryOrDie($query);
 
       // Delete all plugin rules
-      $rule = new Rule();
-      $items = $rule->find(['sub_type' => ['like', "PluginFusion%"]]);
-      foreach ($items as $item) {
-         $rule->delete(['id' => $item['id']], true);
-      }
+      $query = "DELETE FROM " . Rule::getTable() . " WHERE sub_type LIKE 'Plugin%'";
+      $DB->queryOrDie($query);
+
       $DB->query('DELETE FROM glpi_ruleactions WHERE id > 105');
       $DB->query('DELETE FROM glpi_rulecriterias WHERE id > 108');
       $DB->query('DELETE FROM glpi_rules WHERE id > 105');
@@ -242,6 +242,7 @@ class UpdateTest extends TestCase {
       // version, verifyConfig, nb entity rules
       return [
          '0.83+2.1'     => ["0.83+2.1", true, 1],
+         /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
          'empty tables' => ["", false, 0],
       ];
    }

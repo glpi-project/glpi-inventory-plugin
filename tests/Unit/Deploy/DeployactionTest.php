@@ -242,22 +242,23 @@ class DeployactionTest extends TestCase {
     * @test
     */
    public function testRunCommand() {
+      global $DB;
 
       $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $pfDeployCommon = new PluginGlpiinventoryDeployCommon();
       $pfTask = new PluginGlpiinventoryTask();
       $pfTaskjob = new PluginGlpiinventoryTaskjob();
       $computer = new Computer();
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
+      $entity = new Entity();
       $action = new PluginGlpiinventoryDeployAction();
-      $pfEntity = new PluginGlpiinventoryEntity();
 
-      $pfEntity->getFromDBByCrit(['entities_id' => 0]);
+      $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
       $input = [
-         'id'             => $pfEntity->fields['id'],
+         'id'             => $entity->fields['id'],
          'agent_base_url' => 'http://127.0.0.1/glpi'
       ];
-      $pfEntity->update($input);
+      $this->assertTrue($entity->update($input));
 
       $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
       $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls","name":"echo","logLineLimit":"10"}}],"userinteractions":[]},"associatedFiles":[]}';
@@ -297,15 +298,18 @@ class DeployactionTest extends TestCase {
       $computers_id = $computer->add($input);
       $this->assertNotFalse($computers_id);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
          'entities_id' => 0,
          'name'        => 'portdavid',
          'version'     => '{"INVENTORY":"v2.4"}',
-         'device_id'   => 'portdavid',
+         'deviceid'    => 'portdavid',
          'useragent'   => 'FusionInventory-Agent_v2.4',
-         'computers_id'=> $computers_id
+         'items_id'    => $computers_id,
+         'itemtype'    => 'Computer',
+         'agenttypes_id' => $agenttype['id']
       ];
-      $agents_id = $pfAgent->add($input);
+      $agents_id = $agent->add($input);
       $this->assertNotFalse($agents_id);
 
       // create takjob

@@ -1309,15 +1309,10 @@ $(document).ready(function() {
    });
 
    $(document).on("click", ".openExportDialog", function(event) {
-      $('#fiTaskExport_modalWindow').dialog({
-         modal: true,
-         resizeable: true,
-         height: 200,
-         width: 480
-      });
+      $('#fiTaskExport_modalWindow').show();
    });
 
    $(document).on("click", ".task_export_form .submit", function(event) {
-      $('#fiTaskExport_modalWindow').dialog('close');
+      $('#fiTaskExport_modalWindow').hide();
    });
 });

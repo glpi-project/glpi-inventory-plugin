@@ -307,8 +307,6 @@ class DatabaseTestsCommons extends Assert{
               'Cron taskscheduler not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstate', 'cleantaskjob'),
               'Cron cleantaskjob not created');
-      $this->assertTrue($crontask->getFromDBbyName('PluginGlpiinventoryNetworkPortLog', 'cleannetworkportlogs'),
-              'Cron cleannetworkportlogs not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginGlpiinventoryAgentWakeup', 'wakeupAgents'),
               'Cron wakeupAgents not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginGlpiinventoryTask', 'cleanondemand'),

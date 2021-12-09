@@ -80,7 +80,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
          $a_input= [];
          $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state']                              = 0;
-         $a_input['plugin_glpiinventory_agents_id']   = 0;
+         $a_input['agents_id'] = 0;
          $a_input['uniqid']                             = $uniqid;
          $a_input['execution_id']                       = $task->fields['execution_id'];
 
@@ -116,7 +116,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
                      $a_input = [];
                      $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
                      $a_input['state']                              = 0;
-                     $a_input['plugin_glpiinventory_agents_id']   = $items_id;
+                     $a_input['agents_id']   = $items_id;
                      $a_input['itemtype']                           = $task_itemtype;
                      $a_input['items_id']                           = $task_items_id;
                      $a_input['uniqid']                             = $uniqid;

@@ -290,7 +290,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                echo "<input type='text' name='filename' id='server_filename$rand'".
                   " style='width:500px;float:left' />";
                echo "<input type='button' class='submit' value='".__("Choose", 'glpiinventory').
-                  "' onclick='fileModal$rand.dialog(\"open\");' />";
+                  "' onclick='fileModal$rand.show();' />";
                Ajax::createModalWindow("fileModal$rand",
                         $fi_path."/ajax/deployfilemodal.php",
                         ['title' => __('Select the file on server', 'glpiinventory'),
@@ -372,7 +372,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                if (node.leaf == true) {
                   console.log('server_filename$rand');
                   Ext.get('server_filename$rand').dom.value = node.id;
-                  fileModal$rand.dialog('close');
+                     fileModal$rand.hide();
                }
             }
          }

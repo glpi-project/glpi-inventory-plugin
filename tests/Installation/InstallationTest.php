@@ -61,7 +61,9 @@ class InstallationTest extends TestCase {
       $result = $DB->query($query);
       while ($data=$DB->fetchArray($result)) {
          if (strstr($data[0], "tracker")
-            OR strstr($data[0], "fusi")) {
+            || strstr($data[0], "fusi")
+            || strstr($data[0], "glpiinventory")
+         ) {
                $DB->query("DROP TABLE ".$data[0]);
          }
       }

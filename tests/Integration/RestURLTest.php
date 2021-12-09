@@ -36,7 +36,7 @@ class RestURLTest extends TestCase {
 
    public static function setUpBeforeClass(): void {
 
-      // Delete all entities exept root entity
+      // Delete all entities except root entity
       $entity = new Entity();
       $items = $entity->find();
       foreach ($items as $item) {
@@ -46,10 +46,10 @@ class RestURLTest extends TestCase {
       }
 
       // Delete all agents
-      $pfAgent = new PluginGlpiinventoryAgent();
-      $items = $pfAgent->find();
+      $agent = new Agent();
+      $items = $agent->find();
       foreach ($items as $item) {
-         $pfAgent->delete(['id' => $item['id']], true);
+         $agent->delete(['id' => $item['id']], true);
       }
    }
 
@@ -64,43 +64,38 @@ class RestURLTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $entity   = new Entity();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
       $config   = new PluginGlpiinventoryConfig();
-      $pfEntity = new PluginGlpiinventoryEntity();
 
       $entityId = $entity->add([
          'name'        => 'ent1',
          'entities_id' => 0,
-         'comment'     => ''
+         'comment'     => '',
+         'agent_base_url' => 'http://10.0.2.2/glpi085'
       ]);
       $this->assertNotFalse($entityId);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
-          'name'        => 'toto',
-          'entities_id' => $entityId,
-          'device_id'   => 'toto-device'
+         'name'        => 'toto',
+         'entities_id' => $entityId,
+         'deviceid'   => 'toto-device',
+         'agenttypes_id' => $agenttype['id'],
+         'itemtype' => '',
+         'items_id' => 0
       ];
-      $agents_id = $pfAgent->add($input);
+      $agents_id = $agent->add($input);
+      $this->assertNotFalse($agents_id);
 
       $config->loadCache();
 
-      $pfEntities = $pfEntity->find();
-      $this->assertLessThan(2, count($pfEntities));
-
-      $pfEntity->getFromDBByCrit(['entities_id' => 0]);
+      $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
       $input = [
-         'id'             => $pfEntity->fields['id'],
+         'id'             => $entity->fields['id'],
          'agent_base_url' => 'http://127.0.0.1/glpi085'
       ];
-      $ret = $pfEntity->update($input);
+      $ret = $entity->update($input);
       $this->assertTrue($ret);
-
-      $input = [
-         'entities_id'    => $entityId,
-         'agent_base_url' => 'http://10.0.2.2/glpi085'
-      ];
-      $ret = $pfEntity->add($input);
-      $this->assertNotFalse($ret);
 
       // active all modules
       $query = "UPDATE `glpi_plugin_glpiinventory_agentmodules`"
@@ -118,12 +113,12 @@ class RestURLTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
 
-      $pfAgent->getFromDBByCrit(['name' => 'toto']);
+      $agent->getFromDBByCrit(['name' => 'toto']);
       $input = [
-         'itemtype'                         => 'PluginGlpiinventoryCollect',
-         'plugin_glpiinventory_agents_id' => $pfAgent->fields['id']
+         'itemtype' => 'PluginGlpiinventoryCollect',
+         'agents_id' => $agent->fields['id']
       ];
       $ret = $pfTaskjobstate->add($input);
       $this->assertNotFalse($ret);
@@ -152,12 +147,12 @@ class RestURLTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
 
-      $pfAgent->getFromDBByCrit(['name' => 'toto']);
+      $agent->getFromDBByCrit(['name' => 'toto']);
       $input = [
-         'itemtype'                         => 'PluginGlpiinventoryDeployPackage',
-         'plugin_glpiinventory_agents_id' => $pfAgent->fields['id']
+         'itemtype' => 'PluginGlpiinventoryDeployPackage',
+         'agents_id' => $agent->fields['id']
       ];
       $pfTaskjobstate->add($input);
 
@@ -185,12 +180,12 @@ class RestURLTest extends TestCase {
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfAgent  = new PluginGlpiinventoryAgent();
+      $agent  = new Agent();
 
-      $pfAgent->getFromDBByCrit(['name' => 'toto']);
+      $agent->getFromDBByCrit(['name' => 'toto']);
       $input = [
-         'itemtype'                         => 'PluginGlpiinventoryCredentialIp',
-         'plugin_glpiinventory_agents_id' => $pfAgent->fields['id']
+         'itemtype' => 'PluginGlpiinventoryCredentialIp',
+         'agents_id' => $agent->fields['id']
       ];
       $pfTaskjobstate->add($input);
 
@@ -220,16 +215,11 @@ class RestURLTest extends TestCase {
       $config = new PluginGlpiinventoryConfig();
       $config->loadCache();
 
-      $pfEntity = new PluginGlpiinventoryEntity();
       $entity = new Entity();
       $entity->getFromDBByCrit(['name' => 'ent1']);
       $this->assertArrayHasKey('id', $entity->fields);
 
-      $pfEntity->getFromDBByCrit(['entities_id' => $entity->fields['id']]);
-      $this->assertArrayHasKey('id', $pfEntity->fields);
-
-      $delRet = $pfEntity->delete(['id' => $pfEntity->fields['id']]);
-      $this->assertTrue($delRet);
+      $this->assertTrue($entity->update(['id' => $entity->fields['id'], 'agent_base_url' => '']));
 
       // Get answer
       $input = [

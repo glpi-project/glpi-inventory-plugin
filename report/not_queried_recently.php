@@ -85,13 +85,6 @@ Html::closeForm();
 
 
 
-$FK_networking_ports = filter_input(INPUT_GET, "FK_networking_ports");
-if ($FK_networking_ports != '') {
-   echo PluginGlpiinventoryNetworkPortLog::showHistory($FK_networking_ports);
-}
-
-Html::closeForm();
-
 $state_sql = "";
 if (($state != "") AND ($state != "0")) {
    $state_sql = " AND `states_id` = '".$state."' ";

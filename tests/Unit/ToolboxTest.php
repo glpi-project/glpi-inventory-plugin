@@ -89,10 +89,6 @@ JSON;
       $computers_id = $computer->add($values);
       $computer->getFromDB($computers_id);
 
-      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
-
-      $pfComputer = new PluginGlpiinventoryInventoryComputerComputer();
-      $pfComputer->add(['computers_id' => $computers_id]);
       $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
       $printer = new Printer();
@@ -102,10 +98,6 @@ JSON;
                   'is_recursive' => 0];
       $printers_id = $printer->add($values);
       $printer->getFromDB($printers_id);
-      $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
-
-      $pfPrinter = new PluginGlpiinventoryPrinter();
-      $pfPrinter->add(['printers_id' => $printers_id]);
       $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
       $values  = ['name'         => 'printer2',
@@ -114,37 +106,6 @@ JSON;
                   'is_recursive' => 0];
       $printers_id_2 = $printer->add($values);
       $printer->getFromDB($printers_id_2);
-      $pfPrinter->add(['printers_id' => $printers_id_2]);
       $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
-
-   }
-
-
-   /**
-    * @test
-    */
-   public function addDefaultStateIfNeeded() {
-      $input = [];
-
-      $state = new State();
-      $states_id_computer = $state->importExternal('state_computer');
-      $states_id_snmp = $state->importExternal('state_snmp');
-
-      $config = new PluginGlpiinventoryConfig();
-      $config->updateValue('states_id_snmp_default', $states_id_snmp);
-      $config->updateValue('states_id_default', $states_id_computer);
-
-      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('computer', $input);
-      $this->assertEquals(['states_id' => $states_id_computer], $result);
-
-      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
-      $this->assertEquals(['states_id' => $states_id_snmp], $result);
-
-      $result = PluginGlpiinventoryToolbox::addDefaultStateIfNeeded('foo', $input);
-      $this->assertEquals([], $result);
-
-      // Redo default
-      $config->updateValue('states_id_snmp_default', 0);
-      $config->updateValue('states_id_default', 0);
    }
 }

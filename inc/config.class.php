@@ -144,14 +144,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
 
       $input['reprepare_job']         = 0;
 
-      // options for inventory number
-      $input['auto_inventory_number_computer']         = '';
-      $input['auto_inventory_number_monitor']          = '';
-      $input['auto_inventory_number_networkequipment'] = '';
-      $input['auto_inventory_number_peripheral']       = '';
-      $input['auto_inventory_number_phone']            = '';
-      $input['auto_inventory_number_printer']          = '';
-
       if (!$getOnly) {
          $this->addValues($input);
       }
@@ -204,7 +196,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
       $moduleTabs = [];
       $this->addStandardTab("PluginGlpiinventoryConfig", $ong, $options);
       $this->addStandardTab("PluginGlpiinventoryAgentmodule", $ong, $options);
-      $this->addStandardTab("PluginGlpiinventoryLock", $ong, $options);
 
       if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
          $plugin_tabs = $ong;
@@ -236,7 +227,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
       if ($item->getType()==__CLASS__) {
          return [
              __('General setup'),
-             __('Computer Inventory', 'glpiinventory'),
              __('Network Inventory', 'glpiinventory'),
              __('Package management', 'glpiinventory')
          ];
@@ -262,14 +252,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
             return true;
 
          case 1:
-            $item->showFormInventory();
-            return true;
-
-         case 2:
             $item->showFormNetworkInventory();
             return true;
 
-         case 3:
+         case 2:
             $item->showFormDeploy();
             return true;
 
@@ -437,43 +423,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan=4 >".__('Automatic inventory number', 'glpiinventory')."<i class='fa fa-magic' title='".__s('You can define an autofill template')."'></i></th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Computer')."</td>";
-      echo "<td>";
-      echo "<input type='text' class='form-control' name='auto_inventory_number_computer' value='".$this->getValue('auto_inventory_number_computer')."'/>";
-      echo "</td>";
-      echo "<td>".__('Monitor')."</td>";
-      echo "<td>";
-      echo "<input type='text' class='form-control' name='auto_inventory_number_monitor' value='".$this->getValue('auto_inventory_number_monitor')."'/>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Network equipment', 'glpiinventory')."</td>";
-      echo "<td>";
-      echo "<input type='text' name='auto_inventory_number_networkequipment' value='".$this->getValue('auto_inventory_number_networkequipment')."'/>";
-      echo "</td>";
-      echo "<td>".__('Peripheral')."</td>";
-      echo "<td>";
-      echo "<input type='text' class='form-control' name='auto_inventory_number_peripheral' value='".$this->getValue('auto_inventory_number_peripheral')."'/>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Phone')."</td>";
-      echo "<td>";
-      echo "<input type='text' class='form-control' name='auto_inventory_number_phone' value='".$this->getValue('auto_inventory_number_phone')."'/>";
-      echo "</td>";
-      echo "<td>".__('Printer')."</td>";
-      echo "<td>";
-      echo "<input type='text' class='form-control' name='auto_inventory_number_printer' value='".$this->getValue('auto_inventory_number_printer')."'/>";
-      echo "</td>";
-      echo "</tr>";
-
       $options['candel'] = false;
       $this->showFormButtons($options);
 
@@ -497,272 +446,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
               return __('Clean agents', 'glpiinventory');
 
       }
-   }
-
-
-   /**
-    * Display form for tab 'Inventory'
-    *
-    * @param array $options
-    * @return true
-    */
-   static function showFormInventory($options = []) {
-
-      $pfConfig = new PluginGlpiinventoryConfig();
-
-      $pfConfig->fields['id'] = 1;
-      if (!isset($options['formtitle'])) {
-         $options['formtitle'] = false;
-      }
-      if (!isset($options['formfooter'])) {
-         $options['formfooter'] = false;
-      }
-      $pfConfig->showFormHeader($options);
-
-      echo "<tr>";
-      echo "<th colspan='4'>";
-      echo __('Import options', 'glpiinventory');
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Volume', 'Volumes', 2);
-      echo "</td>";
-      echo "<td width='360'>";
-      Dropdown::showYesNo("import_volume", $pfConfig->getValue('import_volume'));
-      echo "</td>";
-
-      echo "<td>";
-      echo _n('Software', 'Software', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_software", $pfConfig->getValue('import_software'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Virtual machine', 'Virtual machines', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_vm", $pfConfig->getValue('import_vm'));
-      echo "</td>";
-
-      echo "<td>";
-      echo __('Antivirus', 'glpiinventory');
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_antivirus",
-                          $pfConfig->getValue('import_antivirus'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Location', 'Locations', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("location",
-                              ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('Inventory tag', 'glpiinventory')],
-                              ['value'=>$pfConfig->getValue('location')]);
-      echo "</td>";
-
-      echo "<td>";
-      echo _n('Group', 'Groups', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("group",
-                              ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('Inventory tag', 'glpiinventory')],
-                              ['value'=>$pfConfig->getValue('group')]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Default status', 'glpiinventory')."</td>";
-      echo "<td>";
-      Dropdown::show('State',
-                     ['name'   => 'states_id_default',
-                           'value'  => $pfConfig->getValue('states_id_default')]);
-      echo "</td>";
-
-      echo "<td>";
-      echo _n('Soundcard', 'Soundcards', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_soundcard", $pfConfig->getValue('component_soundcard'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('Inventory number');
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("otherserial",
-                              ["0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('Inventory tag', 'glpiinventory')],
-                              ['value'=>$pfConfig->getValue('otherserial')]);
-      echo "</td>";
-
-      echo "<td>";
-      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'glpiinventory');
-      echo "</td>";
-
-      echo "<td>";
-      Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('Manage operating system name:', 'glpiinventory');
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("manage_osname", $pfConfig->getValue('manage_osname'));
-      echo "</td>";
-      echo "<td>";
-      echo __('Import monitor on serial partial match:', 'glpiinventory');
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_monitor_on_partial_sn", $pfConfig->getValue('import_monitor_on_partial_sn'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4' width='30%'>";
-      echo _n('Component', 'Components', 2);
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Processor', 'Processors', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_processor",
-                          $pfConfig->getValue('component_processor'));
-      echo "</td>";
-
-      echo "<td>";
-      echo _n('Hard drive', 'Hard drives', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_harddrive",
-                          $pfConfig->getValue('component_harddrive'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Memory', 'Memories', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_memory",
-                          $pfConfig->getValue('component_memory'));
-      echo "</td>";
-
-      echo "<td>";
-      echo _n('Network card', 'Network cards', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkcard",
-                          $pfConfig->getValue('component_networkcard'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Graphics card', 'Graphics cards', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_graphiccard",
-                          $pfConfig->getValue('component_graphiccard'));
-      echo "</td>";
-
-      echo "<td>";
-      echo __('Virtual network card', 'glpiinventory');
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkcardvirtual",
-                          $pfConfig->getValue('component_networkcardvirtual'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Drive', 'Drives', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_drive",
-                          $pfConfig->getValue('component_drive'));
-      echo "</td>";
-
-      echo "<td>";
-      echo __('Network drives', 'glpiinventory');
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkdrive",
-                          $pfConfig->getValue('component_networkdrive'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Controller', 'Controllers', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_control",
-                          $pfConfig->getValue('component_control'));
-      echo "</td>";
-
-      echo "</td>";
-      echo "<td>";
-      echo _n('Battery', 'Batteries', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_battery",
-                          $pfConfig->getValue('component_battery'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Removable medias', 'Removable medias', 2, "glpiinventory");
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_removablemedia",
-                          $pfConfig->getValue('component_removablemedia'));
-      echo "</td>";
-
-      echo "<td>";
-      echo _n('Simcard', 'Simcards', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_simcard",
-                          $pfConfig->getValue('component_simcard'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Power Supply', 'Power Supplies', 2);
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_powersupply",
-                          $pfConfig->getValue('component_powersupply'));
-      echo "</td>";
-
-      echo "<td colspan='2'></td>";
-
-      echo "</tr>";
-
-      $options['candel'] = false;
-      $pfConfig->showFormButtons($options);
-
-      return true;
    }
 
 
@@ -840,14 +523,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM {
 
       $options['candel'] = false;
       $pfsnmpConfig->showFormButtons($options);
-
-      $pfConfigLogField = new PluginGlpiinventoryConfigLogField();
-      $pfConfigLogField->showConfigForm([
-          'target'=>Plugin::getWebDir('glpiinventory')."/front/configlogfield.form.php"]
-          );
-
-      $pfNetworkporttype = new PluginGlpiinventoryNetworkporttype();
-      $pfNetworkporttype->showNetworkporttype();
 
       return true;
    }

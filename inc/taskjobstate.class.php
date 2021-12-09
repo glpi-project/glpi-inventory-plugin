@@ -355,7 +355,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
       $moduleRun = [];
       $params = ['FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
                  'FIELDS' => 'plugin_glpiinventory_taskjobs_id',
-                 'WHERE'  => ['plugin_glpiinventory_agents_id' => $agent_id,
+                 'WHERE'  => ['agents_id' => $agent_id,
                               'state' => self::PREPARED],
                   'ORDER' => 'id'
                 ];
@@ -681,13 +681,14 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
    function showStatesForComputer($computers_id) {
       global $DB;
 
-      $pfAgent      = new PluginGlpiinventoryAgent();
+      $agent      = new Agent();
       $pfTask       = new PluginGlpiinventoryTask();
       $pfTaskjob    = new PluginGlpiinventoryTaskjob();
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
 
       // Get the agent of the computer
-      $agents_id = $pfAgent->getAgentWithComputerid($computers_id);
+      $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+      $agents_id = $agent->fields['id'];
 
       $tasks_id = [];
 
@@ -695,7 +696,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
       $iterator = $DB->request([
          'FROM'   => $this->getTable(),
          'WHERE'  => [
-            'plugin_glpiinventory_agents_id' => $agents_id,
+            'agents_id' => $agents_id,
          ],
          'ORDER' => 'id DESC',
       ]);

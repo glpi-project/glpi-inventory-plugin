@@ -37,7 +37,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
    function setUp(): void {
       // Delete all computers
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
@@ -50,90 +50,26 @@ class NetworkEquipmentLLDPTest extends TestCase {
       }
 
       // Delete all unmanaged items
-      $pfUnmanaged = new PluginGlpiinventoryUnmanaged();
-      $items = $pfUnmanaged->find();
+      $unmanaged = new Unmanaged();
+      $items = $unmanaged->find();
       foreach ($items as $item) {
-         $pfUnmanaged->delete(['id' => $item['id']], true);
+         $unmanaged->delete(['id' => $item['id']], true);
       }
 
    }
 
-   // Cases of LLDP informations
+   public static function setUpBeforeClass(): void {
+      // Reinit rules
+      \RuleImportAsset::initRules();
+   }
 
-   /*
-    * Nortel
-    */
-
-   /*
-          <CONNECTIONS>
-            <CDP>1</CDP>
-            <CONNECTION>
-              <IFNUMBER>22</IFNUMBER>
-              <SYSMAC>00:24:b5:bd:c8:01</SYSMAC>
-            </CONNECTION>
-          </CONNECTIONS>
-   */
-
-   /*
-    * Cisco
-    */
-
-   /*
-          <CONNECTIONS>
-            <CDP>1</CDP>
-            <CONNECTION>
-              <IFDESCR>GigabitEthernet0/10</IFDESCR>
-              <IP>192.168.200.124</IP>
-            </CONNECTION>
-          </CONNECTIONS>
-   */
-
-   /*
-          <CONNECTIONS>
-            <CDP>1</CDP>
-            <CONNECTION>
-              <IFDESCR>ge-0/0/1.0</IFDESCR>
-              <IFNUMBER>504</IFNUMBER>
-              <SYSDESCR>Juniper Networks, Inc. ex2200-24t-4g , version 10.1R1.8 Build date: 2010-02-12 16:59:31 UTC </SYSDESCR>
-              <SYSMAC>2c:6b:f5:98:f9:70</SYSMAC>
-              <SYSNAME>juniperswitch3</SYSNAME>
-            </CONNECTION>
-          </CONNECTIONS>
-   */
-
-
-   /*
-    * Procurve
-    */
-
-   /*
-          <CONNECTIONS>
-            <CDP>1</CDP>
-            <CONNECTION>
-              <IFDESCR>28</IFDESCR>
-              <IP>10.226.164.55</IP>
-            </CONNECTION>
-          </CONNECTIONS>
-   */
-
-   /*
-          <CONNECTIONS>
-            <CDP>1</CDP>
-            <CONNECTION>
-              <IFDESCR>48</IFDESCR>
-              <IP>172.16.100.252</IP>
-              <MODEL>ProCurve J9148A 2910al-48G-PoE Switch, revision W.14.49, ROM W.14.04 (/sw/code/build/sbm(t4a))</MODEL>
-              <SYSDESCR>ProCurve J9148A 2910al-48G-PoE Switch, revision W.14.49, ROM W.14.04 (/sw/code/build/sbm(t4a))</SYSDESCR>
-              <SYSNAME>0x78acc0146cc0</SYSNAME>
-            </CONNECTION>
-          </CONNECTIONS>
-   */
-
+   // Cases of LLDP information
 
    /**
     * @test
     */
    public function NortelSwitch() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $a_lldp = [
           'ifdescr'        => '',
@@ -209,6 +145,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
     * @test
     */
    public function NortelUnmanaged() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $a_lldp = [
           'ifdescr'        => '',
@@ -223,7 +160,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
       $pfINetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $pfUnmanaged            = new PluginGlpiinventoryUnmanaged();
+      $unmanaged            = new Unmanaged();
 
       // Nortel switch
       $networkequipments_id = $networkEquipment->add([
@@ -238,13 +175,13 @@ class NetworkEquipmentLLDPTest extends TestCase {
       ]);
 
       // Unmanaged
-      $unmanageds_id = $pfUnmanaged->add([
+      $unmanageds_id = $unmanaged->add([
           'name'        => 'otherswitch',
           'entities_id' => 0
       ]);
 
       $networkports_unknown_id = $networkport->add([
-          'itemtype'       => 'PluginGlpiinventoryUnmanaged',
+          'itemtype'       => 'Unmanaged',
           'items_id'       => $unmanageds_id,
           'entities_id'    => 0,
           'mac'            => '00:24:b5:bd:c8:01',
@@ -283,6 +220,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
     * @test
     */
    public function NortelNodevice() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $a_lldp = [
           'ifdescr'        => '',
@@ -344,6 +282,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
     * @test
     */
    public function Cisco1Switch() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $a_lldp = [
           'ifdescr'        => 'GigabitEthernet0/10',
@@ -445,6 +384,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
     * It find unknown device, but may add the port with this ifdescr
     */
    public function Cisco1Unmanaged() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $a_lldp = [
           'ifdescr'        => 'GigabitEthernet0/10',
@@ -461,7 +401,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
       $networkport            = new NetworkPort();
       $networkName            = new NetworkName();
       $iPAddress              = new IPAddress();
-      $pfUnmanaged            = new PluginGlpiinventoryUnmanaged();
+      $unmanaged            = new Unmanaged();
 
       // Nortel switch
       $networkequipments_id = $networkEquipment->add([
@@ -476,13 +416,13 @@ class NetworkEquipmentLLDPTest extends TestCase {
       ]);
 
       // Unmanaged
-      $unmanageds_id = $pfUnmanaged->add([
+      $unmanageds_id = $unmanaged->add([
           'name'        => 'otherswitch',
           'entities_id' => 0
       ]);
 
       $networkports_unknown_id = $networkport->add([
-          'itemtype'       => 'PluginGlpiinventoryUnmanaged',
+          'itemtype'       => 'Unmanaged',
           'items_id'       => $unmanageds_id,
           'entities_id'    => 0
       ]);
@@ -513,7 +453,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
                           count($a_networkports),
                           'May have 3 network ports ('.print_r($a_networkports, true).')');
 
-      $a_unknowns = getAllDataFromTable('glpi_plugin_glpiinventory_unmanageds');
+      $a_unknowns = getAllDataFromTable('glpi_unmanageds');
 
       $this->assertEquals(1,
                           count($a_unknowns),
@@ -521,7 +461,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
 
       $a_networkport_ref = [
           'items_id'           => $unmanageds_id,
-          'itemtype'           => 'PluginGlpiinventoryUnmanaged',
+          'itemtype'           => 'Unmanaged',
           'entities_id'        => 0,
           'is_recursive'       => 0,
           'logical_number'     => 0,
@@ -557,6 +497,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
     * @test
     */
    public function Cisco1Nodevice() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $a_lldp = [
           'ifdescr'        => 'GigabitEthernet0/10',
@@ -620,6 +561,7 @@ class NetworkEquipmentLLDPTest extends TestCase {
     * @test
     */
    public function Cisco2Switch() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $a_lldp = [
           'ifdescr'        => 'ge-0/0/1.0',
@@ -758,11 +700,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -788,17 +728,25 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
+         'ifdescr'         => 'ge-0/0/1.0',
       ]);
       $this->assertNotFalse($ports_id);
 
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
-         'ifdescr'         => 'ge-0/0/1.0',
-      ]);
-      $this->assertNotFalse($id);
-
       // Import the switch into GLPI
-      $pfCommunication->handleOCSCommunication('', $xml_source, 'glpi');
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      //$json = json_decode($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      $inventory = new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+
+      if ($inventory->inError()) {
+         foreach ($inventory->getErrors() as $error) {
+            var_dump($error);
+         }
+      }
+      $this->assertFalse($inventory->inError());
+      $this->assertEquals($inventory->getErrors(), []);
 
       // get port of Procurve
       $ports = $networkPort->find(['mac' => 'b4:39:d6:3b:22:bd'], [], 1);
@@ -872,11 +820,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -908,13 +854,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '27',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add the second port right
       $ports_id = $networkPort->add([
@@ -924,13 +866,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '28',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add another port that will not be used, but needed for the test
       $ports_id = $networkPort->add([
@@ -940,16 +878,25 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '29',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Import the switch into GLPI
-      $pfCommunication->handleOCSCommunication('', $xml_source, 'glpi');
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      //$json = json_decode($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      $inventory = new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+
+      if ($inventory->inError()) {
+         foreach ($inventory->getErrors() as $error) {
+            var_dump($error);
+         }
+      }
+      $this->assertFalse($inventory->inError());
+      $this->assertEquals($inventory->getErrors(), []);
 
       // get port of Procurve
       $ports = $networkPort->find(['name' => 'port28'], [], 1);
@@ -957,7 +904,6 @@ class NetworkEquipmentLLDPTest extends TestCase {
       $procurvePort = current($ports);
       $linkPort = $networkPort_NetworkPort->getFromDBForNetworkPort($procurvePort['id']);
       $this->assertNotFalse($linkPort);
-
    }
 
 
@@ -1024,11 +970,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1050,13 +994,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'NetworkName__ipaddresses' => [
             '-1' => '10.226.164.55'
          ],
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '27',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add the second port right
       $ports_id = $networkPort->add([
@@ -1072,13 +1012,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'NetworkName__ipaddresses' => [
             '-1' => '10.226.164.55'
          ],
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '28',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add another port that will not be used, but needed for the test
       $ports_id = $networkPort->add([
@@ -1094,16 +1030,26 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'NetworkName__ipaddresses' => [
             '-1' => '10.226.164.55'
          ],
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '29',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Import the switch into GLPI
-      $pfCommunication->handleOCSCommunication('', $xml_source, 'glpi');
+      // Import the switch into GLPI
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      //$json = json_decode($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      $inventory = new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+
+      if ($inventory->inError()) {
+         foreach ($inventory->getErrors() as $error) {
+            var_dump($error);
+         }
+      }
+      $this->assertFalse($inventory->inError());
+      $this->assertEquals($inventory->getErrors(), []);
 
       // get port of Procurve
       $ports = $networkPort->find(['name' => 'port28'], [], 1);
@@ -1176,11 +1122,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1205,13 +1149,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '20',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add the second port right
       $ports_id = $networkPort->add([
@@ -1220,13 +1160,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '21',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add another port that will not be used, but needed for the test
       $ports_id = $networkPort->add([
@@ -1235,16 +1171,25 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '22',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Import the switch into GLPI
-      $pfCommunication->handleOCSCommunication('', $xml_source, 'glpi');
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      //$json = json_decode($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      $inventory = new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+
+      if ($inventory->inError()) {
+         foreach ($inventory->getErrors() as $error) {
+            var_dump($error);
+         }
+      }
+      $this->assertFalse($inventory->inError());
+      $this->assertEquals($inventory->getErrors(), []);
 
       // get port of Procurve
       $ports = $networkPort->find(['name' => 'port21'], [], 1);
@@ -1317,11 +1262,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1337,13 +1280,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '20',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add the second port right
       $ports_id = $networkPort->add([
@@ -1353,13 +1292,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '21',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add another port that will not be used, but needed for the test
       $ports_id = $networkPort->add([
@@ -1369,16 +1304,25 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '22',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Import the switch into GLPI
-      $pfCommunication->handleOCSCommunication('', $xml_source, 'glpi');
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      //$json = json_decode($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      $inventory = new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+
+      if ($inventory->inError()) {
+         foreach ($inventory->getErrors() as $error) {
+            var_dump($error);
+         }
+      }
+      $this->assertFalse($inventory->inError());
+      $this->assertEquals($inventory->getErrors(), []);
 
       // get port of Procurve
       $ports = $networkPort->find(['name' => 'port21'], [], 1);
@@ -1451,11 +1395,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1471,13 +1413,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '20',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add the second port right
       $ports_id = $networkPort->add([
@@ -1487,13 +1425,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '21',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add another port that will not be used, but needed for the test
       $ports_id = $networkPort->add([
@@ -1503,16 +1437,17 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '22',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Import the switch into GLPI
-      $pfCommunication->handleOCSCommunication('', $xml_source, 'glpi');
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      //$json = json_decode($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      $inventory = new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
       // get port of Procurve
       $ports = $networkPort->find(['name' => 'port21'], [], 1);
@@ -1587,11 +1522,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pfCommunication         = new PluginGlpiinventoryCommunication();
       $networkEquipment        = new NetworkEquipment();
       $networkPort             = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPort           = new PluginGlpiinventoryNetworkPort();
 
       $networkEquipments_id = $networkEquipment->add([
          'entities_id' => 0,
@@ -1621,13 +1554,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '47',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add the second port right
       $ports_id = $networkPort->add([
@@ -1636,13 +1565,9 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '48',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Add another port that will not be used, but needed for the test
       $ports_id = $networkPort->add([
@@ -1651,16 +1576,17 @@ class NetworkEquipmentLLDPTest extends TestCase {
          'instantiation_type' => 'NetworkPortEthernet',
          'items_id'           => $networkEquipments_id,
          'itemtype'           => 'NetworkEquipment',
-      ]);
-      $this->assertNotFalse($ports_id);
-      $id = $pfNetworkPort->add([
-         'networkports_id' => $ports_id,
          'ifdescr'         => '49',
       ]);
-      $this->assertNotFalse($id);
+      $this->assertNotFalse($ports_id);
 
       // Import the switch into GLPI
-      $pfCommunication->handleOCSCommunication('', $xml_source, 'glpi');
+      $converter = new \Glpi\Inventory\Converter;
+      $data = $converter->convert($xml_source);
+      //$json = json_decode($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 0;
+      $inventory = new \Glpi\Inventory\Inventory($data);
+      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
       // get port of Procurve
       $ports = $networkPort->find(['name' => 'port48'], [], 1);
@@ -1669,25 +1595,4 @@ class NetworkEquipmentLLDPTest extends TestCase {
       $linkPort = $networkPort_NetworkPort->getFromDBForNetworkPort($procurvePort['id']);
       $this->assertNotFalse($linkPort);
    }
-
-   /*
-          <CONNECTIONS>
-            <CDP>1</CDP>
-            <CONNECTION>
-              <IFDESCR>48</IFDESCR>
-              <IP>172.16.100.252</IP>
-              <MODEL>ProCurve J9148A 2910al-48G-PoE Switch, revision W.14.49, ROM W.14.04 (/sw/code/build/sbm(t4a))</MODEL>
-              <SYSDESCR>ProCurve J9148A 2910al-48G-PoE Switch, revision W.14.49, ROM W.14.04 (/sw/code/build/sbm(t4a))</SYSDESCR>
-              <SYSNAME>sw001</SYSNAME>
-            </CONNECTION>
-          </CONNECTIONS>
-   */
-
-      /* Scenarii:
-       *
-       * IP + name + itemtype phone
-       * IP + ifdescr in unmanaged
-       * MAC unmanaged
-       *
-       */
 }

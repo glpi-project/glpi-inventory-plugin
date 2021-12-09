@@ -49,21 +49,19 @@ switch (filter_input(INPUT_GET, "action")) {
    case 'getJobs':
       $machineid = filter_input(INPUT_GET, "machineid");
       if (isset($machineid)) {
-         $pfAgent        = new PluginGlpiinventoryAgent();
+         $agent          = new Agent();
          $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
          $pfTask         = new PluginGlpiinventoryTask();
          $pfTaskjob      = new PluginGlpiinventoryTaskjob();
          $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-         $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($machineid));
-
-         if (isset($agent['id'])) {
+         if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep($machineid)])) {
 
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(
-               $agent['id'],
+               $agent->fields['id'],
                ['deployinstall']
             );
-            if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
+            if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent->fields['id'])) {
                foreach ($taskjobstates as $taskjobstate) {
                   $taskjobstate->cancel(
                      __("Deploy module has been disabled for this agent", 'glpiinventory')
@@ -107,7 +105,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
                   // Update associated files list
                   foreach ($jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
-                     if (!array_key_exists($hash, $order->associatedFiles)) {
+                     if (!property_exists($order->associatedFiles, $hash)) {
                         $order->associatedFiles->$hash = $associatedFiles;
                      }
                   }

@@ -56,7 +56,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfIPRange = new PluginGlpiinventoryIPRange();
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $a_specificity = [];
       $a_specificity['DEVICE'] = [];
 
@@ -77,7 +77,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
        * We will count total number of devices to query
        */
       // get all snmpauth
-      $a_snmpauth = getAllDataFromTable("glpi_plugin_glpiinventory_configsecurities");
+      $a_snmpauth = getAllDataFromTable(SNMPCredential::getTable());
 
       // get items_id by type
       $a_iprange = [];
@@ -98,10 +98,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             case 'NetworkEquipment':
                $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_glpiinventory_configsecurities_id`,
+                         `snmpcredentials_id`,
                   FROM `glpi_networkequipments`
-                  LEFT JOIN `glpi_plugin_glpiinventory_networkequipments`
-                       ON `networkequipments_id`=`glpi_networkequipments`.`id`
                   LEFT JOIN `glpi_networkports`
                        ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
                           AND `glpi_networkports`.`itemtype`='NetworkEquipment'
@@ -112,18 +110,18 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   WHERE `glpi_networkequipments`.`is_deleted`='0'
-                       AND `plugin_glpiinventory_configsecurities_id`!='0'
+                       AND `snmpcredentials_id`!='0'
                        AND `glpi_networkequipments`.`id` = '".$items_id."'
                        AND `glpi_ipaddresses`.`name`!=''
                   LIMIT 1";
                $result=$DB->query($query);
                while ($data=$DB->fetchArray($result)) {
-                  if (isset($a_snmpauth[$data['plugin_glpiinventory_configsecurities_id']])) {
+                  if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
                      $input = [];
                      $input['TYPE'] = 'NETWORKING';
                      $input['ID'] = $data['gID'];
                      $input['IP'] = $data['gnifaddr'];
-                     $input['AUTHSNMP_ID'] = $data['plugin_glpiinventory_configsecurities_id'];
+                     $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
                      $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
                      $a_NetworkEquipment[] = $items_id;
                   }
@@ -133,10 +131,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             case 'Printer':
                $query = "SELECT `glpi_printers`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_glpiinventory_configsecurities_id`,
+                         `snmpcredentials_id`,
                   FROM `glpi_printers`
-                  LEFT JOIN `glpi_plugin_glpiinventory_printers`
-                          ON `printers_id`=`glpi_printers`.`id`
                   LEFT JOIN `glpi_networkports`
                        ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
                           AND `glpi_networkports`.`itemtype`='Printer'
@@ -147,18 +143,18 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   WHERE `glpi_printers`.`is_deleted`=0
-                        AND `plugin_glpiinventory_configsecurities_id`!='0'
+                        AND `snmpcredentials_id`!='0'
                         AND `glpi_printers`.`id` = '".$items_id."'
                         AND `glpi_ipaddresses`.`name`!=''
                   LIMIT 1";
                $result=$DB->query($query);
                while ($data=$DB->fetchArray($result)) {
-                  if (isset($a_snmpauth[$data['plugin_glpiinventory_configsecurities_id']])) {
+                  if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
                      $input = [];
                      $input['TYPE'] = 'PRINTER';
                      $input['ID'] = $data['gID'];
                      $input['IP'] = $data['gnifaddr'];
-                     $input['AUTHSNMP_ID'] = $data['plugin_glpiinventory_configsecurities_id'];
+                     $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
                      $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
                      $a_Printer[] = $items_id;
                   }
@@ -174,10 +170,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
          // Search NetworkEquipment
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                             `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                            `plugin_glpiinventory_configsecurities_id`,
+                            `snmpcredentials_id`,
                      FROM `glpi_networkequipments`
-                     LEFT JOIN `glpi_plugin_glpiinventory_networkequipments`
-                          ON `networkequipments_id`=`glpi_networkequipments`.`id`
                      LEFT JOIN `glpi_networkports`
                           ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
                              AND `glpi_networkports`.`itemtype`='NetworkEquipment'
@@ -188,7 +182,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                           ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                              AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                      WHERE `glpi_networkequipments`.`is_deleted`='0'
-                          AND `plugin_glpiinventory_configsecurities_id`!='0'";
+                          AND `snmpcredentials_id`!='0'";
          if ($pfIPRange->fields['entities_id'] != '-1') {
             $entities = "(".$this->fields['entities_id'];
             foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
@@ -204,12 +198,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
          $query .= " GROUP BY `glpi_networkequipments`.`id`";
          $result=$DB->query($query);
          while ($data=$DB->fetchArray($result)) {
-            if (isset($a_snmpauth[$data['plugin_glpiinventory_configsecurities_id']])) {
+            if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
                $input = [];
                $input['TYPE'] = 'NETWORKING';
                $input['ID'] = $data['gID'];
                $input['IP'] = $data['gnifaddr'];
-               $input['AUTHSNMP_ID'] = $data['plugin_glpiinventory_configsecurities_id'];
+               $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
                $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
                $a_NetworkEquipment[] = $data['gID'];
             }
@@ -217,10 +211,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
          // Search Printer
          $query = "SELECT `glpi_printers`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_glpiinventory_configsecurities_id`,
+                         `snmpcredentials_id`,
                   FROM `glpi_printers`
-                  LEFT JOIN `glpi_plugin_glpiinventory_printers`
-                          ON `printers_id`=`glpi_printers`.`id`
                   LEFT JOIN `glpi_networkports`
                        ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
                           AND `glpi_networkports`.`itemtype`='Printer'
@@ -231,7 +223,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   WHERE `glpi_printers`.`is_deleted`=0
-                        AND `plugin_glpiinventory_configsecurities_id`!='0'";
+                        AND `snmpcredentials_id`!='0'";
          if ($pfIPRange->fields['entities_id'] != '-1') {
             $entities = "(".$this->fields['entities_id'];
             foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
@@ -246,12 +238,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
          $query .= " GROUP BY `glpi_printers`.`id`";
          $result=$DB->query($query);
          while ($data=$DB->fetchArray($result)) {
-            if (isset($a_snmpauth[$data['plugin_glpiinventory_configsecurities_id']])) {
+            if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
                $input = [];
                $input['TYPE'] = 'PRINTER';
                $input['ID'] = $data['gID'];
                $input['IP'] = $data['gnifaddr'];
-               $input['AUTHSNMP_ID'] = $data['plugin_glpiinventory_configsecurities_id'];
+               $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
                $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
                $a_Printer[] = $data['gID'];
             }
@@ -303,11 +295,11 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
          $a_input = [];
          $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
-         $a_input['plugin_glpiinventory_agents_id'] = 0;
+         $a_input['agents_id'] = 0;
          $a_input['itemtype'] = '';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
-         $a_input['execution_id'] = $task->fields['execution_id'];
+         $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
          $taskvalid = 0;
          foreach ($a_agentsubnet as $subnet=>$a_agentList) {
@@ -376,7 +368,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                            $agent_id = array_pop($a_agentList);
                            $nbagent = 0;
                         }
-                        $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
+                        $a_input['agents_id'] = $agent_id;
                         $nbagent++;
                         $taskvalid++;
                         $Taskjobstates_id = $pfTaskjobstate->add($a_input);
@@ -386,7 +378,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                            $a_input['date'] = date("Y-m-d H:i:s");
                            $pfTaskjoblog->add($a_input);
                            unset($a_input['state']);
-                           $a_input['plugin_glpiinventory_agents_id'] = 0;
+                           $a_input['agents_id'] = 0;
                            $a_input['state'] = 0;
                         if ($communication == "push") {
                            $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
@@ -411,8 +403,13 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                   AND (!in_array('.2', $a_action))) {
 
                   $agent_id = current($a_action);
-                  if ($pfAgent->getFromDB($agent_id)) {
-                     $agent_version = $pfAgent->getAgentVersion($agent_id);
+                  if ($agent->getFromDB($agent_id)) {
+                     $a_version = importArrayFromDB($this->fields['version']);
+                     $agent_version = '0';
+                     if (isset($a_version['INVENTORY'])) {
+                        $agent_version = str_replace('v', '', $a_version['INVENTORY']);
+                     }
+
                      if (strnatcmp($agent_version, '2.3.4') < 0) {
                         $agent_require_model = 1;
                      }
@@ -439,11 +436,11 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $a_input = [];
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
-            $a_input['plugin_glpiinventory_agents_id'] = 0;
+            $a_input['agents_id'] = 0;
             $a_input['itemtype'] = '';
             $a_input['items_id'] = 0;
             $a_input['uniqid'] = $uniqid;
-            $a_input['execution_id'] = $task->fields['execution_id'];
+            $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
             $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                //Add log of taskjob
@@ -464,7 +461,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $a_input = [];
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
-            $a_input['plugin_glpiinventory_agents_id'] = 0;
+            $a_input['agents_id'] = 0;
             $a_input['itemtype'] = '';
             $a_input['items_id'] = 0;
             $a_input['uniqid'] = $uniqid;
@@ -489,9 +486,9 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                $a_input = [];
                $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
                $a_input['state'] = 0;
-               $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
+               $a_input['agents_id'] = $agent_id;
                $a_input['uniqid'] = $uniqid;
-               $a_input['execution_id'] = $task->fields['execution_id'];
+               $a_input['execution_id'] = $pfTask->fields['execution_id'];
                $alternate = 0;
                for ($d=0; $d < ceil($count_device / count($a_agentList)); $d++) {
                   if ((count($a_NetworkEquipment) + count($a_Printer)) > 0) {
@@ -552,23 +549,26 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * When agent contact server, this function send datas to agent
     *
     * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
-    * @return SimpleXMLElement
+    * @return array
     */
    function run($jobstate) {
-
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-      $pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
+      $credentials = new SNMPCredential();
       $pfToolbox = new PluginGlpiinventoryToolbox();
       $pfConfig = new PluginGlpiinventoryConfig();
 
       $current = $jobstate;
-      $pfAgent->getFromDB($current->fields['plugin_glpiinventory_agents_id']);
+      $agent->getFromDB($current->fields['agents_id']);
 
       $ip = current(PluginGlpiinventoryToolbox::getIPforDevice(
               $jobstate->fields['itemtype'],
               $jobstate->fields['items_id']));
+
+      $param_attrs = [];
+      $device_attrs = [];
+      $auth_nodes = [];
 
       if ($ip == '') {
          $pfTaskjobstate->changeStatusFinish($jobstate->fields['id'],
@@ -577,54 +577,44 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             1,
             "Device have no ip");
       } else {
-         $sxml_option = $this->message->addChild('OPTION');
-         $sxml_option->addChild('NAME', 'SNMPQUERY');
-         $sxml_param = $sxml_option->addChild('PARAM');
          // Use general config when threads number is set to 0 on the agent
-         if ($pfAgent->fields["threads_networkinventory"] == 0) {
-            $sxml_param->addAttribute('THREADS_QUERY',
-               $pfConfig->getValue('threads_networkinventory'));
-         } else {
-            $sxml_param->addAttribute('THREADS_QUERY',
-               $pfAgent->fields["threads_networkinventory"]);
-         }
+         $param_attrs['THREADS_QUERY'] = $agent->fields["threads_networkinventory"] == 0 ?
+            $pfConfig->getValue('threads_networkinventory') :
+            $agent->fields["threads_networkinventory"];
+
          // Use general config when timeout is set to 0 on the agent
-         if ($pfAgent->fields["timeout_networkinventory"] == 0) {
-            $sxml_param->addAttribute('TIMEOUT',
-               $pfConfig->getValue('timeout_networkinventory'));
-         } else {
-            $sxml_param->addAttribute('TIMEOUT',
-               $pfAgent->fields["timeout_networkinventory"]);
-         }
-         $sxml_param->addAttribute('PID', $current->fields['id']);
+         $param_attrs['TIMEOUT'] = $agent->fields["timeout_networkinventory"] == 0 ?
+            $pfConfig->getValue('timeout_networkinventory') :
+            $agent->fields["timeout_networkinventory"];
+
+         $param_attrs['PID'] = $current->fields['id'];
 
          $changestate = 0;
          $taskjobstatedatas = $jobstate->fields;
-         $sxml_device = $sxml_option->addChild('DEVICE');
 
-         $a_extended = ['plugin_glpiinventory_configsecurities_id' => 0];
+         $a_extended = ['snmpcredentials_id' => 0];
          if ($jobstate->fields['itemtype'] == 'Printer') {
-            $sxml_device->addAttribute('TYPE', 'PRINTER');
-            $pfPrinter = new PluginGlpiinventoryPrinter();
-            $a_extended = current($pfPrinter->find(['printers_id' => $jobstate->fields['items_id']], [], 1));
+            $device_attrs['TYPE'] = 'PRINTER';
+            $printer = new Printer();
+            $a_extended = current($printer->find(['id' => $jobstate->fields['items_id']], [], 1));
          } else if ($jobstate->fields['itemtype'] == 'NetworkEquipment') {
-            $sxml_device->addAttribute('TYPE', 'NETWORKING');
-            $pfNetworkEquipment = new PluginGlpiinventoryNetworkEquipment();
-            $a_extended = current($pfNetworkEquipment->find(['networkequipments_id' => $jobstate->fields['items_id']], [], 1));
+            $device_attrs['TYPE'] = 'NETWORKING';
+            $neteq = new NetworkEquipment();
+            $a_extended = current($neteq->find(['id' => $jobstate->fields['items_id']], [], 1));
          }
-         $sxml_device->addAttribute('ID', $jobstate->fields['items_id']);
 
-         $sxml_device->addAttribute('IP', $ip);
-         $sxml_device->addAttribute('AUTHSNMP_ID', $a_extended['plugin_glpiinventory_configsecurities_id']);
+         $device_attrs['ID'] = $jobstate->fields['items_id'];
+         $device_attrs['IP'] = $ip;
+         $device_attrs['AUTHSNMP_ID'] = $a_extended['snmpcredentials_id'];
 
          if ($changestate == '0') {
             $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
             $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
                '0',
-               'PluginGlpiinventoryAgent',
+               'Agent',
                '1',
-               $pfAgent->fields["threads_networkinventory"].' threads '.
-               $pfAgent->fields["timeout_networkinventory"].' timeout'
+               $param_attrs['THREADS_QUERY'].' threads '.
+               $param_attrs['TIMEOUT'].' timeout'
             );
             $changestate = $pfTaskjobstate->fields['id'];
          } else {
@@ -634,14 +624,28 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                0,
                "Merged with ".$changestate);
          }
-         $snmpauthlist=$pfConfigSecurity->find();
-         if (count($snmpauthlist)) {
-            foreach ($snmpauthlist as $snmpauth) {
-               $pfToolbox->addAuth($sxml_option, $snmpauth['id']);
+         $snmpauthlist = $credentials->find();
+         foreach ($snmpauthlist as $snmpauth) {
+            $auth_node = $pfToolbox->addAuth($snmpauth['id']);
+            if (count($auth_node)) {
+               $auth_nodes[] = $auth_node;
             }
          }
       }
-      return $this->message;
+
+      return [
+         'OPTION' => [
+            'NAME' => 'SNMPQUERY',
+            'PARAM' => [
+               'content' => '',
+               'attributes' => $param_attrs
+            ],
+            'DEVICE' => [
+               'content' => '',
+               'attributes' => $device_attrs
+            ]
+         ] + $auth_nodes
+      ];
    }
 
 
@@ -683,16 +687,16 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
          return $a_agentList;
       }
 
-      $where = " AND `glpi_plugin_glpiinventory_agents`.`ID` IN (";
+      $where = " AND `glpi_agents`.`ID` IN (";
       $where .= implode(', ', $a_agentsid);
       $where .= ")
          AND `glpi_ipaddresses`.`name` != '127.0.0.1' ";
 
-      $query = "SELECT `glpi_plugin_glpiinventory_agents`.`id` as `a_id`,
+      $query = "SELECT `glpi_agents`.`id` as `a_id`,
          `glpi_ipaddresses`.`name` as ip, token
-         FROM `glpi_plugin_glpiinventory_agents`
+         FROM `glpi_agents`
          LEFT JOIN `glpi_networkports`
-            ON `glpi_networkports`.`items_id` = `glpi_plugin_glpiinventory_agents`.`computers_id`
+            ON `glpi_networkports`.`items_id` = `glpi_agents`.`items_id`
          LEFT JOIN `glpi_networknames`
               ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
                  AND `glpi_networknames`.`itemtype`='NetworkPort'
@@ -700,8 +704,9 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
               ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                  AND `glpi_ipaddresses`.`itemtype`='NetworkName'
          LEFT JOIN `glpi_computers`
-            ON `glpi_computers`.`id` = `glpi_plugin_glpiinventory_agents`.`computers_id`
-         WHERE `glpi_networkports`.`itemtype`='Computer'
+            ON `glpi_computers`.`id` = `glpi_agents`.`items_id`
+         WHERE `glpi_agents`.`itemtype`='Computer'
+            AND `glpi_networkports`.`itemtype`='Computer'
             ".$subnet."
             ".$where." ";
       Toolbox::logInFile('NET', $query);
@@ -745,17 +750,15 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
       $pfIPRange = new PluginGlpiinventoryIPRange();
 
       // get all snmpauth
-      $a_snmpauth = getAllDataFromTable("glpi_plugin_glpiinventory_configsecurities");
+      $a_snmpauth = getAllDataFromTable(SNMPCredential::getTable());
 
       $pfIPRange->getFromDB($ipranges_id);
       // Search NetworkEquipment
       $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                        `glpi_networkequipments`.`name` AS `gNAME`,
                        `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                       `plugin_glpiinventory_configsecurities_id`
+                       `snmpcredentials_id`
                   FROM `glpi_networkequipments`
-                  LEFT JOIN `glpi_plugin_glpiinventory_networkequipments`
-                       ON `networkequipments_id`=`glpi_networkequipments`.`id`
                   LEFT JOIN `glpi_networkports`
                        ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
                           AND `glpi_networkports`.`itemtype`='NetworkEquipment'
@@ -766,7 +769,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   WHERE `glpi_networkequipments`.`is_deleted`='0'
-                       AND `plugin_glpiinventory_configsecurities_id`!='0'";
+                       AND `snmpcredentials_id`!='0'";
       if ($pfIPRange->fields['entities_id'] != '-1') {
          $entities = "(".$pfIPRange->fields['entities_id'];
          foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
@@ -782,7 +785,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
       $query .= " GROUP BY `glpi_networkequipments`.`id`";
       $result=$DB->query($query);
       while ($data=$DB->fetchArray($result)) {
-         if (isset($a_snmpauth[$data['plugin_glpiinventory_configsecurities_id']])) {
+         if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
             $devicesList[] = [
                'NetworkEquipment' => $data['gID']
             ];
@@ -792,10 +795,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
       $query = "SELECT `glpi_printers`.`id` AS `gID`,
                       `glpi_printers`.`name` AS `gNAME`,
                       `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                      `plugin_glpiinventory_configsecurities_id`
+                      `snmpcredentials_id`
                FROM `glpi_printers`
-               LEFT JOIN `glpi_plugin_glpiinventory_printers`
-                       ON `printers_id`=`glpi_printers`.`id`
                LEFT JOIN `glpi_networkports`
                     ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
                        AND `glpi_networkports`.`itemtype`='Printer'
@@ -806,7 +807,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                        AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                WHERE `glpi_printers`.`is_deleted`=0
-                     AND `plugin_glpiinventory_configsecurities_id`!='0'";
+                     AND `snmpcredentials_id`!='0'";
       if ($pfIPRange->fields['entities_id'] != '-1') {
          $entities = "(".$pfIPRange->fields['entities_id'];
          foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
@@ -821,7 +822,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
       $query .= " GROUP BY `glpi_printers`.`id`";
       $result=$DB->query($query);
       while ($data=$DB->fetchArray($result)) {
-         if (isset($a_snmpauth[$data['plugin_glpiinventory_configsecurities_id']])) {
+         if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
             $devicesList[] = [
                'Printer' => $data['gID']
             ];

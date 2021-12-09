@@ -45,16 +45,16 @@ class CollectsTest extends TestCase {
 
       // Delete all computers
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
 
       // Delete all agents
-      $pfAgent = new PluginGlpiinventoryAgent();
-      $items = $pfAgent->find();
+      $agent = new Agent();
+      $items = $agent->find();
       foreach ($items as $item) {
-         $pfAgent->delete(['id' => $item['id']], true);
+         $agent->delete(['id' => $item['id']], true);
       }
 
       // Delete all collects
@@ -219,11 +219,12 @@ class CollectsTest extends TestCase {
     * @test
     */
    public function registryProcessWithAgent() {
+      global $DB;
 
       $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfAgent            = new PluginGlpiinventoryAgent();
+      $agent            = new Agent();
       $pfCollect          = new PluginGlpiinventoryCollect();
       $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
       $pfTask             = new PluginGlpiinventoryTask();
@@ -269,13 +270,16 @@ class CollectsTest extends TestCase {
       $computers_id = $computer->add($input);
       $this->assertNotFalse($computers_id);
 
+      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
       $input = [
           'name'         => 'pc01',
           'entities_id'  => 0,
-          'computers_id' => $computers_id,
-          'device_id'    => 'pc01'
+          'itemtype'     => Computer::getType(),
+          'items_id'     => $computers_id,
+          'deviceid'     => 'pc01',
+         'agenttypes_id' => $agenttype['id']
       ];
-      $agents_id = $pfAgent->add($input);
+      $agents_id = $agent->add($input);
       $this->assertNotFalse($agents_id);
 
       // Create task
@@ -390,7 +394,7 @@ class CollectsTest extends TestCase {
       $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $pfCollect = new PluginGlpiinventoryCollect();
       $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
       $pfCollect_Wmi_Content = new PluginGlpiinventoryCollect_Wmi_Content();
@@ -432,8 +436,8 @@ class CollectsTest extends TestCase {
       // get computer
       $computer->getFromDBByCrit(['name' => 'pc01']);
       $computers_id = $computer->fields['id'];
-      $pfAgent->getFromDBByCrit(['name' => 'pc01']);
-      $agents_id = $pfAgent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'pc01']);
+      $agents_id = $agent->fields['id'];
 
       // Create task
       $input = [
@@ -554,7 +558,7 @@ class CollectsTest extends TestCase {
       $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $pfCollect = new PluginGlpiinventoryCollect();
       $pfCollect_File = new PluginGlpiinventoryCollect_File();
       $pfCollect_File_Content = new PluginGlpiinventoryCollect_File_Content();
@@ -598,8 +602,8 @@ class CollectsTest extends TestCase {
       // get computer
       $computer->getFromDBByCrit(['name' => 'pc01']);
       $computers_id = $computer->fields['id'];
-      $pfAgent->getFromDBByCrit(['name' => 'pc01']);
-      $agents_id = $pfAgent->fields['id'];
+      $agent->getFromDBByCrit(['name' => 'pc01']);
+      $agents_id = $agent->fields['id'];
 
       // Create task
       $input = [

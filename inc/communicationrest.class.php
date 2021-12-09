@@ -49,7 +49,9 @@ class PluginGlpiinventoryCommunicationRest {
    static function communicate($params = []) {
       $response = [];
       if (isset ($params['action']) && isset($params['machineid'])) {
-         if (PluginGlpiinventoryAgent::getByDeviceID($params['machineid'])) {
+         $agent = new Agent();
+         if ($agent->getFromDBByCrit(['deviceid' => $params['machineid']])) {
+            $params['agent'] = $agent;
             switch ($params['action']) {
 
                case 'getConfig':
@@ -85,7 +87,7 @@ class PluginGlpiinventoryCommunicationRest {
 
       if (isset($params['task'])) {
          $pfAgentModule = new PluginGlpiinventoryAgentmodule();
-         $a_agent       = PluginGlpiinventoryAgent::getByDeviceID($params['machineid']);
+         $a_agent       = $params['agent']->fields;
 
          foreach (array_keys($params['task']) as $task) {
             foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
@@ -114,9 +116,9 @@ class PluginGlpiinventoryCommunicationRest {
                   && $pfAgentModule->isAgentCanDo($taskname, $a_agent['id'])
                   && countElementsInTable('glpi_plugin_glpiinventory_taskjobstates',
                      [
-                        'plugin_glpiinventory_agents_id' => $a_agent['id'],
-                        'itemtype'                         => $classname,
-                        'state'                            => 0,
+                        'agents_id' => $a_agent['id'],
+                        'itemtype' => $classname,
+                        'state' => 0,
                      ]) > 0) {
                   /*
                    * Since migration, there is only one plugin in one directory
@@ -204,10 +206,10 @@ class PluginGlpiinventoryCommunicationRest {
       }
 
       //Get the agent ID by its deviceid
-      $agent = PluginGlpiinventoryAgent::getByDeviceID($p['machineid']);
+      $agent = new Agent();
 
-      //No need to continue since the requested agent doesn't exists in database
-      if ($agent === false) {
+      //No need to continue since the requested agent doesn't exist in database
+      if ($agent->getFromDBByCrit(['deviceid' => $p['machineid']]) === false) {
          if ($p['sendheaders']) {
             self::sendError();
          }

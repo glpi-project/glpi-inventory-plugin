@@ -207,18 +207,14 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView {
       // which will be rendered later by mustache.js
       echo "<div class='tasks_block'></div>";
 
-      if (isset($this->fields['id'])) {
-         $task_id = $this->fields['id'];
-      } else {
-         $task_id = null;
-      }
-      $pfAgent      = new PluginGlpiinventoryAgent();
-      $Computer     = new Computer();
+      $task_id = $this->fields['id'] ?? null;
+      $agent = new Agent();
+      $Computer = new Computer();
 
       echo Html::scriptBlock("$(document).ready(function() {
          taskjobs.task_id        = '".$task_id."';
          taskjobs.ajax_url       = '".$this->getBaseUrlFor('fi.job.logs')."';
-         taskjobs.agents_url     = '".$pfAgent->getFormUrl()."';
+         taskjobs.agents_url     = '".$agent->getFormUrl()."';
          taskjobs.includeoldjobs = '".$_SESSION['glpi_plugin_glpiinventory']['includeoldjobs']."';
          taskjobs.refresh        = '".$_SESSION['glpi_plugin_glpiinventory']['refresh']."';
          taskjobs.computers_url  = '".$Computer->getFormUrl()."';

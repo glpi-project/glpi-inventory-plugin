@@ -271,7 +271,7 @@ class PluginGlpiinventoryStaticmisc {
     */
    static function task_actiontype_InventoryComputerESX($a_itemtype) {
       return ['' => Dropdown::EMPTY_VALUE ,
-                   'PluginGlpiinventoryAgent' => __('Agents', 'glpiinventory')];
+              Agent::class => Agent::getTypeName(Session::getPluralNumber())];
 
    }
 
@@ -306,12 +306,12 @@ class PluginGlpiinventoryStaticmisc {
 
 
    /**
-    * Get all devices of action type 'PluginGlpiinventoryAgent'
+    * Get all devices of action type 'Agent'
     * defined in task_actiontype_InventoryComputerESX
     *
     * @return string unique html element id
     */
-   static function task_actionselection_PluginGlpiinventoryAgent_InventoryComputerESX() {
+   static function task_actionselection_Agent_InventoryComputerESX() {
 
       $array = [];
       $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
@@ -585,15 +585,18 @@ class PluginGlpiinventoryStaticmisc {
          implode( " ",
             [
                '`id` IN ( ',
-               '  SELECT agents.`computers_id`',
-               '  FROM `glpi_plugin_glpiinventory_agents` as agents',
+               '  SELECT agents.`items_id`',
+               '  FROM `glpi_agents` as agents',
                '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
                '  ON module.modulename = "DEPLOY"',
                '  WHERE',
-               '        (  module.is_active=1',
-               '           AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-               '     OR (  module.is_active=0',
-               '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     agents.`itemtype` = \'Computer\'',
+               '     AND (',
+               '           (  module.is_active=1',
+               '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '        OR (  module.is_active=0',
+               '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     )',
                ')'
             ]
          );
@@ -705,15 +708,18 @@ class PluginGlpiinventoryStaticmisc {
          implode( " ",
             [
                '`id` IN ( ',
-               '  SELECT agents.`computers_id`',
-               '  FROM `glpi_plugin_glpiinventory_agents` as agents',
+               '  SELECT agents.`items_id`',
+               '  FROM `glpi_agents` as agents',
                '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
                '  ON module.modulename = "Collect"',
                '  WHERE',
-               '        (  module.is_active=1',
-               '           AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-               '     OR (  module.is_active=0',
-               '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     agents.`itemtype` = \'Computer\'',
+               '     AND (',
+               '           (  module.is_active=1',
+               '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '        OR (  module.is_active=0',
+               '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     )',
                ')'
             ]
          );

@@ -106,13 +106,10 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
           'config'                     => 'PluginGlpiinventoryConfig',
           'task'                       => 'PluginGlpiinventoryTask',
           'timeslot'                   => 'PluginGlpiinventoryTimeslot',
-          'unmanaged'                  => 'PluginGlpiinventoryUnmanaged',
-          'inventoryruleimport'        => 'PluginGlpiinventoryInventoryRuleImport',
-          'inventoryruleentity'        => 'PluginGlpiinventoryInventoryRuleEntity',
-          'inventoryrulelocation'      => 'PluginGlpiinventoryInventoryRuleLocation',
+          'unmanaged'                  => 'Unmanaged',
           'collectrule'                => 'PluginGlpiinventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginGlpiinventoryInventoryComputerBlacklist',
-          'configsecurity'             => 'PluginGlpiinventoryConfigSecurity',
+          'configsecurity'             => 'SNMPCredential',
           'credential'                 => 'PluginGlpiinventoryCredential',
           'credentialip'               => 'PluginGlpiinventoryCredentialIp',
           'collect'                    => 'PluginGlpiinventoryCollect',
@@ -120,7 +117,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
           'deploymirror'               => 'PluginGlpiinventoryDeployMirror',
           'deploygroup'                => 'PluginGlpiinventoryDeployGroup',
           'deployuserinteractiontemplate' => 'PluginGlpiinventoryDeployUserinteractionTemplate',
-          'ignoredimportdevice'        => 'PluginGlpiinventoryIgnoredimportdevice'
+          'ignoredimportdevice'        => 'RefusedEquipment'
       ];
       $options = [];
 
@@ -161,10 +158,10 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
       $options['menu']['links'][$img] = '/plugins/glpiinventory/front/documentation.php';
 
       $options['agent'] = [
-           'title' => PluginGlpiinventoryAgent::getTypeName(),
-           'page'  => PluginGlpiinventoryAgent::getSearchURL(false),
+           'title' => Agent::getTypeName(),
+           'page'  => Agent::getSearchURL(false),
            'links' => [
-               'search' => PluginGlpiinventoryAgent::getSearchURL(false)
+               'search' => Agent::getSearchURL(false)
            ]];
       if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
          $options['agent']['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
@@ -180,6 +177,8 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
     * @param string $type
     */
    static function displayMenu($type = "big") {
+      global $CFG_GLPI;
+
       $fi_path = Plugin::getWebDir('glpiinventory');
 
       $menu = [];
@@ -190,7 +189,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
       if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
          $general_menu[0]['name'] = __('Agents management', 'glpiinventory');
          $general_menu[0]['pic']  = $fi_path."/pics/menu_agents.png";
-         $general_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryAgent');
+         $general_menu[0]['link'] = Agent::getSearchURL();
       }
 
       if (Session::haveRight('plugin_glpiinventory_group', READ)) {
@@ -229,7 +228,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
       if (Session::haveRight('plugin_glpiinventory_importxml', CREATE)) {
          $tasks_menu[0]['name'] = __('Import agent XML file', 'glpiinventory');
          $tasks_menu[0]['pic']  = $fi_path."/pics/menu_importxml.png";
-         $tasks_menu[0]['link'] = $fi_path."/front/inventorycomputerimportxml.php";
+         $tasks_menu[0]['link'] = $CFG_GLPI['root_doc'] . "/front/inventory.conf.php?forcetab=Conf\$2";
       }
 
       if (Session::haveRight("plugin_glpiinventory_collect", READ)) {
@@ -259,29 +258,28 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
          $rules_menu[1]['name'] = __('Equipment import and link rules', 'glpiinventory');
          $rules_menu[1]['pic']  = $fi_path."/pics/menu_rules.png";
          $rules_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
-                    'PluginGlpiinventoryInventoryRuleImport'
+                    RuleImportAsset::class
                  );
       }
 
       if (Session::haveRight('plugin_glpiinventory_ignoredimportdevice', READ)) {
          $rules_menu[2]['name'] = __('Asset skipped during import', 'glpiinventory');
          $rules_menu[2]['pic']  = $fi_path."/pics/menu_rules.png";
-         $rules_menu[2]['link'] = Toolbox::getItemTypeSearchURL(
-                    'PluginGlpiinventoryIgnoredimportdevice'
-                 );
+         $rules_menu[2]['link'] = RefusedEquipment::getSearchURL();
       }
 
       if (Session::haveRight('plugin_glpiinventory_ruleentity', READ)) {
          $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
          $rules_menu[3]['pic']  = $fi_path."/pics/menu_rules.png";
-         $rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
+         $rules_menu[3]['link'] = RuleImportEntity::getSearchURL();
+         //$rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
       }
 
-      if (Session::haveRight('plugin_glpiinventory_rulelocation', READ)) {
+      /*if (Session::haveRight('plugin_glpiinventory_rulelocation', READ)) {
          $rules_menu[4]['name'] = __('Location rules', 'glpiinventory');
          $rules_menu[4]['pic']  = $fi_path."/pics/menu_rules.png";
          $rules_menu[4]['link'] = $fi_path."/front/inventoryrulelocation.php";
-      }
+      }*/
 
       if (Session::haveRight("plugin_glpiinventory_rulecollect", READ)) {
          $rules_menu[5]['name'] = __('Computer information rules', 'glpiinventory');
@@ -327,7 +325,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
          $network_menu[] = [
             'name' => __('SNMP credentials', 'glpiinventory'),
             'pic'  => $fi_path."/pics/menu_authentification.png",
-            'link' => $fi_path."/front/configsecurity.php"
+            'link' => SNMPCredential::getSearchURL()
          ];
       }
 
@@ -407,13 +405,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
       $guide_menu = [];
 
       $guide_menu[] = [
-         'name' => "FI> ".__('Computer inv.', 'glpiinventory'),
-         'pic'  => "",
-         'link' => $fi_path."/front/menu_inventory.php"
-      ];
-
-      $guide_menu[] = [
-         'name' => "FI> ".__('SNMP inv.', 'glpiinventory'),
+         'name' => __('SNMP inventory', 'glpiinventory'),
          'pic'  => "",
          'link' => $fi_path."/front/menu_snmpinventory.php"
       ];
@@ -432,72 +424,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
 
 
    /**
-    * Menu for computer inventory
-    *
-    * @global array $CFG_GLPI
-    */
-   static function displayMenuInventory() {
-      $fi_path = Plugin::getWebDir('glpiinventory');
-
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>";
-      echo __('Statistics', 'glpiinventory')." / ".__('Number of computer inventories of last hours', 'glpiinventory');
-      echo "</th>";
-      echo "</tr>";
-      $dataInventory = PluginGlpiinventoryInventoryComputerStat::getLastHours(23);
-      echo "<tr class='tab_bg_1' height='280'>";
-      echo "<td colspan='2' height='280'>";
-      self::showChartBar('nbinventory', $dataInventory, '', 940);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>";
-      echo __('This is the steps to configure plugin for computer inventory', 'glpiinventory');
-      echo "</th>";
-      echo "</tr>";
-
-      $a_steps = [
-          [
-              'text' => __('Configure frequency of agent contact (and so each inventory)', 'glpiinventory'),
-              'url'  => $fi_path."/front/config.form.php?forcetab=PluginGlpiinventoryConfig$0"
-          ],
-          [
-              'text' => __('Configure inventory options', 'glpiinventory'),
-              'url'  => $fi_path."/front/config.form.php?forcetab=PluginGlpiinventoryConfig$1"
-          ],
-          [
-              'text' => __('Define rules for entity', 'glpiinventory'),
-              'url'  => $fi_path."/front/inventoryruleentity.php"
-          ],
-          [
-              'text' => __('Define rules for location', 'glpiinventory'),
-              'url'  => $fi_path."/front/inventoryrulelocation.php"
-          ],
-          [
-              'text' => __('Define rules for import : merge and create new computer (CAUTION: same rules for SNMP inventory)', 'glpiinventory'),
-              'url'  => $fi_path."/front/inventoryruleimport.php"
-          ]
-      ];
-
-      $i = 1;
-      foreach ($a_steps as $data) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<th width='25'>";
-         echo $i.".";
-         echo "</th>";
-         echo "<td>";
-         echo '<a href="'.$data['url'].'" target="_blank">'.$data['text'].'</a>';
-         echo "</td>";
-         echo "</tr>";
-         $i++;
-      }
-      echo "</table>";
-   }
-
-
-   /**
     * Menu for SNMP inventory
     *
     * @global array $CFG_GLPI
@@ -506,30 +432,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
       $fi_path = Plugin::getWebDir('glpiinventory');
 
       echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>";
-      echo __('Statistics', 'glpiinventory');
-      echo "</th>";
-      echo "</tr>";
-      $networkequipment = countElementsInTable('glpi_plugin_glpiinventory_networkequipments');
-      $printer    = countElementsInTable('glpi_plugin_glpiinventory_printers');
-
-      $dataSNMP = [];
-      $dataSNMP[] = [
-          'key' => 'NetworkEquipments (SNMP) : '.$networkequipment,
-          'y'   => $networkequipment,
-          'color' => '#3d94ff'
-      ];
-      $dataSNMP[] = [
-          'key' => 'Printers (SNMP) : '.$printer,
-          'y'   => $printer,
-          'color' => '#3dff7d'
-      ];
-      echo "<tr class='tab_bg_1' height='100'>";
-      echo "<td colspan='2' height='220'>";
-      self::showChart('snmp', $dataSNMP);
-      echo "</td>";
-      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>";
@@ -540,11 +442,11 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
       $a_steps = [
           [
               'text' => __('Configure SNMP credentials', 'glpiinventory'),
-              'url'  => $fi_path."/front/configsecurity.php"
+              'url'  => SNMPCredential::getFormURL(),
           ],
           [
               'text' => __('Define rules for import : merge and create new devices (CAUTION: same rules for computer inventory)', 'glpiinventory'),
-              'url'  => $fi_path."/front/inventoryruleimport.php"
+              'url'  => RuleImportAsset::getFormURL(),
           ],
           [
               'text' => __('`Network Discovery`, used to discover the devices on the network', 'glpiinventory'),
@@ -565,7 +467,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
           ],
           [
               'text' => __('If you have devices not typed, import them from unmanaged devices', 'glpiinventory'),
-              'url'  => $fi_path."/front/unmanaged.php"
+              'url'  => Unmanaged::getSearchURL()
           ],
           [
               'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'glpiinventory'),
@@ -615,6 +517,8 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
     * @global object $DB
     */
    static function board() {
+      return;
+      /*
       global $DB;
 
       // FI Computers
@@ -824,7 +728,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI {
       self::showChart('ports', $dataPortL, __('Ports on network equipments (inventoried by SNMP)', 'glpiinventory'));
       self::showChart('portsconnected', $dataPortC, __('Ports on all network equipments', 'glpiinventory'));
       echo "</div>";
-
+      */
    }
 
 

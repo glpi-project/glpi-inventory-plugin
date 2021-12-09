@@ -267,7 +267,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
          "     task.`plugin_glpiinventory_timeslots_exec_id` as timeslot_id,",
          "     job.`id`, job.`name`, job.`method`, job.`actors`,",
          "     run.`itemtype`, run.`items_id`, run.`state`,",
-         "     run.`id`, run.`plugin_glpiinventory_agents_id`",
+         "     run.`id`, run.`agents_id`",
          "FROM `glpi_plugin_glpiinventory_taskjobstates` run",
          "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` job",
          "  ON job.`id` = run.`plugin_glpiinventory_taskjobs_id`",
@@ -280,7 +280,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
             PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA,
             PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA,
          ])."')",
-         "  AND run.`plugin_glpiinventory_agents_id` = " . $agent_id,
+         "  AND run.`agents_id` = " . $agent_id,
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag AND drop
          // feature will be properly activated in the taskjobs list.
@@ -606,9 +606,9 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
                       PluginGlpiinventoryTaskjobstate::IN_ERROR,
                       PluginGlpiinventoryTaskjobstate::POSTPONED,
                       PluginGlpiinventoryTaskjobstate::CANCELLED]],
-                   'plugin_glpiinventory_agents_id' => array_keys($agent_ids)]);
+                   'agents_id' => array_keys($agent_ids)]);
             foreach ($jobstates_running as $jobstate_running) {
-               $jobstate_agent_id = $jobstate_running['plugin_glpiinventory_agents_id'];
+               $jobstate_agent_id = $jobstate_running['agents_id'];
                if (isset( $agent_ids[$jobstate_agent_id])) {
                   $agent_ids[$jobstate_agent_id] = false;
                }
@@ -622,10 +622,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
                    'items_id' => $item_id,
                    'plugin_glpiinventory_taskjobs_id' => $job_id,
                    'state'    => PluginGlpiinventoryTaskjobstate::FINISHED,
-                   'plugin_glpiinventory_agents_id'   => array_keys($agent_ids)]);
+                   'agents_id'   => array_keys($agent_ids)]);
 
                foreach ($jobstates_running as $jobstate_running) {
-                  $jobstate_agent_id = $jobstate_running['plugin_glpiinventory_agents_id'];
+                  $jobstate_agent_id = $jobstate_running['agents_id'];
                   if (isset( $agent_ids[$jobstate_agent_id])) {
                      $agent_ids[$jobstate_agent_id] = false;
                   }
@@ -645,7 +645,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
                          PluginGlpiinventoryTaskjobstate::CANCELLED,
                       ]],
                    'NOT' => [
-                     'plugin_glpiinventory_agents_id' => array_keys($agent_ids)]
+                     'agents_id' => array_keys($agent_ids)]
                    ]);
             foreach ($jobstates_tocancel as $jobstate_tocancel) {
                $jobstate->getFromDB($jobstate_tocancel['id']);
@@ -665,7 +665,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
                         'itemtype'                           => $item_type,
                         'items_id'                           => $item_id,
                         'plugin_glpiinventory_taskjobs_id' => $job_id,
-                        'plugin_glpiinventory_agents_id'   => $agent_id,
+                        'agents_id'   => $agent_id,
                         'uniqid'                             => uniqid(),
                      ]
                   );
@@ -705,7 +705,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
       $agents    = [];
       $computers = [];
       $computer  = new Computer();
-      $agent     = new PluginGlpiinventoryAgent();
+      $agent     = new Agent();
       $pfToolbox = new PluginGlpiinventoryToolbox();
       foreach ($actors as $actor) {
          $itemtype = key($actor);
@@ -757,15 +757,18 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
             /**
              * TODO: The following should be replaced with Dynamic groups
              */
-            case 'PluginGlpiinventoryAgent':
+            case Agent::class:
                $agents[$itemid] = 1;
                break;
          }
       }
 
       //Get agents from the computer's ids list
-      foreach ($agent->getAgentsFromComputers(array_keys($computers)) as $agent_entry) {
-         $agents[$agent_entry['id']] = 1;
+      if (count($computers)) {
+         $agents_entries = $agent->find(['itemtype' => 'Computer', 'items_id' => array_keys($computers)]);
+         foreach ($agents_entries as $agent_entry) {
+            $agents[$agent_entry['id']] = 1;
+         }
       }
 
       // Return the list of agent's ids.
@@ -1150,13 +1153,14 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
          // get taskjobstates
           $query_job_state = "SELECT `glpi_plugin_glpiinventory_taskjobstates`.id, state,
              glpi_plugin_glpiinventory_taskjobstates.itemtype, glpi_plugin_glpiinventory_taskjobstates.items_id,
-             `plugin_glpiinventory_agents_id` as 'agent.id',
+             `agents_id` as 'agent.id',
              `agent`.`name` as 'agent.name',
-             `agent`.`computers_id` as 'agent.computers_id'
+             `agent`.`items_id` as 'agent.computers_id'
              FROM `glpi_plugin_glpiinventory_taskjobstates`
-             LEFT JOIN `glpi_plugin_glpiinventory_agents` AS agent
-                ON agent.`id` = `plugin_glpiinventory_agents_id`
+             LEFT JOIN `glpi_agents` AS agent
+                ON agent.`id` = `agents_id`
              WHERE `glpi_plugin_glpiinventory_taskjobstates`.`plugin_glpiinventory_taskjobs_id` = '".$taskjob['id']."'
+             AND agent.itemtype = 'Computer'
              ORDER BY glpi_plugin_glpiinventory_taskjobstates.id desc";
 
          // Execute query to get all jobs states - log the query result
@@ -1650,7 +1654,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
             "     task.`plugin_glpiinventory_timeslots_prep_id` as timeslot_id,",
             "     job.`id`, job.`name`, job.`method`, job.`actors`,",
             "     run.`itemtype`, run.`items_id`, run.`state`,",
-            "     run.`id`, run.`plugin_glpiinventory_agents_id`",
+            "     run.`id`, run.`agents_id`",
             "FROM `glpi_plugin_glpiinventory_taskjobstates` run",
             "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` job",
             "  ON job.`id` = run.`plugin_glpiinventory_taskjobs_id`",
@@ -1764,7 +1768,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
       echo "Status".SEP;
       echo "Last Message".NL;
 
-      $agent_obj = new PluginGlpiinventoryAgent();
+      $agent_obj = new Agent();
       $computer  = new Computer();
 
       // prepare an anonymous (and temporory) function
@@ -1798,7 +1802,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView {
                         foreach ($target['agents'] as $agent_id => $agent) {
                            $agent_obj->getFromDB($agent_id);
                            echo $agent_obj->getName().SEP;
-                           $computer->getFromDB($agent_obj->fields['computers_id']);
+                           $computer->getFromDB($agent_obj->fields['items_id']);
                            echo $computer->getname().SEP;
 
                            $log_cpt = 0;

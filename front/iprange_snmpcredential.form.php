@@ -30,23 +30,27 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
+include ("../../../inc/includes.php");
 
-/**
- * Template for deploy user interactions
- */
-class PluginGlpiinventoryUserinteractionModel extends CommonDBTM {
+$pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_SNMPCredential();
 
+if (isset ($_POST["add"])) {
 
-   /**
-    * Get the name user interaction
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
-   static function getTypeName($nb = 0) {
-      return _n('User interaction', 'User interactions', 'glpiinventory');
+   $a_data = current(
+      getAllDataFromTable(
+         PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
+         [
+            'WHERE' => [
+               'plugin_glpiinventory_ipranges_id' => $_POST['plugin_glpiinventory_ipranges_id']
+            ],
+            'ORDER' => 'rank DESC'
+         ]
+      )
+   );
+   $_POST['rank'] = 1;
+   if (isset($a_data['rank'])) {
+      $_POST['rank'] = $a_data['rank'] + 1;
    }
+   $pfIPRange_ConfigSecurity->add($_POST);
+   Html::back();
 }

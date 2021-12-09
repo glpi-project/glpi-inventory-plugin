@@ -56,7 +56,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication {
       $pfTaskjob = new PluginGlpiinventoryTaskjob();
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
 
       $uniqid = uniqid();
 
@@ -149,7 +149,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication {
                && (!in_array('.2', $a_action))) {
 
                $agent_id = current($a_action);
-               if ($pfAgent->getFromDB($agent_id)) {
+               if ($agent->getFromDB($agent_id)) {
                   if ($communication == 'pull') {
                      $a_agentList[] = $agent_id;
                   } else {
@@ -191,7 +191,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication {
          $a_input = [];
          $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
-         $a_input['plugin_glpiinventory_agents_id'] = 0;
+         $a_input['agents_id'] = 0;
          $a_input['itemtype'] = 'Computer';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
@@ -217,7 +217,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication {
          $a_input['uniqid'] = $uniqid;
          while (count($a_computers_to_wake) != 0) {
             $agent_id = array_pop($a_agentList);
-            $a_input['plugin_glpiinventory_agents_id'] = $agent_id;
+            $a_input['agents_id'] = $agent_id;
             for ($i=0; $i < $nb_computers; $i++) {
                 //Add jobstate and put status
                 $a_input['items_id'] = array_pop($a_computers_to_wake);
@@ -370,18 +370,19 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication {
             return $a_agentList;
          }
 
-         $where = " AND `glpi_plugin_glpiinventory_agents`.`ID` IN (";
+         $where = " AND `glpi_agents`.`ID` IN (";
          $where .= implode(', ', $a_agentsid);
          $where .= ")
             AND `ip` != '127.0.0.1' ";
 
-         $query = "SELECT `glpi_plugin_glpiinventory_agents`.`id` as `a_id`, ip, subnet, token
-            FROM `glpi_plugin_glpiinventory_agents`
+         $query = "SELECT `glpi_agents`.`id` as `a_id`, ip, subnet, token
+            FROM `glpi_agents`
             LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` =
-               `glpi_plugin_glpiinventory_agents`.`items_id`
+               `glpi_agents`.`items_id`
             LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` =
-               `glpi_plugin_glpiinventory_agents`.`items_id`
-            WHERE `glpi_networkports`.`itemtype`='Computer'
+               `glpi_agents`.`items_id`
+            WHERE `glpi_agents`.`itemtype`='Computer'
+               AND `glpi_networkports`.`itemtype`='Computer'
                ".$subnet."
                ".$osfind."
                ".$where." ";

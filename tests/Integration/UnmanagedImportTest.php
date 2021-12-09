@@ -56,8 +56,9 @@ class UnmanagedImportTest extends TestCase {
     * @test
     */
    public function ImportNetworkEquipment() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
-      $pfUnmanaged      = new PluginGlpiinventoryUnmanaged();
+      $unmanaged      = new Unmanaged();
       $networkEquipment = new NetworkEquipment();
       $networkPort      = new NetworkPort();
       $networkName      = new NetworkName();
@@ -74,11 +75,11 @@ class UnmanagedImportTest extends TestCase {
           'comment'     => 'this is a comment',
           'plugin_glpiinventory_configsecurities_id' => 1
       ];
-      $unmanageds_id = $pfUnmanaged->add($input);
+      $unmanageds_id = $unmanaged->add($input);
 
       // * Add networkport
       $input = [];
-      $input['itemtype']            = 'PluginGlpiinventoryUnmanaged';
+      $input['itemtype']            = 'Unmanaged';
       $input['items_id']            = $unmanageds_id;
       $input['instantiation_type']  = 'NetworkPortEthernet';
       $input['name']                = 'general';
@@ -101,13 +102,13 @@ class UnmanagedImportTest extends TestCase {
       $input['is_dynamic']    = 1;
       $iPAddress->add($input);
 
-      $pfUnmanaged->import($unmanageds_id);
+      $unmanaged->import($unmanageds_id);
 
       $cnt = countElementsInTable("glpi_networkequipments");
 
       $this->assertEquals(1, $cnt, "May have network equipment added");
 
-      $cnt = countElementsInTable("glpi_plugin_glpiinventory_unmanageds");
+      $cnt = countElementsInTable("glpi_unmanageds");
 
       $this->assertEquals(0, $cnt, "Unknown device may be deleted");
 

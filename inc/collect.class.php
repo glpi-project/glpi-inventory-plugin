@@ -89,10 +89,14 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $pfComputer = new PluginGlpiinventoryInventoryComputerComputer();
+      if ($item->getType() != 'Computer') {
+         return false;
+      }
+
       $id = $item->fields['id'];
-      if ($item->getType() == 'Computer'
-         && $pfComputer->hasAutomaticInventory($id)) {
+      $computer = new Computer();
+      if ($computer->getFromDB($id)
+         && $computer->fields['is_dynamic'] == 1) {
          foreach (['PluginGlpiinventoryCollect_File_Content',
                    'PluginGlpiinventoryCollect_Wmi_Content',
                    'PluginGlpiinventoryCollect_Registry_Content'] as $itemtype) {
@@ -308,7 +312,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
       $job        = new PluginGlpiinventoryTaskjob();
       $joblog     = new PluginGlpiinventoryTaskjoblog();
       $jobstate   = new PluginGlpiinventoryTaskjobstate();
-      $agent      = new PluginGlpiinventoryAgent();
+      $agent      = new Agent();
 
       $job->getFromDB($taskjobs_id);
       $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
@@ -424,14 +428,14 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
       $c_input= [];
       $c_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
       $c_input['state']                              = 0;
-      $c_input['plugin_glpiinventory_agents_id']   = 0;
+      $c_input['agents_id']   = 0;
       $c_input['execution_id']                       = $task->fields['execution_id'];
 
       $pfCollect = new PluginGlpiinventoryCollect();
 
       foreach ($computers as $computer_id) {
          //get agent if for this computer
-         $agents_id = $agent->getAgentWithComputerid($computer_id);
+         $agents_id = $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer_id]);
          if ($agents_id === false) {
             $jobstates_id = $jobstate->add($c_input);
             $jobstate->changeStatusFinish($jobstates_id,
@@ -458,7 +462,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                         $c_input['date'] = date("Y-m-d H:i:s");
                         $c_input['uniqid'] = $uniqid;
 
-                        $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
+                        $c_input['agents_id'] = $agents_id;
 
                         // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
@@ -488,7 +492,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                         $c_input['date'] = date("Y-m-d H:i:s");
                         $c_input['uniqid'] = $uniqid;
 
-                        $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
+                        $c_input['agents_id'] = $agents_id;
 
                         // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
@@ -518,7 +522,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                         $c_input['date'] = date("Y-m-d H:i:s");
                         $c_input['uniqid'] = $uniqid;
 
-                        $c_input['plugin_glpiinventory_agents_id'] = $agents_id;
+                        $c_input['agents_id'] = $agents_id;
 
                         // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
@@ -641,7 +645,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                $DB->delete(
                   'glpi_plugin_glpiinventory_collects_files_contents', [
                      'plugin_glpiinventory_collects_files_id'   => $files['id'],
-                     'computers_id'                               => $agent['computers_id']
+                     'computers_id'                               => $agent['items_id']
                   ]
                );
             }
@@ -659,7 +663,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
          return $response;
       }
 
-      $pfAgent        = new PluginGlpiinventoryAgent();
+      $pfAgent        = new Agent();
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
 
@@ -672,7 +676,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
             $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
             $pfTask         = new PluginGlpiinventoryTask();
 
-            $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($machineId));
+            $pfAgent->getFromDBByCrit(['deviceid' => addslashes($machineId)]);
+            $agent = $pfAgent->fields;
             if (isset($agent['id'])) {
                $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                   $agent['id'],
@@ -701,7 +706,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                      $a_input = [
                            'plugin_glpiinventory_taskjobstates_id'    => $taskjobstate->fields['id'],
                            'items_id'                                   => $agent['id'],
-                           'itemtype'                                   => 'PluginGlpiinventoryAgent',
+                           'itemtype'                                   => 'Agent',
                            'date'                                       => date("Y-m-d H:i:s"),
                            'comment'                                    => '',
                            'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED
@@ -735,12 +740,12 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                1)
             );
 
-            if (isset($jobstate['plugin_glpiinventory_agents_id'])) {
+            if (isset($jobstate['agents_id'])) {
 
                $add_value = true;
 
-               $pfAgent->getFromDB($jobstate['plugin_glpiinventory_agents_id']);
-               $computers_id = $pfAgent->fields['computers_id'];
+               $pfAgent->getFromDB($jobstate['agents_id']);
+               $computers_id = $pfAgent->fields['items_id'];
 
                $a_values = $_GET;
                // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
@@ -773,7 +778,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                      if (!empty($a_values['path']) && isset($a_values['size'])) {
                         // update files content
                         $params = [
-                           'machineid' => $pfAgent->fields['device_id'],
+                           'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
                            'uuid'      => $uuid,
                            'code'      => 'running',
                            'msg'       => "file ".$a_values['path']." | size ".$a_values['size']
@@ -796,7 +801,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
                }
 
                if ($add_value) {
-                  // add collected informations to computer
+                  // add collected information to computer
                   $pfCollect_subO->updateComputer(
                      $computers_id,
                      $a_values,

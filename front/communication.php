@@ -30,31 +30,9 @@
  * ---------------------------------------------------------------------
  */
 
-ob_start();
-ini_set("memory_limit", "-1");
-ini_set("max_execution_time", "0");
-ini_set('display_errors', 1);
-
-if (session_id()=="") {
-   session_start();
-}
-
 if (!defined('GLPI_ROOT')) {
    include_once("../../../inc/includes.php");
 }
-$_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
-if (!isset($_SESSION['glpilanguage'])) {
-   $_SESSION['glpilanguage'] = 'fr_FR';
-}
-$_SESSION['glpi_glpiinventory_nolock'] = true;
-ini_set('display_errors', 'On');
-error_reporting(E_ALL | E_STRICT);
-$_SESSION['glpi_use_mode'] = 0;
-$_SESSION['glpiparententities'] = '';
-$_SESSION['glpishowallentities'] = true;
-
-ob_end_clean();
-header("server-type: glpi/glpiinventory ".PLUGIN_GLPI_INVENTORY_VERSION);
 
 if (!class_exists("PluginGlpiinventoryConfig")) {
    header("Content-Type: application/xml");
@@ -66,15 +44,31 @@ if (!class_exists("PluginGlpiinventoryConfig")) {
    exit();
 }
 
-$pfCommunication  = new PluginGlpiinventoryCommunication();
-
-if (!isset($rawdata)) {
-   $rawdata = file_get_contents("php://input");
-}
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
+   ini_set("memory_limit", "-1");
+   ini_set("max_execution_time", "0");
+   ini_set('display_errors', 1);
+
+   if (session_id()=="") {
+      session_start();
+   }
+
+   $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
+   if (!isset($_SESSION['glpilanguage'])) {
+      $_SESSION['glpilanguage'] = 'fr_FR';
+   }
+   $_SESSION['glpi_glpiinventory_nolock'] = true;
+   ini_set('display_errors', 'On');
+   error_reporting(E_ALL | E_STRICT);
+   $_SESSION['glpi_use_mode'] = 0;
+   $_SESSION['glpiparententities'] = '';
+   $_SESSION['glpishowallentities'] = true;
+
+   header("server-type: glpi/glpiinventory ".PLUGIN_GLPI_INVENTORY_VERSION);
+
    PluginGlpiinventoryCommunicationRest::handleFusionCommunication();
-} else if (!empty($rawdata)) {
-   $pfCommunication->handleOCSCommunication($rawdata);
+} else {
+   include_once  GLPI_ROOT . '/front/inventory.php';
 }
 
 session_destroy();

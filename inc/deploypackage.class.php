@@ -1606,14 +1606,14 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
     * @return boolean true if deploy is enabled for the agent
     */
    static function isDeployEnabled($computers_id) {
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       //If the agent associated with the computer has not the
       //deploy feature enabled, do not propose to deploy packages on
-      if (!$pfAgent->getAgentWithComputerid($computers_id)) {
+      if (!$agent->getFromDBByCrit(['itemtype' => 'Computer',  'items_id' => $computers_id])) {
          return false;
       }
       $pfAgentModule = new PluginGlpiinventoryAgentmodule();
-      if ($pfAgentModule->isAgentCanDo('deploy', $pfAgent->getID())) {
+      if ($pfAgentModule->isAgentCanDo('deploy', $agent->getID())) {
          return true;
       } else {
          return false;
@@ -1645,7 +1645,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
       //Get all computers of the user
       $mycomputers = $computer->find($query);
 
-      $pfAgent       = new PluginGlpiinventoryAgent();
+      $agent       = new Agent();
 
       foreach ($mycomputers as $mycomputers_id => $data) {
          $my_packages[$mycomputers_id] = [];
@@ -1665,7 +1665,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
             //Get computers that can be targeted for this package installation
             $computers = $pfDeployGroup->getTargetsForGroup($package['plugin_glpiinventory_deploygroups_id']);
 
-            //Browse all computers that are target by a a package installation
+            //Browse all computers that are target by a package installation
 
             foreach ($mycomputers as $comp_id => $data) {
                //If we only want packages for one computer
@@ -1682,7 +1682,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
 
                //Get computers that can be targeted for this package installation
                //Check if the package belong to one of the entity that
-               //are currenlty visible
+               //are currently visible
 
                //The package is recursive, and visible in computer's entity
                if (Session::isMultiEntitiesMode()) {
@@ -1703,7 +1703,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
                if (isset($computers[$comp_id])) {
                   $my_packages[$comp_id][$package['id']]
                      = ['name'     => $package['name'],
-                        'agent_id' => $pfAgent->getId()];
+                        'agent_id' => $agent->getId()];
 
                   //The package has already been deployed or requested to deploy
                   if (isset($packages_used[$comp_id][$package['id']])) {
@@ -1892,15 +1892,16 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM {
     */
    function getMyDepoyPackagesState($computers_id, $taskjobs_id) {
       $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
-      $pfAgent        = new PluginGlpiinventoryAgent();
+      $agent        = new Agent();
 
       // Get a taskjobstate by giving a  taskjobID and a computer ID
-      $agents_id = $pfAgent->getAgentWithComputerid($computers_id);
+      $agent->getFromDBByCrit(['itemtype' => Computer::getType(), 'items_id' => $computers_id]);
+      $agents_id = $agent->fields['id'];
 
       $last_job_state = [];
       $taskjobstates  = current($pfTaskJobState->find(
             ['plugin_glpiinventory_taskjobs_id' => $taskjobs_id,
-             'plugin_glpiinventory_agents_id'   => $agents_id], ['id DESC'], 1));
+             'agents_id'   => $agents_id], ['id DESC'], 1));
       if ($taskjobstates) {
          $state = '';
 

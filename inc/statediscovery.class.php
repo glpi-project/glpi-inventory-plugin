@@ -57,11 +57,11 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM {
    function updateState($p_number, $a_input, $agent_id) {
       $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
-             'plugin_glpiinventory_agents_id'  => $agent_id]);
+             'agents_id'  => $agent_id]);
       if (count($data) == "0") {
          $input = [];
          $input['plugin_glpiinventory_taskjob_id'] = $p_number;
-         $input['plugin_glpiinventory_agents_id'] = $agent_id;
+         $input['agents_id'] = $agent_id;
          $id = $this->add($input);
          $this->getFromDB($id);
          $data[$id] = $this->fields;
@@ -106,7 +106,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM {
    function endState($p_number, $date_end, $agent_id) {
       $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
-             'plugin_glpiinventory_agents_id'  => $agent_id]);
+             'agents_id'  => $agent_id]);
       foreach ($data as $input) {
          $input['end_time'] = $date_end;
          $this->update($input);
@@ -124,7 +124,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM {
    function display($options = []) {
       global $DB, $CFG_GLPI;
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $pfStateInventory = new PluginGlpiinventoryStateInventory();
@@ -188,8 +188,8 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM {
          $link = str_replace('.form', '', $link);
          echo $link;
          echo "</td>";
-         $pfAgent->getFromDB($data['plugin_glpiinventory_agents_id']);
-         echo "<td>".$pfAgent->getLink(1)."</td>";
+         $agent->getFromDB($data['agents_id']);
+         echo "<td>".$agent->getLink(1)."</td>";
          $nb_found = 0;
          $nb_threads = 0;
          $start_date = "";

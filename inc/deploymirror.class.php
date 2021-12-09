@@ -101,15 +101,15 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM {
          return [];
       }
 
-      $pfAgent = new PluginGlpiinventoryAgent();
-      $pfAgent->getFromDB($agents_id);
-      $agent = $pfAgent->fields;
-      if (!isset($agent) || !isset($agent['computers_id'])) {
+      $agent = new Agent();
+      $agent->getFromDB($agents_id);
+      $agent = $agent->fields;
+      if (!isset($agent) || !isset($agent['items_id'])) {
          return [];
       }
 
       $computer = new Computer();
-      $computer->getFromDB($agent['computers_id']);
+      $computer->getFromDB($agent['items_id']);
 
       //If no configuration has been done in the plugin's configuration
       //then use location for mirrors as default

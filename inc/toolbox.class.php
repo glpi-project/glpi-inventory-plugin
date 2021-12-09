@@ -30,8 +30,6 @@
  * ---------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -56,194 +54,6 @@ class PluginGlpiinventoryToolbox {
          }
          Toolbox::logInFile($file, $message . "\n", true);
       }
-   }
-
-
-
-   /** Function get on http://www.php.net/manual/en/function.gzdecode.php#82930
-    *  used to uncompress gzip string
-    *
-    * @param string $data
-    * @param string $filename
-    * @param string $error
-    * @param null|integer $maxlength
-    * @return null|false|string
-    */
-   static function gzdecode($data, &$filename = '', &$error = '', $maxlength = null) {
-       $len = strlen($data);
-      if ($len < 18 || strcmp(substr($data, 0, 2), "\x1f\x8b")) {
-         $error = "Not in GZIP format.";
-         return null;  // Not GZIP format (See RFC 1952)
-      }
-       $method = ord(substr($data, 2, 1));  // Compression method
-       $flags  = ord(substr($data, 3, 1));  // Flags
-      if ($flags & 31 != $flags) {
-         $error = "Reserved bits not allowed.";
-         return null;
-      }
-       // NOTE: $mtime may be negative (PHP integer limitations)
-      //       $a_mtime = unpack("V", substr($data, 4, 4));
-      //       $mtime = $a_mtime[1];
-       $headerlen = 10;
-       $extralen  = 0;
-       $extra     = "";
-      if ($flags & 4) {
-         // 2-byte length prefixed EXTRA data in header
-         if ($len - $headerlen - 2 < 8) {
-            return false;  // invalid
-         }
-         $a_extralen = unpack("v", substr($data, 8, 2));
-         $extralen = $a_extralen[1];
-         if ($len - $headerlen - 2 - $extralen < 8) {
-            return false;  // invalid
-         }
-         $extra = substr($data, 10, $extralen);
-         $headerlen += 2 + $extralen;
-      }
-       $filenamelen = 0;
-       $filename = "";
-      if ($flags & 8) {
-         // C-style string
-         if ($len - $headerlen - 1 < 8) {
-            return false; // invalid
-         }
-         $filenamelen = strpos(substr($data, $headerlen), chr(0));
-         if ($filenamelen === false || $len - $headerlen - $filenamelen - 1 < 8) {
-            return false; // invalid
-         }
-         $filename = substr($data, $headerlen, $filenamelen);
-         $headerlen += $filenamelen + 1;
-      }
-       $commentlen = 0;
-       $comment = "";
-      if ($flags & 16) {
-         // C-style string COMMENT data in header
-         if ($len - $headerlen - 1 < 8) {
-            return false;    // invalid
-         }
-         $commentlen = strpos(substr($data, $headerlen), chr(0));
-         if ($commentlen === false || $len - $headerlen - $commentlen - 1 < 8) {
-            return false;    // Invalid header format
-         }
-         $comment = substr($data, $headerlen, $commentlen);
-         $headerlen += $commentlen + 1;
-      }
-       $headercrc = "";
-      if ($flags & 2) {
-         // 2-bytes (lowest order) of CRC32 on header present
-         if ($len - $headerlen - 2 < 8) {
-            return false;    // invalid
-         }
-         $calccrc = crc32(substr($data, 0, $headerlen)) & 0xffff;
-         $a_headercrc = unpack("v", substr($data, $headerlen, 2));
-         $headercrc = $a_headercrc[1];
-         if ($headercrc != $calccrc) {
-            $error = "Header checksum failed.";
-            return false;    // Bad header CRC
-         }
-         $headerlen += 2;
-      }
-       // GZIP FOOTER
-       $a_datacrc = unpack("V", substr($data, -8, 4));
-       $datacrc = sprintf('%u', $a_datacrc[1] & 0xFFFFFFFF);
-       $a_isize = unpack("V", substr($data, -4));
-       $isize = $a_isize[1];
-       // decompression:
-       $bodylen = $len-$headerlen-8;
-      if ($bodylen < 1) {
-         // IMPLEMENTATION BUG!
-         return null;
-      }
-       $body = substr($data, $headerlen, $bodylen);
-       $data = "";
-      if ($bodylen > 0) {
-         switch ($method) {
-            case 8:
-               // Currently the only supported compression method:
-               $data = gzinflate($body, $maxlength);
-               break;
-            default:
-               $error = "Unknown compression method.";
-               return false;
-         }
-      }  // zero-byte body content is allowed
-       // Verifiy CRC32
-       $crc   = sprintf("%u", crc32($data));
-       $crcOK = $crc == $datacrc;
-       $lenOK = $isize == strlen($data);
-      if (!$lenOK || !$crcOK) {
-         $error = ( $lenOK ? '' : 'Length check FAILED. ') . ( $crcOK ? '' : 'Checksum FAILED.');
-         return false;
-      }
-       return $data;
-   }
-
-
-   /**
-    * Merge 2 simpleXML objects
-    *
-    * @staticvar boolean $firstLoop
-    * @param object $simplexml_to simplexml instance source
-    * @param object $simplexml_from simplexml instance destination
-    */
-   static function appendSimplexml(&$simplexml_to, &$simplexml_from) {
-      static $firstLoop=true;
-
-      //Here adding attributes to parent
-      if ($firstLoop) {
-         foreach ($simplexml_from->attributes() as $attr_key => $attr_value) {
-            $simplexml_to->addAttribute($attr_key, $attr_value);
-         }
-      }
-      foreach ($simplexml_from->children() as $simplexml_child) {
-         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(),
-                                                  (string)$simplexml_child);
-         foreach ($simplexml_child->attributes() as $attr_key => $attr_value) {
-            $simplexml_temp->addAttribute($attr_key, $attr_value);
-         }
-         $firstLoop=false;
-         self::appendSimplexml($simplexml_temp, $simplexml_child);
-      }
-      unset($firstLoop);
-   }
-
-
-   /**
-    * Clean XML, ie convert to be insert without problem into MySQL database
-    *
-    * @param object $xml SimpleXMLElement instance
-    * @return object SimpleXMLElement instance
-    */
-   function cleanXML($xml) {
-      $nodes = [];
-      foreach ($xml->children() as $key=>$value) {
-         if (!isset($nodes[$key])) {
-            $nodes[$key] = 0;
-         }
-         $nodes[$key]++;
-      }
-      foreach ($nodes as $key=>$nb) {
-         if ($nb < 2) {
-            unset($nodes[$key]);
-         }
-      }
-
-      if (count($xml) > 0) {
-         $i = 0;
-         foreach ($xml->children() as $key=>$value) {
-            if (count($value->children()) > 0) {
-               $this->cleanXML($value);
-            } else if (isset($nodes[$key])) {
-               $xml->$key->$i = Sanitizer::sanitize(
-                                    Toolbox::addslashes_deep($value));
-               $i++;
-            } else {
-               $xml->$key = Sanitizer::sanitize(
-                                 Toolbox::addslashes_deep($value));
-            }
-         }
-      }
-      return $xml;
    }
 
 
@@ -287,111 +97,37 @@ class PluginGlpiinventoryToolbox {
 
 
    /**
-    * Write XML in a folder from an inventory by agent
-    *
-    * @param integer $items_id id of the unmanaged device
-    * @param string $xml xml informations (with XML structure)
-    * @param string $itemtype
-    */
-   static function writeXML($items_id, $xml, $itemtype) {
-
-      $folder = substr($items_id, 0, -1);
-      if (empty($folder)) {
-         $folder = '0';
-      }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/glpiinventory")) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/glpiinventory");
-      }
-      if (!file_exists(PLUGIN_GLPI_INVENTORY_XML_DIR)) {
-         mkdir(PLUGIN_GLPI_INVENTORY_XML_DIR);
-      }
-      $itemtype_dir = PLUGIN_GLPI_INVENTORY_XML_DIR.strtolower($itemtype);
-      if (!file_exists($itemtype_dir)) {
-         mkdir($itemtype_dir);
-      }
-      if (!file_exists($itemtype_dir."/".$folder)) {
-         mkdir($itemtype_dir."/".$folder);
-      }
-      $file     = $itemtype_dir."/".$folder."/".$items_id.'.xml';
-      $fileopen = fopen($file, 'w');
-      fwrite($fileopen, $xml);
-      fclose($fileopen);
-   }
-
-
-   /**
     * Add AUTHENTICATION string to XML node
     *
-    * @param object $p_sxml_node XML node to authenticate
     * @param integer $p_id Authenticate id
     **/
-   function addAuth($p_sxml_node, $p_id) {
-      $pfConfigSecurity = new PluginGlpiinventoryConfigSecurity();
-      if ($pfConfigSecurity->getFromDB($p_id)) {
+   function addAuth($p_id) {
+      $node = [];
+      $credentials = new SNMPCredential();
+      if ($credentials->getFromDB($p_id)) {
+         $node = [
+            'AUTHENTICATION' => [
+               'ID' => $p_id,
+               'VERSION' => $credentials->getRealVersion()
+            ]
+         ];
 
-         $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
-
-         $sxml_authentication->addAttribute('ID', $p_id);
-         $sxml_authentication->addAttribute('VERSION',
-                    $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
-         if ($pfConfigSecurity->fields['snmpversion'] == '3') {
-            $sxml_authentication->addAttribute('USERNAME',
-                                               $pfConfigSecurity->fields['username']);
-            if ($pfConfigSecurity->fields['authentication'] != '0') {
-               $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                      $pfConfigSecurity->getSNMPAuthProtocol(
-                              $pfConfigSecurity->fields['authentication']));
+         if ($credentials->fields['snmpversion'] == '3') {
+            $node['AUTHENTICATION']['USERNAME'] = $credentials->fields['username'];
+            if ($credentials->fields['authentication'] != '0') {
+               $node['AUTHENTICATION']['AUTHPROTOCOL'] = $credentials->getAuthProtocol();
             }
-            $sxml_authentication->addAttribute('AUTHPASSPHRASE',
-                                               $pfConfigSecurity->fields['auth_passphrase']);
-            if ($pfConfigSecurity->fields['encryption'] != '0') {
-               $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                              $pfConfigSecurity->getSNMPEncryption(
-                                       $pfConfigSecurity->fields['encryption']));
+            $node['AUTHENTICATION']['AUTHPASSPHRASE'] = (new GLPIKey())->decrypt($credentials->fields['auth_passphrase']);
+            if ($credentials->fields['encryption'] != '0') {
+               $node['AUTHENTICATION']['PRIVPROTOCOL'] = $credentials->getEncryption();
             }
-            $sxml_authentication->addAttribute('PRIVPASSPHRASE',
-                                                $pfConfigSecurity->fields['priv_passphrase']);
+            $node['AUTHENTICATION']['PRIVPASSPHRASE'] = (new GLPIKey())->decrypt($credentials->fields['priv_passphrase']);
          } else {
-            $sxml_authentication->addAttribute('COMMUNITY',
-                                               $pfConfigSecurity->fields['community']);
+            $node['AUTHENTICATION']['COMMUNITY'] = $credentials->fields['community'];
          }
       }
-   }
 
-
-   /**
-    * Add GET oids to XML node 'GET'
-    *
-    * @param object $p_sxml_node
-    * @param string $p_object
-    * @param string $p_oid
-    * @param string $p_link
-    * @param string $p_vlan
-    */
-   function addGet($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
-      $sxml_get = $p_sxml_node->addChild('GET');
-         $sxml_get->addAttribute('OBJECT', $p_object);
-         $sxml_get->addAttribute('OID', $p_oid);
-         $sxml_get->addAttribute('VLAN', $p_vlan);
-         $sxml_get->addAttribute('LINK', $p_link);
-   }
-
-
-   /**
-    * Add WALK (multiple oids) oids to XML node 'WALK'
-    *
-    * @param object $p_sxml_node
-    * @param string $p_object
-    * @param string $p_oid
-    * @param string $p_link
-    * @param string $p_vlan
-    */
-   function addWalk($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
-      $sxml_walk = $p_sxml_node->addChild('WALK');
-         $sxml_walk->addAttribute('OBJECT', $p_object);
-         $sxml_walk->addAttribute('OID', $p_oid);
-         $sxml_walk->addAttribute('VLAN', $p_vlan);
-         $sxml_walk->addAttribute('LINK', $p_link);
+      return $node;
    }
 
 
@@ -433,72 +169,6 @@ class PluginGlpiinventoryToolbox {
 
 
    // *********************** Functions used for inventory *********************** //
-
-
-   /**
-    * Check lock
-    *
-    * @param array $data
-    * @param array $db_data
-    * @param array $a_lockable
-    * @return array
-    */
-   static function checkLock($data, $db_data, $a_lockable = []) {
-      foreach ($a_lockable as $field) {
-         if (isset($data[$field])) {
-            unset($data[$field]);
-         }
-         if (isset($db_data[$field])) {
-            unset($db_data[$field]);
-         }
-      }
-      return [$data, $db_data];
-   }
-
-
-   /**
-    * Display data from serialized inventory field
-    *
-    * @param array $array
-    */
-   static function displaySerializedValues($array) {
-
-      foreach ($array as $key=>$value) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo $key;
-         echo "</th>";
-         echo "<td>";
-         if (is_array($value)) {
-            echo "<table class='tab_cadre' width='100%'>";
-            PluginGlpiinventoryToolbox::displaySerializedValues($value);
-            echo "</table>";
-         } else {
-            echo $value;
-         }
-         echo "</td>";
-         echo "</tr>";
-      }
-   }
-
-
-   /**
-    * Send serialized inventory to user browser (to download)
-    *
-    * @param integer $items_id
-    * @param string $itemtype
-    */
-   static function sendSerializedInventory($items_id, $itemtype) {
-      header('Content-type: text/plain');
-
-      if (call_user_func([$itemtype, 'canView'])) {
-         $item = new $itemtype();
-         $item->getFromDB($items_id);
-         echo base64_decode(gzuncompress($item->fields['serialized_inventory']));
-      } else {
-         Html::displayRightError();
-      }
-   }
 
 
    /**
@@ -726,108 +396,18 @@ class PluginGlpiinventoryToolbox {
    * @return boolean
    */
    static function isAnInventoryDevice($item) {
-      $table = '';
       switch ($item->getType()) {
          case 'Computer':
-            $table = 'glpi_plugin_glpiinventory_inventorycomputercomputers';
-            $fk    = 'computers_id';
-            break;
-
          case 'NetworkEquipment':
-            $table = 'glpi_plugin_glpiinventory_networkequipments';
-            $fk    = 'networkequipments_id';
-            break;
-
          case 'Printer':
-            $table = 'glpi_plugin_glpiinventory_printers';
-            $fk    = 'printers_id';
-            break;
+            return $item->isDynamic();
+      }
 
-      }
-      if ($table) {
-         return $item->isDynamic()
-            && countElementsInTable($table, [$fk => $item->getID()]);
-      } else {
-         // check if device has data in glpi_plugin_glpiinventory_rulematchedlogs table
-         return $item->isDynamic()
-            && countElementsInTable('glpi_plugin_glpiinventory_rulematchedlogs',
-                                    ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]);
-      }
+      return $item->isDynamic()
+         && countElementsInTable(
+            RuleMatchedLog::getTable(),
+            ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]
+         );
    }
 
-
-   /**
-    * Get default value for state of devices (monitor, printer...)
-    *
-    * @param string type the type of inventory performed (values : computer, snmp)
-    * @param array $input
-    * @return array the fields with the states_id filled, is necessary
-    */
-   static function addDefaultStateIfNeeded($type, $input) {
-      $config = new PluginGlpiinventoryConfig();
-      switch ($type) {
-         case 'computer':
-            if ($states_id_default = $config->getValue("states_id_default")) {
-               $input['states_id'] = $states_id_default;
-            }
-            break;
-
-         case 'snmp':
-            if ($states_id_snmp_default = $config->getValue("states_id_snmp_default")) {
-               $input['states_id'] = $states_id_snmp_default;
-            }
-            break;
-
-         default:
-            $state = false;
-            break;
-      }
-      return $input;
-   }
-
-   /**
-    * Add a location if required by a rule
-    * @since 9.2+2.0
-    *
-    * @param array $input fields of the asset being inventoried
-    * @param array $output output array in which the location should be added (optionnal)
-    * @return array the fields with the locations_id filled, is necessary
-    */
-   static function addLocation($input, $output = false) {
-      //manage location
-      $ruleLocation = new PluginGlpiinventoryInventoryRuleLocationCollection();
-
-      // * Reload rules (required for unit tests)
-      $ruleLocation->getCollectionPart();
-
-      $dataLocation = $ruleLocation->processAllRules($input);
-      if (isset($dataLocation['locations_id'])) {
-         if ($output) {
-            $output['locations_id'] = $dataLocation['locations_id'];
-         } else {
-            $input['locations_id'] = $dataLocation['locations_id'];
-         }
-      }
-      return ($output?$output:$input);
-   }
-
-   /**
-    * set inventory number, depending on options defined in configuration
-    */
-   static function setInventoryNumber($itemtype, $value, $entities_id = -1) {
-      if (!in_array($itemtype, ['Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone', 'Printer'])) {
-         return $value;
-      }
-
-      $dbutils = new DbUtils();
-      $config = new PluginGlpiinventoryConfig();
-
-      $autonum = $config->getValue('auto_inventory_number_'.strtolower($itemtype));
-      $autonum = str_replace('<', '&lt;', $autonum);
-      $autonum = str_replace('>', '&gt;', $autonum);
-
-      $new_value = $dbutils->autoName($autonum, 'otherserial', true, $itemtype, $entities_id);
-
-      return $new_value;
-   }
 }

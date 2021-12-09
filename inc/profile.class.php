@@ -270,18 +270,18 @@ class PluginGlpiinventoryProfile extends Profile {
     */
    function getRightsRules() {
       $rights = [
-          ['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
+          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),
                 'field'     => 'plugin_glpiinventory_ruleimport'
-          ],
-          ['itemtype'  => 'PluginGlpiinventoryInventoryRuleEntity',
+          ],*/
+          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleEntity',
                 'label'     => __('Entity rules', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_ruleentity'
-          ],
-          ['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
+          ],*/
+          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),
                 'field'     => 'plugin_glpiinventory_rulelocation'
-          ],
+          ],*/
           ['itemtype'  => 'PluginGlpiinventoryInventoryComputerBlacklist',
                 'label'     => __('Fields blacklist', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_blacklist'
@@ -290,10 +290,10 @@ class PluginGlpiinventoryProfile extends Profile {
                 'label'     => __('Computer information rules', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_rulecollect'
           ],
-          ['itemtype'  => 'PluginGlpiinventoryIgnoredimportdevice',
+          /*['itemtype'  => 'PluginGlpiinventoryIgnoredimportdevice',
                 'label'     =>  __('Equipment ignored on import', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_ignoredimportdevice'
-          ],
+          ],*/
       ];
       return $rights;
    }
@@ -343,30 +343,27 @@ class PluginGlpiinventoryProfile extends Profile {
           ['itemtype'  => 'PluginGlpiinventoryCredential',
                 'label'     => __('VMware host', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_esx'],
-          ['itemtype'  => 'PluginGlpiinventoryConfigSecurity',
+          /*['itemtype'  => 'PluginGlpiinventoryConfigSecurity',
                 'label'     => __('SNMP credentials', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_configsecurity'],
-          ['itemtype'  => 'PluginGlpiinventoryNetworkEquipment',
+                'field'     => 'plugin_glpiinventory_configsecurity'],*/
+          /*['itemtype'  => 'PluginGlpiinventoryNetworkEquipment',
                 'label'     => __('Network equipment SNMP', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_networkequipment'],
-          ['itemtype'  => 'PluginGlpiinventoryPrinter',
+                'field'     => 'plugin_glpiinventory_networkequipment'],*/
+          /*['itemtype'  => 'PluginGlpiinventoryPrinter',
                 'label'     => __('Printer SNMP', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_printer'],
-          ['itemtype'  => 'PluginGlpiinventoryUnmanaged',
+                'field'     => 'plugin_glpiinventory_printer'],*/
+          /*['itemtype'  => 'PluginGlpiinventoryUnmanaged',
                 'label'     => __('Unmanaged devices', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_unmanaged'],
-          ['itemtype'  => 'PluginGlpiinventoryInventoryComputerImportXML',
+                'field'     => 'plugin_glpiinventory_unmanaged'],*/
+          /*['itemtype'  => 'PluginGlpiinventoryInventoryComputerImportXML',
                 'label'     => __('computer XML manual import', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_importxml'],
+                'field'     => 'plugin_glpiinventory_importxml'],*/
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Printers report', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_reportprinter'],
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Network report'),
-                'field'     => 'plugin_glpiinventory_reportnetworkequipment'],
-          ['itemtype'  => 'PluginGlpiinventoryLock',
-                'label'     => __('Lock', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_lock']
+                'field'     => 'plugin_glpiinventory_reportnetworkequipment']
       ];
       return $rights;
    }
@@ -382,7 +379,7 @@ class PluginGlpiinventoryProfile extends Profile {
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Menu', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_menu'],
-          ['itemtype'  => 'PluginGlpiinventoryAgent',
+          ['itemtype'  => 'Agent',
                 'label'     => __('Agents', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_agent'],
           ['rights'    => [READ => __('Read')],

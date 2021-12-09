@@ -46,15 +46,6 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     */
    static $rightname = 'plugin_glpiinventory_task';
 
-
-   /**
-    * __construct function
-    */
-   function __construct() {
-      parent::__construct();
-   }
-
-
    /**
     * Get name of this type by language of the user connected
     *
@@ -177,7 +168,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
       $a_type = [];
       $a_type[''] = Dropdown::EMPTY_VALUE;
       if ($myname == 'action') {
-         $a_type['PluginGlpiinventoryAgent'] = PluginGlpiinventoryAgent::getTypeName();
+         $a_type['Agent'] = Agent::getTypeName();
       }
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
@@ -222,7 +213,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
       $available_methods = PluginGlpiinventoryStaticmisc::getmethods();
       $types = [];
       if ($moduletype === 'actors') {
-         $types['PluginGlpiinventoryAgent'] = PluginGlpiinventoryAgent::getTypeName();
+         $types['Agent'] = Agent::getTypeName();
       }
 
       /**
@@ -337,8 +328,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
       $a_methods               = PluginGlpiinventoryStaticmisc::getmethods();
       $a_actioninitiontype     = [];
       $a_actioninitiontype[''] = Dropdown::EMPTY_VALUE;
-      $a_actioninitiontype['PluginGlpiinventoryAgent']
-         = PluginGlpiinventoryAgent::getTypeName();
+      $a_actioninitiontype['Agent'] = Agent::getTypeName();
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
             $module = ucfirst($datas['module']);
@@ -396,8 +386,8 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
       $rand = '';
 
       $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
-      if ($actiontype == "PluginGlpiinventoryAgent") {
-         $actionselection_method = "task_actionselection_PluginGlpiinventoryAgent_".$method;
+      if ($actiontype == "Agent") {
+         $actionselection_method = "task_actionselection_Agent_".$method;
          if (is_callable([$class, $actionselection_method])) {
             $rand = call_user_func([$class, $actionselection_method]);
          } else {
@@ -618,7 +608,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
       $a_taskjobstate = $DB->request([
          'FROM'    => 'glpi_plugin_glpiinventory_taskjobstates',
          'WHERE'   => ['state' => [0, 1, 2]],
-         'GROUPBY' => ['uniqid', 'plugin_glpiinventory_agents_id']]);
+         'GROUPBY' => ['uniqid', 'agents_id']]);
       foreach ($a_taskjobstate as $data) {
          $sql = "SELECT * FROM `glpi_plugin_glpiinventory_tasks`
             LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
@@ -650,7 +640,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
                if ($finish) {
                      $a_statustmp = $pfTaskjobstate->find(
                            ['uniqid' => $data['uniqid'],
-                            'plugin_glpiinventory_agents_id' => $data['plugin_glpiinventory_agents_id'],
+                            'agents_id' => $data['agents_id'],
                             'state'  => [1, 2]]);
                   foreach ($a_statustmp as $datatmp) {
                      $pfTaskjobstate->changeStatusFinish($datatmp['id'],
@@ -669,7 +659,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
                if (count($a_valid) == '1') {
                   // Get agent status
                   $agentreturn = $this->getRealStateAgent(
-                                                $data['plugin_glpiinventory_agents_id']);
+                                                $data['agents_id']);
 
                   switch ($agentreturn) {
 
@@ -677,7 +667,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
                         // token is bad and must force cancel task in server
                         $a_statetmp = $pfTaskjobstate->find(
                               ['uniqid' => $data['uniqid'],
-                               'plugin_glpiinventory_agents_id' => $data['plugin_glpiinventory_agents_id'],
+                               'agents_id' => $data['agents_id'],
                                'state'  => [0, 1, 2]]);
                         foreach ($a_statetmp as $datatmp) {
                            $pfTaskjobstate->changeStatusFinish($datatmp['id'],
@@ -696,7 +686,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
                         // agent crash or computer is shutdown and force cancel task in server
                         $a_statetmp = $pfTaskjobstate->find(
                               ['uniqid' => $data['uniqid'],
-                               'plugin_glpiinventory_agents_id' => $data['plugin_glpiinventory_agents_id'],
+                               'agents_id' => $data['agents_id'],
                                'state'  => [1, 2]]);
                         foreach ($a_statetmp as $datatmp) {
                            $pfTaskjobstate->changeStatusFinish($datatmp['id'],
@@ -723,7 +713,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
                         if ($finish) {
                            $a_statetmp = $pfTaskjobstate->find(
                                  ['uniqid' => $data['uniqid'],
-                                  'plugin_glpiinventory_agents_id' => $data['plugin_glpiinventory_agents_id'],
+                                  'agents_id' => $data['agents_id'],
                                   'state' => 0]);
                            foreach ($a_statetmp as $datatmp) {
                               $pfTaskjobstate->changeStatusFinish($datatmp['id'],
@@ -1078,7 +1068,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
       $job      = new PluginGlpiinventoryTaskjob();
       $jobstate = new PluginGlpiinventoryTaskjobstate();
       $joblog   = new PluginGlpiinventoryTaskjoblog();
-      $agent    = new PluginGlpiinventoryAgent();
+      $agent    = new Agent();
 
       // get old state
       $jobstate->getFromDB($params['jobstate_id']);
@@ -1109,7 +1099,7 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
             if ($task->fields['wakeup_agent_counter'] > 0
                 && $task->fields['wakeup_agent_time'] > 0) {
                $agent->getFromDB($params['agent_id']);
-               $agent->wakeUp();
+               PluginGlpiinventoryAgentWakeup::wakeUp($agent);
             }
          }
       }

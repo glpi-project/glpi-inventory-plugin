@@ -506,7 +506,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM {
    static function showCriteria(PluginGlpiinventoryDeployGroup $item, $p) {
 
       $is_dynamic = $item->isDynamicGroup();
-      $itemtype   = "PluginGlpiinventoryComputer";
+      $itemtype   = "Computer";
       $can_update = $item->canEdit($item->getID());
 
       $p['target'] = self::getSearchEngineTargetURL($item->getID(), $is_dynamic);
@@ -525,7 +525,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM {
          $p['actionvalue']  = __('Preview');
       }
       $p['showbookmark'] = false;
+
+      $save_fold_status = $_SESSION['glpifold_search'];
+      $_SESSION['glpifold_search'] = 0;
       Search::showGenericSearch($itemtype, $p);
+      $_SESSION['glpifold_search'] = $save_fold_status;
    }
 
 
@@ -573,7 +577,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM {
       //Check criteria from DB
       if (!$check_post_values) {
          if ($group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
-            unset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']);
+            unset($_SESSION['glpisearch']['Computer']);
             $query = "SELECT `fields_array`
                      FROM `glpi_plugin_glpiinventory_deploygroups_dynamicdatas`
                      WHERE `plugin_glpiinventory_deploygroups_id`='".$group->getID()."'";
@@ -585,18 +589,18 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM {
          }
       } else {
          if ($group->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
-                 && isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer'])
-                 && !isset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']['show_results'])) {
-            $computers_params = $_SESSION['glpisearch']['PluginGlpiinventoryComputer'];
+                 && isset($_SESSION['glpisearch']['Computer'])
+                 && !isset($_SESSION['glpisearch']['Computer']['show_results'])) {
+            $computers_params = $_SESSION['glpisearch']['Computer'];
          } else {
-             unset($_SESSION['glpisearch']['PluginGlpiinventoryComputer']);
+             unset($_SESSION['glpisearch']['Computer']);
              $computers_params = $_GET;
          }
       }
       if ($getAll) {
          $computers_params['export_all'] = true;
       }
-      return Search::manageParams('PluginGlpiinventoryComputer', $computers_params);
+      return Search::manageParams('Computer', $computers_params);
    }
 
 

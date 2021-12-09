@@ -70,7 +70,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM {
    function display($options = []) {
       global $DB, $CFG_GLPI;
 
-      $pfAgent = new PluginGlpiinventoryAgent();
+      $agent = new Agent();
       $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
       $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -130,8 +130,8 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM {
          $link = str_replace('.form', '', $link);
          echo $link;
          echo "</td>";
-         $pfAgent->getFromDB($data['plugin_glpiinventory_agents_id']);
-         echo "<td>".$pfAgent->getLink(1)."</td>";
+         $agent->getFromDB($data['agents_id']);
+         echo "<td>".$agent->getLink(1)."</td>";
          $nb_query = 0;
          $nb_threads = 0;
          $start_date = "";

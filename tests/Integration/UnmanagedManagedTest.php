@@ -51,7 +51,7 @@ class UnmanagedManagedTest extends TestCase {
 
       // Delete all computers
       $computer = new Computer();
-      $items = $computer->find();
+      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
       foreach ($items as $item) {
          $computer->delete(['id' => $item['id']], true);
       }
@@ -62,6 +62,7 @@ class UnmanagedManagedTest extends TestCase {
     * @test
     */
    public function AddNetworkEquipment() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $this->update_time = date('Y-m-d H:i:s');
 
@@ -140,6 +141,7 @@ class UnmanagedManagedTest extends TestCase {
     * @test
     */
    public function NewComputer() {
+      $this->markTestSkipped('Move tests into GLPI core');
 
       $_SESSION["plugin_glpiinventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
