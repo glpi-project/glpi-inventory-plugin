@@ -88,7 +88,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    /**
     * @see CommonGLPI::defineTabs()
    **/
-    function defineTabs($options = [])
+    public function defineTabs($options = [])
     {
 
         $ong = [];
@@ -102,7 +102,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    /**
     * @see CommonGLPI::getTabNameForItem()
    **/
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         $tabs[1] = __('General');
         $tabs[2] = _n('Behavior', 'Behaviors', 2, 'glpiinventory');
@@ -115,7 +115,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param $tabnum       (default 1)
     * @param $withtemplate (default 0)
    **/
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         global $CFG_GLPI;
 
@@ -140,7 +140,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
          return _n(
              'User interaction template',
@@ -157,7 +157,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @since 9.2
     * @return array
     */
-    static function getTypes()
+    publicstatic  function getTypes()
     {
         return [self::ALERT_WTS
                => __("Windows system alert (WTS)", 'glpiinventory')];
@@ -171,7 +171,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param interaction_type the type of interaction
     * @return array
     */
-    static function getButtons($interaction_type = '')
+    publicstatic  function getButtons($interaction_type = '')
     {
         $interactions = [
          self::ALERT_WTS => [
@@ -201,7 +201,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param interaction_type the type of interaction
     * @return array
     */
-    static function getIcons($interaction_type = self::ALERT_WTS)
+    publicstatic  function getIcons($interaction_type = self::ALERT_WTS)
     {
         $icons = [
          self::ALERT_WTS => [
@@ -226,7 +226,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @since 9.2
     * @return array
     */
-    static function getBehaviors()
+    publicstatic  function getBehaviors()
     {
         return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction', 'glpiinventory'),
               self::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'glpiinventory'),
@@ -242,7 +242,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * @param type the type of bahaviors (if one already selected)
     * @return rand
     */
-    function dropdownBehaviors($name, $behavior = self::BEHAVIOR_CONTINUE_DEPLOY)
+    public function dropdownBehaviors($name, $behavior = self::BEHAVIOR_CONTINUE_DEPLOY)
     {
         return Dropdown::showFromArray(
             $name,
@@ -257,7 +257,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * @since 9.2
    * @return an array of field names
    */
-    function getJsonFields()
+    public function getJsonFields()
     {
         return  array_merge(
             $this->getMainFormFields(),
@@ -271,7 +271,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * @since 9.2
    * @return an array of field names
    */
-    function getMainFormFields()
+    public function getMainFormFields()
     {
         return  ['platform', 'timeout', 'buttons', 'icon',
                'retry_after', 'nb_max_retry'];
@@ -283,7 +283,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * @since 9.2
    * @return an array of field names
    */
-    function getBehaviorsFields()
+    public function getBehaviorsFields()
     {
         return  ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
                'on_yes', 'on_cancel', 'on_abort', 'on_retry', 'on_tryagain',
@@ -297,7 +297,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    *
    * @return an array of field names
    */
-    function initializeJsonFields($json_fields)
+    public function initializeJsonFields($json_fields)
     {
         foreach ($this->getJsonFields() as $field) {
             if (!isset($json_fields[$field])) {
@@ -314,7 +314,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * @param params form parameters
    * @return json encoded array
    */
-    function saveToJson($params = [])
+    public function saveToJson($params = [])
     {
         $result = [];
         foreach ($this->getJsonFields() as $field) {
@@ -333,7 +333,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * @param the input array
    * @param array now containing input data + data from the template
    */
-    function addJsonFieldsToArray($params = [])
+    public function addJsonFieldsToArray($params = [])
     {
         $fields = json_decode($this->fields['json'], true);
         foreach ($this->getJsonFields() as $field) {
@@ -359,7 +359,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * @param $id id of a template to edit
    * @param options POST form options
    */
-    function showForm($id, $options = [])
+    public function showForm($id, $options = [])
     {
         $this->initForm($id, $options);
 
@@ -381,7 +381,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     *
     *  @return array
     **/
-    static function getRetries()
+    publicstatic  function getRetries()
     {
         $tab = [
         0 => __('Never')
@@ -419,7 +419,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     *
     *  @return array
     **/
-    static function getTimeouts()
+    publicstatic  function getTimeouts()
     {
         $tab = [
          0 => __('Never')

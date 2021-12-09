@@ -50,7 +50,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     *
     * @return array
     */
-    function getTypes()
+    public function getTypes()
     {
         return [
          __('Registry', 'glpiinventory') => [
@@ -87,7 +87,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param the type value
     * @return the type label
     */
-    function getLabelForAType($type)
+    public function getLabelForAType($type)
     {
         $alltypes = [];
         foreach ($this->getTypes() as $label => $types) {
@@ -106,7 +106,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     *
     * @return array
     */
-    function getUnitLabel()
+    public function getUnitLabel()
     {
         return [
                "B"  => __('o'),
@@ -117,7 +117,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-    function getAuditDescription($type, $return)
+    public function getAuditDescription($type, $return)
     {
         $return_string = $this->getLabelForAType($type);
        //The skip case is a litte bit different. So we notice to the user
@@ -140,7 +140,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param string $unit the unit of number
     * @return integer the number to multiply
     */
-    function getUnitSize($unit)
+    public function getUnitSize($unit)
     {
         $units = [ "B"  => 1,
                  "KB" => 1024,
@@ -161,7 +161,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
    * @since 9.2
    * @return an array of registry values types
    */
-    function getRegistryTypes()
+    public function getRegistryTypes()
     {
         return [
          'REG_SZ'                  => 'REG_SZ',
@@ -176,7 +176,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-    function dropdownRegistryTypes($value = 'REG_SZ')
+    public function dropdownRegistryTypes($value = 'REG_SZ')
     {
         return Dropdown::showFromArray(
             'value',
@@ -194,7 +194,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param array $data array converted of 'json' field in DB where stored checks
     * @param string $rand unique element id used to identify/update an element
     */
-    function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         global $CFG_GLPI;
 
@@ -301,7 +301,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     *
     * @return string|false
     */
-    function getValues($type, $data, $mode)
+    public function getValues($type, $data, $mode)
     {
         $values = [
          'warning_message' => false,
@@ -341,7 +341,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
    * @param mandatory indicates if mandatory mark must be added to the label
    * @return the labels and type for a check
    */
-    function getLabelsAndTypes($check_type, $mandatory = false)
+    public function getLabelsAndTypes($check_type, $mandatory = false)
     {
         $values = [];
         $mandatory_mark = ($mandatory ? $this->getMandatoryMark() : '');
@@ -432,7 +432,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param string $mode mode in use (create, edit...)
     * @return boolean
     */
-    function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         global $CFG_GLPI;
 
@@ -574,7 +574,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
    * Get all possible return values for a check
    * @return an array of return values and their labels
    */
-    function getAllReturnValues()
+    public function getAllReturnValues()
     {
         return  ["error"   => __('abort job', 'glpiinventory'),
                "skip"    => __("skip job", 'glpiinventory'),
@@ -590,7 +590,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
    * @param the check return value
    * @return the label for the return value
    */
-    function getValueForReturn($value)
+    public function getValueForReturn($value)
     {
         $values = $this->getAllReturnValues();
         if (isset($values[$value])) {
@@ -606,7 +606,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
    * @param params the check's parameters
    * @return array the array to be encoded in json and serialized
    */
-    static function formatCheckForJson($params)
+    publicstatic  function formatCheckForJson($params)
     {
         if (!isset($params['value'])) {
             $params['value'] = "";
@@ -645,7 +645,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     *
     * @param array $params list of fields with value of the check
     */
-    function add_item($params)
+    public function add_item($params)
     {
         $entry = self::formatCheckForJson($params);
 
@@ -668,7 +668,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     *
     * @param array $params list of fields with value of the check
     */
-    function save_item($params)
+    public function save_item($params)
     {
         $entry = self::formatCheckForJson($params);
        //get current order json

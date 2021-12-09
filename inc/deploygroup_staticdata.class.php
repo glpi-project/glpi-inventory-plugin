@@ -84,7 +84,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     * @param integer $withtemplate 1 if is a template form
     * @return string|array name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         if (
@@ -120,7 +120,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         switch ($tabnum) {
             case 1:
@@ -144,7 +144,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     *
     * @param object $item PluginGlpiinventoryDeployGroup instance
     */
-    static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
+    publicstatic  function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
     {
        // WITH checking post values
         $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, true);
@@ -175,7 +175,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
    /**
     * Display result, so list of computers
     */
-    static function showResults()
+    publicstatic  function showResults()
     {
         if (
             isset($_SESSION['glpisearch']['Computer'])
@@ -213,7 +213,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
    * @param $target_deploygroups_id the target group ID
    * @return the duplication status, as a boolean
    */
-    static function duplicate($source_deploygroups_id, $target_deploygroups_id)
+    publicstatic  function duplicate($source_deploygroups_id, $target_deploygroups_id)
     {
         $result        = true;
         $pfStaticGroup = new self();
@@ -240,7 +240,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     *
     * @return boolean
     */
-    static function csvImportForm(PluginGlpiinventoryDeployGroup $item)
+    publicstatic  function csvImportForm(PluginGlpiinventoryDeployGroup $item)
     {
 
         echo "<form action='' method='post' enctype='multipart/form-data'>";
@@ -279,7 +279,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     *
     * @return boolean
     */
-    static function csvImport($post_data, $files_data)
+    publicstatic  function csvImport($post_data, $files_data)
     {
         $pfDeployGroup_static = new self();
         $computer = new Computer();

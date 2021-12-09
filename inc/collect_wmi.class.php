@@ -49,12 +49,12 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return _n('Found WMI', 'Found WMIs', $nb, 'glpiinventory');
     }
 
-    function getListHeaders()
+    public function getListHeaders()
     {
         return [
          __("Name"),
@@ -65,7 +65,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
         ];
     }
 
-    function displayOneRow($row = [])
+    public function displayOneRow($row = [])
     {
         return [
          $row['name'],
@@ -75,7 +75,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
         ];
     }
 
-    function displayNewSpecificities()
+    public function displayNewSpecificities()
     {
         echo "<td>" . __('moniker', 'glpiinventory') . "</td>";
         echo "<td>";

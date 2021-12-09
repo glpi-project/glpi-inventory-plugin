@@ -50,7 +50,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @param integer $taskjobs_id
     * @return string
     */
-    function prepareRun($taskjobs_id)
+    public function prepareRun($taskjobs_id)
     {
         global $DB;
 
@@ -565,7 +565,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
     * @return array
     */
-    function run($jobstate)
+    public function run($jobstate)
     {
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -681,7 +681,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @param string $ipend
     * @return array
     */
-    function getAgentsSubnet($nb_computers, $communication, $subnet = '', $ipstart = '', $ipend = '')
+    public function getAgentsSubnet($nb_computers, $communication, $subnet = '', $ipstart = '', $ipend = '')
     {
         global $DB;
 
@@ -765,7 +765,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @param integer $ipranges_id
     * @return array
     */
-    function getDevicesOfIPRange($ipranges_id)
+    public function getDevicesOfIPRange($ipranges_id)
     {
         global $DB;
 

@@ -99,7 +99,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     *                     or pictures location)
     * @return string the requested url if found otherwise empty string
     */
-    function getBaseUrlFor($name)
+    public function getBaseUrlFor($name)
     {
         if (array_key_exists($name, $this->base_urls)) {
             return $this->base_urls[$name];

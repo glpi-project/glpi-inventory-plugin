@@ -60,7 +60,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     *
     * @return array
     */
-    function getTypes()
+    public function getTypes()
     {
         return [
          'Computer' => __("Upload from computer", 'glpiinventory'),
@@ -77,7 +77,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param array $data array converted of 'json' field in DB where stored actions
     * @param string $rand unique element id used to identify/update an element
     */
-    function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         global $CFG_GLPI;
 
@@ -250,7 +250,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $mode mode in use (create, edit...)
     * @return boolean
     */
-    function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         $fi_path = Plugin::getWebDir('glpiinventory');
 
@@ -357,7 +357,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @global array $CFG_GLPI
     * @param string $rand unique element id used to identify/update an element
     */
-    static function showServerFileTree($rand)
+    publicstatic  function showServerFileTree($rand)
     {
         echo "<script type='text/javascript'>";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -413,7 +413,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     *
     * @param string $node
     */
-    static function getServerFileTree($node)
+    publicstatic  function getServerFileTree($node)
     {
 
         $nodes            = [];
@@ -490,7 +490,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     *
     * @param array $params list of fields with value of the file
     */
-    function add_item($params)
+    public function add_item($params)
     {
         switch ($params['filestype']) {
             case 'Server':
@@ -510,7 +510,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param array $params
     * @return boolean
     */
-    function remove_item($params)
+    public function remove_item($params)
     {
         if (!isset($params['file_entries'])) {
             return false;
@@ -554,7 +554,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     *
     * @param array $params list of fields with value of the file
     */
-    function save_item($params)
+    public function save_item($params)
     {
        //get current order json
         $data = json_decode($this->getJson($params['id']), true);
@@ -587,7 +587,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param array $params
     * @return boolean
     */
-    function uploadFileFromComputer($params)
+    public function uploadFileFromComputer($params)
     {
         if (isset($params["id"])) {
            //file uploaded?
@@ -676,7 +676,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param array $params
     * @return boolean
     */
-    function uploadFileFromServer($params)
+    public function uploadFileFromServer($params)
     {
 
         if (preg_match('/\.\./', $params['filename'])) {
@@ -687,7 +687,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $file_path = $params['filename'];
             $filename = basename($file_path);
             if (
-                function_exists('finfo_open')
+                public function_exists('finfo_open')
                  && ($finfo = finfo_open(FILEINFO_MIME))
             ) {
                 $mime_type = finfo_file($finfo, $file_path);
@@ -734,7 +734,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $sha512
     * @return string the directories based on sha512
     */
-    function getDirBySha512($sha512)
+    public function getDirBySha512($sha512)
     {
         $first = substr($sha512, 0, 1);
         $second = substr($sha512, 0, 2);
@@ -769,7 +769,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param boolean $skip_creation
     * @return string
     */
-    function registerFilepart($filePath, $skip_creation = false)
+    public function registerFilepart($filePath, $skip_creation = false)
     {
         $sha512 = hash_file('sha512', $filePath);
 
@@ -791,7 +791,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param array $params
     * @return boolean
     */
-    function addFileInRepo($params)
+    public function addFileInRepo($params)
     {
         $filename      = addslashes($params['filename']);
         $file_tmp_name = $params['file_tmp_name'];
@@ -897,7 +897,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $sha512 sha512 of the file
     * @return boolean
     */
-    function removeFileInRepo($sha512)
+    public function removeFileInRepo($sha512)
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
@@ -957,7 +957,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $sha512 sha512 of the file
     * @return boolean
     */
-    function checkPresenceManifest($sha512)
+    public function checkPresenceManifest($sha512)
     {
         if (!file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512)) {
             return false;
@@ -972,7 +972,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $sha512 sha512 of the file
     * @return boolean
     */
-    function checkPresenceFile($sha512)
+    public function checkPresenceFile($sha512)
     {
        //Do not continue if the manifest is not found
         if (!$this->checkPresenceManifest($sha512)) {
@@ -1016,7 +1016,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     *
     * @return string
     */
-    function getMaxUploadSize()
+    public function getMaxUploadSize()
     {
         $max_upload   = (int)(ini_get('upload_max_filesize'));
         $max_post     = (int)(ini_get('post_max_size'));
@@ -1030,7 +1030,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
    /**
     * List number of files not used in packages
     */
-    function numberUnusedFiles()
+    public function numberUnusedFiles()
     {
         echo "<table width='950' class='tab_cadre_fixe'>";
 
@@ -1067,7 +1067,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
    /**
     * Delete the files not used in packages
     */
-    function deleteUnusedFiles()
+    public function deleteUnusedFiles()
     {
         $a_files = $this->find();
         foreach ($a_files as $data) {

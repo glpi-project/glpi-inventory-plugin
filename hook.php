@@ -629,7 +629,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                     $names = json_decode($val);
                     if ($names !== null && is_array($names)) {
                         $names = array_map(
-                            function ($a) {
+                            public function ($a) {
                                 return "\"" . $a . "\"";
                             },
                             $names

@@ -49,7 +49,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
     * @param integer $taskjobs_id id of taskjob esx
     * @return string uniqid value
     */
-    function prepareRun($taskjobs_id)
+    public function prepareRun($taskjobs_id)
     {
 
         $task       = new PluginGlpiinventoryTask();
@@ -152,7 +152,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
     * @param object $taskjobstate
     * @return array
     */
-    function run($taskjobstate)
+    public function run($taskjobstate)
     {
         $credential     = new PluginGlpiinventoryCredential();
         $credentialip   = new PluginGlpiinventoryCredentialIp();

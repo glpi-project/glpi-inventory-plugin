@@ -61,7 +61,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
    /**
     * __contruct function where fill logFile if extradebug enabled
     */
-    function __construct()
+    public function __construct()
     {
         if (PluginGlpiinventoryConfig::isExtradebugActive()) {
             $this->logFile = GLPI_LOG_DIR . '/glpiinventorycommunication.log';
@@ -76,7 +76,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     * @param object $a_CONTENT
     * @param Inventory $arrayinventory
     */
-    function import($p_DEVICEID, $a_CONTENT, Inventory $inventory)
+    public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory)
     {
         $response = [];
 
@@ -167,7 +167,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
    /**
     * Add log in the taskjob
     */
-    function addtaskjoblog()
+    public function addtaskjoblog()
     {
 
         if (!isset($_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'])) {
@@ -190,7 +190,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     *
     * @return string
     */
-    static function getMethod()
+    publicstatic  function getMethod()
     {
         return 'networkinventory';
     }

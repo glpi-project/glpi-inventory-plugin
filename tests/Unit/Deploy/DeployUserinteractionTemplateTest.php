@@ -284,7 +284,7 @@ class DeployUserinteractionTemplateTest extends TestCase
    /**
     * @test
     */
-    function testGestMainFormFields()
+    public function testGestMainFormFields()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
         $expected = ['platform', 'timeout', 'buttons', 'icon',
@@ -296,7 +296,7 @@ class DeployUserinteractionTemplateTest extends TestCase
    /**
     * @test
     */
-    function testGetBehaviorsFields()
+    public function testGetBehaviorsFields()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
         $expected = ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
@@ -309,7 +309,7 @@ class DeployUserinteractionTemplateTest extends TestCase
    /**
     * @test
     */
-    function testGetJsonFields()
+    public function testGetJsonFields()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
         $expected = ['platform', 'timeout', 'buttons', 'icon',

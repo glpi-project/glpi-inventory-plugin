@@ -54,7 +54,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     * @param integer $collects_files_id id of collect_file
     * @param integer $taskjobstates_id id of taskjobstate
     */
-    function updateComputer($computers_id, $file_data, $collects_files_id)
+    public function updateComputer($computers_id, $file_data, $collects_files_id)
     {
         foreach ($file_data as $key => $value) {
             $input = [
@@ -73,7 +73,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     *
     * @param integer $computers_id id of the computer
     */
-    function showForComputer($computers_id)
+    public function showForComputer($computers_id)
     {
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
@@ -119,7 +119,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     *
     * @param integer $collects_files_id id of collect_file
     */
-    function showContent($collects_files_id)
+    public function showContent($collects_files_id)
     {
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
         $computer = new Computer();

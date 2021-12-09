@@ -69,7 +69,7 @@ class PluginGlpiinventoryCollectRule extends Rule
     *
     * @return string name of this type
     */
-    function getTitle()
+    public function getTitle()
     {
         return __('Computer information rules', 'glpiinventory');
     }
@@ -81,7 +81,7 @@ class PluginGlpiinventoryCollectRule extends Rule
     * @param array $output
     * @return array
     */
-    function preProcessPreviewResults($output)
+    public function preProcessPreviewResults($output)
     {
         return $output;
     }
@@ -92,7 +92,7 @@ class PluginGlpiinventoryCollectRule extends Rule
     *
     * @return integer
     */
-    function maxActionsCount()
+    public function maxActionsCount()
     {
         return 8;
     }
@@ -105,7 +105,7 @@ class PluginGlpiinventoryCollectRule extends Rule
     * @param array $params
     * @return array
     */
-    function executeActions($output, $params, array $input = [])
+    public function executeActions($output, $params, array $input = [])
     {
 
         PluginGlpiinventoryToolbox::logIfExtradebug(
@@ -190,7 +190,7 @@ class PluginGlpiinventoryCollectRule extends Rule
     *
     * @return array
     */
-    function getCriterias()
+    public function getCriterias()
     {
 
         $criterias = [];
@@ -227,7 +227,7 @@ class PluginGlpiinventoryCollectRule extends Rule
     *
     * @return array
     */
-    function getActions()
+    public function getActions()
     {
 
         $actions = [];

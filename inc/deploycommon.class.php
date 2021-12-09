@@ -77,7 +77,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
     * @param integer $taskjob_id id of the taskjob
     * @param null|array $definitions_filter
     */
-    function prepareRun($taskjob_id, $definitions_filter = null)
+    public function prepareRun($taskjob_id, $definitions_filter = null)
     {
         global $DB;
 
@@ -318,7 +318,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
     * @param object $taskjobstate PluginGlpiinventoryTaskjobstate instance
     * @return array
     */
-    function run($taskjobstate)
+    public function run($taskjobstate)
     {
 
        //Check if the job has been postponed

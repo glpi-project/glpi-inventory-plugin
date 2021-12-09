@@ -77,7 +77,7 @@ class InstallationTest extends TestCase
     }
 
 
-    function _install()
+    public function _install()
     {
         $output     = [];
         $returncode = 0;

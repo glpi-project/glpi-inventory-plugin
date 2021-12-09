@@ -76,7 +76,7 @@ class PluginGlpiinventorySearch extends CommonDBTM
     *
     * @return boolean
     */
-    static function constructDatas(array &$data, $onlycount = false)
+    publicstatic  function constructDatas(array &$data, $onlycount = false)
     {
         Search::constructData($data, $onlycount);
     }
@@ -91,7 +91,7 @@ class PluginGlpiinventorySearch extends CommonDBTM
     * @param integer $items_id_check
     * @return boolean
     */
-    function constructSQL($itemtype, $params, $items_id_check = 0)
+    public function constructSQL($itemtype, $params, $items_id_check = 0)
     {
         global $CFG_GLPI;
 

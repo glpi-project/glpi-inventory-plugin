@@ -54,7 +54,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return __('Task management', 'glpiinventory');
     }
@@ -66,7 +66,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return boolean
     */
-    static function canCreate()
+    publicstatic  function canCreate()
     {
         return true;
     }
@@ -78,7 +78,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -174,7 +174,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @global object $DB
     * @param object $param
     */
-    static function purgeTask($param)
+    publicstatic  function purgeTask($param)
     {
         global $DB;
 
@@ -216,7 +216,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @param string $method
     */
-    static function cleanTasksbyMethod($method)
+    publicstatic  function cleanTasksbyMethod($method)
     {
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTask = new PluginGlpiinventoryTask();
@@ -257,7 +257,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param array $options
     * @return array
     */
-    function getTaskjobstatesForAgent($agent_id, $methods = [], $options = [])
+    public function getTaskjobstatesForAgent($agent_id, $methods = [], $options = [])
     {
         global $DB;
 
@@ -493,7 +493,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param string $task_id; the concerned task
     * @return true
     */
-    function prepareTaskjobs($methods = [], $tasks_id = false)
+    public function prepareTaskjobs($methods = [], $tasks_id = false)
     {
         global $DB;
 
@@ -811,7 +811,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return true
     */
-    static function cronTaskscheduler()
+    publicstatic  function cronTaskscheduler()
     {
 
         ini_set("max_execution_time", "0");
@@ -831,7 +831,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return true
     */
-    static function cronCleanOnDemand($task = null)
+    publicstatic  function cronCleanOnDemand($task = null)
     {
         global $DB;
 
@@ -854,7 +854,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
    * @param $interval number of days to look for successful tasks
    * @return an array of tasks ID to clean
    */
-    function cleanTasksAndJobs($interval)
+    public function cleanTasksAndJobs($interval)
     {
         global $DB;
 
@@ -913,7 +913,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return arrray of information
    **/
-    static function cronInfo($name)
+    publicstatic  function cronInfo($name)
     {
 
         switch ($name) {
@@ -933,7 +933,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param array $chrono
     * @return string
     */
-    static function formatChrono($chrono)
+    publicstatic  function formatChrono($chrono)
     {
         $interval = abs($chrono['end'] - $chrono['start']);
         $micro    = intval($interval * 100);
@@ -947,7 +947,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
    /**
    * Force running the current task
    **/
-    function forceRunning()
+    public function forceRunning()
     {
         $methods = [];
         foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
@@ -971,7 +971,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param bool $only_active, set to true to include only active tasks
     * @return array
     */
-    function getJoblogs($task_ids = [], $with_logs = true, $only_active = false)
+    public function getJoblogs($task_ids = [], $with_logs = true, $only_active = false)
     {
         global $DB;
 
@@ -1449,7 +1449,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @return depends on @param $options['display'].
     * @return string, empty if JSON results are displayed
     */
-    function ajaxGetJobLogs($options = [])
+    public function ajaxGetJobLogs($options = [])
     {
         if (!empty($options['task_id'])) {
             if (is_array($options['task_id'])) {
@@ -1508,7 +1508,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param bool $only_active, set to true to include only active tasks
     * @return object
     */
-    function getTasksPlanned($tasks_id = 0, $only_active = true)
+    public function getTasksPlanned($tasks_id = 0, $only_active = true)
     {
         global $DB;
 
@@ -1543,7 +1543,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param array $filter criteria to filter in the request
     * @return array
     */
-    static function getItemsFromDB($filter)
+    publicstatic  function getItemsFromDB($filter)
     {
         global $DB;
 
@@ -1680,7 +1680,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @global object $DB
     * @return object
     */
-    function getTasksInerror()
+    public function getTasksInerror()
     {
         global $DB;
 
@@ -1721,7 +1721,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @global object $DB
     * @param integer $history
     */
-    function post_updateItem($history = 1)
+    public function post_updateItem($history = 1)
     {
         global $DB;
 
@@ -1781,7 +1781,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return nothing (force a download of csv)
     */
-    function csvExport($params = [])
+    public function csvExport($params = [])
     {
         global $CFG_GLPI;
 
@@ -1945,7 +1945,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param object|null $checkitem
     * @return array list of actions
     */
-    function getSpecificMassiveActions($checkitem = null)
+    public function getSpecificMassiveActions($checkitem = null)
     {
         $actions = [];
         $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfert'] = __('Transfer');
@@ -1962,7 +1962,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param object $ma MassiveAction instance
     * @return boolean
     */
-    static function showMassiveActionsSubForm(MassiveAction $ma)
+    publicstatic  function showMassiveActionsSubForm(MassiveAction $ma)
     {
         global $CFG_GLPI;
 
@@ -2064,7 +2064,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    static function processMassiveActionsForOneItemtype(
+    publicstatic  function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids
@@ -2244,7 +2244,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
    * @param $source_tasks_id the ID of the task to duplicate
    * @return void
    */
-    function duplicate($source_tasks_id)
+    public function duplicate($source_tasks_id)
     {
         $result = true;
         if ($this->getFromDB($source_tasks_id)) {

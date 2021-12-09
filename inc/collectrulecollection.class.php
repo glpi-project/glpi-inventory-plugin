@@ -68,7 +68,7 @@ class PluginGlpiinventoryCollectRuleCollection extends RuleCollection
     *
     * @return string name of this type
     */
-    function getTitle()
+    public function getTitle()
     {
         return __('Computer information rules', 'glpiinventory');
     }
@@ -81,7 +81,7 @@ class PluginGlpiinventoryCollectRuleCollection extends RuleCollection
     * @param array $params
     * @return array
     */
-    function prepareInputDataForProcess($input, $params)
+    public function prepareInputDataForProcess($input, $params)
     {
         return $input;
     }

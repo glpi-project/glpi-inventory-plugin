@@ -51,7 +51,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
     * @param integer $taskjobs_id
     * @return string
     */
-    function prepareRun($taskjobs_id)
+    public function prepareRun($taskjobs_id)
     {
         global $DB;
 
@@ -253,7 +253,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
     * @param object $jobstate
     * @return string
     */
-    function run($jobstate)
+    public function run($jobstate)
     {
 
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -330,7 +330,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
     * @param string $subnet
     * @return array
     */
-    function getAgentsSubnet($nb_computers, $communication, $subnet = '')
+    public function getAgentsSubnet($nb_computers, $communication, $subnet = '')
     {
         global $DB;
 

@@ -82,7 +82,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
          return _n(
              'User interaction',
@@ -98,7 +98,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * @since 9.2
     * @return array
     */
-    function getTypes()
+    public function getTypes()
     {
         return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'glpiinventory'),
               self::EVENT_AFTER_DOWNLOAD   => __("After download", 'glpiinventory'),
@@ -114,7 +114,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * @since 9.2
     * @return array
     */
-    function getLabelForAType($event)
+    public function getLabelForAType($event)
     {
         $events = $this->getTypes();
         if (isset($events[$event])) {
@@ -134,7 +134,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * @param string $mode mode in use (create, edit...)
     * @return boolean
     */
-    function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         global $CFG_GLPI;
 
@@ -206,7 +206,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     *
     * @return string|false
     */
-    function getValues($type, $data, $mode)
+    public function getValues($type, $data, $mode)
     {
         $values = [
          'name_value'          => "",
@@ -250,7 +250,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * @param array $data array converted of 'json' field in DB where stored checks
     * @param string $rand unique element id used to identify/update an element
     */
-    function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         global $CFG_GLPI;
 
@@ -310,7 +310,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
    * @param interaction an array representing an interaction
    * @return a short description
    */
-    function getInteractionDescription($interaction)
+    public function getInteractionDescription($interaction)
     {
         $text = '';
 
@@ -339,7 +339,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     *
     * @param array $params list of fields with value of the check
     */
-    function add_item($params)
+    public function add_item($params)
     {
         if (!isset($params['text'])) {
             $params['text'] = "";
@@ -367,7 +367,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     *
     * @param array $params list of fields with value of the check
     */
-    function save_item($params)
+    public function save_item($params)
     {
         if (!isset($params['value'])) {
             $params['value'] = "";
@@ -392,7 +392,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-    function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
+    public function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
     {
         $used_interactions = [];
         $json              = json_decode($package->fields['json'], true);
@@ -458,7 +458,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-    function getEventMessage($event = '')
+    public function getEventMessage($event = '')
     {
         $message = __('%1$s button pressed');
         switch ($event) {

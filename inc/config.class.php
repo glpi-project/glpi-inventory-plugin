@@ -76,7 +76,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param boolean $getOnly
     * @return array
     */
-    function initConfigModule($getOnly = false)
+    public function initConfigModule($getOnly = false)
     {
 
         $pfSetup  = new PluginGlpiinventorySetup();
@@ -160,7 +160,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
 
         return __('General setup');
@@ -173,7 +173,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param array $values configuration values, indexed by name
     * @param boolean $update say if add or update in database
     */
-    function addValues($values, $update = true)
+    public function addValues($values, $update = true)
     {
 
         foreach ($values as $type => $value) {
@@ -192,7 +192,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param array $options
     * @return array containing the tabs name
     */
-    function defineTabs($options = [])
+    public function defineTabs($options = [])
     {
 
         $plugin = new Plugin();
@@ -227,7 +227,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return string|array name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         if ($item->getType() == __CLASS__) {
@@ -249,7 +249,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem($item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem($item, $tabnum = 1, $withtemplate = 0)
     {
 
         switch ($tabnum) {
@@ -276,7 +276,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param string $name name in configuration
     * @return null|string|integer
     */
-    function getValue($name)
+    public function getValue($name)
     {
         global $PF_CONFIG;
 
@@ -298,7 +298,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param string $name name in configuration
     * @return boolean
     */
-    function isFieldActive($name)
+    public function isFieldActive($name)
     {
         if (!($this->getValue($name))) {
             return false;
@@ -314,7 +314,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param array $options
     * @return true
     */
-    function showConfigForm($options = [])
+    public function showConfigForm($options = [])
     {
 
         $this->showFormHeader($options);
@@ -405,7 +405,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         );
        //if action == action_status => show blocation else hide blocaction
         echo Html::scriptBlock("
-         function changestatus() {
+         public function changestatus() {
             if ($('#dropdown_agents_action$rand').val() != 0) {
                $('#blocaction1').show();
                $('#blocaction2').show();
@@ -448,7 +448,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param integer $action
     * @return string
     */
-    static function getActions($action)
+    publicstatic  function getActions($action)
     {
         switch ($action) {
             case self::ACTION_STATUS:
@@ -466,7 +466,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param array $options
     * @return true
     */
-    static function showFormNetworkInventory($options = [])
+    publicstatic  function showFormNetworkInventory($options = [])
     {
         global $CFG_GLPI;
 
@@ -544,7 +544,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param array $options
     * @return true
     */
-    static function showFormDeploy($options = [])
+    publicstatic  function showFormDeploy($options = [])
     {
 
         $pfConfig = new PluginGlpiinventoryConfig();
@@ -609,7 +609,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param string $value
     * @return integer|false integer is the id of this configuration name
     */
-    function addValue($name, $value)
+    public function addValue($name, $value)
     {
         $existing_value = $this->getValue($name);
         if (!is_null($existing_value)) {
@@ -628,7 +628,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param string $value
     * @return boolean
     */
-    function updateValue($name, $value)
+    public function updateValue($name, $value)
     {
         global $PF_CONFIG;
 
@@ -656,7 +656,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     *
     * @return null|integer the integer is 1 or 0 (it's like boolean)
     */
-    static function isExtradebugActive()
+    publicstatic  function isExtradebugActive()
     {
         $fConfig = new self();
         return $fConfig->getValue('extradebug');
@@ -669,7 +669,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @param string $file name of log file to update
     * @param string $message the message to put in log file
     */
-    static function logIfExtradebug($file, $message)
+    publicstatic  function logIfExtradebug($file, $message)
     {
         if (self::isExtradebugActive()) {
             if (is_array($message)) {
@@ -690,7 +690,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * @global object $DB
     * @global array $PF_CONFIG
     */
-    static function loadCache()
+    publicstatic  function loadCache()
     {
         global $DB, $PF_CONFIG;
 

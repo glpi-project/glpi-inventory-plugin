@@ -49,13 +49,13 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return _n('Found file', 'Found files', $nb, 'glpiinventory');
     }
 
 
-    function getListHeaders()
+    public function getListHeaders()
     {
         return [
          __("Name"),
@@ -73,7 +73,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         ];
     }
 
-    function displayOneRow($row = [])
+    public function displayOneRow($row = [])
     {
         $filter = $type = '';
         if (!empty($row['filter_sizeequals'])) {
@@ -104,7 +104,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         ];
     }
 
-    function displayNewSpecificities()
+    public function displayNewSpecificities()
     {
         echo "<td>" . __('Limit', 'glpiinventory') . "</td>";
         echo "<td>";
@@ -200,7 +200,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
    /**
     * After purge item, delete collect files
     */
-    function post_purgeItem()
+    public function post_purgeItem()
     {
        // Delete all File
         $pfCollectFileContent = new PluginGlpiinventoryCollect_File_Content();

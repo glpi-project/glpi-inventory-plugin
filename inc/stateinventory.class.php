@@ -54,7 +54,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     *
     * @global array $CFG_GLPI
     */
-    function __construct()
+    public function __construct()
     {
         global $CFG_GLPI;
 
@@ -70,7 +70,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     * @global array $CFG_GLPI
     * @param array $options
     */
-    function display($options = [])
+    public function display($options = [])
     {
         global $DB, $CFG_GLPI;
 
@@ -225,7 +225,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     * @param string $date1
     * @param string $date2
     */
-    function dateDiff($date1, $date2)
+    public function dateDiff($date1, $date2)
     {
         $timestamp1 = strtotime($date1);
         $timestamp2 = strtotime($date2);

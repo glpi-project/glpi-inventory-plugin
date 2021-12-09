@@ -115,7 +115,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         switch ($item->getType()) {
             case 'Computer':
@@ -134,7 +134,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @return array
     */
-    static function getStateNames()
+    publicstatic  function getStateNames()
     {
         return [
          self::PREPARED             => __('Prepared', 'glpiinventory'),
@@ -156,7 +156,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         if ($item->getType() == 'PluginGlpiinventoryTask') {
             $item->showJobLogs();
@@ -184,7 +184,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
    * @return string
    *
    **/
-    function stateTaskjob($taskjobs_id, $width = 930, $return = 'html', $style = '')
+    public function stateTaskjob($taskjobs_id, $width = 930, $return = 'html', $style = '')
     {
         global $DB;
 
@@ -244,7 +244,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param string $itemtype type of the item
     * @param string $state (all or each state : running, finished, nostarted)
     */
-    function stateTaskjobItem($items_id, $itemtype, $state = 'all')
+    public function stateTaskjobItem($items_id, $itemtype, $state = 'all')
     {
         global $DB;
 
@@ -345,7 +345,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param integer $id id of the taskjobstate
     * @param integer $state state to set
     */
-    function changeStatus($id, $state)
+    public function changeStatus($id, $state)
     {
         $this->update(['id' => $id, 'state' => $state]);
     }
@@ -356,7 +356,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @param integer $agent_id id of the agent
     */
-    function getTaskjobsAgent($agent_id)
+    public function getTaskjobsAgent($agent_id)
     {
         global $DB;
 
@@ -389,7 +389,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param array $params list of ajax expected 'id' and 'last_date' parameters
     * @return string in json format, encoded list of logs grouped by jobstates
     */
-    function ajaxGetLogs($params)
+    public function ajaxGetLogs($params)
     {
         $id        = null;
         $last_date = null;
@@ -417,7 +417,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param string $last_date
     * @return array
     */
-    function getLogs($id, $last_date)
+    public function getLogs($id, $last_date)
     {
         global $DB;
         $fields = [
@@ -465,7 +465,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param integer $error error
     * @param string $message message for the status
     */
-    function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = '')
+    public function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = '')
     {
 
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
@@ -503,7 +503,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @param string $reason
     */
-    function fail($reason = '')
+    public function fail($reason = '')
     {
         $this->updateState(
             PluginGlpiinventoryTaskjoblog::TASK_ERROR,
@@ -518,7 +518,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param string $type the type of interaction (before download, etc)
     * @param string $reason the text to be displayed
     */
-    function postpone($type, $reason = '')
+    public function postpone($type, $reason = '')
     {
         $this->updateState(
             PluginGlpiinventoryTaskjoblog::TASK_INFO,
@@ -534,7 +534,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @param string $reason
     */
-    function cancel($reason = '')
+    public function cancel($reason = '')
     {
         $this->updateState(
             PluginGlpiinventoryTaskjoblog::TASK_INFO,
@@ -552,7 +552,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param string $jobstate_state the state of the jobstate to set
     * @param string $reason
     */
-    function updateState($joblog_state, $jobstate_state, $reason = '')
+    public function updateState($joblog_state, $jobstate_state, $reason = '')
     {
 
         $log       = new PluginGlpiinventoryTaskjoblog();
@@ -652,7 +652,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @global object $DB
     */
-    static function cronCleantaskjob()
+    publicstatic  function cronCleantaskjob()
     {
         global $DB;
 
@@ -690,7 +690,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
    * @since 9.2
    * @param uniqid taskjobstate's uniqid
    */
-    function getFromDBByUniqID($uniqid)
+    public function getFromDBByUniqID($uniqid)
     {
         $result = $this->find(['uniqid' => $uniqid], [], 1);
         if (!empty($result)) {
@@ -704,7 +704,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @param integer $computers_id
     */
-    function showStatesForComputer($computers_id)
+    public function showStatesForComputer($computers_id)
     {
         global $DB;
 

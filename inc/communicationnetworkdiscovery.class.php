@@ -51,7 +51,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
     * @param Inventory $inventory
     * @return array
     */
-    function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array
+    public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array
     {
         $response = [];
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -143,7 +143,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
    /**
     * Used to add log in the taskjob
     */
-    function addtaskjoblog()
+    public function addtaskjoblog()
     {
 
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
@@ -162,7 +162,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
     *
     * @return string
     */
-    static function getMethod()
+    publicstatic  function getMethod()
     {
         return 'networkdiscovery';
     }

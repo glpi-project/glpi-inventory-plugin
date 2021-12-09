@@ -62,7 +62,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return __('Time slot entry', 'glpiinventory');
     }
@@ -73,7 +73,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -124,7 +124,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     *
     * @param integer $timeslots_id
     */
-    function formEntry($timeslots_id)
+    public function formEntry($timeslots_id)
     {
         $ID = 0;
         $options = [];
@@ -185,7 +185,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     *
     * @param integer $timeslots_id
     */
-    function formDeleteEntry($timeslots_id)
+    public function formDeleteEntry($timeslots_id)
     {
 
         $dbentries = getAllDataFromTable(
@@ -235,7 +235,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     *
     * @param integer $timeslots_id
     */
-    function showTimeSlot($timeslots_id)
+    public function showTimeSlot($timeslots_id)
     {
         echo "<div id='chart'></div>";
         echo "<div id='startperiod'></div>";
@@ -281,7 +281,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     *
     * @param array $data
     */
-    function addEntry($data)
+    public function addEntry($data)
     {
         if ($data['lastday'] < $data['beginday']) {
             return;

@@ -67,7 +67,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return __('Mirror servers', 'glpiinventory');
     }
@@ -79,7 +79,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param array $options
     * @return array containing the tabs name
     */
-    function defineTabs($options = [])
+    public function defineTabs($options = [])
     {
 
         $ong = [];
@@ -98,7 +98,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param integer $agents_id
     * @return array
     */
-    static function getList($agents_id)
+    publicstatic  function getList($agents_id)
     {
         global $PF_CONFIG, $DB;
 
@@ -208,7 +208,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param array $options
     * @return true
     */
-    function showForm($id, array $options = [])
+    public function showForm($id, array $options = [])
     {
         $this->initForm($id, $options);
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/deploymirror.html.twig', [
@@ -225,7 +225,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -310,7 +310,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param object|null $checkitem
     * @return array list of actions
     */
-    function getSpecificMassiveActions($checkitem = null)
+    public function getSpecificMassiveActions($checkitem = null)
     {
         return [__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfer'
                => __('Transfer')];
@@ -323,7 +323,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param object $ma MassiveAction instance
     * @return boolean
     */
-    static function showMassiveActionsSubForm(MassiveAction $ma)
+    publicstatic  function showMassiveActionsSubForm(MassiveAction $ma)
     {
         if ($ma->getAction() == 'transfer') {
             Dropdown::show('Entity');
@@ -341,7 +341,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    static function processMassiveActionsForOneItemtype(
+    publicstatic  function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids

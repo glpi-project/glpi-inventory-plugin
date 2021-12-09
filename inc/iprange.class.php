@@ -63,7 +63,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     *
     * @return true
     */
-    static function canCreate()
+    publicstatic  function canCreate()
     {
         return true;
     }
@@ -75,7 +75,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
 
         if (isset($_SERVER['HTTP_REFERER']) and strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
@@ -98,7 +98,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     *
     * @return string comments in HTML format
     */
-    function getComments()
+    public function getComments()
     {
         $comment = $this->fields['ip_start'] . " -> " . $this->fields['ip_end'];
         return Html::showToolTip($comment, ['display' => false]);
@@ -110,7 +110,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
         $tab = [];
 
@@ -179,7 +179,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param array $options
     * @return array containing the tabs name
     */
-    function defineTabs($options = [])
+    public function defineTabs($options = [])
     {
 
         $ong = [];
@@ -198,7 +198,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         if ($tabnum == 'task') {
             $pfTask = new PluginGlpiinventoryTask();
@@ -216,7 +216,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param array $options
     * @return true
     */
-    function showForm($id, array $options = [])
+    public function showForm($id, array $options = [])
     {
         $this->initForm($id, $options);
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/iprange.html.twig', [
@@ -234,7 +234,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param array $a_input array of IPs
     * @return boolean
     */
-    function checkip($a_input)
+    public function checkip($a_input)
     {
 
         $count = 0;
@@ -269,7 +269,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param string $ip IP in format IPv4
     * @return integer $int
     */
-    function getIp2long($ip)
+    public function getIp2long($ip)
     {
         $int = ip2long($ip);
         if ($int < 0) {
@@ -282,7 +282,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
    /**
     * After purge item, delete SNMP credentials linked to this ip range
     */
-    function post_purgeItem()
+    public function post_purgeItem()
     {
         $pfIPRange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
         $a_data = getAllDataFromTable(
@@ -302,7 +302,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     * @param object|null $checkitem
     * @return array list of actions
     */
-    function getSpecificMassiveActions($checkitem = null)
+    public function getSpecificMassiveActions($checkitem = null)
     {
 
         $actions = [];

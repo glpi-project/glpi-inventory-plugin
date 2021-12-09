@@ -90,7 +90,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     *
     * @return array with all elements
     */
-    static function dropdownStateValues()
+    publicstatic  function dropdownStateValues()
     {
 
         $elements = [
@@ -112,7 +112,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     * @param integer $state
     * @return string
     */
-    static function getStateName($state = -1)
+    publicstatic  function getStateName($state = -1)
     {
         $state_names = self::dropdownStateValues();
         if (isset($state_names[$state])) {
@@ -129,7 +129,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     * @param integer $taskjoblogs_id
     * @return string
     */
-    static function getStateItemtype($taskjoblogs_id)
+    publicstatic  function getStateItemtype($taskjoblogs_id)
     {
         global $DB;
 
@@ -157,7 +157,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -249,7 +249,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     *
     * @global array $CFG_GLPI
     */
-    function javascriptHistory()
+    public function javascriptHistory()
     {
         $fi_path = Plugin::getWebDir('glpiinventory');
 
@@ -283,7 +283,7 @@ function appear_array(id) {
     * @param integer $displaytaskjob
     * @param integer $nb_td
     */
-    function showHistoryLines(
+    public function showHistoryLines(
         $taskjobstates_id,
         $displayprocess = 1,
         $displaytaskjob = 0,
@@ -380,7 +380,7 @@ function appear_array(id) {
     * @param integer $width how large in pixel display array
     * @return string
     */
-    function showHistoryInDetail($agents_id, $uniqid, $width = 950)
+    public function showHistoryInDetail($agents_id, $uniqid, $width = 950)
     {
         global $CFG_GLPI, $DB;
 
@@ -533,7 +533,7 @@ function appear_array(id) {
     *               - boolean 0/1 if this log = finish
     *               - text to display
     */
-    function displayHistoryDetail($datas, $comment = 1)
+    public function displayHistoryDetail($datas, $comment = 1)
     {
 
         $text = "<td align='center'>";
@@ -611,7 +611,7 @@ function appear_array(id) {
     * @param string $state state of this taskjobstate
     * @param string $comment the comment of this insertion
     */
-    function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment)
+    public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment)
     {
         global $DB;
         $this->getEmpty();
@@ -633,7 +633,7 @@ function appear_array(id) {
     * @global object $DB
     * @param integer $taskjobs_id id of the taskjob
     */
-    function graphFinish($taskjobs_id)
+    public function graphFinish($taskjobs_id)
     {
         global $DB;
 
@@ -680,7 +680,7 @@ function appear_array(id) {
     * @param string $uuid value uniqid
     * @return array with data of table glpi_plugin_glpiinventory_taskjobstates
     */
-    static function getByUniqID($uuid)
+    publicstatic  function getByUniqID($uuid)
     {
         $a_datas = getAllDataFromTable(
             'glpi_plugin_glpiinventory_taskjobstates',
@@ -700,7 +700,7 @@ function appear_array(id) {
     * @param string $type div / td
     * @return string complete node (openned and closed)
     */
-    function getDivState($state, $type = 'div')
+    public function getDivState($state, $type = 'div')
     {
 
         $width = '50';
@@ -747,7 +747,7 @@ function appear_array(id) {
     * @param string $comment
     * @return string
     */
-    static function convertComment($comment)
+    publicstatic  function convertComment($comment)
     {
         $matches = [];
        // Search for replace [[itemtype::items_id]] by link

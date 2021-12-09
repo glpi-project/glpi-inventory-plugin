@@ -77,7 +77,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return __('Remote device inventory', 'glpiinventory');
     }
@@ -88,7 +88,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     *
     * @return array
     */
-    function getAdditionalFields()
+    public function getAdditionalFields()
     {
         return [['name'  => 'itemtype',
                          'label' => __('Type'),
@@ -105,7 +105,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     * @param integer $ID
     * @param array $field
     */
-    function displaySpecificTypeField($ID, $field = [], array $options = [])
+    public function displaySpecificTypeField($ID, $field = [], array $options = [])
     {
 
         switch ($field['type']) {
@@ -126,7 +126,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -176,7 +176,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
    /**
     * Display a specific header
     */
-    function displayHeader()
+    public function displayHeader()
     {
        //Common dropdown header
         parent::displayHeader();

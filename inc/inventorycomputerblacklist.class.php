@@ -56,7 +56,7 @@ class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return _n('Blacklist', 'Blacklists', $nb);
     }
@@ -67,7 +67,7 @@ class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -104,7 +104,7 @@ class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM
     * @param array $options
     * @return array containing the tabs name
     */
-    function defineTabs($options = [])
+    public function defineTabs($options = [])
     {
 
         $pfInventoryComputerCriteria = new PluginGlpiinventoryInventoryComputerCriteria();
@@ -127,7 +127,7 @@ class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM
     * @param array $options
     * @return true
     */
-    function showForm($items_id, array $options = [])
+    public function showForm($items_id, array $options = [])
     {
 
         if ($items_id != '') {
@@ -165,7 +165,7 @@ class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM
     * @param array $a_computerinventory
     * @return array
     */
-    function cleanBlacklist($a_computerinventory)
+    public function cleanBlacklist($a_computerinventory)
     {
 
         $pfInventoryComputerCriteria = new PluginGlpiinventoryInventoryComputerCriteria();

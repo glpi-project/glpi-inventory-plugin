@@ -59,7 +59,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * @since 9.2
     * @return array
     */
-    function getLabelForAType($type)
+    public function getLabelForAType($type)
     {
         $types = $this->getTypes();
         if (isset($types[$type])) {
@@ -76,7 +76,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    * @param $package the package to check
    * @return the types already in used
    */
-    function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
+    public function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
     {
         return [];
     }
@@ -91,7 +91,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
-    function displayDropdownType(
+    public function displayDropdownType(
         PluginGlpiinventoryDeployPackage $package,
         $config,
         $rand,
@@ -178,7 +178,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode possible values: init|edit|create
     */
-    function displayForm(
+    public function displayForm(
         PluginGlpiinventoryDeployPackage $package,
         $request_data,
         $rand,
@@ -237,7 +237,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    * @since 9.2
    * @return the html code for a red star
    */
-    function getMandatoryMark()
+    public function getMandatoryMark()
     {
         return "&nbsp;<span class='red'>*</span>";
     }
@@ -250,7 +250,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    * @param id the package ID
    * @param item the item to add to the package definition
    */
-    function addToPackage($id, $item, $order)
+    public function addToPackage($id, $item, $order)
     {
        //get current json package defintion
         $data = json_decode($this->getJson($id), true);
@@ -269,7 +269,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * @param integer $packages_id id of the order
     * @return boolean|string the string is in json format
     */
-    function getJson($packages_id)
+    public function getJson($packages_id)
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage->getFromDB($packages_id);
@@ -281,7 +281,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     }
 
 
-    function prepareDataToSave($params, $entry)
+    public function prepareDataToSave($params, $entry)
     {
        //get current order json
         $data = json_decode($this->getJson($params['id']), true);
@@ -309,7 +309,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * @param array $data
     * @return integer error number
     */
-    function updateOrderJson($packages_id, $data)
+    public function updateOrderJson($packages_id, $data)
     {
         $pfDeployPackage   = new PluginGlpiinventoryDeployPackage();
         $options           = JSON_UNESCAPED_SLASHES;
@@ -349,7 +349,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * @param array $params
     * @return boolean
     */
-    function remove_item($params)
+    public function remove_item($params)
     {
         if (!isset($params[$this->shortname . '_entries'])) {
             return false;
@@ -378,7 +378,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     *
     * @param array $params
     */
-    function move_item($params)
+    public function move_item($params)
     {
        //get current order json
         $data = json_decode($this->getJson($params['id']), true);
@@ -403,7 +403,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * @param integer $filesize
     * @return string
     */
-    function processFilesize($filesize)
+    public function processFilesize($filesize)
     {
         if (is_numeric($filesize)) {
             if ($filesize >= (1024 * 1024 * 1024)) {
@@ -429,7 +429,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    * @param pfDeployPackage the package in use
    * @param mode the mode (edit or create)
    */
-    function addOrSaveButton(PluginGlpiinventoryDeployPackage $pfDeployPackage, $mode)
+    public function addOrSaveButton(PluginGlpiinventoryDeployPackage $pfDeployPackage, $mode)
     {
         echo "<tr>";
         echo "<td>";
@@ -459,12 +459,12 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         }
     }
 
-    function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         return true;
     }
 
-    function getTypes()
+    public function getTypes()
     {
         return [];
     }

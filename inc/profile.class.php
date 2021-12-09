@@ -81,7 +81,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @return array
     */
-    static function getOldRightsMappings()
+    publicstatic  function getOldRightsMappings()
     {
         $types = ['agent'                  => 'plugin_glpiinventory_agent',
                      'remotecontrol'          => 'plugin_glpiinventory_remotecontrol',
@@ -118,7 +118,7 @@ class PluginGlpiinventoryProfile extends Profile
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         return self::createTabEntry('GLPI Inventory');
     }
@@ -132,7 +132,7 @@ class PluginGlpiinventoryProfile extends Profile
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pfProfile = new self();
         if ($item->fields['interface'] == 'central') {
@@ -151,7 +151,7 @@ class PluginGlpiinventoryProfile extends Profile
     * @param array $options
     * @return boolean
     */
-    function showForm($profiles_id, $options = [])
+    public function showForm($profiles_id, $options = [])
     {
 
         $openform = true;
@@ -212,7 +212,7 @@ class PluginGlpiinventoryProfile extends Profile
     * @param boolean $openform
     * @param boolean $closeform
     */
-    function showFormSelf($profiles_id = 0, $openform = true, $closeform = true)
+    public function showFormSelf($profiles_id = 0, $openform = true, $closeform = true)
     {
 
         echo "<div class='firstbloc'>";
@@ -254,7 +254,7 @@ class PluginGlpiinventoryProfile extends Profile
    /**
     * Delete profiles
     */
-    static function uninstallProfile()
+    publicstatic  function uninstallProfile()
     {
         $pfProfile = new self();
         $a_rights = $pfProfile->getAllRights();
@@ -269,7 +269,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @return array
     */
-    function getAllRights()
+    public function getAllRights()
     {
         $a_rights = [];
         $a_rights = array_merge($a_rights, $this->getRightsGeneral());
@@ -285,7 +285,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @return array
     */
-    function getRightsRules()
+    public function getRightsRules()
     {
         $rights = [
           /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
@@ -322,7 +322,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @return array
     */
-    function getRightsDeploy()
+    public function getRightsDeploy()
     {
         $rights = [
           ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
@@ -348,7 +348,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @return array
     */
-    function getRightsInventory()
+    public function getRightsInventory()
     {
         $rights = [
           ['itemtype'  => 'PluginGlpiinventoryIprange',
@@ -394,7 +394,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @return array
     */
-    function getRightsGeneral()
+    public function getRightsGeneral()
     {
         $rights = [
           ['rights'    => [READ => __('Read')],
@@ -434,7 +434,7 @@ class PluginGlpiinventoryProfile extends Profile
     * @param integer $profiles_id
     * @param array $rights
     */
-    static function addDefaultProfileInfos($profiles_id, $rights)
+    publicstatic  function addDefaultProfileInfos($profiles_id, $rights)
     {
         $profileRight = new ProfileRight();
         foreach ($rights as $right => $value) {
@@ -461,7 +461,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @param integer $profiles_id id of profile
     */
-    static function createFirstAccess($profiles_id)
+    publicstatic  function createFirstAccess($profiles_id)
     {
         include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/profile.class.php");
         $profile = new self();
@@ -477,7 +477,7 @@ class PluginGlpiinventoryProfile extends Profile
    /**
     * Delete rights stored in session
     */
-    static function removeRightsFromSession()
+    publicstatic  function removeRightsFromSession()
     {
         $profile = new self();
         foreach ($profile->getAllRights() as $right) {
@@ -505,7 +505,7 @@ class PluginGlpiinventoryProfile extends Profile
    /**
     * Migration script for old rights from old version of plugin
     */
-    static function migrateProfiles()
+    publicstatic  function migrateProfiles()
     {
        //Get all rights from the old table
         $profiles = getAllDataFromTable(getTableForItemType(__CLASS__));
@@ -554,7 +554,7 @@ class PluginGlpiinventoryProfile extends Profile
     * - add rights in profile table for the current user's profile
     * - current profile has all rights on the plugin
     */
-    static function initProfile()
+    publicstatic  function initProfile()
     {
         $pfProfile = new self();
         $profile   = new Profile();

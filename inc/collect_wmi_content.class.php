@@ -54,7 +54,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */ /*
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   public function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
          if (get_class($item) == 'PluginGlpiinventoryCollect') {
@@ -84,7 +84,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     * @param array $wmi_data
     * @param integer $collects_wmis_id
     */
-    function updateComputer($computers_id, $wmi_data, $collects_wmis_id)
+    public function updateComputer($computers_id, $wmi_data, $collects_wmis_id)
     {
         global $DB;
 
@@ -136,7 +136,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     *
     * @param integer $computers_id id of computer
     */
-    function showForComputer($computers_id)
+    public function showForComputer($computers_id)
     {
 
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
@@ -179,7 +179,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     *
     * @param integer $collects_wmis_id
     */
-    function showContent($collects_wmis_id)
+    public function showContent($collects_wmis_id)
     {
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
         $computer = new Computer();

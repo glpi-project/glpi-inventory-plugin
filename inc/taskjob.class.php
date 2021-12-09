@@ -54,7 +54,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return __('Job', 'glpiinventory');
     }
@@ -65,7 +65,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return boolean
     */
-    static function canCreate()
+    publicstatic  function canCreate()
     {
         return true;
     }
@@ -76,7 +76,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return array
     */
-    static function getJoinQuery()
+    publicstatic  function getJoinQuery()
     {
         return [
           'taskjobs' =>
@@ -90,7 +90,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -149,7 +149,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return object PluginGlpiinventoryTask instance
     */
-    function getTask()
+    public function getTask()
     {
         $pfTask = new PluginGlpiinventoryTask();
         $pfTask->getFromDB($this->fields['plugin_glpiinventory_tasks_id']);
@@ -168,7 +168,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param string $entity_restrict
     * @return string unique id of html element
     */
-    function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '')
+    public function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '')
     {
         global $CFG_GLPI;
 
@@ -217,7 +217,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param string $moduletype
     * @return array
     */
-    function getTypesForModule($method, $moduletype)
+    public function getTypesForModule($method, $moduletype)
     {
 
         $available_methods = PluginGlpiinventoryStaticmisc::getmethods();
@@ -269,7 +269,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param integer $title
     * @return string unique id of html element
     */
-    function dropdownvalue(
+    public function dropdownvalue(
         $myname,
         $definitiontype,
         $method,
@@ -345,7 +345,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param string $entity_restrict restriction of entity if required
     * @return string unique id of html element
     */
-    function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '')
+    public function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '')
     {
         global $CFG_GLPI;
 
@@ -399,7 +399,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param string $entity_restrict restriction of entity if required
     * @return string unique id of html element
     */
-    function dropdownAction(
+    public function dropdownAction(
         $myname,
         $actiontype,
         $method,
@@ -458,7 +458,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param string $module name of dropdown
     * @return array [id integed agent id] => $name value agent name
     */
-    function getAgents($module)
+    public function getAgents($module)
     {
        //Array to store agents that are allowed to use this module
         $allowed_agents = [];
@@ -483,7 +483,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param integer $disableTimeVerification
     * @return boolean true if all taskjob are ready (so finished from old runnning job)
     */
-    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0)
+    public function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0)
     {
         global $DB;
 
@@ -626,7 +626,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param integer $periodicity_count number of type time
     * @return integer in seconds
     */
-    function periodicityToTimestamp($periodicity_type, $periodicity_count)
+    public function periodicityToTimestamp($periodicity_type, $periodicity_count)
     {
         $period = 0;
         switch ($periodicity_type) {
@@ -654,7 +654,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @global object $DB
     */
-    function CronCheckRunnningJobs()
+    public function CronCheckRunnningJobs()
     {
         global $DB;
 
@@ -834,7 +834,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return boolean ( What does this return value mean ? -- Kevin Roy <kiniou@gmail.com> )
     */
-    function checkConfiguration()
+    public function checkConfiguration()
     {
 
         $return = true;
@@ -886,7 +886,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @param object $parm PluginGlpiinventoryTaskjob instance
     */
-    static function purgeTaskjob($parm)
+    publicstatic  function purgeTaskjob($parm)
     {
        // $parm["id"]
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -911,7 +911,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
    /**
     * Force end task
     */
-    function forceEnd()
+    public function forceEnd()
     {
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
@@ -941,7 +941,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @param string $method method name of taskjob to display
     */
-    static function quickList($method)
+    publicstatic  function quickList($method)
     {
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -1037,7 +1037,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param integer $items_id
     * @param integer $taskjobs_id
     */
-    function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id)
+    public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id)
     {
         global $CFG_GLPI;
 
@@ -1089,7 +1089,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param string $items_id
     * @param integer $taskjobs_id
     */
-    function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
+    public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
     {
         global $CFG_GLPI;
 
@@ -1124,7 +1124,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @global array $CFG_GLPI
     * @param string $name name of the action (here definition or action)
     */
-    function plusButton($name)
+    public function plusButton($name)
     {
         global $CFG_GLPI;
 
@@ -1143,7 +1143,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param array $a_taskjob
     * @return string uniqid
     */
-    function prepareRunTaskjob($a_taskjob)
+    public function prepareRunTaskjob($a_taskjob)
     {
 
         $itemtype = "PluginGlpiinventory" . ucfirst($a_taskjob['method']);
@@ -1161,7 +1161,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-    static function restartJob($params)
+    publicstatic  function restartJob($params)
     {
         $task     = new PluginGlpiinventoryTask();
         $job      = new PluginGlpiinventoryTaskjob();
@@ -1212,7 +1212,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param string $method
     * @param integer $taskjobs_id
     */
-    function updateMethod($method, $taskjobs_id)
+    public function updateMethod($method, $taskjobs_id)
     {
 
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
@@ -1234,7 +1234,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @global array $CFG_GLPI
     * @param integer $tasks_id
     */
-    function displayList($tasks_id)
+    public function displayList($tasks_id)
     {
         global $CFG_GLPI;
 
@@ -1400,7 +1400,7 @@ function new_subtype(id) {
     * @param object|null $checkitem
     * @return array list of actions
     */
-    function getSpecificMassiveActions($checkitem = null)
+    public function getSpecificMassiveActions($checkitem = null)
     {
 
         $actions = [];
@@ -1416,7 +1416,7 @@ function new_subtype(id) {
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    static function processMassiveActionsForOneItemtype(
+    publicstatic  function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids
@@ -1444,7 +1444,7 @@ function new_subtype(id) {
    * @param $target_task_id the ID of the cloned task
    * @return void
    */
-    static function duplicate($source_tasks_id, $target_tasks_id)
+    publicstatic  function duplicate($source_tasks_id, $target_tasks_id)
     {
         $pfTaskJob = new self();
         $result    = true;

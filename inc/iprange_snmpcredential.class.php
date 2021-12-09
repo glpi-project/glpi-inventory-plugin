@@ -91,7 +91,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         if ($item->fields['id'] > 0) {
@@ -109,7 +109,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     * @param integer $withtemplate 1 if is a template form
     * @return true
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pfIPRange_credentials = new self();
         $pfIPRange_credentials->showItemForm($item);
@@ -122,7 +122,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     *
     * @return array
     */
-    function getForbiddenStandardMassiveAction()
+    public function getForbiddenStandardMassiveAction()
     {
         $forbidden = parent::getForbiddenStandardMassiveAction();
         $forbidden[] = 'update';
@@ -137,7 +137,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     * @param array $options
     * @return boolean
     */
-    function showItemForm(CommonDBTM $item, array $options = [])
+    public function showItemForm(CommonDBTM $item, array $options = [])
     {
 
         $ID = $item->getField('id');

@@ -51,7 +51,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
     * @param integer $taskjobs_id
     * @return string
     */
-    function prepareRun($taskjobs_id)
+    public function prepareRun($taskjobs_id)
     {
 
         $pfTask = new PluginGlpiinventoryTask();
@@ -313,7 +313,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
     * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
     * @return array
     */
-    function run($jobstate)
+    public function run($jobstate)
     {
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();

@@ -56,7 +56,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         if ($item->getType() == 'PluginGlpiinventoryConfig') {
@@ -76,7 +76,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
         if ($item->getType() == 'PluginGlpiinventoryConfig') {
@@ -97,7 +97,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     *
     * @return boolean true if no problem
     */
-    function showModuleForm()
+    public function showModuleForm()
     {
 
         $agent = new Agent();
@@ -198,7 +198,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @global array $CFG_GLPI
     * @param integer $agents_id id of the agent
     */
-    function showFormAgentException($agents_id)
+    public function showFormAgentException($agents_id)
     {
         $agent = new Agent();
         $agent->getFromDB($agents_id);
@@ -295,7 +295,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param string $module_name name of module
     * @return array information of module activation
     */
-    function getActivationExceptions($module_name)
+    public function getActivationExceptions($module_name)
     {
         $a_modules = $this->find(['modulename' => $module_name], [], 1);
         return current($a_modules);
@@ -308,7 +308,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param string $module_name name of the module
     * @return array id list of agents
     */
-    function getAgentsCanDo($module_name)
+    public function getAgentsCanDo($module_name)
     {
 
         $agent = new Agent();
@@ -370,7 +370,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param integer $agents_id id of the agent
     * @return boolean true if enabled, otherwise false
     */
-    function isAgentCanDo($module_name, $agents_id)
+    public function isAgentCanDo($module_name, $agents_id)
     {
 
         $agentModule = $this->getActivationExceptions($module_name);
@@ -400,7 +400,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     * @param integer $entities_id id of the entity
     * @return string the URL generated
     */
-    static function getUrlForModule($modulename, $entities_id = -1)
+    publicstatic  function getUrlForModule($modulename, $entities_id = -1)
     {
         $plugin_dir = '/' . Plugin::getWebDir('glpiinventory', false);
 
@@ -434,7 +434,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     *
     * @return array list of name of modules
     */
-    static function getModules()
+    publicstatic  function getModules()
     {
         $a_modules = [];
         $a_data = getAllDataFromTable(PluginGlpiinventoryAgentmodule::getTable());

@@ -56,7 +56,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return '';
     }
@@ -70,7 +70,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item->fields['id'] > 0) {
             if ($item->fields['type'] == $this->type) {
@@ -89,7 +89,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $class     = get_called_class();
         $pfCollect = new $class();
@@ -104,7 +104,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
    *
    * @return array a list of header labels to be displayed
    */
-    function getListHeaders()
+    public function getListHeaders()
     {
         return [
          __('Name')
@@ -118,7 +118,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
    * @param array $row the row data to be displayed
    * @return array values to be display
    */
-    function displayOneRow($row = [])
+    public function displayOneRow($row = [])
     {
         return [
          $row['name']
@@ -130,7 +130,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     *
     * @param integer $collects_id id of collect
     */
-    function showList($collects_id)
+    public function showList($collects_id)
     {
         global $DB;
         $params = [
@@ -174,7 +174,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     }
 
 
-    function displayNewSpecificities()
+    public function displayNewSpecificities()
     {
     }
 
@@ -185,7 +185,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     * @param array $options
     * @return true
     */
-    function showForm($collects_id, array $options = [])
+    public function showForm($collects_id, array $options = [])
     {
         $this->initForm(0, $options);
         $this->showFormHeader($options);
@@ -210,7 +210,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         return true;
     }
 
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];

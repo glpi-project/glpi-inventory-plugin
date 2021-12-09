@@ -96,7 +96,7 @@ class UpdateTest extends TestCase
     * @preserveGlobalState disabled
     * @test
     */
-    function update($version = '', $verify = false, $nbrules = 0)
+    public function update($version = '', $verify = false, $nbrules = 0)
     {
         global $DB;
 
@@ -178,7 +178,7 @@ class UpdateTest extends TestCase
         }
     }
 
-    function load_mysql_file($dbuser = '', $dbhost = '', $dbdefault = '', $dbpassword = '', $file = null)
+    public function load_mysql_file($dbuser = '', $dbhost = '', $dbdefault = '', $dbpassword = '', $file = null)
     {
         if (!file_exists($file)) {
             return [
@@ -210,7 +210,7 @@ class UpdateTest extends TestCase
     }
 
 
-    function construct_mysql_options($dbuser = '', $dbhost = '', $dbpassword = '', $cmd_base = 'mysql')
+    public function construct_mysql_options($dbuser = '', $dbhost = '', $dbpassword = '', $cmd_base = 'mysql')
     {
         $cmd = [];
 

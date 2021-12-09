@@ -53,7 +53,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         if ($item->fields['id'] > 0) {
@@ -91,7 +91,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     * @param array $registry_data registry info sent by agent
     * @param integer $collects_registries_id id of collect_registry
     */
-    function updateComputer($computers_id, $registry_data, $collects_registries_id)
+    public function updateComputer($computers_id, $registry_data, $collects_registries_id)
     {
         global $DB;
 
@@ -146,7 +146,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     *
     * @param integer $computers_id id of the computer
     */
-    function showForComputer($computers_id)
+    public function showForComputer($computers_id)
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         echo "<table class='tab_cadre_fixe'>";
@@ -195,7 +195,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     *
     * @param integer $collects_registries_id
     */
-    function showContent($collects_registries_id)
+    public function showContent($collects_registries_id)
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         $computer = new Computer();

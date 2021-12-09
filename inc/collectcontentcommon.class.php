@@ -57,7 +57,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         $class = get_called_class();
         return $class::getTypeName();
@@ -69,7 +69,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     *
     * @return string the collect class name
     */
-    function getCollectClass()
+    public function getCollectClass()
     {
         $class = get_called_class();
         $item  = new $class();
@@ -84,7 +84,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $class            = get_called_class();
         $pfCollectContent = new $class();
@@ -103,7 +103,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         if ($item->fields['id'] > 0) {
@@ -142,7 +142,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     *
     * @param integer $computers_id
     */
-    static function cleanComputer($computers_id)
+    publicstatic  function cleanComputer($computers_id)
     {
         $classname = get_called_class();
         $content   = new $classname();
@@ -154,7 +154,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     *
     * @param integer $collects_id id of collect
     */
-    function showForCollect($collects_id)
+    public function showForCollect($collects_id)
     {
         global $DB;
         $class  = $this->collect_itemtype;
@@ -173,7 +173,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
         }
     }
 
-    function showContent($id)
+    public function showContent($id)
     {
     }
 }

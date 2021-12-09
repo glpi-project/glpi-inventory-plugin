@@ -45,7 +45,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
    /**
     * __contruct function where initialize base URLs
     */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->base_urls = array_merge($this->base_urls, [
@@ -64,7 +64,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         $tab_names = [];
         if ($item->fields['id'] > 0 and $this->can('task', READ)) {
@@ -82,7 +82,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
         $pfTaskJob = new PluginGlpiinventoryTaskjob();
@@ -107,7 +107,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     * @param array $options
     * @return integer
     */
-    function ajaxLoadItem($options)
+    public function ajaxLoadItem($options)
     {
        /*
         * The following has been borrowed from Html::display() and CommonGLPI::showTabsContent().
@@ -157,7 +157,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     *
     * @param array $options
     */
-    function ajaxGetForm($options)
+    public function ajaxGetForm($options)
     {
         $ID = $this->ajaxLoadItem($options);
         $this->showForm($ID, $options);
@@ -506,7 +506,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     * @param array $options
     * @return true
     */
-    function showForm($id, $options = [])
+    public function showForm($id, $options = [])
     {
         global $CFG_GLPI;
 
@@ -968,7 +968,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];

@@ -56,7 +56,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     * @param array $a_input
     * @param integer $agent_id
     */
-    function updateState($p_number, $a_input, $agent_id)
+    public function updateState($p_number, $a_input, $agent_id)
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
@@ -110,7 +110,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     * @param string $date_end
     * @param integer $agent_id
     */
-    function endState($p_number, $date_end, $agent_id)
+    public function endState($p_number, $date_end, $agent_id)
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
@@ -130,7 +130,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     * @global array $CFG_GLPI
     * @param array $options
     */
-    function display($options = [])
+    public function display($options = [])
     {
         global $DB, $CFG_GLPI;
 

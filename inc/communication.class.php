@@ -52,7 +52,7 @@ class PluginGlpiinventoryCommunication
    /**
     * __contruct function used to initialize protected message variable
     */
-    function __construct()
+    public function __construct()
     {
         $this->message = new SimpleXMLElement(
             "<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>"
@@ -69,7 +69,7 @@ class PluginGlpiinventoryCommunication
     *
     * @return object SimpleXMLElement
     */
-    function getMessage()
+    public function getMessage()
     {
         return $this->message;
     }
@@ -80,7 +80,7 @@ class PluginGlpiinventoryCommunication
     *
     * @param string $message XML in string format
     */
-    function setMessage($message)
+    public function setMessage($message)
     {
        // avoid xml warnings
         $this->message = @simplexml_load_string(
@@ -96,7 +96,7 @@ class PluginGlpiinventoryCommunication
     *
     * @param string $compressmode compressed mode: none|zlib|deflate|gzip
     */
-    function sendMessage($compressmode = 'none')
+    public function sendMessage($compressmode = 'none')
     {
 
         if (!$this->message) {
@@ -141,7 +141,7 @@ class PluginGlpiinventoryCommunication
     *
     * @param string $p_logs log message to write
     */
-    static function addLog($p_logs)
+    publicstatic  function addLog($p_logs)
     {
 
         if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
@@ -162,7 +162,7 @@ class PluginGlpiinventoryCommunication
     *
     * @param integer $agent_id id of the agent
     */
-    function getTaskAgent($agent_id)
+    public function getTaskAgent($agent_id)
     {
         $response = [];
         $pfTask = new PluginGlpiinventoryTask();

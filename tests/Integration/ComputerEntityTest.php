@@ -325,7 +325,7 @@ class ComputerEntityTest extends TestCase
     }
 
 
-    function _agentEntity($computers_id = 0, $entities_id = 0, $text = '')
+    public function _agentEntity($computers_id = 0, $entities_id = 0, $text = '')
     {
 
         if ($computers_id == 0) {
@@ -339,7 +339,7 @@ class ComputerEntityTest extends TestCase
         $this->assertEquals($entities_id, $agent->fields['entities_id'], $text);
     }
 
-    function _inventoryPc1()
+    public function _inventoryPc1()
     {
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>

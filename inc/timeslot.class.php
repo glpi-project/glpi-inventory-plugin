@@ -62,7 +62,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return __('Time slot', 'glpiinventory');
     }
@@ -73,7 +73,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     *
     * @return array
     */
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];
@@ -125,7 +125,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     * @param array $options
     * @return array containing the tabs name
     */
-    function defineTabs($options = [])
+    public function defineTabs($options = [])
     {
 
         $ong = [];
@@ -162,7 +162,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     *       )
     *    )
     */
-    function getTimeslotEntries($timeslot_ids = [], $weekdays = null)
+    public function getTimeslotEntries($timeslot_ids = [], $weekdays = null)
     {
 
         $condition = [];
@@ -202,7 +202,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     * @global object $DB
     * @return array
     */
-    function getCurrentActiveTimeslots()
+    public function getCurrentActiveTimeslots()
     {
         global $DB;
 
@@ -238,7 +238,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     *                              cursor. If null the default value is now()
     * @return integer
     */
-    function getTimeslotCursor(DateTime $datetime = null)
+    public function getTimeslotCursor(DateTime $datetime = null)
     {
         if (is_null($datetime)) {
             $datetime = new DateTime();
@@ -257,7 +257,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     * @return true
     *
     */
-    function showForm($ID, $options = [])
+    public function showForm($ID, $options = [])
     {
         $this->initForm($ID, $options);
         $this->showFormHeader($options);

@@ -50,7 +50,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     *
     * @return array
     */
-    function getReturnActionNames()
+    public function getReturnActionNames()
     {
         return [
          0              => Dropdown::EMPTY_VALUE,
@@ -67,7 +67,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     *
     * @return array
     */
-    function getTypes()
+    public function getTypes()
     {
         return [
          'cmd'     => __('Command', 'glpiinventory'),
@@ -85,7 +85,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     * @param string $type name of the type
     * @return string mapped with the type
     */
-    function getLabelForAType($type)
+    public function getLabelForAType($type)
     {
         $a_types = $this->getTypes();
         if (isset($a_types[$type])) {
@@ -103,7 +103,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode possible values: init|edit|create
     */
-    function displayForm(PluginGlpiinventoryDeployPackage $package, $request_data, $rand, $mode)
+    public function displayForm(PluginGlpiinventoryDeployPackage $package, $request_data, $rand, $mode)
     {
 
        /*
@@ -168,7 +168,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     * @param array $data array converted of 'json' field in DB where stored actions
     * @param string $rand unique element id used to identify/update an element
     */
-    function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         global $CFG_GLPI;
 
@@ -262,7 +262,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     * @param string $mode mode in use (create, edit...)
     * @return boolean
     */
-    function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         global $CFG_GLPI;
 
@@ -448,7 +448,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         $this->addOrSaveButton($pfDeployPackage, $mode);
 
         echo "<script type='text/javascript'>
-         function removeLine(item) {
+         public function removeLine(item) {
             var tag_table = item.parentNode.parentNode.parentNode.parentNode;
             var parent = tag_table.parentNode;
                parent.removeChild(tag_table);
@@ -462,7 +462,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     *
     * @param array $params list of fields with value of the action
     */
-    function add_item($params)
+    public function add_item($params)
     {
        //prepare new action entry to insert in json
         $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
@@ -506,7 +506,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     *
     * @param array $params list of fields with value of the action
     */
-    function save_item($params)
+    public function save_item($params)
     {
         $tmp    = [];
         $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];

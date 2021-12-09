@@ -49,7 +49,7 @@ class RuleImportTest extends TestCase
         \RuleImportAsset::initRules();
     }
 
-    function setUp(): void
+    public function setUp(): void
     {
        // Delete all printers
         $printer = new Printer();
@@ -63,7 +63,7 @@ class RuleImportTest extends TestCase
    /**
     * @test
     */
-    function changeRulesForPrinterRules()
+    public function changeRulesForPrinterRules()
     {
 
         $rule = new Rule();

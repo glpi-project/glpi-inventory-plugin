@@ -49,7 +49,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return _n('Found entry', 'Found entries', $nb, 'glpiinventory');
     }
@@ -59,14 +59,14 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
     *
     * @return array list of hives
     */
-    static function getHives()
+    publicstatic  function getHives()
     {
         return [
          "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",
         ];
     }
 
-    function getListHeaders()
+    public function getListHeaders()
     {
         return [
          __('Name'),
@@ -77,7 +77,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         ];
     }
 
-    function displayOneRow($row = [])
+    public function displayOneRow($row = [])
     {
         return [
          $row['name'],
@@ -87,7 +87,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         ];
     }
 
-    function displayNewSpecificities()
+    public function displayNewSpecificities()
     {
         echo "<td>" . __('Hive', 'glpiinventory') . "</td>";
         echo "<td>";

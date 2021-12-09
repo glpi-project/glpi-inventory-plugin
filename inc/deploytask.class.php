@@ -52,7 +52,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         if ($nb > 1) {
             return PluginGlpiinventoryDeployGroup::getTypeName();
@@ -66,7 +66,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     *
     * @return boolean
     */
-    static function canCreate()
+    publicstatic  function canCreate()
     {
         return true;
     }
@@ -77,7 +77,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     *
     * @return boolean
     */
-    static function canView()
+    publicstatic  function canView()
     {
         return true;
     }
@@ -89,7 +89,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     * @param array $options
     * @return array containing the tabs name
     */
-    function defineTabs($options = [])
+    public function defineTabs($options = [])
     {
 
         $ong = [];
@@ -108,7 +108,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         switch (get_class($item)) {
@@ -127,7 +127,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    publicstatic  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         switch (get_class($item)) {
             case __CLASS__:
@@ -142,7 +142,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
    /**
     * Show list of deploy tasks
     */
-    function showList()
+    public function showList()
     {
         self::title();
         Search::show('PluginGlpiinventoryDeployTask');
@@ -154,7 +154,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     *
     * @global array $CFG_GLPI
     */
-    function title()
+    public function title()
     {
         global  $CFG_GLPI;
 
@@ -179,7 +179,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     *
     * @param integer $id
     */
-    function showActions($id)
+    public function showActions($id)
     {
 
        //load extjs plugins library
@@ -222,7 +222,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     * @global array $CFG_GLPI
     * @return boolean
     */
-    function pre_deleteItem()
+    public function pre_deleteItem()
     {
         global $CFG_GLPI;
 
@@ -263,7 +263,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
    /**
     * Do this after added an item
     */
-    function post_addItem()
+    public function post_addItem()
     {
         $options = [
          'id'              => $this->getField('id'),

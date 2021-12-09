@@ -45,7 +45,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
    /**
     * __contruct function where initialize base URLs
     */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->base_urls = array_merge($this->base_urls, [
@@ -57,7 +57,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
    /**
     * Show job logs
     */
-    function showJobLogs()
+    public function showJobLogs()
     {
         echo "<div class='fusinv_panel'>";
         echo "<div class='fusinv_form large'>";
@@ -290,7 +290,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     * @return boolean TRUE if form is ok
     *
     **/
-    function showForm($id, $options = [])
+    public function showForm($id, $options = [])
     {
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
@@ -388,7 +388,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
 
-    function showFormButtons($options = [])
+    public function showFormButtons($options = [])
     {
         if (isset($this->fields['id'])) {
             $ID = $this->fields['id'];
@@ -483,7 +483,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
    /**
     * Define reprepare_if_successful field when get empty item
     */
-    function getEmpty()
+    public function getEmpty()
     {
         parent::getEmpty();
         $pfConfig = new PluginGlpiinventoryConfig();
@@ -491,7 +491,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
 
-    function rawSearchOptions()
+    public function rawSearchOptions()
     {
 
         $tab = [];

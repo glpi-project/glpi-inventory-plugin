@@ -50,7 +50,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    static function getTypeName($nb = 0)
+    publicstatic  function getTypeName($nb = 0)
     {
         return __('GLPI Inventory', 'glpiinventory');
     }
@@ -61,7 +61,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     *
     * @return boolean
     */
-    static function canView()
+    publicstatic  function canView()
     {
         $can_display = false;
         $profile = new PluginGlpiinventoryProfile();
@@ -81,7 +81,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     *
     * @return boolean
     */
-    static function canCreate()
+    publicstatic  function canCreate()
     {
         return false;
     }
@@ -92,7 +92,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     *
     * @return string
     */
-    static function getMenuName()
+    publicstatic  function getMenuName()
     {
         return self::getTypeName();
     }
@@ -104,7 +104,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     * @global array $CFG_GLPI
     * @return array
     */
-    static function getAdditionalMenuOptions()
+    publicstatic  function getAdditionalMenuOptions()
     {
         $fi_full_path = Plugin::getWebDir('glpiinventory');
 
@@ -189,7 +189,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     * @global array $CFG_GLPI
     * @param string $type
     */
-    static function displayMenu($type = "big")
+    publicstatic  function displayMenu($type = "big")
     {
         global $CFG_GLPI;
 
@@ -446,7 +446,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     *
     * @global array $CFG_GLPI
     */
-    static function displayMenuSNMPInventory()
+    publicstatic  function displayMenuSNMPInventory()
     {
         $fi_path = Plugin::getWebDir('glpiinventory');
 
@@ -537,7 +537,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     *
     * @global object $DB
     */
-    static function board()
+    publicstatic  function board()
     {
         return;
        /*
@@ -761,7 +761,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     * @param array $data list of data for the chart
     * @param string $title
     */
-    static function showChart($name, $data, $title = '&nbsp;')
+    publicstatic  function showChart($name, $data, $title = '&nbsp;')
     {
         echo "<div class='fi_chart donut'>";
         echo "<h2 class='fi_chart_title'>$title</h2>";
@@ -781,7 +781,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     * @param string $title
     * @param integer $width
     */
-    static function showChartBar($name, $data, $title = '', $width = 370)
+    publicstatic  function showChartBar($name, $data, $title = '', $width = 370)
     {
         echo "<div class='fi_chart bar'>";
         echo "<h2 class='fi_chart_title'>$title</h2>";

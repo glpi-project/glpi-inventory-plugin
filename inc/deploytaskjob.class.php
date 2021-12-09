@@ -49,7 +49,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return boolean
     */
-    static function canCreate()
+    publicstatic  function canCreate()
     {
         return true;
     }
@@ -60,7 +60,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return boolean
     */
-    static function canView()
+    publicstatic  function canView()
     {
         return true;
     }
@@ -73,7 +73,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     * @param array $params
     * @return string in JSON format
     */
-    function getAllDatas($params)
+    public function getAllDatas($params)
     {
         global $DB;
 
@@ -127,7 +127,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     * @global object $DB
     * @param array $params
     */
-    function saveDatas($params)
+    public function saveDatas($params)
     {
         global $DB;
 
@@ -202,7 +202,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return array
     */
-    static function getActionTypes()
+    publicstatic  function getActionTypes()
     {
 
         return [
@@ -229,7 +229,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     * @param array $params
     * @return string in JSON format
     */
-    static function getActions($params)
+    publicstatic  function getActions($params)
     {
         global $DB;
 

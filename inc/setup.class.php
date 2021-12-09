@@ -48,7 +48,7 @@ class PluginGlpiinventorySetup
     * @global object $DB
     * @return true
     */
-    static function uninstall()
+    publicstatic  function uninstall()
     {
         global $DB;
 
@@ -101,7 +101,7 @@ class PluginGlpiinventorySetup
     *
     * @param string $dir name of the directory
     */
-    function rrmdir($dir)
+    public function rrmdir($dir)
     {
         $pfSetup = new PluginGlpiinventorySetup();
 
@@ -127,7 +127,7 @@ class PluginGlpiinventorySetup
     *
     * @return integer id of the user "Plugin GLPI Inventory"
     */
-    function createGlpiInventoryUser()
+    public function createGlpiInventoryUser()
     {
         $user = new User();
         $a_users = $user->find(['name' => 'Plugin_GLPI_Inventory']);
