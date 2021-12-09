@@ -47,7 +47,7 @@ class PluginGlpiinventoryCollectRule extends Rule
     *
     * @var string
     */
-    static $rightname = "plugin_glpiinventory_rulecollect";
+    public static $rightname = "plugin_glpiinventory_rulecollect";
 
    /**
     * Set these rules can be sorted

@@ -46,7 +46,7 @@ class PluginGlpiinventoryCollectRuleCollection extends RuleCollection
     *
     * @var string
     */
-    static $rightname = "plugin_glpiinventory_rulecollect";
+    public static $rightname = "plugin_glpiinventory_rulecollect";
 
    /**
     * Set we check all rules

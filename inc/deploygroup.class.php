@@ -60,7 +60,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = "plugin_glpiinventory_group";
+    public static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Define the array of itemtype allowed in static groups

@@ -55,7 +55,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_iprange';
+    public static $rightname = 'plugin_glpiinventory_iprange';
 
 
    /**

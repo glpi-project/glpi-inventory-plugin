@@ -47,7 +47,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_taskjob';
+    public static $rightname = 'plugin_glpiinventory_taskjob';
 
 
    /**

@@ -46,7 +46,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_collect';
+    public static $rightname = 'plugin_glpiinventory_collect';
 
     public $type = '';
 

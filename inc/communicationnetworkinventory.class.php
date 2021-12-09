@@ -55,7 +55,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_networkequipment';
+    public static $rightname = 'plugin_glpiinventory_networkequipment';
 
 
    /**

@@ -58,7 +58,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_deploymirror';
+    public static $rightname = 'plugin_glpiinventory_deploymirror';
 
 
    /**

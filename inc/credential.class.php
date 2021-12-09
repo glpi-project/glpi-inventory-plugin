@@ -67,7 +67,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_credential';
+    public static $rightname = 'plugin_glpiinventory_credential';
 
 
    /**

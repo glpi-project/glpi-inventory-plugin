@@ -47,7 +47,7 @@ class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_blacklist';
+    public static $rightname = 'plugin_glpiinventory_blacklist';
 
 
    /**

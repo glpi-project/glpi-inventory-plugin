@@ -46,7 +46,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     *
     * @var string
     */
-    static $rightname = "plugin_glpiinventory_group";
+    public static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Itemtype of the item linked

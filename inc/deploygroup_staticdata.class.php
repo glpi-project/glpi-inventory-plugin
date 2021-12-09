@@ -46,7 +46,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     *
     * @var string
     */
-    static $rightname = "plugin_glpiinventory_group";
+    public static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Itemtype for the first part of relation

@@ -36,8 +36,8 @@ use PHPUnit\Framework\TestCase;
 class CollectRuleTest extends TestCase
 {
 
-    var $rules_id = 0;
-    var $ruleactions_id = 0;
+    public $rules_id = 0;
+    public $ruleactions_id = 0;
 
     public static function setUpBeforeClass(): void
     {

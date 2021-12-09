@@ -46,7 +46,7 @@ class PluginGlpiinventoryProfile extends Profile
     *
     * @var string
     */
-    static $rightname = "config";
+    public static $rightname = "config";
 
       /*
        * Old profile names:

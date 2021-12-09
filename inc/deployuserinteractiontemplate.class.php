@@ -49,7 +49,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_userinteractiontemplate';
+    public static $rightname = 'plugin_glpiinventory_userinteractiontemplate';
 
     const ALERT_WTS                = 'win32'; //Alerts for win32 platform (WTS API)
 

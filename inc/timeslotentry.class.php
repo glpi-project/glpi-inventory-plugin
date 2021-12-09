@@ -53,7 +53,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_task';
+    public static $rightname = 'plugin_glpiinventory_task';
 
 
    /**

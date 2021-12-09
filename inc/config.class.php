@@ -53,7 +53,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     *
     * @var string
     */
-    static $rightname = 'plugin_glpiinventory_configuration';
+    public static $rightname = 'plugin_glpiinventory_configuration';
 
    /**
     * Define number to the action 'clean' of agents
