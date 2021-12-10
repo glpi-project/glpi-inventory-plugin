@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,20 +32,21 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the collect information by the agent.
  */
-class PluginGlpiinventoryCollect extends CommonDBTM {
+class PluginGlpiinventoryCollect extends CommonDBTM
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_collect';
+    public static $rightname = 'plugin_glpiinventory_collect';
 
 
    /**
@@ -53,9 +55,10 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb = 0) {
-      return __('Collect information', 'glpiinventory');
-   }
+    public static function getTypeName($nb = 0)
+    {
+        return __('Collect information', 'glpiinventory');
+    }
 
 
    /**
@@ -65,19 +68,20 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      if ($item->fields['id'] > 0) {
-         $index = self::getNumberOfCollectsForAComputer($item->fields['id']);
-         $nb    = 0;
-         if ($index > 0) {
-            if ($_SESSION['glpishow_count_on_tabs']) {
-               $nb = $index;
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
+        if ($item->fields['id'] > 0) {
+            $index = self::getNumberOfCollectsForAComputer($item->fields['id']);
+            $nb    = 0;
+            if ($index > 0) {
+                if ($_SESSION['glpishow_count_on_tabs']) {
+                    $nb = $index;
+                }
+                return self::createTabEntry(self::getTypeName(Session::getPluralNumber()), $nb);
             }
-            return self::createTabEntry(self::getTypeName(Session::getPluralNumber()), $nb);
-         }
-      }
-      return '';
-   }
+        }
+        return '';
+    }
 
 
    /**
@@ -88,24 +92,29 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      if ($item->getType() != 'Computer') {
-         return false;
-      }
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        if ($item->getType() != 'Computer') {
+            return false;
+        }
 
-      $id = $item->fields['id'];
-      $computer = new Computer();
-      if ($computer->getFromDB($id)
-         && $computer->fields['is_dynamic'] == 1) {
-         foreach (['PluginGlpiinventoryCollect_File_Content',
+        $id = $item->fields['id'];
+        $computer = new Computer();
+        if (
+            $computer->getFromDB($id)
+            && $computer->fields['is_dynamic'] == 1
+        ) {
+            foreach (
+                ['PluginGlpiinventoryCollect_File_Content',
                    'PluginGlpiinventoryCollect_Wmi_Content',
-                   'PluginGlpiinventoryCollect_Registry_Content'] as $itemtype) {
-            $collect_item = new $itemtype();
-            $collect_item->showForComputer($id);
-         }
-      }
-      return false;
-   }
+                   'PluginGlpiinventoryCollect_Registry_Content'] as $itemtype
+            ) {
+                $collect_item = new $itemtype();
+                $collect_item->showForComputer($id);
+            }
+        }
+        return false;
+    }
 
 
    /**
@@ -115,17 +124,18 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
    * @param integer $computers_id the computer ID
    * @return the number of collects for this computer
    */
-   static function getNumberOfCollectsForAComputer($computers_id) {
-      $tables = ['glpi_plugin_glpiinventory_collects_registries_contents',
+    public static function getNumberOfCollectsForAComputer($computers_id)
+    {
+        $tables = ['glpi_plugin_glpiinventory_collects_registries_contents',
                  'glpi_plugin_glpiinventory_collects_wmis_contents',
                  'glpi_plugin_glpiinventory_collects_files_contents',
                 ];
-      $total = 0;
-      foreach ($tables as $table) {
-         $total+= countElementsInTable($table, ['computers_id' => $computers_id]);
-      }
-      return $total;
-   }
+        $total = 0;
+        foreach ($tables as $table) {
+            $total += countElementsInTable($table, ['computers_id' => $computers_id]);
+        }
+        return $total;
+    }
 
 
    /**
@@ -133,33 +143,35 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     *
     * @return array [name] => description
     */
-   static function getTypes() {
-      return [
+    public static function getTypes()
+    {
+        return [
          'registry' => __('Registry', 'glpiinventory'),
          'wmi'      => __('WMI', 'glpiinventory'),
          'file'     => __('Find file', 'glpiinventory')
-      ];
-   }
+        ];
+    }
 
-   function rawSearchOptions() {
+    public function rawSearchOptions()
+    {
 
-      $tab = [];
+        $tab = [];
 
-      $tab[] = [
+        $tab[] = [
          'id'           => 'common',
          'name'         => __('Characteristics')
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'           => '1',
          'table'        => $this->getTable(),
          'field'        => 'name',
          'name'         => __('Name'),
          'datatype'     => 'itemlink'
-      ];
+        ];
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
    /**
@@ -167,88 +179,87 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     *
     * @return array
     */
-   static function getSearchOptionsToAdd($itemtype = null) {
-      $tab = [];
+    public static function getSearchOptionsToAdd($itemtype = null)
+    {
+        $tab = [];
 
-      $i = 5200;
+        $i = 5200;
 
-      $pfCollect = new PluginGlpiinventoryCollect();
-      foreach ($pfCollect->find(getEntitiesRestrictCriteria($pfCollect->getTable(), '', '', true), ['id ASC']) as $collect) {
-
-         //registries
-         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
-         $registries = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
-         foreach ($registries as $registry) {
-            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_registries_contents';
-            $tab[$i]['field']         = 'value';
-            $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Registry', 'glpiinventory')." - ".$registry['name'];
-            $tab[$i]['joinparams']    = ['jointype' => 'child'];
-            $tab[$i]['datatype']      = 'text';
-            $tab[$i]['forcegroupby']  = true;
-            $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = ".$registry['id'],
+        $pfCollect = new PluginGlpiinventoryCollect();
+        foreach ($pfCollect->find(getEntitiesRestrictCriteria($pfCollect->getTable(), '', '', true), ['id ASC']) as $collect) {
+           //registries
+            $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+            $registries = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
+            foreach ($registries as $registry) {
+                $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_registries_contents';
+                $tab[$i]['field']         = 'value';
+                $tab[$i]['linkfield']     = '';
+                $tab[$i]['name']          = __('Registry', 'glpiinventory') . " - " . $registry['name'];
+                $tab[$i]['joinparams']    = ['jointype' => 'child'];
+                $tab[$i]['datatype']      = 'text';
+                $tab[$i]['forcegroupby']  = true;
+                $tab[$i]['massiveaction'] = false;
+                $tab[$i]['nodisplay']     = true;
+                $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = " . $registry['id'],
                                           'jointype' => 'child'];
-            $i++;
-         }
+                $i++;
+            }
 
-         //WMIs
-         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
-         $wmis = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id'  => $collect['id']], ['id ASC']);
-         foreach ($wmis as $wmi) {
-            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_wmis_contents';
-            $tab[$i]['field']         = 'value';
-            $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('WMI', 'glpiinventory')." - ".$wmi['name'];
-            $tab[$i]['joinparams']    = ['jointype' => 'child'];
-            $tab[$i]['datatype']      = 'text';
-            $tab[$i]['forcegroupby']  = true;
-            $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = ".$wmi['id'],
+           //WMIs
+            $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+            $wmis = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id'  => $collect['id']], ['id ASC']);
+            foreach ($wmis as $wmi) {
+                $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_wmis_contents';
+                $tab[$i]['field']         = 'value';
+                $tab[$i]['linkfield']     = '';
+                $tab[$i]['name']          = __('WMI', 'glpiinventory') . " - " . $wmi['name'];
+                $tab[$i]['joinparams']    = ['jointype' => 'child'];
+                $tab[$i]['datatype']      = 'text';
+                $tab[$i]['forcegroupby']  = true;
+                $tab[$i]['massiveaction'] = false;
+                $tab[$i]['nodisplay']     = true;
+                $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = " . $wmi['id'],
                                           'jointype' => 'child'];
-            $i++;
-         }
+                $i++;
+            }
 
-         //Files
-         $pfCollect_File = new PluginGlpiinventoryCollect_File();
-         $files = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
-         foreach ($files as $file) {
-
-            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
-            $tab[$i]['field']         = 'pathfile';
-            $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Find file', 'glpiinventory').
-                                    " - ".$file['name'].
-                                    " - ".__('pathfile', 'glpiinventory');
-            $tab[$i]['joinparams']    = ['jointype' => 'child'];
-            $tab[$i]['datatype']      = 'text';
-            $tab[$i]['forcegroupby']  = true;
-            $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = ".$file['id'],
+           //Files
+            $pfCollect_File = new PluginGlpiinventoryCollect_File();
+            $files = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
+            foreach ($files as $file) {
+                $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
+                $tab[$i]['field']         = 'pathfile';
+                $tab[$i]['linkfield']     = '';
+                $tab[$i]['name']          = __('Find file', 'glpiinventory') .
+                                    " - " . $file['name'] .
+                                    " - " . __('pathfile', 'glpiinventory');
+                $tab[$i]['joinparams']    = ['jointype' => 'child'];
+                $tab[$i]['datatype']      = 'text';
+                $tab[$i]['forcegroupby']  = true;
+                $tab[$i]['massiveaction'] = false;
+                $tab[$i]['nodisplay']     = true;
+                $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $file['id'],
                                           'jointype' => 'child'];
-            $i++;
+                $i++;
 
-            $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
-            $tab[$i]['field']         = 'size';
-            $tab[$i]['linkfield']     = '';
-            $tab[$i]['name']          = __('Find file', 'glpiinventory').
-                                    " - ".$file['name'].
-                                    " - ".__('Size', 'glpiinventory');
-            $tab[$i]['joinparams']    = ['jointype' => 'child'];
-            $tab[$i]['datatype']      = 'text';
-            $tab[$i]['forcegroupby']  = true;
-            $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = ".$file['id'],
+                $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
+                $tab[$i]['field']         = 'size';
+                $tab[$i]['linkfield']     = '';
+                $tab[$i]['name']          = __('Find file', 'glpiinventory') .
+                                    " - " . $file['name'] .
+                                    " - " . __('Size', 'glpiinventory');
+                $tab[$i]['joinparams']    = ['jointype' => 'child'];
+                $tab[$i]['datatype']      = 'text';
+                $tab[$i]['forcegroupby']  = true;
+                $tab[$i]['massiveaction'] = false;
+                $tab[$i]['nodisplay']     = true;
+                $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $file['id'],
                                           'jointype' => 'child'];
-            $i++;
-         }
-      }
-      return $tab;
-   }
+                $i++;
+            }
+        }
+        return $tab;
+    }
 
 
    /**
@@ -258,44 +269,47 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($ID, array $options = []) {
+    public function showForm($ID, array $options = [])
+    {
 
-      $this->initForm($ID, $options);
-      $this->showFormHeader($options);
+        $this->initForm($ID, $options);
+        $this->showFormHeader($options);
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('Name');
-      echo "</td>";
-      echo "<td>";
-      echo Html::input('name', ['value' => $this->fields['name']]);
-      echo "</td>";
-      echo "<td>".__('Type')."</td>";
-      echo "<td>";
-      Dropdown::showFromArray('type',
-                              PluginGlpiinventoryCollect::getTypes(),
-                              ['value' => $this->fields['type']]);
-      echo "</td>";
-      echo "</tr>\n";
+        echo "<tr class='tab_bg_1'>";
+        echo "<td>";
+        echo __('Name');
+        echo "</td>";
+        echo "<td>";
+        echo Html::input('name', ['value' => $this->fields['name']]);
+        echo "</td>";
+        echo "<td>" . __('Type') . "</td>";
+        echo "<td>";
+        Dropdown::showFromArray(
+            'type',
+            PluginGlpiinventoryCollect::getTypes(),
+            ['value' => $this->fields['type']]
+        );
+        echo "</td>";
+        echo "</tr>\n";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('Comments');
-      echo "</td>";
-      echo "<td class='middle'>";
-      echo "<textarea cols='45' rows='3' name='comment' >".
-              $this->fields["comment"]."</textarea>";
-      echo "</td>";
-      echo "<td>".__('Active')."</td>";
-      echo "<td>";
-      Dropdown::showYesNo('is_active', $this->fields['is_active']);
-      echo "</td>";
-      echo "</tr>\n";
+        echo "<tr class='tab_bg_1'>";
+        echo "<td>";
+        echo __('Comments');
+        echo "</td>";
+        echo "<td class='middle'>";
+        echo "<textarea cols='45' rows='3' name='comment' >" .
+              $this->fields["comment"] . "</textarea>";
+        echo "</td>";
+        echo "<td>" . __('Active') . "</td>";
+        echo "<td>";
+        Dropdown::showYesNo('is_active', $this->fields['is_active']);
+        echo "</td>";
+        echo "</tr>\n";
 
-      $this->showFormButtons($options);
+        $this->showFormButtons($options);
 
-      return true;
-   }
+        return true;
+    }
 
 
    /**
@@ -305,252 +319,254 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     * @global object $DB
     * @param integer $taskjobs_id id of taskjob
     */
-   function prepareRun($taskjobs_id) {
-      global $DB;
+    public function prepareRun($taskjobs_id)
+    {
+        global $DB;
 
-      $task       = new PluginGlpiinventoryTask();
-      $job        = new PluginGlpiinventoryTaskjob();
-      $joblog     = new PluginGlpiinventoryTaskjoblog();
-      $jobstate   = new PluginGlpiinventoryTaskjobstate();
-      $agent      = new Agent();
+        $task       = new PluginGlpiinventoryTask();
+        $job        = new PluginGlpiinventoryTaskjob();
+        $joblog     = new PluginGlpiinventoryTaskjoblog();
+        $jobstate   = new PluginGlpiinventoryTaskjobstate();
+        $agent      = new Agent();
 
-      $job->getFromDB($taskjobs_id);
-      $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
+        $job->getFromDB($taskjobs_id);
+        $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
-      $communication = $task->fields['communication'];
-      $actions       = importArrayFromDB($job->fields['action']);
-      $definitions   = importArrayFromDB($job->fields['definition']);
-      $taskvalid     = 0;
+        $communication = $task->fields['communication'];
+        $actions       = importArrayFromDB($job->fields['action']);
+        $definitions   = importArrayFromDB($job->fields['definition']);
+        $taskvalid     = 0;
 
-      $computers = [];
-      foreach ($actions as $action) {
-         $itemtype = key($action);
-         $items_id = current($action);
+        $computers = [];
+        foreach ($actions as $action) {
+            $itemtype = key($action);
+            $items_id = current($action);
 
-         switch ($itemtype) {
+            switch ($itemtype) {
+                case 'Computer':
+                    $computers[] = $items_id;
+                    break;
 
-            case 'Computer':
-               $computers[] = $items_id;
-               break;
+                case 'Group':
+                    $computer_object = new Computer();
 
-            case 'Group':
-               $computer_object = new Computer();
+                   //find computers by user associated with this group
+                    $group_users   = new Group_User();
+                    $group         = new Group();
+                    $group->getFromDB($items_id);
 
-               //find computers by user associated with this group
-               $group_users   = new Group_User();
-               $group         = new Group();
-               $group->getFromDB($items_id);
+                    $computers_a_1 = [];
+                    $computers_a_2 = [];
 
-               $computers_a_1 = [];
-               $computers_a_2 = [];
+                    $members = $group_users->getGroupUsers($items_id);
 
-               $members = $group_users->getGroupUsers($items_id);
+                    foreach ($members as $member) {
+                        $computers = $computer_object->find(['users_id' => $member['id']]);
+                        foreach ($computers as $computer) {
+                             $computers_a_1[] = $computer['id'];
+                        }
+                    }
 
-               foreach ($members as $member) {
-                  $computers = $computer_object->find(['users_id' => $member['id']]);
-                  foreach ($computers as $computer) {
-                     $computers_a_1[] = $computer['id'];
-                  }
-               }
+                  //find computers directly associated with this group
+                    $computers = $computer_object->find(['groups_id' => $items_id]);
+                    foreach ($computers as $computer) {
+                        $computers_a_2[] = $computer['id'];
+                    }
 
-               //find computers directly associated with this group
-               $computers = $computer_object->find(['groups_id' => $items_id]);
-               foreach ($computers as $computer) {
-                  $computers_a_2[] = $computer['id'];
-               }
+                //merge two previous array and deduplicate entries
+                    $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
+                    break;
 
-               //merge two previous array and deduplicate entries
-               $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
-               break;
+                case 'PluginGlpiinventoryDeployGroup':
+                    $group = new PluginGlpiinventoryDeployGroup();
+                    $group->getFromDB($items_id);
 
-            case 'PluginGlpiinventoryDeployGroup':
-               $group = new PluginGlpiinventoryDeployGroup;
-               $group->getFromDB($items_id);
-
-               switch ($group->getField('type')) {
-
-                  case 'STATIC':
-                     $query = "SELECT items_id
+                    switch ($group->getField('type')) {
+                        case 'STATIC':
+                              $query = "SELECT items_id
                      FROM glpi_plugin_glpiinventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
-                     $res = $DB->query($query);
-                     while ($row = $DB->fetchAssoc($res)) {
-                        $computers[] = $row['items_id'];
-                     }
-                     break;
+                              $res = $DB->query($query);
+                            while ($row = $DB->fetchAssoc($res)) {
+                                $computers[] = $row['items_id'];
+                            }
+                            break;
 
-                  case 'DYNAMIC':
-                     $query = "SELECT fields_array
+                        case 'DYNAMIC':
+                             $query = "SELECT fields_array
                      FROM glpi_plugin_glpiinventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
-                     $res = $DB->query($query);
-                     $row = $DB->fetchAssoc($res);
+                             $res = $DB->query($query);
+                             $row = $DB->fetchAssoc($res);
 
-                     if (isset($_GET)) {
-                        $get_tmp = $_GET;
-                     }
-                     if (isset($_SESSION["glpisearchcount"]['Computer'])) {
-                        unset($_SESSION["glpisearchcount"]['Computer']);
-                     }
-                     if (isset($_SESSION["glpisearchcount2"]['Computer'])) {
-                        unset($_SESSION["glpisearchcount2"]['Computer']);
-                     }
+                            if (isset($_GET)) {
+                                $get_tmp = $_GET;
+                            }
+                            if (isset($_SESSION["glpisearchcount"]['Computer'])) {
+                                 unset($_SESSION["glpisearchcount"]['Computer']);
+                            }
+                            if (isset($_SESSION["glpisearchcount2"]['Computer'])) {
+                                  unset($_SESSION["glpisearchcount2"]['Computer']);
+                            }
 
-                     $_GET = importArrayFromDB($row['fields_array']);
+                            $_GET = importArrayFromDB($row['fields_array']);
 
-                     $_GET["glpisearchcount"] = count($_GET['field']);
-                     if (isset($_GET['field2'])) {
-                        $_GET["glpisearchcount2"] = count($_GET['field2']);
-                     }
+                            $_GET["glpisearchcount"] = count($_GET['field']);
+                            if (isset($_GET['field2'])) {
+                                $_GET["glpisearchcount2"] = count($_GET['field2']);
+                            }
 
-                     $pfSearch = new PluginGlpiinventorySearch();
-                     $glpilist_limit = $_SESSION['glpilist_limit'];
-                     $_SESSION['glpilist_limit'] = 999999999;
-                     $result = $pfSearch->constructSQL('Computer',
-                                                       $_GET);
-                     $_SESSION['glpilist_limit'] = $glpilist_limit;
-                     while ($data=$DB->fetchArray($result)) {
-                        $computers[] = $data['id'];
-                     }
-                     if (count($get_tmp) > 0) {
-                        $_GET = $get_tmp;
-                     }
-                     break;
-
-               }
-               break;
-
-         }
-      }
-
-      $c_input= [];
-      $c_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-      $c_input['state']                              = 0;
-      $c_input['agents_id']   = 0;
-      $c_input['execution_id']                       = $task->fields['execution_id'];
-
-      $pfCollect = new PluginGlpiinventoryCollect();
-
-      foreach ($computers as $computer_id) {
-         //get agent if for this computer
-         $agents_id = $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer_id]);
-         if ($agents_id === false) {
-            $jobstates_id = $jobstate->add($c_input);
-            $jobstate->changeStatusFinish($jobstates_id,
-                                          0,
-                                          '',
-                                          1,
-                                          "No agent found for [[Computer::".$computer_id."]]");
-         } else {
-            foreach ($definitions as $definition) {
-               $pfCollect->getFromDB($definition['PluginGlpiinventoryCollect']);
-
-               switch ($pfCollect->fields['type']) {
-
-                  case 'registry':
-                     // get all registry
-                     $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
-                     $a_registries = $pfCollect_Registry->find(
-                             ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]);
-                     foreach ($a_registries as $data_r) {
-                        $uniqid= uniqid();
-                        $c_input['state'] = 0;
-                        $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Registry';
-                        $c_input['items_id'] = $data_r['id'];
-                        $c_input['date'] = date("Y-m-d H:i:s");
-                        $c_input['uniqid'] = $uniqid;
-
-                        $c_input['agents_id'] = $agents_id;
-
-                        // Push the agent, in the stack of agent to awake
-                        if ($communication == "push") {
-                           $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
-                        }
-
-                        $jobstates_id= $jobstate->add($c_input);
-
-                        //Add log of taskjob
-                        $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
-                        $c_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
-                        $taskvalid++;
-                        $joblog->add($c_input);
-                     }
-                     break;
-
-                  case 'wmi':
-                     // get all wmi
-                     $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
-                     $a_wmies = $pfCollect_Wmi->find(
-                             ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]);
-                     foreach ($a_wmies as $data_r) {
-                        $uniqid= uniqid();
-                        $c_input['state'] = 0;
-                        $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Wmi';
-                        $c_input['items_id'] = $data_r['id'];
-                        $c_input['date'] = date("Y-m-d H:i:s");
-                        $c_input['uniqid'] = $uniqid;
-
-                        $c_input['agents_id'] = $agents_id;
-
-                        // Push the agent, in the stack of agent to awake
-                        if ($communication == "push") {
-                           $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
-                        }
-
-                        $jobstates_id= $jobstate->add($c_input);
-
-                        //Add log of taskjob
-                        $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
-                        $c_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
-                        $taskvalid++;
-                        $joblog->add($c_input);
-                     }
-                     break;
-
-                  case 'file':
-                     // find files
-                     $pfCollect_File = new PluginGlpiinventoryCollect_File();
-                     $a_files = $pfCollect_File->find(
-                             ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]);
-                     foreach ($a_files as $data_r) {
-                        $uniqid= uniqid();
-                        $c_input['state'] = 0;
-                        $c_input['itemtype'] = 'PluginGlpiinventoryCollect_File';
-                        $c_input['items_id'] = $data_r['id'];
-                        $c_input['date'] = date("Y-m-d H:i:s");
-                        $c_input['uniqid'] = $uniqid;
-
-                        $c_input['agents_id'] = $agents_id;
-
-                        // Push the agent, in the stack of agent to awake
-                        if ($communication == "push") {
-                           $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
-                        }
-
-                        $jobstates_id= $jobstate->add($c_input);
-
-                        //Add log of taskjob
-                        $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
-                        $c_input['state']= PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
-                        $taskvalid++;
-                        $joblog->add($c_input);
-                     }
-                     break;
-
-               }
+                            $pfSearch = new PluginGlpiinventorySearch();
+                            $glpilist_limit = $_SESSION['glpilist_limit'];
+                            $_SESSION['glpilist_limit'] = 999999999;
+                            $result = $pfSearch->constructSQL(
+                                'Computer',
+                                $_GET
+                            );
+                            $_SESSION['glpilist_limit'] = $glpilist_limit;
+                            while ($data = $DB->fetchArray($result)) {
+                                 $computers[] = $data['id'];
+                            }
+                            if (count($get_tmp) > 0) {
+                                $_GET = $get_tmp;
+                            }
+                            break;
+                    }
+                    break;
             }
-         }
-      }
+        }
 
-      if ($taskvalid > 0) {
-         $job->fields['status']= 1;
-         $job->update($job->fields);
-      } else {
-         $job->reinitializeTaskjobs($job->fields['plugin_glpiinventory_tasks_id']);
-      }
-   }
+        $c_input = [];
+        $c_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
+        $c_input['state']                              = 0;
+        $c_input['agents_id']   = 0;
+        $c_input['execution_id']                       = $task->fields['execution_id'];
+
+        $pfCollect = new PluginGlpiinventoryCollect();
+
+        foreach ($computers as $computer_id) {
+           //get agent if for this computer
+            $agents_id = $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer_id]);
+            if ($agents_id === false) {
+                $jobstates_id = $jobstate->add($c_input);
+                $jobstate->changeStatusFinish(
+                    $jobstates_id,
+                    0,
+                    '',
+                    1,
+                    "No agent found for [[Computer::" . $computer_id . "]]"
+                );
+            } else {
+                foreach ($definitions as $definition) {
+                    $pfCollect->getFromDB($definition['PluginGlpiinventoryCollect']);
+
+                    switch ($pfCollect->fields['type']) {
+                        case 'registry':
+                          // get all registry
+                            $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+                            $a_registries = $pfCollect_Registry->find(
+                                ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]
+                            );
+                            foreach ($a_registries as $data_r) {
+                                  $uniqid = uniqid();
+                                  $c_input['state'] = 0;
+                                  $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Registry';
+                                  $c_input['items_id'] = $data_r['id'];
+                                  $c_input['date'] = date("Y-m-d H:i:s");
+                                  $c_input['uniqid'] = $uniqid;
+
+                                  $c_input['agents_id'] = $agents_id;
+
+                                  // Push the agent, in the stack of agent to awake
+                                if ($communication == "push") {
+                                    $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
+                                }
+
+                                  $jobstates_id = $jobstate->add($c_input);
+
+                                  //Add log of taskjob
+                                  $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                                  $c_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
+                                  $taskvalid++;
+                                  $joblog->add($c_input);
+                            }
+                            break;
+
+                        case 'wmi':
+                           // get all wmi
+                            $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+                            $a_wmies = $pfCollect_Wmi->find(
+                                ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]
+                            );
+                            foreach ($a_wmies as $data_r) {
+                                   $uniqid = uniqid();
+                                   $c_input['state'] = 0;
+                                   $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Wmi';
+                                   $c_input['items_id'] = $data_r['id'];
+                                   $c_input['date'] = date("Y-m-d H:i:s");
+                                   $c_input['uniqid'] = $uniqid;
+
+                                   $c_input['agents_id'] = $agents_id;
+
+                                   // Push the agent, in the stack of agent to awake
+                                if ($communication == "push") {
+                                    $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
+                                }
+
+                                  $jobstates_id = $jobstate->add($c_input);
+
+                                  //Add log of taskjob
+                                  $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                                  $c_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
+                                  $taskvalid++;
+                                  $joblog->add($c_input);
+                            }
+                            break;
+
+                        case 'file':
+                           // find files
+                            $pfCollect_File = new PluginGlpiinventoryCollect_File();
+                            $a_files = $pfCollect_File->find(
+                                ['plugin_glpiinventory_collects_id' => $pfCollect->fields['id']]
+                            );
+                            foreach ($a_files as $data_r) {
+                                  $uniqid = uniqid();
+                                  $c_input['state'] = 0;
+                                  $c_input['itemtype'] = 'PluginGlpiinventoryCollect_File';
+                                  $c_input['items_id'] = $data_r['id'];
+                                  $c_input['date'] = date("Y-m-d H:i:s");
+                                  $c_input['uniqid'] = $uniqid;
+
+                                  $c_input['agents_id'] = $agents_id;
+
+                                  // Push the agent, in the stack of agent to awake
+                                if ($communication == "push") {
+                                    $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
+                                }
+
+                                $jobstates_id = $jobstate->add($c_input);
+
+                                //Add log of taskjob
+                                $c_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
+                                $c_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
+                                $taskvalid++;
+                                $joblog->add($c_input);
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        if ($taskvalid > 0) {
+            $job->fields['status'] = 1;
+            $job->update($job->fields);
+        } else {
+            $job->reinitializeTaskjobs($job->fields['plugin_glpiinventory_tasks_id']);
+        }
+    }
 
 
    /**
@@ -560,322 +576,325 @@ class PluginGlpiinventoryCollect extends CommonDBTM {
     * @param array $agent agent information from agent table in database
     * @return array
     */
-   function run($taskjobstate, $agent) {
-      global $DB;
+    public function run($taskjobstate, $agent)
+    {
+        global $DB;
 
-      $output = [];
+        $output = [];
 
-      $this->getFromDB($taskjobstate->fields['items_id']);
-      $sql_where = ['plugin_glpiinventory_collects_id' => $this->fields['id']];
+        $this->getFromDB($taskjobstate->fields['items_id']);
+        $sql_where = ['plugin_glpiinventory_collects_id' => $this->fields['id']];
 
-      switch ($this->fields['type']) {
+        switch ($this->fields['type']) {
+            case 'registry':
+                $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+                $reg_db = $pfCollect_Registry->find($sql_where);
+                foreach ($reg_db as $reg) {
+                    $output[] = [
+                     'function' => 'getFromRegistry',
+                     'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
+                     'uuid'     => $taskjobstate->fields['uniqid'],
+                     '_sid'     => $reg['id']
+                    ];
+                }
+                break;
 
-         case 'registry':
-            $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
-            $reg_db = $pfCollect_Registry->find($sql_where);
-            foreach ($reg_db as $reg) {
-               $output[] = [
-                   'function' => 'getFromRegistry',
-                   'path'     => $reg['hive'].$reg['path'].$reg['key'],
-                   'uuid'     => $taskjobstate->fields['uniqid'],
-                   '_sid'     => $reg['id']
-               ];
-            }
-            break;
+            case 'wmi':
+                $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+                $wmi_db = $pfCollect_Wmi->find($sql_where);
+                foreach ($wmi_db as $wmi) {
+                    $datawmi = [
+                    'function'   => 'getFromWMI',
+                    'class'      => $wmi['class'],
+                    'properties' => [$wmi['properties']],
+                    'uuid'       => $taskjobstate->fields['uniqid'],
+                    '_sid'       => $wmi['id']];
+                    if ($wmi['moniker'] != '') {
+                        $datawmi['moniker'] = $wmi['moniker'];
+                    }
+                    $output[] = $datawmi;
+                }
 
-         case 'wmi':
-            $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
-            $wmi_db = $pfCollect_Wmi->find($sql_where);
-            foreach ($wmi_db as $wmi) {
-               $datawmi = [
-                   'function'   => 'getFromWMI',
-                   'class'      => $wmi['class'],
-                   'properties' => [$wmi['properties']],
-                   'uuid'       => $taskjobstate->fields['uniqid'],
-                   '_sid'       => $wmi['id']];
-               if ($wmi['moniker'] != '') {
-                  $datawmi['moniker'] = $wmi['moniker'];
-               }
-               $output[] = $datawmi;
-            }
+                break;
 
-            break;
-
-         case 'file':
-            $pfCollect_File = new PluginGlpiinventoryCollect_File();
-            $files_db = $pfCollect_File->find($sql_where);
-            foreach ($files_db as $files) {
-               $datafile = [
-                  'function'  => 'findFile',
-                  'dir'       => $files['dir'],
-                  'limit'     => $files['limit'],
-                  'recursive' => $files['is_recursive'],
-                  'filter'    => [
+            case 'file':
+                $pfCollect_File = new PluginGlpiinventoryCollect_File();
+                $files_db = $pfCollect_File->find($sql_where);
+                foreach ($files_db as $files) {
+                    $datafile = [
+                    'function'  => 'findFile',
+                    'dir'       => $files['dir'],
+                    'limit'     => $files['limit'],
+                    'recursive' => $files['is_recursive'],
+                    'filter'    => [
                      'is_file' => $files['filter_is_file'],
                      'is_dir'  => $files['filter_is_dir']
-                  ],
-                  'uuid'      => $taskjobstate->fields['uniqid'],
-                  '_sid'       => $files['id']
-               ];
-               if ($files['filter_regex'] != '') {
-                  $datafile['filter']['regex'] = $files['filter_regex'];
-               }
-               if ($files['filter_sizeequals'] > 0) {
-                  $datafile['filter']['sizeEquals'] = $files['filter_sizeequals'];
-               } else if ($files['filter_sizegreater'] > 0) {
-                  $datafile['filter']['sizeGreater'] = $files['filter_sizegreater'];
-               } else if ($files['filter_sizelower'] > 0) {
-                  $datafile['filter']['sizeLower'] = $files['filter_sizelower'];
-               }
-               if ($files['filter_checksumsha512'] != '') {
-                  $datafile['filter']['checkSumSHA512'] = $files['filter_checksumsha512'];
-               }
-               if ($files['filter_checksumsha2'] != '') {
-                  $datafile['filter']['checkSumSHA2'] = $files['filter_checksumsha2'];
-               }
-               if ($files['filter_name'] != '') {
-                  $datafile['filter']['name'] = $files['filter_name'];
-               }
-               if ($files['filter_iname'] != '') {
-                  $datafile['filter']['iname'] = $files['filter_iname'];
-               }
-               $output[] = $datafile;
+                    ],
+                    'uuid'      => $taskjobstate->fields['uniqid'],
+                    '_sid'       => $files['id']
+                    ];
+                    if ($files['filter_regex'] != '') {
+                        $datafile['filter']['regex'] = $files['filter_regex'];
+                    }
+                    if ($files['filter_sizeequals'] > 0) {
+                        $datafile['filter']['sizeEquals'] = $files['filter_sizeequals'];
+                    } elseif ($files['filter_sizegreater'] > 0) {
+                        $datafile['filter']['sizeGreater'] = $files['filter_sizegreater'];
+                    } elseif ($files['filter_sizelower'] > 0) {
+                        $datafile['filter']['sizeLower'] = $files['filter_sizelower'];
+                    }
+                    if ($files['filter_checksumsha512'] != '') {
+                        $datafile['filter']['checkSumSHA512'] = $files['filter_checksumsha512'];
+                    }
+                    if ($files['filter_checksumsha2'] != '') {
+                        $datafile['filter']['checkSumSHA2'] = $files['filter_checksumsha2'];
+                    }
+                    if ($files['filter_name'] != '') {
+                        $datafile['filter']['name'] = $files['filter_name'];
+                    }
+                    if ($files['filter_iname'] != '') {
+                        $datafile['filter']['iname'] = $files['filter_iname'];
+                    }
+                    $output[] = $datafile;
 
-               //clean old files
-               $DB->delete(
-                  'glpi_plugin_glpiinventory_collects_files_contents', [
-                     'plugin_glpiinventory_collects_files_id'   => $files['id'],
-                     'computers_id'                               => $agent['items_id']
-                  ]
-               );
-            }
-            break;
+                   //clean old files
+                    $DB->delete(
+                        'glpi_plugin_glpiinventory_collects_files_contents',
+                        [
+                        'plugin_glpiinventory_collects_files_id'   => $files['id'],
+                        'computers_id'                               => $agent['items_id']
+                        ]
+                    );
+                }
+                break;
+        }
+        return $output;
+    }
 
-      }
-      return $output;
-   }
 
+    public function communication($action, $machineId, $uuid)
+    {
+        $response = new \stdClass();
 
-   function communication($action, $machineId, $uuid) {
-      $response = new \stdClass();
+        if (empty($action)) {
+            return $response;
+        }
 
-      if (empty($action)) {
-         return $response;
-      }
+        $pfAgent        = new Agent();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
 
-      $pfAgent        = new Agent();
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
+        switch ($action) {
+            case 'getJobs':
+                if (empty($machineId)) {
+                    return $response;
+                }
+                $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
+                $pfTask         = new PluginGlpiinventoryTask();
 
-      switch ($action) {
+                $pfAgent->getFromDBByCrit(['deviceid' => addslashes($machineId)]);
+                $agent = $pfAgent->fields;
+                if (isset($agent['id'])) {
+                    $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+                        $agent['id'],
+                        ['collect']
+                    );
+                    $order = new \stdClass();
+                    $order->jobs = [];
 
-         case 'getJobs':
-            if (empty($machineId)) {
-               return $response;
-            }
-            $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
-            $pfTask         = new PluginGlpiinventoryTask();
+                    foreach ($taskjobstates as $taskjobstate) {
+                        if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
+                            $taskjobstate->cancel(
+                                __("Collect module has been disabled for this agent", 'glpiinventory')
+                            );
+                        } else {
+                            $out = $this->run($taskjobstate, $agent);
+                            if (count($out) > 0) {
+                                 $order->jobs = array_merge($order->jobs, $out);
+                            }
 
-            $pfAgent->getFromDBByCrit(['deviceid' => addslashes($machineId)]);
-            $agent = $pfAgent->fields;
-            if (isset($agent['id'])) {
-               $taskjobstates = $pfTask->getTaskjobstatesForAgent(
-                  $agent['id'],
-                  ['collect']
-               );
-               $order = new \stdClass();
-               $order->jobs = [];
+                        // change status of state table row
+                            $pfTaskjobstate->changeStatus(
+                                $taskjobstate->fields['id'],
+                                PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                            );
 
-               foreach ($taskjobstates as $taskjobstate) {
-                  if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
-                     $taskjobstate->cancel(
-                        __("Collect module has been disabled for this agent", 'glpiinventory')
-                     );
-                  } else {
-                     $out = $this->run($taskjobstate, $agent);
-                     if (count($out) > 0) {
-                        $order->jobs = array_merge($order->jobs, $out);
-                     }
+                            $a_input = [
+                            'plugin_glpiinventory_taskjobstates_id'    => $taskjobstate->fields['id'],
+                            'items_id'                                   => $agent['id'],
+                            'itemtype'                                   => 'Agent',
+                            'date'                                       => date("Y-m-d H:i:s"),
+                            'comment'                                    => '',
+                            'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED
+                            ];
+                            $pfTaskjoblog->add($a_input);
 
-                     // change status of state table row
-                     $pfTaskjobstate->changeStatus(
-                           $taskjobstate->fields['id'],
-                           PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
-                     );
-
-                     $a_input = [
-                           'plugin_glpiinventory_taskjobstates_id'    => $taskjobstate->fields['id'],
-                           'items_id'                                   => $agent['id'],
-                           'itemtype'                                   => 'Agent',
-                           'date'                                       => date("Y-m-d H:i:s"),
-                           'comment'                                    => '',
-                           'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED
-                     ];
-                     $pfTaskjoblog->add($a_input);
-
-                     if (count($order->jobs) > 0) {
-                        $response = $order;
-                        // Inform agent we request POST method, agent will then submit result
-                        // in POST request if it supports the method or it will continue with GET
-                        $response->postmethod = 'POST';
-                        $response->token = Session::getNewCSRFToken();
-                     }
-                  }
-               }
-            }
-            break;
-
-         case 'setAnswer':
-            // example
-            // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
-            if (empty($uuid)) {
-               return $response;
-            }
-            $jobstate = current($pfTaskjobstate->find(
-               [
-                  'uniqid' => $uuid,
-                  'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
-               ],
-               [],
-               1)
-            );
-
-            if (isset($jobstate['agents_id'])) {
-
-               $add_value = true;
-
-               $pfAgent->getFromDB($jobstate['agents_id']);
-               $computers_id = $pfAgent->fields['items_id'];
-
-               $a_values = $_GET;
-               // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
-               if (isset($_GET['method']) && $_GET['method'] == 'POST') {
-                  $a_values = $_POST;
-                  $response->token = Session::getNewCSRFToken();
-                  unset($a_values['_glpi_csrf_token']);
-               }
-               $sid = isset($a_values['_sid'])?$a_values['_sid']:0;
-               $cpt = isset($a_values['_cpt'])?$a_values['_cpt']:0;
-               unset($a_values['action']);
-               unset($a_values['uuid']);
-               unset($a_values['_cpt']);
-               unset($a_values['_sid']);
-
-               $this->getFromDB($jobstate['items_id']);
-
-               switch ($this->fields['type']) {
-                  case 'registry':
-                     // update registry content
-                     $pfCollect_subO = new PluginGlpiinventoryCollect_Registry_Content();
-                     break;
-
-                  case 'wmi':
-                     // update wmi content
-                     $pfCollect_subO = new PluginGlpiinventoryCollect_Wmi_Content();
-                     break;
-
-                  case 'file':
-                     if (!empty($a_values['path']) && isset($a_values['size'])) {
-                        // update files content
-                        $params = [
-                           'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
-                           'uuid'      => $uuid,
-                           'code'      => 'running',
-                           'msg'       => "file ".$a_values['path']." | size ".$a_values['size']
-                        ];
-                        if (isset($a_values['sendheaders'])) {
-                           $params['sendheaders'] = $a_values['sendheaders'];
+                            if (count($order->jobs) > 0) {
+                                $response = $order;
+                                // Inform agent we request POST method, agent will then submit result
+                                // in POST request if it supports the method or it will continue with GET
+                                $response->postmethod = 'POST';
+                                $response->token = Session::getNewCSRFToken();
+                            }
                         }
-                        PluginGlpiinventoryCommunicationRest::updateLog($params);
-                        $pfCollect_subO = new PluginGlpiinventoryCollect_File_Content();
-                        $a_values = [$sid => $a_values];
-                     } else {
-                        $add_value = false;
-                     }
-                     break;
-               }
+                    }
+                }
+                break;
 
-               if (!isset($pfCollect_subO)) {
-                  // return anyway the next CSRF token to client
-                  break;
-               }
+            case 'setAnswer':
+               // example
+               // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
+                if (empty($uuid)) {
+                    return $response;
+                }
+                $jobstate = current($pfTaskjobstate->find(
+                    [
+                    'uniqid' => $uuid,
+                    'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
+                    ],
+                    [],
+                    1
+                ));
 
-               if ($add_value) {
-                  // add collected information to computer
-                  $pfCollect_subO->updateComputer(
-                     $computers_id,
-                     $a_values,
-                     $sid
-                  );
-               }
+                if (isset($jobstate['agents_id'])) {
+                     $add_value = true;
 
-               // change status of state table row
-               $pfTaskjobstate->changeStatus($jobstate['id'],
-                        PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+                     $pfAgent->getFromDB($jobstate['agents_id']);
+                     $computers_id = $pfAgent->fields['items_id'];
 
-               // add logs to job
-               if (count($a_values)) {
-                  $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
-                  $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
-               } else {
-                  $flag    = PluginGlpiinventoryTaskjoblog::TASK_ERROR;
-                  $message = __('Path not found', 'glpiinventory');
-               }
-                  $pfTaskjoblog->addTaskjoblog($jobstate['id'],
-                                             $jobstate['items_id'],
-                                             $jobstate['itemtype'],
-                                             $flag,
-                                             $message);
-            }
-            break;
+                     $a_values = $_GET;
+                     // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
+                    if (isset($_GET['method']) && $_GET['method'] == 'POST') {
+                        $a_values = $_POST;
+                        $response->token = Session::getNewCSRFToken();
+                        unset($a_values['_glpi_csrf_token']);
+                    }
+                     $sid = isset($a_values['_sid']) ? $a_values['_sid'] : 0;
+                     $cpt = isset($a_values['_cpt']) ? $a_values['_cpt'] : 0;
+                     unset($a_values['action']);
+                     unset($a_values['uuid']);
+                     unset($a_values['_cpt']);
+                     unset($a_values['_sid']);
 
-         case 'jobsDone':
-            $jobstate = current($pfTaskjobstate->find(
-               [
-                  'uniqid' => $uuid,
-                  'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
-               ],
-               [],
-               1)
-            );
-            $pfTaskjobstate->changeStatusFinish(
-               $jobstate['id'],
-               $jobstate['items_id'],
-               $jobstate['itemtype']
-            );
+                     $this->getFromDB($jobstate['items_id']);
 
-               break;
-      }
-      return $response;
-   }
+                    switch ($this->fields['type']) {
+                        case 'registry':
+                         // update registry content
+                            $pfCollect_subO = new PluginGlpiinventoryCollect_Registry_Content();
+                            break;
+
+                        case 'wmi':
+                       // update wmi content
+                            $pfCollect_subO = new PluginGlpiinventoryCollect_Wmi_Content();
+                            break;
+
+                        case 'file':
+                            if (!empty($a_values['path']) && isset($a_values['size'])) {
+                                // update files content
+                                $params = [
+                                  'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
+                                  'uuid'      => $uuid,
+                                  'code'      => 'running',
+                                  'msg'       => "file " . $a_values['path'] . " | size " . $a_values['size']
+                                ];
+                                if (isset($a_values['sendheaders'])) {
+                                    $params['sendheaders'] = $a_values['sendheaders'];
+                                }
+                                PluginGlpiinventoryCommunicationRest::updateLog($params);
+                                $pfCollect_subO = new PluginGlpiinventoryCollect_File_Content();
+                                $a_values = [$sid => $a_values];
+                            } else {
+                                $add_value = false;
+                            }
+                            break;
+                    }
+
+                    if (!isset($pfCollect_subO)) {
+                        // return anyway the next CSRF token to client
+                        break;
+                    }
+
+                    if ($add_value) {
+                       // add collected information to computer
+                        $pfCollect_subO->updateComputer(
+                            $computers_id,
+                            $a_values,
+                            $sid
+                        );
+                    }
+
+                  // change status of state table row
+                    $pfTaskjobstate->changeStatus(
+                        $jobstate['id'],
+                        PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA
+                    );
+
+                     // add logs to job
+                    if (count($a_values)) {
+                          $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
+                          $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                    } else {
+                        $flag    = PluginGlpiinventoryTaskjoblog::TASK_ERROR;
+                        $message = __('Path not found', 'glpiinventory');
+                    }
+                    $pfTaskjoblog->addTaskjoblog(
+                        $jobstate['id'],
+                        $jobstate['items_id'],
+                        $jobstate['itemtype'],
+                        $flag,
+                        $message
+                    );
+                }
+                break;
+
+            case 'jobsDone':
+                $jobstate = current($pfTaskjobstate->find(
+                    [
+                    'uniqid' => $uuid,
+                    'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
+                    ],
+                    [],
+                    1
+                ));
+                $pfTaskjobstate->changeStatusFinish(
+                    $jobstate['id'],
+                    $jobstate['items_id'],
+                    $jobstate['itemtype']
+                );
+
+                break;
+        }
+        return $response;
+    }
 
 
    /**
     * After purge item, delete collect data
     */
-   function post_purgeItem() {
+    public function post_purgeItem()
+    {
 
-      // Delete all registry
-      $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
-      $items = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
-      foreach ($items as $item) {
-         $pfCollect_Registry->delete(['id' => $item['id']], true);
-      }
+       // Delete all registry
+        $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+        $items = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
+        foreach ($items as $item) {
+            $pfCollect_Registry->delete(['id' => $item['id']], true);
+        }
 
-      // Delete all WMI
-      $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
-      $items = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
-      foreach ($items as $item) {
-         $pfCollect_Wmi->delete(['id' => $item['id']], true);
-      }
+       // Delete all WMI
+        $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+        $items = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
+        foreach ($items as $item) {
+            $pfCollect_Wmi->delete(['id' => $item['id']], true);
+        }
 
-      // Delete all File
-      $pfCollect_File = new PluginGlpiinventoryCollect_File();
-      $items = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
-      foreach ($items as $item) {
-         $pfCollect_File->delete(['id' => $item['id']], true);
-      }
-      parent::post_deleteItem();
-   }
-
+       // Delete all File
+        $pfCollect_File = new PluginGlpiinventoryCollect_File();
+        $items = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
+        foreach ($items as $item) {
+            $pfCollect_File->delete(['id' => $item['id']], true);
+        }
+        parent::post_deleteItem();
+    }
 }

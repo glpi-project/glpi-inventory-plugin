@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,16 +31,16 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 Session::checkCentralAccess();
 
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
 if (isset($_REQUEST['params']) && is_array($_REQUEST['params'])) {
-   foreach ($_REQUEST['params'] as $params) {
-      PluginGlpiinventoryTaskjob::restartJob($params);
-   }
+    foreach ($_REQUEST['params'] as $params) {
+        PluginGlpiinventoryTaskjob::restartJob($params);
+    }
 } else {
-   PluginGlpiinventoryTaskjob::restartJob($_REQUEST);
+    PluginGlpiinventoryTaskjob::restartJob($_REQUEST);
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,42 +32,43 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the IP of VMWARE ESX and link to credentials to be able to inventory
  * these specific systems througth the webservice.
  */
-class PluginGlpiinventoryCredentialIp extends CommonDropdown {
+class PluginGlpiinventoryCredentialIp extends CommonDropdown
+{
 
    /**
     * Define first level menu name
     *
     * @var string
     */
-   public $first_level_menu  = "admin";
+    public $first_level_menu  = "admin";
 
    /**
     * Define second level menu name
     *
     * @var string
     */
-   public $second_level_menu = "pluginglpiinventorymenu";
+    public $second_level_menu = "pluginglpiinventorymenu";
 
    /**
     * Define third level menu name
     *
     * @var string
     */
-   public $third_level_menu  = "credentialip";
+    public $third_level_menu  = "credentialip";
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_credentialip';
+    public static $rightname = 'plugin_glpiinventory_credentialip';
 
 
    /**
@@ -75,9 +77,10 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb = 0) {
-      return __('Remote device inventory', 'glpiinventory');
-   }
+    public static function getTypeName($nb = 0)
+    {
+        return __('Remote device inventory', 'glpiinventory');
+    }
 
 
    /**
@@ -85,14 +88,15 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown {
     *
     * @return array
     */
-   function getAdditionalFields() {
-      return [['name'  => 'itemtype',
+    public function getAdditionalFields()
+    {
+        return [['name'  => 'itemtype',
                          'label' => __('Type'),
                          'type'  => 'credentials'],
                    ['name'  => 'ip',
                          'label' => __('IP'),
                          'type'  => 'text']];
-   }
+    }
 
 
    /**
@@ -101,20 +105,20 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown {
     * @param integer $ID
     * @param array $field
     */
-   function displaySpecificTypeField($ID, $field = [], array $options = []) {
+    public function displaySpecificTypeField($ID, $field = [], array $options = [])
+    {
 
-      switch ($field['type']) {
-
-         case 'credentials' :
-            if ($ID > 0) {
-               $field['id'] = $this->fields['plugin_glpiinventory_credentials_id'];
-            } else {
-               $field['id'] = -1;
-            }
-            PluginGlpiinventoryCredential::dropdownCredentials($field);
-            break;
-      }
-   }
+        switch ($field['type']) {
+            case 'credentials':
+                if ($ID > 0) {
+                    $field['id'] = $this->fields['plugin_glpiinventory_credentials_id'];
+                } else {
+                    $field['id'] = -1;
+                }
+                PluginGlpiinventoryCredential::dropdownCredentials($field);
+                break;
+        }
+    }
 
 
    /**
@@ -122,58 +126,60 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown {
     *
     * @return array
     */
-   function rawSearchOptions() {
+    public function rawSearchOptions()
+    {
 
-      $tab = [];
+        $tab = [];
 
-      $tab[] = [
+        $tab[] = [
          'id'   => 'common',
          'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'       => '1',
          'table'    => $this->getTable(),
          'field'    => 'name',
          'name'     => __('Name'),
          'datatype' => 'itemlink',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'       => '2',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => Entity::getTypeName(1),
          'datatype' => 'dropdown',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'            => '3',
          'table'         => $this->getTable(),
          'field'         => 'name',
          'name'          => __('Authentication for remote devices (VMware)', 'glpiinventory'),
          'datatype'      => 'itemlink',
          'itemlink_type' => 'PluginGlpiinventoryCredential',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'       => '4',
          'table'    => $this->getTable(),
          'field'    => 'ip',
          'name'     => __('IP'),
          'datatype' => 'string',
-      ];
+        ];
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
    /**
     * Display a specific header
     */
-   function displayHeader() {
-      //Common dropdown header
-      parent::displayHeader();
-      PluginGlpiinventoryMenu::displayMenu("mini");
-   }
+    public function displayHeader()
+    {
+       //Common dropdown header
+        parent::displayHeader();
+        PluginGlpiinventoryMenu::displayMenu("mini");
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -34,7 +35,8 @@
  * Manage the display information of class Migration when upgrade
  * plugin in CLI.
  */
-class CliMigration extends Migration {
+class CliMigration extends Migration
+{
 
 
    /**
@@ -42,10 +44,11 @@ class CliMigration extends Migration {
     *
     * @param string $ver
     */
-   function __construct($ver) {
-      $this->deb     = time();
-      $this->version = $ver;
-   }
+    public function __construct($ver)
+    {
+        $this->deb     = time();
+        $this->version = $ver;
+    }
 
 
    /**
@@ -53,10 +56,11 @@ class CliMigration extends Migration {
     *
     * @param string $msg
     */
-   function displayMessage($msg) {
-      $msg .= " (".Html::timestampToString(time()-$this->deb).")";
-      echo str_pad($msg, 100)."\n";
-   }
+    public function displayMessage($msg)
+    {
+        $msg .= " (" . Html::timestampToString(time() - $this->deb) . ")";
+        echo str_pad($msg, 100) . "\n";
+    }
 
 
    /**
@@ -64,9 +68,10 @@ class CliMigration extends Migration {
     *
     * @param string $title
     */
-   function displayTitle($title) {
-      echo "\n".str_pad(" $title ", 100, '=', STR_PAD_BOTH)."\n";
-   }
+    public function displayTitle($title)
+    {
+        echo "\n" . str_pad(" $title ", 100, '=', STR_PAD_BOTH) . "\n";
+    }
 
 
    /**
@@ -75,12 +80,11 @@ class CliMigration extends Migration {
     * @param string $msg
     * @param boolean $red
     */
-   function displayWarning($msg, $red = false) {
-      if ($red) {
-         $msg = "** $msg";
-      }
-      echo str_pad($msg, 100)."\n";
-   }
-
-
+    public function displayWarning($msg, $red = false)
+    {
+        if ($red) {
+            $msg = "** $msg";
+        }
+        echo str_pad($msg, 100) . "\n";
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,205 +33,220 @@
 
 use PHPUnit\Framework\TestCase;
 
-class RestURLTest extends TestCase {
+class RestURLTest extends TestCase
+{
 
-   public static function setUpBeforeClass(): void {
+    public static function setUpBeforeClass(): void
+    {
 
-      // Delete all entities except root entity
-      $entity = new Entity();
-      $items = $entity->find();
-      foreach ($items as $item) {
-         if ($item['id'] > 0) {
-            $entity->delete(['id' => $item['id']], true);
-         }
-      }
+       // Delete all entities except root entity
+        $entity = new Entity();
+        $items = $entity->find();
+        foreach ($items as $item) {
+            if ($item['id'] > 0) {
+                $entity->delete(['id' => $item['id']], true);
+            }
+        }
 
-      // Delete all agents
-      $agent = new Agent();
-      $items = $agent->find();
-      foreach ($items as $item) {
-         $agent->delete(['id' => $item['id']], true);
-      }
-   }
+       // Delete all agents
+        $agent = new Agent();
+        $items = $agent->find();
+        foreach ($items as $item) {
+            $agent->delete(['id' => $item['id']], true);
+        }
+    }
 
 
    /**
     * @test
     */
-   public function prepareDb() {
-      global $DB;
+    public function prepareDb()
+    {
+        global $DB;
 
-      $_SESSION["plugin_glpiinventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $entity   = new Entity();
-      $agent  = new Agent();
-      $config   = new PluginGlpiinventoryConfig();
+        $entity   = new Entity();
+        $agent  = new Agent();
+        $config   = new PluginGlpiinventoryConfig();
 
-      $entityId = $entity->add([
+        $entityId = $entity->add([
          'name'        => 'ent1',
          'entities_id' => 0,
          'comment'     => '',
          'agent_base_url' => 'http://10.0.2.2/glpi085'
-      ]);
-      $this->assertNotFalse($entityId);
+        ]);
+        $this->assertNotFalse($entityId);
 
-      $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
-      $input = [
+        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $input = [
          'name'        => 'toto',
          'entities_id' => $entityId,
          'deviceid'   => 'toto-device',
          'agenttypes_id' => $agenttype['id'],
          'itemtype' => '',
          'items_id' => 0
-      ];
-      $agents_id = $agent->add($input);
-      $this->assertNotFalse($agents_id);
+        ];
+        $agents_id = $agent->add($input);
+        $this->assertNotFalse($agents_id);
 
-      $config->loadCache();
+        $config->loadCache();
 
-      $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
-      $input = [
+        $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
+        $input = [
          'id'             => $entity->fields['id'],
          'agent_base_url' => 'http://127.0.0.1/glpi085'
-      ];
-      $ret = $entity->update($input);
-      $this->assertTrue($ret);
+        ];
+        $ret = $entity->update($input);
+        $this->assertTrue($ret);
 
-      // active all modules
-      $query = "UPDATE `glpi_plugin_glpiinventory_agentmodules`"
+       // active all modules
+        $query = "UPDATE `glpi_plugin_glpiinventory_agentmodules`"
               . " SET `is_active`='1'";
-      $DB->query($query);
-   }
+        $DB->query($query);
+    }
 
 
    /**
     * @test
     */
-   public function getCollectUrlEnt1Entity() {
+    public function getCollectUrlEnt1Entity()
+    {
 
-      $_SESSION["plugin_glpiinventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $agent  = new Agent();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $agent  = new Agent();
 
-      $agent->getFromDBByCrit(['name' => 'toto']);
-      $input = [
+        $agent->getFromDBByCrit(['name' => 'toto']);
+        $input = [
          'itemtype' => 'PluginGlpiinventoryCollect',
          'agents_id' => $agent->fields['id']
-      ];
-      $ret = $pfTaskjobstate->add($input);
-      $this->assertNotFalse($ret);
+        ];
+        $ret = $pfTaskjobstate->add($input);
+        $this->assertNotFalse($ret);
 
-      // Get answer
-      $input = [
+       // Get answer
+        $input = [
           'action'    => 'getConfig',
           'task'      => ['COLLECT' => '1.0.0'],
           'machineid' => 'toto-device'
-      ];
+        ];
 
-      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
+        $response = PluginGlpiinventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/collect/',
-                          $response['schedule'][0]['remote'],
-                          'Wrong URL');
-   }
+        $this->assertEquals(
+            'http://10.0.2.2/glpi085/plugins/glpiinventory/b/collect/',
+            $response['schedule'][0]['remote'],
+            'Wrong URL'
+        );
+    }
 
 
    /**
     * @test
     */
-   public function getDeployUrlRootEntity() {
+    public function getDeployUrlRootEntity()
+    {
 
-      $_SESSION["plugin_glpiinventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $agent  = new Agent();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $agent  = new Agent();
 
-      $agent->getFromDBByCrit(['name' => 'toto']);
-      $input = [
+        $agent->getFromDBByCrit(['name' => 'toto']);
+        $input = [
          'itemtype' => 'PluginGlpiinventoryDeployPackage',
          'agents_id' => $agent->fields['id']
-      ];
-      $pfTaskjobstate->add($input);
+        ];
+        $pfTaskjobstate->add($input);
 
-      // Get answer
-      $input = [
+       // Get answer
+        $input = [
           'action'    => 'getConfig',
           'task'      => ['Deploy' => '1.0.0'],
           'machineid' => 'toto-device'
-      ];
+        ];
 
-      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
+        $response = PluginGlpiinventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/deploy/',
-                          $response['schedule'][0]['remote'],
-                          'Wrong URL');
-   }
+        $this->assertEquals(
+            'http://10.0.2.2/glpi085/plugins/glpiinventory/b/deploy/',
+            $response['schedule'][0]['remote'],
+            'Wrong URL'
+        );
+    }
 
 
    /**
     * @test
     */
-   public function getEsxUrlRootEntity() {
+    public function getEsxUrlRootEntity()
+    {
 
-      $_SESSION["plugin_glpiinventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $agent  = new Agent();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $agent  = new Agent();
 
-      $agent->getFromDBByCrit(['name' => 'toto']);
-      $input = [
+        $agent->getFromDBByCrit(['name' => 'toto']);
+        $input = [
          'itemtype' => 'PluginGlpiinventoryCredentialIp',
          'agents_id' => $agent->fields['id']
-      ];
-      $pfTaskjobstate->add($input);
+        ];
+        $pfTaskjobstate->add($input);
 
-      // Get answer
-      $input = [
+       // Get answer
+        $input = [
           'action'    => 'getConfig',
           'task'      => ['ESX' => '1.0.0'],
           'machineid' => 'toto-device'
-      ];
+        ];
 
-      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
+        $response = PluginGlpiinventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://10.0.2.2/glpi085/plugins/glpiinventory/b/esx/',
-                          $response['schedule'][0]['remote'],
-                          'Wrong URL');
-   }
+        $this->assertEquals(
+            'http://10.0.2.2/glpi085/plugins/glpiinventory/b/esx/',
+            $response['schedule'][0]['remote'],
+            'Wrong URL'
+        );
+    }
 
 
    /**
     * @test
     */
-   public function getCollectUrlRootEntity() {
+    public function getCollectUrlRootEntity()
+    {
 
-      $_SESSION["plugin_glpiinventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $config = new PluginGlpiinventoryConfig();
-      $config->loadCache();
+        $config = new PluginGlpiinventoryConfig();
+        $config->loadCache();
 
-      $entity = new Entity();
-      $entity->getFromDBByCrit(['name' => 'ent1']);
-      $this->assertArrayHasKey('id', $entity->fields);
+        $entity = new Entity();
+        $entity->getFromDBByCrit(['name' => 'ent1']);
+        $this->assertArrayHasKey('id', $entity->fields);
 
-      $this->assertTrue($entity->update(['id' => $entity->fields['id'], 'agent_base_url' => '']));
+        $this->assertTrue($entity->update(['id' => $entity->fields['id'], 'agent_base_url' => '']));
 
-      // Get answer
-      $input = [
+       // Get answer
+        $input = [
           'action'    => 'getConfig',
           'task'      => ['COLLECT' => '1.0.0'],
           'machineid' => 'toto-device'
-      ];
+        ];
 
-      $response = PluginGlpiinventoryCommunicationRest::communicate($input);
-      $this->assertEquals('http://127.0.0.1/glpi085/plugins/glpiinventory/b/collect/',
-                          $response['schedule'][0]['remote'],
-                          'Wrong URL');
-   }
+        $response = PluginGlpiinventoryCommunicationRest::communicate($input);
+        $this->assertEquals(
+            'http://127.0.0.1/glpi085/plugins/glpiinventory/b/collect/',
+            $response['schedule'][0]['remote'],
+            'Wrong URL'
+        );
+    }
 }

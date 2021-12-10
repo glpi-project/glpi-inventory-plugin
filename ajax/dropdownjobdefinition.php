@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
@@ -41,63 +42,63 @@ $type = filter_input(INPUT_POST, "type");
 $actortype = filter_input(INPUT_POST, "actortype");
 
 if (!empty($type) && !empty($actortype)) {
-   $rand = mt_rand();
+    $rand = mt_rand();
 
-   $entity_restrict = filter_input(INPUT_POST, "entity_restrict");
-   switch ($type) {
-      case "user" :
-         $right = 'all';
-         /// TODO : review depending of itil object
-         // Only steal or own ticket whit empty assign
-         if ($actortype == 'assign') {
-            $right = "own_ticket";
-            if (!$item->canAssign()) {
-               $right = 'id';
+    $entity_restrict = filter_input(INPUT_POST, "entity_restrict");
+    switch ($type) {
+        case "user":
+            $right = 'all';
+           /// TODO : review depending of itil object
+           // Only steal or own ticket whit empty assign
+            if ($actortype == 'assign') {
+                $right = "own_ticket";
+                if (!$item->canAssign()) {
+                    $right = 'id';
+                }
             }
-         }
 
-         $options = ['name'        => '_itil_'.$actortype.'[users_id]',
+            $options = ['name'        => '_itil_' . $actortype . '[users_id]',
                           'entity'      => $entity_restrict,
                           'right'       => $right,
                           'ldap_import' => true];
-         $withemail = false;
-         if ($CFG_GLPI["use_mailing"]) {
-            $allow_email = filter_input(INPUT_POST, "allow_email");
-            $withemail = (!empty($allow_email) ? $allow_email : false);
-            $paramscomment = ['value'       => '__VALUE__',
+            $withemail = false;
+            if ($CFG_GLPI["use_mailing"]) {
+                $allow_email = filter_input(INPUT_POST, "allow_email");
+                $withemail = (!empty($allow_email) ? $allow_email : false);
+                $paramscomment = ['value'       => '__VALUE__',
                                    'allow_email' => $withemail,
-                                   'field'       => "_itil_".$actortype];
-            // Fix rand value
-            $options['rand']     = $rand;
-            $options['toupdate'] = ['value_fieldname' => 'value',
+                                   'field'       => "_itil_" . $actortype];
+               // Fix rand value
+                $options['rand']     = $rand;
+                $options['toupdate'] = ['value_fieldname' => 'value',
                                          'to_update'  => "notif_user_$rand",
-                                         'url'        => $CFG_GLPI["root_doc"]."/ajax/uemailUpdate.php",
+                                         'url'        => $CFG_GLPI["root_doc"] . "/ajax/uemailUpdate.php",
                                          'moreparams' => $paramscomment];
-         }
-         $rand = User::dropdown($options);
-
-         if ($CFG_GLPI["use_mailing"]==1) {
-            echo "<br><span id='notif_user_$rand'>";
-            if ($withemail) {
-               echo __('Email followup').'&nbsp;:&nbsp;';
-               $rand = Dropdown::showYesNo('_itil_'.$actortype.'[use_notification]', 1);
-               echo '<br>'.__('Email').'&nbsp;:&nbsp;';
-               echo "<input type='text' size='25' name='_itil_".$actortype."[alternative_email]'>";
             }
-            echo "</span>";
-         }
-         break;
+            $rand = User::dropdown($options);
 
-      case "group" :
-         $cond = ($actortype=='assign' ? $cond = '`is_assign`' : $cond = '`is_requester`');
-         Dropdown::show('Group', ['name'      => '_itil_'.$actortype.'[groups_id]',
+            if ($CFG_GLPI["use_mailing"] == 1) {
+                echo "<br><span id='notif_user_$rand'>";
+                if ($withemail) {
+                    echo __('Email followup') . '&nbsp;:&nbsp;';
+                    $rand = Dropdown::showYesNo('_itil_' . $actortype . '[use_notification]', 1);
+                    echo '<br>' . __('Email') . '&nbsp;:&nbsp;';
+                    echo "<input type='text' size='25' name='_itil_" . $actortype . "[alternative_email]'>";
+                }
+                echo "</span>";
+            }
+            break;
+
+        case "group":
+            $cond = ($actortype == 'assign' ? $cond = '`is_assign`' : $cond = '`is_requester`');
+            Dropdown::show('Group', ['name'      => '_itil_' . $actortype . '[groups_id]',
                                        'entity'    => $entity_restrict,
                                        'condition' => $cond]);
-         break;
+            break;
 
-      case "supplier" :
-         Dropdown::show('Supplier', ['name'   => 'suppliers_id_assign',
+        case "supplier":
+            Dropdown::show('Supplier', ['name'   => 'suppliers_id_assign',
                                           'entity' => $entity_restrict]);
-         break;
-   }
+            break;
+    }
 }

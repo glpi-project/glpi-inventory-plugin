@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,34 +32,35 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage collect rule collection.
  */
-class PluginGlpiinventoryCollectRuleCollection extends RuleCollection {
+class PluginGlpiinventoryCollectRuleCollection extends RuleCollection
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_glpiinventory_rulecollect";
+    public static $rightname = "plugin_glpiinventory_rulecollect";
 
    /**
     * Set we check all rules
     *
     * @var boolean
     */
-   public $stop_on_first_match=false;
+    public $stop_on_first_match = false;
 
    /**
     * Set the menu option name
     *
     * @var string
     */
-   public $menu_option='test';
+    public $menu_option = 'test';
 
 
    /**
@@ -66,9 +68,10 @@ class PluginGlpiinventoryCollectRuleCollection extends RuleCollection {
     *
     * @return string name of this type
     */
-   function getTitle() {
-      return __('Computer information rules', 'glpiinventory');
-   }
+    public function getTitle()
+    {
+        return __('Computer information rules', 'glpiinventory');
+    }
 
 
    /**
@@ -78,7 +81,8 @@ class PluginGlpiinventoryCollectRuleCollection extends RuleCollection {
     * @param array $params
     * @return array
     */
-   function prepareInputDataForProcess($input, $params) {
-      return $input;
-   }
+    public function prepareInputDataForProcess($input, $params)
+    {
+        return $input;
+    }
 }

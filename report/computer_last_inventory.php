@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,10 +32,10 @@
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
-$USEDBREPLICATE=1;
-$DBCONNECTION_REQUIRED=0;
+$USEDBREPLICATE = 1;
+$DBCONNECTION_REQUIRED = 0;
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
@@ -42,15 +43,15 @@ Session::checkRight('computer', READ);
 
 $nbdays = filter_input(INPUT_GET, "nbdays");
 if ($nbdays == '') {
-   $nbdays = 365;
+    $nbdays = 365;
 }
 
 $state = filter_input(INPUT_GET, "state");
 if (!is_numeric($state)) {
-   $state = 0;
+    $state = 0;
 }
 
-echo "<form action='".filter_input(INPUT_SERVER, "PHP_SELF")."' method='get'>";
+echo "<form action='" . filter_input(INPUT_SERVER, "PHP_SELF") . "' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";
@@ -61,14 +62,13 @@ echo "</tr>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo __('Number of days (minimum) since last inventory', 'glpiinventory')." :&nbsp;";
+echo __('Number of days (minimum) since last inventory', 'glpiinventory') . " :&nbsp;";
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", [
                 'value' => $nbdays,
                 'min'   => 1,
-                'max'   => 365]
-);
+                'max'   => 365]);
 echo "</td>";
 echo "</tr>";
 
@@ -77,7 +77,7 @@ echo "<td>";
 echo __('Status');
 echo "</td>";
 echo "<td>";
-Dropdown::show("State", ['name'=>'state', 'value'=>$state]);
+Dropdown::show("State", ['name' => 'state', 'value' => $state]);
 echo "</td>";
 echo "</tr>";
 
@@ -93,16 +93,16 @@ Html::closeForm();
 $computer = new Computer();
 
 $state_sql = "";
-if (($state != "") AND ($state != "0")) {
-   $state_sql = " AND `states_id` = '".$state."' ";
+if (($state != "") and ($state != "0")) {
+    $state_sql = " AND `states_id` = '" . $state . "' ";
 }
 
 $query = "SELECT `last_inventory_update`, `computers_id`
       FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
    LEFT JOIN `glpi_computers` ON `computers_id`=`glpi_computers`.`id`
-WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL ".$nbdays." DAY)
+WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY)
       OR last_inventory_update IS NULL)
-   ".$state_sql.")".getEntitiesRestrictRequest("AND", "glpi_computers")."
+   " . $state_sql . ")" . getEntitiesRestrictRequest("AND", "glpi_computers") . "
 
 ORDER BY last_inventory_update DESC";
 
@@ -111,30 +111,30 @@ $result = $DB->query($query);
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
 
 echo "<tr class='tab_bg_1'>";
-echo "<th colspan='5'>".__('Number of items')." : ".$DB->numrows($result)."</th>";
+echo "<th colspan='5'>" . __('Number of items') . " : " . $DB->numrows($result) . "</th>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
-echo "<th>".__('Name')."</th>";
-echo "<th>".__('Last inventory', 'glpiinventory')."</th>";
-echo "<th>".__('Serial Number')."</th>";
-echo "<th>".__('Inventory number')."</th>";
-echo "<th>".__('Status')."</th>";
+echo "<th>" . __('Name') . "</th>";
+echo "<th>" . __('Last inventory', 'glpiinventory') . "</th>";
+echo "<th>" . __('Serial Number') . "</th>";
+echo "<th>" . __('Inventory number') . "</th>";
+echo "<th>" . __('Status') . "</th>";
 echo "</tr>";
 
-while ($data=$DB->fetchArray($result)) {
-   echo "<tr class='tab_bg_1'>";
-   echo "<td>";
-   $computer->getFromDB($data['computers_id']);
-   echo $computer->getLink(1);
-   echo "</td>";
-   echo "<td>".Html::convDateTime($data['last_inventory_update'])."</td>";
-   echo "<td>".$computer->fields['serial']."</td>";
-   echo "<td>".$computer->fields['otherserial']."</td>";
-   echo "<td>";
-   echo Dropdown::getDropdownName(getTableForItemType("State"), $computer->fields['states_id']);
-   echo "</td>";
-   echo "</tr>";
+while ($data = $DB->fetchArray($result)) {
+    echo "<tr class='tab_bg_1'>";
+    echo "<td>";
+    $computer->getFromDB($data['computers_id']);
+    echo $computer->getLink(1);
+    echo "</td>";
+    echo "<td>" . Html::convDateTime($data['last_inventory_update']) . "</td>";
+    echo "<td>" . $computer->fields['serial'] . "</td>";
+    echo "<td>" . $computer->fields['otherserial'] . "</td>";
+    echo "<td>";
+    echo Dropdown::getDropdownName(getTableForItemType("State"), $computer->fields['states_id']);
+    echo "</td>";
+    echo "</tr>";
 }
 
 echo "</table>";

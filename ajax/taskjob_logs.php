@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,10 +31,12 @@
  * ---------------------------------------------------------------------
  */
 
-if (!isset($_SERVER['PHP_SELF'])
-    || strpos(filter_input(INPUT_SERVER, 'PHP_SELF'), "taskjob_logs.php")) {
-   include ("../../../inc/includes.php");
-   Session::checkCentralAccess();
+if (
+    !isset($_SERVER['PHP_SELF'])
+    || strpos(filter_input(INPUT_SERVER, 'PHP_SELF'), "taskjob_logs.php")
+) {
+    include("../../../inc/includes.php");
+    Session::checkCentralAccess();
 }
 
 header("Content-Type: text/html; charset=UTF-8");

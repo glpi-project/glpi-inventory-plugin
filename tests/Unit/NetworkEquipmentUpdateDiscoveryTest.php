@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,11 +33,12 @@
 
 use PHPUnit\Framework\TestCase;
 
-class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
+class NetworkEquipmentUpdateDiscoveryTest extends TestCase
+{
 
-   public $item_id = 0;
+    public $item_id = 0;
 
-   public $networkports_reference = [
+    public $networkports_reference = [
       [
          'items_id'            => 1,
          'itemtype'            => 'NetworkEquipment',
@@ -65,9 +67,9 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
          'trunk' => 0,
          'lastup' => null
       ]
-   ];
+    ];
 
-   public $ipaddresses_reference = [
+    public $ipaddresses_reference = [
       [
          'entities_id'   => 0,
          'items_id'      => 1,
@@ -84,9 +86,9 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
          'mainitemtype'  => 'NetworkEquipment'
 
       ]
-   ];
+    ];
 
-   protected $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+    protected $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
     <DEVICE>
@@ -107,242 +109,254 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
 </REQUEST>
 ";
 
-   public static function setUpBeforeClass(): void {
-      // Delete all network equipments
-      $networkEquipment = new NetworkEquipment();
-      $items = $networkEquipment->find();
-      foreach ($items as $item) {
-         $networkEquipment->delete(['id' => $item['id']], true);
-      }
+    public static function setUpBeforeClass(): void
+    {
+       // Delete all network equipments
+        $networkEquipment = new NetworkEquipment();
+        $items = $networkEquipment->find();
+        foreach ($items as $item) {
+            $networkEquipment->delete(['id' => $item['id']], true);
+        }
 
-      // Delete all printers
-      $printer = new Printer();
-      $items = $printer->find();
-      foreach ($items as $item) {
-         $printer->delete(['id' => $item['id']], true);
-      }
+       // Delete all printers
+        $printer = new Printer();
+        $items = $printer->find();
+        foreach ($items as $item) {
+            $printer->delete(['id' => $item['id']], true);
+        }
 
-      // Delete all computer
-      $computer = new Computer();
-      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-      foreach ($items as $item) {
-         $computer->delete(['id' => $item['id']], true);
-      }
+       // Delete all computer
+        $computer = new Computer();
+        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
+        foreach ($items as $item) {
+            $computer->delete(['id' => $item['id']], true);
+        }
 
-      // Delete all ipaddresses
-      $ipAddress = new IPAddress();
-      $items = $ipAddress->find();
-      foreach ($items as $item) {
-         $ipAddress->delete(['id' => $item['id']], true);
-      }
+       // Delete all ipaddresses
+        $ipAddress = new IPAddress();
+        $items = $ipAddress->find();
+        foreach ($items as $item) {
+            $ipAddress->delete(['id' => $item['id']], true);
+        }
 
-      // Delete all networknames
-      $networkName= new NetworkName();
-      $items = $networkName->find();
-      foreach ($items as $item) {
-         $networkName->delete(['id' => $item['id']], true);
-      }
+       // Delete all networknames
+        $networkName = new NetworkName();
+        $items = $networkName->find();
+        foreach ($items as $item) {
+            $networkName->delete(['id' => $item['id']], true);
+        }
 
-      \RuleImportAsset::initRules();
-   }
+        \RuleImportAsset::initRules();
+    }
 
 
    /**
     * @test
     */
-   public function AddNetworkEquipment() {
-      // Load session rights
-      $_SESSION['glpidefault_entity'] = 0;
-      Session::initEntityProfiles(2);
-      Session::changeProfile(4);
-      plugin_init_glpiinventory();
+    public function AddNetworkEquipment()
+    {
+       // Load session rights
+        $_SESSION['glpidefault_entity'] = 0;
+        Session::initEntityProfiles(2);
+        Session::changeProfile(4);
+        plugin_init_glpiinventory();
 
-      $networkEquipment = new NetworkEquipment();
+        $networkEquipment = new NetworkEquipment();
 
-      $input = [
+        $input = [
           'name' => 'switch H3C',
           'serial' => '042ff',
           'entities_id' => '0'
-      ];
-      $this->item_id = $networkEquipment->add($input);
-      $this->assertNotFalse($this->item_id, "Add network equipment failed");
-      $networkEquipment->getFromDB($this->item_id);
+        ];
+        $this->item_id = $networkEquipment->add($input);
+        $this->assertNotFalse($this->item_id, "Add network equipment failed");
+        $networkEquipment->getFromDB($this->item_id);
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($this->xml_source);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($this->xml_source);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-      $this->assertEquals(1, count($networkEquipment->find()));
+        $this->assertEquals(1, count($networkEquipment->find()));
 
-      $this->assertGreaterThan(0, $networkEquipment->getFromDBByCrit(['serial' => '042ff']));
-      $this->assertEquals('switch H3C', $networkEquipment->fields['name'], 'Name must be updated');
-   }
-
-
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
-   public function NewNetworkEquipmentHasPorts() {
-      $networkports = getAllDataFromTable('glpi_networkports');
-
-      $networkEquipment = new NetworkEquipment();
-      $this->assertTrue($networkEquipment->getFromDBByCrit(['serial' => '042ff']));
-      $this->networkports_reference[0]['items_id'] = $networkEquipment->fields['id'];
-
-      $reference = [];
-      foreach ($networkports as $data) {
-         unset($data['id']);
-         unset($data['date_mod']);
-         unset($data['date_creation']);
-         $reference[] = $data;
-      }
-
-      $this->assertEquals(
-         $this->networkports_reference,
-         $reference,
-         "Network ports does not match reference on first update"
-      );
-   }
+        $this->assertGreaterThan(0, $networkEquipment->getFromDBByCrit(['serial' => '042ff']));
+        $this->assertEquals('switch H3C', $networkEquipment->fields['name'], 'Name must be updated');
+    }
 
 
    /**
     * @test
     * @depends AddNetworkEquipment
     */
-   public function NewNetworkEquipmentHasIpAdresses() {
-      $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
+    public function NewNetworkEquipmentHasPorts()
+    {
+        $networkports = getAllDataFromTable('glpi_networkports');
 
-      $items = [];
-      foreach ($ipaddresses as $data) {
-         unset($data['id']);
-         unset($data['date_mod']);
-         unset($data['date_creation']);
-         $items[] = $data;
-      }
+        $networkEquipment = new NetworkEquipment();
+        $this->assertTrue($networkEquipment->getFromDBByCrit(['serial' => '042ff']));
+        $this->networkports_reference[0]['items_id'] = $networkEquipment->fields['id'];
 
-      $networkName = new NetworkName();
-      $netnames = $networkName->find([], [], 1);
-      $this->assertEquals(1, count($netnames), 'No network name created');
-      $item = current($netnames);
-      $this->ipaddresses_reference[0]['items_id'] = $item['id'];
+        $reference = [];
+        foreach ($networkports as $data) {
+            unset($data['id']);
+            unset($data['date_mod']);
+            unset($data['date_creation']);
+            $reference[] = $data;
+        }
 
-      $networkEquipment = new NetworkEquipment();
-      $item = current($networkEquipment->find([], [], 1));
-      $this->ipaddresses_reference[0]['mainitems_id'] = $item['id'];
-
-      $this->assertEquals($this->ipaddresses_reference,
-                          $items,
-                          "IP addresses does not match reference on first update");
-
-   }
+        $this->assertEquals(
+            $this->networkports_reference,
+            $reference,
+            "Network ports does not match reference on first update"
+        );
+    }
 
 
    /**
     * @test
     * @depends AddNetworkEquipment
     */
-   public function UpdateNetworkEquipment() {
+    public function NewNetworkEquipmentHasIpAdresses()
+    {
+        $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
 
-      // Load session rights
-      $_SESSION['glpidefault_entity'] = 0;
-      Session::initEntityProfiles(2);
-      Session::changeProfile(4);
-      plugin_init_glpiinventory();
+        $items = [];
+        foreach ($ipaddresses as $data) {
+            unset($data['id']);
+            unset($data['date_mod']);
+            unset($data['date_creation']);
+            $items[] = $data;
+        }
 
-      // Update 2nd time
-      $networkEquipment = new NetworkEquipment();
-      $item = current($networkEquipment->find([], [], 1));
+        $networkName = new NetworkName();
+        $netnames = $networkName->find([], [], 1);
+        $this->assertEquals(1, count($netnames), 'No network name created');
+        $item = current($netnames);
+        $this->ipaddresses_reference[0]['items_id'] = $item['id'];
 
-      $networkEquipment->getFromDB($item['id']);
+        $networkEquipment = new NetworkEquipment();
+        $item = current($networkEquipment->find([], [], 1));
+        $this->ipaddresses_reference[0]['mainitems_id'] = $item['id'];
 
-      $converter = new \Glpi\Inventory\Converter;
-      $data = $converter->convert($this->xml_source);
-      $CFG_GLPI["is_contact_autoupdate"] = 0;
-      new \Glpi\Inventory\Inventory($data);
-      $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+        $this->assertEquals(
+            $this->ipaddresses_reference,
+            $items,
+            "IP addresses does not match reference on first update"
+        );
+    }
 
-      $this->assertEquals(1, count($networkEquipment->find()));
-   }
+
+   /**
+    * @test
+    * @depends AddNetworkEquipment
+    */
+    public function UpdateNetworkEquipment()
+    {
+
+       // Load session rights
+        $_SESSION['glpidefault_entity'] = 0;
+        Session::initEntityProfiles(2);
+        Session::changeProfile(4);
+        plugin_init_glpiinventory();
+
+       // Update 2nd time
+        $networkEquipment = new NetworkEquipment();
+        $item = current($networkEquipment->find([], [], 1));
+
+        $networkEquipment->getFromDB($item['id']);
+
+        $converter = new \Glpi\Inventory\Converter();
+        $data = $converter->convert($this->xml_source);
+        $CFG_GLPI["is_contact_autoupdate"] = 0;
+        new \Glpi\Inventory\Inventory($data);
+        $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
+
+        $this->assertEquals(1, count($networkEquipment->find()));
+    }
 
    /**
     * @test
     * @depends UpdateNetworkEquipment
     */
-   public function UpdateNetworkEquipmentOnlyOneNetworkName() {
-      $networkNames = getAllDataFromTable('glpi_networknames');
-      $this->assertEquals(1, count($networkNames));
-   }
+    public function UpdateNetworkEquipmentOnlyOneNetworkName()
+    {
+        $networkNames = getAllDataFromTable('glpi_networknames');
+        $this->assertEquals(1, count($networkNames));
+    }
 
 
    /**
     * @test
     * @depends UpdateNetworkEquipment
     */
-   public function UpdateNetworkEquipmentOnlyOneIpaddress() {
-      $Ips = getAllDataFromTable('glpi_ipaddresses');
-      $this->assertEquals(1, count($Ips));
-   }
+    public function UpdateNetworkEquipmentOnlyOneIpaddress()
+    {
+        $Ips = getAllDataFromTable('glpi_ipaddresses');
+        $this->assertEquals(1, count($Ips));
+    }
 
 
    /**
     * @test
     * @depends UpdateNetworkEquipment
     */
-   public function UpdatedNetworkEquipmentHasPorts() {
-      $networkports = getAllDataFromTable('glpi_networkports');
+    public function UpdatedNetworkEquipmentHasPorts()
+    {
+        $networkports = getAllDataFromTable('glpi_networkports');
 
-      $this->assertEquals(1, count($networkports), "Must have only 1 network port");
+        $this->assertEquals(1, count($networkports), "Must have only 1 network port");
 
-      $networkEquipment = new NetworkEquipment();
-      $item = current($networkEquipment->find([], [], 1));
-      $this->networkports_reference[0]['items_id'] = $item['id'];
+        $networkEquipment = new NetworkEquipment();
+        $item = current($networkEquipment->find([], [], 1));
+        $this->networkports_reference[0]['items_id'] = $item['id'];
 
-      $reference = [];
-      foreach ($networkports as $data) {
-         unset($data['id']);
-         unset($data['date_mod']);
-         unset($data['date_creation']);
-         $reference[] = $data;
-      }
+        $reference = [];
+        foreach ($networkports as $data) {
+            unset($data['id']);
+            unset($data['date_mod']);
+            unset($data['date_creation']);
+            $reference[] = $data;
+        }
 
-      $this->assertEquals($this->networkports_reference,
-                          $reference,
-                          "network ports does not match reference on second update");
-   }
+        $this->assertEquals(
+            $this->networkports_reference,
+            $reference,
+            "network ports does not match reference on second update"
+        );
+    }
 
 
    /**
     * @test
     * @depends UpdateNetworkEquipment
     */
-   public function UpdateNetworkEquipmentHasIpAdresses() {
-      $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
+    public function UpdateNetworkEquipmentHasIpAdresses()
+    {
+        $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
 
-      $items = [];
-      foreach ($ipaddresses as $data) {
-         unset($data['id']);
-         unset($data['date_mod']);
-         unset($data['date_creation']);
-         $items[] = $data;
-      }
+        $items = [];
+        foreach ($ipaddresses as $data) {
+            unset($data['id']);
+            unset($data['date_mod']);
+            unset($data['date_creation']);
+            $items[] = $data;
+        }
 
-      $networkName = new NetworkName();
-      $item = current($networkName->find([], [], 1));
-      $this->ipaddresses_reference[0]['items_id'] = $item['id'];
+        $networkName = new NetworkName();
+        $item = current($networkName->find([], [], 1));
+        $this->ipaddresses_reference[0]['items_id'] = $item['id'];
 
-      $networkEquipment = new NetworkEquipment();
-      $item = current($networkEquipment->find([], [], 1));
-      $this->ipaddresses_reference[0]['mainitems_id'] = $item['id'];
+        $networkEquipment = new NetworkEquipment();
+        $item = current($networkEquipment->find([], [], 1));
+        $this->ipaddresses_reference[0]['mainitems_id'] = $item['id'];
 
-      $this->assertEquals(
-         $this->ipaddresses_reference,
-         $items,
-         "IP addresses does not match reference on second update:\n".
-         print_r($this->ipaddresses_reference, true)."\n".
-         print_r($ipaddresses, true)."\n"
-      );
-   }
+        $this->assertEquals(
+            $this->ipaddresses_reference,
+            $items,
+            "IP addresses does not match reference on second update:\n" .
+            print_r($this->ipaddresses_reference, true) . "\n" .
+            print_r($ipaddresses, true) . "\n"
+        );
+    }
 }

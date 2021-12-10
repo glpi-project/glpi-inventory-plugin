@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,21 +31,21 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
 
 if (isset($_POST["add"])) {
-   if (!preg_match('/^\/()/', $_POST['path'])) {
-      $_POST['path'] = "/".$_POST['path'];
-   }
-   if (!preg_match('/\/$/', $_POST['path'])) {
-      $_POST['path'] = $_POST['path']."/";
-   }
+    if (!preg_match('/^\/()/', $_POST['path'])) {
+        $_POST['path'] = "/" . $_POST['path'];
+    }
+    if (!preg_match('/\/$/', $_POST['path'])) {
+        $_POST['path'] = $_POST['path'] . "/";
+    }
 
-   $pfCollect_Registry->add($_POST);
-   Html::back();
-} else if (isset($_POST["delete_x"])) {
-   $pfCollect_Registry->delete($_POST);
-   Html::back();
+    $pfCollect_Registry->add($_POST);
+    Html::back();
+} elseif (isset($_POST["delete_x"])) {
+    $pfCollect_Registry->delete($_POST);
+    Html::back();
 }

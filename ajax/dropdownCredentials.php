@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,9 +32,9 @@
  */
 
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdownCredentials.php")) {
-   include ("../../../inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+    include("../../../inc/includes.php");
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 
 Session::checkRight('plugin_glpiinventory_credential', READ);

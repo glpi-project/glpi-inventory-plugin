@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,15 +31,20 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 $pfTask = new PluginGlpiinventoryTask();
 
 //Submit the task form parameters
 $pfTask->submitForm($_POST);
 
-Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "admin", "pluginglpiinventorymenu", "task");
+Html::header(
+    __('GLPI Inventory', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "task"
+);
 
 
 

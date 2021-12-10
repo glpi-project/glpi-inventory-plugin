@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,50 +31,50 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
 if (!isset($_GET["id"])) {
-   $_GET["id"] = "";
+    $_GET["id"] = "";
 }
 
 $pfTimeslot = new PluginGlpiinventoryTimeslot();
 //Add a new timeslot
 if (isset($_POST["add"])) {
-   $pfTimeslot->check(-1, CREATE, $_POST);
-   if ($newID = $pfTimeslot->add($_POST)) {
-      if ($_SESSION['glpibackcreated']) {
-         Html::redirect($pfTimeslot->getFormURL()."?id=".$newID);
-      }
-   }
-   Html::back();
+    $pfTimeslot->check(-1, CREATE, $_POST);
+    if ($newID = $pfTimeslot->add($_POST)) {
+        if ($_SESSION['glpibackcreated']) {
+            Html::redirect($pfTimeslot->getFormURL() . "?id=" . $newID);
+        }
+    }
+    Html::back();
 
    // delete a timeslot
-} else if (isset($_POST["delete"])) {
-   $pfTimeslot->check($_POST['id'], DELETE);
-   $ok = $pfTimeslot->delete($_POST);
-   $pfTimeslot->redirectToList();
-
-} else if (isset($_POST["purge"])) {
-   $pfTimeslot->check($_POST['id'], PURGE);
-   $pfTimeslot->delete($_POST, 1);
-   $pfTimeslot->redirectToList();
+} elseif (isset($_POST["delete"])) {
+    $pfTimeslot->check($_POST['id'], DELETE);
+    $ok = $pfTimeslot->delete($_POST);
+    $pfTimeslot->redirectToList();
+} elseif (isset($_POST["purge"])) {
+    $pfTimeslot->check($_POST['id'], PURGE);
+    $pfTimeslot->delete($_POST, 1);
+    $pfTimeslot->redirectToList();
 
    //update a timeslot
-} else if (isset($_POST["update"])) {
-   $pfTimeslot->check($_POST['id'], UPDATE);
-   $pfTimeslot->update($_POST);
-   Html::back();
-
+} elseif (isset($_POST["update"])) {
+    $pfTimeslot->check($_POST['id'], UPDATE);
+    $pfTimeslot->update($_POST);
+    Html::back();
 } else {//print timeslot information
-   Html::header(PluginGlpiinventoryTimeslot::getTypeName(2),
-                $_SERVER['PHP_SELF'],
-                "admin",
-                "pluginglpiinventorymenu",
-                "timeslot");
+    Html::header(
+        PluginGlpiinventoryTimeslot::getTypeName(2),
+        $_SERVER['PHP_SELF'],
+        "admin",
+        "pluginglpiinventorymenu",
+        "timeslot"
+    );
 
-   PluginGlpiinventoryMenu::displayMenu("mini");
-   $pfTimeslot->display(['id' => $_GET["id"]]);
-   Html::footer();
+    PluginGlpiinventoryMenu::displayMenu("mini");
+    $pfTimeslot->display(['id' => $_GET["id"]]);
+    Html::footer();
 }

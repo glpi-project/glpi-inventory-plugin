@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,18 +31,23 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 if (PluginGlpiinventoryMenu::canView()) {
-   Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"], "admin",
-                "pluginglpiinventorymenu", "menu");
+    Html::header(
+        __('GLPI Inventory', 'glpiinventory'),
+        $_SERVER["PHP_SELF"],
+        "admin",
+        "pluginglpiinventorymenu",
+        "menu"
+    );
 
-   echo Html::manageRefreshPage();
+    echo Html::manageRefreshPage();
 
-   PluginGlpiinventoryMenu::displayMenu();
-   PluginGlpiinventoryMenu::board();
+    PluginGlpiinventoryMenu::displayMenu();
+    PluginGlpiinventoryMenu::board();
 } else {
-   Html::displayRightError();
+    Html::displayRightError();
 }
 
 Html::footer();

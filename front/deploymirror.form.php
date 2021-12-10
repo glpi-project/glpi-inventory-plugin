@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,30 +31,35 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('Mirror servers'), $_SERVER["PHP_SELF"], "admin",
-   "pluginglpiinventorymenu", "deploymirror");
+Html::header(
+    __('Mirror servers'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "deploymirror"
+);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
 $mirror = new PluginGlpiinventoryDeployMirror();
 
-if (isset ($_POST["add"])) {
-   $newID = $mirror->add($_POST);
-   Html::back();
-} else if (isset ($_POST["update"])) {
-   $mirror->update($_POST);
-   Html::back();
-} else if (isset ($_POST["delete"])) {
-   $mirror->delete($_POST);
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployMirror'));
+if (isset($_POST["add"])) {
+    $newID = $mirror->add($_POST);
+    Html::back();
+} elseif (isset($_POST["update"])) {
+    $mirror->update($_POST);
+    Html::back();
+} elseif (isset($_POST["delete"])) {
+    $mirror->delete($_POST);
+    Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployMirror'));
 }
 
 $id = "";
 if (isset($_GET["id"])) {
-   $id = $_GET["id"];
+    $id = $_GET["id"];
 }
 $mirror->display(['id' => $id]);
 //$mirror->showForm($id);

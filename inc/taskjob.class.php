@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,20 +32,21 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access this file directly");
+    die("Sorry. You can't access this file directly");
 }
 
 /**
  * Manage the task jobs.
  */
-class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
+class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_task';
+    public static $rightname = 'plugin_glpiinventory_task';
 
    /**
     * Get name of this type by language of the user connected
@@ -52,9 +54,10 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb = 0) {
-      return __('Job', 'glpiinventory');
-   }
+    public static function getTypeName($nb = 0)
+    {
+        return __('Job', 'glpiinventory');
+    }
 
 
    /**
@@ -62,9 +65,10 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     *
     * @return boolean
     */
-   static function canCreate() {
-      return true;
-   }
+    public static function canCreate()
+    {
+        return true;
+    }
 
 
    /**
@@ -72,12 +76,13 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     *
     * @return array
     */
-   static function getJoinQuery() {
-      return [
+    public static function getJoinQuery()
+    {
+        return [
           'taskjobs' =>
-               "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` as taskjob\n".
+               "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` as taskjob\n" .
                "ON taskjob.`plugin_glpiinventory_tasks_id` = task.`id`"];
-   }
+    }
 
 
    /**
@@ -85,32 +90,33 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     *
     * @return array
     */
-   function rawSearchOptions() {
+    public function rawSearchOptions()
+    {
 
-      $tab = [];
+        $tab = [];
 
-      $tab[] = [
+        $tab[] = [
          'id' => 'common',
          'name' => __('Task')
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'name',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '2',
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
          'name'      => Entity::getTypeName(1),
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'            => '4',
          'table'         => 'glpi_plugin_glpiinventory_tasks',
          'field'         => 'name',
@@ -118,24 +124,24 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
          'name'          => __('Task'),
          'datatype'      => 'itemlink',
          'itemlink_type' => 'PluginGlpiinventoryTask',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '5',
          'table'     => $this->getTable(),
          'field'     => 'status',
          'name'      => __('Status'),
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '6',
          'table'     => $this->getTable(),
          'field'     => 'id',
          'name'      => __('ID'),
-      ];
+        ];
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
    /**
@@ -143,11 +149,12 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     *
     * @return object PluginGlpiinventoryTask instance
     */
-   function getTask() {
-      $pfTask = new PluginGlpiinventoryTask();
-      $pfTask->getFromDB($this->fields['plugin_glpiinventory_tasks_id']);
-      return $pfTask;
-   }
+    public function getTask()
+    {
+        $pfTask = new PluginGlpiinventoryTask();
+        $pfTask->getFromDB($this->fields['plugin_glpiinventory_tasks_id']);
+        return $pfTask;
+    }
 
 
    /**
@@ -161,44 +168,46 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param string $entity_restrict
     * @return string unique id of html element
     */
-   function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '') {
-      global $CFG_GLPI;
+    public function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '')
+    {
+        global $CFG_GLPI;
 
-      $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
-      $a_type = [];
-      $a_type[''] = Dropdown::EMPTY_VALUE;
-      if ($myname == 'action') {
-         $a_type['Agent'] = Agent::getTypeName();
-      }
-      foreach ($a_methods as $datas) {
-         if ($method == $datas['method']) {
-            $module = $datas['module'];
-            $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
-            if (is_callable([$class, "task_".$myname."type_".$method])) {
-               $a_type = call_user_func([$class, "task_".$myname."type_".$method], $a_type);
+        $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
+        $a_type = [];
+        $a_type[''] = Dropdown::EMPTY_VALUE;
+        if ($myname == 'action') {
+            $a_type['Agent'] = Agent::getTypeName();
+        }
+        foreach ($a_methods as $datas) {
+            if ($method == $datas['method']) {
+                $module = $datas['module'];
+                $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
+                if (is_callable([$class, "task_" . $myname . "type_" . $method])) {
+                    $a_type = call_user_func([$class, "task_" . $myname . "type_" . $method], $a_type);
+                }
             }
-         }
-      }
+        }
 
-      $rand = Dropdown::showFromArray(ucfirst($myname)."Type", $a_type);
+        $rand = Dropdown::showFromArray(ucfirst($myname) . "Type", $a_type);
 
-      $params=[ucfirst($myname).'Type'=>'__VALUE__',
+        $params = [ucfirst($myname) . 'Type' => '__VALUE__',
             'entity_restrict' => $entity_restrict,
             'rand'            => $rand,
-            'myname'          => ucfirst($myname)."Type",
+            'myname'          => ucfirst($myname) . "Type",
             'name'            => $myname,
             'method'          => $method,
-            $myname.'typeid'  => 'dropdown_'.ucfirst($myname).'Type'.$rand,
+            $myname . 'typeid'  => 'dropdown_' . ucfirst($myname) . 'Type' . $rand,
             'taskjobs_id'     => $taskjobs_id];
 
-      Ajax::updateItemOnEvent(
-              'dropdown_'.ucfirst($myname).'Type'.$rand,
-              "show_".ucfirst($myname)."List".$taskjobs_id,
-              Plugin::getWebDir('glpiinventory')."/ajax/dropdowntypelist.php",
-              $params);
+        Ajax::updateItemOnEvent(
+            'dropdown_' . ucfirst($myname) . 'Type' . $rand,
+            "show_" . ucfirst($myname) . "List" . $taskjobs_id,
+            Plugin::getWebDir('glpiinventory') . "/ajax/dropdowntypelist.php",
+            $params
+        );
 
-      return $rand;
-   }
+        return $rand;
+    }
 
 
    /**
@@ -208,42 +217,42 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param string $moduletype
     * @return array
     */
-   function getTypesForModule($method, $moduletype) {
+    public function getTypesForModule($method, $moduletype)
+    {
 
-      $available_methods = PluginGlpiinventoryStaticmisc::getmethods();
-      $types = [];
-      if ($moduletype === 'actors') {
-         $types['Agent'] = Agent::getTypeName();
-      }
+        $available_methods = PluginGlpiinventoryStaticmisc::getmethods();
+        $types = [];
+        if ($moduletype === 'actors') {
+            $types['Agent'] = Agent::getTypeName();
+        }
 
-      /**
-       * TODO: move staticmisc actors and targets related methods to the relevant Module classes
-       * ( I don't have time for this yet and this is why i can live with a simple mapping string
-       * table)
-       */
-      switch ($moduletype) {
+       /**
+        * TODO: move staticmisc actors and targets related methods to the relevant Module classes
+        * ( I don't have time for this yet and this is why i can live with a simple mapping string
+        * table)
+        */
+        switch ($moduletype) {
+            case 'actors':
+                $moduletype_tmp = 'action';
+                break;
 
-         case 'actors':
-            $moduletype_tmp = 'action';
-            break;
+            case 'targets':
+                $moduletype_tmp = 'definition';
+                break;
+        }
 
-         case 'targets':
-            $moduletype_tmp = 'definition';
-            break;
-      }
-
-      foreach ($available_methods as $available_method) {
-         if ($method == $available_method['method']) {
-            $module = $available_method['module'];
-            $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
-            $class_method = [$class, "task_".$moduletype_tmp."type_".$method];
-            if (is_callable($class_method)) {
-               $types = call_user_func($class_method, $types);
+        foreach ($available_methods as $available_method) {
+            if ($method == $available_method['method']) {
+                $module = $available_method['module'];
+                $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
+                $class_method = [$class, "task_" . $moduletype_tmp . "type_" . $method];
+                if (is_callable($class_method)) {
+                    $types = call_user_func($class_method, $types);
+                }
             }
-         }
-      }
-      return $types;
-   }
+        }
+        return $types;
+    }
 
 
    /**
@@ -260,56 +269,70 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param integer $title
     * @return string unique id of html element
     */
-   function dropdownvalue($myname, $definitiontype, $method, $deftypeid, $taskjobs_id, $value = 0,
-                          $entity_restrict = '', $title = 0) {
-      global $CFG_GLPI;
+    public function dropdownvalue(
+        $myname,
+        $definitiontype,
+        $method,
+        $deftypeid,
+        $taskjobs_id,
+        $value = 0,
+        $entity_restrict = '',
+        $title = 0
+    ) {
+        global $CFG_GLPI;
 
-      $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
-      $module = '';
-      foreach ($a_methods as $datas) {
-         if ($method == $datas['method']) {
-            $module = $datas['module'];
-         }
-      }
+        $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
+        $module = '';
+        foreach ($a_methods as $datas) {
+            if ($method == $datas['method']) {
+                $module = $datas['module'];
+            }
+        }
 
-      $rand = '';
-      $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
-      if (is_callable([$class, "task_".$_POST['name']."selection_".
-            $definitiontype."_".$method])) {
-         $rand = call_user_func([$class,
-                                      "task_".$_POST['name']."selection_".$definitiontype."_".
+        $rand = '';
+        $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
+        if (
+            is_callable([$class, "task_" . $_POST['name'] . "selection_" .
+            $definitiontype . "_" . $method])
+        ) {
+            $rand = call_user_func(
+                [$class,
+                                      "task_" . $_POST['name'] . "selection_" . $definitiontype . "_" .
                                           $method],
-                                $title);
+                $title
+            );
 
-         $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
-      } else {
-         $a_data = $this->getAgents($method);
+            $iddropdown = "dropdown_" . $_POST['name'] . "selectiontoadd";
+        } else {
+            $a_data = $this->getAgents($method);
 
-         $rand = Dropdown::showFromArray($_POST['name'].'selectiontoadd', $a_data);
-         $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
-      }
+            $rand = Dropdown::showFromArray($_POST['name'] . 'selectiontoadd', $a_data);
+            $iddropdown = "dropdown_" . $_POST['name'] . "selectiontoadd";
+        }
 
-      echo "<br/><center><input type='button' id='add_button_".$_POST['name'].$taskjobs_id."' ".
-              "name='add_button_".$_POST['name']."' value=\"".__('Add').
+        echo "<br/><center><input type='button' id='add_button_" . $_POST['name'] . $taskjobs_id . "' " .
+              "name='add_button_" . $_POST['name'] . "' value=\"" . __('Add') .
               "\" class='submit'></center>";
-      $params = ['items_id'  => '__VALUE0__',
-                      'add_button_'.$_POST['name'].$taskjobs_id => '__VALUE1__',
+        $params = ['items_id'  => '__VALUE0__',
+                      'add_button_' . $_POST['name'] . $taskjobs_id => '__VALUE1__',
                       'itemtype'  => $definitiontype,
                       'rand'      => $rand,
                       'myname'    => 'items_id',
                       'type'      => $_POST['name'],
-                      'taskjobs_id'=>$taskjobs_id];
-      Ajax::updateItemOnEvent([$iddropdown.$rand , "add_button_".$_POST['name'].$taskjobs_id],
-                              "Additem_$rand",
-                              Plugin::getWebDir('glpiinventory')."/ajax/taskjobaddtype.php",
-                              $params,
-                              ["click"],
-                              "-1",
-                              "-1",
-                              [__('Add')]);
+                      'taskjobs_id' => $taskjobs_id];
+        Ajax::updateItemOnEvent(
+            [$iddropdown . $rand , "add_button_" . $_POST['name'] . $taskjobs_id],
+            "Additem_$rand",
+            Plugin::getWebDir('glpiinventory') . "/ajax/taskjobaddtype.php",
+            $params,
+            ["click"],
+            "-1",
+            "-1",
+            [__('Add')]
+        );
 
-      echo "<span id='Additem_$rand'></span>";
-   }
+        echo "<span id='Additem_$rand'></span>";
+    }
 
 
    /**
@@ -322,41 +345,46 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param string $entity_restrict restriction of entity if required
     * @return string unique id of html element
     */
-   function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '') {
-      global $CFG_GLPI;
+    public function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '')
+    {
+        global $CFG_GLPI;
 
-      $a_methods               = PluginGlpiinventoryStaticmisc::getmethods();
-      $a_actioninitiontype     = [];
-      $a_actioninitiontype[''] = Dropdown::EMPTY_VALUE;
-      $a_actioninitiontype['Agent'] = Agent::getTypeName();
-      foreach ($a_methods as $datas) {
-         if ($method == $datas['method']) {
-            $module = ucfirst($datas['module']);
-            $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
+        $a_methods               = PluginGlpiinventoryStaticmisc::getmethods();
+        $a_actioninitiontype     = [];
+        $a_actioninitiontype[''] = Dropdown::EMPTY_VALUE;
+        $a_actioninitiontype['Agent'] = Agent::getTypeName();
+        foreach ($a_methods as $datas) {
+            if ($method == $datas['method']) {
+                $module = ucfirst($datas['module']);
+                $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
 
-            if (is_callable([$class, "task_actiontype_".$method])) {
-               $a_actioninitiontype = call_user_func([$class, "task_actiontype_".$method],
-                                                     $a_actioninitiontype);
+                if (is_callable([$class, "task_actiontype_" . $method])) {
+                    $a_actioninitiontype = call_user_func(
+                        [$class, "task_actiontype_" . $method],
+                        $a_actioninitiontype
+                    );
+                }
             }
-         }
-      }
+        }
 
-      $rand = Dropdown::showFromArray($myname, $a_actioninitiontype);
+        $rand = Dropdown::showFromArray($myname, $a_actioninitiontype);
 
-      $params=['ActionType'=>'__VALUE__',
-            'entity_restrict'=>$entity_restrict,
-            'rand'=>$rand,
-            'myname'=>$myname,
-            'method'=>$method,
-            'actiontypeid'=>'dropdown_'.$myname.$rand
+        $params = ['ActionType' => '__VALUE__',
+            'entity_restrict' => $entity_restrict,
+            'rand' => $rand,
+            'myname' => $myname,
+            'method' => $method,
+            'actiontypeid' => 'dropdown_' . $myname . $rand
             ];
-      Ajax::updateItemOnSelectEvent('dropdown_ActionType'.$rand,
-                                    "show_ActionList",
-                                    Plugin::getWebDir('glpiinventory')."/ajax/dropdownactionlist.php",
-                                    $params);
+        Ajax::updateItemOnSelectEvent(
+            'dropdown_ActionType' . $rand,
+            "show_ActionList",
+            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownactionlist.php",
+            $params
+        );
 
-      return $rand;
-   }
+        return $rand;
+    }
 
 
    /**
@@ -371,48 +399,57 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param string $entity_restrict restriction of entity if required
     * @return string unique id of html element
     */
-   function dropdownAction($myname, $actiontype, $method, $actiontypeid, $value = 0,
-                           $entity_restrict = '') {
-      global $CFG_GLPI;
+    public function dropdownAction(
+        $myname,
+        $actiontype,
+        $method,
+        $actiontypeid,
+        $value = 0,
+        $entity_restrict = ''
+    ) {
+        global $CFG_GLPI;
 
-      $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
-      $module = '';
-      foreach ($a_methods as $datas) {
-         if ($method == $datas['method']) {
-            $module = $datas['module'];
-         }
-      }
+        $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
+        $module = '';
+        foreach ($a_methods as $datas) {
+            if ($method == $datas['method']) {
+                $module = $datas['module'];
+            }
+        }
 
-      $rand = '';
+        $rand = '';
 
-      $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
-      if ($actiontype == "Agent") {
-         $actionselection_method = "task_actionselection_Agent_".$method;
-         if (is_callable([$class, $actionselection_method])) {
-            $rand = call_user_func([$class, $actionselection_method]);
-         } else {
-            $a_data = $this->getAgents($method);
+        $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
+        if ($actiontype == "Agent") {
+            $actionselection_method = "task_actionselection_Agent_" . $method;
+            if (is_callable([$class, $actionselection_method])) {
+                $rand = call_user_func([$class, $actionselection_method]);
+            } else {
+                $a_data = $this->getAgents($method);
 
-            $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
-         }
-      } else {
-         $definitionselection_method = "task_definitionselection_".$actiontype."_".$method;
-         if (is_callable([$class, $definitionselection_method])) {
-            $rand = call_user_func([$class, $definitionselection_method]);
-         }
-      }
+                $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
+            }
+        } else {
+            $definitionselection_method = "task_definitionselection_" . $actiontype . "_" . $method;
+            if (is_callable([$class, $definitionselection_method])) {
+                $rand = call_user_func([$class, $definitionselection_method]);
+            }
+        }
 
-      $params=['selection'        => '__VALUE__',
+        $params = ['selection'        => '__VALUE__',
                     'entity_restrict'  => $entity_restrict,
                     'myname'           => $myname,
-                    'actionselectadd'  => 'dropdown_actionselectiontoadd'.$rand,
+                    'actionselectadd'  => 'dropdown_actionselectiontoadd' . $rand,
                     'actiontypeid'     => $actiontypeid];
 
-      Ajax::updateItemOnEvent('addAObject', 'show_ActionListEmpty',
-                              Plugin::getWebDir('glpiinventory')."/ajax/dropdownactionselection.php",
-                              $params, ["click"]);
-
-   }
+        Ajax::updateItemOnEvent(
+            'addAObject',
+            'show_ActionListEmpty',
+            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownactionselection.php",
+            $params,
+            ["click"]
+        );
+    }
 
 
    /**
@@ -421,20 +458,21 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param string $module name of dropdown
     * @return array [id integed agent id] => $name value agent name
     */
-   function getAgents($module) {
-      //Array to store agents that are allowed to use this module
-      $allowed_agents = [];
-      $pfAgentmodule  = new PluginGlpiinventoryAgentmodule();
+    public function getAgents($module)
+    {
+       //Array to store agents that are allowed to use this module
+        $allowed_agents = [];
+        $pfAgentmodule  = new PluginGlpiinventoryAgentmodule();
 
-      //Get all agents that can run the module
-      $array_agents   = $pfAgentmodule->getAgentsCanDo(strtoupper($module));
-      foreach ($array_agents as $id => $data) {
-         $allowed_agents[$id] = $data['name'];
-      }
-      //Sort the array
-      asort($allowed_agents);
-      return $allowed_agents;
-   }
+       //Get all agents that can run the module
+        $array_agents   = $pfAgentmodule->getAgentsCanDo(strtoupper($module));
+        foreach ($array_agents as $id => $data) {
+            $allowed_agents[$id] = $data['name'];
+        }
+       //Sort the array
+        asort($allowed_agents);
+        return $allowed_agents;
+    }
 
 
    /**
@@ -445,121 +483,140 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param integer $disableTimeVerification
     * @return boolean true if all taskjob are ready (so finished from old runnning job)
     */
-   function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
-      global $DB;
+    public function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0)
+    {
+        global $DB;
 
-      $pfTask         = new PluginGlpiinventoryTask();
-      $pfTaskjob      = new PluginGlpiinventoryTaskjob();
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
-      $query  = "SELECT *, UNIX_TIMESTAMP(datetime_start) AS date_scheduled_timestamp
-                 FROM `".$pfTask->getTable()."`
-                 WHERE `id`='".$tasks_id."'
+        $pfTask         = new PluginGlpiinventoryTask();
+        $pfTaskjob      = new PluginGlpiinventoryTaskjob();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
+        $query  = "SELECT *, UNIX_TIMESTAMP(datetime_start) AS date_scheduled_timestamp
+                 FROM `" . $pfTask->getTable() . "`
+                 WHERE `id`='" . $tasks_id . "'
                  LIMIT 1";
-      $result = $DB->query($query);
-      $data   = $DB->fetchAssoc($result);
-      $period = $pfTaskjob->periodicityToTimestamp($data['periodicity_type'],
-                                                   $data['periodicity_count']);
+        $result = $DB->query($query);
+        $data   = $DB->fetchAssoc($result);
+        $period = $pfTaskjob->periodicityToTimestamp(
+            $data['periodicity_type'],
+            $data['periodicity_count']
+        );
 
-      // Calculate next execution from last
-      $queryJob   = "SELECT *
-                     FROM `".$pfTaskjob->getTable()."`
-                     WHERE `plugin_glpiinventory_tasks_id`='".$tasks_id."'
+       // Calculate next execution from last
+        $queryJob   = "SELECT *
+                     FROM `" . $pfTaskjob->getTable() . "`
+                     WHERE `plugin_glpiinventory_tasks_id`='" . $tasks_id . "'
                      ORDER BY `id` DESC";
-      $resultJob   = $DB->query($queryJob);
-      $nb_taskjobs = $DB->numrows($resultJob);
-      // get only with execution_id (same +1) as task
-      $queryJob    = "SELECT *
-                      FROM `".$pfTaskjob->getTable()."`
-                      WHERE `plugin_glpiinventory_tasks_id`='".$tasks_id."'
-                         AND `execution_id`='".($data['execution_id'] + 1)."'
+        $resultJob   = $DB->query($queryJob);
+        $nb_taskjobs = $DB->numrows($resultJob);
+       // get only with execution_id (same +1) as task
+        $queryJob    = "SELECT *
+                      FROM `" . $pfTaskjob->getTable() . "`
+                      WHERE `plugin_glpiinventory_tasks_id`='" . $tasks_id . "'
+                         AND `execution_id`='" . ($data['execution_id'] + 1) . "'
                       ORDER BY `id` DESC";
-      $finished    = 2;
-      $resultJob   = $DB->query($queryJob);
-      $nb_finished = 0;
-      while ($dataJob = $DB->fetchArray($resultJob)) {
-         $a_taskjobstateuniqs = $pfTaskjobstate->find(
-               ['plugin_glpiinventory_taskjobs_id' => $dataJob['id']],
-               ['id DESC'], 1);
-         $a_taskjobstateuniq = current($a_taskjobstateuniqs);
-         $a_taskjobstate = $pfTaskjobstate->find(
-               ['plugin_glpiinventory_taskjobs_id' => $dataJob['id'],
-                'uniqid'                             => $a_taskjobstateuniq['uniqid']]);
-         $taskjobstatefinished = 0;
+        $finished    = 2;
+        $resultJob   = $DB->query($queryJob);
+        $nb_finished = 0;
+        while ($dataJob = $DB->fetchArray($resultJob)) {
+            $a_taskjobstateuniqs = $pfTaskjobstate->find(
+                ['plugin_glpiinventory_taskjobs_id' => $dataJob['id']],
+                ['id DESC'],
+                1
+            );
+            $a_taskjobstateuniq = current($a_taskjobstateuniqs);
+            $a_taskjobstate = $pfTaskjobstate->find(
+                ['plugin_glpiinventory_taskjobs_id' => $dataJob['id'],
+                'uniqid'                             => $a_taskjobstateuniq['uniqid']]
+            );
+            $taskjobstatefinished = 0;
 
-         foreach ($a_taskjobstate as $statedata) {
-            $a_joblog = $pfTaskjoblog->find(
-                  ['plugin_glpiinventory_taskjobstates_id' => $statedata['id'],
-                   'state'                                   => [2, 4, 5]]);
-            if (count($a_joblog) > 0) {
-               $taskjobstatefinished++;
+            foreach ($a_taskjobstate as $statedata) {
+                 $a_joblog = $pfTaskjoblog->find(
+                     ['plugin_glpiinventory_taskjobstates_id' => $statedata['id'],
+                     'state'                                   => [2,
+                     4,
+                     5]]
+                 );
+                if (count($a_joblog) > 0) {
+                     $taskjobstatefinished++;
+                }
             }
-         }
-         if ((count($a_taskjobstate) == $taskjobstatefinished)
-                 AND (count($a_taskjobstate) > 0 )) {
-            if ($finished == '2') {
-               $finished = 1;
-            }
-            $nb_finished++;
-         } else {
-            $finished = 0;
-         }
-      }
-      if ($nb_finished != $nb_taskjobs) {
-         if ($disableTimeVerification == '1') { // Forcerun
-            $queryJob2 = "SELECT * FROM `".$pfTaskjob->getTable()."`
-            WHERE `plugin_glpiinventory_tasks_id`='".$tasks_id."'
-               AND `execution_id`='".$data['execution_id']."'
-            ORDER BY `id` DESC";
-            $resultJob2 = $DB->query($queryJob2);
-            if ($DB->numrows($resultJob2) == $nb_taskjobs) {
-               $finished = 1;
-               return true;
+            if (
+                (count($a_taskjobstate) == $taskjobstatefinished)
+                 and (count($a_taskjobstate) > 0 )
+            ) {
+                if ($finished == '2') {
+                    $finished = 1;
+                }
+                $nb_finished++;
             } else {
-               $finished = 0;
+                $finished = 0;
             }
-         } else {
-            $finished = 0;
-         }
-      }
-      // if all jobs are finished, we calculate if we reinitialize all jobs
-      if ($finished == "1") {
-         $exe = $data['execution_id'];
-         unset($data['execution_id']);
+        }
+        if ($nb_finished != $nb_taskjobs) {
+            if ($disableTimeVerification == '1') { // Forcerun
+                $queryJob2 = "SELECT * FROM `" . $pfTaskjob->getTable() . "`
+            WHERE `plugin_glpiinventory_tasks_id`='" . $tasks_id . "'
+               AND `execution_id`='" . $data['execution_id'] . "'
+            ORDER BY `id` DESC";
+                $resultJob2 = $DB->query($queryJob2);
+                if ($DB->numrows($resultJob2) == $nb_taskjobs) {
+                    $finished = 1;
+                    return true;
+                } else {
+                    $finished = 0;
+                }
+            } else {
+                $finished = 0;
+            }
+        }
+       // if all jobs are finished, we calculate if we reinitialize all jobs
+        if ($finished == "1") {
+            $exe = $data['execution_id'];
+            unset($data['execution_id']);
 
-         $DB->update(
-            $pfTaskjob->getTable(), [
-               'status' => 0
-            ], [
-               'plugin_glpiinventory_tasks_id' => $data['id']
-            ]
-         );
+            $DB->update(
+                $pfTaskjob->getTable(),
+                [
+                'status' => 0
+                ],
+                [
+                'plugin_glpiinventory_tasks_id' => $data['id']
+                ]
+            );
 
-         if ($period != '0') {
-            if (is_null($data['date_scheduled_timestamp'])) {
-               $data['date_scheduled_timestamp'] = date('U');
+            if ($period != '0') {
+                if (is_null($data['date_scheduled_timestamp'])) {
+                    $data['date_scheduled_timestamp'] = date('U');
+                }
+                if (
+                    ($data['date_scheduled_timestamp'] + $period) <= date('U')
+                    and $period = ! '0'
+                ) {
+                    $periodtotal = $period;
+                    for ($i = 2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
+                        $periodtotal = $period * $i;
+                    }
+                    $data['datetime_start'] = date(
+                        "Y-m-d H:i:s",
+                        $data['date_scheduled_timestamp'] + $periodtotal
+                    );
+                } elseif ($data['date_scheduled_timestamp'] <= date('U')) {
+                    $data['datetime_start'] = date(
+                        "Y-m-d H:i:s",
+                        $data['date_scheduled_timestamp'] + $period
+                    );
+                }
             }
-            if (($data['date_scheduled_timestamp'] + $period) <= date('U')
-                    AND $period =! '0') {
-               $periodtotal = $period;
-               for ($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
-                  $periodtotal = $period * $i;
-               }
-               $data['datetime_start'] = date("Y-m-d H:i:s",
-                                              $data['date_scheduled_timestamp'] + $periodtotal);
-            } else if ($data['date_scheduled_timestamp'] <= date('U')) {
-               $data['datetime_start'] = date("Y-m-d H:i:s",
-                                              $data['date_scheduled_timestamp'] + $period);
-            }
-         }
-         $data['execution_id'] = $exe + 1;
-         unset($data['comment']);
-         $pfTask->update($data);
-         return true;
-      } else {
-         return false;
-      }
-   }
+            $data['execution_id'] = $exe + 1;
+            unset($data['comment']);
+            $pfTask->update($data);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
    /**
@@ -569,185 +626,206 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param integer $periodicity_count number of type time
     * @return integer in seconds
     */
-   function periodicityToTimestamp($periodicity_type, $periodicity_count) {
-      $period = 0;
-      switch ($periodicity_type) {
+    public function periodicityToTimestamp($periodicity_type, $periodicity_count)
+    {
+        $period = 0;
+        switch ($periodicity_type) {
+            case 'minutes':
+                $period = $periodicity_count * 60;
+                break;
 
-         case 'minutes':
-            $period = $periodicity_count * 60;
-            break;
+            case 'hours':
+                $period = $periodicity_count * 60 * 60;
+                break;
 
-         case 'hours':
-            $period = $periodicity_count * 60 * 60;
-            break;
+            case 'days':
+                $period = $periodicity_count * 60 * 60 * 24;
+                break;
 
-         case 'days':
-            $period = $periodicity_count * 60 * 60 * 24;
-            break;
-
-         case 'months':
-            $period = $periodicity_count * 60 * 60 * 24 * 30; //month
-            break;
-
-      }
-      return $period;
-   }
+            case 'months':
+                $period = $periodicity_count * 60 * 60 * 24 * 30; //month
+                break;
+        }
+        return $period;
+    }
 
    /**
     * Cron task: finish task if have some problem or started for so long time
     *
     * @global object $DB
     */
-   function CronCheckRunnningJobs() {
-      global $DB;
+    public function CronCheckRunnningJobs()
+    {
+        global $DB;
 
-      // Get all taskjobstate running
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
+       // Get all taskjobstate running
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
 
-      $a_taskjobstate = $DB->request([
+        $a_taskjobstate = $DB->request([
          'FROM'    => 'glpi_plugin_glpiinventory_taskjobstates',
          'WHERE'   => ['state' => [0, 1, 2]],
          'GROUPBY' => ['uniqid', 'agents_id']]);
-      foreach ($a_taskjobstate as $data) {
-         $sql = "SELECT * FROM `glpi_plugin_glpiinventory_tasks`
+        foreach ($a_taskjobstate as $data) {
+            $sql = "SELECT * FROM `glpi_plugin_glpiinventory_tasks`
             LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
                ON `plugin_glpiinventory_tasks_id`=`glpi_plugin_glpiinventory_tasks`.`id`
-            WHERE `glpi_plugin_glpiinventory_taskjobs`.`id`='".
-                 $data['plugin_glpiinventory_taskjobs_id']."'
+            WHERE `glpi_plugin_glpiinventory_taskjobs`.`id`='" .
+                 $data['plugin_glpiinventory_taskjobs_id'] . "'
             LIMIT 1 ";
-         $result = $DB->query($sql);
-         if ($DB->numrows($result) != 0) {
-            $task = $DB->fetchAssoc($result);
-            if ($task['communication'] == 'pull') {
-               $has_recent_log_entries = $pfTaskjoblog->find(
-                     ['plugin_glpiinventory_taskjobstates_id' => $data['id']],
-                     ['id DESC'], 1);
-               $finish = false;
-               if (count($has_recent_log_entries) == 1) {
-                  $data2 = current($has_recent_log_entries);
-                  $date = strtotime($data2['date']);
-                  $date += (4 * 3600);
-                  if ($date < date('U')) {
-                     $finish = true;
-                  }
-               } else {
-                  $finish = true;
-               }
+            $result = $DB->query($sql);
+            if ($DB->numrows($result) != 0) {
+                $task = $DB->fetchAssoc($result);
+                if ($task['communication'] == 'pull') {
+                    $has_recent_log_entries = $pfTaskjoblog->find(
+                        ['plugin_glpiinventory_taskjobstates_id' => $data['id']],
+                        ['id DESC'],
+                        1
+                    );
+                    $finish = false;
+                    if (count($has_recent_log_entries) == 1) {
+                          $data2 = current($has_recent_log_entries);
+                          $date = strtotime($data2['date']);
+                          $date += (4 * 3600);
+                        if ($date < date('U')) {
+                            $finish = true;
+                        }
+                    } else {
+                        $finish = true;
+                    }
 
-               // No news from the agent since 4 hour. The agent is probably crached.
-               //Let's cancel the task
-               if ($finish) {
-                     $a_statustmp = $pfTaskjobstate->find(
-                           ['uniqid' => $data['uniqid'],
+                    // No news from the agent since 4 hour. The agent is probably crached.
+                    //Let's cancel the task
+                    if ($finish) {
+                        $a_statustmp = $pfTaskjobstate->find(
+                            ['uniqid' => $data['uniqid'],
                             'agents_id' => $data['agents_id'],
-                            'state'  => [1, 2]]);
-                  foreach ($a_statustmp as $datatmp) {
-                     $pfTaskjobstate->changeStatusFinish($datatmp['id'],
-                                                      0,
-                                                      '',
-                                                      1,
-                                                      "==agentcrashed==");
-                  }
-               }
-            } else if ($task['communication'] == 'push') {
-               $a_valid = $pfTaskjoblog->find(
-                     ['plugin_glpiinventory_taskjobstates_id' => $data['id'],
-                      'ADDTIME(date, "00:10:00")' => ['<',  'NOW()']],
-                     ['id DESC'], 1);
-
-               if (count($a_valid) == '1') {
-                  // Get agent status
-                  $agentreturn = $this->getRealStateAgent(
-                                                $data['agents_id']);
-
-                  switch ($agentreturn) {
-
-                     case 'waiting':
-                        // token is bad and must force cancel task in server
-                        $a_statetmp = $pfTaskjobstate->find(
-                              ['uniqid' => $data['uniqid'],
-                               'agents_id' => $data['agents_id'],
-                               'state'  => [0, 1, 2]]);
-                        foreach ($a_statetmp as $datatmp) {
-                           $pfTaskjobstate->changeStatusFinish($datatmp['id'],
-                                                                 0,
-                                                                 '',
-                                                                 1,
-                                                                 "==badtoken==");
+                            'state'  => [1,
+                            2]]
+                        );
+                        foreach ($a_statustmp as $datatmp) {
+                            $pfTaskjobstate->changeStatusFinish(
+                                $datatmp['id'],
+                                0,
+                                '',
+                                1,
+                                "==agentcrashed=="
+                            );
                         }
-                        break;
+                    }
+                } elseif ($task['communication'] == 'push') {
+                    $a_valid = $pfTaskjoblog->find(
+                        ['plugin_glpiinventory_taskjobstates_id' => $data['id'],
+                        'ADDTIME(date, "00:10:00")' => ['<',  'NOW()']],
+                        ['id DESC'],
+                        1
+                    );
 
-                     case 'running':
-                         // just wait and do nothing
-                        break;
+                    if (count($a_valid) == '1') {
+                         // Get agent status
+                         $agentreturn = $this->getRealStateAgent(
+                             $data['agents_id']
+                         );
 
-                     case 'noanswer':
-                        // agent crash or computer is shutdown and force cancel task in server
-                        $a_statetmp = $pfTaskjobstate->find(
-                              ['uniqid' => $data['uniqid'],
-                               'agents_id' => $data['agents_id'],
-                               'state'  => [1, 2]]);
-                        foreach ($a_statetmp as $datatmp) {
-                           $pfTaskjobstate->changeStatusFinish($datatmp['id'],
-                                                               0,
-                                                               '',
-                                                               1,
-                                                               "==agentcrashed==");
+                        switch ($agentreturn) {
+                            case 'waiting':
+                              // token is bad and must force cancel task in server
+                                $a_statetmp = $pfTaskjobstate->find(
+                                    ['uniqid' => $data['uniqid'],
+                                    'agents_id' => $data['agents_id'],
+                                    'state'  => [0,
+                                    1,
+                                    2]]
+                                );
+                                foreach ($a_statetmp as $datatmp) {
+                                           $pfTaskjobstate->changeStatusFinish(
+                                               $datatmp['id'],
+                                               0,
+                                               '',
+                                               1,
+                                               "==badtoken=="
+                                           );
+                                }
+                                break;
+
+                            case 'running':
+                          // just wait and do nothing
+                                break;
+
+                            case 'noanswer':
+                                   // agent crash or computer is shutdown and force cancel task in server
+                                   $a_statetmp = $pfTaskjobstate->find(
+                                       ['uniqid' => $data['uniqid'],
+                                       'agents_id' => $data['agents_id'],
+                                       'state'  => [1,
+                                       2]]
+                                   );
+                                foreach ($a_statetmp as $datatmp) {
+                                        $pfTaskjobstate->changeStatusFinish(
+                                            $datatmp['id'],
+                                            0,
+                                            '',
+                                            1,
+                                            "==agentcrashed=="
+                                        );
+                                }
+                                  $a_valid4h = $pfTaskjoblog->find(
+                                      ['plugin_glpiinventory_taskjobstates_id' => $data['id']],
+                                      ['id DESC'],
+                                      1
+                                  );
+                                  $finish = false;
+                                if (count($a_valid4h) == 1) {
+                                        $datajs = current($a_valid4h);
+                                        $date = strtotime($datajs['date']);
+                                        $date += (4 * 3600);
+                                    if ($date < date('U')) {
+                                        $finish = true;
+                                    }
+                                } else {
+                                    $finish = true;
+                                }
+
+                                if ($finish) {
+                                    $a_statetmp = $pfTaskjobstate->find(
+                                        ['uniqid' => $data['uniqid'],
+                                        'agents_id' => $data['agents_id'],
+                                        'state' => 0]
+                                    );
+                                    foreach ($a_statetmp as $datatmp) {
+                                         $pfTaskjobstate->changeStatusFinish(
+                                             $datatmp['id'],
+                                             0,
+                                             '',
+                                             1,
+                                             "==agentcrashed=="
+                                         );
+                                    }
+                                }
+                                break;
+
+                            case 'noip':
+                                 // just wait and do nothing
+                                break;
                         }
-                        $a_valid4h = $pfTaskjoblog->find(
-                              ['plugin_glpiinventory_taskjobstates_id' => $data['id']],
-                              ['id DESC'], 1);
-                        $finish = false;
-                        if (count($a_valid4h) == 1) {
-                           $datajs = current($a_valid4h);
-                           $date = strtotime($datajs['date']);
-                           $date += (4 * 3600);
-                           if ($date < date('U')) {
-                              $finish = true;
-                           }
-                        } else {
-                           $finish = true;
-                        }
-
-                        if ($finish) {
-                           $a_statetmp = $pfTaskjobstate->find(
-                                 ['uniqid' => $data['uniqid'],
-                                  'agents_id' => $data['agents_id'],
-                                  'state' => 0]);
-                           foreach ($a_statetmp as $datatmp) {
-                              $pfTaskjobstate->changeStatusFinish($datatmp['id'],
-                                                                  0,
-                                                                  '',
-                                                                  1,
-                                                                  "==agentcrashed==");
-                           }
-                        }
-                        break;
-
-                     case 'noip':
-                        // just wait and do nothing
-                        break;
-
-                  }
-               }
+                    }
+                }
             }
-         }
-      }
+        }
 
-      // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
-      $sql = "SELECT *
+       // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
+        $sql = "SELECT *
       FROM `glpi_plugin_glpiinventory_taskjobs`
       WHERE (
          SELECT count(*) FROM glpi_plugin_glpiinventory_taskjobstates
          WHERE plugin_glpiinventory_taskjobs_id = `glpi_plugin_glpiinventory_taskjobs`.id
             AND glpi_plugin_glpiinventory_taskjobstates.state <3) = 0
             AND `glpi_plugin_glpiinventory_taskjobs`.`status`=1";
-      $result=$DB->query($sql);
-      while ($data=$DB->fetchArray($result)) {
-         $this->reinitializeTaskjobs($data['plugin_glpiinventory_tasks_id'], '1');
-      }
-   }
+        $result = $DB->query($sql);
+        while ($data = $DB->fetchArray($result)) {
+            $this->reinitializeTaskjobs($data['plugin_glpiinventory_tasks_id'], '1');
+        }
+    }
 
 
    /**
@@ -756,48 +834,51 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     *
     * @return boolean ( What does this return value mean ? -- Kevin Roy <kiniou@gmail.com> )
     */
-   function checkConfiguration() {
+    public function checkConfiguration()
+    {
 
-      $return = true;
-      $input = [];
-      $input['id'] = $this->fields['id'];
-      $targets = importArrayFromDB($this->fields['targets']);
-      foreach ($targets as $num=>$data) {
-         $classname = key($data);
-         if ($classname == '') {
-            unset($targets[$num]);
-         } else {
-            $Class = new $classname;
-            if (!$Class->getFromDB(current($data))) {
-               unset($targets[$num]);
+        $return = true;
+        $input = [];
+        $input['id'] = $this->fields['id'];
+        $targets = importArrayFromDB($this->fields['targets']);
+        foreach ($targets as $num => $data) {
+            $classname = key($data);
+            if ($classname == '') {
+                unset($targets[$num]);
+            } else {
+                $Class = new $classname();
+                if (!$Class->getFromDB(current($data))) {
+                    unset($targets[$num]);
+                }
             }
-         }
-      }
-      if (count($targets) == '0') {
-         $input['targets'] = '';
-         $return = false;
-      } else {
-         $input['targets'] = exportArrayToDB($targets);
-      }
-      $actors = importArrayFromDB($this->fields['actors']);
-      foreach ($actors as $num=>$data) {
-         $classname = key($data);
-         $Class = new $classname;
-         if (!$Class->getFromDB(current($data))
-                 AND (current($data) != ".1")
-                 AND (current($data) != ".2")) {
-            unset($actors[$num]);
-         }
-      }
-      if (count($actors) == '0') {
-         $input['actors'] = '';
-         $return = false;
-      } else {
-         $input['actors'] = exportArrayToDB($actors);
-      }
-      $this->update($input);
-      return $return;
-   }
+        }
+        if (count($targets) == '0') {
+            $input['targets'] = '';
+            $return = false;
+        } else {
+            $input['targets'] = exportArrayToDB($targets);
+        }
+        $actors = importArrayFromDB($this->fields['actors']);
+        foreach ($actors as $num => $data) {
+            $classname = key($data);
+            $Class = new $classname();
+            if (
+                !$Class->getFromDB(current($data))
+                 and (current($data) != ".1")
+                 and (current($data) != ".2")
+            ) {
+                unset($actors[$num]);
+            }
+        }
+        if (count($actors) == '0') {
+            $input['actors'] = '';
+            $return = false;
+        } else {
+            $input['actors'] = exportArrayToDB($actors);
+        }
+        $this->update($input);
+        return $return;
+    }
 
 
    /**
@@ -805,46 +886,54 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     *
     * @param object $parm PluginGlpiinventoryTaskjob instance
     */
-   static function purgeTaskjob($parm) {
-      // $parm["id"]
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-      $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
+    public static function purgeTaskjob($parm)
+    {
+       // $parm["id"]
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
 
-      // all taskjobs
-      $a_taskjobstates = $pfTaskjobstate->find(
-            ['plugin_glpiinventory_taskjobs_id' => $parm->fields["id"]]);
-      foreach ($a_taskjobstates as $a_taskjobstate) {
-         $a_taskjoblogs = $pfTaskjoblog->find(
-               ['plugin_glpiinventory_taskjobstates_id' => $a_taskjobstate['id']]);
-         foreach ($a_taskjoblogs as $a_taskjoblog) {
-            $pfTaskjoblog->delete($a_taskjoblog, 1);
-         }
-         $pfTaskjobstate->delete($a_taskjobstate, 1);
-      }
-   }
+       // all taskjobs
+        $a_taskjobstates = $pfTaskjobstate->find(
+            ['plugin_glpiinventory_taskjobs_id' => $parm->fields["id"]]
+        );
+        foreach ($a_taskjobstates as $a_taskjobstate) {
+            $a_taskjoblogs = $pfTaskjoblog->find(
+                ['plugin_glpiinventory_taskjobstates_id' => $a_taskjobstate['id']]
+            );
+            foreach ($a_taskjoblogs as $a_taskjoblog) {
+                 $pfTaskjoblog->delete($a_taskjoblog, 1);
+            }
+            $pfTaskjobstate->delete($a_taskjobstate, 1);
+        }
+    }
 
 
    /**
     * Force end task
     */
-   function forceEnd() {
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+    public function forceEnd()
+    {
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-      $a_taskjobstates =
+        $a_taskjobstates =
          $pfTaskjobstate->find(['plugin_glpiinventory_taskjobs_id' => $this->fields["id"]]);
 
-      //TODO: in order to avoid too many atomic operations on DB, convert the
-      //following into a massive prepared operation (ie. ids in one massive action)
-      foreach ($a_taskjobstates as $a_taskjobstate) {
-         $pfTaskjobstate->getFromDB($a_taskjobstate['id']);
-         if ($a_taskjobstate['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
-               $pfTaskjobstate->changeStatusFinish(
-                     $a_taskjobstate['id'], 0, '', 1, "Action cancelled by user"
-               );
-         }
-      }
-      $this->reinitializeTaskjobs($this->fields['plugin_glpiinventory_tasks_id']);
-   }
+       //TODO: in order to avoid too many atomic operations on DB, convert the
+       //following into a massive prepared operation (ie. ids in one massive action)
+        foreach ($a_taskjobstates as $a_taskjobstate) {
+            $pfTaskjobstate->getFromDB($a_taskjobstate['id']);
+            if ($a_taskjobstate['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
+                 $pfTaskjobstate->changeStatusFinish(
+                     $a_taskjobstate['id'],
+                     0,
+                     '',
+                     1,
+                     "Action cancelled by user"
+                 );
+            }
+        }
+        $this->reinitializeTaskjobs($this->fields['plugin_glpiinventory_tasks_id']);
+    }
 
 
    /**
@@ -852,90 +941,89 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     *
     * @param string $method method name of taskjob to display
     */
-   static function quickList($method) {
+    public static function quickList($method)
+    {
 
-      $pfTaskjob = new PluginGlpiinventoryTaskjob();
-      $pfTask = new PluginGlpiinventoryTask();
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
+        $pfTask = new PluginGlpiinventoryTask();
 
-      $a_list = $pfTaskjob->find(['method' => $method]);
+        $a_list = $pfTaskjob->find(['method' => $method]);
 
-      echo "<table class='tab_cadrehov' style='width:950px'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th>".__('Name')."</th>";
-      echo "<th>".__('Active')."</th>";
-      echo "<th>".__('Scheduled date', 'glpiinventory')."</th>";
-      echo "<th>".__('Periodicity', 'glpiinventory')."</th>";
-      echo "<th>".__('Definition', 'glpiinventory')."</td>";
-      echo "<th>".__('Action', 'glpiinventory')."</th>";
-      echo "</tr>";
+        echo "<table class='tab_cadrehov' style='width:950px'>";
+        echo "<tr class='tab_bg_1'>";
+        echo "<th>" . __('Name') . "</th>";
+        echo "<th>" . __('Active') . "</th>";
+        echo "<th>" . __('Scheduled date', 'glpiinventory') . "</th>";
+        echo "<th>" . __('Periodicity', 'glpiinventory') . "</th>";
+        echo "<th>" . __('Definition', 'glpiinventory') . "</td>";
+        echo "<th>" . __('Action', 'glpiinventory') . "</th>";
+        echo "</tr>";
 
-      foreach ($a_list as $data) {
-         $pfTaskjob->getFromDB($data['id']);
-         $pfTask->getFromDB($data['plugin_glpiinventory_tasks_id']);
-         echo "<tr class='tab_bg_1'>";
-         $link_item = $pfTaskjob->getFormURL();
-         $link  = $link_item;
-         $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
-         echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
-         echo "<td>".Dropdown::getYesNo($pfTask->fields['is_active'])."</td>";
-         echo "<td>".$pfTask->fields['datetime_start']."</td>";
-         $a_time = '';
-         switch ($pfTask->fields['periodicity_type']) {
+        foreach ($a_list as $data) {
+            $pfTaskjob->getFromDB($data['id']);
+            $pfTask->getFromDB($data['plugin_glpiinventory_tasks_id']);
+            echo "<tr class='tab_bg_1'>";
+            $link_item = $pfTaskjob->getFormURL();
+            $link  = $link_item;
+            $link .= (strpos($link, '?') ? '&amp;' : '?') . 'id=' . $pfTaskjob->fields['id'];
+            echo "<td><a href='" . $link . "'>" . $pfTaskjob->getNameID(1) . "</a></td>";
+            echo "<td>" . Dropdown::getYesNo($pfTask->fields['is_active']) . "</td>";
+            echo "<td>" . $pfTask->fields['datetime_start'] . "</td>";
+            $a_time = '';
+            switch ($pfTask->fields['periodicity_type']) {
+                case 'minutes':
+                    $a_time = $pfTask->fields['periodicity_count'] . " " .
+                    strtolower(__('Minute(s)', 'glpiinventory'));
+                    break;
 
-            case 'minutes':
-               $a_time = $pfTask->fields['periodicity_count']." ".
-               strtolower(__('Minute(s)', 'glpiinventory'));
-               break;
-
-            case 'hours':
-               $a_time = $pfTask->fields['periodicity_count']." ".
+                case 'hours':
+                    $a_time = $pfTask->fields['periodicity_count'] . " " .
                     strtolower(__('hour(s)', 'glpiinventory'));
-               break;
+                    break;
 
-            case 'days':
-               $a_time = $pfTask->fields['periodicity_count']." ".
+                case 'days':
+                    $a_time = $pfTask->fields['periodicity_count'] . " " .
                     __('day(s)', 'glpiinventory');
-               break;
+                    break;
 
-            case 'months':
-               $a_time = $pfTask->fields['periodicity_count']." ".
+                case 'months':
+                    $a_time = $pfTask->fields['periodicity_count'] . " " .
                     __('months');
-               break;
-
-         }
-         echo "<td>".$a_time."</td>";
-         $a_defs = importArrayFromDB($data['definition']);
-         echo "<td>";
-         foreach ($a_defs as $datadef) {
-            foreach ($datadef as $itemtype=>$items_id) {
-               $class = new $itemtype;
-               $class->getFromDB($items_id);
-               echo $class->getLink(1)." (".$class->getTypeName().")<br/>";
+                    break;
             }
-         }
-         echo "</td>";
-         echo "<td>";
-         $a_acts = importArrayFromDB($data['action']);
-         foreach ($a_acts as $dataact) {
-            foreach ($dataact as $itemtype=>$items_id) {
-               $class = new $itemtype();
-               $itemname = $class->getTypeName();
-               $class->getFromDB($items_id);
-               if ($items_id == '.1') {
-                  $name = __('Auto managenement dynamic of agents', 'glpiinventory');
-               } else if ($items_id == '.2') {
-                  $name =  __('Auto managenement dynamic of agents (same subnet)', 'glpiinventory');
-               } else {
-                  $name = $class->getLink(1);
-               }
-               echo $name.' ('.$itemname.')<br/>';
+            echo "<td>" . $a_time . "</td>";
+            $a_defs = importArrayFromDB($data['definition']);
+            echo "<td>";
+            foreach ($a_defs as $datadef) {
+                foreach ($datadef as $itemtype => $items_id) {
+                    $class = new $itemtype();
+                    $class->getFromDB($items_id);
+                    echo $class->getLink(1) . " (" . $class->getTypeName() . ")<br/>";
+                }
             }
-         }
-         echo "</td>";
-         echo "</tr>";
-      }
-      echo "</table>";
-   }
+            echo "</td>";
+            echo "<td>";
+            $a_acts = importArrayFromDB($data['action']);
+            foreach ($a_acts as $dataact) {
+                foreach ($dataact as $itemtype => $items_id) {
+                    $class = new $itemtype();
+                    $itemname = $class->getTypeName();
+                    $class->getFromDB($items_id);
+                    if ($items_id == '.1') {
+                        $name = __('Auto managenement dynamic of agents', 'glpiinventory');
+                    } elseif ($items_id == '.2') {
+                        $name =  __('Auto managenement dynamic of agents (same subnet)', 'glpiinventory');
+                    } else {
+                        $name = $class->getLink(1);
+                    }
+                    echo $name . ' (' . $itemname . ')<br/>';
+                }
+            }
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
 
 
    /**
@@ -949,43 +1037,46 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param integer $items_id
     * @param integer $taskjobs_id
     */
-   function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id) {
-      global $CFG_GLPI;
+    public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id)
+    {
+        global $CFG_GLPI;
 
-      $this->getFromDB($taskjobs_id);
-      $a_type = importArrayFromDB($this->fields[$type]);
-      $add = 1;
-      foreach ($a_type as $data) {
-         foreach ($data as $key=>$val) {
-            if ($itemtype == $key AND $items_id == $val) {
-               $add = 0;
+        $this->getFromDB($taskjobs_id);
+        $a_type = importArrayFromDB($this->fields[$type]);
+        $add = 1;
+        foreach ($a_type as $data) {
+            foreach ($data as $key => $val) {
+                if ($itemtype == $key and $items_id == $val) {
+                    $add = 0;
+                }
             }
-         }
-      }
-      if ($add == '1') {
-         $a_type[] = [$itemtype => $items_id];
-         $input = [];
-         $input['id'] = $this->fields['id'];
-         $input[$type] = exportArrayToDB($a_type);
-         $this->update($input);
-      }
+        }
+        if ($add == '1') {
+            $a_type[] = [$itemtype => $items_id];
+            $input = [];
+            $input['id'] = $this->fields['id'];
+            $input[$type] = exportArrayToDB($a_type);
+            $this->update($input);
+        }
 
-      //TODO: Clean add form
-      echo "<script type='text/javascript'>
-      //document.getElementById('show_".ucfirst($type)."List').innerHTML='&nbsp';
+       //TODO: Clean add form
+        echo "<script type='text/javascript'>
+      //document.getElementById('show_" . ucfirst($type) . "List').innerHTML='&nbsp';
 
-      Ext.get('".$type.$taskjobs_id."').setDisplayed('none');
+      Ext.get('" . $type . $taskjobs_id . "').setDisplayed('none');
       </script>";
-      // reload item list
-      $params = [];
-      $params['taskjobs_id'] = $taskjobs_id;
-      $params['typename'] = $type;
-      echo "<script type='text/javascript'>";
-      Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                Plugin::getWebDir('glpiinventory')."/ajax/dropdownlist.php",
-                                $params);
-      echo "</script>";
-   }
+       // reload item list
+        $params = [];
+        $params['taskjobs_id'] = $taskjobs_id;
+        $params['typename'] = $type;
+        echo "<script type='text/javascript'>";
+        Ajax::updateItemJsCode(
+            "show" . $type . "list" . $taskjobs_id . "_",
+            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownlist.php",
+            $params
+        );
+        echo "</script>";
+    }
 
 
    /**
@@ -998,30 +1089,33 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param string $items_id
     * @param integer $taskjobs_id
     */
-   function deleteitemtodefatc($type, $a_items_id, $taskjobs_id) {
-      global $CFG_GLPI;
+    public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
+    {
+        global $CFG_GLPI;
 
-      $this->getFromDB($taskjobs_id);
-      $a_type = importArrayFromDB($this->fields[$type]);
-      $split = explode("-", $a_items_id);
-      foreach ($split as $key) {
-         unset($a_type[$key]);
-      }
-      $input = [];
-      $input['id'] = $this->fields['id'];
-      $input[$type] = exportArrayToDB($a_type);
-      $this->update($input);
+        $this->getFromDB($taskjobs_id);
+        $a_type = importArrayFromDB($this->fields[$type]);
+        $split = explode("-", $a_items_id);
+        foreach ($split as $key) {
+            unset($a_type[$key]);
+        }
+        $input = [];
+        $input['id'] = $this->fields['id'];
+        $input[$type] = exportArrayToDB($a_type);
+        $this->update($input);
 
-      // reload item list
-      $params = [];
-      $params['taskjobs_id'] = $taskjobs_id;
-      $params['typename'] = $type;
-      echo "<script type='text/javascript'>";
-      Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                Plugin::getWebDir('glpiinventory')."/ajax/dropdownlist.php",
-                                $params);
-      echo "</script>";
-   }
+       // reload item list
+        $params = [];
+        $params['taskjobs_id'] = $taskjobs_id;
+        $params['typename'] = $type;
+        echo "<script type='text/javascript'>";
+        Ajax::updateItemJsCode(
+            "show" . $type . "list" . $taskjobs_id . "_",
+            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownlist.php",
+            $params
+        );
+        echo "</script>";
+    }
 
 
    /**
@@ -1030,16 +1124,17 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @global array $CFG_GLPI
     * @param string $name name of the action (here definition or action)
     */
-   function plusButton($name) {
-      global $CFG_GLPI;
+    public function plusButton($name)
+    {
+        global $CFG_GLPI;
 
-      if ($this->canUpdate()) {
-         echo "&nbsp;";
-         echo "<img onClick=\"Ext.get('".$name."').setDisplayed('block')\"
-                    title=\"".__('Add')."\" alt=\"".__('Add')."\"
-                    class='pointer'  src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
-      }
-   }
+        if ($this->canUpdate()) {
+            echo "&nbsp;";
+            echo "<img onClick=\"Ext.get('" . $name . "').setDisplayed('block')\"
+                    title=\"" . __('Add') . "\" alt=\"" . __('Add') . "\"
+                    class='pointer'  src='" . $CFG_GLPI["root_doc"] . "/pics/add_dropdown.png'>";
+        }
+    }
 
 
    /**
@@ -1048,62 +1143,67 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param array $a_taskjob
     * @return string uniqid
     */
-   function prepareRunTaskjob($a_taskjob) {
+    public function prepareRunTaskjob($a_taskjob)
+    {
 
-      $itemtype = "PluginGlpiinventory".ucfirst($a_taskjob['method']);
-      $item = new $itemtype;
+        $itemtype = "PluginGlpiinventory" . ucfirst($a_taskjob['method']);
+        $item = new $itemtype();
 
-      if ($a_taskjob['method'] == 'deployinstall'
-              && isset($a_taskjob['definitions_filter'])) {
-         $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
-      } else {
-         $uniqid = $item->prepareRun($a_taskjob['id']);
-      }
-      return $uniqid;
-   }
+        if (
+            $a_taskjob['method'] == 'deployinstall'
+              && isset($a_taskjob['definitions_filter'])
+        ) {
+            $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
+        } else {
+            $uniqid = $item->prepareRun($a_taskjob['id']);
+        }
+        return $uniqid;
+    }
 
 
-   static function restartJob($params) {
-      $task     = new PluginGlpiinventoryTask();
-      $job      = new PluginGlpiinventoryTaskjob();
-      $jobstate = new PluginGlpiinventoryTaskjobstate();
-      $joblog   = new PluginGlpiinventoryTaskjoblog();
-      $agent    = new Agent();
+    public static function restartJob($params)
+    {
+        $task     = new PluginGlpiinventoryTask();
+        $job      = new PluginGlpiinventoryTaskjob();
+        $jobstate = new PluginGlpiinventoryTaskjobstate();
+        $joblog   = new PluginGlpiinventoryTaskjoblog();
+        $agent    = new Agent();
 
-      // get old state
-      $jobstate->getFromDB($params['jobstate_id']);
+       // get old state
+        $jobstate->getFromDB($params['jobstate_id']);
 
-      // prepare new state (copy from old)
-      $run = $jobstate->fields;
-      unset($run['id']);
-      $run['state']  = PluginGlpiinventoryTaskjobstate::PREPARED;
-      $run['uniqid'] = uniqid();
-      if ($run['specificity'] == "") {
-         $run['specificity'] = "NULL";
-      }
+       // prepare new state (copy from old)
+        $run = $jobstate->fields;
+        unset($run['id']);
+        $run['state']  = PluginGlpiinventoryTaskjobstate::PREPARED;
+        $run['uniqid'] = uniqid();
+        if ($run['specificity'] == "") {
+            $run['specificity'] = "NULL";
+        }
 
-      // add this new state and first log
-      if ($run_id = $jobstate->add($run)) {
-         $log = [
+       // add this new state and first log
+        if ($run_id = $jobstate->add($run)) {
+            $log = [
             'date'    => date("Y-m-d H:i:s"),
             'state'   => PluginGlpiinventoryTaskjoblog::TASK_PREPARED,
             'plugin_glpiinventory_taskjobstates_id' => $run_id,
             'comment' => ''
-         ];
-         if ($joblog->add($log)) {
+            ];
+            if ($joblog->add($log)) {
+               //wake up agent (only if task support wakeup)
+                $job->getFromDB($jobstate->fields['plugin_glpiinventory_taskjobs_id']);
+                $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
-            //wake up agent (only if task support wakeup)
-            $job->getFromDB($jobstate->fields['plugin_glpiinventory_taskjobs_id']);
-            $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
-
-            if ($task->fields['wakeup_agent_counter'] > 0
-                && $task->fields['wakeup_agent_time'] > 0) {
-               $agent->getFromDB($params['agent_id']);
-               PluginGlpiinventoryAgentWakeup::wakeUp($agent);
+                if (
+                    $task->fields['wakeup_agent_counter'] > 0
+                    && $task->fields['wakeup_agent_time'] > 0
+                ) {
+                    $agent->getFromDB($params['agent_id']);
+                    PluginGlpiinventoryAgentWakeup::wakeUp($agent);
+                }
             }
-         }
-      }
-   }
+        }
+    }
 
 
    /**
@@ -1112,19 +1212,20 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @param string $method
     * @param integer $taskjobs_id
     */
-   function updateMethod($method, $taskjobs_id) {
+    public function updateMethod($method, $taskjobs_id)
+    {
 
-      $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
-      foreach ($a_methods as $datas) {
-         if ($method == $datas['method']) {
-            $input = [];
-            $input['id'] = $taskjobs_id;
-            $input['method'] = $method;
-            $input['plugins_id'] = PluginGlpiinventoryModule::getModuleId($datas['module']);
-            $this->update($input);
-         }
-      }
-   }
+        $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
+        foreach ($a_methods as $datas) {
+            if ($method == $datas['method']) {
+                $input = [];
+                $input['id'] = $taskjobs_id;
+                $input['method'] = $method;
+                $input['plugins_id'] = PluginGlpiinventoryModule::getModuleId($datas['module']);
+                $this->update($input);
+            }
+        }
+    }
 
 
    /**
@@ -1133,12 +1234,13 @@ class PluginGlpiinventoryTaskjob extends  PluginGlpiinventoryTaskjobView {
     * @global array $CFG_GLPI
     * @param integer $tasks_id
     */
-   function displayList($tasks_id) {
-      global $CFG_GLPI;
+    public function displayList($tasks_id)
+    {
+        global $CFG_GLPI;
 
-      $rand = mt_rand();
+        $rand = mt_rand();
 
-      echo "<script type=\"text/javascript\">
+        echo "<script type=\"text/javascript\">
 function edit_subtype(id,el) {
 
    //remove all border to previous selected item (remove classes)
@@ -1179,116 +1281,117 @@ function new_subtype(id) {
 }
 </script>";
 
-      echo "<table class='tab_cadre_fixe' id='package_order_".$tasks_id."'>";
+        echo "<table class='tab_cadre_fixe' id='package_order_" . $tasks_id . "'>";
 
-      echo "<tr>";
-      echo "<th id='th_title_taskjob_$rand'>";
-      echo "&nbsp;".$this->getTypeName();
+        echo "<tr>";
+        echo "<th id='th_title_taskjob_$rand'>";
+        echo "&nbsp;" . $this->getTypeName();
 
-      echo "&nbsp;";
-      echo "<img id='plus_taskjobs_block{$rand}'";
-      echo " onclick=\"new_subtype({$tasks_id})\" ";
-      echo  " title='".__('Add')."' alt='".__('Add')."' ";
-      echo  " class='pointer' src='".
-            $CFG_GLPI["root_doc"]."/pics/add_dropdown.png' /> ";
+        echo "&nbsp;";
+        echo "<img id='plus_taskjobs_block{$rand}'";
+        echo " onclick=\"new_subtype({$tasks_id})\" ";
+        echo  " title='" . __('Add') . "' alt='" . __('Add') . "' ";
+        echo  " class='pointer' src='" .
+            $CFG_GLPI["root_doc"] . "/pics/add_dropdown.png' /> ";
 
-      echo "</th>";
-      echo "</tr>";
+        echo "</th>";
+        echo "</tr>";
 
-      echo "<tr>";
-      echo "<td style='vertical-align:top'>";
+        echo "<tr>";
+        echo "<td style='vertical-align:top'>";
 
-      /**
-       * Display subtype form
-       **/
-      echo "<form name='additiontaskjob' method='post' ".
+       /**
+        * Display subtype form
+        **/
+        echo "<form name='additiontaskjob' method='post' " .
          " action='taskjob.form.php'>";
-      echo "<input type='hidden' name='orders_id' value='$tasks_id' />";
-      echo "<input type='hidden' name='itemtype' value='PluginGlpiinventoryDeploy".
-         ucfirst('taskjob')."' />";
+        echo "<input type='hidden' name='orders_id' value='$tasks_id' />";
+        echo "<input type='hidden' name='itemtype' value='PluginGlpiinventoryDeploy" .
+         ucfirst('taskjob') . "' />";
 
-      echo "<div id='taskjobs_block'></div>";
-      Html::closeForm();
+        echo "<div id='taskjobs_block'></div>";
+        Html::closeForm();
 
-      $a_taskjobs = getAllDataFromTable(
-              $this->getTable(),
-              ['plugin_glpiinventory_tasks_id' => $tasks_id],
-              false,
-              '`ranking`');
-      echo  "<div id='drag_taskjob_taskjobs'>";
-      echo "<table class='tab_cadrehov package_item_list' id='table_taskjob_$rand' style='width: 950px'>";
-      $i=0;
-      foreach ($a_taskjobs as $data) {
-         echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td class='control'>";
-         Html::showCheckbox(['name'    => 'taskjob_entries[]',
+        $a_taskjobs = getAllDataFromTable(
+            $this->getTable(),
+            ['plugin_glpiinventory_tasks_id' => $tasks_id],
+            false,
+            '`ranking`'
+        );
+        echo  "<div id='drag_taskjob_taskjobs'>";
+        echo "<table class='tab_cadrehov package_item_list' id='table_taskjob_$rand' style='width: 950px'>";
+        $i = 0;
+        foreach ($a_taskjobs as $data) {
+            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo "<td class='control'>";
+            Html::showCheckbox(['name'    => 'taskjob_entries[]',
                                   'value'   => $i]);
-         echo "</td>";
-         echo "<td>";
-         echo "<a class='edit' ".
+            echo "</td>";
+            echo "<td>";
+            echo "<a class='edit' " .
                  "onclick=\"edit_subtype({$data['id']}, this)\">";
-         echo $data['name'];
-         echo "</a><br />";
+            echo $data['name'];
+            echo "</a><br />";
 
-         echo "<b>";
-         echo __('Definition', 'glpiinventory');
-         echo "</b>";
-         echo "<ul class='retChecks'>";
-         $a_definitions = importArrayFromDB($data['definition']);
-         foreach ($a_definitions as $a_definition) {
-            foreach ($a_definition as $itemtype=>$items_id) {
-               echo "<li>";
-               $item = new $itemtype();
-               $item->getFromDB($items_id);
-               echo $item->getTypeName()." > ";
-               echo $item->getLink();
-               echo "</li>";
+            echo "<b>";
+            echo __('Definition', 'glpiinventory');
+            echo "</b>";
+            echo "<ul class='retChecks'>";
+            $a_definitions = importArrayFromDB($data['definition']);
+            foreach ($a_definitions as $a_definition) {
+                foreach ($a_definition as $itemtype => $items_id) {
+                    echo "<li>";
+                    $item = new $itemtype();
+                    $item->getFromDB($items_id);
+                    echo $item->getTypeName() . " > ";
+                    echo $item->getLink();
+                    echo "</li>";
+                }
             }
-         }
-         echo "</ul>";
+            echo "</ul>";
 
-         echo "<b>";
-         echo __('Action', 'glpiinventory');
-         echo "</b>";
-         echo "<ul class='retChecks'>";
-         $a_actions = importArrayFromDB($data['action']);
-         foreach ($a_actions as $a_action) {
-            foreach ($a_action as $itemtype=>$items_id) {
-               echo "<li>";
-               $item = new $itemtype();
-               $item->getFromDB($items_id);
-               echo $item->getTypeName()." > ";
-               echo $item->getLink();
-               echo "</li>";
+            echo "<b>";
+            echo __('Action', 'glpiinventory');
+            echo "</b>";
+            echo "<ul class='retChecks'>";
+            $a_actions = importArrayFromDB($data['action']);
+            foreach ($a_actions as $a_action) {
+                foreach ($a_action as $itemtype => $items_id) {
+                    echo "<li>";
+                    $item = new $itemtype();
+                    $item->getFromDB($items_id);
+                    echo $item->getTypeName() . " > ";
+                    echo $item->getLink();
+                    echo "</li>";
+                }
             }
-         }
-         echo "</ul>";
+            echo "</ul>";
 
-         echo "</td>";
-         echo "</td>";
-         echo "<td class='rowhandler control' title='".__('drag', 'glpiinventory').
+            echo "</td>";
+            echo "</td>";
+            echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory') .
             "'><div class='drag row'></div></td>";
-         echo "</tr>";
-         $i++;
-      }
-      echo "<tr><th>";
-      echo Html::getCheckAllAsCheckbox("taskjobsList$rand", mt_rand());
-      echo "</th><th colspan='3' class='mark'></th></tr>";
-      echo "</table>";
-      echo "</div>";
-      echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
-      echo "<input type='submit' name='delete' value=\"".
-         __('Delete', 'glpiinventory')."\" class='submit'>";
+            echo "</tr>";
+            $i++;
+        }
+        echo "<tr><th>";
+        echo Html::getCheckAllAsCheckbox("taskjobsList$rand", mt_rand());
+        echo "</th><th colspan='3' class='mark'></th></tr>";
+        echo "</table>";
+        echo "</div>";
+        echo "&nbsp;&nbsp;<img src='" . $CFG_GLPI["root_doc"] . "/pics/arrow-left.png' alt=''>";
+        echo "<input type='submit' name='delete' value=\"" .
+         __('Delete', 'glpiinventory') . "\" class='submit'>";
 
-      /**
-       * Initialize drag and drop on subtype lists
-       **/
-      echo "<script type=\"text/javascript\">
+       /**
+        * Initialize drag and drop on subtype lists
+        **/
+        echo "<script type=\"text/javascript\">
       redipsInit('taskjob', 'taskjob', $tasks_id);
 </script>";
 
-      echo "</table>";
-   }
+        echo "</table>";
+    }
 
 
    /**
@@ -1297,12 +1400,13 @@ function new_subtype(id) {
     * @param object|null $checkitem
     * @return array list of actions
     */
-   function getSpecificMassiveActions($checkitem = null) {
+    public function getSpecificMassiveActions($checkitem = null)
+    {
 
-      $actions = [];
-      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'glpiinventory');
-      return $actions;
-   }
+        $actions = [];
+        $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'task_forceend'] = __('Force the end', 'glpiinventory');
+        return $actions;
+    }
 
 
    /**
@@ -1312,25 +1416,26 @@ function new_subtype(id) {
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
-                                                       array $ids) {
+    public static function processMassiveActionsForOneItemtype(
+        MassiveAction $ma,
+        CommonDBTM $item,
+        array $ids
+    ) {
 
-      $pfTaskjob = new PluginGlpiinventoryTaskjob();
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
-      switch ($ma->getAction()) {
+        switch ($ma->getAction()) {
+            case "plugin_glpiinventory_transfert":
+                foreach ($ids as $key) {
+                    $pfTaskjob->getFromDB($key);
+                    $pfTaskjob->forceEnd();
 
-         case "plugin_glpiinventory_transfert" :
-            foreach ($ids as $key) {
-               $pfTaskjob->getFromDB($key);
-               $pfTaskjob->forceEnd();
-
-               //set action massive ok for this item
-                $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
-            }
-            break;
-
-      }
-   }
+                   //set action massive ok for this item
+                    $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                }
+                break;
+        }
+    }
 
 
    /**
@@ -1339,17 +1444,18 @@ function new_subtype(id) {
    * @param $target_task_id the ID of the cloned task
    * @return void
    */
-   static function duplicate($source_tasks_id, $target_tasks_id) {
-      $pfTaskJob = new self();
-      $result    = true;
-      $taskjobs  = $pfTaskJob->find(['plugin_glpiinventory_tasks_id' => $source_tasks_id]);
-      foreach ($taskjobs as $taskjob) {
-         $taskjob['plugin_glpiinventory_tasks_id'] = $target_tasks_id;
-         unset($taskjob['id']);
-         if (!$pfTaskJob->add($taskjob)) {
-            $result = false;
-         }
-      }
-      return $result;
-   }
+    public static function duplicate($source_tasks_id, $target_tasks_id)
+    {
+        $pfTaskJob = new self();
+        $result    = true;
+        $taskjobs  = $pfTaskJob->find(['plugin_glpiinventory_tasks_id' => $source_tasks_id]);
+        foreach ($taskjobs as $taskjob) {
+            $taskjob['plugin_glpiinventory_tasks_id'] = $target_tasks_id;
+            unset($taskjob['id']);
+            if (!$pfTaskJob->add($taskjob)) {
+                $result = false;
+            }
+        }
+        return $result;
+    }
 }

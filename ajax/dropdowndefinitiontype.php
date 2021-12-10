@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,16 +32,17 @@
  */
 
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowndefinitiontype.php")) {
-   include ("../../../inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+    include("../../../inc/includes.php");
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
 
-$pfTaskjob = new PluginGlpiinventoryTaskjob;
+$pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->dropdownDefinitionType(
-        "DefinitionType",
-        filter_input(INPUT_POST, "method"),
-        filter_input(INPUT_POST, "taskjobs_id"),
-        "");
+    "DefinitionType",
+    filter_input(INPUT_POST, "method"),
+    filter_input(INPUT_POST, "taskjobs_id"),
+    ""
+);

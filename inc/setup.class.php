@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,13 +32,14 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the installation and uninstallation of the plugin.
  */
-class PluginGlpiinventorySetup {
+class PluginGlpiinventorySetup
+{
 
 
    /**
@@ -46,49 +48,52 @@ class PluginGlpiinventorySetup {
     * @global object $DB
     * @return true
     */
-   static function uninstall() {
-      global $DB;
+    public static function uninstall()
+    {
+        global $DB;
 
-      CronTask::Unregister('glpiinventory');
-      PluginGlpiinventoryProfile::uninstallProfile();
+        CronTask::Unregister('glpiinventory');
+        PluginGlpiinventoryProfile::uninstallProfile();
 
-      $pfSetup  = new PluginGlpiinventorySetup();
-      $user     = new User();
+        $pfSetup  = new PluginGlpiinventorySetup();
+        $user     = new User();
 
-      if (class_exists('PluginGlpiinventoryConfig')) {
-         $inventory_config      = new PluginGlpiinventoryConfig();
-         $users_id = $inventory_config->getValue('users_id');
-         $user->delete(['id'=>$users_id], 1);
-      }
+        if (class_exists('PluginGlpiinventoryConfig')) {
+            $inventory_config      = new PluginGlpiinventoryConfig();
+            $users_id = $inventory_config->getValue('users_id');
+            $user->delete(['id' => $users_id], 1);
+        }
 
-      if (file_exists(GLPI_PLUGIN_DOC_DIR.'/glpiinventory')) {
-         $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/glpiinventory');
-      }
+        if (file_exists(GLPI_PLUGIN_DOC_DIR . '/glpiinventory')) {
+            $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
+        }
 
-      $result = $DB->query("SHOW TABLES;");
-      while ($data = $DB->fetchArray($result)) {
-         if ((strstr($data[0], "glpi_plugin_glpiinventory_"))
-                 OR (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
-                 OR (strstr($data[0], "glpi_plugin_fusinvinventory_"))
-                OR (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
-                OR (strstr($data[0], "glpi_plugin_tracker"))
-                OR (strstr($data[0], "glpi_dropdown_plugin_tracker"))) {
+        $result = $DB->query("SHOW TABLES;");
+        while ($data = $DB->fetchArray($result)) {
+            if (
+                (strstr($data[0], "glpi_plugin_glpiinventory_"))
+                 or (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
+                 or (strstr($data[0], "glpi_plugin_fusinvinventory_"))
+                or (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
+                or (strstr($data[0], "glpi_plugin_tracker"))
+                or (strstr($data[0], "glpi_dropdown_plugin_tracker"))
+            ) {
+                $query_delete = "DROP TABLE `" . $data[0] . "`;";
+                $DB->query($query_delete) or die($DB->error());
+            }
+        }
 
-            $query_delete = "DROP TABLE `".$data[0]."`;";
-            $DB->query($query_delete) or die($DB->error());
-         }
-      }
-
-      $DB->deleteOrDie(
-         'glpi_displaypreferences', [
+        $DB->deleteOrDie(
+            'glpi_displaypreferences',
+            [
             'itemtype' => ['LIKE', 'PluginGlpiinventory%']
-         ]
-      );
+            ]
+        );
 
-      //Remove informations related to profiles from the session (to clean menu and breadcrumb)
-      PluginGlpiinventoryProfile::removeRightsFromSession();
-      return true;
-   }
+       //Remove informations related to profiles from the session (to clean menu and breadcrumb)
+        PluginGlpiinventoryProfile::removeRightsFromSession();
+        return true;
+    }
 
 
    /**
@@ -96,24 +101,25 @@ class PluginGlpiinventorySetup {
     *
     * @param string $dir name of the directory
     */
-   function rrmdir($dir) {
-      $pfSetup = new PluginGlpiinventorySetup();
+    public function rrmdir($dir)
+    {
+        $pfSetup = new PluginGlpiinventorySetup();
 
-      if (is_dir($dir)) {
-         $objects = scandir($dir);
-         foreach ($objects as $object) {
-            if ($object != "." && $object != "..") {
-               if (filetype($dir."/".$object) == "dir") {
-                  $pfSetup->rrmdir($dir."/".$object);
-               } else {
-                  unlink($dir."/".$object);
-               }
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir . "/" . $object) == "dir") {
+                        $pfSetup->rrmdir($dir . "/" . $object);
+                    } else {
+                        unlink($dir . "/" . $object);
+                    }
+                }
             }
-         }
-         reset($objects);
-         rmdir($dir);
-      }
-   }
+            reset($objects);
+            rmdir($dir);
+        }
+    }
 
 
    /**
@@ -121,18 +127,19 @@ class PluginGlpiinventorySetup {
     *
     * @return integer id of the user "Plugin GLPI Inventory"
     */
-   function createGlpiInventoryUser() {
-      $user = new User();
-      $a_users = $user->find(['name' => 'Plugin_GLPI_Inventory']);
-      if (count($a_users) == '0') {
-         $input = [];
-         $input['name'] = 'Plugin_GLPI_Inventory';
-         $input['password'] = mt_rand(30, 39);
-         $input['firstname'] = "Plugin GLPI Inventory";
-         return $user->add($input);
-      } else {
-         $user = current($a_users);
-         return $user['id'];
-      }
-   }
+    public function createGlpiInventoryUser()
+    {
+        $user = new User();
+        $a_users = $user->find(['name' => 'Plugin_GLPI_Inventory']);
+        if (count($a_users) == '0') {
+            $input = [];
+            $input['name'] = 'Plugin_GLPI_Inventory';
+            $input['password'] = mt_rand(30, 39);
+            $input['firstname'] = "Plugin GLPI Inventory";
+            return $user->add($input);
+        } else {
+            $user = current($a_users);
+            return $user['id'];
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
@@ -41,17 +42,21 @@ $type      = filter_input(INPUT_POST, "type");
 $classname = filter_input(INPUT_POST, "class");
 
 if (empty($rand) && (empty($type))) {
-   exit();
+    exit();
 }
 //Only process class that are related to software deployment
-if (!class_exists($classname)
-   || !in_array($classname,
-               ['PluginGlpiinventoryDeployCheck',
+if (
+    !class_exists($classname)
+    || !in_array(
+        $classname,
+        ['PluginGlpiinventoryDeployCheck',
                 'PluginGlpiinventoryDeployFile',
                 'PluginGlpiinventoryDeployAction',
                 'PluginGlpiinventoryDeployUserinteraction'
-               ])) {
-   exit();
+        ]
+    )
+) {
+    exit();
 }
 $class        = new $classname();
 $request_data = [

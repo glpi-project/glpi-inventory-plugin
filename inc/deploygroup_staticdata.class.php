@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,48 +32,49 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the static groups (add manually computers in the group).
  */
-class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
+class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = "plugin_glpiinventory_group";
+    public static $rightname = "plugin_glpiinventory_group";
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1 = 'PluginGlpiinventoryDeployGroup';
+    public static $itemtype_1 = 'PluginGlpiinventoryDeployGroup';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1 = 'groups_id';
+    public static $items_id_1 = 'groups_id';
 
    /**
     * Itemtype for the second part of relation
     *
     * @var string
     */
-   static public $itemtype_2 = 'itemtype';
+    public static $itemtype_2 = 'itemtype';
 
    /**
     * id field name for the second part of relation
     *
     * @var string
     */
-   static public $items_id_2 = 'items_id';
+    public static $items_id_2 = 'items_id';
 
 
    /**
@@ -82,28 +84,32 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param integer $withtemplate 1 if is a template form
     * @return string|array name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
 
-      if (!$withtemplate
-          && ($item->getType() == 'PluginGlpiinventoryDeployGroup')
-             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP) {
-
-         $tabs[1] = _n('Criterion', 'Criteria', 2);
-         $count = countElementsInTable(getTableForItemType(__CLASS__),
-            [
-               'itemtype'                               => 'Computer',
-               'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
-            ]);
-         if ($_SESSION['glpishow_count_on_tabs']) {
-            $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
-         } else {
-            $tabs[2] = _n('Associated item', 'Associated items', $count);
-         }
-         $tabs[3] = __('CSV import', 'glpiinventory');
-         return $tabs;
-      }
-      return '';
-   }
+        if (
+            !$withtemplate
+            && ($item->getType() == 'PluginGlpiinventoryDeployGroup')
+             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
+        ) {
+            $tabs[1] = _n('Criterion', 'Criteria', 2);
+            $count = countElementsInTable(
+                getTableForItemType(__CLASS__),
+                [
+                'itemtype'                               => 'Computer',
+                'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
+                ]
+            );
+            if ($_SESSION['glpishow_count_on_tabs']) {
+                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
+            } else {
+                $tabs[2] = _n('Associated item', 'Associated items', $count);
+            }
+            $tabs[3] = __('CSV import', 'glpiinventory');
+            return $tabs;
+        }
+        return '';
+    }
 
 
    /**
@@ -114,24 +120,23 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      switch ($tabnum) {
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        switch ($tabnum) {
+            case 1:
+                self::showCriteriaAndSearch($item);
+                return true;
 
-         case 1:
-            self::showCriteriaAndSearch($item);
-            return true;
+            case 2:
+                self::showResults();
+                return true;
 
-         case 2:
-            self::showResults();
-            return true;
-
-         case 3:
-            self::csvImportForm($item);
-            return true;
-
-      }
-      return false;
-   }
+            case 3:
+                self::csvImportForm($item);
+                return true;
+        }
+        return false;
+    }
 
 
    /**
@@ -139,63 +144,67 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
     *
     * @param object $item PluginGlpiinventoryDeployGroup instance
     */
-   static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item) {
-      // WITH checking post values
-      $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, true);
-      //If metacriteria array is empty, remove it as it displays the metacriteria form,
-      //and it's is not we want !
-      if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
-         unset($search_params['metacriteria']);
-      }
-      PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
+    public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
+    {
+       // WITH checking post values
+        $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, true);
+       //If metacriteria array is empty, remove it as it displays the metacriteria form,
+       //and it's is not we want !
+        if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+            unset($search_params['metacriteria']);
+        }
+        PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
 
-      //Add extra parameters for massive action display : only the Add action should be displayed
-      $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
-      $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
-      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
+       //Add extra parameters for massive action display : only the Add action should be displayed
+        $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
+        $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
+        $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-      $data = Search::prepareDatasForSearch('Computer', $search_params);
-      $data['itemtype'] = 'Computer';
-      Search::constructSQL($data);
+        $data = Search::prepareDatasForSearch('Computer', $search_params);
+        $data['itemtype'] = 'Computer';
+        Search::constructSQL($data);
 
-      // Use our specific constructDatas function rather than Glpi function
-      PluginGlpiinventorySearch::constructDatas($data);
-      $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-      $data['itemtype'] = 'Computer';
-      Search::displayData($data);
-   }
+       // Use our specific constructDatas function rather than Glpi function
+        PluginGlpiinventorySearch::constructDatas($data);
+        $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
+        $data['itemtype'] = 'Computer';
+        Search::displayData($data);
+    }
 
 
    /**
     * Display result, so list of computers
     */
-   static function showResults() {
-      if (isset($_SESSION['glpisearch']['Computer'])
-              && isset($_SESSION['glpisearch']['Computer']['show_results'])) {
-         $computers_params = $_SESSION['glpisearch']['Computer'];
-      }
-      $computers_params['metacriteria'] = [];
-      $computers_params['criteria'][]   = ['searchtype' => 'equals',
+    public static function showResults()
+    {
+        if (
+            isset($_SESSION['glpisearch']['Computer'])
+              && isset($_SESSION['glpisearch']['Computer']['show_results'])
+        ) {
+            $computers_params = $_SESSION['glpisearch']['Computer'];
+        }
+        $computers_params['metacriteria'] = [];
+        $computers_params['criteria'][]   = ['searchtype' => 'equals',
                                                 'value' => $_GET['id'],
                                                 'field' => 5171];
 
-      $search_params = Search::manageParams('Computer', $computers_params);
+        $search_params = Search::manageParams('Computer', $computers_params);
 
-      //Add extra parameters for massive action display : only the Delete action should be displayed
-      $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-      $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
-      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
-      $data = Search::prepareDatasForSearch('Computer', $search_params);
+       //Add extra parameters for massive action display : only the Delete action should be displayed
+        $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
+        $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
+        $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
+        $data = Search::prepareDatasForSearch('Computer', $search_params);
 
-      $data['itemtype'] = 'Computer';
-      Search::constructSQL($data);
+        $data['itemtype'] = 'Computer';
+        Search::constructSQL($data);
 
-      // Use our specific constructDatas function rather than Glpi function
-      PluginGlpiinventorySearch::constructDatas($data);
-      $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
-      $data['itemtype'] = 'Computer';
-      Search::displayData($data);
-   }
+       // Use our specific constructDatas function rather than Glpi function
+        PluginGlpiinventorySearch::constructDatas($data);
+        $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
+        $data['itemtype'] = 'Computer';
+        Search::displayData($data);
+    }
 
 
    /**
@@ -204,21 +213,22 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
    * @param $target_deploygroups_id the target group ID
    * @return the duplication status, as a boolean
    */
-   static function duplicate($source_deploygroups_id, $target_deploygroups_id) {
-      $result        = true;
-      $pfStaticGroup = new self();
+    public static function duplicate($source_deploygroups_id, $target_deploygroups_id)
+    {
+        $result        = true;
+        $pfStaticGroup = new self();
 
-      $groups = $pfStaticGroup->find(['plugin_glpiinventory_deploygroups_id' => $source_deploygroups_id]);
-      foreach ($groups as $group) {
-         unset($group['id']);
-         $group['plugin_glpiinventory_deploygroups_id']
+        $groups = $pfStaticGroup->find(['plugin_glpiinventory_deploygroups_id' => $source_deploygroups_id]);
+        foreach ($groups as $group) {
+            unset($group['id']);
+            $group['plugin_glpiinventory_deploygroups_id']
             = $target_deploygroups_id;
-         if (!$pfStaticGroup->add($group)) {
-            $result |= false;
-         }
-      }
-      return $result;
-   }
+            if (!$pfStaticGroup->add($group)) {
+                $result |= false;
+            }
+        }
+        return $result;
+    }
 
 
    /**
@@ -230,31 +240,33 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
     *
     * @return boolean
     */
-   static function csvImportForm(PluginGlpiinventoryDeployGroup $item) {
+    public static function csvImportForm(PluginGlpiinventoryDeployGroup $item)
+    {
 
-      echo "<form action='' method='post' enctype='multipart/form-data'>";
+        echo "<form action='' method='post' enctype='multipart/form-data'>";
 
-      echo "<br>";
-      echo "<table class='tab_cadre_fixe' cellpadding='1' width='600'>";
-      echo "<tr>";
-      echo "<th>";
-      echo __('Import a list of computers from a CSV file (the first column must contain the computer ID)', 'glpiinventory')." :";
-      echo "</th>";
-      echo "</tr>";
+        echo "<br>";
+        echo "<table class='tab_cadre_fixe' cellpadding='1' width='600'>";
+        echo "<tr>";
+        echo "<th>";
+        echo __('Import a list of computers from a CSV file (the first column must contain the computer ID)', 'glpiinventory') . " :";
+        echo "</th>";
+        echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo Html::hidden('groups_id', ['value' => $item->getID()]);
-      echo "<input type='file' name='importcsvfile' value=''/>";
-      echo "&nbsp;".Html::submit(__('Import'));;
-      echo "</td>";
-      echo "</tr>";
+        echo "<tr class='tab_bg_1'>";
+        echo "<td align='center'>";
+        echo Html::hidden('groups_id', ['value' => $item->getID()]);
+        echo "<input type='file' name='importcsvfile' value=''/>";
+        echo "&nbsp;" . Html::submit(__('Import'));
+        ;
+        echo "</td>";
+        echo "</tr>";
 
-      echo "</table>";
+        echo "</table>";
 
-      Html::closeForm();
-      return true;
-   }
+        Html::closeForm();
+        return true;
+    }
 
 
    /**
@@ -267,31 +279,32 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation{
     *
     * @return boolean
     */
-   static function csvImport($post_data, $files_data) {
-      $pfDeployGroup_static = new self();
-      $computer = new Computer();
-      $input = [
+    public static function csvImport($post_data, $files_data)
+    {
+        $pfDeployGroup_static = new self();
+        $computer = new Computer();
+        $input = [
          'plugin_glpiinventory_deploygroups_id' => $post_data['groups_id'],
          'itemtype' => 'Computer'
-      ];
-      if (isset($files_data['importcsvfile']['tmp_name'])) {
-         if (($handle = fopen($files_data['importcsvfile']['tmp_name'], "r")) !== false) {
-            while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"])) !== false) {
-               $input['items_id'] = str_replace(' ', '', $data[0]);
-               if ($computer->getFromDB($input['items_id'])) {
-                   $pfDeployGroup_static->add($input);
-               }
+        ];
+        if (isset($files_data['importcsvfile']['tmp_name'])) {
+            if (($handle = fopen($files_data['importcsvfile']['tmp_name'], "r")) !== false) {
+                while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"])) !== false) {
+                    $input['items_id'] = str_replace(' ', '', $data[0]);
+                    if ($computer->getFromDB($input['items_id'])) {
+                        $pfDeployGroup_static->add($input);
+                    }
+                }
+                Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'glpiinventory'), false, INFO);
+                fclose($handle);
+            } else {
+                Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'glpiinventory'), false, ERROR);
+                return false;
             }
-            Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'glpiinventory'), false, INFO);
-            fclose($handle);
-         } else {
-            Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'glpiinventory'), false, ERROR);
+        } else {
+            Session::addMessageAfterRedirect(sprintf(__('%1$s %2$s'), "File not found", $files_data['importcsvfile']['tmp_name']), false, ERROR);
             return false;
-         }
-      } else {
-         Session::addMessageAfterRedirect(sprintf( __('%1$s %2$s'), "File not found", $files_data['importcsvfile']['tmp_name']), false, ERROR);
-         return false;
-      }
-      return true;
-   }
+        }
+        return true;
+    }
 }

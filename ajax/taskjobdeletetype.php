@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,15 +32,16 @@
  */
 
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjobdeletetype.php")) {
-   include ("../../../inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+    include("../../../inc/includes.php");
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
 
 $pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->deleteitemtodefatc(
-        filter_input(INPUT_POST, "type"),
-        filter_input(INPUT_POST, filter_input(INPUT_POST, "type").'item'),
-        filter_input(INPUT_POST, "taskjobs_id"));
+    filter_input(INPUT_POST, "type"),
+    filter_input(INPUT_POST, filter_input(INPUT_POST, "type") . 'item'),
+    filter_input(INPUT_POST, "taskjobs_id")
+);

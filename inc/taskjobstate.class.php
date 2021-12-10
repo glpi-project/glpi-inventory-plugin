@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,13 +32,14 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access this file directly");
+    die("Sorry. You can't access this file directly");
 }
 
 /**
  * Manage the state of task jobs.
  */
-class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
+class PluginGlpiinventoryTaskjobstate extends CommonDBTM
+{
 
    /**
     * Define constant state prepared.
@@ -45,7 +47,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @var integer
     */
-   const PREPARED = 0;
+    const PREPARED = 0;
 
    /**
     * Define constant state has sent data to agent and not have the answer.
@@ -53,7 +55,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @var integer
     */
-   const SERVER_HAS_SENT_DATA = 1;
+    const SERVER_HAS_SENT_DATA = 1;
 
    /**
     * Define constant state agent has sent data.
@@ -61,7 +63,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @var integer
     */
-   const AGENT_HAS_SENT_DATA = 2;
+    const AGENT_HAS_SENT_DATA = 2;
 
    /**
     * Define constant state finished.
@@ -69,7 +71,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @var integer
     */
-   const FINISHED = 3;
+    const FINISHED = 3;
 
    /**
     * Define constant state in error.
@@ -77,7 +79,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @var integer
     */
-   const IN_ERROR = 4;
+    const IN_ERROR = 4;
 
    /**
     * Define constant state cancelled
@@ -86,7 +88,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @var integer
     */
-   const CANCELLED = 5;
+    const CANCELLED = 5;
 
    /**
     * Define constant state in error.
@@ -94,17 +96,17 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @var integer
     */
-   const POSTPONED = 6;
+    const POSTPONED = 6;
 
    /**
     * Initialize the public method
     *
     * @var string
     */
-   public $method = '';
+    public $method = '';
 
 
-   static $rightname = 'plugin_glpiinventory_task';
+    public static $rightname = 'plugin_glpiinventory_task';
 
    /**
     * Get the tab name used for item
@@ -113,19 +115,18 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      switch ($item->getType()) {
-
-         case 'Computer':
-            return __("Tasks / Groups", "glpiinventory");
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
+        switch ($item->getType()) {
+            case 'Computer':
+                return __("Tasks / Groups", "glpiinventory");
             break;
 
-         case 'PluginGlpiinventoryTask':
-            return __("Job executions", "glpiinventory");
+            case 'PluginGlpiinventoryTask':
+                return __("Job executions", "glpiinventory");
             break;
-
-      }
-   }
+        }
+    }
 
 
    /**
@@ -133,8 +134,9 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @return array
     */
-   static function getStateNames() {
-      return [
+    public static function getStateNames()
+    {
+        return [
          self::PREPARED             => __('Prepared', 'glpiinventory'),
          self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'glpiinventory'),
          self::AGENT_HAS_SENT_DATA  => __('Agent replied with data to the server', 'glpiinventory'),
@@ -142,8 +144,8 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
          self::IN_ERROR             => __('Error', 'glpiinventory'),
          self::CANCELLED            => __('Cancelled', 'glpiinventory'),
          self::POSTPONED            => __('Postponed', 'glpiinventory')
-      ];
-   }
+        ];
+    }
 
 
    /**
@@ -154,19 +156,20 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      if ($item->getType() == 'PluginGlpiinventoryTask') {
-         $item->showJobLogs();
-         return true;
-      } else if ($item->getType() == 'Computer') {
-         $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
-         $pfTaskJobState->showStatesForComputer($item->fields['id']);
-         echo "<br>";
-         $pfDeployGroup = new PluginGlpiinventoryDeployGroup();
-         $pfDeployGroup->showForComputer($item->fields['id']);
-      }
-      return false;
-   }
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        if ($item->getType() == 'PluginGlpiinventoryTask') {
+            $item->showJobLogs();
+            return true;
+        } elseif ($item->getType() == 'Computer') {
+            $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
+            $pfTaskJobState->showStatesForComputer($item->fields['id']);
+            echo "<br>";
+            $pfDeployGroup = new PluginGlpiinventoryDeployGroup();
+            $pfDeployGroup->showForComputer($item->fields['id']);
+        }
+        return false;
+    }
 
 
    /**
@@ -181,50 +184,55 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
    * @return string
    *
    **/
-   function stateTaskjob ($taskjobs_id, $width = 930, $return = 'html', $style = '') {
-      global $DB;
+    public function stateTaskjob($taskjobs_id, $width = 930, $return = 'html', $style = '')
+    {
+        global $DB;
 
-      $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
-      $total = 0;
-      $iterator = $DB->request(['FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
+        $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
+        $total = 0;
+        $iterator = $DB->request(['FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
                                 'WHERE' => ['plugin_glpiinventory_taskjobs_id' => $taskjobs_id,
                                             'state' => ['NOT', self::FINISHED]]
                                ]);
-      if ($iterator->numrows() > 0) {
-         foreach ($iterator as $data) {
-            $total++;
-            $state[$data['state']]++;
-         }
-         if ($total == '0') {
-            $globalState = 0;
-         } else {
-            $first       = 25;
-            $second      = ((($state[1]+$state[2]+$state[3]) * 100) / $total) / 4;
-            $third       = ((($state[2]+$state[3]) * 100) / $total) / 4;
-            $fourth      = (($state[3] * 100) / $total) / 4;
-            $globalState = $first + $second + $third + $fourth;
-         }
-         if ($return == 'html') {
-            if ($style == 'simple') {
-               Html::displayProgressBar($width, ceil($globalState), ['simple' => 1]);
-            } else {
-               Html::displayProgressBar($width, ceil($globalState));
+        if ($iterator->numrows() > 0) {
+            foreach ($iterator as $data) {
+                $total++;
+                $state[$data['state']]++;
             }
-         } else if ($return == 'htmlvar') {
-            if ($style == 'simple') {
-               return PluginGlpiinventoryDisplay::getProgressBar($width,
-                                                                   ceil($globalState),
-                                                                   ['simple' => 1]);
+            if ($total == '0') {
+                $globalState = 0;
             } else {
-               return PluginGlpiinventoryDisplay::getProgressBar($width,
-                                                                   ceil($globalState));
+                $first       = 25;
+                $second      = ((($state[1] + $state[2] + $state[3]) * 100) / $total) / 4;
+                $third       = ((($state[2] + $state[3]) * 100) / $total) / 4;
+                $fourth      = (($state[3] * 100) / $total) / 4;
+                $globalState = $first + $second + $third + $fourth;
             }
-         } else {
-            return ceil($globalState);
-         }
-      }
-      return '';
-   }
+            if ($return == 'html') {
+                if ($style == 'simple') {
+                    Html::displayProgressBar($width, ceil($globalState), ['simple' => 1]);
+                } else {
+                    Html::displayProgressBar($width, ceil($globalState));
+                }
+            } elseif ($return == 'htmlvar') {
+                if ($style == 'simple') {
+                    return PluginGlpiinventoryDisplay::getProgressBar(
+                        $width,
+                        ceil($globalState),
+                        ['simple' => 1]
+                    );
+                } else {
+                    return PluginGlpiinventoryDisplay::getProgressBar(
+                        $width,
+                        ceil($globalState)
+                    );
+                }
+            } else {
+                return ceil($globalState);
+            }
+        }
+        return '';
+    }
 
 
    /**
@@ -236,97 +244,96 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param string $itemtype type of the item
     * @param string $state (all or each state : running, finished, nostarted)
     */
-   function stateTaskjobItem($items_id, $itemtype, $state = 'all') {
-      global $DB;
+    public function stateTaskjobItem($items_id, $itemtype, $state = 'all')
+    {
+        global $DB;
 
-      $fi_path = Plugin::getWebDir('glpiinventory');
+        $fi_path = Plugin::getWebDir('glpiinventory');
 
-      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-      $icon         = "";
-      $title        = "";
-      $fields       = false;
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $icon         = "";
+        $title        = "";
+        $fields       = false;
 
-      $pfTaskjoblog->javascriptHistory();
+        $pfTaskjoblog->javascriptHistory();
 
-      switch ($state) {
+        switch ($state) {
+            case 'running':
+                $fields['state'] = ['NOT', self::FINISHED];
+                $title = __('Running tasks', 'glpiinventory');
+                $icon  = "<img src='" . $fi_path . "/pics/task_running.png'/>";
+                break;
 
-         case 'running':
-            $fields['state'] = ['NOT', self::FINISHED];
-            $title = __('Running tasks', 'glpiinventory');
-            $icon  = "<img src='".$fi_path."/pics/task_running.png'/>";
-            break;
+            case 'finished':
+                $fields['state'] = self::FINISHED;
+                $title = __('Finished tasks', 'glpiinventory');
+                $icon  = "<img src='" . $fi_path . "/pics/task_finished.png'/>";
+                break;
 
-         case 'finished':
-            $fields['state'] = self::FINISHED;
-            $title = __('Finished tasks', 'glpiinventory');
-            $icon  = "<img src='".$fi_path."/pics/task_finished.png'/>";
-            break;
+            case 'all':
+                $fields = [];
+                $title  = _n('Task', 'Tasks', 2);
+                $icon   = "";
+                break;
+        }
+        if (!$fields) {
+            return;
+        }
 
-         case 'all':
-            $fields = [];
-            $title  = _n('Task', 'Tasks', 2);
-            $icon   = "";
-            break;
+        $a_taskjobs         = [];
+        $fields['items_id'] = $items_id;
+        $fields['itemtype'] = $itemtype;
 
-      }
-      if (!$fields) {
-         return;
-      }
-
-      $a_taskjobs         = [];
-      $fields['items_id'] = $items_id;
-      $fields['itemtype'] = $itemtype;
-
-      $params = ['FROM'  => $this->getTable(),
+        $params = ['FROM'  => $this->getTable(),
                  'WHERE' => $fields,
                  'ORDER' => 'id DESC'
                 ];
-      foreach ($DB->request($params) as $data) {
-         $a_taskjobs[] = $data;
-      }
+        foreach ($DB->request($params) as $data) {
+            $a_taskjobs[] = $data;
+        }
 
-      echo "<div align='center'>";
-      echo "<table  class='tab_cadre' width='950'>";
+        echo "<div align='center'>";
+        echo "<table  class='tab_cadre' width='950'>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<th  width='32'>";
-      echo $icon;
-      echo "</th>";
-      echo "<td>";
-      if (count($a_taskjobs) > 0) {
-         echo "<table class='tab_cadre' width='950'>";
-         echo "<tr>";
-         echo "<th></th>";
-         echo "<th>".__('Unique id', 'glpiinventory')."</th>";
-         echo "<th>".__('Job', 'glpiinventory')."</th>";
-         echo "<th>".__('Agent', 'glpiinventory')."</th>";
-         echo "<th>";
-         echo _n('Date', 'Dates', 1);
-         echo "</th>";
-         echo "<th>";
-         echo __('Status');
-         echo "</th>";
-         $nb_td = 6;
-         if ($state == 'running') {
-            $nb_td++;
+        echo "<tr class='tab_bg_1'>";
+        echo "<th  width='32'>";
+        echo $icon;
+        echo "</th>";
+        echo "<td>";
+        if (count($a_taskjobs) > 0) {
+            echo "<table class='tab_cadre' width='950'>";
+            echo "<tr>";
+            echo "<th></th>";
+            echo "<th>" . __('Unique id', 'glpiinventory') . "</th>";
+            echo "<th>" . __('Job', 'glpiinventory') . "</th>";
+            echo "<th>" . __('Agent', 'glpiinventory') . "</th>";
             echo "<th>";
-            echo __('Comments');
+            echo _n('Date', 'Dates', 1);
             echo "</th>";
-         }
-         echo "</tr>";
-         foreach ($a_taskjobs as $data) {
-            $pfTaskjoblog->showHistoryLines($data['id'], 0, 1, $nb_td);
-         }
-         echo "</table>";
-      }
-      echo "</td>";
-      echo "</tr>";
+            echo "<th>";
+            echo __('Status');
+            echo "</th>";
+            $nb_td = 6;
+            if ($state == 'running') {
+                $nb_td++;
+                echo "<th>";
+                echo __('Comments');
+                echo "</th>";
+            }
+            echo "</tr>";
+            foreach ($a_taskjobs as $data) {
+                $pfTaskjoblog->showHistoryLines($data['id'], 0, 1, $nb_td);
+            }
+            echo "</table>";
+        }
+        echo "</td>";
+        echo "</tr>";
 
-      echo "</table>";
-      echo "<br/>";
+        echo "</table>";
+        echo "<br/>";
 
-      echo "</div>";
-   }
+        echo "</div>";
+    }
 
 
    /**
@@ -338,9 +345,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param integer $id id of the taskjobstate
     * @param integer $state state to set
     */
-   function changeStatus($id, $state) {
-      $this->update(['id' => $id, 'state' => $state]);
-   }
+    public function changeStatus($id, $state)
+    {
+        $this->update(['id' => $id, 'state' => $state]);
+    }
 
 
    /**
@@ -348,30 +356,30 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @param integer $agent_id id of the agent
     */
-   function getTaskjobsAgent($agent_id) {
-      global $DB;
+    public function getTaskjobsAgent($agent_id)
+    {
+        global $DB;
 
-      $pfTaskjob = new PluginGlpiinventoryTaskjob();
-      $moduleRun = [];
-      $params = ['FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
+        $moduleRun = [];
+        $params = ['FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
                  'FIELDS' => 'plugin_glpiinventory_taskjobs_id',
                  'WHERE'  => ['agents_id' => $agent_id,
                               'state' => self::PREPARED],
                   'ORDER' => 'id'
                 ];
-      foreach ($DB->request($params) as $data) {
-         // Get job and data to send to agent
-         if ($pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id'])) {
-
-            $moduleName = PluginGlpiinventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
-            if ($moduleName) {
-               $className = "Plugin".ucfirst($moduleName).ucfirst($pfTaskjob->fields['method']);
-               $moduleRun[$className][] = $data;
+        foreach ($DB->request($params) as $data) {
+           // Get job and data to send to agent
+            if ($pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id'])) {
+                $moduleName = PluginGlpiinventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
+                if ($moduleName) {
+                    $className = "Plugin" . ucfirst($moduleName) . ucfirst($pfTaskjob->fields['method']);
+                    $moduleRun[$className][] = $data;
+                }
             }
-         }
-      }
-      return $moduleRun;
-   }
+        }
+        return $moduleRun;
+    }
 
 
    /**
@@ -381,23 +389,24 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param array $params list of ajax expected 'id' and 'last_date' parameters
     * @return string in json format, encoded list of logs grouped by jobstates
     */
-   function ajaxGetLogs($params) {
-      $id        = null;
-      $last_date = null;
+    public function ajaxGetLogs($params)
+    {
+        $id        = null;
+        $last_date = null;
 
-      if (isset($params['id']) and $params['id'] > 0) {
-         $id = $params['id'];
-      }
-      if (isset($params['last_date'])) {
-         $last_date = $params['last_date'];
-      }
-      if (!preg_match("/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/", $last_date)) {
-         $last_date = null;
-      }
-      if (!is_null($id) && !is_null($last_date)) {
-         echo json_encode($this->getLogs($id, $last_date));
-      }
-   }
+        if (isset($params['id']) and $params['id'] > 0) {
+            $id = $params['id'];
+        }
+        if (isset($params['last_date'])) {
+            $last_date = $params['last_date'];
+        }
+        if (!preg_match("/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/", $last_date)) {
+            $last_date = null;
+        }
+        if (!is_null($id) && !is_null($last_date)) {
+            echo json_encode($this->getLogs($id, $last_date));
+        }
+    }
 
 
    /**
@@ -408,16 +417,17 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param string $last_date
     * @return array
     */
-   function getLogs($id, $last_date) {
-      global $DB;
-      $fields = [
-       'log.id'      => 0,
-       'log.date'    => 1,
-       'log.comment' => 2,
-       'log.state'   => 3,
-       'run.id'      => 4,
-      ];
-      $query = "SELECT log.`id` AS 'log.id',
+    public function getLogs($id, $last_date)
+    {
+        global $DB;
+        $fields = [
+        'log.id'      => 0,
+        'log.date'    => 1,
+        'log.comment' => 2,
+        'log.state'   => 3,
+        'run.id'      => 4,
+        ];
+        $query = "SELECT log.`id` AS 'log.id',
                   log.`date` AS 'log.date',
                   log.`comment` AS 'log.comment',
                   log.`state` AS 'log.state',
@@ -428,22 +438,22 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
                 WHERE run.`id` = $id
                   AND log.`date` <= '$last_date'
                ORDER BY log.`id` DESC";
-      $res = $DB->query($query);
-      $logs = [];
-      while ($result = $res->fetch_row()) {
-         $run_id = $result[$fields['run.id']];
-         $logs['run']    = $run_id;
-         $logs['logs'][] = [
+        $res = $DB->query($query);
+        $logs = [];
+        while ($result = $res->fetch_row()) {
+            $run_id = $result[$fields['run.id']];
+            $logs['run']    = $run_id;
+            $logs['logs'][] = [
             'log.id'      => $result[$fields['log.id']],
             'log.comment' => PluginGlpiinventoryTaskjoblog::convertComment($result[$fields['log.comment']]),
             'log.date'    => $result[$fields['log.date']],
             'log.f_date'  => Html::convDateTime($result[$fields['log.date']]),
             'log.state'   => $result[$fields['log.state']]
-         ];
-      }
+            ];
+        }
 
-      return $logs;
-   }
+        return $logs;
+    }
 
 
    /**
@@ -455,36 +465,37 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param integer $error error
     * @param string $message message for the status
     */
-   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = '') {
+    public function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = '')
+    {
 
-      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-      $pfTaskjob    = new PluginGlpiinventoryTaskjob();
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $pfTaskjob    = new PluginGlpiinventoryTaskjob();
 
-      $this->getFromDB($taskjobstates_id);
-      $input          = [];
-      $input['id']    = $this->fields['id'];
-      $input['state'] = self::FINISHED;
+        $this->getFromDB($taskjobstates_id);
+        $input          = [];
+        $input['id']    = $this->fields['id'];
+        $input['state'] = self::FINISHED;
 
-      $log_input = [];
-      if ($error == "1") {
-         $log_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_ERROR;
-         $input['state']     = self::IN_ERROR;
-      } else {
-         $log_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_OK;
-         $input['state']     = self::FINISHED;
-      }
+        $log_input = [];
+        if ($error == "1") {
+            $log_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_ERROR;
+            $input['state']     = self::IN_ERROR;
+        } else {
+            $log_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_OK;
+            $input['state']     = self::FINISHED;
+        }
 
-      $this->update($input);
-      $log_input['plugin_glpiinventory_taskjobstates_id'] = $taskjobstates_id;
-      $log_input['items_id'] = $items_id;
-      $log_input['itemtype'] = $itemtype;
-      $log_input['date']     = $_SESSION['glpi_currenttime'];
-      $log_input['comment']  = $message;
-      $log_input             = Toolbox::addslashes_deep($log_input);
-      $pfTaskjoblog->add($log_input);
+        $this->update($input);
+        $log_input['plugin_glpiinventory_taskjobstates_id'] = $taskjobstates_id;
+        $log_input['items_id'] = $items_id;
+        $log_input['itemtype'] = $itemtype;
+        $log_input['date']     = $_SESSION['glpi_currenttime'];
+        $log_input['comment']  = $message;
+        $log_input             = Toolbox::addslashes_deep($log_input);
+        $pfTaskjoblog->add($log_input);
 
-      $pfTaskjob->getFromDB($this->fields['plugin_glpiinventory_taskjobs_id']);
-   }
+        $pfTaskjob->getFromDB($this->fields['plugin_glpiinventory_taskjobs_id']);
+    }
 
 
    /**
@@ -492,11 +503,14 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @param string $reason
     */
-   function fail($reason = '') {
-      $this->updateState(PluginGlpiinventoryTaskjoblog::TASK_ERROR,
-                         self::IN_ERROR,
-                         $reason);
-   }
+    public function fail($reason = '')
+    {
+        $this->updateState(
+            PluginGlpiinventoryTaskjoblog::TASK_ERROR,
+            self::IN_ERROR,
+            $reason
+        );
+    }
 
 
    /*
@@ -504,12 +518,15 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param string $type the type of interaction (before download, etc)
     * @param string $reason the text to be displayed
     */
-   function postpone($type, $reason = '') {
-      $this->updateState(PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                         self::POSTPONED,
-                         $reason);
-      $this->processPostonedJob($type);
-   }
+    public function postpone($type, $reason = '')
+    {
+        $this->updateState(
+            PluginGlpiinventoryTaskjoblog::TASK_INFO,
+            self::POSTPONED,
+            $reason
+        );
+        $this->processPostonedJob($type);
+    }
 
 
    /**
@@ -517,11 +534,14 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @param string $reason
     */
-   function cancel($reason = '') {
-      $this->updateState(PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                         self::CANCELLED,
-                         $reason);
-   }
+    public function cancel($reason = '')
+    {
+        $this->updateState(
+            PluginGlpiinventoryTaskjoblog::TASK_INFO,
+            self::CANCELLED,
+            $reason
+        );
+    }
 
 
    /**
@@ -532,96 +552,99 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     * @param string $jobstate_state the state of the jobstate to set
     * @param string $reason
     */
-   function updateState($joblog_state, $jobstate_state, $reason = '') {
+    public function updateState($joblog_state, $jobstate_state, $reason = '')
+    {
 
-      $log       = new PluginGlpiinventoryTaskjoblog();
-      $log_input = [
+        $log       = new PluginGlpiinventoryTaskjoblog();
+        $log_input = [
          'plugin_glpiinventory_taskjobstates_id' => $this->fields['id'],
          'items_id' => $this->fields['items_id'],
          'itemtype' => $this->fields['itemtype'],
          'date'     => $_SESSION['glpi_currenttime'],
          'state'    => $joblog_state,
          'comment'  => Toolbox::addslashes_deep($reason)
-      ];
+        ];
 
-      $log->add($log_input);
-      $this->update([
+        $log->add($log_input);
+        $this->update([
          'id'    => $this->fields['id'],
          'state' => $jobstate_state
-      ]);
-   }
+        ]);
+    }
 
 
-   private function processPostonedJob($type) {
+    private function processPostonedJob($type)
+    {
 
-      $pfDeployUserInteraction = new PluginGlpiinventoryDeployUserinteraction();
-      //Let's browse all user interactions
-      foreach ($pfDeployUserInteraction->getItemValues($this->fields['items_id']) as $interaction) {
-         //Look for the user interaction that matches our event
-         if ($interaction['type'] == $type && $interaction['template']) {
-            $params = $this->fields;
+        $pfDeployUserInteraction = new PluginGlpiinventoryDeployUserinteraction();
+       //Let's browse all user interactions
+        foreach ($pfDeployUserInteraction->getItemValues($this->fields['items_id']) as $interaction) {
+           //Look for the user interaction that matches our event
+            if ($interaction['type'] == $type && $interaction['template']) {
+                $params = $this->fields;
 
-            //Found, let's load the template
-            $template  = new PluginGlpiinventoryDeployUserinteractionTemplate();
-            if ($template->getFromDB($interaction['template'])) {
-               //Get the template values
-               $template_values = $template->getValues();
-               //Compute the next run date for the job. Retry_after value is in seconds
-               $date = new \DateTime('+'.$template_values['retry_after'].' seconds');
-               $params['date_start'] = $date->format('Y-m-d H:i');
-               //Set the max number or retry
-               //(we set it each time a job is postponed because the value
-               //can change in the template)
-               $params['max_retry'] = $template_values['nb_max_retry'];
-               $params['nb_retry']  = $params['nb_retry'] + 1;
-               $params['state']     = self::PREPARED;
-               $states_id           = $params['id'];
-               $this->update($params);
+                //Found, let's load the template
+                $template  = new PluginGlpiinventoryDeployUserinteractionTemplate();
+                if ($template->getFromDB($interaction['template'])) {
+                   //Get the template values
+                    $template_values = $template->getValues();
+                   //Compute the next run date for the job. Retry_after value is in seconds
+                    $date = new \DateTime('+' . $template_values['retry_after'] . ' seconds');
+                    $params['date_start'] = $date->format('Y-m-d H:i');
+                   //Set the max number or retry
+                   //(we set it each time a job is postponed because the value
+                   //can change in the template)
+                    $params['max_retry'] = $template_values['nb_max_retry'];
+                    $params['nb_retry']  = $params['nb_retry'] + 1;
+                    $params['state']     = self::PREPARED;
+                    $states_id           = $params['id'];
+                    $this->update($params);
 
-               $reason    = '-----------------------------------------------------';
-               $log       = new PluginGlpiinventoryTaskjoblog();
-               $log_input = [
-                  'plugin_glpiinventory_taskjobstates_id' => $states_id,
-                  'items_id' => $this->fields['items_id'],
-                  'itemtype' => $this->fields['itemtype'],
-                  'date'     => $_SESSION['glpi_currenttime'],
-                  'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                  'comment'  => Toolbox::addslashes_deep($reason)
-               ];
-               $log->add($log_input);
+                    $reason    = '-----------------------------------------------------';
+                    $log       = new PluginGlpiinventoryTaskjoblog();
+                    $log_input = [
+                    'plugin_glpiinventory_taskjobstates_id' => $states_id,
+                    'items_id' => $this->fields['items_id'],
+                    'itemtype' => $this->fields['itemtype'],
+                    'date'     => $_SESSION['glpi_currenttime'],
+                    'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
+                    'comment'  => Toolbox::addslashes_deep($reason)
+                    ];
+                    $log->add($log_input);
 
-               $reason = sprintf(__('Job available for next execution at %s', 'glpiinventory'),
-                            Html::convDateTime($params['date_start'], 'glpiinventory'));
+                    $reason = sprintf(
+                        __('Job available for next execution at %s', 'glpiinventory'),
+                        Html::convDateTime($params['date_start'], 'glpiinventory')
+                    );
 
-               $log_input = [
-                  'plugin_glpiinventory_taskjobstates_id' => $states_id,
-                  'items_id' => $this->fields['items_id'],
-                  'itemtype' => $this->fields['itemtype'],
-                  'date'     => $_SESSION['glpi_currenttime'],
-                  'state'    => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
-                  'comment'  => Toolbox::addslashes_deep($reason)
-               ];
-               $log->add($log_input);
+                    $log_input = [
+                     'plugin_glpiinventory_taskjobstates_id' => $states_id,
+                     'items_id' => $this->fields['items_id'],
+                     'itemtype' => $this->fields['itemtype'],
+                     'date'     => $_SESSION['glpi_currenttime'],
+                     'state'    => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
+                     'comment'  => Toolbox::addslashes_deep($reason)
+                    ];
+                    $log->add($log_input);
 
-               if ($params['nb_retry'] <= $params['max_retry']) {
-                  $reason= ' '.sprintf(__('Retry #%d', 'glpiinventory'), $params['nb_retry']);
-               } else {
-                  $reason= ' '.sprintf(__('Maximum number of retry reached: force deployment', 'glpiinventory'));
-               }
-               $log_input = [
-                  'plugin_glpiinventory_taskjobstates_id' => $states_id,
-                  'items_id' => $this->fields['items_id'],
-                  'itemtype' => $this->fields['itemtype'],
-                  'date'     => $_SESSION['glpi_currenttime'],
-                  'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                  'comment'  => Toolbox::addslashes_deep($reason)
-               ];
-               $log->add($log_input);
-
+                    if ($params['nb_retry'] <= $params['max_retry']) {
+                         $reason = ' ' . sprintf(__('Retry #%d', 'glpiinventory'), $params['nb_retry']);
+                    } else {
+                        $reason = ' ' . sprintf(__('Maximum number of retry reached: force deployment', 'glpiinventory'));
+                    }
+                    $log_input = [
+                    'plugin_glpiinventory_taskjobstates_id' => $states_id,
+                    'items_id' => $this->fields['items_id'],
+                    'itemtype' => $this->fields['itemtype'],
+                    'date'     => $_SESSION['glpi_currenttime'],
+                    'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
+                    'comment'  => Toolbox::addslashes_deep($reason)
+                    ];
+                    $log->add($log_input);
+                }
             }
-         }
-      }
-   }
+        }
+    }
 
 
    /**
@@ -629,35 +652,37 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @global object $DB
     */
-   static function cronCleantaskjob() {
-      global $DB;
+    public static function cronCleantaskjob()
+    {
+        global $DB;
 
-      $config         = new PluginGlpiinventoryConfig();
-      $retentiontime  = $config->getValue('delete_task');
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $config         = new PluginGlpiinventoryConfig();
+        $retentiontime  = $config->getValue('delete_task');
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-      $sql = "SELECT *
+        $sql = "SELECT *
               FROM `glpi_plugin_glpiinventory_taskjoblogs`
-              WHERE  `date` < date_add(now(), interval -".$retentiontime." day)
+              WHERE  `date` < date_add(now(), interval -" . $retentiontime . " day)
               GROUP BY `plugin_glpiinventory_taskjobstates_id`";
-      $result=$DB->query($sql);
-      if ($result) {
-         $delete = $DB->buildDelete(
-            'glpi_plugin_glpiinventory_taskjoblogs', [
-               'plugin_glpiinventory_taskjobstates_id' => new \Queryparam()
-            ]
-         );
-         $stmt = $DB->prepare($delete);
-         while ($data=$DB->fetchArray($result)) {
-            $pfTaskjobstate->getFromDB($data['plugin_glpiinventory_taskjobstates_id']);
-            $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
+        $result = $DB->query($sql);
+        if ($result) {
+            $delete = $DB->buildDelete(
+                'glpi_plugin_glpiinventory_taskjoblogs',
+                [
+                'plugin_glpiinventory_taskjobstates_id' => new \Queryparam()
+                ]
+            );
+            $stmt = $DB->prepare($delete);
+            while ($data = $DB->fetchArray($result)) {
+                 $pfTaskjobstate->getFromDB($data['plugin_glpiinventory_taskjobstates_id']);
+                 $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
 
-            $stmt->bind_param('s', $data['plugin_glpiinventory_taskjobstates_id']);
-            $DB->executeStatement($stmt);
-         }
-         mysqli_stmt_close($stmt);
-      }
-   }
+                 $stmt->bind_param('s', $data['plugin_glpiinventory_taskjobstates_id']);
+                 $DB->executeStatement($stmt);
+            }
+            mysqli_stmt_close($stmt);
+        }
+    }
 
 
    /**
@@ -665,12 +690,13 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
    * @since 9.2
    * @param uniqid taskjobstate's uniqid
    */
-   function getFromDBByUniqID($uniqid) {
-      $result = $this->find(['uniqid' => $uniqid], [], 1);
-      if (!empty($result)) {
-         $this->fields = array_pop($result);
-      }
-   }
+    public function getFromDBByUniqID($uniqid)
+    {
+        $result = $this->find(['uniqid' => $uniqid], [], 1);
+        if (!empty($result)) {
+            $this->fields = array_pop($result);
+        }
+    }
 
 
    /**
@@ -678,109 +704,110 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM {
     *
     * @param integer $computers_id
     */
-   function showStatesForComputer($computers_id) {
-      global $DB;
+    public function showStatesForComputer($computers_id)
+    {
+        global $DB;
 
-      $agent      = new Agent();
-      $pfTask       = new PluginGlpiinventoryTask();
-      $pfTaskjob    = new PluginGlpiinventoryTaskjob();
-      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $agent      = new Agent();
+        $pfTask       = new PluginGlpiinventoryTask();
+        $pfTaskjob    = new PluginGlpiinventoryTaskjob();
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
 
-      // Get the agent of the computer
-      $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
-      $agents_id = $agent->fields['id'];
+       // Get the agent of the computer
+        $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+        $agents_id = $agent->fields['id'];
 
-      $tasks_id = [];
+        $tasks_id = [];
 
-      // Get tasks ids
-      $iterator = $DB->request([
+       // Get tasks ids
+        $iterator = $DB->request([
          'FROM'   => $this->getTable(),
          'WHERE'  => [
             'agents_id' => $agents_id,
          ],
          'ORDER' => 'id DESC',
-      ]);
-      foreach ($iterator as $data) {
-         $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
-         $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
-         if (!isset($tasks_id[$pfTask->fields['id']])) {
-            $tasks_id[$pfTask->fields['id']] = [
-               'is_active' => $pfTask->fields['is_active'],
-               'jobstates' => [],
-               'method'    => $pfTaskjob->fields['method'],
-               'name'      => $pfTask->fields['name'],
-            ];
-         }
-         // Limit to 5 last runs
-         if (count($tasks_id[$pfTask->fields['id']]['jobstates']) < 5) {
-            $tasks_id[$pfTask->fields['id']]['jobstates'][] = $data['id'];
-         }
-      }
-      echo "<table width='950' class='tab_cadre_fixe'>";
+        ]);
+        foreach ($iterator as $data) {
+            $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
+            $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
+            if (!isset($tasks_id[$pfTask->fields['id']])) {
+                $tasks_id[$pfTask->fields['id']] = [
+                 'is_active' => $pfTask->fields['is_active'],
+                 'jobstates' => [],
+                 'method'    => $pfTaskjob->fields['method'],
+                 'name'      => $pfTask->fields['name'],
+                ];
+            }
+            // Limit to 5 last runs
+            if (count($tasks_id[$pfTask->fields['id']]['jobstates']) < 5) {
+                $tasks_id[$pfTask->fields['id']]['jobstates'][] = $data['id'];
+            }
+        }
+        echo "<table width='950' class='tab_cadre_fixe'>";
 
-      echo "<tr>";
-      echo "<th>";
-      echo __('Task');
-      echo "</th>";
-      echo "<th>";
-      echo __('Active');
-      echo "</th>";
-      echo "<th>";
-      echo __('Module method');
-      echo "</th>";
-      echo "<th>";
-      echo _n('Date', 'Dates', 1);
-      echo "</th>";
-      echo "<th>";
-      echo __('Status');
-      echo "</th>";
-      echo "</tr>";
+        echo "<tr>";
+        echo "<th>";
+        echo __('Task');
+        echo "</th>";
+        echo "<th>";
+        echo __('Active');
+        echo "</th>";
+        echo "<th>";
+        echo __('Module method');
+        echo "</th>";
+        echo "<th>";
+        echo _n('Date', 'Dates', 1);
+        echo "</th>";
+        echo "<th>";
+        echo __('Status');
+        echo "</th>";
+        echo "</tr>";
 
-      $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
-      $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryTask");
-      $stateColors = [
+        $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
+        $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryTask");
+        $stateColors = [
          PluginGlpiinventoryTaskjoblog::TASK_PREPARED => '#efefef',
          PluginGlpiinventoryTaskjoblog::TASK_RUNNING  => '#aaaaff',
          PluginGlpiinventoryTaskjoblog::TASK_STARTED  => '#aaaaff',
          PluginGlpiinventoryTaskjoblog::TASK_OK       => '#aaffaa',
          PluginGlpiinventoryTaskjoblog::TASK_ERROR    => '#ff0000',
-      ];
+        ];
 
-      foreach ($tasks_id as $id=>$data) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo "<a href='".$link."?id=".$id."'>".$data['name']."</a>";
-         echo "</td>";
-         echo "<td>";
-         echo Dropdown::getYesNo($data['is_active']);
-         echo "</td>";
-         echo "<td>";
-         echo $modules_methods[$data['method']];
-         echo "</td>";
-         echo "<td colspan='2'>";
-         echo "</td>";
-         echo "</tr>";
+        foreach ($tasks_id as $id => $data) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo "<a href='" . $link . "?id=" . $id . "'>" . $data['name'] . "</a>";
+            echo "</td>";
+            echo "<td>";
+            echo Dropdown::getYesNo($data['is_active']);
+            echo "</td>";
+            echo "<td>";
+            echo $modules_methods[$data['method']];
+            echo "</td>";
+            echo "<td colspan='2'>";
+            echo "</td>";
+            echo "</tr>";
 
-         // Each taskjobstate
-         foreach ($data['jobstates'] as $jobstates_id) {
-            $logs = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $jobstates_id], ['id DESC'], 1);
-            if (count($logs) > 0) {
-               $log = current($logs);
-               echo "<tr class='tab_bg_1'>";
-               echo "<td colspan='3'>";
-               echo "</td>";
-               echo "</td>";
-               echo "<td style='background-color: ".$stateColors[$log['state']]."'>";
-               echo Html::convDateTime($log['date']);
-               echo "</td>";
-               echo "<td style='background-color: ".$stateColors[$log['state']]."'>";
-               echo $pfTaskjoblog->getStateName($log['state']);
-               // status
-               echo "</td>";
-               echo "</tr>";
+           // Each taskjobstate
+            foreach ($data['jobstates'] as $jobstates_id) {
+                $logs = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $jobstates_id], ['id DESC'], 1);
+                if (count($logs) > 0) {
+                    $log = current($logs);
+                    echo "<tr class='tab_bg_1'>";
+                    echo "<td colspan='3'>";
+                    echo "</td>";
+                    echo "</td>";
+                    echo "<td style='background-color: " . $stateColors[$log['state']] . "'>";
+                    echo Html::convDateTime($log['date']);
+                    echo "</td>";
+                    echo "<td style='background-color: " . $stateColors[$log['state']] . "'>";
+                    echo $pfTaskjoblog->getStateName($log['state']);
+                    // status
+                    echo "</td>";
+                    echo "</tr>";
+                }
             }
-         }
-      }
-      echo "</table>";
-   }
+        }
+        echo "</table>";
+    }
 }

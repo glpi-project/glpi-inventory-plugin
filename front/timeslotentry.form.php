@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,23 +31,23 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
 if (!isset($_GET["id"])) {
-   $_GET["id"] = "";
+    $_GET["id"] = "";
 }
 
 $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-foreach ($_POST as $key=>$value) {
-   if (strstr($key, 'purge-')) {
-      $split = explode('-', $key);
-      $_POST['id'] = $split[1];
-      $pfTimeslotEntry->check($_POST['id'], PURGE);
-      $pfTimeslotEntry->delete($_POST, 1);
-      Html::back();
-   }
+foreach ($_POST as $key => $value) {
+    if (strstr($key, 'purge-')) {
+        $split = explode('-', $key);
+        $_POST['id'] = $split[1];
+        $pfTimeslotEntry->check($_POST['id'], PURGE);
+        $pfTimeslotEntry->delete($_POST, 1);
+        Html::back();
+    }
 }
 
 $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();

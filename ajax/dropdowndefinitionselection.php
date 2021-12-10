@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,19 +32,19 @@
  */
 
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowndefinitionselection.php")) {
-   include ("../../../inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+    include("../../../inc/includes.php");
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 if (!defined('GLPI_ROOT')) {
-   die("Can not acces directly to this file");
+    die("Can not acces directly to this file");
 }
 Session::checkCentralAccess();
 
 echo "<script type='text/javascript'>
 var select = document.getElementById('definitionlist');
-var obj = document.getElementById('".filter_input(INPUT_POST, "defselectadd")."');
-var deftype = document.getElementById('".filter_input(INPUT_POST, "definitiontypeid")."');
+var obj = document.getElementById('" . filter_input(INPUT_POST, "defselectadd") . "');
+var deftype = document.getElementById('" . filter_input(INPUT_POST, "definitiontypeid") . "');
 
 var list = document.getElementById('definitionselection').innerHTML;
 
@@ -53,7 +54,7 @@ if ((select.value.match(pattern1)) || (select.value.match(pattern2))) {
 
 } else {
    document.getElementById('definitionselection').innerHTML = list + '<br>' + deftype.options[deftype.selectedIndex].text + ' -> ' + obj.options[obj.selectedIndex].text +
-   ' <img src=\"".$CFG_GLPI['root_doc']."/pics/delete.png\" onclick=\'deldef(\"' + deftype.options[deftype.selectedIndex].text + '->' + obj.options[obj.selectedIndex].text + '->' + deftype.options[deftype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '\")\'>';
+   ' <img src=\"" . $CFG_GLPI['root_doc'] . "/pics/delete.png\" onclick=\'deldef(\"' + deftype.options[deftype.selectedIndex].text + '->' + obj.options[obj.selectedIndex].text + '->' + deftype.options[deftype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '\")\'>';
    if (deftype.value !== '0') {
       document.getElementById('definitionlist').value = document.getElementById('definitionlist').value + ',' + deftype.options[deftype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value;
    } else {

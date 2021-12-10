@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,7 +33,8 @@
 
 use PHPUnit\Framework\TestCase;
 
-class UnmanagedManagedTest extends TestCase {
+class UnmanagedManagedTest extends TestCase
+{
 
    /*
     * When switch get unknown mac address, it create unknown device (in reality a computer)
@@ -40,33 +42,35 @@ class UnmanagedManagedTest extends TestCase {
     * the connections to the switch
     */
 
-   public static function setUpBeforeClass(): void {
+    public static function setUpBeforeClass(): void
+    {
 
-      // Delete all networkequipment
-      $networkEquipment = new NetworkEquipment();
-      $items = $networkEquipment->find();
-      foreach ($items as $item) {
-         $networkEquipment->delete(['id' => $item['id']], true);
-      }
+       // Delete all networkequipment
+        $networkEquipment = new NetworkEquipment();
+        $items = $networkEquipment->find();
+        foreach ($items as $item) {
+            $networkEquipment->delete(['id' => $item['id']], true);
+        }
 
-      // Delete all computers
-      $computer = new Computer();
-      $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-      foreach ($items as $item) {
-         $computer->delete(['id' => $item['id']], true);
-      }
-   }
+       // Delete all computers
+        $computer = new Computer();
+        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
+        foreach ($items as $item) {
+            $computer->delete(['id' => $item['id']], true);
+        }
+    }
 
 
    /**
     * @test
     */
-   public function AddNetworkEquipment() {
-      $this->markTestSkipped('Move tests into GLPI core');
+    public function AddNetworkEquipment()
+    {
+        $this->markTestSkipped('Move tests into GLPI core');
 
-      $this->update_time = date('Y-m-d H:i:s');
+        $this->update_time = date('Y-m-d H:i:s');
 
-      $a_inventory = [
+        $a_inventory = [
          'PluginGlpiinventoryNetworkEquipment' => [
             'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
             'last_inventory_update' => $this->update_time,
@@ -80,8 +84,8 @@ class UnmanagedManagedTest extends TestCase {
          'connection-lldp'   => [],
          'internalport'      => ['192.168.30.2'],
          'itemtype'          => 'NetworkEquipment'
-      ];
-      $a_inventory['NetworkEquipment'] = [
+        ];
+        $a_inventory['NetworkEquipment'] = [
          'name'               => 'switchr2d2',
          'id'                 => 96,
          'serial'             => 'FOC147UJXXX',
@@ -94,9 +98,9 @@ class UnmanagedManagedTest extends TestCase {
          'ram'                => 64,
          'is_dynamic'         => 1,
          'mac'                => '6c:50:4d:39:59:90'
-      ];
+        ];
 
-      $a_inventory['networkport'] = [
+        $a_inventory['networkport'] = [
          '10001' => [
             'ifdescr'          => 'FastEthernet0/1',
             'ifinerrors'       => 869,
@@ -115,38 +119,39 @@ class UnmanagedManagedTest extends TestCase {
             'trunk'            => 0,
             'ifspeed'          => 100000000
          ]
-      ];
-      $a_inventory['connection-mac'] = [
+        ];
+        $a_inventory['connection-mac'] = [
          '10001' => ['cc:f9:54:a1:03:45']
-      ];
-      $a_inventory['vlans'] = [];
-      $a_inventory['connection-lldp'] = [];
+        ];
+        $a_inventory['vlans'] = [];
+        $a_inventory['connection-lldp'] = [];
 
-      $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
-      $networkEquipment = new NetworkEquipment();
+        $pfiNetworkEquipmentLib = new PluginGlpiinventoryInventoryNetworkEquipmentLib();
+        $networkEquipment = new NetworkEquipment();
 
-      $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJXXX',
+        $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJXXX',
          'entities_id' => 0]);
 
-      $this->assertGreaterThan(0, $this->items_id);
+        $this->assertGreaterThan(0, $this->items_id);
 
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+        $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
 
-      // To be sure not have 2 same informations
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
-   }
+       // To be sure not have 2 same informations
+        $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+    }
 
 
    /**
     * @test
     */
-   public function NewComputer() {
-      $this->markTestSkipped('Move tests into GLPI core');
+    public function NewComputer()
+    {
+        $this->markTestSkipped('Move tests into GLPI core');
 
-      $_SESSION["plugin_glpiinventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-      $a_inventory = [
+        $a_inventory = [
          'inventorycomputer' => [
             'last_inventory_update' => date('Y-m-d H:i:s')
          ],
@@ -173,8 +178,8 @@ class UnmanagedManagedTest extends TestCase {
          'bios'           => [],
          'powersupply'    => [],
          'itemtype'       => 'Computer'
-      ];
-      $a_inventory['Computer'] = [
+        ];
+        $a_inventory['Computer'] = [
          'name'                             => 'pc',
          'users_id'                         => 0,
          'operatingsystems_id'              => 1,
@@ -189,8 +194,8 @@ class UnmanagedManagedTest extends TestCase {
          'computertypes_id'                 => 1,
          'is_dynamic'                       => 1,
          'contact'                          => 'username'
-      ];
-      $a_inventory['networkport'] = [
+        ];
+        $a_inventory['networkport'] = [
          'em0-cc:f9:54:a1:03:45' => [
             'name'                 => 'em0',
             'netmask'              => '255.255.255.0',
@@ -204,34 +209,40 @@ class UnmanagedManagedTest extends TestCase {
             'logical_number'       => 1,
             'ipaddress'            => ['192.168.30.198']
          ]
-      ];
+        ];
 
-      $networkPort = new NetworkPort();
+        $networkPort = new NetworkPort();
 
-      $a_networkports = $networkPort->find(['mac' => 'cc:f9:54:a1:03:45']);
+        $a_networkports = $networkPort->find(['mac' => 'cc:f9:54:a1:03:45']);
 
-      $a_networkport = current($a_networkports);
-      $networkports_id = $a_networkport['id'];
+        $a_networkport = current($a_networkports);
+        $networkports_id = $a_networkport['id'];
 
-      $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
-      $computer         = new Computer();
+        $pfiComputerLib   = new PluginGlpiinventoryInventoryComputerLib();
+        $computer         = new Computer();
 
-      $computers_id = $computer->add(['serial'      => 'XB63J7D',
+        $computers_id = $computer->add(['serial'      => 'XB63J7D',
                                       'entities_id' => 0]);
 
-      $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
+        $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
 
-      $a_networkports = $networkPort->find(['mac' => 'cc:f9:54:a1:03:45']);
+        $a_networkports = $networkPort->find(['mac' => 'cc:f9:54:a1:03:45']);
 
-      $this->assertEquals(1, count($a_networkports),
-         "The MAC address cc:f9:54:a1:03:45 must be tied to only one port");
+        $this->assertEquals(
+            1,
+            count($a_networkports),
+            "The MAC address cc:f9:54:a1:03:45 must be tied to only one port"
+        );
 
-      $a_networkport = current($a_networkports);
+        $a_networkport = current($a_networkports);
 
-      $this->assertEquals($networkports_id, $a_networkport['id'],
-         'The networkport ID is not the same '.
-         'between the unknown device and the computer');
+        $this->assertEquals(
+            $networkports_id,
+            $a_networkport['id'],
+            'The networkport ID is not the same ' .
+            'between the unknown device and the computer'
+        );
 
-      $this->assertEquals('Computer', $a_networkport['itemtype'], "Maybe Computer ");
-   }
+        $this->assertEquals('Computer', $a_networkport['itemtype'], "Maybe Computer ");
+    }
 }

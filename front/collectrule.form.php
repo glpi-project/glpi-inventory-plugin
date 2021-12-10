@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,17 +31,19 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
-Html::header(__('GLPI Inventory', 'glpiinventory'),
-             $_SERVER["PHP_SELF"],
-             "plugins",
-             "pluginglpiinventorymenu",
-             "collectrule");
+Html::header(
+    __('GLPI Inventory', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "plugins",
+    "pluginglpiinventorymenu",
+    "collectrule"
+);
 Session::checkLoginUser();
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
 $rulecollection = new PluginGlpiinventoryCollectRuleCollection();
 
-include (GLPI_ROOT . "/front/rule.common.form.php");
+include(GLPI_ROOT . "/front/rule.common.form.php");

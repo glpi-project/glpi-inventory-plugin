@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -33,37 +34,39 @@
 use Glpi\Inventory\Inventory;
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access this file directly");
+    die("Sorry. You can't access this file directly");
 }
 
 /**
  * Manage the communication of network inventory feature with the agents.
  */
-class PluginGlpiinventoryCommunicationNetworkInventory {
+class PluginGlpiinventoryCommunicationNetworkInventory
+{
 
    /**
     * Define protected variables
     *
     * @var null
     */
-   private $logFile, $arrayinventory;
+    private $logFile;
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_networkequipment';
+    public static $rightname = 'plugin_glpiinventory_networkequipment';
 
 
    /**
     * __contruct function where fill logFile if extradebug enabled
     */
-   function __construct() {
-      if (PluginGlpiinventoryConfig::isExtradebugActive()) {
-         $this->logFile = GLPI_LOG_DIR.'/glpiinventorycommunication.log';
-      }
-   }
+    public function __construct()
+    {
+        if (PluginGlpiinventoryConfig::isExtradebugActive()) {
+            $this->logFile = GLPI_LOG_DIR . '/glpiinventorycommunication.log';
+        }
+    }
 
 
    /**
@@ -73,107 +76,113 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
     * @param object $a_CONTENT
     * @param Inventory $arrayinventory
     */
-   function import($p_DEVICEID, $a_CONTENT, Inventory $inventory) {
-      $response= [];
+    public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory)
+    {
+        $response = [];
 
-      PluginGlpiinventoryCommunication::addLog(
-              'Function PluginGlpiinventoryCommunicationNetworkInventory->import().');
+        PluginGlpiinventoryCommunication::addLog(
+            'Function PluginGlpiinventoryCommunicationNetworkInventory->import().'
+        );
 
-      $agent = new Agent();
-      $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $agent = new Agent();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-      $agent->getFromDBByCrit(['deviceid' => $p_DEVICEID]);
+        $agent->getFromDBByCrit(['deviceid' => $p_DEVICEID]);
 
-      if (!isset($a_CONTENT->jobid)) {
-         if (isset($a_CONTENT->content->processnumber)) {
-            $a_CONTENT->jobid = $a_CONTENT->content->processnumber;
-         } else {
-            $a_CONTENT->jobid = 1;
-         }
-      }
-
-      $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
-      if ((!isset($a_CONTENT->content->agent->start)) AND (!isset($a_CONTENT->content->agent->end))) {
-          $nb_devices = 1;
-          $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
-              $a_CONTENT->jobid;
-          $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-          $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
-          $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
-          $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices.
-              ' ==devicesqueried==';
-          $this->addtaskjoblog();
-      }
-
-      if (isset($a_CONTENT->content->agent->end)) {
-         $cnt = countElementsInTable('glpi_plugin_glpiinventory_taskjoblogs',
-            [
-               'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-               'comment'                                 => ["LIKE", '%[==detail==] Update %'],
-            ]);
-
-         $pfTaskjobstate->changeStatusFinish(
-            $a_CONTENT->jobid,
-            $agent->fields['id'],
-            'Agent',
-            '0',
-            'Total updated:'.$cnt
-         );
-         $response = ['response' => ['RESPONSE' => 'SEND']];
-      } else if (isset($a_CONTENT->content->agent->start)) {
-         $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
-         $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-         $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
-         $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
-         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
-         $this->addtaskjoblog();
-         $response = ['response' => ['RESPONSE' => 'SEND']];
-      } else if (isset($a_CONTENT->content->device->error)) {
-         $itemtype = "";
-         if ($a_CONTENT->content->device->error->type == "NETWORKING" || $a_CONTENT->content->device->error->type == "STORAGE") {
-            $itemtype = "NetworkEquipment";
-         } else if ($a_CONTENT->content->device->error->type == "PRINTER") {
-            $itemtype = "Printer";
-         }
-         $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '.
-            $a_CONTENT->content->device->error->message.' [['.$itemtype.'::'.
-            $a_CONTENT->content->device->error->id.']]';
-         $this->addtaskjoblog();
-         $response = ['response' => ['RESPONSE' => 'SEND']];
-      } else {
-         $inventory->doInventory();
-         if ($inventory->inError()) {
-            foreach ($inventory->getErrors() as $error) {
-               $response = ['response' => ['ERROR' => $error]];
+        if (!isset($a_CONTENT->jobid)) {
+            if (isset($a_CONTENT->content->processnumber)) {
+                $a_CONTENT->jobid = $a_CONTENT->content->processnumber;
+            } else {
+                $a_CONTENT->jobid = 1;
             }
-         } else {
-            //nothing to do.
-            $response = ['response' => ['RESPONSE' => 'SEND']];
-         }
-      }
+        }
 
-      return $response;
-   }
+        $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
+        if ((!isset($a_CONTENT->content->agent->start)) and (!isset($a_CONTENT->content->agent->end))) {
+            $nb_devices = 1;
+            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
+              $a_CONTENT->jobid;
+            $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
+            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices .
+              ' ==devicesqueried==';
+            $this->addtaskjoblog();
+        }
+
+        if (isset($a_CONTENT->content->agent->end)) {
+            $cnt = countElementsInTable(
+                'glpi_plugin_glpiinventory_taskjoblogs',
+                [
+                'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                'comment'                                 => ["LIKE", '%[==detail==] Update %'],
+                ]
+            );
+
+            $pfTaskjobstate->changeStatusFinish(
+                $a_CONTENT->jobid,
+                $agent->fields['id'],
+                'Agent',
+                '0',
+                'Total updated:' . $cnt
+            );
+            $response = ['response' => ['RESPONSE' => 'SEND']];
+        } elseif (isset($a_CONTENT->content->agent->start)) {
+            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
+            $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
+            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
+            $this->addtaskjoblog();
+            $response = ['response' => ['RESPONSE' => 'SEND']];
+        } elseif (isset($a_CONTENT->content->device->error)) {
+            $itemtype = "";
+            if ($a_CONTENT->content->device->error->type == "NETWORKING" || $a_CONTENT->content->device->error->type == "STORAGE") {
+                $itemtype = "NetworkEquipment";
+            } elseif ($a_CONTENT->content->device->error->type == "PRINTER") {
+                $itemtype = "Printer";
+            }
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] ' .
+            $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::' .
+            $a_CONTENT->content->device->error->id . ']]';
+            $this->addtaskjoblog();
+            $response = ['response' => ['RESPONSE' => 'SEND']];
+        } else {
+            $inventory->doInventory();
+            if ($inventory->inError()) {
+                foreach ($inventory->getErrors() as $error) {
+                    $response = ['response' => ['ERROR' => $error]];
+                }
+            } else {
+               //nothing to do.
+                $response = ['response' => ['RESPONSE' => 'SEND']];
+            }
+        }
+
+        return $response;
+    }
 
 
 
    /**
     * Add log in the taskjob
     */
-   function addtaskjoblog() {
+    public function addtaskjoblog()
+    {
 
-      if (!isset($_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'])) {
-         return;
-      }
+        if (!isset($_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'])) {
+            return;
+        }
 
-      $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-      $pfTaskjoblog->addTaskjoblog(
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
-                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment']);
-   }
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $pfTaskjoblog->addTaskjoblog(
+            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
+        );
+    }
 
 
    /**
@@ -181,8 +190,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory {
     *
     * @return string
     */
-   static function getMethod() {
-      return 'networkinventory';
-   }
-
+    public static function getMethod()
+    {
+        return 'networkinventory';
+    }
 }

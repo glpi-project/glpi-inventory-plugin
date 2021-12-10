@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,21 +32,22 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the computer inventory stats (number of inventories arrived in
  * the plugin and regroued by hour).
  */
-class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
+class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
+{
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_agent';
+    public static $rightname = 'plugin_glpiinventory_agent';
 
 
    /**
@@ -54,9 +56,10 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb = 0) {
-      return "Stat";
-   }
+    public static function getTypeName($nb = 0)
+    {
+        return "Stat";
+    }
 
 
    /**
@@ -64,30 +67,31 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
     *
     * @global object $DB
     */
-   static function init() {
-      global $DB;
+    public static function init()
+    {
+        global $DB;
 
-      $insert = $DB->buildInsert(
-         'glpi_plugin_glpiinventory_inventorycomputerstats', [
+        $insert = $DB->buildInsert(
+            'glpi_plugin_glpiinventory_inventorycomputerstats',
+            [
             'day'    => new \QueryParam(),
             'hour'   => new \QueryParam()
-         ]
-      );
-      $stmt = $DB->prepare($insert);
+            ]
+        );
+        $stmt = $DB->prepare($insert);
 
-      for ($d=1; $d<=365; $d++) {
-         for ($h=0; $h<24; $h++) {
-
-            $stmt->bind_param(
-               'ss',
-               $d,
-               $h
-            );
-            $DB->executeStatement($stmt);
-         }
-      }
-      mysqli_stmt_close($stmt);
-   }
+        for ($d = 1; $d <= 365; $d++) {
+            for ($h = 0; $h < 24; $h++) {
+                $stmt->bind_param(
+                    'ss',
+                    $d,
+                    $h
+                );
+                $DB->executeStatement($stmt);
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
 
 
    /**
@@ -95,18 +99,21 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
     *
     * @global object $DB
     */
-   static function increment() {
-      global $DB;
+    public static function increment()
+    {
+        global $DB;
 
-      $DB->update(
-         'glpi_plugin_glpiinventory_inventorycomputerstats', [
+        $DB->update(
+            'glpi_plugin_glpiinventory_inventorycomputerstats',
+            [
             'counter'   => new \QueryExpression($DB->quoteName('counter') . ' + 1')
-         ], [
+            ],
+            [
             'day'    => date('z'),
             'hour'   => date('G')
-         ]
-      );
-   }
+            ]
+        );
+    }
 
 
    /**
@@ -116,30 +123,31 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM {
     * @param integer $nb
     * @return integer
     */
-   static function getLastHours($nb = 11) {
-      global $DB;
+    public static function getLastHours($nb = 11)
+    {
+        global $DB;
 
-      $a_counters = [];
-      $a_counters['key'] = 'test';
+        $a_counters = [];
+        $a_counters['key'] = 'test';
 
-      $timestamp = date('U');
-      for ($i=$nb; $i>=0; $i--) {
-         $timestampSearch = $timestamp - ($i * 3600);
-         $query = "SELECT * FROM `glpi_plugin_glpiinventory_inventorycomputerstats` "
-                    ."WHERE `day`='".date('z', $timestampSearch)."' "
-                    ."   AND `hour`='".date('G', $timestampSearch)."' "
-                    ."LIMIT 1";
-         $result = $DB->query($query);
-         $data = $DB->fetchAssoc($result);
-         $cnt = 0;
-         if (!is_null($data)) {
-            $cnt = (int)$data['counter'];
-         }
-         $a_counters['values'][] = [
-             'label' => date('H', $timestampSearch).":00",
+        $timestamp = date('U');
+        for ($i = $nb; $i >= 0; $i--) {
+            $timestampSearch = $timestamp - ($i * 3600);
+            $query = "SELECT * FROM `glpi_plugin_glpiinventory_inventorycomputerstats` "
+                    . "WHERE `day`='" . date('z', $timestampSearch) . "' "
+                    . "   AND `hour`='" . date('G', $timestampSearch) . "' "
+                    . "LIMIT 1";
+            $result = $DB->query($query);
+            $data = $DB->fetchAssoc($result);
+            $cnt = 0;
+            if (!is_null($data)) {
+                $cnt = (int)$data['counter'];
+            }
+            $a_counters['values'][] = [
+             'label' => date('H', $timestampSearch) . ":00",
              'value' => $cnt
-         ];
-      }
-      return $a_counters;
-   }
+            ];
+        }
+        return $a_counters;
+    }
 }

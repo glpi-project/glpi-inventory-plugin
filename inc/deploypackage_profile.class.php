@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,55 +32,56 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the visibility of package by profile.
  */
-class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation {
+class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation
+{
 
    /**
     * Itemtype for the first part of relation
     *
     * @var string
     */
-   static public $itemtype_1          = 'PluginGlpiinventoryDeployPackage';
+    public static $itemtype_1          = 'PluginGlpiinventoryDeployPackage';
 
    /**
     * id field name for the first part of relation
     *
     * @var string
     */
-   static public $items_id_1          = 'plugin_glpiinventory_deploypackages_id';
+    public static $items_id_1          = 'plugin_glpiinventory_deploypackages_id';
 
    /**
     * Itemtype for the second part of relation
     *
     * @var string
     */
-   static public $itemtype_2          = 'Profile';
+    public static $itemtype_2          = 'Profile';
 
    /**
     * id field name for the second part of relation
     *
     * @var string
     */
-   static public $items_id_2          = 'profiles_id';
+    public static $items_id_2          = 'profiles_id';
 
    /**
     * Set we don't check parent right of the second item
     *
     * @var integer
     */
-   static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
+    public static $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
 
    /**
     * Logs for the second item are disabled
     *
     * @var type
     */
-   static public $logs_for_item_2     = false;
+    public static $logs_for_item_2     = false;
 
 
    /**
@@ -89,17 +91,18 @@ class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation {
     * @param integer $deploypackages_id ID of the deploypackage
     * @return array list of profiles linked to a deploypackage
    **/
-   static function getProfiles($deploypackages_id) {
-      global $DB;
+    public static function getProfiles($deploypackages_id)
+    {
+        global $DB;
 
-      $prof  = [];
-      $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_profiles`.*
+        $prof  = [];
+        $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_profiles`.*
                 FROM `glpi_plugin_glpiinventory_deploypackages_profiles`
                 WHERE `plugin_glpiinventory_deploypackages_id` = '$deploypackages_id'";
 
-      foreach ($DB->request($query) as $data) {
-         $prof[$data['profiles_id']][] = $data;
-      }
-      return $prof;
-   }
+        foreach ($DB->request($query) as $data) {
+            $prof[$data['profiles_id']][] = $data;
+        }
+        return $prof;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,13 +31,18 @@
  * ---------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
 
-Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER["PHP_SELF"],
-        "admin", "pluginglpiinventorymenu", "timeslot");
+Html::header(
+    __('GLPI Inventory', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "timeslot"
+);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 

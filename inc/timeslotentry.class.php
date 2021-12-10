@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,27 +32,28 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the hours in the timeslot.
  */
-class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
+class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
+{
 
    /**
     * We activate the history.
     *
     * @var boolean
     */
-   public $dohistory = true;
+    public $dohistory = true;
 
    /**
     * The right name for this class
     *
     * @var string
     */
-   static $rightname = 'plugin_glpiinventory_task';
+    public static $rightname = 'plugin_glpiinventory_task';
 
 
    /**
@@ -60,9 +62,10 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb = 0) {
-      return __('Time slot entry', 'glpiinventory');
-   }
+    public static function getTypeName($nb = 0)
+    {
+        return __('Time slot entry', 'glpiinventory');
+    }
 
 
    /**
@@ -70,49 +73,50 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
     *
     * @return array
     */
-   function rawSearchOptions() {
+    public function rawSearchOptions()
+    {
 
-      $tab = [];
+        $tab = [];
 
-      $tab[] = [
+        $tab[] = [
          'id' => 'common',
          'name' => __('Time slot', 'glpiinventory')
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'name',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'       => '2',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => Entity::getTypeName(1),
          'datatype' => 'dropdown',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '3',
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
          'name'      => __('Child entities'),
          'datatype'  => 'bool',
-      ];
+        ];
 
-      $tab[] = [
+        $tab[] = [
          'id'        => '4',
          'table'     => $this->getTable(),
          'field'     => 'name',
          'name'      => __('Name'),
          'datatype'  => 'string',
-      ];
+        ];
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
    /**
@@ -120,18 +124,19 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
     *
     * @param integer $timeslots_id
     */
-   function formEntry($timeslots_id) {
-      $ID = 0;
-      $options = [];
-      $this->initForm($ID, $options);
-      $this->showFormHeader($options);
+    public function formEntry($timeslots_id)
+    {
+        $ID = 0;
+        $options = [];
+        $this->initForm($ID, $options);
+        $this->showFormHeader($options);
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('Start time', 'glpiinventory');
-      echo "</td>";
-      echo "<td>";
-      $days = [
+        echo "<tr class='tab_bg_1'>";
+        echo "<td>";
+        echo __('Start time', 'glpiinventory');
+        echo "</td>";
+        echo "<td>";
+        $days = [
           '1' => __('Monday'),
           '2' => __('Tuesday'),
           '3' => __('Wednesday'),
@@ -139,37 +144,37 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
           '5' => __('Friday'),
           '6' => __('Saturday'),
           '7' => __('Sunday')
-      ];
-      echo '<div id="beginday">';
-      Dropdown::showFromArray('beginday', $days);
-      echo '</div>';
-      $hours = [];
-      $dec = 15 * 60;
-      for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec) {
-         $hours[$timestamp] = date('H:i', $timestamp);
-      }
-      PluginGlpiinventoryToolbox::showHours('beginhours', ['step' => 15]);
-      echo "</td>";
-      echo "</tr>";
+        ];
+        echo '<div id="beginday">';
+        Dropdown::showFromArray('beginday', $days);
+        echo '</div>';
+        $hours = [];
+        $dec = 15 * 60;
+        for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec) {
+            $hours[$timestamp] = date('H:i', $timestamp);
+        }
+        PluginGlpiinventoryToolbox::showHours('beginhours', ['step' => 15]);
+        echo "</td>";
+        echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('End time', 'glpiinventory');
-      echo "</td>";
-      echo "<td>";
-      echo '<div id="beginday">';
-      Dropdown::showFromArray('lastday', $days);
-      echo '</div>';
-      PluginGlpiinventoryToolbox::showHours('lasthours', ['step' => 15]);
-      echo Html::hidden('timeslots_id', ['value' => $timeslots_id]);
-      echo "</td>";
-      echo "</tr>";
-      $this->showFormButtons($options);
+        echo "<tr class='tab_bg_1'>";
+        echo "<td>";
+        echo __('End time', 'glpiinventory');
+        echo "</td>";
+        echo "<td>";
+        echo '<div id="beginday">';
+        Dropdown::showFromArray('lastday', $days);
+        echo '</div>';
+        PluginGlpiinventoryToolbox::showHours('lasthours', ['step' => 15]);
+        echo Html::hidden('timeslots_id', ['value' => $timeslots_id]);
+        echo "</td>";
+        echo "</tr>";
+        $this->showFormButtons($options);
 
-      $this->formDeleteEntry($timeslots_id);
+        $this->formDeleteEntry($timeslots_id);
 
-      $this->showTimeSlot($timeslots_id);
-   }
+        $this->showTimeSlot($timeslots_id);
+    }
 
 
    /**
@@ -180,44 +185,45 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
     *
     * @param integer $timeslots_id
     */
-   function formDeleteEntry($timeslots_id) {
+    public function formDeleteEntry($timeslots_id)
+    {
 
-      $dbentries = getAllDataFromTable(
-         'glpi_plugin_glpiinventory_timeslotentries', [
+        $dbentries = getAllDataFromTable(
+            'glpi_plugin_glpiinventory_timeslotentries',
+            [
             'WHERE'  => ['plugin_glpiinventory_timeslots_id' => $timeslots_id],
             'ORDER'  => ['day', 'begin ASC']
-         ]
-      );
+            ]
+        );
 
-      $options = [];
-      $ID      = key($dbentries);
-      $canedit = $this->getFromDB($ID)
+        $options = [];
+        $ID      = key($dbentries);
+        $canedit = $this->getFromDB($ID)
                  && $this->can($ID, READ);
-      $this->showFormHeader($options);
+        $this->showFormHeader($options);
 
-      foreach ($dbentries as $dbentry) {
-
-         echo "<tr class='tab_bg_3'>";
-         echo "<td>";
-         $daysofweek = Toolbox::getDaysOfWeekArray();
-         $daysofweek[7] = $daysofweek[0];
-         unset($daysofweek[0]);
-         echo $daysofweek[$dbentry['day']];
-         echo "</td>";
-         echo "<td>";
-         echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['begin']);
-         echo " - ";
-         echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['end']);
-         echo "</td>";
-         echo "<td colspan='2'>";
-         if ($canedit) {
-            echo "<input type='submit' class='submit' name='purge-".$dbentry['id']."' value='delete' />";
-         }
-         echo "</td>";
-         echo "</tr>";
-      }
-      $this->showFormButtons(['canedit' => false]);
-   }
+        foreach ($dbentries as $dbentry) {
+            echo "<tr class='tab_bg_3'>";
+            echo "<td>";
+            $daysofweek = Toolbox::getDaysOfWeekArray();
+            $daysofweek[7] = $daysofweek[0];
+            unset($daysofweek[0]);
+            echo $daysofweek[$dbentry['day']];
+            echo "</td>";
+            echo "<td>";
+            echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['begin']);
+            echo " - ";
+            echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['end']);
+            echo "</td>";
+            echo "<td colspan='2'>";
+            if ($canedit) {
+                echo "<input type='submit' class='submit' name='purge-" . $dbentry['id'] . "' value='delete' />";
+            }
+            echo "</td>";
+            echo "</tr>";
+        }
+        $this->showFormButtons(['canedit' => false]);
+    }
 
 
    /**
@@ -229,15 +235,16 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
     *
     * @param integer $timeslots_id
     */
-   function showTimeSlot($timeslots_id) {
-      echo "<div id='chart'></div>";
-      echo "<div id='startperiod'></div>";
-      echo "<div id='stopperiod'></div>";
+    public function showTimeSlot($timeslots_id)
+    {
+        echo "<div id='chart'></div>";
+        echo "<div id='startperiod'></div>";
+        echo "<div id='stopperiod'></div>";
 
-      $daysofweek = Toolbox::getDaysOfWeekArray();
-      $daysofweek[7] = $daysofweek[0];
-      unset($daysofweek[0]);
-      $dates = [
+        $daysofweek = Toolbox::getDaysOfWeekArray();
+        $daysofweek[7] = $daysofweek[0];
+        unset($daysofweek[0]);
+        $dates = [
           $daysofweek[1] => [],
           $daysofweek[2] => [],
           $daysofweek[3] => [],
@@ -245,27 +252,28 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
           $daysofweek[5] => [],
           $daysofweek[6] => [],
           $daysofweek[7] => [],
-      ];
+        ];
 
-      for ($day=1; $day <= 7; $day++) {
-         $dbentries = getAllDataFromTable(
-            'glpi_plugin_glpiinventory_timeslotentries', [
-               'WHERE'  => [
+        for ($day = 1; $day <= 7; $day++) {
+            $dbentries = getAllDataFromTable(
+                'glpi_plugin_glpiinventory_timeslotentries',
+                [
+                'WHERE'  => [
                   'plugin_glpiinventory_timeslots_id' => $timeslots_id,
                   'day'                                 => $day,
-               ],
-               'ORDER'  => 'begin ASC'
-            ]
-         );
-         foreach ($dbentries as $entries) {
-            $dates[$daysofweek[$day]][] = [
-                'start' => $entries['begin'],
-                'end'   => $entries['end']
-            ];
-         }
-      }
-      echo '<script>timeslot(\''.json_encode($dates).'\')</script>';
-   }
+                ],
+                'ORDER'  => 'begin ASC'
+                ]
+            );
+            foreach ($dbentries as $entries) {
+                $dates[$daysofweek[$day]][] = [
+                  'start' => $entries['begin'],
+                  'end'   => $entries['end']
+                ];
+            }
+        }
+        echo '<script>timeslot(\'' . json_encode($dates) . '\')</script>';
+    }
 
 
    /**
@@ -273,135 +281,138 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM {
     *
     * @param array $data
     */
-   function addEntry($data) {
-      if ($data['lastday'] < $data['beginday']) {
-         return;
-      } else if ($data['lastday'] == $data['beginday']
-              && $data['lasthours'] <= $data['beginhours']) {
-         return;
-      }
-      // else ok, we can update DB
-      for ($day=$data['beginday']; $day <= $data['lastday']; $day++) {
-         $range = [];
+    public function addEntry($data)
+    {
+        if ($data['lastday'] < $data['beginday']) {
+            return;
+        } elseif (
+            $data['lastday'] == $data['beginday']
+              && $data['lasthours'] <= $data['beginhours']
+        ) {
+            return;
+        }
+       // else ok, we can update DB
+        for ($day = $data['beginday']; $day <= $data['lastday']; $day++) {
+            $range = [];
 
-         $range['beginhours'] = $data['beginhours'];
-         $range['lasthours'] = $data['lasthours'];
-         if ($data['beginday'] < $day) {
-            $range['beginhours'] = 0;
-         }
-         if ($data['lastday'] > $day) {
-            $range['lasthours'] = (24 * 3600);
-         }
+            $range['beginhours'] = $data['beginhours'];
+            $range['lasthours'] = $data['lasthours'];
+            if ($data['beginday'] < $day) {
+                $range['beginhours'] = 0;
+            }
+            if ($data['lastday'] > $day) {
+                $range['lasthours'] = (24 * 3600);
+            }
 
-         // now get from DB
-         $dbentries = getAllDataFromTable(
-            'glpi_plugin_glpiinventory_timeslotentries', [
-               'WHERE'  => [
+           // now get from DB
+            $dbentries = getAllDataFromTable(
+                'glpi_plugin_glpiinventory_timeslotentries',
+                [
+                'WHERE'  => [
                   'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                   'day'                                 => $day,
-               ],
-               'ORDER'  => 'begin ASC'
-            ]
-         );
+                ],
+                'ORDER'  => 'begin ASC'
+                ]
+            );
 
-         $inThePeriod = false;
-         $afterPeriod = false;
-         $updateEntries = [];
-         $deleteEntries = [];
-         $addEntries = [];
+            $inThePeriod = false;
+            $afterPeriod = false;
+            $updateEntries = [];
+            $deleteEntries = [];
+            $addEntries = [];
 
-         foreach ($dbentries as $entries) {
-            if ($afterPeriod) {
-               continue;
+            foreach ($dbentries as $entries) {
+                if ($afterPeriod) {
+                    continue;
+                }
+
+                if ($inThePeriod) {
+                 // So we need manage the end
+                    if ($range['lasthours'] < $entries['begin']) {
+                        $addEntries[] = [
+                        'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
+                        'day'   => $day,
+                        'begin' => $range['beginhours'],
+                        'end'   => $range['lasthours']
+                        ];
+                        $inThePeriod = false;
+                        $afterPeriod = true;
+                        continue;
+                    } elseif ($range['lasthours'] > $entries['end']) {
+                        $deleteEntries[] = $entries;
+                        continue;
+                    } else {
+                        $entries['begin'] = $range['beginhours'];
+                        $updateEntries[] = $entries;
+                        $inThePeriod = false;
+                        $afterPeriod = true;
+                        continue;
+                    }
+                } elseif (($range['lasthours'] < $entries['begin'])) {
+                  // We add
+                    $this->add([
+                    'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
+                    'day'   => $day,
+                    'begin' => $range['beginhours'],
+                    'end'   => $range['lasthours']
+                    ]);
+                    continue 2;
+                } elseif ($range['beginhours'] > $entries['end']) {
+                   // Not manage, hop to next entry
+                    continue;
+                }
+
+                if ($range['beginhours'] < $entries['begin']) {
+                    $inThePeriod = true;
+
+                    if ($range['lasthours'] <= $entries['end']) {
+                        $entries['begin'] = $range['beginhours'];
+                        $updateEntries[] = $entries;
+                        $inThePeriod = false;
+                        $afterPeriod = true;
+                    } else {
+                        $deleteEntries[] = $entries;
+                    }
+                } elseif ($range['beginhours'] < $entries['end']) {
+                    $inThePeriod = true;
+                    $range['beginhours'] = $entries['begin'];
+
+                    if ($range['lasthours'] <= $entries['end']) {
+                        $entries['begin'] = $range['beginhours'];
+                        $updateEntries[] = $entries;
+                        $inThePeriod = false;
+                        $afterPeriod = true;
+                    } else {
+                        $deleteEntries[] = $entries;
+                    }
+                }
+            }
+            if (count($dbentries) == 0) {
+                $addEntries[] = [
+                 'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
+                 'day'   => $day,
+                 'begin' => $range['beginhours'],
+                 'end'   => $range['lasthours']
+                ];
+            } elseif ($inThePeriod || (count($updateEntries) == 0 && count($deleteEntries) == 0 & count($addEntries) == 0)) {
+                $addEntries[] = [
+                 'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
+                 'day'   => $day,
+                 'begin' => $range['beginhours'],
+                 'end'   => $range['lasthours']
+                ];
             }
 
-            if ($inThePeriod) {
-               // So we need manage the end
-               if ($range['lasthours'] < $entries['begin']) {
-                  $addEntries[] = [
-                     'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
-                     'day'   => $day,
-                     'begin' => $range['beginhours'],
-                     'end'   => $range['lasthours']
-                  ];
-                  $inThePeriod = false;
-                  $afterPeriod = true;
-                  continue;
-               } else if ($range['lasthours'] > $entries['end']) {
-                  $deleteEntries[] = $entries;
-                  continue;
-               } else {
-                  $entries['begin'] = $range['beginhours'];
-                  $updateEntries[] = $entries;
-                  $inThePeriod = false;
-                  $afterPeriod = true;
-                  continue;
-               }
-            } else if (($range['lasthours'] < $entries['begin'])) {
-               // We add
-               $this->add([
-                  'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
-                  'day'   => $day,
-                  'begin' => $range['beginhours'],
-                  'end'   => $range['lasthours']
-               ]);
-               continue 2;
-            } else if ($range['beginhours'] > $entries['end']) {
-               // Not manage, hop to next entry
-               continue;
+            foreach ($updateEntries as $entry) {
+                $this->update($entry);
             }
-
-            if ($range['beginhours'] < $entries['begin']) {
-               $inThePeriod = true;
-
-               if ($range['lasthours'] <= $entries['end']) {
-                  $entries['begin'] = $range['beginhours'];
-                  $updateEntries[] = $entries;
-                  $inThePeriod = false;
-                  $afterPeriod = true;
-               } else {
-                  $deleteEntries[] = $entries;
-               }
-            } else if ($range['beginhours'] < $entries['end']) {
-               $inThePeriod = true;
-               $range['beginhours'] = $entries['begin'];
-
-               if ($range['lasthours'] <= $entries['end']) {
-                  $entries['begin'] = $range['beginhours'];
-                  $updateEntries[] = $entries;
-                  $inThePeriod = false;
-                  $afterPeriod = true;
-               } else {
-                  $deleteEntries[] = $entries;
-               }
+            foreach ($deleteEntries as $entry) {
+                $this->delete(['id' => $entry['id']]);
             }
-         }
-         if (count($dbentries) == 0) {
-            $addEntries[] = [
-               'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
-               'day'   => $day,
-               'begin' => $range['beginhours'],
-               'end'   => $range['lasthours']
-            ];
-         } else if ($inThePeriod || (count($updateEntries) == 0 && count($deleteEntries) == 0 & count($addEntries) == 0)) {
-            $addEntries[] = [
-               'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
-               'day'   => $day,
-               'begin' => $range['beginhours'],
-               'end'   => $range['lasthours']
-            ];
-         }
-
-         foreach ($updateEntries as $entry) {
-            $this->update($entry);
-         }
-         foreach ($deleteEntries as $entry) {
-            $this->delete(['id' => $entry['id']]);
-         }
-         foreach ($addEntries as $entry) {
-            $this->add($entry);
-         }
-      }
-   }
-
+            foreach ($addEntries as $entry) {
+                $this->add($entry);
+            }
+        }
+    }
 }

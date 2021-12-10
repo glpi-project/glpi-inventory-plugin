@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,18 +32,18 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Manage the files found by the collect module of agent.
  */
-class PluginGlpiinventoryCollect_File_Content
-   extends PluginGlpiinventoryCollectContentCommon {
+class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollectContentCommon
+{
 
-   public $collect_itemtype = 'PluginGlpiinventoryCollect_File';
-   public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
-   public $type             = 'file';
+    public $collect_itemtype = 'PluginGlpiinventoryCollect_File';
+    public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
+    public $type             = 'file';
 
    /**
     * Update computer files (add and update files) related to this
@@ -53,17 +54,18 @@ class PluginGlpiinventoryCollect_File_Content
     * @param integer $collects_files_id id of collect_file
     * @param integer $taskjobstates_id id of taskjobstate
     */
-   function updateComputer($computers_id, $file_data, $collects_files_id) {
-      foreach ($file_data as $key => $value) {
-         $input = [
+    public function updateComputer($computers_id, $file_data, $collects_files_id)
+    {
+        foreach ($file_data as $key => $value) {
+            $input = [
             'computers_id' => $computers_id,
             'plugin_glpiinventory_collects_files_id' => $collects_files_id,
             'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
             'size'         => $value['size']
-         ];
-         $this->add($input);
-      }
-   }
+            ];
+            $this->add($input);
+        }
+    }
 
 
    /**
@@ -71,42 +73,45 @@ class PluginGlpiinventoryCollect_File_Content
     *
     * @param integer $computers_id id of the computer
     */
-   function showForComputer($computers_id) {
-      $pfCollect_File = new PluginGlpiinventoryCollect_File();
+    public function showForComputer($computers_id)
+    {
+        $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
-      echo "<table class='tab_cadre_fixe'>";
+        echo "<table class='tab_cadre_fixe'>";
 
-      $a_data = $this->find(['computers_id' => $computers_id],
-                            ['plugin_glpiinventory_collects_files_id', 'pathfile']);
-      $previous_key = 0;
-      foreach ($a_data as $data) {
-         $pfCollect_File->getFromDB($data['plugin_glpiinventory_collects_files_id']);
-         if ($previous_key != $data['plugin_glpiinventory_collects_files_id']) {
+        $a_data = $this->find(
+            ['computers_id' => $computers_id],
+            ['plugin_glpiinventory_collects_files_id', 'pathfile']
+        );
+        $previous_key = 0;
+        foreach ($a_data as $data) {
+            $pfCollect_File->getFromDB($data['plugin_glpiinventory_collects_files_id']);
+            if ($previous_key != $data['plugin_glpiinventory_collects_files_id']) {
+                echo "<tr class='tab_bg_1'>";
+                echo '<th colspan="3">';
+                echo $pfCollect_File->fields['name'] . ": " . $pfCollect_File->fields['dir'];
+                echo '</th>';
+                echo '</tr>';
+
+                echo "<tr>";
+                echo "<th>" . __('Path/file', 'glpiinventory') . "</th>";
+                echo "<th>" . __('Size', 'glpiinventory') . "</th>";
+                echo "</tr>";
+
+                $previous_key = $data['plugin_glpiinventory_collects_files_id'];
+            }
+
             echo "<tr class='tab_bg_1'>";
-            echo '<th colspan="3">';
-            echo $pfCollect_File->fields['name']. ": ".$pfCollect_File->fields['dir'];
-            echo '</th>';
-            echo '</tr>';
-
-            echo "<tr>";
-            echo "<th>".__('Path/file', 'glpiinventory')."</th>";
-            echo "<th>".__('Size', 'glpiinventory')."</th>";
+            echo '<td>';
+            echo $data['pathfile'];
+            echo '</td>';
+            echo '<td>';
+            echo Toolbox::getSize($data['size']);
+            echo '</td>';
             echo "</tr>";
-
-            $previous_key = $data['plugin_glpiinventory_collects_files_id'];
-         }
-
-         echo "<tr class='tab_bg_1'>";
-         echo '<td>';
-         echo $data['pathfile'];
-         echo '</td>';
-         echo '<td>';
-         echo Toolbox::getSize($data['size']);
-         echo '</td>';
-         echo "</tr>";
-      }
-      echo '</table>';
-   }
+        }
+        echo '</table>';
+    }
 
 
    /**
@@ -114,44 +119,45 @@ class PluginGlpiinventoryCollect_File_Content
     *
     * @param integer $collects_files_id id of collect_file
     */
-   function showContent($collects_files_id) {
-      $pfCollect_File = new PluginGlpiinventoryCollect_File();
-      $computer = new Computer();
+    public function showContent($collects_files_id)
+    {
+        $pfCollect_File = new PluginGlpiinventoryCollect_File();
+        $computer = new Computer();
 
-      $pfCollect_File->getFromDB($collects_files_id);
+        $pfCollect_File->getFromDB($collects_files_id);
 
-      echo "<table class='tab_cadre_fixe'>";
+        echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr>";
-      echo "<th colspan='3'>";
-      echo $pfCollect_File->fields['name'];
-      echo "</th>";
-      echo "</tr>";
+        echo "<tr>";
+        echo "<th colspan='3'>";
+        echo $pfCollect_File->fields['name'];
+        echo "</th>";
+        echo "</tr>";
 
-      echo "<tr>";
-      echo "<th>".__('Computer')."</th>";
-      echo "<th>".__('pathfile', 'glpiinventory')."</th>";
-      echo "<th>".__('Size', 'glpiinventory')."</th>";
-      echo "</tr>";
+        echo "<tr>";
+        echo "<th>" . __('Computer') . "</th>";
+        echo "<th>" . __('pathfile', 'glpiinventory') . "</th>";
+        echo "<th>" . __('Size', 'glpiinventory') . "</th>";
+        echo "</tr>";
 
-      $a_data = $this->find(['plugin_glpiinventory_collects_files_id' => $collects_files_id],
-                            ['pathfile']);
-      foreach ($a_data as $data) {
-         echo "<tr class='tab_bg_1'>";
-         echo '<td>';
-         $computer->getFromDB($data['computers_id']);
-         echo $computer->getLink(1);
-         echo '</td>';
-         echo '<td>';
-         echo $data['pathfile'];
-         echo '</td>';
-         echo '<td>';
-         echo Toolbox::getSize($data['size']);
-         echo '</td>';
-         echo "</tr>";
-      }
-      echo '</table>';
-   }
-
-
+        $a_data = $this->find(
+            ['plugin_glpiinventory_collects_files_id' => $collects_files_id],
+            ['pathfile']
+        );
+        foreach ($a_data as $data) {
+            echo "<tr class='tab_bg_1'>";
+            echo '<td>';
+            $computer->getFromDB($data['computers_id']);
+            echo $computer->getLink(1);
+            echo '</td>';
+            echo '<td>';
+            echo $data['pathfile'];
+            echo '</td>';
+            echo '<td>';
+            echo Toolbox::getSize($data['size']);
+            echo '</td>';
+            echo "</tr>";
+        }
+        echo '</table>';
+    }
 }
