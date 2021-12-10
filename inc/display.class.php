@@ -51,7 +51,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     * @param integer $width
     * @param integer $height
     */
-    public static  function bar($percentage, $message = '', $order = '', $width = '400', $height = '20')
+    public static function bar($percentage, $message = '', $order = '', $width = '400', $height = '20')
     {
         if ((!empty($percentage)) and ($percentage < 0)) {
             $percentage = "";
@@ -124,7 +124,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
    /**
     * Disable debug mode to not see php errors
     */
-    public static  function disableDebug()
+    public static function disableDebug()
     {
         error_reporting(0);
         set_error_handler(['PluginGlpiinventoryDisplay', 'error_handler']);
@@ -134,7 +134,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
    /**
    * Enable debug mode if user is in debug mode
    **/
-    public static  function reenableusemode()
+    public static function reenableusemode()
     {
         Toolbox::setDebugMode();
     }
@@ -148,7 +148,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     * @param string $errfile
     * @param integer $errline
     */
-    public static  function error_handler($errno, $errstr, $errfile, $errline)
+    public static function error_handler($errno, $errstr, $errfile, $errline)
     {
     }
 
@@ -162,7 +162,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     * @param array $options
     * @return string
     */
-    public static  function getProgressBar($width, $percent, $options = [])
+    public static function getProgressBar($width, $percent, $options = [])
     {
         global $CFG_GLPI;
 

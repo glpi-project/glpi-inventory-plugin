@@ -56,7 +56,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    public static  function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return "Stat";
     }
@@ -67,7 +67,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
     *
     * @global object $DB
     */
-    public static  function init()
+    public static function init()
     {
         global $DB;
 
@@ -99,7 +99,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
     *
     * @global object $DB
     */
-    public static  function increment()
+    public static function increment()
     {
         global $DB;
 
@@ -123,7 +123,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
     * @param integer $nb
     * @return integer
     */
-    public static  function getLastHours($nb = 11)
+    public static function getLastHours($nb = 11)
     {
         global $DB;
 

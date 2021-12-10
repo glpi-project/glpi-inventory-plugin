@@ -54,7 +54,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    public static  function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return __('Job', 'glpiinventory');
     }
@@ -65,7 +65,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return boolean
     */
-    public static  function canCreate()
+    public static function canCreate()
     {
         return true;
     }
@@ -76,7 +76,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return array
     */
-    public static  function getJoinQuery()
+    public static function getJoinQuery()
     {
         return [
           'taskjobs' =>
@@ -886,7 +886,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @param object $parm PluginGlpiinventoryTaskjob instance
     */
-    public static  function purgeTaskjob($parm)
+    public static function purgeTaskjob($parm)
     {
        // $parm["id"]
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -941,7 +941,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @param string $method method name of taskjob to display
     */
-    public static  function quickList($method)
+    public static function quickList($method)
     {
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -1161,7 +1161,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-    public static  function restartJob($params)
+    public static function restartJob($params)
     {
         $task     = new PluginGlpiinventoryTask();
         $job      = new PluginGlpiinventoryTaskjob();
@@ -1416,7 +1416,7 @@ function new_subtype(id) {
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    public static  function processMassiveActionsForOneItemtype(
+    public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids
@@ -1444,7 +1444,7 @@ function new_subtype(id) {
    * @param $target_task_id the ID of the cloned task
    * @return void
    */
-    public static  function duplicate($source_tasks_id, $target_tasks_id)
+    public static function duplicate($source_tasks_id, $target_tasks_id)
     {
         $pfTaskJob = new self();
         $result    = true;

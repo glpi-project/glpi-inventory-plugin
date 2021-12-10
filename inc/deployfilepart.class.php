@@ -47,7 +47,7 @@ class PluginGlpiinventoryDeployFilepart
     *
     * @param string $file
     */
-    public static  function httpSendFile($file)
+    public static function httpSendFile($file)
     {
         if (empty($file)) {
             header("HTTP/1.1 500");

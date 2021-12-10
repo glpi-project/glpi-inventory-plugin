@@ -48,7 +48,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     *
     * @var null
     */
-    private $logFile, $arrayinventory;
+    private $logFile;
 
    /**
     * The right name for this class
@@ -190,7 +190,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     *
     * @return string
     */
-    public static  function getMethod()
+    public static function getMethod()
     {
         return 'networkinventory';
     }

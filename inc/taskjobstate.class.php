@@ -134,7 +134,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @return array
     */
-    public static  function getStateNames()
+    public static function getStateNames()
     {
         return [
          self::PREPARED             => __('Prepared', 'glpiinventory'),
@@ -156,7 +156,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         if ($item->getType() == 'PluginGlpiinventoryTask') {
             $item->showJobLogs();
@@ -652,7 +652,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     *
     * @global object $DB
     */
-    public static  function cronCleantaskjob()
+    public static function cronCleantaskjob()
     {
         global $DB;
 

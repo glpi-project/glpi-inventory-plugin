@@ -73,11 +73,11 @@ class InstallationTest extends TestCase
             }
         }
         $DB->query('TRUNCATE TABLE glpi_plugins');
-        $this->_install();
+        $this->install();
     }
 
 
-    public function _install()
+    protected function install()
     {
         $output     = [];
         $returncode = 0;

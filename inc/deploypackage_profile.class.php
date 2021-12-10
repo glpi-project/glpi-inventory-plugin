@@ -91,7 +91,7 @@ class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation
     * @param integer $deploypackages_id ID of the deploypackage
     * @return array list of profiles linked to a deploypackage
    **/
-    public static  function getProfiles($deploypackages_id)
+    public static function getProfiles($deploypackages_id)
     {
         global $DB;
 

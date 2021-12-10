@@ -56,7 +56,7 @@ class PluginGlpiinventoryInventoryComputerBlacklist extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    public static  function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return _n('Blacklist', 'Blacklists', $nb);
     }

@@ -76,7 +76,7 @@ class PluginGlpiinventorySearch extends CommonDBTM
     *
     * @return boolean
     */
-    public static  function constructDatas(array &$data, $onlycount = false)
+    public static function constructDatas(array &$data, $onlycount = false)
     {
         Search::constructData($data, $onlycount);
     }

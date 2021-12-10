@@ -629,7 +629,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                     $names = json_decode($val);
                     if ($names !== null && is_array($names)) {
                         $names = array_map(
-                            public function ($a) {
+                            function ($a) {
                                 return "\"" . $a . "\"";
                             },
                             $names
@@ -880,7 +880,7 @@ function plugin_item_purge_glpiinventory($parm)
             }
             break;
 
-        case 'PluginGlpiinventoryTimeslot';
+        case 'PluginGlpiinventoryTimeslot':
             $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
             $dbentries = getAllDataFromTable(
                 'glpi_plugin_glpiinventory_timeslotentries',
@@ -893,7 +893,7 @@ function plugin_item_purge_glpiinventory($parm)
             foreach ($dbentries as $data) {
                 $pfTimeslotEntry->delete(['id' => $data['id']], true);
             }
-          break;
+            break;
 
         case 'PluginGlpiinventoryDeployPackage':
            // Delete all linked items

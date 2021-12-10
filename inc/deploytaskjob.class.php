@@ -49,7 +49,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return boolean
     */
-    public static  function canCreate()
+    public static function canCreate()
     {
         return true;
     }
@@ -60,7 +60,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return boolean
     */
-    public static  function canView()
+    public static function canView()
     {
         return true;
     }
@@ -202,7 +202,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return array
     */
-    public static  function getActionTypes()
+    public static function getActionTypes()
     {
 
         return [
@@ -229,7 +229,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     * @param array $params
     * @return string in JSON format
     */
-    public static  function getActions($params)
+    public static function getActions($params)
     {
         global $DB;
 
@@ -238,13 +238,12 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             exit;
         }
         switch ($params['get']) {
-            case "type";
+            case "type":
                 $res = json_encode([
                 'action_types' => self::getActionTypes()
                 ]);
-              break;
-            case "selection";
-
+                break;
+            case "selection":
                 switch ($params['type']) {
                     case 'Computer':
                         $query = "SELECT id, name FROM glpi_computers";
@@ -284,7 +283,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                         $res = PluginGlpiinventoryDeployGroup::getAllDatas('action_selections');
                         break;
                 }
-              break;
+                break;
 
             case "oneSelection":
                 break;

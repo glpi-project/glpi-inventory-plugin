@@ -146,6 +146,7 @@ if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export')) {
     mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export');
 }
 
+// @codingStandardsIgnoreStart
 class GlpitestPHPerror extends \Exception
 {
 }
@@ -158,3 +159,4 @@ class GlpitestPHPnotice extends \Exception
 class GlpitestSQLError extends \Exception
 {
 }
+// @codingStandardsIgnoreEnd

@@ -207,6 +207,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             switch ($check['type']) {
                 case 'freespaceGreater':
                     $check['value'] = $check['value'] * 1024 * 1024;
+                    break;
                 case 'fileSizeLower':
                 case 'fileSizeGreater':
                 case 'fileSizeEquals':
@@ -606,7 +607,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
    * @param params the check's parameters
    * @return array the array to be encoded in json and serialized
    */
-    public static  function formatCheckForJson($params)
+    public static function formatCheckForJson($params)
     {
         if (!isset($params['value'])) {
             $params['value'] = "";

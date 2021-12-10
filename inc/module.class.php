@@ -48,7 +48,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
     * @param boolean $p_inactive Show inactive modules
     * @return array
     */
-    public static  function getAll($p_inactive = false)
+    public static function getAll($p_inactive = false)
     {
         $plugin = new Plugin();
         if ($p_inactive) {
@@ -65,7 +65,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
     * @param string $p_name the module name
     * @return integer|false plugin id or FALSE if module is not active or not a module
     */
-    public static  function getModuleId($p_name)
+    public static function getModuleId($p_name)
     {
         $index = false;
         if (!isset($_SESSION['glpi_plugins'])) {
@@ -92,7 +92,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
     * @param integer $p_id the module id
     * @return string|false false if module is not active or not a module
     */
-    public static  function getModuleName($p_id)
+    public static function getModuleName($p_id)
     {
         if (isset($_SESSION['glpi_plugins'][$p_id])) {
             if (

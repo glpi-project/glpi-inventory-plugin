@@ -95,7 +95,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    public static  function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return __('Inventory group', 'glpiinventory');
     }
@@ -144,7 +144,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-    public static  function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         global $DB;
 
@@ -218,7 +218,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param object $ma MassiveAction instance
     * @return boolean
     */
-    public static  function showMassiveActionsSubForm(MassiveAction $ma)
+    public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         switch ($ma->getAction()) {
             case 'add_to_static_group':
@@ -243,7 +243,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    public static  function processMassiveActionsForOneItemtype(
+    public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids
@@ -452,7 +452,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param array $options
     * @return string
     */
-    public static  function getSpecificValueToDisplay($field, $values, array $options = [])
+    public static function getSpecificValueToDisplay($field, $values, array $options = [])
     {
         $group = new self();
         if (!is_array($values)) {
@@ -472,7 +472,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param string $value
     * @return string
     */
-    public static  function dropdownGroupType($name = 'type', $value = 'STATIC')
+    public static function dropdownGroupType($name = 'type', $value = 'STATIC')
     {
         $group = new self();
         if ($name == 'type') {
@@ -500,7 +500,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param array $options
     * @return string
     */
-    public static  function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
+    public static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
     {
 
         if (!is_array($values)) {
@@ -523,7 +523,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
    * @param boolean $is_dynamic is the group dynamic or static
    * @return string the target
    */
-    public static  function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false)
+    public static function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false)
     {
         $target = PluginGlpiinventoryDeployGroup::getFormURLWithID($deploygroup_id);
         if ($is_dynamic) {
@@ -542,7 +542,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param object $item PluginGlpiinventoryDeployGroup instance
     * @param array $p
     */
-    public static  function showCriteria(PluginGlpiinventoryDeployGroup $item, $p)
+    public static function showCriteria(PluginGlpiinventoryDeployGroup $item, $p)
     {
 
         $is_dynamic = $item->isDynamicGroup();
@@ -580,7 +580,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param bool    $use_cache retrieve agents from cache or not (only for dynamic groups)
     * @return array list of computers
     */
-    public static  function getTargetsForGroup($groups_id, $use_cache = false)
+    public static function getTargetsForGroup($groups_id, $use_cache = false)
     {
         $group = new self();
         $group->getFromDB($groups_id);
@@ -615,7 +615,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * @param boolean $getAll
     * @return array
     */
-    public static  function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false)
+    public static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false)
     {
         global $DB;
 

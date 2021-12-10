@@ -357,7 +357,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @global array $CFG_GLPI
     * @param string $rand unique element id used to identify/update an element
     */
-    public static  function showServerFileTree($rand)
+    public static function showServerFileTree($rand)
     {
         echo "<script type='text/javascript'>";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -413,7 +413,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     *
     * @param string $node
     */
-    public static  function getServerFileTree($node)
+    public static function getServerFileTree($node)
     {
 
         $nodes            = [];
@@ -687,7 +687,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $file_path = $params['filename'];
             $filename = basename($file_path);
             if (
-                public function_exists('finfo_open')
+                function_exists('finfo_open')
                  && ($finfo = finfo_open(FILEINFO_MIME))
             ) {
                 $mime_type = finfo_file($finfo, $file_path);

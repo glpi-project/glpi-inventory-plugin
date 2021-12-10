@@ -67,7 +67,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    public static  function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return __('Mirror servers', 'glpiinventory');
     }
@@ -98,7 +98,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param integer $agents_id
     * @return array
     */
-    public static  function getList($agents_id)
+    public static function getList($agents_id)
     {
         global $PF_CONFIG, $DB;
 
@@ -323,7 +323,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param object $ma MassiveAction instance
     * @return boolean
     */
-    public static  function showMassiveActionsSubForm(MassiveAction $ma)
+    public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         if ($ma->getAction() == 'transfer') {
             Dropdown::show('Entity');
@@ -341,7 +341,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    public static  function processMassiveActionsForOneItemtype(
+    public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids

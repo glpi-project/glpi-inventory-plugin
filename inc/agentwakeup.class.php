@@ -56,7 +56,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    public static  function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return __('Job', 'glpiinventory');
     }
@@ -67,7 +67,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     *
     * @return true
     */
-    public static  function canCreate()
+    public static function canCreate()
     {
         return true;
     }
@@ -86,7 +86,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     * @param object $crontask
     * @return boolean true if successfully, otherwise false
     */
-    public static  function cronWakeupAgents($crontask)
+    public static function cronWakeupAgents($crontask)
     {
         global $DB;
 
@@ -221,7 +221,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     *
     * @return boolean true if send successfully, otherwise false
     */
-    public static  function wakeUp(Agent $agent)
+    public static function wakeUp(Agent $agent)
     {
         $ret = false;
 

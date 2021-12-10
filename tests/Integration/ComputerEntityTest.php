@@ -130,7 +130,7 @@ class ComputerEntityTest extends TestCase
         $this->assertNotFalse($ruleAction->add($input));
 
        // ** Add
-        $this->_inventoryPc1();
+        $this->inventoryPc1();
 
         $nbComputers = countElementsInTable("glpi_computers", ['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
@@ -138,10 +138,10 @@ class ComputerEntityTest extends TestCase
         $computer->getFromDBByCrit(['name' => 'pc1']);
         $this->assertEquals(self::$entities_id_1, $computer->fields['entities_id'], 'Add computer');
 
-        $this->_agentEntity($computer->fields['id'], self::$entities_id_1, 'Add computer on entity 1');
+        $this->agentEntity($computer->fields['id'], self::$entities_id_1, 'Add computer on entity 1');
 
        // ** Update
-        $this->_inventoryPc1();
+        $this->inventoryPc1();
 
         $computers = getAllDataFromTable("glpi_computers", ['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         $this->assertEquals(1, count($computers), 'Nb computer for update computer ' . print_r($computers, true));
@@ -149,7 +149,7 @@ class ComputerEntityTest extends TestCase
         $computer->getFromDBByCrit(['name' => 'pc1']);
         $this->assertEquals(self::$entities_id_1, $computer->fields['entities_id'], 'Update computer');
 
-        $this->_agentEntity($computer->fields['id'], self::$entities_id_1, 'Update computer on entity 1 (not changed)');
+        $this->agentEntity($computer->fields['id'], self::$entities_id_1, 'Update computer on entity 1 (not changed)');
     }
 
 
@@ -174,12 +174,12 @@ class ComputerEntityTest extends TestCase
         $computer->getFromDBByCrit(['serial' => 'xxyyzz']);
         $this->assertEquals(2, $computer->fields['entities_id'], 'Transfer move computer');
 
-        $this->_agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
+        $this->agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
 
        // Update computer and computer may be transferred to entity 1 automatically
         $orig_transfers_auto = $CFG_GLPI['transfers_id_auto'];
         $CFG_GLPI['transfers_id_auto'] = 1;
-        $this->_inventoryPc1();
+        $this->inventoryPc1();
 
         $nbComputers = countElementsInTable("glpi_computers", ['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
@@ -187,7 +187,7 @@ class ComputerEntityTest extends TestCase
         $computer->getFromDBByCrit(['serial' => 'xxyyzz']);
         $this->assertEquals(1, $computer->fields['entities_id'], 'Automatic transfer computer');
 
-        $this->_agentEntity($computer->fields['id'], 1, 'Automatic transfer computer on entity 1');
+        $this->agentEntity($computer->fields['id'], 1, 'Automatic transfer computer on entity 1');
 
         $CFG_GLPI['transfers_id_auto'] = $orig_transfers_auto;
     }
@@ -214,7 +214,7 @@ class ComputerEntityTest extends TestCase
         $computer->getFromDBByCrit(['serial' => 'xxyyzz']);
         $this->assertEquals(2, $computer->fields['entities_id'], 'Transfer move computer');
 
-        $this->_agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
+        $this->agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
 
        // Define entity 2 not allowed to transfer
         $this->assertTrue($entity->getFromDB(self::$entities_id_2));
@@ -226,14 +226,14 @@ class ComputerEntityTest extends TestCase
         );
 
        // Update computer and computer must not be transferred (keep in entity 2)
-        $this->_inventoryPc1();
+        $this->inventoryPc1();
 
         $this->assertEquals(1, countElementsInTable('glpi_computers', ['NOT' => ['name' => ['LIKE', '_test_pc%']]]), 'Must have only 1 computer');
 
         $computer->getFromDBByCrit(['serial' => 'xxyyzz']);
         $this->assertEquals(2, $computer->fields['entities_id'], 'Computer must not be transferred');
 
-        $this->_agentEntity($computer->fields['id'], 1, 'Agent must stay with entity 1');
+        $this->agentEntity($computer->fields['id'], 1, 'Agent must stay with entity 1');
     }
 
 
@@ -316,7 +316,7 @@ class ComputerEntityTest extends TestCase
         ];
         $this->assertNotFalse($ruleaction->add($input));
 
-        $this->_inventoryPc1();
+        $this->inventoryPc1();
 
         $this->assertEquals(2, countElementsInTable('glpi_computers', ['NOT' => ['name' => ['LIKE', '_test_pc%']]]), 'Must have only 2 computer');
 
@@ -325,7 +325,7 @@ class ComputerEntityTest extends TestCase
     }
 
 
-    public function _agentEntity($computers_id = 0, $entities_id = 0, $text = '')
+    protected function agentEntity($computers_id = 0, $entities_id = 0, $text = '')
     {
 
         if ($computers_id == 0) {
@@ -339,7 +339,7 @@ class ComputerEntityTest extends TestCase
         $this->assertEquals($entities_id, $agent->fields['entities_id'], $text);
     }
 
-    public function _inventoryPc1()
+    protected function inventoryPc1()
     {
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>

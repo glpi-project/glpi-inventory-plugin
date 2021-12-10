@@ -54,7 +54,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param integer $nb number of elements
     * @return string name of this type
     */
-    public static  function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return __('Task management', 'glpiinventory');
     }
@@ -66,7 +66,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return boolean
     */
-    public static  function canCreate()
+    public static function canCreate()
     {
         return true;
     }
@@ -174,7 +174,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @global object $DB
     * @param object $param
     */
-    public static  function purgeTask($param)
+    public static function purgeTask($param)
     {
         global $DB;
 
@@ -216,7 +216,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @param string $method
     */
-    public static  function cleanTasksbyMethod($method)
+    public static function cleanTasksbyMethod($method)
     {
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTask = new PluginGlpiinventoryTask();
@@ -811,7 +811,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return true
     */
-    public static  function cronTaskscheduler()
+    public static function cronTaskscheduler()
     {
 
         ini_set("max_execution_time", "0");
@@ -831,7 +831,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return true
     */
-    public static  function cronCleanOnDemand($task = null)
+    public static function cronCleanOnDemand($task = null)
     {
         global $DB;
 
@@ -913,7 +913,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return arrray of information
    **/
-    public static  function cronInfo($name)
+    public static function cronInfo($name)
     {
 
         switch ($name) {
@@ -933,7 +933,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param array $chrono
     * @return string
     */
-    public static  function formatChrono($chrono)
+    public static function formatChrono($chrono)
     {
         $interval = abs($chrono['end'] - $chrono['start']);
         $micro    = intval($interval * 100);
@@ -1543,7 +1543,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param array $filter criteria to filter in the request
     * @return array
     */
-    public static  function getItemsFromDB($filter)
+    public static function getItemsFromDB($filter)
     {
         global $DB;
 
@@ -1962,7 +1962,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param object $ma MassiveAction instance
     * @return boolean
     */
-    public static  function showMassiveActionsSubForm(MassiveAction $ma)
+    public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         global $CFG_GLPI;
 
@@ -2064,7 +2064,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-    public static  function processMassiveActionsForOneItemtype(
+    public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids
