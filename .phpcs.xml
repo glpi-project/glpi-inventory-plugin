@@ -6,6 +6,7 @@
     <exclude-pattern>/vendor/</exclude-pattern>
 
     <arg name="warning-severity" value="0" />
+    <arg value="p" />
     <ini name="memory_limit" value="512M" />
     <arg name="colors" />
     <arg name="extensions" value="php" />
