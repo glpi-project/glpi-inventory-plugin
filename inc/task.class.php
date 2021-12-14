@@ -937,7 +937,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     {
         $interval = abs($chrono['end'] - $chrono['start']);
         $micro    = intval($interval * 100);
-        $seconds  = intval($interval % 60);
+        $seconds  = fmod($interval, 60);
         $minutes  = intval($interval / 60);
         $hours    = intval($interval / 60 / 60);
         return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
