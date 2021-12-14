@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
 {
-
-
    /**
     * Prepare a taskjob
     * Get all devices and put in taskjobstate each task for each device for

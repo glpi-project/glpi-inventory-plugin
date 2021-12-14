@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 {
-
    /**
     * The right name for this class
     *

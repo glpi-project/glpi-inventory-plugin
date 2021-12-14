@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryProfile extends Profile
 {
-
    /**
     * The right name for this class
     *
@@ -300,10 +299,10 @@ class PluginGlpiinventoryProfile extends Profile
                 'label'     => __('Rules for import and link computers'),
                 'field'     => 'plugin_glpiinventory_rulelocation'
           ],*/
-          ['itemtype'  => 'PluginGlpiinventoryInventoryComputerBlacklist',
+          /*['itemtype'  => 'PluginGlpiinventoryInventoryComputerBlacklist',
                 'label'     => __('Fields blacklist', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_blacklist'
-          ],
+          ],*/
           ['itemtype'  => 'PluginGlpiinventoryCollectRule',
                 'label'     => __('Computer information rules', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_rulecollect'

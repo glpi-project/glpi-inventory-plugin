@@ -43,8 +43,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
 {
-
-
    /**
     * Check if definition_type is present in definitions_filter array.
     * This function returns true if the definition_type is not in

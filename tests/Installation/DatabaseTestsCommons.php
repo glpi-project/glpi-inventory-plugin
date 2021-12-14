@@ -35,8 +35,6 @@ use PHPUnit\Framework\Assert;
 
 class DatabaseTestsCommons extends Assert
 {
-
-
     public function checkInstall($pluginname = '', $when = '')
     {
         global $DB;
@@ -387,15 +385,6 @@ class DatabaseTestsCommons extends Assert
         $this->assertEquals($DB->numrows($result), 1, "type 'agents_status' not added in config");
 
        // TODO : test glpi_displaypreferences, rules, SavedSearch...
-
-       /*
-       * Verify table glpi_plugin_glpiinventory_inventorycomputercriterias
-       * have right 10 lines
-       */
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_inventorycomputercriterias`";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 11, "Number of criteria not right in table" .
-              " glpi_plugin_glpiinventory_inventorycomputercriterias " . $when);
 
        /*
         * Verify table `glpi_plugin_glpiinventory_inventorycomputerstats` filed with data

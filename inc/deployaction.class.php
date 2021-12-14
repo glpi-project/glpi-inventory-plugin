@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageItem
 {
-
     public $shortname = 'actions';
     public $json_name = 'actions';
 

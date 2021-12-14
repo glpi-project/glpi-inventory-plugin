@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollectCommon extends CommonDBTM
 {
-
    /**
     * The right name for this class
     *

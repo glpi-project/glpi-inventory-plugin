@@ -42,7 +42,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommunicationNetworkInventory
 {
-
    /**
     * Define protected variables
     *

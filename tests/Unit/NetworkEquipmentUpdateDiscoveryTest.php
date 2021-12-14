@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class NetworkEquipmentUpdateDiscoveryTest extends TestCase
 {
-
     public $item_id = 0;
 
     public $networkports_reference = [

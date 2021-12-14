@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryStaticmisc
 {
-
-
    /**
     * Get task methods of this plugin
     *

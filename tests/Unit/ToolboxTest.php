@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class ToolboxTest extends TestCase
 {
-
     public $formatJson_input = [
       'test_text' => 'Lorem Ipsum',
       'test_number' => 1234,

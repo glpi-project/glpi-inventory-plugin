@@ -43,7 +43,6 @@ use Glpi\Application\View\TemplateRenderer;
  */
 class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 {
-
    /**
     * The right name for this class
     *

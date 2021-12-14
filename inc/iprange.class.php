@@ -42,7 +42,6 @@ use Glpi\Application\View\TemplateRenderer;
  */
 class PluginGlpiinventoryIPRange extends CommonDBTM
 {
-
    /**
     * We activate the history.
     *

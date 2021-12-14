@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryModule extends CommonDBTM
 {
-
-
    /**
     * Get all installed modules
     *

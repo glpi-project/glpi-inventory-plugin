@@ -42,7 +42,6 @@ if (!defined('GLPI_ROOT')) {
 */
 class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 {
-
    //Display modes
     const CREATE      = 'create';
     const EDIT        = 'edit';

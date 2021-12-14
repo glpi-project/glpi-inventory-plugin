@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
 {
-
    /**
     * The right name for this class
     *

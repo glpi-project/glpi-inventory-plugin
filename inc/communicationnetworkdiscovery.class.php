@@ -42,7 +42,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommunicationNetworkDiscovery
 {
-
    /**
     * Import data, so get data from agent to put in GLPI
     *

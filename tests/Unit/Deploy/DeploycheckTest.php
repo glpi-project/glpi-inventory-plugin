@@ -35,8 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeploycheckTest extends TestCase
 {
-
-
    /**
     * @test
     */

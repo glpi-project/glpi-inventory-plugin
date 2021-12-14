@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTimeslot extends CommonDBTM
 {
-
    /**
     * We activate the history.
     *

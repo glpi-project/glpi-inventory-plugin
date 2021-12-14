@@ -44,8 +44,6 @@ include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/task.class.php");
  */
 class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
 {
-
-
    /**
     * Get name of this type by language of the user connected
     *

@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeploygroupTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
         global $DB;

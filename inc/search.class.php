@@ -41,7 +41,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventorySearch extends CommonDBTM
 {
-
    /**
     * Define the form URL
     *

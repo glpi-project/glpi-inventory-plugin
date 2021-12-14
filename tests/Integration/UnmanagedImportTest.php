@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class UnmanagedImportTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
 

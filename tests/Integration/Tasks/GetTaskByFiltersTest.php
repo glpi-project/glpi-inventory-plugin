@@ -35,8 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class GetTaskByFiltersTest extends TestCase
 {
-
-
    /**
     * @test
     */

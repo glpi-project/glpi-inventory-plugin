@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 {
-
-
    /**
     * __contruct function where initialize base URLs
     */

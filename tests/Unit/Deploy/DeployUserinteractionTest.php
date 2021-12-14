@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeployUserinteractionTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
 

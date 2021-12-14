@@ -35,8 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class RuleImportTest extends TestCase
 {
-
-
     public static function setUpBeforeClass(): void
     {
        // Reinit rules

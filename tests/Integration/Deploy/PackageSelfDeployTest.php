@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class PackageSelfDeployTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
         global $DB;

@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventorySetup
 {
-
-
    /**
     * Uninstall process when uninstall the plugin
     *

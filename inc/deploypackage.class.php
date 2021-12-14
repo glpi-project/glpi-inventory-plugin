@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployPackage extends CommonDBTM
 {
-
    /**
     * Initialize the tasks running with this package (updated with overrided getFromDB method)
     *

@@ -41,7 +41,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectContentCommon
 {
-
     public $collect_itemtype = 'PluginGlpiinventoryCollect_Wmi';
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_wmis';
 

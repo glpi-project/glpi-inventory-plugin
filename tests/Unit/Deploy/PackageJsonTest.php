@@ -35,8 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class PackageJsonTest extends TestCase
 {
-
-
    /**
     * @test
     */

@@ -41,7 +41,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeployPackageItem
 {
-
     public $shortname = 'userinteractions';
     public $json_name = 'userinteractions';
 

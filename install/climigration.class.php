@@ -37,8 +37,6 @@
  */
 class CliMigration extends Migration
 {
-
-
    /**
     * __contruct function where initialize variables
     *

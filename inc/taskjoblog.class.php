@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTaskjoblog extends CommonDBTM
 {
-
    /**
     * Define state task started
     *

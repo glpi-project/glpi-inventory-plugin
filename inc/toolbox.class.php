@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginGlpiinventoryToolbox
 {
-
-
    /**
     * Log if extra debug enabled
     *

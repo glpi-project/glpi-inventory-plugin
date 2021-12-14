@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommunication
 {
-
    /**
     * Define message variable
     *

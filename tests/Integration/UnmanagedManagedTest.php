@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class UnmanagedManagedTest extends TestCase
 {
-
    /*
     * When switch get unknown mac address, it create unknown device (in reality a computer)
     * When have computer inventory, it must delete unknown device with same mac and get

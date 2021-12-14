@@ -41,7 +41,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCredentialIp extends CommonDropdown
 {
-
    /**
     * Define first level menu name
     *

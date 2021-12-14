@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 {
-
     public $shortname = 'files';
     public $json_name = 'associatedFiles';
 

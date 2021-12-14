@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
 {
-
    /**
     * Itemtype for the first part of relation
     *

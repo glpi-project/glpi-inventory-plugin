@@ -41,7 +41,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollectRule extends Rule
 {
-
    /**
     * The right name for this class
     *

@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class TimeslotTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
        // Delete all timeslots
