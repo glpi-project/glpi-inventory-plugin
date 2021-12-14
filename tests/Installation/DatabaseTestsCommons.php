@@ -389,15 +389,6 @@ class DatabaseTestsCommons extends Assert
        // TODO : test glpi_displaypreferences, rules, SavedSearch...
 
        /*
-       * Verify table glpi_plugin_glpiinventory_inventorycomputercriterias
-       * have right 10 lines
-       */
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_inventorycomputercriterias`";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 11, "Number of criteria not right in table" .
-              " glpi_plugin_glpiinventory_inventorycomputercriterias " . $when);
-
-       /*
         * Verify table `glpi_plugin_glpiinventory_inventorycomputerstats` filed with data
         */
         $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_inventorycomputerstats`";

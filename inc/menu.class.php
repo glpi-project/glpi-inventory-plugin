@@ -115,7 +115,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
           'timeslot'                   => 'PluginGlpiinventoryTimeslot',
           'unmanaged'                  => 'Unmanaged',
           'collectrule'                => 'PluginGlpiinventoryCollectRule',
-          'inventorycomputerblacklist' => 'PluginGlpiinventoryInventoryComputerBlacklist',
           'configsecurity'             => 'SNMPCredential',
           'credential'                 => 'PluginGlpiinventoryCredential',
           'credentialip'               => 'PluginGlpiinventoryCredentialIp',
@@ -302,9 +301,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         }
 
         if (Session::haveRight('plugin_glpiinventory_blacklist', READ)) {
-            $rules_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
+            $rules_menu[6]['name'] = Blacklist::getTypeName(1);
             $rules_menu[6]['pic']  = $fi_path . "/pics/menu_blacklist.png";
-            $rules_menu[6]['link'] = $fi_path . "/front/inventorycomputerblacklist.php";
+            $rules_menu[6]['link'] = Blacklist::getSearchURL();
         }
 
         if (!empty($rules_menu)) {
