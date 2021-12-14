@@ -94,7 +94,7 @@ jobs:
           --health-retries=10
     steps:
     - name: Install gettext and mysql-client
-      run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext mysql-client
+      run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext
     - name: Change dir owner to working user
       run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
     - uses: actions/checkout@v1
