@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 {
-
    /**
     * Define constant state prepared.
     * The job is just prepared and waiting for agent request

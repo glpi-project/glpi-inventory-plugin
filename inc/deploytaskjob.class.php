@@ -42,8 +42,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
 {
-
-
    /**
     * Is this use can create a deploy task job
     *

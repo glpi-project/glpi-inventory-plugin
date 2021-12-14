@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
 {
-
    /**
     * The right name for this class
     *

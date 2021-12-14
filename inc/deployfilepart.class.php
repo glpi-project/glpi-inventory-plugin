@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployFilepart
 {
-
-
    /**
     * Send file to agent
     *

@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployGroup extends CommonDBTM
 {
-
    /**
     * Define constant name of static group
     *

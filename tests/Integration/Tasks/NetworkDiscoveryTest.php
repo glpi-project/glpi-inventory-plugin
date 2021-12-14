@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class NetworkDiscoveryTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
 

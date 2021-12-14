@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDisplay extends CommonDBTM
 {
-
-
    /**
     * Display static progress bar (used for SNMP cartridge state)
     *

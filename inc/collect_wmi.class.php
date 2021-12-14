@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
 {
-
     public $type = 'wmi';
 
    /**

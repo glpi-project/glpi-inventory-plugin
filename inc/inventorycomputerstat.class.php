@@ -41,7 +41,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
 {
-
    /**
     * The right name for this class
     *

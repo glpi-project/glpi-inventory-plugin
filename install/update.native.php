@@ -569,5 +569,5 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Drop blacklists tables");
     $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputerblacklists');
-   $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputercriterias');
+    $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputercriterias');
 }

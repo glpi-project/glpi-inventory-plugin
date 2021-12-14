@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class NetworkEquipmentUpdateTest extends TestCase
 {
-
     public $items_id = 0;
 
     public static function setUpBeforeClass(): void

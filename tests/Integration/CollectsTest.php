@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class CollectsTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
 

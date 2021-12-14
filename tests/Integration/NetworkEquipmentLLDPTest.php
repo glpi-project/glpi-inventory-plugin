@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class NetworkEquipmentLLDPTest extends TestCase
 {
-
     public function setUp(): void
     {
        // Delete all computers

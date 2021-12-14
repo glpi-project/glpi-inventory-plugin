@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class GLPIlogs extends TestCase
 {
-
     public function testSQLlogs()
     {
         $filecontent = file_get_contents("../../files/_log/sql-errors.log");

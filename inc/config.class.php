@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryConfig extends CommonDBTM
 {
-
    /**
     * Initialize the displaylist public variable
     *

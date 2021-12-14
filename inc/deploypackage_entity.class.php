@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
 {
-
    /**
     * Itemtype for the first part of relation
     *

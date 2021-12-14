@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryProfile extends Profile
 {
-
    /**
     * The right name for this class
     *

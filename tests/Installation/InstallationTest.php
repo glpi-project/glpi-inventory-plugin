@@ -37,7 +37,6 @@ use PHPUnit\Framework\TestCase;
 
 class InstallationTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
        // clean log files

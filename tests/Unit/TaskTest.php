@@ -35,8 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
-
-
     public static function setUpBeforeClass(): void
     {
         $pfTask = new PluginGlpiinventoryTask();

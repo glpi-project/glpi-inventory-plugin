@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryAgentWakeup extends CommonDBTM
 {
-
-
    /**
     * The right name for this class
     *

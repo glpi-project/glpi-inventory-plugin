@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommonView extends CommonDBTM
 {
-
    /**
     * Define the number for the message information constant
     *

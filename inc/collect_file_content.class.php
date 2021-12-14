@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollectContentCommon
 {
-
     public $collect_itemtype = 'PluginGlpiinventoryCollect_File';
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
     public $type             = 'file';

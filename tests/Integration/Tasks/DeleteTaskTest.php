@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteTaskTest extends TestCase
 {
-
     private static $taskId = 0;
     private static $taskjobId = 0;
     private static $taskjobstateId = 0;

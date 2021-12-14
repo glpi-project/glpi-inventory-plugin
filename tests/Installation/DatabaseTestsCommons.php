@@ -35,8 +35,6 @@ use PHPUnit\Framework\Assert;
 
 class DatabaseTestsCommons extends Assert
 {
-
-
     public function checkInstall($pluginname = '', $when = '')
     {
         global $DB;

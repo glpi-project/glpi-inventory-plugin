@@ -41,8 +41,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunication
 {
-
-
    /**
     * Prepare network discovery.
     * Get all devices and put in taskjobstat each task for each device for each

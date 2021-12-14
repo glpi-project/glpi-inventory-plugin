@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommunicationRest
 {
-
-
    /**
     * Manage communication between agent and server
     *

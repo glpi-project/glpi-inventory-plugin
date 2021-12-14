@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class PrinterUpdateTest extends TestCase
 {
-
     public $items_id = 0;
     public $update_time = '';
 

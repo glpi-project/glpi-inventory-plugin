@@ -35,7 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class NetworkInventoryTest extends TestCase
 {
-
     public static function setUpBeforeClass(): void
     {
 
