@@ -97,7 +97,7 @@
       <version>
          <num>1.0.0-rc1</num>
          <compatibility>~10.0.0</compatibility>
-         <download_url>https://github.com/pluginsGLPI/glpi-inventory-plugin/releases/download/1.0.0-rc1/glpi-glpiinventory-1.0.0-rc1.tar.bz2</download_url>
+         <download_url>https://github.com/glpi-project/glpi-inventory-plugin/releases/download/1.0.0-rc1/glpi-glpiinventory-1.0.0-rc1.tar.bz2</download_url>
       </version>
    </versions>
    <langs>
