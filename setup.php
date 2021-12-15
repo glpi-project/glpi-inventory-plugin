@@ -33,7 +33,7 @@
 
 use Glpi\Plugin\Hooks;
 
-define("PLUGIN_GLPI_INVENTORY_VERSION", "1.0.0-rc1");
+define("PLUGIN_GLPIINVENTORY_VERSION", "1.0.0-rc1");
 // Minimal GLPI version, inclusive
 define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '10.0.0');
 // Maximum GLPI version, exclusive
@@ -48,7 +48,7 @@ define('PLUGIN_GLPI_INVENTORY_DIR', __DIR__);
 define("PLUGIN_GLPI_INVENTORY_XML", '');
 
 define("PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE", "0");
-define("PLUGIN_GLPI_INVENTORY_REALVERSION", PLUGIN_GLPI_INVENTORY_VERSION . " SNAPSHOT");
+define("PLUGIN_GLPI_INVENTORY_REALVERSION", PLUGIN_GLPIINVENTORY_VERSION . " SNAPSHOT");
 
 define(
     "PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR",
@@ -394,7 +394,7 @@ function plugin_version_glpiinventory()
 {
     return ['name'           => 'GLPI Inventory',
            'shortname'      => 'glpiinventory',
-           'version'        => PLUGIN_GLPI_INVENTORY_VERSION,
+           'version'        => PLUGIN_GLPIINVENTORY_VERSION,
            'license'        => 'AGPLv3+',
            'oldname'        => 'tracker',
            'author'         => 'Teclib\'',

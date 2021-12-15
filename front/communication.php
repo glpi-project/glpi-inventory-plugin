@@ -65,7 +65,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
     $_SESSION['glpiparententities'] = '';
     $_SESSION['glpishowallentities'] = true;
 
-    header("server-type: glpi/glpiinventory " . PLUGIN_GLPI_INVENTORY_VERSION);
+    header("server-type: glpi/glpiinventory " . PLUGIN_GLPIINVENTORY_VERSION);
 
     PluginGlpiinventoryCommunicationRest::handleFusionCommunication();
 } else {

@@ -327,7 +327,7 @@ function plugin_glpiinventory_install()
         pluginGlpiinventoryUpdateNative($version_detected, $migrationname);
     } else {
         require_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/install.php");
-        pluginGlpiinventoryInstall(PLUGIN_GLPI_INVENTORY_VERSION, $migrationname);
+        pluginGlpiinventoryInstall(PLUGIN_GLPIINVENTORY_VERSION, $migrationname);
     }
     return true;
 }

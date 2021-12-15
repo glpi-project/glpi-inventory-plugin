@@ -864,7 +864,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     $config->addValues($a_input, false);
 
     $a_input = [];
-    $a_input['version'] = PLUGIN_GLPI_INVENTORY_VERSION;
+    $a_input['version'] = PLUGIN_GLPIINVENTORY_VERSION;
     $config->addValues($a_input, true);
     $a_input = [];
     $a_input['ssl_only'] = 0;
@@ -7062,7 +7062,7 @@ function do_rule_migration($migration)
     $config->addValues($a_input, false);
 
     $a_input = [];
-    $a_input['version'] = PLUGIN_GLPI_INVENTORY_VERSION;
+    $a_input['version'] = PLUGIN_GLPIINVENTORY_VERSION;
     $config->addValues($a_input, true);
     $a_input = [];
     $a_input['ssl_only'] = 0;

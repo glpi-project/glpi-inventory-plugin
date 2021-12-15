@@ -82,7 +82,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $users_id = $pfSetup->createGlpiInventoryUser();
         $input    = [];
 
-        $input['version']                = PLUGIN_GLPI_INVENTORY_VERSION;
+        $input['version']                = PLUGIN_GLPIINVENTORY_VERSION;
         $input['ssl_only']               = '0';
         $input['delete_task']            = '20';
         $input['inventory_frequence']    = '24';

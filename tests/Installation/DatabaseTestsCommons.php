@@ -372,7 +372,7 @@ class DatabaseTestsCommons extends Assert
         $result = $DB->query($query);
         $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
         $data = $DB->fetchAssoc($result);
-        $this->assertEquals($data['value'], PLUGIN_GLPI_INVENTORY_VERSION, "Field 'version' not with right version");
+        $this->assertEquals($data['value'], PLUGIN_GLPIINVENTORY_VERSION, "Field 'version' not with right version");
 
         $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
          WHERE `type`='otherserial'";
