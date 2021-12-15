@@ -63,8 +63,6 @@ define(
     GLPI_PLUGIN_DOC_DIR . "/glpiinventory/xml/"
 );
 
-include_once GLPI_ROOT . '/plugins/glpiinventory/vendor/autoload.php';
-
 /**
  * Check if the script name finish by
  *
