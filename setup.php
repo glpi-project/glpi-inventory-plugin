@@ -33,11 +33,11 @@
 
 use Glpi\Plugin\Hooks;
 
-define("PLUGIN_GLPI_INVENTORY_VERSION", "10.0.0+1.0");
+define("PLUGIN_GLPI_INVENTORY_VERSION", "1.0.0-rc1");
 // Minimal GLPI version, inclusive
 define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '10.0.0');
 // Maximum GLPI version, exclusive
-define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '11.0');
+define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '10.0.99');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
