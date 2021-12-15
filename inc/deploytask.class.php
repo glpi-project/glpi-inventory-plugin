@@ -55,7 +55,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
         if ($nb > 1) {
             return PluginGlpiinventoryDeployGroup::getTypeName();
         }
-        return __('Task', 'glpiinventory');
+        return _n('Task', 'Tasks', 1, 'glpiinventory');
     }
 
 
@@ -157,7 +157,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
         global  $CFG_GLPI;
 
         $buttons = [];
-        $title = __('Task', 'glpiinventory');
+        $title = _n('Task', 'Tasks', 1, 'glpiinventory');
 
         if ($this->canCreate()) {
             $buttons["task.form.php?new=1"] = __('Add task', 'glpiinventory');

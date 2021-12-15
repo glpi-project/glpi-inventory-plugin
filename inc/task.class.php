@@ -1979,7 +1979,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 echo "<table class='tab_cadre' width='600'>";
                 echo "<tr>";
                 echo "<td>";
-                echo __('Task', 'glpiinventory') . "&nbsp;:";
+                echo _n('Task', 'Tasks', 1, 'glpiinventory') . "&nbsp;:";
                 echo "</td>";
                 echo "<td>";
                 $rand = mt_rand();
@@ -2019,7 +2019,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 echo "<table class='tab_cadre' width='600'>";
                 echo "<tr>";
                 echo "<td>";
-                echo __('Task', 'glpiinventory') . "&nbsp;:";
+                echo _n('Task', 'Tasks', 1, 'glpiinventory') . "&nbsp;:";
                 echo "</td>";
                 echo "<td>";
                 $rand = mt_rand();
