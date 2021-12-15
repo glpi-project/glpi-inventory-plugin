@@ -447,7 +447,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         $this->addOrSaveButton($pfDeployPackage, $mode);
 
         echo "<script type='text/javascript'>
-         public function removeLine(item) {
+         function removeLine(item) {
             var tag_table = item.parentNode.parentNode.parentNode.parentNode;
             var parent = tag_table.parentNode;
                parent.removeChild(tag_table);
