@@ -111,7 +111,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "<script id='template_task' type='x-tmpl-mustache'>
                <div id='{{task_id}}' class='task_block {{expanded}}'>
                   <h3>" .
-                     __("Task", 'glpiinventory') . "
+                     _n('Task', 'Tasks', 1, 'glpiinventory') . "
                      <span class='task_name'>{{task_name}}</span>
                   </h3>
                   <a href='" . PluginGlpiinventoryTask::getFormURL() . "?id={{task_id}}'

@@ -328,7 +328,7 @@ class PluginGlpiinventoryProfile extends Profile
                 'label'     => __('Manage packages', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_package'],
           ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
-               'label'     => __('User interaction template', 'glpiinventory'),
+               'label'     => _n('User interaction template', 'User interaction templates', 1, 'glpiinventory'),
                'field'     => 'plugin_glpiinventory_userinteractiontemplate'],
           ['itemtype'  => 'PluginGlpiinventoryDeployMirror',
                 'label'     => __('Mirror servers', 'glpiinventory'),
