@@ -4,425 +4,277 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Walid Nouh, 2018
-# Sascha Sengpiel <sascha.sengpiell@proit-solutions.de>, 2018
-# Thomas Wolf <mail@thomaswolf.eu>, 2018
-# Eric Schindler <eric.schindler@klinikumfrankfurt.de>, 2018
-# sbeneke <sbeneke@gmail.com>, 2018
-# Stephan <stephan.rennert@web.de>, 2019
+# Cédric Anne, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: 2018-01-05 08:43+0000\n"
-"Last-Translator: Stephan <stephan.rennert@web.de>, 2019\n"
-"Language-Team: German (Germany) (https://www.transifex.com/ddurieux/teams/797/de_DE/)\n"
+"POT-Creation-Date: 2021-12-15 16:35+0000\n"
+"PO-Revision-Date: 2021-12-15 15:19+0000\n"
+"Last-Translator: Cédric Anne, 2021\n"
+"Language-Team: German (Germany) (https://www.transifex.com/teclib/teams/28042/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: report/not_queried_recently.php:55 report/computer_last_inventory.php:53
-#: report/switch_ports.history.php:54 report/ports_date_connections.php:54
-#: front/inventoryruleentity.form.php:49 front/configsecurity.php:49
-#: front/configsecurity.form.php:54 front/menu_inventory.php:50
-#: front/unmanaged.form.php:52 front/inventorycomputerblacklist.form.php:49
-#: front/taskjob.php:49 front/inventoryruleentity.php:50
-#: front/collectrule.form.php:49 front/iprange.form.php:51
-#: front/menu_snmpinventory.php:50 front/agentmodule.form.php:49
-#: front/unmanaged.php:49 front/inventorycomputerimportxml.php:49
-#: front/documentation.php:49 front/menu.php:50 front/task.form.php:54
-#: front/taskjoblog.php:49 front/stateinventory.php:49
-#: front/statediscovery.php:49 front/inventoryruleimport.form.php:49
-#: front/collect.php:49 front/task.php:50 front/inventoryruleimport.php:49
-#: front/taskjob.form.php:51 front/timeslot.php:52 front/collectrule.php:50
-#: front/inventoryrulelocation.form.php:50 front/ignoredimportdevice.php:49
-#: front/agent.form.php:73 front/agent.php:49 front/printerlogreport.php:52
-#: front/inventorycomputerblacklist.php:49 front/inventoryrulelocation.php:51
-#: front/iprange.php:49 inc/lock.class.php:224 inc/printer.class.php:167
-#: inc/computerlicenseinfo.class.php:73
-#: inc/inventorycomputercomputer.class.php:171
-#: inc/inventorycomputercomputer.class.php:249
-#: inc/networkequipment.class.php:510 index.php:63
+#: index.php:48 front/agentmodule.form.php:37 front/documentation.php:37
+#: front/collectrule.form.php:37 front/taskjob.form.php:39
+#: front/statediscovery.php:37 front/task.form.php:42 front/iprange.php:37
+#: front/timeslot.php:40 front/iprange.form.php:39
+#: front/menu_snmpinventory.php:38 front/taskjoblog.php:37 front/task.php:38
+#: front/collectrule.php:38 front/stateinventory.php:37 front/taskjob.php:37
+#: front/menu.php:38 front/collect.php:37 inc/menu.class.php:53
+msgid "GLPI Inventory"
+msgstr ""
+
+#: hook.php:48 hook.php:55 hook.php:62 hook.php:69 hook.php:76 hook.php:83
+#: hook.php:90 inc/agentmodule.class.php:110 inc/agentmodule.class.php:213
+#: inc/agentmodule.class.php:215
+msgid "Module"
+msgstr "Modul"
+
+#: hook.php:48 inc/menu.class.php:413
+msgid "Deploy"
+msgstr "Bereitstellen"
+
+#: hook.php:55
+msgid "WakeOnLan"
+msgstr "Wake on LAN"
+
+#: hook.php:62
+msgid "Local inventory"
+msgstr "Lokales Inventar"
+
+#: hook.php:69
+msgid "ESX/VMWare"
+msgstr "ESX/VMWare"
+
+#: hook.php:76
+msgid "Network inventory"
+msgstr "Netzwerkinventar"
+
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:496
+#: inc/config.class.php:516
+msgid "Network discovery"
+msgstr "Netzwerkdiscovery"
+
+#: hook.php:90
+msgid "Collect"
+msgstr "Sammeln"
+
+#: hook.php:94 inc/deploygroup.class.php:85 inc/deploygroup.class.php:705
+msgid "Static group"
+msgstr "Statische Gruppe"
+
+#: hook.php:301
+msgid "Setup"
+msgstr ""
+
+#: hook.php:365 inc/deploygroup.class.php:208 inc/iprange.class.php:309
+msgid "Target a task"
+msgstr "Wähle einen Task"
+
+#: hook.php:369
+msgid "Add to static group"
+msgstr "zu einer statischen Gruppe hinzufügen"
+
+#: report/switch_ports.history.php:41 report/not_queried_recently.php:42
+#: report/computer_last_inventory.php:40 report/ports_date_connections.php:40
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: report/not_queried_recently.php:70 setup.php:392
+#: report/not_queried_recently.php:57
 msgid "Number of days since last inventory"
 msgstr "Anzahl Tage seit der letzten Inventarisierung"
 
-#: report/not_queried_recently.php:156 report/computer_last_inventory.php:130
-#: hook.php:63 hook.php:255 hook.php:281 inc/item.class.php:176
-#: inc/printer.class.php:172 inc/inventorycomputercomputer.class.php:254
-#: inc/networkequipment.class.php:515
+#: report/not_queried_recently.php:135 report/computer_last_inventory.php:119
 msgid "Last inventory"
 msgstr "Letzte Inventarisierung"
 
-#: report/computer_last_inventory.php:69 setup.php:396
+#: report/computer_last_inventory.php:59
 msgid "Computers not inventoried since xx days"
 msgstr "Computer, welche seit xx Tagen nicht inventorisiert wurden"
 
-#: report/computer_last_inventory.php:75
+#: report/computer_last_inventory.php:65
 msgid "Number of days (minimum) since last inventory"
 msgstr "Anzahl Tage seit der letzten Inventarisierung (mindestens)"
 
-#: front/deploygroup.php:51 inc/deploytaskjob.class.php:226
-#: inc/profile.class.php:414 inc/menu.class.php:256
-msgid "Groups of computers"
-msgstr "Gruppen von Computern"
+#: install/install.php:283
+msgid "Wake agents ups"
+msgstr "Starte Agenten"
 
-#: front/rule.common.php:181
-msgid "Rules applied"
-msgstr "Regeln angewendet"
+#: install/update.php:1009
+msgid "Delete agents that have not contacted the server since \"xxx\" days."
+msgstr ""
+"Lösche Agenten, die den Server seit \"xxx\" Tagen nicht kontaktiert haben."
 
-#: front/rule.common.php:192
-msgid "Local rules"
-msgstr "Lokale Regeln"
-
-#: front/unmanaged.form.php:86
-msgid "restoration of the item"
-msgstr "Element wieder herstellen"
-
-#: front/unmanaged.form.php:107 inc/unmanaged.class.php:367
-msgid "Number of imported devices"
-msgstr "Anzahl importierter Geräte"
-
-#: front/unmanaged.form.php:109 inc/unmanaged.class.php:368
-msgid "Number of devices not imported because type not defined"
-msgstr "Number of devices not imported because type non defined"
-
-#: front/deployuserinteractiontemplate.php:50 inc/profile.class.php:325
-#: inc/menu.class.php:471 inc/deployuserinteractiontemplate.class.php:151
+#: front/deployuserinteractiontemplate.php:38 inc/profile.class.php:331
+#: inc/deployuserinteractiontemplate.class.php:145 inc/menu.class.php:402
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "Benutzer Interaktions-Vorlage"
 msgstr[1] "Benutzer Interaktions-Vorlage"
 
-#: front/inventorycomputerimportxml.php:73
-msgid "Can't read zip file!"
-msgstr "Kann keine ZP-Datei erstellen!"
+#: front/deploygroup.php:38 inc/profile.class.php:419
+#: inc/deploytaskjob.class.php:216 inc/menu.class.php:208
+msgid "Groups of computers"
+msgstr "Gruppen von Computern"
 
-#: front/inventorycomputerimportxml.php:101
-msgid "No file to import!"
-msgstr "Keine Datei zum importieren gefunden!"
+#: front/rule.common.php:178
+msgid "Rules applied"
+msgstr "Regeln angewendet"
 
-#: front/inventoryruleimport.php:67
-msgid "Reset import rules (define only default rules)"
-msgstr "Setze Import-Richtlinie zurück (legt Standardrichtlinie fest)"
+#: front/rule.common.php:191
+msgid "Local rules"
+msgstr "Lokale Regeln"
 
-#: front/configlogfield.form.php:51 front/config.form.php:52
-msgid "Features"
-msgstr "Funktionen"
-
-#: front/popup.php:68
-msgid "Cache informations"
-msgstr "Cache-Informationen"
-
-#: front/popup.php:73
-msgid "Network ports display options"
-msgstr "Anzeigeoptionen Netzwerkports"
-
-#: front/printerlogreport.php:101 inc/stateinventory.class.php:118
-#: inc/statediscovery.class.php:172
-msgid "Starting date"
-msgstr "Startdatum"
-
-#: front/printerlogreport.php:109 inc/stateinventory.class.php:119
-#: inc/statediscovery.class.php:173
-msgid "Ending date"
-msgstr "Enddatum"
-
-#: front/collect.form.php:49
+#: front/collect.form.php:37
 msgid "Collect management"
 msgstr "Sammlungsmanagement"
 
-#: phpunit/2_Integration/CollectsTest.php:118
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:53 inc/collect.class.php:149
-#: inc/collect.class.php:176 inc/deploycheck.class.php:68
-msgid "Registry"
-msgstr "Registry"
+#: front/popup.php:55
+msgid "Cache informations"
+msgstr "Cache-Informationen"
 
-#: phpunit/2_Integration/CollectsTest.php:135 inc/collect.class.php:150
-#: inc/collect.class.php:194
-msgid "WMI"
-msgstr "WMI"
+#: front/config.form.php:39
+msgid "Features"
+msgstr "Funktionen"
 
-#: phpunit/2_Integration/CollectsTest.php:152
-#: phpunit/2_Integration/CollectsTest.php:170 inc/collect.class.php:151
-#: inc/collect.class.php:213 inc/collect.class.php:228
-msgid "Find file"
-msgstr "Finde Datei"
+#: inc/collect_file_content.class.php:96
+msgid "Path/file"
+msgstr "Pfad/Datei"
 
-#: phpunit/2_Integration/CollectsTest.php:153 inc/collect.class.php:215
-#: inc/collect_file_content.class.php:149
-msgid "pathfile"
-msgstr "Dateipfad"
-
-#: phpunit/2_Integration/CollectsTest.php:171 inc/collect.class.php:230
-#: inc/collect_file.class.php:76 inc/collect_file.class.php:157
-#: inc/deployfile.class.php:1023 inc/collect_file_content.class.php:109
-#: inc/collect_file_content.class.php:150
+#: inc/collect_file_content.class.php:97
+#: inc/collect_file_content.class.php:139 inc/collect.class.php:249
+#: inc/collect_file.class.php:65 inc/collect_file.class.php:147
+#: inc/deployfile.class.php:1041
 msgid "Size"
 msgstr "Grösse"
 
-#: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:89
-#: inc/deployuserinteractiontemplate.class.php:164
-msgid "Windows system alert (WTS)"
-msgstr "Windows System-Meldung (WTS)"
+#: inc/collect_file_content.class.php:138 inc/collect.class.php:234
+msgid "pathfile"
+msgstr "Dateipfad"
 
-#: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:159
-#: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:170
-#: inc/deployuserinteractiontemplate.class.php:245
-msgid "Question"
-msgstr "Frage"
+#: inc/collectcommon.class.php:149
+msgid "Windows registry associated"
+msgstr "verbunden mit Windows Registrierung (Datenbank)"
 
-#: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:182
-#: inc/deployuserinteractiontemplate.class.php:278
-msgid "Retry job later"
-msgstr "Wiederhole Vorgang später"
+#: inc/profile.class.php:174 inc/menu.class.php:221
+msgid "General"
+msgstr "Allgemein"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:67 inc/deploycheck.class.php:69
-msgid "Registry key exists"
-msgstr "Registry-Key ist vorhanden"
+#: inc/profile.class.php:184
+msgid "Inventory"
+msgstr "Inventar"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:69 inc/deploycheck.class.php:91
-msgid "Free space is greater than"
-msgstr "Freier Speicherplatz grösser als"
+#: inc/profile.class.php:189 inc/profile.class.php:236
+msgid "Software deployment"
+msgstr "Softwareverteilung"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:422 inc/deploycheck.class.php:564
-msgid "abort job"
-msgstr "breche Aufgabe ab"
+#: inc/profile.class.php:231 inc/profile.class.php:337
+msgid "Deploy packages on demand"
+msgstr "Ausrollpakete auf Anfrage"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:423 inc/deploycheck.class.php:565
-msgid "skip job"
-msgstr "Überspringe die Aufgabe"
+#: inc/profile.class.php:307 inc/collectrule.class.php:73
+#: inc/menu.class.php:297 inc/collectrulecollection.class.php:72
+msgid "Computer information rules"
+msgstr "Computer Informations-Regel"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:424 inc/deploycheck.class.php:566
-msgid "report info"
-msgstr "JSON Paket-Angabe"
+#: inc/profile.class.php:328
+msgid "Manage packages"
+msgstr "Verwalte Pakete"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:425 inc/deploycheck.class.php:567
-msgid "report warning"
-msgstr "Warnhinweis zum Bericht"
+#: inc/profile.class.php:334 inc/menu.class.php:395
+#: inc/deploymirror.class.php:72
+msgid "Mirror servers"
+msgstr "Spiegelserver"
 
-#: phpunit/1_Unit/Deploy/DeployactionTest.php:70 inc/deployaction.class.php:84
-msgid "Command"
-msgstr "Befehl"
+#: inc/profile.class.php:354 inc/iprange.class.php:118
+msgid "IP range configuration"
+msgstr "IP-Adressbereich Konfiguration"
 
-#: phpunit/1_Unit/Deploy/DeployactionTest.php:72 inc/deployaction.class.php:85
-msgid "Move"
-msgstr "Verschieben"
+#: inc/profile.class.php:357 inc/credential.class.php:80
+#: inc/credential.class.php:180 inc/menu.class.php:346
+#: inc/credentialip.class.php:135 inc/credentialip.class.php:158
+msgid "Authentication for remote devices (VMware)"
+msgstr "Authentifizierung mit Remote-Gerät (VMware)"
 
-#: phpunit/1_Unit/Deploy/DeployactionTest.php:74 inc/deployaction.class.php:86
-msgid "Copy"
-msgstr "Kopieren"
+#: inc/profile.class.php:360 inc/menu.class.php:330
+msgid "Remote devices to inventory (VMware)"
+msgstr "Remote-Gerät inventarisieren (VMware)"
 
-#: phpunit/1_Unit/Deploy/DeployactionTest.php:76 inc/deployaction.class.php:87
-msgid "Delete directory"
-msgstr "Lösche Verzeichnis"
+#: inc/profile.class.php:363 inc/credential.class.php:294
+#: inc/credential.class.php:311
+msgid "VMware host"
+msgstr "Konfiguration"
 
-#: phpunit/1_Unit/Deploy/DeployactionTest.php:78 inc/deployaction.class.php:88
-msgid "Create directory"
-msgstr "Erstelle Verzeichnis"
+#: inc/profile.class.php:381
+msgid "Printers report"
+msgstr "Druckerbericht"
 
-#: b/deploy/index.php:85
-msgid "Deploy module has been disabled for this agent"
-msgstr "Bereitstellungsmodul wurde deaktiviert für diesen Agenten"
+#: inc/profile.class.php:400
+msgid "Menu"
+msgstr "Menü"
 
-#: b/deploy/index.php:156
-msgid "Checks"
-msgstr "Prüfungen"
+#: inc/profile.class.php:403
+msgid "Agents"
+msgstr "Agents"
 
-#: b/deploy/index.php:157
-msgid "Files download"
-msgstr "Dateien herunterladen"
+#: inc/profile.class.php:406
+msgid "Agent remote control"
+msgstr "Fernverwaltung der Agents"
 
-#: b/deploy/index.php:158
-msgid "Files preparation"
-msgstr "Dateien vorbereiten"
+#: inc/profile.class.php:410
+msgid "Configuration"
+msgstr "Konfiguration"
 
-#: b/deploy/index.php:159 inc/deploypackage.class.php:523
-msgid "Actions"
-msgstr "Aktionen"
+#: inc/profile.class.php:413 inc/taskview.class.php:114
+#: inc/task.class.php:1982 inc/task.class.php:2022 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160
+msgid "Task"
+msgid_plural "Tasks"
+msgstr[0] "Aufgabe"
+msgstr[1] "Aufgaben"
 
-#: b/deploy/index.php:278
-msgid "User canceled the job"
-msgstr "Benutzer hat Aufgabe abgebrochen"
+#: inc/profile.class.php:416 inc/staticmisc.class.php:57
+msgid "Wake On LAN"
+msgstr "Wake On LAN"
 
-#: b/deploy/index.php:280
-msgid "User postponed the job"
-msgstr "Der Benutzer hat den Vorgang verschoben"
+#: inc/profile.class.php:422 inc/menu.class.php:247
+msgid "Computer information"
+msgstr "Computer Information"
 
-#: b/collect/index.php:81
-msgid "Collect module has been disabled for this agent"
-msgstr "Das Sammel-Modul wurde deaktiviert für diesen Agenten"
+#: inc/agentmodule.class.php:62 inc/agentmodule.class.php:64
+msgid "Agents modules"
+msgstr "Agent-Module"
 
-#: b/collect/index.php:199
-msgid "Path not found"
-msgstr "Pfad nicht gefunden"
+#: inc/agentmodule.class.php:111
+msgid "Activation (by default)"
+msgstr "Aktivierung (Standard)"
 
-#: install/update.php:943 install/install.php:302
-msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
-"Lösche Agenten, die den Server seit \"xxx\" Tagen nicht kontaktiert haben."
+#: inc/agentmodule.class.php:112
+msgid "Exceptions"
+msgstr "Ausnahmen"
 
-#: install/install.php:305
-msgid "Wake agents ups"
-msgstr "Starte Agenten"
+#: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
+#: inc/staticmisc.class.php:87 inc/config.class.php:505
+#: inc/config.class.php:524
+msgid "Network inventory (SNMP)"
+msgstr "Netzwerkinventar (SNMP)"
 
-#: hook.php:62 hook.php:197 hook.php:204 hook.php:213 hook.php:232
-#: hook.php:239 hook.php:245 hook.php:254 hook.php:271 hook.php:280
-#: hook.php:288
-msgid "FusInv"
-msgstr "FusInv"
+#: inc/agentmodule.class.php:137 inc/agentmodule.class.php:245
+msgid "Package deployment"
+msgstr "Paketverteilung"
 
-#: hook.php:79 inc/inventorycomputercomputer.class.php:134
-#: inc/inventorycomputercomputer.class.php:205
-msgid "Owner"
-msgstr "Besitzer"
-
-#: hook.php:84 inc/inventorycomputercomputer.class.php:141
-#: inc/inventorycomputercomputer.class.php:202
-msgid "Company"
-msgstr "Firma"
-
-#: hook.php:90 inc/agent.class.php:177 inc/agent.class.php:260
-#: inc/agent.class.php:478 inc/agent.class.php:1160
-msgid "Useragent"
-msgstr "Benutzer-Agent"
-
-#: hook.php:97 inc/config.class.php:536 inc/config.class.php:546
-#: inc/config.class.php:574 inc/inventoryruleentity.class.php:191
-#: inc/inventoryruleimport.class.php:171
-#: inc/inventoryrulelocation.class.php:205 inc/agent.class.php:186
-#: inc/agent.class.php:510 inc/agent.class.php:1167
-msgid "FusionInventory tag"
-msgstr "FusionInventory Tag"
-
-#: hook.php:108 hook.php:115 hook.php:122 hook.php:129 hook.php:136
-#: hook.php:143 hook.php:150 inc/rulematchedlog.class.php:268
-#: inc/rulematchedlog.class.php:349 inc/agentmodule.class.php:120
-#: inc/agentmodule.class.php:224 inc/agentmodule.class.php:226
-#: inc/ignoredimportdevice.class.php:178 inc/agent.class.php:227
-#: inc/agent.class.php:285
-msgid "Module"
-msgstr "Modul"
-
-#: hook.php:108 inc/menu.class.php:478
-msgid "Deploy"
-msgstr "Bereitstellen"
-
-#: hook.php:115
-msgid "WakeOnLan"
-msgstr "Wake on LAN"
-
-#: hook.php:122
-msgid "Local inventory"
-msgstr "Lokales Inventar"
-
-#: hook.php:129
-msgid "ESX/VMWare"
-msgstr "ESX/VMWare"
-
-#: hook.php:136
-msgid "Network inventory"
-msgstr "Netzwerkinventar"
-
-#: hook.php:143 inc/config.class.php:751 inc/config.class.php:773
-#: inc/staticmisc.class.php:95 inc/agent.class.php:196 inc/agent.class.php:469
-#: inc/agent.class.php:486
-msgid "Network discovery"
-msgstr "Netzwerkdiscovery"
-
-#: hook.php:150
-msgid "Collect"
-msgstr "Sammeln"
-
-#: hook.php:154 inc/deploygroup.class.php:98
-msgid "Static group"
-msgstr "Statische Gruppe"
-
-#: hook.php:168 inc/inventorycomputercomputer.class.php:217
-msgid "HostID"
-msgstr "HostID"
-
-#: hook.php:174
-msgid "License serial number"
-msgstr "Lizenz-Seriennummer"
-
-#: hook.php:180
-msgid "License full name"
-msgstr "Lizenz-Name"
-
-#: hook.php:214 inc/agent.class.php:124 inc/agent.class.php:261
-#: inc/agent.class.php:494 inc/agent.class.php:1175
-msgid "Last contact"
-msgstr "Letzter Kontakt"
-
-#: hook.php:222
-msgid "Agent base URL"
-msgstr "Agent Basis URL"
-
-#: hook.php:246 hook.php:272 inc/profile.class.php:359 inc/menu.class.php:399
-#: inc/iprange.class.php:166 inc/unmanaged.class.php:241
-#: inc/unmanaged.class.php:494 inc/iprange_configsecurity.class.php:206
-msgid "SNMP credentials"
-msgstr "SNMP Zugangsdaten"
-
-#: hook.php:262 hook.php:296 inc/item.class.php:165
-#: inc/unmanaged.class.php:232 inc/unmanaged.class.php:484
-msgid "Sysdescr"
-msgstr "SNMP-Authentifizierung"
-
-#: hook.php:289 inc/networkequipment.class.php:1087
-msgid "CPU usage (in %)"
-msgstr "CPU-Last (in %)"
-
-#: hook.php:862 hook.php:878 inc/lock.class.php:231 inc/lock.class.php:403
-#: inc/profile.class.php:380
-msgid "Lock"
-msgid_plural "Locks"
-msgstr[0] "Sperrung"
-msgstr[1] "Sperrungen"
-
-#: hook.php:866 inc/deploygroup.class.php:213 inc/iprange.class.php:393
-msgid "Target a task"
-msgstr "Wähle einen Task"
-
-#: hook.php:870
-msgid "Add to static group"
-msgstr "zu einer statischen Gruppe hinzufügen"
-
-#: hook.php:882 inc/unmanaged.class.php:325
-msgid "Assign SNMP credentials"
-msgstr "SNMP-Authentifizierung zuordnen"
-
-#: ajax/remote_status.php:69
-msgid "cannot contact the agent"
-msgstr "Kann den Agent nicht erreichen"
-
-#: ajax/remote_status.php:75
-#, php-format
-msgid "Available on %1$s"
-msgstr "Verfügbar auf %1$s"
-
-#: ajax/remote_status.php:95
-msgid "The agent is running"
-msgstr "Agent läuft zur Zeit"
-
-#: ajax/remote_status.php:101
-msgid "Impossible to communicate with agent!"
-msgstr "Kann nicht mit dem Agent kommunizieren!"
-
-#: inc/deploygroup_staticdata.class.php:116
+#: inc/deploygroup_staticdata.class.php:107
 msgid "CSV import"
 msgstr "CSV importieren"
 
-#: inc/deploygroup_staticdata.class.php:252
+#: inc/deploygroup_staticdata.class.php:251
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
@@ -430,1124 +282,121 @@ msgstr ""
 "Importiere eine Liste von Computern über eine CSV-Datei (die erste Spalte "
 "muss die Computer-ID enthalten)"
 
-#: inc/deploygroup_staticdata.class.php:296
+#: inc/deploygroup_staticdata.class.php:297
 msgid "Computers imported successfully from CSV file"
 msgstr "Computer wurden erfolgreich von einer CSV-Datei importiert"
 
-#: inc/deploygroup_staticdata.class.php:299
+#: inc/deploygroup_staticdata.class.php:300
 msgid "Impossible to read the CSV file"
 msgstr "CSV-Datei kann gelesen werden"
 
-#: inc/taskview.class.php:78
+#: inc/commonview.class.php:308
+msgid "Warning:"
+msgstr "Warnung:"
+
+#: inc/commonview.class.php:313
+msgid "Error:"
+msgstr "Fehler:"
+
+#: inc/taskview.class.php:65
 msgid "Include old jobs"
 msgstr "Einschließlich alter Aufgaben"
 
-#: inc/taskview.class.php:96
+#: inc/taskview.class.php:83
 msgid "refresh interval"
 msgstr "Aktualisierungsintervall"
 
-#: inc/taskview.class.php:99
+#: inc/taskview.class.php:86
 msgid "Off"
 msgstr "Aus"
 
-#: inc/taskview.class.php:127 inc/deploytask.class.php:72
-#: inc/deploytask.class.php:171 inc/task.class.php:1926
-#: inc/task.class.php:1967 inc/profile.class.php:408
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "Aufgabe"
-msgstr[1] "Aufgaben"
-
-#: inc/taskview.class.php:176
+#: inc/taskview.class.php:163
 msgid "Show/Hide details"
 msgstr "Zeige/Verstecke Details"
 
-#: inc/taskview.class.php:200 inc/deploypackage.class.php:1295
+#: inc/taskview.class.php:187 inc/deploypackage.class.php:1369
 msgid "Not done yet"
 msgstr "Bisher nicht ausgeführt"
 
-#: inc/taskview.class.php:201 inc/menu.class.php:966
-#: inc/deploypackage.class.php:1296
+#: inc/taskview.class.php:188 inc/deploypackage.class.php:1370
 msgid "In error"
 msgstr "Davon fehlerhaft"
 
-#: inc/taskview.class.php:202 inc/menu.class.php:961
-#: inc/deploypackage.class.php:1297
+#: inc/taskview.class.php:189 inc/deploypackage.class.php:1371
 msgid "Successful"
 msgstr "Erfolgreich"
 
-#: inc/taskview.class.php:203 inc/menu.class.php:956
-#: inc/deploypackage.class.php:1298
+#: inc/taskview.class.php:190 inc/deploypackage.class.php:1372
 msgid "Running"
 msgstr "Läuft"
 
-#: inc/taskview.class.php:204 inc/stateinventory.class.php:182
-#: inc/statediscovery.class.php:244 inc/deploypackage.class.php:1299
-#: inc/taskjoblog.class.php:108 inc/taskjoblog.class.php:552
-#: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:140
+#: inc/taskview.class.php:191 inc/statediscovery.class.php:242
+#: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
+#: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
+#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1373
 msgid "Prepared"
 msgstr "Vorbereitet"
 
-#: inc/taskview.class.php:205 inc/taskjobstate.class.php:146
+#: inc/taskview.class.php:192 inc/taskjobstate.class.php:145
 msgid "Postponed"
 msgstr "Verschoben"
 
-#: inc/taskview.class.php:206 inc/deploypackage.class.php:1300
-#: inc/taskjobstate.class.php:145
+#: inc/taskview.class.php:193 inc/taskjobstate.class.php:144
+#: inc/deploypackage.class.php:1374
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: inc/taskview.class.php:264
+#: inc/taskview.class.php:247
 msgid "Task execution states"
 msgstr "Ausführungsstatus der Aufgabe"
 
-#: inc/taskview.class.php:332 inc/task.class.php:152
+#: inc/taskview.class.php:317 inc/task.class.php:143
 msgid "Re-prepare a target-actor if previous run is successful"
 msgstr ""
 "Bereiten Sie einen Ziel-Akteur neu vor, wenn der vorherige Lauf erfolgreich "
 "war."
 
-#: inc/taskview.class.php:336
+#: inc/taskview.class.php:322
 msgid "This is an on demand deployment task"
 msgstr "Dies ist eine Bereitstellungsaufgabe"
 
-#: inc/taskview.class.php:348 inc/task.class.php:112
+#: inc/taskview.class.php:333 inc/task.class.php:102
 msgid "Schedule start"
 msgstr "Aufgabenbeginn"
 
-#: inc/taskview.class.php:352 inc/task.class.php:120
+#: inc/taskview.class.php:339 inc/task.class.php:110
 msgid "Schedule end"
 msgstr "Aufgabenende"
 
-#: inc/taskview.class.php:356
+#: inc/taskview.class.php:345
 msgid "Preparation timeslot"
 msgstr "Zeitfenster für Vorbereitung"
 
-#: inc/taskview.class.php:364
+#: inc/taskview.class.php:353
 msgid "Execution timeslot"
 msgstr "Zeitfenster zur Ausführung"
 
-#: inc/taskview.class.php:370
+#: inc/taskview.class.php:360
 msgid "Agent wakeup interval (in minutes)"
 msgstr "Agent Start-Intervall (in Minuten)"
 
-#: inc/taskview.class.php:377
+#: inc/taskview.class.php:370
 msgid "Number of agents to wake up"
 msgstr "Anzahl Agenten zum Starten"
 
-#: inc/taskview.class.php:413
+#: inc/taskview.class.php:410
 msgid "Force start"
 msgstr "Start erzwingen"
 
-#: inc/timeslotentry.class.php:78
-msgid "Time slot entry"
-msgstr "Zeitfenster"
-
-#: inc/timeslotentry.class.php:93 inc/timeslot.class.php:79
-#: inc/timeslot.class.php:94 inc/menu.class.php:305
-msgid "Time slot"
-msgstr "Zeitfenster"
-
-#: inc/timeslotentry.class.php:145
-msgid "Start time"
-msgstr "Startzeit"
-
-#: inc/timeslotentry.class.php:171
-msgid "End time"
-msgstr "Endzeit"
-
-#: inc/collect_registry.class.php:65
-msgid "Found entry"
-msgid_plural "Found entries"
-msgstr[0] "Gefundene Einträge"
-msgstr[1] "Gefundene Einträge"
-
-#: inc/collect_registry.class.php:82 inc/collect_registry.class.php:99
-msgid "Hive"
-msgstr "Hive"
-
-#: inc/collect_registry.class.php:83 inc/collect_registry.class.php:108
-#: inc/collect_registry_content.class.php:172
-msgid "Path"
-msgstr "Pfad"
-
-#: inc/collect_registry.class.php:84 inc/collect_registry.class.php:114
-msgid "Key"
-msgstr "Schlüssel"
-
-#: inc/inventorycomputerblacklist.class.php:95
-#: inc/inventorycomputerblacklist.class.php:151
-msgid "blacklisted value"
-msgstr "Werte in der schwarzen Liste"
-
-#: inc/computerremotemanagement.class.php:73
-#: inc/computerremotemanagement.class.php:91
-msgid "Remote management"
-msgstr "Remote-Verwaltung"
-
-#: inc/collect.class.php:72 inc/staticmisc.class.php:674
-msgid "Collect information"
-msgstr "Informationen sammeln"
-
-#: inc/rulematchedlog.class.php:103 inc/rulematchedlog.class.php:111
-#: inc/rulematchedlog.class.php:117 inc/rulematchedlog.class.php:139
-msgid "Import information"
-msgstr "Import-Information"
-
-#: inc/rulematchedlog.class.php:249 inc/rulematchedlog.class.php:326
-msgid "Rule import logs"
-msgstr "Regel-Import Log"
-
-#: inc/rulematchedlog.class.php:260 inc/rulematchedlog.class.php:337
-#: inc/ignoredimportdevice.class.php:105
-msgid "Rule name"
-msgstr "Regel-Name"
-
-#: inc/rulematchedlog.class.php:264 inc/stateinventory.class.php:116
-#: inc/statediscovery.class.php:170 inc/ignoredimportdevice.class.php:90
-#: inc/ignoredimportdevice.class.php:187 inc/taskjoblog.class.php:241
-#: inc/taskjoblog.class.php:429 inc/taskjobstate.class.php:298
-#: inc/agent.class.php:78 inc/agent.class.php:93 inc/agent.class.php:1153
-msgid "Agent"
-msgstr "Agent"
-
-#: inc/configsecurity.class.php:105
-msgid "SNMP version"
-msgstr "Vorhaltezeit in Tagen"
-
-#: inc/configsecurity.class.php:117
-msgid "Community"
-msgstr "SNMP Community"
-
-#: inc/configsecurity.class.php:130
-msgid "Encryption protocol for authentication "
-msgstr "Verschlüsseungs für die Authentifizierung "
-
-#: inc/configsecurity.class.php:147
-msgid "Encryption protocol for data"
-msgstr "Verschlüsselungmethode für Daten"
-
-#: inc/item.class.php:122
-msgid "Download inventory file"
-msgstr "Lade Inventur-Datei herunter"
-
-#: inc/item.class.php:158
-msgid "SNMP information"
-msgstr "SNMP-Information"
-
-#: inc/item.class.php:186
-msgid "SNMP authentication"
-msgstr "SNMP Authentifizierung"
-
-#: inc/item.class.php:299
-msgid "sec(s)"
-msgstr "Sekunde(n)"
-
-#: inc/taskjob.class.php:79 inc/lock.class.php:333
-#: inc/agentwakeup.class.php:73 inc/task.class.php:1985
-#: inc/taskjoblog.class.php:199 inc/unmanaged.class.php:265
-#: inc/taskjobstate.class.php:297
-msgid "Job"
-msgstr "Aufgabe / Befehl"
-
-#: inc/taskjob.class.php:893
-msgid "Scheduled date"
-msgstr "Geplanter Zeitpunkt"
-
-#: inc/taskjob.class.php:894
-msgid "Periodicity"
-msgstr "Häufigkeit"
-
-#: inc/taskjob.class.php:895 inc/taskjob.class.php:1264
-#: inc/taskjoblog.class.php:451
-msgid "Definition"
-msgstr "Definition"
-
-#: inc/taskjob.class.php:896 inc/taskjob.class.php:1281
-msgid "Action"
-msgstr "Aktion"
-
-#: inc/taskjob.class.php:914 inc/deployfile.class.php:186
-#: inc/deployfile.class.php:348
-msgid "Minute(s)"
-msgstr "Minute(n)"
-
-#: inc/taskjob.class.php:919
-msgid "hour(s)"
-msgstr "Stunde(n)"
-
-#: inc/taskjob.class.php:924
-msgid "day(s)"
-msgstr "Tag(e)"
-
-#: inc/taskjob.class.php:952 inc/staticmisc.class.php:470
-#: inc/staticmisc.class.php:476
-msgid "Auto managenement dynamic of agents"
-msgstr "Dynamische Auto-Verwaltung des Agents"
-
-#: inc/taskjob.class.php:954
-msgid "Auto managenement dynamic of agents (same subnet)"
-msgstr "Dynamische Auto-Verwaltung des Agents (gleiches Subnetz)"
-
-#: inc/taskjob.class.php:1299 inc/deployfile.class.php:232
-#: inc/deployaction.class.php:245 inc/deployuserinteraction.class.php:283
-#: inc/deploycheck.class.php:268
-msgid "drag"
-msgstr "ziehen"
-
-#: inc/taskjob.class.php:1311 inc/networkequipment.class.php:1001
-#: inc/networkequipment.class.php:1002 inc/deployfile.class.php:246
-#: inc/deployaction.class.php:260 inc/printerlog.class.php:462
-#: inc/printerlog.class.php:664 inc/networkportlog.class.php:213
-#: inc/deployuserinteraction.class.php:298 inc/networkporttype.class.php:439
-#: inc/taskjobview.class.php:283 inc/deploycheck.class.php:283
-msgid "Delete"
-msgstr "Löschen"
-
-#: inc/taskjob.class.php:1333 inc/taskjoblog.class.php:364
-msgid "Force the end"
-msgstr "Beendigung erzwingen"
-
-#: inc/collect_file.class.php:65
-msgid "Found file"
-msgid_plural "Found files"
-msgstr[0] "Gefundene Dateien"
-msgstr[1] "Gefundene Dateien"
-
-#: inc/collect_file.class.php:72 inc/collect_file.class.php:117
-msgid "Limit"
-msgstr "Limite"
-
-#: inc/collect_file.class.php:73 inc/collect_file.class.php:98
-#: inc/collect_file.class.php:205
-msgid "Folder"
-msgstr "Ordner"
-
-#: inc/collect_file.class.php:74
-msgid "Recursive"
-msgstr "Rekursiv"
-
-#: inc/collect_file.class.php:75 inc/collect_file.class.php:151
-msgid "Regex"
-msgstr "Regulärer Ausdruck"
-
-#: inc/collect_file.class.php:77 inc/collect_file.class.php:173
-msgid "Checksum SHA512"
-msgstr "SHA512-Prüfsumme"
-
-#: inc/collect_file.class.php:78 inc/collect_file.class.php:179
-msgid "Checksum SHA2"
-msgstr "SHA2-Prüfsumme"
-
-#: inc/collect_file.class.php:79
-msgid "Name"
-msgstr "Name"
-
-#: inc/collect_file.class.php:80
-msgid "Iname"
-msgstr "Name"
-
-#: inc/collect_file.class.php:81 inc/collect_file.class.php:200
-msgid "Type"
-msgstr "Typ"
-
-#: inc/collect_file.class.php:96 inc/collect_file.class.php:204
-#: inc/deployfile.class.php:295 inc/deploycheck.class.php:375
-#: inc/deploycheck.class.php:388 inc/deploycheck.class.php:395
-msgid "File"
-msgstr "Datei"
-
-#: inc/collect_file.class.php:130
-msgid "Filter"
-msgid_plural "Filters"
-msgstr[0] "Filter"
-msgstr[1] "Filter"
-
-#: inc/collect_file.class.php:136
-msgid "Base folder"
-msgstr "Basisordner"
-
-#: inc/collect_file.class.php:142
-msgid "Folder recursive"
-msgstr "Ordner rekursiv"
-
-#: inc/collect_file.class.php:161 inc/collect_file.class.php:192
-msgid "Disabled"
-msgstr "Deaktiviert"
-
-#: inc/collect_file.class.php:188
-msgid "Filename"
-msgstr "Dateiname"
-
-#: inc/collect_file.class.php:193
-msgid "Non sentitive case"
-msgstr "Gross-/Kleinschreibung nicht beachten"
-
-#: inc/collect_file.class.php:194
-msgid "Sentitive case"
-msgstr "Gross-/Kleinschreibung beachten"
-
-#: inc/lock.class.php:228
-msgid "Values GLPI"
-msgstr "GLPI-Werte"
-
-#: inc/lock.class.php:229
-msgid "Values of last inventory"
-msgstr "Werte der letzten Inventur"
-
-#: inc/lock.class.php:337
-msgid "Add locks"
-msgstr "Sperrung hinzufügen"
-
-#: inc/lock.class.php:343
-msgid "Delete locks"
-msgstr "Sperrung entfernen"
-
-#: inc/printer.class.php:97 inc/networkequipment.class.php:76
-msgid "FusionInventory SNMP"
-msgstr "FusionInventory"
-
-#: inc/computerlicenseinfo.class.php:112
-msgid "Trial"
-msgstr "Test"
-
-#: inc/computerlicenseinfo.class.php:113
-msgid "OEM"
-msgstr "OEM"
-
-#: inc/computerlicenseinfo.class.php:119
-msgid "Option"
-msgstr "Option"
-
-#: inc/config.class.php:243 inc/staticmisc.class.php:79
-msgid "Computer Inventory"
-msgstr "Computerinventar"
-
-#: inc/config.class.php:244
-msgid "Network Inventory"
-msgstr "Netzwerkinventar"
-
-#: inc/config.class.php:245 inc/menu.class.php:456
-msgid "Package management"
-msgstr "Paketverwaltung"
-
-#: inc/config.class.php:333
-msgid "SSL-only for agent"
-msgstr "Nur SSL für die Kommunikation mit dem Agent verwenden"
-
-#: inc/config.class.php:337
-msgid "Inventory frequency (in hours)"
-msgstr "Periodizität des Inventars (in Stunden)"
-
-#: inc/config.class.php:350
-msgid "Delete tasks logs after"
-msgstr "Lösche Aufgaben-Log nach"
-
-#: inc/config.class.php:362 inc/agent.class.php:215 inc/agent.class.php:531
-msgid "Agent port"
-msgstr "Netzwerkports Agents"
-
-#: inc/config.class.php:369
-msgid "Extra-debug"
-msgstr "Extra-Debug"
-
-#: inc/config.class.php:374
-msgid "Re-prepare successful jobs"
-msgstr "Erfolgreiche Jobs neu vorbereiten"
-
-#: inc/config.class.php:382
-msgid "Maximum number of agents to wake up in a task"
-msgstr "Maximale Anzahl von Agenten zum starten je Vorgang"
-
-#: inc/config.class.php:395
-msgid "Update agents"
-msgstr "Agenten aktualisieren"
-
-#: inc/config.class.php:397
-msgid "Update agents not have contacted server since (in days)"
-msgstr ""
-"Aktualisieren der Agenten die den Server nicht kontaktiert haben seit (in "
-"Tagen)"
-
-#: inc/config.class.php:432 inc/config.class.php:462
-msgid "Change the status"
-msgstr "Ändere den Status"
-
-#: inc/config.class.php:465
-msgid "Clean agents"
-msgstr "Agenten bereinigen"
-
-#: inc/config.class.php:492
-msgid "Import options"
-msgstr "Import-Optionen"
-
-#: inc/config.class.php:521
-msgid "Antivirus"
-msgstr "Antivirus"
-
-#: inc/config.class.php:552 inc/config.class.php:742
-msgid "Default status"
-msgstr "Standardstatus"
-
-#: inc/config.class.php:579
-msgid ""
-"Create computer based on virtual machine information ( only when the virtual"
-" machine has no inventory agent ! )"
-msgstr ""
-"Erstelle einen Computer basierend auf den Informationen der virtuellen "
-"Maschine (Nur wenn diese keinen eigenen Agenten hat!)"
-
-#: inc/config.class.php:589
-msgid "Manage operating system name:"
-msgstr "Betriebssystem-Namen verwalten:"
-
-#: inc/config.class.php:649
-msgid "Virtual network card"
-msgstr "Virtuelle netzwerkadapter"
-
-#: inc/config.class.php:667
-msgid "Network drives"
-msgstr "Netzwerklaufwerke"
-
-#: inc/config.class.php:696
-msgid "Removable medias"
-msgid_plural "Removable medias"
-msgstr[0] "Entfernbare Medien"
-msgstr[1] "Wechselmedien"
-
-#: inc/config.class.php:737
-msgid "Network options"
-msgstr "Netzwerkoptionen"
-
-#: inc/config.class.php:750 inc/config.class.php:760
-#: inc/stateinventory.class.php:122 inc/statediscovery.class.php:175
-#: inc/agent.class.php:195 inc/agent.class.php:205 inc/agent.class.php:468
-#: inc/agent.class.php:501
-msgid "Threads number"
-msgstr "Anzahl Threads"
-
-#: inc/config.class.php:761 inc/config.class.php:782
-#: inc/staticmisc.class.php:101 inc/agentmodule.class.php:141
-#: inc/agentmodule.class.php:250 inc/agent.class.php:206
-#: inc/agent.class.php:502 inc/agent.class.php:517
-msgid "Network inventory (SNMP)"
-msgstr "Netzwerkinventar (SNMP)"
-
-#: inc/config.class.php:772 inc/config.class.php:781 inc/agent.class.php:485
-#: inc/agent.class.php:516
-msgid "SNMP timeout"
-msgstr "SNMP timeout"
-
-#: inc/config.class.php:821
-msgid "Root folder for sending files from server"
-msgstr "Wurzelverzeichnis um Dateien vom Server zu senden"
-
-#: inc/config.class.php:829
-msgid "Use this GLPI server as a mirror server"
-msgstr "Diesen GLPI-Server als Spiegelserver verwenden"
-
-#: inc/config.class.php:836
-msgid "Match mirrors to agents"
-msgstr "Abgleich von Spiegeln mit Agenten"
-
-#: inc/config.class.php:839
-msgid "with location"
-msgstr "mit Standort"
-
-#: inc/config.class.php:840
-msgid "with entity"
-msgstr "mit Entität"
-
-#: inc/config.class.php:841
-msgid "with both"
-msgstr "mit beiden"
-
-#: inc/config.class.php:850
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "Löschen von erfolgreichen On-Demand-Aufgaben nach (in Tagen)"
-
-#: inc/printercartridge.class.php:97
-msgid "Cartridge(s)"
-msgstr "Kartusche(n)"
-
-#: inc/printercartridge.class.php:131
-msgid "remaining pages"
-msgstr "Verbleibende Seiten"
-
-#: inc/inventorycomputercomputer.class.php:102
-msgid "BIOS date"
-msgstr "BIOS Datum"
-
-#: inc/inventorycomputercomputer.class.php:109
-msgid "BIOS version"
-msgstr "BIOS Version"
-
-#: inc/inventorycomputercomputer.class.php:261
-msgid "Public contact address"
-msgstr "Öffentliche Kontaktadresse"
-
-#: inc/inventorycomputercomputer.class.php:274
-msgid "Automatic entity transfer"
-msgstr "Automatische Übertragung der Entität"
-
-#: inc/inventorycomputercomputer.class.php:278
-msgid "No, locked (by entity configuration)"
-msgstr "Nein, gesperrt (durch Entitäts-Einstellung)"
-
-#: inc/inventorycomputercomputer.class.php:281
-msgid "No, locked manually"
-msgstr "Nein, manuell gesperrt"
-
-#: inc/inventorycomputercomputer.class.php:283
-msgid "Unlock it"
-msgstr "Entsperre es"
-
-#: inc/inventorycomputercomputer.class.php:287
-msgid "Lock it"
-msgstr "Sperre es"
-
-#: inc/stateinventory.class.php:114 inc/statediscovery.class.php:168
-#: inc/taskjoblog.class.php:225 inc/taskjobstate.class.php:296
-msgid "Unique id"
-msgstr "Eindeutige ID"
-
-#: inc/stateinventory.class.php:115 inc/statediscovery.class.php:169
-msgid "Task job"
-msgstr "Aufgabe"
-
-#: inc/stateinventory.class.php:121
-msgid "Number per second"
-msgstr "Anzahl pro Sekunden"
-
-#: inc/stateinventory.class.php:123
-msgid "To inventory"
-msgstr "Zum Inventar"
-
-#: inc/stateinventory.class.php:124
-msgid "Error(s)"
-msgstr "Fehler"
-
-#: inc/stateinventory.class.php:187 inc/statediscovery.class.php:249
-#: inc/taskjoblog.class.php:109 inc/taskjoblog.class.php:558
-#: inc/taskjoblog.class.php:664 inc/taskjoblog.class.php:714
-msgid "Started"
-msgstr "gestartet"
-
-#: inc/stateinventory.class.php:191 inc/statediscovery.class.php:253
-#: inc/taskjobstate.class.php:256
-msgid "Finished tasks"
-msgstr "Beendete Aufgaben"
-
-#: inc/statediscovery.class.php:176
-msgid "Total discovery devices"
-msgstr "Anzahl entdeckte Geräte"
-
-#: inc/statediscovery.class.php:177
-msgid "Devices not imported"
-msgstr "Nicht importierte Geräte"
-
-#: inc/statediscovery.class.php:178
-msgid "Devices linked"
-msgstr "Verknüpfte Geräte"
-
-#: inc/statediscovery.class.php:179
-msgid "Devices imported"
-msgstr "Geräte importiert"
-
-#: inc/deployinstall.class.php:65 inc/deployinstall.class.php:81
-msgid "Package actions"
-msgstr "Paket-Aktion"
-
-#: inc/staticmisc.class.php:71 inc/profile.class.php:411
-msgid "Wake On LAN"
-msgstr "Wake On LAN"
-
-#: inc/staticmisc.class.php:87
-msgid "VMware host remote inventory"
-msgstr "VMware host, Remoteinventar"
-
-#: inc/staticmisc.class.php:107 inc/deploypackage.class.php:1029
-msgid "Package deploy"
-msgstr "Paket Bereitstellung"
-
-#: inc/staticmisc.class.php:115
-msgid "Collect data"
-msgstr "Sammel Daten"
-
-#: inc/staticmisc.class.php:289 inc/profile.class.php:398
-msgid "Agents"
-msgstr "Agents"
-
-#: inc/staticmisc.class.php:373 inc/staticmisc.class.php:405
-#: inc/menu.class.php:381 inc/iprange.class.php:98 inc/iprange.class.php:101
-msgid "IP Ranges"
-msgstr "IP-Adressbereich"
-
-#: inc/credential.class.php:92 inc/credential.class.php:187
-#: inc/credentialip.class.php:147 inc/credentialip.class.php:170
-#: inc/profile.class.php:350 inc/menu.class.php:409
-msgid "Authentication for remote devices (VMware)"
-msgstr "Authentifizierung mit Remote-Gerät (VMware)"
-
-#: inc/credential.class.php:294 inc/credential.class.php:310
-#: inc/profile.class.php:356
-msgid "VMware host"
-msgstr "Konfiguration"
-
-#: inc/networkequipment.class.php:177
-msgid "Display the view"
-msgstr "Anzeigen der Ansicht"
-
-#: inc/networkequipment.class.php:179
-msgid "If you prefer, you can display the view"
-msgstr "Falls bevorzugt, es kann die Ansicht angezeigt werden"
-
-#: inc/networkequipment.class.php:524
-msgid "Uptime"
-msgstr "Uptime"
-
-#: inc/networkequipment.class.php:553
-msgid "Ports array"
-msgstr "Porttabelle"
-
-#: inc/networkequipment.class.php:584
-msgid "Legend"
-msgstr "Legende"
-
-#: inc/networkequipment.class.php:594
-msgid "Connection with a switch or a server in trunk or tagged mode"
-msgstr ""
-"Verbindung mit einem Switch oder Server der im trunking oder tagged-Modus "
-"arbeitet"
-
-#: inc/networkequipment.class.php:600
-msgid "Other connections (with a computer, a printer...)"
-msgstr "Andere Verbindunge (mit Computer, Drucker...)"
-
-#: inc/networkequipment.class.php:614
-msgid "Monitoring"
-msgstr "Monitoring"
-
-#: inc/networkequipment.class.php:622 inc/networkport.class.php:114
-#: inc/mapping.class.php:531
-msgid "MTU"
-msgstr "MTU"
-
-#: inc/networkequipment.class.php:630 inc/networkport.class.php:128
-#: inc/mapping.class.php:537
-msgid "Internal status"
-msgstr "Interer Status"
-
-#: inc/networkequipment.class.php:634 inc/mapping.class.php:540
-msgid "Last Change"
-msgstr "Letze &Auml"
-
-#: inc/networkequipment.class.php:638
-msgid "Traffic received/sent"
-msgstr "Traffic erhalten/gesendet"
-
-#: inc/networkequipment.class.php:642
-msgid "Errors received/sent"
-msgstr "Fehler erhalten/gesendet"
-
-#: inc/networkequipment.class.php:646 inc/networkport.class.php:156
-msgid "Duplex"
-msgstr "Duplex"
-
-#: inc/networkequipment.class.php:650 inc/networkport.class.php:163
-#: inc/mapping.class.php:561
-msgid "Internal MAC address"
-msgstr "Interne MAC Adresse"
-
-#: inc/networkequipment.class.php:666 inc/networkport.class.php:191
-msgid "Port not connected since"
-msgstr "Port nicht verbunden seit"
-
-#: inc/networkequipment.class.php:670 inc/networkport.class.php:198
-#: inc/mapping.class.php:576
-msgid "Alias"
-msgstr "Alias"
-
-#: inc/networkequipment.class.php:832
-msgid "Half"
-msgstr "Halb"
-
-#: inc/networkequipment.class.php:836
-msgid "Full"
-msgstr "Vollständig"
-
-#: inc/networkequipment.class.php:1097
-msgid "Memory usage (in %)"
-msgstr "Speicherauslastung (in %)"
-
-#: inc/networkequipment.class.php:1118
-msgid "No data available"
-msgstr "Keine Daten verfügbar"
-
-#: inc/agentwakeup.class.php:169
-msgid "Maximum number of agent wakeup reached"
-msgstr "Maximale Anzahl von Agenten zum Starten erreicht"
-
-#: inc/deploygroup.class.php:99
-msgid "Dynamic group"
-msgstr "Dynamische Gruppe"
-
-#: inc/deploygroup.class.php:111
-msgid "FusionInventory group"
-msgstr "FusionInventory Gruppe"
-
-#: inc/deploygroup.class.php:329
-msgid "Add group"
-msgstr "Gruppe hinzufügen"
-
-#: inc/agentmodule.class.php:74 inc/agentmodule.class.php:76
-#: inc/configuration.class.php:77
-msgid "Agents modules"
-msgstr "Agent-Module"
-
-#: inc/agentmodule.class.php:121
-msgid "Activation (by default)"
-msgstr "Aktivierung (Standard)"
-
-#: inc/agentmodule.class.php:122
-msgid "Exceptions"
-msgstr "Ausnahmen"
-
-#: inc/agentmodule.class.php:146 inc/agentmodule.class.php:255
-msgid "Package deployment"
-msgstr "Paketverteilung"
-
-#: inc/inventoryruleentitycollection.class.php:86
-#: inc/inventoryruleentity.class.php:88 inc/profile.class.php:290
-msgid "Entity rules"
-msgstr "Entitätsregeln"
-
-#: inc/communication.class.php:231
-#: inc/communicationnetworkinventory.class.php:230
-#: inc/communicationnetworkinventory.class.php:298
-msgid "Unattended element in"
-msgstr "Unbeaufsichtigtes Element in"
-
-#: inc/deployfile.class.php:78
-msgid "Upload from computer"
-msgstr "Von Computer heraufladen"
-
-#: inc/deployfile.class.php:79
-msgid "Upload from server"
-msgstr "Hochgeladen vom Server"
-
-#: inc/deployfile.class.php:183
-msgid "p2p"
-msgstr "P2P"
-
-#: inc/deployfile.class.php:184 inc/deployfile.class.php:347
-msgid "retention"
-msgstr "Speicherung"
-
-#: inc/deployfile.class.php:196
-msgid "uncompress"
-msgstr "dekomprimieren"
-
-#: inc/deployfile.class.php:302
-msgid "filename"
-msgstr "Dateiname"
-
-#: inc/deployfile.class.php:309
-msgid "Choose"
-msgstr "Auswählen"
-
-#: inc/deployfile.class.php:313
-msgid "Select the file on server"
-msgstr "Datei auf dem Server wählen"
-
-#: inc/deployfile.class.php:330
-msgid "Uncompress"
-msgstr "Dekomprimieren"
-
-#: inc/deployfile.class.php:338
-msgid "P2P"
-msgstr "P2P"
-
-#: inc/deployfile.class.php:615
-msgid "Transfer error: the file size is too big"
-msgstr "Übertragunsfehler: Die Datei ist zu groß"
-
-#: inc/deployfile.class.php:619
-msgid "The uploaded file was only partially uploaded"
-msgstr "Die hochgeladene Datei ist unvollständig"
-
-#: inc/deployfile.class.php:623
-msgid "No file was uploaded"
-msgstr "Dateien wurde nicht heraufgeladen"
-
-#: inc/deployfile.class.php:627
-msgid "Missing a temporary folder"
-msgstr "Temporäres Verzeichnis fehlt"
-
-#: inc/deployfile.class.php:631
-msgid "Failed to write file to disk"
-msgstr "Datei konnte nicht gespeichert werden"
-
-#: inc/deployfile.class.php:635
-msgid "PHP extension stopped the file upload"
-msgstr "PHP-Erweiterung hat den Upload gestoppt"
-
-#: inc/deployfile.class.php:664 inc/deployfile.class.php:720
-msgid "File saved!"
-msgstr "Datei gespeichert!"
-
-#: inc/deployfile.class.php:667 inc/deployfile.class.php:723
-msgid "Failed to copy file"
-msgstr "Datei konnte nicht kopiert werden"
-
-#: inc/deployfile.class.php:671 inc/deployfile.class.php:727
-msgid "File missing"
-msgstr "Datei fehlt"
-
-#: inc/deployfile.class.php:1007
-msgid "Max file size"
-msgstr "Maximale Dateigrösse"
-
-#: inc/deployfile.class.php:1008
-msgid "Mio"
-msgstr "Mio"
-
-#: inc/deployfile.class.php:1020
-msgid "Unused file"
-msgstr "Ungenutzte Datei"
-
-#: inc/collect_wmi_content.class.php:158 inc/collect_wmi.class.php:71
-msgid "Moniker"
-msgstr "Name"
-
-#: inc/collect_wmi_content.class.php:159 inc/collect_wmi.class.php:72
-#: inc/collect_wmi.class.php:96
-msgid "Class"
-msgstr "Klasse"
-
-#: inc/collect_wmi_content.class.php:160 inc/collect_wmi_content.class.php:209
-msgid "Property"
-msgstr "Eigenschaft"
-
-#: inc/collect_wmi_content.class.php:161 inc/collect_wmi_content.class.php:210
-#: inc/collect_registry_content.class.php:173
-#: inc/collect_registry_content.class.php:219 inc/deploycheck.class.php:357
-#: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
-#: inc/deploycheck.class.php:402
-msgid "Value"
-msgstr "Wert"
-
-#: inc/deploytask.class.php:125
-msgid "Order list"
-msgstr "Sortierung"
-
-#: inc/deploytask.class.php:174
-msgid "Add task"
-msgstr "Aufgabe hinzufügen"
-
-#: inc/deploytask.class.php:201
-msgid "Edit impossible, this task is active"
-msgstr "Änderung nicht möglich, Aufgabe ist aktiv"
-
-#: inc/deploytask.class.php:235
-msgid "This task is active. delete denied"
-msgstr "Die Aufgabe ist aktiv. Löschen fehlgeschlagen"
-
-#: inc/ignoredimportdevice.class.php:75 inc/profile.class.php:306
-msgid "Equipment ignored on import"
-msgstr "Geräte die beim Import ignoriert wurden"
-
-#: inc/communicationnetworkdiscovery.class.php:123
-msgid "Processed:"
-msgstr "Abgeschlossen:"
-
-#: inc/communicationnetworkdiscovery.class.php:124
-msgid "Created:"
-msgstr "Erstellt:"
-
-#: inc/communicationnetworkdiscovery.class.php:125
-msgid " Updated:"
-msgstr "Aktualisiert:"
-
-#: inc/commonview.class.php:293
-msgid "Warning:"
-msgstr "Warnung:"
-
-#: inc/commonview.class.php:298
-msgid "Error:"
-msgstr "Fehler:"
-
-#: inc/inventorycomputerlib.class.php:2010
-msgid "Internal battery"
-msgstr "Interne Batterie"
-
-#: inc/deployaction.class.php:69
-msgid "Return code is equal to"
-msgstr "Rückgabewert ist gleich"
-
-#: inc/deployaction.class.php:70
-msgid "Return code is not equal to"
-msgstr "Rückgabewert ist nicht gleich"
-
-#: inc/deployaction.class.php:71
-msgid "Command output contains"
-msgstr "Ausgabe des Kommandos enthält"
-
-#: inc/deployaction.class.php:72
-msgid "Command output does not contains"
-msgstr "Ausgabe des Kommandos enthält nicht"
-
-#: inc/deployaction.class.php:218
-msgid "Command to execute"
-msgstr "Auszuführender Befehl"
-
-#: inc/deployaction.class.php:232
-msgid "return codes saved for this command"
-msgstr "Rückgabewerte dieses Befehls gespeichert"
-
-#: inc/deployaction.class.php:304 inc/deployaction.class.php:360
-msgid "Action label"
-msgstr "Aktion Beschriftung"
-
-#: inc/deployaction.class.php:316
-msgid "From"
-msgstr "Von"
-
-#: inc/deployaction.class.php:318
-msgid "To"
-msgstr "Nach"
-
-#: inc/deployaction.class.php:327
-msgid "exec"
-msgstr "Ausführen"
-
-#: inc/deployaction.class.php:341
-msgid "path"
-msgstr "Pfad"
-
-#: inc/deployaction.class.php:389
-msgid "Execution checks"
-msgstr "Ausführungsprüfung"
-
-#: inc/deployaction.class.php:437
-msgid "Number of output lines to retrieve"
-msgstr "Anzahl der Zeilen zum Abfragen"
-
-#: inc/collectcommon.class.php:156
-msgid "Windows registry associated"
-msgstr "verbunden mit Windows Registrierung (Datenbank)"
-
-#: inc/inventoryruleentity.class.php:200
-msgid "IP Address"
-msgstr "IP-Adresse"
-
-#: inc/inventoryruleentity.class.php:203
-msgid "Computer's name"
-msgstr "Computername"
-
-#: inc/inventoryruleentity.class.php:239
-#: inc/inventoryrulelocation.class.php:245
-msgid "Ignore in FusionInventory import"
-msgstr "Ignorieren beim Import von FusionInventory"
-
-#: inc/inventoryruleentity.class.php:293
-#: inc/inventoryrulelocation.class.php:309
-msgid "is CIDR"
-msgstr "ist CIDR"
-
-#: inc/inventoryruleentity.class.php:294
-#: inc/inventoryrulelocation.class.php:310
-msgid "is not CIDR"
-msgstr "ist nicht CIDR"
-
-#: inc/display.class.php:176
-msgid "Progress"
-msgstr "Fortschritt"
-
-#: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
-#: inc/profile.class.php:302 inc/menu.class.php:353
-msgid "Computer information rules"
-msgstr "Computer Informations-Regel"
-
-#: inc/collectrule.class.php:204
-msgid "Registry key"
-msgstr "Registry-Schlüssel"
-
-#: inc/collectrule.class.php:208
-msgid "Registry value"
-msgstr "Wert in der Registrierungsdatenbank"
-
-#: inc/collectrule.class.php:211
-msgid "WMI property"
-msgstr "WMI-Eigenschaft"
-
-#: inc/collectrule.class.php:215
-msgid "WMI value"
-msgstr "WMI-Wert"
-
-#: inc/collectrule.class.php:218
-msgid "File name"
-msgstr "Dateiname"
-
-#: inc/collectrule.class.php:221
-msgid "File path"
-msgstr "Dateipfad"
-
-#: inc/collectrule.class.php:224
-msgid "File size"
-msgstr "Dateigrösse"
-
-#: inc/collectrule.class.php:275
-msgid "Software version"
-msgstr "Software Version"
-
-#: inc/configlogfield.class.php:171
-msgid "History configuration"
-msgstr "Verlaufskonfiguration"
-
-#: inc/configlogfield.class.php:178
-msgid "List of fields for which to keep history"
-msgstr "Liste der Felder, die im historischen Verlauf beibehalten werden."
-
-#: inc/configlogfield.class.php:182
-msgid "Retention in days"
-msgstr "Speicherung (in Tagen)"
-
-#: inc/entity.class.php:135
-msgid "Model for automatic computers transfer in an other entity"
-msgstr "Modell für den automatischen Computertransfer in eine andere Entität."
-
-#: inc/entity.class.php:180
-msgid "Service URL"
-msgstr "Dienst-URL"
-
-#: inc/inventoryruleimportcollection.class.php:85 inc/menu.class.php:323
-msgid "Equipment import and link rules"
-msgstr "Materialimport- und verknüpfungsregeln"
-
-#: inc/inventoryruleimportcollection.class.php:149
-#: inc/inventoryruleimport.class.php:1047
-msgid "Device created"
-msgstr "Gerät erstellt"
-
-#: inc/inventoryruleimportcollection.class.php:154
-#: inc/taskjoblog.class.php:773 inc/inventoryruleimport.class.php:1052
-msgid "Import denied"
-msgstr "Import nicht erlaubt"
-
-#: inc/credentialip.class.php:95
-msgid "Remote device inventory"
-msgstr "Remote-Inventarisierung von Geräten"
-
-#: inc/task.class.php:70 inc/menu.class.php:280
+#: inc/task.class.php:58 inc/menu.class.php:231
 msgid "Task management"
 msgstr "Aufgabenverwaltung"
 
-#: inc/task.class.php:161
+#: inc/task.class.php:153
 msgid "deploy on demand task"
 msgstr "Bereitstellung von On-Demand-Aufgaben"
 
-#: inc/task.class.php:366
+#: inc/task.class.php:364
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
@@ -1561,35 +410,41 @@ msgstr ""
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Die Aufgabe wurde deaktiviert nach der Vorbereitung des Vorgangs"
 
-#: inc/task.class.php:396
+#: inc/task.class.php:398
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr ""
 "Dieser Vorgang kann nicht mehr ausgeführt werden während dem Zeitplan der "
 "Aufgabe."
 
-#: inc/task.class.php:427
+#: inc/task.class.php:433
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr ""
 "Dieser Vorgang kann nicht mehr ausgeführt werden während dem Zeitfenster der"
 " Aufgabe."
 
-#: inc/task.class.php:444
+#: inc/task.class.php:452
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "Dieser Agent gehört nicht mehr zu den im Job definierten Akteuren."
 
-#: inc/task.class.php:679
+#: inc/task.class.php:678
 msgid "Device no longer defined in definition of job"
 msgstr "Gerät nicht länger im Vorgang festgelegt"
 
-#: inc/task.class.php:1709
+#: inc/task.class.php:1763
 msgid "Task has been disabled"
 msgstr "Aufgabe wurde deaktiviert"
 
-#: inc/task.class.php:1945 inc/deploypackage.class.php:107
+#: inc/task.class.php:2000 inc/deploypackage.class.php:94
 msgid "Package"
 msgstr "Paket"
 
-#: inc/task.class.php:2075
+#: inc/task.class.php:2039 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
+#: inc/taskjobstate.class.php:307
+msgid "Job"
+msgstr "Aufgabe / Befehl"
+
+#: inc/task.class.php:2133
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
@@ -1597,359 +452,528 @@ msgstr ""
 "Sie müssen eine Aufgabe und ein Paket auswählen, um eine Aufgabe mit einem "
 "Bereitstellungspaket zu bearbeiten."
 
-#: inc/task.class.php:2088
+#: inc/task.class.php:2150
 msgid "Deployment job, package: "
 msgstr "Ausrollvorgang, Paket:"
 
-#: inc/task.class.php:2103
+#: inc/task.class.php:2167
 msgid "Updated a deployment job, package: "
 msgstr "Aktualisiere einen Ausroll-Vorgang, Paket:"
 
-#: inc/task.class.php:2104 inc/task.class.php:2136
+#: inc/task.class.php:2168 inc/task.class.php:2211
 msgid ", actors: "
 msgstr ", Aktoren:"
 
-#: inc/task.class.php:2127
+#: inc/task.class.php:2196
 msgid "The selected task already has a deployment job for another package: "
 msgstr ""
 "Der ausgewählte Auftrag hat einen Ausrollvorgang für ein anderes Paket:"
 
-#: inc/task.class.php:2135
+#: inc/task.class.php:2210
 msgid "Created a deployment job, package: "
 msgstr "Erstellt einen Ausrollvorgang, Paket:"
 
-#: inc/deploypackageitem.class.php:323 inc/deploypackage.class.php:982
-msgid "The modified JSON contained a syntax error :"
-msgstr "Die modifizierte JSON enthält einen Syntax-Fehler:"
+#: inc/deploygroup.class.php:86 inc/deploygroup.class.php:723
+msgid "Dynamic group"
+msgstr "Dynamische Gruppe"
 
-#: inc/printerlog.class.php:68 inc/printerlog.class.php:431
-msgid "History meter printer"
-msgstr "Verlauf des Seitenzählers"
+#: inc/deploygroup.class.php:99
+msgid "Inventory group"
+msgstr ""
 
-#: inc/printerlog.class.php:194 inc/mapping.class.php:579
-msgid "Total number of printed pages"
-msgstr "Total gedruckte Seiten"
+#: inc/deploygroup.class.php:337
+msgid "Add group"
+msgstr "Gruppe hinzufügen"
 
-#: inc/printerlog.class.php:202 inc/mapping.class.php:582
-msgid "Number of printed black and white pages"
-msgstr "Anzahl gedruckter Seiten (S/W)"
+#: inc/statediscovery.class.php:166 inc/taskjoblog.class.php:216
+#: inc/taskjobstate.class.php:306 inc/stateinventory.class.php:104
+msgid "Unique id"
+msgstr "Eindeutige ID"
 
-#: inc/printerlog.class.php:210 inc/mapping.class.php:585
-msgid "Number of printed color pages"
-msgstr "Anzahl gedruckter Seiten (Farbe)"
+#: inc/statediscovery.class.php:167 inc/stateinventory.class.php:105
+msgid "Task job"
+msgstr "Aufgabe"
 
-#: inc/printerlog.class.php:218 inc/mapping.class.php:651
-msgid "Number of pages printed duplex"
-msgstr "Anzahl gedruckter Duplexseiten"
+#: inc/statediscovery.class.php:168 inc/taskjoblog.class.php:232
+#: inc/taskjoblog.class.php:423 inc/taskjobstate.class.php:308
+#: inc/stateinventory.class.php:106
+msgid "Agent"
+msgstr "Agent"
 
-#: inc/printerlog.class.php:226 inc/mapping.class.php:654
-msgid "Number of scanned pages"
-msgstr "Anzahl gescannter Seiten"
+#: inc/statediscovery.class.php:170 inc/stateinventory.class.php:108
+msgid "Starting date"
+msgstr "Startdatum"
 
-#: inc/printerlog.class.php:234 inc/mapping.class.php:780
-msgid "Total number of printed pages (print)"
-msgstr "Seitenzahl"
+#: inc/statediscovery.class.php:171 inc/stateinventory.class.php:109
+msgid "Ending date"
+msgstr "Enddatum"
 
-#: inc/printerlog.class.php:242 inc/mapping.class.php:783
-msgid "Number of printed black and white pages (print)"
-msgstr "Total gedruckte Seiten (S/W)"
+#: inc/statediscovery.class.php:173 inc/config.class.php:495
+#: inc/config.class.php:504 inc/stateinventory.class.php:112
+msgid "Threads number"
+msgstr "Anzahl Threads"
 
-#: inc/printerlog.class.php:250 inc/mapping.class.php:786
-msgid "Number of printed color pages (print)"
-msgstr "Total gedruckte Seiten (Farbe)"
+#: inc/statediscovery.class.php:174
+msgid "Total discovery devices"
+msgstr "Anzahl entdeckte Geräte"
 
-#: inc/printerlog.class.php:258 inc/mapping.class.php:789
-msgid "Total number of printed pages (copy)"
-msgstr "Total gedruckte Kopien"
+#: inc/statediscovery.class.php:175
+msgid "Devices not imported"
+msgstr "Nicht importierte Geräte"
 
-#: inc/printerlog.class.php:266 inc/mapping.class.php:792
-msgid "Number of printed black and white pages (copy)"
-msgstr "Total gedruckte Kopien (S/W)"
+#: inc/statediscovery.class.php:176
+msgid "Devices linked"
+msgstr "Verknüpfte Geräte"
 
-#: inc/printerlog.class.php:274 inc/mapping.class.php:795
-msgid "Number of printed color pages (copy)"
-msgstr "Total gedruckte Kopien (Farbe)"
+#: inc/statediscovery.class.php:177
+msgid "Devices imported"
+msgstr "Geräte importiert"
 
-#: inc/printerlog.class.php:282 inc/mapping.class.php:798
-msgid "Total number of printed pages (fax)"
-msgstr "Total gedruckte Faxe"
+#: inc/statediscovery.class.php:247 inc/taskjoblog.class.php:97
+#: inc/taskjoblog.class.php:552 inc/taskjoblog.class.php:660
+#: inc/taskjoblog.class.php:714 inc/stateinventory.class.php:177
+msgid "Started"
+msgstr "gestartet"
 
-#: inc/printerlog.class.php:395
-msgid "Total printed pages"
-msgstr "Gedruckte Seiten gesamt"
+#: inc/statediscovery.class.php:251 inc/taskjobstate.class.php:268
+#: inc/stateinventory.class.php:181
+msgid "Finished tasks"
+msgstr "Beendete Aufgaben"
 
-#: inc/printerlog.class.php:399
-msgid "Pages / day"
-msgstr "Seiten / Tag"
+#: inc/collect.class.php:59 inc/staticmisc.class.php:690
+msgid "Collect information"
+msgstr "Informationen sammeln"
 
-#: inc/printerlog.class.php:436
-msgid "Meter"
-msgstr "Zähler"
+#: inc/collect.class.php:148 inc/collect.class.php:196
+#: inc/deploycheck.class.php:55
+msgid "Registry"
+msgstr "Registry"
 
-#: inc/printerlog.class.php:458
-msgid "Check All"
-msgstr "Alle auswählen"
+#: inc/collect.class.php:149 inc/collect.class.php:214
+msgid "WMI"
+msgstr "WMI"
 
-#: inc/printerlog.class.php:461
-msgid "Uncheck All"
-msgstr "Auswahle entfernen"
+#: inc/collect.class.php:150 inc/collect.class.php:232
+#: inc/collect.class.php:247
+msgid "Find file"
+msgstr "Finde Datei"
 
-#: inc/printerlog.class.php:589 setup.php:384
-msgid "Printed page counter"
-msgstr "Seitenzähler"
+#: inc/collect.class.php:707
+msgid "Collect module has been disabled for this agent"
+msgstr "Das Sammel-Modul wurde deaktiviert für diesen Agenten"
 
-#: inc/printerlog.class.php:598
-msgid "Time unit"
-msgstr "Zeiteinheit"
+#: inc/collect.class.php:838
+msgid "Path not found"
+msgstr "Pfad nicht gefunden"
 
-#: inc/printerlog.class.php:603
-msgid "Year"
-msgstr "Jahr"
+#: inc/deploytask.class.php:114
+msgid "Order list"
+msgstr "Sortierung"
 
-#: inc/printerlog.class.php:615
-msgid "Display"
-msgstr "Anzeige"
+#: inc/deploytask.class.php:163
+msgid "Add task"
+msgstr "Aufgabe hinzufügen"
 
-#: inc/printerlog.class.php:617
-msgid "Total counter"
-msgstr "Seitenzähler"
+#: inc/deploytask.class.php:195
+msgid "Edit impossible, this task is active"
+msgstr "Änderung nicht möglich, Aufgabe ist aktiv"
 
-#: inc/printerlog.class.php:619
-msgid "pages per day"
-msgstr "Seiten/Tag"
+#: inc/deploytask.class.php:230
+msgid "This task is active. delete denied"
+msgstr "Die Aufgabe ist aktiv. Löschen fehlgeschlagen"
 
-#: inc/printerlog.class.php:634
-msgid "Printers to compare"
-msgstr "Drucker zum vergleichen"
+#: inc/deployaction.class.php:56
+msgid "Return code is equal to"
+msgstr "Rückgabewert ist gleich"
 
-#: inc/printerlog.class.php:642
-msgid "Add a printer"
-msgstr "Drucker hinzufügen"
+#: inc/deployaction.class.php:57
+msgid "Return code is not equal to"
+msgstr "Rückgabewert ist nicht gleich"
 
-#: inc/printerlog.class.php:658
-msgid "Remove a printer"
-msgstr "Drucker entfernen"
+#: inc/deployaction.class.php:58
+msgid "Command output contains"
+msgstr "Ausgabe des Kommandos enthält"
 
-#: inc/printerlog.class.php:789
-msgid "Too datas to display"
-msgstr "Zu viele Datenfür die Anzeige"
+#: inc/deployaction.class.php:59
+msgid "Command output does not contains"
+msgstr "Ausgabe des Kommandos enthält nicht"
 
-#: inc/profile.class.php:179 inc/menu.class.php:269
-msgid "General"
-msgstr "Allgemein"
+#: inc/deployaction.class.php:72
+msgid "Command"
+msgstr "Befehl"
 
-#: inc/profile.class.php:189
-msgid "Inventory"
-msgstr "Inventar"
+#: inc/deployaction.class.php:73
+msgid "Move"
+msgstr "Verschieben"
 
-#: inc/profile.class.php:194 inc/profile.class.php:236
-msgid "Software deployment"
-msgstr "Softwareverteilung"
+#: inc/deployaction.class.php:74
+msgid "Copy"
+msgstr "Kopieren"
 
-#: inc/profile.class.php:231 inc/profile.class.php:331
-msgid "Deploy packages on demand"
-msgstr "Ausrollpakete auf Anfrage"
+#: inc/deployaction.class.php:75
+msgid "Delete directory"
+msgstr "Lösche Verzeichnis"
 
-#: inc/profile.class.php:298
-msgid "Fields blacklist"
-msgstr "Felder in der schwarzen Liste"
+#: inc/deployaction.class.php:76
+msgid "Create directory"
+msgstr "Erstelle Verzeichnis"
 
-#: inc/profile.class.php:322
-msgid "Manage packages"
-msgstr "Verwalte Pakete"
+#: inc/deployaction.class.php:209
+msgid "Command to execute"
+msgstr "Auszuführender Befehl"
 
-#: inc/profile.class.php:328 inc/menu.class.php:465
-#: inc/deploymirror.class.php:83
-msgid "Mirror servers"
-msgstr "Spiegelserver"
+#: inc/deployaction.class.php:223
+msgid "return codes saved for this command"
+msgstr "Rückgabewerte dieses Befehls gespeichert"
 
-#: inc/profile.class.php:347 inc/iprange.class.php:126
-msgid "IP range configuration"
-msgstr "IP-Adressbereich Konfiguration"
+#: inc/deployaction.class.php:236 inc/deploycheck.class.php:275
+#: inc/taskjob.class.php:1371 inc/deployuserinteraction.class.php:285
+#: inc/deployfile.class.php:223
+msgid "drag"
+msgstr "ziehen"
 
-#: inc/profile.class.php:353 inc/menu.class.php:390
-msgid "Remote devices to inventory (VMware)"
-msgstr "Remote-Gerät inventarisieren (VMware)"
+#: inc/deployaction.class.php:251 inc/deploycheck.class.php:290
+#: inc/taskjob.class.php:1383 inc/deployuserinteraction.class.php:300
+#: inc/deployfile.class.php:237 inc/taskjobview.class.php:281
+msgid "Delete"
+msgstr "Löschen"
 
-#: inc/profile.class.php:362
-msgid "Network equipment SNMP"
-msgstr "SNMP-Discovery der Netzwerkgeräte"
+#: inc/deployaction.class.php:296 inc/deployaction.class.php:350
+msgid "Action label"
+msgstr "Aktion Beschriftung"
 
-#: inc/profile.class.php:365
-msgid "Printer SNMP"
-msgstr "SNMP-Discovery der Drucker"
+#: inc/deployaction.class.php:307
+msgid "From"
+msgstr "Von"
 
-#: inc/profile.class.php:368
-msgid "Unmanaged devices"
-msgstr "Unverwaltete Geräte"
+#: inc/deployaction.class.php:309
+msgid "To"
+msgstr "Nach"
 
-#: inc/profile.class.php:371
-msgid "computer XML manual import"
-msgstr "Computer manuell über XML importieren"
+#: inc/deployaction.class.php:318
+msgid "exec"
+msgstr "Ausführen"
 
-#: inc/profile.class.php:374
-msgid "Printers report"
-msgstr "Druckerbericht"
+#: inc/deployaction.class.php:332
+msgid "path"
+msgstr "Pfad"
 
-#: inc/profile.class.php:395
-msgid "Menu"
-msgstr "Menü"
+#: inc/deployaction.class.php:377
+msgid "Execution checks"
+msgstr "Ausführungsprüfung"
 
-#: inc/profile.class.php:401
-msgid "Agent remote control"
-msgstr "Fernverwaltung der Agents"
+#: inc/deployaction.class.php:432
+msgid "Number of output lines to retrieve"
+msgstr "Anzahl der Zeilen zum Abfragen"
 
-#: inc/profile.class.php:405
-msgid "Configuration"
-msgstr "Konfiguration"
+#: inc/collectrule.class.php:198
+msgid "Registry key"
+msgstr "Registry-Schlüssel"
 
-#: inc/profile.class.php:417 inc/menu.class.php:299
-msgid "Computer information"
-msgstr "Computer Information"
+#: inc/collectrule.class.php:202
+msgid "Registry value"
+msgstr "Wert in der Registrierungsdatenbank"
 
-#: inc/menu.class.php:163 inc/menu.class.php:172
-#: inc/deploypackage.class.php:158
+#: inc/collectrule.class.php:205
+msgid "WMI property"
+msgstr "WMI-Eigenschaft"
+
+#: inc/collectrule.class.php:209
+msgid "WMI value"
+msgstr "WMI-Wert"
+
+#: inc/collectrule.class.php:212
+msgid "File name"
+msgstr "Dateiname"
+
+#: inc/collectrule.class.php:215
+msgid "File path"
+msgstr "Dateipfad"
+
+#: inc/collectrule.class.php:218
+msgid "File size"
+msgstr "Dateigrösse"
+
+#: inc/collectrule.class.php:270
+msgid "Software version"
+msgstr "Software Version"
+
+#: inc/collect_wmi.class.php:53
+msgid "Found WMI"
+msgid_plural "Found WMIs"
+msgstr[0] "WMI's gefunden"
+msgstr[1] "WMI's gefunden"
+
+#: inc/collect_wmi.class.php:60 inc/collect_wmi_content.class.php:145
+msgid "Moniker"
+msgstr "Name"
+
+#: inc/collect_wmi.class.php:61 inc/collect_wmi.class.php:87
+#: inc/collect_wmi_content.class.php:146
+msgid "Class"
+msgstr "Klasse"
+
+#: inc/collect_wmi.class.php:62 inc/collect_wmi.class.php:93
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: inc/collect_wmi.class.php:79
+msgid "moniker"
+msgstr "Name"
+
+#: inc/staticmisc.class.php:65
+msgid "Computer Inventory"
+msgstr "Computerinventar"
+
+#: inc/staticmisc.class.php:73
+msgid "VMware host remote inventory"
+msgstr "VMware host, Remoteinventar"
+
+#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1065
+msgid "Package deploy"
+msgstr "Paket Bereitstellung"
+
+#: inc/staticmisc.class.php:101
+msgid "Collect data"
+msgstr "Sammel Daten"
+
+#: inc/staticmisc.class.php:372 inc/staticmisc.class.php:406
+#: inc/menu.class.php:322 inc/iprange.class.php:88 inc/iprange.class.php:91
+msgid "IP Ranges"
+msgstr "IP-Adressbereich"
+
+#: inc/staticmisc.class.php:475 inc/staticmisc.class.php:481
+#: inc/taskjob.class.php:1012
+msgid "Auto managenement dynamic of agents"
+msgstr "Dynamische Auto-Verwaltung des Agents"
+
+#: inc/deployuserinteractiontemplate.class.php:107
+msgid "Behavior"
+msgid_plural "Behaviors"
+msgstr[0] "Verhalten"
+msgstr[1] "Verhalten"
+
+#: inc/deployuserinteractiontemplate.class.php:162
+msgid "Windows system alert (WTS)"
+msgstr "Windows System-Meldung (WTS)"
+
+#: inc/deployuserinteractiontemplate.class.php:177
+msgid "OK"
+msgstr "OK"
+
+#: inc/deployuserinteractiontemplate.class.php:178
+msgid "OK (asynchronous)"
+msgstr "OK (asynchron)"
+
+#: inc/deployuserinteractiontemplate.class.php:179
+msgid "OK - Cancel"
+msgstr "OK - Abbrechen"
+
+#: inc/deployuserinteractiontemplate.class.php:180
+msgid "Yes - No"
+msgstr "Ja - Nein"
+
+#: inc/deployuserinteractiontemplate.class.php:181
+msgid "OK - Abort - Retry"
+msgstr "OK - Abbrechen - Wiederholen"
+
+#: inc/deployuserinteractiontemplate.class.php:182
+msgid "Retry - Cancel"
+msgstr "Wiederholen - Abbrechen"
+
+#: inc/deployuserinteractiontemplate.class.php:183
+msgid "Abort - Retry - Ignore"
+msgstr "Abbrechen - Wiederholen - Ignorieren"
+
+#: inc/deployuserinteractiontemplate.class.php:184
+msgid "Cancel - Try - Continue"
+msgstr "Abbrechen - Testen - Fortsetzen"
+
+#: inc/deployuserinteractiontemplate.class.php:185
+msgid "Yes - No - Cancel"
+msgstr "Ja - Nein - Abbrechen"
+
+#: inc/deployuserinteractiontemplate.class.php:211
+msgid "Question"
+msgstr "Frage"
+
+#: inc/deployuserinteractiontemplate.class.php:230
+msgid "Continue job with no user interaction"
+msgstr "Setze Vorgang ohne Benutzereingriff fort"
+
+#: inc/deployuserinteractiontemplate.class.php:231
+msgid "Retry job later"
+msgstr "Wiederhole Vorgang später"
+
+#: inc/deployuserinteractiontemplate.class.php:232
+#: inc/deploypackage.class.php:1503
+msgid "Cancel job"
+msgstr "Breche Aufgabe ab"
+
+#: inc/deployuserinteractiontemplate.class.php:459
+msgid "Button ok"
+msgstr "Button ok"
+
+#: inc/deployuserinteractiontemplate.class.php:460
+msgid "Button yes"
+msgstr "Button ja"
+
+#: inc/deployuserinteractiontemplate.class.php:461
+msgid "Button continue"
+msgstr "Button fortsetzen"
+
+#: inc/deployuserinteractiontemplate.class.php:462
+msgid "Button retry"
+msgstr "Button wiederholen"
+
+#: inc/deployuserinteractiontemplate.class.php:463
+msgid "Button try"
+msgstr "Button testen"
+
+#: inc/deployuserinteractiontemplate.class.php:464
+msgid "Button no"
+msgstr "Button nein"
+
+#: inc/deployuserinteractiontemplate.class.php:465
+msgid "Button cancel"
+msgstr "Button abbrechen"
+
+#: inc/deployuserinteractiontemplate.class.php:466
+msgid "Button abort"
+msgstr "Button abbrechen"
+
+#: inc/deployuserinteractiontemplate.class.php:467
+msgid "Button ignore"
+msgstr "Button ignorieren"
+
+#: inc/deployuserinteractiontemplate.class.php:468
+msgid "No active session"
+msgstr "Keine aktive Sitzung"
+
+#: inc/deployuserinteractiontemplate.class.php:469
+msgid "Alert timeout exceeded"
+msgstr "Alarm Zeitüberschreitung "
+
+#: inc/deployuserinteractiontemplate.class.php:470
+msgid "Several active sessions"
+msgstr "Mehrere aktive Sitzungen"
+
+#: inc/deployuserinteractiontemplate.class.php:578
+msgid "Behaviors"
+msgstr "Verhalten"
+
+#: inc/collect_registry.class.php:53
+msgid "Found entry"
+msgid_plural "Found entries"
+msgstr[0] "Gefundene Einträge"
+msgstr[1] "Gefundene Einträge"
+
+#: inc/collect_registry.class.php:72 inc/collect_registry.class.php:91
+msgid "Hive"
+msgstr "Hive"
+
+#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
+#: inc/collect_registry_content.class.php:167
+msgid "Path"
+msgstr "Pfad"
+
+#: inc/collect_registry.class.php:74 inc/collect_registry.class.php:108
+msgid "Key"
+msgstr "Schlüssel"
+
+#: inc/menu.class.php:154 inc/menu.class.php:167
+#: inc/deploypackage.class.php:148
 msgid "Import"
 msgstr "Import"
 
-#: inc/menu.class.php:167
+#: inc/menu.class.php:160
 msgid "Clean unused files"
 msgstr "Bereinige ungenutzte Dateien"
 
-#: inc/menu.class.php:216
-msgid ""
-"The server needs to know the URL the agents use to access the server. Please"
-" configure it in the General Configuration page."
-msgstr ""
-"Der Server muss die URL kennen, welche der Agent zum Verbinden mit dem "
-"Server nutzt. Bitte auf der Seite der Allgemeinen Konfiguration einrichten."
-
-#: inc/menu.class.php:228
-msgid "GLPI cron not running, see "
-msgstr "GLPI cron läuft nicht, siehe"
-
-#: inc/menu.class.php:229
-msgid "documentation"
-msgstr "Dokumentation"
-
-#: inc/menu.class.php:250
+#: inc/menu.class.php:202
 msgid "Agents management"
 msgstr "Agent-Verwaltung"
 
-#: inc/menu.class.php:262
+#: inc/menu.class.php:214
 msgid "General configuration"
 msgstr "Grundlegende Konfiguration"
 
-#: inc/menu.class.php:284
+#: inc/menu.class.php:235
 msgid "Monitoring / Logs"
 msgstr "Monitoring / Logs"
 
-#: inc/menu.class.php:291
+#: inc/menu.class.php:241
 msgid "Import agent XML file"
 msgstr "XML-Datei eines Agents importieren"
 
-#: inc/menu.class.php:311
+#: inc/menu.class.php:253 inc/timeslot.class.php:66 inc/timeslot.class.php:82
+#: inc/timeslotentry.class.php:82
+msgid "Time slot"
+msgstr "Zeitfenster"
+
+#: inc/menu.class.php:260
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: inc/menu.class.php:331
+#: inc/menu.class.php:270
+msgid "Equipment import and link rules"
+msgstr "Materialimport- und verknüpfungsregeln"
+
+#: inc/menu.class.php:278
 msgid "Asset skipped during import"
 msgstr "Inventar übersprungen während dem Import"
 
-#: inc/menu.class.php:339
+#: inc/menu.class.php:284
 msgid "Computer entity rules"
 msgstr "Entitätstregeln für Computer"
 
-#: inc/menu.class.php:346 inc/inventoryrulelocation.class.php:88
-#: inc/inventoryrulelocationcollection.class.php:85
-msgid "Location rules"
-msgstr "Standortregeln"
-
-#: inc/menu.class.php:368
+#: inc/menu.class.php:310
 msgid "Rules"
 msgstr "Regeln"
 
-#: inc/menu.class.php:418
+#: inc/menu.class.php:338 inc/iprange_snmpcredential.class.php:204
+msgid "SNMP credentials"
+msgstr "SNMP Zugangsdaten"
+
+#: inc/menu.class.php:354
 msgid "Discovery status"
 msgstr "Discovery-Status"
 
-#: inc/menu.class.php:426
+#: inc/menu.class.php:360
 msgid "Network inventory status"
 msgstr "Status Netzwerkinventar"
 
-#: inc/menu.class.php:436
+#: inc/menu.class.php:368
 msgid "SNMP models creation"
 msgstr "SNMP Modellerstellung"
 
-#: inc/menu.class.php:443
+#: inc/menu.class.php:376
 msgid "Networking"
 msgstr "Netzwerk"
 
-#: inc/menu.class.php:490
-msgid "Computer inv."
-msgstr "Computer inv."
+#: inc/menu.class.php:388 inc/config.class.php:236
+msgid "Package management"
+msgstr "Paketverwaltung"
 
-#: inc/menu.class.php:496
-msgid "SNMP inv."
-msgstr "SNMP inv."
+#: inc/menu.class.php:424
+msgid "SNMP inventory"
+msgstr ""
 
-#: inc/menu.class.php:502
+#: inc/menu.class.php:431
 msgid "Guide"
 msgstr "Assistent"
 
-#: inc/menu.class.php:530 inc/menu.class.php:601
-msgid "Statistics"
-msgstr "Statistiken"
-
-#: inc/menu.class.php:530
-msgid "Number of computer inventories of last hours"
-msgstr "Anzahl der Computer Inventarisierungen der letzten Stunde"
-
-#: inc/menu.class.php:542
+#: inc/menu.class.php:455
 msgid ""
-"This is the steps to configure FusionInventory plugin for computer inventory"
+"This is the steps to configure plugin for SNMP inventory (swicth, router, "
+"network printer)"
 msgstr ""
-"Dieser Schritt konfiguriert die FusionInventory Erweiterung für die Computer"
-" Inventarisierung"
 
-#: inc/menu.class.php:548
-msgid "Configure frequency of agent contact (and so each inventory)"
-msgstr ""
-"Konfiguriere Verarbeitungs-Frequenz der Agenten (und somit der Inventur)"
-
-#: inc/menu.class.php:553
-msgid "Configure inventory options"
-msgstr "Konfiguriere Inventur-Optionen"
-
-#: inc/menu.class.php:558
-msgid "Define rules for entity"
-msgstr "Legt Regel für Entität fest"
-
-#: inc/menu.class.php:563
-msgid "Define rules for location"
-msgstr "Definiert die Standortregel"
-
-#: inc/menu.class.php:568
-msgid ""
-"Define rules for import : merge and create new computer (CAUTION: same rules"
-" for SNMP inventory)"
-msgstr ""
-"Definiert Regeln für den Import: füge zusammen und erstelle neue Computer "
-"(ACHTUNG: die selben Regeln gelten für die SNMP Inventarisierung)"
-
-#: inc/menu.class.php:626
-msgid ""
-"This is the steps to configure FusionInventory plugin for SNMP inventory "
-"(swicth, router, network printer)"
-msgstr ""
-"Dies ist der Schritt die FusionInventory Erweiterung für die SNMP Inventur "
-"zu konfigurieren (Switch, Router, Netzwerkdrucker)"
-
-#: inc/menu.class.php:632
+#: inc/menu.class.php:461
 msgid "Configure SNMP credentials"
 msgstr "Konfiguriere die SNMP Zugangsdaten"
 
-#: inc/menu.class.php:637
+#: inc/menu.class.php:465
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
@@ -1957,46 +981,46 @@ msgstr ""
 "Definiert Regeln für den Import: füge zusammen und erstelle neue Geräte "
 "(ACHTUNG: die selben Regeln gelten für die Computer Inventarisierung)"
 
-#: inc/menu.class.php:642
+#: inc/menu.class.php:469
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr "`Network Discovery`, genutzt zum Erkennen von Geräten im Netzwerk"
 
-#: inc/menu.class.php:647
+#: inc/menu.class.php:474
 msgid "Define IP Ranges of your network + related SNMP credentials"
 msgstr ""
 "Legt den IP Adressbereich des Netzwerkes fest + die zugehörigen SNMP "
 "Zugangsdaten"
 
-#: inc/menu.class.php:652
+#: inc/menu.class.php:478
 msgid "Define an agent allowed to discover the network"
 msgstr "Lege einen Agenten fest zum Durchsuchen des Netzwerkes"
 
-#: inc/menu.class.php:657
+#: inc/menu.class.php:482
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
 msgstr ""
 "Erstelle eine neue Aufgabe mit dem Erkennungs-Modul und dem zuvor "
 "festgelegten Agenten"
 
-#: inc/menu.class.php:662
+#: inc/menu.class.php:486
 msgid "If you have devices not typed, import them from unmanaged devices"
 msgstr ""
 "Falls Geräte nicht kategorisiert wurden, importiere diese von den "
 "unverwalteten Geräten"
 
-#: inc/menu.class.php:667
+#: inc/menu.class.php:490
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr ""
 "`Network Inventory`, genutzt zum Abschließen der Inventur der erkannten "
 "Geräte"
 
-#: inc/menu.class.php:672
+#: inc/menu.class.php:495
 msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr ""
 "Lege einen Agenten fest, welcher berechtigt ist das Netzwerk über SNMP zu "
 "inventarisieren"
 
-#: inc/menu.class.php:677
+#: inc/menu.class.php:499
 msgid ""
 "Create a new Task with network inventory module and the agent defined "
 "previously"
@@ -2004,169 +1028,33 @@ msgstr ""
 "Erstelle eine neue Aufgabe mit dem Netzwer-Inventarisierungs-Modul und dem "
 "zuvor festgelegten Agenten "
 
-#: inc/menu.class.php:808
-msgid "FusionInventory computers"
-msgstr "FusionInventory Computer"
+#: inc/display.class.php:168
+msgid "Progress"
+msgstr "Fortschritt"
 
-#: inc/menu.class.php:813
-msgid "Other computers"
-msgstr "Andere Computer"
-
-#: inc/menu.class.php:851
-msgid "Network equipments"
-msgstr "Netzwerk-Gerät"
-
-#: inc/menu.class.php:856
-msgid "Printers"
-msgstr "Drucker"
-
-#: inc/menu.class.php:890 inc/menu.class.php:919
-msgid "Linked with a device"
-msgstr "Verbunden mit einem Gerät"
-
-#: inc/menu.class.php:895
-msgid "SNMP switch network ports not linked"
-msgstr "Nicht verbundene SNMP Switch-Ports"
-
-#: inc/menu.class.php:924
-msgid "Not linked"
-msgstr "Nicht verbunden"
-
-#: inc/menu.class.php:951
-msgid "Prepared and waiting"
-msgstr "Vorbereitet und wartend"
-
-#: inc/menu.class.php:985
-msgid "Automatic inventory vs manually added"
-msgstr "Automatische Inventur vs. manuell hinzugefügt"
-
-#: inc/menu.class.php:987
-msgid "Computer inventories in the last hours"
-msgstr "Computer Inventuren in der letzten Stunde"
-
-#: inc/menu.class.php:988
-msgid "Deployment"
-msgstr "Bereitstellung"
-
-#: inc/menu.class.php:989
-msgid "Network inventory by SNMP"
-msgstr "Netzwerk Inventarisierung über SNMP"
-
-#: inc/menu.class.php:990
-msgid "Ports on network equipments (inventoried by SNMP)"
-msgstr "Ports der Netzwerkgeräte (inventarisiert durch SNMP)"
-
-#: inc/menu.class.php:991
-msgid "Ports on all network equipments"
-msgstr "Ports an allen Netzwergeräten"
-
-#: inc/inventorycomputerwebservice.class.php:82
-msgid "Computer injected into GLPI"
-msgstr "Computer wurde in GLPI importiert"
-
-#: inc/deploypackage.class.php:161
-msgid "Export"
-msgstr "Export"
-
-#: inc/deploypackage.class.php:277
-msgid "Modification Denied"
-msgstr "Änderung verweigert"
-
-#: inc/deploypackage.class.php:280
-msgid "The following task is running with this package"
-msgid_plural "The following tasks are running with this package"
-msgstr[0] "Die folgenden Aufgaben werden mit diesem Paket ausgeführt"
-msgstr[1] "Die folgenden Aufgaben werden mit diesem Paket ausgeführt"
-
-#: inc/deploypackage.class.php:383 inc/deploypackage.class.php:499
-msgid "Enable deploy on demand for the following group"
-msgstr "Aktiviere die Verteilung über eine Aufgabe für die folgende Gruppe"
-
-#: inc/deploypackage.class.php:521
-msgid "Audits"
-msgstr "Revidiert"
-
-#: inc/deploypackage.class.php:522
-msgid "Files"
-msgstr "Dateien"
-
-#: inc/deploypackage.class.php:524
-msgid "User interactions"
-msgstr "Benutzer-Interaktionen"
-
-#: inc/deploypackage.class.php:668
-msgid "JSON package representation"
-msgstr "JSON Paket Darstellung"
-
-#: inc/deploypackage.class.php:786
-msgid "Package exported in"
-msgstr "Paket exportiert in"
-
-#: inc/deploypackage.class.php:857
-msgid "Packages to import"
-msgstr "Pakete zum Importieren"
-
-#: inc/deploypackage.class.php:1014 inc/deploypackage.class.php:1019
-msgid "Target for deploy on demand"
-msgid_plural "Targets for deploy on demand"
-msgstr[0] "Ziele für den Ausrollvorgang auf Anfrage"
-msgstr[1] "Ziele für den Ausrollvorgang auf Anfrage"
-
-#: inc/deploypackage.class.php:1100
-msgid "Add a target for self-service"
-msgstr "Füge ein Ziel für Selbstbedienung hinzu"
-
-#: inc/deploypackage.class.php:1415
-msgid "Restart job"
-msgstr "Starte Aufgabe neu"
-
-#: inc/deploypackage.class.php:1424
-#: inc/deployuserinteractiontemplate.class.php:279
-msgid "Cancel job"
-msgstr "Breche Aufgabe ab"
-
-#: inc/deploypackage.class.php:1431
-msgid "refresh job"
-msgstr "Wiederhole Aufgabe"
-
-#: inc/deploypackage.class.php:1578
-msgid "Select packages you want install"
-msgstr "Wähle das Paket zur Installation aus"
-
-#: inc/deploypackage.class.php:1586
-msgid "Prepare for install"
-msgstr "Zur Installation vorbereiten"
-
-#: inc/deploypackage.class.php:1590
-msgid "I'm on this computer: local wakeup"
-msgstr "Ich bin an diesem Computer: lokales Starten"
-
-#: inc/deploypackage.class.php:1591
-msgid "I'm not on this computer: wakeup from the server"
-msgstr "Ich bin nicht an diesem Computer: Starten vom Server"
-
-#: inc/deploypackage.class.php:1592
-msgid "Don't wakeup"
-msgstr "Nicht starten"
-
-#: inc/deploypackage.class.php:1605
-msgid "No packages available to install"
-msgstr "Es sind keine Pakete zur Installation bereit"
-
-#: inc/taskjoblog.class.php:111 inc/taskjoblog.class.php:566
-#: inc/taskjoblog.class.php:665
+#: inc/taskjoblog.class.php:99 inc/taskjoblog.class.php:560
+#: inc/taskjoblog.class.php:661
 msgid "Ok"
 msgstr "OK"
 
-#: inc/taskjoblog.class.php:113 inc/taskjoblog.class.php:582
+#: inc/taskjoblog.class.php:101 inc/taskjoblog.class.php:576
 msgid "Info"
 msgstr "Info"
 
-#: inc/taskjoblog.class.php:413
+#: inc/taskjoblog.class.php:359 inc/taskjob.class.php:1406
+msgid "Force the end"
+msgstr "Beendigung erzwingen"
+
+#: inc/taskjoblog.class.php:407
 msgid "Process number"
 msgstr "Prozessnummer"
 
-#: inc/taskjoblog.class.php:666
+#: inc/taskjoblog.class.php:445 inc/taskjob.class.php:957
+#: inc/taskjob.class.php:1336
+msgid "Definition"
+msgstr "Definition"
+
+#: inc/taskjoblog.class.php:662
 msgid "Error / rescheduled"
 msgstr "Fehler / Erneuter Versuch geplant"
 
@@ -2206,1483 +1094,868 @@ msgstr "Verbindungsfehler zum Agent, starten des Agenten nicht möglich"
 msgid "Agent stopped/crashed"
 msgstr "Agent gestoppt / abgestürzt"
 
-#: inc/collect_wmi.class.php:65
-msgid "Found WMI"
-msgid_plural "Found WMIs"
-msgstr[0] "WMI's gefunden"
-msgstr[1] "WMI's gefunden"
+#: inc/taskjoblog.class.php:773
+msgid "Import denied"
+msgstr "Import nicht erlaubt"
 
-#: inc/collect_wmi.class.php:73 inc/collect_wmi.class.php:102
-msgid "Properties"
-msgstr "Eigenschaften"
+#: inc/iprange_snmpcredential.class.php:97
+msgid "Associated SNMP credentials"
+msgstr "Verknüpfte SNMP Zugangsdaten"
 
-#: inc/collect_wmi.class.php:88
-msgid "moniker"
-msgstr "Name"
+#: inc/iprange_snmpcredential.class.php:207
+msgid "Version"
+msgstr "Version"
 
-#: inc/networkportlog.class.php:68
-msgid "FusionInventory historical"
-msgstr "FusionInventory Verlauf"
+#: inc/iprange_snmpcredential.class.php:210
+msgid "By order of priority"
+msgstr "Geordnet nach der Priorität"
 
-#: inc/networkportlog.class.php:134
-msgid "List of fields to history"
-msgstr "Feldliste, die in den Verlauf verschoben werden"
+#: inc/deploycheck.class.php:56
+msgid "Registry key exists"
+msgstr "Registry-Key ist vorhanden"
 
-#: inc/networkportlog.class.php:232
-msgid "Clean history"
-msgstr "Verlauf löschen"
+#: inc/deploycheck.class.php:57
+msgid "Registry value exists"
+msgstr "Registry-Wert existiert"
 
-#: inc/networkportlog.class.php:494 inc/networkportlog.class.php:515
-#: inc/networkportconnectionlog.class.php:148
-#: inc/networkportconnectionlog.class.php:174
-msgid "on"
-msgstr "ein"
+#: inc/deploycheck.class.php:58
+msgid "Registry key missing"
+msgstr "Registrierungsschlüssel fehlt"
 
-#: inc/deployuserinteraction.class.php:98
+#: inc/deploycheck.class.php:59
+msgid "Registry value missing"
+msgstr "Registry-Wert fehlt"
+
+#: inc/deploycheck.class.php:60
+msgid "Registry value equals to"
+msgstr "Registry-Wert ist gleich zu"
+
+#: inc/deploycheck.class.php:61
+msgid "Registry value not equals to"
+msgstr "Registry-Wert ist nicht gleich zu"
+
+#: inc/deploycheck.class.php:62
+msgid "Type of registry value equals to"
+msgstr "Art des Registry-Wert ist gleich zu"
+
+#: inc/deploycheck.class.php:65
+msgid "File exists"
+msgstr "Datei existiert"
+
+#: inc/deploycheck.class.php:66
+msgid "File is missing"
+msgstr "Datei fehlt"
+
+#: inc/deploycheck.class.php:67
+msgid "File size is greater than"
+msgstr "Datei ist grösser als"
+
+#: inc/deploycheck.class.php:68
+msgid "File size is equal to"
+msgstr "Dateigrösse gleich"
+
+#: inc/deploycheck.class.php:69
+msgid "File size is lower than"
+msgstr "Datei ist kleiner als"
+
+#: inc/deploycheck.class.php:70
+msgid "SHA-512 hash value matches"
+msgstr "SHA-512 Hash-Wert stimmt"
+
+#: inc/deploycheck.class.php:71
+msgid "SHA-512 hash value mismatch"
+msgstr "SHA-512 Hash-Wert stimmt nicht"
+
+#: inc/deploycheck.class.php:74
+msgid "Directory exists"
+msgstr "Verzeichnis existiert"
+
+#: inc/deploycheck.class.php:75
+msgid "Directory is missing"
+msgstr "Verzeichnis fehlt"
+
+#: inc/deploycheck.class.php:78
+msgid "Free space is greater than"
+msgstr "Freier Speicherplatz grösser als"
+
+#: inc/deploycheck.class.php:125
+msgid "continue"
+msgstr "fortsetzen"
+
+#: inc/deploycheck.class.php:127
+msgid "passed"
+msgstr "akzeptiert"
+
+#: inc/deploycheck.class.php:129
+msgid "otherwise"
+msgstr "ansonsten"
+
+#: inc/deploycheck.class.php:309 inc/deploycheck.class.php:466
+msgid "Audit label"
+msgstr "Revidiert Beschriftung"
+
+#: inc/deploycheck.class.php:352
+msgid "Path to the key"
+msgstr "Pfad zum Schlüssel"
+
+#: inc/deploycheck.class.php:360 inc/deploycheck.class.php:368
+#: inc/deploycheck.class.php:379
+msgid "Path to the value"
+msgstr "Pfad zum Wert"
+
+#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
+#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
+#: inc/collect_registry_content.class.php:168
+#: inc/collect_registry_content.class.php:215
+#: inc/collect_wmi_content.class.php:148 inc/collect_wmi_content.class.php:199
+msgid "Value"
+msgstr "Wert"
+
+#: inc/deploycheck.class.php:380
+msgid "Type of value"
+msgstr "Art des Wertes"
+
+#: inc/deploycheck.class.php:388 inc/deploycheck.class.php:401
+#: inc/deploycheck.class.php:408 inc/collect_file.class.php:86
+#: inc/collect_file.class.php:192 inc/deployfile.class.php:287
+msgid "File"
+msgstr "Datei"
+
+#: inc/deploycheck.class.php:394
+msgid "Directory"
+msgstr "Verzeichnis"
+
+#: inc/deploycheck.class.php:414
+msgid "Disk or directory"
+msgstr "Festplatte oder Ordner"
+
+#: inc/deploycheck.class.php:525
+msgid "Unit"
+msgstr "EInheit"
+
+#: inc/deploycheck.class.php:548
+msgid "If not successful"
+msgstr "Falls nicht erfolgreich"
+
+#: inc/deploycheck.class.php:579
+msgid "abort job"
+msgstr "breche Aufgabe ab"
+
+#: inc/deploycheck.class.php:580
+msgid "skip job"
+msgstr "Überspringe die Aufgabe"
+
+#: inc/deploycheck.class.php:581
+msgid "start job now"
+msgstr ""
+
+#: inc/deploycheck.class.php:582
+msgid "report info"
+msgstr "JSON Paket-Angabe"
+
+#: inc/deploycheck.class.php:583
+msgid "report warning"
+msgstr "Warnhinweis zum Bericht"
+
+#: inc/taskjob.class.php:955
+msgid "Scheduled date"
+msgstr "Geplanter Zeitpunkt"
+
+#: inc/taskjob.class.php:956
+msgid "Periodicity"
+msgstr "Häufigkeit"
+
+#: inc/taskjob.class.php:958 inc/taskjob.class.php:1353
+msgid "Action"
+msgstr "Aktion"
+
+#: inc/taskjob.class.php:975 inc/deployfile.class.php:175
+#: inc/deployfile.class.php:340
+msgid "Minute(s)"
+msgstr "Minute(n)"
+
+#: inc/taskjob.class.php:980
+msgid "hour(s)"
+msgstr "Stunde(n)"
+
+#: inc/taskjob.class.php:985
+msgid "day(s)"
+msgstr "Tag(e)"
+
+#: inc/taskjob.class.php:1014
+msgid "Auto managenement dynamic of agents (same subnet)"
+msgstr "Dynamische Auto-Verwaltung des Agents (gleiches Subnetz)"
+
+#: inc/deployuserinteraction.class.php:87
 msgid "User interaction"
 msgid_plural "User interactions"
 msgstr[0] "Benutzer Aktionen"
 msgstr[1] "Benutzer Aktionen"
 
-#: inc/deployuserinteraction.class.php:109
+#: inc/deployuserinteraction.class.php:102
 msgid "Before download"
 msgstr "Vor Download"
 
-#: inc/deployuserinteraction.class.php:110
+#: inc/deployuserinteraction.class.php:103
 msgid "After download"
 msgstr "Nach Download"
 
-#: inc/deployuserinteraction.class.php:111
+#: inc/deployuserinteraction.class.php:104
 msgid "After actions"
 msgstr "Nach Aktionen"
 
-#: inc/deployuserinteraction.class.php:112
+#: inc/deployuserinteraction.class.php:105
 msgid "On download failure"
 msgstr "Bei Download-Fehler"
 
-#: inc/deployuserinteraction.class.php:113
+#: inc/deployuserinteraction.class.php:106
 msgid "On actions failure"
 msgstr "Bei Aktions-Fehler"
 
-#: inc/deployuserinteraction.class.php:214
+#: inc/deployuserinteraction.class.php:212
 msgid "Interaction label"
 msgstr "Benutzeraktion Beschriftung"
 
-#: inc/deployuserinteraction.class.php:418
+#: inc/deployuserinteraction.class.php:432
 #, php-format
 msgid "Job cancelled by the user %1$s"
 msgstr "Aufgabe wurde abgebrochen von dem Benutzer %1$s"
 
-#: inc/deployuserinteraction.class.php:423
+#: inc/deployuserinteraction.class.php:439
 #, php-format
 msgid "User %1$s agreed to continue the job"
 msgstr "Benutzer %1$s hat den Vorgang fortgesetzt"
 
-#: inc/deployuserinteraction.class.php:428
+#: inc/deployuserinteraction.class.php:446
 #, php-format
 msgid "Job postponed by the user %1$s"
 msgstr "Aufgabe verschoben durch den Benutzer %1$s"
 
-#: inc/deployuserinteraction.class.php:433
+#: inc/deployuserinteraction.class.php:452
 msgid "Bad event sent to the agent"
 msgstr "Ungültige Anforderung zum Agenten gesendet"
 
-#: inc/deployuserinteraction.class.php:452
+#: inc/deployuserinteraction.class.php:471
 msgid "Alert displayed, no input required"
 msgstr "Warnung angezeigt, keine Eingabe erforderlich"
 
-#: inc/deployuserinteraction.class.php:458
+#: inc/deployuserinteraction.class.php:477
 msgid "Retry"
 msgstr "Wiederholen"
 
-#: inc/deployuserinteraction.class.php:464
+#: inc/deployuserinteraction.class.php:483
 msgid "Abort"
 msgstr "Abbrechen"
 
-#: inc/deployuserinteraction.class.php:467
+#: inc/deployuserinteraction.class.php:486
 msgid "Ignore"
 msgstr "Ignorieren"
 
-#: inc/deployuserinteraction.class.php:473
+#: inc/deployuserinteraction.class.php:492
 msgid "Alert duration exceeded"
 msgstr "Alarm Zeitüberschreitung "
 
-#: inc/deployuserinteraction.class.php:476
+#: inc/deployuserinteraction.class.php:495
 msgid "No user connected"
 msgstr "Kein Benutzer ist verbunden"
 
-#: inc/deployuserinteraction.class.php:479
+#: inc/deployuserinteraction.class.php:498
 msgid "Multiple users connected"
 msgstr "Verschiedene Benutzer sind verbunden"
 
-#: inc/collect_registry_content.class.php:83
-msgid "Windows registry content"
-msgstr "Windows Registry Kommentar"
+#: inc/collect_file.class.php:53
+msgid "Found file"
+msgid_plural "Found files"
+msgstr[0] "Gefundene Dateien"
+msgstr[1] "Gefundene Dateien"
 
-#: inc/collect_registry_content.class.php:174
-#: inc/collect_registry_content.class.php:220
-msgid "Data"
-msgstr "Daten"
+#: inc/collect_file.class.php:61 inc/collect_file.class.php:108
+msgid "Limit"
+msgstr "Limite"
 
-#: inc/inventoryruleimport.class.php:119 inc/inventoryruleimport.class.php:144
-#: inc/inventoryruleimport.class.php:146 inc/inventoryruleimport.class.php:148
-#: inc/inventoryruleimport.class.php:150 inc/inventoryruleimport.class.php:160
-#: inc/inventoryruleimport.class.php:165 inc/inventoryruleimport.class.php:168
-#: inc/inventoryruleimport.class.php:170 inc/inventoryruleimport.class.php:173
-#: inc/inventoryruleimport.class.php:176 inc/inventoryruleimport.class.php:186
-msgid "Assets to import"
-msgstr "Inventar zum Importieren"
+#: inc/collect_file.class.php:62 inc/collect_file.class.php:88
+#: inc/collect_file.class.php:193
+msgid "Folder"
+msgstr "Ordner"
 
-#: inc/inventoryruleimport.class.php:120
-msgid "Destination of equipment entity"
-msgstr "Ziel-Entität des Materials"
+#: inc/collect_file.class.php:63
+msgid "Recursive"
+msgstr "Rekursiv"
 
-#: inc/inventoryruleimport.class.php:136
-msgid "Search GLPI equipment with the status"
-msgstr "Durchsuche GLPI nach Material mit dem Status"
+#: inc/collect_file.class.php:64 inc/collect_file.class.php:141
+msgid "Regex"
+msgstr "Regulärer Ausdruck"
 
-#: inc/inventoryruleimport.class.php:162
-msgid "agent"
-msgstr "Agent"
+#: inc/collect_file.class.php:66 inc/collect_file.class.php:162
+msgid "Checksum SHA512"
+msgstr "SHA512-Prüfsumme"
 
-#: inc/inventoryruleimport.class.php:163 inc/agent.class.php:140
-#: inc/agent.class.php:420
-msgid "Device_id"
-msgstr "Device ID"
+#: inc/collect_file.class.php:67 inc/collect_file.class.php:168
+msgid "Checksum SHA2"
+msgstr "SHA2-Prüfsumme"
 
-#: inc/inventoryruleimport.class.php:194
-msgid "Restrict search in defined entity"
-msgstr "Eingeschränkte Suche in festgelegter Entität"
+#: inc/collect_file.class.php:68
+msgid "Name"
+msgstr "Name"
 
-#: inc/inventoryruleimport.class.php:219
-msgid "FusionInventory link"
-msgstr "FusionInventory-Verbindung"
+#: inc/collect_file.class.php:69
+msgid "Iname"
+msgstr "Name"
 
-#: inc/inventoryruleimport.class.php:222
-msgid "To be unaware of import (with log)"
-msgstr "Um den Import nicht zu kennen (mit Protokoll)"
+#: inc/collect_file.class.php:70 inc/collect_file.class.php:188
+msgid "Type"
+msgstr "Typ"
 
-#: inc/inventoryruleimport.class.php:236
-msgid "Link"
-msgstr "Verknüpfung"
+#: inc/collect_file.class.php:120
+msgid "Filter"
+msgid_plural "Filters"
+msgstr[0] "Filter"
+msgstr[1] "Filter"
 
-#: inc/inventoryruleimport.class.php:237
-msgid "Import denied (no log)"
-msgstr "Import abgebrochen (kein Log)"
+#: inc/collect_file.class.php:126
+msgid "Base folder"
+msgstr "Basisordner"
 
-#: inc/inventoryruleimport.class.php:268
-msgid "equal"
-msgstr "gleich"
+#: inc/collect_file.class.php:132
+msgid "Folder recursive"
+msgstr "Ordner rekursiv"
 
-#: inc/inventoryruleimport.class.php:269
-msgid "empty"
-msgstr "leer"
+#: inc/collect_file.class.php:151 inc/collect_file.class.php:181
+msgid "Disabled"
+msgstr "Deaktiviert"
 
-#: inc/inventoryruleimport.class.php:1000
-#: inc/inventoryruleimport.class.php:1091
-#: inc/inventoryrulelocation.class.php:406
-msgid "No itemtype defined"
-msgstr "Keine Art des Elements definiert"
+#: inc/collect_file.class.php:177
+msgid "Filename"
+msgstr "Dateiname"
 
-#: inc/networkporttype.class.php:411
-msgid "Ports types to import (for network equipments)"
-msgstr "Port-Arten zum importieren (für Netzwerkgeräte)"
+#: inc/collect_file.class.php:182
+msgid "Non sentitive case"
+msgstr "Gross-/Kleinschreibung nicht beachten"
 
-#: inc/taskjobview.class.php:82
-msgid "Jobs configuration"
-msgstr "Aufgaben-Einstellungen"
+#: inc/collect_file.class.php:183
+msgid "Sentitive case"
+msgstr "Gross-/Kleinschreibung beachten"
 
-#: inc/taskjobview.class.php:193
-msgid "Add a job"
-msgstr "Füge eine Aufgabe hinzu"
-
-#: inc/taskjobview.class.php:258
-msgid ""
-"Several jobs in the same task is not anymore supported because of unexpected side-effects. \n"
-"         Please consider modifying this task to avoid unexpected results."
+#: inc/taskjobstate.class.php:121
+msgid "Tasks / Groups"
 msgstr ""
-"Einige Vorgänge in der selben Aufgabe werden nicht mehr unterstützt wegen unerwünschten Nebeneffekten. \n"
-"Bitte passe die Aufgabe an um unerwünschte Folgen zu vermeiden."
 
-#: inc/taskjobview.class.php:355
-msgid "Actor Type"
-msgstr "Art des Beteiligten"
-
-#: inc/taskjobview.class.php:359
-msgid "Target Type"
-msgstr "Ziel-Art"
-
-#: inc/taskjobview.class.php:400
-msgid "Actor Item"
-msgstr "Beteiligter"
-
-#: inc/taskjobview.class.php:404
-msgid "Target Item"
-msgstr "Ziel-Element"
-
-#: inc/taskjobview.class.php:553 inc/taskjobview.class.php:556
-msgid "New action"
-msgstr "Neue Aufgabe"
-
-#: inc/taskjobview.class.php:584
-msgid "Module method"
-msgstr "Modul-Methode"
-
-#: inc/taskjobview.class.php:603 inc/taskjobview.class.php:633
-msgid "Targets"
-msgstr "Ziele"
-
-#: inc/taskjobview.class.php:608
-msgid "The items that should be applied for this job."
-msgstr "Die für diese Aufgabe zu verwendenden Elemente."
-
-#: inc/taskjobview.class.php:614 inc/taskjobview.class.php:655
-msgid "Actors"
-msgstr "Beteiligte"
-
-#: inc/taskjobview.class.php:618
-msgid "The items that should carry out those targets."
-msgstr "Die Elemente, die die definiereten Ziele ausführen."
-
-#: inc/taskjobview.class.php:641 inc/taskjobview.class.php:663
-msgid "Clear list"
-msgstr "Bereinige die Liste"
-
-#: inc/taskjobview.class.php:646 inc/taskjobview.class.php:668
-msgid "Delete selected items"
-msgstr "Lösche ausgewähltes Element"
-
-#: inc/taskjobview.class.php:690
-msgid "Cancel modifications"
-msgstr "Setze Änderung zurück"
-
-#: inc/taskjobview.class.php:697
-msgid "Purge"
-msgstr "Löschen"
-
-#: inc/taskjobview.class.php:699
-msgid "Confirm the final deletion ?"
-msgstr "Definitiv löschen?"
-
-#: inc/networkport.class.php:135
-msgid "Last change"
-msgstr "Letzte Änderung"
-
-#: inc/networkport.class.php:142
-msgid "Number of bytes received / Number of bytes sent"
-msgstr "Anzahl an Bytes empfangen / Anzahl an Bytes gesendet"
-
-#: inc/networkport.class.php:149
-msgid "Number of input errors / Number of errors in reception"
-msgstr "Anzahl der Eingabefehler / Anzahl der Empfangsfehler"
-
-#: inc/mapping.class.php:126
-msgid "networking > location"
-msgstr "Netwerk > Standort"
-
-#: inc/mapping.class.php:129
-msgid "networking > firmware"
-msgstr "Netzwerk > Firmware"
-
-#: inc/mapping.class.php:132
-msgid "networking > uptime"
-msgstr "Netzwerk > Uptime"
-
-#: inc/mapping.class.php:135
-msgid "networking > port > mtu"
-msgstr "Netzwerk > Port > MTU"
-
-#: inc/mapping.class.php:138
-msgid "networking > port > speed"
-msgstr "Netzwerk > Port > Geschwindigkeit"
-
-#: inc/mapping.class.php:141
-msgid "networking > port > internal status"
-msgstr "Netzwerk > Port > Interner Zustand"
-
-#: inc/mapping.class.php:144
-msgid "networking > ports > last change"
-msgstr "Netzwerk > Ports > Letzte Änderungen"
-
-#: inc/mapping.class.php:147
-msgid "networking > port > number of bytes entered"
-msgstr "Netzwerk > Port > Anzahl Bytes eingehend"
-
-#: inc/mapping.class.php:150
-msgid "networking > port > number of bytes out"
-msgstr "Netzwerk > Port > Anzahl Bytes ausgehend"
-
-#: inc/mapping.class.php:153
-msgid "networking > port > number of input errors"
-msgstr "Netzwerk > Port > Anzahl Fehler eingehend"
-
-#: inc/mapping.class.php:156
-msgid "networking > port > number of errors output"
-msgstr "Netzwerk > Port > Anzahl Fehler ausgehend"
-
-#: inc/mapping.class.php:159
-msgid "networking > CPU usage"
-msgstr "Netzwerk > CPU-Auslastung"
-
-#: inc/mapping.class.php:162
-msgid "networking > serial number"
-msgstr "Netzwerk > Seriennummer"
-
-#: inc/mapping.class.php:165
-msgid "networking > port > connection status"
-msgstr "Netzwerk > Port > Verbindungszustand"
-
-#: inc/mapping.class.php:168
-msgid "networking > port > MAC address"
-msgstr "Netzwerk > Port > MAC-Adresse"
-
-#: inc/mapping.class.php:171
-msgid "networking > port > name"
-msgstr "Netzwerk > Port > Name"
-
-#: inc/mapping.class.php:174
-msgid "networking > model"
-msgstr "Netzwerk > Modell"
-
-#: inc/mapping.class.php:177
-msgid "networking > port > type"
-msgstr "Netzwerk > Port > Typ"
-
-#: inc/mapping.class.php:180
-msgid "networking > VLAN"
-msgstr "Netzwerk > VLAN"
-
-#: inc/mapping.class.php:183
-msgid "networking > name"
-msgstr "Netzwerk > Name"
-
-#: inc/mapping.class.php:186
-msgid "networking > total memory"
-msgstr "Netzwerk > Gesamter Speicher"
-
-#: inc/mapping.class.php:189
-msgid "networking > free memory"
-msgstr "Netzwerk > Freier Speicher"
-
-#: inc/mapping.class.php:192
-msgid "networking > port > port description"
-msgstr "Netzwerk > Port > Portbezeichnung"
-
-#: inc/mapping.class.php:195
-msgid "printer > name"
-msgstr "Drucker > Name"
-
-#: inc/mapping.class.php:198
-msgid "printer > model"
-msgstr "Drucker > Modell"
-
-#: inc/mapping.class.php:201
-msgid "printer > total memory"
-msgstr "Drucker > Gesamter Speicher"
-
-#: inc/mapping.class.php:204
-msgid "printer > serial number"
-msgstr "Drucker > Seriennummer"
-
-#: inc/mapping.class.php:207
-msgid "printer > meter > total number of printed pages"
-msgstr "Drucker > Zähler > Anzahl gedruckte Seiten"
-
-#: inc/mapping.class.php:210
-msgid "printer > meter > number of printed black and white pages"
-msgstr "Drucker > Zähler > Anzahl gedruckte Seiten (S/W)"
-
-#: inc/mapping.class.php:213
-msgid "printer > meter > number of printed color pages"
-msgstr "Drucker > Zähler > Anzahl gedruckte Seiten (Farbe)"
-
-#: inc/mapping.class.php:216
-msgid "printer > meter > number of printed monochrome pages"
-msgstr "Drucker > Zähler > Anzahl gedruckte Seiten (Monochrom)"
-
-#: inc/mapping.class.php:219
-msgid "networking > port > duplex type"
-msgstr "Netzwerk > Port > Duplex-Modus"
-
-#: inc/mapping.class.php:222
-msgid "printer > consumables > black cartridge (%)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Schwarz (%)"
-
-#: inc/mapping.class.php:225
-msgid "printer > consumables > photo black cartridge (%)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Kontrastschwarz (%)"
-
-#: inc/mapping.class.php:228
-msgid "printer > consumables > cyan cartridge (%)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Cyan (%)"
-
-#: inc/mapping.class.php:231
-msgid "printer > consumables > yellow cartridge (%)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Yellow (%)"
-
-#: inc/mapping.class.php:234
-msgid "printer > consumables > magenta cartridge (%)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Magenta (%)"
-
-#: inc/mapping.class.php:237
-msgid "printer > consumables > light cyan cartridge (%)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Photo-Cyan (%)"
-
-#: inc/mapping.class.php:240
-msgid "printer > consumables > light magenta cartridge (%)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Photo-Magenta (%)"
-
-#: inc/mapping.class.php:243
-msgid "printer > consumables > photoconductor (%)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter (%)"
-
-#: inc/mapping.class.php:246
-msgid "printer > consumables > black photoconductor (%)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Schwarz (%)"
-
-#: inc/mapping.class.php:249
-msgid "printer > consumables > color photoconductor (%)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Farbe (%)"
-
-#: inc/mapping.class.php:252
-msgid "printer > consumables > cyan photoconductor (%)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Cyan (%)"
-
-#: inc/mapping.class.php:255
-msgid "printer > consumables > yellow photoconductor (%)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Yellow (%)"
-
-#: inc/mapping.class.php:258
-msgid "printer > consumables > magenta photoconductor (%)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Magenta (%)"
-
-#: inc/mapping.class.php:261
-msgid "printer > consumables > black transfer unit (%)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Schwarz (%)"
-
-#: inc/mapping.class.php:264
-msgid "printer > consumables > cyan transfer unit (%)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Cyan (%)"
-
-#: inc/mapping.class.php:267
-msgid "printer > consumables > yellow transfer unit (%)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Yellow (%)"
-
-#: inc/mapping.class.php:270
-msgid "printer > consumables > magenta transfer unit (%)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Magenta (%)"
-
-#: inc/mapping.class.php:273
-msgid "printer > consumables > waste bin (%)"
-msgstr "Drucker > Verbrauchsmaterial > Abfalleinheit (%)"
-
-#: inc/mapping.class.php:276
-msgid "printer > consumables > four (%)"
-msgstr "Drucker > Verbrauchsmaterial > Fixiereinheit (%)"
-
-#: inc/mapping.class.php:279
-msgid "printer > consumables > cleaning module (%)"
-msgstr "Drucker > Verbrauchsmaterial > Reinigungsmodul (%)"
-
-#: inc/mapping.class.php:282
-msgid "printer > meter > number of printed duplex pages"
-msgstr "Drucker > Zähler > Anzahl der gedruckten Duplex Seiten"
-
-#: inc/mapping.class.php:285
-msgid "printer > meter > nomber of scanned pages"
-msgstr "Drucker > Zähler > Anzahl der gescannten Seiten"
-
-#: inc/mapping.class.php:288
-msgid "printer > location"
-msgstr "Drucker > Standort"
-
-#: inc/mapping.class.php:291
-msgid "printer > port > name"
-msgstr "Drucker > Port > Name"
-
-#: inc/mapping.class.php:294
-msgid "printer > port > MAC address"
-msgstr "Drucker > Port > MAC-Adresse"
-
-#: inc/mapping.class.php:297
-msgid "printer > consumables > black cartridge (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Schwarz (Maximum)"
-
-#: inc/mapping.class.php:300
-msgid "printer > consumables > black cartridge (remaining ink )"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Schwarz (verbleibend)"
-
-#: inc/mapping.class.php:303
-msgid "printer > consumables > cyan cartridge (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Cyan (Maximum)"
-
-#: inc/mapping.class.php:306
-msgid "printer > consumables > cyan cartridge (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Cyan (verbleibend)"
-
-#: inc/mapping.class.php:309
-msgid "printer > consumables > yellow cartridge (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Yellow (Maximum)"
-
-#: inc/mapping.class.php:312
-msgid "printer > consumables > yellow cartridge (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Yellow (verbleibend)"
-
-#: inc/mapping.class.php:315
-msgid "printer > consumables > magenta cartridge (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Magenta (Maximum)"
-
-#: inc/mapping.class.php:318
-msgid "printer > consumables > magenta cartridge (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Magenta (verbleibend)"
-
-#: inc/mapping.class.php:321
-msgid "printer > consumables > light cyan cartridge (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Photo-Cyan (Maximum)"
-
-#: inc/mapping.class.php:324
-msgid "printer > consumables > light cyan cartridge (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Photo-Cyan (verbleibend)"
-
-#: inc/mapping.class.php:327
-msgid "printer > consumables > light magenta cartridge (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Photo-Magenta (Maximum)"
-
-#: inc/mapping.class.php:330
-msgid "printer > consumables > light magenta cartridge (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Kartusche Photo-Magenta (verbleibend)"
-
-#: inc/mapping.class.php:333
-msgid "printer > consumables > photoconductor (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter (Maximum)"
-
-#: inc/mapping.class.php:336
-msgid "printer > consumables > photoconductor (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter (verbleibend)"
-
-#: inc/mapping.class.php:339
-msgid "printer > consumables > black photoconductor (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Schwarz (Maximum)"
-
-#: inc/mapping.class.php:342
-msgid "printer > consumables > black photoconductor (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Schwarz (verbleibend)"
-
-#: inc/mapping.class.php:345
-msgid "printer > consumables > color photoconductor (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Farbe (Maximum)"
-
-#: inc/mapping.class.php:348
-msgid "printer > consumables > color photoconductor (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Farbe (verbleibend)"
-
-#: inc/mapping.class.php:351
-msgid "printer > consumables > cyan photoconductor (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Cyan (Maximum)"
-
-#: inc/mapping.class.php:354
-msgid "printer > consumables > cyan photoconductor (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Cyan (verbleibend)"
-
-#: inc/mapping.class.php:357
-msgid "printer > consumables > yellow photoconductor (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Yellow (Maximum)"
-
-#: inc/mapping.class.php:360
-msgid "printer > consumables > yellow photoconductor (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Yellow (verbleibend)"
-
-#: inc/mapping.class.php:363
-msgid "printer > consumables > magenta photoconductor (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Magenta (Maximum)"
-
-#: inc/mapping.class.php:366
-msgid "printer > consumables > magenta photoconductor (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Photoleiter Magenta (verbleibend)"
-
-#: inc/mapping.class.php:369
-msgid "printer > consumables > black transfer unit (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Schwarz (Maximum)"
-
-#: inc/mapping.class.php:372
-msgid "printer > consumables > black transfer unit (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Schwarz (verbleibend)"
-
-#: inc/mapping.class.php:375
-msgid "printer > consumables > cyan transfer unit (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Cyan (Maximum)"
-
-#: inc/mapping.class.php:378
-msgid "printer > consumables > cyan transfer unit (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Cyan (verbleibend)"
-
-#: inc/mapping.class.php:381
-msgid "printer > consumables > yellow transfer unit (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Yellow (Maximum)"
-
-#: inc/mapping.class.php:384
-msgid "printer > consumables > yellow transfer unit (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Yellow (verbleibend)"
-
-#: inc/mapping.class.php:387
-msgid "printer > consumables > magenta transfer unit (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Magenta (Maximum)"
-
-#: inc/mapping.class.php:390
-msgid "printer > consumables > magenta transfer unit (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Transfereinheit Magenta (verbleibend)"
-
-#: inc/mapping.class.php:393
-msgid "printer > consumables > waste bin (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Abfalleinheit (Maximum)"
-
-#: inc/mapping.class.php:396
-msgid "printer > consumables > waste bin (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Abfalleinheit (verbleibend)"
-
-#: inc/mapping.class.php:399
-msgid "printer > consumables > four (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Fixiereinheit (Maximum)"
-
-#: inc/mapping.class.php:402
-msgid "printer > consumables > four (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Fixiereinheit (verbleibend)"
-
-#: inc/mapping.class.php:405
-msgid "printer > consumables > cleaning module (max ink)"
-msgstr "Drucker > Verbrauchsmaterial > Reinigungsmodul (Maximum)"
-
-#: inc/mapping.class.php:408
-msgid "printer > consumables > cleaning module (remaining ink)"
-msgstr "Drucker > Verbrauchsmaterial > Reinigungsmodul (verbleibend)"
-
-#: inc/mapping.class.php:411
-msgid "printer > port > type"
-msgstr "Drucker > Port > Typ"
-
-#: inc/mapping.class.php:414
-msgid "printer > consumables > maintenance kit (max)"
-msgstr "Drucker > Verbrauchsmaterial > Wartungskit (max.)"
-
-#: inc/mapping.class.php:417
-msgid "printer > consumables > maintenance kit (remaining)"
-msgstr "Drucker > Verbrauchsmaterial > Wartungskit (verbleibend)"
-
-#: inc/mapping.class.php:420
-msgid "printer > consumables > maintenance kit (%)"
-msgstr "Drucker > Verbrauchsmaterial > Wartungskit (%)"
-
-#: inc/mapping.class.php:423
-msgid "networking > CPU user"
-msgstr "Netzwerk > CPU Benutzer"
-
-#: inc/mapping.class.php:426
-msgid "networking > CPU system"
-msgstr "Netzwerk > CPU System"
-
-#: inc/mapping.class.php:429
-msgid "networking > contact"
-msgstr "Netzwerk > Kontakt"
-
-#: inc/mapping.class.php:432
-msgid "networking > comments"
-msgstr "Netzwerk > Kommentar"
-
-#: inc/mapping.class.php:435
-msgid "printer > contact"
-msgstr "Drucker > Kontakt"
-
-#: inc/mapping.class.php:438
-msgid "printer > comments"
-msgstr "Drucker > Kommentar"
-
-#: inc/mapping.class.php:441
-msgid "printer > port > IP address"
-msgstr "Drucker > Port > IP Adresse"
-
-#: inc/mapping.class.php:444
-msgid "networking > port > index number"
-msgstr "Netzwerk > Port > Nummerischer Index"
-
-#: inc/mapping.class.php:447
-msgid "networking > Address CDP"
-msgstr "Netzwerk > CDP-Adresse"
-
-#: inc/mapping.class.php:450
-msgid "networking > Port CDP"
-msgstr "Netzwerk > CDP-Port"
-
-#: inc/mapping.class.php:453
-msgid "networking > port > trunk/tagged"
-msgstr "Netzwerk > Port > Trunk/tagged"
-
-#: inc/mapping.class.php:456
-msgid "networking > MAC address filters (dot1dTpFdbAddress)"
-msgstr "Netzwerk > MAC-Adressefilter (dot1dTpFdbAddress)"
-
-#: inc/mapping.class.php:459
-msgid "networking > Physical addresses in memory (ipNetToMediaPhysAddress)"
-msgstr ""
-"Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)"
-
-#: inc/mapping.class.php:462
-msgid "networking > instances de ports (dot1dTpFdbPort)"
-msgstr "Netzwerk > Instanzen des Ports (dot1dTpFdbPort)"
-
-#: inc/mapping.class.php:468
-msgid "printer > port > index number"
-msgstr "Drucker > Port > Indexnummer"
-
-#: inc/mapping.class.php:471
-msgid "networking > MAC address"
-msgstr "Netzwerk > MAC-Adresse"
-
-#: inc/mapping.class.php:474
-msgid "printer > Inventory number"
-msgstr "Drucker > Inventarnummer"
-
-#: inc/mapping.class.php:477
-msgid "networking > Inventory number"
-msgstr "Netzwerk > Inventarnummer"
-
-#: inc/mapping.class.php:480
-msgid "printer > manufacturer"
-msgstr "Drucker > Hersteller"
-
-#: inc/mapping.class.php:483
-msgid "networking > IP addresses"
-msgstr "Netzwerk > IP-Adressen"
-
-#: inc/mapping.class.php:486
-msgid "networking > PVID (port VLAN ID)"
-msgstr "Netzwerk > PVID (Port VLAN ID)"
-
-#: inc/mapping.class.php:489
-msgid "printer > meter > total number of printed pages (print)"
-msgstr "Drucker > Zähler > Total gedruckte Seiten"
-
-#: inc/mapping.class.php:492
-msgid "printer > meter > number of printed black and white pages (print)"
-msgstr "Drucker > Zähler > Total gedruckte Seiten (S/W)"
-
-#: inc/mapping.class.php:495
-msgid "printer > meter > number of printed color pages (print)"
-msgstr "Drucker > Zähler > Total gedruckte Seiten (Farbe)"
-
-#: inc/mapping.class.php:498
-msgid "printer > meter > total number of printed pages (copy)"
-msgstr "Drucker > Zähler > Total gedruckte Kopien"
-
-#: inc/mapping.class.php:501
-msgid "printer > meter > number of printed black and white pages (copy)"
-msgstr "Drucker > Zähler > Total gedruckte Kopien (S/W)"
-
-#: inc/mapping.class.php:504
-msgid "printer > meter > number of printed color pages (copy)"
-msgstr "Drucker > Zähler > Total gedruckte Kopien (Farbe)"
-
-#: inc/mapping.class.php:507
-msgid "printer > meter > total number of printed pages (fax)"
-msgstr "Drucker > Zähler > Total gedruckte Faxe"
-
-#: inc/mapping.class.php:510
-msgid "networking > port > vlan"
-msgstr "Netzwerk > Port > VLAN"
-
-#: inc/mapping.class.php:513
-msgid "networking > CDP remote sysdescr"
-msgstr "Netzwerk > CDP remote sysdescr"
-
-#: inc/mapping.class.php:516
-msgid "networking > CDP remote id"
-msgstr "Netzwerk > CDP remote id"
-
-#: inc/mapping.class.php:519
-msgid "networking > CDP remote model device"
-msgstr "Netzwerk > CDP remote model device"
-
-#: inc/mapping.class.php:522
-msgid "networking > LLDP remote sysdescr"
-msgstr "Netzwerk > LLDP remote Systembeschreibung"
-
-#: inc/mapping.class.php:525
-msgid "networking > LLDP remote id"
-msgstr "Netzwerk > LLDP remote id"
-
-#: inc/mapping.class.php:528
-msgid "networking > LLDP remote port description"
-msgstr "Netzwerk > LLDP remote port Beschreibung"
-
-#: inc/mapping.class.php:543
-msgid "Number of received bytes"
-msgstr "Anzahl empfangener Bytes"
-
-#: inc/mapping.class.php:546
-msgid "Number of outgoing bytes"
-msgstr "Anzahl ausgehender Bytes"
-
-#: inc/mapping.class.php:549
-msgid "Number of input errors"
-msgstr "Anzahl input Fehler"
-
-#: inc/mapping.class.php:552
-msgid "Number of output errors"
-msgstr "Anzahl output Fehler"
-
-#: inc/mapping.class.php:555
-msgid "CPU usage"
-msgstr "CPU-Auslastung"
-
-#: inc/mapping.class.php:588
-msgid "Number of printed monochrome pages"
-msgstr "Anzahl gedruckter Seiten (Graustufe)"
-
-#: inc/mapping.class.php:591
-msgid "Black cartridge"
-msgstr "Kartusche Schwarz"
-
-#: inc/mapping.class.php:594
-msgid "Photo black cartridge"
-msgstr "Kartusche Photoschwarz"
-
-#: inc/mapping.class.php:597
-msgid "Cyan cartridge"
-msgstr "Kartusche Cyan"
-
-#: inc/mapping.class.php:600
-msgid "Yellow cartridge"
-msgstr "Kartusche Yellow"
-
-#: inc/mapping.class.php:603
-msgid "Magenta cartridge"
-msgstr "Kartusche Magenta"
-
-#: inc/mapping.class.php:606
-msgid "Light cyan cartridge"
-msgstr "Kartusche Leichtes Cyan"
-
-#: inc/mapping.class.php:609
-msgid "Light magenta cartridge"
-msgstr "Kartusche Leichtes Magenta Kartusche"
-
-#: inc/mapping.class.php:612
-msgid "Photoconductor"
-msgstr "Photoleiter"
-
-#: inc/mapping.class.php:615
-msgid "Black photoconductor"
-msgstr "Photoleiter Schwarz "
-
-#: inc/mapping.class.php:618
-msgid "Color photoconductor"
-msgstr "Photoleiter Farbe"
-
-#: inc/mapping.class.php:621
-msgid "Cyan photoconductor"
-msgstr "Photoleiter Cyan"
-
-#: inc/mapping.class.php:624
-msgid "Yellow photoconductor"
-msgstr "Photoleiter Gelb"
-
-#: inc/mapping.class.php:627
-msgid "Magenta photoconductor"
-msgstr "Photoleiter Magenta"
-
-#: inc/mapping.class.php:630
-msgid "Black transfer unit"
-msgstr "Fixiereinheit Schwarz"
-
-#: inc/mapping.class.php:633
-msgid "Cyan transfer unit"
-msgstr "Fixiereinheit Cyan"
-
-#: inc/mapping.class.php:636
-msgid "Yellow transfer unit"
-msgstr "Fixiereinheit Yellow"
-
-#: inc/mapping.class.php:639
-msgid "Magenta transfer unit"
-msgstr "Fixiereinheit Magenta"
-
-#: inc/mapping.class.php:642
-msgid "Waste bin"
-msgstr "Resttonereinheit"
-
-#: inc/mapping.class.php:645
-msgid "Four"
-msgstr "Fixiereinheit"
-
-#: inc/mapping.class.php:648
-msgid "Cleaning module"
-msgstr "Reinigungsmodul"
-
-#: inc/mapping.class.php:657
-msgid "Maintenance kit"
-msgstr "Wartungsmodul"
-
-#: inc/mapping.class.php:660
-msgid "Black toner"
-msgstr "Toner Schwarz"
-
-#: inc/mapping.class.php:663
-msgid "Cyan toner"
-msgstr "Toner Cyan"
-
-#: inc/mapping.class.php:666
-msgid "Magenta toner"
-msgstr "Toner Magenta"
-
-#: inc/mapping.class.php:669
-msgid "Yellow toner"
-msgstr "Toner Gelb"
-
-#: inc/mapping.class.php:672
-msgid "Black drum"
-msgstr "Trommel Schwarz"
-
-#: inc/mapping.class.php:675
-msgid "Cyan drum"
-msgstr "Trommel Cyan"
-
-#: inc/mapping.class.php:678
-msgid "Magenta drum"
-msgstr "Trommel Magenta"
-
-#: inc/mapping.class.php:681
-msgid "Yellow drum"
-msgstr "Trommel Gelb"
-
-#: inc/mapping.class.php:684
-msgid "Many informations grouped"
-msgstr "Informationen zusammengefasst."
-
-#: inc/mapping.class.php:687
-msgid "Black toner 2"
-msgstr "Toner Schwarz Maximum2"
-
-#: inc/mapping.class.php:690
-msgid "Black toner Utilisé"
-msgstr "Toner verbraucht"
-
-#: inc/mapping.class.php:693
-msgid "Black toner Restant"
-msgstr "Toner verbleibend"
-
-#: inc/mapping.class.php:696
-msgid "Cyan toner Max"
-msgstr "Toner Cyan Maximum"
-
-#: inc/mapping.class.php:699
-msgid "Cyan toner Utilisé"
-msgstr "Toner Cyan benutzt"
-
-#: inc/mapping.class.php:702
-msgid "Cyan toner Restant"
-msgstr "Toner Cyan verbleibend"
-
-#: inc/mapping.class.php:705
-msgid "Magenta toner Max"
-msgstr "Toner Magenta Maximum"
-
-#: inc/mapping.class.php:708
-msgid "Magenta toner Utilisé"
-msgstr "Toner Magenta verbraucht"
-
-#: inc/mapping.class.php:711
-msgid "Magenta toner Restant"
-msgstr "Toner Magenta verbleibend"
-
-#: inc/mapping.class.php:714
-msgid "Yellow toner Max"
-msgstr "Toner Gelb Maximum"
-
-#: inc/mapping.class.php:717
-msgid "Yellow toner Utilisé"
-msgstr "Toner Gelb verbraucht"
-
-#: inc/mapping.class.php:720
-msgid "Yellow toner Restant"
-msgstr "Toner Gelb verbleibend"
-
-#: inc/mapping.class.php:723
-msgid "Black drum Max"
-msgstr "Trommel Black Maximum"
-
-#: inc/mapping.class.php:726
-msgid "Black drum Utilisé"
-msgstr "Trommel Black verbraucht"
-
-#: inc/mapping.class.php:729
-msgid "Black drum Restant"
-msgstr "Trommel Black verbleibend"
-
-#: inc/mapping.class.php:732
-msgid "Cyan drum Max"
-msgstr "Trommel Cyan Maximum"
-
-#: inc/mapping.class.php:735
-msgid "Cyan drum Utilisé"
-msgstr "Trommel Cyan verbraucht"
-
-#: inc/mapping.class.php:738
-msgid "Cyan drumRestant"
-msgstr "Trommel Cyan verbleibend"
-
-#: inc/mapping.class.php:741
-msgid "Magenta drum Max"
-msgstr "Trommel Magenta Maximum"
-
-#: inc/mapping.class.php:744
-msgid "Magenta drum Utilisé"
-msgstr "Trommel Magenta verbraucht"
-
-#: inc/mapping.class.php:747
-msgid "Magenta drum Restant"
-msgstr "Trommel Magenta verbleiend"
-
-#: inc/mapping.class.php:750
-msgid "Yellow drum Max"
-msgstr "Trommel Gelb Maximum"
-
-#: inc/mapping.class.php:753
-msgid "Yellow drum Utilisé"
-msgstr "Trommel Gelb verbraucht"
-
-#: inc/mapping.class.php:756
-msgid "Yellow drum Restant"
-msgstr "Trommel Gelb verbleibend"
-
-#: inc/mapping.class.php:759
-msgid "Waste bin Max"
-msgstr "Abfalleinheit Maximum"
-
-#: inc/mapping.class.php:762
-msgid "Waste bin Utilisé"
-msgstr "Abfalleinheit benutzt"
-
-#: inc/mapping.class.php:765
-msgid "Waste bin Restant"
-msgstr "Abfalleinheit verbleibend"
-
-#: inc/mapping.class.php:768
-msgid "Maintenance kit Max"
-msgstr "Wartungskit Maximum"
-
-#: inc/mapping.class.php:771
-msgid "Maintenance kit Utilisé"
-msgstr "Wartungskit verbraucht"
-
-#: inc/mapping.class.php:774
-msgid "Maintenance kit Restant"
-msgstr "Wartungskit verbleibend"
-
-#: inc/mapping.class.php:777
-msgid "Grey ink cartridge"
-msgstr "Graue Tintenpatrone"
-
-#: inc/mapping.class.php:801
-msgid "Total number of large printed pages"
-msgstr "Total gedruckte Seiten (Grossformat)"
-
-#: inc/inventoryrulelocation.class.php:194
-msgid "Assets"
-msgstr "Inventar"
-
-#: inc/deploycheck.class.php:70
-msgid "Registry value exists"
-msgstr "Registry-Wert existiert"
-
-#: inc/deploycheck.class.php:71
-msgid "Registry key missing"
-msgstr "Registrierungsschlüssel fehlt"
-
-#: inc/deploycheck.class.php:72
-msgid "Registry value missing"
-msgstr "Registry-Wert fehlt"
-
-#: inc/deploycheck.class.php:73
-msgid "Registry value equals to"
-msgstr "Registry-Wert ist gleich zu"
-
-#: inc/deploycheck.class.php:74
-msgid "Registry value not equals to"
-msgstr "Registry-Wert ist nicht gleich zu"
-
-#: inc/deploycheck.class.php:75
-msgid "Type of registry value equals to"
-msgstr "Art des Registry-Wert ist gleich zu"
-
-#: inc/deploycheck.class.php:78
-msgid "File exists"
-msgstr "Datei existiert"
-
-#: inc/deploycheck.class.php:79
-msgid "File is missing"
-msgstr "Datei fehlt"
-
-#: inc/deploycheck.class.php:80
-msgid "File size is greater than"
-msgstr "Datei ist grösser als"
-
-#: inc/deploycheck.class.php:81
-msgid "File size is equal to"
-msgstr "Dateigrösse gleich"
-
-#: inc/deploycheck.class.php:82
-msgid "File size is lower than"
-msgstr "Datei ist kleiner als"
-
-#: inc/deploycheck.class.php:83
-msgid "SHA-512 hash value matches"
-msgstr "SHA-512 Hash-Wert stimmt"
-
-#: inc/deploycheck.class.php:84
-msgid "SHA-512 hash value mismatch"
-msgstr "SHA-512 Hash-Wert stimmt nicht"
-
-#: inc/deploycheck.class.php:87
-msgid "Directory exists"
-msgstr "Verzeichnis existiert"
-
-#: inc/deploycheck.class.php:88
-msgid "Directory is missing"
-msgstr "Verzeichnis fehlt"
-
-#: inc/deploycheck.class.php:135
-msgid "continue"
-msgstr "fortsetzen"
-
-#: inc/deploycheck.class.php:137
-msgid "passed"
-msgstr "akzeptiert"
-
-#: inc/deploycheck.class.php:139
-msgid "otherwise"
-msgstr "ansonsten"
-
-#: inc/deploycheck.class.php:301 inc/deploycheck.class.php:453
-msgid "Audit label"
-msgstr "Revidiert Beschriftung"
-
-#: inc/deploycheck.class.php:340
-msgid "Path to the key"
-msgstr "Pfad zum Schlüssel"
-
-#: inc/deploycheck.class.php:348 inc/deploycheck.class.php:356
-#: inc/deploycheck.class.php:367
-msgid "Path to the value"
-msgstr "Pfad zum Wert"
-
-#: inc/deploycheck.class.php:368
-msgid "Type of value"
-msgstr "Art des Wertes"
-
-#: inc/deploycheck.class.php:381
-msgid "Directory"
-msgstr "Verzeichnis"
-
-#: inc/deploycheck.class.php:401
-msgid "Disk or directory"
-msgstr "Festplatte oder Ordner"
-
-#: inc/deploycheck.class.php:513
-msgid "Unit"
-msgstr "EInheit"
-
-#: inc/deploycheck.class.php:537
-msgid "If not successful"
-msgstr "Falls nicht erfolgreich"
-
-#: inc/iprange.class.php:93
-msgid "Communication mode"
-msgstr "Kommunikationsmodus"
-
-#: inc/iprange.class.php:96
-msgid "See all informations of task"
-msgstr "Alle Informationen zu diesem Task anzeigen"
-
-#: inc/iprange.class.php:150 inc/iprange.class.php:237
-#: inc/iprange.class.php:343
-msgid "Start of IP range"
-msgstr "Start des IP-Adressbereichs"
-
-#: inc/iprange.class.php:157 inc/iprange.class.php:262
-#: inc/iprange.class.php:346
-msgid "End of IP range"
-msgstr "Ende des IP-Adressbereichs"
-
-#: inc/iprange.class.php:341
-msgid "Bad IP"
-msgstr "IP-Adresse inkorrekt"
-
-#: inc/collect_file_content.class.php:108
-msgid "Path/file"
-msgstr "Pfad/Datei"
-
-#: inc/unmanaged.class.php:78 inc/unmanaged.class.php:129
-msgid "Unmanaged device"
-msgstr "Unverwaltete Geräte"
-
-#: inc/unmanaged.class.php:182 inc/unmanaged.class.php:460
-msgid "Network hub"
-msgstr "Netzwerk-Hub"
-
-#: inc/unmanaged.class.php:448
-msgid "Approved devices"
-msgstr "Genehmigte Geräte"
-
-#: inc/unmanaged.class.php:527
-msgid "Import unmanaged device into asset"
-msgstr "Importiere ein unverwaltetes Gerät ins Inventar"
-
-#: inc/iprange_configsecurity.class.php:109
-msgid "Associated SNMP credentials"
-msgstr "Verknüpfte SNMP Zugangsdaten"
-
-#: inc/iprange_configsecurity.class.php:209
-msgid "Version"
-msgstr "Version"
-
-#: inc/iprange_configsecurity.class.php:212
-msgid "By order of priority"
-msgstr "Geordnet nach der Priorität"
-
-#: inc/taskjobstate.class.php:129
+#: inc/taskjobstate.class.php:125
 msgid "Job executions"
 msgstr "ausgeführte Aufgaben"
 
-#: inc/taskjobstate.class.php:141
+#: inc/taskjobstate.class.php:140
 msgid "Server has sent data to the agent"
 msgstr "Server hat Daten zum Agent gesendet"
 
-#: inc/taskjobstate.class.php:142
+#: inc/taskjobstate.class.php:141
 msgid "Agent replied with data to the server"
 msgstr "Agent antwortet mit Daten zum Server"
 
-#: inc/taskjobstate.class.php:143
+#: inc/taskjobstate.class.php:142
 msgid "Finished"
 msgstr "Abgeschlossen"
 
-#: inc/taskjobstate.class.php:144
+#: inc/taskjobstate.class.php:143
 msgid "Error"
 msgstr "Fehler"
 
-#: inc/taskjobstate.class.php:249
+#: inc/taskjobstate.class.php:262
 msgid "Running tasks"
 msgstr "Laufende Augfaben"
 
-#: inc/taskjobstate.class.php:587
+#: inc/taskjobstate.class.php:615
 #, php-format
 msgid "Job available for next execution at %s"
 msgstr "Aufgabe bereit zur nächsten Ausführung um %s"
 
-#: inc/taskjobstate.class.php:601
+#: inc/taskjobstate.class.php:630
 #, php-format
 msgid "Retry #%d"
 msgstr "Wiederholung #%d"
 
-#: inc/taskjobstate.class.php:603
+#: inc/taskjobstate.class.php:632
 msgid "Maximum number of retry reached: force deployment"
 msgstr "Maximale Anzahl Wiederholungen erreicht: Verteilung erzwingen"
 
-#: inc/deploymirror.class.php:243 inc/deploymirror.class.php:318
+#: inc/credentialip.class.php:81
+msgid "Remote device inventory"
+msgstr "Remote-Inventarisierung von Geräten"
+
+#: inc/iprange.class.php:83
+msgid "Communication mode"
+msgstr "Kommunikationsmodus"
+
+#: inc/iprange.class.php:86
+msgid "See all informations of task"
+msgstr "Alle Informationen zu diesem Task anzeigen"
+
+#: inc/iprange.class.php:142 inc/iprange.class.php:254
+#: templates/forms/iprange.html.twig:42
+msgid "Start of IP range"
+msgstr "Start des IP-Adressbereichs"
+
+#: inc/iprange.class.php:149 inc/iprange.class.php:257
+#: templates/forms/iprange.html.twig:48
+msgid "End of IP range"
+msgstr "Ende des IP-Adressbereichs"
+
+#: inc/iprange.class.php:252
+msgid "Bad IP"
+msgstr "IP-Adresse inkorrekt"
+
+#: inc/config.class.php:235
+msgid "Network Inventory"
+msgstr "Netzwerkinventar"
+
+#: inc/config.class.php:322
+msgid "SSL-only for agent"
+msgstr "Nur SSL für die Kommunikation mit dem Agent verwenden"
+
+#: inc/config.class.php:326
+msgid "Inventory frequency (in hours)"
+msgstr "Periodizität des Inventars (in Stunden)"
+
+#: inc/config.class.php:340
+msgid "Delete tasks logs after"
+msgstr "Lösche Aufgaben-Log nach"
+
+#: inc/config.class.php:353
+msgid "Agent port"
+msgstr "Netzwerkports Agents"
+
+#: inc/config.class.php:360
+msgid "Extra-debug"
+msgstr "Extra-Debug"
+
+#: inc/config.class.php:365
+msgid "Re-prepare successful jobs"
+msgstr "Erfolgreiche Jobs neu vorbereiten"
+
+#: inc/config.class.php:373
+msgid "Maximum number of agents to wake up in a task"
+msgstr "Maximale Anzahl von Agenten zum starten je Vorgang"
+
+#: inc/config.class.php:387
+msgid "Update agents"
+msgstr "Agenten aktualisieren"
+
+#: inc/config.class.php:389
+msgid "Update agents not have contacted server since (in days)"
+msgstr ""
+"Aktualisieren der Agenten die den Server nicht kontaktiert haben seit (in "
+"Tagen)"
+
+#: inc/config.class.php:425 inc/config.class.php:454
+msgid "Change the status"
+msgstr "Ändere den Status"
+
+#: inc/config.class.php:457
+msgid "Clean agents"
+msgstr "Agenten bereinigen"
+
+#: inc/config.class.php:480
+msgid "Network options"
+msgstr "Netzwerkoptionen"
+
+#: inc/config.class.php:485
+msgid "Default status"
+msgstr "Standardstatus"
+
+#: inc/config.class.php:515 inc/config.class.php:523
+msgid "SNMP timeout"
+msgstr "SNMP timeout"
+
+#: inc/config.class.php:555
+msgid "Root folder for sending files from server"
+msgstr "Wurzelverzeichnis um Dateien vom Server zu senden"
+
+#: inc/config.class.php:563
+msgid "Use this GLPI server as a mirror server"
+msgstr "Diesen GLPI-Server als Spiegelserver verwenden"
+
+#: inc/config.class.php:570
+msgid "Match mirrors to agents"
+msgstr "Abgleich von Spiegeln mit Agenten"
+
+#: inc/config.class.php:573
+msgid "with location"
+msgstr "mit Standort"
+
+#: inc/config.class.php:574
+msgid "with entity"
+msgstr "mit Entität"
+
+#: inc/config.class.php:575
+msgid "with both"
+msgstr "mit beiden"
+
+#: inc/config.class.php:586
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "Löschen von erfolgreichen On-Demand-Aufgaben nach (in Tagen)"
+
+#: inc/deployfile.class.php:65
+msgid "Upload from computer"
+msgstr "Von Computer heraufladen"
+
+#: inc/deployfile.class.php:66
+msgid "Upload from server"
+msgstr "Hochgeladen vom Server"
+
+#: inc/deployfile.class.php:172
+msgid "p2p"
+msgstr "P2P"
+
+#: inc/deployfile.class.php:173 inc/deployfile.class.php:339
+msgid "retention"
+msgstr "Speicherung"
+
+#: inc/deployfile.class.php:187
+msgid "uncompress"
+msgstr "dekomprimieren"
+
+#: inc/deployfile.class.php:293
+msgid "filename"
+msgstr "Dateiname"
+
+#: inc/deployfile.class.php:300
+msgid "Choose"
+msgstr "Auswählen"
+
+#: inc/deployfile.class.php:305
+msgid "Select the file on server"
+msgstr "Datei auf dem Server wählen"
+
+#: inc/deployfile.class.php:322
+msgid "Uncompress"
+msgstr "Dekomprimieren"
+
+#: inc/deployfile.class.php:330
+msgid "P2P"
+msgstr "P2P"
+
+#: inc/deployfile.class.php:612
+msgid "Transfer error: the file size is too big"
+msgstr "Übertragunsfehler: Die Datei ist zu groß"
+
+#: inc/deployfile.class.php:616
+msgid "The uploaded file was only partially uploaded"
+msgstr "Die hochgeladene Datei ist unvollständig"
+
+#: inc/deployfile.class.php:620
+msgid "No file was uploaded"
+msgstr "Dateien wurde nicht heraufgeladen"
+
+#: inc/deployfile.class.php:624
+msgid "Missing a temporary folder"
+msgstr "Temporäres Verzeichnis fehlt"
+
+#: inc/deployfile.class.php:628
+msgid "Failed to write file to disk"
+msgstr "Datei konnte nicht gespeichert werden"
+
+#: inc/deployfile.class.php:632
+msgid "PHP extension stopped the file upload"
+msgstr "PHP-Erweiterung hat den Upload gestoppt"
+
+#: inc/deployfile.class.php:660 inc/deployfile.class.php:718
+msgid "File saved!"
+msgstr "Datei gespeichert!"
+
+#: inc/deployfile.class.php:663 inc/deployfile.class.php:721
+msgid "Failed to copy file"
+msgstr "Datei konnte nicht kopiert werden"
+
+#: inc/deployfile.class.php:667 inc/deployfile.class.php:725
+msgid "File missing"
+msgstr "Datei fehlt"
+
+#: inc/deployfile.class.php:1024
+msgid "Max file size"
+msgstr "Maximale Dateigrösse"
+
+#: inc/deployfile.class.php:1025
+msgid "Mio"
+msgstr "Mio"
+
+#: inc/deployfile.class.php:1038
+msgid "Unused file"
+msgstr "Ungenutzte Datei"
+
+#: inc/stateinventory.class.php:111
+msgid "Number per second"
+msgstr "Anzahl pro Sekunden"
+
+#: inc/stateinventory.class.php:113
+msgid "To inventory"
+msgstr "Zum Inventar"
+
+#: inc/stateinventory.class.php:114
+msgid "Error(s)"
+msgstr "Fehler"
+
+#: inc/collect_registry_content.class.php:75
+msgid "Windows registry content"
+msgstr "Windows Registry Kommentar"
+
+#: inc/collect_registry_content.class.php:169
+#: inc/collect_registry_content.class.php:216
+msgid "Data"
+msgstr "Daten"
+
+#: inc/taskjobview.class.php:69
+msgid "Jobs configuration"
+msgstr "Aufgaben-Einstellungen"
+
+#: inc/taskjobview.class.php:188
+msgid "Add a job"
+msgstr "Füge eine Aufgabe hinzu"
+
+#: inc/taskjobview.class.php:256
+msgid ""
+"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
+"         Please consider modifying this task to avoid unexpected results."
+msgstr ""
+
+#: inc/taskjobview.class.php:356
+msgid "Actor Type"
+msgstr "Art des Beteiligten"
+
+#: inc/taskjobview.class.php:360
+msgid "Target Type"
+msgstr "Ziel-Art"
+
+#: inc/taskjobview.class.php:402
+msgid "Actor Item"
+msgstr "Beteiligter"
+
+#: inc/taskjobview.class.php:406
+msgid "Target Item"
+msgstr "Ziel-Element"
+
+#: inc/taskjobview.class.php:559 inc/taskjobview.class.php:562
+msgid "New action"
+msgstr "Neue Aufgabe"
+
+#: inc/taskjobview.class.php:592
+msgid "Module method"
+msgstr "Modul-Methode"
+
+#: inc/taskjobview.class.php:612 inc/taskjobview.class.php:644
+msgid "Targets"
+msgstr "Ziele"
+
+#: inc/taskjobview.class.php:618
+msgid "The items that should be applied for this job."
+msgstr "Die für diese Aufgabe zu verwendenden Elemente."
+
+#: inc/taskjobview.class.php:624 inc/taskjobview.class.php:666
+msgid "Actors"
+msgstr "Beteiligte"
+
+#: inc/taskjobview.class.php:629
+msgid "The items that should carry out those targets."
+msgstr "Die Elemente, die die definiereten Ziele ausführen."
+
+#: inc/taskjobview.class.php:652 inc/taskjobview.class.php:674
+msgid "Clear list"
+msgstr "Bereinige die Liste"
+
+#: inc/taskjobview.class.php:657 inc/taskjobview.class.php:679
+msgid "Delete selected items"
+msgstr "Lösche ausgewähltes Element"
+
+#: inc/taskjobview.class.php:701
+msgid "Cancel modifications"
+msgstr "Setze Änderung zurück"
+
+#: inc/taskjobview.class.php:708
+msgid "Purge"
+msgstr "Löschen"
+
+#: inc/taskjobview.class.php:711
+msgid "Confirm the final deletion ?"
+msgstr "Definitiv löschen?"
+
+#: inc/collect_wmi_content.class.php:147 inc/collect_wmi_content.class.php:198
+msgid "Property"
+msgstr "Eigenschaft"
+
+#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:997
+msgid "The modified JSON contained a syntax error :"
+msgstr "Die modifizierte JSON enthält einen Syntax-Fehler:"
+
+#: inc/deploypackage.class.php:151
+msgid "Export"
+msgstr "Export"
+
+#: inc/deploypackage.class.php:272
+msgid "Modification Denied"
+msgstr "Änderung verweigert"
+
+#: inc/deploypackage.class.php:275
+msgid "The following task is running with this package"
+msgid_plural "The following tasks are running with this package"
+msgstr[0] "Die folgenden Aufgaben werden mit diesem Paket ausgeführt"
+msgstr[1] "Die folgenden Aufgaben werden mit diesem Paket ausgeführt"
+
+#: inc/deploypackage.class.php:381 inc/deploypackage.class.php:500
+msgid "Enable deploy on demand for the following group"
+msgstr "Aktiviere die Verteilung über eine Aufgabe für die folgende Gruppe"
+
+#: inc/deploypackage.class.php:523
+msgid "Audits"
+msgstr "Revidiert"
+
+#: inc/deploypackage.class.php:524
+msgid "Files"
+msgstr "Dateien"
+
+#: inc/deploypackage.class.php:525 b/deploy/index.php:140
+msgid "Actions"
+msgstr "Aktionen"
+
+#: inc/deploypackage.class.php:526
+msgid "User interactions"
+msgstr "Benutzer-Interaktionen"
+
+#: inc/deploypackage.class.php:675
+msgid "JSON package representation"
+msgstr "JSON Paket Darstellung"
+
+#: inc/deploypackage.class.php:795
+msgid "Package exported in"
+msgstr "Paket exportiert in"
+
+#: inc/deploypackage.class.php:868
+msgid "Packages to import"
+msgstr "Pakete zum Importieren"
+
+#: inc/deploypackage.class.php:1032
+msgid "Package actions"
+msgstr "Paket-Aktion"
+
+#: inc/deploypackage.class.php:1039 inc/deploypackage.class.php:1048
+msgid "Target for deploy on demand"
+msgid_plural "Targets for deploy on demand"
+msgstr[0] "Ziele für den Ausrollvorgang auf Anfrage"
+msgstr[1] "Ziele für den Ausrollvorgang auf Anfrage"
+
+#: inc/deploypackage.class.php:1141
+msgid "Add a target for self-service"
+msgstr "Füge ein Ziel für Selbstbedienung hinzu"
+
+#: inc/deploypackage.class.php:1494
+msgid "Restart job"
+msgstr "Starte Aufgabe neu"
+
+#: inc/deploypackage.class.php:1510
+msgid "refresh job"
+msgstr "Wiederhole Aufgabe"
+
+#: inc/deploypackage.class.php:1652
+msgid "Select packages you want install"
+msgstr "Wähle das Paket zur Installation aus"
+
+#: inc/deploypackage.class.php:1661
+msgid "Prepare for install"
+msgstr "Zur Installation vorbereiten"
+
+#: inc/deploypackage.class.php:1666
+msgid "I'm on this computer: local wakeup"
+msgstr "Ich bin an diesem Computer: lokales Starten"
+
+#: inc/deploypackage.class.php:1667
+msgid "I'm not on this computer: wakeup from the server"
+msgstr "Ich bin nicht an diesem Computer: Starten vom Server"
+
+#: inc/deploypackage.class.php:1668
+msgid "Don't wakeup"
+msgstr "Nicht starten"
+
+#: inc/deploypackage.class.php:1684
+msgid "No packages available to install"
+msgstr "Es sind keine Pakete zur Installation bereit"
+
+#: inc/deploymirror.class.php:259 templates/forms/deploymirror.html.twig:40
 msgid "Mirror server address"
 msgstr "Spiegelserver Adresse"
 
-#: inc/deploymirror.class.php:249
-msgid "Mirror location"
-msgstr "Standort Spiegelserver"
-
-#: inc/inventorycomputerimportxml.class.php:86
-msgid "Import XML file from an Agent"
-msgstr "Import von einer XML-Datei eines Agents"
-
-#: inc/inventorycomputerimportxml.class.php:92
-msgid ""
-"You can use this menu to upload XML generated by an agent. The file must "
-"have .xml or .ocs extension. It's also possible to upload <b>ZIP</b> archive"
-" directly with a collection of XML files. Read you agent documentation to "
-"see how to generate such XML file"
+#: inc/communicationnetworkdiscovery.class.php:107
+#, php-format
+msgid "Processed: %1$s Created: %2$s Updated: %3$s"
 msgstr ""
-"Du kannst dieses Menü dazu verwenden um XML Dateien von Agenten hochzuladen."
-" Diese Datei muss die Endung .xml oder .ocs haben. Es ist auch möglich ein "
-"<b> ZIP </b> Archiv mit mehreren XML Dateien hochzuladen. Bitte lese die "
-"Agenten Dokumentation um zu sehen wie eine Agenten erzeugte XML Datei "
-"erstellt wird."
 
-#: inc/networkportconnectionlog.class.php:73
-msgid "PID"
-msgstr "PID"
+#: inc/timeslotentry.class.php:66
+msgid "Time slot entry"
+msgstr "Zeitfenster"
 
-#: inc/agent.class.php:132 inc/agent.class.php:454
-msgid "locked"
-msgstr "gesperrt"
+#: inc/timeslotentry.class.php:135
+msgid "Start time"
+msgstr "Startzeit"
 
-#: inc/agent.class.php:149 inc/agent.class.php:427
-msgid "Computer link"
-msgstr "Computerverbindung"
+#: inc/timeslotentry.class.php:161
+msgid "End time"
+msgstr "Endzeit"
 
-#: inc/agent.class.php:532
-msgid "if empty use port configured in general options"
+#: setup.php:450
+#, php-format
+msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
-"falls leer verwende den festgelegten Port in den allgemeinen Einstellungen"
 
-#: inc/agent.class.php:853
-msgid "not yet requested, refresh?"
-msgstr "bisher nicht abgefragt, aktualisieren?"
-
-#: inc/agent.class.php:860
-msgid "Force inventory"
-msgstr "Inventarisierung erzwingen"
-
-#: inc/agent.class.php:1099
-msgid "Informations for agent configuration"
-msgstr "Informationen zur Agent-Konfiguration"
-
-#: inc/agent.class.php:1109
-msgid "Communication url of the server"
-msgstr "Kommunikations-URL des Servers"
-
-#: inc/deployuserinteractiontemplate.class.php:116
-msgid "Behavior"
-msgid_plural "Behaviors"
-msgstr[0] "Verhalten"
-msgstr[1] "Verhalten"
-
-#: inc/deployuserinteractiontemplate.class.php:191
-msgid "OK"
-msgstr "OK"
-
-#: inc/deployuserinteractiontemplate.class.php:193
-msgid "OK (asynchronous)"
-msgstr "OK (asynchron)"
-
-#: inc/deployuserinteractiontemplate.class.php:195
-msgid "OK - Cancel"
-msgstr "OK - Abbrechen"
-
-#: inc/deployuserinteractiontemplate.class.php:197
-msgid "Yes - No"
-msgstr "Ja - Nein"
-
-#: inc/deployuserinteractiontemplate.class.php:199
-msgid "OK - Abort - Retry"
-msgstr "OK - Abbrechen - Wiederholen"
-
-#: inc/deployuserinteractiontemplate.class.php:201
-msgid "Retry - Cancel"
-msgstr "Wiederholen - Abbrechen"
-
-#: inc/deployuserinteractiontemplate.class.php:203
-msgid "Abort - Retry - Ignore"
-msgstr "Abbrechen - Wiederholen - Ignorieren"
-
-#: inc/deployuserinteractiontemplate.class.php:205
-msgid "Cancel - Try - Continue"
-msgstr "Abbrechen - Testen - Fortsetzen"
-
-#: inc/deployuserinteractiontemplate.class.php:207
-msgid "Yes - No - Cancel"
-msgstr "Ja - Nein - Abbrechen"
-
-#: inc/deployuserinteractiontemplate.class.php:277
-msgid "Continue job with no user interaction"
-msgstr "Setze Vorgang ohne Benutzereingriff fort"
-
-#: inc/deployuserinteractiontemplate.class.php:428
-msgid "Interaction format"
-msgstr "Benutzeraktion Format"
-
-#: inc/deployuserinteractiontemplate.class.php:436
-msgid "Interaction type"
-msgstr "Benutzeraktion Typ"
-
-#: inc/deployuserinteractiontemplate.class.php:441
-msgid "Alert icon"
-msgstr "Alarm Icon"
-
-#: inc/deployuserinteractiontemplate.class.php:448
-msgid "Retry job after"
-msgstr "Wiederhole Vorgang nach"
-
-#: inc/deployuserinteractiontemplate.class.php:453
-msgid "Maximum number of retry allowed"
-msgstr "Maximale Anzahl der erlaubten Versuche"
-
-#: inc/deployuserinteractiontemplate.class.php:465
-msgid "Alert display timeout"
-msgstr "Zeitüberschreitung beim Anzeigen der Meldung"
-
-#: inc/deployuserinteractiontemplate.class.php:558
-msgid "Button ok"
-msgstr "Button ok"
-
-#: inc/deployuserinteractiontemplate.class.php:559
-msgid "Button yes"
-msgstr "Button ja"
-
-#: inc/deployuserinteractiontemplate.class.php:560
-msgid "Button continue"
-msgstr "Button fortsetzen"
-
-#: inc/deployuserinteractiontemplate.class.php:561
-msgid "Button retry"
-msgstr "Button wiederholen"
-
-#: inc/deployuserinteractiontemplate.class.php:562
-msgid "Button try"
-msgstr "Button testen"
-
-#: inc/deployuserinteractiontemplate.class.php:563
-msgid "Button no"
-msgstr "Button nein"
-
-#: inc/deployuserinteractiontemplate.class.php:564
-msgid "Button cancel"
-msgstr "Button abbrechen"
-
-#: inc/deployuserinteractiontemplate.class.php:565
-msgid "Button abort"
-msgstr "Button abbrechen"
-
-#: inc/deployuserinteractiontemplate.class.php:566
-msgid "Button ignore"
-msgstr "Button ignorieren"
-
-#: inc/deployuserinteractiontemplate.class.php:567
-msgid "No active session"
-msgstr "Keine aktive Sitzung"
-
-#: inc/deployuserinteractiontemplate.class.php:568
-msgid "Alert timeout exceeded"
-msgstr "Alarm Zeitüberschreitung "
-
-#: inc/deployuserinteractiontemplate.class.php:569
-msgid "Several active sessions"
-msgstr "Mehrere aktive Sitzungen"
-
-#: inc/deployuserinteractiontemplate.class.php:677
-msgid "Behaviors"
-msgstr "Verhalten"
-
-#: setup.php:388
-msgid "Switch ports history"
-msgstr "Wechsle Port-Historie"
-
-#: setup.php:390
-msgid "Unused switch ports"
-msgstr "Ungenutzter Switch-Port"
-
-#: setup.php:530
-msgid "Your GLPI version not compatible, require >= 9.2 and < 9.3"
-msgstr "Deine GLPI Version ist nicht kompatibel, erfordert >= 9.2 und < 9.3"
-
-#: setup.php:536
+#: setup.php:459
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo Erweiterung (php) ist erforderlich..."
 
-#: setup.php:549
+#: setup.php:467
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Bitte den Ordner %s im Verzeichnis glpi/plugins löschen"
+
+#: b/deploy/index.php:66
+msgid "Deploy module has been disabled for this agent"
+msgstr "Bereitstellungsmodul wurde deaktiviert für diesen Agenten"
+
+#: b/deploy/index.php:137
+msgid "Checks"
+msgstr "Prüfungen"
+
+#: b/deploy/index.php:138
+msgid "Files download"
+msgstr "Dateien herunterladen"
+
+#: b/deploy/index.php:139
+msgid "Files preparation"
+msgstr "Dateien vorbereiten"
+
+#: b/deploy/index.php:267
+msgid "User canceled the job"
+msgstr "Benutzer hat Aufgabe abgebrochen"
+
+#: b/deploy/index.php:269
+msgid "User postponed the job"
+msgstr "Der Benutzer hat den Vorgang verschoben"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig:41
+msgid "Interaction format"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig:50
+msgid "Interaction type"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig:57
+msgid "Alert icon"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig:64
+msgid "Retry job after"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig:70
+msgid "Maximum number of retry allowed"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig:82
+msgid "Alert display timeout"
+msgstr ""
