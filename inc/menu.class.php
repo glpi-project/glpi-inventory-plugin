@@ -105,6 +105,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     public static function getAdditionalMenuOptions()
     {
         $fi_full_path = Plugin::getWebDir('glpiinventory');
+        $fi_rel_path  = Plugin::getWebDir('glpiinventory', false);
 
         $elements = [
           'iprange'                    => 'PluginGlpiinventoryIPRange',
@@ -152,20 +153,20 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $fi_full_path . "/pics/menu_import.png",
             ['alt' => __('Import', 'glpiinventory')]
         );
-        $options['deploypackage']['links'][$img] = '/plugins/glpiinventory/front/deploypackage.import.php';
+        $options['deploypackage']['links'][$img] = '/' . $fi_rel_path . '/front/deploypackage.import.php';
        // Add icon for clean unused deploy files
         $img = Html::image(
             $fi_full_path . "/pics/menu_cleanfiles.png",
             ['alt' => __('Clean unused files', 'glpiinventory')]
         );
-        $options['deploypackage']['links'][$img] = '/plugins/glpiinventory/front/deployfile.clean.php';
+        $options['deploypackage']['links'][$img] = '/' . $fi_rel_path . '/front/deployfile.clean.php';
 
        // Add icon for documentation
         $img = Html::image(
             $fi_full_path . "/pics/books.png",
             ['alt' => __('Import', 'glpiinventory')]
         );
-        $options['menu']['links'][$img] = '/plugins/glpiinventory/front/documentation.php';
+        $options['menu']['links'][$img] = '/' . $fi_rel_path . '/front/documentation.php';
 
         $options['agent'] = [
            'title' => Agent::getTypeName(),
