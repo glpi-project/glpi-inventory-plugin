@@ -66,8 +66,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.1']
-        db-image: ['mysql:5.7', 'mysql:8.0', 'mariadb:10.2', 'mariadb:10.6']
+        include:
+          - {php-versions: "7.4", db-image: "mysql:5.7"}
+          - {php-versions: "8.1", db-image: "mysql:8.0"}
+          - {php-versions: "8.1", db-image: "mariadb:10.2"}
+          - {php-versions: "8.1", db-image: "mariadb:10.6"}
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
