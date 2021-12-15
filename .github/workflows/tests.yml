@@ -3,17 +3,23 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - develop
+    tags:
+       - '*'
+  pull_request:
+  workflow_dispatch:
 
 jobs:
 
   lint:
-    #runs-on: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        #php-versions: ['7.4', '8.1']
-        php-versions: ['8.1']
+        php-versions: ['7.4', '8.1']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -40,7 +46,6 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       env:
-        #runner: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
         runner: ubuntu-latest
       with:
         php-version: ${{ matrix.php-versions }}
@@ -58,14 +63,11 @@ jobs:
         vendor/bin/phpcs
 
   phpunit:
-    #runs-on: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        #php-versions: ['7.4', '8.0', '8.1']
-        php-versions: ['8.1']
-          #db-image: ['mysql:5.7', 'mysql:8.0', 'mariadb:10.2', 'mariadb:10.6']
-        db-image: ['mysql:8.0']
+        php-versions: ['7.4', '8.1']
+        db-image: ['mysql:5.7', 'mysql:8.0', 'mariadb:10.2', 'mariadb:10.6']
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
@@ -116,7 +118,6 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       env:
-        #runner: "${{ github.repository == 'glpi-network/glpi-inventory-plugin' && 'self-hosted' || 'ubuntu-latest' }}"
         runner: ubuntu-latest
       with:
         php-version: ${{ matrix.php-versions }}
