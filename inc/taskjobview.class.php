@@ -263,14 +263,20 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $addition_enabled = (count($taskjobs) == 0);
 
         echo "<form id='taskjobs_form' method='post' action='" . $this->getFormURL() . "'>";
-        echo "<table class='tab_cadrehov package_item_list' id='taskjobs_list'>\n";
+        echo "<table class='tab_cadrehov package_item_list search-results table  card-table table-hover table-striped ' id='taskjobs_list'>\n";
+        echo "<thead><tr>";
+        echo "<td>" .  Html::getCheckAllAsCheckbox("taskjobs_list", mt_rand()) . "</td>";
+        echo "<td class='text-wrap'>" . __('Name') . "</td>";
+        echo "<td class='text-wrap'>" . __('Comment') . "</td>";
+        echo "<td></td>";
+        echo "</tr></thead>";
+
         foreach ($taskjobs as $taskjob_data) {
             echo "<tr class='tab_bg_2'>\n";
             $this->showTaskjobSummary($taskjob_data);
             echo "</tr>\n";
         }
 
-        $this->showListHeader($task_id, $deletion_enabled, $addition_enabled);
         echo "</table>\n";
 
        //Show the delete button for selected object
@@ -312,6 +318,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     {
         $id = $taskjob_data['id'];
         $name = $taskjob_data['name'];
+        $comment = $taskjob_data['comment'];
         if ($name == '') {
             $name = "($id)";
         }
@@ -326,6 +333,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                   $name
                </a>
             </td>
+            <td>" . $comment ."</td>
             <td class='rowhandler control'><div class='drag'/></td>";
 
         PluginGlpiinventoryToolbox::logIfExtradebug(
