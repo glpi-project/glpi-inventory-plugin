@@ -388,6 +388,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
     public function showFormButtons($options = [])
     {
+
         if (isset($this->fields['id'])) {
             $ID = $this->fields['id'];
         }
@@ -415,7 +416,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         }
 
         echo "<td>";
-        if ($this->can($ID, PURGE)) {
+        if (!$this->isNewID($ID) && $this->can($ID, PURGE)) {
             echo Html::submit("<i class='fas fa-trash me-1'></i>" . _x('button', 'Delete permanently'), [
             'name'    => 'purge',
             'confirm' => __('Confirm the final deletion?'),
