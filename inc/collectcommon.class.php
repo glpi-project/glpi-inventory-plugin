@@ -92,8 +92,9 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     {
         $class     = get_called_class();
         $pfCollect = new $class();
-        $pfCollect->showList($item->fields['id']);
         $pfCollect->showForm($item->fields['id']);
+        $pfCollect->showList($item->fields['id']);
+
         return true;
     }
 
