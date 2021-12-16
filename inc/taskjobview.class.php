@@ -573,8 +573,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
         if (
-            !Session::haveRight('plugin_glpiinventory_networkequipment', READ)
-              and !Session::haveRight('plugin_glpiinventory_printer', READ)
+            !Session::haveRight('plugin_glpiinventory_networkequipment', CREATE)
+              and !Session::haveRight('plugin_glpiinventory_printer', CREATE)
         ) {
             if (isset($modules_methods['networkdiscovery'])) {
                 unset($modules_methods['networkdiscovery']);

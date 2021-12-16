@@ -365,12 +365,12 @@ class PluginGlpiinventoryProfile extends Profile
           /*['itemtype'  => 'PluginGlpiinventoryConfigSecurity',
                 'label'     => __('SNMP credentials', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_configsecurity'],*/
-          /*['itemtype'  => 'PluginGlpiinventoryNetworkEquipment',
+          ['rights'    => [CREATE => __('Create')],
                 'label'     => __('Network equipment SNMP', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_networkequipment'],*/
-          /*['itemtype'  => 'PluginGlpiinventoryPrinter',
+                'field'     => 'plugin_glpiinventory_networkequipment'],
+          ['rights'    => [CREATE => __('Create')],
                 'label'     => __('Printer SNMP', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_printer'],*/
+                'field'     => 'plugin_glpiinventory_printer'],
           /*['itemtype'  => 'PluginGlpiinventoryUnmanaged',
                 'label'     => __('Unmanaged devices', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_unmanaged'],*/
