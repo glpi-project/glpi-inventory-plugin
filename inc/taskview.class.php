@@ -396,7 +396,10 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "<tr>";
         echo "<td colspan='2'>";
         if ($this->isNewID($ID)) {
-            echo Html::submit(_x('button', 'Add'), ['name' => 'add']);
+            echo Html::submit(_x('button', 'Add'), [
+                'name' => 'add',
+                'class' => 'btn btn-primary'
+            ]);
         } else {
             echo Html::hidden('id', ['value' => $ID]);
             echo Html::submit("<i class='fas fa-save me-1'></i>" . _x('button', 'Save'), [
