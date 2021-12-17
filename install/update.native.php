@@ -58,11 +58,11 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     if ($DB->tableExists('glpi_plugin_glpiinventory_agents')) {
         $agents_mapping = [];
         $agents_tables = [
-          'glpi_plugin_glpiinventory_taskjobstates',
-          'glpi_plugin_glpiinventory_statediscoveries',
-          'glpi_plugin_glpiinventory_unmanageds',
-          'glpi_plugin_glpiinventory_printers',
-          'glpi_plugin_glpiinventory_networkequipments'
+            'glpi_plugin_glpiinventory_ignoredimportdevices',
+            'glpi_plugin_glpiinventory_rulematchedlogs',
+            'glpi_plugin_glpiinventory_statediscoveries',
+            'glpi_plugin_glpiinventory_taskjobstates',
+            'glpi_plugin_glpiinventory_unmanageds',
         ];
         $iterator = $DB->request([
           'FROM' => 'glpi_plugin_glpiinventory_agents'
