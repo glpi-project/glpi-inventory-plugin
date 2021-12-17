@@ -127,10 +127,6 @@ class UpdateTest extends TestCase
         $DB->query('DELETE FROM glpi_rulecriterias WHERE id > 108');
         $DB->query('DELETE FROM glpi_rules WHERE id > 105');
 
-        // Change GLPI core tables auto-increment to simulate presence of native data
-        $DB->query('ALTER TABLE glpi_agents AUTO_INCREMENT = 72');
-        $DB->query('ALTER TABLE glpi_snmpcredentials AUTO_INCREMENT = 37');
-
         if ($version != '') {
             $sqlfile = "tests/Installation/mysql/i-" . $version . ".sql";
            // Load specific plugin version in database
