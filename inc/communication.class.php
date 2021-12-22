@@ -201,4 +201,47 @@ class PluginGlpiinventoryCommunication
 
         return $response;
     }
+
+   /**
+    * Get all netdiscovery tasks prepared for the agent
+    *
+    * @param integer $agent_id id of the agent
+    */
+    public function getNetdiscoveryTaskAgent($agent_id)
+    {
+        $response = [];
+        $pfTask = new PluginGlpiinventoryTask();
+
+        $jobstates = $pfTask->getTaskjobstatesForAgent($agent_id, ['networkdiscovery']);
+        foreach ($jobstates as $jobstate) {
+            $netdiscovery = new PluginGlpiinventoryNetworkDiscovery();
+            $run_response = $netdiscovery->run($jobstate, 1);
+            $response[] = $run_response;
+        }
+
+        return $response;
+    }
+
+   /**
+    * Get all credential for a given netdiscovery task prepared for the agent
+    *
+    * @param integer $agent_id id of the agent
+    * @param integer $job_id id of the job
+    */
+    public function getNetdiscoveryTaskCredentials($agent_id, $job_id)
+    {
+        $credentials = [];
+        $jobstate = new PluginGlpiinventoryTaskjobstate();
+
+        $jobstate->getFromDB($job_id);
+        $fields = $jobstate->fields;
+        $started = PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA;
+
+        if ($fields['agents_id'] == $agent_id && $fields['state'] == $started) {
+            $netdiscovery = new PluginGlpiinventoryNetworkDiscovery();
+            $credentials = $netdiscovery->getcredentials($fields['items_id']);
+        }
+
+        return $credentials;
+    }
 }

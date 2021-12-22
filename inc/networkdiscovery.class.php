@@ -309,9 +309,10 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
     * When agent contact server, this function send job data to agent
     *
     * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
+    * @param integer $glpimode glpi mode, 0 for XML, 1 for JSON
     * @return array
     */
-    public function run($jobstate)
+    public function run($jobstate, $glpimode = 0)
     {
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -384,6 +385,22 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 "Merged with " . $changestate
             );
         }
+
+        if ($glpimode) {
+            return [
+                'param'   => [
+                    'threads' => $param_attrs['THREADS_DISCOVERY'],
+                    'timeout' => $param_attrs['TIMEOUT'],
+                    'pid' => $param_attrs['PID']
+                ],
+                'iprange' => [
+                    'start' => $iprange_attrs['IPSTART'],
+                    'end' => $iprange_attrs['IPEND'],
+                    'entity' => $iprange_attrs['ENTITY']
+                ]
+            ];
+        }
+
         $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
         $a_auths = $iprange_credentials->find(
             ['plugin_glpiinventory_ipranges_id' => $pfIPRange->fields['id']],
@@ -410,5 +427,33 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             ]
          ] + $auth_nodes
         ];
+    }
+
+   /**
+    * After agent has contacted server, this function returns credentials data to agent
+    *
+    * @param integer $iprange_id id of the iprange
+    * @return array
+    */
+    public function getcredentials($iprange_id)
+    {
+        $pfToolbox = new PluginGlpiinventoryToolbox();
+        $pfIPRange = new PluginGlpiinventoryIPRange();
+        $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
+
+        $pfIPRange->getFromDB($iprange_id);
+        $a_auths = $iprange_credentials->find(
+            ['plugin_glpiinventory_ipranges_id' => $pfIPRange->fields['id']],
+            ['rank']
+        );
+        $auth_list = [];
+        foreach ($a_auths as $dataAuth) {
+            $auth = $pfToolbox->addCred($dataAuth['snmpcredentials_id']);
+            if (count($auth)) {
+                $auth_list[] = $auth;
+            }
+        }
+
+        return $auth_list;
     }
 }

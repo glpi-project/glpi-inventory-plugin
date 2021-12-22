@@ -135,6 +135,40 @@ class PluginGlpiinventoryToolbox
 
 
    /**
+    * Add credentials to JSON
+    *
+    * @param integer $p_id Authenticate id
+    **/
+    public function addCred($p_id)
+    {
+        $json = [];
+        $credentials = new SNMPCredential();
+        if ($credentials->getFromDB($p_id)) {
+            $json = [
+               'id' => $p_id,
+               'version' => $credentials->getRealVersion()
+            ];
+
+            if ($credentials->fields['snmpversion'] == '3') {
+                $json['username'] = $credentials->fields['username'];
+                if ($credentials->fields['authentication'] != '0') {
+                    $json['authprotocol'] = $credentials->getAuthProtocol();
+                }
+                $json['authpassword'] = (new GLPIKey())->decrypt($credentials->fields['auth_passphrase']);
+                if ($credentials->fields['encryption'] != '0') {
+                    $json['privprotocol'] = $credentials->getEncryption();
+                }
+                $json['privpassword'] = (new GLPIKey())->decrypt($credentials->fields['priv_passphrase']);
+            } else {
+                $json['community'] = $credentials->fields['community'];
+            }
+        }
+
+        return $json;
+    }
+
+
+   /**
     * Get IP for device
     *
     * @param string $itemtype

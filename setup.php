@@ -377,6 +377,9 @@ function plugin_init_glpiinventory()
         array_push($CFG_GLPI['layout_excluded_pages'], "timeslot.form.php");
     }
 
+    $PLUGIN_HOOKS['handle_netdiscovery_task']['glpiinventory'] = 'plugin_glpiinventory_handle_netdiscovery_task';
+    $PLUGIN_HOOKS['handle_netinventory_task']['glpiinventory'] = 'plugin_glpiinventory_handle_netinventory_task';
+    $PLUGIN_HOOKS['inventory_get_params']['glpiinventory'] = 'plugin_glpiinventory_inventory_get_params';
     $PLUGIN_HOOKS[Hooks::PROLOG_RESPONSE]['glpiinventory'] = 'plugin_glpiinventory_prolog_response';
     $PLUGIN_HOOKS[Hooks::NETWORK_DISCOVERY]['glpiinventory'] = 'plugin_glpiinventory_network_discovery';
     $PLUGIN_HOOKS[Hooks::NETWORK_INVENTORY]['glpiinventory'] = 'plugin_glpiinventory_network_inventory';

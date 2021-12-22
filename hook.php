@@ -973,9 +973,22 @@ function plugin_glpiinventory_prolog_response($params)
 {
     $agent = new Agent();
     if ($agent->getFromDBByCrit(['deviceid' => $params['deviceid']])) {
-        $communication = new PluginGlpiinventoryCommunication();
-        $tasks_response = $communication->getTaskAgent($agent->fields['id']);
-        $params['response'] += $tasks_response;
+        if ($params['mode'] == 1) { // Handle case agent ask a prolog but we answer a json
+            $params['item'] = $agent;
+            $params['options']['response'] = [];
+            $netdisco = plugin_glpiinventory_handle_netdiscovery_task($params);
+            if (!empty($netdisco['options']['response']['netdiscovery'])) {
+                $params['response']['tasks']['netdiscovery'] = $netdisco['options']['response']['netdiscovery'];
+            }
+            $netinv = plugin_glpiinventory_handle_netinventory_task($params);
+            if (!empty($netinv['options']['response']['netinventory'])) {
+                $params['response']['tasks']['netinventory'] = $netinv['options']['response']['netinventory'];
+            }
+        } else {
+            $communication = new PluginGlpiinventoryCommunication();
+            $tasks_response = $communication->getTaskAgent($agent->fields['id']);
+            $params['response'] += $tasks_response;
+        }
     }
 
     return $params;
@@ -1012,6 +1025,50 @@ function plugin_glpiinventory_network_inventory($params)
         );
 
         $params['response'] = $response['response'];
+    }
+
+    return $params;
+}
+
+function plugin_glpiinventory_handle_netdiscovery_task(array $params)
+{
+    $agent = $params['item'];
+    $communication = new PluginGlpiinventoryCommunication();
+
+    $tasks_response = $communication->getNetdiscoveryTaskAgent($agent->fields['id']);
+    if (!empty($tasks_response)) {
+        $a_plugin = plugin_version_glpiinventory();
+        $params['options']['response']['netdiscovery'][] = [
+            'options' => $tasks_response,
+            'version' => PLUGIN_GLPIINVENTORY_VERSION,
+            'server' => $a_plugin['shortname']
+        ];
+    }
+
+    return $params;
+}
+
+function plugin_glpiinventory_handle_netinventory_task(array $params)
+{
+    // TODO implement this hook
+
+    return $params;
+}
+
+function plugin_glpiinventory_inventory_get_params(array $params)
+{
+    $content = json_decode($params['options']['content'], true);
+    $a_plugin = plugin_version_glpiinventory();
+
+    if ($content['use'] == $a_plugin['shortname'] . '_netdiscovery') {
+        $agent = $params['item'];
+        $job_id = $content['params_id'];
+        $communication = new PluginGlpiinventoryCommunication();
+
+        $credentials_response = $communication->getNetdiscoveryTaskCredentials($agent->fields['id'], $job_id);
+        if (!empty($credentials_response)) {
+            $params['options']['response']['credentials'] = $credentials_response;
+        }
     }
 
     return $params;
