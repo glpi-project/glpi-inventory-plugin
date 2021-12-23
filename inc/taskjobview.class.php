@@ -161,7 +161,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $this->showForm($ID, $options);
        // hide taskjobs_list after a job has been selected from the taskjobs_list
         echo Html::scriptBlock("$(document).ready(function() {
-            document.getElementById(\"taskjobs_list\").style.display =\"none\";
+            $(\"#taskjobs_list\").hide();
          });");
     }
 
@@ -241,7 +241,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             echo "<input type='button' class='submit taskjobs_create'" .
                 " data-ajaxurl='" . $this->getBaseUrlFor('fi.job.create') . "'" .
                 " data-task_id='$task_id' style='padding:5px;margin:0;right:0' " .
-                " onclick='document.getElementById(\"taskjobs_list\").style.display =\"none\"'" .
+                " onclick='$(\"#taskjobs_list\").hide()'" .
                 " value=' " . __('Add a job', 'glpiinventory') . " '/>";
             echo "</div>";
         } else {
