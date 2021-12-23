@@ -159,6 +159,10 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     {
         $ID = $this->ajaxLoadItem($options);
         $this->showForm($ID, $options);
+       // hide taskjobs_list after a job has been selected from the taskjobs_list
+        echo Html::scriptBlock("$(document).ready(function() {
+            document.getElementById(\"taskjobs_list\").style.display =\"none\";
+         });");
     }
 
 
@@ -243,9 +247,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         } else {
             echo "<table class='tab_cadrehov package_item_list search-results table  card-table table-hover table-striped ' id='taskjobs_list'>\n";
 
-           //Show list header only if a legacy task with more than one job was imported
-            $hide_list = (count($taskjobs) > 1);
-            if ($hide_list) {
+           //Show list header only if a legacy task with more than one job was imported or not in editing mode
+            $show_list = (count($taskjobs) > 1 || !isset($_REQUEST['edit_job']));
+            if ($show_list) {
                 echo "<thead><tr>";
                 echo "<td>" .  Html::getCheckAllAsCheckbox("taskjobs_list", mt_rand()) . "</td>";
                 echo "<td class='text-wrap'>" . __('Name') . "</td>";
@@ -255,13 +259,21 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             }
 
             foreach ($taskjobs as $taskjob_data) {
-               //Keep row hidden when there's only one
-                echo "<tr class='tab_bg_2'" . ($hide_list ? "" : " hidden='true'") . ">\n";
+               //Keep row hidden when showing row is not required
+                echo "<tr class='tab_bg_2'" . ($show_list ? "" : " hidden='true'") . ">\n";
                 $this->showTaskjobSummary($taskjob_data);
                 echo "</tr>\n";
             }
 
             echo "</table>\n";
+
+           //Show the delete button for selected object when showing row is required
+            if ($show_list) {
+                echo "<div class='center' style='padding:5px'>";
+                echo "<input type='submit' name='delete_taskjobs' value=\"" .
+                __('Delete', 'glpiinventory') . "\" class='submit'>";
+                echo "</div>";
+            }
         }
         Html::closeForm();
     }
