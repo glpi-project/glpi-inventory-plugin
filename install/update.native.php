@@ -623,45 +623,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         'PluginFusioninventoryIgnoredimportdevice' => 'RefusedEquipment'
     ];
 
-    $query = [
-        'SELECT'       => [
-            'information_schema.columns.table_name as TABLE_NAME'
-        ],
-        'FROM'         => 'information_schema.columns',
-        'INNER JOIN'   => [
-            'information_schema.tables' => [
-                'FKEY' => [
-                    'information_schema.tables'  => 'table_name',
-                    'information_schema.columns' => 'table_name',
-                    [
-                        'AND' => [
-                            'information_schema.tables.table_schema' => new QueryExpression(
-                                $DB->quoteName('information_schema.columns.table_schema')
-                            ),
-                        ]
-                    ],
-                ]
-            ]
-        ],
-        'WHERE'       => [
-            'information_schema.tables.table_schema'  => $DB->dbdefault,
-            'information_schema.tables.table_name'    => ['LIKE', 'glpi\_%'],
-            'information_schema.tables.table_type'    => 'BASE TABLE',
-            'information_schema.columns.column_name' => 'itemtype'
-        ],
-        'ORDER'       => ['TABLE_NAME']
-    ];
-
-    $typed_iterator = $DB->request($query);
-    foreach ($typed_iterator as $typed_table) {
-        foreach ($types as $orig_type => $new_type) {
-            $migration->addPostQuery(
-                $DB->buildUpdate(
-                    $typed_table,
-                    ['itemtype' => $new_type],
-                    ['itemtype' => $orig_type]
-                )
-            );
-        }
+    foreach ($types as $orig_type => $new_type) {
+        $migration->renameItemtype($orig_type, $new_type, false);
     }
 }
