@@ -800,7 +800,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                   'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
                                   'uuid'      => $uuid,
                                   'code'      => 'running',
-                                  'msg'       => (isset($name) ? "$name: file " : "file ").$a_values['path']." | size ".$a_values['size']
+                                  'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size']
                                 ];
                                 if (isset($a_values['sendheaders'])) {
                                     $params['sendheaders'] = $a_values['sendheaders'];
