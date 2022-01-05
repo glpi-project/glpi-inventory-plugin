@@ -469,6 +469,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             $data_refused['agents_id'] = $data_refused['plugin_glpiinventory_agents_id'];
 
             unset(
+                $data_refused['id'],
                 $data_refused['date'],
                 $data_refused['plugin_glpiinventory_agents_id'],
             );
