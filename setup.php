@@ -84,7 +84,7 @@ function script_endswith($scriptname)
  */
 function plugin_init_glpiinventory()
 {
-    global $PLUGIN_HOOKS, $CFG_GLPI, $_UGET;
+    global $PLUGIN_HOOKS, $CFG_GLPI, $PF_CONFIG;
 
     $PLUGIN_HOOKS['csrf_compliant']['glpiinventory'] = true;
 
@@ -217,6 +217,11 @@ function plugin_init_glpiinventory()
           'Computer' => ['Plugin']];
 
         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_glpiinventory_ipranges';
+
+        $CFG_GLPI['threads_networkdiscovery'] = $PF_CONFIG['threads_networkdiscovery'];
+        $CFG_GLPI['threads_networkinventory'] = $PF_CONFIG['threads_networkinventory'];
+        $CFG_GLPI['timeout_networkdiscovery'] = $PF_CONFIG['timeout_networkdiscovery'];
+        $CFG_GLPI['timeout_networkinventory'] = $PF_CONFIG['timeout_networkinventory'];
 
        /**
         * Load the relevant javascript/css files only on pages that need them.
