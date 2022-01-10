@@ -789,13 +789,18 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             break;
 
                         case 'file':
+                            if ($sid) {
+                                $pfCollect_File = new PluginGlpiinventoryCollect_File();
+                                $job = current($pfCollect_File->find(['id' => $sid]));
+                                $name = $job['name'];
+                            }
                             if (!empty($a_values['path']) && isset($a_values['size'])) {
                                 // update files content
                                 $params = [
                                   'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
                                   'uuid'      => $uuid,
                                   'code'      => 'running',
-                                  'msg'       => "file " . $a_values['path'] . " | size " . $a_values['size']
+                                  'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size']
                                 ];
                                 if (isset($a_values['sendheaders'])) {
                                     $params['sendheaders'] = $a_values['sendheaders'];
@@ -809,12 +814,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             break;
                     }
 
-                    if (!isset($pfCollect_subO)) {
-                        // return anyway the next CSRF token to client
-                        break;
-                    }
-
-                    if ($add_value) {
+                    if ($add_value && isset($pfCollect_subO)) {
                        // add collected information to computer
                         $pfCollect_subO->updateComputer(
                             $computers_id,
@@ -823,27 +823,30 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         );
                     }
 
-                  // change status of state table row
-                    $pfTaskjobstate->changeStatus(
-                        $jobstate['id'],
-                        PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA
-                    );
+                  // change status of state table row unless still in error
+                    if ($jobstate['state'] != PluginGlpiinventoryTaskjobstate::IN_ERROR) {
+                        $pfTaskjobstate->changeStatus(
+                            $jobstate['id'],
+                            PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA
+                        );
+                    }
 
                      // add logs to job
-                    if (count($a_values)) {
-                          $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
-                          $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                    if ($add_value && count($a_values)) {
+                        $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
+                        $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                        $pfTaskjoblog->addTaskjoblog(
+                            $jobstate['id'],
+                            $jobstate['items_id'],
+                            $jobstate['itemtype'],
+                            $flag,
+                            isset($name) ? "$name: $message" : $message
+                        );
                     } else {
-                        $flag    = PluginGlpiinventoryTaskjoblog::TASK_ERROR;
+                       // Can only happen on file collect
                         $message = __('Path not found', 'glpiinventory');
+                        $pfTaskjobstate->fail(isset($name) ? "$name: $message" : $message);
                     }
-                    $pfTaskjoblog->addTaskjoblog(
-                        $jobstate['id'],
-                        $jobstate['items_id'],
-                        $jobstate['itemtype'],
-                        $flag,
-                        $message
-                    );
                 }
                 break;
 
@@ -859,7 +862,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $pfTaskjobstate->changeStatusFinish(
                     $jobstate['id'],
                     $jobstate['items_id'],
-                    $jobstate['itemtype']
+                    $jobstate['itemtype'],
+                    $jobstate['state'] == PluginGlpiinventoryTaskjobstate::IN_ERROR ? "1" : ""
                 );
 
                 break;
