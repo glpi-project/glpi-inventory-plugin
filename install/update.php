@@ -1229,7 +1229,7 @@ function do_agent_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']            = ['type'    => 'autoincrement',
                                                 'value'   => ''];
-    $a_table['fields']['entities_id']   = ['type'    => 'integer',
+    $a_table['fields']['entities_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                 'value'   => '1'];
@@ -1243,7 +1243,7 @@ function do_agent_migration($migration)
                                                 'value'   => null];
     $a_table['fields']['device_id']     = ['type'    => 'string',
                                                 'value'   => null];
-    $a_table['fields']['computers_id']  = ['type'    => 'integer',
+    $a_table['fields']['computers_id']  = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['token']         = ['type'    => 'string',
                                                 'value'   => null];
@@ -1699,9 +1699,9 @@ function do_entities_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
-    $a_table['fields']['entities_id'] = ['type'    => 'integer',
+    $a_table['fields']['entities_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
-    $a_table['fields']['transfers_id_auto'] = ['type'    => 'integer',
+    $a_table['fields']['transfers_id_auto'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                               'value'   => null];
     $a_table['fields']['agent_base_url'] = ['type'    => 'string',
                                               'value'   => ''];
@@ -1830,7 +1830,7 @@ function do_iprange_migration($migration)
     $a_table['fields']  = [
       'id'         => ['type'    => 'autoincrement',    'value'   => ''],
       'name'       => ['type'    => 'string',           'value'   => null],
-      'entities_id' => ['type'    => 'integer',          'value'   => null],
+      'entities_id' => ['type'    => 'int unsigned NOT NULL DEFAULT 0',          'value'   => null],
       'ip_start'   => ['type'    => 'string',           'value'   => null],
       'ip_end'     => ['type'    => 'string',           'value'   => null]
     ];
@@ -1892,7 +1892,7 @@ function do_locks_migration($migration)
     $a_table['fields']['tablename']  = [
                      'type'    => "varchar(64) NOT NULL DEFAULT ''",
                      'value'   => null];
-    $a_table['fields']['items_id']   = ['type'    => 'integer',
+    $a_table['fields']['items_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['tablefields'] = ['type'    => 'text',
                                             'value'   => null];
@@ -1960,9 +1960,9 @@ function do_iprangeconfigsecurity_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_ipranges_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_ipranges_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_configsecurities_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_configsecurities_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['rank']       = ['type'    => 'integer',
                                             'value'   => '1'];
@@ -2035,9 +2035,9 @@ function do_profile_migration($migration)
                                                'value'   => ''];
         $a_table['fields']['right']      = ['type'    => 'char',
                                                'value'   => null];
-        $a_table['fields']['plugins_id'] = ['type'    => 'integer',
+        $a_table['fields']['plugins_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                'value'   => null];
-        $a_table['fields']['profiles_id'] = ['type'    => 'integer',
+        $a_table['fields']['profiles_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                'value'   => null];
 
         $a_table['oldfields']  = [
@@ -2125,7 +2125,7 @@ function do_timeslot_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']           = ['type'    => 'autoincrement',
                                               'value'   => ''];
-    $a_table['fields']['entities_id']  = ['type'    => 'integer',
+    $a_table['fields']['entities_id']  = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                               'value'   => null];
     $a_table['fields']['is_recursive'] = ['type'    => 'bool',
                                               'value'   => '0'];
@@ -2156,9 +2156,9 @@ function do_timeslot_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']           = ['type'    => 'autoincrement',
                                               'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_timeslots_id']  = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_timeslots_id']  = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                               'value'   => null];
-    $a_table['fields']['entities_id']  = ['type'    => 'integer',
+    $a_table['fields']['entities_id']  = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                               'value'   => null];
     $a_table['fields']['is_recursive'] = ['type'    => 'bool',
                                               'value'   => '0'];
@@ -2207,13 +2207,13 @@ function do_unmanaged_migration($migration)
                                             'value'   => null];
     $a_table['fields']['date_mod']   = ['type'    => 'timestamp',
                                             'value'   => null];
-    $a_table['fields']['entities_id'] = ['type'    => 'integer',
+    $a_table['fields']['entities_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
-    $a_table['fields']['locations_id'] = ['type'    => 'integer',
+    $a_table['fields']['locations_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['is_deleted'] = ['type'    => 'bool',
                                             'value'   => null];
-    $a_table['fields']['users_id']   = ['type'    => 'integer',
+    $a_table['fields']['users_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['serial']     = ['type'    => 'string',
                                             'value'   => null];
@@ -2229,17 +2229,17 @@ function do_unmanaged_migration($migration)
                                             'value'   => null];
     $a_table['fields']['accepted']   = ['type'    => 'bool',
                                             'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_agents_id'] = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_agents_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['ip']         = ['type'    => 'string',
                                             'value'   => null];
     $a_table['fields']['hub']        = ['type'    => 'bool',
                                             'value'   => null];
-    $a_table['fields']['states_id']  = ['type'    => 'integer',
+    $a_table['fields']['states_id']  = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['sysdescr']   = ['type'    => 'text',
                                             'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_configsecurities_id'] = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_configsecurities_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['is_dynamic'] = ['type'    => 'bool',
                                             'value'   => null];
@@ -2381,13 +2381,13 @@ function do_ignoredimport_migration($migration)
     $a_table['fields']['itemtype']   = [
                      'type'    => "varchar(100) DEFAULT NULL",
                      'value'   => null];
-    $a_table['fields']['entities_id'] = ['type'    => 'integer',
+    $a_table['fields']['entities_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['ip']         = ['type'    => 'string',
                                             'value'   => null];
     $a_table['fields']['mac']        = ['type'    => 'string',
                                             'value'   => null];
-    $a_table['fields']['rules_id']   = ['type'    => 'integer',
+    $a_table['fields']['rules_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['method']     = ['type'    => 'string',
                                             'value'   => null];
@@ -2396,7 +2396,7 @@ function do_ignoredimport_migration($migration)
     $a_table['fields']['uuid']       = ['type'    => 'string',
                                             'value'   => null];
     $a_table['fields']['plugin_glpiinventory_agents_id']
-                                    = ['type'    => 'integer',
+                                    = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
 
     $a_table['oldfields']  = [];
@@ -2459,7 +2459,7 @@ function do_blacklist_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                              'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_criterium_id'] = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_criterium_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                                      'value'   => null];
     $a_table['fields']['value']  = ['type'    => 'string',
                                           'value'   => null];
@@ -2763,7 +2763,7 @@ function do_rulematchedlog_migration($migration)
     $newTable = "glpi_plugin_glpiinventory_rulematchedlogs";
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                  `id` int NOT NULL AUTO_INCREMENT,
+                  `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -2772,7 +2772,7 @@ function do_rulematchedlog_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
 
     $migration->migrationOneTable($newTable);
@@ -2785,7 +2785,7 @@ function do_rulematchedlog_migration($migration)
     $migration->addField(
         $newTable,
         "items_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -2795,12 +2795,12 @@ function do_rulematchedlog_migration($migration)
     $migration->addField(
         $newTable,
         "rules_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agents_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -2875,7 +2875,7 @@ function do_computercomputer_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']                     = ['type'    => 'autoincrement',
                                                    'value'   => ''];
-    $a_table['fields']['computers_id']           = ['type'    => 'integer',
+    $a_table['fields']['computers_id']           = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                    'value'   => null];
     $a_table['fields']['operatingsystem_installationdate'] = ['type'    => 'timestamp',
                                                              'value'   => null];
@@ -3042,7 +3042,7 @@ function do_computerstat_migration($migration)
         $a_table['oldname'] = [];
 
         $a_table['fields']  = [];
-        $a_table['fields']['id']      = ['type'    => "smallint NOT NULL AUTO_INCREMENT",
+        $a_table['fields']['id']      = ['type'    => "smallint unsigned NOT NULL AUTO_INCREMENT",
                                                          'value'   => ''];
         $a_table['fields']['day']     = ['type'    => "smallint NOT NULL DEFAULT '0'",
                                                          'value'   => ''];
@@ -3093,7 +3093,7 @@ function do_configlogfield_migration($migration)
     renamePluginFields($migration, $newTable);
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                  `id` int NOT NULL AUTO_INCREMENT,
+                  `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -3102,19 +3102,19 @@ function do_configlogfield_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3127,24 +3127,24 @@ function do_configlogfield_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "field",
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3182,7 +3182,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -3190,13 +3190,13 @@ function do_networkport_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
@@ -3220,38 +3220,38 @@ function do_networkport_migration($migration)
         $newTable,
         "FK_port_source",
         "networkports_id_source",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "networkports_id_source",
         "networkports_id_source",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_port_destination",
         "networkports_id_destination",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "networkports_id_destination",
         "networkports_id_destination",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
         "plugin_glpiinventory_agentprocesses_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->dropField($newTable, "process_number");
     $migration->migrationOneTable($newTable);
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
@@ -3266,17 +3266,17 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "networkports_id_source",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "networkports_id_destination",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addKey(
         $newTable,
@@ -3304,7 +3304,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                     `id` int NOT NULL AUTO_INCREMENT,
+                     `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -3313,7 +3313,7 @@ function do_networkport_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
@@ -3380,7 +3380,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -3388,13 +3388,13 @@ function do_networkport_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "networkports_id",
         "networkports_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3491,13 +3491,13 @@ function do_networkport_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_networking_ports",
         "networkports_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3513,12 +3513,12 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "networkports_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3710,7 +3710,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                     `id` int NOT NULL AUTO_INCREMENT,
+                     `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -3719,19 +3719,19 @@ function do_networkport_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "networkports_id",
         "networkports_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3755,25 +3755,25 @@ function do_networkport_migration($migration)
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
         "plugin_glpiinventory_agentprocesses_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->changeField(
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_ports",
         "networkports_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
 
@@ -3842,17 +3842,17 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "networkports_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3872,7 +3872,7 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addKey(
         $newTable,
@@ -3987,7 +3987,7 @@ function do_printer_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -3995,13 +3995,13 @@ function do_printer_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "printers_id",
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4013,13 +4013,13 @@ function do_printer_migration($migration)
         $newTable,
         "plugin_fusinvsnmp_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4038,19 +4038,19 @@ function do_printer_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_printers",
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_snmp_connection",
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4086,12 +4086,12 @@ function do_printer_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4101,7 +4101,7 @@ function do_printer_migration($migration)
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4143,7 +4143,7 @@ function do_printer_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -4151,13 +4151,13 @@ function do_printer_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "printers_id",
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4242,24 +4242,24 @@ function do_printer_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_printers",
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4350,7 +4350,7 @@ function do_printer_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -4358,25 +4358,25 @@ function do_printer_migration($migration)
         $newTable,
         "id",
         "id",
-        "bigint NOT NULL AUTO_INCREMENT"
+        "bigint unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "printers_id",
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "cartridges_id",
         "cartridges_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4389,24 +4389,24 @@ function do_printer_migration($migration)
         $newTable,
         "ID",
         "id",
-        "bigint NOT NULL AUTO_INCREMENT"
+        "bigint unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_printers",
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_cartridges",
         "cartridges_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
 
@@ -4440,22 +4440,22 @@ function do_printer_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "bigint NOT NULL AUTO_INCREMENT"
+        "bigint unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "printers_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "cartridges_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4619,7 +4619,7 @@ function do_networkequipment_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -4627,13 +4627,13 @@ function do_networkequipment_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "networkequipments_id",
         "networkequipments_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4645,7 +4645,7 @@ function do_networkequipment_migration($migration)
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4682,19 +4682,19 @@ function do_networkequipment_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_networking",
         "networkequipments_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_snmp_connection",
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4706,7 +4706,7 @@ function do_networkequipment_migration($migration)
         $newTable,
         "plugin_fusinvsnmp_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->dropKey(
         $newTable,
@@ -4736,12 +4736,12 @@ function do_networkequipment_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "networkequipments_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4751,7 +4751,7 @@ function do_networkequipment_migration($migration)
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4812,7 +4812,7 @@ function do_networkequipment_migration($migration)
 
         if (!$DB->tableExists($newTable)) {
             $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
         }
@@ -4820,13 +4820,13 @@ function do_networkequipment_migration($migration)
             $newTable,
             "id",
             "id",
-            "int NOT NULL AUTO_INCREMENT"
+            "int unsigned NOT NULL AUTO_INCREMENT"
         );
         $migration->changeField(
             $newTable,
             "networkequipments_id",
             "networkequipments_id",
-            "int NOT NULL DEFAULT '0'"
+            "int unsigned NOT NULL DEFAULT '0'"
         );
         $migration->changeField(
             $newTable,
@@ -4839,13 +4839,13 @@ function do_networkequipment_migration($migration)
             $newTable,
             "ID",
             "id",
-            "int NOT NULL AUTO_INCREMENT"
+            "int unsigned NOT NULL AUTO_INCREMENT"
         );
         $migration->changeField(
             $newTable,
             "FK_networking",
             "networkequipments_id",
-            "int NOT NULL DEFAULT '0'"
+            "int unsigned NOT NULL DEFAULT '0'"
         );
         $migration->changeField(
             $newTable,
@@ -4861,12 +4861,12 @@ function do_networkequipment_migration($migration)
         $migration->addField(
             $newTable,
             "id",
-            "int NOT NULL AUTO_INCREMENT"
+            "int unsigned NOT NULL AUTO_INCREMENT"
         );
         $migration->addField(
             $newTable,
             "networkequipments_id",
-            "int NOT NULL DEFAULT '0'"
+            "int unsigned NOT NULL DEFAULT '0'"
         );
         $migration->addField(
             $newTable,
@@ -5041,7 +5041,7 @@ function do_configsecurity_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -5049,7 +5049,7 @@ function do_configsecurity_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
       $migration->changeField(
           $newTable,
@@ -5110,7 +5110,7 @@ function do_configsecurity_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
@@ -5144,7 +5144,7 @@ function do_configsecurity_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
@@ -5236,7 +5236,7 @@ function do_statediscovery_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query("CREATE TABLE `" . $newTable . "` (
-                     `id` int NOT NULL AUTO_INCREMENT,
+                     `id` int unsigned NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC");
     }
@@ -5244,19 +5244,19 @@ function do_statediscovery_migration($migration)
         $newTable,
         "id",
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_taskjob_id",
         "plugin_glpiinventory_taskjob_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_agents_id",
         "plugin_glpiinventory_agents_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -5316,17 +5316,17 @@ function do_statediscovery_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int NOT NULL AUTO_INCREMENT"
+        "int unsigned NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_taskjob_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agents_id",
-        "int NOT NULL DEFAULT '0'"
+        "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -5409,9 +5409,9 @@ function do_computerlicense_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']                  = ['type'    => 'autoincrement',
                                                      'value'   => ''];
-    $a_table['fields']['computers_id']        = ['type'    => 'integer',
+    $a_table['fields']['computers_id']        = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                      'value'   => null];
-    $a_table['fields']['softwarelicenses_id'] = ['type'    => 'integer',
+    $a_table['fields']['softwarelicenses_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                      'value'   => null];
     $a_table['fields']['name']                = ['type'    => 'string',
                                                      'value'   => null];
@@ -5460,7 +5460,7 @@ function do_computerremotemgmt_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']                  = ['type'    => 'autoincrement',
                                                      'value'   => ''];
-    $a_table['fields']['computers_id']        = ['type'    => 'integer',
+    $a_table['fields']['computers_id']        = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                      'value'   => null];
     $a_table['fields']['number']              = ['type'    => 'string',
                                                      'value'   => null];
@@ -5800,9 +5800,9 @@ function do_deployuserinteraction_migration($migration)
 
     if (!$DB->tableExists('glpi_plugin_glpiinventory_deployuserinteractions')) {
         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployuserinteractiontemplates` (
-         `id` int NOT NULL AUTO_INCREMENT,
+         `id` int unsigned NOT NULL AUTO_INCREMENT,
          `name` varchar(255) DEFAULT NULL,
-         `entities_id` int NOT NULL DEFAULT '0',
+         `entities_id` int unsigned NOT NULL DEFAULT '0',
          `is_recursive` tinyint NOT NULL DEFAULT '0',
          `date_creation` timestamp NULL DEFAULT NULL,
          `date_mod` timestamp NULL DEFAULT NULL,
@@ -5868,7 +5868,7 @@ function do_deployfile_migration($migration)
                'value'  => null
       ],
       'entities_id' => [
-               'type'   => 'int NOT NULL',
+               'type'   => 'int unsigned NOT NULL',
                'value'  => null
       ],
       'is_recursive' => [
@@ -5921,7 +5921,7 @@ function do_deployfile_migration($migration)
             $migration->addField(
                 'glpi_plugin_fusinvdeploy_files',
                 'entities_id',
-                'integer',
+                'int unsigned NOT NULL DEFAULT 0',
                 ['value' => 0]
             );
             $migration->addField(
@@ -6008,7 +6008,7 @@ function do_deploypackage_migration($migration)
                'value' => null
       ],
       'entities_id' =>  [
-               'type' => 'int NOT NULL',
+               'type' => 'int unsigned NOT NULL',
                'value' => null
       ],
       'is_recursive' =>  [
@@ -6028,7 +6028,7 @@ function do_deploypackage_migration($migration)
                'value' => null
       ],
       'plugin_glpiinventory_deploygroups_id' => [
-               'type'    => 'integer',
+               'type'    => 'int unsigned NOT NULL DEFAULT 0',
                'value'   => null
       ],
 
@@ -6118,9 +6118,9 @@ function do_deploypackage_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'integer',
+    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'int unsigned NOT NULL DEFAULT 0',
                                                                           'value' => null];
-    $a_table['fields']['entities_id']   = ['type'    => 'integer',
+    $a_table['fields']['entities_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                'value'   => null];
     $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                'value'   => '0'];
@@ -6147,11 +6147,11 @@ function do_deploypackage_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'integer',
+    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'int unsigned NOT NULL DEFAULT 0',
                                                                           'value' => null];
-    $a_table['fields']['groups_id']   = ['type'    => 'integer',
+    $a_table['fields']['groups_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                              'value'   => null];
-    $a_table['fields']['entities_id']   = ['type'    => 'integer',
+    $a_table['fields']['entities_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                'value'   => null];
     $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                'value'   => '0'];
@@ -6179,11 +6179,11 @@ function do_deploypackage_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'integer',
+    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'int unsigned NOT NULL DEFAULT 0',
                                                                           'value' => null];
-    $a_table['fields']['profiles_id']   = ['type'    => 'integer',
+    $a_table['fields']['profiles_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                'value'   => null];
-    $a_table['fields']['entities_id']   = ['type'    => 'integer',
+    $a_table['fields']['entities_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                'value'   => null];
     $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                'value'   => '0'];
@@ -6211,9 +6211,9 @@ function do_deploypackage_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'integer',
+    $a_table['fields']['plugin_glpiinventory_deploypackages_id'] = ['type' => 'int unsigned NOT NULL DEFAULT 0',
                                                                           'value' => null];
-    $a_table['fields']['users_id']   = ['type'    => 'integer',
+    $a_table['fields']['users_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['oldfields']  = [];
 
@@ -6266,7 +6266,7 @@ function do_deploymirror_migration($migration)
          'value' => null
       ],
       'entities_id' =>  [
-         'type' => 'int NOT NULL',
+         'type' => 'int unsigned NOT NULL',
          'value' => null
       ],
       'is_active' =>  [
@@ -6287,7 +6287,7 @@ function do_deploymirror_migration($migration)
          'value' => null
       ],
       'locations_id' => [
-         'type' => 'int NOT NULL',
+         'type' => 'int unsigned NOT NULL',
          'value' => 0
       ],
       'comment' =>  [
@@ -6419,7 +6419,7 @@ function do_deploygroup_migration($migration)
          'value' => null
       ],
       'plugin_glpiinventory_deploygroups_id' =>  [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
       'itemtype' =>  [
@@ -6427,7 +6427,7 @@ function do_deploygroup_migration($migration)
          'value' => null
       ],
       'items_id' =>  [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
     ];
@@ -6475,7 +6475,7 @@ function do_deploygroup_migration($migration)
          'value' => null
       ],
       'plugin_glpiinventory_deploygroups_id' =>  [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
       'fields_array' =>  [
@@ -6645,7 +6645,7 @@ function do_credentialESX_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                              'value'   => ''];
-    $a_table['fields']['entities_id'] = ['type'    => 'integer',
+    $a_table['fields']['entities_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                              'value'   => null];
     $a_table['fields']['is_recursive'] = ['type'    => 'bool',
                                              'value'   => null];
@@ -6693,9 +6693,9 @@ function do_credentialESX_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                              'value'   => ''];
-    $a_table['fields']['entities_id'] = ['type'    => 'integer',
+    $a_table['fields']['entities_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                              'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_credentials_id'] = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_credentials_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                              'value'   => null];
     $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => ""];
@@ -6738,7 +6738,7 @@ function do_collect_migration($migration)
                                              'value'   => ''];
     $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-    $a_table['fields']['entities_id']   = ['type'    => 'integer',
+    $a_table['fields']['entities_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                 'value'   => null];
@@ -6771,7 +6771,7 @@ function do_collect_migration($migration)
                                              'value'   => ''];
     $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_collects_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_collects_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['hive']       = ['type'    => 'string',
                                              'value'   => null];
@@ -6800,9 +6800,9 @@ function do_collect_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => "autoincrement",
                                              'value'   => ''];
-    $a_table['fields']['computers_id'] = ['type'    => 'integer',
+    $a_table['fields']['computers_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                              'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_collects_registries_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_collects_registries_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['key']       = ['type'    => 'string',
                                              'value'   => null];
@@ -6832,7 +6832,7 @@ function do_collect_migration($migration)
                                              'value'   => ''];
     $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_collects_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_collects_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['moniker']    = ['type'    => 'string',
                                              'value'   => null];
@@ -6861,9 +6861,9 @@ function do_collect_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => "autoincrement",
                                              'value'   => ''];
-    $a_table['fields']['computers_id'] = ['type'    => 'integer',
+    $a_table['fields']['computers_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                              'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_collects_wmis_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_collects_wmis_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['property']   = ['type'    => 'string',
                                              'value'   => null];
@@ -6892,7 +6892,7 @@ function do_collect_migration($migration)
                                              'value'   => ''];
     $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_collects_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_collects_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['dir']        = ['type'    => 'string',
                                              'value'   => null];
@@ -6941,9 +6941,9 @@ function do_collect_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']         = ['type'    => "autoincrement",
                                              'value'   => ''];
-    $a_table['fields']['computers_id'] = ['type'    => 'integer',
+    $a_table['fields']['computers_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                              'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_collects_files_id']   = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_collects_files_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                 'value'   => null];
     $a_table['fields']['pathfile']   = ['type'    => 'text',
                                              'value'   => null];
@@ -7146,9 +7146,9 @@ function do_task_migration($migration)
     $a_table['fields']  = [];
     $a_table['fields']['id']                     = ['type'    => 'autoincrement',
                                                         'value'   => ''];
-    $a_table['fields']['plugin_glpiinventory_tasks_id'] = ['type'    => 'integer',
+    $a_table['fields']['plugin_glpiinventory_tasks_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                                  'value'   => null];
-    $a_table['fields']['entities_id']   = ['type'    => 'integer',
+    $a_table['fields']['entities_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                'value'   => null];
     $a_table['fields']['name']          = ['type'    => 'string',
                                                'value'   => null];
@@ -7162,7 +7162,7 @@ function do_task_migration($migration)
                                                'value'   => null];
     $a_table['fields']['comment']       = ['type'    => 'text',
                                                'value'   => null];
-    $a_table['fields']['rescheduled_taskjob_id'] = ['type'    => 'integer',
+    $a_table['fields']['rescheduled_taskjob_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                                         'value'   => null];
     $a_table['fields']['statuscomments'] = ['type'    => 'text',
                                                 'value'   => null];
@@ -8126,7 +8126,7 @@ function migratePluginTables($migration, $a_table)
                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         } else {
             $query = "CREATE TABLE `" . $a_table['name'] . "` (
-                        `id` int NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         }
@@ -8608,7 +8608,7 @@ function renamePluginFields(Migration $migration, string $table)
                 $table,
                 $old_field,
                 $new_field,
-                'int'
+                'int unsigned NOT NULL DEFAULT 0'
             );
             $migration->dropKey($table, $old_field);
             $migration->addKey($table, $new_field);

@@ -131,7 +131,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             'glpi_plugin_glpiinventory_taskjobstates',
             'plugin_glpiinventory_agents_id',
             'agents_id',
-            'integer'
+            'int unsigned NOT NULL DEFAULT 0'
         );
     }
     $migration->dropKey('glpi_plugin_glpiinventory_taskjobstates', 'plugin_glpiinventory_agents_id');
@@ -142,7 +142,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             'glpi_plugin_glpiinventory_statediscoveries',
             'plugin_glpiinventory_agents_id',
             'agents_id',
-            'integer'
+            'int unsigned NOT NULL DEFAULT 0'
         );
     }
     $migration->dropKey('glpi_plugin_glpiinventory_statediscoveries', 'plugin_glpiinventory_agents_id');
@@ -242,7 +242,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             'glpi_plugin_glpiinventory_ipranges_snmpcredentials',
             'plugin_glpiinventory_configsecurities_id',
             'snmpcredentials_id',
-            'integer'
+            'int unsigned NOT NULL DEFAULT 0'
         );
         $migration->dropKey('glpi_plugin_glpiinventory_ipranges_snmpcredentials', 'unicity');
         $migration->addKey('glpi_plugin_glpiinventory_ipranges_snmpcredentials', ['plugin_glpiinventory_ipranges_id', 'snmpcredentials_id'], 'unicity');
