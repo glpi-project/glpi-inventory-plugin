@@ -118,10 +118,10 @@ class PackageJsonTest extends TestCase
         $DB->query($query);
 
         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deploypackages` (
-         `id` int NOT NULL AUTO_INCREMENT,
+         `id` int unsigned NOT NULL AUTO_INCREMENT,
          `name` varchar(255) NOT NULL,
          `comment` text DEFAULT NULL,
-         `entities_id` int NOT NULL,
+         `entities_id` int unsigned NOT NULL,
          `is_recursive` tinyint NOT NULL DEFAULT '0',
          `date_mod` timestamp NULL DEFAULT NULL,
          `uuid` varchar(255) DEFAULT NULL,
@@ -140,10 +140,10 @@ class PackageJsonTest extends TestCase
         $DB->query($query);
 
         $query = "CREATE TABLE `glpi_plugin_glpiinventory_deployorders` (
-        `id` int NOT NULL,
+        `id` int unsigned NOT NULL,
         `type` int NOT NULL,
         `create_date` timestamp NOT NULL,
-        `plugin_glpiinventory_deploypackages_id` int NOT NULL,
+        `plugin_glpiinventory_deploypackages_id` int unsigned NOT NULL,
         `json` longtext,
         PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;";

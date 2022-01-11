@@ -55,7 +55,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
          'value'   => ''
       ],
       'entities_id' => [
-         'type'    => 'integer',
+         'type'    => 'int unsigned NOT NULL DEFAULT 0',
          'value'   => null
       ],
       'name' => [
@@ -83,11 +83,11 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
          'value'   => null
       ],
       'plugin_glpiinventory_timeslots_prep_id' => [
-         'type'    => 'integer',
+         'type'    => 'int unsigned NOT NULL DEFAULT 0',
          'value'   => null
       ],
       'plugin_glpiinventory_timeslots_exec_id' => [
-         'type'    => 'integer',
+         'type'    => 'int unsigned NOT NULL DEFAULT 0',
          'value'   => null
       ],
     ];
@@ -147,11 +147,11 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
          'value'   => ''
       ],
       'plugin_glpiinventory_tasks_id' => [
-         'type'    => 'integer',
+         'type'    => 'int unsigned NOT NULL DEFAULT 0',
          'value'   => null
       ],
       'entities_id' => [
-         'type'    => 'integer',
+         'type'    => 'int unsigned NOT NULL DEFAULT 0',
          'value'   => null
       ],
       'name' => [
@@ -242,11 +242,11 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
 
     $table['fields']  = [
       'id' => [
-         'type' => 'BIGINT NOT NULL AUTO_INCREMENT',
+         'type' => 'BIGINT unsigned NOT NULL AUTO_INCREMENT',
          'value' => ''
       ],
       'plugin_glpiinventory_taskjobstates_id' => [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
       'date' => [
@@ -254,7 +254,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
          'value' => null
       ],
       'items_id' => [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
       'itemtype' => [
@@ -344,15 +344,15 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
 
     $table['fields'] = [
       'id' => [
-         'type' => 'bigint not null auto_increment',
+         'type' => 'bigint unsigned not null auto_increment',
          'value' => '0'
       ],
       'plugin_glpiinventory_taskjobs_id' => [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
       'items_id' => [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
       'itemtype' => [
@@ -360,7 +360,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
          'value' => null
       ],
       'plugin_glpiinventory_agents_id' => [
-         'type' => 'integer',
+         'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
       'specificity' => [
