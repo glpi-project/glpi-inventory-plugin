@@ -345,21 +345,15 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     {
         global $CFG_GLPI;
 
-        $p = [];
-        if ($params['id'] == -1) {
-            $p['value']    = '';
-            $p['itemtype'] = '';
-            $p['id']       = 0;
-        } else {
-            $credential = new PluginGlpiinventoryCredential();
-            $credential->getFromDB($params['id']);
-            if ($credential->getFromDB($params['id'])) {
-                $p = $credential->fields;
-            } else {
-                $p['value']    = '';
-                $p['itemtype'] = '';
-                $p['id']       = 0;
-            }
+        $p = [
+            'value'    => '',
+            'itemtype' => '',
+            'id'       => 0
+        ];
+
+        $credential = new PluginGlpiinventoryCredential();
+        if ($credential->getFromDB($params['id'])) {
+            $p = $credential->fields;
         }
 
         $types     = self::getCredentialsItemTypes();
