@@ -109,11 +109,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
 
         switch ($field['type']) {
             case 'credentials':
-                if ($ID > 0) {
-                    $field['id'] = $this->fields['plugin_glpiinventory_credentials_id'];
-                } else {
-                    $field['id'] = -1;
-                }
+                $field['id'] = $this->fields['plugin_glpiinventory_credentials_id'];
                 PluginGlpiinventoryCredential::dropdownCredentials($field);
                 break;
         }
