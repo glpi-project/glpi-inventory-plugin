@@ -153,7 +153,7 @@ jobs:
       run: |
         mysql -e 'create database IF NOT EXISTS glpi;' -u root --password=glpi1iventory -h 127.0.0.1 -P 3306
     - name: Install GLPI
-      run: cd glpi && php bin/console glpi:database:install -n --ansi --config-dir=tests/config --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306
+      run: cd glpi && php bin/console glpi:database:install -n --ansi --config-dir=tests/config --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306 --strict-configuration
     - name: Install plugin
       run: cd glpi && php bin/console glpi:plugin:install -vvv -n --ansi --config-dir=tests/config --username=glpi glpiinventory
     - name: Activate plugin
