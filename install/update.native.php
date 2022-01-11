@@ -54,9 +54,13 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Migration Classname : " . $migrationname);
     $migration->displayMessage("Use core capabilities");
 
+    //mappings
+    $agents_mapping = [];
+    $unmanageds_mapping = [];
+    $refused_mappings = [];
+
     $migration->displayMessage("Use core agent");
     if ($DB->tableExists('glpi_plugin_glpiinventory_agents')) {
-        $agents_mapping = [];
         $agents_tables = [
             'glpi_plugin_glpiinventory_ignoredimportdevices',
             'glpi_plugin_glpiinventory_rulematchedlogs',
@@ -109,10 +113,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                         $DB->buildUpdate(
                             $agent_table,
                             [
-                            'plugin_glpiinventory_agents_id' => $new_agent_id
+                                'plugin_glpiinventory_agents_id' => $new_agent_id
                             ],
                             [
-                            'plugin_glpiinventory_agents_id' => $old_agent_id
+                                'plugin_glpiinventory_agents_id' => $old_agent_id
                             ]
                         )
                     );
@@ -160,10 +164,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     $DB->buildUpdate(
                         'glpi_plugin_glpiinventory_agentmodules',
                         [
-                        'exceptions' => exportArrayToDB($agent_ids)
+                            'exceptions' => exportArrayToDB($agent_ids)
                         ],
                         [
-                        'id' => $agentmodule['id']
+                            'id' => $agentmodule['id']
                         ]
                     )
                 );
@@ -211,10 +215,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                         $DB->buildUpdate(
                             $cs_table,
                             [
-                            'plugin_glpiinventory_configsecurities_id' => $new_cs_id
+                                'plugin_glpiinventory_configsecurities_id' => $new_cs_id
                             ],
                             [
-                            'plugin_glpiinventory_configsecurities_id' => $old_cs_id
+                                'plugin_glpiinventory_configsecurities_id' => $old_cs_id
                             ]
                         )
                     );
@@ -421,86 +425,59 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core unmanaged equipments");
     if ($DB->tableExists('glpi_plugin_glpiinventory_unmanageds')) {
         // agents and snmp credentials must be migrated before that one
-        $DB->queryOrDie(
-            "INSERT INTO `glpi_unmanageds` (
-                `name`,
-                `date_mod`,
-                `entities_id`,
-                `locations_id`,
-                `is_deleted`,
-                `users_id`,
-                `serial`,
-                `otherserial`,
-                `contact`,
-                `domains_id`,
-                `comment`,
-                `itemtype`,
-                `accepted`,
-                `agents_id`,
-                `ip`,
-                `hub`,
-                `states_id`,
-                `sysdescr`,
-                `snmpcredentials_id`,
-                `is_dynamic`
-              )
-              SELECT
-                `name`,
-                `date_mod`,
-                `entities_id`,
-                `locations_id`,
-                `is_deleted`,
-                `users_id`,
-                `serial`,
-                `otherserial`,
-                `contact`,
-                `domain`,
-                `comment`,
-                `item_type`,
-                `accepted`,
-                `plugin_glpiinventory_agents_id`,
-                `ip`,
-                `hub`,
-                `states_id`,
-                `sysdescr`,
-                `plugin_glpiinventory_configsecurities_id`,
-                `is_dynamic`
-              FROM `glpi_plugin_glpiinventory_unmanageds`;"
-        );
+        $iterator = $DB->request([
+            'FROM' => 'glpi_plugin_glpiinventory_unmanageds'
+        ]);
+        $unmanaged = new Unmanaged();
+
+        foreach ($iterator as $data_unmanaged) {
+            $old_id = $data_unmanaged['id'];
+
+            //mappings
+            $data_unmanaged['domains_id'] = $data_unmanaged['domain'];
+            $data_unmanaged['itemtype'] = $data_unmanaged['item_type'];
+            $data_unmanaged['agents_id'] = $data_unmanaged['plugin_glpiinventory_agents_id'];
+            $data_unmanaged['snmpcredentials_id'] = $data_unmanaged['plugin_glpiinventory_configsecurities_id'];
+
+            unset(
+                $data_unmanaged['id'],
+                $data_unmanaged['domain'],
+                $data_unmanaged['item_type'],
+                $data_unmanaged['plugin_glpiinventory_agents_id'],
+                $data_unmanaged['plugin_glpiinventory_configsecurities_id']
+            );
+
+            $new_id = $unmanaged->add(Toolbox::addslashes_deep($data_unmanaged));
+            $unmanageds_mapping[$old_id] = $new_id;
+        }
         $migration->dropTable('glpi_plugin_glpiinventory_unmanageds');
     }
 
     $migration->displayMessage("Use core refused equipments");
     if ($DB->tableExists('glpi_plugin_glpiinventory_ignoredimportdevices')) {
         // agents must be migrated before that one
-        $DB->queryOrDie(
-            "INSERT INTO `glpi_refusedequipments` (
-                `name`,
-                `date_creation`,
-                `itemtype`,
-                `entities_id`,
-                `ip`,
-                `mac`,
-                `rules_id`,
-                `method`,
-                `serial`,
-                `uuid`,
-                `agents_id`
-              )
-              SELECT
-                `name`,
-                `date`,
-                `itemtype`,
-                `entities_id`,
-                `ip`,
-                `mac`,
-                `rules_id`,
-                `method`,
-                `serial`,
-                `uuid`,
-                `plugin_glpiinventory_agents_id`
-              FROM `glpi_plugin_glpiinventory_ignoredimportdevices`;"
-        );
+        $iterator = $DB->request([
+            'FROM' => 'glpi_plugin_glpiinventory_ignoredimportdevices'
+        ]);
+        $refused = new RefusedEquipment();
+
+        foreach ($iterator as $data_refused) {
+            $old_id = $data_refused['id'];
+
+            //mappings
+            $data_refused['date_creation'] = $data_refused['date'];
+            $data_refused['agents_id'] = $data_refused['plugin_glpiinventory_agents_id'];
+
+            unset(
+                $data_refused['id'],
+                $data_refused['date'],
+                $data_refused['plugin_glpiinventory_agents_id'],
+            );
+
+            $new_id = $refused->add(Toolbox::addslashes_deep($data_refused));
+            $refused_mappings[$old_id] = $new_id;
+        }
+
         $migration->dropTable('glpi_plugin_glpiinventory_ignoredimportdevices');
     }
 
@@ -613,4 +590,57 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $crontask = new CronTask();
     $crontask->deleteByCriteria(['itemtype' => 'PluginGlpiinventoryNetworkPortLog', 'name' => 'cleannetworkportlogs']);
     $crontask->deleteByCriteria(['itemtype' => 'PluginGlpiinventoryAgent', 'name' => 'cleanoldagents']);
+
+    //Fix old types
+    $types = [
+        'PluginFusioninventoryAgent' => 'Agent',
+        'PluginFusioninventoryUnmanaged' => 'Unmanaged',
+        'PluginFusioninventoryIgnoredimportdevice' => 'RefusedEquipment'
+    ];
+
+    $mappings = [
+        'Agent' => $agents_mapping,
+        'Unmanaged' => $unmanageds_mapping,
+        'RefusedEquipment' => $refused_mappings
+    ];
+
+    $types_iterator = $DB->request(
+        [
+            'SELECT' => [
+                'table_name AS TABLE_NAME',
+                'column_name AS COLUMN_NAME',
+            ],
+            'FROM'   => 'information_schema.columns',
+            'WHERE'  => [
+                'table_schema' => $DB->dbdefault,
+                'table_name'   => ['LIKE', 'glpi\_%'],
+                'OR' => [
+                    ['column_name'  => 'itemtype'],
+                    ['column_name'  => ['LIKE', 'itemtype_%']],
+                ],
+            ],
+            'ORDER'  => 'TABLE_NAME',
+        ]
+    );
+
+    foreach ($types_iterator as $type) {
+        foreach ($types as $orig_type => $new_type) {
+            $mapping = $mappings[$new_type];
+            foreach ($mapping as $orig_id => $new_id) {
+                $migration->addPostQuery(
+                    $DB->buildUpdate(
+                        $type['TABLE_NAME'],
+                        [
+                            'itemtype' => $new_type,
+                            'items_id' => $new_id
+                        ],
+                        [
+                            'itemtype' => $orig_type,
+                            'items_id' => $orig_id
+                        ]
+                    )
+                );
+            }
+        }
+    }
 }
