@@ -146,9 +146,6 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         echo "<div class='spaced'>";
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
-        echo "<th colspan=" . count($headers) . ">"
-         . __('Windows registry associated', 'glpiinventory') . "</th>";
-        echo "</tr>";
         echo "<tr>";
         foreach ($headers as $label) {
             echo "<th>" . $label . "</th>";
