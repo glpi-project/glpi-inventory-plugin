@@ -242,7 +242,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
 
     $table['fields']  = [
       'id' => [
-         'type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT',
+         'type' => 'BIGINT NOT NULL AUTO_INCREMENT',
          'value' => ''
       ],
       'plugin_glpiinventory_taskjobstates_id' => [
@@ -344,7 +344,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
 
     $table['fields'] = [
       'id' => [
-         'type' => 'bigint(20) not null auto_increment',
+         'type' => 'bigint not null auto_increment',
          'value' => '0'
       ],
       'plugin_glpiinventory_taskjobs_id' => [

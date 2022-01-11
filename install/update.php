@@ -646,10 +646,10 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
 
    //Push task functionnality
     $migration->addField('glpi_plugin_glpiinventory_tasks', 'last_agent_wakeup', 'timestamp');
-    $migration->addField('glpi_plugin_glpiinventory_tasks', 'wakeup_agent_counter', "int(11) NOT NULL DEFAULT '0'");
-    $migration->addField('glpi_plugin_glpiinventory_tasks', 'wakeup_agent_time', "int(11) NOT NULL DEFAULT '0'");
-    $migration->addField('glpi_plugin_glpiinventory_tasks', 'reprepare_if_successful', "tinyint(1) NOT NULL DEFAULT '1'");
-    $deploy_on_demand = $migration->addField('glpi_plugin_glpiinventory_tasks', 'is_deploy_on_demand', "tinyint(1) NOT NULL DEFAULT '0'");
+    $migration->addField('glpi_plugin_glpiinventory_tasks', 'wakeup_agent_counter', "int NOT NULL DEFAULT '0'");
+    $migration->addField('glpi_plugin_glpiinventory_tasks', 'wakeup_agent_time', "int NOT NULL DEFAULT '0'");
+    $migration->addField('glpi_plugin_glpiinventory_tasks', 'reprepare_if_successful', "tinyint NOT NULL DEFAULT '1'");
+    $deploy_on_demand = $migration->addField('glpi_plugin_glpiinventory_tasks', 'is_deploy_on_demand', "tinyint NOT NULL DEFAULT '0'");
     $migration->addKey('glpi_plugin_glpiinventory_tasks', 'wakeup_agent_counter');
     $migration->addKey('glpi_plugin_glpiinventory_tasks', 'reprepare_if_successful');
     $migration->addKey('glpi_plugin_glpiinventory_tasks', 'is_deploy_on_demand');
@@ -1252,11 +1252,11 @@ function do_agent_migration($migration)
     $a_table['fields']['tag']           = ['type'    => 'string',
                                                 'value'   => null];
     $a_table['fields']['threads_networkdiscovery'] = [
-      'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+      'type' => "int NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
       'value'   => null];
 
     $a_table['fields']['threads_networkinventory'] = [
-      'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+      'type' => "int NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
       'value'   => null];
 
     $a_table['fields']['senddico']      = [
@@ -1265,11 +1265,11 @@ function do_agent_migration($migration)
     ];
 
     $a_table['fields']['timeout_networkdiscovery'] = [
-      'type' => "int(4) NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout'",
+      'type' => "int NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout'",
       'value'   => null
     ];
     $a_table['fields']['timeout_networkinventory'] = [
-      'type' => "int(4) NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout'",
+      'type' => "int NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout'",
       'value'   => null
     ];
     $a_table['fields']['agent_port']    = ['type'    => 'varchar(6)',
@@ -2164,9 +2164,9 @@ function do_timeslot_migration($migration)
                                               'value'   => '0'];
     $a_table['fields']['day']          = ['type'    => 'bool',
                                               'value'   => 1];
-    $a_table['fields']['begin']        = ['type'    => 'int(11) DEFAULT NULL',
+    $a_table['fields']['begin']        = ['type'    => 'int DEFAULT NULL',
                                               'value'   => null];
-    $a_table['fields']['end']          = ['type'    => 'int(11) DEFAULT NULL',
+    $a_table['fields']['end']          = ['type'    => 'int DEFAULT NULL',
                                               'value'   => null];
 
     $a_table['oldfields']  = [];
@@ -2763,7 +2763,7 @@ function do_rulematchedlog_migration($migration)
     $newTable = "glpi_plugin_glpiinventory_rulematchedlogs";
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id` int NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -2772,7 +2772,7 @@ function do_rulematchedlog_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
 
     $migration->migrationOneTable($newTable);
@@ -2785,7 +2785,7 @@ function do_rulematchedlog_migration($migration)
     $migration->addField(
         $newTable,
         "items_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -2795,12 +2795,12 @@ function do_rulematchedlog_migration($migration)
     $migration->addField(
         $newTable,
         "rules_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agents_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3042,11 +3042,11 @@ function do_computerstat_migration($migration)
         $a_table['oldname'] = [];
 
         $a_table['fields']  = [];
-        $a_table['fields']['id']      = ['type'    => "smallint(3) NOT NULL AUTO_INCREMENT",
+        $a_table['fields']['id']      = ['type'    => "smallint NOT NULL AUTO_INCREMENT",
                                                          'value'   => ''];
-        $a_table['fields']['day']     = ['type'    => "smallint(3) NOT NULL DEFAULT '0'",
+        $a_table['fields']['day']     = ['type'    => "smallint NOT NULL DEFAULT '0'",
                                                          'value'   => ''];
-        $a_table['fields']['hour']    = ['type'    => "tinyint(2) NOT NULL DEFAULT '0'",
+        $a_table['fields']['hour']    = ['type'    => "tinyint NOT NULL DEFAULT '0'",
                                                          'value'   => ''];
         $a_table['fields']['counter'] = ['type'    => 'integer',
                                                          'value'   => null];
@@ -3093,7 +3093,7 @@ function do_configlogfield_migration($migration)
     renamePluginFields($migration, $newTable);
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                  `id` int(8) NOT NULL AUTO_INCREMENT,
+                  `id` int NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -3102,54 +3102,54 @@ function do_configlogfield_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "id",
         "id",
-        "int(8) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "days",
         "days",
-        "int(255) NOT NULL DEFAULT '-1'"
+        "int NOT NULL DEFAULT '-1'"
     );
     $migration->migrationOneTable($newTable);
     $migration->changeField(
         $newTable,
         "ID",
         "id",
-        "int(8) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "field",
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->addField(
         $newTable,
         "id",
-        "int(8) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "days",
-        "int(255) NOT NULL DEFAULT '-1'"
+        "int NOT NULL DEFAULT '-1'"
     );
     $migration->addKey(
         $newTable,
@@ -3182,7 +3182,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -3190,13 +3190,13 @@ function do_networkport_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
@@ -3214,44 +3214,44 @@ function do_networkport_migration($migration)
         $newTable,
         "creation",
         "creation",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_port_source",
         "networkports_id_source",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "networkports_id_source",
         "networkports_id_source",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_port_destination",
         "networkports_id_destination",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "networkports_id_destination",
         "networkports_id_destination",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
         "plugin_glpiinventory_agentprocesses_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->dropField($newTable, "process_number");
     $migration->migrationOneTable($newTable);
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
@@ -3261,22 +3261,22 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "creation",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "networkports_id_source",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "networkports_id_destination",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addKey(
         $newTable,
@@ -3304,7 +3304,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -3313,7 +3313,7 @@ function do_networkport_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
@@ -3325,7 +3325,7 @@ function do_networkport_migration($migration)
         $newTable,
         "number",
         "number",
-        "int(4) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3337,7 +3337,7 @@ function do_networkport_migration($migration)
         $newTable,
         "import",
         "import",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->addField(
@@ -3348,7 +3348,7 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "number",
-        "int(4) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3358,7 +3358,7 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "import",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $DB->listFields($newTable, false);
@@ -3380,7 +3380,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -3388,25 +3388,25 @@ function do_networkport_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "networkports_id",
         "networkports_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "ifmtu",
         "ifmtu",
-        "int(8) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "ifspeed",
         "ifspeed",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3418,7 +3418,7 @@ function do_networkport_migration($migration)
         $newTable,
         "ifconnectionstatus",
         "ifconnectionstatus",
-        "int(8) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3430,25 +3430,25 @@ function do_networkport_migration($migration)
         $newTable,
         "ifinoctets",
         "ifinoctets",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "ifinerrors",
         "ifinerrors",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "ifoutoctets",
         "ifoutoctets",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "ifouterrors",
         "ifouterrors",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3478,7 +3478,7 @@ function do_networkport_migration($migration)
         $newTable,
         "trunk",
         "trunk",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3491,13 +3491,13 @@ function do_networkport_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_networking_ports",
         "networkports_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3513,22 +3513,22 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "networkports_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "ifmtu",
-        "int(8) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "ifspeed",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3538,7 +3538,7 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "ifconnectionstatus",
-        "int(8) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3548,22 +3548,22 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "ifinoctets",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "ifinerrors",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "ifoutoctets",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "ifouterrors",
-        "bigint(50) NOT NULL DEFAULT '0'"
+        "bigint NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3593,7 +3593,7 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "trunk",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3710,7 +3710,7 @@ function do_networkport_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $query = "CREATE TABLE `" . $newTable . "` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         $DB->query($query);
@@ -3719,19 +3719,19 @@ function do_networkport_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "networkports_id",
         "networkports_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -3755,25 +3755,25 @@ function do_networkport_migration($migration)
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
         "plugin_glpiinventory_agentprocesses_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->changeField(
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_ports",
         "networkports_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
 
@@ -3842,17 +3842,17 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "networkports_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -3872,7 +3872,7 @@ function do_networkport_migration($migration)
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agentprocesses_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addKey(
         $newTable,
@@ -3987,7 +3987,7 @@ function do_printer_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -3995,13 +3995,13 @@ function do_printer_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "printers_id",
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4013,19 +4013,19 @@ function do_printer_migration($migration)
         $newTable,
         "plugin_fusinvsnmp_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "frequence_days",
         "frequence_days",
-        "int(5) NOT NULL DEFAULT '1'"
+        "int NOT NULL DEFAULT '1'"
     );
     $migration->changeField(
         $newTable,
@@ -4038,19 +4038,19 @@ function do_printer_migration($migration)
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_printers",
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_snmp_connection",
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4086,12 +4086,12 @@ function do_printer_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4101,12 +4101,12 @@ function do_printer_migration($migration)
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "frequence_days",
-        "int(5) NOT NULL DEFAULT '1'"
+        "int NOT NULL DEFAULT '1'"
     );
     $migration->addField(
         $newTable,
@@ -4143,7 +4143,7 @@ function do_printer_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -4151,13 +4151,13 @@ function do_printer_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "printers_id",
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4169,97 +4169,97 @@ function do_printer_migration($migration)
         $newTable,
         "pages_total",
         "pages_total",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_n_b",
         "pages_n_b",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_color",
         "pages_color",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_recto_verso",
         "pages_recto_verso",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "scanned",
         "scanned",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_total_print",
         "pages_total_print",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_n_b_print",
         "pages_n_b_print",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_color_print",
         "pages_color_print",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_total_copy",
         "pages_total_copy",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_n_b_copy",
         "pages_n_b_copy",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_color_copy",
         "pages_color_copy",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "pages_total_fax",
         "pages_total_fax",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->changeField(
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_printers",
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4269,62 +4269,62 @@ function do_printer_migration($migration)
     $migration->addField(
         $newTable,
         "pages_total",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_n_b",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_color",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_recto_verso",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "scanned",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_total_print",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_n_b_print",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_color_print",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_total_copy",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_n_b_copy",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_color_copy",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "pages_total_fax",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addKey(
         $newTable,
@@ -4350,7 +4350,7 @@ function do_printer_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` bigint(100) NOT NULL AUTO_INCREMENT,
+                        `id` bigint NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -4358,55 +4358,55 @@ function do_printer_migration($migration)
         $newTable,
         "id",
         "id",
-        "bigint(100) NOT NULL AUTO_INCREMENT"
+        "bigint NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "printers_id",
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "cartridges_id",
         "cartridges_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "state",
         "state",
-        "int(3) NOT NULL DEFAULT '100'"
+        "int NOT NULL DEFAULT '100'"
     );
     $migration->migrationOneTable($newTable);
     $migration->changeField(
         $newTable,
         "ID",
         "id",
-        "bigint(100) NOT NULL AUTO_INCREMENT"
+        "bigint NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_printers",
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_cartridges",
         "cartridges_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
 
@@ -4440,27 +4440,27 @@ function do_printer_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "bigint(100) NOT NULL AUTO_INCREMENT"
+        "bigint NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "printers_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_mappings_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "cartridges_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "state",
-        "int(3) NOT NULL DEFAULT '100'"
+        "int NOT NULL DEFAULT '100'"
     );
     $migration->addKey(
         $newTable,
@@ -4619,7 +4619,7 @@ function do_networkequipment_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -4627,13 +4627,13 @@ function do_networkequipment_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "networkequipments_id",
         "networkequipments_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4645,7 +4645,7 @@ function do_networkequipment_migration($migration)
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4657,13 +4657,13 @@ function do_networkequipment_migration($migration)
         $newTable,
         "cpu",
         "cpu",
-        "int(3) NOT NULL DEFAULT '0' COMMENT '%'"
+        "int NOT NULL DEFAULT '0' COMMENT '%'"
     );
     $migration->changeField(
         $newTable,
         "memory",
         "memory",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4675,26 +4675,26 @@ function do_networkequipment_migration($migration)
         $newTable,
         "last_PID_update",
         "last_PID_update",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->changeField(
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "FK_networking",
         "networkequipments_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "FK_snmp_connection",
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -4706,7 +4706,7 @@ function do_networkequipment_migration($migration)
         $newTable,
         "plugin_fusinvsnmp_configsecurities_id",
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->dropKey(
         $newTable,
@@ -4736,12 +4736,12 @@ function do_networkequipment_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "networkequipments_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4751,7 +4751,7 @@ function do_networkequipment_migration($migration)
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_configsecurities_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4761,12 +4761,12 @@ function do_networkequipment_migration($migration)
     $migration->addField(
         $newTable,
         "cpu",
-        "int(3) NOT NULL DEFAULT '0' COMMENT '%'"
+        "int NOT NULL DEFAULT '0' COMMENT '%'"
     );
     $migration->addField(
         $newTable,
         "memory",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4776,7 +4776,7 @@ function do_networkequipment_migration($migration)
     $migration->addField(
         $newTable,
         "last_PID_update",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -4812,7 +4812,7 @@ function do_networkequipment_migration($migration)
 
         if (!$DB->tableExists($newTable)) {
             $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
         }
@@ -4820,13 +4820,13 @@ function do_networkequipment_migration($migration)
             $newTable,
             "id",
             "id",
-            "int(11) NOT NULL AUTO_INCREMENT"
+            "int NOT NULL AUTO_INCREMENT"
         );
         $migration->changeField(
             $newTable,
             "networkequipments_id",
             "networkequipments_id",
-            "int(11) NOT NULL DEFAULT '0'"
+            "int NOT NULL DEFAULT '0'"
         );
         $migration->changeField(
             $newTable,
@@ -4839,13 +4839,13 @@ function do_networkequipment_migration($migration)
             $newTable,
             "ID",
             "id",
-            "int(11) NOT NULL AUTO_INCREMENT"
+            "int NOT NULL AUTO_INCREMENT"
         );
         $migration->changeField(
             $newTable,
             "FK_networking",
             "networkequipments_id",
-            "int(11) NOT NULL DEFAULT '0'"
+            "int NOT NULL DEFAULT '0'"
         );
         $migration->changeField(
             $newTable,
@@ -4861,12 +4861,12 @@ function do_networkequipment_migration($migration)
         $migration->addField(
             $newTable,
             "id",
-            "int(11) NOT NULL AUTO_INCREMENT"
+            "int NOT NULL AUTO_INCREMENT"
         );
         $migration->addField(
             $newTable,
             "networkequipments_id",
-            "int(11) NOT NULL DEFAULT '0'"
+            "int NOT NULL DEFAULT '0'"
         );
         $migration->addField(
             $newTable,
@@ -5041,7 +5041,7 @@ function do_configsecurity_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query('CREATE TABLE `' . $newTable . '` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
     }
@@ -5049,7 +5049,7 @@ function do_configsecurity_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
       $migration->changeField(
           $newTable,
@@ -5103,14 +5103,14 @@ function do_configsecurity_migration($migration)
         $newTable,
         "is_deleted",
         "is_deleted",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->changeField(
         $newTable,
         "ID",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
@@ -5144,7 +5144,7 @@ function do_configsecurity_migration($migration)
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
@@ -5189,7 +5189,7 @@ function do_configsecurity_migration($migration)
     $migration->addField(
         $newTable,
         "is_deleted",
-        "tinyint(1) NOT NULL DEFAULT '0'"
+        "tinyint NOT NULL DEFAULT '0'"
     );
     $migration->addKey(
         $newTable,
@@ -5236,7 +5236,7 @@ function do_statediscovery_migration($migration)
 
     if (!$DB->tableExists($newTable)) {
         $DB->query("CREATE TABLE `" . $newTable . "` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC");
     }
@@ -5244,19 +5244,19 @@ function do_statediscovery_migration($migration)
         $newTable,
         "id",
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_taskjob_id",
         "plugin_glpiinventory_taskjob_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_agents_id",
         "plugin_glpiinventory_agents_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
@@ -5280,53 +5280,53 @@ function do_statediscovery_migration($migration)
         $newTable,
         "threads",
         "threads",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "nb_ip",
         "nb_ip",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "nb_found",
         "nb_found",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "nb_error",
         "nb_error",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "nb_exists",
         "nb_exists",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
         $newTable,
         "nb_import",
         "nb_import",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $migration->addField(
         $newTable,
         "id",
-        "int(11) NOT NULL AUTO_INCREMENT"
+        "int NOT NULL AUTO_INCREMENT"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_taskjob_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "plugin_glpiinventory_agents_id",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
@@ -5346,32 +5346,32 @@ function do_statediscovery_migration($migration)
     $migration->addField(
         $newTable,
         "threads",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "nb_ip",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "nb_found",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "nb_error",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "nb_exists",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->addField(
         $newTable,
         "nb_import",
-        "int(11) NOT NULL DEFAULT '0'"
+        "int NOT NULL DEFAULT '0'"
     );
     $migration->migrationOneTable($newTable);
     $DB->listFields($newTable, false);
@@ -5800,10 +5800,10 @@ function do_deployuserinteraction_migration($migration)
 
     if (!$DB->tableExists('glpi_plugin_glpiinventory_deployuserinteractions')) {
         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployuserinteractiontemplates` (
-         `id` int(11) NOT NULL AUTO_INCREMENT,
+         `id` int NOT NULL AUTO_INCREMENT,
          `name` varchar(255) DEFAULT NULL,
-         `entities_id` int(11) NOT NULL DEFAULT '0',
-         `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+         `entities_id` int NOT NULL DEFAULT '0',
+         `is_recursive` tinyint NOT NULL DEFAULT '0',
          `date_creation` timestamp NULL DEFAULT NULL,
          `date_mod` timestamp NULL DEFAULT NULL,
          `json` longtext DEFAULT NULL,
@@ -5852,7 +5852,7 @@ function do_deployfile_migration($migration)
                'value'  => null
       ],
       'filesize' => [
-               'type' => 'bigint(20) NOT NULL',
+               'type' => 'bigint NOT NULL',
                'value' => null
       ],
       'comment' => [
@@ -5868,11 +5868,11 @@ function do_deployfile_migration($migration)
                'value'  => null
       ],
       'entities_id' => [
-               'type'   => 'int(11) NOT NULL',
+               'type'   => 'int NOT NULL',
                'value'  => null
       ],
       'is_recursive' => [
-               'type'   => 'tinyint(1) NOT NULL DEFAULT \'0\'',
+               'type'   => 'tinyint NOT NULL DEFAULT \'0\'',
                'value'  => 0
       ],
       'date_mod' => [
@@ -6008,11 +6008,11 @@ function do_deploypackage_migration($migration)
                'value' => null
       ],
       'entities_id' =>  [
-               'type' => 'int(11) NOT NULL',
+               'type' => 'int NOT NULL',
                'value' => null
       ],
       'is_recursive' =>  [
-               'type' => 'tinyint(1) NOT NULL DEFAULT \'0\'',
+               'type' => 'tinyint NOT NULL DEFAULT \'0\'',
                'value' => null
       ],
       'date_mod' =>  [
@@ -6266,15 +6266,15 @@ function do_deploymirror_migration($migration)
          'value' => null
       ],
       'entities_id' =>  [
-         'type' => 'int(11) NOT NULL',
+         'type' => 'int NOT NULL',
          'value' => null
       ],
       'is_active' =>  [
-         'type' => 'tinyint(1) NOT NULL DEFAULT \'0\'',
+         'type' => 'tinyint NOT NULL DEFAULT \'0\'',
          'value' => null
       ],
       'is_recursive' =>  [
-         'type' => 'tinyint(1) NOT NULL DEFAULT \'0\'',
+         'type' => 'tinyint NOT NULL DEFAULT \'0\'',
          'value' => null
       ],
       'name' =>  [
@@ -6287,7 +6287,7 @@ function do_deploymirror_migration($migration)
          'value' => null
       ],
       'locations_id' => [
-         'type' => 'int(11) NOT NULL',
+         'type' => 'int NOT NULL',
          'value' => 0
       ],
       'comment' =>  [
@@ -6896,7 +6896,7 @@ function do_collect_migration($migration)
                                                 'value'   => null];
     $a_table['fields']['dir']        = ['type'    => 'string',
                                              'value'   => null];
-    $a_table['fields']['limit']      = ['type'    => "int(4) NOT NULL DEFAULT '50'",
+    $a_table['fields']['limit']      = ['type'    => "int NOT NULL DEFAULT '50'",
                                              'value'   => null];
     $a_table['fields']['is_recursive'] = ['type'    => 'bool',
                                              'value'   => null];
@@ -8121,12 +8121,12 @@ function migratePluginTables($migration, $a_table)
     if (!$DB->tableExists($a_table['name'])) {
         if (strstr($a_table['name'], 'glpi_plugin_glpiinventory_dblock')) {
             $query = "CREATE TABLE `" . $a_table['name'] . "` (
-                        `value` int(11) NOT NULL AUTO_INCREMENT,
+                        `value` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`value`)
                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         } else {
             $query = "CREATE TABLE `" . $a_table['name'] . "` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         }
