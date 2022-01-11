@@ -352,7 +352,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         ];
 
         $credential = new PluginGlpiinventoryCredential();
-        if ($credential->getFromDB($params['id'])) {
+        if ($params['id'] > 0 && $credential->getFromDB($params['id'])) {
             $p = $credential->fields;
         }
 
