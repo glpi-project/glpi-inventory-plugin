@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_task`;
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_configs`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_configs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int NOT NULL AUTO_INCREMENT,
    `type` varchar(255) DEFAULT NULL,
    `value` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
@@ -68,21 +68,21 @@ CREATE TABLE `glpi_plugin_glpiinventory_configs` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_tasks`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_tasks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entities_id` int NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
   `comment` text DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `is_active` tinyint NOT NULL DEFAULT '0',
   `datetime_start` timestamp NULL DEFAULT NULL,
   `datetime_end` timestamp NULL DEFAULT NULL,
-  `plugin_glpiinventory_timeslots_prep_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_glpiinventory_timeslots_exec_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_timeslots_prep_id` int NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_timeslots_exec_id` int NOT NULL DEFAULT '0',
   `last_agent_wakeup` timestamp NULL DEFAULT NULL,
-  `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
-  `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
-  `reprepare_if_successful` tinyint(1) NOT NULL DEFAULT '1',
-  `is_deploy_on_demand` tinyint(1) NOT NULL DEFAULT '0',
+  `wakeup_agent_counter` int NOT NULL DEFAULT '0',
+  `wakeup_agent_time` int NOT NULL DEFAULT '0',
+  `reprepare_if_successful` tinyint NOT NULL DEFAULT '1',
+  `is_deploy_on_demand` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `plugin_glpiinventory_timeslots_prep_id` (`plugin_glpiinventory_timeslots_prep_id`),
@@ -98,16 +98,16 @@ CREATE TABLE `glpi_plugin_glpiinventory_tasks` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_taskjobs`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_taskjobs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_tasks_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_tasks_id` int NOT NULL DEFAULT '0',
+  `entities_id` int NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
   `method` varchar(255) DEFAULT NULL,
   `targets` text DEFAULT NULL,
   `actors` text DEFAULT NULL,
   `comment` text DEFAULT NULL,
-  `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
+  `rescheduled_taskjob_id` int NOT NULL DEFAULT '0',
   `statuscomments` text DEFAULT NULL,
   `enduser` text DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -121,12 +121,12 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjobs` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_taskjoblogs`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_taskjoblogs` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_taskjobstates_id` int(11) NOT NULL DEFAULT '0',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_taskjobstates_id` int NOT NULL DEFAULT '0',
   `date` timestamp NULL DEFAULT NULL,
-  `items_id` int(11) NOT NULL DEFAULT '0',
+  `items_id` int NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
-  `state` int(11) NOT NULL DEFAULT '0',
+  `state` int NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_taskjobstates_id` (`plugin_glpiinventory_taskjobstates_id`,`state`)
@@ -137,17 +137,17 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjoblogs` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_taskjobstates`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_taskjobstates` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
-  `items_id` int(11) NOT NULL DEFAULT '0',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_taskjobs_id` int NOT NULL DEFAULT '0',
+  `items_id` int NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
-  `state` int(11) NOT NULL DEFAULT '0',
-  `agents_id` int(11) NOT NULL DEFAULT '0',
+  `state` int NOT NULL DEFAULT '0',
+  `agents_id` int NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
   `uniqid` varchar(255) DEFAULT NULL,
   `date_start` timestamp NULL DEFAULT NULL,
-  `nb_retry` int(11) NOT NULL DEFAULT '0',
-  `max_retry` int(11) NOT NULL DEFAULT '1',
+  `nb_retry` int NOT NULL DEFAULT '0',
+  `max_retry` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_taskjobs_id` (`plugin_glpiinventory_taskjobs_id`),
   KEY `agents_id` (`agents_id`),
@@ -159,9 +159,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjobstates` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_agentmodules`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_agentmodules` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int NOT NULL AUTO_INCREMENT,
    `modulename` varchar(255) DEFAULT NULL,
-   `is_active` tinyint(1) NOT NULL DEFAULT '0',
+   `is_active` tinyint NOT NULL DEFAULT '0',
    `exceptions` text DEFAULT NULL COMMENT 'array(agent_id)',
    PRIMARY KEY (`id`),
    UNIQUE KEY `modulename` (`modulename`),
@@ -173,9 +173,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_agentmodules` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ipranges`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_ipranges` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `entities_id` int NOT NULL DEFAULT '0',
    `ip_start` varchar(255) DEFAULT NULL,
    `ip_end` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
@@ -187,10 +187,10 @@ CREATE TABLE `glpi_plugin_glpiinventory_ipranges` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_ipranges_snmpcredentials`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_ipranges_snmpcredentials` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_ipranges_id` int(11) NOT NULL DEFAULT '0',
-  `snmpcredentials_id` int(11) NOT NULL DEFAULT '0',
-  `rank` int(11) NOT NULL DEFAULT '1',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_ipranges_id` int NOT NULL DEFAULT '0',
+  `snmpcredentials_id` int NOT NULL DEFAULT '0',
+  `rank` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `unicity` (`plugin_glpiinventory_ipranges_id`,`snmpcredentials_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -200,9 +200,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_ipranges_snmpcredentials` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_credentials`;
 
 CREATE TABLE  `glpi_plugin_glpiinventory_credentials` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+   `id` int NOT NULL AUTO_INCREMENT,
+   `entities_id` int NOT NULL DEFAULT '0',
+   `is_recursive` tinyint NOT NULL DEFAULT '0',
    `name` varchar(255) NOT NULL DEFAULT '',
    `username` varchar(255) NOT NULL DEFAULT '',
    `password` varchar(255) NOT NULL DEFAULT '',
@@ -217,9 +217,9 @@ CREATE TABLE  `glpi_plugin_glpiinventory_credentials` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_credentialips`;
 
 CREATE TABLE  `glpi_plugin_glpiinventory_credentialips` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_glpiinventory_credentials_id` int(11) NOT NULL DEFAULT '0',
+   `id` int NOT NULL AUTO_INCREMENT,
+   `entities_id` int NOT NULL DEFAULT '0',
+   `plugin_glpiinventory_credentials_id` int NOT NULL DEFAULT '0',
    `name` varchar(255) NOT NULL DEFAULT '',
    `comment` text DEFAULT NULL,
    `ip` varchar(255) NOT NULL DEFAULT '',
@@ -230,15 +230,15 @@ CREATE TABLE  `glpi_plugin_glpiinventory_credentialips` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputercomputers`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputercomputers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `computers_id` int NOT NULL DEFAULT '0',
   `operatingsystem_installationdate` timestamp NULL DEFAULT NULL,
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,
   `last_inventory_update` timestamp NULL DEFAULT NULL,
   `remote_addr` varchar(255) DEFAULT NULL,
   `serialized_inventory` longblob DEFAULT NULL,
-  `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
+  `is_entitylocked` tinyint NOT NULL DEFAULT '0',
   `oscomment` text DEFAULT NULL,
   `hostid` varchar(255) DEFAULT NULL,
   `last_boot` timestamp NULL DEFAULT NULL,
@@ -252,10 +252,10 @@ CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputercomputers` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputerstats`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputerstats` (
- `id` smallint(3) NOT NULL AUTO_INCREMENT,
- `day` smallint(3) NOT NULL DEFAULT '0',
- `hour` tinyint(2) NOT NULL DEFAULT '0',
- `counter` int(11) NOT NULL DEFAULT '0',
+ `id` smallint NOT NULL AUTO_INCREMENT,
+ `day` smallint NOT NULL DEFAULT '0',
+ `hour` tinyint NOT NULL DEFAULT '0',
+ `counter` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
@@ -264,18 +264,18 @@ CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputerstats` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_statediscoveries`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_statediscoveries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_taskjob_id` int(11) NOT NULL DEFAULT '0',
-  `agents_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_taskjob_id` int NOT NULL DEFAULT '0',
+  `agents_id` int NOT NULL DEFAULT '0',
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
-  `threads` int(11) NOT NULL DEFAULT '0',
-  `nb_ip` int(11) NOT NULL DEFAULT '0',
-  `nb_found` int(11) NOT NULL DEFAULT '0',
-  `nb_error` int(11) NOT NULL DEFAULT '0',
-  `nb_exists` int(11) NOT NULL DEFAULT '0',
-  `nb_import` int(11) NOT NULL DEFAULT '0',
+  `threads` int NOT NULL DEFAULT '0',
+  `nb_ip` int NOT NULL DEFAULT '0',
+  `nb_found` int NOT NULL DEFAULT '0',
+  `nb_error` int NOT NULL DEFAULT '0',
+  `nb_exists` int NOT NULL DEFAULT '0',
+  `nb_import` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
@@ -286,15 +286,15 @@ CREATE TABLE `glpi_plugin_glpiinventory_statediscoveries` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deploypackages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `comment` text DEFAULT NULL,
-  `entities_id` int(11) NOT NULL,
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `entities_id` int NOT NULL,
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   `date_mod` timestamp NULL DEFAULT NULL,
   `uuid` varchar(255) DEFAULT NULL,
   `json` longtext DEFAULT NULL,
-  `plugin_glpiinventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_deploygroups_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
@@ -305,10 +305,10 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deploypackages` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_entities`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_entities` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_deploypackages_id` int NOT NULL DEFAULT '0',
+  `entities_id` int NOT NULL DEFAULT '0',
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `entities_id` (`entities_id`),
@@ -320,11 +320,11 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_entities` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_groups`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `groups_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_deploypackages_id` int NOT NULL DEFAULT '0',
+  `groups_id` int NOT NULL DEFAULT '0',
+  `entities_id` int NOT NULL DEFAULT '0',
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `groups_id` (`groups_id`),
@@ -337,11 +337,11 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_groups` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_profiles`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_profiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `profiles_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_deploypackages_id` int NOT NULL DEFAULT '0',
+  `profiles_id` int NOT NULL DEFAULT '0',
+  `entities_id` int NOT NULL DEFAULT '0',
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `profiles_id` (`profiles_id`),
@@ -354,9 +354,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_profiles` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages_users`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `users_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_deploypackages_id` int NOT NULL DEFAULT '0',
+  `users_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_deploypackages_id` (`plugin_glpiinventory_deploypackages_id`),
   KEY `users_id` (`users_id`)
@@ -367,15 +367,15 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploypackages_users` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deployfiles`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployfiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `mimetype` varchar(255) NOT NULL,
-  `filesize` bigint(20) NOT NULL,
+  `filesize` bigint NOT NULL,
   `comment` text DEFAULT NULL,
   `sha512` char(128) NOT NULL,
   `shortsha512` char(6) NOT NULL,
-  `entities_id` int(11) NOT NULL,
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `entities_id` int NOT NULL,
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   `date_mod` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `shortsha512` (`shortsha512`),
@@ -388,13 +388,13 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployfiles` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploymirrors`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploymirrors` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entities_id` int(11) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entities_id` int NOT NULL,
+  `is_active` tinyint NOT NULL DEFAULT '0',
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL DEFAULT '',
-  `locations_id` int(11) NOT NULL,
+  `locations_id` int NOT NULL,
   `comment` text DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -409,7 +409,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploymirrors` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploygroups`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploygroups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `comment` text DEFAULT NULL,
   `type` varchar(255) NOT NULL,
@@ -421,10 +421,10 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploygroups` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploygroups_staticdatas`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploygroups_staticdatas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_deploygroups_id` int NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
-  `items_id` int(11) NOT NULL DEFAULT '0',
+  `items_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (  `id` ),
   KEY `plugin_glpiinventory_deploygroups_id` (`plugin_glpiinventory_deploygroups_id`),
   KEY `items_id` (`items_id`)
@@ -435,10 +435,10 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploygroups_staticdatas` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploygroups_dynamicdatas`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_deploygroups_dynamicdatas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_glpiinventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plugin_glpiinventory_deploygroups_id` int NOT NULL DEFAULT '0',
   `fields_array` text DEFAULT NULL,
-  `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
+  `can_update_group` tinyint NOT NULL DEFAULT '0',
   `computers_id_cache` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_deploygroups_id` (`plugin_glpiinventory_deploygroups_id`),
@@ -448,10 +448,10 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploygroups_dynamicdatas` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deployuserinteractiontemplates`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployuserinteractiontemplates` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+   `entities_id` int NOT NULL DEFAULT '0',
+   `is_recursive` tinyint NOT NULL DEFAULT '0',
    `date_creation` timestamp NULL DEFAULT NULL,
    `date_mod` timestamp NULL DEFAULT NULL,
    `json` longtext DEFAULT NULL,
@@ -471,12 +471,12 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deployuserinteractiontempl
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `entities_id` int(11) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `entities_id` int NOT NULL DEFAULT '0',
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   `type` varchar(255) DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `is_active` tinyint NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -486,9 +486,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_registries`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_registries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_glpiinventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_id` int NOT NULL DEFAULT '0',
   `hive` varchar(255) DEFAULT NULL,
   `path` text DEFAULT NULL,
   `key` varchar(255) DEFAULT NULL,
@@ -500,9 +500,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_registries` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_registries_contents`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_registries_contents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_glpiinventory_collects_registries_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `computers_id` int NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_registries_id` int NOT NULL DEFAULT '0',
   `key` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -514,9 +514,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_registries_contents` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_wmis`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_glpiinventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_id` int NOT NULL DEFAULT '0',
   `moniker` varchar(255) DEFAULT NULL,
   `class` varchar(255) DEFAULT NULL,
   `properties` varchar(255) DEFAULT NULL,
@@ -528,9 +528,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_wmis_contents`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis_contents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_glpiinventory_collects_wmis_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `computers_id` int NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_wmis_id` int NOT NULL DEFAULT '0',
   `property` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -541,22 +541,22 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis_contents` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_files`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_files` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_glpiinventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_id` int NOT NULL DEFAULT '0',
   `dir` varchar(255) DEFAULT NULL,
-  `limit` int(4) NOT NULL DEFAULT '50',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `limit` int NOT NULL DEFAULT '50',
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   `filter_regex` varchar(255) DEFAULT NULL,
-  `filter_sizeequals` int(11) NOT NULL DEFAULT '0',
-  `filter_sizegreater` int(11) NOT NULL DEFAULT '0',
-  `filter_sizelower` int(11) NOT NULL DEFAULT '0',
+  `filter_sizeequals` int NOT NULL DEFAULT '0',
+  `filter_sizegreater` int NOT NULL DEFAULT '0',
+  `filter_sizelower` int NOT NULL DEFAULT '0',
   `filter_checksumsha512` varchar(255) DEFAULT NULL,
   `filter_checksumsha2` varchar(255) DEFAULT NULL,
   `filter_name` varchar(255) DEFAULT NULL,
   `filter_iname` varchar(255) DEFAULT NULL,
-  `filter_is_file` tinyint(1) NOT NULL DEFAULT '1',
-  `filter_is_dir` tinyint(1) NOT NULL DEFAULT '0',
+  `filter_is_file` tinyint NOT NULL DEFAULT '1',
+  `filter_is_dir` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
@@ -565,11 +565,11 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_files` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_files_contents`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_files_contents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_glpiinventory_collects_files_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `computers_id` int NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_files_id` int NOT NULL DEFAULT '0',
   `pathfile` text DEFAULT NULL,
-  `size` int(11) NOT NULL DEFAULT '0',
+  `size` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
@@ -578,9 +578,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_files_contents` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_timeslots`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_timeslots` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entities_id` int(11) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entities_id` int NOT NULL DEFAULT '0',
+  `is_recursive` tinyint NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
@@ -592,13 +592,13 @@ CREATE TABLE `glpi_plugin_glpiinventory_timeslots` (
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_timeslotentries`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_timeslotentries` (
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `plugin_glpiinventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
- `entities_id` int(11) NOT NULL DEFAULT '0',
- `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
- `day` tinyint(1) NOT NULL DEFAULT '1',
- `begin` int(11) DEFAULT NULL,
- `end` int(11) DEFAULT NULL,
+ `id` int NOT NULL AUTO_INCREMENT,
+ `plugin_glpiinventory_timeslots_id` int NOT NULL DEFAULT '0',
+ `entities_id` int NOT NULL DEFAULT '0',
+ `is_recursive` tinyint NOT NULL DEFAULT '0',
+ `day` tinyint NOT NULL DEFAULT '1',
+ `begin` int DEFAULT NULL,
+ `end` int DEFAULT NULL,
  PRIMARY KEY (`id`),
  KEY `plugin_glpiinventory_calendars_id` (`plugin_glpiinventory_timeslots_id`),
  KEY `day` (`day`)
