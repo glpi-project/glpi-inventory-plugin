@@ -198,7 +198,22 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             if (!empty($cs['priv_passphrase'])) {
                 $cs['priv_passphrase'] = (new GLPIKey())->encrypt($cs['priv_passphrase']);
             }
-            $new_id = $snmpcred->add($cs);
+            $search_crit = [
+                'name'              => $cs['name'],
+                'snmpversion'       => $cs['snmpversion'],
+                'community'         => $cs['community'],
+                'username'          => !empty($cs['username']) ? $cs['username'] : null,
+                'authentication'    => !empty($cs['authentication']) && $cs['authentication'] != '0' ? $cs['authentication'] : null,
+                'auth_passphrase'   => !empty($cs['auth_passphrase']) ? $cs['auth_passphrase'] : null,
+                'encryption'        => !empty($cs['encryption']) && $cs['encryption'] != '0' ? $cs['encryption'] : null,
+                'priv_passphrase'   => !empty($cs['priv_passphrase']) ? $cs['priv_passphrase'] : null,
+                'is_deleted'        => $cs['is_deleted'],
+            ];
+            if ($snmpcred->getFromDBByCrit($search_crit)) {
+                $new_id = $snmpcred->fields['id'];
+            } else {
+                $new_id = $snmpcred->add($cs);
+            }
             if ($new_id != $old_id) {
                 $cs_mapping[$old_id] = $new_id;
             }
