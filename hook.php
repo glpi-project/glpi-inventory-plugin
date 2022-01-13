@@ -1016,3 +1016,45 @@ function plugin_glpiinventory_network_inventory($params)
 
     return $params;
 }
+
+function plugin_glpiinventory_handle_common_handle_task($task, array $params)
+{
+    $a_plugin = plugin_version_glpiinventory();
+    $params['options']['response'][$task] = [
+        'version' => PLUGIN_GLPIINVENTORY_VERSION,
+        'server' => $a_plugin['shortname']
+    ];
+
+    return $params;
+}
+
+function plugin_glpiinventory_handle_netdiscovery_task(array $params)
+{
+    return plugin_glpiinventory_handle_common_handle_task('netdiscovery', $params);
+}
+
+function plugin_glpiinventory_handle_netinventory_task(array $params)
+{
+    return plugin_glpiinventory_handle_common_handle_task('netinventory', $params);
+}
+
+
+function plugin_glpiinventory_handle_esx_task(array $params)
+{
+    return plugin_glpiinventory_handle_common_handle_task('esx', $params);
+}
+
+function plugin_glpiinventory_handle_collect_task(array $params)
+{
+    return plugin_glpiinventory_handle_common_handle_task('collect', $params);
+}
+
+function plugin_glpiinventory_handle_deploy_task(array $params)
+{
+    return plugin_glpiinventory_handle_common_handle_task('deploy', $params);
+}
+
+function plugin_glpiinventory_handle_wakeonlan_task(array $params)
+{
+    return plugin_glpiinventory_handle_common_handle_task('wakeonlan', $params);
+}
