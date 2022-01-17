@@ -72,7 +72,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                 $pfTaskjobstate->changeStatus($a_CONTENT->jobid, 2);
                 if (
                     (!isset($a_CONTENT->content->agent->start))
-                    and (!isset($a_CONTENT->content->agent->end))
+                    && (!isset($a_CONTENT->content->agent->end))
+                    && (!isset($a_CONTENT->content->agent->exit))
                 ) {
                     $nb_devices = 1;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
@@ -87,7 +88,10 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
 
         if ($pfTaskjobstate->getFromDB($a_CONTENT->jobid)) {
             if ($pfTaskjobstate->fields['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
-                if (isset($a_CONTENT->content->agent->end)) {
+                if (isset($a_CONTENT->content->agent->exit)) {
+                    $pfTaskjobstate->fail('Task aborted by agent');
+                    $response['response'] = ['RESPONSE' => 'SEND'];
+                } elseif (isset($a_CONTENT->content->agent->end)) {
                     $updated = countElementsInTable(
                         'glpi_plugin_glpiinventory_taskjoblogs',
                         [
