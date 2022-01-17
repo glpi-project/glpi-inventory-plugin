@@ -97,7 +97,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
         }
 
         $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
-        if ((!isset($a_CONTENT->content->agent->start)) and (!isset($a_CONTENT->content->agent->end))) {
+        if ((!isset($a_CONTENT->content->agent->start)) && (!isset($a_CONTENT->content->agent->end)) && (!isset($a_CONTENT->content->agent->exit))) {
             $nb_devices = 1;
             $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
               $a_CONTENT->jobid;
@@ -109,7 +109,10 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $this->addtaskjoblog();
         }
 
-        if (isset($a_CONTENT->content->agent->end)) {
+        if (isset($a_CONTENT->content->agent->exit)) {
+            $pfTaskjobstate->fail('Task aborted by agent');
+            $response['response'] = ['RESPONSE' => 'SEND'];
+        } elseif (isset($a_CONTENT->content->agent->end)) {
             $cnt = countElementsInTable(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
