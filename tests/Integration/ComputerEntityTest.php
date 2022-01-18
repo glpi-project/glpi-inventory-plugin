@@ -86,7 +86,6 @@ class ComputerEntityTest extends TestCase
          'name'        => 'ent1',
          'entities_id' => 0,
          'comment'     => '',
-         'transfers_id' => 1
         ]);
         $this->assertNotFalse(self::$entities_id_1);
 
@@ -164,6 +163,7 @@ class ComputerEntityTest extends TestCase
 
         $transfer       = new Transfer();
         $computer       = new Computer();
+        $entity = new Entity();
 
        // Manual transfer computer to entity 2
         $transfer->getFromDB(1);
@@ -176,9 +176,17 @@ class ComputerEntityTest extends TestCase
 
         $this->agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
 
-       // Update computer and computer may be transferred to entity 1 automatically
-        $orig_transfers_auto = $CFG_GLPI['transfers_id_auto'];
-        $CFG_GLPI['transfers_id_auto'] = 1;
+        // Define entity 2 to allow to transfer
+        $this->assertTrue($entity->getFromDB(self::$entities_id_2));
+        $this->assertTrue(
+            $entity->update([
+                'id' => self::$entities_id_2,
+                'transfers_id' => 1,
+                'transfers_strategy' => 0
+            ])
+        );
+
+        // Update computer and computer must be transferred
         $this->inventoryPc1();
 
         $nbComputers = countElementsInTable("glpi_computers", ['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
@@ -188,8 +196,6 @@ class ComputerEntityTest extends TestCase
         $this->assertEquals(1, $computer->fields['entities_id'], 'Automatic transfer computer');
 
         $this->agentEntity($computer->fields['id'], 1, 'Automatic transfer computer on entity 1');
-
-        $CFG_GLPI['transfers_id_auto'] = $orig_transfers_auto;
     }
 
 
@@ -216,12 +222,13 @@ class ComputerEntityTest extends TestCase
 
         $this->agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
 
-       // Define entity 2 not allowed to transfer
+       // Define entity 2 to disallowed transfer
         $this->assertTrue($entity->getFromDB(self::$entities_id_2));
         $this->assertTrue(
             $entity->update([
-            'id' => self::$entities_id_2,
-            'transfers_id' => 0
+                'id' => self::$entities_id_2,
+                'transfers_id' => 0,
+                'transfers_strategy' => 0
             ])
         );
 
