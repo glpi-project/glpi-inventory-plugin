@@ -144,23 +144,35 @@ class UpdateTest extends TestCase
                 implode("\n", $result['output'])
             );
 
-            $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -vvv -n --config-dir=tests/config --no-interaction";
+            $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --config-dir=tests/config";
             $outputMy = [];
             $returncodeMy = 0;
             exec($commandMy, $outputMy, $returncodeMy);
-            $this->assertEquals(0, $returncodeMy, implode("\n", $outputMy));
+            $this->assertEquals(
+                0,
+                $returncodeMy,
+                sprintf("Result code from glpi:migration:myisam_to_innodb was '%s'.\n%s", $returncodeMy, implode("\n", $outputMy))
+            );
         }
-        $output = [];
-        $returncode = 0;
+        $outputInstall = [];
+        $returncodeInstall = 0;
+        $commandInstall = "cd ../../ && php bin/console glpi:plugin:install -n -q --config-dir=tests/config --username=glpi glpiinventory";
+        exec($commandInstall, $outputInstall, $returncodeInstall);
+        $this->assertEquals(
+            0,
+            $returncodeInstall,
+            sprintf("Result code from glpi:plugin:install was '%s'.\n%s", $returncodeInstall, implode("\n", $outputInstall))
+        );
+
         $outputActivate     = [];
         $returncodeActivate = 0;
-        $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory";
-        exec($command, $output, $returncode);
-
-        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory";
+        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n -q --config-dir=tests/config glpiinventory";
         exec($commandActivate, $outputActivate, $returncodeActivate);
-
-        $this->assertEquals(0, $returncode, implode("\n", $output));
+        $this->assertEquals(
+            0,
+            $returncodeActivate,
+            sprintf("Result code from glpi:plugin:activate was '%s'.\n%s", $returncodeActivate, implode("\n", $outputActivate))
+        );
 
         $GLPIlog = new GLPIlogs();
         $GLPIlog->testSQLlogs();
