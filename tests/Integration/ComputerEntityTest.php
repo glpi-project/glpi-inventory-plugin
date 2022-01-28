@@ -78,8 +78,6 @@ class ComputerEntityTest extends TestCase
     */
     public function AddComputer()
     {
-        plugin_init_glpiinventory();
-
         $entity = new Entity();
 
         self::$entities_id_1 = $entity->add([
