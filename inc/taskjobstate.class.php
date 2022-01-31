@@ -796,10 +796,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                     echo "<td colspan='3'>";
                     echo "</td>";
                     echo "</td>";
-                    echo "<td style='background-color: " . $stateColors[$log['state']] . "'>";
+                    echo "<td style='background-color: " . ($stateColors[$log['state']] ?? '#ffffff') . "'>";
                     echo Html::convDateTime($log['date']);
                     echo "</td>";
-                    echo "<td style='background-color: " . $stateColors[$log['state']] . "'>";
+                    echo "<td style='background-color: " . ($stateColors[$log['state']] ?? '#ffffff') . "'>";
                     echo $pfTaskjoblog->getStateName($log['state']);
                     // status
                     echo "</td>";
