@@ -668,7 +668,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             $delete = $DB->buildDelete(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
-                'plugin_glpiinventory_taskjobstates_id' => new \Queryparam()
+                'plugin_glpiinventory_taskjobstates_id' => new \QueryParam()
                 ]
             );
             $stmt = $DB->prepare($delete);
