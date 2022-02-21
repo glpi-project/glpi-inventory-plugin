@@ -168,7 +168,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
             $counter = 0;
 
             foreach ($iterator2 as $state) {
-                 $agents_id = $state['agents_id'];
+                $agents_id = $state['agents_id'];
                 if (isset($wakeupArray[$agents_id])) {
                     $counter++;
                 } else {
@@ -182,7 +182,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
 
                // check if max number of agent reached for this task
                 if ($counter >= $maxWakeUpTask) {
-                     break;
+                    break;
                 }
             }
         }
@@ -221,22 +221,12 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     */
     public static function wakeUp(Agent $agent)
     {
-        $ret = false;
-
-        PluginGlpiinventoryDisplay::disableDebug();
-        $urls = $agent->getAgentURLs();
-
-        $ctx = stream_context_create(['http' => ['timeout' => 2]]);
-        foreach ($urls as $url) {
-            if (!$ret) {
-                if (@file_get_contents($url, 0, $ctx) !== false) {
-                    $ret = true;
-                    break;
-                }
-            }
+        try {
+            $agent->requestAgent('now');
+        } catch (Exception $e) {
+            return false;
         }
-        PluginGlpiinventoryDisplay::reenableusemode();
 
-        return $ret;
+        return true;
     }
 }
