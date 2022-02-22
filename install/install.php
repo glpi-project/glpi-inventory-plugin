@@ -40,7 +40,7 @@
  */
 function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
 {
-    global $DB;
+    global $CFG_GLPI, $DB;
 
     ini_set("memory_limit", "-1");
     ini_set("max_execution_time", "0");
@@ -306,29 +306,35 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
     PluginGlpiinventoryInventoryComputerStat::init();
 
-   /*
-    * Define when install agent_base_url in entity
-    */
-    $full_url = filter_input(INPUT_SERVER, "PHP_SELF");
-    $https = filter_input(INPUT_SERVER, "HTTPS");
-    $http_host = filter_input(INPUT_SERVER, "HTTP_HOST");
-    if (!empty($full_url) && !strstr($full_url, 'cli_install.php')) {
-        if (!empty($https)) {
-            $agent_base_url = 'https://' . $http_host . $full_url;
-        } else {
-            $agent_base_url = 'http://' . $http_host . $full_url;
-        }
-        $agent_base_url = str_replace('/front/plugin.form.php', '', $agent_base_url);
-        $DB->update(
-            'glpi_entities',
-            [
-            'agent_base_url'  => $agent_base_url
-            ],
-            [
-            'id'              => 0
-            ]
-        );
-    }
+    /*
+     * Define when install agent_base_url in entity, unless:
+     *  - it is already defined,
+     *  - it matches the GLPI base URL.
+     */
+    $agent_base_url = Entity::getUsedConfig('agent_base_url', 0, 'agent_base_url', '');
 
-    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
+    if (empty($agent_base_url)) {
+        $full_url = filter_input(INPUT_SERVER, "PHP_SELF");
+        $https = filter_input(INPUT_SERVER, "HTTPS");
+        $http_host = filter_input(INPUT_SERVER, "HTTP_HOST");
+
+        if ($full_url && (strpos($full_url, '/ajax/marketplace.php') !== false || strpos($full_url, '/front/plugin.form.php') !== false)) {
+            $agent_base_url = str_replace(
+                ['/ajax/marketplace.php', '/front/plugin.form.php'],
+                '',
+                (!empty($https) ? 'https://' : 'http://') . $http_host . $full_url
+            );
+            if ($agent_base_url !== $CFG_GLPI['url_base']) {
+                $DB->update(
+                    'glpi_entities',
+                    [
+                        'agent_base_url' => $agent_base_url
+                    ],
+                    [
+                        'id'             => 0
+                    ]
+                );
+            }
+        }
+    }
 }
