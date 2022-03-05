@@ -404,7 +404,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         );
        //if action == action_status => show blocation else hide blocaction
         echo Html::scriptBlock("
-         public function changestatus() {
+         function changestatus() {
             if ($('#dropdown_agents_action$rand').val() != 0) {
                $('#blocaction1').show();
                $('#blocaction2').show();
