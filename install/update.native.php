@@ -57,7 +57,6 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     //mappings
     $agents_mapping = [];
     $unmanageds_mapping = [];
-    $refused_mappings = [];
 
     $migration->displayMessage("Use core agent");
     if ($DB->tableExists('glpi_plugin_glpiinventory_agents')) {
@@ -468,31 +467,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         $migration->dropTable('glpi_plugin_glpiinventory_unmanageds');
     }
 
-    $migration->displayMessage("Use core refused equipments");
+    $migration->displayMessage("Drop ignored equipments");
     if ($DB->tableExists('glpi_plugin_glpiinventory_ignoredimportdevices')) {
-        // agents must be migrated before that one
-        $iterator = $DB->request([
-            'FROM' => 'glpi_plugin_glpiinventory_ignoredimportdevices'
-        ]);
-        $refused = new RefusedEquipment();
-
-        foreach ($iterator as $data_refused) {
-            $old_id = $data_refused['id'];
-
-            //mappings
-            $data_refused['date_creation'] = $data_refused['date'];
-            $data_refused['agents_id'] = $data_refused['plugin_glpiinventory_agents_id'];
-
-            unset(
-                $data_refused['id'],
-                $data_refused['date'],
-                $data_refused['plugin_glpiinventory_agents_id'],
-            );
-
-            $new_id = $refused->add(Toolbox::addslashes_deep($data_refused));
-            $refused_mappings[$old_id] = $new_id;
-        }
-
         $migration->dropTable('glpi_plugin_glpiinventory_ignoredimportdevices');
     }
 
@@ -609,14 +585,12 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     //Fix old types
     $types = [
         'PluginFusioninventoryAgent' => 'Agent',
-        'PluginFusioninventoryUnmanaged' => 'Unmanaged',
-        'PluginFusioninventoryIgnoredimportdevice' => 'RefusedEquipment'
+        'PluginFusioninventoryUnmanaged' => 'Unmanaged'
     ];
 
     $mappings = [
         'Agent' => $agents_mapping,
         'Unmanaged' => $unmanageds_mapping,
-        'RefusedEquipment' => $refused_mappings
     ];
 
     $types_iterator = $DB->request(
@@ -657,5 +631,14 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 );
             }
         }
+
+        $migration->addPostQuery(
+            $DB->buildDelete(
+                $type['TABLE_NAME'],
+                [
+                    'itemtype' => 'PluginFusioninventoryIgnoredimportdevice'
+                ]
+            )
+        );
     }
 }
