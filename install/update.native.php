@@ -311,6 +311,23 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         $migration->dropTable('glpi_plugin_glpiinventory_networkports');
     }
 
+    $migration->displayMessage("Use core computers");
+    if ($DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers')) {
+        $DB->queryOrDie(
+            "UPDATE `glpi_computers` AS `computers`
+            INNER JOIN (
+              SELECT
+                `computers_id`,
+                `last_inventory_update`
+              FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
+          ) AS `plugin_computers` ON `plugin_computers`.`computers_id` = `computers`.`id`
+          SET
+              `computers`.`last_inventory_update` = `plugin_computers`.`last_inventory_update`
+          ;"
+        );
+        $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputercomputers');
+    }
+
     $migration->displayMessage("Use core network equipments");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkequipments')) {
         // agents and snmp credentials must be migrated before that one
