@@ -227,26 +227,6 @@ CREATE TABLE  `glpi_plugin_glpiinventory_credentialips` (
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
-DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputercomputers`;
-
-CREATE TABLE `glpi_plugin_glpiinventory_inventorycomputercomputers` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `computers_id` int unsigned NOT NULL DEFAULT '0',
-  `operatingsystem_installationdate` timestamp NULL DEFAULT NULL,
-  `winowner` varchar(255) DEFAULT NULL,
-  `wincompany` varchar(255) DEFAULT NULL,
-  `last_inventory_update` timestamp NULL DEFAULT NULL,
-  `remote_addr` varchar(255) DEFAULT NULL,
-  `serialized_inventory` longblob DEFAULT NULL,
-  `is_entitylocked` tinyint NOT NULL DEFAULT '0',
-  `oscomment` text DEFAULT NULL,
-  `hostid` varchar(255) DEFAULT NULL,
-  `last_boot` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `computers_id` (`computers_id`),
-  KEY `last_inventory_update` (`last_inventory_update`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
 
 
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_inventorycomputerstats`;
