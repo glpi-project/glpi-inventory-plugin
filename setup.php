@@ -508,3 +508,10 @@ function plugin_glpiinventory_haveTypeRight($type, $right)
 {
     return true;
 }
+
+function plugin_glpiinventory_options()
+{
+    return [
+        'autoinstall_disabled' => true,
+    ];
+}
