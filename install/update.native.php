@@ -650,6 +650,15 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         }
 
         $migration->addPostQuery(
+            $DB->buildDelete(
+                $type['TABLE_NAME'],
+                [
+                    'itemtype' => 'PluginFusioninventoryIgnoredimportdevice'
+                ]
+            )
+        );
+
+        $migration->addPostQuery(
             $DB->buildUpdate(
                 $type['TABLE_NAME'],
                 [
@@ -657,15 +666,6 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 ],
                 [
                     'itemtype' => new \QueryExpression('REPLACE(itemtype, "PluginFusioninventory", "PluginGlpiinventory")'),
-                ]
-            )
-        );
-
-        $migration->addPostQuery(
-            $DB->buildDelete(
-                $type['TABLE_NAME'],
-                [
-                    'itemtype' => 'PluginFusioninventoryIgnoredimportdevice'
                 ]
             )
         );
