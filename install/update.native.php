@@ -657,5 +657,18 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 ]
             )
         );
+
+        $migration->addPostQuery(
+            $DB->buildUpdate(
+                $type['TABLE_NAME'],
+                [
+                    'itemtype' => new \QueryExpression('REPLACE(itemtype, "PluginFusioninventory", "PluginGlpiinventory")')
+
+                ],
+                [
+                    'itemtype' => ['LIKE', 'PluginFusion%']
+                ]
+            )
+        );
     }
 }
