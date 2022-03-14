@@ -662,10 +662,11 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             $DB->buildUpdate(
                 $type['TABLE_NAME'],
                 [
-                    'itemtype' => ['LIKE', 'PluginFusion%']
+                    'itemtype' => new \QueryExpression('REPLACE(itemtype, "PluginFusioninventory", "PluginGlpiinventory")'),,
+
                 ],
                 [
-                    'itemtype' => new \QueryExpression('REPLACE(itemtype, "PluginFusioninventory", "PluginGlpiinventory")'),
+                    'itemtype' => ['LIKE', 'PluginFusion%']
                 ]
             )
         );
