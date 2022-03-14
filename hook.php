@@ -871,8 +871,8 @@ function plugin_item_purge_glpiinventory($parm)
                         }
                     }
 
-                    $unmanaged->disconnectFrom($switchPorts_id); // disconnect this port
-                    $unmanaged->disconnectFrom($otherPorts_id); // disconnect destination port
+                    $networkPort_NetworkPort->getFromDBForNetworkPort($switchPorts_id);
+                    $networkPort_NetworkPort->disconnectFrom($otherPorts_id);
 
                     $networkPort_NetworkPort->add(['networkports_id_1' => $switchPorts_id,
                                                    'networkports_id_2' => $otherPorts_id]);
