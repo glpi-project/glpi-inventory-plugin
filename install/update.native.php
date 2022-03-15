@@ -540,17 +540,26 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage('Use core fields locks');
     if ($DB->tableExists('glpi_plugin_glpiinventory_locks')) {
         $lock = new Lockedfield();
+        $lock_table = $lock->getTable();
         $iterator = $DB->request([
          'FROM' => 'glpi_plugin_glpiinventory_locks'
         ]);
         foreach ($iterator as $row) {
             $fields = importArrayFromDB($row['tablefields']);
             foreach ($fields as $field) {
-                $lock->add(Toolbox::addslashes_deep([
-                 'itemtype' => getItemTypeForTable($row['tablename']),
-                 'items_id' => $row['items_id'],
-                 'field' => $field
-                ]));
+                $input = Toolbox::addslashes_deep(
+                    [
+                        'itemtype' => getItemTypeForTable($row['tablename']),
+                        'items_id' => $row['items_id'],
+                        'field'    => $field,
+                    ]
+                );
+
+                if (countElementsInTable($lock_table, $input) > 0) {
+                    continue; // Field is already locked
+                }
+
+                $lock->add($input);
             }
         }
         $migration->dropTable('glpi_plugin_glpiinventory_locks');
