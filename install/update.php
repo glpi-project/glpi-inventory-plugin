@@ -749,9 +749,9 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         foreach ($iterator as $data) {
             $a_defs = importArrayFromDB($data['targets']);
             foreach ($a_defs as $num => $a_def) {
-                if (key($a_def) == 'PluginFusinvsnmpIPRange') {
+                if (in_array(key($a_def), ['PluginFusinvsnmpIPRange', 'PluginFusioninventoryIPRange'])) {
                     $a_defs[$num] = ['PluginGlpiinventoryIPRange' => current($a_def)];
-                } elseif (key($a_def) == 'PluginFusinvdeployPackage') {
+                } elseif (in_array(key($a_def), ['PluginFusinvdeployPackage', 'PluginFusioninventoryDeployPackage'])) {
                     $a_defs[$num] = ['PluginGlpiinventoryDeployPackage' => current($a_def)];
                 }
             }
