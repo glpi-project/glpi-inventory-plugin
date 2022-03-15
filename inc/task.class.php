@@ -739,10 +739,22 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             $itemtype = key($actor);
             $itemid   = $actor[$itemtype];
             $item     = getItemForItemtype($itemtype);
+
+            // If this item doesn't exists, we continue to the next actor item.
+            // TODO: remove this faulty actor from the list of job actor.
+            if ($item === false) {
+                trigger_error(
+                    sprintf('Invalid itemtype "%s".', $itemtype),
+                    E_USER_WARNING
+                );
+                continue;
+            }
             $dbresult = $item->getFromDB($itemid);
-           // If this item doesn't exists, we continue to the next actor item.
-           // TODO: remove this faulty actor from the list of job actor.
             if ($dbresult === false) {
+                trigger_error(
+                    sprintf('Invalid item "%s" (%s).', $itemtype, $itemid),
+                    E_USER_WARNING
+                );
                 continue;
             }
 
