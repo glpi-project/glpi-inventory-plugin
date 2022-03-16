@@ -601,8 +601,6 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputerblacklists');
     $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputercriterias');
 
-    $migration->executeMigration();
-
     // Removed deleted crontasks
     $crontask = new CronTask();
     $crontask->deleteByCriteria(['itemtype' => 'PluginGlpiinventoryNetworkPortLog', 'name' => 'cleannetworkportlogs']);
@@ -719,4 +717,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             }
         }
     }
+
+    // /!\ Keep it at the end
+    $migration->executeMigration();
 }
