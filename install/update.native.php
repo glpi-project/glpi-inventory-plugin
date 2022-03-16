@@ -393,11 +393,13 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 `copies`,
                 `bw_copies`,
                 `color_copies`,
-                `faxed`
+                `faxed`,
+                `date_creation`,
+                `date_mod`
               )
               SELECT
                 `printers_id`,
-                `date`,
+                DATE(`date`) as `log_date`,
                 `pages_total`,
                 `pages_n_b`,
                 `pages_color`,
@@ -409,8 +411,12 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 `pages_total_copy`,
                 `pages_n_b_copy`,
                 `pages_color_copy`,
-                `pages_total_fax`
-              FROM `glpi_plugin_glpiinventory_printerlogs`;"
+                `pages_total_fax`,
+                `date`,
+                `date`
+              FROM `glpi_plugin_glpiinventory_printerlogs`
+              WHERE `id` IN (SELECT MAX(`id`) as `id` from glpi_plugin_glpiinventory_printerlogs GROUP BY `printers_id`, DATE(`date`))
+            ;"
         );
         $migration->dropTable('glpi_plugin_glpiinventory_printerlogs');
     }
