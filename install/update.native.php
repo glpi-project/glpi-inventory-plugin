@@ -96,9 +96,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             );
 
             $new_id = $agent->add(Toolbox::addslashes_deep($data_agent));
-            if ($new_id != $old_id) {
-                $agents_mapping[$old_id] = $new_id;
-            }
+            $agents_mapping[$old_id] = $new_id;
         }
 
         //update to new ids
@@ -108,6 +106,9 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     continue;
                 }
                 foreach ($agents_mapping as $old_agent_id => $new_agent_id) {
+                    if ($old_agent_id == $new_agent_id) {
+                        continue;
+                    }
                     $DB->queryOrDie(
                         $DB->buildUpdate(
                             $agent_table,
@@ -150,27 +151,25 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     if ($DB->tableExists('glpi_plugin_glpiinventory_agentmodules')) {
         $agentmodules_iterator = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_agentmodules']);
         foreach ($agentmodules_iterator as $agentmodule) {
-            $agent_ids = importArrayFromDB($agentmodule['exceptions']);
-            $updated = false;
-            foreach ($agent_ids as $key => $agent_id) {
-                if (array_key_exists($agent_id, $agents_mapping)) {
-                    $agent_ids[$key] = $agents_mapping[$agent_id];
-                    $updated = true;
+            $old_agent_ids = importArrayFromDB($agentmodule['exceptions']);
+            $new_agent_ids = [];
+            foreach ($old_agent_ids as $old_agent_id) {
+                if (!array_key_exists($old_agent_id, $agents_mapping)) {
+                    continue; // Agent does not exist anymore, data is probably stale
                 }
+                $new_agent_ids[] = $agents_mapping[$old_agent_id];
             }
-            if ($updated) {
-                $DB->queryOrDie(
-                    $DB->buildUpdate(
-                        'glpi_plugin_glpiinventory_agentmodules',
-                        [
-                            'exceptions' => exportArrayToDB($agent_ids)
-                        ],
-                        [
-                            'id' => $agentmodule['id']
-                        ]
-                    )
-                );
-            }
+            $DB->queryOrDie(
+                $DB->buildUpdate(
+                    'glpi_plugin_glpiinventory_agentmodules',
+                    [
+                        'exceptions' => exportArrayToDB($new_agent_ids)
+                    ],
+                    [
+                        'id' => $agentmodule['id']
+                    ]
+                )
+            );
         }
     }
 
@@ -654,6 +653,15 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     )
                 );
             }
+            // Remove data related to items that does not exists anymore
+            $migration->addPostQuery(
+                $DB->buildDelete(
+                    $type['TABLE_NAME'],
+                    [
+                        'itemtype' => $orig_type,
+                    ],
+                )
+            );
         }
 
         $migration->addPostQuery(
