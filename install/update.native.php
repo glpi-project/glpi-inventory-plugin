@@ -640,31 +640,47 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         $itemtype_col = $type['COLUMN_NAME'];
         $items_id_col = str_replace('itemtype', 'items_id', $itemtype_col);
         foreach ($types as $orig_type => $new_type) {
-            $mapping = $mappings[$new_type];
-            foreach ($mapping as $orig_id => $new_id) {
+            if ($DB->fieldExists($table_name, $items_id_col)) {
+                // items_id field exists, update itemtype and items_id
+                // and remove data related to items that does not exists anymore
+                $mapping = $mappings[$new_type];
+                foreach ($mapping as $orig_id => $new_id) {
+                    $migration->addPostQuery(
+                        $DB->buildUpdate(
+                            $table_name,
+                            [
+                                $itemtype_col => $new_type,
+                                $items_id_col => $new_id
+                            ],
+                            [
+                                $itemtype_col => $orig_type,
+                                $items_id_col => $orig_id
+                            ]
+                        )
+                    );
+                }
+                $migration->addPostQuery(
+                    $DB->buildDelete(
+                        $type['TABLE_NAME'],
+                        [
+                            $itemtype_col => $orig_type,
+                        ],
+                    )
+                );
+            } else {
+                // items_id field does not exists, just rename the itemtype
                 $migration->addPostQuery(
                     $DB->buildUpdate(
                         $table_name,
                         [
                             $itemtype_col => $new_type,
-                            $items_id_col => $new_id
                         ],
                         [
                             $itemtype_col => $orig_type,
-                            $items_id_col => $orig_id
                         ]
                     )
                 );
             }
-            // Remove data related to items that does not exists anymore
-            $migration->addPostQuery(
-                $DB->buildDelete(
-                    $type['TABLE_NAME'],
-                    [
-                        $itemtype_col => $orig_type,
-                    ],
-                )
-            );
         }
 
         $migration->addPostQuery(
