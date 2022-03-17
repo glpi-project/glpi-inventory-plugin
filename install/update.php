@@ -361,6 +361,17 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         unset($gzfiles);
     }
 
+    // Drop unused views
+    // Have to be done prior to renamePlugin() to prevent following warning:
+    // "View 'glpi.glpi_plugin_fusinvdeploy_taskjobs' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them"
+    $old_deploy_views = [
+      'glpi_plugin_fusinvdeploy_taskjobs',
+      'glpi_plugin_fusinvdeploy_tasks'
+    ];
+    foreach ($old_deploy_views as $view) {
+        $DB->query("DROP VIEW IF EXISTS $view");
+    }
+
     renamePlugin($migration);
 
    // conversion in very old version
@@ -8559,15 +8570,6 @@ function migrateTablesFromFusinvDeploy($migration)
     foreach ($old_deploy_tables as $table) {
         $migration->dropTable($table);
     }
-
-   //drop unused views
-    $old_deploy_views = [
-      'glpi_plugin_fusinvdeploy_taskjobs',
-      'glpi_plugin_fusinvdeploy_tasks'
-    ];
-    foreach ($old_deploy_views as $view) {
-        $DB->query("DROP VIEW IF EXISTS $view");
-    }
 }
 
 function renamePlugin(Migration $migration)
@@ -8587,6 +8589,59 @@ function renamePlugin(Migration $migration)
         $new_table = str_replace('fusioninventory', 'glpiinventory', $old_table);
         $migration->renameTable($old_table, $new_table);
         renamePluginFields($migration, $new_table);
+    }
+
+    // Rename itemtypes
+    $itemtypes_iterator = $DB->request(
+        [
+            'SELECT' => [
+                'information_schema.columns.table_name AS TABLE_NAME',
+                'information_schema.columns.column_name AS COLUMN_NAME',
+            ],
+            'FROM'   => 'information_schema.columns',
+            'INNER JOIN'   => [
+                'information_schema.tables' => [
+                    'FKEY' => [
+                        'information_schema.tables'  => 'table_name',
+                        'information_schema.columns' => 'table_name',
+                        [
+                            'AND' => [
+                                'information_schema.tables.table_schema' => new QueryExpression(
+                                    $DB->quoteName('information_schema.columns.table_schema')
+                                ),
+                            ]
+                        ],
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'information_schema.tables.table_type'    => 'BASE TABLE',
+                'information_schema.columns.table_schema' => $DB->dbdefault,
+                'information_schema.columns.table_name'   => ['LIKE', 'glpi\_%'],
+                'OR' => [
+                    ['information_schema.columns.column_name'  => 'itemtype'],
+                    ['information_schema.columns.column_name'  => ['LIKE', 'itemtype_%']],
+                ],
+            ],
+            'ORDER'  => 'information_schema.columns.table_name',
+        ]
+    );
+
+    foreach ($itemtypes_iterator as $itemtype) {
+        $table_name   = $itemtype['TABLE_NAME'];
+        $itemtype_col = $itemtype['COLUMN_NAME'];
+
+        $DB->update(
+            $table_name,
+            [
+                $itemtype_col => new \QueryExpression(
+                    'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
+                )
+            ],
+            [
+                $itemtype_col => ['LIKE', 'PluginFusioninventory%']
+            ]
+        );
     }
 }
 
