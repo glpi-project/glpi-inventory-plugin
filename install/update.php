@@ -8593,19 +8593,35 @@ function renamePlugin(Migration $migration)
     $itemtypes_iterator = $DB->request(
         [
             'SELECT' => [
-                'table_name AS TABLE_NAME',
-                'column_name AS COLUMN_NAME',
+                'information_schema.columns.table_name AS TABLE_NAME',
+                'information_schema.columns.column_name AS COLUMN_NAME',
             ],
             'FROM'   => 'information_schema.columns',
+            'INNER JOIN'   => [
+                'information_schema.tables' => [
+                    'FKEY' => [
+                        'information_schema.tables'  => 'table_name',
+                        'information_schema.columns' => 'table_name',
+                        [
+                            'AND' => [
+                                'information_schema.tables.table_schema' => new QueryExpression(
+                                    $DB->quoteName('information_schema.columns.table_schema')
+                                ),
+                            ]
+                        ],
+                    ]
+                ]
+            ],
             'WHERE'  => [
-                'table_schema' => $DB->dbdefault,
-                'table_name'   => ['LIKE', 'glpi\_%'],
+                'information_schema.tables.table_type'    => 'BASE TABLE',
+                'information_schema.columns.table_schema' => $DB->dbdefault,
+                'information_schema.columns.table_name'   => ['LIKE', 'glpi\_%'],
                 'OR' => [
-                    ['column_name'  => 'itemtype'],
-                    ['column_name'  => ['LIKE', 'itemtype_%']],
+                    ['information_schema.columns.column_name'  => 'itemtype'],
+                    ['information_schema.columns.column_name'  => ['LIKE', 'itemtype_%']],
                 ],
             ],
-            'ORDER'  => 'TABLE_NAME',
+            'ORDER'  => 'information_schema.columns.table_name',
         ]
     );
 
