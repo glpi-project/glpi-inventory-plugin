@@ -613,13 +613,13 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     // Remove old display preferences
     $displaypref = new DisplayPreference();
-    $displaypref->deleteByCriteria(['itemtype' => 'PluginFusioninventoryAgent'], true, false);
-    $displaypref->deleteByCriteria(['itemtype' => 'PluginFusioninventoryUnmanaged'], true, false);
+    $displaypref->deleteByCriteria(['itemtype' => 'PluginGlpiinventoryAgent'], true, false);
+    $displaypref->deleteByCriteria(['itemtype' => 'PluginGlpiinventoryUnmanaged'], true, false);
 
     //Fix old types
     $types = [
-        'PluginFusioninventoryAgent' => 'Agent',
-        'PluginFusioninventoryUnmanaged' => 'Unmanaged'
+        'PluginGlpiinventoryAgent' => 'Agent',
+        'PluginGlpiinventoryUnmanaged' => 'Unmanaged'
     ];
 
     $mappings = [
@@ -698,22 +698,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             $DB->buildDelete(
                 $table_name,
                 [
-                    $itemtype_col => 'PluginFusioninventoryIgnoredimportdevice'
-                ]
-            )
-        );
-
-        $migration->addPostQuery(
-            $DB->buildUpdate(
-                $table_name,
-                [
-                    $itemtype_col => new \QueryExpression(
-                        'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
-                    )
-
-                ],
-                [
-                    $itemtype_col => ['LIKE', 'PluginFusion%']
+                    $itemtype_col => 'PluginGlpiinventoryIgnoredimportdevice'
                 ]
             )
         );
@@ -727,16 +712,14 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 ];
                 foreach (['actors', 'targets'] as $fieldname) {
                     $existing_values = importArrayFromDB($taskjob[$fieldname]);
-                    foreach ($existing_values as $key => $item_specs) {
+                    foreach ($existing_values as $item_specs) {
                         $itemtype = key($item_specs);
                         $items_id = current($item_specs);
-                        if ($itemtype === 'PluginFusioninventoryAgent') {
+                        if ($itemtype === 'PluginGlpiinventoryAgent') {
                             $itemtype = 'Agent';
                             if (array_key_exists($items_id, $agents_mapping)) {
                                 $items_id = $agents_mapping[$items_id];
                             }
-                        } else {
-                            $itemtype = str_replace('PluginFusioninventory', 'PluginGlpiinventory', $itemtype);
                         }
                         $updated_values[$fieldname][] = [$itemtype => $items_id];
                     }

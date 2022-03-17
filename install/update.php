@@ -8588,6 +8588,45 @@ function renamePlugin(Migration $migration)
         $migration->renameTable($old_table, $new_table);
         renamePluginFields($migration, $new_table);
     }
+
+    // Rename itemtypes
+    $itemtypes_iterator = $DB->request(
+        [
+            'SELECT' => [
+                'table_name AS TABLE_NAME',
+                'column_name AS COLUMN_NAME',
+            ],
+            'FROM'   => 'information_schema.columns',
+            'WHERE'  => [
+                'table_schema' => $DB->dbdefault,
+                'table_name'   => ['LIKE', 'glpi\_%'],
+                'OR' => [
+                    ['column_name'  => 'itemtype'],
+                    ['column_name'  => ['LIKE', 'itemtype_%']],
+                ],
+            ],
+            'ORDER'  => 'TABLE_NAME',
+        ]
+    );
+
+    foreach ($itemtypes_iterator as $itemtype) {
+        $table_name   = $itemtype['TABLE_NAME'];
+        $itemtype_col = $itemtype['COLUMN_NAME'];
+
+        $migration->addPostQuery(
+            $DB->buildUpdate(
+                $table_name,
+                [
+                    $itemtype_col => new \QueryExpression(
+                        'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
+                    )
+                ],
+                [
+                    $itemtype_col => ['LIKE', 'PluginFusioninventory%']
+                ]
+            )
+        );
+    }
 }
 
 function renamePluginFields(Migration $migration, string $table)
