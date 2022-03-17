@@ -361,6 +361,17 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         unset($gzfiles);
     }
 
+    // Drop unused views
+    // Have to be done prior to renamePlugin() to prevent following warning:
+    // "View 'glpi.glpi_plugin_fusinvdeploy_taskjobs' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them"
+    $old_deploy_views = [
+      'glpi_plugin_fusinvdeploy_taskjobs',
+      'glpi_plugin_fusinvdeploy_tasks'
+    ];
+    foreach ($old_deploy_views as $view) {
+        $DB->query("DROP VIEW IF EXISTS $view");
+    }
+
     renamePlugin($migration);
 
    // conversion in very old version
@@ -749,9 +760,9 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         foreach ($iterator as $data) {
             $a_defs = importArrayFromDB($data['targets']);
             foreach ($a_defs as $num => $a_def) {
-                if (in_array(key($a_def), ['PluginFusinvsnmpIPRange', 'PluginFusioninventoryIPRange'])) {
+                if (in_array(key($a_def), ['PluginFusinvsnmpIPRange'])) {
                     $a_defs[$num] = ['PluginGlpiinventoryIPRange' => current($a_def)];
-                } elseif (in_array(key($a_def), ['PluginFusinvdeployPackage', 'PluginFusioninventoryDeployPackage'])) {
+                } elseif (in_array(key($a_def), ['PluginFusinvdeployPackage'])) {
                     $a_defs[$num] = ['PluginGlpiinventoryDeployPackage' => current($a_def)];
                 }
             }
@@ -8558,15 +8569,6 @@ function migrateTablesFromFusinvDeploy($migration)
     ];
     foreach ($old_deploy_tables as $table) {
         $migration->dropTable($table);
-    }
-
-   //drop unused views
-    $old_deploy_views = [
-      'glpi_plugin_fusinvdeploy_taskjobs',
-      'glpi_plugin_fusinvdeploy_tasks'
-    ];
-    foreach ($old_deploy_views as $view) {
-        $DB->query("DROP VIEW IF EXISTS $view");
     }
 }
 
