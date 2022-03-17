@@ -715,11 +715,13 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     foreach ($existing_values as $item_specs) {
                         $itemtype = key($item_specs);
                         $items_id = current($item_specs);
-                        if ($itemtype === 'PluginGlpiinventoryAgent') {
+                        if ($itemtype === 'PluginGlpiinventoryAgent' || $itemtype === 'PluginFusioninventoryAgent') {
                             $itemtype = 'Agent';
                             if (array_key_exists($items_id, $agents_mapping)) {
                                 $items_id = $agents_mapping[$items_id];
                             }
+                        } else {
+                            $itemtype = str_replace('PluginFusioninventory', 'PluginGlpiinventory', $itemtype);
                         }
                         $updated_values[$fieldname][] = [$itemtype => $items_id];
                     }
