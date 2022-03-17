@@ -600,10 +600,15 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputerblacklists');
     $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputercriterias');
 
-    // Removed deleted crontasks
+    // Remove deleted crontasks
     $crontask = new CronTask();
     $crontask->deleteByCriteria(['itemtype' => 'PluginGlpiinventoryNetworkPortLog', 'name' => 'cleannetworkportlogs']);
     $crontask->deleteByCriteria(['itemtype' => 'PluginGlpiinventoryAgent', 'name' => 'cleanoldagents']);
+
+    // Remove old display preferences
+    $displaypref = new DisplayPreference();
+    $displaypref->deleteByCriteria(['itemtype' => 'PluginFusioninventoryAgent'], true, false);
+    $displaypref->deleteByCriteria(['itemtype' => 'PluginFusioninventoryUnmanaged'], true, false);
 
     //Fix old types
     $types = [
