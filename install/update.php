@@ -8613,18 +8613,16 @@ function renamePlugin(Migration $migration)
         $table_name   = $itemtype['TABLE_NAME'];
         $itemtype_col = $itemtype['COLUMN_NAME'];
 
-        $migration->addPostQuery(
-            $DB->buildUpdate(
-                $table_name,
-                [
-                    $itemtype_col => new \QueryExpression(
-                        'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
-                    )
-                ],
-                [
-                    $itemtype_col => ['LIKE', 'PluginFusioninventory%']
-                ]
-            )
+        $DB->update(
+            $table_name,
+            [
+                $itemtype_col => new \QueryExpression(
+                    'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
+                )
+            ],
+            [
+                $itemtype_col => ['LIKE', 'PluginFusioninventory%']
+            ]
         );
     }
 }
