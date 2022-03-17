@@ -636,19 +636,22 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     );
 
     foreach ($types_iterator as $type) {
+        $table_name   = $type['TABLE_NAME'];
+        $itemtype_col = $type['COLUMN_NAME'];
+        $items_id_col = str_replace('itemtype', 'items_id', $itemtype_col);
         foreach ($types as $orig_type => $new_type) {
             $mapping = $mappings[$new_type];
             foreach ($mapping as $orig_id => $new_id) {
                 $migration->addPostQuery(
                     $DB->buildUpdate(
-                        $type['TABLE_NAME'],
+                        $table_name,
                         [
-                            'itemtype' => $new_type,
-                            'items_id' => $new_id
+                            $itemtype_col => $new_type,
+                            $items_id_col => $new_id
                         ],
                         [
-                            'itemtype' => $orig_type,
-                            'items_id' => $orig_id
+                            $itemtype_col => $orig_type,
+                            $items_id_col => $orig_id
                         ]
                     )
                 );
@@ -658,7 +661,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 $DB->buildDelete(
                     $type['TABLE_NAME'],
                     [
-                        'itemtype' => $orig_type,
+                        $itemtype_col => $orig_type,
                     ],
                 )
             );
@@ -666,22 +669,24 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
         $migration->addPostQuery(
             $DB->buildDelete(
-                $type['TABLE_NAME'],
+                $table_name,
                 [
-                    'itemtype' => 'PluginFusioninventoryIgnoredimportdevice'
+                    $itemtype_col => 'PluginFusioninventoryIgnoredimportdevice'
                 ]
             )
         );
 
         $migration->addPostQuery(
             $DB->buildUpdate(
-                $type['TABLE_NAME'],
+                $table_name,
                 [
-                    'itemtype' => new \QueryExpression('REPLACE(itemtype, "PluginFusioninventory", "PluginGlpiinventory")')
+                    $itemtype_col => new \QueryExpression(
+                        'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
+                    )
 
                 ],
                 [
-                    'itemtype' => ['LIKE', 'PluginFusion%']
+                    $itemtype_col => ['LIKE', 'PluginFusion%']
                 ]
             )
         );
