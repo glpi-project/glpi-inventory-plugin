@@ -702,44 +702,44 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 ]
             )
         );
+    }
 
-        if ($DB->tableExists('glpi_plugin_glpiinventory_taskjobs')) {
-            $taskjobs_iterator = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_taskjobs']);
-            foreach ($taskjobs_iterator as $taskjob) {
-                $updated_values = [
-                    'actors'  => [],
-                    'targets' => [],
-                ];
-                foreach (['actors', 'targets'] as $fieldname) {
-                    $existing_values = importArrayFromDB($taskjob[$fieldname]);
-                    foreach ($existing_values as $item_specs) {
-                        $itemtype = key($item_specs);
-                        $items_id = current($item_specs);
-                        if ($itemtype === 'PluginGlpiinventoryAgent' || $itemtype === 'PluginFusioninventoryAgent') {
-                            $itemtype = 'Agent';
-                            if (array_key_exists($items_id, $agents_mapping)) {
-                                $items_id = $agents_mapping[$items_id];
-                            }
-                        } else {
-                            $itemtype = str_replace('PluginFusioninventory', 'PluginGlpiinventory', $itemtype);
+    if ($DB->tableExists('glpi_plugin_glpiinventory_taskjobs')) {
+        $taskjobs_iterator = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_taskjobs']);
+        foreach ($taskjobs_iterator as $taskjob) {
+            $updated_values = [
+                'actors'  => [],
+                'targets' => [],
+            ];
+            foreach (['actors', 'targets'] as $fieldname) {
+                $existing_values = importArrayFromDB($taskjob[$fieldname]);
+                foreach ($existing_values as $item_specs) {
+                    $itemtype = key($item_specs);
+                    $items_id = current($item_specs);
+                    if ($itemtype === 'PluginGlpiinventoryAgent' || $itemtype === 'PluginFusioninventoryAgent') {
+                        $itemtype = 'Agent';
+                        if (array_key_exists($items_id, $agents_mapping)) {
+                            $items_id = $agents_mapping[$items_id];
                         }
-                        $updated_values[$fieldname][] = [$itemtype => $items_id];
+                    } else {
+                        $itemtype = str_replace('PluginFusioninventory', 'PluginGlpiinventory', $itemtype);
                     }
+                    $updated_values[$fieldname][] = [$itemtype => $items_id];
                 }
-
-                $DB->queryOrDie(
-                    $DB->buildUpdate(
-                        'glpi_plugin_glpiinventory_taskjobs',
-                        [
-                            'actors'  => exportArrayToDB($updated_values['actors']),
-                            'targets' => exportArrayToDB($updated_values['targets'])
-                        ],
-                        [
-                            'id' => $taskjob['id']
-                        ]
-                    )
-                );
             }
+
+            $DB->queryOrDie(
+                $DB->buildUpdate(
+                    'glpi_plugin_glpiinventory_taskjobs',
+                    [
+                        'actors'  => exportArrayToDB($updated_values['actors']),
+                        'targets' => exportArrayToDB($updated_values['targets'])
+                    ],
+                    [
+                        'id' => $taskjob['id']
+                    ]
+                )
+            );
         }
     }
 
