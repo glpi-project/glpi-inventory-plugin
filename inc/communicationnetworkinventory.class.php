@@ -112,6 +112,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
         if (isset($a_CONTENT->content->agent->exit)) {
             $pfTaskjobstate->fail('Task aborted by agent');
             $response['response'] = ['RESPONSE' => 'SEND'];
+        } elseif (isset($a_CONTENT->content->device->error)) {
+            $pfTaskjobstate->fail($a_CONTENT->content->device->error);
+            $response['response'] = ['RESPONSE' => 'SEND'];
         } elseif (isset($a_CONTENT->content->agent->end)) {
             $cnt = countElementsInTable(
                 'glpi_plugin_glpiinventory_taskjoblogs',
