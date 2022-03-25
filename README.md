@@ -1,12 +1,12 @@
 ## GLPI Inventory Plugin
 
-This plugin makes GLPI to process various types of tasks for GLPI agents:
-* Computer inventory
-* Network discovery
-* Network (SNMP) inventory
+This plugin handles various types of tasks for GLPI agents:
+* Network discovery and inventory (SNMP)
 * Software deployment
 * VMWare ESX host remote inventory
 * Collect data (files, Windows registry, WMI)
+
+Computer and Network inventories themselves are done on GLPI side; the plugin only handle network related *tasks*.
 
 ## Third-party icons and images
 
