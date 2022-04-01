@@ -69,7 +69,7 @@ define(
  * @param string $scriptname
  * @return boolean
  */
-function script_endswith($scriptname)
+function plugin_glpiinventory_script_endswith($scriptname)
 {
     $script_name = filter_input(INPUT_SERVER, "SCRIPT_NAME");
     return substr($script_name, -strlen($scriptname)) === $scriptname;
@@ -242,10 +242,10 @@ function plugin_init_glpiinventory()
                 "lib/d3/d3" . ($debug_mode ? "" : ".min") . ".js"
             );
         }
-        if (script_endswith("timeslot.form.php")) {
+        if (plugin_glpiinventory_script_endswith("timeslot.form.php")) {
             $PLUGIN_HOOKS['add_javascript']['glpiinventory'][] = "lib/timeslot" . ($debug_mode ? "" : ".min") . ".js";
         }
-        if (script_endswith("deploypackage.form.php")) {
+        if (plugin_glpiinventory_script_endswith("deploypackage.form.php")) {
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "lib/extjs/resources/css/ext-all.css";
 
             array_push(
@@ -259,9 +259,9 @@ function plugin_init_glpiinventory()
             );
         }
         if (
-            script_endswith("task.form.php")
-            || script_endswith("taskjob.php")
-            || script_endswith("iprange.form.php")
+            plugin_glpiinventory_script_endswith("task.form.php")
+            || plugin_glpiinventory_script_endswith("taskjob.php")
+            || plugin_glpiinventory_script_endswith("iprange.form.php")
         ) {
             array_push(
                 $PLUGIN_HOOKS['add_javascript']['glpiinventory'],
@@ -270,7 +270,7 @@ function plugin_init_glpiinventory()
                 "js/taskjobs" . ($debug_mode || !file_exists('js/taskjobs.min.js') ? "" : ".min") . ".js"
             );
         }
-        if (script_endswith("menu.php")) {
+        if (plugin_glpiinventory_script_endswith("menu.php")) {
             $PLUGIN_HOOKS['add_javascript']['glpiinventory'][] = "js/stats" . ($debug_mode || !file_exists('js/stats.min.js') ? "" : ".min") . ".js";
         }
 
@@ -319,7 +319,7 @@ function plugin_init_glpiinventory()
         }
 
        // load task view css for computer self deploy (tech)
-        if (script_endswith("computer.form.php")) {
+        if (plugin_glpiinventory_script_endswith("computer.form.php")) {
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/views.css";
         }
 
