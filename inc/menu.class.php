@@ -161,13 +161,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         );
         $options['deploypackage']['links'][$img] = '/' . $fi_rel_path . '/front/deployfile.clean.php';
 
-       // Add icon for documentation
-        $img = Html::image(
-            $fi_full_path . "/pics/books.png",
-            ['alt' => __('Import', 'glpiinventory')]
-        );
-        $options['menu']['links'][$img] = '/' . $fi_rel_path . '/front/documentation.php';
-
         $options['agent'] = [
            'title' => Agent::getTypeName(),
            'page'  => Agent::getSearchURL(false),
