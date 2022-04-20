@@ -106,6 +106,7 @@ class PrinterUpdateTest extends TestCase
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         // To be sure not have 2 times the same information
+        $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
         new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
