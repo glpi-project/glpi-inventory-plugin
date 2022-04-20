@@ -14,5 +14,5 @@ updates:
     allow:
       - dependency-type: "direct"
     open-pull-requests-limit: 100
-    target-branch: "master"
+    target-branch: "develop"
     versioning-strategy: "lockfile-only"
