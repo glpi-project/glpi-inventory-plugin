@@ -362,7 +362,7 @@ class ComputerEntityTest extends TestCase
 </REQUEST>";
 
         $converter = new \Glpi\Inventory\Converter();
-        $source = $converter->convert($xml_source);
+        $source = json_decode($converter->convert($xml_source));
 
         $CFG_GLPI["is_contact_autoupdate"] = 0;
         $inventory = new \Glpi\Inventory\Inventory($source);

@@ -99,15 +99,15 @@ class PrinterUpdateTest extends TestCase
         $this->assertGreaterThan(0, $this->items_id);
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($xml_source);
-       //$json = json_decode($data);
+        $data = json_decode($converter->convert($xml_source));
+
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
-       // To be sure not have 2 same information
+        // To be sure not have 2 times the same information
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
     }
 
@@ -346,10 +346,9 @@ class PrinterUpdateTest extends TestCase
         $this->assertTrue($printer->getFromDB($printers_id));
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($xml_source);
-       //$json = json_decode($data);
+        $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $printer->getFromDB($printers_id);
@@ -452,10 +451,9 @@ class PrinterUpdateTest extends TestCase
         $this->assertArrayHasKey('id', $printer->fields);
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($xml_source);
-       //$json = json_decode($data);
+        $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $printer = new Printer();
@@ -558,10 +556,9 @@ class PrinterUpdateTest extends TestCase
         $printer->getFromDB($printers_id);
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($xml_source);
-       //$json = json_decode($data);
+        $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $this->assertGreaterThan(0, $printer->getFromDBByCrit(['serial' => '8512418234']));
@@ -628,10 +625,9 @@ class PrinterUpdateTest extends TestCase
 </REQUEST>";
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($xml_source);
-       //$json = json_decode($data);
+        $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
@@ -643,7 +639,7 @@ class PrinterUpdateTest extends TestCase
         $this->assertEquals('Management', $mgmt_port['name']);
         $this->assertEquals('Management', $mgmt_port['name']);
 
-       //Logical number should be 1
+        //Logical number should be 1
         $this->assertEquals(1, $a_port['logical_number'], 'Logical number changed to 1');
         $this->assertEquals('NC-6800h', $a_port['name'], 'Name has changed');
     }

@@ -172,7 +172,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $networkEquipment->getFromDB($this->item_id);
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($this->xml_source);
+        $data = json_decode($converter->convert($this->xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
         new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
@@ -266,7 +266,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $networkEquipment->getFromDB($item['id']);
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($this->xml_source);
+        $data = json_decode($converter->convert($this->xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
         new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
