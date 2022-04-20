@@ -170,9 +170,9 @@ class RuleImportTest extends TestCase
         );
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($xml_source);
+        $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
@@ -225,9 +225,9 @@ class RuleImportTest extends TestCase
         $this->assertEquals(0, count($a_printers), 'There should be no printer');
 
         $converter = new \Glpi\Inventory\Converter();
-        $data = $converter->convert($xml_source);
+        $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        $inventory = new \Glpi\Inventory\Inventory($data);
+        new \Glpi\Inventory\Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
