@@ -287,7 +287,7 @@ class UpdateTest extends TestCase
 
         $cnt_new = countElementsInTable(
             "glpi_rules",
-            ['sub_type' => 'PluginGlpiinventoryInventoryRuleEntity']
+            ['sub_type' => 'RuleImportEntity']
         );
 
         $this->assertEquals($nbrules, $cnt_new, "May have " . $nbrules . " entity rules");
