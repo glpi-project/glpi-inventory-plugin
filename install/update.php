@@ -7053,6 +7053,7 @@ function do_rule_migration($migration)
           'OR' => [
            ['sub_type'  => 'PluginFusinvinventoryRuleEntity'],
            ['sub_type'  => 'PluginFusioninventoryInventoryRuleEntity']
+          ]
         ]
     );
 
