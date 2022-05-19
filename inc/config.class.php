@@ -85,7 +85,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $input['version']                = PLUGIN_GLPIINVENTORY_VERSION;
         $input['ssl_only']               = '0';
         $input['delete_task']            = '20';
-        $input['inventory_frequence']    = '24';
         $input['agent_port']             = '62354';
         $input['extradebug']             = '0';
         $input['users_id']               = $users_id;
@@ -322,17 +321,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "<td>" . __('SSL-only for agent', 'glpiinventory') . "</td>";
         echo "<td width='20%'>";
         Dropdown::showYesNo("ssl_only", $this->isFieldActive('ssl_only'));
-        echo "</td>";
-        echo "<td>" . __('Inventory frequency (in hours)', 'glpiinventory') . "</td>";
-        echo "<td width='20%'>";
-        Dropdown::showNumber(
-            "inventory_frequence",
-            [
-                            'value' => $this->getValue('inventory_frequence'),
-                            'min' => 1,
-                            'max' => 240
-                           ]
-        );
         echo "</td>";
         echo "</tr>";
 

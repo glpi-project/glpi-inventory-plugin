@@ -348,11 +348,6 @@ class DatabaseTestsCommons extends Assert
         $this->assertEquals($DB->numrows($result), 1, "type 'delete_task' not added in config");
 
         $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='inventory_frequence'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'inventory_frequence' not added in config");
-
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
          WHERE `type`='agent_port'";
         $result = $DB->query($query);
         $this->assertEquals($DB->numrows($result), 1, "type 'agent_port' not added in config");

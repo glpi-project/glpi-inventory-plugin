@@ -222,7 +222,6 @@ function plugin_init_glpiinventory()
         $CFG_GLPI['threads_networkinventory'] = $PF_CONFIG['threads_networkinventory'];
         $CFG_GLPI['timeout_networkdiscovery'] = $PF_CONFIG['timeout_networkdiscovery'];
         $CFG_GLPI['timeout_networkinventory'] = $PF_CONFIG['timeout_networkinventory'];
-        $CFG_GLPI['inventory_frequency'] = $PF_CONFIG['inventory_frequence'];
 
        /**
         * Load the relevant javascript/css files only on pages that need them.
