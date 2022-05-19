@@ -865,7 +865,6 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     $a_input = [];
     $a_input['ssl_only'] = 0;
     $a_input['delete_task'] = 20;
-    $a_input['inventory_frequence'] = 24;
     $a_input['agent_port'] = 62354;
     $a_input['extradebug'] = 0;
     $a_input['users_id'] = $users_id;
@@ -883,7 +882,6 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $a_input['ssl_only'] = $prepare_Config['ssl_only'];
     }
     $a_input['delete_task'] = 20;
-    $a_input['inventory_frequence'] = 24;
     $a_input['agent_port'] = 62354;
     $a_input['extradebug'] = 0;
     $a_input['users_id'] = 0;
@@ -1654,7 +1652,6 @@ function do_config_migration($migration)
     $a_table['oldfields'][] = 'URL_agent_conf';
     $a_table['oldfields'][] = 'ssl_only';
     $a_table['oldfields'][] = 'authsnmp';
-    $a_table['oldfields'][] = 'inventory_frequence';
     $a_table['oldfields'][] = 'criteria1_ip';
     $a_table['oldfields'][] = 'criteria1_name';
     $a_table['oldfields'][] = 'criteria1_serial';
@@ -7063,7 +7060,6 @@ function do_rule_migration($migration)
     $a_input = [];
     $a_input['ssl_only'] = 0;
     $a_input['delete_task'] = 20;
-    $a_input['inventory_frequence'] = 24;
     $a_input['agent_port'] = 62354;
     $a_input['extradebug'] = 0;
     $a_input['users_id'] = $users_id;
@@ -7081,7 +7077,6 @@ function do_rule_migration($migration)
         $a_input['ssl_only'] = $prepare_Config['ssl_only'];
     }
     $a_input['delete_task'] = 20;
-    $a_input['inventory_frequence'] = 24;
     $a_input['agent_port'] = 62354;
     $a_input['extradebug'] = 0;
     $a_input['users_id'] = 0;
