@@ -588,7 +588,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
               FROM `glpi_plugin_glpiinventory_entities`
           ) AS `plugin_entities` ON `plugin_entities`.`entities_id` = `entities`.`id`
           SET
-              `entities`.`transfers_id` = GREATEST(0, `plugin_entities`.`transfers_id_auto`),
+              `entities`.`transfers_id` = `plugin_entities`.`transfers_id_auto`,
               `entities`.`agent_base_url` = `plugin_entities`.`agent_base_url`
           ;"
         );
