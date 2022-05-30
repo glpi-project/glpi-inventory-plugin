@@ -1725,6 +1725,15 @@ function do_entities_migration($migration)
 
     $a_table['oldkeys'] = [];
 
+    // Fix -1 values in `transfers_id_auto`
+    if ($DB->tableExists('glpi_plugin_glpiinventory_entities') && $DB->fieldExists('glpi_plugin_glpiinventory_entities', 'transfers_id_auto')) {
+        $DB->update(
+            'glpi_plugin_glpiinventory_entities',
+            ['transfers_id_auto' => '0'],
+            ['transfers_id_auto' => '-1'],
+        );
+    }
+
     migratePluginTables($migration, $a_table);
     if (countElementsInTable($a_table['name']) == 0) {
         $a_configs = getAllDataFromTable(
