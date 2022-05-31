@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Cédric Anne, 2021
-# Kaya Zeren <kayazeren@gmail.com>, 2021
+# Kaya Zeren <kayazeren@gmail.com>, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:37+0000\n"
+"POT-Creation-Date: 2022-05-31 10:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2021\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2022\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/teclib/teams/28042/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,7 +104,7 @@ msgstr "Ajan"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Ajan iletişim hatası, ajan başlatılamadı"
 
-#: inc/config.class.php:353
+#: inc/config.class.php:341
 msgid "Agent port"
 msgstr "Ajan kapısı"
 
@@ -279,7 +279,7 @@ msgstr "Değişiklikleri iptal et"
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: inc/config.class.php:425 inc/config.class.php:454
+#: inc/config.class.php:413 inc/config.class.php:442
 msgid "Change the status"
 msgstr "Durumu değiştir"
 
@@ -304,7 +304,7 @@ msgstr "Seçin"
 msgid "Class"
 msgstr "Sınıf"
 
-#: inc/config.class.php:457
+#: inc/config.class.php:445
 msgid "Clean agents"
 msgstr "Ajanları temizle"
 
@@ -428,7 +428,7 @@ msgstr "Bir dağıtım işi, paket oluşturuldu:"
 msgid "Data"
 msgstr "Veri"
 
-#: inc/config.class.php:485
+#: inc/config.class.php:473
 msgid "Default status"
 msgstr "Varsayılan durum"
 
@@ -465,7 +465,7 @@ msgstr "Açıklama"
 msgid "Delete"
 msgstr "Sil"
 
-#: install/update.php:1020
+#: install/update.php:1018
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "\"xxx\" gündür sunucu ile bağlantı kurmayan ajanlar silinsin."
 
@@ -477,11 +477,11 @@ msgstr "Klasörü sil"
 msgid "Delete selected items"
 msgstr "Seçilmiş ögeleri sil"
 
-#: inc/config.class.php:586
+#: inc/config.class.php:574
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
 
-#: inc/config.class.php:340
+#: inc/config.class.php:328
 msgid "Delete tasks logs after"
 msgstr "Şundan sonra görev günlükleri silinsin"
 
@@ -614,7 +614,7 @@ msgstr "Yürütülme zaman aralığı"
 msgid "Export"
 msgstr "Dışa aktar"
 
-#: inc/config.class.php:360
+#: inc/config.class.php:348
 msgid "Extra-debug"
 msgstr "Ek hata ayıklama"
 
@@ -876,10 +876,6 @@ msgstr "Etkileşim türü"
 msgid "Inventory"
 msgstr "Envanter"
 
-#: inc/config.class.php:326
-msgid "Inventory frequency (in hours)"
-msgstr "Envanter sıklığı (saat)"
-
 #: inc/deploygroup.class.php:99
 msgid "Inventory group"
 msgstr "Envanter grubu"
@@ -945,7 +941,7 @@ msgstr "Yerel kurallar"
 msgid "Manage packages"
 msgstr "Paket yönetimi"
 
-#: inc/config.class.php:570
+#: inc/config.class.php:558
 msgid "Match mirrors to agents"
 msgstr "Yansıları ajanlarla eşleştirme"
 
@@ -953,7 +949,7 @@ msgstr "Yansıları ajanlarla eşleştirme"
 msgid "Max file size"
 msgstr "En büyük dosya boyutu"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:361
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Bir görevin uyandıracağı en fazla ajan sayısı"
 
@@ -1025,26 +1021,26 @@ msgstr "Birden çok kullanıcı bağlı"
 msgid "Name"
 msgstr "Ad"
 
-#: inc/config.class.php:235
+#: inc/config.class.php:234
 msgid "Network Inventory"
 msgstr "Ağ envanteri"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:496
-#: inc/config.class.php:516
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:484
+#: inc/config.class.php:504
 msgid "Network discovery"
 msgstr "Ağ keşfi"
 
 #: inc/profile.class.php:369
 msgid "Network equipment SNMP"
-msgstr ""
+msgstr "Ağ aygıtı SNMP"
 
 #: hook.php:76
 msgid "Network inventory"
 msgstr "Ağ envanteri"
 
 #: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:505
-#: inc/config.class.php:524
+#: inc/staticmisc.class.php:87 inc/config.class.php:493
+#: inc/config.class.php:512
 msgid "Network inventory (SNMP)"
 msgstr "Ağ envanteri (SNMP)"
 
@@ -1052,7 +1048,7 @@ msgstr "Ağ envanteri (SNMP)"
 msgid "Network inventory status"
 msgstr "Ağ envanteri durumu"
 
-#: inc/config.class.php:480
+#: inc/config.class.php:468
 msgid "Network options"
 msgstr "Ağ ayarları"
 
@@ -1173,7 +1169,7 @@ msgstr "Paket dağıtımı"
 msgid "Package exported in"
 msgstr "Paket şuraya dışa aktarıldı"
 
-#: inc/menu.class.php:381 inc/config.class.php:236
+#: inc/menu.class.php:381 inc/config.class.php:235
 msgid "Package management"
 msgstr "Paket yönetimi"
 
@@ -1207,7 +1203,7 @@ msgstr "Yol / dosya"
 msgid "Periodicity"
 msgstr "Sıklık"
 
-#: setup.php:481
+#: setup.php:480
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Lütfen glpi/plugins/ içindeki %s klasörünü silin"
@@ -1233,7 +1229,7 @@ msgstr "Hazırlanmış"
 
 #: inc/profile.class.php:372
 msgid "Printer SNMP"
-msgstr ""
+msgstr "Yazıcı SNMP"
 
 #: inc/profile.class.php:381
 msgid "Printers report"
@@ -1272,7 +1268,7 @@ msgstr "Soru"
 msgid "Re-prepare a target-actor if previous run is successful"
 msgstr "Önceki çalışma başarısız olduysa bir hedef aktörünü yeniden hazırla"
 
-#: inc/config.class.php:365
+#: inc/config.class.php:353
 msgid "Re-prepare successful jobs"
 msgstr "Başarılı işler yeniden hazırlansın"
 
@@ -1362,7 +1358,7 @@ msgstr "Dönüş kodu şuna eşit olan"
 msgid "Return code is not equal to"
 msgstr "Dönüş kodu şundan farklı olan"
 
-#: inc/config.class.php:555
+#: inc/config.class.php:543
 msgid "Root folder for sending files from server"
 msgstr "Sunucudan gönderilecek dosyaların kök klasörü"
 
@@ -1402,11 +1398,11 @@ msgstr "SNMP envanteri"
 msgid "SNMP models creation"
 msgstr "SNMP modeli oluşturma"
 
-#: inc/config.class.php:515 inc/config.class.php:523
+#: inc/config.class.php:503 inc/config.class.php:511
 msgid "SNMP timeout"
 msgstr "SNMP zaman aşımı"
 
-#: inc/config.class.php:322
+#: inc/config.class.php:321
 msgid "SSL-only for agent"
 msgstr "Ajan yalnız SSL kullansın"
 
@@ -1625,8 +1621,8 @@ msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
 msgid "This task is active. delete denied"
 msgstr "Bu görev etkin olduğundan silinemez"
 
-#: inc/statediscovery.class.php:173 inc/config.class.php:495
-#: inc/config.class.php:504 inc/stateinventory.class.php:112
+#: inc/statediscovery.class.php:173 inc/config.class.php:483
+#: inc/config.class.php:492 inc/stateinventory.class.php:112
 msgid "Threads number"
 msgstr "İşlem sayısı"
 
@@ -1684,11 +1680,11 @@ msgstr "Birim"
 msgid "Unused file"
 msgstr "Kullanılmayan dosya"
 
-#: inc/config.class.php:387
+#: inc/config.class.php:375
 msgid "Update agents"
 msgstr "Ajanları güncelle"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:377
 msgid "Update agents not have contacted server since (in days)"
 msgstr "Ajan güncellemesi şu kadar zamandır sunucuya bağlanmadı (gün)"
 
@@ -1708,7 +1704,7 @@ msgstr "Bilgisayardan yükle"
 msgid "Upload from server"
 msgstr "Sunucudan yükle"
 
-#: inc/config.class.php:563
+#: inc/config.class.php:551
 msgid "Use this GLPI server as a mirror server"
 msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
 
@@ -1813,7 +1809,7 @@ msgid ""
 "package."
 msgstr "Bir hedefe dağıtmak için bir görev ve bir paket seçmelisiniz."
 
-#: setup.php:464
+#: setup.php:463
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr "GLPI sürümünüz uyumlu değil. %1$s ile %2$s arasında olmalı"
@@ -1860,7 +1856,7 @@ msgstr "sürükleyin"
 msgid "exec"
 msgstr "yürütme"
 
-#: setup.php:473
+#: setup.php:472
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo eklentisi (PHP) gerekli..."
 
@@ -1936,14 +1932,14 @@ msgstr "ayıkla"
 msgid "unknown"
 msgstr "bilinmiyor"
 
-#: inc/config.class.php:575
+#: inc/config.class.php:563
 msgid "with both"
 msgstr "ikisine de göre"
 
-#: inc/config.class.php:574
+#: inc/config.class.php:562
 msgid "with entity"
 msgstr "varlığa göre"
 
-#: inc/config.class.php:573
+#: inc/config.class.php:561
 msgid "with location"
 msgstr "konuma göre"

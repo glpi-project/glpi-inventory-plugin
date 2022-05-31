@@ -4,22 +4,22 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Cédric Anne, 2021
+# Cédric Anne, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:37+0000\n"
+"POT-Creation-Date: 2022-05-31 10:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Cédric Anne, 2021\n"
+"Last-Translator: Cédric Anne, 2022\n"
 "Language-Team: Italian (Italy) (https://www.transifex.com/teclib/teams/28042/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: it_IT\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: inc/task.class.php:2180 inc/task.class.php:2223
 msgid ", actors: "
@@ -103,7 +103,7 @@ msgstr "Agente"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Errore di comunicazione con l'agente, impossibile avviarlo"
 
-#: inc/config.class.php:353
+#: inc/config.class.php:341
 msgid "Agent port"
 msgstr "Numero di porta dell'agente"
 
@@ -207,6 +207,7 @@ msgid "Behavior"
 msgid_plural "Behaviors"
 msgstr[0] "Comportamento"
 msgstr[1] "Comportamenti"
+msgstr[2] "Comportamenti"
 
 #: inc/deployuserinteractiontemplate.class.php:578
 msgid "Behaviors"
@@ -278,7 +279,7 @@ msgstr "Annulla modifiche"
 msgid "Cancelled"
 msgstr "Annullato"
 
-#: inc/config.class.php:425 inc/config.class.php:454
+#: inc/config.class.php:413 inc/config.class.php:442
 msgid "Change the status"
 msgstr "Cambia lo stato"
 
@@ -303,7 +304,7 @@ msgstr "Scegli"
 msgid "Class"
 msgstr "Classe"
 
-#: inc/config.class.php:457
+#: inc/config.class.php:445
 msgid "Clean agents"
 msgstr "Rimuovi gli agenti"
 
@@ -428,7 +429,7 @@ msgstr "Crea un pacchetto del compito di distribuzione:"
 msgid "Data"
 msgstr "Dati"
 
-#: inc/config.class.php:485
+#: inc/config.class.php:473
 msgid "Default status"
 msgstr "Stato predefinito"
 
@@ -465,7 +466,7 @@ msgstr "Definizione"
 msgid "Delete"
 msgstr "Elimina"
 
-#: install/update.php:1020
+#: install/update.php:1018
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "Elimina gli agenti che non hanno contattato il server da \"xxx\" giorni."
 
@@ -477,11 +478,11 @@ msgstr "Elimina directory"
 msgid "Delete selected items"
 msgstr "Elimina l'elemento selezionato"
 
-#: inc/config.class.php:586
+#: inc/config.class.php:574
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Elimina le richieste dell'attività evase dopo (in giorni)"
 
-#: inc/config.class.php:340
+#: inc/config.class.php:328
 msgid "Delete tasks logs after"
 msgstr "Cancella il log delle attività dopo"
 
@@ -614,7 +615,7 @@ msgstr "Orario di esecuzione dell'attività"
 msgid "Export"
 msgstr "Esporta"
 
-#: inc/config.class.php:360
+#: inc/config.class.php:348
 msgid "Extra-debug"
 msgstr "Extra-debug"
 
@@ -697,6 +698,7 @@ msgid "Filter"
 msgid_plural "Filters"
 msgstr[0] "Filtro"
 msgstr[1] "Filtri"
+msgstr[2] "Filtri"
 
 #: inc/collect.class.php:150 inc/collect.class.php:232
 #: inc/collect.class.php:247
@@ -734,18 +736,21 @@ msgid "Found WMI"
 msgid_plural "Found WMIs"
 msgstr[0] "Trovato WMI"
 msgstr[1] "Trovati WMI"
+msgstr[2] "Trovati WMI"
 
 #: inc/collect_registry.class.php:53
 msgid "Found entry"
 msgid_plural "Found entries"
 msgstr[0] "Elemento trovato"
 msgstr[1] "Elementi trovati"
+msgstr[2] "Elementi trovati"
 
 #: inc/collect_file.class.php:53
 msgid "Found file"
 msgid_plural "Found files"
 msgstr[0] "File trovato"
 msgstr[1] "File trovati"
+msgstr[2] "File trovati"
 
 #: inc/deploycheck.class.php:78
 msgid "Free space is greater than"
@@ -878,10 +883,6 @@ msgstr ""
 msgid "Inventory"
 msgstr "Inventario"
 
-#: inc/config.class.php:326
-msgid "Inventory frequency (in hours)"
-msgstr "Frequenza dell'inventario (in ore)"
-
 #: inc/deploygroup.class.php:99
 msgid "Inventory group"
 msgstr ""
@@ -947,7 +948,7 @@ msgstr "Regole locali"
 msgid "Manage packages"
 msgstr "Gestione pacchetti"
 
-#: inc/config.class.php:570
+#: inc/config.class.php:558
 msgid "Match mirrors to agents"
 msgstr "Confronta i mirror e gli agenti"
 
@@ -955,7 +956,7 @@ msgstr "Confronta i mirror e gli agenti"
 msgid "Max file size"
 msgstr "Grandezza massima del file"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:361
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Numero massimo degli agenti da attivare per una attività"
 
@@ -1028,12 +1029,12 @@ msgstr "Più utenti connessi"
 msgid "Name"
 msgstr "Nome"
 
-#: inc/config.class.php:235
+#: inc/config.class.php:234
 msgid "Network Inventory"
 msgstr "Inventorio di rete"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:496
-#: inc/config.class.php:516
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:484
+#: inc/config.class.php:504
 msgid "Network discovery"
 msgstr "Rilevamento della rete"
 
@@ -1046,8 +1047,8 @@ msgid "Network inventory"
 msgstr "Inventorio di rete"
 
 #: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:505
-#: inc/config.class.php:524
+#: inc/staticmisc.class.php:87 inc/config.class.php:493
+#: inc/config.class.php:512
 msgid "Network inventory (SNMP)"
 msgstr "Inventario della rete (SNMP)"
 
@@ -1055,7 +1056,7 @@ msgstr "Inventario della rete (SNMP)"
 msgid "Network inventory status"
 msgstr "Stato inventario di rete"
 
-#: inc/config.class.php:480
+#: inc/config.class.php:468
 msgid "Network options"
 msgstr "Opzioni di rete"
 
@@ -1176,7 +1177,7 @@ msgstr "Distribuzione del pacchetto"
 msgid "Package exported in"
 msgstr "Pacchetto esportato in"
 
-#: inc/menu.class.php:381 inc/config.class.php:236
+#: inc/menu.class.php:381 inc/config.class.php:235
 msgid "Package management"
 msgstr "Gestione pacchetto"
 
@@ -1210,7 +1211,7 @@ msgstr "Percorso/file"
 msgid "Periodicity"
 msgstr "Ricorrenza"
 
-#: setup.php:481
+#: setup.php:480
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Si prega di eliminare la cartella %s in glpi/plugins/"
@@ -1277,7 +1278,7 @@ msgstr ""
 "Ripreparare un attore designato se la precedente esecuzione ha avuto "
 "successo"
 
-#: inc/config.class.php:365
+#: inc/config.class.php:353
 msgid "Re-prepare successful jobs"
 msgstr "Ripreparare i compiti eseguiti con successo"
 
@@ -1367,7 +1368,7 @@ msgstr "Il codice di ritorno è "
 msgid "Return code is not equal to"
 msgstr "Il codice di ritorno non è "
 
-#: inc/config.class.php:555
+#: inc/config.class.php:543
 msgid "Root folder for sending files from server"
 msgstr "Cartella radice per mandare file dal server"
 
@@ -1407,11 +1408,11 @@ msgstr ""
 msgid "SNMP models creation"
 msgstr "Creazione modelli SNMP"
 
-#: inc/config.class.php:515 inc/config.class.php:523
+#: inc/config.class.php:503 inc/config.class.php:511
 msgid "SNMP timeout"
 msgstr "Timeout SNMP"
 
-#: inc/config.class.php:322
+#: inc/config.class.php:321
 msgid "SSL-only for agent"
 msgstr "SSL unicamente per l'agente"
 
@@ -1524,6 +1525,7 @@ msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "Obiettivo per la distribuzione su richiesta"
 msgstr[1] "Obiettivi per le distribuzioni su richiesta"
+msgstr[2] "Obiettivi per le distribuzioni su richiesta"
 
 #: inc/taskjobview.class.php:608 inc/taskjobview.class.php:640
 msgid "Targets"
@@ -1536,6 +1538,7 @@ msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Compito"
 msgstr[1] "Attività"
+msgstr[2] "Attività"
 
 #: inc/taskview.class.php:247
 msgid "Task execution states"
@@ -1575,6 +1578,7 @@ msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "Il seguente compito è in esecuzione con questo pacchetto"
 msgstr[1] "Le seguenti attività sono in esecuzione con questo pacchetto"
+msgstr[2] "Le seguenti attività sono in esecuzione con questo pacchetto"
 
 #: inc/taskjobview.class.php:614
 msgid "The items that should be applied for this job."
@@ -1632,8 +1636,8 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr "Attività in esecuzione. Eliminazione non permessa"
 
-#: inc/statediscovery.class.php:173 inc/config.class.php:495
-#: inc/config.class.php:504 inc/stateinventory.class.php:112
+#: inc/statediscovery.class.php:173 inc/config.class.php:483
+#: inc/config.class.php:492 inc/stateinventory.class.php:112
 msgid "Threads number"
 msgstr "Numero di thread"
 
@@ -1691,11 +1695,11 @@ msgstr "Unità"
 msgid "Unused file"
 msgstr "File non utilizzato"
 
-#: inc/config.class.php:387
+#: inc/config.class.php:375
 msgid "Update agents"
 msgstr "Aggiorna gli agenti"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:377
 msgid "Update agents not have contacted server since (in days)"
 msgstr "Aggiorna gli agenti che non hanno contattato il server da (in giorni)"
 
@@ -1715,7 +1719,7 @@ msgstr "Upload dal computer"
 msgid "Upload from server"
 msgstr "Upload dal server"
 
-#: inc/config.class.php:563
+#: inc/config.class.php:551
 msgid "Use this GLPI server as a mirror server"
 msgstr "Usa questo server GLPI come un server mirror"
 
@@ -1733,6 +1737,7 @@ msgid "User interaction"
 msgid_plural "User interactions"
 msgstr[0] "Interazione utente"
 msgstr[1] "Interazioni utente"
+msgstr[2] "Interazioni utente"
 
 #: front/deployuserinteractiontemplate.php:38 inc/profile.class.php:331
 #: inc/deployuserinteractiontemplate.class.php:145 inc/menu.class.php:395
@@ -1740,6 +1745,7 @@ msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "Modello d'intervento dell'utente"
 msgstr[1] "Modelli d'intervento dell'utente"
+msgstr[2] "Modelli d'intervento dell'utente"
 
 #: inc/deploypackage.class.php:526
 msgid "User interactions"
@@ -1822,7 +1828,7 @@ msgstr ""
 "Devi scegliere un'attività ed un pacchetto per selezionare come destinazione"
 " un'attività con un pacchetto di distribuzione."
 
-#: setup.php:464
+#: setup.php:463
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1871,7 +1877,7 @@ msgstr "trascina"
 msgid "exec"
 msgstr "exec"
 
-#: setup.php:473
+#: setup.php:472
 msgid "fileinfo extension (PHP) is required..."
 msgstr "è richiesta l'estensione (PHP) fileinfo"
 
@@ -1947,14 +1953,14 @@ msgstr "scompatta"
 msgid "unknown"
 msgstr "Sconosciuto"
 
-#: inc/config.class.php:575
+#: inc/config.class.php:563
 msgid "with both"
 msgstr "con entrambi"
 
-#: inc/config.class.php:574
+#: inc/config.class.php:562
 msgid "with entity"
 msgstr "con entità"
 
-#: inc/config.class.php:573
+#: inc/config.class.php:561
 msgid "with location"
 msgstr "con posizione"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:37+0000\n"
+"POT-Creation-Date: 2022-05-31 10:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: German (Germany) (https://www.transifex.com/teclib/teams/28042/de_DE/)\n"
@@ -103,7 +103,7 @@ msgstr "Agent"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Verbindungsfehler zum Agent, starten des Agenten nicht möglich"
 
-#: inc/config.class.php:353
+#: inc/config.class.php:341
 msgid "Agent port"
 msgstr "Netzwerkports Agents"
 
@@ -278,7 +278,7 @@ msgstr "Setze Änderung zurück"
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: inc/config.class.php:425 inc/config.class.php:454
+#: inc/config.class.php:413 inc/config.class.php:442
 msgid "Change the status"
 msgstr "Ändere den Status"
 
@@ -303,7 +303,7 @@ msgstr "Auswählen"
 msgid "Class"
 msgstr "Klasse"
 
-#: inc/config.class.php:457
+#: inc/config.class.php:445
 msgid "Clean agents"
 msgstr "Agenten bereinigen"
 
@@ -428,7 +428,7 @@ msgstr "Erstellt einen Ausrollvorgang, Paket:"
 msgid "Data"
 msgstr "Daten"
 
-#: inc/config.class.php:485
+#: inc/config.class.php:473
 msgid "Default status"
 msgstr "Standardstatus"
 
@@ -467,7 +467,7 @@ msgstr "Definition"
 msgid "Delete"
 msgstr "Löschen"
 
-#: install/update.php:1020
+#: install/update.php:1018
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr ""
 "Lösche Agenten, die den Server seit \"xxx\" Tagen nicht kontaktiert haben."
@@ -480,11 +480,11 @@ msgstr "Lösche Verzeichnis"
 msgid "Delete selected items"
 msgstr "Lösche ausgewähltes Element"
 
-#: inc/config.class.php:586
+#: inc/config.class.php:574
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Löschen von erfolgreichen On-Demand-Aufgaben nach (in Tagen)"
 
-#: inc/config.class.php:340
+#: inc/config.class.php:328
 msgid "Delete tasks logs after"
 msgstr "Lösche Aufgaben-Log nach"
 
@@ -617,7 +617,7 @@ msgstr "Zeitfenster zur Ausführung"
 msgid "Export"
 msgstr "Export"
 
-#: inc/config.class.php:360
+#: inc/config.class.php:348
 msgid "Extra-debug"
 msgstr "Extra-Debug"
 
@@ -881,10 +881,6 @@ msgstr ""
 msgid "Inventory"
 msgstr "Inventar"
 
-#: inc/config.class.php:326
-msgid "Inventory frequency (in hours)"
-msgstr "Periodizität des Inventars (in Stunden)"
-
 #: inc/deploygroup.class.php:99
 msgid "Inventory group"
 msgstr ""
@@ -950,7 +946,7 @@ msgstr "Lokale Regeln"
 msgid "Manage packages"
 msgstr "Verwalte Pakete"
 
-#: inc/config.class.php:570
+#: inc/config.class.php:558
 msgid "Match mirrors to agents"
 msgstr "Abgleich von Spiegeln mit Agenten"
 
@@ -958,7 +954,7 @@ msgstr "Abgleich von Spiegeln mit Agenten"
 msgid "Max file size"
 msgstr "Maximale Dateigrösse"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:361
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Maximale Anzahl von Agenten zum starten je Vorgang"
 
@@ -1030,12 +1026,12 @@ msgstr "Verschiedene Benutzer sind verbunden"
 msgid "Name"
 msgstr "Name"
 
-#: inc/config.class.php:235
+#: inc/config.class.php:234
 msgid "Network Inventory"
 msgstr "Netzwerkinventar"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:496
-#: inc/config.class.php:516
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:484
+#: inc/config.class.php:504
 msgid "Network discovery"
 msgstr "Netzwerkdiscovery"
 
@@ -1048,8 +1044,8 @@ msgid "Network inventory"
 msgstr "Netzwerkinventar"
 
 #: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:505
-#: inc/config.class.php:524
+#: inc/staticmisc.class.php:87 inc/config.class.php:493
+#: inc/config.class.php:512
 msgid "Network inventory (SNMP)"
 msgstr "Netzwerkinventar (SNMP)"
 
@@ -1057,7 +1053,7 @@ msgstr "Netzwerkinventar (SNMP)"
 msgid "Network inventory status"
 msgstr "Status Netzwerkinventar"
 
-#: inc/config.class.php:480
+#: inc/config.class.php:468
 msgid "Network options"
 msgstr "Netzwerkoptionen"
 
@@ -1178,7 +1174,7 @@ msgstr "Paketverteilung"
 msgid "Package exported in"
 msgstr "Paket exportiert in"
 
-#: inc/menu.class.php:381 inc/config.class.php:236
+#: inc/menu.class.php:381 inc/config.class.php:235
 msgid "Package management"
 msgstr "Paketverwaltung"
 
@@ -1212,7 +1208,7 @@ msgstr "Pfad/Datei"
 msgid "Periodicity"
 msgstr "Häufigkeit"
 
-#: setup.php:481
+#: setup.php:480
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Bitte den Ordner %s im Verzeichnis glpi/plugins löschen"
@@ -1279,7 +1275,7 @@ msgstr ""
 "Bereiten Sie einen Ziel-Akteur neu vor, wenn der vorherige Lauf erfolgreich "
 "war."
 
-#: inc/config.class.php:365
+#: inc/config.class.php:353
 msgid "Re-prepare successful jobs"
 msgstr "Erfolgreiche Jobs neu vorbereiten"
 
@@ -1369,7 +1365,7 @@ msgstr "Rückgabewert ist gleich"
 msgid "Return code is not equal to"
 msgstr "Rückgabewert ist nicht gleich"
 
-#: inc/config.class.php:555
+#: inc/config.class.php:543
 msgid "Root folder for sending files from server"
 msgstr "Wurzelverzeichnis um Dateien vom Server zu senden"
 
@@ -1409,11 +1405,11 @@ msgstr ""
 msgid "SNMP models creation"
 msgstr "SNMP Modellerstellung"
 
-#: inc/config.class.php:515 inc/config.class.php:523
+#: inc/config.class.php:503 inc/config.class.php:511
 msgid "SNMP timeout"
 msgstr "SNMP timeout"
 
-#: inc/config.class.php:322
+#: inc/config.class.php:321
 msgid "SSL-only for agent"
 msgstr "Nur SSL für die Kommunikation mit dem Agent verwenden"
 
@@ -1634,8 +1630,8 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr "Die Aufgabe ist aktiv. Löschen fehlgeschlagen"
 
-#: inc/statediscovery.class.php:173 inc/config.class.php:495
-#: inc/config.class.php:504 inc/stateinventory.class.php:112
+#: inc/statediscovery.class.php:173 inc/config.class.php:483
+#: inc/config.class.php:492 inc/stateinventory.class.php:112
 msgid "Threads number"
 msgstr "Anzahl Threads"
 
@@ -1693,11 +1689,11 @@ msgstr "EInheit"
 msgid "Unused file"
 msgstr "Ungenutzte Datei"
 
-#: inc/config.class.php:387
+#: inc/config.class.php:375
 msgid "Update agents"
 msgstr "Agenten aktualisieren"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:377
 msgid "Update agents not have contacted server since (in days)"
 msgstr ""
 "Aktualisieren der Agenten die den Server nicht kontaktiert haben seit (in "
@@ -1719,7 +1715,7 @@ msgstr "Von Computer heraufladen"
 msgid "Upload from server"
 msgstr "Hochgeladen vom Server"
 
-#: inc/config.class.php:563
+#: inc/config.class.php:551
 msgid "Use this GLPI server as a mirror server"
 msgstr "Diesen GLPI-Server als Spiegelserver verwenden"
 
@@ -1826,7 +1822,7 @@ msgstr ""
 "Sie müssen eine Aufgabe und ein Paket auswählen, um eine Aufgabe mit einem "
 "Bereitstellungspaket zu bearbeiten."
 
-#: setup.php:464
+#: setup.php:463
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1875,7 +1871,7 @@ msgstr "ziehen"
 msgid "exec"
 msgstr "Ausführen"
 
-#: setup.php:473
+#: setup.php:472
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo Erweiterung (php) ist erforderlich..."
 
@@ -1951,14 +1947,14 @@ msgstr "dekomprimieren"
 msgid "unknown"
 msgstr "Unbekannt"
 
-#: inc/config.class.php:575
+#: inc/config.class.php:563
 msgid "with both"
 msgstr "mit beiden"
 
-#: inc/config.class.php:574
+#: inc/config.class.php:562
 msgid "with entity"
 msgstr "mit Entität"
 
-#: inc/config.class.php:573
+#: inc/config.class.php:561
 msgid "with location"
 msgstr "mit Standort"

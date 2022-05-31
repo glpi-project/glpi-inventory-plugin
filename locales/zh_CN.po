@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:37+0000\n"
+"POT-Creation-Date: 2022-05-31 10:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -103,7 +103,7 @@ msgstr "代理"
 msgid "Agent communication error, impossible to start agent"
 msgstr "代理通信错误，无法启动代理"
 
-#: inc/config.class.php:353
+#: inc/config.class.php:341
 msgid "Agent port"
 msgstr "代理端口"
 
@@ -277,7 +277,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "已取消"
 
-#: inc/config.class.php:425 inc/config.class.php:454
+#: inc/config.class.php:413 inc/config.class.php:442
 msgid "Change the status"
 msgstr "变更状态"
 
@@ -302,7 +302,7 @@ msgstr "选择"
 msgid "Class"
 msgstr "类"
 
-#: inc/config.class.php:457
+#: inc/config.class.php:445
 msgid "Clean agents"
 msgstr ""
 
@@ -423,7 +423,7 @@ msgstr "新建部署作业、包："
 msgid "Data"
 msgstr "数据"
 
-#: inc/config.class.php:485
+#: inc/config.class.php:473
 msgid "Default status"
 msgstr "默认状态"
 
@@ -456,7 +456,7 @@ msgstr "定义"
 msgid "Delete"
 msgstr "删除"
 
-#: install/update.php:1020
+#: install/update.php:1018
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "删除自“xxx”天以来未连接服务器的代理。"
 
@@ -468,11 +468,11 @@ msgstr "删除目录"
 msgid "Delete selected items"
 msgstr ""
 
-#: inc/config.class.php:586
+#: inc/config.class.php:574
 msgid "Delete successful on demand tasks after (in days)"
 msgstr ""
 
-#: inc/config.class.php:340
+#: inc/config.class.php:328
 msgid "Delete tasks logs after"
 msgstr "之后删除任务日志"
 
@@ -605,7 +605,7 @@ msgstr "执行时段"
 msgid "Export"
 msgstr "导出"
 
-#: inc/config.class.php:360
+#: inc/config.class.php:348
 msgid "Extra-debug"
 msgstr ""
 
@@ -861,10 +861,6 @@ msgstr ""
 msgid "Inventory"
 msgstr "资产盘点"
 
-#: inc/config.class.php:326
-msgid "Inventory frequency (in hours)"
-msgstr "盘点频率（以小时为单位）"
-
 #: inc/deploygroup.class.php:99
 msgid "Inventory group"
 msgstr ""
@@ -930,7 +926,7 @@ msgstr "本地规则"
 msgid "Manage packages"
 msgstr "管理程序包"
 
-#: inc/config.class.php:570
+#: inc/config.class.php:558
 msgid "Match mirrors to agents"
 msgstr ""
 
@@ -938,7 +934,7 @@ msgstr ""
 msgid "Max file size"
 msgstr "最大文件尺寸"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:361
 msgid "Maximum number of agents to wake up in a task"
 msgstr "任务中要唤醒的代理的最大数目"
 
@@ -1010,12 +1006,12 @@ msgstr "多个用户已连接"
 msgid "Name"
 msgstr "名称"
 
-#: inc/config.class.php:235
+#: inc/config.class.php:234
 msgid "Network Inventory"
 msgstr "网络资产盘点"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:496
-#: inc/config.class.php:516
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:484
+#: inc/config.class.php:504
 msgid "Network discovery"
 msgstr "网络发现"
 
@@ -1028,8 +1024,8 @@ msgid "Network inventory"
 msgstr "网络资产盘点"
 
 #: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:505
-#: inc/config.class.php:524
+#: inc/staticmisc.class.php:87 inc/config.class.php:493
+#: inc/config.class.php:512
 msgid "Network inventory (SNMP)"
 msgstr "网络资产盘点 (SNMP)"
 
@@ -1037,7 +1033,7 @@ msgstr "网络资产盘点 (SNMP)"
 msgid "Network inventory status"
 msgstr "网络资产状态"
 
-#: inc/config.class.php:480
+#: inc/config.class.php:468
 msgid "Network options"
 msgstr "网络选项"
 
@@ -1158,7 +1154,7 @@ msgstr ""
 msgid "Package exported in"
 msgstr ""
 
-#: inc/menu.class.php:381 inc/config.class.php:236
+#: inc/menu.class.php:381 inc/config.class.php:235
 msgid "Package management"
 msgstr "程序包管理"
 
@@ -1192,7 +1188,7 @@ msgstr "路径/文件"
 msgid "Periodicity"
 msgstr ""
 
-#: setup.php:481
+#: setup.php:480
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "请删除 glpi/plugins/ 目录的%s文件夹"
@@ -1257,7 +1253,7 @@ msgstr "问题"
 msgid "Re-prepare a target-actor if previous run is successful"
 msgstr "如果先前的运行成功则请再准备一个目标执行体"
 
-#: inc/config.class.php:365
+#: inc/config.class.php:353
 msgid "Re-prepare successful jobs"
 msgstr "重新准备成功的工作"
 
@@ -1347,7 +1343,7 @@ msgstr "返回码等于"
 msgid "Return code is not equal to"
 msgstr "返回码不等于"
 
-#: inc/config.class.php:555
+#: inc/config.class.php:543
 msgid "Root folder for sending files from server"
 msgstr ""
 
@@ -1387,11 +1383,11 @@ msgstr ""
 msgid "SNMP models creation"
 msgstr ""
 
-#: inc/config.class.php:515 inc/config.class.php:523
+#: inc/config.class.php:503 inc/config.class.php:511
 msgid "SNMP timeout"
 msgstr "SNMP 超时"
 
-#: inc/config.class.php:322
+#: inc/config.class.php:321
 msgid "SSL-only for agent"
 msgstr "仅SSL适用于代理"
 
@@ -1601,8 +1597,8 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr "此任务处于活动状态。拒绝删除。"
 
-#: inc/statediscovery.class.php:173 inc/config.class.php:495
-#: inc/config.class.php:504 inc/stateinventory.class.php:112
+#: inc/statediscovery.class.php:173 inc/config.class.php:483
+#: inc/config.class.php:492 inc/stateinventory.class.php:112
 msgid "Threads number"
 msgstr ""
 
@@ -1660,11 +1656,11 @@ msgstr "单位"
 msgid "Unused file"
 msgstr "未使用文件"
 
-#: inc/config.class.php:387
+#: inc/config.class.php:375
 msgid "Update agents"
 msgstr "更新代理"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:377
 msgid "Update agents not have contacted server since (in days)"
 msgstr "更新代理自（以天为单位）以来未联系服务器"
 
@@ -1684,7 +1680,7 @@ msgstr ""
 msgid "Upload from server"
 msgstr ""
 
-#: inc/config.class.php:563
+#: inc/config.class.php:551
 msgid "Use this GLPI server as a mirror server"
 msgstr ""
 
@@ -1787,7 +1783,7 @@ msgid ""
 "package."
 msgstr ""
 
-#: setup.php:464
+#: setup.php:463
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1834,7 +1830,7 @@ msgstr "拖动"
 msgid "exec"
 msgstr "执行"
 
-#: setup.php:473
+#: setup.php:472
 msgid "fileinfo extension (PHP) is required..."
 msgstr "需要fileinfo扩展（PHP）..."
 
@@ -1910,14 +1906,14 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: inc/config.class.php:575
+#: inc/config.class.php:563
 msgid "with both"
 msgstr ""
 
-#: inc/config.class.php:574
+#: inc/config.class.php:562
 msgid "with entity"
 msgstr ""
 
-#: inc/config.class.php:573
+#: inc/config.class.php:561
 msgid "with location"
 msgstr ""

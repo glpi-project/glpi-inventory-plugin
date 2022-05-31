@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:37+0000\n"
+"POT-Creation-Date: 2022-05-31 10:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Russian (Russia) (https://www.transifex.com/teclib/teams/28042/ru_RU/)\n"
@@ -103,7 +103,7 @@ msgstr "Агент"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Ошибка связи с агентом, невозможно запустить агент"
 
-#: inc/config.class.php:353
+#: inc/config.class.php:341
 msgid "Agent port"
 msgstr "Порт агента"
 
@@ -280,7 +280,7 @@ msgstr "Отменить изменения"
 msgid "Cancelled"
 msgstr "Отменено"
 
-#: inc/config.class.php:425 inc/config.class.php:454
+#: inc/config.class.php:413 inc/config.class.php:442
 msgid "Change the status"
 msgstr "Изменить статус"
 
@@ -305,7 +305,7 @@ msgstr "Выбор"
 msgid "Class"
 msgstr "Класс"
 
-#: inc/config.class.php:457
+#: inc/config.class.php:445
 msgid "Clean agents"
 msgstr "Очистить агентов"
 
@@ -427,7 +427,7 @@ msgstr "Создано задание развертывания, пакет:"
 msgid "Data"
 msgstr "Данные"
 
-#: inc/config.class.php:485
+#: inc/config.class.php:473
 msgid "Default status"
 msgstr "Статус по умолчанию"
 
@@ -464,7 +464,7 @@ msgstr "Определение"
 msgid "Delete"
 msgstr "Удалить"
 
-#: install/update.php:1020
+#: install/update.php:1018
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "Удалить агента, который не соединялся с сервером начиная с \"ххх\" дней. "
 
@@ -476,11 +476,11 @@ msgstr "Удалить директорию"
 msgid "Delete selected items"
 msgstr "Удалить выбранные элементы"
 
-#: inc/config.class.php:586
+#: inc/config.class.php:574
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Удалить успешные задания по установке по требованию после (в днях)"
 
-#: inc/config.class.php:340
+#: inc/config.class.php:328
 msgid "Delete tasks logs after"
 msgstr "Удалить логи задач после"
 
@@ -613,7 +613,7 @@ msgstr "Временной интервал выполнения"
 msgid "Export"
 msgstr "Экспорт"
 
-#: inc/config.class.php:360
+#: inc/config.class.php:348
 msgid "Extra-debug"
 msgstr "Отладка"
 
@@ -885,10 +885,6 @@ msgstr ""
 msgid "Inventory"
 msgstr "Инвентаризация"
 
-#: inc/config.class.php:326
-msgid "Inventory frequency (in hours)"
-msgstr "Интервал инвентаризации (в часах)"
-
 #: inc/deploygroup.class.php:99
 msgid "Inventory group"
 msgstr ""
@@ -954,7 +950,7 @@ msgstr "Локальные правила"
 msgid "Manage packages"
 msgstr "Управление пакетами"
 
-#: inc/config.class.php:570
+#: inc/config.class.php:558
 msgid "Match mirrors to agents"
 msgstr "Соответствие зеркал агентам"
 
@@ -962,7 +958,7 @@ msgstr "Соответствие зеркал агентам"
 msgid "Max file size"
 msgstr "Макс. размер файла"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:361
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Максимальное количество агентов для пробуждения ПК в задаче"
 
@@ -1035,12 +1031,12 @@ msgstr "Подключено много пользователей"
 msgid "Name"
 msgstr "Имя"
 
-#: inc/config.class.php:235
+#: inc/config.class.php:234
 msgid "Network Inventory"
 msgstr "Инвентаризация сети"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:496
-#: inc/config.class.php:516
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:484
+#: inc/config.class.php:504
 msgid "Network discovery"
 msgstr "Сетевое обнаружение"
 
@@ -1053,8 +1049,8 @@ msgid "Network inventory"
 msgstr "Инвентаризация сети"
 
 #: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:505
-#: inc/config.class.php:524
+#: inc/staticmisc.class.php:87 inc/config.class.php:493
+#: inc/config.class.php:512
 msgid "Network inventory (SNMP)"
 msgstr "Сетевая инвентаризация (SNMP)"
 
@@ -1062,7 +1058,7 @@ msgstr "Сетевая инвентаризация (SNMP)"
 msgid "Network inventory status"
 msgstr "Статус инвентаризации сети"
 
-#: inc/config.class.php:480
+#: inc/config.class.php:468
 msgid "Network options"
 msgstr "Параметры сети"
 
@@ -1183,7 +1179,7 @@ msgstr "Развертывание пакета"
 msgid "Package exported in"
 msgstr "Пакет экспортируется в"
 
-#: inc/menu.class.php:381 inc/config.class.php:236
+#: inc/menu.class.php:381 inc/config.class.php:235
 msgid "Package management"
 msgstr "Управление пакетами"
 
@@ -1217,7 +1213,7 @@ msgstr "Путь/файл"
 msgid "Periodicity"
 msgstr "Периодичность"
 
-#: setup.php:481
+#: setup.php:480
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Пожалуйста, удалите папку %s из glpi/plugins/"
@@ -1283,7 +1279,7 @@ msgid "Re-prepare a target-actor if previous run is successful"
 msgstr ""
 "Повторная подготовка целевого исполнителя, если предыдущий успешно запущен"
 
-#: inc/config.class.php:365
+#: inc/config.class.php:353
 msgid "Re-prepare successful jobs"
 msgstr "Повторная подготовка успешных заданий"
 
@@ -1373,7 +1369,7 @@ msgstr "Код возврата равен"
 msgid "Return code is not equal to"
 msgstr "Код возврата не равен"
 
-#: inc/config.class.php:555
+#: inc/config.class.php:543
 msgid "Root folder for sending files from server"
 msgstr "Корневая папка для отправки файлов с сервера"
 
@@ -1413,11 +1409,11 @@ msgstr ""
 msgid "SNMP models creation"
 msgstr "Создание моделей SNMP"
 
-#: inc/config.class.php:515 inc/config.class.php:523
+#: inc/config.class.php:503 inc/config.class.php:511
 msgid "SNMP timeout"
 msgstr "Тайм-аут SNMP"
 
-#: inc/config.class.php:322
+#: inc/config.class.php:321
 msgid "SSL-only for agent"
 msgstr "Агент только с SSL"
 
@@ -1640,8 +1636,8 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr "Данная задача активна,  в удалении отказано"
 
-#: inc/statediscovery.class.php:173 inc/config.class.php:495
-#: inc/config.class.php:504 inc/stateinventory.class.php:112
+#: inc/statediscovery.class.php:173 inc/config.class.php:483
+#: inc/config.class.php:492 inc/stateinventory.class.php:112
 msgid "Threads number"
 msgstr "Количество потоков"
 
@@ -1699,11 +1695,11 @@ msgstr "Единица"
 msgid "Unused file"
 msgstr "Неиспользуемый файл"
 
-#: inc/config.class.php:387
+#: inc/config.class.php:375
 msgid "Update agents"
 msgstr "Обновление агентов"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:377
 msgid "Update agents not have contacted server since (in days)"
 msgstr "Обновить агентов не связывающихся с сервером после (в днях)"
 
@@ -1723,7 +1719,7 @@ msgstr "Выгрузить с компьютера"
 msgid "Upload from server"
 msgstr "Выгрузить с сервера"
 
-#: inc/config.class.php:563
+#: inc/config.class.php:551
 msgid "Use this GLPI server as a mirror server"
 msgstr "Использовать этот сервер GLPI как зеркалирующий сервер"
 
@@ -1834,7 +1830,7 @@ msgstr ""
 "Необходимо выбрать задачу и пакет для целевой задачи с пакетом "
 "развертывания."
 
-#: setup.php:464
+#: setup.php:463
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1883,7 +1879,7 @@ msgstr "тянуть"
 msgid "exec"
 msgstr "выполнение"
 
-#: setup.php:473
+#: setup.php:472
 msgid "fileinfo extension (PHP) is required..."
 msgstr "требуется fileinfo расширение (PHP)  ..."
 
@@ -1959,14 +1955,14 @@ msgstr "распаковать"
 msgid "unknown"
 msgstr "неизвестно"
 
-#: inc/config.class.php:575
+#: inc/config.class.php:563
 msgid "with both"
 msgstr "с обоими"
 
-#: inc/config.class.php:574
+#: inc/config.class.php:562
 msgid "with entity"
 msgstr "с организацией"
 
-#: inc/config.class.php:573
+#: inc/config.class.php:561
 msgid "with location"
 msgstr "с локальным"

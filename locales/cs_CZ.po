@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:37+0000\n"
+"POT-Creation-Date: 2022-05-31 10:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Michal Čermák <michal.cermak79@gmail.com>, 2022\n"
 "Language-Team: Czech (Czech Republic) (https://www.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -105,7 +105,7 @@ msgstr "Agent"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Chyba komunikace s agentem, není možné ho spustit"
 
-#: inc/config.class.php:353
+#: inc/config.class.php:341
 msgid "Agent port"
 msgstr "Port agenta"
 
@@ -282,7 +282,7 @@ msgstr "Zrušit úpravy"
 msgid "Cancelled"
 msgstr "Zrušeno"
 
-#: inc/config.class.php:425 inc/config.class.php:454
+#: inc/config.class.php:413 inc/config.class.php:442
 msgid "Change the status"
 msgstr "Změnit stav"
 
@@ -307,7 +307,7 @@ msgstr "Zvolit"
 msgid "Class"
 msgstr "Třída"
 
-#: inc/config.class.php:457
+#: inc/config.class.php:445
 msgid "Clean agents"
 msgstr "Vyčistit agenty"
 
@@ -432,7 +432,7 @@ msgstr "Vytvořena úloha nasazení, balíček:"
 msgid "Data"
 msgstr "Data"
 
-#: inc/config.class.php:485
+#: inc/config.class.php:473
 msgid "Default status"
 msgstr "Výchozí stav"
 
@@ -470,7 +470,7 @@ msgstr "Definice"
 msgid "Delete"
 msgstr "Smazat"
 
-#: install/update.php:1020
+#: install/update.php:1018
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "Smazat agenty kteří nekontaktovali server už „xxx“ dní."
 
@@ -482,11 +482,11 @@ msgstr "Smazat složku"
 msgid "Delete selected items"
 msgstr "Smazat označené položky"
 
-#: inc/config.class.php:586
+#: inc/config.class.php:574
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Smazat úspěšné úlohy na vyžádání po uplynutí (dnů)"
 
-#: inc/config.class.php:340
+#: inc/config.class.php:328
 msgid "Delete tasks logs after"
 msgstr "Záznamy z úloh (log) mazat po uplynutí"
 
@@ -619,7 +619,7 @@ msgstr "Časové okno vykonání"
 msgid "Export"
 msgstr "Export"
 
-#: inc/config.class.php:360
+#: inc/config.class.php:348
 msgid "Extra-debug"
 msgstr "Ještě podrobnější ladící informace"
 
@@ -890,10 +890,6 @@ msgstr ""
 msgid "Inventory"
 msgstr "Inventář"
 
-#: inc/config.class.php:326
-msgid "Inventory frequency (in hours)"
-msgstr "Častost inventarizace (v hodinách)"
-
 #: inc/deploygroup.class.php:99
 msgid "Inventory group"
 msgstr ""
@@ -959,7 +955,7 @@ msgstr "Místní pravidla"
 msgid "Manage packages"
 msgstr "Správa balíčků"
 
-#: inc/config.class.php:570
+#: inc/config.class.php:558
 msgid "Match mirrors to agents"
 msgstr "Přiřadit zrcadla k agentům"
 
@@ -967,7 +963,7 @@ msgstr "Přiřadit zrcadla k agentům"
 msgid "Max file size"
 msgstr "Maximální velikost souboru"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:361
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Kolik agentů nejvýše v úloze probouzet"
 
@@ -1039,12 +1035,12 @@ msgstr "Připojeno vícero uživatelů"
 msgid "Name"
 msgstr "Název"
 
-#: inc/config.class.php:235
+#: inc/config.class.php:234
 msgid "Network Inventory"
 msgstr "Inventura sítě"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:496
-#: inc/config.class.php:516
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:484
+#: inc/config.class.php:504
 msgid "Network discovery"
 msgstr "Sken sítě"
 
@@ -1057,8 +1053,8 @@ msgid "Network inventory"
 msgstr "Inventarizace sítě"
 
 #: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:505
-#: inc/config.class.php:524
+#: inc/staticmisc.class.php:87 inc/config.class.php:493
+#: inc/config.class.php:512
 msgid "Network inventory (SNMP)"
 msgstr "Inventura sítě (SNMP)"
 
@@ -1066,7 +1062,7 @@ msgstr "Inventura sítě (SNMP)"
 msgid "Network inventory status"
 msgstr "Stav inventarizace sítě"
 
-#: inc/config.class.php:480
+#: inc/config.class.php:468
 msgid "Network options"
 msgstr "Předvolby sítě"
 
@@ -1187,7 +1183,7 @@ msgstr "Nasazení balíčku"
 msgid "Package exported in"
 msgstr "Balíček exportován do"
 
-#: inc/menu.class.php:381 inc/config.class.php:236
+#: inc/menu.class.php:381 inc/config.class.php:235
 msgid "Package management"
 msgstr "Správa balíčků"
 
@@ -1221,7 +1217,7 @@ msgstr "Popis umístění / soubor"
 msgid "Periodicity"
 msgstr "Četnost opakování"
 
-#: setup.php:481
+#: setup.php:480
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Odeberte složku %s ve složce glpi/plugins/"
@@ -1286,7 +1282,7 @@ msgstr "Dotaz"
 msgid "Re-prepare a target-actor if previous run is successful"
 msgstr "Znovu připravit cílového činitele pokud předchozí běh nebyl úspěšný"
 
-#: inc/config.class.php:365
+#: inc/config.class.php:353
 msgid "Re-prepare successful jobs"
 msgstr "Znovu připravit úspěšné úlohy"
 
@@ -1376,7 +1372,7 @@ msgstr "Návratový kód je roven"
 msgid "Return code is not equal to"
 msgstr "Návratový kód není roven"
 
-#: inc/config.class.php:555
+#: inc/config.class.php:543
 msgid "Root folder for sending files from server"
 msgstr "Kořenová složka pro posílání souborů ze serveru"
 
@@ -1416,11 +1412,11 @@ msgstr "SNMP inventarizace"
 msgid "SNMP models creation"
 msgstr "Vytváření SNMP modelů"
 
-#: inc/config.class.php:515 inc/config.class.php:523
+#: inc/config.class.php:503 inc/config.class.php:511
 msgid "SNMP timeout"
 msgstr "Časový limit pro SNMP"
 
-#: inc/config.class.php:322
+#: inc/config.class.php:321
 msgid "SSL-only for agent"
 msgstr "Pro agenty pouze SSL"
 
@@ -1645,8 +1641,8 @@ msgstr "Tento úkol už nemůže být vykonán kvůli časovému oknu."
 msgid "This task is active. delete denied"
 msgstr "Tato úloha je aktivní, smazání odepřeno"
 
-#: inc/statediscovery.class.php:173 inc/config.class.php:495
-#: inc/config.class.php:504 inc/stateinventory.class.php:112
+#: inc/statediscovery.class.php:173 inc/config.class.php:483
+#: inc/config.class.php:492 inc/stateinventory.class.php:112
 msgid "Threads number"
 msgstr "Počet vláken"
 
@@ -1704,11 +1700,11 @@ msgstr "Jednotka"
 msgid "Unused file"
 msgstr "Nepoužitý soubor"
 
-#: inc/config.class.php:387
+#: inc/config.class.php:375
 msgid "Update agents"
 msgstr "Aktualizovat agenty"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:377
 msgid "Update agents not have contacted server since (in days)"
 msgstr "Aktualizovat agenty pokud nekontaktovali server po více než (dnů)"
 
@@ -1728,7 +1724,7 @@ msgstr "Nahrát z počítače"
 msgid "Upload from server"
 msgstr "Nahrát ze serveru"
 
-#: inc/config.class.php:563
+#: inc/config.class.php:551
 msgid "Use this GLPI server as a mirror server"
 msgstr "Použít tento GLPI server jako zrcadlo"
 
@@ -1838,7 +1834,7 @@ msgid ""
 msgstr ""
 "Je třeba zvolit úlohu a balíček pro zacílení úlohy s balíčkem nasazení"
 
-#: setup.php:464
+#: setup.php:463
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr "Vaše verze GLPI není kompatibilní, požadovaná >= %1$s a < %2$s"
@@ -1885,7 +1881,7 @@ msgstr "přetáhnout"
 msgid "exec"
 msgstr "spustit"
 
-#: setup.php:473
+#: setup.php:472
 msgid "fileinfo extension (PHP) is required..."
 msgstr "je vyžadováno rozšíření (PHP) fileinfo…"
 
@@ -1961,14 +1957,14 @@ msgstr "rozbalit"
 msgid "unknown"
 msgstr "neznámé"
 
-#: inc/config.class.php:575
+#: inc/config.class.php:563
 msgid "with both"
 msgstr "s obojím"
 
-#: inc/config.class.php:574
+#: inc/config.class.php:562
 msgid "with entity"
 msgstr "s entitou"
 
-#: inc/config.class.php:573
+#: inc/config.class.php:561
 msgid "with location"
 msgstr "s umístěním"
