@@ -523,7 +523,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         "DELETE FROM glpi_rules WHERE sub_type IN (
             'RuleImportAsset',
             'RuleImportEntity',
-            'RuleLocation',
+            'RuleLocation'
         );"
     );
     $DB->queryOrDie(
