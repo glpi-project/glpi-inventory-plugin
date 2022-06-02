@@ -518,32 +518,6 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         $migration->dropTable('glpi_plugin_glpiinventory_rulematchedlogs');
     }
 
-    $migration->displayMessage("Use core rules");
-    $DB->queryOrDie(
-        "DELETE FROM glpi_rules WHERE sub_type IN (
-            'RuleImportAsset',
-            'RuleImportEntity',
-            'RuleLocation'
-        );"
-    );
-    $DB->queryOrDie(
-        "UPDATE glpi_ruleactions
-            SET field = '_inventory'
-            WHERE field = '_fusion'
-            AND rules_id IN (
-                SELECT id FROM glpi_rules WHERE sub_type = 'PluginFusioninventoryInventoryRuleImport'
-            );"
-    );
-    $DB->queryOrDie(
-        "UPDATE glpi_rules SET sub_type = 'RuleImportAsset' WHERE sub_type = 'PluginFusioninventoryInventoryRuleImport';"
-    );
-    $DB->queryOrDie(
-        "UPDATE glpi_rules SET sub_type = 'RuleImportEntity' WHERE sub_type = 'PluginFusioninventoryInventoryRuleEntity';"
-    );
-    $DB->queryOrDie(
-        "UPDATE glpi_rules SET sub_type = 'RuleLocation' WHERE sub_type = 'PluginFusioninventoryInventoryRuleLocation';"
-    );
-
     $migration->displayMessage("Use core remote management");
     if ($DB->tableExists('glpi_plugin_glpiinventory_computerremotemanagements')) {
         // agents must be migrated before that one

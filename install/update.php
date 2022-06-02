@@ -7062,6 +7062,15 @@ function do_rule_migration($migration)
           ]
         ]
     );
+    $DB->update(
+        'glpi_rules',
+        [
+         'sub_type'  => 'RuleLocation'
+        ],
+        [
+          'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation'
+        ]
+    );
 
    /*
    *  Manage configuration of plugin
