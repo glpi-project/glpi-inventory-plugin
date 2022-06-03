@@ -7050,25 +7050,79 @@ function do_rule_migration($migration)
         mysqli_stmt_close($stmt);
     }
 
+    // get max rankings
+    $rank_ria = 0;
+    $rank_rie = 0;
+    $rank_ril = 0;
+
+    $iterator = $DB->request([
+        'SELECT' => [
+            new \QueryExpression('MAX(ranking) AS max_ranking')
+        ],
+        'FROM'   => 'glpi_rules',
+        'WHERE'  => ['sub_type' => 'RuleImportAsset']
+    ]);
+    if (count($iterator)) {
+        $rank_ria = $iterator->current()['max_ranking'];
+    }
+    $iterator = $DB->request([
+        'SELECT' => [
+            new \QueryExpression('MAX(ranking) AS max_ranking')
+        ],
+        'FROM'   => 'glpi_rules',
+        'WHERE'  => ['sub_type' => 'RuleImportEntity']
+    ]);
+    if (count($iterator)) {
+        $rank_rie = $iterator->current()['max_ranking'];
+    }
+    $iterator = $DB->request([
+        'SELECT' => [
+            new \QueryExpression('MAX(ranking) AS max_ranking')
+        ],
+        'FROM'   => 'glpi_rules',
+        'WHERE'  => ['sub_type' => 'RuleLocation']
+    ]);
+    if (count($iterator)) {
+        $rank_ril = $iterator->current()['max_ranking'];
+    }
+
     $DB->update(
         'glpi_rules',
         [
-         'sub_type'  => 'RuleImportEntity'
+         'sub_type'  => 'RuleImportAsset',
+         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", '.$DB->quoteName('name').')'),
+         'ranking'   => new QueryExpression($DB->quoteName('ranking')." + ".($rank_ria ?? 0))
         ],
         [
-          'OR' => [
-           ['sub_type'  => 'PluginFusinvinventoryRuleEntity'],
-           ['sub_type'  => 'PluginFusioninventoryInventoryRuleEntity']
-          ]
+            'OR' => [
+                ['sub_type'  => 'PluginFusioninventoryInventoryRuleImport'],
+                ['sub_type'  => 'PluginGlpiinventoryInventoryRuleImport']
+            ]
         ]
     );
     $DB->update(
         'glpi_rules',
         [
-         'sub_type'  => 'RuleLocation'
+         'sub_type'  => 'RuleImportEntity',
+         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", '.$DB->quoteName('name').')'),
+         'ranking'   => new QueryExpression($DB->quoteName('ranking')." + ".($rank_rie ?? 0))
         ],
         [
-          'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation'
+            'OR' => [
+                ['sub_type'  => 'PluginFusinvinventoryRuleEntity'],
+                ['sub_type'  => 'PluginFusioninventoryInventoryRuleEntity']
+            ]
+        ]
+    );
+    $DB->update(
+        'glpi_rules',
+        [
+            'sub_type'  => 'RuleLocation',
+            'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", '.$DB->quoteName('name').')'),
+            'ranking'   => new QueryExpression($DB->quoteName('ranking')." + ".($rank_ril ?? 0))
+        ],
+        [
+            'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation'
         ]
     );
 
