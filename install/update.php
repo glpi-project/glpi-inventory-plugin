@@ -7090,8 +7090,8 @@ function do_rule_migration($migration)
         'glpi_rules',
         [
          'sub_type'  => 'RuleImportAsset',
-         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", '.$DB->quoteName('name').')'),
-         'ranking'   => new QueryExpression($DB->quoteName('ranking')." + ".($rank_ria ?? 0))
+         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", ' . $DB->quoteName('name') . ')'),
+         'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ria ?? 0))
         ],
         [
             'OR' => [
@@ -7104,8 +7104,8 @@ function do_rule_migration($migration)
         'glpi_rules',
         [
          'sub_type'  => 'RuleImportEntity',
-         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", '.$DB->quoteName('name').')'),
-         'ranking'   => new QueryExpression($DB->quoteName('ranking')." + ".($rank_rie ?? 0))
+         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", ' . $DB->quoteName('name') . ')'),
+         'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_rie ?? 0))
         ],
         [
             'OR' => [
@@ -7118,8 +7118,8 @@ function do_rule_migration($migration)
         'glpi_rules',
         [
             'sub_type'  => 'RuleLocation',
-            'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", '.$DB->quoteName('name').')'),
-            'ranking'   => new QueryExpression($DB->quoteName('ranking')." + ".($rank_ril ?? 0))
+            'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", ' . $DB->quoteName('name') . ')'),
+            'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ril ?? 0))
         ],
         [
             'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation'
