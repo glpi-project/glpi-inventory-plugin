@@ -58,10 +58,6 @@ define(
     "PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR",
     GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/manifests/"
 );
-define(
-    "PLUGIN_GLPI_INVENTORY_XML_DIR",
-    GLPI_PLUGIN_DOC_DIR . "/glpiinventory/xml/"
-);
 
 /**
  * Check if the script name finish by

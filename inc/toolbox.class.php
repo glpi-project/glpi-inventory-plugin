@@ -180,27 +180,6 @@ class PluginGlpiinventoryToolbox
 
    // *********************** Functions used for inventory *********************** //
 
-
-   /**
-    * Send the XML (last inventory) to user browser (to download)
-    *
-    * @param integer $items_id
-    * @param string $itemtype
-    */
-    public static function sendXML($items_id, $itemtype)
-    {
-        if (
-            preg_match("/^([a-zA-Z]+)\/(\d+)\/(\d+)\.xml$/", $items_id)
-            && call_user_func([$itemtype, 'canView'])
-        ) {
-            $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/xml/" . $items_id);
-            echo $xml;
-        } else {
-            Html::displayRightError();
-        }
-    }
-
-
    /**
     *  This function fetch rows from a MySQL result in an array with each table as a key
     *

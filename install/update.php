@@ -289,18 +289,6 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/tmp')) {
         mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/tmp');
     }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml');
-    }
-    if (!is_dir(PLUGIN_GLPI_INVENTORY_XML_DIR . 'computer')) {
-        mkdir(PLUGIN_GLPI_INVENTORY_XML_DIR . 'computer');
-    }
-    if (!is_dir(PLUGIN_GLPI_INVENTORY_XML_DIR . 'printer')) {
-        mkdir(PLUGIN_GLPI_INVENTORY_XML_DIR . 'printer');
-    }
-    if (!is_dir(PLUGIN_GLPI_INVENTORY_XML_DIR . 'networkequipment')) {
-        mkdir(PLUGIN_GLPI_INVENTORY_XML_DIR . 'networkequipment');
-    }
 
    // ********* Deploy folders ********************************************** //
 
