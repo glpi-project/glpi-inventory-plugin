@@ -163,18 +163,6 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/tmp')) {
         mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/tmp');
     }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml');
-    }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml/computer')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml/computer');
-    }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml/printer')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml/printer');
-    }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml/networkequipment')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/xml/networkequipment');
-    }
     if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/upload')) {
         mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/upload');
     }
