@@ -7037,19 +7037,6 @@ function do_rule_migration($migration)
         mysqli_stmt_close($stmt);
     }
 
-    $DB->update(
-        'glpi_rules',
-        [
-         'sub_type'  => 'RuleImportEntity'
-        ],
-        [
-          'OR' => [
-           ['sub_type'  => 'PluginFusinvinventoryRuleEntity'],
-           ['sub_type'  => 'PluginFusioninventoryInventoryRuleEntity']
-          ]
-        ]
-    );
-
    /*
    *  Manage configuration of plugin
    */
