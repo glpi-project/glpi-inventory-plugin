@@ -560,6 +560,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     ]
                 );
 
+                if ($row['items_id'] == 0) {
+                    $input['is_global'] = 1;
+                }
+
                 if (countElementsInTable($lock_table, $input) > 0) {
                     continue; // Field is already locked
                 }
