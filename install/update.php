@@ -7056,9 +7056,7 @@ function do_rule_migration($migration)
     $rank_ril = 0;
 
     $iterator = $DB->request([
-        'SELECT' => [
-            new \QueryExpression('MAX(ranking) AS max_ranking')
-        ],
+        'SELECT' => ['MAX' => 'ranking AS max_ranking'],
         'FROM'   => 'glpi_rules',
         'WHERE'  => ['sub_type' => 'RuleImportAsset']
     ]);
@@ -7066,9 +7064,7 @@ function do_rule_migration($migration)
         $rank_ria = $iterator->current()['max_ranking'];
     }
     $iterator = $DB->request([
-        'SELECT' => [
-            new \QueryExpression('MAX(ranking) AS max_ranking')
-        ],
+        'SELECT' => ['MAX' => 'ranking AS max_ranking'],
         'FROM'   => 'glpi_rules',
         'WHERE'  => ['sub_type' => 'RuleImportEntity']
     ]);
@@ -7076,9 +7072,7 @@ function do_rule_migration($migration)
         $rank_rie = $iterator->current()['max_ranking'];
     }
     $iterator = $DB->request([
-        'SELECT' => [
-            new \QueryExpression('MAX(ranking) AS max_ranking')
-        ],
+        'SELECT' => ['MAX' => 'ranking AS max_ranking'],
         'FROM'   => 'glpi_rules',
         'WHERE'  => ['sub_type' => 'RuleLocation']
     ]);
@@ -7090,7 +7084,7 @@ function do_rule_migration($migration)
         'glpi_rules',
         [
          'sub_type'  => 'RuleImportAsset',
-         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", ' . $DB->quoteName('name') . ')'),
+         'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
          'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ria ?? 0))
         ],
         [
@@ -7104,7 +7098,7 @@ function do_rule_migration($migration)
         'glpi_rules',
         [
          'sub_type'  => 'RuleImportEntity',
-         'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", ' . $DB->quoteName('name') . ')'),
+         'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
          'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_rie ?? 0))
         ],
         [
@@ -7118,7 +7112,7 @@ function do_rule_migration($migration)
         'glpi_rules',
         [
             'sub_type'  => 'RuleLocation',
-            'name'      => new QueryExpression('CONCAT("[MIGRATED_FROM_FUSION]", ' . $DB->quoteName('name') . ')'),
+            'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
             'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ril ?? 0))
         ],
         [
