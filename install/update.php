@@ -281,56 +281,55 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     $migration->displayMessage("Migration Classname : " . $migrationname);
     $migration->displayMessage("Update of plugin GLPI Inventory");
 
-   // ********* Check if folders are correctly created ********************** //
+    $plugin_doc_dir = GLPI_PLUGIN_DOC_DIR . '/glpiinventory';
+    $sub_directories = [
+        'tmp'               => false,
+        'files'             => false,
+        'files/import'      => true,
+        'files/export'      => true,
+        'files/manifests'   => true,
+        'files/repository'  => true,
+        'upload'            => true,
+    ];
 
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
+    // ********* Ensure plugin directories are existing ********************** //
+    if (!is_dir($plugin_doc_dir)) {
+        mkdir($plugin_doc_dir);
     }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/tmp')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/tmp');
-    }
-
-   // ********* Deploy folders ********************************************** //
-
-    if (is_dir(GLPI_PLUGIN_DOC_DIR . '/fusinvdeploy/files')) {
-        rename(
-            GLPI_PLUGIN_DOC_DIR . '/fusinvdeploy/files',
-            GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files'
-        );
-    }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files');
-    }
-
-    if (is_dir(GLPI_PLUGIN_DOC_DIR . '/fusinvdeploy/repository')) {
-        rename(
-            GLPI_PLUGIN_DOC_DIR . '/fusinvdeploy/repository',
-            GLPI_PLUGIN_DOC_DIR . '/glpiinventory/repository'
-        );
-    }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/repository')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/repository');
+    foreach (array_keys($sub_directories) as $sub_directory) {
+        $directory_full_path = $plugin_doc_dir . '/' . $sub_directory;
+        if (!is_dir($directory_full_path)) {
+            mkdir($directory_full_path);
+        }
     }
 
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/manifests')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/manifests');
-    }
-
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/import')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/import');
-    }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export');
-    }
-
-    if (is_dir(GLPI_PLUGIN_DOC_DIR . '/fusinvdeploy/upload')) {
-        rename(
-            GLPI_PLUGIN_DOC_DIR . '/fusinvdeploy/upload',
-            GLPI_PLUGIN_DOC_DIR . '/glpiinventory/upload'
-        );
-    }
-    if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/upload')) {
-        mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/upload');
+    // ********* Copy files from FusionInventory ***************************** //
+    foreach ($sub_directories as $sub_directory => $copy) {
+        if (!$copy) {
+            continue;
+        }
+        $directory_full_path = $plugin_doc_dir . '/' . $sub_directory;
+        foreach (['fusinvdeploy', 'fusioninventory'] as $fi_plugin_directory) {
+            $fi_directory_full_path = GLPI_PLUGIN_DOC_DIR . '/' . $fi_plugin_directory . '/' . $sub_directory;
+            if (!is_dir($fi_directory_full_path)) {
+                continue;
+            }
+            $files_iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($fi_directory_full_path, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+            foreach ($files_iterator as $file) {
+                $dest_path = $directory_full_path . '/' . $files_iterator->getSubPathname();
+                if (file_exists($dest_path)) {
+                    continue; // Do not overwrite files (file has probably been copied by a previous migration)
+                }
+                if ($file->isDir()) {
+                    mkdir($dest_path);
+                } else {
+                    copy($file->getRealPath(), $dest_path);
+                }
+            }
+        }
     }
 
    // ********* Rename fileparts without .gz extension (cf #1999) *********** //
@@ -343,7 +342,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         );
 
         foreach ($gzfiles as $gzfile) {
-            $name = $gzfile->getFileName();
+            $name = $gzfile->getRealPath();
             rename($name, str_replace('.' . $gzfile->getExtension(), '', $name));
         }
         unset($gzfiles);
