@@ -50,7 +50,6 @@ if (PluginGlpiinventoryMenu::canView()) {
     } else if (Session::haveRight('config', READ) || Session::haveRight('plugin_glpiinventory_configuration', READ)) {
         Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/config.form.php");
     }
-
 } else {
     Html::displayRightError();
 }
