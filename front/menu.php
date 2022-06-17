@@ -45,7 +45,11 @@ if (PluginGlpiinventoryMenu::canView()) {
     echo Html::manageRefreshPage();
 
     PluginGlpiinventoryMenu::displayMenu();
-    PluginGlpiinventoryMenu::board();
+    if (Session::haveRight('plugin_glpiinventory_task', READ)) {
+        Html::redirect(Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTask'));
+    } else if (Session::haveRight('config', READ) || Session::haveRight('plugin_glpiinventory_configuration', READ)) {
+        Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/config.form.php");
+    }
 } else {
     Html::displayRightError();
 }
