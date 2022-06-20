@@ -946,7 +946,7 @@ table.runs td.comment {
    background: rgba(255, 255, 255, .5) no-repeat 2px 2px;
    background-image: url("../../../pics/expand.png");
    padding: 2px 2px 2px 22px;
-   height: 14px;
+   height: 20px;
    display: inline-block;
 }
 

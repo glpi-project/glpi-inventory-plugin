@@ -42,66 +42,87 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype)
 
     $sopt = [];
     if ($itemtype == 'Computer') {
-        $sopt[5164]['table']         = "glpi_plugin_glpiinventory_agentmodules";
-        $sopt[5164]['field']         = "DEPLOY";
-        $sopt[5164]['linkfield']     = "DEPLOY";
-        $sopt[5164]['name']          = __('Module', 'glpiinventory') . "-" . __('Deploy', 'glpiinventory');
-        $sopt[5164]['datatype']      = 'bool';
-        $sopt[5164]['massiveaction'] = false;
+        $sopt[5164] = [
+            'table'         => 'glpi_plugin_glpiinventory_agentmodules',
+            'field'         => 'DEPLOY',
+            'linkfield'     => 'DEPLOY',
+            'name'          => __('Module', 'glpiinventory') . "-" . __('Deploy', 'glpiinventory'),
+            'datatype'      => 'bool',
+            'massiveaction' => false
+        ];
 
-        $sopt[5165]['table']         = "glpi_plugin_glpiinventory_agentmodules";
-        $sopt[5165]['field']         = "WAKEONLAN";
-        $sopt[5165]['linkfield']     = "WAKEONLAN";
-        $sopt[5165]['name']          = __('Module', 'glpiinventory') . "-" . __('WakeOnLan', 'glpiinventory');
-        $sopt[5165]['datatype']      = 'bool';
-        $sopt[5165]['massiveaction'] = false;
+        $sopt[5165] = [
+            'table'         => 'glpi_plugin_glpiinventory_agentmodules',
+            'field'         => 'WAKEONLAN',
+            'linkfield'     => 'WAKEONLAN',
+            'name'          => __('Module', 'glpiinventory') . "-" . __('WakeOnLan', 'glpiinventory'),
+            'datatype'      => 'bool',
+            'massiveaction' => false
+        ];
 
-        $sopt[5166]['table']         = "glpi_plugin_glpiinventory_agentmodules";
-        $sopt[5166]['field']         = "INVENTORY";
-        $sopt[5166]['linkfield']     = "INVENTORY";
-        $sopt[5166]['name']          = __('Module', 'glpiinventory') . "-" . __('Local inventory', 'glpiinventory');
-        $sopt[5166]['datatype']      = 'bool';
-        $sopt[5166]['massiveaction'] = false;
+        $sopt[5166] = [
+            'table'         => 'glpi_plugin_glpiinventory_agentmodules',
+            'field'         => 'INVENTORY',
+            'linkfield'     => 'INVENTORY',
+            'name'          => __('Module', 'glpiinventory') . "-" . __('Local inventory', 'glpiinventory'),
+            'datatype'      => 'bool',
+            'massiveaction' => false
+        ];
 
-        $sopt[5167]['table']         = "glpi_plugin_glpiinventory_agentmodules";
-        $sopt[5167]['field']         = "InventoryComputerESX";
-        $sopt[5167]['linkfield']     = "InventoryComputerESX";
-        $sopt[5167]['name']          = __('Module', 'glpiinventory') . "-" . __('ESX/VMWare', 'glpiinventory');
-        $sopt[5167]['datatype']      = 'bool';
-        $sopt[5167]['massiveaction'] = false;
+        $sopt[5167] = [
+            'table'         => 'glpi_plugin_glpiinventory_agentmodules',
+            'field'         => 'InventoryComputerESX',
+            'linkfield'     => 'InventoryComputerESX',
+            'name'          => __('Module', 'glpiinventory') . "-" . __('ESX/VMWare', 'glpiinventory'),
+            'datatype'      => 'bool',
+            'massiveaction' => false
+        ];
 
-        $sopt[5168]['table']         = "glpi_plugin_glpiinventory_agentmodules";
-        $sopt[5168]['field']         = "NETWORKINVENTORY";
-        $sopt[5168]['linkfield']     = "NETWORKINVENTORY";
-        $sopt[5168]['name']          = __('Module', 'glpiinventory') . "-" . __('Network inventory', 'glpiinventory');
-        $sopt[5168]['datatype']      = 'bool';
-        $sopt[5168]['massiveaction'] = false;
+        $sopt[5168] = [
+            'table'         => 'glpi_plugin_glpiinventory_agentmodules',
+            'field'         => 'NETWORKINVENTORY',
+            'linkfield'     => 'NETWORKINVENTORY',
+            'name'          => __('Module', 'glpiinventory') . "-" . __('Network inventory', 'glpiinventory'),
+            'datatype'      => 'bool',
+            'massiveaction' => false
+        ];
 
-        $sopt[5169]['table']         = "glpi_plugin_glpiinventory_agentmodules";
-        $sopt[5169]['field']         = "NETWORKDISCOVERY";
-        $sopt[5169]['linkfield']     = "NETWORKDISCOVERY";
-        $sopt[5169]['name']          = __('Module', 'glpiinventory') . "-" . __('Network discovery', 'glpiinventory');
-        $sopt[5169]['datatype']      = 'bool';
-        $sopt[5169]['massiveaction'] = false;
+        $sopt[5169] = [
+            'table'         => 'glpi_plugin_glpiinventory_agentmodules',
+            'field'         => 'NETWORKDISCOVERY',
+            'linkfield'     => 'NETWORKDISCOVERY',
+            'name'          => __('Module', 'glpiinventory') . "-" . __('Network discovery', 'glpiinventory'),
+            'datatype'      => 'bool',
+            'massiveaction' => false
+        ];
 
-        $sopt[5170]['table']         = "glpi_plugin_glpiinventory_agentmodules";
-        $sopt[5170]['field']         = "Collect";
-        $sopt[5170]['linkfield']     = "Collect";
-        $sopt[5170]['name']          = __('Module', 'glpiinventory') . "-" . __('Collect', 'glpiinventory');
-        $sopt[5170]['datatype']      = 'bool';
-        $sopt[5170]['massiveaction'] = false;
+        $sopt[5170] = [
+            'table'         => 'glpi_plugin_glpiinventory_agentmodules',
+            'field'         => 'Collect',
+            'linkfield'     => 'Collect',
+            'name'          => __('Module', 'glpiinventory') . "-" . __('Collect', 'glpiinventory'),
+            'datatype'      => 'bool',
+            'massiveaction' => false
+        ];
 
-        $sopt[5171]['name']          = __('Static group', 'glpiinventory');
-        $sopt[5171]['table']         = getTableForItemType('PluginGlpiinventoryDeployGroup');
-        $sopt[5171]['massiveaction'] = false;
-        $sopt[5171]['field']         = 'name';
-        $sopt[5171]['forcegroupby']  = true;
-        $sopt[5171]['usehaving']     = true;
-        $sopt[5171]['datatype']      = 'dropdown';
-        $sopt[5171]['joinparams']    = ['beforejoin'
-                                       => ['table'      => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
-                                                'joinparams' => ['jointype'          => 'itemtype_item',
-                                                                        'specific_itemtype' => 'Computer']]];
+        $sopt[5171] = [
+            'table'         => getTableForItemType('PluginGlpiinventoryDeployGroup'),
+            'field'         => 'name',
+            'name'          => __('Static group', 'glpiinventory'),
+            'datatype'      => 'dropdown',
+            'massiveaction' => false,
+            'forcegroupby'  => true,
+            'usehaving'     => true,
+            'joinparams'    => [
+                'beforejoin'    => [
+                    'table'         =>  'glpi_plugin_glpiinventory_deploygroups_staticdatas',
+                    'joinparams'    => [
+                        'jointype'              => 'itemtype_item',
+                        'specific_itemtype'     => 'Computer'
+                    ]
+                ]
+            ]
+        ];
     }
 
     if ($itemtype == 'Computer') {
