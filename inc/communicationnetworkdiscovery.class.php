@@ -125,6 +125,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     );
                     $response['response'] = ['RESPONSE' => 'SEND'];
                 } elseif (!isset($a_CONTENT->content->agent->start) && !isset($a_CONTENT->content->agent->end) && !isset($a_CONTENT->content->agent->nbip)) {
+                    $inventory->setDiscovery(true);
                     $inventory->doInventory();
                     if ($inventory->inError()) {
                         foreach ($inventory->getErrors() as $error) {
