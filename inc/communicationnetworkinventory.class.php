@@ -120,7 +120,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
                 'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                'comment'                                 => ["LIKE", '%[==detail==] Update %'],
+                'comment'                                 => ["LIKE", '%[==detail==] ==updatetheitem== %'],
                 ]
             );
 
@@ -159,7 +159,30 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                     $response = ['response' => ['ERROR' => $error]];
                 }
             } else {
-               //nothing to do.
+                $refused = $inventory->getMainAsset()->getRefused();
+                $device = $a_CONTENT->content->network_device;
+                if (isset($refused) && count($refused)) {
+                    $a_text = [];
+                    if (isset($device)) {
+                        foreach (["type", "name", "mac", "ips"] as $property) {
+                            if (property_exists($device, $property)) {
+                                if (is_array($device->$property)) {
+                                    $a_text[] = "[".$property."]: ".implode(", ", $device->$property);
+                                } else {
+                                    $a_text[] = "[".$property."]: ".$device->$property;
+                                }
+                            }
+                        }
+                    }
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== '.implode(", ", $a_text);
+                    $this->addtaskjoblog();
+                } else {
+                    $item = $inventory->getMainAsset()->getItem();
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
+                        '[==detail==] ==updatetheitem== '.$item->getTypeName().
+                        ' [['.$device->type.'::'.$item->fields['id'].']]';
+                    $this->addtaskjoblog();
+                }
                 $response = ['response' => ['RESPONSE' => 'SEND']];
             }
         }
