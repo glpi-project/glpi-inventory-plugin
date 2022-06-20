@@ -132,7 +132,32 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             $response = ['response' => ['ERROR' => $error]];
                         }
                     } else {
-                     //nothing to do.
+                        $refused = $inventory->getMainAsset()->getRefused();
+                        $device = $a_CONTENT->content->network_device;
+                        if (isset($refused) && count($refused)) {
+                            $a_text = [];
+                            if (isset($device)) {
+                                foreach (["type", "name", "mac", "ips"] as $property) {
+                                    if (property_exists($device, $property)) {
+                                        if (is_array($device->$property)) {
+                                            $a_text[] = "[".$property."]: ".implode(", ", $device->$property);
+                                        } else {
+                                            $a_text[] = "[".$property."]: ".$device->$property;
+                                        }
+                                    }
+                                }
+                            }
+                            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== '.implode(", ", $a_text);
+                            $this->addtaskjoblog();
+                        } else {
+                            $item = $inventory->getMainAsset()->getItem();
+                            // this is an update if at least 'last_inventory_update' can be found in old values
+                            $what = count($item->oldvalues) ? '==updatetheitem==' : '==addtheitem==';
+                            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
+                                '[==detail==] '.$what.' '.$item->getTypeName().
+                                ' [['.$device->type.'::'.$item->fields['id'].']]';
+                            $this->addtaskjoblog();
+                        }
                         $response = ['response' => ['RESPONSE' => 'SEND']];
                     }
                 } else {
