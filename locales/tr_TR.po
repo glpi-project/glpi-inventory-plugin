@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 10:44+0000\n"
+"POT-Creation-Date: 2022-06-20 07:10+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2022\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -42,7 +42,7 @@ msgstr "İşlem"
 msgid "Action label"
 msgstr "İşlem etiketi"
 
-#: inc/deploypackage.class.php:525 b/deploy/index.php:140
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "İşlemler"
 
@@ -66,7 +66,7 @@ msgstr "Aktörler"
 msgid "Add a job"
 msgstr "İş ekle"
 
-#: inc/deploypackage.class.php:1141
+#: inc/deploypackage.class.php:1143
 msgid "Add a target for self-service"
 msgstr "Kendi kendine hizmet için bir hedef ekleyin"
 
@@ -168,7 +168,7 @@ msgstr "Atanmış SNMP kimlik doğrulama bilgileri"
 msgid "Audit label"
 msgstr "Denetim etiketi"
 
-#: inc/deploypackage.class.php:523
+#: inc/deploypackage.class.php:525
 msgid "Audits"
 msgstr "Denetimler"
 
@@ -266,7 +266,7 @@ msgid "Cancel - Try - Continue"
 msgstr "İptal - Dene - Sürdür"
 
 #: inc/deployuserinteractiontemplate.class.php:232
-#: inc/deploypackage.class.php:1503
+#: inc/deploypackage.class.php:1505
 msgid "Cancel job"
 msgstr "İş iptal edilsin"
 
@@ -275,7 +275,7 @@ msgid "Cancel modifications"
 msgstr "Değişiklikleri iptal et"
 
 #: inc/taskview.class.php:193 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1376
 msgid "Cancelled"
 msgstr "İptal edildi"
 
@@ -465,7 +465,7 @@ msgstr "Açıklama"
 msgid "Delete"
 msgstr "Sil"
 
-#: install/update.php:1018
+#: install/update.php:1005
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "\"xxx\" gündür sunucu ile bağlantı kurmayan ajanlar silinsin."
 
@@ -545,7 +545,7 @@ msgstr "Keşif durumu"
 msgid "Disk or directory"
 msgstr "Disk ya da klasör"
 
-#: inc/deploypackage.class.php:1668
+#: inc/deploypackage.class.php:1670
 msgid "Don't wakeup"
 msgstr "Uyandırma"
 
@@ -561,7 +561,7 @@ msgstr "ESX/VMWare"
 msgid "Edit impossible, this task is active"
 msgstr "Bu görev etkin olduğundan düzenlenemez"
 
-#: inc/deploypackage.class.php:381 inc/deploypackage.class.php:500
+#: inc/deploypackage.class.php:383 inc/deploypackage.class.php:502
 msgid "Enable deploy on demand for the following group"
 msgstr "Şu grup için isteğe göre dağıtım kullanılsın"
 
@@ -610,7 +610,7 @@ msgstr "Yürütme denetimleri"
 msgid "Execution timeslot"
 msgstr "Yürütülme zaman aralığı"
 
-#: inc/deploypackage.class.php:151
+#: inc/deploypackage.class.php:153
 msgid "Export"
 msgstr "Dışa aktar"
 
@@ -618,11 +618,11 @@ msgstr "Dışa aktar"
 msgid "Extra-debug"
 msgstr "Ek hata ayıklama"
 
-#: inc/deployfile.class.php:663 inc/deployfile.class.php:721
+#: inc/deployfile.class.php:664 inc/deployfile.class.php:722
 msgid "Failed to copy file"
 msgstr "Dosya kopyalanamadı"
 
-#: inc/deployfile.class.php:628
+#: inc/deployfile.class.php:629
 msgid "Failed to write file to disk"
 msgstr "Dosya diske yazılamadı"
 
@@ -644,7 +644,7 @@ msgstr "Dosya var olan"
 msgid "File is missing"
 msgstr "Dosya eksik olan"
 
-#: inc/deployfile.class.php:667 inc/deployfile.class.php:725
+#: inc/deployfile.class.php:668 inc/deployfile.class.php:726
 msgid "File missing"
 msgstr "Dosya eksik"
 
@@ -656,7 +656,7 @@ msgstr "Dosya adı"
 msgid "File path"
 msgstr "Dosya yolu"
 
-#: inc/deployfile.class.php:660 inc/deployfile.class.php:718
+#: inc/deployfile.class.php:661 inc/deployfile.class.php:719
 msgid "File saved!"
 msgstr "Dosya kaydedildi!"
 
@@ -680,7 +680,7 @@ msgstr "Dosya boyutu şundan küçük olan"
 msgid "Filename"
 msgstr "Dosya adı"
 
-#: inc/deploypackage.class.php:524
+#: inc/deploypackage.class.php:526
 msgid "Files"
 msgstr "Dosyalar"
 
@@ -791,11 +791,11 @@ msgstr "Rehber"
 msgid "Hive"
 msgstr "Kovan"
 
-#: inc/deploypackage.class.php:1667
+#: inc/deploypackage.class.php:1669
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "Bu bilgisayarda değilim: Sunucudan uyandır"
 
-#: inc/deploypackage.class.php:1666
+#: inc/deploypackage.class.php:1668
 msgid "I'm on this computer: local wakeup"
 msgstr "Bu bilgisayardayım: Yerel olarak uyandır"
 
@@ -820,7 +820,7 @@ msgstr "Yazılmamış aygıtlarınız varsa, yönetilmeyen aygıtlar olarak alı
 msgid "Ignore"
 msgstr "Yok say"
 
-#: inc/menu.class.php:154 inc/deploypackage.class.php:148
+#: inc/menu.class.php:154 inc/deploypackage.class.php:150
 msgid "Import"
 msgstr "İçe aktar"
 
@@ -844,7 +844,7 @@ msgstr "İçe aktarım reddedildi"
 msgid "Impossible to read the CSV file"
 msgstr "CSV dosyası okunamadı"
 
-#: inc/taskview.class.php:188 inc/deploypackage.class.php:1370
+#: inc/taskview.class.php:188 inc/deploypackage.class.php:1372
 msgid "In error"
 msgstr "Hata"
 
@@ -884,7 +884,7 @@ msgstr "Envanter grubu"
 msgid "Inventory started"
 msgstr "Envanter başlatıldı"
 
-#: inc/deploypackage.class.php:675
+#: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr "JSON paketi gösterimi"
 
@@ -945,7 +945,7 @@ msgstr "Paket yönetimi"
 msgid "Match mirrors to agents"
 msgstr "Yansıları ajanlarla eşleştirme"
 
-#: inc/deployfile.class.php:1024
+#: inc/deployfile.class.php:1025
 msgid "Max file size"
 msgstr "En büyük dosya boyutu"
 
@@ -970,7 +970,7 @@ msgstr "Menü"
 msgid "Minute(s)"
 msgstr "dakika"
 
-#: inc/deployfile.class.php:1025
+#: inc/deployfile.class.php:1026
 msgid "Mio"
 msgstr "MB"
 
@@ -983,11 +983,11 @@ msgstr "Yansı sunucu adresi"
 msgid "Mirror servers"
 msgstr "Yansı sunucular"
 
-#: inc/deployfile.class.php:624
+#: inc/deployfile.class.php:625
 msgid "Missing a temporary folder"
 msgstr "Bir geçici klasör bulunamadı"
 
-#: inc/deploypackage.class.php:272
+#: inc/deploypackage.class.php:274
 msgid "Modification Denied"
 msgstr "Değişiklik reddedildi"
 
@@ -1064,11 +1064,11 @@ msgstr "Yeni işlem"
 msgid "No active session"
 msgstr "Etkin bir oturum bulunamadı"
 
-#: inc/deployfile.class.php:620
+#: inc/deployfile.class.php:621
 msgid "No file was uploaded"
 msgstr "Henüz bir dosya yüklenmemiş"
 
-#: inc/deploypackage.class.php:1684
+#: inc/deploypackage.class.php:1686
 msgid "No packages available to install"
 msgstr "Kurulabilecek bir paket yok"
 
@@ -1080,7 +1080,7 @@ msgstr "Herhangi bir kullanıcı bağlı değil"
 msgid "Non sentitive case"
 msgstr "Büyük-küçük harfe duyarsız"
 
-#: inc/taskview.class.php:187 inc/deploypackage.class.php:1369
+#: inc/taskview.class.php:187 inc/deploypackage.class.php:1371
 msgid "Not done yet"
 msgstr "Henüz yapılmadı"
 
@@ -1145,19 +1145,19 @@ msgstr "Listeyi sırala"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:633
 msgid "PHP extension stopped the file upload"
 msgstr "PHP eklentisi dosya yüklemeyi durdurdu"
 
-#: inc/task.class.php:2012 inc/deploypackage.class.php:94
+#: inc/task.class.php:2012 inc/deploypackage.class.php:96
 msgid "Package"
 msgstr "Paket"
 
-#: inc/deploypackage.class.php:1032
+#: inc/deploypackage.class.php:1034
 msgid "Package actions"
 msgstr "Paket işlemleri"
 
-#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1065
+#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1067
 msgid "Package deploy"
 msgstr "Paket dağıtımı"
 
@@ -1165,7 +1165,7 @@ msgstr "Paket dağıtımı"
 msgid "Package deployment"
 msgstr "Paket dağıtımı"
 
-#: inc/deploypackage.class.php:795
+#: inc/deploypackage.class.php:797
 msgid "Package exported in"
 msgstr "Paket şuraya dışa aktarıldı"
 
@@ -1173,7 +1173,7 @@ msgstr "Paket şuraya dışa aktarıldı"
 msgid "Package management"
 msgstr "Paket yönetimi"
 
-#: inc/deploypackage.class.php:868
+#: inc/deploypackage.class.php:870
 msgid "Packages to import"
 msgstr "İçe aktarılacak paketler"
 
@@ -1203,7 +1203,7 @@ msgstr "Yol / dosya"
 msgid "Periodicity"
 msgstr "Sıklık"
 
-#: setup.php:480
+#: setup.php:476
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Lütfen glpi/plugins/ içindeki %s klasörünü silin"
@@ -1216,14 +1216,14 @@ msgstr "Ertelenmiş"
 msgid "Preparation timeslot"
 msgstr "Hazırlanma zaman aralığı"
 
-#: inc/deploypackage.class.php:1661
+#: inc/deploypackage.class.php:1663
 msgid "Prepare for install"
 msgstr "Kurulum için hazırla"
 
 #: inc/taskview.class.php:191 inc/statediscovery.class.php:242
 #: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
 #: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
-#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1373
+#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1375
 msgid "Prepared"
 msgstr "Hazırlanmış"
 
@@ -1325,7 +1325,7 @@ msgstr "Uzak aygıt envanteri"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Envantere eklenecek uzak aygıtlar (VMware)"
 
-#: inc/deploypackage.class.php:1494
+#: inc/deploypackage.class.php:1496
 msgid "Restart job"
 msgstr "İşi yeniden başlat"
 
@@ -1370,7 +1370,7 @@ msgstr "Kurallar"
 msgid "Rules applied"
 msgstr "Uygulanan kurallar"
 
-#: inc/taskview.class.php:190 inc/deploypackage.class.php:1372
+#: inc/taskview.class.php:190 inc/deploypackage.class.php:1374
 msgid "Running"
 msgstr "Çalışıyor"
 
@@ -1422,7 +1422,7 @@ msgstr "Zamanlanan tarih"
 msgid "See all informations of task"
 msgstr "Görev bilgilerini görüntüle"
 
-#: inc/deploypackage.class.php:1652
+#: inc/deploypackage.class.php:1654
 msgid "Select packages you want install"
 msgstr "Kurmak istediğiniz paketleri seçin"
 
@@ -1461,7 +1461,7 @@ msgstr "Ayrıntıları görüntüle./ gizle"
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139 inc/collect.class.php:249
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1041
+#: inc/deployfile.class.php:1042
 msgid "Size"
 msgstr "Boyut"
 
@@ -1496,7 +1496,7 @@ msgstr "Başlangıç tarihi"
 msgid "Static group"
 msgstr "Durağan grup"
 
-#: inc/taskview.class.php:189 inc/deploypackage.class.php:1371
+#: inc/taskview.class.php:189 inc/deploypackage.class.php:1373
 msgid "Successful"
 msgstr "Başarılı"
 
@@ -1512,7 +1512,7 @@ msgstr "Hedef türü"
 msgid "Target a task"
 msgstr "Bir görevi hedefle"
 
-#: inc/deploypackage.class.php:1039 inc/deploypackage.class.php:1048
+#: inc/deploypackage.class.php:1041 inc/deploypackage.class.php:1050
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "İsteğe bağlı dağıtım hedefi"
@@ -1563,7 +1563,7 @@ msgstr ""
 "Ajan zaten sunucu tarafından kendisine gönderilmiş ayarları istiyor. Ajan "
 "üzerinde kritik bir sorun çıkmış olma olasılığı daha yüksek. "
 
-#: inc/deploypackage.class.php:275
+#: inc/deploypackage.class.php:277
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "Bu paketle birlikte şu görev yürütülüyor"
@@ -1577,7 +1577,7 @@ msgstr "Bu işin uygulanacağı ögeler."
 msgid "The items that should carry out those targets."
 msgstr "Bu hedeflere ulaşacak ögeler."
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:997
+#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
 msgid "The modified JSON contained a syntax error :"
 msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
 
@@ -1589,7 +1589,7 @@ msgstr "Seçilmiş görevin zaten başka bir paket için dağıtım işi var: "
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
 
-#: inc/deployfile.class.php:616
+#: inc/deployfile.class.php:617
 msgid "The uploaded file was only partially uploaded"
 msgstr "Dosyanın yalnız bir kısmı yüklenebildi"
 
@@ -1647,7 +1647,7 @@ msgstr "Envantere"
 msgid "Total discovery devices"
 msgstr "Toplam keşfedilen aygıt"
 
-#: inc/deployfile.class.php:612
+#: inc/deployfile.class.php:613
 msgid "Transfer error: the file size is too big"
 msgstr "Aktarım hatası: Dosya boyutu çok büyük"
 
@@ -1676,7 +1676,7 @@ msgstr "Eşsiz kod"
 msgid "Unit"
 msgstr "Birim"
 
-#: inc/deployfile.class.php:1038
+#: inc/deployfile.class.php:1039
 msgid "Unused file"
 msgstr "Kullanılmayan dosya"
 
@@ -1730,7 +1730,7 @@ msgid_plural "User interaction templates"
 msgstr[0] "Kullanıcı etkileşimi kalıbı"
 msgstr[1] "Kullanıcı etkileşimi kalıpları"
 
-#: inc/deploypackage.class.php:526
+#: inc/deploypackage.class.php:528
 msgid "User interactions"
 msgstr "Kullanıcı etkileşimleri"
 
@@ -1775,7 +1775,7 @@ msgstr "WMI değeri"
 msgid "Wake On LAN"
 msgstr "Ağdan başlatma"
 
-#: install/install.php:283
+#: install/install.php:271
 msgid "Wake agents ups"
 msgstr "Ajanları uyandır"
 
@@ -1809,7 +1809,7 @@ msgid ""
 "package."
 msgstr "Bir hedefe dağıtmak için bir görev ve bir paket seçmelisiniz."
 
-#: setup.php:463
+#: setup.php:459
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr "GLPI sürümünüz uyumlu değil. %1$s ile %2$s arasında olmalı"
@@ -1856,7 +1856,7 @@ msgstr "sürükleyin"
 msgid "exec"
 msgstr "yürütme"
 
-#: setup.php:472
+#: setup.php:468
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo eklentisi (PHP) gerekli..."
 
@@ -1896,7 +1896,7 @@ msgstr "yoldosya"
 msgid "refresh interval"
 msgstr "yenileme sıklığı"
 
-#: inc/deploypackage.class.php:1510
+#: inc/deploypackage.class.php:1512
 msgid "refresh job"
 msgstr "işi yenile"
 

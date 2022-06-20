@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 10:44+0000\n"
+"POT-Creation-Date: 2022-06-20 07:10+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Michal Čermák <michal.cermak79@gmail.com>, 2022\n"
 "Language-Team: Czech (Czech Republic) (https://www.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -43,7 +43,7 @@ msgstr "Akce"
 msgid "Action label"
 msgstr "Šítek akce"
 
-#: inc/deploypackage.class.php:525 b/deploy/index.php:140
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "Akce"
 
@@ -67,7 +67,7 @@ msgstr "Činitelé"
 msgid "Add a job"
 msgstr "Přidat úlohu"
 
-#: inc/deploypackage.class.php:1141
+#: inc/deploypackage.class.php:1143
 msgid "Add a target for self-service"
 msgstr "Přidat cíl pro samoobsluhu"
 
@@ -169,7 +169,7 @@ msgstr "Související SNMP přihlašovací údaje"
 msgid "Audit label"
 msgstr "Šítek auditu"
 
-#: inc/deploypackage.class.php:523
+#: inc/deploypackage.class.php:525
 msgid "Audits"
 msgstr "Audity"
 
@@ -269,7 +269,7 @@ msgid "Cancel - Try - Continue"
 msgstr "Storno – Zkusit – Pokračovat"
 
 #: inc/deployuserinteractiontemplate.class.php:232
-#: inc/deploypackage.class.php:1503
+#: inc/deploypackage.class.php:1505
 msgid "Cancel job"
 msgstr "Zrušit úlohu"
 
@@ -278,7 +278,7 @@ msgid "Cancel modifications"
 msgstr "Zrušit úpravy"
 
 #: inc/taskview.class.php:193 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1376
 msgid "Cancelled"
 msgstr "Zrušeno"
 
@@ -470,7 +470,7 @@ msgstr "Definice"
 msgid "Delete"
 msgstr "Smazat"
 
-#: install/update.php:1018
+#: install/update.php:1005
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "Smazat agenty kteří nekontaktovali server už „xxx“ dní."
 
@@ -550,7 +550,7 @@ msgstr "Stav zjišťování"
 msgid "Disk or directory"
 msgstr "Úložiště nebo složka"
 
-#: inc/deploypackage.class.php:1668
+#: inc/deploypackage.class.php:1670
 msgid "Don't wakeup"
 msgstr "Neprobouzet"
 
@@ -566,7 +566,7 @@ msgstr "ESX/VMWare"
 msgid "Edit impossible, this task is active"
 msgstr "Není možné upravit, tato úloha je aktivní"
 
-#: inc/deploypackage.class.php:381 inc/deploypackage.class.php:500
+#: inc/deploypackage.class.php:383 inc/deploypackage.class.php:502
 msgid "Enable deploy on demand for the following group"
 msgstr "Nasazovat na vyžádání pro následující skupinu"
 
@@ -615,7 +615,7 @@ msgstr "Kontroly vykonávání"
 msgid "Execution timeslot"
 msgstr "Časové okno vykonání"
 
-#: inc/deploypackage.class.php:151
+#: inc/deploypackage.class.php:153
 msgid "Export"
 msgstr "Export"
 
@@ -623,11 +623,11 @@ msgstr "Export"
 msgid "Extra-debug"
 msgstr "Ještě podrobnější ladící informace"
 
-#: inc/deployfile.class.php:663 inc/deployfile.class.php:721
+#: inc/deployfile.class.php:664 inc/deployfile.class.php:722
 msgid "Failed to copy file"
 msgstr "Soubor se nepodařilo zkopírovat"
 
-#: inc/deployfile.class.php:628
+#: inc/deployfile.class.php:629
 msgid "Failed to write file to disk"
 msgstr "Soubor se nepodařilo zapsat na úložiště"
 
@@ -649,7 +649,7 @@ msgstr "Soubor existuje"
 msgid "File is missing"
 msgstr "Soubor chybí"
 
-#: inc/deployfile.class.php:667 inc/deployfile.class.php:725
+#: inc/deployfile.class.php:668 inc/deployfile.class.php:726
 msgid "File missing"
 msgstr "Soubor chybí"
 
@@ -661,7 +661,7 @@ msgstr "Název souboru"
 msgid "File path"
 msgstr "Popis umístění souboru"
 
-#: inc/deployfile.class.php:660 inc/deployfile.class.php:718
+#: inc/deployfile.class.php:661 inc/deployfile.class.php:719
 msgid "File saved!"
 msgstr "Soubor uložen!"
 
@@ -685,7 +685,7 @@ msgstr "Soubor je menší než"
 msgid "Filename"
 msgstr "Název souboru"
 
-#: inc/deploypackage.class.php:524
+#: inc/deploypackage.class.php:526
 msgid "Files"
 msgstr "Soubory"
 
@@ -804,11 +804,11 @@ msgstr "Příručka"
 msgid "Hive"
 msgstr "Soubor registru (hive)"
 
-#: inc/deploypackage.class.php:1667
+#: inc/deploypackage.class.php:1669
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "Nejsem na tomto počítači: probuzení ze serveru"
 
-#: inc/deploypackage.class.php:1666
+#: inc/deploypackage.class.php:1668
 msgid "I'm on this computer: local wakeup"
 msgstr "Jsem na tomto počítači: místní probuzení"
 
@@ -834,7 +834,7 @@ msgstr ""
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: inc/menu.class.php:154 inc/deploypackage.class.php:148
+#: inc/menu.class.php:154 inc/deploypackage.class.php:150
 msgid "Import"
 msgstr "Import"
 
@@ -858,7 +858,7 @@ msgstr "Import odepřen"
 msgid "Impossible to read the CSV file"
 msgstr "CSV soubor se nedaří číst"
 
-#: inc/taskview.class.php:188 inc/deploypackage.class.php:1370
+#: inc/taskview.class.php:188 inc/deploypackage.class.php:1372
 msgid "In error"
 msgstr "V chybě"
 
@@ -898,7 +898,7 @@ msgstr ""
 msgid "Inventory started"
 msgstr "Inventarizace zahájena"
 
-#: inc/deploypackage.class.php:675
+#: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr "Reprezentace JSON balíčku"
 
@@ -959,7 +959,7 @@ msgstr "Správa balíčků"
 msgid "Match mirrors to agents"
 msgstr "Přiřadit zrcadla k agentům"
 
-#: inc/deployfile.class.php:1024
+#: inc/deployfile.class.php:1025
 msgid "Max file size"
 msgstr "Maximální velikost souboru"
 
@@ -984,7 +984,7 @@ msgstr "Nabídka"
 msgid "Minute(s)"
 msgstr "minut"
 
-#: inc/deployfile.class.php:1025
+#: inc/deployfile.class.php:1026
 msgid "Mio"
 msgstr "MiB"
 
@@ -997,11 +997,11 @@ msgstr "Adresa serveru se zrcadlem"
 msgid "Mirror servers"
 msgstr "Zrcadlící servery"
 
-#: inc/deployfile.class.php:624
+#: inc/deployfile.class.php:625
 msgid "Missing a temporary folder"
 msgstr "Chybí dočasná složka"
 
-#: inc/deploypackage.class.php:272
+#: inc/deploypackage.class.php:274
 msgid "Modification Denied"
 msgstr "Změny odepřeny"
 
@@ -1078,11 +1078,11 @@ msgstr "Nová akce"
 msgid "No active session"
 msgstr "Žádné aktivní sezení"
 
-#: inc/deployfile.class.php:620
+#: inc/deployfile.class.php:621
 msgid "No file was uploaded"
 msgstr "Nebyl nahrán žádný soubor"
 
-#: inc/deploypackage.class.php:1684
+#: inc/deploypackage.class.php:1686
 msgid "No packages available to install"
 msgstr "Nejsou k dispozici žádné balíčky pro instalaci"
 
@@ -1094,7 +1094,7 @@ msgstr "Není připojený žádný uživatel"
 msgid "Non sentitive case"
 msgstr "Nerozlišovat malá/velká písmena"
 
-#: inc/taskview.class.php:187 inc/deploypackage.class.php:1369
+#: inc/taskview.class.php:187 inc/deploypackage.class.php:1371
 msgid "Not done yet"
 msgstr "Ještě není hotovo"
 
@@ -1159,19 +1159,19 @@ msgstr "Pořadí seznamu"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:633
 msgid "PHP extension stopped the file upload"
 msgstr "PHP rozšíření toto nahrávání zastavilo"
 
-#: inc/task.class.php:2012 inc/deploypackage.class.php:94
+#: inc/task.class.php:2012 inc/deploypackage.class.php:96
 msgid "Package"
 msgstr "Balíček"
 
-#: inc/deploypackage.class.php:1032
+#: inc/deploypackage.class.php:1034
 msgid "Package actions"
 msgstr "Akce balíčku"
 
-#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1065
+#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1067
 msgid "Package deploy"
 msgstr "Nasazení balíčku"
 
@@ -1179,7 +1179,7 @@ msgstr "Nasazení balíčku"
 msgid "Package deployment"
 msgstr "Nasazení balíčku"
 
-#: inc/deploypackage.class.php:795
+#: inc/deploypackage.class.php:797
 msgid "Package exported in"
 msgstr "Balíček exportován do"
 
@@ -1187,7 +1187,7 @@ msgstr "Balíček exportován do"
 msgid "Package management"
 msgstr "Správa balíčků"
 
-#: inc/deploypackage.class.php:868
+#: inc/deploypackage.class.php:870
 msgid "Packages to import"
 msgstr "Balíčky k importu"
 
@@ -1217,7 +1217,7 @@ msgstr "Popis umístění / soubor"
 msgid "Periodicity"
 msgstr "Četnost opakování"
 
-#: setup.php:480
+#: setup.php:476
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Odeberte složku %s ve složce glpi/plugins/"
@@ -1230,14 +1230,14 @@ msgstr "Odloženo"
 msgid "Preparation timeslot"
 msgstr "Časové okno přípravy"
 
-#: inc/deploypackage.class.php:1661
+#: inc/deploypackage.class.php:1663
 msgid "Prepare for install"
 msgstr "Připravit pro instalaci"
 
 #: inc/taskview.class.php:191 inc/statediscovery.class.php:242
 #: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
 #: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
-#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1373
+#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1375
 msgid "Prepared"
 msgstr "Připravuje se"
 
@@ -1339,7 +1339,7 @@ msgstr "Inventura zařízení na dálku"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Vzdálená zařízení do inventáře (VMware)"
 
-#: inc/deploypackage.class.php:1494
+#: inc/deploypackage.class.php:1496
 msgid "Restart job"
 msgstr "Restartovat úlohu"
 
@@ -1384,7 +1384,7 @@ msgstr "Pravidla"
 msgid "Rules applied"
 msgstr "Aplikováno pravidel"
 
-#: inc/taskview.class.php:190 inc/deploypackage.class.php:1372
+#: inc/taskview.class.php:190 inc/deploypackage.class.php:1374
 msgid "Running"
 msgstr "Spuštěné"
 
@@ -1436,7 +1436,7 @@ msgstr "Naplánované datum"
 msgid "See all informations of task"
 msgstr "Zobrazit všechny informace o úloze"
 
-#: inc/deploypackage.class.php:1652
+#: inc/deploypackage.class.php:1654
 msgid "Select packages you want install"
 msgstr "Vyberte balíčky které chcete nainstalovat"
 
@@ -1475,7 +1475,7 @@ msgstr "Zobrazit/skrýt podrobnosti"
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139 inc/collect.class.php:249
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1041
+#: inc/deployfile.class.php:1042
 msgid "Size"
 msgstr "Velikost"
 
@@ -1510,7 +1510,7 @@ msgstr "Datum začátku"
 msgid "Static group"
 msgstr "Statická skupina"
 
-#: inc/taskview.class.php:189 inc/deploypackage.class.php:1371
+#: inc/taskview.class.php:189 inc/deploypackage.class.php:1373
 msgid "Successful"
 msgstr "Úspěšné"
 
@@ -1526,7 +1526,7 @@ msgstr "Typ cíle"
 msgid "Target a task"
 msgstr "Zacílit úlohu"
 
-#: inc/deploypackage.class.php:1039 inc/deploypackage.class.php:1048
+#: inc/deploypackage.class.php:1041 inc/deploypackage.class.php:1050
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "Cíl nasazení na vyžádání"
@@ -1581,7 +1581,7 @@ msgstr ""
 "Agent požaduje nastavení, které mu už bylo serverem posláno. Je "
 "pravděpodobné, že na agentovi došlo ke kritické chybě."
 
-#: inc/deploypackage.class.php:275
+#: inc/deploypackage.class.php:277
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "S tímto balíčkem je spuštěná následující úloha"
@@ -1597,7 +1597,7 @@ msgstr "Položky které aplikovat na tuto úlohu."
 msgid "The items that should carry out those targets."
 msgstr "Položky které vykonat na těchto cílech."
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:997
+#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
 msgid "The modified JSON contained a syntax error :"
 msgstr "Upravené JSON obsahovalo syntaktickou chybu:"
 
@@ -1609,7 +1609,7 @@ msgstr "Označený úkol už má úlohu nasazení pro jiný balíček:"
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Úloha byla deaktivována po přípravě tohoto úkolu."
 
-#: inc/deployfile.class.php:616
+#: inc/deployfile.class.php:617
 msgid "The uploaded file was only partially uploaded"
 msgstr "Soubor nebyl nahrán celý"
 
@@ -1667,7 +1667,7 @@ msgstr "Do inventáře"
 msgid "Total discovery devices"
 msgstr "Celkem objevených zařízení"
 
-#: inc/deployfile.class.php:612
+#: inc/deployfile.class.php:613
 msgid "Transfer error: the file size is too big"
 msgstr "Chyba přenosu: soubor je příliš velký"
 
@@ -1696,7 +1696,7 @@ msgstr "Neopakující se identifikátor"
 msgid "Unit"
 msgstr "Jednotka"
 
-#: inc/deployfile.class.php:1038
+#: inc/deployfile.class.php:1039
 msgid "Unused file"
 msgstr "Nepoužitý soubor"
 
@@ -1754,7 +1754,7 @@ msgstr[1] "Šablony interakce uživatele"
 msgstr[2] "Šablon interakce uživatele"
 msgstr[3] "Šablony interakce uživatele"
 
-#: inc/deploypackage.class.php:526
+#: inc/deploypackage.class.php:528
 msgid "User interactions"
 msgstr "Interakce uživatele"
 
@@ -1799,7 +1799,7 @@ msgstr "VMI hodnota"
 msgid "Wake On LAN"
 msgstr "Probudit po síti (WoL)"
 
-#: install/install.php:283
+#: install/install.php:271
 msgid "Wake agents ups"
 msgstr "Probudit agenty"
 
@@ -1834,7 +1834,7 @@ msgid ""
 msgstr ""
 "Je třeba zvolit úlohu a balíček pro zacílení úlohy s balíčkem nasazení"
 
-#: setup.php:463
+#: setup.php:459
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr "Vaše verze GLPI není kompatibilní, požadovaná >= %1$s a < %2$s"
@@ -1881,7 +1881,7 @@ msgstr "přetáhnout"
 msgid "exec"
 msgstr "spustit"
 
-#: setup.php:472
+#: setup.php:468
 msgid "fileinfo extension (PHP) is required..."
 msgstr "je vyžadováno rozšíření (PHP) fileinfo…"
 
@@ -1921,7 +1921,7 @@ msgstr "umístění souboru"
 msgid "refresh interval"
 msgstr "interval aktualizace"
 
-#: inc/deploypackage.class.php:1510
+#: inc/deploypackage.class.php:1512
 msgid "refresh job"
 msgstr "znovu načíst úlohu"
 

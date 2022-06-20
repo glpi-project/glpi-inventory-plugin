@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 10:44+0000\n"
+"POT-Creation-Date: 2022-06-20 07:10+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: German (Germany) (https://www.transifex.com/teclib/teams/28042/de_DE/)\n"
@@ -41,7 +41,7 @@ msgstr "Aktion"
 msgid "Action label"
 msgstr "Aktion Beschriftung"
 
-#: inc/deploypackage.class.php:525 b/deploy/index.php:140
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -65,7 +65,7 @@ msgstr "Beteiligte"
 msgid "Add a job"
 msgstr "Füge eine Aufgabe hinzu"
 
-#: inc/deploypackage.class.php:1141
+#: inc/deploypackage.class.php:1143
 msgid "Add a target for self-service"
 msgstr "Füge ein Ziel für Selbstbedienung hinzu"
 
@@ -167,7 +167,7 @@ msgstr "Verknüpfte SNMP Zugangsdaten"
 msgid "Audit label"
 msgstr "Revidiert Beschriftung"
 
-#: inc/deploypackage.class.php:523
+#: inc/deploypackage.class.php:525
 msgid "Audits"
 msgstr "Revidiert"
 
@@ -265,7 +265,7 @@ msgid "Cancel - Try - Continue"
 msgstr "Abbrechen - Testen - Fortsetzen"
 
 #: inc/deployuserinteractiontemplate.class.php:232
-#: inc/deploypackage.class.php:1503
+#: inc/deploypackage.class.php:1505
 msgid "Cancel job"
 msgstr "Breche Aufgabe ab"
 
@@ -274,7 +274,7 @@ msgid "Cancel modifications"
 msgstr "Setze Änderung zurück"
 
 #: inc/taskview.class.php:193 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1376
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
@@ -467,7 +467,7 @@ msgstr "Definition"
 msgid "Delete"
 msgstr "Löschen"
 
-#: install/update.php:1018
+#: install/update.php:1005
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr ""
 "Lösche Agenten, die den Server seit \"xxx\" Tagen nicht kontaktiert haben."
@@ -548,7 +548,7 @@ msgstr "Discovery-Status"
 msgid "Disk or directory"
 msgstr "Festplatte oder Ordner"
 
-#: inc/deploypackage.class.php:1668
+#: inc/deploypackage.class.php:1670
 msgid "Don't wakeup"
 msgstr "Nicht starten"
 
@@ -564,7 +564,7 @@ msgstr "ESX/VMWare"
 msgid "Edit impossible, this task is active"
 msgstr "Änderung nicht möglich, Aufgabe ist aktiv"
 
-#: inc/deploypackage.class.php:381 inc/deploypackage.class.php:500
+#: inc/deploypackage.class.php:383 inc/deploypackage.class.php:502
 msgid "Enable deploy on demand for the following group"
 msgstr "Aktiviere die Verteilung über eine Aufgabe für die folgende Gruppe"
 
@@ -613,7 +613,7 @@ msgstr "Ausführungsprüfung"
 msgid "Execution timeslot"
 msgstr "Zeitfenster zur Ausführung"
 
-#: inc/deploypackage.class.php:151
+#: inc/deploypackage.class.php:153
 msgid "Export"
 msgstr "Export"
 
@@ -621,11 +621,11 @@ msgstr "Export"
 msgid "Extra-debug"
 msgstr "Extra-Debug"
 
-#: inc/deployfile.class.php:663 inc/deployfile.class.php:721
+#: inc/deployfile.class.php:664 inc/deployfile.class.php:722
 msgid "Failed to copy file"
 msgstr "Datei konnte nicht kopiert werden"
 
-#: inc/deployfile.class.php:628
+#: inc/deployfile.class.php:629
 msgid "Failed to write file to disk"
 msgstr "Datei konnte nicht gespeichert werden"
 
@@ -647,7 +647,7 @@ msgstr "Datei existiert"
 msgid "File is missing"
 msgstr "Datei fehlt"
 
-#: inc/deployfile.class.php:667 inc/deployfile.class.php:725
+#: inc/deployfile.class.php:668 inc/deployfile.class.php:726
 msgid "File missing"
 msgstr "Datei fehlt"
 
@@ -659,7 +659,7 @@ msgstr "Dateiname"
 msgid "File path"
 msgstr "Dateipfad"
 
-#: inc/deployfile.class.php:660 inc/deployfile.class.php:718
+#: inc/deployfile.class.php:661 inc/deployfile.class.php:719
 msgid "File saved!"
 msgstr "Datei gespeichert!"
 
@@ -683,7 +683,7 @@ msgstr "Datei ist kleiner als"
 msgid "Filename"
 msgstr "Dateiname"
 
-#: inc/deploypackage.class.php:524
+#: inc/deploypackage.class.php:526
 msgid "Files"
 msgstr "Dateien"
 
@@ -794,11 +794,11 @@ msgstr "Assistent"
 msgid "Hive"
 msgstr "Hive"
 
-#: inc/deploypackage.class.php:1667
+#: inc/deploypackage.class.php:1669
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "Ich bin nicht an diesem Computer: Starten vom Server"
 
-#: inc/deploypackage.class.php:1666
+#: inc/deploypackage.class.php:1668
 msgid "I'm on this computer: local wakeup"
 msgstr "Ich bin an diesem Computer: lokales Starten"
 
@@ -825,7 +825,7 @@ msgstr ""
 msgid "Ignore"
 msgstr "Ignorieren"
 
-#: inc/menu.class.php:154 inc/deploypackage.class.php:148
+#: inc/menu.class.php:154 inc/deploypackage.class.php:150
 msgid "Import"
 msgstr "Import"
 
@@ -849,7 +849,7 @@ msgstr "Import nicht erlaubt"
 msgid "Impossible to read the CSV file"
 msgstr "CSV-Datei kann gelesen werden"
 
-#: inc/taskview.class.php:188 inc/deploypackage.class.php:1370
+#: inc/taskview.class.php:188 inc/deploypackage.class.php:1372
 msgid "In error"
 msgstr "Davon fehlerhaft"
 
@@ -889,7 +889,7 @@ msgstr ""
 msgid "Inventory started"
 msgstr "Inventar gestartet"
 
-#: inc/deploypackage.class.php:675
+#: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr "JSON Paket Darstellung"
 
@@ -950,7 +950,7 @@ msgstr "Verwalte Pakete"
 msgid "Match mirrors to agents"
 msgstr "Abgleich von Spiegeln mit Agenten"
 
-#: inc/deployfile.class.php:1024
+#: inc/deployfile.class.php:1025
 msgid "Max file size"
 msgstr "Maximale Dateigrösse"
 
@@ -975,7 +975,7 @@ msgstr "Menü"
 msgid "Minute(s)"
 msgstr "Minute(n)"
 
-#: inc/deployfile.class.php:1025
+#: inc/deployfile.class.php:1026
 msgid "Mio"
 msgstr "Mio"
 
@@ -988,11 +988,11 @@ msgstr "Spiegelserver Adresse"
 msgid "Mirror servers"
 msgstr "Spiegelserver"
 
-#: inc/deployfile.class.php:624
+#: inc/deployfile.class.php:625
 msgid "Missing a temporary folder"
 msgstr "Temporäres Verzeichnis fehlt"
 
-#: inc/deploypackage.class.php:272
+#: inc/deploypackage.class.php:274
 msgid "Modification Denied"
 msgstr "Änderung verweigert"
 
@@ -1069,11 +1069,11 @@ msgstr "Neue Aufgabe"
 msgid "No active session"
 msgstr "Keine aktive Sitzung"
 
-#: inc/deployfile.class.php:620
+#: inc/deployfile.class.php:621
 msgid "No file was uploaded"
 msgstr "Dateien wurde nicht heraufgeladen"
 
-#: inc/deploypackage.class.php:1684
+#: inc/deploypackage.class.php:1686
 msgid "No packages available to install"
 msgstr "Es sind keine Pakete zur Installation bereit"
 
@@ -1085,7 +1085,7 @@ msgstr "Kein Benutzer ist verbunden"
 msgid "Non sentitive case"
 msgstr "Gross-/Kleinschreibung nicht beachten"
 
-#: inc/taskview.class.php:187 inc/deploypackage.class.php:1369
+#: inc/taskview.class.php:187 inc/deploypackage.class.php:1371
 msgid "Not done yet"
 msgstr "Bisher nicht ausgeführt"
 
@@ -1150,19 +1150,19 @@ msgstr "Sortierung"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:633
 msgid "PHP extension stopped the file upload"
 msgstr "PHP-Erweiterung hat den Upload gestoppt"
 
-#: inc/task.class.php:2012 inc/deploypackage.class.php:94
+#: inc/task.class.php:2012 inc/deploypackage.class.php:96
 msgid "Package"
 msgstr "Paket"
 
-#: inc/deploypackage.class.php:1032
+#: inc/deploypackage.class.php:1034
 msgid "Package actions"
 msgstr "Paket-Aktion"
 
-#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1065
+#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1067
 msgid "Package deploy"
 msgstr "Paket Bereitstellung"
 
@@ -1170,7 +1170,7 @@ msgstr "Paket Bereitstellung"
 msgid "Package deployment"
 msgstr "Paketverteilung"
 
-#: inc/deploypackage.class.php:795
+#: inc/deploypackage.class.php:797
 msgid "Package exported in"
 msgstr "Paket exportiert in"
 
@@ -1178,7 +1178,7 @@ msgstr "Paket exportiert in"
 msgid "Package management"
 msgstr "Paketverwaltung"
 
-#: inc/deploypackage.class.php:868
+#: inc/deploypackage.class.php:870
 msgid "Packages to import"
 msgstr "Pakete zum Importieren"
 
@@ -1208,7 +1208,7 @@ msgstr "Pfad/Datei"
 msgid "Periodicity"
 msgstr "Häufigkeit"
 
-#: setup.php:480
+#: setup.php:476
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Bitte den Ordner %s im Verzeichnis glpi/plugins löschen"
@@ -1221,14 +1221,14 @@ msgstr "Verschoben"
 msgid "Preparation timeslot"
 msgstr "Zeitfenster für Vorbereitung"
 
-#: inc/deploypackage.class.php:1661
+#: inc/deploypackage.class.php:1663
 msgid "Prepare for install"
 msgstr "Zur Installation vorbereiten"
 
 #: inc/taskview.class.php:191 inc/statediscovery.class.php:242
 #: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
 #: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
-#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1373
+#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1375
 msgid "Prepared"
 msgstr "Vorbereitet"
 
@@ -1332,7 +1332,7 @@ msgstr "Remote-Inventarisierung von Geräten"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Remote-Gerät inventarisieren (VMware)"
 
-#: inc/deploypackage.class.php:1494
+#: inc/deploypackage.class.php:1496
 msgid "Restart job"
 msgstr "Starte Aufgabe neu"
 
@@ -1377,7 +1377,7 @@ msgstr "Regeln"
 msgid "Rules applied"
 msgstr "Regeln angewendet"
 
-#: inc/taskview.class.php:190 inc/deploypackage.class.php:1372
+#: inc/taskview.class.php:190 inc/deploypackage.class.php:1374
 msgid "Running"
 msgstr "Läuft"
 
@@ -1429,7 +1429,7 @@ msgstr "Geplanter Zeitpunkt"
 msgid "See all informations of task"
 msgstr "Alle Informationen zu diesem Task anzeigen"
 
-#: inc/deploypackage.class.php:1652
+#: inc/deploypackage.class.php:1654
 msgid "Select packages you want install"
 msgstr "Wähle das Paket zur Installation aus"
 
@@ -1466,7 +1466,7 @@ msgstr "Zeige/Verstecke Details"
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139 inc/collect.class.php:249
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1041
+#: inc/deployfile.class.php:1042
 msgid "Size"
 msgstr "Grösse"
 
@@ -1501,7 +1501,7 @@ msgstr "Startdatum"
 msgid "Static group"
 msgstr "Statische Gruppe"
 
-#: inc/taskview.class.php:189 inc/deploypackage.class.php:1371
+#: inc/taskview.class.php:189 inc/deploypackage.class.php:1373
 msgid "Successful"
 msgstr "Erfolgreich"
 
@@ -1517,7 +1517,7 @@ msgstr "Ziel-Art"
 msgid "Target a task"
 msgstr "Wähle einen Task"
 
-#: inc/deploypackage.class.php:1039 inc/deploypackage.class.php:1048
+#: inc/deploypackage.class.php:1041 inc/deploypackage.class.php:1050
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "Ziele für den Ausrollvorgang auf Anfrage"
@@ -1569,7 +1569,7 @@ msgstr ""
 "übermittelt wurde. Es ist wahrscheinlicher, dass der Agent einem kritischen "
 "Fehler unterliegt."
 
-#: inc/deploypackage.class.php:275
+#: inc/deploypackage.class.php:277
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "Die folgenden Aufgaben werden mit diesem Paket ausgeführt"
@@ -1583,7 +1583,7 @@ msgstr "Die für diese Aufgabe zu verwendenden Elemente."
 msgid "The items that should carry out those targets."
 msgstr "Die Elemente, die die definiereten Ziele ausführen."
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:997
+#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
 msgid "The modified JSON contained a syntax error :"
 msgstr "Die modifizierte JSON enthält einen Syntax-Fehler:"
 
@@ -1596,7 +1596,7 @@ msgstr ""
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Die Aufgabe wurde deaktiviert nach der Vorbereitung des Vorgangs"
 
-#: inc/deployfile.class.php:616
+#: inc/deployfile.class.php:617
 msgid "The uploaded file was only partially uploaded"
 msgstr "Die hochgeladene Datei ist unvollständig"
 
@@ -1656,7 +1656,7 @@ msgstr "Zum Inventar"
 msgid "Total discovery devices"
 msgstr "Anzahl entdeckte Geräte"
 
-#: inc/deployfile.class.php:612
+#: inc/deployfile.class.php:613
 msgid "Transfer error: the file size is too big"
 msgstr "Übertragunsfehler: Die Datei ist zu groß"
 
@@ -1685,7 +1685,7 @@ msgstr "Eindeutige ID"
 msgid "Unit"
 msgstr "EInheit"
 
-#: inc/deployfile.class.php:1038
+#: inc/deployfile.class.php:1039
 msgid "Unused file"
 msgstr "Ungenutzte Datei"
 
@@ -1741,7 +1741,7 @@ msgid_plural "User interaction templates"
 msgstr[0] "Benutzer Interaktions-Vorlage"
 msgstr[1] "Benutzer Interaktions-Vorlage"
 
-#: inc/deploypackage.class.php:526
+#: inc/deploypackage.class.php:528
 msgid "User interactions"
 msgstr "Benutzer-Interaktionen"
 
@@ -1786,7 +1786,7 @@ msgstr "WMI-Wert"
 msgid "Wake On LAN"
 msgstr "Wake On LAN"
 
-#: install/install.php:283
+#: install/install.php:271
 msgid "Wake agents ups"
 msgstr "Starte Agenten"
 
@@ -1822,7 +1822,7 @@ msgstr ""
 "Sie müssen eine Aufgabe und ein Paket auswählen, um eine Aufgabe mit einem "
 "Bereitstellungspaket zu bearbeiten."
 
-#: setup.php:463
+#: setup.php:459
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1871,7 +1871,7 @@ msgstr "ziehen"
 msgid "exec"
 msgstr "Ausführen"
 
-#: setup.php:472
+#: setup.php:468
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo Erweiterung (php) ist erforderlich..."
 
@@ -1911,7 +1911,7 @@ msgstr "Dateipfad"
 msgid "refresh interval"
 msgstr "Aktualisierungsintervall"
 
-#: inc/deploypackage.class.php:1510
+#: inc/deploypackage.class.php:1512
 msgid "refresh job"
 msgstr "Wiederhole Aufgabe"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 10:44+0000\n"
+"POT-Creation-Date: 2022-06-20 07:10+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Ukrainian (Ukraine) (https://www.transifex.com/teclib/teams/28042/uk_UA/)\n"
@@ -41,7 +41,7 @@ msgstr "Дія"
 msgid "Action label"
 msgstr "Мітка дії"
 
-#: inc/deploypackage.class.php:525 b/deploy/index.php:140
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "Дії"
 
@@ -65,7 +65,7 @@ msgstr "Виконавці"
 msgid "Add a job"
 msgstr "Додати Роботу"
 
-#: inc/deploypackage.class.php:1141
+#: inc/deploypackage.class.php:1143
 msgid "Add a target for self-service"
 msgstr "Додати призначення для самообслуговування"
 
@@ -167,7 +167,7 @@ msgstr "Пов’язані параметри аутентифікаціі SNMP
 msgid "Audit label"
 msgstr "Мітка дії"
 
-#: inc/deploypackage.class.php:523
+#: inc/deploypackage.class.php:525
 msgid "Audits"
 msgstr "Аудит"
 
@@ -267,7 +267,7 @@ msgid "Cancel - Try - Continue"
 msgstr "Cancel - Try - Continue"
 
 #: inc/deployuserinteractiontemplate.class.php:232
-#: inc/deploypackage.class.php:1503
+#: inc/deploypackage.class.php:1505
 msgid "Cancel job"
 msgstr "Закінчити виконання"
 
@@ -276,7 +276,7 @@ msgid "Cancel modifications"
 msgstr "Перервати зміни"
 
 #: inc/taskview.class.php:193 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1376
 msgid "Cancelled"
 msgstr "Перервано"
 
@@ -464,7 +464,7 @@ msgstr "Визначення"
 msgid "Delete"
 msgstr "Видалити"
 
-#: install/update.php:1018
+#: install/update.php:1005
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "Видалити агентів, які не контактували з сервером понад Х днів."
 
@@ -544,7 +544,7 @@ msgstr "Стан виявлення"
 msgid "Disk or directory"
 msgstr "Диск або каталог"
 
-#: inc/deploypackage.class.php:1668
+#: inc/deploypackage.class.php:1670
 msgid "Don't wakeup"
 msgstr "Не пробуджувати"
 
@@ -560,7 +560,7 @@ msgstr "ESX/VMWare"
 msgid "Edit impossible, this task is active"
 msgstr "Неможливо змінити, це завдання активне"
 
-#: inc/deploypackage.class.php:381 inc/deploypackage.class.php:500
+#: inc/deploypackage.class.php:383 inc/deploypackage.class.php:502
 msgid "Enable deploy on demand for the following group"
 msgstr "Увімкнути розгортання за вимогою наступним групам"
 
@@ -609,7 +609,7 @@ msgstr "Перевірки виконання"
 msgid "Execution timeslot"
 msgstr "Проміжок часу виконання"
 
-#: inc/deploypackage.class.php:151
+#: inc/deploypackage.class.php:153
 msgid "Export"
 msgstr "Експорт"
 
@@ -617,11 +617,11 @@ msgstr "Експорт"
 msgid "Extra-debug"
 msgstr "Додаткова відладка"
 
-#: inc/deployfile.class.php:663 inc/deployfile.class.php:721
+#: inc/deployfile.class.php:664 inc/deployfile.class.php:722
 msgid "Failed to copy file"
 msgstr "Помилка копіювання файлу"
 
-#: inc/deployfile.class.php:628
+#: inc/deployfile.class.php:629
 msgid "Failed to write file to disk"
 msgstr "Помилка запису файлу на диск"
 
@@ -643,7 +643,7 @@ msgstr "Файл існує"
 msgid "File is missing"
 msgstr "Файл відсутній"
 
-#: inc/deployfile.class.php:667 inc/deployfile.class.php:725
+#: inc/deployfile.class.php:668 inc/deployfile.class.php:726
 msgid "File missing"
 msgstr "Файл відсутній"
 
@@ -655,7 +655,7 @@ msgstr "Ім’я файлу"
 msgid "File path"
 msgstr "Шлях до файлу"
 
-#: inc/deployfile.class.php:660 inc/deployfile.class.php:718
+#: inc/deployfile.class.php:661 inc/deployfile.class.php:719
 msgid "File saved!"
 msgstr "Файл збережено!"
 
@@ -679,7 +679,7 @@ msgstr "Розмір файлу менше, чим"
 msgid "Filename"
 msgstr "Назва файлу"
 
-#: inc/deploypackage.class.php:524
+#: inc/deploypackage.class.php:526
 msgid "Files"
 msgstr "Файли"
 
@@ -798,11 +798,11 @@ msgstr "Керівництво"
 msgid "Hive"
 msgstr "Hive"
 
-#: inc/deploypackage.class.php:1667
+#: inc/deploypackage.class.php:1669
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "Я не на цьому комп'ютері: пробудження з серверу"
 
-#: inc/deploypackage.class.php:1666
+#: inc/deploypackage.class.php:1668
 msgid "I'm on this computer: local wakeup"
 msgstr "Я на цьому комп'ютері: локальне пробудження"
 
@@ -829,7 +829,7 @@ msgstr ""
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: inc/menu.class.php:154 inc/deploypackage.class.php:148
+#: inc/menu.class.php:154 inc/deploypackage.class.php:150
 msgid "Import"
 msgstr "Імпорт"
 
@@ -853,7 +853,7 @@ msgstr "Імпорт заборонено"
 msgid "Impossible to read the CSV file"
 msgstr "CVS файл неможливо прочитати"
 
-#: inc/taskview.class.php:188 inc/deploypackage.class.php:1370
+#: inc/taskview.class.php:188 inc/deploypackage.class.php:1372
 msgid "In error"
 msgstr "Є помилки"
 
@@ -893,7 +893,7 @@ msgstr ""
 msgid "Inventory started"
 msgstr "Інвентаризацію розпочато"
 
-#: inc/deploypackage.class.php:675
+#: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr "JSON презентація пакету"
 
@@ -954,7 +954,7 @@ msgstr "Керувати пакетами"
 msgid "Match mirrors to agents"
 msgstr "Пов'язати дзеркала до агентів"
 
-#: inc/deployfile.class.php:1024
+#: inc/deployfile.class.php:1025
 msgid "Max file size"
 msgstr "Максимальний розмір файлу"
 
@@ -979,7 +979,7 @@ msgstr "Меню"
 msgid "Minute(s)"
 msgstr "хвилини"
 
-#: inc/deployfile.class.php:1025
+#: inc/deployfile.class.php:1026
 msgid "Mio"
 msgstr "Mio"
 
@@ -992,11 +992,11 @@ msgstr "Адреси дзеркальних серверів"
 msgid "Mirror servers"
 msgstr "Дзеркальні сервери"
 
-#: inc/deployfile.class.php:624
+#: inc/deployfile.class.php:625
 msgid "Missing a temporary folder"
 msgstr "Відсутній тимчасовий каталог"
 
-#: inc/deploypackage.class.php:272
+#: inc/deploypackage.class.php:274
 msgid "Modification Denied"
 msgstr "Модифікація заборонена"
 
@@ -1073,11 +1073,11 @@ msgstr "Нова дія"
 msgid "No active session"
 msgstr "Нема активних сесій"
 
-#: inc/deployfile.class.php:620
+#: inc/deployfile.class.php:621
 msgid "No file was uploaded"
 msgstr "Файл не завантажено"
 
-#: inc/deploypackage.class.php:1684
+#: inc/deploypackage.class.php:1686
 msgid "No packages available to install"
 msgstr "Немає пакетів для встановлення"
 
@@ -1089,7 +1089,7 @@ msgstr "Немає під'єднаних користувачів"
 msgid "Non sentitive case"
 msgstr "Ігнорувати регістр символів"
 
-#: inc/taskview.class.php:187 inc/deploypackage.class.php:1369
+#: inc/taskview.class.php:187 inc/deploypackage.class.php:1371
 msgid "Not done yet"
 msgstr "Ще не виконано"
 
@@ -1154,19 +1154,19 @@ msgstr "Сортувати список"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:633
 msgid "PHP extension stopped the file upload"
 msgstr "Розширення PHP зупинило завантаження файлу"
 
-#: inc/task.class.php:2012 inc/deploypackage.class.php:94
+#: inc/task.class.php:2012 inc/deploypackage.class.php:96
 msgid "Package"
 msgstr "Пакет"
 
-#: inc/deploypackage.class.php:1032
+#: inc/deploypackage.class.php:1034
 msgid "Package actions"
 msgstr "Дії з пакетами"
 
-#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1065
+#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1067
 msgid "Package deploy"
 msgstr "Розгортання пакету"
 
@@ -1174,7 +1174,7 @@ msgstr "Розгортання пакету"
 msgid "Package deployment"
 msgstr "Розгортання пакетів"
 
-#: inc/deploypackage.class.php:795
+#: inc/deploypackage.class.php:797
 msgid "Package exported in"
 msgstr "Пакет експортовано до"
 
@@ -1182,7 +1182,7 @@ msgstr "Пакет експортовано до"
 msgid "Package management"
 msgstr "Керування пакетами"
 
-#: inc/deploypackage.class.php:868
+#: inc/deploypackage.class.php:870
 msgid "Packages to import"
 msgstr "Пакети для імпорту"
 
@@ -1212,7 +1212,7 @@ msgstr "Шлях/файл"
 msgid "Periodicity"
 msgstr "Періодичність"
 
-#: setup.php:480
+#: setup.php:476
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Будь ласка, видаліть каталог %s в glpi/plugins/"
@@ -1225,14 +1225,14 @@ msgstr "Відкладено"
 msgid "Preparation timeslot"
 msgstr "Проміжок часу розгортання"
 
-#: inc/deploypackage.class.php:1661
+#: inc/deploypackage.class.php:1663
 msgid "Prepare for install"
 msgstr "Підготовка встановлення"
 
 #: inc/taskview.class.php:191 inc/statediscovery.class.php:242
 #: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
 #: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
-#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1373
+#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1375
 msgid "Prepared"
 msgstr "Підготовлено"
 
@@ -1335,7 +1335,7 @@ msgstr "Інвентаризація віддалених пристроїв"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Віддалені пристрої для інвентаризації (VMware)"
 
-#: inc/deploypackage.class.php:1494
+#: inc/deploypackage.class.php:1496
 msgid "Restart job"
 msgstr "Перезапустити виконання"
 
@@ -1380,7 +1380,7 @@ msgstr "Правила"
 msgid "Rules applied"
 msgstr "Застосовані правила"
 
-#: inc/taskview.class.php:190 inc/deploypackage.class.php:1372
+#: inc/taskview.class.php:190 inc/deploypackage.class.php:1374
 msgid "Running"
 msgstr "Виконуються"
 
@@ -1432,7 +1432,7 @@ msgstr "Запланована дата"
 msgid "See all informations of task"
 msgstr "Переглянути всю інформацію завдання"
 
-#: inc/deploypackage.class.php:1652
+#: inc/deploypackage.class.php:1654
 msgid "Select packages you want install"
 msgstr "Оберіть пакети для встановлення"
 
@@ -1469,7 +1469,7 @@ msgstr "Показати/Сховати деталі"
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139 inc/collect.class.php:249
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1041
+#: inc/deployfile.class.php:1042
 msgid "Size"
 msgstr "Розмір"
 
@@ -1504,7 +1504,7 @@ msgstr "Дата початку"
 msgid "Static group"
 msgstr "Статична група"
 
-#: inc/taskview.class.php:189 inc/deploypackage.class.php:1371
+#: inc/taskview.class.php:189 inc/deploypackage.class.php:1373
 msgid "Successful"
 msgstr "Успішно"
 
@@ -1520,7 +1520,7 @@ msgstr "Тип Мети"
 msgid "Target a task"
 msgstr "Мета завдання"
 
-#: inc/deploypackage.class.php:1039 inc/deploypackage.class.php:1048
+#: inc/deploypackage.class.php:1041 inc/deploypackage.class.php:1050
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "Ціль розгортання за вимогою"
@@ -1575,7 +1575,7 @@ msgstr ""
 "Агент запитує конфігурацію, що вже надсилалась йому сервером. Схоже, що "
 "агент має критичну помилку."
 
-#: inc/deploypackage.class.php:275
+#: inc/deploypackage.class.php:277
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "З цим пакетом виконуються наступне завдання"
@@ -1591,7 +1591,7 @@ msgstr "Елементи, які застосовуються для цієї Р
 msgid "The items that should carry out those targets."
 msgstr "Елементи, які займаються цими цілями"
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:997
+#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
 msgid "The modified JSON contained a syntax error :"
 msgstr "Змінений JSON містить синтаксичну помилку :"
 
@@ -1603,7 +1603,7 @@ msgstr "Обране завдання вже має задачу розгорт�
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Завдання було деактивовано після підготовки цієї роботи."
 
-#: inc/deployfile.class.php:616
+#: inc/deployfile.class.php:617
 msgid "The uploaded file was only partially uploaded"
 msgstr "Файл був завантажений лише частково"
 
@@ -1661,7 +1661,7 @@ msgstr "До інвентаризації"
 msgid "Total discovery devices"
 msgstr "Всього пристроїв виявлено"
 
-#: inc/deployfile.class.php:612
+#: inc/deployfile.class.php:613
 msgid "Transfer error: the file size is too big"
 msgstr "Помилка передачі: файл занадто великий"
 
@@ -1690,7 +1690,7 @@ msgstr "Унікальний id"
 msgid "Unit"
 msgstr "Одиниця"
 
-#: inc/deployfile.class.php:1038
+#: inc/deployfile.class.php:1039
 msgid "Unused file"
 msgstr "Файл, що не використовується"
 
@@ -1748,7 +1748,7 @@ msgstr[1] "Шаблони взаємодії користувача"
 msgstr[2] "Шаблонів взаємодії користувача"
 msgstr[3] "Шаблони взаємодії користувача"
 
-#: inc/deploypackage.class.php:526
+#: inc/deploypackage.class.php:528
 msgid "User interactions"
 msgstr "Взаємодії користувача"
 
@@ -1793,7 +1793,7 @@ msgstr "Значення WMI"
 msgid "Wake On LAN"
 msgstr "Wake On LAN"
 
-#: install/install.php:283
+#: install/install.php:271
 msgid "Wake agents ups"
 msgstr "\"Розбудити\" агентів"
 
@@ -1829,7 +1829,7 @@ msgstr ""
 "Ви маєте обрати завдання та пакет, щоб визначити завдання розгортання "
 "пакету."
 
-#: setup.php:463
+#: setup.php:459
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1878,7 +1878,7 @@ msgstr "тягти"
 msgid "exec"
 msgstr "виконати"
 
-#: setup.php:472
+#: setup.php:468
 msgid "fileinfo extension (PHP) is required..."
 msgstr "В PHP не вистачає розширення fileinfo ..."
 
@@ -1918,7 +1918,7 @@ msgstr "pathfile"
 msgid "refresh interval"
 msgstr "оновити діапазон"
 
-#: inc/deploypackage.class.php:1510
+#: inc/deploypackage.class.php:1512
 msgid "refresh job"
 msgstr "Оновити завдання"
 

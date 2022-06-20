@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 10:44+0000\n"
+"POT-Creation-Date: 2022-06-20 07:10+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Action label"
 msgstr "动作标签"
 
-#: inc/deploypackage.class.php:525 b/deploy/index.php:140
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "动作"
 
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Add a job"
 msgstr "添加作业"
 
-#: inc/deploypackage.class.php:1141
+#: inc/deploypackage.class.php:1143
 msgid "Add a target for self-service"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Audit label"
 msgstr "审核标签"
 
-#: inc/deploypackage.class.php:523
+#: inc/deploypackage.class.php:525
 msgid "Audits"
 msgstr ""
 
@@ -264,7 +264,7 @@ msgid "Cancel - Try - Continue"
 msgstr ""
 
 #: inc/deployuserinteractiontemplate.class.php:232
-#: inc/deploypackage.class.php:1503
+#: inc/deploypackage.class.php:1505
 msgid "Cancel job"
 msgstr "取消作业"
 
@@ -273,7 +273,7 @@ msgid "Cancel modifications"
 msgstr ""
 
 #: inc/taskview.class.php:193 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1376
 msgid "Cancelled"
 msgstr "已取消"
 
@@ -456,7 +456,7 @@ msgstr "定义"
 msgid "Delete"
 msgstr "删除"
 
-#: install/update.php:1018
+#: install/update.php:1005
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr "删除自“xxx”天以来未连接服务器的代理。"
 
@@ -536,7 +536,7 @@ msgstr "发现状态"
 msgid "Disk or directory"
 msgstr "磁盘或目录"
 
-#: inc/deploypackage.class.php:1668
+#: inc/deploypackage.class.php:1670
 msgid "Don't wakeup"
 msgstr ""
 
@@ -552,7 +552,7 @@ msgstr "ESX/VMWare"
 msgid "Edit impossible, this task is active"
 msgstr ""
 
-#: inc/deploypackage.class.php:381 inc/deploypackage.class.php:500
+#: inc/deploypackage.class.php:383 inc/deploypackage.class.php:502
 msgid "Enable deploy on demand for the following group"
 msgstr ""
 
@@ -601,7 +601,7 @@ msgstr "执行检查"
 msgid "Execution timeslot"
 msgstr "执行时段"
 
-#: inc/deploypackage.class.php:151
+#: inc/deploypackage.class.php:153
 msgid "Export"
 msgstr "导出"
 
@@ -609,11 +609,11 @@ msgstr "导出"
 msgid "Extra-debug"
 msgstr ""
 
-#: inc/deployfile.class.php:663 inc/deployfile.class.php:721
+#: inc/deployfile.class.php:664 inc/deployfile.class.php:722
 msgid "Failed to copy file"
 msgstr ""
 
-#: inc/deployfile.class.php:628
+#: inc/deployfile.class.php:629
 msgid "Failed to write file to disk"
 msgstr ""
 
@@ -635,7 +635,7 @@ msgstr ""
 msgid "File is missing"
 msgstr ""
 
-#: inc/deployfile.class.php:667 inc/deployfile.class.php:725
+#: inc/deployfile.class.php:668 inc/deployfile.class.php:726
 msgid "File missing"
 msgstr "文件丢失"
 
@@ -647,7 +647,7 @@ msgstr "文件名称"
 msgid "File path"
 msgstr "文件路径"
 
-#: inc/deployfile.class.php:660 inc/deployfile.class.php:718
+#: inc/deployfile.class.php:661 inc/deployfile.class.php:719
 msgid "File saved!"
 msgstr "文件已保存!"
 
@@ -671,7 +671,7 @@ msgstr ""
 msgid "Filename"
 msgstr "文件名"
 
-#: inc/deploypackage.class.php:524
+#: inc/deploypackage.class.php:526
 msgid "Files"
 msgstr "文件"
 
@@ -778,11 +778,11 @@ msgstr "向导"
 msgid "Hive"
 msgstr "储巢"
 
-#: inc/deploypackage.class.php:1667
+#: inc/deploypackage.class.php:1669
 msgid "I'm not on this computer: wakeup from the server"
 msgstr ""
 
-#: inc/deploypackage.class.php:1666
+#: inc/deploypackage.class.php:1668
 msgid "I'm on this computer: local wakeup"
 msgstr ""
 
@@ -807,7 +807,7 @@ msgstr ""
 msgid "Ignore"
 msgstr "忽略"
 
-#: inc/menu.class.php:154 inc/deploypackage.class.php:148
+#: inc/menu.class.php:154 inc/deploypackage.class.php:150
 msgid "Import"
 msgstr "导入"
 
@@ -829,7 +829,7 @@ msgstr ""
 msgid "Impossible to read the CSV file"
 msgstr "无法读取csv文件"
 
-#: inc/taskview.class.php:188 inc/deploypackage.class.php:1370
+#: inc/taskview.class.php:188 inc/deploypackage.class.php:1372
 msgid "In error"
 msgstr "发生错误"
 
@@ -869,7 +869,7 @@ msgstr ""
 msgid "Inventory started"
 msgstr ""
 
-#: inc/deploypackage.class.php:675
+#: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr ""
 
@@ -930,7 +930,7 @@ msgstr "管理程序包"
 msgid "Match mirrors to agents"
 msgstr ""
 
-#: inc/deployfile.class.php:1024
+#: inc/deployfile.class.php:1025
 msgid "Max file size"
 msgstr "最大文件尺寸"
 
@@ -955,7 +955,7 @@ msgstr "菜单"
 msgid "Minute(s)"
 msgstr "分钟(m)"
 
-#: inc/deployfile.class.php:1025
+#: inc/deployfile.class.php:1026
 msgid "Mio"
 msgstr ""
 
@@ -968,11 +968,11 @@ msgstr ""
 msgid "Mirror servers"
 msgstr "镜像服务器"
 
-#: inc/deployfile.class.php:624
+#: inc/deployfile.class.php:625
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: inc/deploypackage.class.php:272
+#: inc/deploypackage.class.php:274
 msgid "Modification Denied"
 msgstr ""
 
@@ -1049,11 +1049,11 @@ msgstr ""
 msgid "No active session"
 msgstr "没有活动的会话"
 
-#: inc/deployfile.class.php:620
+#: inc/deployfile.class.php:621
 msgid "No file was uploaded"
 msgstr ""
 
-#: inc/deploypackage.class.php:1684
+#: inc/deploypackage.class.php:1686
 msgid "No packages available to install"
 msgstr ""
 
@@ -1065,7 +1065,7 @@ msgstr "无已连接用户"
 msgid "Non sentitive case"
 msgstr "大小写不敏感"
 
-#: inc/taskview.class.php:187 inc/deploypackage.class.php:1369
+#: inc/taskview.class.php:187 inc/deploypackage.class.php:1371
 msgid "Not done yet"
 msgstr "还未完成"
 
@@ -1130,19 +1130,19 @@ msgstr ""
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:633
 msgid "PHP extension stopped the file upload"
 msgstr ""
 
-#: inc/task.class.php:2012 inc/deploypackage.class.php:94
+#: inc/task.class.php:2012 inc/deploypackage.class.php:96
 msgid "Package"
 msgstr ""
 
-#: inc/deploypackage.class.php:1032
+#: inc/deploypackage.class.php:1034
 msgid "Package actions"
 msgstr ""
 
-#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1065
+#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1067
 msgid "Package deploy"
 msgstr "程序包部署"
 
@@ -1150,7 +1150,7 @@ msgstr "程序包部署"
 msgid "Package deployment"
 msgstr ""
 
-#: inc/deploypackage.class.php:795
+#: inc/deploypackage.class.php:797
 msgid "Package exported in"
 msgstr ""
 
@@ -1158,7 +1158,7 @@ msgstr ""
 msgid "Package management"
 msgstr "程序包管理"
 
-#: inc/deploypackage.class.php:868
+#: inc/deploypackage.class.php:870
 msgid "Packages to import"
 msgstr ""
 
@@ -1188,7 +1188,7 @@ msgstr "路径/文件"
 msgid "Periodicity"
 msgstr ""
 
-#: setup.php:480
+#: setup.php:476
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "请删除 glpi/plugins/ 目录的%s文件夹"
@@ -1201,14 +1201,14 @@ msgstr "已推迟"
 msgid "Preparation timeslot"
 msgstr "准备时段"
 
-#: inc/deploypackage.class.php:1661
+#: inc/deploypackage.class.php:1663
 msgid "Prepare for install"
 msgstr "准备安装"
 
 #: inc/taskview.class.php:191 inc/statediscovery.class.php:242
 #: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
 #: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
-#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1373
+#: inc/stateinventory.class.php:172 inc/deploypackage.class.php:1375
 msgid "Prepared"
 msgstr "已就绪"
 
@@ -1310,7 +1310,7 @@ msgstr "远程设备清单"
 msgid "Remote devices to inventory (VMware)"
 msgstr "远程设备待资产盘点 (VMware)"
 
-#: inc/deploypackage.class.php:1494
+#: inc/deploypackage.class.php:1496
 msgid "Restart job"
 msgstr "重启作业"
 
@@ -1355,7 +1355,7 @@ msgstr "规则"
 msgid "Rules applied"
 msgstr "已应用的规则"
 
-#: inc/taskview.class.php:190 inc/deploypackage.class.php:1372
+#: inc/taskview.class.php:190 inc/deploypackage.class.php:1374
 msgid "Running"
 msgstr "正在运行"
 
@@ -1407,7 +1407,7 @@ msgstr ""
 msgid "See all informations of task"
 msgstr "查看任务的所有信息"
 
-#: inc/deploypackage.class.php:1652
+#: inc/deploypackage.class.php:1654
 msgid "Select packages you want install"
 msgstr ""
 
@@ -1444,7 +1444,7 @@ msgstr "展示/隐藏 详细信息"
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139 inc/collect.class.php:249
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1041
+#: inc/deployfile.class.php:1042
 msgid "Size"
 msgstr "大小"
 
@@ -1479,7 +1479,7 @@ msgstr "起始日期"
 msgid "Static group"
 msgstr "静态组"
 
-#: inc/taskview.class.php:189 inc/deploypackage.class.php:1371
+#: inc/taskview.class.php:189 inc/deploypackage.class.php:1373
 msgid "Successful"
 msgstr "成功"
 
@@ -1495,7 +1495,7 @@ msgstr ""
 msgid "Target a task"
 msgstr "选定一项任务作为目标"
 
-#: inc/deploypackage.class.php:1039 inc/deploypackage.class.php:1048
+#: inc/deploypackage.class.php:1041 inc/deploypackage.class.php:1050
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] ""
@@ -1542,7 +1542,7 @@ msgid ""
 "error."
 msgstr ""
 
-#: inc/deploypackage.class.php:275
+#: inc/deploypackage.class.php:277
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] ""
@@ -1555,7 +1555,7 @@ msgstr ""
 msgid "The items that should carry out those targets."
 msgstr ""
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:997
+#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
 msgid "The modified JSON contained a syntax error :"
 msgstr "改动后的JSON含有一个语法错误："
 
@@ -1567,7 +1567,7 @@ msgstr "所选任务已有另一个包的部署作业："
 msgid "The task has been deactivated after preparation of this job."
 msgstr ""
 
-#: inc/deployfile.class.php:616
+#: inc/deployfile.class.php:617
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
@@ -1623,7 +1623,7 @@ msgstr ""
 msgid "Total discovery devices"
 msgstr ""
 
-#: inc/deployfile.class.php:612
+#: inc/deployfile.class.php:613
 msgid "Transfer error: the file size is too big"
 msgstr ""
 
@@ -1652,7 +1652,7 @@ msgstr ""
 msgid "Unit"
 msgstr "单位"
 
-#: inc/deployfile.class.php:1038
+#: inc/deployfile.class.php:1039
 msgid "Unused file"
 msgstr "未使用文件"
 
@@ -1704,7 +1704,7 @@ msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "用户交互模版"
 
-#: inc/deploypackage.class.php:526
+#: inc/deploypackage.class.php:528
 msgid "User interactions"
 msgstr ""
 
@@ -1749,7 +1749,7 @@ msgstr "WMI值"
 msgid "Wake On LAN"
 msgstr "局域网唤醒"
 
-#: install/install.php:283
+#: install/install.php:271
 msgid "Wake agents ups"
 msgstr "唤醒智能代理端"
 
@@ -1783,7 +1783,7 @@ msgid ""
 "package."
 msgstr ""
 
-#: setup.php:463
+#: setup.php:459
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1830,7 +1830,7 @@ msgstr "拖动"
 msgid "exec"
 msgstr "执行"
 
-#: setup.php:472
+#: setup.php:468
 msgid "fileinfo extension (PHP) is required..."
 msgstr "需要fileinfo扩展（PHP）..."
 
@@ -1870,7 +1870,7 @@ msgstr "路径文件"
 msgid "refresh interval"
 msgstr "刷新间隔"
 
-#: inc/deploypackage.class.php:1510
+#: inc/deploypackage.class.php:1512
 msgid "refresh job"
 msgstr "刷新作业"
 
