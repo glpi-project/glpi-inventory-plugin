@@ -167,20 +167,20 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                         foreach (["type", "name", "mac", "ips"] as $property) {
                             if (property_exists($device, $property)) {
                                 if (is_array($device->$property)) {
-                                    $a_text[] = "[".$property."]: ".implode(", ", $device->$property);
+                                    $a_text[] = "[" . $property . "]: " . implode(", ", $device->$property);
                                 } else {
-                                    $a_text[] = "[".$property."]: ".$device->$property;
+                                    $a_text[] = "[" . $property . "]: " . $device->$property;
                                 }
                             }
                         }
                     }
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== '.implode(", ", $a_text);
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
                     $this->addtaskjoblog();
                 } else {
                     $item = $inventory->getMainAsset()->getItem();
                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
-                        '[==detail==] ==updatetheitem== '.$item->getTypeName().
-                        ' [['.$device->type.'::'.$item->fields['id'].']]';
+                        '[==detail==] ==updatetheitem== ' . $item->getTypeName() .
+                        ' [[' . $device->type . '::' . $item->fields['id'] . ']]';
                     $this->addtaskjoblog();
                 }
                 $response = ['response' => ['RESPONSE' => 'SEND']];
