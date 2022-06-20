@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Toolbox\Sanitizer;
+
 /**
  * Manage the deploy packages.
  */
@@ -1889,11 +1891,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
            //Add the new task
             $input = [
-            'name'                    => '[deploy on demand] ' . $this->fields['name'],
-            'entities_id'             => $computer->fields['entities_id'],
-            'reprepare_if_successful' => 0,
-            'is_deploy_on_demand'     => 1,
-            'is_active'               => 1,
+                'name'                    => '[deploy on demand] ' . Sanitizer::dbEscape($this->fields['name']),
+                'entities_id'             => $computer->fields['entities_id'],
+                'reprepare_if_successful' => 0,
+                'is_deploy_on_demand'     => 1,
+                'is_active'               => 1,
             ];
             $tasks_id = $pfTask->add($input);
 
