@@ -73,6 +73,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                 if (
                     (!isset($a_CONTENT->content->agent->start))
                     && (!isset($a_CONTENT->content->agent->end))
+                    && (!isset($a_CONTENT->content->agent->nbip))
                     && (!isset($a_CONTENT->content->agent->exit))
                 ) {
                     $nb_devices = 1;
