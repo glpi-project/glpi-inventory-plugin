@@ -995,8 +995,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         if (is_array($task_ids) && count($task_ids) > 0) {
             $tasks_list = "AND task.`id` IN ('" . implode("', '", $task_ids) . "')";
         } else {
-           // Not task identifiers provided
-           $tasks_list = "";
+            // Not task identifiers provided
+            $tasks_list = "";
         }
 
        // Restrict by IP to prevent display tasks in another entity use not have right
