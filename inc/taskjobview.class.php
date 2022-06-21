@@ -66,7 +66,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     {
         $tab_names = [];
         if ($item->fields['id'] > 0 and $this->can('task', READ)) {
-            return __('Jobs configuration', 'glpiinventory');
+            return __('Job configuration', 'glpiinventory');
         }
         return '';
     }
