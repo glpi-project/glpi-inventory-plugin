@@ -87,7 +87,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         if ($item->fields['id'] > 0) {
             if ($item->getType() == 'PluginGlpiinventoryTask') {
-
                 //keep this code for multi task job if reintroduced
                 //echo "<div id='taskjobs_form'>";
                 //echo "</div>";
