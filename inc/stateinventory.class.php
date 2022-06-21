@@ -77,6 +77,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
+        $pfTask = new PluginGlpiinventoryTask();
 
         $start = 0;
         if (isset($_REQUEST["start"])) {
@@ -102,7 +103,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
         echo "<thead>";
         echo "<tr class='tab_bg_1'>";
         echo "<th>" . __('Unique id', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Task job', 'glpiinventory') . "</th>";
+        echo "<th>" . __('Task', 'glpiinventory') . "</th>";
         echo "<th>" . __('Agent', 'glpiinventory') . "</th>";
         echo "<th>" . __('Status') . "</th>";
         echo "<th>" . __('Starting date', 'glpiinventory') . "</th>";
@@ -128,10 +129,11 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['uniqid'] . "</td>";
             $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
+            $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
             echo "<td>";
-            $link = $pfTaskjob->getLink();
-            $link = str_replace('.form', '', $link);
-            echo $link;
+            $link = $pfTask->getLinkURL().'&forcetab=PluginGlpiinventoryTaskjobstate$1';
+            $label = $pfTask->getNameID([]);
+            echo "<a href='$link'>$label</a>";
             echo "</td>";
             $agent->getFromDB($data['agents_id']);
             echo "<td>" . $agent->getLink(1) . "</td>";
