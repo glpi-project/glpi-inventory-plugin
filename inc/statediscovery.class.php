@@ -195,7 +195,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
             $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
             echo "<td>";
-            $link = $pfTask->getLinkURL().'&forcetab=PluginGlpiinventoryTaskjobstate$1';
+            $link = $pfTask->getLinkURL() . '&forcetab=PluginGlpiinventoryTaskjobstate$1';
             $label = $pfTask->getNameID([]);
 
             echo "<a href='$link'>$label</a>";
