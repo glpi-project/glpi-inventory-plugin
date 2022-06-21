@@ -87,11 +87,22 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         if ($item->fields['id'] > 0) {
             if ($item->getType() == 'PluginGlpiinventoryTask') {
-                echo "<div id='taskjobs_form'>";
-                echo "</div>";
-                echo "<div id='taskjobs_list' class='tab_cadre_fixe'>";
-                $pfTaskJob->showListForTask($item->fields['id']);
-                echo "</div>";
+
+                //keep this code for multi task job if reintroduced
+                //echo "<div id='taskjobs_form'>";
+                //echo "</div>";
+                //echo "<div id='taskjobs_list' class='tab_cadre_fixe'>";
+                //$pfTaskJob->showListForTask($item->fields['id']);
+                //echo "</div>";
+
+                //display the unique job attached to task if needed
+                $taskjobs = $pfTaskJob->getTaskjobs($item->fields['id']);
+                $taskjob_id = 0;
+                if (count($taskjobs)) {
+                    $taskjob_id = reset($taskjobs)['id'];
+                }
+                $pfTaskJob->showForm($taskjob_id, ['task_id' => $item->fields['id']]);
+
                 return true;
             }
         }
