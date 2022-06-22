@@ -94,7 +94,16 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     {
 
         if ($item->fields['id'] > 0) {
-            return __('Associated SNMP credentials', 'glpiinventory');
+            $nb = 0;
+            if ($_SESSION['glpishow_count_on_tabs']) {
+                $nb = countElementsInTable(
+                    PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
+                    [
+                        'plugin_glpiinventory_ipranges_id' => $item->getID()
+                    ]
+                );
+            }
+            return self::createTabEntry(__('Associated SNMP credentials', 'glpiinventory'), $nb);
         }
         return '';
     }
