@@ -1220,7 +1220,7 @@ taskjobs.init_tasks_expand_buttons = function() {
 taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {
 
    $("#"+ refresh_id)
-      .off("change")
+      .off("change", "*")
       .on("change", function() {
          taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id );
       }
