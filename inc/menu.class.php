@@ -193,19 +193,19 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $general_menu = [];
         if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
             $general_menu[0]['name'] = __('Agents management', 'glpiinventory');
-            $general_menu[0]['pic']  = $fi_path . "/pics/menu_agents.png";
+            $general_menu[0]['pic']  = "ti ti-robot";
             $general_menu[0]['link'] = Agent::getSearchURL();
         }
 
         if (Session::haveRight('plugin_glpiinventory_group', READ)) {
             $general_menu[2]['name'] = __('Groups of computers', 'glpiinventory');
-            $general_menu[2]['pic']  = $fi_path . "/pics/menu_group.png";
+            $general_menu[2]['pic']  = "ti ti-devices-pc";
             $general_menu[2]['link'] = $fi_path . "/front/deploygroup.php";
         }
 
         if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
             $general_menu[3]['name'] = __('General configuration', 'glpiinventory');
-            $general_menu[3]['pic']  = $fi_path . "/pics/menu_agents.png";
+            $general_menu[3]['pic']  = "ti ti-settings";
             $general_menu[3]['link'] = $fi_path . "/front/config.form.php";
         }
 
@@ -222,11 +222,11 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $tasks_menu = [];
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $tasks_menu[2]['name'] = __('Task management', 'glpiinventory');
-            $tasks_menu[2]['pic']  = $fi_path . "/pics/menu_task.png";
+            $tasks_menu[2]['pic']  ="ti ti-list-check";
             $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTask');
 
             $tasks_menu[3]['name'] = __('Monitoring / Logs', 'glpiinventory');
-            $tasks_menu[3]['pic']  = $fi_path . "/pics/menu_runningjob.png";
+            $tasks_menu[3]['pic']  = "ti ti-activity";
             $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTaskJob');
         }
 
@@ -238,13 +238,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (Session::haveRight("plugin_glpiinventory_collect", READ)) {
             $tasks_menu[11]['name'] = __('Computer information', 'glpiinventory');
-            $tasks_menu[11]['pic']  = $fi_path . "/pics/menu_task.png";
+            $tasks_menu[11]['pic']  = "ti ti-devices-pc";
             $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCollect');
         }
 
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $tasks_menu[12]['name'] = __('Time slot', 'glpiinventory');
-            $tasks_menu[12]['pic']  = $fi_path . "/pics/menu_timeslot.png";
+            $tasks_menu[12]['pic']  = "ti ti-calendar-time";
             $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTimeslot');
         }
 
@@ -269,13 +269,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (Session::haveRight('plugin_glpiinventory_ignoredimportdevice', READ)) {
             $rules_menu[2]['name'] = __('Asset skipped during import', 'glpiinventory');
-            $rules_menu[2]['pic']  = $fi_path . "/pics/menu_rules.png";
+            $rules_menu[2]['pic']  = "ti ti-device-desktop-off";
             $rules_menu[2]['link'] = RefusedEquipment::getSearchURL();
         }
 
         if (Session::haveRight('plugin_glpiinventory_ruleentity', READ)) {
             $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
-            $rules_menu[3]['pic']  = $fi_path . "/pics/menu_rules.png";
+            $rules_menu[3]['pic']  = "ti ti-book";
             $rules_menu[3]['link'] = RuleImportEntity::getSearchURL();
            //$rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
         }
@@ -288,13 +288,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (Session::haveRight("plugin_glpiinventory_rulecollect", READ)) {
             $rules_menu[5]['name'] = __('Computer information rules', 'glpiinventory');
-            $rules_menu[5]['pic']  = $fi_path . "/pics/menu_rules.png";
+            $rules_menu[5]['pic']  = "ti ti-book";
             $rules_menu[5]['link'] = $fi_path . "/front/collectrule.php";
         }
 
         if (Session::haveRight('plugin_glpiinventory_blacklist', READ)) {
             $rules_menu[6]['name'] = Blacklist::getTypeName(1);
-            $rules_menu[6]['pic']  = $fi_path . "/pics/menu_blacklist.png";
+            $rules_menu[6]['pic']  = "ti ti-ban";
             $rules_menu[6]['link'] = Blacklist::getSearchURL();
         }
 
@@ -313,7 +313,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_iprange', READ)) {
             $network_menu[] = [
             'name' => __('IP Ranges', 'glpiinventory'),
-            'pic'  => $fi_path . "/pics/menu_rangeip.png",
+            'pic'  => "ti ti-viewfinder",
             'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange')
             ];
         }
@@ -321,7 +321,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_credentialip', READ)) {
             $network_menu[] = [
             'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
-            'pic'  => $fi_path . "/pics/menu_credentialips.png",
+            'pic'  => "ti ti-devices-pc",
             'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredentialip')
             ];
         }
@@ -329,7 +329,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_configsecurity', READ)) {
             $network_menu[] = [
             'name' => __('SNMP credentials', 'glpiinventory'),
-            'pic'  => $fi_path . "/pics/menu_authentification.png",
+            'pic'  => "ti ti-lock",
             'link' => SNMPCredential::getSearchURL()
             ];
         }
@@ -337,7 +337,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_credential', READ)) {
             $network_menu[] = [
             'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
-            'pic'  => $fi_path . "/pics/menu_authentification.png",
+            'pic'  => "ti ti-lock",
             'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredential')
             ];
         }
@@ -345,13 +345,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $network_menu[] = [
             'name' => __('Discovery status', 'glpiinventory'),
-            'pic'  =>   $fi_path . "/pics/menu_discovery_status.png",
+            'pic'  =>   "ti ti-activity",
             'link' =>   $fi_path . "/front/statediscovery.php"
             ];
 
             $network_menu[] = [
                'name' => __('Network inventory status', 'glpiinventory'),
-               'pic' =>    $fi_path . "/pics/menu_inventory_status.png",
+               'pic' =>    "ti ti-activity",
                'link' =>   $fi_path . "/front/stateinventory.php",
             ];
         }
@@ -359,7 +359,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_model', READ)) {
             $network_menu[] = [
             'name' => __('SNMP models creation', 'glpiinventory'),
-            'pic'  => $fi_path . "/pics/menu_constructmodel.png",
+            'pic'  => "ti ti-model",
             'link' => $fi_path . "/front/constructmodel.php"
             ];
         }
@@ -379,14 +379,14 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_package', READ)) {
             $deploy_menu[] = [
             'name' => __('Package management', 'glpiinventory'),
-            'pic'  => $fi_path . "/pics/menu_package.png",
+            'pic'  => "ti ti-package",
             'link' => $fi_path . "/front/deploypackage.php"
             ];
         }
 
         if (Session::haveRight('plugin_glpiinventory_deploymirror', READ)) {
             $deploy_menu[1]['name'] = __('Mirror servers', 'glpiinventory');
-            $deploy_menu[1]['pic']  = $fi_path . "/pics/menu_files.png";
+            $deploy_menu[1]['pic']  = "ti ti-server-2";
             $deploy_menu[1]['link'] = $fi_path . "/front/deploymirror.php";
         }
 
@@ -397,7 +397,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
                 2,
                 'glpiinventory'
             );
-            $deploy_menu[2]['pic']  = $fi_path . "/pics/menu_files.png";
+            $deploy_menu[2]['pic']  = "ti ti-template";
             $deploy_menu[2]['link'] = $fi_path . "/front/deployuserinteractiontemplate.php";
         }
 
@@ -415,7 +415,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         $guide_menu[] = [
          'name' => __('SNMP inventory', 'glpiinventory'),
-         'pic'  => "",
+         'pic'  => "ti ti-book",
          'link' => $fi_path . "/front/menu_snmpinventory.php"
         ];
 
