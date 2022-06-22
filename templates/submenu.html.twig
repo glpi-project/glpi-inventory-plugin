@@ -36,16 +36,18 @@
             <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" href="#" id="{{ first_lvl_key }}_menu"
                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ first_lvl['name'] }}
+                  {% if first_lvl['pic']|length %}
+                     <i class="p-1 {{ first_lvl['pic'] }}"></i>
+                  {% endif %}
+                  <span class="menu-label">{{ first_lvl['name'] }}</span>
                </a>
                <ul class="dropdown-menu" aria-labelledby="{{ first_lvl_key }}_menu">
                   {% for second_lvl in first_lvl['children'] %}
                      <li>
                         <a class="dropdown-item text-wrap" href="{{ second_lvl['link'] }}">
                            {% if second_lvl['pic']|length %}
-                              <img class="me-2" src="{{ second_lvl['pic'] }}" width="16" height="16">
+                              <i class="{{ second_lvl['pic'] }}"></i>
                            {% endif %}
-
                            <span>{{ second_lvl['name'] }}</span>
                         </a>
                      </li>
