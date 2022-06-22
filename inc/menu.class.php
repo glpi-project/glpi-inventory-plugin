@@ -263,7 +263,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $rules_menu = [];
         if (Session::haveRight('plugin_glpiinventory_ruleimport', READ)) {
             $rules_menu[1]['name'] = __('Equipment import and link rules', 'glpiinventory');
-            $rules_menu[1]['pic']  = $fi_path . "/pics/menu_rules.png";
+            $rules_menu[1]['pic']  = "ti ti-book";
             $rules_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
                 RuleImportAsset::class
             );
@@ -284,7 +284,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
        /*if (Session::haveRight('plugin_glpiinventory_rulelocation', READ)) {
          $rules_menu[4]['name'] = __('Location rules', 'glpiinventory');
-         $rules_menu[4]['pic']  = $fi_path."/pics/menu_rules.png";
+         $rules_menu[4]['pic']  = "ti ti-map-2";
          $rules_menu[4]['link'] = $fi_path."/front/inventoryrulelocation.php";
        }*/
 
