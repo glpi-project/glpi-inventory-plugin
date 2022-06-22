@@ -155,6 +155,32 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         return $pfTask;
     }
 
+    /**
+    * get task with job using IPRange
+    *
+    * @return array
+    */
+    public static  function getTaskfromIPRange(PluginGlpiinventoryIPRange $item)
+    {
+        global $DB;
+
+        $ID = $item->getField('id');
+
+        //get all task with job using IPRange
+        $sql = "SELECT `task`.*
+        FROM  `glpi_plugin_glpiinventory_tasks` AS task
+        LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS job
+           ON `task`.`id` = `job`.`plugin_glpiinventory_tasks_id`
+        WHERE `job`.`targets` LIKE '%{\"PluginGlpiinventoryIPRange\":\"".$ID."\"}%'";
+
+        $a_data = [];
+        foreach ($DB->request($sql) as $data) {
+            $a_data[$data['id']] = $data;
+        }
+
+        return $a_data;
+    }
+
 
    /**
     * Display definitions type dropdown
