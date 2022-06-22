@@ -177,7 +177,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     {
 
         if ($item->fields['id'] > 0) {
-            return __('Associated tasks', 'glpiinventory');
+
+            $nb = 0;
+            if ($_SESSION['glpishow_count_on_tabs']) {
+                $nb = count(PluginGlpiinventoryTaskjob::getTaskfromIPRange($item));
+            }
+            return self::createTabEntry(__('Associated tasks', 'glpiinventory'), $nb);
         }
         return '';
     }
