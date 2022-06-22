@@ -28,12 +28,11 @@
  # along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
  # ---------------------------------------------------------------------
  #}
-
-<nav class="navbar navbar-dark navbar-expand-lg mx-n3 mt-n3 mb-4">
-   <div class="container-fluid">
-      <ul class="navbar-nav me-auto">
+   <div class="container">
+      <nav class="rounded navbar navbar-dark justify-content-center navbar-expand-lg mt-n8 mb-3 rounded" style="background-color: #2f3f64;">
+      <ul class="navbar-nav">
          {% for first_lvl_key, first_lvl in menu %}
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown mx-3">
                <a class="nav-link dropdown-toggle" href="#" id="{{ first_lvl_key }}_menu"
                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {% if first_lvl['pic']|length %}
@@ -56,5 +55,5 @@
             </li>
          {% endfor %}
       </ul>
+      </nav>
    </div>
-</nav>
