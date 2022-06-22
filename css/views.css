@@ -474,7 +474,6 @@ a.expanded > div.fold {
 }
 
 .target_block > div {
-   display: inline-block;
    vertical-align: top;
 }
 
@@ -509,7 +508,7 @@ a.expanded > div.fold {
 }
 
 .target_block div.progressbar {
-   height: 100px;
+   height: 115px;
    display: inline-block;
    background-color: #EFEFEF;
    width: 400px;
