@@ -753,7 +753,7 @@ function appear_array(id) {
         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
         foreach ($matches[0] as $num => $commentvalue) {
             $classname = $matches[1][$num];
-            if ($classname != '') {
+            if ($classname != '' && class_exists($classname)) {
                 $Class = new $classname();
                 $Class->getFromDB($matches[2][$num]);
                 $comment = str_replace($commentvalue, $Class->getLink(), $comment);
