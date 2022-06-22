@@ -125,7 +125,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
        // Template structure for jobs' blocks
         echo "<script id='template_job' type='x-tmpl-mustache'>
                <div id='{{job_id}}' class='job_block'>
-                  <div class='refresh_button submit'><span></span></div>
                      <h3 class='job_name'>{{job_name}}</h3>
                   <div class='targets_block'></div>
                </div>
