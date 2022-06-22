@@ -160,6 +160,7 @@ td:not(#foo) > input[type=radio]:checked + label {
    border: #AAA solid 1px;
    border-radius: 5px;
    margin: 0 auto;
+   margin-top: 5px;
 }
 
 .fusinv_form {
@@ -782,7 +783,6 @@ table.runs td.comment {
 }
 
 .refresh_button {
-   padding: 5px;
    display: block;
    float: right;
 }

@@ -57,8 +57,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     */
     public function showJobLogs()
     {
+        $task_id = $this->fields['id'] ?? null;
         echo "<div class='fusinv_panel'>";
-        echo "<div class='fusinv_form large'>";
+        echo "<div class='row'>";
 
        // add a list limit for include old jobs
         $include_oldjobs_id = $this->showDropdownFromArray(
@@ -96,16 +97,60 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         );
 
        // display export button
+        echo "<div class='col my-auto'>";
         echo "<i class='openExportDialog pointer fa fa-lg fa-save'
                title='" . _sx('button', 'Export') . "'></i>";
+
 
        // Add a manual refresh button
         echo "<div class='refresh_button submit'>";
         echo "<span></span>";
         echo "</div>"; // .refresh_button
+        echo "</div>";
 
         echo "</div>"; // .fusinv_form
         echo "</div>"; // .fusinv_panel
+
+         // Display Export modal
+         echo "<div class='fusinv_panel' id='fiTaskExport_modalWindow'>";
+         echo "<form method='POST' class='task_export_form center'
+                     action='" . self::getFormURLWithID($task_id) . "'>";
+ 
+         // states checkboxes
+         echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
+             "</label>";
+         echo "<div class='state_checkboxes'>";
+         // set options checked by default
+         $agent_state_types = [
+         'agents_prepared'  => false,
+         'agents_running'   => true,
+         'agents_cancelled' => false,
+         'agents_success'   => true,
+         'agents_error'     => true,
+         'agents_postponed' => false,
+         ];
+         foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
+             $agent_state_type = str_replace("agents_", "", $agent_state_type);
+             $locale  = __(ucfirst($agent_state_type), 'glpiinventory');
+             $checked = "";
+             if ($agent_state_checked) {
+                 $checked = "checked='checked'";
+             }
+             echo "<div class='agent_state_type_checkbox'>";
+             echo "<input type='checkbox' $checked name='agent_state_types[]' " .
+                 "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+             echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
+             echo "</div>";
+         }
+         echo "</div>"; // .state_checkboxes
+ 
+         echo "<div class='clear_states'></div>";
+ 
+         echo Html::hidden('task_id', ['value' => $task_id]);
+         echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-primary']);
+         Html::closeForm();
+         echo "</div>"; // #fiTaskExport_modalWindow
+
 
        // Template structure for tasks' blocks
         echo "<script id='template_task' type='x-tmpl-mustache'>
@@ -208,7 +253,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
        // which will be rendered later by mustache.js
         echo "<div class='tasks_block'></div>";
 
-        $task_id = $this->fields['id'] ?? null;
         $agent = new Agent();
         $Computer = new Computer();
 
@@ -237,45 +281,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          );
       });");
 
-       // Display Export modal
-        echo "<div id='fiTaskExport_modalWindow'>";
-        echo "<form method='POST' class='task_export_form center'
-                  action='" . self::getFormURLWithID($task_id) . "'>";
-
-       // states checkboxes
-        echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
-           "</label>";
-        echo "<div class='state_checkboxes'>";
-        // set options checked by default
-        $agent_state_types = [
-         'agents_prepared'  => false,
-         'agents_running'   => true,
-         'agents_cancelled' => false,
-         'agents_success'   => true,
-         'agents_error'     => true,
-         'agents_postponed' => false,
-        ];
-        foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
-            $agent_state_type = str_replace("agents_", "", $agent_state_type);
-            $locale  = __(ucfirst($agent_state_type), 'glpiinventory');
-            $checked = "";
-            if ($agent_state_checked) {
-                $checked = "checked='checked'";
-            }
-            echo "<div class='agent_state_type_checkbox'>";
-            echo "<input type='checkbox' $checked name='agent_state_types[]' " .
-              "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
-            echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
-            echo "</div>";
-        }
-        echo "</div>"; // .state_checkboxes
-
-        echo "<div class='clear_states'></div>";
-
-        echo Html::hidden('task_id', ['value' => $task_id]);
-        echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-primary']);
-        Html::closeForm();
-        echo "</div>"; // #fiTaskExport_modalWindow
     }
 
 
