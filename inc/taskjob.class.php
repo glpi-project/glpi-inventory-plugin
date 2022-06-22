@@ -160,7 +160,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @return array
     */
-    public static  function getTaskfromIPRange(PluginGlpiinventoryIPRange $item)
+    public static function getTaskfromIPRange(PluginGlpiinventoryIPRange $item)
     {
         global $DB;
 
@@ -171,7 +171,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         FROM  `glpi_plugin_glpiinventory_tasks` AS task
         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS job
            ON `task`.`id` = `job`.`plugin_glpiinventory_tasks_id`
-        WHERE `job`.`targets` LIKE '%{\"PluginGlpiinventoryIPRange\":\"".$ID."\"}%'";
+        WHERE `job`.`targets` LIKE '%{\"PluginGlpiinventoryIPRange\":\"" . $ID . "\"}%'";
 
         $a_data = [];
         foreach ($DB->request($sql) as $data) {
