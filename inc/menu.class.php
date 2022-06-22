@@ -560,4 +560,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
       });");
         echo "</div>";
     }
+
+    public static function getIcon()
+    {
+        return "ti ti-settings";
+    }
 }
