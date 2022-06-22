@@ -94,7 +94,6 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     {
 
         if ($item->fields['id'] > 0) {
-
             $nb = 0;
             if ($_SESSION['glpishow_count_on_tabs']) {
                 $nb = countElementsInTable(
