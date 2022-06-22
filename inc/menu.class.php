@@ -223,7 +223,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $tasks_menu = [];
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $tasks_menu[2]['name'] = __('Task management', 'glpiinventory');
-            $tasks_menu[2]['pic']  ="ti ti-list-check";
+            $tasks_menu[2]['pic']  = "ti ti-list-check";
             $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTask');
 
             $tasks_menu[3]['name'] = __('Monitoring / Logs', 'glpiinventory');
