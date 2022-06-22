@@ -212,6 +212,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (!empty($general_menu)) {
             $menu['general'] = [
             'name'     => __('General', 'glpiinventory'),
+            'pic'     => "ti ti-settings",
             'children' => $general_menu,
             ];
         }
@@ -251,6 +252,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (!empty($tasks_menu)) {
             $menu['tasks'] = [
             'name'     => __('Tasks', 'glpiinventory'),
+            'pic'     => "ti ti-list-check",
             'children' => $tasks_menu,
             ];
         }
@@ -301,6 +303,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (!empty($rules_menu)) {
             $menu['rules'] = [
             'name'     => __('Rules', 'glpiinventory'),
+            'pic'     => "ti ti-book",
             'children' => $rules_menu,
             ];
         }
@@ -367,6 +370,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (!empty($network_menu)) {
             $menu['network'] = [
             'name'     => __('Networking', 'glpiinventory'),
+            'pic'     => "ti ti-network",
             'children' => $network_menu,
             ];
         }
@@ -404,6 +408,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (!empty($deploy_menu)) {
             $menu['deploy'] = [
             'name'     => __('Deploy', 'glpiinventory'),
+            'pic'     => "ti ti-share",
             'children' => $deploy_menu,
             ];
         }
@@ -422,6 +427,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (!empty($guide_menu)) {
             $menu['guide'] = [
             'name'     => __('Guide', 'glpiinventory'),
+            'pic'      => "ti ti-book-2",
             'children' => $guide_menu,
             ];
         }
