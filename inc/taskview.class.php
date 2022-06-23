@@ -101,7 +101,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         echo '<a class="openExportDialog pointer btn btn-icon btn-sm btn-secondary me-1 pe-2">';
         echo '<i class="ti ti-save"></i>';
-        echo'<span class="d-none d-xxl-block">' .  __('Export task result','glpinventory') . '</span>';
+        echo'<span class="d-none d-xxl-block">' .  __('Export task result', 'glpinventory') . '</span>';
         echo '</a>';
 
         // Add a manual refresh button
@@ -117,7 +117,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          echo "<div class='fusinv_panel' id='fiTaskExport_modalWindow'>";
          echo "<form method='POST' class='task_export_form center'
                      action='" . self::getFormURLWithID($task_id) . "'>";
- 
+
          // states checkboxes
          echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
              "</label>";
@@ -154,23 +154,23 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          echo "</div>"; // #fiTaskExport_modalWindow
 
 
-       // Template structure for tasks' blocks
-        echo "<script id='template_task' type='x-tmpl-mustache'>
-               <div id='{{task_id}}' class='task_block {{expanded}}'>";
-        if (!$task_id != null) {
+         // Template structure for tasks' blocks
+         echo "<script id='template_task' type='x-tmpl-mustache'>
+             <div id='{{task_id}}' class='task_block {{expanded}}'>";
+         if (!$task_id != null) {
             echo"<h3>" .  _n('Task', 'Tasks', 1, 'glpiinventory') . "
             <span class='task_name'>{{task_name}}</span></h3>
             <a href='" . PluginGlpiinventoryTask::getFormURL() . "?id={{task_id}}'  class='task_block_link'>
                 <i class='fa fa-link pointer'></i>
             </a>";
-        }
+         }
 
-        echo "<div class='jobs_block'></div>
+         echo "<div class='jobs_block'></div>
                </div>
             </script>";
 
        // Template structure for jobs' blocks
-        echo "<script id='template_job' type='x-tmpl-mustache'>
+         echo "<script id='template_job' type='x-tmpl-mustache'>
                <div id='{{job_id}}' class='job_block'>
                      <h3 class='job_name'>{{job_name}}</h3>
                   <div class='targets_block'></div>
@@ -178,7 +178,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             </script>";
 
        // Template structure for targets' blocks
-        echo "<script id='template_target' type='x-tmpl-mustache'>
+         echo "<script id='template_target' type='x-tmpl-mustache'>
                <div id='{{target_id}}' class='target_block'>
                   <div class='target_details'>
                   <div class='target_infos'>
@@ -196,12 +196,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             </script>";
 
        // Template structure for targets' statistics
-        echo "<script id='template_target_stats' type='x-tmp-mustache'>
+         echo "<script id='template_target_stats' type='x-tmp-mustache'>
                <div class='{{stats_type}} stats_block'></div>
             </script>";
 
        // Template for counters' blocks
-        echo "<script id='template_counter_block' type='x-tmpl-mustache'>
+         echo "<script id='template_counter_block' type='x-tmpl-mustache'>
                <div class='counter_block {{counter_type}} {{#counter_empty}}empty{{/counter_empty}}'>
                   <a class='toggle_details_type'
                      data-counter_type='{{counter_type}}'
@@ -215,7 +215,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             </script>";
 
        // List of counter names
-        echo Html::scriptBlock("$(document).ready(function() {
+         echo Html::scriptBlock("$(document).ready(function() {
          taskjobs.statuses_order = {
             last_executions: [
                'agents_prepared',
@@ -282,7 +282,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             'dropdown_" . $refresh_randid . "'
          );
       });");
-
     }
 
 
