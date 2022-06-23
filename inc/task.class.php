@@ -176,7 +176,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item->fields['id'] > 0) {
-
             $nb = 0;
             if ($_SESSION['glpishow_count_on_tabs']) {
                 $nb = count(PluginGlpiinventoryTaskjob::getTaskfromIPRange($item));
