@@ -97,12 +97,14 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         );
 
        // display export button
-        echo "<div class='col my-auto'>";
-        echo "<i class='openExportDialog pointer fa fa-lg fa-save'
-               title='" . _sx('button', 'Export') . "'></i>";
+        echo "<div class='col mt-auto'>";
 
+        echo '<a class="openExportDialog pointer btn btn-icon btn-sm btn-secondary me-1 pe-2">';
+        echo '<i class="ti ti-save"></i>';
+        echo'<span class="d-none d-xxl-block">' .  __('Export task result','glpinventory') . '</span>';
+        echo '</a>';
 
-       // Add a manual refresh button
+        // Add a manual refresh button
         echo "<div class='refresh_button submit'>";
         echo "<span></span>";
         echo "</div>"; // .refresh_button

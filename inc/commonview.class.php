@@ -215,7 +215,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     */
     public function showDropdownFromArray($title, $varname, $values = [], $options = [])
     {
-        echo "<div class='col-lg-3'>";
+        echo "<div class='col-lg-4'>";
         echo $title . "&nbsp;";
         if (!isset($options['width'])) {
             $options['width'] = '40%';
