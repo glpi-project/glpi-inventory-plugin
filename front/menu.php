@@ -45,11 +45,11 @@ if (PluginGlpiinventoryMenu::canView()) {
     echo Html::manageRefreshPage();
 
     PluginGlpiinventoryMenu::displayMenu();
-    if (Session::haveRight('plugin_glpiinventory_task', READ)) {
-        Html::redirect(Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTask'));
-    } else if (Session::haveRight('config', READ) || Session::haveRight('plugin_glpiinventory_configuration', READ)) {
-        Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/config.form.php");
-    }
+
+    $dashboard = new Glpi\Dashboard\Grid('plugin_glpiinventory_dashboard');
+    echo "<div class='dashboard card p-3'>";
+    $dashboard->show();
+    echo "</div>";
 } else {
     Html::displayRightError();
 }

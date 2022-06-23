@@ -93,8 +93,15 @@ function plugin_init_glpiinventory()
     }
 
     if ($Plugin->isActivated('glpiinventory')) { // check if plugin is active
-       // Register classes into GLPI plugin factory
+        //for dashboard
+        $CFG_GLPI['javascript']['admin']['pluginglpiinventorymenu'] = [
+            'dashboard', 'gridstack',
+            'charts', 'clipboard', 'sortable'
+        ];
 
+        $PLUGIN_HOOKS['dashboard_cards']['glpiinventory'] = 'plugin_glpiinventory_hook_dashboard_cards';
+
+        // Register classes into GLPI plugin factory
         $Plugin->registerClass(
             'PluginGlpiinventoryAgentmodule',
             [

@@ -111,6 +111,91 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype)
     return $sopt;
 }
 
+function plugin_glpiinventory_hook_dashboard_cards($cards)
+{
+    if ($cards === null) {
+        $cards = [];
+    }
+
+    $counters = [
+        'agent'        => [
+            'itemtype' => Agent::getType(),
+            'label' => sprintf(__("Number of %s"), Agent::getTypeName(2)),
+        ],
+        'task'         => [
+            'itemtype' => PluginGlpiinventoryTask::getType(),
+            'label' => sprintf(__("Number of %s"), __('Tasks')),
+        ],
+        'unmanaged'         => [
+            'itemtype' => Unmanaged::getType(),
+            'label' => sprintf(__("Number of %s"), Unmanaged::getTypeName(2)),
+        ],
+        'computer'         => [
+            'itemtype' => Computer::getType(),
+            'label' =>  sprintf(__("%s inventoried"), Computer::getTypeName(2)),
+            'apply_filters' =>  [
+                'link'          => 'AND',
+                'field'         => 42,
+                'searchtype'    => 'equals',
+                'value'         => 1,
+                ]
+            ],
+        'printer'         => [
+            'itemtype' => Printer::getType(),
+            'label' =>  sprintf(__("%s inventoried"), Printer::getTypeName(2)),
+            'apply_filters' =>  [
+                'link'          => 'AND',
+                'field'         => 72,
+                'searchtype'    => 'equals',
+                'value'         => 1,
+                ]
+            ],
+        'networkequipement'         => [
+            'itemtype' => NetworkEquipment::getType(),
+            'label' =>  sprintf(__("%s inventoried"), NetworkEquipment::getTypeName(2)),
+            'apply_filters' =>  [
+                'link'          => 'AND',
+                'field'         => 72,
+                'searchtype'    => 'equals',
+                'value'         => 1,
+                ]
+            ],
+        'phone'         => [
+            'itemtype' => Phone::getType(),
+            'label' =>  sprintf(__("%s inventoried"), Phone::getTypeName(2)),
+            'apply_filters' =>  [
+                'link'          => 'AND',
+                'field'         => 72,
+                'searchtype'    => 'equals',
+                'value'         => 1,
+                ]
+            ]
+    ];
+
+
+    foreach ($counters as $key => $item) {
+        $cards['plugin_glpiinventory_nb_' . $key] = [
+            'widgettype' => ['bigNumber'],
+            'itemtype'   => $item,
+            'group'      => __('Inventory'),
+            'label'      => $item['label'],
+            'provider'   => 'PluginGlpiinventoryDashboard::nbItems',
+            'args'       => [
+                'params' => [
+                    'key'            => $key,
+                    'label'          => $item['label'],
+                    'icon'           => $item['itemtype']::getIcon(),
+                    'itemtype'       => $item['itemtype'],
+                    'apply_filters'  => isset($item['apply_filters']) ? $item['apply_filters'] : [],
+                ]
+            ],
+            'cache'      => false,
+            'filters'    => []
+        ];
+    }
+
+    return $cards;
+}
 
 /**
  * Manage search give items (display information in the search page)
