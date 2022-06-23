@@ -222,7 +222,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr class='tab_bg_2'>";
-        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
         echo "<th>";
         echo __('Tasks', 'glpiinventory');
         echo "</th>";
@@ -231,9 +230,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $credentials = new PluginGlpiinventoryTask();
         foreach ($a_data as $data) {
             echo "<tr class='tab_bg_2'>";
-            echo "<td>";
-            Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
-            echo "</td>";
             echo "<td>";
             $credentials->getFromDB($data['id']);
             echo $credentials->getLink();
