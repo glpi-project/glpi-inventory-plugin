@@ -202,19 +202,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     }
 
 
-   /**
-    * Get standard massive action forbidden (hide in massive action list)
-    *
-    * @return array
-    */
-    public function getForbiddenStandardMassiveAction()
-    {
-        $forbidden = parent::getForbiddenStandardMassiveAction();
-        $forbidden[] = 'update';
-        return $forbidden;
-    }
-
-       /**
+    /**
     * Display form
     *
     * @param object $item
