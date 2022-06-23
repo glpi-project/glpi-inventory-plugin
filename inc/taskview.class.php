@@ -57,8 +57,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     */
     public function showJobLogs()
     {
+        $task_id = $this->fields['id'] ?? null;
         echo "<div class='fusinv_panel'>";
-        echo "<div class='fusinv_form large'>";
+        echo "<div class='row'>";
 
        // add a list limit for include old jobs
         $include_oldjobs_id = $this->showDropdownFromArray(
@@ -96,43 +97,88 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         );
 
        // display export button
-        echo "<i class='openExportDialog pointer fa fa-lg fa-save'
-               title='" . _sx('button', 'Export') . "'></i>";
+        echo "<div class='col mt-auto'>";
 
-       // Add a manual refresh button
+        echo '<a class="openExportDialog pointer btn btn-icon btn-sm btn-secondary me-1 pe-2">';
+        echo '<i class="ti ti-save"></i>';
+        echo'<span class="d-none d-xxl-block">' .  __('Export task result', 'glpinventory') . '</span>';
+        echo '</a>';
+
+        // Add a manual refresh button
         echo "<div class='refresh_button submit'>";
         echo "<span></span>";
         echo "</div>"; // .refresh_button
+        echo "</div>";
 
         echo "</div>"; // .fusinv_form
         echo "</div>"; // .fusinv_panel
 
-       // Template structure for tasks' blocks
-        echo "<script id='template_task' type='x-tmpl-mustache'>
-               <div id='{{task_id}}' class='task_block {{expanded}}'>
-                  <h3>" .
-                     _n('Task', 'Tasks', 1, 'glpiinventory') . "
-                     <span class='task_name'>{{task_name}}</span>
-                  </h3>
-                  <a href='" . PluginGlpiinventoryTask::getFormURL() . "?id={{task_id}}'
-                     class='task_block_link'>
-                     <i class='fa fa-link pointer'></i>
-                  </a>
-                  <div class='jobs_block'></div>
+         // Display Export modal
+         echo "<div class='fusinv_panel' id='fiTaskExport_modalWindow'>";
+         echo "<form method='POST' class='task_export_form center'
+                     action='" . self::getFormURLWithID($task_id) . "'>";
+
+         // states checkboxes
+         echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
+             "</label>";
+         echo "<div class='state_checkboxes'>";
+         // set options checked by default
+         $agent_state_types = [
+         'agents_prepared'  => false,
+         'agents_running'   => true,
+         'agents_cancelled' => false,
+         'agents_success'   => true,
+         'agents_error'     => true,
+         'agents_postponed' => false,
+         ];
+         foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
+             $agent_state_type = str_replace("agents_", "", $agent_state_type);
+             $locale  = __(ucfirst($agent_state_type), 'glpiinventory');
+             $checked = "";
+             if ($agent_state_checked) {
+                 $checked = "checked='checked'";
+             }
+             echo "<div class='agent_state_type_checkbox'>";
+             echo "<input type='checkbox' $checked name='agent_state_types[]' " .
+                 "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+             echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
+             echo "</div>";
+         }
+         echo "</div>"; // .state_checkboxes
+
+         echo "<div class='clear_states'></div>";
+
+         echo Html::hidden('task_id', ['value' => $task_id]);
+         echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-icon btn-sm btn-secondary me-1 pe-2']);
+         Html::closeForm();
+         echo "</div>"; // #fiTaskExport_modalWindow
+
+
+         // Template structure for tasks' blocks
+         echo "<script id='template_task' type='x-tmpl-mustache'>
+             <div id='{{task_id}}' class='task_block {{expanded}}'>";
+         if (!$task_id != null) {
+             echo"<h3>" .  _n('Task', 'Tasks', 1, 'glpiinventory') . "
+            <span class='task_name'>{{task_name}}</span></h3>
+            <a href='" . PluginGlpiinventoryTask::getFormURL() . "?id={{task_id}}'  class='task_block_link'>
+                <i class='fa fa-link pointer'></i>
+            </a>";
+         }
+
+         echo "<div class='jobs_block'></div>
                </div>
             </script>";
 
        // Template structure for jobs' blocks
-        echo "<script id='template_job' type='x-tmpl-mustache'>
+         echo "<script id='template_job' type='x-tmpl-mustache'>
                <div id='{{job_id}}' class='job_block'>
-                  <div class='refresh_button submit'><span></span></div>
                      <h3 class='job_name'>{{job_name}}</h3>
                   <div class='targets_block'></div>
                </div>
             </script>";
 
        // Template structure for targets' blocks
-        echo "<script id='template_target' type='x-tmpl-mustache'>
+         echo "<script id='template_target' type='x-tmpl-mustache'>
                <div id='{{target_id}}' class='target_block'>
                   <div class='target_details'>
                   <div class='target_infos'>
@@ -150,12 +196,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             </script>";
 
        // Template structure for targets' statistics
-        echo "<script id='template_target_stats' type='x-tmp-mustache'>
+         echo "<script id='template_target_stats' type='x-tmp-mustache'>
                <div class='{{stats_type}} stats_block'></div>
             </script>";
 
        // Template for counters' blocks
-        echo "<script id='template_counter_block' type='x-tmpl-mustache'>
+         echo "<script id='template_counter_block' type='x-tmpl-mustache'>
                <div class='counter_block {{counter_type}} {{#counter_empty}}empty{{/counter_empty}}'>
                   <a class='toggle_details_type'
                      data-counter_type='{{counter_type}}'
@@ -169,7 +215,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             </script>";
 
        // List of counter names
-        echo Html::scriptBlock("$(document).ready(function() {
+         echo Html::scriptBlock("$(document).ready(function() {
          taskjobs.statuses_order = {
             last_executions: [
                'agents_prepared',
@@ -209,7 +255,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
        // which will be rendered later by mustache.js
         echo "<div class='tasks_block'></div>";
 
-        $task_id = $this->fields['id'] ?? null;
         $agent = new Agent();
         $Computer = new Computer();
 
@@ -237,46 +282,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             'dropdown_" . $refresh_randid . "'
          );
       });");
-
-       // Display Export modal
-        echo "<div id='fiTaskExport_modalWindow'>";
-        echo "<form method='POST' class='task_export_form center'
-                  action='" . self::getFormURLWithID($task_id) . "'>";
-
-       // states checkboxes
-        echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
-           "</label>";
-        echo "<div class='state_checkboxes'>";
-        // set options checked by default
-        $agent_state_types = [
-         'agents_prepared'  => false,
-         'agents_running'   => true,
-         'agents_cancelled' => false,
-         'agents_success'   => true,
-         'agents_error'     => true,
-         'agents_postponed' => false,
-        ];
-        foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
-            $agent_state_type = str_replace("agents_", "", $agent_state_type);
-            $locale  = __(ucfirst($agent_state_type), 'glpiinventory');
-            $checked = "";
-            if ($agent_state_checked) {
-                $checked = "checked='checked'";
-            }
-            echo "<div class='agent_state_type_checkbox'>";
-            echo "<input type='checkbox' $checked name='agent_state_types[]' " .
-              "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
-            echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
-            echo "</div>";
-        }
-        echo "</div>"; // .state_checkboxes
-
-        echo "<div class='clear_states'></div>";
-
-        echo Html::hidden('task_id', ['value' => $task_id]);
-        echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-primary']);
-        Html::closeForm();
-        echo "</div>"; // #fiTaskExport_modalWindow
     }
 
 

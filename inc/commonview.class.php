@@ -215,11 +215,10 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     */
     public function showDropdownFromArray($title, $varname, $values = [], $options = [])
     {
-        echo "<div class='mb-2 row col-12 col-sm-6'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:" . "</label>";
-        echo "<div class='col-sm-6'>";
+        echo "<div class='col-lg-4'>";
+        echo $title . "&nbsp;";
         if (!isset($options['width'])) {
-            $options['width'] = '100%';
+            $options['width'] = '40%';
         }
 
         if (!is_null($varname)) {
@@ -230,7 +229,6 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
             $values,
             $options
         );
-        echo "</div>";
         echo "</div>";
         return $rand;
     }

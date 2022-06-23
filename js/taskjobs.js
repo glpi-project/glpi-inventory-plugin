@@ -1309,7 +1309,11 @@ $(document).ready(function() {
    });
 
    $(document).on("click", ".openExportDialog", function(event) {
-      $('#fiTaskExport_modalWindow').show();
+      if($("#fiTaskExport_modalWindow").is(":visible")){
+         $('#fiTaskExport_modalWindow').hide();
+      } else {
+         $('#fiTaskExport_modalWindow').show();
+      }
    });
 
    $(document).on("click", ".task_export_form .submit", function(event) {

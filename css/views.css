@@ -160,6 +160,7 @@ td:not(#foo) > input[type=radio]:checked + label {
    border: #AAA solid 1px;
    border-radius: 5px;
    margin: 0 auto;
+   margin-top: 5px;
 }
 
 .fusinv_form {
@@ -474,7 +475,6 @@ a.expanded > div.fold {
 }
 
 .target_block > div {
-   display: inline-block;
    vertical-align: top;
 }
 
@@ -509,7 +509,7 @@ a.expanded > div.fold {
 }
 
 .target_block div.progressbar {
-   height: 100px;
+   height: 115px;
    display: inline-block;
    background-color: #EFEFEF;
    width: 400px;
@@ -783,9 +783,9 @@ table.runs td.comment {
 }
 
 .refresh_button {
-   padding: 5px;
    display: block;
    float: right;
+   cursor: pointer;
 }
 
 .refresh_button > span {
