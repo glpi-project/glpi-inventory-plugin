@@ -785,6 +785,7 @@ table.runs td.comment {
 .refresh_button {
    display: block;
    float: right;
+   cursor: pointer;
 }
 
 .refresh_button > span {
