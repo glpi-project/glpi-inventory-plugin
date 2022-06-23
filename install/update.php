@@ -31,6 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Dashboard\Dashboard;
+use Glpi\Dashboard\Item as Dashboard_Item;
+use Glpi\Dashboard\Right as Dashboard_Right;
+use Ramsey\Uuid\Uuid;
+
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 
 /**
@@ -1143,7 +1148,78 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
    // Migrate search params for dynamic groups
     doDynamicDataSearchParamsMigration();
 
+    installDashboard();
+
     $migration->executeMigration();
+}
+
+function installDashboard()
+{
+    $dashboard = new Dashboard();
+
+    if ($dashboard->getFromDB('plugin_glpiinventory_dashboard') !== false) {
+       // The dashboard already exists, nothing to create
+        return;
+    }
+
+    $dashboard->add([
+       'key'     => 'plugin_glpiinventory_dashboard',
+       'name'    => 'Glpi inventory reports',
+       'context' => 'core',
+    ]);
+
+    if ($dashboard->isNewItem()) {
+       // Failed to create the dashboard
+        return;
+    };
+
+    $commonOptions = [
+        'widgettype'   => 'bigNumber',
+        'use_gradient' => '0',
+        'point_labels' => '0',
+     ];
+    $cards = [
+        'plugin_glpiinventory_nb_agent'    => [
+            'color' => '#606f91'
+        ],
+        'plugin_glpiinventory_nb_task'    => [
+            'color' => '#606f91'
+        ],
+        'plugin_glpiinventory_nb_printer'      => [
+           'color' => '#606f91'
+        ],
+        'plugin_glpiinventory_nb_networkequipement' => [
+           'color' => '#606f91'
+        ],
+        'plugin_glpiinventory_nb_phone' => [
+           'color' => '#606f91'
+        ],
+        'plugin_glpiinventory_nb_computer'  => [
+           'color' => '#606f91'
+        ],
+        'plugin_glpiinventory_nb_unmanaged'   => [
+            'color' => '#e69138'
+        ]
+    ];
+
+    // With counters
+    $x = 0;
+    $w = 3; // Width
+    $h = 2; // Height
+    $y = 0;
+    foreach ($cards as $key => $options) {
+        $item = new Dashboard_Item();
+        $item->addForDashboard($dashboard->fields['id'], [[
+            'card_id' => $key,
+            'gridstack_id' => $key . '_' . Uuid::uuid4(),
+            'x'       => $x,
+            'y'       => $y,
+            'width'   => $w,
+            'height'  => $h,
+            'card_options' => array_merge($commonOptions, $options),
+        ]]);
+        $x =  $x + $w;
+    }
 }
 
 

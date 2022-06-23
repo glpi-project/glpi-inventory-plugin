@@ -2356,4 +2356,9 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         }
         return $result;
     }
+
+    public static function getIcon()
+    {
+        return "ti ti-list-check";
+    }
 }
