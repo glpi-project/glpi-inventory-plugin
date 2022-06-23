@@ -145,9 +145,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
              echo "</div>";
          }
          echo "</div>"; // .state_checkboxes
- 
+
          echo "<div class='clear_states'></div>";
- 
+
          echo Html::hidden('task_id', ['value' => $task_id]);
          echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-icon btn-sm btn-secondary me-1 pe-2']);
          Html::closeForm();
