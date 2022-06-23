@@ -149,23 +149,23 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          echo "<div class='clear_states'></div>";
  
          echo Html::hidden('task_id', ['value' => $task_id]);
-         echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-primary']);
+         echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-icon btn-sm btn-secondary me-1 pe-2']);
          Html::closeForm();
          echo "</div>"; // #fiTaskExport_modalWindow
 
 
        // Template structure for tasks' blocks
         echo "<script id='template_task' type='x-tmpl-mustache'>
-               <div id='{{task_id}}' class='task_block {{expanded}}'>
-                  <h3>" .
-                     _n('Task', 'Tasks', 1, 'glpiinventory') . "
-                     <span class='task_name'>{{task_name}}</span>
-                  </h3>
-                  <a href='" . PluginGlpiinventoryTask::getFormURL() . "?id={{task_id}}'
-                     class='task_block_link'>
-                     <i class='fa fa-link pointer'></i>
-                  </a>
-                  <div class='jobs_block'></div>
+               <div id='{{task_id}}' class='task_block {{expanded}}'>";
+        if (!$task_id != null) {
+            echo"<h3>" .  _n('Task', 'Tasks', 1, 'glpiinventory') . "
+            <span class='task_name'>{{task_name}}</span></h3>
+            <a href='" . PluginGlpiinventoryTask::getFormURL() . "?id={{task_id}}'  class='task_block_link'>
+                <i class='fa fa-link pointer'></i>
+            </a>";
+        }
+
+        echo "<div class='jobs_block'></div>
                </div>
             </script>";
 
