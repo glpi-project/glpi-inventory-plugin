@@ -735,20 +735,21 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
                // Cancel agents prepared but not in $agent_ids (like computer
                // not in dynamic group)
-                $jobstates_tocancel = $jobstate->find(
-                    ['itemtype' => $item_type,
+                $jobstates_tocancel = $jobstate->find([
+                    'itemtype' => $item_type,
                     'items_id' => $item_id,
                     'plugin_glpiinventory_taskjobs_id' => $job_id,
-                    'NOT'      => [
-                      'state' => [
-                         PluginGlpiinventoryTaskjobstate::FINISHED,
-                         PluginGlpiinventoryTaskjobstate::IN_ERROR,
-                         PluginGlpiinventoryTaskjobstate::CANCELLED,
-                      ]],
                     'NOT' => [
-                     'agents_id' => array_keys($agent_ids)]
-                    ]
-                );
+                        'OR' => [
+                            'state' => [
+                                PluginGlpiinventoryTaskjobstate::FINISHED,
+                                PluginGlpiinventoryTaskjobstate::IN_ERROR,
+                                PluginGlpiinventoryTaskjobstate::CANCELLED,
+                            ],
+                            'agents_id' => array_keys($agent_ids)]
+                        ]
+                    ]);
+
                 foreach ($jobstates_tocancel as $jobstate_tocancel) {
                      $jobstate->getFromDB($jobstate_tocancel['id']);
                      $jobstate->cancel(__('Device no longer defined in definition of job', 'glpiinventory'));
