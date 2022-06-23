@@ -104,7 +104,7 @@ function plugin_init_glpiinventory()
             ]
         );
         $Plugin->registerClass('PluginGlpiinventoryConfig');
-        $Plugin->registerClass('PluginGlpiinventoryTask');
+        $Plugin->registerClass('PluginGlpiinventoryTask', ['addtabon' => 'PluginGlpiinventoryIPRange']);
 
         $Plugin->registerClass(
             'PluginGlpiinventoryTaskjob',

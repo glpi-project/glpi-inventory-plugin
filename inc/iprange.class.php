@@ -183,28 +183,8 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
 
         $ong = [];
         $this->addDefaultFormTab($ong);
-        $ong[$this->getType() . '$task'] = _n('Task', 'Tasks', 2);
         $this->addStandardTab('Log', $ong, $options);
         return $ong;
-    }
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
-    {
-        if ($tabnum == 'task') {
-            $pfTask = new PluginGlpiinventoryTask();
-            $pfTask->showJobLogs();
-            return true;
-        }
-        return false;
     }
 
 

@@ -166,6 +166,86 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     }
 
 
+    /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
+        if ($item->fields['id'] > 0) {
+            $nb = 0;
+            if ($_SESSION['glpishow_count_on_tabs']) {
+                $nb = count(PluginGlpiinventoryTaskjob::getTaskfromIPRange($item));
+            }
+            return self::createTabEntry(__('Associated tasks', 'glpiinventory'), $nb);
+        }
+        return '';
+    }
+
+
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return true
+    */
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        $pf_Task = new self();
+        $pf_Task->showItemForm($item);
+        return true;
+    }
+
+
+    /**
+    * Display form
+    *
+    * @param object $item
+    * @param array $options
+    * @return boolean
+    */
+    public function showItemForm(CommonDBTM $item, array $options = [])
+    {
+        $ID = $item->getField('id');
+
+        if ($item->isNewID($ID) || !$item->can($item->fields['id'], READ)) {
+            return false;
+        }
+
+        $rand = mt_rand();
+        $a_data = PluginGlpiinventoryTaskjob::getTaskfromIPRange($item);
+
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tr class='tab_bg_2'>";
+        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
+        echo "<th>";
+        echo __('Tasks', 'glpiinventory');
+        echo "</th>";
+        echo "</tr>";
+
+        $credentials = new PluginGlpiinventoryTask();
+        foreach ($a_data as $data) {
+            echo "<tr class='tab_bg_2'>";
+            echo "<td>";
+            Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
+            echo "</td>";
+            echo "<td>";
+            $credentials->getFromDB($data['id']);
+            echo $credentials->getLink();
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        return true;
+    }
+
+
+
 
    /**
     * Purge elements linked to task when delete it
@@ -995,8 +1075,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         if (is_array($task_ids) && count($task_ids) > 0) {
             $tasks_list = "AND task.`id` IN ('" . implode("', '", $task_ids) . "')";
         } else {
-           // Not task identifiers provided
-            return ['tasks' => $logs, 'agents' => $agents];
+            // Not task identifiers provided
+            $tasks_list = "";
         }
 
        // Restrict by IP to prevent display tasks in another entity use not have right
