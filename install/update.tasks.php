@@ -389,7 +389,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
       ]
     ];
 
-    $table['renamefields'] = [];
+    $table['renamefields'] = ['agents_id' => 'plugin_glpiinventory_agents_id'];
     $table['oldfields'] = [
       'execution_id'
     ];
