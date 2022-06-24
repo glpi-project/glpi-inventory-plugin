@@ -137,7 +137,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->dropKey('glpi_plugin_glpiinventory_taskjobstates', 'plugin_glpiinventory_agents_id');
     $migration->addKey('glpi_plugin_glpiinventory_taskjobstates', 'agents_id', 'agents_id');
 
-    if ($DB->fieldExists('glpi_plugin_glpiinventory_taskjobstates', 'plugin_glpiinventory_agents_id')) {
+    if ($DB->fieldExists('glpi_plugin_glpiinventory_statediscoveries', 'plugin_glpiinventory_agents_id')) {
         $migration->changeField(
             'glpi_plugin_glpiinventory_statediscoveries',
             'plugin_glpiinventory_agents_id',
