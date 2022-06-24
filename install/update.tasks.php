@@ -359,7 +359,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
          'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
-      'plugin_glpiinventory_agents_id' => [
+      'agents_id' => [
          'type' => 'int unsigned NOT NULL DEFAULT 0',
          'value' => null
       ],
@@ -389,7 +389,7 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
       ]
     ];
 
-    $table['renamefields'] = ['agents_id' => 'plugin_glpiinventory_agents_id'];
+    $table['renamefields'] = ['plugin_glpiinventory_agents_id' => 'agents_id'];
     $table['oldfields'] = [
       'execution_id'
     ];
@@ -403,14 +403,14 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
       ],
       [
          'field' => [
-            'plugin_glpiinventory_agents_id',
+            'agents_id',
             'state'
          ],
          'name' => '', 'type' => 'INDEX'
       ],
       [
          'field' => [
-            'plugin_glpiinventory_agents_id',
+            'agents_id',
             'plugin_glpiinventory_taskjobs_id',
             'items_id',
             'itemtype',
@@ -422,6 +422,6 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
       ]
 
     ];
-    $table['oldkeys'] = [];
+    $table['oldkeys'] = ['plugin_glpiinventory_agents_id'];
     migratePluginTables($migration, $table);
 }
