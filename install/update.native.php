@@ -113,10 +113,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                         $DB->buildUpdate(
                             $agent_table,
                             [
-                                'plugin_glpiinventory_agents_id' => $new_agent_id
+                                'agents_id' => $new_agent_id
                             ],
                             [
-                                'plugin_glpiinventory_agents_id' => $old_agent_id
+                                'agents_id' => $old_agent_id
                             ]
                         )
                     );
