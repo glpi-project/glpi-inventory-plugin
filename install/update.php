@@ -2233,7 +2233,7 @@ function do_unmanaged_migration($migration)
                                             'value'   => null];
     $a_table['fields']['accepted']   = ['type'    => 'bool',
                                             'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_agents_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
+    $a_table['fields']['agents_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
     $a_table['fields']['ip']         = ['type'    => 'string',
                                             'value'   => null];
@@ -2271,17 +2271,20 @@ function do_unmanaged_migration($migration)
       'FK_entities'  => 'entities_id',
       'location'     => 'locations_id',
       'deleted'      => 'is_deleted',
-      'plugin_fusinvsnmp_configsecurities_id' => 'plugin_glpiinventory_configsecurities_id'
+      'plugin_fusinvsnmp_configsecurities_id' => 'plugin_glpiinventory_configsecurities_id',
+      'plugin_glpiinventory_agents_id' => 'agents_id',
        ];
 
     $a_table['keys']   = [
       ['field' => 'entities_id', 'name' => '', 'type' => 'INDEX'],
-      ['field' => 'plugin_glpiinventory_agents_id', 'name' => '', 'type' => 'INDEX'],
+      ['field' => 'agents_id', 'name' => '', 'type' => 'INDEX'],
       ['field' => 'is_deleted', 'name' => '', 'type' => 'INDEX'],
       ['field' => 'date_mod', 'name' => '', 'type' => 'INDEX']
     ];
 
-    $a_table['oldkeys'] = [];
+    $a_table['oldkeys'] = [
+        'plugin_glpiinventory_agents_id',
+    ];
 
     migratePluginTables($migration, $a_table);
 
@@ -2399,20 +2402,24 @@ function do_ignoredimport_migration($migration)
                                             'value'   => null];
     $a_table['fields']['uuid']       = ['type'    => 'string',
                                             'value'   => null];
-    $a_table['fields']['plugin_glpiinventory_agents_id']
+    $a_table['fields']['agents_id']
                                     = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
                                             'value'   => null];
 
     $a_table['oldfields']  = [];
 
-    $a_table['renamefields'] = [];
+    $a_table['renamefields'] = [
+        'plugin_glpiinventory_agents_id' => 'agents_id',
+    ];
 
     $a_table['keys']   = [];
-    $a_table['keys'][] = ['field' => 'plugin_glpiinventory_agents_id',
+    $a_table['keys'][] = ['field' => 'agents_id',
                               'name' => '',
                               'type' => 'INDEX'];
 
-    $a_table['oldkeys'] = [];
+    $a_table['oldkeys'] = [
+        'plugin_glpiinventory_agents_id',
+    ];
 
     migratePluginTables($migration, $a_table);
 }
@@ -2801,11 +2808,20 @@ function do_rulematchedlog_migration($migration)
         "rules_id",
         "int unsigned NOT NULL DEFAULT '0'"
     );
-    $migration->addField(
-        $newTable,
-        "plugin_glpiinventory_agents_id",
-        "int unsigned NOT NULL DEFAULT '0'"
-    );
+    if ($DB->fieldExists($newTable, "plugin_glpiinventory_agents_id")) {
+        $migration->changeField(
+            $newTable,
+            "plugin_glpiinventory_agents_id",
+            "agents_id",
+            "int unsigned NOT NULL DEFAULT '0'"
+        );
+    } else {
+        $migration->addField(
+            $newTable,
+            "agents_id",
+            "int unsigned NOT NULL DEFAULT '0'"
+        );
+    }
     $migration->addField(
         $newTable,
         "method",
@@ -5259,7 +5275,7 @@ function do_statediscovery_migration($migration)
     $migration->changeField(
         $newTable,
         "plugin_glpiinventory_agents_id",
-        "plugin_glpiinventory_agents_id",
+        "agents_id",
         "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->changeField(
@@ -5329,7 +5345,7 @@ function do_statediscovery_migration($migration)
     );
     $migration->addField(
         $newTable,
-        "plugin_glpiinventory_agents_id",
+        "agents_id",
         "int unsigned NOT NULL DEFAULT '0'"
     );
     $migration->addField(
