@@ -126,27 +126,6 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
         $migration->dropTable('glpi_plugin_glpiinventory_agents');
     }
-    if ($DB->fieldExists('glpi_plugin_glpiinventory_taskjobstates', 'plugin_glpiinventory_agents_id')) {
-        $migration->changeField(
-            'glpi_plugin_glpiinventory_taskjobstates',
-            'plugin_glpiinventory_agents_id',
-            'agents_id',
-            'int unsigned NOT NULL DEFAULT 0'
-        );
-    }
-    $migration->dropKey('glpi_plugin_glpiinventory_taskjobstates', 'plugin_glpiinventory_agents_id');
-    $migration->addKey('glpi_plugin_glpiinventory_taskjobstates', 'agents_id', 'agents_id');
-
-    if ($DB->fieldExists('glpi_plugin_glpiinventory_statediscoveries', 'plugin_glpiinventory_agents_id')) {
-        $migration->changeField(
-            'glpi_plugin_glpiinventory_statediscoveries',
-            'plugin_glpiinventory_agents_id',
-            'agents_id',
-            'int unsigned NOT NULL DEFAULT 0'
-        );
-    }
-    $migration->dropKey('glpi_plugin_glpiinventory_statediscoveries', 'plugin_glpiinventory_agents_id');
-    $migration->addKey('glpi_plugin_glpiinventory_statediscoveries', 'agents_id', 'agents_id');
 
     if ($DB->tableExists('glpi_plugin_glpiinventory_agentmodules')) {
         $agentmodules_iterator = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_agentmodules']);
@@ -472,14 +451,12 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             //mappings
             $data_unmanaged['domains_id'] = $data_unmanaged['domain'];
             $data_unmanaged['itemtype'] = $data_unmanaged['item_type'];
-            $data_unmanaged['agents_id'] = $data_unmanaged['plugin_glpiinventory_agents_id'];
             $data_unmanaged['snmpcredentials_id'] = $data_unmanaged['plugin_glpiinventory_configsecurities_id'];
 
             unset(
                 $data_unmanaged['id'],
                 $data_unmanaged['domain'],
                 $data_unmanaged['item_type'],
-                $data_unmanaged['plugin_glpiinventory_agents_id'],
                 $data_unmanaged['plugin_glpiinventory_configsecurities_id']
             );
 
@@ -581,7 +558,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                `items_id`,
                `itemtype`,
                `rules_id`,
-               `plugin_glpiinventory_agents_id`,
+               `agents_id`,
                `method`
              FROM `glpi_plugin_glpiinventory_rulematchedlogs`;"
         );
