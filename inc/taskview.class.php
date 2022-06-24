@@ -58,7 +58,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     public function showJobLogs()
     {
         $task_id = $this->fields['id'] ?? null;
-        echo "<div class='fusinv_panel'>";
+        echo "<div class='card fusinv_panel'>";
         echo "<div class='row'>";
 
        // add a list limit for include old jobs
@@ -171,15 +171,15 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
        // Template structure for jobs' blocks
          echo "<script id='template_job' type='x-tmpl-mustache'>
-               <div id='{{job_id}}' class='job_block'>
+               <div id='{{job_id}}' class='card job_block'>
                      <h3 class='job_name'>{{job_name}}</h3>
-                  <div class='targets_block'></div>
+                  <div class='card targets_block'></div>
                </div>
             </script>";
 
        // Template structure for targets' blocks
          echo "<script id='template_target' type='x-tmpl-mustache'>
-               <div id='{{target_id}}' class='target_block'>
+               <div id='{{target_id}}' class='card target_block'>
                   <div class='target_details'>
                   <div class='target_infos'>
                      <h4 class='target_name'>

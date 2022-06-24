@@ -477,8 +477,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                  data-itemtype='$itemtype'
                  data-itemtype_name='$itemtype_name'
                  data-dropdown_rand_id='$dropdown_rand_id'>
-               <input type='button' class='btn btn-secondary' role='button'
-                      value='" . __('Add') . " $title' />
+               <button type='button' class='btn btn-secondary'>" . __('Add') . " $title</button>
             </div>";
     }
 
@@ -702,9 +701,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
             echo "<td class='center' colspan='2'>
                   <div id='cancel_job_changes_button' style='display:none'>
-                     <input type='button' class='btn btn-secondary'
-                            onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'
-                            value='" . __('Cancel modifications', 'glpiinventory') . "'/>
+                     <button type='button' class='btn btn-secondary'
+                            onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>" .
+                            __('Cancel modifications', 'glpiinventory') ."</button>
                   </div>
                </td>";
 
