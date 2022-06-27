@@ -860,9 +860,6 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     $a_input['agent_port'] = 62354;
     $a_input['extradebug'] = 0;
     $a_input['users_id'] = $users_id;
-    $a_input['agents_old_days'] = 0;
-    $a_input['agents_action'] = 0;
-    $a_input['agents_status'] = 0;
     $config->addValues($a_input, false);
 
     $a_input = [];
@@ -7141,9 +7138,6 @@ function do_rule_migration($migration)
     $a_input['agent_port'] = 62354;
     $a_input['extradebug'] = 0;
     $a_input['users_id'] = $users_id;
-    $a_input['agents_old_days'] = 0;
-    $a_input['agents_action'] = 0;
-    $a_input['agents_status'] = 0;
     $config->addValues($a_input, false);
 
     $a_input = [];
