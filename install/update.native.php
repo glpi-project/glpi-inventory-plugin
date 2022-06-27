@@ -791,6 +791,33 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         }
     }
 
+    // Use core configuration entries
+    $plugin_configs = $DB->request('glpi_plugin_glpiinventory_configs');
+    $mapping = [
+        'agents_action'   => 'stale_agents_action',
+        'agents_old_days' => 'stale_agents_delay',
+        'agents_status'   => 'stale_agents_status',
+    ];
+    foreach ($plugin_configs as $plugin_config) {
+        $plugin_name = $plugin_config['type'];
+        if (array_key_exists($plugin_name, $mapping)) {
+            $glpi_name = $mapping[$plugin_name];
+            if (Config::getConfigurationValue('inventory', $glpi_name) == null) {
+                // Only set configuration if it has never been set in GLPI
+                Config::setConfigurationValues(
+                    'inventory',
+                    [
+                        $glpi_name => $plugin_config['value'],
+                    ]
+                );
+            }
+            // Delete configuration, value, it is not needed anymore
+            $migration->addPostQuery(
+                $DB->buildDelete('glpi_plugin_glpiinventory_configs', ['id' => $plugin_config['id']])
+            );
+        }
+    }
+
     // /!\ Keep it at the end
     $migration->executeMigration();
 }

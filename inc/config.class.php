@@ -88,9 +88,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $input['agent_port']             = '62354';
         $input['extradebug']             = '0';
         $input['users_id']               = $users_id;
-        $input['agents_old_days']        = '0';
-        $input['agents_action']          = 0;
-        $input['agents_status']          = 0;
         $input['wakeup_agent_max']       = '10';
 
         $input['import_software']        = 1;
@@ -370,56 +367,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         );
         echo "</td>";
 
-        echo "</tr>";
-        echo "<tr class='tab_bg_1'>";
-        echo "<th colspan=4 >" . __('Update agents', 'glpiinventory') . "</th></tr>";
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Update agents not have contacted server since (in days)', 'glpiinventory') . "</td>";
-        echo "<td width='20%'>";
-        Dropdown::showNumber("agents_old_days", [
-         'value' => $this->getValue('agents_old_days'),
-         'min'   => 1,
-         'max'   => 1000,
-         'toadd' => ['0' => __('Disabled')]]);
-        echo "</td>";
-        echo "<td>" . __('Action') . "</td>";
-        echo "<td width='20%'>";
-       //action
-        $rand = Dropdown::showFromArray(
-            'agents_action',
-            [self::getActions(self::ACTION_CLEAN), self::getActions(self::ACTION_STATUS)],
-            ['value' => $this->getValue('agents_action'), 'on_change' => 'changestatus();']
-        );
-       //if action == action_status => show blocation else hide blocaction
-        echo Html::scriptBlock("
-         function changestatus() {
-            if ($('#dropdown_agents_action$rand').val() != 0) {
-               $('#blocaction1').show();
-               $('#blocaction2').show();
-            } else {
-               $('#blocaction1').hide();
-               $('#blocaction2').hide();
-            }
-         }
-         changestatus();
-
-      ");
-        echo "</td>";
-        echo "</tr>";
-       //blocaction with status
-        echo "<tr class='tab_bg_1'><td colspan=2></td>";
-        echo "<td>";
-        echo "<span id='blocaction1' style='display:none'>";
-        echo __('Change the status', 'glpiinventory');
-        echo "</span>";
-        echo "</td>";
-        echo "<td width='20%'>";
-        echo "<span id='blocaction2' style='display:none'>";
-        State::dropdown(['name'   => 'agents_status',
-         'value'  => $this->getValue('agents_status'),
-         'entity' => $_SESSION['glpiactive_entity']]);
-        echo "</span>";
-        echo "</td>";
         echo "</tr>";
 
         $options['candel'] = false;
