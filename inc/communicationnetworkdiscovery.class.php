@@ -152,11 +152,10 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             $this->addtaskjoblog();
                         } else {
                             $item = $inventory->getMainAsset()->getItem();
-                            // this is an update if at least 'last_inventory_update' can be found in old values
-                            $what = count($item->oldvalues) ? '==updatetheitem==' : '==addtheitem==';
+                            $what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
                             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
                                 '[==detail==] ' . $what . ' ' . $item->getTypeName() .
-                                ' [[' . $device->type . '::' . $item->fields['id'] . ']]';
+                                ' [[' . $item::getType() . '::' . $item->fields['id'] . ']]';
                             $this->addtaskjoblog();
                         }
                         $response = ['response' => ['RESPONSE' => 'SEND']];
