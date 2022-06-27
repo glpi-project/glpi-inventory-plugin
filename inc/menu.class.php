@@ -248,10 +248,10 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTaskJob');
         }
 
-        if (Session::haveRight('plugin_glpiinventory_importxml', CREATE)) {
+        if (Session::haveRight('config', READ)) {
             $tasks_menu[0]['name'] = __('Import agent XML file', 'glpiinventory');
-            $tasks_menu[0]['pic']  = $fi_path . "/pics/menu_importxml.png";
-            $tasks_menu[0]['link'] = $CFG_GLPI['root_doc'] . "/front/inventory.conf.php?forcetab=Conf\$2";
+            $tasks_menu[0]['pic']  = "ti ti-file-import";
+            $tasks_menu[0]['link'] = $CFG_GLPI['root_doc'] . "/front/inventory.conf.php?forcetab=Glpi\Inventory\Conf$2";
         }
 
         if (Session::haveRight("plugin_glpiinventory_collect", READ)) {
@@ -286,13 +286,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             );
         }
 
-        if (Session::haveRight('plugin_glpiinventory_ignoredimportdevice', READ)) {
+        if (Session::haveRight('config', READ)) {
             $rules_menu[2]['name'] = __('Asset skipped during import', 'glpiinventory');
             $rules_menu[2]['pic']  = "ti ti-device-desktop-off";
             $rules_menu[2]['link'] = RefusedEquipment::getSearchURL();
         }
 
-        if (Session::haveRight('plugin_glpiinventory_ruleentity', READ)) {
+        if (Session::haveRight('rule_import', READ)) {
             $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
             $rules_menu[3]['pic']  = "ti ti-book";
             $rules_menu[3]['link'] = RuleImportEntity::getSearchURL();
@@ -306,12 +306,12 @@ class PluginGlpiinventoryMenu extends CommonGLPI
        }*/
 
         if (Session::haveRight("plugin_glpiinventory_rulecollect", READ)) {
-            $rules_menu[5]['name'] = __('Computer information rules', 'glpiinventory');
+            $rules_menu[5]['name'] = __('Computer collect rules', 'glpiinventory');
             $rules_menu[5]['pic']  = "ti ti-book";
             $rules_menu[5]['link'] = $fi_path . "/front/collectrule.php";
         }
 
-        if (Session::haveRight('plugin_glpiinventory_blacklist', READ)) {
+        if (Session::haveRight('config', READ)) {
             $rules_menu[6]['name'] = Blacklist::getTypeName(1);
             $rules_menu[6]['pic']  = "ti ti-ban";
             $rules_menu[6]['link'] = Blacklist::getSearchURL();
