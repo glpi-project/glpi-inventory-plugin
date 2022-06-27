@@ -1506,7 +1506,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         'last_log_id'   => $log_result['log.last_id'],
                         'last_log_date' => $log_result['log.last_date'],
                         'timestamp'     => $log_result['log.last_timestamp'],
-                        'last_log'      => $log_result['log.last_comment']
+                        'last_log'      => PluginGlpiinventoryTaskjoblog::convertComment($log_result['log.last_comment'])
                      ];
                 }
             }

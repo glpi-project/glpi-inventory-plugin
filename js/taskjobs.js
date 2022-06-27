@@ -368,7 +368,7 @@ function agents_chart(chart_id) {
             var log = d3.select(this).selectAll('span.comment').data([d]);
             log.enter().append('span')
               .attr('class', 'comment');
-            log.text(function(d) { return [
+            log.html(function(d) { return [
                 d[1][0].last_log + " "
                ].join(',');});
             log.exit().remove();
