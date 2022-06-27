@@ -703,7 +703,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                   <div id='cancel_job_changes_button' style='display:none'>
                      <button type='button' class='btn btn-secondary'
                             onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>" .
-                            __('Cancel modifications', 'glpiinventory') ."</button>
+                            __('Cancel modifications', 'glpiinventory') . "</button>
                   </div>
                </td>";
 
