@@ -187,6 +187,23 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $fi_path = Plugin::getWebDir('glpiinventory');
 
         $menu = [];
+
+       /*
+        * Dashboard
+        */
+        if (Session::haveRight('dashboard', READ)) {
+            $dashboard_menu = [];
+            $dashboard_menu[0]['name'] = __('Inventory');
+            $dashboard_menu[0]['pic']  = "ti ti-dashboard";
+            $dashboard_menu[0]['link'] = $fi_path . "/front/menu.php";
+
+            $menu['dashboard'] = [
+                'name'     => __('Dashboard'),
+                'pic'      => "ti ti-dashboard",
+                'children' => $dashboard_menu
+            ];
+        }
+
        /*
         * General
         */
