@@ -244,18 +244,17 @@ td:not(#foo) > input[type=radio]:checked + label {
    padding: 2px;
    border: 1px #e0e0e0 solid;
    border-radius: 3px;
-   background-color: #e7e7e7;
+   background-color: #e7e7e780;
 }
 
 .taskjob_item.new {
-   background-color: #FDDB6F;
+   background-color: #FDDB6F80;
 }
 
 .taskjob_item:hover {
    border-color: #CCC;
    box-shadow: 0 0 2px #CCC;
-   background-color: #D7D7D7;
-   color: black;
+   background-color: #D7D7D780;
    font-weight: bolder;
 }
 
@@ -293,9 +292,6 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .jobs_block .job_block {
-   border: #AAA solid 1px;
-   border-radius: 5px;
-   background: #EFEFEF;
    padding: 10px;
    margin-bottom:10px;
 }
@@ -305,9 +301,6 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .target_block {
-   border: #CCC solid 1px;
-   border-radius: 5px;
-   background: #F7F7F7;
    padding: 10px;
    margin: 5px 0;
 }
