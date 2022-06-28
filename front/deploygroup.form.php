@@ -60,8 +60,8 @@ if (isset($_GET['save'])) {
         );
         $values                 = array_pop($item);
 
-        $criteria = ['criteria'     => $_GET['criteria'],
-                        'metacriteria' => $_GET['metacriteria']];
+        $criteria = ['criteria'     =>  isset($_GET['criteria']) ? $_GET['criteria'] : [],
+                     'metacriteria' => isset($_GET['metacriteria']) ? $_GET['metacriteria'] : []];
         $values['fields_array'] = serialize($criteria);
         $group_item->update($values);
     }
