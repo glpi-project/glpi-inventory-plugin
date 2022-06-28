@@ -42,14 +42,14 @@ if (isset($_GET['plugin_glpiinventory_deploygroups_id'])) {
 
 if (isset($_GET['save'])) {
     $group_item = new PluginGlpiinventoryDeployGroup_Dynamicdata();
+    $criteria = ['criteria'     =>  isset($_GET['criteria']) ? $_GET['criteria'] : [],
+                 'metacriteria' => isset($_GET['metacriteria']) ? $_GET['metacriteria'] : []];
     if (
         !countElementsInTable(
             $group_item->getTable(),
             ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
         )
     ) {
-        $criteria  = ['criteria'     => $_GET['criteria'],
-                         'metacriteria' => $_GET['metacriteria']];
         $values['fields_array'] = serialize($criteria);
         $values['plugin_glpiinventory_deploygroups_id'] = $_GET['id'];
         $group_item->add($values);
@@ -59,9 +59,6 @@ if (isset($_GET['save'])) {
             ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
         );
         $values                 = array_pop($item);
-
-        $criteria = ['criteria'     =>  isset($_GET['criteria']) ? $_GET['criteria'] : [],
-                     'metacriteria' => isset($_GET['metacriteria']) ? $_GET['metacriteria'] : []];
         $values['fields_array'] = serialize($criteria);
         $group_item->update($values);
     }
