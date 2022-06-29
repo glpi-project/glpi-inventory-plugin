@@ -573,8 +573,23 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "<tr class='tab_bg_1'>";
         echo "<td colspan='4'>";
         echo "<div class='fusinv_form'>";
-        $this->showTextField(__('Name'), "name");
-        $this->showTextArea(__('Comments'), "comment");
+
+        echo "<div class='mb-2 row col-12 col-sm-10'>";
+        echo "<label class='form-label col-sm-4 col-form-label'>" . __('Name') . "&nbsp;</label>";
+        echo "<div class='col-sm-8'>";
+        echo Html::input("name", ['value' => $this->fields["name"]]);
+        echo "</div>";
+        echo "</div>";
+
+        echo "<div class='mb-2 row col-20 col-sm-10'>";
+        echo "<label class='form-label col-sm-4 col-form-label'>" . __('Comments') . "&nbsp;</label>";
+        echo "<div class='col-sm-8'>";
+        echo
+         "<textarea class='autogrow form-control' name='comment' >" .
+         $this->fields["comment"] .
+         "</textarea>";
+        echo "</div>";
+        echo "</div>";
 
         $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
         if (
@@ -593,11 +608,24 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 unset($modules_methods['wakeonlan']);
             }
         }
-        $modules_methods_rand = $this->showDropdownFromArray(
-            __('Module method', 'glpiinventory'),
+
+        echo "<div class='mb-2 row col-20 col-sm-10'>";
+        echo "<label>" . __('Module method', 'glpiinventory') . "&nbsp;</label>";
+
+        if (!isset($options['width'])) {
+            $options['width'] = '40%';
+        }
+
+        if (!is_null("method")) {
+            $options['value'] = $this->fields["method"];
+        }
+        $modules_methods_rand = Dropdown::showFromArray(
             "method",
-            $modules_methods
+            $modules_methods,
+            $options
         );
+        echo "</div>";
+
         if (!$new_item) {
             echo "<script type='text/javascript'>";
             echo "   taskjobs.register_update_method( 'dropdown_method" . $modules_methods_rand . "');";
@@ -635,6 +663,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             echo "</span>";
             echo "</div>";
 
+            echo "<div class='dropdown-divider'></div>";
             echo "<div id='taskjob_moduletypes_dropdown'></div>";
             echo "<div id='taskjob_moduleitems_dropdown'></div>";
             echo "</div>";
