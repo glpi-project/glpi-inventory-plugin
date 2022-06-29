@@ -574,9 +574,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "<td colspan='4'>";
         echo "<div class='fusinv_form'>";
 
-                
         echo "<div class='mb-2 row col-12 col-sm-10'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" .__('Name') . "&nbsp;</label>";
+        echo "<label class='form-label col-sm-4 col-form-label'>" . __('Name') . "&nbsp;</label>";
         echo "<div class='col-sm-8'>";
         echo Html::input("name", ['value' => $this->fields["name"]]);
         echo "</div>";
@@ -591,7 +590,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
          "</textarea>";
         echo "</div>";
         echo "</div>";
-
 
         $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
         if (
