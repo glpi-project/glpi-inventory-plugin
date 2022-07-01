@@ -194,8 +194,12 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
             unset($search_params['metacriteria']);
         }
-        PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
 
+        echo '<div class="search_page row">';
+        echo '<div class="col search-container">';
+        PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
+        echo '</div>';
+        echo '</div>';
        /* Do not display the search result on the current tab
        * @mohierf: I do not remove this code if this feature is intended to be reactivated...
        * -----
