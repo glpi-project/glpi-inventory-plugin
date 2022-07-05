@@ -36,7 +36,7 @@ body:
     id: os
     attributes:
       label: Operating system
-      description: On which operating system is the GLPI agent that is experiencing this issue ?
+      description: On which operating system is the GLPI agent that is experiencing this issue?
       options:
         - Windows
         - Linux
@@ -49,7 +49,7 @@ body:
     id: version
     attributes:
       label: GLPI Agent version
-      description: Which GLPI agent version is triggering this issue ?
+      description: Which GLPI agent version is triggering this issue?
       options:
         - 1.4
         - 1.3
@@ -65,7 +65,7 @@ body:
     id: glpi-version
     attributes:
       label: GLPI version
-      description: What is your GLPI version on server-side ?
+      description: What is your GLPI version on server-side?
       options:
         - 10.0.2
         - 10.0.1
@@ -79,7 +79,7 @@ body:
     id: plugin-version
     attributes:
       label: GLPIInventory plugin
-      description: What is your GLPIInventory plugin version on server-side ?
+      description: What is your GLPIInventory plugin version on server-side?
       options:
         - 1.0.4
         - 1.0.3
