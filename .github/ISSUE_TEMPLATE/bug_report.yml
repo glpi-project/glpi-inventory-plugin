@@ -72,7 +72,6 @@ body:
         - 10.0.0
         - Other (See additional context below)
         - development release (See additional context below)
-        - Not applicable
       multiple: true
     validations:
       required: true
@@ -89,7 +88,6 @@ body:
         - 1.0.0
         - Other (See additional context below)
         - development release (See additional context below)
-        - Not applicable
       multiple: true
     validations:
       required: false
