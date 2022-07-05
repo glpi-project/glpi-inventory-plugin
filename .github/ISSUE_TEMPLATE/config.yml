@@ -1,7 +1,7 @@
 contact_links:
   - name: Professional Support
     url: https://services.glpi-network.com/
-    about: Professional support is available through GLPI Network subscription
+    about: Professional support is available through GLPI Network subscription.
   - name: GLPI Community Support
     url: https://forum.glpi-project.org/
     about: You can ask questions and find answers on the forum.
