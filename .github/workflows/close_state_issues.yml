@@ -14,7 +14,7 @@ jobs:
         with:
           stale-issue-message: >-
             There has been no activity on this issue for some time and therefore it is considered stale
-            and will be closed automatically in 10 days.
+            and will be closed automatically in 7 days.
             
             
             If this issue is related to a bug, please try to reproduce on latest release. If the problem persist,
