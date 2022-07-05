@@ -6,19 +6,6 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-  - type: dropdown
-    id: professional-support
-    attributes:
-      label: Professional support
-      description: I know I can also request a [professional support](https://services.glpi-network.com/) to resolve the bug.
-      options:
-        - Yes, I know
-        - I still have but want a public following to keep the community aware
-        - I'm a GLPI partner
-        - I would like to be contacted
-        - Still not applicable
-    validations:
-      required: false
   - type: textarea
     id: description
     attributes:
@@ -65,6 +52,7 @@ body:
       description: What GLPI agent version is triggering this issue ?
       options:
         - 1.3
+        - 1.4
         - 1.2
         - 1.1
         - 1.0
@@ -79,10 +67,9 @@ body:
       label: GLPI version
       description: What is your GLPI version on server-side ?
       options:
+        - 10.0.2
         - 10.0.1
         - 10.0.0
-        - 9.5.7
-        - 9.5.6
         - Other (See additional context below)
         - development release (See additional context below)
         - Not applicable
@@ -92,15 +79,14 @@ body:
   - type: dropdown
     id: plugin-version
     attributes:
-      label: GLPIInventory plugin or FusionInventory for GLPI plugin version
-      description: What is your GLPIInventory or FusionInventory for GLPI plugin version on server-side ?
+      label: GLPIInventory plugin
+      description: What is your GLPIInventory plugin version on server-side ?
       options:
+        - 1.0.4
+        - 1.0.3
+        - 1.0.2
         - 1.0.1
         - 1.0.0
-        - 9.5+4.1
-        - 9.5+4.0
-        - 9.5+3.0
-        - 9.4+2.6
         - Other (See additional context below)
         - development release (See additional context below)
         - Not applicable
