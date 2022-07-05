@@ -1,0 +1,116 @@
+name: Bug Report
+description: File a bug report
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: dropdown
+    id: professional-support
+    attributes:
+      label: Professional support
+      description: I know I can also request a [professional support](https://services.glpi-network.com/) to resolv the bug.
+      options:
+        - Yes, I know
+        - I still have but want a public following to keep the community aware
+        - I'm a GLPI partner
+        - I would like to be contacted
+        - Still not applicable
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: To reproduce
+      description: "Steps to reproduce the behavior:"
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      description: On what operating system GLPI agent is experimenting this issue ?
+      options:
+        - Windows
+        - Linux
+        - MacOSX
+        - Other (See additional context below)
+      multiple: true
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: GLPI Agent version
+      description: What GLPI agent version is triggering this issue ?
+      options:
+        - 1.3
+        - 1.2
+        - 1.1
+        - 1.0
+        - Nightly build (git version in additional context below)
+        - Other (See additional context below)
+      multiple: true
+    validations:
+      required: true
+  - type: dropdown
+    id: glpi-version
+    attributes:
+      label: GLPI version
+      description: What is your GLPI version on server-side ?
+      options:
+        - 10.0.1
+        - 10.0.0
+        - 9.5.7
+        - 9.5.6
+        - Other (See additional context below)
+        - development release (See additional context below)
+        - Not applicable
+      multiple: true
+    validations:
+      required: true
+  - type: dropdown
+    id: plugin-version
+    attributes:
+      label: GLPIInventory plugin or FusionInventory for GLPI plugin version
+      description: What is your GLPIInventory or FusionInventory for GLPI plugin version on server-side ?
+      options:
+        - 1.0.1
+        - 1.0.0
+        - 9.5+4.1
+        - 9.5+4.0
+        - 9.5+3.0
+        - 9.4+2.6
+        - Other (See additional context below)
+        - development release (See additional context below)
+        - Not applicable
+      multiple: true
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      placeholder: Add any other context about the problem here.
+    validations:
+      required: false
