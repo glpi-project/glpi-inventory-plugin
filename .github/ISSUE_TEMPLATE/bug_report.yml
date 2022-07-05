@@ -36,7 +36,7 @@ body:
     id: os
     attributes:
       label: Operating system
-      description: On what operating system GLPI agent is experimenting this issue ?
+      description: On which operating system does the GLPI agent experimenting this issue ?
       options:
         - Windows
         - Linux
