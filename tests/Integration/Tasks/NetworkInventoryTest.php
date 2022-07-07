@@ -38,33 +38,55 @@ class NetworkInventoryTest extends TestCase
     public static function setUpBeforeClass(): void
     {
 
-       // Delete all computers
+        // Delete all computers
         $computer = new Computer();
         $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         foreach ($items as $item) {
             $computer->delete(['id' => $item['id']], true);
         }
 
-       // Delete all agents
+        // Delete all agents
         $agent = new Agent();
         $items = $agent->find();
         foreach ($items as $item) {
             $agent->delete(['id' => $item['id']], true);
         }
 
-       // Delete all ipranges
+        // Delete all ipranges
         $pfIPRange = new PluginGlpiinventoryIPRange();
         $items = $pfIPRange->find();
         foreach ($items as $item) {
             $pfIPRange->delete(['id' => $item['id']], true);
         }
 
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
             $pfTask->delete(['id' => $item['id']], true);
         }
+
+        // Delete all tasks job
+        $pfTaskJob = new PluginGlpiinventoryTaskjob();
+        $items = $pfTaskJob->find();
+        foreach ($items as $item) {
+            $pfTaskJob->delete(['id' => $item['id']], true);
+        }
+
+        // Delete all tasks job log
+        $pfTaskJobLog = new PluginGlpiinventoryTaskjoblog();
+        $items = $pfTaskJobLog->find();
+        foreach ($items as $item) {
+            $pfTaskJobLog->delete(['id' => $item['id']], true);
+        }
+
+        // Delete all tasks job state
+        $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
+        $items = $pfTaskJobState->find();
+        foreach ($items as $item) {
+            $pfTaskJobState->delete(['id' => $item['id']], true);
+        }
+
 
        // Delete all network equipments
         $networkEquipment = new NetworkEquipment();
@@ -289,7 +311,7 @@ class NetworkInventoryTest extends TestCase
         $ipranges_id = $pfIPRange->add($input);
         $this->assertNotFalse($ipranges_id);
 
-       // Allow all agents to do network discovery
+       // Allow all agents to do network inventory
         $module = new PluginGlpiinventoryAgentmodule();
         $module->getFromDBByCrit(['modulename' => 'NETWORKINVENTORY']);
         $module->update([
@@ -352,7 +374,9 @@ class NetworkInventoryTest extends TestCase
 
         $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
         $jobstate           = new PluginGlpiinventoryTaskjobstate();
-        $jobstate->getFromDBByCrit(['itemtype' => 'NetworkEquipment']);
+        $networkEquipement = new NetworkEquipment();
+        $networkEquipement->getFromDBByCrit(['name' => 'sw0']);
+        $jobstate->getFromDBByCrit(['itemtype' => 'NetworkEquipment', 'items_id' => $networkEquipement->fields['id']]);
         $data = $pfNetworkinventory->run($jobstate);
 
         $this->assertEquals('NETWORKING', $data['OPTION']['DEVICE']['attributes']['TYPE']);
@@ -367,6 +391,7 @@ class NetworkInventoryTest extends TestCase
     */
     public function PrinterToInventoryWithIp()
     {
+        global $DB;
 
         $printer       = new Printer();
         $pfTask        = new PluginGlpiinventoryTask();
@@ -378,6 +403,9 @@ class NetworkInventoryTest extends TestCase
         $this->assertTrue($printer->getFromDBByCrit(['name' => 'printer 001']));
         $this->assertTrue($agent->getFromDBByCrit(['name' => 'computer1']));
         $this->assertTrue($agent->update(['id' => $agent->fields['id'], 'threads_networkinventory' => 10]));
+
+        //Disable previous task
+        $DB->update(PluginGlpiinventoryTask::getTable(), ['is_active' => 0], ['is_active' => 1]);
 
        // Add task
        // create task
@@ -401,7 +429,9 @@ class NetworkInventoryTest extends TestCase
         $taskjobId = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobId);
 
-        PluginGlpiinventoryTask::cronTaskscheduler();
+        //preparation to a specific tasks_id
+        $pfTask->prepareTaskjobs(['networkinventory'], $tasks_id);
+        //PluginGlpiinventoryTask::cronTaskscheduler();
 
        // Task is prepared
        // Agent will get data
