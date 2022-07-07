@@ -3058,7 +3058,7 @@ function do_biosascomponentmigration()
                   LEFT JOIN glpi_manufacturers
                      ON glpi_plugin_glpiinventory_inventorycomputercomputers.bios_manufacturers_id = glpi_manufacturers.id
                      WHERE
-                        bios_date IS NOT NULL AND bios_date != ''
+                        bios_date IS NOT NULL
                         OR bios_version IS NOT NULL AND bios_version != ''
                         OR bios_manufacturers_id != 0";
         $result = $DB->query($query);
@@ -3066,6 +3066,10 @@ function do_biosascomponentmigration()
         $deviceBios = new DeviceFirmware();
         $item_DeviceBios  = new Item_DeviceFirmware();
         while ($data = $DB->fetchArray($result)) {
+            if (empty($data['bios_date'])) {
+                continue; // Ignore invalid dates
+            }
+
             $key = md5($data['bios_date'] . $data['bios_version'] . $data['bios_manufacturers_id']);
             if (!isset($bioses[$key])) {
                 //look for an existing BIOS in the database
