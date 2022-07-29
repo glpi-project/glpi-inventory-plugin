@@ -689,6 +689,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     ['column_name'  => 'itemtype'],
                     ['column_name'  => ['LIKE', 'itemtype_%']],
                 ],
+                // Handle edge case where an id column (i.e. a kind of foreign key) is prefixed by `itemtype_`.
+                ['NOT' => ['column_name'  => ['LIKE', '%_id']]],
             ],
             'ORDER'  => 'TABLE_NAME',
         ]
