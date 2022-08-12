@@ -294,6 +294,8 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
     PluginGlpiinventoryInventoryComputerStat::init();
 
+    installDashboard();
+
     /*
      * Define when install agent_base_url in entity, unless:
      *  - it is already defined,
