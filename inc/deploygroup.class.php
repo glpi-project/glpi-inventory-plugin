@@ -648,7 +648,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         if ($getAll) {
             $computers_params['export_all'] = true;
         }
-        return Search::manageParams('Computer', $computers_params);
+
+        $computers_params["reset"] = true;
+        return Search::manageParams('Computer', $computers_params, true, false);
+
     }
 
 
