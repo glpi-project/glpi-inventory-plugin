@@ -121,7 +121,8 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         Search::constructSQL($data);
 
        // Use our specific constructDatas function rather than Glpi function
-        PluginGlpiinventorySearch::constructDatas($data);
+        PluginGlpiinventorySearch::constructDatas($data, true);
+
 
        // Restore pagination parameters
         foreach ($pagination_params as $key => $value) {
