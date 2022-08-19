@@ -710,6 +710,11 @@ taskjobs.update_logs = function (data) {
          targets_selector = job_selector + ' .targets_block';
 
          var targets_cpt = 0;
+
+         if(job_v.targets.length === 0) {
+            $(targets_selector).html('The preparation of the task did not return any targets');
+         }
+
          $.each( job_v.targets, function( target_i, target_v) {
             target_id = target_i+ '_' + targets_cpt;
             targets_cpt++;
