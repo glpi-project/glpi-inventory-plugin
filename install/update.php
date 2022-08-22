@@ -5787,7 +5787,8 @@ function do_computeroperatingsystem_migration($migration)
          5174 => 64, //Kernel name
          5175 => 48, //Kernel version
          5176 => 41, //Service pack
-         5177 => 63  //OS edition
+         5177 => 63, //OS edition
+         5150 => 9   //Last Update
         ];
         foreach ($sopts as $oldid => $newid) {
             $iterator = $DB->request(
