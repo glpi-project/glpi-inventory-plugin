@@ -129,7 +129,8 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjoblogs` (
   `state` int NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `plugin_glpiinventory_taskjobstates_id` (`plugin_glpiinventory_taskjobstates_id`,`state`)
+  KEY `plugin_glpiinventory_taskjobstates_id` (`plugin_glpiinventory_taskjobstates_id`, `state`),
+  KEY `item` (`itemtype`, `items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
