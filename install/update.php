@@ -1147,7 +1147,21 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
 
     installDashboard();
 
+    // Add missing index on `glpi_plugin_glpiinventory_taskjoblogs`
+    $migration = addTaskJobLogIndex($migration);
+
     $migration->executeMigration();
+}
+
+function addTaskJobLogIndex(Migration $migration)
+{
+    $migration->addKey(
+        "glpi_plugin_glpiinventory_taskjoblogs",
+        ['itemtype', 'items_id'],
+        'item'
+    );
+
+    return $migration;
 }
 
 function installDashboard()
