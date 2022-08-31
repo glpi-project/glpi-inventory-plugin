@@ -2055,6 +2055,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         global $DB;
 
+        if (!Session::haveRight('plugin_glpiinventory_selfpackage', READ)) {
+            return false;
+        }
+
         $table = "glpi_plugin_glpiinventory_deploypackages";
         $where = " WHERE `" . $table . "`.`plugin_glpiinventory_deploygroups_id` > 0 "
               . " AND (";

@@ -198,6 +198,8 @@ class PackageSelfDeployTest extends TestCase
         $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
         $pfDeployGroup          = new PluginGlpiinventoryDeployGroup();
 
+        $_SESSION['glpiactiveprofile']['plugin_glpiinventory_selfpackage'] = READ;
+
         $pfDeployGroup->getFromDBByCrit(['name' => 'all']);
 
         $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
@@ -227,6 +229,8 @@ class PackageSelfDeployTest extends TestCase
         $pfDeployPackage_Group = new PluginGlpiinventoryDeployPackage_Group();
         $group                 = new Group();
         $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
+
+        $_SESSION['glpiactiveprofile']['plugin_glpiinventory_selfpackage'] = READ;
 
         $pfDeployGroup->getFromDBByCrit(['name' => 'all']);
 
@@ -266,6 +270,8 @@ class PackageSelfDeployTest extends TestCase
         $pfDeployPackage      = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_User = new PluginGlpiinventoryDeployPackage_User();
         $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
+
+        $_SESSION['glpiactiveprofile']['plugin_glpiinventory_selfpackage'] = READ;
 
         $pfDeployGroup->getFromDBByCrit(['name' => 'all']);
 
