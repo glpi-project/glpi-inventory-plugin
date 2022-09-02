@@ -632,13 +632,10 @@ class PrinterUpdateTest extends TestCase
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
-        $expected = 1 + 1; //1 port + 1 management port
+        $expected = 1 ; //only 1 port //see https://github.com/glpi-project/glpi/pull/12197
         $this->assertEquals($expected, count($a_ports), 'Should have ' . $expected . 'ports');
 
         $a_port = array_pop($a_ports);
-        $mgmt_port = array_pop($a_ports);
-        $this->assertEquals('Management', $mgmt_port['name']);
-        $this->assertEquals('Management', $mgmt_port['name']);
 
         //Logical number should be 1
         $this->assertEquals(1, $a_port['logical_number'], 'Logical number changed to 1');
