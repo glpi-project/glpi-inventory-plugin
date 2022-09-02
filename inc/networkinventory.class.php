@@ -791,15 +791,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   WHERE `glpi_networkequipments`.`is_deleted`='0'
                        AND `snmpcredentials_id`!='0'";
-        if ($pfIPRange->fields['entities_id'] != '-1') {
-            $entities = "(" . $pfIPRange->fields['entities_id'];
-            foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
-                $entities .= ",$parent";
-            }
-            $entities .= ")";
-            $query .= " AND `glpi_networkequipments`.`entities_id` IN " .
-                     $entities . " ";
-        }
         $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                       BETWEEN inet_aton('" . $pfIPRange->fields['ip_start'] . "')
                       AND inet_aton('" . $pfIPRange->fields['ip_end'] . "') ";
@@ -829,14 +820,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                        AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                WHERE `glpi_printers`.`is_deleted`=0
                      AND `snmpcredentials_id`!='0'";
-        if ($pfIPRange->fields['entities_id'] != '-1') {
-            $entities = "(" . $pfIPRange->fields['entities_id'];
-            foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
-                $entities .= ",$parent";
-            }
-            $entities .= ")";
-            $query .= "AND `glpi_printers`.`entities_id` IN " . $entities . " ";
-        }
         $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                    BETWEEN inet_aton('" . $pfIPRange->fields['ip_start'] . "')
                    AND inet_aton('" . $pfIPRange->fields['ip_end'] . "') ";
