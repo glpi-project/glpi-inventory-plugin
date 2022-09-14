@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-28 09:13+0000\n"
+"POT-Creation-Date: 2022-09-14 13:03+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2022\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -42,7 +42,7 @@ msgstr "İşlem"
 msgid "Action label"
 msgstr "İşlem etiketi"
 
-#: b/deploy/index.php:140 inc/deploypackage.class.php:527
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "İşlemler"
 
@@ -58,7 +58,7 @@ msgstr "Aktör ögesi"
 msgid "Actor Type"
 msgstr "Aktör türü"
 
-#: inc/taskjobview.class.php:629 inc/taskjobview.class.php:671
+#: inc/taskjobview.class.php:657 inc/taskjobview.class.php:700
 msgid "Actors"
 msgstr "Aktörler"
 
@@ -94,9 +94,9 @@ msgstr "İşlemlerden sonra"
 msgid "After download"
 msgstr "İndirildikten sonra"
 
-#: inc/statediscovery.class.php:169 inc/taskjobstate.class.php:308
-#: inc/stateinventory.class.php:107 inc/taskjoblog.class.php:232
-#: inc/taskjoblog.class.php:423
+#: inc/statediscovery.class.php:169 inc/taskjoblog.class.php:232
+#: inc/taskjoblog.class.php:423 inc/taskjobstate.class.php:308
+#: inc/stateinventory.class.php:107
 msgid "Agent"
 msgstr "Ajan"
 
@@ -136,6 +136,10 @@ msgstr "Ajan yönetimi"
 msgid "Agents modules"
 msgstr "Ajan modülleri"
 
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert display timeout"
+msgstr ""
+
 #: inc/deployuserinteraction.class.php:471
 msgid "Alert displayed, no input required"
 msgstr "Uyarı görüntülendi, herhangi bir giriş gerekmiyor"
@@ -143,6 +147,10 @@ msgstr "Uyarı görüntülendi, herhangi bir giriş gerekmiyor"
 #: inc/deployuserinteraction.class.php:492
 msgid "Alert duration exceeded"
 msgstr "Uyarı süresi aşıldı"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert icon"
+msgstr ""
 
 #: inc/deployuserinteractiontemplate.class.php:469
 msgid "Alert timeout exceeded"
@@ -158,7 +166,7 @@ msgstr "Atanmış SNMP kimlik doğrulama bilgileri"
 
 #: inc/task.class.php:183
 msgid "Associated tasks"
-msgstr ""
+msgstr "İlgili görevler"
 
 #: inc/deploycheck.class.php:309 inc/deploycheck.class.php:466
 msgid "Audit label"
@@ -168,14 +176,14 @@ msgstr "Denetim etiketi"
 msgid "Audits"
 msgstr "Denetimler"
 
-#: inc/credentialip.class.php:131 inc/credentialip.class.php:154
 #: inc/profile.class.php:357 inc/credential.class.php:80
 #: inc/credential.class.php:180 inc/menu.class.php:359
+#: inc/credentialip.class.php:131 inc/credentialip.class.php:154
 msgid "Authentication for remote devices (VMware)"
 msgstr "Uzak aygıtlar için kimlik doğrulaması (VMware)"
 
-#: inc/taskjob.class.php:1038 inc/staticmisc.class.php:475
-#: inc/staticmisc.class.php:481
+#: inc/staticmisc.class.php:475 inc/staticmisc.class.php:481
+#: inc/taskjob.class.php:1038
 msgid "Auto managenement dynamic of agents"
 msgstr "Ajanın otomatik yönetim devinimi"
 
@@ -266,7 +274,7 @@ msgstr "İptal - Dene - Sürdür"
 msgid "Cancel job"
 msgstr "İş iptal edilsin"
 
-#: inc/taskjobview.class.php:706
+#: inc/taskjobview.class.php:735
 msgid "Cancel modifications"
 msgstr "Değişiklikleri iptal et"
 
@@ -308,7 +316,7 @@ msgstr "Ajanları temizle"
 msgid "Clean unused files"
 msgstr "Kullanılmayan dosyaları temizle"
 
-#: inc/taskjobview.class.php:657 inc/taskjobview.class.php:679
+#: inc/taskjobview.class.php:686 inc/taskjobview.class.php:708
 msgid "Clear list"
 msgstr "Listeyi temizle"
 
@@ -320,7 +328,7 @@ msgstr "Derle"
 msgid "Collect data"
 msgstr "Verileri derle"
 
-#: inc/staticmisc.class.php:690 inc/collect.class.php:59
+#: inc/collect.class.php:59 inc/staticmisc.class.php:690
 msgid "Collect information"
 msgstr "Bilgileri derle"
 
@@ -358,7 +366,7 @@ msgstr "Bilgisayar envanteri"
 
 #: inc/menu.class.php:309
 msgid "Computer collect rules"
-msgstr ""
+msgstr "Bilgisayar derleme kuralları"
 
 #: inc/menu.class.php:296
 msgid "Computer entity rules"
@@ -368,7 +376,7 @@ msgstr "Bilgisayar birim kuralları"
 msgid "Computer information"
 msgstr "Bilgisayar bilgileri"
 
-#: inc/collectrule.class.php:73 inc/profile.class.php:307
+#: inc/profile.class.php:307 inc/collectrule.class.php:73
 #: inc/collectrulecollection.class.php:72
 msgid "Computer information rules"
 msgstr "Bilgisayar bilgi kuralları"
@@ -389,7 +397,7 @@ msgstr "Yapılandırma"
 msgid "Configure SNMP credentials"
 msgstr "SNMP kimlik doğrulama bilgilerini yapılandır"
 
-#: inc/taskjobview.class.php:716
+#: inc/taskjobview.class.php:745
 msgid "Confirm the final deletion ?"
 msgstr "Silme işlemini onaylıyor musunuz?"
 
@@ -454,14 +462,14 @@ msgstr ""
 "İçe aktarma kurallarını belirleyin : aktarılsın ve yeni aygıtlar "
 "oluşturulsun (DİKKAT: Bilgisayar envanteri ile aynı kurallar)"
 
-#: inc/taskjob.class.php:983 inc/taskjob.class.php:1362
-#: inc/taskjoblog.class.php:445
+#: inc/taskjoblog.class.php:445 inc/taskjob.class.php:983
+#: inc/taskjob.class.php:1362
 msgid "Definition"
 msgstr "Açıklama"
 
-#: inc/taskjob.class.php:1409 inc/deploycheck.class.php:290
-#: inc/deployaction.class.php:251 inc/deployfile.class.php:237
-#: inc/deployuserinteraction.class.php:300 inc/taskjobview.class.php:284
+#: inc/deployaction.class.php:251 inc/deploycheck.class.php:290
+#: inc/taskjob.class.php:1409 inc/deployuserinteraction.class.php:300
+#: inc/deployfile.class.php:237 inc/taskjobview.class.php:284
 msgid "Delete"
 msgstr "Sil"
 
@@ -473,7 +481,7 @@ msgstr "\"xxx\" gündür sunucu ile bağlantı kurmayan ajanlar silinsin."
 msgid "Delete directory"
 msgstr "Klasörü sil"
 
-#: inc/taskjobview.class.php:662 inc/taskjobview.class.php:684
+#: inc/taskjobview.class.php:691 inc/taskjobview.class.php:713
 msgid "Delete selected items"
 msgstr "Seçilmiş ögeleri sil"
 
@@ -485,7 +493,7 @@ msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
 msgid "Delete tasks logs after"
 msgstr "Şundan sonra görev günlükleri silinsin"
 
-#: inc/menu.class.php:427 hook.php:48
+#: hook.php:48 inc/menu.class.php:427
 msgid "Deploy"
 msgstr "dağıt"
 
@@ -549,7 +557,7 @@ msgstr "Disk ya da klasör"
 msgid "Don't wakeup"
 msgstr "Uyandırma"
 
-#: inc/deploygroup.class.php:86 inc/deploygroup.class.php:723
+#: inc/deploygroup.class.php:86 inc/deploygroup.class.php:725
 msgid "Dynamic group"
 msgstr "Devingen grup"
 
@@ -565,7 +573,8 @@ msgstr "Bu görev etkin olduğundan düzenlenemez"
 msgid "Enable deploy on demand for the following group"
 msgstr "Şu grup için isteğe göre dağıtım kullanılsın"
 
-#: inc/iprange.class.php:149 inc/iprange.class.php:237
+#: templates/forms/iprange.html.twig inc/iprange.class.php:149
+#: inc/iprange.class.php:237
 msgid "End of IP range"
 msgstr "IP aralığının sonu"
 
@@ -615,7 +624,7 @@ msgstr "Dışa aktar"
 
 #: inc/taskview.class.php:104
 msgid "Export task result"
-msgstr ""
+msgstr "Görev sonuçlarını dışa aktar"
 
 #: inc/config.class.php:345
 msgid "Extra-debug"
@@ -728,7 +737,7 @@ msgstr "Alt klasörler"
 msgid "Force start"
 msgstr "Başlatmaya zorla"
 
-#: inc/taskjob.class.php:1432 inc/taskjoblog.class.php:359
+#: inc/taskjoblog.class.php:359 inc/taskjob.class.php:1432
 msgid "Force the end"
 msgstr "Durmaya zorla"
 
@@ -758,18 +767,18 @@ msgstr "Boş alan şundan büyük olan"
 msgid "From"
 msgstr "Nereden"
 
-#: report/not_queried_recently.php:42 report/switch_ports.history.php:41
-#: report/ports_date_connections.php:40 report/computer_last_inventory.php:40
+#: report/switch_ports.history.php:41 report/not_queried_recently.php:42
+#: report/computer_last_inventory.php:40 report/ports_date_connections.php:40
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: inc/menu.class.php:53 front/stateinventory.php:37 front/task.form.php:42
-#: front/menu_snmpinventory.php:38 front/collectrule.php:38
-#: front/taskjoblog.php:37 front/menu.php:38 front/collect.php:37
-#: front/taskjob.form.php:39 front/task.php:38 front/timeslot.php:40
-#: front/statediscovery.php:37 front/taskjob.php:37 front/iprange.php:37
-#: front/iprange.form.php:39 front/collectrule.form.php:37
-#: front/agentmodule.form.php:37 index.php:48
+#: index.php:48 front/agentmodule.form.php:37 front/collectrule.form.php:37
+#: front/taskjob.form.php:39 front/statediscovery.php:37
+#: front/task.form.php:42 front/iprange.php:37 front/timeslot.php:40
+#: front/iprange.form.php:39 front/menu_snmpinventory.php:38
+#: front/taskjoblog.php:37 front/task.php:38 front/collectrule.php:38
+#: front/stateinventory.php:37 front/taskjob.php:37 front/menu.php:38
+#: front/collect.php:37 inc/menu.class.php:53
 msgid "GLPI Inventory"
 msgstr "GLPI envanter"
 
@@ -781,8 +790,8 @@ msgstr "Genel"
 msgid "General configuration"
 msgstr "Genel ayarlar"
 
-#: inc/deploytaskjob.class.php:216 inc/profile.class.php:419
-#: inc/menu.class.php:218 front/deploygroup.php:38
+#: front/deploygroup.php:38 inc/profile.class.php:419
+#: inc/deploytaskjob.class.php:216 inc/menu.class.php:218
 msgid "Groups of computers"
 msgstr "Bilgisayar grupları"
 
@@ -802,13 +811,12 @@ msgstr "Bu bilgisayarda değilim: Sunucudan uyandır"
 msgid "I'm on this computer: local wakeup"
 msgstr "Bu bilgisayardayım: Yerel olarak uyandır"
 
-#: inc/iprange.class.php:88 inc/iprange.class.php:91
 #: inc/staticmisc.class.php:372 inc/staticmisc.class.php:406
-#: inc/menu.class.php:335
+#: inc/menu.class.php:335 inc/iprange.class.php:88 inc/iprange.class.php:91
 msgid "IP Ranges"
 msgstr "IP aralıkları"
 
-#: inc/iprange.class.php:118 inc/profile.class.php:354
+#: inc/profile.class.php:354 inc/iprange.class.php:118
 msgid "IP range configuration"
 msgstr "IP aralığı ayarları"
 
@@ -824,7 +832,7 @@ msgstr "Yazılmamış aygıtlarınız varsa, yönetilmeyen aygıtlar olarak alı
 msgid "Ignore"
 msgstr "Yok say"
 
-#: inc/deploypackage.class.php:150 inc/menu.class.php:154
+#: inc/menu.class.php:154 inc/deploypackage.class.php:150
 msgid "Import"
 msgstr "İçe aktar"
 
@@ -864,9 +872,17 @@ msgstr "Eski işler katılsın"
 msgid "Info"
 msgstr "Bilgiler"
 
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction format"
+msgstr ""
+
 #: inc/deployuserinteraction.class.php:212
 msgid "Interaction label"
 msgstr "Etkileşim etiketi"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction type"
+msgstr ""
 
 #: inc/profile.class.php:184
 msgid "Inventory"
@@ -884,9 +900,9 @@ msgstr "Envanter başlatıldı"
 msgid "JSON package representation"
 msgstr "JSON paketi gösterimi"
 
-#: inc/taskjob.class.php:58 inc/task.class.php:2128
-#: inc/taskjobstate.class.php:307 inc/agentwakeup.class.php:59
-#: inc/taskjoblog.class.php:190
+#: inc/task.class.php:2128 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
+#: inc/taskjobstate.class.php:307
 msgid "Job"
 msgstr "İş"
 
@@ -902,7 +918,7 @@ msgstr "İş %1$s kullanıcısı tarafından iptal edildi"
 
 #: inc/taskjobview.class.php:69
 msgid "Job configuration"
-msgstr ""
+msgstr "İş yapılandırması"
 
 #: inc/taskjobstate.class.php:125
 msgid "Job executions"
@@ -949,6 +965,10 @@ msgstr "En büyük dosya boyutu"
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Bir görevin uyandıracağı en fazla ajan sayısı"
 
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Maximum number of retry allowed"
+msgstr ""
+
 #: inc/taskjobstate.class.php:632
 msgid "Maximum number of retry reached: force deployment"
 msgstr "En fazla yeniden deneme sayısına ulaşıldı: Zorla dağıtılsın"
@@ -966,12 +986,12 @@ msgstr "dakika"
 msgid "Mio"
 msgstr "MB"
 
-#: inc/deploymirror.class.php:259
+#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:259
 msgid "Mirror server address"
 msgstr "Yansı sunucu adresi"
 
-#: inc/deploymirror.class.php:72 inc/profile.class.php:334
-#: inc/menu.class.php:409
+#: inc/profile.class.php:334 inc/menu.class.php:409
+#: inc/deploymirror.class.php:72
 msgid "Mirror servers"
 msgstr "Yansı sunucular"
 
@@ -983,13 +1003,13 @@ msgstr "Bir geçici klasör bulunamadı"
 msgid "Modification Denied"
 msgstr "Değişiklik reddedildi"
 
-#: inc/agentmodule.class.php:110 inc/agentmodule.class.php:213
-#: inc/agentmodule.class.php:215 hook.php:48 hook.php:55 hook.php:62
-#: hook.php:69 hook.php:76 hook.php:83 hook.php:90
+#: hook.php:48 hook.php:55 hook.php:62 hook.php:69 hook.php:76 hook.php:83
+#: hook.php:90 inc/agentmodule.class.php:110 inc/agentmodule.class.php:213
+#: inc/agentmodule.class.php:215
 msgid "Module"
 msgstr "Modül"
 
-#: inc/taskjobview.class.php:597
+#: inc/taskjobview.class.php:613
 msgid "Module method"
 msgstr "Modül yöntemi"
 
@@ -1017,8 +1037,8 @@ msgstr "Ad"
 msgid "Network Inventory"
 msgstr "Ağ envanteri"
 
-#: inc/staticmisc.class.php:81 inc/config.class.php:431
-#: inc/config.class.php:451 hook.php:83
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:431
+#: inc/config.class.php:451
 msgid "Network discovery"
 msgstr "Ağ keşfi"
 
@@ -1030,8 +1050,8 @@ msgstr "Ağ aygıtı SNMP"
 msgid "Network inventory"
 msgstr "Ağ envanteri"
 
-#: inc/staticmisc.class.php:87 inc/agentmodule.class.php:133
-#: inc/agentmodule.class.php:241 inc/config.class.php:440
+#: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
+#: inc/staticmisc.class.php:87 inc/config.class.php:440
 #: inc/config.class.php:459
 msgid "Network inventory (SNMP)"
 msgstr "Ağ envanteri (SNMP)"
@@ -1161,7 +1181,7 @@ msgstr "Paket dağıtımı"
 msgid "Package exported in"
 msgstr "Paket şuraya dışa aktarıldı"
 
-#: inc/config.class.php:232 inc/menu.class.php:402
+#: inc/menu.class.php:402 inc/config.class.php:232
 msgid "Package management"
 msgstr "Paket yönetimi"
 
@@ -1213,9 +1233,9 @@ msgid "Prepare for install"
 msgstr "Kurulum için hazırla"
 
 #: inc/taskview.class.php:237 inc/statediscovery.class.php:245
-#: inc/taskjobstate.class.php:139 inc/deploypackage.class.php:1375
-#: inc/stateinventory.class.php:174 inc/taskjoblog.class.php:96
-#: inc/taskjoblog.class.php:546 inc/taskjoblog.class.php:710
+#: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
+#: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
+#: inc/stateinventory.class.php:174 inc/deploypackage.class.php:1375
 msgid "Prepared"
 msgstr "Hazırlanmış"
 
@@ -1248,7 +1268,7 @@ msgstr "Özellikler"
 msgid "Property"
 msgstr "Varlık"
 
-#: inc/taskjobview.class.php:713
+#: inc/taskjobview.class.php:742
 msgid "Purge"
 msgstr "Sil"
 
@@ -1272,8 +1292,8 @@ msgstr "Yinelenen"
 msgid "Regex"
 msgstr "Kurallı ifade"
 
-#: inc/deploycheck.class.php:55 inc/collect.class.php:148
-#: inc/collect.class.php:196
+#: inc/collect.class.php:148 inc/collect.class.php:196
+#: inc/deploycheck.class.php:55
 msgid "Registry"
 msgstr "Kayıt defteri"
 
@@ -1334,6 +1354,10 @@ msgstr "Yeniden deneme sayısı %d"
 msgid "Retry - Cancel"
 msgstr "Yeniden dene - İptal"
 
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Retry job after"
+msgstr ""
+
 #: inc/deployuserinteractiontemplate.class.php:231
 msgid "Retry job later"
 msgstr "İş daha sonra yeniden başlatılsın"
@@ -1374,7 +1398,7 @@ msgstr "SHA-512 karma değeri şuna eşit olan"
 msgid "SHA-512 hash value mismatch"
 msgstr "SHA-512 karma değeri şuna eşit olmayan"
 
-#: inc/iprange_snmpcredential.class.php:213 inc/menu.class.php:351
+#: inc/menu.class.php:351 inc/iprange_snmpcredential.class.php:213
 msgid "SNMP credentials"
 msgstr "SNMP kimlik doğrulama bilgileri"
 
@@ -1447,8 +1471,8 @@ msgid "Show/Hide details"
 msgstr "Ayrıntıları görüntüle./ gizle"
 
 #: inc/collect_file_content.class.php:97
-#: inc/collect_file_content.class.php:139 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/collect.class.php:249
+#: inc/collect_file_content.class.php:139 inc/collect.class.php:249
+#: inc/collect_file.class.php:65 inc/collect_file.class.php:147
 #: inc/deployfile.class.php:1042
 msgid "Size"
 msgstr "Boyut"
@@ -1461,7 +1485,8 @@ msgstr "Yazılım dağıtma"
 msgid "Software version"
 msgstr "Yazılım sürümü"
 
-#: inc/iprange.class.php:142 inc/iprange.class.php:234
+#: templates/forms/iprange.html.twig inc/iprange.class.php:142
+#: inc/iprange.class.php:234
 msgid "Start of IP range"
 msgstr "IP aralığının başlangıcı"
 
@@ -1469,9 +1494,9 @@ msgstr "IP aralığının başlangıcı"
 msgid "Start time"
 msgstr "Başlangıç zamanı"
 
-#: inc/statediscovery.class.php:250 inc/stateinventory.class.php:179
-#: inc/taskjoblog.class.php:97 inc/taskjoblog.class.php:552
-#: inc/taskjoblog.class.php:660 inc/taskjoblog.class.php:714
+#: inc/statediscovery.class.php:250 inc/taskjoblog.class.php:97
+#: inc/taskjoblog.class.php:552 inc/taskjoblog.class.php:660
+#: inc/taskjoblog.class.php:714 inc/stateinventory.class.php:179
 msgid "Started"
 msgstr "Başlatılmış"
 
@@ -1479,7 +1504,7 @@ msgstr "Başlatılmış"
 msgid "Starting date"
 msgstr "Başlangıç tarihi"
 
-#: inc/deploygroup.class.php:85 inc/deploygroup.class.php:705 hook.php:94
+#: hook.php:94 inc/deploygroup.class.php:85 inc/deploygroup.class.php:707
 msgid "Static group"
 msgstr "Durağan grup"
 
@@ -1495,7 +1520,7 @@ msgstr "Hedef öge"
 msgid "Target Type"
 msgstr "Hedef türü"
 
-#: inc/iprange.class.php:289 inc/deploygroup.class.php:208 hook.php:450
+#: hook.php:450 inc/deploygroup.class.php:208 inc/iprange.class.php:289
 msgid "Target a task"
 msgstr "Bir görevi hedefle"
 
@@ -1505,14 +1530,14 @@ msgid_plural "Targets for deploy on demand"
 msgstr[0] "İsteğe bağlı dağıtım hedefi"
 msgstr[1] "İsteğe bağlı dağıtım hedefleri"
 
-#: inc/taskjobview.class.php:617 inc/taskjobview.class.php:649
+#: inc/taskjobview.class.php:645 inc/taskjobview.class.php:678
 msgid "Targets"
 msgstr "Hedefler"
 
-#: inc/taskview.class.php:161 inc/deploytask.class.php:58
-#: inc/deploytask.class.php:160 inc/profile.class.php:413
+#: inc/profile.class.php:413 inc/taskview.class.php:161
 #: inc/task.class.php:2071 inc/task.class.php:2111
-#: inc/statediscovery.class.php:168 inc/stateinventory.class.php:106
+#: inc/statediscovery.class.php:168 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160 inc/stateinventory.class.php:106
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Görev"
@@ -1553,11 +1578,11 @@ msgid_plural "The following tasks are running with this package"
 msgstr[0] "Bu paketle birlikte şu görev yürütülüyor"
 msgstr[1] "Bu paketle birlikte şu görevler yürütülüyor"
 
-#: inc/taskjobview.class.php:623
+#: inc/taskjobview.class.php:651
 msgid "The items that should be applied for this job."
 msgstr "Bu işin uygulanacağı ögeler."
 
-#: inc/taskjobview.class.php:634
+#: inc/taskjobview.class.php:662
 msgid "The items that should carry out those targets."
 msgstr "Bu hedeflere ulaşacak ögeler."
 
@@ -1605,13 +1630,13 @@ msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
 msgid "This task is active. delete denied"
 msgstr "Bu görev etkin olduğundan silinemez"
 
-#: inc/config.class.php:430 inc/config.class.php:439
-#: inc/statediscovery.class.php:174 inc/stateinventory.class.php:113
+#: inc/statediscovery.class.php:174 inc/config.class.php:430
+#: inc/config.class.php:439 inc/stateinventory.class.php:113
 msgid "Threads number"
 msgstr "İşlem sayısı"
 
-#: inc/timeslot.class.php:66 inc/timeslot.class.php:82
-#: inc/timeslotentry.class.php:82 inc/menu.class.php:264
+#: inc/menu.class.php:264 inc/timeslot.class.php:66 inc/timeslot.class.php:82
+#: inc/timeslotentry.class.php:82
 msgid "Time slot"
 msgstr "Zaman aralığı"
 
@@ -1651,8 +1676,8 @@ msgstr "Değer türü"
 msgid "Uncompress"
 msgstr "Ayıkla"
 
-#: inc/statediscovery.class.php:167 inc/taskjobstate.class.php:306
-#: inc/stateinventory.class.php:105 inc/taskjoblog.class.php:216
+#: inc/statediscovery.class.php:167 inc/taskjoblog.class.php:216
+#: inc/taskjobstate.class.php:306 inc/stateinventory.class.php:105
 msgid "Unique id"
 msgstr "Eşsiz kod"
 
@@ -1699,8 +1724,8 @@ msgid_plural "User interactions"
 msgstr[0] "Kullanıcı etkileşimi"
 msgstr[1] "Kullanıcı etkileşimleri"
 
-#: inc/profile.class.php:331 inc/deployuserinteractiontemplate.class.php:145
-#: inc/menu.class.php:416 front/deployuserinteractiontemplate.php:38
+#: front/deployuserinteractiontemplate.php:38 inc/profile.class.php:331
+#: inc/deployuserinteractiontemplate.class.php:145 inc/menu.class.php:416
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "Kullanıcı etkileşimi kalıbı"
@@ -1747,7 +1772,7 @@ msgstr "WMI varlığı"
 msgid "WMI value"
 msgstr "WMI değeri"
 
-#: inc/staticmisc.class.php:57 inc/profile.class.php:416
+#: inc/profile.class.php:416 inc/staticmisc.class.php:57
 msgid "Wake On LAN"
 msgstr "Ağdan başlatma"
 
@@ -1822,9 +1847,9 @@ msgstr "bulunan aygıt"
 msgid "devices queried"
 msgstr "sorgulanan aygıt"
 
-#: inc/taskjob.class.php:1397 inc/deploycheck.class.php:275
-#: inc/deployaction.class.php:236 inc/deployfile.class.php:223
-#: inc/deployuserinteraction.class.php:285
+#: inc/deployaction.class.php:236 inc/deploycheck.class.php:275
+#: inc/taskjob.class.php:1397 inc/deployuserinteraction.class.php:285
+#: inc/deployfile.class.php:223
 msgid "drag"
 msgstr "sürükleyin"
 
