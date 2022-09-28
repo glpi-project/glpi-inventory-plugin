@@ -316,6 +316,7 @@ function plugin_init_glpiinventory()
             $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
             if ($pfDeployPackage->canUserDeploySelf()) {
                 $PLUGIN_HOOKS['helpdesk_menu_entry']['glpiinventory'] = '/front/deploypackage.public.php';
+                $PLUGIN_HOOKS['helpdesk_menu_entry_icon']['glpiinventory'] = 'ti ti-package';
                 $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/views.css";
             }
         }
