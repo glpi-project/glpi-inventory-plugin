@@ -179,8 +179,8 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         echo "<td>";
         Dropdown::showFromArray('filter_nametype', [
           'none'  => __('Disabled', 'glpiinventory'),
-          'name'  => __('Non sentitive case', 'glpiinventory'),
-          'iname' => __('Sentitive case', 'glpiinventory')
+          'iname'  => __('Non sentitive case', 'glpiinventory'),
+          'name' => __('Sentitive case', 'glpiinventory')
          ]);
         echo "<input type='text' name='filter_name' value='' />";
         echo "</td>";
