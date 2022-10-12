@@ -869,6 +869,8 @@ function plugin_pre_item_purge_glpiinventory($parm)
     $rule = new RuleMatchedLog();
     $rule->deleteByCriteria(['itemtype' => $itemtype, 'items_id' => $items_id]);
 
+    Lockedfield::releaseLockForAsset($itemtype, $items_id);
+
     return $parm;
 }
 
