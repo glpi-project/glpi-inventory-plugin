@@ -140,7 +140,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
          'table'     => $this->getTable(),
          'field'     => 'reprepare_if_successful',
          'name'      => __(
-             'Re-prepare a target-actor if previous run is successful',
+             'Permit to re-prepare task on success',
              'glpiinventory'
          ),
          'datatype'  => 'bool',
