@@ -319,7 +319,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         $this->showTextField(__('Name'), "name");
         $this->showTextArea(__('Comments'), "comment");
         $this->showCheckboxField(
-            __('Permit to re-prepare task on success', 'glpiinventory'),
+            __('Permit to re-prepare task after run', 'glpiinventory'),
             "reprepare_if_successful"
         );
         if ($this->fields['is_deploy_on_demand']) {
