@@ -172,7 +172,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
                 $agents_id = $state['agents_id'];
                 if (isset($unavailableAgents[$agents_id])) {
                     continue;
-                 } elseif (isset($wakeupArray[$agents_id])) {
+                } elseif (isset($wakeupArray[$agents_id])) {
                     $counter++;
                 } else {
                     $agent->getFromDB($agents_id);
