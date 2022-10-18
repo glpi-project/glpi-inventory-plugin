@@ -88,8 +88,9 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     {
         global $DB;
 
-        $wakeupArray = [];
-        $tasks       = [];
+        $wakeupArray       = [];
+        $tasks             = [];
+        $unavailableAgents = [];
        //Get the maximum number of agent to wakeup,
        //as allowed in the general configuration
         $config = new PluginGlpiinventoryConfig();
@@ -169,7 +170,9 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
 
             foreach ($iterator2 as $state) {
                 $agents_id = $state['agents_id'];
-                if (isset($wakeupArray[$agents_id])) {
+                if (isset($unavailableAgents[$agents_id])) {
+                    continue;
+                } elseif (isset($wakeupArray[$agents_id])) {
                     $counter++;
                 } else {
                     $agent->getFromDB($agents_id);
@@ -177,6 +180,9 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
                     if ($statusAgent['answer'] == 'waiting') {
                         $wakeupArray[$agents_id] = $agents_id;
                         $counter++;
+                    } else {
+                        $unavailableAgents[$agents_id] = $agents_id;
+                        continue;
                     }
                 }
 
