@@ -149,7 +149,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         echo "<div class='alert alert-primary d-flex align-items-center' role='alert'>";
         echo "<i class='fas fa-info-circle fa-xl'></i>";
         echo "<span class='ms-2'>";
-        echo "Make a search to get desired computer, then use massive actions and use <strong>Add to static group</strong>.";
+        echo __('Make a search to get desired computer, then use massive actions and use <strong>Add to static group</strong>');
         echo "</span>";
         echo "</div>";
 
