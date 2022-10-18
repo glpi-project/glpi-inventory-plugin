@@ -145,6 +145,17 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     */
     public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
     {
+
+        echo "<div class='alert alert-primary d-flex align-items-center' role='alert'>";
+        echo "<i class='fas fa-info-circle fa-xl'></i>";
+        echo "<span class='ms-2'>";
+        echo sprintf(
+            __('Make a search to get desired computer, then use massive actions and use %s', 'glpiinventory'),
+            '<strong>' . __('Add to static group', 'glpiinventory') . '</strong>'
+        );
+        echo "</span>";
+        echo "</div>";
+
        // WITH checking post values
         $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, true);
        //If metacriteria array is empty, remove it as it displays the metacriteria form,
