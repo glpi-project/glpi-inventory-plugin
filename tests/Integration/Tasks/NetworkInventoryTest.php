@@ -289,7 +289,7 @@ class NetworkInventoryTest extends TestCase
         $ipranges_id = $pfIPRange->add($input);
         $this->assertNotFalse($ipranges_id);
 
-       // Allow all agents to do network discovery
+       // Allow all agents to do network inventory
         $module = new PluginGlpiinventoryAgentmodule();
         $module->getFromDBByCrit(['modulename' => 'NETWORKINVENTORY']);
         $module->update([

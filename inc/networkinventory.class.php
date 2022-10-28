@@ -763,7 +763,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @param integer $ipranges_id
     * @return array
     */
-    public function getDevicesOfIPRange($ipranges_id)
+    public function getDevicesOfIPRange($ipranges_id, bool $restrict_entity = true)
     {
         global $DB;
 
@@ -791,7 +791,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   WHERE `glpi_networkequipments`.`is_deleted`='0'
                        AND `snmpcredentials_id`!='0'";
-        if ($pfIPRange->fields['entities_id'] != '-1') {
+        if ($pfIPRange->fields['entities_id'] != '-1' && $restrict_entity) {
             $entities = "(" . $pfIPRange->fields['entities_id'];
             foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
                 $entities .= ",$parent";
@@ -829,7 +829,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                        AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                WHERE `glpi_printers`.`is_deleted`=0
                      AND `snmpcredentials_id`!='0'";
-        if ($pfIPRange->fields['entities_id'] != '-1') {
+        if ($pfIPRange->fields['entities_id'] != '-1' && $restrict_entity) {
             $entities = "(" . $pfIPRange->fields['entities_id'];
             foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
                 $entities .= ",$parent";

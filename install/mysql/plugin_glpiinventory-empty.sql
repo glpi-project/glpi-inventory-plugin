@@ -110,6 +110,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjobs` (
   `rescheduled_taskjob_id` int unsigned NOT NULL DEFAULT '0',
   `statuscomments` text DEFAULT NULL,
   `enduser` text DEFAULT NULL,
+  `restrict_to_task_entity` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_tasks_id` (`plugin_glpiinventory_tasks_id`),
   KEY `entities_id` (`entities_id`),

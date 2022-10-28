@@ -791,6 +791,9 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 )
             );
         }
+
+        //new field
+        $migration->addField('glpi_plugin_glpiinventory_taskjobs', 'restrict_to_task_entity', "tinyint NOT NULL DEFAULT '1'", ['value'   => '1']);
     }
 
     // Use core configuration entries

@@ -619,12 +619,22 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         if (!is_null("method")) {
             $options['value'] = $this->fields["method"];
         }
+
+        $options["on_change"] = "task_methode_change(this.value)";
+
         $modules_methods_rand = Dropdown::showFromArray(
             "method",
             $modules_methods,
             $options
         );
         echo "</div>";
+
+        echo Html::scriptBlock("
+        function task_methode_change(val) {
+           var display = (val != 'networkinventory') ? 'none' : '';
+           document.getElementById('entity_restrict').style.display = display;
+        }
+     ");
 
         if (!$new_item) {
             echo "<script type='text/javascript'>";
@@ -633,7 +643,32 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
             echo "<div style='display:none' id='method_selected'>" . $this->fields['method'] . "</div>";
         }
+
+        $style = "style='display:none'";
+        if (!$new_item && $this->fields['method'] == "networkinventory") {
+            $style = "";
+        }
+
+        echo "<div " . $style . "id='entity_restrict' class='mb-2 col-20 col-sm-10'>";
+        echo "<label>" . __('Restrict scope to task entity', 'glpiinventory') . "&nbsp;</label>";
+
+        if (!isset($options['width'])) {
+            $options['width'] = '40%';
+        }
+        $options['name'] = 'restrict_to_task_entity';
+        if (!is_null("restrict_to_task_entity")) {
+            $options['value'] = 1;
+            $options['checked'] = $this->fields["restrict_to_task_entity"];
+        }
+        echo Html::getCheckbox($options);
+        echo Html::showToolTip(__('Only for IPRange, restrict target to task entity. Unchecked if assets are not in the same entity as the task'), ['display' => true]);
+        echo "</div>";
+
         echo "</div>"; // end of first inputs column wrapper
+
+
+
+
 
        // Display Definition choices
         if (!$new_item) {
