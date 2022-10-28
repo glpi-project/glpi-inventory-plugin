@@ -620,7 +620,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $options['value'] = $this->fields["method"];
         }
 
-        $options["on_change"] = "task_methode_change(this.value)";
+        $options["on_change"] = "task_method_change(this.value)";
 
         $modules_methods_rand = Dropdown::showFromArray(
             "method",
@@ -630,7 +630,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "</div>";
 
         echo Html::scriptBlock("
-        function task_methode_change(val) {
+        function task_method_change(val) {
            var display = (val != 'networkinventory') ? 'none' : '';
            document.getElementById('entity_restrict').style.display = display;
         }
@@ -665,10 +665,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "</div>";
 
         echo "</div>"; // end of first inputs column wrapper
-
-
-
-
 
        // Display Definition choices
         if (!$new_item) {
