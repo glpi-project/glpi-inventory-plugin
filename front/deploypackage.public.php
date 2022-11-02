@@ -34,7 +34,9 @@
 include("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Session::checkRight('plugin_glpiinventory_selfpackage', READ);
+if (Session::getCurrentInterface() !== 'helpdesk') {
+    Session::checkRight('plugin_glpiinventory_selfpackage', READ);
+}
 
 Html::helpHeader(
     __('GLPI Inventory'),
