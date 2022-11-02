@@ -601,7 +601,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
          "SELECT",
          "     task.`id`, task.`name`, task.`reprepare_if_successful`, ",
          "     job.`id`, job.`name`, job.`method`, ",
-         "     job.`targets`, job.`actors`",
+         "     job.`targets`, job.`actors`,job.`restrict_to_task_entity`",
          "FROM `glpi_plugin_glpiinventory_taskjobs` job",
          "LEFT JOIN `glpi_plugin_glpiinventory_tasks` task",
          "  ON task.`id` = job.`plugin_glpiinventory_tasks_id`",
@@ -682,7 +682,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     if ($item_type == 'PluginGlpiinventoryIPRange') {
                         unset($targets[$keyt]);
                         // In this case get devices of this iprange
-                        $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
+                        $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id, $result['job']['restrict_to_task_entity']);
                         $newtargets = array_merge($newtargets, $deviceList);
                     }
                 }
@@ -1102,7 +1102,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             `job`.`method` as 'job.method',
             `job`.`targets` as 'job.targets',
             `task`.`id` as 'task.id',
-            `task`.`name` as 'task.name'
+            `task`.`name` as 'task.name',
+            `job`.`restrict_to_task_entity` as 'job.restrict_to_task_entity'
             FROM `glpi_plugin_glpiinventory_taskjobs` as job
             LEFT JOIN `glpi_plugin_glpiinventory_tasks` as task
               ON job.`plugin_glpiinventory_tasks_id` = task.`id` $active_task $tasks_list $entity_restrict_task
@@ -1185,7 +1186,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     if ($item_type == 'PluginGlpiinventoryIPRange') {
                         unset($targets[$keyt]);
                         // In this case get devices of this iprange
-                        $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
+                        $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id, $result['job.restrict_to_task_entity']);
                         $newtargets = array_merge($newtargets, $deviceList);
                     }
                 }
