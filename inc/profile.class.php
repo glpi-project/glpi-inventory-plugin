@@ -377,12 +377,12 @@ class PluginGlpiinventoryProfile extends Profile
           /*['itemtype'  => 'PluginGlpiinventoryInventoryComputerImportXML',
                 'label'     => __('computer XML manual import', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_importxml'],*/
-          ['rights'    => [READ => __('Read')],
+          /*['rights'    => [READ => __('Read')],
                 'label'     => __('Printers report', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_reportprinter'],
-          ['rights'    => [READ => __('Read')],
+                'field'     => 'plugin_glpiinventory_reportprinter'],*/
+          /*['rights'    => [READ => __('Read')],
                 'label'     => __('Network report'),
-                'field'     => 'plugin_glpiinventory_reportnetworkequipment']
+                'field'     => 'plugin_glpiinventory_reportnetworkequipment']*/
         ];
         return $rights;
     }
@@ -399,12 +399,12 @@ class PluginGlpiinventoryProfile extends Profile
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Menu', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_menu'],
-          ['itemtype'  => 'Agent',
+          /*['itemtype'  => 'Agent',
                 'label'     => __('Agents', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_agent'],
-          ['rights'    => [READ => __('Read')],
+                'field'     => 'plugin_glpiinventory_agent'],*/
+          /*['rights'    => [READ => __('Read')],
                 'label'     => __('Agent remote control', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_remotecontrol'],
+                'field'     => 'plugin_glpiinventory_remotecontrol'],*/
           ['rights'    => [READ => __('Read'), UPDATE => __('Update')],
                 'itemtype'  => 'PluginGlpiinventoryConfig',
                 'label'     => __('Configuration', 'glpiinventory'),
