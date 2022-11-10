@@ -110,7 +110,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $input['component_simcard']      = 1;
         $input['component_powersupply']  = 1;
         $input['states_id_default']      = 0;
-        $input['states_id_snmp_default'] = 0;
         $input['location']               = 0;
         $input['group']                  = 0;
         $input['create_vm']              = 0;
@@ -415,16 +414,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo __('Network options', 'glpiinventory');
         echo "</th>";
         echo "</tr>";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Default status', 'glpiinventory') . "</td>";
-        echo "<td>";
-        Dropdown::show(
-            'State',
-            ['name'   => 'states_id_snmp_default',
-            'value'  => $pfConfig->getValue('states_id_snmp_default')]
-        );
-        echo "</td><td colspan='2'></td></tr>";
 
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;" .
