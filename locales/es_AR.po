@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 13:03+0000\n"
+"POT-Creation-Date: 2022-11-14 09:35+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Juan Fortuna <juan.fortuna@gmail.com>, 2022\n"
 "Language-Team: Spanish (Argentina) (https://www.transifex.com/teclib/teams/28042/es_AR/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Language: es_AR\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: inc/task.class.php:2257 inc/task.class.php:2300
+#: inc/task.class.php:2258 inc/task.class.php:2301
 msgid ", actors: "
 msgstr ",actores:"
 
@@ -58,7 +58,7 @@ msgstr "Elemento del actor"
 msgid "Actor Type"
 msgstr "Tipo de actor"
 
-#: inc/taskjobview.class.php:657 inc/taskjobview.class.php:700
+#: inc/taskjobview.class.php:688 inc/taskjobview.class.php:731
 msgid "Actors"
 msgstr "Actores"
 
@@ -82,7 +82,7 @@ msgstr "Añadir tarea"
 msgid "Add the item"
 msgstr "Añadir el elemento"
 
-#: hook.php:454
+#: hook.php:454 inc/deploygroup_staticdata.class.php:154
 msgid "Add to static group"
 msgstr "Agregar a grupo estático"
 
@@ -94,9 +94,9 @@ msgstr "Acciones posteriores"
 msgid "After download"
 msgstr "Después de descargar"
 
-#: inc/statediscovery.class.php:169 inc/taskjoblog.class.php:232
-#: inc/taskjoblog.class.php:423 inc/taskjobstate.class.php:308
-#: inc/stateinventory.class.php:107
+#: inc/statediscovery.class.php:169 inc/taskjobstate.class.php:308
+#: inc/stateinventory.class.php:107 inc/taskjoblog.class.php:232
+#: inc/taskjoblog.class.php:423
 msgid "Agent"
 msgstr "Agente"
 
@@ -104,13 +104,9 @@ msgstr "Agente"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Error al comunicar con el agente, imposible iniciar el agente."
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Agent port"
 msgstr "Puerto del agente"
-
-#: inc/profile.class.php:406
-msgid "Agent remote control"
-msgstr "Control remoto de los agentes"
 
 #: inc/taskjobstate.class.php:141
 msgid "Agent replied with data to the server"
@@ -123,10 +119,6 @@ msgstr "Agente parado/averiado"
 #: inc/taskview.class.php:365
 msgid "Agent wakeup interval (in minutes)"
 msgstr "Intervalo de activación del agente (en minutos)"
-
-#: inc/profile.class.php:403
-msgid "Agents"
-msgstr "Agentes"
 
 #: inc/menu.class.php:212
 msgid "Agents management"
@@ -176,8 +168,8 @@ msgstr "Etiqueta de auditoría"
 msgid "Audits"
 msgstr "Exámenes"
 
-#: inc/profile.class.php:357 inc/credential.class.php:80
-#: inc/credential.class.php:180 inc/menu.class.php:359
+#: inc/profile.class.php:357 inc/menu.class.php:359
+#: inc/credential.class.php:80 inc/credential.class.php:180
 #: inc/credentialip.class.php:131 inc/credentialip.class.php:154
 msgid "Authentication for remote devices (VMware)"
 msgstr "Autenticación en servidores VMware ESX"
@@ -270,21 +262,21 @@ msgstr "Información de cache"
 msgid "Cancel - Try - Continue"
 msgstr "Cancelar - Intentar - Continuar"
 
-#: inc/deployuserinteractiontemplate.class.php:232
 #: inc/deploypackage.class.php:1505
+#: inc/deployuserinteractiontemplate.class.php:232
 msgid "Cancel job"
 msgstr "Cancelar trabajo"
 
-#: inc/taskjobview.class.php:735
+#: inc/taskjobview.class.php:766
 msgid "Cancel modifications"
 msgstr "Cancelar modificaciones"
 
-#: inc/taskview.class.php:239 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1376
+#: inc/deploypackage.class.php:1376 inc/taskview.class.php:239
+#: inc/taskjobstate.class.php:144
 msgid "Cancelled"
 msgstr "Cancelado"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:388
 msgid "Change the status"
 msgstr "Cambiar de estado"
 
@@ -309,7 +301,7 @@ msgstr "Eleja"
 msgid "Class"
 msgstr "Clase"
 
-#: inc/config.class.php:392
+#: inc/config.class.php:391
 msgid "Clean agents"
 msgstr "Agentes limpios"
 
@@ -317,7 +309,7 @@ msgstr "Agentes limpios"
 msgid "Clean unused files"
 msgstr "Limpiar archivos no utilizados"
 
-#: inc/taskjobview.class.php:686 inc/taskjobview.class.php:708
+#: inc/taskjobview.class.php:717 inc/taskjobview.class.php:739
 msgid "Clear list"
 msgstr "Limpiar lista"
 
@@ -329,7 +321,7 @@ msgstr "Recopilar"
 msgid "Collect data"
 msgstr "Dato de colector"
 
-#: inc/collect.class.php:59 inc/staticmisc.class.php:690
+#: inc/staticmisc.class.php:690 inc/collect.class.php:59
 msgid "Collect information"
 msgstr "Información de colector"
 
@@ -377,12 +369,12 @@ msgstr "Reglas para criterios de existencia de la computadora"
 msgid "Computer information"
 msgstr "Información del ordenador"
 
-#: inc/profile.class.php:307 inc/collectrule.class.php:73
-#: inc/collectrulecollection.class.php:72
+#: inc/collectrulecollection.class.php:72 inc/profile.class.php:307
+#: inc/collectrule.class.php:73
 msgid "Computer information rules"
 msgstr "Reglas información de ordenador"
 
-#: inc/deploygroup_staticdata.class.php:297
+#: inc/deploygroup_staticdata.class.php:308
 msgid "Computers imported successfully from CSV file"
 msgstr ""
 "Las computadoras fueron importadas satisfactoriamente desde el archivo CSV"
@@ -399,7 +391,7 @@ msgstr "Configuración"
 msgid "Configure SNMP credentials"
 msgstr "Configurar credenciales SNMP"
 
-#: inc/taskjobview.class.php:745
+#: inc/taskjobview.class.php:776
 msgid "Confirm the final deletion ?"
 msgstr "¿Confirma la eliminación completa?"
 
@@ -430,7 +422,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Crear directorio"
 
-#: inc/task.class.php:2299
+#: inc/task.class.php:2300
 msgid "Created a deployment job, package: "
 msgstr "Tarea de despliegue creada, paquete;"
 
@@ -438,10 +430,6 @@ msgstr "Tarea de despliegue creada, paquete;"
 #: inc/collect_registry_content.class.php:216
 msgid "Data"
 msgstr "Dato"
-
-#: inc/config.class.php:420
-msgid "Default status"
-msgstr "Estado por defecto"
 
 #: inc/menu.class.php:490
 msgid "Define IP Ranges of your network + related SNMP credentials"
@@ -463,14 +451,14 @@ msgstr ""
 "Definir reglas para la importación: fusionar y crear nuevos dispositivos "
 "(CUIDADO: mismas reglas para inventario de equipo)"
 
-#: inc/taskjoblog.class.php:445 inc/taskjob.class.php:983
-#: inc/taskjob.class.php:1362
+#: inc/taskjob.class.php:983 inc/taskjob.class.php:1362
+#: inc/taskjoblog.class.php:445
 msgid "Definition"
 msgstr "Definición"
 
-#: inc/deployaction.class.php:251 inc/deploycheck.class.php:290
-#: inc/taskjob.class.php:1409 inc/deployuserinteraction.class.php:300
-#: inc/deployfile.class.php:237 inc/taskjobview.class.php:284
+#: inc/deployuserinteraction.class.php:300 inc/deployfile.class.php:237
+#: inc/deployaction.class.php:251 inc/taskjobview.class.php:284
+#: inc/taskjob.class.php:1409 inc/deploycheck.class.php:290
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -482,15 +470,15 @@ msgstr "Borrar agentes que no se han conectado al servidor desde \"xxx días."
 msgid "Delete directory"
 msgstr "Borrar directorio"
 
-#: inc/taskjobview.class.php:691 inc/taskjobview.class.php:713
+#: inc/taskjobview.class.php:722 inc/taskjobview.class.php:744
 msgid "Delete selected items"
 msgstr "Eliminar los elementos seleccionados"
 
-#: inc/config.class.php:521
+#: inc/config.class.php:510
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Eliminar tareas exitosas en demanda después de (en días)"
 
-#: inc/config.class.php:325
+#: inc/config.class.php:324
 msgid "Delete tasks logs after"
 msgstr "Eliminar registros de tareas después"
 
@@ -506,7 +494,7 @@ msgstr "El modulo de despliegue ha sido deshabilitado para este agente"
 msgid "Deploy packages on demand"
 msgstr "Despliegue de paquetes bajo demanda"
 
-#: inc/task.class.php:2239
+#: inc/task.class.php:2240
 msgid "Deployment job, package: "
 msgstr "Tarea de despliegue, aplicación:"
 
@@ -627,7 +615,7 @@ msgstr "Exportar"
 msgid "Export task result"
 msgstr ""
 
-#: inc/config.class.php:345
+#: inc/config.class.php:344
 msgid "Extra-debug"
 msgstr "Depuración extra"
 
@@ -643,9 +631,9 @@ msgstr "Error al escribir el fichero en el disco"
 msgid "Features"
 msgstr "Características"
 
-#: inc/deploycheck.class.php:388 inc/deploycheck.class.php:401
-#: inc/deploycheck.class.php:408 inc/collect_file.class.php:86
-#: inc/collect_file.class.php:192 inc/deployfile.class.php:287
+#: inc/collect_file.class.php:86 inc/collect_file.class.php:192
+#: inc/deployfile.class.php:287 inc/deploycheck.class.php:388
+#: inc/deploycheck.class.php:401 inc/deploycheck.class.php:408
 msgid "File"
 msgstr "Fichero"
 
@@ -739,7 +727,7 @@ msgstr "Carpeta recursiva"
 msgid "Force start"
 msgstr "Forzar comienzo"
 
-#: inc/taskjoblog.class.php:359 inc/taskjob.class.php:1432
+#: inc/taskjob.class.php:1432 inc/taskjoblog.class.php:359
 msgid "Force the end"
 msgstr "Forzar la parada"
 
@@ -774,18 +762,18 @@ msgstr "El espacio libre es mayor de"
 msgid "From"
 msgstr "De"
 
-#: report/switch_ports.history.php:41 report/not_queried_recently.php:42
-#: report/computer_last_inventory.php:40 report/ports_date_connections.php:40
+#: report/switch_ports.history.php:41 report/computer_last_inventory.php:40
+#: report/not_queried_recently.php:42 report/ports_date_connections.php:40
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: index.php:48 front/agentmodule.form.php:37 front/collectrule.form.php:37
-#: front/taskjob.form.php:39 front/statediscovery.php:37
-#: front/task.form.php:42 front/iprange.php:37 front/timeslot.php:40
-#: front/iprange.form.php:39 front/menu_snmpinventory.php:38
-#: front/taskjoblog.php:37 front/task.php:38 front/collectrule.php:38
-#: front/stateinventory.php:37 front/taskjob.php:37 front/menu.php:38
-#: front/collect.php:37 inc/menu.class.php:53
+#: index.php:48 inc/menu.class.php:53 front/taskjob.php:37
+#: front/timeslot.php:40 front/collect.php:37 front/collectrule.php:38
+#: front/taskjob.form.php:39 front/taskjoblog.php:37 front/iprange.form.php:39
+#: front/menu_snmpinventory.php:38 front/statediscovery.php:37
+#: front/agentmodule.form.php:37 front/iprange.php:37 front/task.php:38
+#: front/task.form.php:42 front/collectrule.form.php:37
+#: front/stateinventory.php:37 front/menu.php:38
 msgid "GLPI Inventory"
 msgstr "Inventario GLPI"
 
@@ -797,8 +785,8 @@ msgstr "General"
 msgid "General configuration"
 msgstr "Configuración general"
 
-#: front/deploygroup.php:38 inc/profile.class.php:419
-#: inc/deploytaskjob.class.php:216 inc/menu.class.php:218
+#: inc/profile.class.php:419 inc/menu.class.php:218
+#: inc/deploytaskjob.class.php:216 front/deploygroup.php:38
 msgid "Groups of computers"
 msgstr "Grupos de computadoras"
 
@@ -819,11 +807,11 @@ msgid "I'm on this computer: local wakeup"
 msgstr "Estoy en este ordenador: activación local"
 
 #: inc/staticmisc.class.php:372 inc/staticmisc.class.php:406
-#: inc/menu.class.php:335 inc/iprange.class.php:88 inc/iprange.class.php:91
+#: inc/iprange.class.php:88 inc/iprange.class.php:91 inc/menu.class.php:335
 msgid "IP Ranges"
 msgstr "Rango de direcciones IP"
 
-#: inc/profile.class.php:354 inc/iprange.class.php:118
+#: inc/iprange.class.php:118 inc/profile.class.php:354
 msgid "IP range configuration"
 msgstr "Rangos de direcciones IP"
 
@@ -841,11 +829,11 @@ msgstr ""
 msgid "Ignore"
 msgstr "Ignorar"
 
-#: inc/menu.class.php:154 inc/deploypackage.class.php:150
+#: inc/deploypackage.class.php:150 inc/menu.class.php:154
 msgid "Import"
 msgstr "Importar"
 
-#: inc/deploygroup_staticdata.class.php:251
+#: inc/deploygroup_staticdata.class.php:262
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
@@ -861,11 +849,11 @@ msgstr "Importar fichero XML del agente"
 msgid "Import denied"
 msgstr "Importación denegada"
 
-#: inc/deploygroup_staticdata.class.php:300
+#: inc/deploygroup_staticdata.class.php:311
 msgid "Impossible to read the CSV file"
 msgstr "Imposible leer el archivo CSV"
 
-#: inc/taskview.class.php:234 inc/deploypackage.class.php:1372
+#: inc/deploypackage.class.php:1372 inc/taskview.class.php:234
 msgid "In error"
 msgstr "En error"
 
@@ -909,9 +897,9 @@ msgstr "Inventario iniciado"
 msgid "JSON package representation"
 msgstr "Representación de paquete JSON"
 
-#: inc/task.class.php:2128 inc/agentwakeup.class.php:59
-#: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/taskjobstate.class.php:307
+#: inc/task.class.php:2129 inc/taskjobstate.class.php:307
+#: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190
 msgid "Job"
 msgstr "Acción"
 
@@ -942,7 +930,7 @@ msgstr "Trabajo aplazado por el usuario %1$s"
 msgid "Key"
 msgstr "Clave"
 
-#: report/not_queried_recently.php:135 report/computer_last_inventory.php:119
+#: report/computer_last_inventory.php:119 report/not_queried_recently.php:135
 msgid "Last inventory"
 msgstr "Último inventario"
 
@@ -958,11 +946,17 @@ msgstr "Inventario local"
 msgid "Local rules"
 msgstr "Reglas locales"
 
+#: inc/deploygroup_staticdata.class.php:153
+#, php-format
+msgid ""
+"Make a search to get desired computer, then use massive actions and use %s"
+msgstr ""
+
 #: inc/profile.class.php:328
 msgid "Manage packages"
 msgstr "Gestionar paquetes"
 
-#: inc/config.class.php:505
+#: inc/config.class.php:494
 msgid "Match mirrors to agents"
 msgstr "Emparejar espejos a agentes"
 
@@ -970,7 +964,7 @@ msgstr "Emparejar espejos a agentes"
 msgid "Max file size"
 msgstr "Tamaño máximo del fichero"
 
-#: inc/config.class.php:358
+#: inc/config.class.php:357
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Número máximo de agentes a activar en una tarea"
 
@@ -986,8 +980,8 @@ msgstr "Número máximo de intentos alcanzados: despliegue a la fuerza"
 msgid "Menu"
 msgstr "Menú"
 
-#: inc/taskjob.class.php:1001 inc/deployfile.class.php:175
-#: inc/deployfile.class.php:340
+#: inc/deployfile.class.php:175 inc/deployfile.class.php:340
+#: inc/taskjob.class.php:1001
 msgid "Minute(s)"
 msgstr "minuto(s)"
 
@@ -999,8 +993,8 @@ msgstr "Mio"
 msgid "Mirror server address"
 msgstr "Direcciones de servidores en espejo"
 
-#: inc/profile.class.php:334 inc/menu.class.php:409
-#: inc/deploymirror.class.php:72
+#: inc/deploymirror.class.php:72 inc/profile.class.php:334
+#: inc/menu.class.php:409
 msgid "Mirror servers"
 msgstr "Servidores en espejo"
 
@@ -1042,12 +1036,12 @@ msgstr "Varios usuarios conectados"
 msgid "Name"
 msgstr "Nombre"
 
-#: inc/config.class.php:231
+#: inc/config.class.php:230
 msgid "Network Inventory"
 msgstr "Inventario de red"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:431
-#: inc/config.class.php:451
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:420
+#: inc/config.class.php:440
 msgid "Network discovery"
 msgstr "Descubrimiento de red"
 
@@ -1059,9 +1053,9 @@ msgstr ""
 msgid "Network inventory"
 msgstr "Inventario de red"
 
-#: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:440
-#: inc/config.class.php:459
+#: inc/staticmisc.class.php:87 inc/config.class.php:429
+#: inc/config.class.php:448 inc/agentmodule.class.php:133
+#: inc/agentmodule.class.php:241
 msgid "Network inventory (SNMP)"
 msgstr "Inventario de red (SNMP)"
 
@@ -1069,7 +1063,7 @@ msgstr "Inventario de red (SNMP)"
 msgid "Network inventory status"
 msgstr "Estado del inventario de red"
 
-#: inc/config.class.php:415
+#: inc/config.class.php:414
 msgid "Network options"
 msgstr "Opciones de red"
 
@@ -1101,7 +1095,7 @@ msgstr "Ningún usuario conectado"
 msgid "Non sentitive case"
 msgstr "No sensible a mayúsculas/minúsculas"
 
-#: inc/taskview.class.php:233 inc/deploypackage.class.php:1371
+#: inc/deploypackage.class.php:1371 inc/taskview.class.php:233
 msgid "Not done yet"
 msgstr "Aún no realizado"
 
@@ -1170,7 +1164,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "Extension PHP paró la subida"
 
-#: inc/task.class.php:2089 inc/deploypackage.class.php:96
+#: inc/deploypackage.class.php:96 inc/task.class.php:2090
 msgid "Package"
 msgstr "Paquete"
 
@@ -1190,7 +1184,7 @@ msgstr "Despliegue de paquete"
 msgid "Package exported in"
 msgstr "Paquetes exportado en"
 
-#: inc/menu.class.php:402 inc/config.class.php:232
+#: inc/config.class.php:231 inc/menu.class.php:402
 msgid "Package management"
 msgstr "Gestión de paquetes"
 
@@ -1198,8 +1192,8 @@ msgstr "Gestión de paquetes"
 msgid "Packages to import"
 msgstr "Paquetes importados a"
 
-#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
 #: inc/collect_registry_content.class.php:167
+#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
 msgid "Path"
 msgstr "Ruta"
 
@@ -1224,7 +1218,11 @@ msgstr "Ruta/Fichero"
 msgid "Periodicity"
 msgstr "Periodicidad"
 
-#: setup.php:483
+#: inc/task.class.php:143 inc/taskview.class.php:322
+msgid "Permit to re-prepare task after run"
+msgstr ""
+
+#: setup.php:484
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Por favor, elimine la carpeta %s del directorio 'glpi/plugins'"
@@ -1241,20 +1239,16 @@ msgstr "Intervalo de tiempo de preparación"
 msgid "Prepare for install"
 msgstr "Preparar para instalar"
 
-#: inc/taskview.class.php:237 inc/statediscovery.class.php:245
-#: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
-#: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
-#: inc/stateinventory.class.php:174 inc/deploypackage.class.php:1375
+#: inc/deploypackage.class.php:1375 inc/taskview.class.php:237
+#: inc/statediscovery.class.php:245 inc/taskjobstate.class.php:139
+#: inc/stateinventory.class.php:174 inc/taskjoblog.class.php:96
+#: inc/taskjoblog.class.php:546 inc/taskjoblog.class.php:710
 msgid "Prepared"
 msgstr "Preparado"
 
 #: inc/profile.class.php:372
 msgid "Printer SNMP"
 msgstr ""
-
-#: inc/profile.class.php:381
-msgid "Printers report"
-msgstr "Informe de impresoras"
 
 #: inc/taskjoblog.class.php:407
 msgid "Process number"
@@ -1277,7 +1271,7 @@ msgstr "Propiedades"
 msgid "Property"
 msgstr "Propiedad"
 
-#: inc/taskjobview.class.php:742
+#: inc/taskjobview.class.php:773
 msgid "Purge"
 msgstr "Purgar"
 
@@ -1285,12 +1279,7 @@ msgstr "Purgar"
 msgid "Question"
 msgstr "Pregunta"
 
-#: inc/taskview.class.php:322 inc/task.class.php:143
-msgid "Re-prepare a target-actor if previous run is successful"
-msgstr ""
-"Volver a preparar el actor objetivo si la ejecución previa es correcta"
-
-#: inc/config.class.php:350
+#: inc/config.class.php:349
 msgid "Re-prepare successful jobs"
 msgstr "Trabajos preparados con éxito"
 
@@ -1351,6 +1340,10 @@ msgstr "Inventario de servidores VMware ESX"
 msgid "Restart job"
 msgstr "Reiniciar trabajo"
 
+#: inc/taskjobview.class.php:653
+msgid "Restrict scope to task entity"
+msgstr ""
+
 #: inc/deployuserinteraction.class.php:477
 msgid "Retry"
 msgstr "Reintentar"
@@ -1380,7 +1373,7 @@ msgstr "El código de retorno es igual a"
 msgid "Return code is not equal to"
 msgstr "El código de retorno es distinto de"
 
-#: inc/config.class.php:490
+#: inc/config.class.php:479
 msgid "Root folder for sending files from server"
 msgstr "Carpeta raíz para el envío de ficheros desde el servidor"
 
@@ -1392,7 +1385,7 @@ msgstr "Reglas"
 msgid "Rules applied"
 msgstr "Reglas aplicadas"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1374 inc/taskview.class.php:236
 msgid "Running"
 msgstr "Ejecutándose"
 
@@ -1420,19 +1413,19 @@ msgstr "Inventario SNMP"
 msgid "SNMP models creation"
 msgstr "Creación de modelos SNMP"
 
-#: inc/config.class.php:450 inc/config.class.php:458
+#: inc/config.class.php:439 inc/config.class.php:447
 msgid "SNMP timeout"
 msgstr "SNMP Tiempo de espera largo"
 
-#: inc/config.class.php:318
+#: inc/config.class.php:317
 msgid "SSL-only for agent"
 msgstr "Emplear únicamente SSL para comunicar con el agente"
 
-#: inc/taskview.class.php:344 inc/task.class.php:110
+#: inc/task.class.php:110 inc/taskview.class.php:344
 msgid "Schedule end"
 msgstr "Finaliza programación"
 
-#: inc/taskview.class.php:338 inc/task.class.php:102
+#: inc/task.class.php:102 inc/taskview.class.php:338
 msgid "Schedule start"
 msgstr "Comienzo programación"
 
@@ -1480,10 +1473,10 @@ msgstr ""
 msgid "Show/Hide details"
 msgstr "Mostrar/Ocultar detalle"
 
-#: inc/collect_file_content.class.php:97
-#: inc/collect_file_content.class.php:139 inc/collect.class.php:249
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1042
+#: inc/deployfile.class.php:1042 inc/collect.class.php:249
+#: inc/collect_file_content.class.php:97
+#: inc/collect_file_content.class.php:139
 msgid "Size"
 msgstr "Tamaño"
 
@@ -1504,9 +1497,9 @@ msgstr "Inicio del rango de direcciones IP"
 msgid "Start time"
 msgstr "Hora de inicio"
 
-#: inc/statediscovery.class.php:250 inc/taskjoblog.class.php:97
-#: inc/taskjoblog.class.php:552 inc/taskjoblog.class.php:660
-#: inc/taskjoblog.class.php:714 inc/stateinventory.class.php:179
+#: inc/statediscovery.class.php:250 inc/stateinventory.class.php:179
+#: inc/taskjoblog.class.php:97 inc/taskjoblog.class.php:552
+#: inc/taskjoblog.class.php:660 inc/taskjoblog.class.php:714
 msgid "Started"
 msgstr "Iniciado"
 
@@ -1518,7 +1511,7 @@ msgstr "Fecha de inicio"
 msgid "Static group"
 msgstr "Grupo estático"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1373
+#: inc/deploypackage.class.php:1373 inc/taskview.class.php:235
 msgid "Successful"
 msgstr "Correcto"
 
@@ -1530,7 +1523,7 @@ msgstr "Elemento de destino"
 msgid "Target Type"
 msgstr "Tipo de destino"
 
-#: hook.php:450 inc/deploygroup.class.php:208 inc/iprange.class.php:289
+#: hook.php:450 inc/iprange.class.php:289 inc/deploygroup.class.php:208
 msgid "Target a task"
 msgstr "Vincular con una tarea"
 
@@ -1541,14 +1534,14 @@ msgstr[0] "Destinos para despliegues según demanda"
 msgstr[1] "Destinos para despliegues según demanda"
 msgstr[2] "Destinos para despliegues según demanda"
 
-#: inc/taskjobview.class.php:645 inc/taskjobview.class.php:678
+#: inc/taskjobview.class.php:676 inc/taskjobview.class.php:709
 msgid "Targets"
 msgstr "Destinos"
 
-#: inc/profile.class.php:413 inc/taskview.class.php:161
-#: inc/task.class.php:2071 inc/task.class.php:2111
-#: inc/statediscovery.class.php:168 inc/deploytask.class.php:58
-#: inc/deploytask.class.php:160 inc/stateinventory.class.php:106
+#: inc/task.class.php:2072 inc/task.class.php:2112 inc/taskview.class.php:161
+#: inc/profile.class.php:413 inc/statediscovery.class.php:168
+#: inc/stateinventory.class.php:106 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Tarea"
@@ -1559,7 +1552,7 @@ msgstr[2] "Tareas"
 msgid "Task execution states"
 msgstr "Estado de ejecución de la tarea"
 
-#: inc/task.class.php:1852
+#: inc/task.class.php:1853
 msgid "Task has been disabled"
 msgstr "Se ha deshabilitado la tarea"
 
@@ -1591,19 +1584,19 @@ msgstr[0] "La siguiente tarea está ejecutándose con este paquete"
 msgstr[1] "Las siguientes tareas están ejecutándose con este paquete"
 msgstr[2] "Las siguientes tareas están ejecutándose con este paquete"
 
-#: inc/taskjobview.class.php:651
+#: inc/taskjobview.class.php:682
 msgid "The items that should be applied for this job."
 msgstr "Los elementos que deberían ser aplicados a este trabajo."
 
-#: inc/taskjobview.class.php:662
+#: inc/taskjobview.class.php:693
 msgid "The items that should carry out those targets."
 msgstr "Los elementos que deben llevar a cabo esos destinos."
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
+#: inc/deploypackage.class.php:999 inc/deploypackageitem.class.php:330
 msgid "The modified JSON contained a syntax error :"
 msgstr "El JSON modificado contenía un error de sintaxis:"
 
-#: inc/task.class.php:2285
+#: inc/task.class.php:2286
 msgid "The selected task already has a deployment job for another package: "
 msgstr ""
 "La tarea seleccionada ya tiene un trabajo de despliegue para otro paquete: "
@@ -1646,13 +1639,13 @@ msgstr "Este trabajo ya no se puede ejecutar debido al horario de la tarea."
 msgid "This task is active. delete denied"
 msgstr "Esta tarea está activa. No es posible su eliminación."
 
-#: inc/statediscovery.class.php:174 inc/config.class.php:430
-#: inc/config.class.php:439 inc/stateinventory.class.php:113
+#: inc/statediscovery.class.php:174 inc/stateinventory.class.php:113
+#: inc/config.class.php:419 inc/config.class.php:428
 msgid "Threads number"
 msgstr "Número de hilos"
 
-#: inc/menu.class.php:264 inc/timeslot.class.php:66 inc/timeslot.class.php:82
-#: inc/timeslotentry.class.php:82
+#: inc/timeslotentry.class.php:82 inc/timeslot.class.php:66
+#: inc/timeslot.class.php:82 inc/menu.class.php:264
 msgid "Time slot"
 msgstr "Intervalo de tiempo"
 
@@ -1692,8 +1685,8 @@ msgstr "Tipo de valor"
 msgid "Uncompress"
 msgstr "Descomprimir"
 
-#: inc/statediscovery.class.php:167 inc/taskjoblog.class.php:216
-#: inc/taskjobstate.class.php:306 inc/stateinventory.class.php:105
+#: inc/statediscovery.class.php:167 inc/taskjobstate.class.php:306
+#: inc/stateinventory.class.php:105 inc/taskjoblog.class.php:216
 msgid "Unique id"
 msgstr "Identificador"
 
@@ -1709,7 +1702,7 @@ msgstr "Archivo no utilizado"
 msgid "Update the item"
 msgstr "Actualizar el elemento"
 
-#: inc/task.class.php:2256
+#: inc/task.class.php:2257
 msgid "Updated a deployment job, package: "
 msgstr "Tarea de despliegue actualizada, paquete:"
 
@@ -1721,7 +1714,7 @@ msgstr "Cargar desde la computadora"
 msgid "Upload from server"
 msgstr "Cargar desde el servidor"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:487
 msgid "Use this GLPI server as a mirror server"
 msgstr "Usar este servidor GLPI como servidor espejo"
 
@@ -1741,8 +1734,8 @@ msgstr[0] "Interacciones de usuario"
 msgstr[1] "Interacciones de usuario"
 msgstr[2] "Interacciones de usuario"
 
-#: front/deployuserinteractiontemplate.php:38 inc/profile.class.php:331
-#: inc/deployuserinteractiontemplate.class.php:145 inc/menu.class.php:416
+#: inc/profile.class.php:331 inc/deployuserinteractiontemplate.class.php:145
+#: inc/menu.class.php:416 front/deployuserinteractiontemplate.php:38
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "Plantillas de interacción del usuario"
@@ -1766,11 +1759,11 @@ msgstr "Servidor VMware ESX"
 msgid "VMware host remote inventory"
 msgstr "Inventario de servidores VMware ESX"
 
-#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
-#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 #: inc/collect_registry_content.class.php:168
 #: inc/collect_registry_content.class.php:215
 #: inc/collect_wmi_content.class.php:148 inc/collect_wmi_content.class.php:199
+#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
+#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 msgid "Value"
 msgstr "Valor"
 
@@ -1790,7 +1783,7 @@ msgstr "Propiedad WMI"
 msgid "WMI value"
 msgstr "Valor WMI"
 
-#: inc/profile.class.php:416 inc/staticmisc.class.php:57
+#: inc/staticmisc.class.php:57 inc/profile.class.php:416
 msgid "Wake On LAN"
 msgstr "Wake On LAN"
 
@@ -1822,13 +1815,13 @@ msgstr "Sí - No"
 msgid "Yes - No - Cancel"
 msgstr "Sí - No - Cancelar"
 
-#: inc/task.class.php:2222
+#: inc/task.class.php:2223
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
 msgstr "Debe elegir una tarea y una aplicación para implementar una tarea "
 
-#: setup.php:466
+#: setup.php:467
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr "Su versión de GLPI no es compatible, requiere >= %1$s y < %2$s"
@@ -1868,9 +1861,9 @@ msgstr "dispositivos encontrados"
 msgid "devices queried"
 msgstr "dispositivos consultados"
 
-#: inc/deployaction.class.php:236 inc/deploycheck.class.php:275
-#: inc/taskjob.class.php:1397 inc/deployuserinteraction.class.php:285
-#: inc/deployfile.class.php:223
+#: inc/deployuserinteraction.class.php:285 inc/deployfile.class.php:223
+#: inc/deployaction.class.php:236 inc/taskjob.class.php:1397
+#: inc/deploycheck.class.php:275
 msgid "drag"
 msgstr "drag"
 
@@ -1878,7 +1871,7 @@ msgstr "drag"
 msgid "exec"
 msgstr "Comando a ejecutar"
 
-#: setup.php:475
+#: setup.php:476
 msgid "fileinfo extension (PHP) is required..."
 msgstr "extensión FileInfo (PHP) es requerida..."
 
@@ -1910,7 +1903,7 @@ msgstr "pasado"
 msgid "path"
 msgstr "Ruta del fichero o directorio"
 
-#: inc/collect_file_content.class.php:138 inc/collect.class.php:234
+#: inc/collect.class.php:234 inc/collect_file_content.class.php:138
 msgid "pathfile"
 msgstr "Ruta del fichero"
 
@@ -1954,14 +1947,14 @@ msgstr "Descomprimir"
 msgid "unknown"
 msgstr "desconocido"
 
-#: inc/config.class.php:510
+#: inc/config.class.php:499
 msgid "with both"
 msgstr "con ambos"
 
-#: inc/config.class.php:509
+#: inc/config.class.php:498
 msgid "with entity"
 msgstr "con entidad"
 
-#: inc/config.class.php:508
+#: inc/config.class.php:497
 msgid "with location"
 msgstr "con ubicación"

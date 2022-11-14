@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 13:03+0000\n"
+"POT-Creation-Date: 2022-11-14 09:35+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: inc/task.class.php:2257 inc/task.class.php:2300
+#: inc/task.class.php:2258 inc/task.class.php:2301
 msgid ", actors: "
 msgstr ""
 
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Actor Type"
 msgstr ""
 
-#: inc/taskjobview.class.php:657 inc/taskjobview.class.php:700
+#: inc/taskjobview.class.php:688 inc/taskjobview.class.php:731
 msgid "Actors"
 msgstr ""
 
@@ -81,7 +81,7 @@ msgstr "添加任务"
 msgid "Add the item"
 msgstr "添加项目"
 
-#: hook.php:454
+#: hook.php:454 inc/deploygroup_staticdata.class.php:154
 msgid "Add to static group"
 msgstr "添加到静态组"
 
@@ -93,9 +93,9 @@ msgstr ""
 msgid "After download"
 msgstr "下载后"
 
-#: inc/statediscovery.class.php:169 inc/taskjoblog.class.php:232
-#: inc/taskjoblog.class.php:423 inc/taskjobstate.class.php:308
-#: inc/stateinventory.class.php:107
+#: inc/statediscovery.class.php:169 inc/taskjobstate.class.php:308
+#: inc/stateinventory.class.php:107 inc/taskjoblog.class.php:232
+#: inc/taskjoblog.class.php:423
 msgid "Agent"
 msgstr "代理"
 
@@ -103,13 +103,9 @@ msgstr "代理"
 msgid "Agent communication error, impossible to start agent"
 msgstr "代理通信错误，无法启动代理"
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Agent port"
 msgstr "代理端口"
-
-#: inc/profile.class.php:406
-msgid "Agent remote control"
-msgstr "智能代理端远程控制"
 
 #: inc/taskjobstate.class.php:141
 msgid "Agent replied with data to the server"
@@ -122,10 +118,6 @@ msgstr ""
 #: inc/taskview.class.php:365
 msgid "Agent wakeup interval (in minutes)"
 msgstr "智能代理端唤醒间隔 (以分钟计)"
-
-#: inc/profile.class.php:403
-msgid "Agents"
-msgstr "智能代理端"
 
 #: inc/menu.class.php:212
 msgid "Agents management"
@@ -175,8 +167,8 @@ msgstr "审核标签"
 msgid "Audits"
 msgstr ""
 
-#: inc/profile.class.php:357 inc/credential.class.php:80
-#: inc/credential.class.php:180 inc/menu.class.php:359
+#: inc/profile.class.php:357 inc/menu.class.php:359
+#: inc/credential.class.php:80 inc/credential.class.php:180
 #: inc/credentialip.class.php:131 inc/credentialip.class.php:154
 msgid "Authentication for remote devices (VMware)"
 msgstr "远程设备认证 (VMware)"
@@ -267,21 +259,21 @@ msgstr "缓存信息"
 msgid "Cancel - Try - Continue"
 msgstr ""
 
-#: inc/deployuserinteractiontemplate.class.php:232
 #: inc/deploypackage.class.php:1505
+#: inc/deployuserinteractiontemplate.class.php:232
 msgid "Cancel job"
 msgstr "取消作业"
 
-#: inc/taskjobview.class.php:735
+#: inc/taskjobview.class.php:766
 msgid "Cancel modifications"
 msgstr ""
 
-#: inc/taskview.class.php:239 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1376
+#: inc/deploypackage.class.php:1376 inc/taskview.class.php:239
+#: inc/taskjobstate.class.php:144
 msgid "Cancelled"
 msgstr "已取消"
 
-#: inc/config.class.php:389
+#: inc/config.class.php:388
 msgid "Change the status"
 msgstr "变更状态"
 
@@ -306,7 +298,7 @@ msgstr "选择"
 msgid "Class"
 msgstr "类"
 
-#: inc/config.class.php:392
+#: inc/config.class.php:391
 msgid "Clean agents"
 msgstr ""
 
@@ -314,7 +306,7 @@ msgstr ""
 msgid "Clean unused files"
 msgstr "清理未用文件"
 
-#: inc/taskjobview.class.php:686 inc/taskjobview.class.php:708
+#: inc/taskjobview.class.php:717 inc/taskjobview.class.php:739
 msgid "Clear list"
 msgstr "清除列表"
 
@@ -326,7 +318,7 @@ msgstr "收集"
 msgid "Collect data"
 msgstr "收集数据"
 
-#: inc/collect.class.php:59 inc/staticmisc.class.php:690
+#: inc/staticmisc.class.php:690 inc/collect.class.php:59
 msgid "Collect information"
 msgstr "收集信息"
 
@@ -374,12 +366,12 @@ msgstr ""
 msgid "Computer information"
 msgstr "计算机信息"
 
-#: inc/profile.class.php:307 inc/collectrule.class.php:73
-#: inc/collectrulecollection.class.php:72
+#: inc/collectrulecollection.class.php:72 inc/profile.class.php:307
+#: inc/collectrule.class.php:73
 msgid "Computer information rules"
 msgstr "计算机信息规则"
 
-#: inc/deploygroup_staticdata.class.php:297
+#: inc/deploygroup_staticdata.class.php:308
 msgid "Computers imported successfully from CSV file"
 msgstr "已成功从CSV文件导入计算机"
 
@@ -395,7 +387,7 @@ msgstr "配置"
 msgid "Configure SNMP credentials"
 msgstr "配置SNMP证书"
 
-#: inc/taskjobview.class.php:745
+#: inc/taskjobview.class.php:776
 msgid "Confirm the final deletion ?"
 msgstr ""
 
@@ -422,7 +414,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "创建目录"
 
-#: inc/task.class.php:2299
+#: inc/task.class.php:2300
 msgid "Created a deployment job, package: "
 msgstr "新建部署作业、包："
 
@@ -430,10 +422,6 @@ msgstr "新建部署作业、包："
 #: inc/collect_registry_content.class.php:216
 msgid "Data"
 msgstr "数据"
-
-#: inc/config.class.php:420
-msgid "Default status"
-msgstr "默认状态"
 
 #: inc/menu.class.php:490
 msgid "Define IP Ranges of your network + related SNMP credentials"
@@ -453,14 +441,14 @@ msgid ""
 "for computer inventory)"
 msgstr "定义导入规则：合并和创建新设备（注意：计算机资产盘点规则相同）"
 
-#: inc/taskjoblog.class.php:445 inc/taskjob.class.php:983
-#: inc/taskjob.class.php:1362
+#: inc/taskjob.class.php:983 inc/taskjob.class.php:1362
+#: inc/taskjoblog.class.php:445
 msgid "Definition"
 msgstr "定义"
 
-#: inc/deployaction.class.php:251 inc/deploycheck.class.php:290
-#: inc/taskjob.class.php:1409 inc/deployuserinteraction.class.php:300
-#: inc/deployfile.class.php:237 inc/taskjobview.class.php:284
+#: inc/deployuserinteraction.class.php:300 inc/deployfile.class.php:237
+#: inc/deployaction.class.php:251 inc/taskjobview.class.php:284
+#: inc/taskjob.class.php:1409 inc/deploycheck.class.php:290
 msgid "Delete"
 msgstr "删除"
 
@@ -472,15 +460,15 @@ msgstr "删除自“xxx”天以来未连接服务器的代理。"
 msgid "Delete directory"
 msgstr "删除目录"
 
-#: inc/taskjobview.class.php:691 inc/taskjobview.class.php:713
+#: inc/taskjobview.class.php:722 inc/taskjobview.class.php:744
 msgid "Delete selected items"
 msgstr ""
 
-#: inc/config.class.php:521
+#: inc/config.class.php:510
 msgid "Delete successful on demand tasks after (in days)"
 msgstr ""
 
-#: inc/config.class.php:325
+#: inc/config.class.php:324
 msgid "Delete tasks logs after"
 msgstr "之后删除任务日志"
 
@@ -496,7 +484,7 @@ msgstr "\"部署\"模块已在该智能代理端上被禁用"
 msgid "Deploy packages on demand"
 msgstr "按需部署程序包"
 
-#: inc/task.class.php:2239
+#: inc/task.class.php:2240
 msgid "Deployment job, package: "
 msgstr "部署作业、包："
 
@@ -617,7 +605,7 @@ msgstr "导出"
 msgid "Export task result"
 msgstr ""
 
-#: inc/config.class.php:345
+#: inc/config.class.php:344
 msgid "Extra-debug"
 msgstr ""
 
@@ -633,9 +621,9 @@ msgstr ""
 msgid "Features"
 msgstr "特性"
 
-#: inc/deploycheck.class.php:388 inc/deploycheck.class.php:401
-#: inc/deploycheck.class.php:408 inc/collect_file.class.php:86
-#: inc/collect_file.class.php:192 inc/deployfile.class.php:287
+#: inc/collect_file.class.php:86 inc/collect_file.class.php:192
+#: inc/deployfile.class.php:287 inc/deploycheck.class.php:388
+#: inc/deploycheck.class.php:401 inc/deploycheck.class.php:408
 msgid "File"
 msgstr "文件"
 
@@ -727,7 +715,7 @@ msgstr "文件夹递归"
 msgid "Force start"
 msgstr "强制开始"
 
-#: inc/taskjoblog.class.php:359 inc/taskjob.class.php:1432
+#: inc/taskjob.class.php:1432 inc/taskjoblog.class.php:359
 msgid "Force the end"
 msgstr ""
 
@@ -754,18 +742,18 @@ msgstr "可用空间大于"
 msgid "From"
 msgstr "从"
 
-#: report/switch_ports.history.php:41 report/not_queried_recently.php:42
-#: report/computer_last_inventory.php:40 report/ports_date_connections.php:40
+#: report/switch_ports.history.php:41 report/computer_last_inventory.php:40
+#: report/not_queried_recently.php:42 report/ports_date_connections.php:40
 msgid "FusionInventory"
 msgstr "聚合资产盘点"
 
-#: index.php:48 front/agentmodule.form.php:37 front/collectrule.form.php:37
-#: front/taskjob.form.php:39 front/statediscovery.php:37
-#: front/task.form.php:42 front/iprange.php:37 front/timeslot.php:40
-#: front/iprange.form.php:39 front/menu_snmpinventory.php:38
-#: front/taskjoblog.php:37 front/task.php:38 front/collectrule.php:38
-#: front/stateinventory.php:37 front/taskjob.php:37 front/menu.php:38
-#: front/collect.php:37 inc/menu.class.php:53
+#: index.php:48 inc/menu.class.php:53 front/taskjob.php:37
+#: front/timeslot.php:40 front/collect.php:37 front/collectrule.php:38
+#: front/taskjob.form.php:39 front/taskjoblog.php:37 front/iprange.form.php:39
+#: front/menu_snmpinventory.php:38 front/statediscovery.php:37
+#: front/agentmodule.form.php:37 front/iprange.php:37 front/task.php:38
+#: front/task.form.php:42 front/collectrule.form.php:37
+#: front/stateinventory.php:37 front/menu.php:38
 msgid "GLPI Inventory"
 msgstr ""
 
@@ -777,8 +765,8 @@ msgstr "通用"
 msgid "General configuration"
 msgstr ""
 
-#: front/deploygroup.php:38 inc/profile.class.php:419
-#: inc/deploytaskjob.class.php:216 inc/menu.class.php:218
+#: inc/profile.class.php:419 inc/menu.class.php:218
+#: inc/deploytaskjob.class.php:216 front/deploygroup.php:38
 msgid "Groups of computers"
 msgstr "计算机群组"
 
@@ -799,11 +787,11 @@ msgid "I'm on this computer: local wakeup"
 msgstr ""
 
 #: inc/staticmisc.class.php:372 inc/staticmisc.class.php:406
-#: inc/menu.class.php:335 inc/iprange.class.php:88 inc/iprange.class.php:91
+#: inc/iprange.class.php:88 inc/iprange.class.php:91 inc/menu.class.php:335
 msgid "IP Ranges"
 msgstr "IP段"
 
-#: inc/profile.class.php:354 inc/iprange.class.php:118
+#: inc/iprange.class.php:118 inc/profile.class.php:354
 msgid "IP range configuration"
 msgstr "配置IP段"
 
@@ -819,11 +807,11 @@ msgstr ""
 msgid "Ignore"
 msgstr "忽略"
 
-#: inc/menu.class.php:154 inc/deploypackage.class.php:150
+#: inc/deploypackage.class.php:150 inc/menu.class.php:154
 msgid "Import"
 msgstr "导入"
 
-#: inc/deploygroup_staticdata.class.php:251
+#: inc/deploygroup_staticdata.class.php:262
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
@@ -837,11 +825,11 @@ msgstr ""
 msgid "Import denied"
 msgstr ""
 
-#: inc/deploygroup_staticdata.class.php:300
+#: inc/deploygroup_staticdata.class.php:311
 msgid "Impossible to read the CSV file"
 msgstr "无法读取csv文件"
 
-#: inc/taskview.class.php:234 inc/deploypackage.class.php:1372
+#: inc/deploypackage.class.php:1372 inc/taskview.class.php:234
 msgid "In error"
 msgstr "发生错误"
 
@@ -885,9 +873,9 @@ msgstr ""
 msgid "JSON package representation"
 msgstr ""
 
-#: inc/task.class.php:2128 inc/agentwakeup.class.php:59
-#: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/taskjobstate.class.php:307
+#: inc/task.class.php:2129 inc/taskjobstate.class.php:307
+#: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190
 msgid "Job"
 msgstr "作业"
 
@@ -918,7 +906,7 @@ msgstr "作业被用户%1$s推迟"
 msgid "Key"
 msgstr "项"
 
-#: report/not_queried_recently.php:135 report/computer_last_inventory.php:119
+#: report/computer_last_inventory.php:119 report/not_queried_recently.php:135
 msgid "Last inventory"
 msgstr "上次资产盘点"
 
@@ -934,11 +922,17 @@ msgstr "本地资产盘点"
 msgid "Local rules"
 msgstr "本地规则"
 
+#: inc/deploygroup_staticdata.class.php:153
+#, php-format
+msgid ""
+"Make a search to get desired computer, then use massive actions and use %s"
+msgstr ""
+
 #: inc/profile.class.php:328
 msgid "Manage packages"
 msgstr "管理程序包"
 
-#: inc/config.class.php:505
+#: inc/config.class.php:494
 msgid "Match mirrors to agents"
 msgstr ""
 
@@ -946,7 +940,7 @@ msgstr ""
 msgid "Max file size"
 msgstr "最大文件尺寸"
 
-#: inc/config.class.php:358
+#: inc/config.class.php:357
 msgid "Maximum number of agents to wake up in a task"
 msgstr "任务中要唤醒的代理的最大数目"
 
@@ -962,8 +956,8 @@ msgstr ""
 msgid "Menu"
 msgstr "菜单"
 
-#: inc/taskjob.class.php:1001 inc/deployfile.class.php:175
-#: inc/deployfile.class.php:340
+#: inc/deployfile.class.php:175 inc/deployfile.class.php:340
+#: inc/taskjob.class.php:1001
 msgid "Minute(s)"
 msgstr "分钟(m)"
 
@@ -975,8 +969,8 @@ msgstr ""
 msgid "Mirror server address"
 msgstr ""
 
-#: inc/profile.class.php:334 inc/menu.class.php:409
-#: inc/deploymirror.class.php:72
+#: inc/deploymirror.class.php:72 inc/profile.class.php:334
+#: inc/menu.class.php:409
 msgid "Mirror servers"
 msgstr "镜像服务器"
 
@@ -1018,12 +1012,12 @@ msgstr "多个用户已连接"
 msgid "Name"
 msgstr "名称"
 
-#: inc/config.class.php:231
+#: inc/config.class.php:230
 msgid "Network Inventory"
 msgstr "网络资产盘点"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:431
-#: inc/config.class.php:451
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:420
+#: inc/config.class.php:440
 msgid "Network discovery"
 msgstr "网络发现"
 
@@ -1035,9 +1029,9 @@ msgstr ""
 msgid "Network inventory"
 msgstr "网络资产盘点"
 
-#: inc/agentmodule.class.php:133 inc/agentmodule.class.php:241
-#: inc/staticmisc.class.php:87 inc/config.class.php:440
-#: inc/config.class.php:459
+#: inc/staticmisc.class.php:87 inc/config.class.php:429
+#: inc/config.class.php:448 inc/agentmodule.class.php:133
+#: inc/agentmodule.class.php:241
 msgid "Network inventory (SNMP)"
 msgstr "网络资产盘点 (SNMP)"
 
@@ -1045,7 +1039,7 @@ msgstr "网络资产盘点 (SNMP)"
 msgid "Network inventory status"
 msgstr "网络资产状态"
 
-#: inc/config.class.php:415
+#: inc/config.class.php:414
 msgid "Network options"
 msgstr "网络选项"
 
@@ -1077,7 +1071,7 @@ msgstr "无已连接用户"
 msgid "Non sentitive case"
 msgstr "大小写不敏感"
 
-#: inc/taskview.class.php:233 inc/deploypackage.class.php:1371
+#: inc/deploypackage.class.php:1371 inc/taskview.class.php:233
 msgid "Not done yet"
 msgstr "还未完成"
 
@@ -1146,7 +1140,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr ""
 
-#: inc/task.class.php:2089 inc/deploypackage.class.php:96
+#: inc/deploypackage.class.php:96 inc/task.class.php:2090
 msgid "Package"
 msgstr ""
 
@@ -1166,7 +1160,7 @@ msgstr ""
 msgid "Package exported in"
 msgstr ""
 
-#: inc/menu.class.php:402 inc/config.class.php:232
+#: inc/config.class.php:231 inc/menu.class.php:402
 msgid "Package management"
 msgstr "程序包管理"
 
@@ -1174,8 +1168,8 @@ msgstr "程序包管理"
 msgid "Packages to import"
 msgstr ""
 
-#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
 #: inc/collect_registry_content.class.php:167
+#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
 msgid "Path"
 msgstr "路径"
 
@@ -1200,7 +1194,11 @@ msgstr "路径/文件"
 msgid "Periodicity"
 msgstr ""
 
-#: setup.php:483
+#: inc/task.class.php:143 inc/taskview.class.php:322
+msgid "Permit to re-prepare task after run"
+msgstr ""
+
+#: setup.php:484
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "请删除 glpi/plugins/ 目录的%s文件夹"
@@ -1217,20 +1215,16 @@ msgstr "准备时段"
 msgid "Prepare for install"
 msgstr "准备安装"
 
-#: inc/taskview.class.php:237 inc/statediscovery.class.php:245
-#: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:546
-#: inc/taskjoblog.class.php:710 inc/taskjobstate.class.php:139
-#: inc/stateinventory.class.php:174 inc/deploypackage.class.php:1375
+#: inc/deploypackage.class.php:1375 inc/taskview.class.php:237
+#: inc/statediscovery.class.php:245 inc/taskjobstate.class.php:139
+#: inc/stateinventory.class.php:174 inc/taskjoblog.class.php:96
+#: inc/taskjoblog.class.php:546 inc/taskjoblog.class.php:710
 msgid "Prepared"
 msgstr "已就绪"
 
 #: inc/profile.class.php:372
 msgid "Printer SNMP"
 msgstr ""
-
-#: inc/profile.class.php:381
-msgid "Printers report"
-msgstr "打印机报告"
 
 #: inc/taskjoblog.class.php:407
 msgid "Process number"
@@ -1253,7 +1247,7 @@ msgstr ""
 msgid "Property"
 msgstr "属性"
 
-#: inc/taskjobview.class.php:742
+#: inc/taskjobview.class.php:773
 msgid "Purge"
 msgstr ""
 
@@ -1261,11 +1255,7 @@ msgstr ""
 msgid "Question"
 msgstr "问题"
 
-#: inc/taskview.class.php:322 inc/task.class.php:143
-msgid "Re-prepare a target-actor if previous run is successful"
-msgstr "如果先前的运行成功则请再准备一个目标执行体"
-
-#: inc/config.class.php:350
+#: inc/config.class.php:349
 msgid "Re-prepare successful jobs"
 msgstr "重新准备成功的工作"
 
@@ -1326,6 +1316,10 @@ msgstr "远程设备待资产盘点 (VMware)"
 msgid "Restart job"
 msgstr "重启作业"
 
+#: inc/taskjobview.class.php:653
+msgid "Restrict scope to task entity"
+msgstr ""
+
 #: inc/deployuserinteraction.class.php:477
 msgid "Retry"
 msgstr "重试"
@@ -1355,7 +1349,7 @@ msgstr "返回码等于"
 msgid "Return code is not equal to"
 msgstr "返回码不等于"
 
-#: inc/config.class.php:490
+#: inc/config.class.php:479
 msgid "Root folder for sending files from server"
 msgstr ""
 
@@ -1367,7 +1361,7 @@ msgstr "规则"
 msgid "Rules applied"
 msgstr "已应用的规则"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1374 inc/taskview.class.php:236
 msgid "Running"
 msgstr "正在运行"
 
@@ -1395,19 +1389,19 @@ msgstr ""
 msgid "SNMP models creation"
 msgstr ""
 
-#: inc/config.class.php:450 inc/config.class.php:458
+#: inc/config.class.php:439 inc/config.class.php:447
 msgid "SNMP timeout"
 msgstr "SNMP 超时"
 
-#: inc/config.class.php:318
+#: inc/config.class.php:317
 msgid "SSL-only for agent"
 msgstr "仅SSL适用于代理"
 
-#: inc/taskview.class.php:344 inc/task.class.php:110
+#: inc/task.class.php:110 inc/taskview.class.php:344
 msgid "Schedule end"
 msgstr "方案结束"
 
-#: inc/taskview.class.php:338 inc/task.class.php:102
+#: inc/task.class.php:102 inc/taskview.class.php:338
 msgid "Schedule start"
 msgstr "方案开始"
 
@@ -1453,10 +1447,10 @@ msgstr ""
 msgid "Show/Hide details"
 msgstr "展示/隐藏 详细信息"
 
-#: inc/collect_file_content.class.php:97
-#: inc/collect_file_content.class.php:139 inc/collect.class.php:249
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1042
+#: inc/deployfile.class.php:1042 inc/collect.class.php:249
+#: inc/collect_file_content.class.php:97
+#: inc/collect_file_content.class.php:139
 msgid "Size"
 msgstr "大小"
 
@@ -1477,9 +1471,9 @@ msgstr "IP段起始位置"
 msgid "Start time"
 msgstr "起始时间"
 
-#: inc/statediscovery.class.php:250 inc/taskjoblog.class.php:97
-#: inc/taskjoblog.class.php:552 inc/taskjoblog.class.php:660
-#: inc/taskjoblog.class.php:714 inc/stateinventory.class.php:179
+#: inc/statediscovery.class.php:250 inc/stateinventory.class.php:179
+#: inc/taskjoblog.class.php:97 inc/taskjoblog.class.php:552
+#: inc/taskjoblog.class.php:660 inc/taskjoblog.class.php:714
 msgid "Started"
 msgstr ""
 
@@ -1491,7 +1485,7 @@ msgstr "起始日期"
 msgid "Static group"
 msgstr "静态组"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1373
+#: inc/deploypackage.class.php:1373 inc/taskview.class.php:235
 msgid "Successful"
 msgstr "成功"
 
@@ -1503,7 +1497,7 @@ msgstr "目标项"
 msgid "Target Type"
 msgstr ""
 
-#: hook.php:450 inc/deploygroup.class.php:208 inc/iprange.class.php:289
+#: hook.php:450 inc/iprange.class.php:289 inc/deploygroup.class.php:208
 msgid "Target a task"
 msgstr "选定一项任务作为目标"
 
@@ -1512,14 +1506,14 @@ msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] ""
 
-#: inc/taskjobview.class.php:645 inc/taskjobview.class.php:678
+#: inc/taskjobview.class.php:676 inc/taskjobview.class.php:709
 msgid "Targets"
 msgstr "目标"
 
-#: inc/profile.class.php:413 inc/taskview.class.php:161
-#: inc/task.class.php:2071 inc/task.class.php:2111
-#: inc/statediscovery.class.php:168 inc/deploytask.class.php:58
-#: inc/deploytask.class.php:160 inc/stateinventory.class.php:106
+#: inc/task.class.php:2072 inc/task.class.php:2112 inc/taskview.class.php:161
+#: inc/profile.class.php:413 inc/statediscovery.class.php:168
+#: inc/stateinventory.class.php:106 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "任务"
@@ -1528,7 +1522,7 @@ msgstr[0] "任务"
 msgid "Task execution states"
 msgstr "任务执行状态"
 
-#: inc/task.class.php:1852
+#: inc/task.class.php:1853
 msgid "Task has been disabled"
 msgstr ""
 
@@ -1556,19 +1550,19 @@ msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] ""
 
-#: inc/taskjobview.class.php:651
+#: inc/taskjobview.class.php:682
 msgid "The items that should be applied for this job."
 msgstr ""
 
-#: inc/taskjobview.class.php:662
+#: inc/taskjobview.class.php:693
 msgid "The items that should carry out those targets."
 msgstr ""
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
+#: inc/deploypackage.class.php:999 inc/deploypackageitem.class.php:330
 msgid "The modified JSON contained a syntax error :"
 msgstr "改动后的JSON含有一个语法错误："
 
-#: inc/task.class.php:2285
+#: inc/task.class.php:2286
 msgid "The selected task already has a deployment job for another package: "
 msgstr "所选任务已有另一个包的部署作业："
 
@@ -1606,13 +1600,13 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr "此任务处于活动状态。拒绝删除。"
 
-#: inc/statediscovery.class.php:174 inc/config.class.php:430
-#: inc/config.class.php:439 inc/stateinventory.class.php:113
+#: inc/statediscovery.class.php:174 inc/stateinventory.class.php:113
+#: inc/config.class.php:419 inc/config.class.php:428
 msgid "Threads number"
 msgstr ""
 
-#: inc/menu.class.php:264 inc/timeslot.class.php:66 inc/timeslot.class.php:82
-#: inc/timeslotentry.class.php:82
+#: inc/timeslotentry.class.php:82 inc/timeslot.class.php:66
+#: inc/timeslot.class.php:82 inc/menu.class.php:264
 msgid "Time slot"
 msgstr ""
 
@@ -1652,8 +1646,8 @@ msgstr "值的类型"
 msgid "Uncompress"
 msgstr ""
 
-#: inc/statediscovery.class.php:167 inc/taskjoblog.class.php:216
-#: inc/taskjobstate.class.php:306 inc/stateinventory.class.php:105
+#: inc/statediscovery.class.php:167 inc/taskjobstate.class.php:306
+#: inc/stateinventory.class.php:105 inc/taskjoblog.class.php:216
 msgid "Unique id"
 msgstr ""
 
@@ -1669,7 +1663,7 @@ msgstr "未使用文件"
 msgid "Update the item"
 msgstr ""
 
-#: inc/task.class.php:2256
+#: inc/task.class.php:2257
 msgid "Updated a deployment job, package: "
 msgstr "更新了部署作业、包:"
 
@@ -1681,7 +1675,7 @@ msgstr ""
 msgid "Upload from server"
 msgstr ""
 
-#: inc/config.class.php:498
+#: inc/config.class.php:487
 msgid "Use this GLPI server as a mirror server"
 msgstr ""
 
@@ -1699,8 +1693,8 @@ msgid "User interaction"
 msgid_plural "User interactions"
 msgstr[0] ""
 
-#: front/deployuserinteractiontemplate.php:38 inc/profile.class.php:331
-#: inc/deployuserinteractiontemplate.class.php:145 inc/menu.class.php:416
+#: inc/profile.class.php:331 inc/deployuserinteractiontemplate.class.php:145
+#: inc/menu.class.php:416 front/deployuserinteractiontemplate.php:38
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "用户交互模版"
@@ -1722,11 +1716,11 @@ msgstr "VMware主机"
 msgid "VMware host remote inventory"
 msgstr "VMware主机远程资产盘点"
 
-#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
-#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 #: inc/collect_registry_content.class.php:168
 #: inc/collect_registry_content.class.php:215
 #: inc/collect_wmi_content.class.php:148 inc/collect_wmi_content.class.php:199
+#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
+#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 msgid "Value"
 msgstr "值"
 
@@ -1746,7 +1740,7 @@ msgstr "WMI属性"
 msgid "WMI value"
 msgstr "WMI值"
 
-#: inc/profile.class.php:416 inc/staticmisc.class.php:57
+#: inc/staticmisc.class.php:57 inc/profile.class.php:416
 msgid "Wake On LAN"
 msgstr "局域网唤醒"
 
@@ -1778,13 +1772,13 @@ msgstr ""
 msgid "Yes - No - Cancel"
 msgstr ""
 
-#: inc/task.class.php:2222
+#: inc/task.class.php:2223
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
 msgstr ""
 
-#: setup.php:466
+#: setup.php:467
 #, php-format
 msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
 msgstr ""
@@ -1821,9 +1815,9 @@ msgstr ""
 msgid "devices queried"
 msgstr ""
 
-#: inc/deployaction.class.php:236 inc/deploycheck.class.php:275
-#: inc/taskjob.class.php:1397 inc/deployuserinteraction.class.php:285
-#: inc/deployfile.class.php:223
+#: inc/deployuserinteraction.class.php:285 inc/deployfile.class.php:223
+#: inc/deployaction.class.php:236 inc/taskjob.class.php:1397
+#: inc/deploycheck.class.php:275
 msgid "drag"
 msgstr "拖动"
 
@@ -1831,7 +1825,7 @@ msgstr "拖动"
 msgid "exec"
 msgstr "执行"
 
-#: setup.php:475
+#: setup.php:476
 msgid "fileinfo extension (PHP) is required..."
 msgstr "需要fileinfo扩展（PHP）..."
 
@@ -1863,7 +1857,7 @@ msgstr ""
 msgid "path"
 msgstr "路径"
 
-#: inc/collect_file_content.class.php:138 inc/collect.class.php:234
+#: inc/collect.class.php:234 inc/collect_file_content.class.php:138
 msgid "pathfile"
 msgstr "路径文件"
 
@@ -1907,14 +1901,14 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: inc/config.class.php:510
+#: inc/config.class.php:499
 msgid "with both"
 msgstr ""
 
-#: inc/config.class.php:509
+#: inc/config.class.php:498
 msgid "with entity"
 msgstr ""
 
-#: inc/config.class.php:508
+#: inc/config.class.php:497
 msgid "with location"
 msgstr ""
