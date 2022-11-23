@@ -41,7 +41,7 @@ Html::header(
     "agentmodules"
 );
 
-Session::checkRight('plugin_glpiinventory_agent', READ);
+Session::checkRight(PluginGlpiinventoryAgentmodule::$rightname, READ);
 
 $agentmodule = new PluginGlpiinventoryAgentmodule();
 
