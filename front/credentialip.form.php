@@ -35,6 +35,9 @@ include('../../../inc/includes.php');
 $dropdown = new PluginGlpiinventoryCredentialIP();
 
 if (!empty($_POST) || isset($_GET['_in_modal'])) {
+    if (empty($_POST['plugin_glpiinventory_credentials_id'])) {
+        $_POST['plugin_glpiinventory_credentials_id'] = 0;
+    }
     include(GLPI_ROOT . "/front/dropdown.common.form.php");
 } else {
     Html::header(

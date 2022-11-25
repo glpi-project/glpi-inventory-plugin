@@ -49,3 +49,7 @@ if (!empty($_POST) || isset($_GET['_in_modal'])) {
     $dropdown->display($_GET);
     Html::footer();
 }
+
+if (isset($_GET['popup'])) {
+    Ajax::refreshDropdownPopupInMainWindow();
+}
