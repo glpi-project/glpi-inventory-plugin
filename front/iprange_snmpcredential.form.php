@@ -52,10 +52,5 @@ if (isset($_POST["add"])) {
         $_POST['rank'] = $a_data['rank'] + 1;
     }
     $pfIPRange_ConfigSecurity->add($_POST);
-
-    if ($_SESSION['glpibackcreated']) {
-        Html::redirect($pfIPRange_ConfigSecurity->getLinkURL());
-    } else {
-        Html::back();
-    }
+    Html::back();
 }
