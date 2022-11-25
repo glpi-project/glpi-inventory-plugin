@@ -48,7 +48,11 @@ $mirror = new PluginGlpiinventoryDeployMirror();
 
 if (isset($_POST["add"])) {
     $newID = $mirror->add($_POST);
-    Html::back();
+    if ($_SESSION['glpibackcreated']) {
+        Html::redirect($mirror->getLinkURL());
+    } else {
+        Html::back();
+    }
 } elseif (isset($_POST["update"])) {
     $mirror->update($_POST);
     Html::back();
