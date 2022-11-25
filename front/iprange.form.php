@@ -55,7 +55,9 @@ if (isset($_POST["add"])) {
         $_POST['ip_end']    = (int)$_POST['ip_end0'] . "." . (int)$_POST['ip_end1'] . ".";
         $_POST['ip_end']   .= (int)$_POST['ip_end2'] . "." . (int)$_POST['ip_end3'];
         $iprange->add($_POST);
-        Html::back();
+        if ($_SESSION['glpibackcreated']) {
+            Html::redirect($iprange->getLinkURL());
+        }
     } else {
         Html::back();
     }
