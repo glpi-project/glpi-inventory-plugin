@@ -57,6 +57,8 @@ if (isset($_POST["add"])) {
         $iprange->add($_POST);
         if ($_SESSION['glpibackcreated']) {
             Html::redirect($iprange->getLinkURL());
+        } else {
+            Html::back();
         }
     } else {
         Html::back();
