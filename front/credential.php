@@ -33,5 +33,18 @@
 
 include("../../../inc/includes.php");
 
-$dropdown = new PluginGlpiinventoryCredential();
-include(GLPI_ROOT . "/front/dropdown.common.php");
+Html::header(
+    __('GLPI Inventory', 'glpiinventory'),
+    $_SERVER["PHP_SELF"],
+    "admin",
+    "pluginglpiinventorymenu",
+    "credential"
+);
+
+Session::checkRight('plugin_glpiinventory_iprange', READ);
+
+PluginGlpiinventoryMenu::displayMenu("mini");
+
+Search::show('PluginGlpiinventoryCredential');
+
+Html::footer();

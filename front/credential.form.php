@@ -31,10 +31,24 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-
+include('../../../inc/includes.php');
 $dropdown = new PluginGlpiinventoryCredential();
-include(GLPI_ROOT . "/front/dropdown.common.form.php");
+
+if (!empty($_POST) || isset($_GET['_in_modal'])) {
+    include(GLPI_ROOT . "/front/dropdown.common.form.php");
+} else {
+    Html::header(
+        __('GLPI Inventory', 'glpiinventory'),
+        $_SERVER["PHP_SELF"],
+        "admin",
+        "pluginglpiinventorymenu",
+        "credential"
+    );
+    PluginGlpiinventoryMenu::displayMenu("mini");
+    //If there is no form to submit, display the form
+    $dropdown->display($_GET);
+    Html::footer();
+}
 
 if (isset($_GET['popup'])) {
     Ajax::refreshDropdownPopupInMainWindow();
