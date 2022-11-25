@@ -81,10 +81,6 @@ if (isset($_POST["add"])) {
         $dropdown->delete($_POST, 1);
         $dropdown->redirectToList();
     }
-} else if (isset($_POST["replace"])) {
-    $dropdown->check($_POST["id"], PURGE);
-    $dropdown->delete($_POST, 1);
-    $dropdown->redirectToList();
 } else if (isset($_POST["update"])) {
     $dropdown->check($_POST["id"], UPDATE);
     $dropdown->update($_POST);
