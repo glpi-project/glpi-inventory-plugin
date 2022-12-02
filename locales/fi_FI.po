@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-14 09:35+0000\n"
+"POT-Creation-Date: 2022-12-02 08:29+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -45,7 +45,7 @@ msgstr "Toiminnon tunniste"
 msgid "Actions"
 msgstr "Toiminnot"
 
-#: inc/agentmodule.class.php:111
+#: inc/agentmodule.class.php:112
 msgid "Activation (by default)"
 msgstr "Aktivointi (oletuksena)"
 
@@ -123,7 +123,7 @@ msgstr "Kahden herätyksen välinen aika (minuutteina)"
 msgid "Agents management"
 msgstr "Agenttien hallinta"
 
-#: inc/agentmodule.class.php:62 inc/agentmodule.class.php:64
+#: inc/agentmodule.class.php:63 inc/agentmodule.class.php:65
 msgid "Agents modules"
 msgstr "Agenttien moduulit"
 
@@ -597,7 +597,7 @@ msgstr "Virheet"
 msgid "Error:"
 msgstr "Virhe "
 
-#: inc/agentmodule.class.php:112
+#: inc/agentmodule.class.php:113
 msgid "Exceptions"
 msgstr "Poikkeukset"
 
@@ -763,11 +763,13 @@ msgstr "Alkaen"
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: index.php:48 inc/menu.class.php:53 front/taskjob.php:37
-#: front/timeslot.php:40 front/collect.php:37 front/collectrule.php:38
+#: index.php:48 inc/menu.class.php:53 front/credential.php:37
+#: front/taskjob.php:37 front/timeslot.php:40 front/collect.php:37
+#: front/credential.form.php:41 front/collectrule.php:38
 #: front/taskjob.form.php:39 front/taskjoblog.php:37 front/iprange.form.php:39
-#: front/menu_snmpinventory.php:38 front/statediscovery.php:37
-#: front/agentmodule.form.php:37 front/iprange.php:37 front/task.php:38
+#: front/menu_snmpinventory.php:38 front/credentialip.php:37
+#: front/statediscovery.php:37 front/agentmodule.form.php:37
+#: front/iprange.php:37 front/task.php:38 front/credentialip.form.php:44
 #: front/task.form.php:42 front/collectrule.form.php:37
 #: front/stateinventory.php:37 front/menu.php:38
 msgid "GLPI Inventory"
@@ -1003,8 +1005,8 @@ msgid "Modification Denied"
 msgstr "Muokkaus estetty"
 
 #: hook.php:48 hook.php:55 hook.php:62 hook.php:69 hook.php:76 hook.php:83
-#: hook.php:90 inc/agentmodule.class.php:110 inc/agentmodule.class.php:213
-#: inc/agentmodule.class.php:215
+#: hook.php:90 inc/agentmodule.class.php:111 inc/agentmodule.class.php:214
+#: inc/agentmodule.class.php:216
 msgid "Module"
 msgstr "Moduuli"
 
@@ -1050,8 +1052,8 @@ msgid "Network inventory"
 msgstr "Verkkokartoitus"
 
 #: inc/staticmisc.class.php:87 inc/config.class.php:429
-#: inc/config.class.php:448 inc/agentmodule.class.php:133
-#: inc/agentmodule.class.php:241
+#: inc/config.class.php:448 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:242
 msgid "Network inventory (SNMP)"
 msgstr "Verkon kartoitus (SNMP)"
 
@@ -1172,7 +1174,7 @@ msgstr "Paketitoiminnot"
 msgid "Package deploy"
 msgstr "Paketin käyttöönotto"
 
-#: inc/agentmodule.class.php:137 inc/agentmodule.class.php:245
+#: inc/agentmodule.class.php:138 inc/agentmodule.class.php:246
 msgid "Package deployment"
 msgstr "Paketin käyttöönotto"
 

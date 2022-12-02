@@ -1,8 +1,8 @@
 [main]
 host = https://www.transifex.com
 
-[glpi-plugin-glpiinventory.glpiinventory-pot]
+[o:teclib:p:glpi-plugin-glpiinventory:r:glpiinventory-pot]
 file_filter = locales/<lang>.po
 source_file = locales/glpiinventory.pot
 source_lang = en
-type = PO
+type        = PO
