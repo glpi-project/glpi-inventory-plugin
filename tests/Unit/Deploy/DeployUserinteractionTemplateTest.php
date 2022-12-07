@@ -233,7 +233,7 @@ class DeployUserinteractionTemplateTest extends TestCase
               'on_multiusers' => PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_STOP_DEPLOY
              ];
         $this->assertNotNull($interaction->add($tmp));
-        $expected = '{"platform":"win32","timeout":4,"buttons":"ok","icon":"warning","retry_after":4,"nb_max_retry":4,"on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"stop:stop"}';
+        $expected = '{"platform":"win32","timeout":4,"buttons":"ok","icon":"warning","retry_after":4,"nb_max_retry":4,"on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"stop:stop","on_ok":"continue:continue","on_no":"stop:stop","on_yes":"continue:continue","on_cancel":"stop:stop","on_abort":"stop:stop","on_retry":"stop:postpone","on_tryagain":"stop:postpone","on_ignore":"stop:postpone","on_continue":"","on_async":""}';
         $this->assertEquals($expected, $interaction->fields['json']);
     }
 
