@@ -216,7 +216,8 @@ class DeployUserinteractionTemplateTest extends TestCase
              ];
         $this->assertNotNull($interaction->add($tmp));
         $interaction->getFromDB(1);
-        $this->assertEquals('[]', $interaction->fields['json']);
+        $expected = '{"platform":"","timeout":"","buttons":"","icon":"","retry_after":"","nb_max_retry":"","on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"continue:continue","on_ok":"continue:continue","on_no":"stop:stop","on_yes":"continue:continue","on_cancel":"stop:stop","on_abort":"stop:stop","on_retry":"stop:postpone","on_tryagain":"stop:postpone","on_ignore":"stop:postpone","on_continue":"","on_async":""}';
+        $this->assertEquals($expected, $interaction->fields['json']);
 
         $tmp = ['name'         => 'test2',
               'entities_id'  => 0,
@@ -406,7 +407,7 @@ class DeployUserinteractionTemplateTest extends TestCase
                 'icon'       => PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION,
                 'on_timeout' => PluginGlpiinventoryDeployUserinteractionTemplate::BEHAVIOR_CONTINUE_DEPLOY
                ];
-        $expected = '{"icon":"question","on_timeout":"continue:continue"}';
+        $expected = '{"platform":"","timeout":"","buttons":"","icon":"question","retry_after":"","nb_max_retry":"","on_timeout":"continue:continue","on_nouser":"continue:continue","on_multiusers":"continue:continue","on_ok":"continue:continue","on_no":"stop:stop","on_yes":"continue:continue","on_cancel":"stop:stop","on_abort":"stop:stop","on_retry":"stop:postpone","on_tryagain":"stop:postpone","on_ignore":"stop:postpone","on_continue":"","on_async":""}';
         $modified = $template->prepareInputForAdd($input);
         $this->assertEquals($expected, $modified['json']);
     }
