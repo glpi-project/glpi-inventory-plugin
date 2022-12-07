@@ -413,7 +413,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
                 "Entity " . $entities_id . ", agent base URL: " . $base_url
             );
         } else {
-           // ... else use global GLPI configuration parameter.
+            // ... else use global GLPI configuration parameter.
             global $CFG_GLPI;
             $base_url = $CFG_GLPI['url_base'];
 
@@ -423,9 +423,14 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             );
         }
 
-       // Construct the path to the JSON back from the agent_base_url.
-       // agent_base_url is the initial URL used by the agent
-        return $base_url . $plugin_dir . '/b/' . strtolower($modulename) . '/';
+        // Add plugin_dir only if still not set in agent_base_url
+        if (!preg_match('/(plugins|marketplace)/', $base_url)) {
+            $base_url .= $plugin_dir;
+        }
+
+        // Construct the path to the JSON back from the agent_base_url.
+        // agent_base_url is the initial URL used by the agent
+        return $base_url . '/b/' . strtolower($modulename) . '/';
     }
 
 
