@@ -614,7 +614,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
     public function prepareInputForAdd($input)
     {
-       //Save params as a json array, ready to be saved in db
+        //Compute default value if needed (for behavior configuration)
+        $input = $this->initializeJsonFields($input);
+        //Save params as a json array, ready to be saved in db
         $input['json'] = $this->saveToJson($input);
         return $input;
     }
