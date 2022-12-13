@@ -405,7 +405,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         echo '<div class="alert alert-info d-flex" role="alert">';
         echo '<i class="fas fa-exclamation-circle fa-2x me-2"></i>';
-        echo '<p>' . __('Files need to be uploaded to <kbd>/files/_plugins/glpiinventory/upload/</kbd> folder to be displayed here', 'glpiinventory') . '</p>';
+        echo '<p>' . __('Files need to be uploaded to <mark>/files/_plugins/glpiinventory/upload/</mark> folder to be displayed here', 'glpiinventory') . '</p>';
         echo '</div>';
 
         echo "<div id='tree_projectcategory$rand' ></div>";
