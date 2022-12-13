@@ -375,7 +375,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
          enableDD         : true,
          containerScroll  : true,
          height           : 320,
-         width            : 770,
+         width            : 670,
          loader           : Tree_Category_Loader$rand,
          rootVisible      : false,
          listeners: {
@@ -402,6 +402,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             Tree_Category_Root$rand.expand();";
 
         echo "</script>";
+
+        echo '<div class="alert alert-info d-flex" role="alert">';
+        echo '<i class="fas fa-exclamation-circle fa-2x me-2"></i>';
+        echo '<p>' . __('Files need to be uploaded to <kbd>/files/_plugins/glpiinventory/upload/</kbd> folder to be displayed here', 'glpiinventory') . '</p>';
+        echo '</div>';
 
         echo "<div id='tree_projectcategory$rand' ></div>";
         echo "</div>";
