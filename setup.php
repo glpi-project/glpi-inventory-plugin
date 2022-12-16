@@ -411,7 +411,7 @@ function plugin_version_glpiinventory()
            'shortname'      => 'glpiinventory',
            'version'        => PLUGIN_GLPIINVENTORY_VERSION,
            'license'        => 'AGPLv3+',
-           'oldname'        => 'tracker',
+           'oldname'        => 'fusioninventory',
            'author'         => 'Teclib\'',
            'homepage'       => 'https://github.com/glpi-project/glpi-inventory-plugin',
            'requirements'   => [
