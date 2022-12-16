@@ -441,43 +441,6 @@ function plugin_version_glpiinventory()
  */
 function plugin_glpiinventory_check_prerequisites()
 {
-    global $DB;
-
-    if (!method_exists('Plugin', 'checkVersions')) {
-        $version = rtrim(GLPI_VERSION, '-dev');
-        if (version_compare($version, PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION, 'lt')) {
-            echo "This plugin requires GLPI " . PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION;
-            return false;
-        }
-
-        if (!isset($_SESSION['glpi_plugins'])) {
-            $_SESSION['glpi_plugins'] = [];
-        }
-
-        if (
-            version_compare(GLPI_VERSION, PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION . '-dev', '!=')
-            && version_compare(GLPI_VERSION, PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION, 'lt')
-            || version_compare(GLPI_VERSION, PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION, 'ge')
-        ) {
-            if (method_exists('Plugin', 'messageIncompatible')) {
-                echo Plugin::messageIncompatible('core', PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION, PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION);
-            } else {
-               // TRANS: %1$s is the minimum GLPI version inclusive, %2$s the maximum version exclusive
-                echo sprintf(
-                    __('Your GLPI version not compatible, require >= %1$s and < %2$s', 'glpiinventory'),
-                    PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION,
-                    PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION
-                );
-            }
-            return false;
-        }
-
-        if (!function_exists('finfo_open')) {
-            echo __('fileinfo extension (PHP) is required...', 'glpiinventory');
-            return false;
-        }
-    }
-
     $a_plugins = ['fusinvinventory', 'fusinvsnmp', 'fusinvdeploy', 'fusioninventory'];
     foreach ($a_plugins as $pluginname) {
         if (file_exists(GLPI_ROOT . '/plugins/' . $pluginname)) {
@@ -486,17 +449,6 @@ function plugin_glpiinventory_check_prerequisites()
         }
     }
 
-    return true;
-}
-
-
-/**
- * Check if the config is ok
- *
- * @return boolean
- */
-function plugin_glpiinventory_check_config()
-{
     return true;
 }
 
