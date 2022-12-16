@@ -441,11 +441,16 @@ function plugin_version_glpiinventory()
  */
 function plugin_glpiinventory_check_prerequisites()
 {
-    $a_plugins = ['fusinvinventory', 'fusinvsnmp', 'fusinvdeploy', 'fusioninventory'];
-    foreach ($a_plugins as $pluginname) {
-        if (file_exists(GLPI_ROOT . '/plugins/' . $pluginname)) {
-            printf(__('Please remove folder %s in glpi/plugins/', 'glpiinventory'), $pluginname);
-            return false;
+    if (version_compare(GLPI_VERSION, '10.0.5', '<=')) {
+        $a_plugins = ['fusinvinventory', 'fusinvsnmp', 'fusinvdeploy', 'fusioninventory'];
+        foreach ($a_plugins as $pluginname) {
+            foreach (PLUGINS_DIRECTORIES as $basedir) {
+                $plugindir = $basedir . '/' . $pluginname;
+                if (file_exists($plugindir)) {
+                    printf(__('Please remove %s directory.', 'glpiinventory'), $plugindir);
+                    return false;
+                }
+            }
         }
     }
 
