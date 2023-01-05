@@ -677,9 +677,25 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         global $DB;
 
+        $canedit = PluginGlpiinventoryDeployGroup_Staticdata::canUpdate();
+        if ($canedit) {
+            $rand     = mt_rand();
+            Html::openMassiveActionsForm('mass' . PluginGlpiinventoryDeployGroup_Staticdata::class . $rand);
+            $massiveactionparams = [
+                'num_displayed' => $_SESSION['glpilist_limit'],
+                'container'     => 'mass' . PluginGlpiinventoryDeployGroup_Staticdata::class . $rand
+            ];
+            Html::showMassiveActions($massiveactionparams);
+        }
+
         echo "<table width='950' class='tab_cadre_fixe'>";
 
         echo "<tr>";
+        if ($canedit) {
+            echo "<th width='10'>";
+            echo Html::getCheckAllAsCheckbox('mass' . PluginGlpiinventoryDeployGroup_Staticdata::class . $rand);
+            echo "</th>";
+        }
         echo "<th>";
         echo __('Group');
         echo "</th>";
@@ -700,6 +716,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         foreach ($iterator as $data) {
             $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
             echo "<tr>";
+            if ($canedit) {
+                echo "<td width='10'>";
+                Html::showMassiveActionCheckBox(PluginGlpiinventoryDeployGroup_Staticdata::class, $data["id"]);
+                echo "</td>";
+            }
             echo "<td>";
             echo "<a href='" . $link . "?id=" . $this->fields['id'] . "'>" . $this->fields['name'] . "</a>";
             echo "</td>";
