@@ -837,22 +837,18 @@ function plugin_pre_item_purge_glpiinventory($parm)
         case 'Computer':
             $agent        = new Agent();
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+            $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+            $pfStatediscovery = new PluginGlpiinventoryStateDiscovery();
             if ($agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $items_id])) {
                 $agent_id = $agent->fields['id'];
-                // count associated tasks to the agent
-                $states = $pfTaskjobstate->find(['agents_id' => $agent_id], [], 1);
-                if (count($states) > 0) {
-                   // Delete link between computer and agent fusion
-                    $agent->update(
-                        [
-                        'id'           => $agent_id,
-                        'items_id' => 0],
-                        true
-                    );
-                } else {
-                   // no task associated, purge also agent
-                    $agent->delete(['id' => $agent_id], true);
-                }
+                // purge associated task job state
+                $pfTaskjobstate->deleteByCriteria(['agents_id' => $agent_id], 1);
+                // purge associated task job log
+                $pfTaskjoblog->deleteByCriteria(['items_id' => $agent_id, 'itemtype' => "Agent"], 1);
+                // purge related sate discovery
+                $pfStatediscovery->deleteByCriteria(['agents_id' => $agent_id], 1);
+                //remove agent
+                $agent->delete(['id' => $agent_id], true);
             }
 
             $clean = [
