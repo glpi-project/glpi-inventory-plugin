@@ -189,6 +189,16 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                      $pics_path .
                      "uncompress.png' /></a>";
             }
+
+            //download file
+            if (
+                $this->checkPresenceFile($sha512)
+            ) {
+                $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?sha512=" . $sha512 . "&filename=" . $file_name . "&mimetype=" . $files[$file_id]['mimetype'];
+                echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
+                    "' target='_blank' ><i class='ti ti-file-download'></a>";
+            }
+
            //sha fingerprint
             $sha_status = "good";
             if ($fileregistry_error != 0) {
@@ -953,6 +963,22 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         }
 
         return true;
+    }
+
+    public function getFilePath($sha512) {
+        if (!$this->checkPresenceFile($sha512)) {
+            return false;
+        }
+
+        $handle = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512, "r");
+        if ($handle) {
+            while (($buffer = fgets($handle)) !== false) {
+                $path = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
+            }
+            fclose($handle);
+        }
+
+        return $path;
     }
 
 
