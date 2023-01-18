@@ -542,6 +542,17 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         ]
     );
 
+    //update _fusion action to _inventory
+    $DB->update(
+        'glpi_ruleactions',
+        [
+            'field'  => '_inventory',
+        ],
+        [
+            'field'  => '_fusion',
+       ]
+    );
+
     if ($DB->tableExists('glpi_plugin_glpiinventory_rulematchedlogs')) {
         // agents must be migrated before that one
         $DB->queryOrDie(
