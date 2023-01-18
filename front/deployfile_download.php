@@ -48,7 +48,6 @@ if (isset($_GET['mimetype'])) {
 
 $deploy = new PluginGlpiinventoryDeployFile();
 if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
-
     if ($deploy->checkPresenceFile($deploy->fields['sha512'])) {
         //get all repository file path
         $path = $deploy->getFilePath($deploy->fields['sha512']);
@@ -83,7 +82,7 @@ if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
 
             header('Content-Description: File Transfer');
             header('Content-Type: ' . $mimetype);
-            header('Content-Disposition: ' . $attachment . ' filename='.basename($filename));
+            header('Content-Disposition: ' . $attachment . ' filename=' . basename($filename));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
             header_remove('Pragma');
@@ -102,12 +101,9 @@ if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
         } else {
             Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
         }
-
-
     } else {
         Html::displayErrorAndDie(__('File not found'), true); // Not found
     }
-
 } else {
     Html::displayErrorAndDie(__('File not found'), true); // Not found
 }
