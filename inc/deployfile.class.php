@@ -196,7 +196,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 $this->checkPresenceFile($sha512)
             ) {
                 if ($file_size <= self::DL_MAX_SIZE) {
-                    $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?sha512=" . $sha512 . "&filename=" . $file_name . "&mimetype=" . $files[$file_id]['mimetype'];
+                    $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?filename=" . $file_name . "&mimetype=" . $files[$file_id]['mimetype'];
                     echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
                         "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></a>";
                 } else {

@@ -46,18 +46,21 @@ if (isset($_GET['mimetype'])) {
     $mimetype = urldecode($_GET['mimetype']);
 }
 
-if (isset($_GET['sha512'])) {
-    $deploy = new PluginGlpiinventoryDeployFile();
-    if ($deploy->checkPresenceFile($_GET['sha512'])) {
-        $path = $deploy->getFilePath($_GET['sha512']);
+$deploy = new PluginGlpiinventoryDeployFile();
+if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
+
+    if ($deploy->checkPresenceFile($deploy->fields['sha512'])) {
+        $path = $deploy->getFilePath($deploy->fields['sha512']);
         $deploy->constructFileToTmp($path, $filename);
     } else {
         Html::displayErrorAndDie(__('File not found'), true); // Not found
     }
-}
 
-if ($mimetype != null && $filename != null && $path != null) {
-    Toolbox::sendFile(GLPI_TMP_DIR . "/" . $filename, $filename, $mimetype);
+    if ($mimetype != null && $filename != null && $path != null) {
+        Toolbox::sendFile(GLPI_TMP_DIR . "/" . $filename, $filename, $mimetype);
+    } else {
+        Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
+    }
 } else {
-    Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
+    Html::displayErrorAndDie(__('File not found'), true); // Not found
 }
