@@ -50,7 +50,11 @@ if (isset($_POST["add"])) {
         $_POST['filter_' . $_POST['filter_nametype']] = $_POST['filter_name'];
 
         //set null if needed
-        $_POST['filter_nametype'] == 'iname' ? $_POST['filter_name'] = null : $_POST['filter_iname'] = null;
+        if ($_POST['filter_nametype'] == 'iname') {
+            $_POST['filter_name'] = null;
+        } else {
+            $_POST['filter_iname'] = null;
+        }
     } else {
         //if 'none' , name and iname need to be null
         $_POST['filter_iname'] = null;
