@@ -105,7 +105,6 @@ if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
 
             flush();
             readfile("php://output");
-            fclose($stdout);
         } else {
             Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
         }
