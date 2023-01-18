@@ -37,15 +37,6 @@ include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_package', READ);
 global $CFG_GLPI;
-$path = null;
-if (isset($_GET['sha512'])) {
-   $deploy = new PluginGlpiinventoryDeployFile();
-   if($deploy->checkPresenceFile($_GET['sha512'])) {
-      $path = $deploy->getFilePath($_GET['sha512']);
-   } else {
-      Html::displayErrorAndDie(__('File not found'), true); // Not found
-   }
-}
 
 $filename = null;
 if (isset($_GET['filename'])) {
@@ -57,10 +48,18 @@ if (isset($_GET['mimetype'])) {
     $mimetype = urldecode($_GET['mimetype']);
 }
 
-Toolbox::logError($mimetype, $filename, $path);
+if (isset($_GET['sha512'])) {
+   $deploy = new PluginGlpiinventoryDeployFile();
+   if($deploy->checkPresenceFile($_GET['sha512'])) {
+      $path = $deploy->getFilePath($_GET['sha512']);
+      $deploy->constructFileToTmp($path, $filename);
+   } else {
+      Html::displayErrorAndDie(__('File not found'), true); // Not found
+   }
+}
 
 if ($mimetype != null && $filename != null && $path != null) {
-   Toolbox::sendFile($path, $filename, $mimetype);
+   Toolbox::sendFile(GLPI_TMP_DIR . "/" . $filename, $filename, $mimetype);
 } else {
    Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
 }

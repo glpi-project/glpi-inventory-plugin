@@ -79,7 +79,13 @@ table.package_item_list .more {
 
 table.package_item_list .download {
    padding-left: 5px;
+   color: green;
    cursor: pointer;
+}
+
+table.package_item_list .download_off {
+   padding-left: 5px;
+   color: red;
 }
 
 table.package_item_list .filename {
