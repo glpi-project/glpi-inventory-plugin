@@ -550,7 +550,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         ],
         [
             'field'  => '_fusion',
-       ]
+        ]
     );
 
     if ($DB->tableExists('glpi_plugin_glpiinventory_rulematchedlogs')) {
