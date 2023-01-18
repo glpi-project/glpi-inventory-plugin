@@ -53,7 +53,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     const REGISTRY_NO_DB_ENTRY = 0x1;
     const REGISTRY_NO_MANIFEST = 0x2;
 
-    const DL_MAX_SIZE = 1024 * 1024 * 50;
+    const DL_MAX_SIZE = 1024 * 1024 * 100;
 
    /**
     * Get the 2 types to add files
