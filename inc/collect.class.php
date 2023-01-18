@@ -650,10 +650,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     }
                     if ($files['filter_iname'] != '') {
                         $datafile['filter']['iname'] = $files['filter_iname'];
-                    } else {
-                        if ($files['filter_name'] != '') {
-                            $datafile['filter']['name'] = $files['filter_name'];
-                        }
+                    } elseif ($files['filter_name'] != '') {
+                        $datafile['filter']['name'] = $files['filter_name'];
                     }
                     $output[] = $datafile;
 
