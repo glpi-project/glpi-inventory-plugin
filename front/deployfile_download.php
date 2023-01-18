@@ -49,10 +49,10 @@ if (isset($_GET['mimetype'])) {
 if (isset($_GET['sha512'])) {
     $deploy = new PluginGlpiinventoryDeployFile();
     if ($deploy->checkPresenceFile($_GET['sha512'])) {
-       $path = $deploy->getFilePath($_GET['sha512']);
-       $deploy->constructFileToTmp($path, $filename);
+        $path = $deploy->getFilePath($_GET['sha512']);
+        $deploy->constructFileToTmp($path, $filename);
     } else {
-       Html::displayErrorAndDie(__('File not found'), true); // Not found
+        Html::displayErrorAndDie(__('File not found'), true); // Not found
     }
 }
 

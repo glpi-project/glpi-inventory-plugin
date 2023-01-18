@@ -976,7 +976,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $sha512 sha512 of the file
     * @return array
     */
-    public function getFilePath($sha512) 
+    public function getFilePath($sha512)
     {
         if (!$this->checkPresenceFile($sha512)) {
             return false;
