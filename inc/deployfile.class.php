@@ -202,7 +202,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 } else {
                     echo "<a class='download_off' data-bs-toggle='tooltip' title='" . sprintf(__('File size too big > %s', 'glpiinventory'), self::DL_MAX_SIZE)  . "'><i class='ti ti-download-off'></a>";
                 }
-
             }
 
            //sha fingerprint
@@ -977,7 +976,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $sha512 sha512 of the file
     * @return array
     */
-    public function getFilePath($sha512) {
+    public function getFilePath($sha512) 
+    {
         if (!$this->checkPresenceFile($sha512)) {
             return false;
         }
@@ -1000,7 +1000,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * @param string $sha512 sha512 of the file
     * @return array
     */
-    public function constructFileToTmp($path, $filename) {
+    public function constructFileToTmp($path, $filename)
+    {
 
         $filename = GLPI_TMP_DIR . "/" . $filename;
         //exit if file already exist

@@ -31,8 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-use org\bovigo\vfs\FilenameTestCase;
-
 include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_package', READ);
@@ -49,17 +47,17 @@ if (isset($_GET['mimetype'])) {
 }
 
 if (isset($_GET['sha512'])) {
-   $deploy = new PluginGlpiinventoryDeployFile();
-   if($deploy->checkPresenceFile($_GET['sha512'])) {
-      $path = $deploy->getFilePath($_GET['sha512']);
-      $deploy->constructFileToTmp($path, $filename);
-   } else {
-      Html::displayErrorAndDie(__('File not found'), true); // Not found
-   }
+    $deploy = new PluginGlpiinventoryDeployFile();
+    if ($deploy->checkPresenceFile($_GET['sha512'])) {
+       $path = $deploy->getFilePath($_GET['sha512']);
+       $deploy->constructFileToTmp($path, $filename);
+    } else {
+       Html::displayErrorAndDie(__('File not found'), true); // Not found
+    }
 }
 
 if ($mimetype != null && $filename != null && $path != null) {
-   Toolbox::sendFile(GLPI_TMP_DIR . "/" . $filename, $filename, $mimetype);
+    Toolbox::sendFile(GLPI_TMP_DIR . "/" . $filename, $filename, $mimetype);
 } else {
-   Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
+    Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
 }
