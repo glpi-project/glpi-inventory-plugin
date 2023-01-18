@@ -89,11 +89,19 @@ if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
             header('Cache-Control: private');
 
             $stdout = fopen('php://output', 'w');
+            $length = 0;
             foreach ($path as $key => $value) {
                 $fdPart = gzopen($value, 'r');
-                fwrite($stdout, gzpassthru($fdPart));
-                gzclose($fdPart);
+                if(!gzpassthru($fdPart)){
+                    $uncompress_part = gzpassthru($fdPart);
+                    $length = $length + strlen($uncompress_part);
+                    fwrite($stdout, $uncompress_part);
+                    gzclose($fdPart);
+                }
+
             }
+            fclose($stdout);
+            header('Content-Length: '.$length);
 
             flush();
             readfile("php://output");
