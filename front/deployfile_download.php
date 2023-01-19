@@ -37,13 +37,10 @@ Session::checkRight('plugin_glpiinventory_package', READ);
 
 session_write_close(); // unlock session to ensure GLPI is still usable while huge file downloads is done in background
 
-$deployfile_id = null;
-if (isset($_GET['deployfile_id'])) {
-    $deployfile_id = urldecode($_GET['deployfile_id']);
-}
+$deployfile_id = (int)($_GET['deployfile_id'] ?? 0);
 
 $deploy = new PluginGlpiinventoryDeployFile();
-if ($deploy->getFromDB($deployfile_id)) {
+if ($deployfile_id > 0 && $deploy->getFromDB($deployfile_id)) {
     if ($deploy->checkPresenceFile($deploy->fields['sha512'])) {
         //get all repository file path
         $part_path = $deploy->getFilePath($deploy->fields['sha512']);
