@@ -73,7 +73,7 @@ if ($deploy->getFromDB($deployfile_id)) {
             header('Expires: 0');
             header_remove('Pragma');
             header('Cache-Control: no-store');
-            header('Content-Length: '.$filesize);
+            header('Content-Length: ' . $filesize);
 
             foreach ($part_path as $key => $path) {
                 readgzfile($path);
