@@ -50,7 +50,7 @@ if ($deploy->getFromDB($deployfile_id)) {
         $filesize = $deploy->fields['filesize'];
         $filename = $deploy->fields['name'];
 
-        if ($mimetype != null && $filename != null && count($part_path)) {
+        if ($filename != '' && $part_path !== false && count($part_path)) {
             // Make sure there is nothing in the output buffer (In case stuff was added by core or misbehaving plugin).
             // If there is any extra data, the sent file will be corrupted.
             // 1. Turn off any extra buffering level. Keep one buffering level if PHP output_buffering directive is not "off".
