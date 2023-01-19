@@ -45,7 +45,7 @@ $deploy = new PluginGlpiinventoryDeployFile();
 if ($deploy->getFromDB($deployfile_id)) {
     if ($deploy->checkPresenceFile($deploy->fields['sha512'])) {
         //get all repository file path
-        $path = $deploy->getFilePath($deploy->fields['sha512']);
+        $part_path = $deploy->getFilePath($deploy->fields['sha512']);
         $mimetype = $deploy->fields['mimetype'];
         $filesize = $deploy->fields['filesize'];
         $filename = $deploy->fields['name'];
@@ -86,22 +86,12 @@ if ($deploy->getFromDB($deployfile_id)) {
             header('Expires: 0');
             header_remove('Pragma');
             header('Cache-Control: private');
-
-            $stdout = fopen('php://output', 'w');
-            foreach ($path as $key => $value) {
-                $fdPart = gzopen($value, 'r');
-                if(!gzpassthru($fdPart)){
-                    $uncompress_part = gzpassthru($fdPart);
-                    fwrite($stdout, $uncompress_part);
-                    gzclose($fdPart);
-                }
-
-            }
-            fclose($stdout);
             header('Content-Length: '.$filesize);
 
+            foreach ($part_path as $key => $path) {
+                readgzfile($path);
+            }
             flush();
-            readfile("php://output");
         } else {
             Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
         }
