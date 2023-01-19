@@ -79,7 +79,7 @@ if ($deploy->getFromDB($deployfile_id)) {
             }
             flush();
         } else {
-            Html::displayErrorAndDie(__('Unauthorized access to this file'), true);
+            Html::displayErrorAndDie(__('An error occurs'), true);
         }
     } else {
         Html::displayErrorAndDie(__('File not found'), true); // Not found
