@@ -77,7 +77,6 @@ if ($deploy->getFromDB($deployfile_id)) {
             foreach ($part_path as $key => $path) {
                 readgzfile($path);
             }
-            flush();
         } else {
             Html::displayErrorAndDie(__('An error occurs'), true);
         }
