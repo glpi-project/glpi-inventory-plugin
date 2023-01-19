@@ -190,9 +190,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
 
             //download file
-            if (
-                $this->checkPresenceFile($sha512)
-            ) {
+            if (!$fileregistry_error) {
                 $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?deployfile_id=" . $file_id;
                 echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
                     "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></a>";
