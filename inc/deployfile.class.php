@@ -983,7 +983,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             while (($buffer = fgets($handle)) !== false) {
                 $path[] = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
             }
-            if (!feof($fp)) {
+            if (!feof($handle)) {
                 $error = true;
             }
             fclose($handle);
