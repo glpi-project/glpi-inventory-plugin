@@ -34,7 +34,6 @@
 include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_package', READ);
-global $CFG_GLPI;
 
 session_write_close(); // unlock session to ensure GLPI is still usable while huge file downloads is done in background
 
