@@ -78,7 +78,7 @@ if ($deploy->getFromDB($deployfile_id)) {
                 readgzfile($path);
             }
         } else {
-            Html::displayErrorAndDie(__('An error occurs'), true);
+            Html::displayErrorAndDie(__('An error occurs', 'glpiinventory'), true);
         }
     } else {
         Html::displayErrorAndDie(__('File not found'), true); // Not found
