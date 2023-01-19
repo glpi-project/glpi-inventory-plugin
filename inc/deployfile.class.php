@@ -978,11 +978,22 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         $path = [];
         $handle = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512, "r");
+        $error = $handle === false;
         if ($handle) {
             while (($buffer = fgets($handle)) !== false) {
                 $path[] = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
             }
+            if (!feof($fp)) {
+                $error = true;
+            }
             fclose($handle);
+        }
+        if ($error) {
+            trigger_error(
+                sprintf('Unable to read file %s manifest.', $sha512),
+                E_USER_WARNING
+            );
+            return false;
         }
 
         return $path;
