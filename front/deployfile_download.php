@@ -50,7 +50,7 @@ if ($deploy->getFromDB($deployfile_id)) {
         $filesize = $deploy->fields['filesize'];
         $filename = $deploy->fields['name'];
 
-        if ($mimetype != null && $filename != null && count($path)) {
+        if ($mimetype != null && $filename != null && count($part_path)) {
             // Make sure there is nothing in the output buffer (In case stuff was added by core or misbehaving plugin).
             // If there is any extra data, the sent file will be corrupted.
             // 1. Turn off any extra buffering level. Keep one buffering level if PHP output_buffering directive is not "off".
@@ -66,26 +66,13 @@ if ($deploy->getFromDB($deployfile_id)) {
                 ob_clean();
             }
 
-            // don't download picture files, see them inline
-            $attachment = "";
-            // if not begin 'image/'
-            if (
-                strncmp($mimetype, 'image/', 6) !== 0
-                && $mimetype != 'application/pdf'
-                // svg vector of attack, force attachment
-                // see https://github.com/glpi-project/glpi/issues/3873
-                || $mimetype == 'image/svg+xml'
-            ) {
-                $attachment = ' attachment;';
-            }
-
             header('Content-Description: File Transfer');
             header('Content-Type: ' . $mimetype);
-            header('Content-Disposition: ' . $attachment . ' filename=' . basename($filename));
+            header('Content-Disposition: attachment; filename=' . basename($filename));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
             header_remove('Pragma');
-            header('Cache-Control: private');
+            header('Cache-Control: no-store');
             header('Content-Length: '.$filesize);
 
             foreach ($part_path as $key => $path) {

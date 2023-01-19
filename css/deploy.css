@@ -83,11 +83,6 @@ table.package_item_list .download {
    cursor: pointer;
 }
 
-table.package_item_list .download_off {
-   padding-left: 5px;
-   color: red;
-}
-
 table.package_item_list .filename {
    white-space: normal;
 }
