@@ -81,7 +81,7 @@ if ($deploy->getFromDB($deployfile_id)) {
             Html::displayErrorAndDie(__('An error occurs', 'glpiinventory'), true);
         }
     } else {
-        Html::displayErrorAndDie(__('File not found'), true); // Not found
+        Html::displayErrorAndDie(__('File not found', 'glpiinventory'), true); // Not found
     }
 } else {
     Html::displayErrorAndDie(__('File not found'), true); // Not found
