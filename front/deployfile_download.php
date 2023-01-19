@@ -67,7 +67,7 @@ if ($deploy->getFromDB($deployfile_id)) {
             }
 
             header('Content-Description: File Transfer');
-            header('Content-Type: ' . $mimetype);
+            header('Content-Type: ' . ($mimetype ?: 'application/octet-stream'));
             header('Content-Disposition: attachment; filename=' . basename($filename));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
