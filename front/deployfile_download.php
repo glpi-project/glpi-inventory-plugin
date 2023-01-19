@@ -36,21 +36,20 @@ include("../../../inc/includes.php");
 Session::checkRight('plugin_glpiinventory_package', READ);
 global $CFG_GLPI;
 
-$filename = null;
-if (isset($_GET['filename'])) {
-    $filename = $_GET['filename'];
-}
-
-$mimetype = null;
-if (isset($_GET['mimetype'])) {
-    $mimetype = urldecode($_GET['mimetype']);
+$deployfile_id = null;
+if (isset($_GET['deployfile_id'])) {
+    $deployfile_id = urldecode($_GET['deployfile_id']);
 }
 
 $deploy = new PluginGlpiinventoryDeployFile();
-if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
+if ($deploy->getFromDB($deployfile_id)) {
     if ($deploy->checkPresenceFile($deploy->fields['sha512'])) {
         //get all repository file path
         $path = $deploy->getFilePath($deploy->fields['sha512']);
+        $mimetype = $deploy->fields['mimetype'];
+        $filesize = $deploy->fields['filesize'];
+        $filename = $deploy->fields['name'];
+
         if ($mimetype != null && $filename != null && count($path)) {
             // Make sure there is nothing in the output buffer (In case stuff was added by core or misbehaving plugin).
             // If there is any extra data, the sent file will be corrupted.
@@ -89,19 +88,17 @@ if ($deploy->getFromDBByCrit(['name' => $filename, 'mimetype' => $mimetype ])) {
             header('Cache-Control: private');
 
             $stdout = fopen('php://output', 'w');
-            $length = 0;
             foreach ($path as $key => $value) {
                 $fdPart = gzopen($value, 'r');
                 if(!gzpassthru($fdPart)){
                     $uncompress_part = gzpassthru($fdPart);
-                    $length = $length + strlen($uncompress_part);
                     fwrite($stdout, $uncompress_part);
                     gzclose($fdPart);
                 }
 
             }
             fclose($stdout);
-            header('Content-Length: '.$length);
+            header('Content-Length: '.$filesize);
 
             flush();
             readfile("php://output");
