@@ -53,7 +53,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     const REGISTRY_NO_DB_ENTRY = 0x1;
     const REGISTRY_NO_MANIFEST = 0x2;
 
-
    /**
     * Get the 2 types to add files
     *
@@ -189,6 +188,14 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                      $pics_path .
                      "uncompress.png' /></a>";
             }
+
+            //download file
+            if (!$fileregistry_error) {
+                $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?deployfile_id=" . $file_id;
+                echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
+                    "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></a>";
+            }
+
            //sha fingerprint
             $sha_status = "good";
             if ($fileregistry_error != 0) {
@@ -953,6 +960,41 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         }
 
         return true;
+    }
+
+    /**
+    * Return all subpart path
+    *
+    * @param string $sha512 sha512 of the file
+    * @return array
+    */
+    public function getFilePath($sha512)
+    {
+        if (!$this->checkPresenceFile($sha512)) {
+            return false;
+        }
+
+        $path = [];
+        $handle = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512, "r");
+        $error = $handle === false;
+        if ($handle) {
+            while (($buffer = fgets($handle)) !== false) {
+                $path[] = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
+            }
+            if (!feof($handle)) {
+                $error = true;
+            }
+            fclose($handle);
+        }
+        if ($error) {
+            trigger_error(
+                sprintf('Unable to read file %s manifest.', $sha512),
+                E_USER_WARNING
+            );
+            return false;
+        }
+
+        return $path;
     }
 
 

@@ -76,6 +76,13 @@ table.package_item_list .more {
    float: right;
    cursor: help;
 }
+
+table.package_item_list .download {
+   padding-left: 5px;
+   color: green;
+   cursor: pointer;
+}
+
 table.package_item_list .filename {
    white-space: normal;
 }
