@@ -208,7 +208,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         * General
         */
         $general_menu = [];
-        if (Session::haveRight('plugin_glpiinventory_agent', READ)) {
+        if (Session::haveRight('agent', READ)) {
             $general_menu[0]['name'] = __('Agents management', 'glpiinventory');
             $general_menu[0]['pic']  = "ti ti-robot";
             $general_menu[0]['link'] = Agent::getSearchURL();
