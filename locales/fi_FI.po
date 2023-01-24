@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-02 08:29+0000\n"
+"POT-Creation-Date: 2023-01-24 12:22+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -41,7 +41,7 @@ msgstr "Toiminto"
 msgid "Action label"
 msgstr "Toiminnon tunniste"
 
-#: inc/deploypackage.class.php:527 b/deploy/index.php:140
+#: b/deploy/index.php:140 inc/deploypackage.class.php:527
 msgid "Actions"
 msgstr "Toiminnot"
 
@@ -81,7 +81,7 @@ msgstr "Lisää tehtävä"
 msgid "Add the item"
 msgstr "Lisää kohde"
 
-#: hook.php:454 inc/deploygroup_staticdata.class.php:154
+#: inc/deploygroup_staticdata.class.php:154 hook.php:454
 msgid "Add to static group"
 msgstr "Lisää staattiseen ryhmään"
 
@@ -147,6 +147,10 @@ msgstr ""
 msgid "Alert timeout exceeded"
 msgstr "Hälytyksen aikaraja ylittyi"
 
+#: front/deployfile_download.php:79
+msgid "An error occurs"
+msgstr ""
+
 #: inc/menu.class.php:290
 msgid "Asset skipped during import"
 msgstr "Omaisuus ohitettu tuonnin aikana"
@@ -167,14 +171,14 @@ msgstr "Auditoinnin tunniste"
 msgid "Audits"
 msgstr "Tarkastukset"
 
-#: inc/profile.class.php:357 inc/menu.class.php:359
-#: inc/credential.class.php:80 inc/credential.class.php:180
 #: inc/credentialip.class.php:131 inc/credentialip.class.php:154
+#: inc/profile.class.php:357 inc/credential.class.php:80
+#: inc/credential.class.php:180 inc/menu.class.php:359
 msgid "Authentication for remote devices (VMware)"
 msgstr "Kirjautuminen etälaitteille (Vmware)"
 
-#: inc/staticmisc.class.php:475 inc/staticmisc.class.php:481
-#: inc/taskjob.class.php:1038
+#: inc/taskjob.class.php:1038 inc/staticmisc.class.php:475
+#: inc/staticmisc.class.php:481
 msgid "Auto managenement dynamic of agents"
 msgstr "Agenttien dynaaminen hallinta"
 
@@ -260,8 +264,8 @@ msgstr "Piilotiedot"
 msgid "Cancel - Try - Continue"
 msgstr "Peruuta - Yritä - Jatka"
 
-#: inc/deploypackage.class.php:1505
 #: inc/deployuserinteractiontemplate.class.php:232
+#: inc/deploypackage.class.php:1505
 msgid "Cancel job"
 msgstr "Peruuta työ"
 
@@ -269,8 +273,8 @@ msgstr "Peruuta työ"
 msgid "Cancel modifications"
 msgstr "Peru muutokset"
 
-#: inc/deploypackage.class.php:1376 inc/taskview.class.php:239
-#: inc/taskjobstate.class.php:144
+#: inc/taskview.class.php:239 inc/taskjobstate.class.php:144
+#: inc/deploypackage.class.php:1376
 msgid "Cancelled"
 msgstr "Peruttu"
 
@@ -290,7 +294,7 @@ msgstr "Tarkistussumma SHA2"
 msgid "Checksum SHA512"
 msgstr "Tarkistussumma SHA512"
 
-#: inc/deployfile.class.php:300
+#: inc/deployfile.class.php:307
 msgid "Choose"
 msgstr "Valitse"
 
@@ -327,7 +331,7 @@ msgstr "Keräystiedot"
 msgid "Collect management"
 msgstr "Keräyksen hallinta"
 
-#: inc/collect.class.php:707
+#: inc/collect.class.php:706
 msgid "Collect module has been disabled for this agent"
 msgstr "Tiedon keräys-moduuli on poistettu käytöstä kyseiselle agentille"
 
@@ -367,8 +371,8 @@ msgstr "Tietokoneyksikön säännöt"
 msgid "Computer information"
 msgstr "Tietokoneen tiedot"
 
-#: inc/collectrulecollection.class.php:72 inc/profile.class.php:307
-#: inc/collectrule.class.php:73
+#: inc/collectrule.class.php:73 inc/profile.class.php:307
+#: inc/collectrulecollection.class.php:72
 msgid "Computer information rules"
 msgstr "Tietokonetietojen säännöt"
 
@@ -453,9 +457,9 @@ msgstr ""
 msgid "Definition"
 msgstr "Toiminta-alue"
 
-#: inc/deployuserinteraction.class.php:300 inc/deployfile.class.php:237
-#: inc/deployaction.class.php:251 inc/taskjobview.class.php:284
 #: inc/taskjob.class.php:1409 inc/deploycheck.class.php:290
+#: inc/deployaction.class.php:251 inc/deployfile.class.php:244
+#: inc/deployuserinteraction.class.php:300 inc/taskjobview.class.php:284
 msgid "Delete"
 msgstr "Poista "
 
@@ -483,7 +487,7 @@ msgstr ""
 msgid "Delete tasks logs after"
 msgstr "Poista tehtävien lokit, kun on kulunut "
 
-#: hook.php:48 inc/menu.class.php:427
+#: inc/menu.class.php:427 hook.php:48
 msgid "Deploy"
 msgstr "Ota käyttöön"
 
@@ -548,7 +552,11 @@ msgstr "Levy tai hakemisto"
 msgid "Don't wakeup"
 msgstr "Älä herätä"
 
-#: inc/deploygroup.class.php:86 inc/deploygroup.class.php:725
+#: inc/deployfile.class.php:195
+msgid "Download"
+msgstr ""
+
+#: inc/deploygroup.class.php:86 inc/deploygroup.class.php:746
 msgid "Dynamic group"
 msgstr "Dynaaminen ryhmä"
 
@@ -621,11 +629,11 @@ msgstr ""
 msgid "Extra-debug"
 msgstr "Extra-debug"
 
-#: inc/deployfile.class.php:664 inc/deployfile.class.php:722
+#: inc/deployfile.class.php:676 inc/deployfile.class.php:734
 msgid "Failed to copy file"
 msgstr "Tiedoston kopiointi epäonnistui"
 
-#: inc/deployfile.class.php:629
+#: inc/deployfile.class.php:641
 msgid "Failed to write file to disk"
 msgstr "Tiedostoa ei voida kirjoittaa levylle "
 
@@ -633,9 +641,9 @@ msgstr "Tiedostoa ei voida kirjoittaa levylle "
 msgid "Features"
 msgstr "Piirteet"
 
-#: inc/collect_file.class.php:86 inc/collect_file.class.php:192
-#: inc/deployfile.class.php:287 inc/deploycheck.class.php:388
-#: inc/deploycheck.class.php:401 inc/deploycheck.class.php:408
+#: inc/deploycheck.class.php:388 inc/deploycheck.class.php:401
+#: inc/deploycheck.class.php:408 inc/collect_file.class.php:86
+#: inc/collect_file.class.php:192 inc/deployfile.class.php:294
 msgid "File"
 msgstr "Tiedosto"
 
@@ -647,7 +655,7 @@ msgstr "Tiedosto on olemassa"
 msgid "File is missing"
 msgstr "Tiedosto ei ole olemassa"
 
-#: inc/deployfile.class.php:668 inc/deployfile.class.php:726
+#: inc/deployfile.class.php:680 inc/deployfile.class.php:738
 msgid "File missing"
 msgstr "Tiedosto puuttuu"
 
@@ -655,11 +663,15 @@ msgstr "Tiedosto puuttuu"
 msgid "File name"
 msgstr "Tiedoston nimi "
 
+#: front/deployfile_download.php:82 front/deployfile_download.php:85
+msgid "File not found"
+msgstr ""
+
 #: inc/collectrule.class.php:215
 msgid "File path"
 msgstr "Tiedostopolku "
 
-#: inc/deployfile.class.php:661 inc/deployfile.class.php:719
+#: inc/deployfile.class.php:673 inc/deployfile.class.php:731
 msgid "File saved!"
 msgstr "Tiedoston tallennus onnistui"
 
@@ -690,6 +702,11 @@ msgstr "Tiedostot"
 #: b/deploy/index.php:138
 msgid "Files download"
 msgstr "Tiedostojen lataus"
+
+#: inc/deployfile.class.php:415
+#, php-format
+msgid "Files need to be uploaded to %s folder to be displayed here"
+msgstr ""
 
 #: b/deploy/index.php:139
 msgid "Files preparation"
@@ -758,20 +775,19 @@ msgstr "Vapaa tila suurempi kuin "
 msgid "From"
 msgstr "Alkaen"
 
-#: report/switch_ports.history.php:41 report/computer_last_inventory.php:40
-#: report/not_queried_recently.php:42 report/ports_date_connections.php:40
+#: report/not_queried_recently.php:42 report/switch_ports.history.php:41
+#: report/ports_date_connections.php:40 report/computer_last_inventory.php:40
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: index.php:48 inc/menu.class.php:53 front/credential.php:37
-#: front/taskjob.php:37 front/timeslot.php:40 front/collect.php:37
-#: front/credential.form.php:41 front/collectrule.php:38
-#: front/taskjob.form.php:39 front/taskjoblog.php:37 front/iprange.form.php:39
-#: front/menu_snmpinventory.php:38 front/credentialip.php:37
-#: front/statediscovery.php:37 front/agentmodule.form.php:37
-#: front/iprange.php:37 front/task.php:38 front/credentialip.form.php:44
-#: front/task.form.php:42 front/collectrule.form.php:37
-#: front/stateinventory.php:37 front/menu.php:38
+#: inc/menu.class.php:53 front/stateinventory.php:37 front/task.form.php:42
+#: front/menu_snmpinventory.php:38 front/collectrule.php:38
+#: front/taskjoblog.php:37 front/credential.form.php:41 front/menu.php:38
+#: front/collect.php:37 front/taskjob.form.php:39 front/task.php:38
+#: front/credential.php:37 front/timeslot.php:40 front/statediscovery.php:37
+#: front/taskjob.php:37 front/iprange.php:37 front/iprange.form.php:39
+#: front/credentialip.form.php:44 front/collectrule.form.php:37
+#: front/credentialip.php:37 front/agentmodule.form.php:37 index.php:48
 msgid "GLPI Inventory"
 msgstr ""
 
@@ -783,8 +799,8 @@ msgstr "Yleinen"
 msgid "General configuration"
 msgstr "Yleiset asetukset"
 
-#: inc/profile.class.php:419 inc/menu.class.php:218
-#: inc/deploytaskjob.class.php:216 front/deploygroup.php:38
+#: inc/deploytaskjob.class.php:216 inc/profile.class.php:419
+#: inc/menu.class.php:218 front/deploygroup.php:38
 msgid "Groups of computers"
 msgstr "Tietokoneryhmät"
 
@@ -804,8 +820,9 @@ msgstr "En ole tällä tietokoneella: herätys palvelimelta"
 msgid "I'm on this computer: local wakeup"
 msgstr "Olen tällä tietokoneella: paikallinen herätys"
 
+#: inc/iprange.class.php:88 inc/iprange.class.php:91
 #: inc/staticmisc.class.php:372 inc/staticmisc.class.php:406
-#: inc/iprange.class.php:88 inc/iprange.class.php:91 inc/menu.class.php:335
+#: inc/menu.class.php:335
 msgid "IP Ranges"
 msgstr "IP-osoitealueet"
 
@@ -851,7 +868,7 @@ msgstr "Tuonti estetty"
 msgid "Impossible to read the CSV file"
 msgstr "CSV-tiedostoa ei voi lukea"
 
-#: inc/deploypackage.class.php:1372 inc/taskview.class.php:234
+#: inc/taskview.class.php:234 inc/deploypackage.class.php:1372
 msgid "In error"
 msgstr "Virhetilassa"
 
@@ -895,8 +912,8 @@ msgstr "Kartoitus käynnistyi"
 msgid "JSON package representation"
 msgstr "JSON-paketin esitys"
 
-#: inc/task.class.php:2129 inc/taskjobstate.class.php:307
-#: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
+#: inc/taskjob.class.php:58 inc/task.class.php:2129
+#: inc/taskjobstate.class.php:307 inc/agentwakeup.class.php:59
 #: inc/taskjoblog.class.php:190
 msgid "Job"
 msgstr "Työ"
@@ -928,7 +945,7 @@ msgstr "Käyttäjä %1$s lykkäsi työn suoritusta"
 msgid "Key"
 msgstr "Avain"
 
-#: report/computer_last_inventory.php:119 report/not_queried_recently.php:135
+#: report/not_queried_recently.php:135 report/computer_last_inventory.php:119
 msgid "Last inventory"
 msgstr "Edellinen kartoitus"
 
@@ -958,7 +975,7 @@ msgstr "Hallinnoi paketteja"
 msgid "Match mirrors to agents"
 msgstr "Sovita peilipalvelimet agenteille"
 
-#: inc/deployfile.class.php:1025
+#: inc/deployfile.class.php:1072
 msgid "Max file size"
 msgstr "Tiedoston enimmäiskoko"
 
@@ -978,12 +995,12 @@ msgstr "Uudelleenyritysten enimmäismäärä saavutettu: pakota käyttöönotto"
 msgid "Menu"
 msgstr "Tehtävälista"
 
-#: inc/deployfile.class.php:175 inc/deployfile.class.php:340
-#: inc/taskjob.class.php:1001
+#: inc/taskjob.class.php:1001 inc/deployfile.class.php:174
+#: inc/deployfile.class.php:347
 msgid "Minute(s)"
 msgstr "minuuttia"
 
-#: inc/deployfile.class.php:1026
+#: inc/deployfile.class.php:1073
 msgid "Mio"
 msgstr "Mt"
 
@@ -996,7 +1013,7 @@ msgstr "Peilipalvelimen osoite"
 msgid "Mirror servers"
 msgstr "Peilipalvelimet"
 
-#: inc/deployfile.class.php:625
+#: inc/deployfile.class.php:637
 msgid "Missing a temporary folder"
 msgstr "Väliaikaiskansio puuttuu"
 
@@ -1004,9 +1021,9 @@ msgstr "Väliaikaiskansio puuttuu"
 msgid "Modification Denied"
 msgstr "Muokkaus estetty"
 
-#: hook.php:48 hook.php:55 hook.php:62 hook.php:69 hook.php:76 hook.php:83
-#: hook.php:90 inc/agentmodule.class.php:111 inc/agentmodule.class.php:214
-#: inc/agentmodule.class.php:216
+#: inc/agentmodule.class.php:111 inc/agentmodule.class.php:214
+#: inc/agentmodule.class.php:216 hook.php:48 hook.php:55 hook.php:62
+#: hook.php:69 hook.php:76 hook.php:83 hook.php:90
 msgid "Module"
 msgstr "Moduuli"
 
@@ -1038,8 +1055,8 @@ msgstr "Nimi"
 msgid "Network Inventory"
 msgstr "Verkkokartoitus"
 
-#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:420
-#: inc/config.class.php:440
+#: inc/staticmisc.class.php:81 inc/config.class.php:420
+#: inc/config.class.php:440 hook.php:83
 msgid "Network discovery"
 msgstr "Verkon löytäminen"
 
@@ -1051,9 +1068,9 @@ msgstr ""
 msgid "Network inventory"
 msgstr "Verkkokartoitus"
 
-#: inc/staticmisc.class.php:87 inc/config.class.php:429
-#: inc/config.class.php:448 inc/agentmodule.class.php:134
-#: inc/agentmodule.class.php:242
+#: inc/staticmisc.class.php:87 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:242 inc/config.class.php:429
+#: inc/config.class.php:448
 msgid "Network inventory (SNMP)"
 msgstr "Verkon kartoitus (SNMP)"
 
@@ -1077,7 +1094,7 @@ msgstr "Uusi toiminto"
 msgid "No active session"
 msgstr "Ei aktiivista istuntoa"
 
-#: inc/deployfile.class.php:621
+#: inc/deployfile.class.php:633
 msgid "No file was uploaded"
 msgstr "Yhtään tiedostoa ei ladattu"
 
@@ -1093,7 +1110,7 @@ msgstr "Ei käyttäjiä yhteydessä"
 msgid "Non sentitive case"
 msgstr "Kirjainkoolla ei merkitystä"
 
-#: inc/deploypackage.class.php:1371 inc/taskview.class.php:233
+#: inc/taskview.class.php:233 inc/deploypackage.class.php:1371
 msgid "Not done yet"
 msgstr "Ei vielä suoritettu"
 
@@ -1154,15 +1171,15 @@ msgstr "Latauksen epäonnistuessa"
 msgid "Order list"
 msgstr "Järjestysluettelo"
 
-#: inc/deployfile.class.php:330
+#: inc/deployfile.class.php:337
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:633
+#: inc/deployfile.class.php:645
 msgid "PHP extension stopped the file upload"
 msgstr "PHP-laajennus keskeytti tiedoston latauksen"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:2090
+#: inc/task.class.php:2090 inc/deploypackage.class.php:96
 msgid "Package"
 msgstr "Paketti"
 
@@ -1190,12 +1207,12 @@ msgstr "Paketin hallinta"
 msgid "Packages to import"
 msgstr "Tuotavat paketit"
 
-#: inc/collect_registry_content.class.php:167
 #: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
+#: inc/collect_registry_content.class.php:167
 msgid "Path"
 msgstr "Polku"
 
-#: inc/collect.class.php:847
+#: inc/collect.class.php:846
 msgid "Path not found"
 msgstr "Polkua ei löydy"
 
@@ -1216,14 +1233,14 @@ msgstr "Polku/tiedosto"
 msgid "Periodicity"
 msgstr "Jaksottaisuus"
 
-#: inc/task.class.php:143 inc/taskview.class.php:322
+#: inc/taskview.class.php:322 inc/task.class.php:143
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:484
+#: setup.php:450
 #, php-format
-msgid "Please remove folder %s in glpi/plugins/"
-msgstr "Poista hakemisto %s hakemistosta glpi/plugins/"
+msgid "Please remove %s directory."
+msgstr ""
 
 #: inc/taskview.class.php:238 inc/taskjobstate.class.php:145
 msgid "Postponed"
@@ -1237,8 +1254,8 @@ msgstr "Valmistelun aikaväli"
 msgid "Prepare for install"
 msgstr "Valmistele asennus"
 
-#: inc/deploypackage.class.php:1375 inc/taskview.class.php:237
-#: inc/statediscovery.class.php:245 inc/taskjobstate.class.php:139
+#: inc/taskview.class.php:237 inc/statediscovery.class.php:245
+#: inc/taskjobstate.class.php:139 inc/deploypackage.class.php:1375
 #: inc/stateinventory.class.php:174 inc/taskjoblog.class.php:96
 #: inc/taskjoblog.class.php:546 inc/taskjoblog.class.php:710
 msgid "Prepared"
@@ -1289,8 +1306,8 @@ msgstr "Rekursiivinen"
 msgid "Regex"
 msgstr "Säännöllinen lauseke"
 
-#: inc/collect.class.php:148 inc/collect.class.php:196
-#: inc/deploycheck.class.php:55
+#: inc/deploycheck.class.php:55 inc/collect.class.php:148
+#: inc/collect.class.php:196
 msgid "Registry"
 msgstr "Rekisteri"
 
@@ -1383,7 +1400,7 @@ msgstr "Säännöt"
 msgid "Rules applied"
 msgstr "Käytetyt säännöt"
 
-#: inc/deploypackage.class.php:1374 inc/taskview.class.php:236
+#: inc/taskview.class.php:236 inc/deploypackage.class.php:1374
 msgid "Running"
 msgstr "Käynnissä"
 
@@ -1399,7 +1416,7 @@ msgstr "SHA-512-tiiviste on yhteensopiva"
 msgid "SHA-512 hash value mismatch"
 msgstr "SHA-512-tiiviste on yhteensopimaton"
 
-#: inc/menu.class.php:351 inc/iprange_snmpcredential.class.php:213
+#: inc/iprange_snmpcredential.class.php:213 inc/menu.class.php:351
 msgid "SNMP credentials"
 msgstr "SNMP-tunnistetiedot"
 
@@ -1419,11 +1436,11 @@ msgstr "SNMP-timeout"
 msgid "SSL-only for agent"
 msgstr "Yhteys agenttin vain SSL:än avulla"
 
-#: inc/task.class.php:110 inc/taskview.class.php:344
+#: inc/taskview.class.php:344 inc/task.class.php:110
 msgid "Schedule end"
 msgstr "Aikatauluta lopetus"
 
-#: inc/task.class.php:102 inc/taskview.class.php:338
+#: inc/taskview.class.php:338 inc/task.class.php:102
 msgid "Schedule start"
 msgstr "Aikatauluta aloitus"
 
@@ -1439,7 +1456,7 @@ msgstr "Katso tehtävien kaikki tiedot"
 msgid "Select packages you want install"
 msgstr "Valitse asennettavat paketit"
 
-#: inc/deployfile.class.php:305
+#: inc/deployfile.class.php:312
 msgid "Select the file on server"
 msgstr "Valitse palvelimen tiedosto"
 
@@ -1469,10 +1486,10 @@ msgstr ""
 msgid "Show/Hide details"
 msgstr "Näytä/piilota tiedot"
 
-#: inc/collect_file.class.php:65 inc/collect_file.class.php:147
-#: inc/deployfile.class.php:1042 inc/collect.class.php:249
 #: inc/collect_file_content.class.php:97
-#: inc/collect_file_content.class.php:139
+#: inc/collect_file_content.class.php:139 inc/collect_file.class.php:65
+#: inc/collect_file.class.php:147 inc/collect.class.php:249
+#: inc/deployfile.class.php:1089
 msgid "Size"
 msgstr "Koko"
 
@@ -1503,11 +1520,11 @@ msgstr "Käynnistyi"
 msgid "Starting date"
 msgstr "Aloituspäivä"
 
-#: hook.php:94 inc/deploygroup.class.php:85 inc/deploygroup.class.php:707
+#: inc/deploygroup.class.php:85 inc/deploygroup.class.php:728 hook.php:94
 msgid "Static group"
 msgstr "Staattinen ryhmä"
 
-#: inc/deploypackage.class.php:1373 inc/taskview.class.php:235
+#: inc/taskview.class.php:235 inc/deploypackage.class.php:1373
 msgid "Successful"
 msgstr "Onnistunut"
 
@@ -1519,7 +1536,7 @@ msgstr "Tavoitekohteen osa"
 msgid "Target Type"
 msgstr "Tavoitekohteen tyyppi"
 
-#: hook.php:450 inc/iprange.class.php:289 inc/deploygroup.class.php:208
+#: inc/iprange.class.php:289 inc/deploygroup.class.php:208 hook.php:450
 msgid "Target a task"
 msgstr "Kohdista tehtävä"
 
@@ -1533,10 +1550,10 @@ msgstr[1] "Pyydetyn käyttöönoton kohteet"
 msgid "Targets"
 msgstr "Tavoitekohteet"
 
-#: inc/task.class.php:2072 inc/task.class.php:2112 inc/taskview.class.php:161
-#: inc/profile.class.php:413 inc/statediscovery.class.php:168
-#: inc/stateinventory.class.php:106 inc/deploytask.class.php:58
-#: inc/deploytask.class.php:160
+#: inc/taskview.class.php:161 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160 inc/profile.class.php:413
+#: inc/task.class.php:2072 inc/task.class.php:2112
+#: inc/statediscovery.class.php:168 inc/stateinventory.class.php:106
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Tehtävä"
@@ -1585,7 +1602,7 @@ msgstr "Kohteet, joita tulee käyttää tässä työssä"
 msgid "The items that should carry out those targets."
 msgstr "Kohteet tavoitekohteen suorittamiseksi"
 
-#: inc/deploypackage.class.php:999 inc/deploypackageitem.class.php:330
+#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
 msgid "The modified JSON contained a syntax error :"
 msgstr "Muokattu JSON sisältää syntaksivirheen:"
 
@@ -1597,7 +1614,7 @@ msgstr "Valitulla tehtävällä on jo käyttöönottotyö toiselle paketille:"
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Tehtävä on deaktivoitu tämän työn valmistelun jälkeen."
 
-#: inc/deployfile.class.php:617
+#: inc/deployfile.class.php:629
 msgid "The uploaded file was only partially uploaded"
 msgstr "Tiedosto ladattiin vain osittain"
 
@@ -1627,13 +1644,13 @@ msgstr "Tätä työtä ei voida suorittaa enää johtuen tehtävän aikavälist�
 msgid "This task is active. delete denied"
 msgstr "Poisto ei ole mahdollinen, sillä tämä tehtävä on aktiivinen."
 
-#: inc/statediscovery.class.php:174 inc/stateinventory.class.php:113
 #: inc/config.class.php:419 inc/config.class.php:428
+#: inc/statediscovery.class.php:174 inc/stateinventory.class.php:113
 msgid "Threads number"
 msgstr "Säikeiden lukumäärä"
 
-#: inc/timeslotentry.class.php:82 inc/timeslot.class.php:66
-#: inc/timeslot.class.php:82 inc/menu.class.php:264
+#: inc/timeslot.class.php:66 inc/timeslot.class.php:82
+#: inc/timeslotentry.class.php:82 inc/menu.class.php:264
 msgid "Time slot"
 msgstr "Aikaväli"
 
@@ -1653,7 +1670,7 @@ msgstr "Kartoitettavat"
 msgid "Total discovery devices"
 msgstr "Löydettyjen laitteiden kokonaismäärä"
 
-#: inc/deployfile.class.php:613
+#: inc/deployfile.class.php:625
 msgid "Transfer error: the file size is too big"
 msgstr "Siirtovirhe: tiedosto on liian suuri."
 
@@ -1669,7 +1686,7 @@ msgstr "Rekisteriarvon tyyppi on sama kuin"
 msgid "Type of value"
 msgstr "Arvon tyyppi"
 
-#: inc/deployfile.class.php:322
+#: inc/deployfile.class.php:329
 msgid "Uncompress"
 msgstr "Pura"
 
@@ -1682,7 +1699,7 @@ msgstr "Yksilöllinen tunniste"
 msgid "Unit"
 msgstr "Yksikkö"
 
-#: inc/deployfile.class.php:1039
+#: inc/deployfile.class.php:1086
 msgid "Unused file"
 msgstr "Käyttämätön tiedosto"
 
@@ -1694,11 +1711,11 @@ msgstr "Päivitä kohde"
 msgid "Updated a deployment job, package: "
 msgstr "Päivitetty käyttöönottotyö, paketti:"
 
-#: inc/deployfile.class.php:65
+#: inc/deployfile.class.php:64
 msgid "Upload from computer"
 msgstr "Lataa tietokoneelta"
 
-#: inc/deployfile.class.php:66
+#: inc/deployfile.class.php:65
 msgid "Upload from server"
 msgstr "Lataa palvelimelta"
 
@@ -1745,11 +1762,11 @@ msgstr "Vmware-isäntä"
 msgid "VMware host remote inventory"
 msgstr "Vmware-isäntien etäkartoitus"
 
+#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
+#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 #: inc/collect_registry_content.class.php:168
 #: inc/collect_registry_content.class.php:215
 #: inc/collect_wmi_content.class.php:148 inc/collect_wmi_content.class.php:199
-#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
-#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 msgid "Value"
 msgstr "Arvo"
 
@@ -1807,11 +1824,6 @@ msgid ""
 "package."
 msgstr "Täytyy valita tehtävä ja paketti käyttöönotto tehtävän kohdennukseen."
 
-#: setup.php:467
-#, php-format
-msgid "Your GLPI version not compatible, require >= %1$s and < %2$s"
-msgstr ""
-
 #: inc/menu.class.php:485
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr "`Verkon löytäminen`, käytetään laitteiden löytämiseen verkosta"
@@ -1845,9 +1857,9 @@ msgstr "löydetyt oheislaitteet"
 msgid "devices queried"
 msgstr "kysellyt oheislaitteet"
 
-#: inc/deployuserinteraction.class.php:285 inc/deployfile.class.php:223
-#: inc/deployaction.class.php:236 inc/taskjob.class.php:1397
-#: inc/deploycheck.class.php:275
+#: inc/taskjob.class.php:1397 inc/deploycheck.class.php:275
+#: inc/deployaction.class.php:236 inc/deployfile.class.php:230
+#: inc/deployuserinteraction.class.php:285
 msgid "drag"
 msgstr "raahaa"
 
@@ -1855,11 +1867,7 @@ msgstr "raahaa"
 msgid "exec"
 msgstr "exec"
 
-#: setup.php:476
-msgid "fileinfo extension (PHP) is required..."
-msgstr "PHP:n fileinfo-laajennos on välttämätön …"
-
-#: inc/deployfile.class.php:293
+#: inc/deployfile.class.php:300
 msgid "filename"
 msgstr "Tiedoston nimi "
 
@@ -1875,7 +1883,7 @@ msgstr "Monikeri"
 msgid "otherwise"
 msgstr "muuten"
 
-#: inc/deployfile.class.php:172
+#: inc/deployfile.class.php:171
 msgid "p2p"
 msgstr "p2p"
 
@@ -1887,7 +1895,7 @@ msgstr "läpäissyt"
 msgid "path"
 msgstr "Polku "
 
-#: inc/collect.class.php:234 inc/collect_file_content.class.php:138
+#: inc/collect_file_content.class.php:138 inc/collect.class.php:234
 msgid "pathfile"
 msgstr "tiedostopolku"
 
@@ -1907,7 +1915,7 @@ msgstr "raportti tiedoista"
 msgid "report warning"
 msgstr "raportti varoituksista"
 
-#: inc/deployfile.class.php:173 inc/deployfile.class.php:339
+#: inc/deployfile.class.php:172 inc/deployfile.class.php:346
 msgid "retention"
 msgstr "säilytysaika"
 
@@ -1923,7 +1931,7 @@ msgstr "ohita työ"
 msgid "start job now"
 msgstr ""
 
-#: inc/deployfile.class.php:187
+#: inc/deployfile.class.php:186
 msgid "uncompress"
 msgstr "pura"
 
