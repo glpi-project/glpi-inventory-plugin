@@ -46,7 +46,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
     *
     * @var string
     */
-    public static $rightname = 'plugin_glpiinventory_agent';
+    public static $rightname = 'agent';
 
 
    /**
