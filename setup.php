@@ -324,7 +324,7 @@ function plugin_init_glpiinventory()
         }
 
        // load task view css for computer self deploy (tech)
-        if (plugin_glpiinventory_script_endswith("computer.form.php")) {
+        if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/computer.form.php") != false) {
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/views.css";
         }
 
