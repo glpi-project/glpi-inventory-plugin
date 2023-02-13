@@ -149,7 +149,7 @@ class PluginGlpiinventoryComputer extends Computer
                         $group_item->deleteByCriteria(['items_id' => $key,
                                                        'itemtype' => 'Computer',
                                                        'plugin_glpiinventory_deploygroups_id'
-                                                          => $_POST['id']])
+                                                          => $_POST['item_items_id']])
                     ) {
                         $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                     } else {
