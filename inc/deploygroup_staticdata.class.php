@@ -178,7 +178,23 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         PluginGlpiinventorySearch::constructDatas($data);
         $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
         $data['itemtype'] = 'PluginGlpiinventoryComputer';
+        $limit_backup = $_SESSION['glpilist_limit'];
+        $_SESSION['glpilist_limit'] = 200;
         Search::displayData($data);
+        $_SESSION['glpilist_limit'] = $limit_backup;
+
+        //remove trashbin switch
+        echo Html::scriptBlock("
+            $(document).ready(
+                function() {
+                    $('label.form-switch').hide();
+                    $('#dropdown-export').hide();
+                    $('button.show_displaypreference_modal').hide();
+                    $('#massformPluginGlpiinventoryComputer').find('table:first').removeClass('search-results');
+                    $('span.search-limit').html('');
+                }
+            );
+        ");
     }
 
 
