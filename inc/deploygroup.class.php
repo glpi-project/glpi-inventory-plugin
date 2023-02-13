@@ -275,12 +275,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                     }
                 }
                 break;
-            case 'remove_from_static_group':
+            case 'exclude_from_static_group':
                 if ($item->getType() == 'Computer') {
                     $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
                     foreach ($ids as $id) {
                         if (
-                            !countElementsInTable(
+                            countElementsInTable(
                                 $group_item->getTable(),
                                 [
                                 'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
