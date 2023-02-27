@@ -430,7 +430,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
         // Construct the path to the JSON back from the agent_base_url.
         // agent_base_url is the initial URL used by the agent
-        return $base_url . '/b/' . strtolower($modulename) . '/';
+        return $base_url . '/front/agent_' . strtolower($modulename) . '_callback.php';
     }
 
 
