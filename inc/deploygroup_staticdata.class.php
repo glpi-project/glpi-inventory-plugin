@@ -127,7 +127,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
                 return true;
 
             case 2:
-                self::showResults();
+                self::showResults($item);
                 return true;
 
             case 3:
@@ -167,53 +167,129 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 
        //Add extra parameters for massive action display : only the Add action should be displayed
         $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
-        $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
+        $search_params['massiveactionparams']['extraparams']['specific_actions']['PluginGlpiinventoryComputer' . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-        $data = Search::prepareDatasForSearch('Computer', $search_params);
+        $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
         $data['itemtype'] = 'Computer';
         Search::constructSQL($data);
 
        // Use our specific constructDatas function rather than Glpi function
         PluginGlpiinventorySearch::constructDatas($data);
         $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-        $data['itemtype'] = 'Computer';
+        $data['itemtype'] = 'PluginGlpiinventoryComputer';
+        $limit_backup = $_SESSION['glpilist_limit'];
+        $_SESSION['glpilist_limit'] = 200;
         Search::displayData($data);
+        $_SESSION['glpilist_limit'] = $limit_backup;
+
+        //remove trashbin switch
+        echo Html::scriptBlock("
+            $(document).ready(
+                function() {
+                    $('label.form-switch').hide();
+                    $('#dropdown-export').hide();
+                    $('button.show_displaypreference_modal').hide();
+                    $('#massformPluginGlpiinventoryComputer').find('table:first').removeClass('search-results');
+                    $('span.search-limit').html('');
+                }
+            );
+        ");
     }
 
 
    /**
     * Display result, so list of computers
     */
-    public static function showResults()
+    public static function showResults(PluginGlpiinventoryDeployGroup $item)
     {
-        if (
-            isset($_SESSION['glpisearch']['Computer'])
-              && isset($_SESSION['glpisearch']['Computer']['show_results'])
-        ) {
-            $computers_params = $_SESSION['glpisearch']['Computer'];
+        global $DB;
+        $rand = rand();
+
+        $params = [
+            'SELECT' => '*',
+            'FROM'   => self::getTable(),
+            'WHERE'  => ['plugin_glpiinventory_deploygroups_id' => $item->getID()],
+        ];
+
+        $datas = [];
+        $iterator = $DB->request($params);
+        foreach ($iterator as $data) {
+            $datas[] = $data;
         }
-        $computers_params['metacriteria'] = [];
-        $computers_params['criteria'][]   = ['searchtype' => 'equals',
-                                                'value' => $_GET['id'],
-                                                'field' => 5171];
+        $number = count($datas);
 
-        $search_params = Search::manageParams('Computer', $computers_params);
+        echo "<div class='spaced'>";
+        echo "<div class='spaced'>";
 
-       //Add extra parameters for massive action display : only the Delete action should be displayed
-        $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-        $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
-        $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
-        $data = Search::prepareDatasForSearch('Computer', $search_params);
+        $mass_class = "PluginGlpiinventoryComputer";
+        Html::openMassiveActionsForm('mass' . $mass_class . $rand);
+        $massiveactionparams = ['num_displayed' => min($_SESSION['glpilist_limit'], $number),
+                    'item' => $item,
+                    'specific_actions' => ['PluginGlpiinventoryComputer' . MassiveAction::CLASS_ACTION_SEPARATOR . 'deleteitem' => _x('button', __('Remove from static group', 'glpiinventory'))],
+                    'container' => 'mass' . $mass_class . $rand,
+                    'massive_action_fields' => ['action', 'id'],
+                    ];
+        Html::showMassiveActions($massiveactionparams);
 
-        $data['itemtype'] = 'Computer';
-        Search::constructSQL($data);
+        echo "<table class='tab_cadre_fixehov'>";
+        $header_begin  = "<tr>";
+        $header_top    = '';
+        $header_bottom = '';
+        $header_end    = '';
 
-       // Use our specific constructDatas function rather than Glpi function
-        PluginGlpiinventorySearch::constructDatas($data);
-        $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
-        $data['itemtype'] = 'Computer';
-        Search::displayData($data);
+        $header_top    .= "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . $mass_class . $rand);
+        $header_top    .= "</th>";
+        $header_bottom .= "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . $mass_class . $rand);
+        $header_bottom .=  "</th>";
+
+        $header_end .= "<th>" . __('Name') . "</th>";
+        $header_end .= "<th>" . __('Automatic inventory') . "</th>";
+        $header_end .= "<th>" . Entity::getTypeName(1) . "</th>";
+        $header_end .= "<th>" . __('Serial number') . "</th>";
+        $header_end .= "<th>" . __('Inventory number') . "</th>";
+        $header_end .= "</tr>";
+        echo $header_begin . $header_top . $header_end;
+
+        foreach ($datas as $data) {
+            $computer = new Computer();
+            $computer->getFromDB($data["items_id"]);
+            $linkname = $computer->fields["name"];
+            $itemtype = Computer::getType();
+            if ($_SESSION["glpiis_ids_visible"] || empty($computer->fields["name"])) {
+                $linkname = sprintf(__('%1$s (%2$s)'), $linkname, $computer->fields["id"]);
+            }
+            $link = $itemtype::getFormURLWithID($computer->fields["id"]);
+            $name = "<a href=\"" . $link . "\">" . $linkname . "</a>";
+            echo "<tr class='tab_bg_1'>";
+
+            echo "<td width='10'>";
+            Html::showMassiveActionCheckBox($mass_class, $data["items_id"]);
+            echo "</td>";
+
+            echo "<td " .
+                ((isset($computer->fields['is_deleted']) && $computer->fields['is_deleted']) ? "class='tab_bg_2_2'" : "") .
+                ">" . $name . "</td>";
+            echo "<td>" . Dropdown::getYesNo($computer->fields['is_dynamic']) . "</td>";
+            echo "<td>" . Dropdown::getDropdownName(
+                "glpi_entities",
+                $computer->fields['entities_id']
+            );
+            echo "</td>";
+            echo "<td>" .
+                    (isset($computer->fields["serial"]) ? "" . $computer->fields["serial"] . "" : "-") . "</td>";
+            echo "<td>" .
+                    (isset($computer->fields["otherserial"]) ? "" . $computer->fields["otherserial"] . "" : "-") . "</td>";
+            echo "</tr>";
+        }
+        echo $header_begin . $header_bottom . $header_end;
+
+        echo "</table>";
+        if ($number) {
+            $massiveactionparams['ontop'] = false;
+            Html::showMassiveActions($massiveactionparams);
+            Html::closeForm();
+        }
     }
 
 

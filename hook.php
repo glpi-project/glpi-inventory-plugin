@@ -447,14 +447,17 @@ function plugin_glpiinventory_MassiveActions($type)
         case "Computer":
             if (Session::haveRight('plugin_glpiinventory_task', UPDATE)) {
                 $ma["PluginGlpiinventoryTask" . $sep . "target_task"]
-                 = __('Target a task', 'glpiinventory');
+                 = "<i class='ti ti-list-check'></i>" . __('Target a task', 'glpiinventory');
             }
             if (Session::haveRight('plugin_glpiinventory_group', UPDATE)) {
                 $ma["PluginGlpiinventoryDeployGroup" . $sep . "add_to_static_group"]
-                = __('Add to static group', 'glpiinventory');
+                = "<i class='ti ti-devices-pc'></i>" . __('Add to static group', 'glpiinventory');
+                $ma["PluginGlpiinventoryDeployGroup" . $sep . "exclude_from_static_group"]
+                = "<i class='ti ti-devices-pc'></i>" . __('Remove from static group', 'glpiinventory');
             }
             break;
     }
+
     return $ma;
 }
 

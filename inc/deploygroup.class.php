@@ -221,6 +221,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         switch ($ma->getAction()) {
             case 'add_to_static_group':
+            case 'exclude_from_static_group':
                 Dropdown::show(
                     'PluginGlpiinventoryDeployGroup',
                     ['condition' => ['type' => PluginGlpiinventoryDeployGroup::STATIC_GROUP]]
@@ -268,6 +269,34 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                             'items_id' => $id];
                             $group_item->add($values);
                             $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                        } else {
+                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                        }
+                    }
+                }
+                break;
+            case 'exclude_from_static_group':
+                if ($item->getType() == 'Computer') {
+                    $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
+                    foreach ($ids as $id) {
+                        if (
+                            countElementsInTable(
+                                $group_item->getTable(),
+                                [
+                                'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
+                                'itemtype'                               => 'Computer',
+                                'items_id'                               => $id,
+                                ]
+                            )
+                        ) {
+                            $values = [
+                            'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
+                            'itemtype' => 'Computer',
+                            'items_id' => $id];
+                            if ($group_item->getFromDBByCrit($values)) {
+                                $group_item->deleteByCriteria($values);
+                                $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                            }
                         } else {
                             $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
                         }
