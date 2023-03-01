@@ -75,6 +75,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     */
     public $dohistory = true;
 
+    public array $grouptypes;
+
 
    /**
     * __contruct function used to define the 2 types of groups

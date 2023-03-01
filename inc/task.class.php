@@ -1028,7 +1028,13 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $seconds  = fmod($interval, 60);
         $minutes  = intval($interval / 60);
         $hours    = intval($interval / 60 / 60);
-        return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
+        return sprintf(
+            '%1$sh %2$sm %3$ss %4$sµs',
+            $hours,
+            $minutes,
+            $seconds,
+            $micro
+        );
     }
 
 
