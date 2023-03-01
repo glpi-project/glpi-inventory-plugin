@@ -347,7 +347,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $networkPort_NetworkPort = new NetworkPort_NetworkPort();
         $unmanaged = new Unmanaged();
 
-        $a_networkports = $networkPort->find(['logical_number' => 10001]);
+        $a_networkports = $networkPort->find(['logical_number' => 10001, 'itemtype' => \NetworkEquipment::class]);
 
         $this->assertEquals(1, count($a_networkports), 'Number of networkport 10001 may be 1');
 
