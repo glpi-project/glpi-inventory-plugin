@@ -136,8 +136,8 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 42,
-                'searchtype'    => 'equals',
-                'value'         => 1,
+                'searchtype'    => 'contains',
+                'value'         => 'GLPI Native Inventory',
                 ]
             ],
         'printer'         => [
@@ -146,8 +146,8 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
-                'searchtype'    => 'equals',
-                'value'         => 1,
+                'searchtype'    => 'contains',
+                'value'         => 'GLPI Native Inventory',
                 ]
             ],
         'networkequipement'         => [
@@ -156,8 +156,8 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
-                'searchtype'    => 'equals',
-                'value'         => 1,
+                'searchtype'    => 'contains',
+                'value'         => 'GLPI Native Inventory',
                 ]
             ],
         'phone'         => [
@@ -166,8 +166,8 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
-                'searchtype'    => 'equals',
-                'value'         => 1,
+                'searchtype'    => 'contains',
+                'value'         => 'GLPI Native Inventory',
                 ]
             ]
     ];
