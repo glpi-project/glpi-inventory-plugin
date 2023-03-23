@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
@@ -120,11 +122,11 @@ class PluginGlpiinventoryToolbox
                 if ($credentials->fields['authentication'] != '0') {
                     $node['AUTHENTICATION']['AUTHPROTOCOL'] = $credentials->getAuthProtocol();
                 }
-                $node['AUTHENTICATION']['AUTHPASSPHRASE'] = (new GLPIKey())->decrypt($credentials->fields['auth_passphrase']);
+                $node['AUTHENTICATION']['AUTHPASSPHRASE'] = (new GLPIKey())->decrypt(Sanitizer::unsanitize($credentials->fields['auth_passphrase'])) ;
                 if ($credentials->fields['encryption'] != '0') {
                     $node['AUTHENTICATION']['PRIVPROTOCOL'] = $credentials->getEncryption();
                 }
-                $node['AUTHENTICATION']['PRIVPASSPHRASE'] = (new GLPIKey())->decrypt($credentials->fields['priv_passphrase']);
+                $node['AUTHENTICATION']['PRIVPASSPHRASE'] = (new GLPIKey())->decrypt(Sanitizer::unsanitize($credentials->fields['priv_passphrase']));
             } else {
                 $node['AUTHENTICATION']['COMMUNITY'] = $credentials->fields['community'];
             }
@@ -132,6 +134,7 @@ class PluginGlpiinventoryToolbox
 
         return $node;
     }
+
 
 
    /**
