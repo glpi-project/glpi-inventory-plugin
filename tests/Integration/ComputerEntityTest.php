@@ -240,7 +240,7 @@ class ComputerEntityTest extends TestCase
 
         //the agent must follow / keep the PC entity (even if transfer is disallowed)
         //due to https://github.com/glpi-project/glpi/pull/14254
-        $this->agentEntity($computer->fields['id'], 2, 'Agent must stay with entity 2');
+        $this->agentEntity($computer->fields['id'], 2, 'Agent follows computer on entity 2');
     }
 
 
