@@ -238,7 +238,9 @@ class ComputerEntityTest extends TestCase
         $computer->getFromDBByCrit(['serial' => 'xxyyzz']);
         $this->assertEquals(2, $computer->fields['entities_id'], 'Computer must not be transferred');
 
-        $this->agentEntity($computer->fields['id'], 1, 'Agent must stay with entity 1');
+        //the agent must follow / keep the PC entity (even if transfer is disallowed)
+        //due to https://github.com/glpi-project/glpi/pull/14254
+        $this->agentEntity($computer->fields['id'], 2, 'Agent follows computer on entity 2');
     }
 
 
