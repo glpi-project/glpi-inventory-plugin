@@ -193,7 +193,7 @@ class DeploycheckTest extends TestCase
                 ];
 
         $result   = $check->getValues('winkeyEquals', $values, 'edit');
-        $expected = ['warning_message' => 'GLPI-Agent or Fusioninventory-Agent >= 2.3.20',
+        $expected = ['warning_message' => 'GLPI-Agent or Fusioninventory-Agent >= 2.3.20 recommended',
                    'name_value'      => 'Value equals',
                    'name_label'      => 'Audit label',
                    'name_type'       => 'input',
@@ -280,7 +280,7 @@ class DeploycheckTest extends TestCase
         $expected = ['path_label'      => "Path to the value&nbsp;<span class='red'>*</span>",
                    'value_label'     => 'Value',
                    'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server',
-                   'warning_message' => 'GLPI-Agent or Fusioninventory-Agent => 2.3.20 recommended',
+                   'warning_message' => 'GLPI-Agent or Fusioninventory-Agent >= 2.3.20 recommended',
                   ];
         $this->assertEquals($result, $expected);
 
@@ -299,7 +299,7 @@ class DeploycheckTest extends TestCase
                    'value_label'     => 'Type of value',
                    'value_type'      => 'registry_type',
                    'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server',
-                   'warning_message' => 'GLPI-Agent or Fusioninventory-Agent => 2.3.20 mandatory',
+                   'warning_message' => 'GLPI-Agent or Fusioninventory-Agent >= 2.3.20 mandatory',
                   ];
         $this->assertEquals($result, $expected);
 
