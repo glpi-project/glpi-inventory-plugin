@@ -699,7 +699,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $static_group->deleteByCriteria($params);
 
         //remove link between group and package
-        $params = ['groups_id'=> $this->getID()];
+        $params = ['groups_id' => $this->getID()];
         $package_group->deleteByCriteria($params);
     }
 
