@@ -241,7 +241,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
             if ($check['return'] === 'startnow') {
                 echo "<br />";
-                $warning = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory'), '2.4.2');
+                $warning = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.4.2');
                 echo "<img src='" . $CFG_GLPI['root_doc'] . "/pics/warning_min.png'>";
                 echo "<span class='red'><i>" . $warning . "</i></span>";
             }
