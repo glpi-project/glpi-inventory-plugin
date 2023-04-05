@@ -367,7 +367,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             case "winkeyNotEquals":
                 $values['path_label']      = __("Path to the value", 'glpiinventory') . $mandatory_mark;
                 $values['value_label']     = __('Value', 'glpiinventory');
-                $values['path_comment']    = __('Example of registry value') . ': HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server';
+                $values['path_comment']    = __('Example of registry value', 'glpiinventory') . ': HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server';
                 if ($check_type == 'winkeyEquals') {
                     $values['warning_message'] = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s recommended', 'glpiinventory'), '2.3.20');
                 } else {
@@ -379,7 +379,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                 $values['path_label']      = __("Path to the value", 'glpiinventory') . $mandatory_mark;
                 $values['value_label']     = __('Type of value', 'glpiinventory') . $mandatory_mark;
                 $values['value_type']      = 'registry_type';
-                $values['path_comment']    = __('Example of registry value') . ': HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server';
+                $values['path_comment']    = __('Example of registry value', 'glpiinventory') . ': HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server';
                 $values['warning_message'] = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.3.20');
                 break;
 
