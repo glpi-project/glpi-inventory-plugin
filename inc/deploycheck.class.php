@@ -359,7 +359,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             case "winvalueMissing":
                 $values['path_label']      = __("Path to the value", 'glpiinventory') . $mandatory_mark;
                 $values['value_label']     = false;
-                $values['path_comment']    = __('Example of registry value') . ': HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server';
+                $values['path_comment']    = __('Example of registry value', 'glpiinventory') . ': HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\server';
                 $values['warning_message'] = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory'), '2.3.20');
                 break;
 
