@@ -352,7 +352,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                 $values['path_label']         = __("Path to the key", 'glpiinventory') . $mandatory_mark;
                 $values['value_label']     = false;
                 $values['path_comment']    = __('Example of registry key', 'glpiinventory') . ': HKEY_LOCAL_MACHINE\SOFTWARE\GLPI-Agent\\';
-                $values['warning_message'] = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s recommended'), '2.3.20');
+                $values['warning_message'] = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s recommended', 'glpiinventory'), '2.3.20');
                 break;
 
             case "winvalueExists":
