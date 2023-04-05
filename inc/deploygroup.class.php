@@ -612,11 +612,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     */
     public static function getTargetsForGroup($groups_id, $use_cache = false)
     {
-        $group = new self();
-        $group->getFromDB($groups_id);
-
         $results = [];
-        if ($group->isStaticGroup()) {
+        $group = new self();
+
+        if ($group->getFromDB($groups_id) && $group->isStaticGroup()) {
             $staticgroup = new PluginGlpiinventoryDeployGroup_Staticdata();
             foreach (
                 $staticgroup->find(
@@ -653,7 +652,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
        //Check criteria from DB
         if (!$check_post_values) {
-            if ($group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
+            if (isset($group->fields['type']) && $group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
                 unset($_SESSION['glpisearch']['Computer']);
                 $query = "SELECT `fields_array`
                      FROM `glpi_plugin_glpiinventory_deploygroups_dynamicdatas`
@@ -666,7 +665,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             }
         } else {
             if (
-                $group->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
+                isset($group->fields['type'])
+                 && $group->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
                  && isset($_SESSION['glpisearch']['Computer'])
                  && !isset($_SESSION['glpisearch']['Computer']['show_results'])
             ) {
@@ -692,10 +692,15 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         $dynamic_group = new PluginGlpiinventoryDeployGroup_Dynamicdata();
         $static_group  = new PluginGlpiinventoryDeployGroup_Staticdata();
+        $package_group  = new PluginGlpiinventoryDeployGroup();
 
         $params = ['plugin_glpiinventory_deploygroups_id' => $this->getID()];
         $dynamic_group->deleteByCriteria($params);
         $static_group->deleteByCriteria($params);
+
+        //remove link between group and package
+        $params = ['groups_id' => $this->getID()];
+        $package_group->deleteByCriteria($params);
     }
 
 
