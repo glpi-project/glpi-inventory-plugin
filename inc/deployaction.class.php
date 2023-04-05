@@ -439,7 +439,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                     ];
             Dropdown::showNumber('logLineLimit', $options);
             echo "&nbsp;<span class='red'><i>";
-            echo __('Fusioninventory-Agent 2.3.20 or higher mandatory');
+            echo sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.3.20');
             echo "</i></span></td>";
             echo "</tr>";
         }
