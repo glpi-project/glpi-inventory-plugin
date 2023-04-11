@@ -69,7 +69,7 @@ function plugin_glpiinventory_script_endswith($scriptname)
 {
     //append plugin directory to avoid dumb errors...
     $scriptname = 'glpiinventory/front/' . $scriptname;
-    $script_name = filter_input(INPUT_SERVER, "REQUEST_URI");
+    $script_name = filter_input(INPUT_SERVER, "REQUEST_URI") ?? '';
 
     return substr($script_name, -strlen($scriptname)) === $scriptname;
 }
