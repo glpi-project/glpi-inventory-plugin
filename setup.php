@@ -360,8 +360,8 @@ function plugin_init_glpiinventory()
 
            // Load nvd3 for printerpage counter graph
             if (
-                strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/front/printer.form.php')
-                 || strstr(filter_input(INPUT_SERVER, "PHP_SELF"), 'glpiinventory/front/menu.php')
+                strstr(filter_input(INPUT_SERVER, "REQUEST_URI") ?? '', '/front/printer.form.php')
+                 || strstr(filter_input(INPUT_SERVER, "REQUEST_URI") ?? '', 'glpiinventory/front/menu.php')
             ) {
                // Add graph javascript
                 $PLUGIN_HOOKS['add_javascript']['glpiinventory'] = array_merge(

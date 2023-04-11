@@ -381,9 +381,9 @@ function plugin_glpiinventory_install()
 {
     ini_set("max_execution_time", "0");
 
-    if (basename(filter_input(INPUT_SERVER, "SCRIPT_NAME")) != "cli_install.php") {
+    if (basename(filter_input(INPUT_SERVER, "REQUEST_URI") ?? '') != "cli_install.php") {
         if (!isCommandLine()) {
-            Html::header(__('Setup', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "config", "plugins");
+            Html::header(__('Setup', 'glpiinventory'), $_SERVER['PHP_SELF'], "config", "plugins");
         }
         $migrationname = 'Migration';
     } else {
