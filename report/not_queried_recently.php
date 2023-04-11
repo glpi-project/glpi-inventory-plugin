@@ -39,7 +39,7 @@ $NEEDED_ITEMS = ["search", "computer", "infocom", "setup", "networking", "printe
 
 include("../../../inc/includes.php");
 
-Html::header(__('GLPIInventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
