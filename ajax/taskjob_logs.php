@@ -31,10 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (
-    !isset($_SERVER['PHP_SELF'])
-    || strpos(filter_input(INPUT_SERVER, 'PHP_SELF'), "taskjob_logs.php")
-) {
+if (strpos($_SERVER['PHP_SELF'], "taskjob_logs.php")) {
     include("../../../inc/includes.php");
     Session::checkCentralAccess();
 }

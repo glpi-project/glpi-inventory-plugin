@@ -304,7 +304,7 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     $agent_base_url = Entity::getUsedConfig('agent_base_url', 0, 'agent_base_url', '');
 
     if (empty($agent_base_url)) {
-        $full_url = filter_input(INPUT_SERVER, "PHP_SELF");
+        $full_url = $_SERVER['PHP_SELF'] ?? null;
         $https = filter_input(INPUT_SERVER, "HTTPS");
         $http_host = filter_input(INPUT_SERVER, "HTTP_HOST");
 

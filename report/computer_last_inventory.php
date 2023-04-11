@@ -37,7 +37,7 @@ $DBCONNECTION_REQUIRED = 0;
 
 include("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight('computer', READ);
 
@@ -51,7 +51,7 @@ if (!is_numeric($state)) {
     $state = 0;
 }
 
-echo "<form action='" . filter_input(INPUT_SERVER, "PHP_SELF") . "' method='get'>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";

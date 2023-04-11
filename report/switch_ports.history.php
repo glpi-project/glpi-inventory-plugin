@@ -38,13 +38,13 @@ $DBCONNECTION_REQUIRED = 0;
 define('GLPI_ROOT', '../../..');
 include(GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory', 'glpiinventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
+Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 
 $FK_port = filter_input(INPUT_GET, "networkports_id");
 
-echo "<form action='" . filter_input(INPUT_SERVER, "PHP_SELF") . "' method='get'>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 echo "<tr class='tab_bg_1' align='center'>";
 

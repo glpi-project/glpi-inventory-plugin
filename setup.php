@@ -69,7 +69,8 @@ function plugin_glpiinventory_script_endswith($scriptname)
 {
     //append plugin directory to avoid dumb errors...
     $scriptname = 'glpiinventory/front/' . $scriptname;
-    $script_name = filter_input(INPUT_SERVER, "SCRIPT_NAME");
+    $script_name = $_SERVER['SCRIPT_NAME'];
+
     return substr($script_name, -strlen($scriptname)) === $scriptname;
 }
 
@@ -234,9 +235,9 @@ function plugin_init_glpiinventory()
         $PLUGIN_HOOKS['add_javascript']['glpiinventory'] = [];
         $PLUGIN_HOOKS['add_css']['glpiinventory'] = [];
         if (
-            strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), Plugin::getWebDir('glpiinventory', false)) != false
-            || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false
-            || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/computer.form.php") != false
+            strpos($_SERVER['SCRIPT_NAME'], Plugin::getWebDir('glpiinventory', false)) != false
+            || strpos($_SERVER['SCRIPT_NAME'], "front/printer.form.php") != false
+            || strpos($_SERVER['SCRIPT_NAME'], "front/computer.form.php") != false
         ) {
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/views.css";
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/deploy.css";
@@ -324,7 +325,7 @@ function plugin_init_glpiinventory()
         }
 
        // load task view css for computer self deploy (tech)
-        if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/computer.form.php") != false) {
+        if (strpos($_SERVER['SCRIPT_NAME'], "front/computer.form.php") != false) {
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/views.css";
         }
 
@@ -359,8 +360,8 @@ function plugin_init_glpiinventory()
 
            // Load nvd3 for printerpage counter graph
             if (
-                strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/front/printer.form.php')
-                 || strstr(filter_input(INPUT_SERVER, "PHP_SELF"), 'glpiinventory/front/menu.php')
+                strstr($_SERVER['SCRIPT_NAME'], '/front/printer.form.php')
+                 || strstr($_SERVER['SCRIPT_NAME'], 'glpiinventory/front/menu.php')
             ) {
                // Add graph javascript
                 $PLUGIN_HOOKS['add_javascript']['glpiinventory'] = array_merge(

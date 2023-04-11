@@ -46,7 +46,7 @@ if (
 } else {
     Html::header(
         __('GLPI Inventory', 'glpiinventory'),
-        filter_input(INPUT_SERVER, "PHP_SELF"),
+        $_SERVER['PHP_SELF'],
         "plugins",
         "glpiinventory"
     );
