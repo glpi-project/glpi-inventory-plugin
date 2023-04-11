@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos(filter_input(INPUT_SERVER, "REQUEST_URI"), "dropdownactionselection.php")) {
+if (strpos($_SERVER['PHP_SELF'], "dropdownactionselection.php")) {
     include("../../../inc/includes.php");
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();

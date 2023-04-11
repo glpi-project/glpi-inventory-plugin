@@ -51,7 +51,7 @@ if (!is_numeric($state)) {
     $state = 0;
 }
 
-echo "<form action='" . filter_input(INPUT_SERVER, "REQUEST_URI") . "' method='get'>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";
