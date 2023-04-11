@@ -37,7 +37,7 @@ $DBCONNECTION_REQUIRED = 0;
 
 include("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('GLPIInventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight('computer', READ);
 
