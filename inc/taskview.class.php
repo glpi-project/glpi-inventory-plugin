@@ -284,6 +284,20 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
       });");
     }
 
+       /**
+    * Prepare data before update in database
+    *
+    * @param array $input
+    * @return array
+    */
+    public function prepareInputForUpdate($input)
+    {
+        if ($input['is_active'] && $input['is_active_from_db']){
+            Session::addMessageAfterRedirect(__('The task cannot be updated if it is active', 'glpiinventory'), false, ERROR);
+            return false;
+        }
+        return $input;
+    }
 
    /**
     * Display form for task configuration
@@ -328,6 +342,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             echo "</div>";
         }
         if (!$new_item) {
+            echo Html::hidden('is_active_from_db', ['value' => $this->fields['is_active']]);
             $this->showCheckboxField(__('Active'), "is_active");
 
             $datetime_field_options = [
