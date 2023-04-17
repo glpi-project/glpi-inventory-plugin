@@ -645,7 +645,7 @@ class CronTaskTest extends TestCase
           'is_active' => 0,
         ]);
 
-        //update task and by reactivating it
+        // reactivate task
         $pfTask->update([
           'is_active' => 1,
         ]);
