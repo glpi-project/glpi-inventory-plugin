@@ -284,7 +284,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
       });");
     }
 
-       /**
+    /**
     * Prepare data before update in database
     *
     * @param array $input
@@ -292,7 +292,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     */
     public function prepareInputForUpdate($input)
     {
-        if ($input['is_active'] && $input['is_active_from_db']){
+        if ($input['is_active'] && $input['is_active_from_db']) {
             Session::addMessageAfterRedirect(__('The task cannot be updated if it is active', 'glpiinventory'), false, ERROR);
             return false;
         }
