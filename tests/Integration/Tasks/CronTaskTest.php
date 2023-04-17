@@ -638,10 +638,18 @@ class CronTaskTest extends TestCase
         $counters = $data['tasks'][$pfTask->fields['id']]['jobs'][$pfTaskjob->fields['id']]['targets']['PluginGlpiinventoryDeployPackage_' . $pfDeployPackage->fields['id']]['counters'];
         $this->assertEquals($reference, $counters);
 
+        //update task and by deactivating it (plugin prevent task update if it active)
         $pfTask->update([
-         'id'                      => $pfTask->fields['id'],
-         'reprepare_if_successful' => 1,
+          'id'                      => $pfTask->fields['id'],
+          'reprepare_if_successful' => 1,
+          'is_active' => 0,
         ]);
+
+        //update task and by reactivating it
+        $pfTask->update([
+          'is_active' => 1,
+        ]);
+
         PluginGlpiinventoryTask::cronTaskscheduler();
         $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
         $reference = [
