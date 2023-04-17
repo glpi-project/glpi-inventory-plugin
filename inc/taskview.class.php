@@ -292,7 +292,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     */
     public function prepareInputForUpdate($input)
     {
-        if ($input['is_active'] && $input['is_active_from_db']) {
+        if ($this->fields['is_active'] && ($input['is_active'] ?? '1')) {
             Session::addMessageAfterRedirect(__('The task cannot be updated if it is active', 'glpiinventory'), false, ERROR);
             return false;
         }
@@ -342,7 +342,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             echo "</div>";
         }
         if (!$new_item) {
-            echo Html::hidden('is_active_from_db', ['value' => $this->fields['is_active']]);
             $this->showCheckboxField(__('Active'), "is_active");
 
             $datetime_field_options = [
