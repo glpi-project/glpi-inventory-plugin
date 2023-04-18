@@ -393,7 +393,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
     public function showFormButtons($options = [])
     {
-
         if (isset($this->fields['id'])) {
             $ID = $this->fields['id'];
         }
