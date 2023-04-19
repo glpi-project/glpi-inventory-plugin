@@ -503,11 +503,11 @@ class CronTaskTest extends TestCase
 
         $pfTask->getFromDBByCrit(['name' => 'deploy']);
         $this->assertArrayHasKey('id', $pfTask->fields);
-        $pfTask->update([
-         'id'                      => $pfTask->fields['id'],
-         'reprepare_if_successful' => 0,
-         'is_active'               => 1
-        ]);
+
+        //update directly in DB to prevent reset jobstate
+        //see PluginGlpiinventoryTask->post_updateItem
+        $DB->query("UPDATE glpi_plugin_glpiinventory_tasks set `reprepare_if_successful` = 0 WHERE id = " . $pfTask->fields['id']);
+        $pfTask->fields['reprepare_if_successful'] = 0;
 
        // prepare
         PluginGlpiinventoryTask::cronTaskscheduler();
@@ -638,10 +638,11 @@ class CronTaskTest extends TestCase
         $counters = $data['tasks'][$pfTask->fields['id']]['jobs'][$pfTaskjob->fields['id']]['targets']['PluginGlpiinventoryDeployPackage_' . $pfDeployPackage->fields['id']]['counters'];
         $this->assertEquals($reference, $counters);
 
-        $pfTask->update([
-         'id'                      => $pfTask->fields['id'],
-         'reprepare_if_successful' => 1,
-        ]);
+        //update directly in DB to prevent reset jobstate
+        //see PluginGlpiinventoryTask->post_updateItem
+        $DB->query("UPDATE glpi_plugin_glpiinventory_tasks set `reprepare_if_successful` = 1 WHERE id = " . $pfTask->fields['id']);
+        $pfTask->fields['reprepare_if_successful'] = 1;
+
         PluginGlpiinventoryTask::cronTaskscheduler();
         $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
         $reference = [
