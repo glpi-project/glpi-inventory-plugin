@@ -120,7 +120,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     {
         $return_string = $this->getLabelForAType($type);
        //The skip case is a litte bit different. So we notice to the user
-       //that if audit is successful, the the audit check process continue
+       //that if audit is successful, the audit check process continue
         if ($return == 'skip') {
             $return_string .= ' : ' . __('continue', 'glpiinventory');
         } else {

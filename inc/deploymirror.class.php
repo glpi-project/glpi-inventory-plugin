@@ -129,24 +129,37 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
        //Get all mirrors for the agent's entity, or for entities above
        //sorted by entity level in a descending way (going to the closest,
        //deepest entity, to the highest)
-        $query     = "SELECT `mirror`.*, `glpi_entities`.`level`
-                    FROM `glpi_plugin_glpiinventory_deploymirrors` AS mirror
-                    LEFT JOIN `glpi_entities`
-                     ON (`mirror`.`entities_id`=`glpi_entities`.`id`)
-                    WHERE `mirror`.`is_active`='1'";
-        $query    .= getEntitiesRestrictRequest(
-            ' AND ',
-            'mirror',
-            'entities_id',
-            $agent['entities_id'],
-            true
-        );
-        $query   .= " ORDER BY `glpi_entities`.`level` DESC";
+        $iterator = $DB->request([
+            'SELECT' => [
+                'mirror.*',
+                'glpi_entities.level'
+            ],
+            'FROM'   => 'glpi_plugin_glpiinventory_deploymirrors AS mirror',
+            'LEFT JOIN' => [
+                'glpi_entities' => [
+                    'ON' => [
+                        'mirror' => 'entities_id',
+                        'glpi_entities' => 'id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'mirror.is_active' => 1
+            ] + getEntitiesRestrictCriteria(
+                'mirror',
+                'entities_id',
+                $agent['entities_id'],
+                true
+            ),
+            'ORDER'  => [
+                'glpi_entities.level DESC'
+            ]
+        ]);
 
-       //The list of mirrors to return
+        //The list of mirrors to return
         $mirrors  = [];
 
-        foreach ($DB->request($query) as $result) {
+        foreach ($iterator as $result) {
            //First, check mirror by location
             if (
                 in_array($mirror_match, [self::MATCH_LOCATION, self::MATCH_BOTH])

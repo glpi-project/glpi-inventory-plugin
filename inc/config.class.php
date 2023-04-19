@@ -575,7 +575,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
 
    /**
-    * Check if extradebug mode is activate
+    * Check if extradebug mode is active
     *
     * @return null|integer the integer is 1 or 0 (it's like boolean)
     */

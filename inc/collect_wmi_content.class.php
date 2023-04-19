@@ -47,35 +47,6 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     public $type = 'wmi';
 
    /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */ /*
-   public function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->getID() > 0) {
-         if (get_class($item) == 'PluginGlpiinventoryCollect') {
-            if ($item->fields['type'] == 'wmi') {
-               $a_colregs = getAllDataFromTable('glpi_plugin_glpiinventory_collects_wmis',
-                                                 "`plugin_glpiinventory_collects_id`='".$item->getID()."'");
-               if (count($a_colregs) == 0) {
-                  return '';
-               }
-               $in = array_keys($a_colregs);
-               if (countElementsInTable('glpi_plugin_glpiinventory_collects_wmis_contents',
-                                "`plugin_glpiinventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
-                  return __('Windows WMI content', 'glpiinventory');
-               }
-            }
-         }
-      }
-      return '';
-   }*/
-
-
-   /**
     * update wmi data to compute (add and update) with data sent by the agent
     *
     * @global object $DB
@@ -88,13 +59,17 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         global $DB;
 
         $db_wmis = [];
-        $query = "SELECT `id`, `property`, `value`
-                FROM `glpi_plugin_glpiinventory_collects_wmis_contents`
-                WHERE `computers_id` = '" . $computers_id . "'
-                  AND `plugin_glpiinventory_collects_wmis_id` =
-                  '" . $collects_wmis_id . "'";
-        $result = $DB->query($query);
-        while ($data = $DB->fetchAssoc($result)) {
+
+        $iterator = $DB->request([
+            'SELECT' => ['id', 'property', 'value'],
+            'FROM'   => 'glpi_plugin_glpiinventory_collects_wmis_contents',
+            'WHERE'  => [
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id
+            ]
+        ]);
+
+        foreach ($iterator as $data) {
             $wmi_id = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);

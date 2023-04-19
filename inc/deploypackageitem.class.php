@@ -54,7 +54,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 
 
    /**
-    * Get an event label by it's identifier
+    * Get an event label by its identifier
     * @since 9.2
     * @return array
     */

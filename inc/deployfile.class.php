@@ -453,7 +453,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 $folders = $files = [];
 
                //list files in dir selected
-               //we store folders and files separately to sort them alphabeticaly separatly
+               //we store folders and files separately to sort them alphabetically separately
                 while (false !== ($entry = readdir($handle))) {
                     if ($entry != "." && $entry != "..") {
                         $filepath = $dir . "/" . $entry;

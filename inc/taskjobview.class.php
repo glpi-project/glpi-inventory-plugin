@@ -427,6 +427,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
            // prepare a query to retrieve agent's & computer's id
+            //FIXME; not sure the complex JOIN can be done with iterator...
             $query_filter = "SELECT agents.`id` as agents_id,
                                  agents.`items_id`
                           FROM `glpi_agents` as agents

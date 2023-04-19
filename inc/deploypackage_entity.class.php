@@ -95,11 +95,15 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
         global $DB;
 
         $ent   = [];
-        $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_entities`.*
-                FROM `glpi_plugin_glpiinventory_deploypackages_entities`
-                WHERE `plugin_glpiinventory_deploypackages_id` = '$deploypackages_id'";
 
-        foreach ($DB->request($query) as $data) {
+        $iterator = $DB->request([
+            'FROM'   => self::getTable(),
+            'WHERE'  => [
+                'plugin_glpiinventory_deploypackages_id' => $deploypackages_id
+            ]
+        ]);
+
+        foreach ($iterator as $data) {
             $ent[$data['entities_id']][] = $data;
         }
         return $ent;

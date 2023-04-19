@@ -251,18 +251,26 @@ class PluginGlpiinventoryStaticmisc
     {
         global $DB;
 
-        $query = "SELECT `a`.`id`, `a`.`name`
-                FROM `glpi_plugin_glpiinventory_credentialips` as `a`
-                LEFT JOIN `glpi_plugin_glpiinventory_credentials` as `c`
-                   ON `c`.`id` = `a`.`plugin_glpiinventory_credentials_id`
-                WHERE `c`.`itemtype`='PluginGlpiinventoryInventoryComputerESX'";
-        $query .= getEntitiesRestrictRequest(' AND', 'a');
-        $results = $DB->query($query);
+        $iterator = $DB->request([
+            'SELECT' => ['id', 'name'],
+            'FROM'   => 'glpi_plugin_glpiinventory_credentialips',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_credentials' => [
+                    'ON' => [
+                        'glpi_plugin_glpiinventory_credentials' => 'id',
+                        'glpi_plugin_glpiinventory_credentialips' => 'plugin_glpiinventory_credentials_id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'glpi_plugin_glpiinventory_credentials.itemtype' => 'PluginGlpiinventoryInventoryComputerESX'
+            ] + getEntitiesRestrictCriteria('glpi_plugin_glpiinventory_credentialips')
+        ]);
 
         $agents = [];
-       //$agents['.1'] = __('All');
+        //$agents['.1'] = __('All');
 
-        while ($data = $DB->fetchArray($results)) {
+        foreach ($iterator as $data) {
             $agents[$data['id']] = $data['name'];
         }
         if (!empty($agents)) {
@@ -301,16 +309,24 @@ class PluginGlpiinventoryStaticmisc
         $options = [];
         $options['name'] = 'definitionactiontoadd';
 
-        $query = "SELECT `a`.`id`, `a`.`name`
-                FROM `glpi_plugin_glpiinventory_credentialips` as `a`
-                LEFT JOIN `glpi_plugin_glpiinventory_credentials` as `c`
-                   ON `c`.`id` = `a`.`plugin_glpiinventory_credentials_id`
-                WHERE `c`.`itemtype`='PluginGlpiinventoryInventoryComputerESX'";
-        $query .= getEntitiesRestrictRequest(' AND', 'glpi_plugin_glpiinventory_credentialips');
+        $iterator = $DB->request([
+            'SELECT' => ['id', 'name'],
+            'FROM'   => 'glpi_plugin_glpiinventory_credentialips',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_credentials' => [
+                    'ON' => [
+                        'glpi_plugin_glpiinventory_credentials' => 'id',
+                        'glpi_plugin_glpiinventory_credentialips' => 'plugin_glpiinventory_credentials_id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'glpi_plugin_glpiinventory_credentials.itemtype' => 'PluginGlpiinventoryInventoryComputerESX'
+            ] + getEntitiesRestrictCriteria('glpi_plugin_glpiinventory_credentialips')
+        ]);
 
-        $results = $DB->query($query);
         $credentialips = [];
-        while ($data = $DB->fetchArray($results)) {
+        foreach ($iterator as $data) {
             $credentialips[$data['id']] = $data['name'];
         }
         return Dropdown::showFromArray('actionselectiontoadd', $credentialips);

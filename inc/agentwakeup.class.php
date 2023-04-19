@@ -221,7 +221,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     }
 
    /**
-    * Send a request to the remotely agent to run now
+    * Send a request to the remote agent to run now
     *
     * @return boolean true if send successfully, otherwise false
     */

@@ -132,12 +132,20 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
         $timestamp = date('U');
         for ($i = $nb; $i >= 0; $i--) {
             $timestampSearch = $timestamp - ($i * 3600);
-            $query = "SELECT * FROM `glpi_plugin_glpiinventory_inventorycomputerstats` "
-                    . "WHERE `day`='" . date('z', $timestampSearch) . "' "
-                    . "   AND `hour`='" . date('G', $timestampSearch) . "' "
-                    . "LIMIT 1";
-            $result = $DB->query($query);
-            $data = $DB->fetchAssoc($result);
+
+            $iterator = $DB->request([
+                'SELECT' => [
+                    'counter'
+                ],
+                'FROM' => 'glpi_plugin_glpiinventory_inventorycomputerstats',
+                'WHERE' => [
+                    'day' => date('z', $timestampSearch),
+                    'hour' => date('G', $timestampSearch)
+                ],
+                'LIMIT' => 1
+            ]);
+
+            $data = $iterator->current();
             $cnt = 0;
             if (!is_null($data)) {
                 $cnt = (int)$data['counter'];

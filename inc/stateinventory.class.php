@@ -84,15 +84,28 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
             $start = $_REQUEST["start"];
         }
 
-       // Total Number of events
-        $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_glpiinventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
-            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
-         WHERE `method` = 'networkinventory'
-         GROUP BY `uniqid`
-         ORDER BY `uniqid` DESC ";
-        $resultcount = $DB->query($querycount);
-        $number = $DB->numrows($resultcount);
+        // Total Number of events
+        $iterator = $DB->request([
+            'SELECT' => [
+                'COUNT' => 'cpt'
+            ],
+            'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_taskjobs' => [
+                    'ON' => [
+                        'glpi_plugin_glpiinventory_taskjobs' => 'id',
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'method' => 'networkinventory'
+            ],
+            'GROUPBY' => 'uniqid',
+            'ORDERBY' => 'uniqid DESC'
+        ]);
+
+        $number = count($iterator);
 
        // Display the pager
         Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/stateinventory.php", '');
@@ -116,16 +129,29 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
         echo "</tr>";
         echo "</thead>";
 
-        $sql = "SELECT `glpi_plugin_glpiinventory_taskjobstates`.*
-            FROM `glpi_plugin_glpiinventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
-            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
-         WHERE `method` = 'networkinventory'
-         GROUP BY `uniqid`
-         ORDER BY `uniqid` DESC
-         LIMIT " . intval($start) . ", " . intval($_SESSION['glpilist_limit']);
-        $result = $DB->query($sql);
-        while ($data = $DB->fetchArray($result)) {
+        $iterator = $DB->request([
+            'SELECT' => [
+                'glpi_plugin_glpiinventory_taskjobstates.*'
+            ],
+            'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_taskjobs' => [
+                    'ON' => [
+                        'glpi_plugin_glpiinventory_taskjobs' => 'id',
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'method' => 'networkinventory'
+            ],
+            'GROUPBY' => 'uniqid',
+            'ORDERBY' => 'uniqid DESC',
+            'LIMIT'  => (int)$_SESSION['glpilist_limit'],
+            'START'  => (int)$start
+        ]);
+
+        foreach ($iterator as $data) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['uniqid'] . "</td>";
             $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);

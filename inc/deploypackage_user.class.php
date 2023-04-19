@@ -95,11 +95,15 @@ class PluginGlpiinventoryDeployPackage_User extends CommonDBRelation
         global $DB;
 
         $users = [];
-        $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_users`.*
-                FROM `glpi_plugin_glpiinventory_deploypackages_users`
-                WHERE `plugin_glpiinventory_deploypackages_id` = '$deploypackages_id'";
 
-        foreach ($DB->request($query) as $data) {
+        $iterator = $DB->request([
+            'FROM'   => self::getTable(),
+            'WHERE'  => [
+                'plugin_glpiinventory_deploypackages_id' => $deploypackages_id
+            ]
+        ]);
+
+        foreach ($iterator as $data) {
             $users[$data['users_id']][] = $data;
         }
         return $users;
