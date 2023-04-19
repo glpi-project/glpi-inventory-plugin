@@ -292,7 +292,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     */
     public function prepareInputForUpdate($input)
     {
-        if ($this->fields['is_active'] && ($input['is_active'] ?? '1')) {
+        if (!defined('TU_USER') && $this->fields['is_active'] && ($input['is_active'] ?? '1')) {
             Session::addMessageAfterRedirect(__('The task cannot be updated if it is active', 'glpiinventory'), false, ERROR);
             return false;
         }
