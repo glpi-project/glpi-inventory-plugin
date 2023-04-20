@@ -506,7 +506,11 @@ class CronTaskTest extends TestCase
 
         //update directly in DB to prevent reset jobstate
         //see PluginGlpiinventoryTask->post_updateItem
-        $DB->query("UPDATE glpi_plugin_glpiinventory_tasks set `reprepare_if_successful` = 0 WHERE id = " . $pfTask->fields['id']);
+        $DB->update(
+          'glpi_plugin_glpiinventory_tasks',
+          ['reprepare_if_successful' => 0],
+          ['id' => $pfTask->fields['id']]
+        );
         $pfTask->fields['reprepare_if_successful'] = 0;
 
        // prepare
@@ -640,7 +644,11 @@ class CronTaskTest extends TestCase
 
         //update directly in DB to prevent reset jobstate
         //see PluginGlpiinventoryTask->post_updateItem
-        $DB->query("UPDATE glpi_plugin_glpiinventory_tasks set `reprepare_if_successful` = 1 WHERE id = " . $pfTask->fields['id']);
+        $DB->update(
+          'glpi_plugin_glpiinventory_tasks',
+          ['reprepare_if_successful' => 1],
+          ['id' => $pfTask->fields['id']]
+        );
         $pfTask->fields['reprepare_if_successful'] = 1;
 
         PluginGlpiinventoryTask::cronTaskscheduler();
