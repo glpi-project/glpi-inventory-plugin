@@ -284,6 +284,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
       });");
     }
 
+
    /**
     * Display form for task configuration
     *
