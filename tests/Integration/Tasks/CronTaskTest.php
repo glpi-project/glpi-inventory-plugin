@@ -645,7 +645,7 @@ class CronTaskTest extends TestCase
         //update directly in DB to prevent reset jobstate
         //see PluginGlpiinventoryTask->post_updateItem
         $DB->update(
-            'glpi_plugin_glpiinventory_tasks',
+            $pfTask->getTable(),
             ['reprepare_if_successful' => 1],
             ['id' => $pfTask->fields['id']]
         );
