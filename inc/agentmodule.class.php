@@ -407,6 +407,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         $entity = new Entity();
         $base_url = $entity->getUsedConfig('agent_base_url', $entities_id, 'agent_base_url', '');
 
+        //trim the ending / if needed
+        $base_url = rtrim($base_url, '/');
+
         if (!empty($base_url)) {
             PluginGlpiinventoryToolbox::logIfExtradebug(
                 "pluginGlpiinventory-agent-url",
