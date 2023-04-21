@@ -692,7 +692,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         $dynamic_group = new PluginGlpiinventoryDeployGroup_Dynamicdata();
         $static_group  = new PluginGlpiinventoryDeployGroup_Staticdata();
-        $package_group  = new PluginGlpiinventoryDeployGroup();
+        $package_group  = new PluginGlpiinventoryDeployPackage_Group();
 
         $params = ['plugin_glpiinventory_deploygroups_id' => $this->getID()];
         $dynamic_group->deleteByCriteria($params);
