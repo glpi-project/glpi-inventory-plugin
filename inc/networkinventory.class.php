@@ -110,27 +110,30 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                             'glpi_networkports' => [
                                 'ON' => [
                                     'glpi_networkports' => 'items_id',
-                                    'glpi_networkequipments' => 'id',
-                                    'AND' => [
-                                        'glpi_networkports.itemtype' => $itemtype
+                                    'glpi_networkequipments' => 'id',[
+                                        'AND' => [
+                                            'glpi_networkports.itemtype' => $itemtype
+                                        ]
                                     ]
                                 ]
                             ],
                             'glpi_networknames' => [
                                 'ON' => [
                                     'glpi_networknames' => 'items_id',
-                                    'glpi_networkports' => 'id',
-                                    'AND' => [
-                                        'glpi_networknames.itemtype' => 'NetworkPort'
+                                    'glpi_networkports' => 'id',[
+                                        'AND' => [
+                                            'glpi_networknames.itemtype' => 'NetworkPort'
+                                        ]
                                     ]
                                 ]
                             ],
                             'glpi_ipaddresses' => [
                                 'ON' => [
                                     'glpi_ipaddresses' => 'items_id',
-                                    'glpi_networknames' => 'id',
-                                    'AND' => [
-                                        'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                    'glpi_networknames' => 'id',[
+                                        'AND' => [
+                                            'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                        ]
                                     ]
                                 ]
                             ]
@@ -176,27 +179,30 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                         'glpi_networkports' => [
                             'ON' => [
                                 'glpi_networkports' => 'items_id',
-                                'glpi_networkequipments' => 'id',
-                                'AND' => [
-                                    'glpi_networkports.itemtype' => $cur_itemtype
+                                'glpi_networkequipments' => 'id',[
+                                    'AND' => [
+                                        'glpi_networkports.itemtype' => $cur_itemtype
+                                    ]
                                 ]
                             ]
                         ],
                         'glpi_networknames' => [
                             'ON' => [
                                 'glpi_networknames' => 'items_id',
-                                'glpi_networkports' => 'id',
-                                'AND' => [
-                                    'glpi_networknames.itemtype' => 'NetworkPort'
+                                'glpi_networkports' => 'id',[
+                                    'AND' => [
+                                        'glpi_networknames.itemtype' => 'NetworkPort'
+                                    ]
                                 ]
                             ]
                         ],
                         'glpi_ipaddresses' => [
                             'ON' => [
                                 'glpi_ipaddresses' => 'items_id',
-                                'glpi_networknames' => 'id',
-                                'AND' => [
-                                    'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                'glpi_networknames' => 'id',[
+                                    'AND' => [
+                                        'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                    ]
                                 ]
                             ]
                         ]
@@ -798,27 +804,30 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     'glpi_networkports' => [
                         'ON' => [
                             'glpi_networkports' => 'items_id',
-                            $itemtype::getTable() => 'id',
-                            'AND' => [
-                                'glpi_networkports.itemtype' => $itemtype
+                            $itemtype::getTable() => 'id', [
+                                'AND' => [
+                                    'glpi_networkports.itemtype' => $itemtype
+                                ]
                             ]
                         ]
                     ],
                     'glpi_networknames' => [
                         'ON' => [
                             'glpi_networknames' => 'items_id',
-                            'glpi_networkports' => 'id',
-                            'AND' => [
-                                'glpi_networknames.itemtype' => 'NetworkPort'
+                            'glpi_networkports' => 'id', [
+                                'AND' => [
+                                    'glpi_networknames.itemtype' => 'NetworkPort'
+                                ]
                             ]
                         ]
                     ],
                     'glpi_ipaddresses' => [
                         'ON' => [
                             'glpi_ipaddresses' => 'items_id',
-                            'glpi_networknames' => 'id',
-                            'AND' => [
-                                'glpi_ipaddresses.itemtype' => 'NetworkName'
+                            'glpi_networknames' => 'id',[
+                                'AND' => [
+                                    'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                ]
                             ]
                         ]
                     ]
@@ -836,8 +845,10 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             ];
 
             if ($pfIPRange->fields['entities_id'] != '-1' && $restrict_entity) {
-                $criteria['WHERE'][$itemtype::getTable() . '.entities_id'] = $pfIPRange->fields['entities_id'] +
-                    getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']);
+                $criteria['WHERE'][$itemtype::getTable() . '.entities_id'] = array_merge(
+                    [$pfIPRange->fields['entities_id']],
+                    getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id'])
+                );
             }
 
             $iterator = $DB->request($criteria);
