@@ -892,7 +892,20 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         return array_keys($agents);
     }
 
-
+    /**
+    * Prepare data before update in database
+    *
+    * @param array $input
+    * @return array
+    */
+    public function prepareInputForUpdate($input)
+    {
+        if ($this->fields['is_active'] && ($input['is_active'] ?? '1')) {
+            Session::addMessageAfterRedirect(__('The task cannot be updated if it is active', 'glpiinventory'), false, ERROR);
+            return false;
+        }
+        return $input;
+    }
 
    /**
     * Cron task: prepare taskjobs
