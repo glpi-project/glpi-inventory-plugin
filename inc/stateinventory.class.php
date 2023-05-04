@@ -86,9 +86,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
         // Total Number of events
         $iterator = $DB->request([
-            'SELECT' => [
-                'COUNT' => 'cpt'
-            ],
+            'COUNT' => 'cpt',
             'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
             'LEFT JOIN' => [
                 'glpi_plugin_glpiinventory_taskjobs' => [
