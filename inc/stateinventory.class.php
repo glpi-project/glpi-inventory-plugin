@@ -206,8 +206,12 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                 }
                 echo "<td>" . $display_date . $interval->s . "s</td>";
 
-                echo "<td>" . round(($nb_query - $nb_errors) /
-                    (strtotime($end_date) - strtotime($start_date)), 2) . "</td>";
+                $nb_per_second = 0;
+                if (strtotime($end_date) - strtotime($start_date) > 0) {
+                    $nb_per_second = round(($nb_query - $nb_errors) /
+                    (strtotime($end_date) - strtotime($start_date)), 2);
+                }
+                echo "<td>" . $nb_per_second . "</td>";
             }
             echo "<td>" . $nb_threads . "</td>";
             echo "<td>" . $nb_query . "</td>";
