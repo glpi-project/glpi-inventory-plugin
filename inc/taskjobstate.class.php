@@ -439,7 +439,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             ],
             'WHERE'  => [
                 'run.id' => $id,
-                'log.date' => ['<=' => $last_date]
+                'log.date' => ['<=', $last_date]
             ],
             'ORDER'  => 'log.id DESC'
         ]);
