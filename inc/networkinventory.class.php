@@ -836,7 +836,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     $itemtype::getTable() . '.is_deleted' => 0,
                     'snmpcredentials_id' => ['!=', '0'],
                     new \QueryExpression(
-                        $DB->quoteName('glpi_ipaddresses.name') . ' BETWEEN ' .
+                        'inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN ' .
                         'inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' .
                         $DB->quote($pfIPRange->fields['ip_end']) . ')'
                     )
