@@ -1845,6 +1845,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         //Get jobs for a package on a computer
         $iterator = $DB->request([
+            'SELECT' => [
+                'job.*',
+            ],
             'FROM'   => 'glpi_plugin_glpiinventory_taskjobs AS job',
             'LEFT JOIN' => [
                 'glpi_plugin_glpiinventory_tasks AS task' => [

@@ -110,7 +110,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                             'glpi_networkports' => [
                                 'ON' => [
                                     'glpi_networkports' => 'items_id',
-                                    'glpi_networkequipments' => 'id',[
+                                    $itemtype::getTable() => 'id',[
                                         'AND' => [
                                             'glpi_networkports.itemtype' => $itemtype
                                         ]
@@ -139,9 +139,9 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                             ]
                         ],
                         'WHERE'  => [
-                            'glpi_networkequipments.is_deleted' => 0,
+                            $itemtype::getTable() . '.is_deleted' => 0,
                             'snmpcredentials_id' => ['!=', 0],
-                            'glpi_networkequipments.id' => $items_id,
+                            $itemtype::getTable() . '.id' => $items_id,
                             'glpi_ipaddresses.name' => ['!=', '']
                         ],
                         'LIMIT'  => 1
@@ -179,7 +179,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                         'glpi_networkports' => [
                             'ON' => [
                                 'glpi_networkports' => 'items_id',
-                                'glpi_networkequipments' => 'id',[
+                                $cur_itemtype::getTable() => 'id',[
                                     'AND' => [
                                         'glpi_networkports.itemtype' => $cur_itemtype
                                     ]
@@ -210,14 +210,16 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     'WHERE' => [
                         $cur_itemtype::getTable() . '.is_deleted' => 0,
                         'snmpcredentials_id' => ['!=', 0],
-                        new \QueryExpression('inet_aton(glpi_ipaddresses.name) BETWEEN inet_aton("' . $pfIPRange->fields['ip_start'] . '") AND inet_aton("' . $pfIPRange->fields['ip_end'] . '")'),
+                        new \QueryExpression('inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' . $DB->quote($pfIPRange->fields['ip_end']) . ')'),
                     ],
-                    'GROUPBY' => 'glpi_networkequipments.id'
+                    'GROUPBY' => $cur_itemtype::getTable() . '.id'
                 ];
 
                 if ($pfIPRange->fields['entities_id'] != '-1') {
-                    $criteria['WHERE'][$cur_itemtype::getTable() . '.entities_id'] = $pfIPRange->fields['entities_id'] +
-                        getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']);
+                    $criteria['WHERE'][$cur_itemtype::getTable() . '.entities_id'] = array_merge(
+                        [$pfIPRange->fields['entities_id']],
+                        getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id'])
+                    );
                 }
 
                 $iterator = $DB->request($criteria);
@@ -710,7 +712,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 'glpi_networkports' => [
                     'ON' => [
                         'glpi_networkports' => 'items_id',
-                        'glpi_agents' => 'id'
+                        'glpi_agents' => 'items_id'
                     ]
                 ],
                 'glpi_networknames' => [
@@ -734,7 +736,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 'glpi_computers' => [
                     'ON' => [
                         'glpi_computers' => 'id',
-                        'glpi_agents' => 'computers_id'
+                        'glpi_agents' => 'items_id'
                     ]
                 ]
             ],
