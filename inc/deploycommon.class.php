@@ -158,16 +158,18 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                             if ($this->definitionFiltered("PluginGlpiinventoryDeployGroupStatic", $definitions_filter)) {
                                 break;
                             }
-                             $query = "SELECT items_id
-                     FROM glpi_plugin_glpiinventory_deploygroups_staticdatas
-                     WHERE groups_id = '$items_id'
-                     AND itemtype = 'Computer'";
-                             $res = $DB->query($query);
-                            while ($row = $DB->fetchAssoc($res)) {
+                            $iterator = $DB->request([
+                                'SELECT' => 'items_id',
+                                'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
+                                'WHERE'  => [
+                                    'groups_id' => $items_id,
+                                    'itemtype'  => 'Computer'
+                                ]
+                            ]);
+                            foreach ($iterator as $row) {
                                 $computers[] = $row['items_id'];
                             }
                             break;
-
                         case 'DYNAMIC':
                             if ($this->definitionFiltered("PluginGlpiinventoryDeployGroupDynamic", $definitions_filter)) {
                                 break;

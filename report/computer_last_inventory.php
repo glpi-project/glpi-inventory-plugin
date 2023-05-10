@@ -92,21 +92,36 @@ Html::closeForm();
 
 $computer = new Computer();
 
-$state_sql = "";
+$state_where = [];
 if (($state != "") and ($state != "0")) {
-    $state_sql = " AND `states_id` = '" . $state . "' ";
+    $state_where = ['states_id' => $state];
 }
 
-$query = "SELECT `last_inventory_update`, `computers_id`
-      FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
-   LEFT JOIN `glpi_computers` ON `computers_id`=`glpi_computers`.`id`
-WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY)
-      OR last_inventory_update IS NULL)
-   " . $state_sql . ")" . getEntitiesRestrictRequest("AND", "glpi_computers") . "
-
-ORDER BY last_inventory_update DESC";
-
-$result = $DB->query($query);
+$iterator = $DB->request([
+    'SELECT' => [
+        'last_inventory_update',
+        'computers_id'
+    ],
+    'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers',
+    'LEFT JOIN' => [
+        'glpi_computers' => [
+            'FKEY' => [
+                'glpi_plugin_glpiinventory_inventorycomputercomputers' => 'computers_id',
+                'glpi_computers' => 'id'
+            ]
+        ]
+    ],
+    'WHERE' => [
+        'OR' => [
+            new \QueryExpression("NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY"),
+            ['last_inventory_update' => null]
+        ]
+    ] + $state_where + getEntitiesRestrictCriteria('glpi_computers'),
+    'ORDER' => [
+        'last_inventory_update' => 'DESC'
+    ]
+]);
+$result = $iterator->next();
 
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
 
