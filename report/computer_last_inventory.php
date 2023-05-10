@@ -126,7 +126,7 @@ $result = $iterator->next();
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
 
 echo "<tr class='tab_bg_1'>";
-echo "<th colspan='5'>" . __('Number of items') . " : " . $DB->numrows($result) . "</th>";
+echo "<th colspan='5'>" . __('Number of items') . " : " . count($iterator) . "</th>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
@@ -137,7 +137,7 @@ echo "<th>" . __('Inventory number') . "</th>";
 echo "<th>" . __('Status') . "</th>";
 echo "</tr>";
 
-while ($data = $DB->fetchArray($result)) {
+foreach ($iterator as $data) {
     echo "<tr class='tab_bg_1'>";
     echo "<td>";
     $computer->getFromDB($data['computers_id']);
