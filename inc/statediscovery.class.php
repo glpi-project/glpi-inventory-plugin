@@ -145,18 +145,28 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             $start = $_REQUEST["start"];
         }
 
-       // Total Number of events
-        $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_glpiinventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
-            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
-         WHERE `method` = 'networkdiscovery'
-         GROUP BY `uniqid`
-         ORDER BY `uniqid` DESC ";
+        // Total Number of events
+        $iterator = $DB->request([
+            'COUNT' => 'cpt',
+            'FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_taskjobs' => [
+                    'FKEY' => [
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                        'glpi_plugin_glpiinventory_taskjobs' => 'id'
+                    ]
+                ]
+            ],
+            'WHERE' => [
+                'method' => 'networkdiscovery'
+            ],
+            'GROUP' => 'uniqid',
+            'ORDER' => 'uniqid DESC'
+        ]);
+        $result = $iterator->next();
+        $number = $result['cpt'];
 
-        $resultcount = $DB->query($querycount);
-        $number = $DB->numrows($resultcount);
-
-       // Display the pager
+        // Display the pager
         Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/statediscovery.php", '');
 
         echo "<div class='card'>";

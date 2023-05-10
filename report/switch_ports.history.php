@@ -51,16 +51,32 @@ echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
 echo _n('Network port', 'Network ports', 1) . " :&nbsp;";
 
-$query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.`name` as `pname`,
-                 `glpi_networkports`.`id` as `id`
-          FROM `glpi_networkequipments`
-               LEFT JOIN `glpi_networkports` ON `items_id` = `glpi_networkequipments`.`id`
-          WHERE `itemtype`='NetworkEquipment'
-          ORDER BY `glpi_networkequipments`.`name`, `glpi_networkports`.`logical_number`;";
+$iterator = $DB->request([
+    'SELECT' => [
+        'glpi_networkequipments.name AS name',
+        'glpi_networkports.name AS pname',
+        'glpi_networkports.id AS id'
+    ],
+    'FROM'   => 'glpi_networkequipments',
+    'LEFT JOIN'   => [
+        'glpi_networkports' => [
+            'FKEY' => [
+                'glpi_networkequipments' => 'id',
+                'glpi_networkports'      => 'items_id'
+            ]
+        ]
+    ],
+    'WHERE' => [
+        'itemtype' => 'NetworkEquipment'
+    ],
+    'ORDER' => [
+        'glpi_networkequipments.name',
+        'glpi_networkports.logical_number'
+    ]
+]);
 
-$result = $DB->query($query);
-      $selected = '';
-while ($data = $DB->fetchArray($result)) {
+$selected = '';
+foreach ($iterator as $data) {
     if (($data['id'] == $FK_port)) {
         $selected = $data['id'];
     }

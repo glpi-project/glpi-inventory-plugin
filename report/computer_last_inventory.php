@@ -92,26 +92,40 @@ Html::closeForm();
 
 $computer = new Computer();
 
-$state_sql = "";
+$state_where = [];
 if (($state != "") and ($state != "0")) {
-    $state_sql = " AND `states_id` = '" . $state . "' ";
+    $state_where = ['states_id' => $state];
 }
 
-$query = "SELECT `last_inventory_update`, `computers_id`
-      FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
-   LEFT JOIN `glpi_computers` ON `computers_id`=`glpi_computers`.`id`
-WHERE ((NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY)
-      OR last_inventory_update IS NULL)
-   " . $state_sql . ")" . getEntitiesRestrictRequest("AND", "glpi_computers") . "
-
-ORDER BY last_inventory_update DESC";
-
-$result = $DB->query($query);
+$iterator = $DB->request([
+    'SELECT' => [
+        'last_inventory_update',
+        'computers_id'
+    ],
+    'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers',
+    'LEFT JOIN' => [
+        'glpi_computers' => [
+            'FKEY' => [
+                'glpi_plugin_glpiinventory_inventorycomputercomputers' => 'computers_id',
+                'glpi_computers' => 'id'
+            ]
+        ]
+    ],
+    'WHERE' => [
+        'OR' => [
+            new \QueryExpression("NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY"),
+            ['last_inventory_update' => null]
+        ]
+    ] + $state_where + getEntitiesRestrictCriteria('glpi_computers'),
+    'ORDER' => [
+        'last_inventory_update' => 'DESC'
+    ]
+]);
 
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
 
 echo "<tr class='tab_bg_1'>";
-echo "<th colspan='5'>" . __('Number of items') . " : " . $DB->numrows($result) . "</th>";
+echo "<th colspan='5'>" . __('Number of items') . " : " . count($iterator) . "</th>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
@@ -122,7 +136,7 @@ echo "<th>" . __('Inventory number') . "</th>";
 echo "<th>" . __('Status') . "</th>";
 echo "</tr>";
 
-while ($data = $DB->fetchArray($result)) {
+foreach ($iterator as $data) {
     echo "<tr class='tab_bg_1'>";
     echo "<td>";
     $computer->getFromDB($data['computers_id']);
