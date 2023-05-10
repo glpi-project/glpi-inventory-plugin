@@ -80,10 +80,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
        // get all snmpauth
         $a_snmpauth = getAllDataFromTable(SNMPCredential::getTable());
 
-       // get items_id by type
+        // get items_id by type
         $a_iprange = [];
-        $a_NetworkEquipment = [];
-        $a_Printer = [];
+        $devices = [
+            NetworkEquipment::getType() => [],
+            Printer::getType() => []
+        ];
         $communication = $pfTask->fields['communication'];
         $a_definition = importArrayFromDB($pfTaskjob->fields['definition']);
         foreach ($a_definition as $datas) {
@@ -96,159 +98,146 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     break;
 
                 case 'NetworkEquipment':
-                    $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
-                         `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `snmpcredentials_id`,
-                  FROM `glpi_networkequipments`
-                  LEFT JOIN `glpi_networkports`
-                       ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
-                          AND `glpi_networkports`.`itemtype`='NetworkEquipment'
-                  LEFT JOIN `glpi_networknames`
-                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                          AND `glpi_networknames`.`itemtype`='NetworkPort'
-                  LEFT JOIN `glpi_ipaddresses`
-                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  WHERE `glpi_networkequipments`.`is_deleted`='0'
-                       AND `snmpcredentials_id`!='0'
-                       AND `glpi_networkequipments`.`id` = '" . $items_id . "'
-                       AND `glpi_ipaddresses`.`name`!=''
-                  LIMIT 1";
-                    $result = $DB->query($query);
-                    while ($data = $DB->fetchArray($result)) {
-                        if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
-                              $input = [];
-                              $input['TYPE'] = 'NETWORKING';
-                              $input['ID'] = $data['gID'];
-                              $input['IP'] = $data['gnifaddr'];
-                              $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
-                              $a_specificity['DEVICE']['NetworkEquipment' . $data['gID']] = $input;
-                              $a_NetworkEquipment[] = $items_id;
-                        }
-                    }
-                    break;
-
                 case 'Printer':
-                    $query = "SELECT `glpi_printers`.`id` AS `gID`,
-                         `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `snmpcredentials_id`,
-                  FROM `glpi_printers`
-                  LEFT JOIN `glpi_networkports`
-                       ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
-                          AND `glpi_networkports`.`itemtype`='Printer'
-                  LEFT JOIN `glpi_networknames`
-                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                          AND `glpi_networknames`.`itemtype`='NetworkPort'
-                  LEFT JOIN `glpi_ipaddresses`
-                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  WHERE `glpi_printers`.`is_deleted`=0
-                        AND `snmpcredentials_id`!='0'
-                        AND `glpi_printers`.`id` = '" . $items_id . "'
-                        AND `glpi_ipaddresses`.`name`!=''
-                  LIMIT 1";
-                    $result = $DB->query($query);
-                    while ($data = $DB->fetchArray($result)) {
+                    $iterator = $DB->request([
+                        'SELECT' => [
+                            $itemtype::getTable() . '.id AS gID',
+                            'glpi_ipaddresses.name AS gnifaddr',
+                            'snmpcredentials_id'
+                        ],
+                        'FROM'   => $itemtype::getTable(),
+                        'LEFT JOIN' => [
+                            'glpi_networkports' => [
+                                'ON' => [
+                                    'glpi_networkports' => 'items_id',
+                                    $itemtype::getTable() => 'id',[
+                                        'AND' => [
+                                            'glpi_networkports.itemtype' => $itemtype
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'glpi_networknames' => [
+                                'ON' => [
+                                    'glpi_networknames' => 'items_id',
+                                    'glpi_networkports' => 'id',[
+                                        'AND' => [
+                                            'glpi_networknames.itemtype' => 'NetworkPort'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'glpi_ipaddresses' => [
+                                'ON' => [
+                                    'glpi_ipaddresses' => 'items_id',
+                                    'glpi_networknames' => 'id',[
+                                        'AND' => [
+                                            'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ],
+                        'WHERE'  => [
+                            $itemtype::getTable() . '.is_deleted' => 0,
+                            'snmpcredentials_id' => ['!=', 0],
+                            $itemtype::getTable() . '.id' => $items_id,
+                            'glpi_ipaddresses.name' => ['!=', '']
+                        ],
+                        'LIMIT'  => 1
+                    ]);
+
+                    foreach ($iterator as $data) {
                         if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
                               $input = [];
-                              $input['TYPE'] = 'PRINTER';
+                              $input['TYPE'] = ($itemtype === NetworkEquipment::getType() ? 'NETWORKING' : 'PRINTER');
                               $input['ID'] = $data['gID'];
                               $input['IP'] = $data['gnifaddr'];
                               $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
-                              $a_specificity['DEVICE']['Printer' . $data['gID']] = $input;
-                              $a_Printer[] = $items_id;
+                              $a_specificity['DEVICE'][$itemtype . $data['gID']] = $input;
+                              $devices[$itemtype][] = $items_id;
                         }
                     }
                     break;
             }
         }
 
-       // Get all devices on each iprange
+        // Get all devices on each iprange
         foreach ($a_iprange as $items_id) {
             $pfIPRange->getFromDB($items_id);
-           // Search NetworkEquipment
-            $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
-                            `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                            `snmpcredentials_id`,
-                     FROM `glpi_networkequipments`
-                     LEFT JOIN `glpi_networkports`
-                          ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
-                             AND `glpi_networkports`.`itemtype`='NetworkEquipment'
-                     LEFT JOIN `glpi_networknames`
-                          ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                             AND `glpi_networknames`.`itemtype`='NetworkPort'
-                     LEFT JOIN `glpi_ipaddresses`
-                          ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                             AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                     WHERE `glpi_networkequipments`.`is_deleted`='0'
-                          AND `snmpcredentials_id`!='0'";
-            if ($pfIPRange->fields['entities_id'] != '-1') {
-                $entities = "(" . $this->fields['entities_id'];
-                foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
-                    $entities .= ",$parent";
+
+            foreach ([NetworkEquipment::getType(), Printer::getType()] as $cur_itemtype) {
+                // Search NetworkEquipment
+                $criteria = [
+                    'SELECT' => [
+                        $cur_itemtype::getTable() . '.id AS gID',
+                        'glpi_ipaddresses.name AS gnifaddr',
+                        'snmpcredentials_id'
+                    ],
+                    'FROM' => $cur_itemtype::getTable(),
+                    'LEFT JOIN' => [
+                        'glpi_networkports' => [
+                            'ON' => [
+                                'glpi_networkports' => 'items_id',
+                                $cur_itemtype::getTable() => 'id',[
+                                    'AND' => [
+                                        'glpi_networkports.itemtype' => $cur_itemtype
+                                    ]
+                                ]
+                            ]
+                        ],
+                        'glpi_networknames' => [
+                            'ON' => [
+                                'glpi_networknames' => 'items_id',
+                                'glpi_networkports' => 'id',[
+                                    'AND' => [
+                                        'glpi_networknames.itemtype' => 'NetworkPort'
+                                    ]
+                                ]
+                            ]
+                        ],
+                        'glpi_ipaddresses' => [
+                            'ON' => [
+                                'glpi_ipaddresses' => 'items_id',
+                                'glpi_networknames' => 'id',[
+                                    'AND' => [
+                                        'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'WHERE' => [
+                        $cur_itemtype::getTable() . '.is_deleted' => 0,
+                        'snmpcredentials_id' => ['!=', 0],
+                        new \QueryExpression('inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' . $DB->quote($pfIPRange->fields['ip_end']) . ')'),
+                    ],
+                    'GROUPBY' => $cur_itemtype::getTable() . '.id'
+                ];
+
+                if ($pfIPRange->fields['entities_id'] != '-1') {
+                    $criteria['WHERE'][$cur_itemtype::getTable() . '.entities_id'] = array_merge(
+                        [$pfIPRange->fields['entities_id']],
+                        getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id'])
+                    );
                 }
-                $entities .= ")";
-                $query .= " AND `glpi_networkequipments`.`entities_id` IN " .
-                        $entities . " ";
-            }
-            $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
-                         BETWEEN inet_aton('" . $pfIPRange->fields['ip_start'] . "')
-                         AND inet_aton('" . $pfIPRange->fields['ip_end'] . "') ";
-            $query .= " GROUP BY `glpi_networkequipments`.`id`";
-            $result = $DB->query($query);
-            while ($data = $DB->fetchArray($result)) {
-                if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
-                    $input = [];
-                    $input['TYPE'] = 'NETWORKING';
-                    $input['ID'] = $data['gID'];
-                    $input['IP'] = $data['gnifaddr'];
-                    $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
-                    $a_specificity['DEVICE']['NetworkEquipment' . $data['gID']] = $input;
-                    $a_NetworkEquipment[] = $data['gID'];
-                }
-            }
-           // Search Printer
-            $query = "SELECT `glpi_printers`.`id` AS `gID`,
-                         `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `snmpcredentials_id`,
-                  FROM `glpi_printers`
-                  LEFT JOIN `glpi_networkports`
-                       ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
-                          AND `glpi_networkports`.`itemtype`='Printer'
-                  LEFT JOIN `glpi_networknames`
-                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                          AND `glpi_networknames`.`itemtype`='NetworkPort'
-                  LEFT JOIN `glpi_ipaddresses`
-                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  WHERE `glpi_printers`.`is_deleted`=0
-                        AND `snmpcredentials_id`!='0'";
-            if ($pfIPRange->fields['entities_id'] != '-1') {
-                $entities = "(" . $this->fields['entities_id'];
-                foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
-                    $entities .= ",$parent";
-                }
-                $entities .= ")";
-                $query .= "AND `glpi_printers`.`entities_id` IN " . $entities . " ";
-            }
-            $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
-                      BETWEEN inet_aton('" . $pfIPRange->fields['ip_start'] . "')
-                      AND inet_aton('" . $pfIPRange->fields['ip_end'] . "') ";
-            $query .= " GROUP BY `glpi_printers`.`id`";
-            $result = $DB->query($query);
-            while ($data = $DB->fetchArray($result)) {
-                if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
-                    $input = [];
-                    $input['TYPE'] = 'PRINTER';
-                    $input['ID'] = $data['gID'];
-                    $input['IP'] = $data['gnifaddr'];
-                    $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
-                    $a_specificity['DEVICE']['Printer' . $data['gID']] = $input;
-                    $a_Printer[] = $data['gID'];
+
+                $iterator = $DB->request($criteria);
+
+                foreach ($iterator as $data) {
+                    if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
+                        $input = [];
+                        $input['TYPE'] = ($cur_itemtype === NetworkEquipment::getType() ? 'NETWORKING' : 'PRINTER');
+                        $input['ID'] = $data['gID'];
+                        $input['IP'] = $data['gnifaddr'];
+                        $input['AUTHSNMP_ID'] = $data['snmpcredentials_id'];
+                        $a_specificity['DEVICE'][$cur_itemtype . $data['gID']] = $input;
+                        $devices[$cur_itemtype][] = $data['gID'];
+                    }
                 }
             }
         }
-        $count_device = count($a_NetworkEquipment) + count($a_Printer);
+        $count_device = count($devices[NetworkEquipment::getType()]) + count($devices[Printer::getType()]);
 
         $a_actions = importArrayFromDB($pfTaskjob->fields['action']);
 
@@ -257,7 +246,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $a_subnet = [];
             $a_agentList = [];
             $a_devicesubnet = [];
-            foreach ($a_NetworkEquipment as $items_id) {
+            foreach ($devices[NetworkEquipment::getType()] as $items_id) {
                 $NetworkEquipment->getFromDB($items_id);
                 $a_ip = explode(".", $NetworkEquipment->fields['ip']);
                 $ip_subnet = $a_ip[0] . "." . $a_ip[1] . "." . $a_ip[2] . ".";
@@ -267,7 +256,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 $a_subnet[$ip_subnet]++;
                 $a_devicesubnet[$ip_subnet]['NetworkEquipment'][$items_id] = 1;
             }
-            foreach ($a_Printer as $items_id) {
+            foreach ($devices[Printer::getType()] as $items_id) {
                 $a_ports = $NetworkPort->find(
                     ['itemtype' => 'Printer',
                     'items_id' => $items_id,
@@ -503,7 +492,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     $a_input['execution_id'] = $pfTask->fields['execution_id'];
                     $alternate = 0;
                     for ($d = 0; $d < ceil($count_device / count($a_agentList)); $d++) {
-                        if ((count($a_NetworkEquipment) + count($a_Printer)) > 0) {
+                        if ($count_device > 0) {
                             $getdevice = "NetworkEquipment";
                             if ($alternate == "1") {
                                  $getdevice = "Printer";
@@ -512,30 +501,30 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                                 $getdevice = "NetworkEquipment";
                                 $alternate++;
                             }
-                            if (count($a_NetworkEquipment) == '0') {
+                            if (count($devices[NetworkEquipment::getType()]) == '0') {
                                 $getdevice = "Printer";
-                            } elseif (count($a_Printer) == '0') {
+                            } elseif (count($devices[Printer::getType()]) == '0') {
                                 $getdevice = "NetworkEquipment";
                             }
                             $a_input['itemtype'] = $getdevice;
 
                             switch ($getdevice) {
                                 case 'NetworkEquipment':
-                                    $a_input['items_id'] = array_pop($a_NetworkEquipment);
+                                    $a_input['items_id'] = array_pop($devices[NetworkEquipment::getType()]);
                                     $a_input['specificity'] = exportArrayToDB(
                                         $a_specificity['DEVICE']['NetworkEquipment' . $a_input['items_id']]
                                     );
                                     break;
 
                                 case 'Printer':
-                                    $a_input['items_id'] = array_pop($a_Printer);
+                                    $a_input['items_id'] = array_pop($devices[Printer::getType()]);
                                     $a_input['specificity'] = exportArrayToDB(
                                         $a_specificity['DEVICE']['Printer' . $a_input['items_id']]
                                     );
                                     break;
                             }
                             $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                     //Add log of taskjob
+                            //Add log of taskjob
                             $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
                             $a_input['state'] = 7;
                             $a_input['date'] = date("Y-m-d H:i:s");
@@ -691,12 +680,17 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $nb_agentsMax = ceil($nb_computers / $nb_computerByAgentMin);
 
         $a_agentList = [];
+        $where = [];
 
         if ($subnet != '') {
-            $subnet = " AND `glpi_ipaddresses`.`name` LIKE '" . $subnet . "%' ";
+            $where[] = ['glpi_ipaddresses.name' => ['LIKE', $subnet . '%']];
         } elseif ($ipstart != '' and $ipend != '') {
-            $subnet = " AND ( INET_ATON(`glpi_ipaddresses`.`name`) > INET_ATON('" . $ipstart . "')
-            AND  INET_ATON(`glpi_ipaddresses`.`name`) < INET_ATON('" . $ipend . "') ) ";
+            $where[] = new \QueryExpression(
+                'INET_ATON(`glpi_ipaddresses`.`name`) > INET_ATON(\'' . $ipstart . '\')'
+            );
+            $where[] = new \QueryExpression(
+                'INET_ATON(`glpi_ipaddresses`.`name`) < INET_ATON(\'' . $ipend . '\')'
+            );
         }
         $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKINVENTORY');
         $a_agentsid = [];
@@ -707,47 +701,71 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             return $a_agentList;
         }
 
-        $where = " AND `glpi_agents`.`ID` IN (";
-        $where .= implode(', ', $a_agentsid);
-        $where .= ")
-         AND `glpi_ipaddresses`.`name` != '127.0.0.1' ";
+        $criteria = [
+            'SELECT' => [
+                'glpi_agents.id AS a_id',
+                'glpi_ipaddresses.name AS ip',
+                'token'
+            ],
+            'FROM' => 'glpi_agents',
+            'LEFT JOIN' => [
+                'glpi_networkports' => [
+                    'ON' => [
+                        'glpi_networkports' => 'items_id',
+                        'glpi_agents' => 'items_id'
+                    ]
+                ],
+                'glpi_networknames' => [
+                    'ON' => [
+                        'glpi_networknames' => 'items_id',
+                        'glpi_networkports' => 'id',
+                        'AND' => [
+                            'glpi_networknames.itemtype' => 'NetworkPort'
+                        ]
+                    ]
+                ],
+                'glpi_ipaddresses' => [
+                    'ON' => [
+                        'glpi_ipaddresses' => 'items_id',
+                        'glpi_networknames' => 'id',
+                        'AND' => [
+                            'glpi_ipaddresses.itemtype' => 'NetworkName'
+                        ]
+                    ]
+                ],
+                'glpi_computers' => [
+                    'ON' => [
+                        'glpi_computers' => 'id',
+                        'glpi_agents' => 'items_id'
+                    ]
+                ]
+            ],
+            'WHERE' => [
+                'glpi_agents.itemtype' => 'Computer',
+                'glpi_networkports.itemtype' => 'Computer',
+                'glpi_agents.id' => $a_agentsid,
+                'glpi_ipadresses.name' => ['!=', '127.0.0.1']
+            ] + $where
+        ];
 
-        $query = "SELECT `glpi_agents`.`id` as `a_id`,
-         `glpi_ipaddresses`.`name` as ip, token
-         FROM `glpi_agents`
-         LEFT JOIN `glpi_networkports`
-            ON `glpi_networkports`.`items_id` = `glpi_agents`.`items_id`
-         LEFT JOIN `glpi_networknames`
-              ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                 AND `glpi_networknames`.`itemtype`='NetworkPort'
-         LEFT JOIN `glpi_ipaddresses`
-              ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                 AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-         LEFT JOIN `glpi_computers`
-            ON `glpi_computers`.`id` = `glpi_agents`.`items_id`
-         WHERE `glpi_agents`.`itemtype`='Computer'
-            AND `glpi_networkports`.`itemtype`='Computer'
-            " . $subnet . "
-            " . $where . " ";
-        Toolbox::logInFile('NET', $query);
-        $result = $DB->query($query);
-        if ($result) {
-            while ($data = $DB->fetchArray($result)) {
-                if ($communication == 'push') {
-                    if ($pfTaskjob->isAgentAlive("1", $data['a_id'])) {
-                        if (!in_array($a_agentList, $data['a_id'])) {
-                             $a_agentList[] = $data['a_id'];
-                            if (count($a_agentList) >= $nb_agentsMax) {
-                                return $a_agentList;
-                            }
-                        }
-                    }
-                } elseif ($communication == 'pull') {
-                    if (!in_array($data['a_id'], $a_agentList)) {
-                        $a_agentList[] = $data['a_id'];
-                        if (count($a_agentList) > $nb_agentsMax) {
+
+        $iterator = $DB->request($criteria);
+        Toolbox::logInFile('NET', $iterator->getSql() . "\n");
+        foreach ($iterator as $data) {
+            if ($communication == 'push') {
+                if ($pfTaskjob->isAgentAlive("1", $data['a_id'])) {
+                    if (!in_array($a_agentList, $data['a_id'])) {
+                         $a_agentList[] = $data['a_id'];
+                        if (count($a_agentList) >= $nb_agentsMax) {
                             return $a_agentList;
                         }
+                    }
+                }
+            } elseif ($communication == 'pull') {
+                if (!in_array($data['a_id'], $a_agentList)) {
+                    $a_agentList[] = $data['a_id'];
+                    if (count($a_agentList) > $nb_agentsMax) {
+                        return $a_agentList;
                     }
                 }
             }
@@ -774,81 +792,77 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $a_snmpauth = getAllDataFromTable(SNMPCredential::getTable());
 
         $pfIPRange->getFromDB($ipranges_id);
-       // Search NetworkEquipment
-        $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
-                       `glpi_networkequipments`.`name` AS `gNAME`,
-                       `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                       `snmpcredentials_id`
-                  FROM `glpi_networkequipments`
-                  LEFT JOIN `glpi_networkports`
-                       ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
-                          AND `glpi_networkports`.`itemtype`='NetworkEquipment'
-                  LEFT JOIN `glpi_networknames`
-                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                          AND `glpi_networknames`.`itemtype`='NetworkPort'
-                  LEFT JOIN `glpi_ipaddresses`
-                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  WHERE `glpi_networkequipments`.`is_deleted`='0'
-                       AND `snmpcredentials_id`!='0'";
-        if ($pfIPRange->fields['entities_id'] != '-1' && $restrict_entity) {
-            $entities = "(" . $pfIPRange->fields['entities_id'];
-            foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
-                $entities .= ",$parent";
+
+        foreach ([NetworkEquipment::getType(), Printer::getType()] as $itemtype) {
+            $criteria = [
+                'SELECT' => [
+                    $itemtype::getTable() . '.id AS gID',
+                    $itemtype::getTable() . '.name AS gNAME',
+                    'glpi_ipaddresses.name AS gnifaddr',
+                    'snmpcredentials_id'
+                ],
+                'FROM' => $itemtype::getTable(),
+                'LEFT JOIN' => [
+                    'glpi_networkports' => [
+                        'ON' => [
+                            'glpi_networkports' => 'items_id',
+                            $itemtype::getTable() => 'id', [
+                                'AND' => [
+                                    'glpi_networkports.itemtype' => $itemtype
+                                ]
+                            ]
+                        ]
+                    ],
+                    'glpi_networknames' => [
+                        'ON' => [
+                            'glpi_networknames' => 'items_id',
+                            'glpi_networkports' => 'id', [
+                                'AND' => [
+                                    'glpi_networknames.itemtype' => 'NetworkPort'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'glpi_ipaddresses' => [
+                        'ON' => [
+                            'glpi_ipaddresses' => 'items_id',
+                            'glpi_networknames' => 'id',[
+                                'AND' => [
+                                    'glpi_ipaddresses.itemtype' => 'NetworkName'
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'WHERE' => [
+                    $itemtype::getTable() . '.is_deleted' => 0,
+                    'snmpcredentials_id' => ['!=', '0'],
+                    new \QueryExpression(
+                        'inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN ' .
+                        'inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' .
+                        $DB->quote($pfIPRange->fields['ip_end']) . ')'
+                    )
+                ],
+                'GROUPBY' => 'gID'
+            ];
+
+            if ($pfIPRange->fields['entities_id'] != '-1' && $restrict_entity) {
+                $criteria['WHERE'][$itemtype::getTable() . '.entities_id'] = array_merge(
+                    [$pfIPRange->fields['entities_id']],
+                    getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id'])
+                );
             }
-            $entities .= ")";
-            $query .= " AND `glpi_networkequipments`.`entities_id` IN " .
-                     $entities . " ";
-        }
-        $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
-                      BETWEEN inet_aton('" . $pfIPRange->fields['ip_start'] . "')
-                      AND inet_aton('" . $pfIPRange->fields['ip_end'] . "') ";
-        $query .= " GROUP BY `glpi_networkequipments`.`id`";
-        $result = $DB->query($query);
-        while ($data = $DB->fetchArray($result)) {
-            if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
-                $devicesList[] = [
-                'NetworkEquipment' => $data['gID']
-                ];
-            }
-        }
-       // Search Printer
-        $query = "SELECT `glpi_printers`.`id` AS `gID`,
-                      `glpi_printers`.`name` AS `gNAME`,
-                      `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                      `snmpcredentials_id`
-               FROM `glpi_printers`
-               LEFT JOIN `glpi_networkports`
-                    ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
-                       AND `glpi_networkports`.`itemtype`='Printer'
-               LEFT JOIN `glpi_networknames`
-                    ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                       AND `glpi_networknames`.`itemtype`='NetworkPort'
-               LEFT JOIN `glpi_ipaddresses`
-                    ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                       AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-               WHERE `glpi_printers`.`is_deleted`=0
-                     AND `snmpcredentials_id`!='0'";
-        if ($pfIPRange->fields['entities_id'] != '-1' && $restrict_entity) {
-            $entities = "(" . $pfIPRange->fields['entities_id'];
-            foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
-                $entities .= ",$parent";
-            }
-            $entities .= ")";
-            $query .= "AND `glpi_printers`.`entities_id` IN " . $entities . " ";
-        }
-        $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
-                   BETWEEN inet_aton('" . $pfIPRange->fields['ip_start'] . "')
-                   AND inet_aton('" . $pfIPRange->fields['ip_end'] . "') ";
-        $query .= " GROUP BY `glpi_printers`.`id`";
-        $result = $DB->query($query);
-        while ($data = $DB->fetchArray($result)) {
-            if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
-                $devicesList[] = [
-                'Printer' => $data['gID']
-                ];
+
+            $iterator = $DB->request($criteria);
+            foreach ($iterator as $data) {
+                if (isset($a_snmpauth[$data['snmpcredentials_id']])) {
+                    $devicesList[] = [
+                        $itemtype => $data['gID']
+                    ];
+                }
             }
         }
+
         return $devicesList;
     }
 }

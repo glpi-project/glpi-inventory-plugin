@@ -127,7 +127,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    **/
     public function canUpdateContent()
     {
-       // check if a task is currenlty runnning with this package
+       // check if a task is currently running with this package
         if (count($this->running_tasks)) {
             return false;
         }
@@ -397,19 +397,19 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         global $DB;
 
-        $sql = " SELECT id, name
-               FROM `" . $this->getTable() . "`
-               ORDER BY name";
-        $res  = $DB->query($sql);
-        $nb   = $DB->numrows($res);
+        $iterator = $DB->request([
+            'SELECT' => ['id', 'name'],
+            'FROM'   => $this->getTable(),
+            'ORDER'  => 'name'
+        ]);
         $json = [];
         $i    = 0;
-        while ($row = $DB->fetchAssoc($res)) {
+        foreach ($iterator as $row) {
             $json['packages'][$i]['package_id'] = $row['id'];
             $json['packages'][$i]['package_name'] = $row['name'];
             $i++;
         }
-        $json['results'] = $nb;
+        $json['results'] = count($iterator);
         return json_encode($json);
     }
 
@@ -1843,21 +1843,32 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         $computer->getFromDB($computers_id);
 
-       //Get jobs for a package on a computer
-        $query = "SELECT `job`.*
-                FROM `glpi_plugin_glpiinventory_taskjobs` AS job"
-              . " LEFT JOIN `glpi_plugin_glpiinventory_tasks` AS task"
-              . "    ON `task`.`id` = `job`.`plugin_glpiinventory_tasks_id`"
-              . " WHERE `job`.`targets`='[{\"PluginGlpiinventoryDeployPackage\":\"" . $packages_id . "\"}]'"
-              . "    AND `task`.`is_active`='1'"
-              . "    AND `task`.`is_deploy_on_demand`='1'"
-              . "    AND `task`.`entities_id`='" . $computer->fields['entities_id'] . "'"
-              . "    AND `task`.`reprepare_if_successful`='0'"
-              . "     AND `job`.`method`='deployinstall'"
-              . " LIMIT 1";
-        $iterator = $DB->request($query);
+        //Get jobs for a package on a computer
+        $iterator = $DB->request([
+            'SELECT' => [
+                'job.*',
+            ],
+            'FROM'   => 'glpi_plugin_glpiinventory_taskjobs AS job',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_tasks AS task' => [
+                    'ON' => [
+                        'job' => 'plugin_glpiinventory_tasks_id',
+                        'task' => 'id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'job.targets' => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
+                'task.is_active' => 1,
+                'task.is_deploy_on_demand' => 1,
+                'task.entities_id' => $computer->fields['entities_id'],
+                'task.reprepare_if_successful' => 0,
+                'method'  => 'deployinstall'
+            ],
+            'LIMIT'  => 1
+        ]);
 
-       // case 1: if exist, we add computer in actors of the taskjob
+        // case 1: if exist, we add computer in actors of the taskjob
         if ($iterator->numrows() == 1) {
             foreach ($iterator as $data) {
                 //Get current list of actors
@@ -1936,22 +1947,31 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         foreach ($computers_packages as $computers_id => $data) {
             $packages_used[$computers_id] = [];
         }
-        if ($users_id) {
-            $where = "`enduser` IS NOT NULL";
-        } else {
-            $where = "1 ";
-        }
-        $sql = "SELECT `job`.*
-              FROM `glpi_plugin_glpiinventory_taskjobs` AS job
-              LEFT JOIN `glpi_plugin_glpiinventory_tasks` AS task
-                 ON `task`.`id` = `job`.`plugin_glpiinventory_tasks_id`
-              WHERE $where
-                 AND `task`.`is_deploy_on_demand`='1'
-                 AND `task`.`is_active`='1'
-                 AND `task`.`entities_id`
-                    IN (" . $_SESSION['glpiactiveentities_string'] . ")";
 
-        foreach ($DB->request($sql) as $data) {
+        $where = [];
+        if ($users_id) {
+            $where ['NOT'] = ['enduser' => null];
+        }
+
+        $iterator = $DB->request([
+            'SELECT' => 'job.*',
+            'FROM'   => 'glpi_plugin_glpiinventory_taskjobs AS job',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_tasks AS task' => [
+                    'ON' => [
+                        'job' => 'plugin_glpiinventory_tasks_id',
+                        'task' => 'id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'task.is_deploy_on_demand' => 1,
+                'task.is_active' => 1,
+                'task.entities_id' => $_SESSION['glpiactiveentities']
+            ] + $where
+        ]);
+
+        foreach ($iterator as $data) {
            //Only look for deploy tasks
             if ($data['method'] != 'deployinstall') {
                 continue;
@@ -1996,7 +2016,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
         $agent        = new Agent();
 
-       // Get a taskjobstate by giving a  taskjobID and a computer ID
+        // Get a taskjobstate by giving a  taskjobID and a computer ID
         $agent->getFromDBByCrit(['itemtype' => Computer::getType(), 'items_id' => $computers_id]);
         $agents_id = $agent->fields['id'];
 
@@ -2062,45 +2082,65 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         }
 
         $table = "glpi_plugin_glpiinventory_deploypackages";
-        $where = " WHERE `" . $table . "`.`plugin_glpiinventory_deploygroups_id` > 0 "
-              . " AND (";
+        $where = [
+            $table . ".plugin_glpiinventory_deploygroups_id" => ['>', 0]
+        ];
 
-       //Include groups
+        //Include groups
         if (!empty($_SESSION['glpigroups'])) {
-            $where .= " `glpi_plugin_glpiinventory_deploypackages_groups`.`groups_id`
-                    IN ('" . implode("', '", $_SESSION['glpigroups']) . "') OR ";
+            $where['OR'][] = ['glpi_plugin_glpiinventory_deploypackages_groups.groups_id' => $_SESSION['glpigroups']];
         }
 
-       //Include entity
-        $where .= getEntitiesRestrictRequest(
-            '',
+        //Include entity
+        $where['OR'][] = getEntitiesRestrictCriteria(
             'glpi_plugin_glpiinventory_deploypackages_entities',
             'entities_id',
             $_SESSION['glpiactive_entity'],
             true
         );
-       //Include user
-        $where .= " OR `glpi_plugin_glpiinventory_deploypackages_users`.`users_id`='" . $_SESSION['glpiID'] . "' OR ";
 
-       //Include profile
-        $where .= " `glpi_plugin_glpiinventory_deploypackages_profiles`.`profiles_id`='" . $_SESSION['glpiactiveprofile']['id'] . "' ";
-        $where .= " )";
+        //Include user
+        $where['OR'][] = ['glpi_plugin_glpiinventory_deploypackages_users.users_id' => $_SESSION['glpiID']];
 
-        $query = "SELECT DISTINCT `" . $table . "`.*
-                FROM `$table`
-                LEFT JOIN `glpi_plugin_glpiinventory_deploypackages_groups`
-                     ON (`glpi_plugin_glpiinventory_deploypackages_groups`.`plugin_glpiinventory_deploypackages_id` = `$table`.`id`)
-                LEFT JOIN `glpi_plugin_glpiinventory_deploypackages_entities`
-                     ON (`glpi_plugin_glpiinventory_deploypackages_entities`.`plugin_glpiinventory_deploypackages_id` = `$table`.`id`)
-                LEFT JOIN `glpi_plugin_glpiinventory_deploypackages_users`
-                     ON (`glpi_plugin_glpiinventory_deploypackages_users`.`plugin_glpiinventory_deploypackages_id` = `$table`.`id`)
-                LEFT JOIN `glpi_plugin_glpiinventory_deploypackages_profiles`
-                     ON (`glpi_plugin_glpiinventory_deploypackages_profiles`.`plugin_glpiinventory_deploypackages_id` = `$table`.`id`)
-               $where";
-        $result = $DB->query($query);
+        //Include profile
+        $where['OR'][] = ['glpi_plugin_glpiinventory_deploypackages_profiles.profiles_id' => $_SESSION['glpiactiveprofile']['id']];
+
+        $iterator = $DB->request([
+            'SELECT' => $table . '.*',
+            'DISTINCT' => true,
+            'FROM' => $table,
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_deploypackages_groups' => [
+                    'ON' => [
+                        $table => 'id',
+                        'glpi_plugin_glpiinventory_deploypackages_groups' => 'plugin_glpiinventory_deploypackages_id'
+                    ]
+                ],
+                'glpi_plugin_glpiinventory_deploypackages_entities' => [
+                    'ON' => [
+                        $table => 'id',
+                        'glpi_plugin_glpiinventory_deploypackages_entities' => 'plugin_glpiinventory_deploypackages_id'
+                    ]
+                ],
+                'glpi_plugin_glpiinventory_deploypackages_users' => [
+                    'ON' => [
+                        $table => 'id',
+                        'glpi_plugin_glpiinventory_deploypackages_users' => 'plugin_glpiinventory_deploypackages_id'
+                    ]
+                ],
+                'glpi_plugin_glpiinventory_deploypackages_profiles' => [
+                    'ON' => [
+                        $table => 'id',
+                        'glpi_plugin_glpiinventory_deploypackages_profiles' => 'plugin_glpiinventory_deploypackages_id'
+                    ]
+                ],
+            ],
+            'WHERE' => $where
+        ]);
+
         $a_packages = [];
-        if ($DB->numrows($result) > 0) {
-            while ($data = $DB->fetchAssoc($result)) {
+        if (count($iterator) > 0) {
+            foreach ($iterator as $data) {
                 $a_packages[$data['id']] = $data;
             }
             return $a_packages;

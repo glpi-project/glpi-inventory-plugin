@@ -77,15 +77,17 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
 
         $tasks_id = $params['tasks_id'];
 
-        $sql = " SELECT *
-               FROM `" . $this->getTable() . "`
-               WHERE `plugin_glpiinventory_deploytasks_id` = '$tasks_id'
-               AND method = 'deployinstall'";
+        $iterator = $DB->request([
+            'FROM'   => $this->getTable(),
+            'WHERE'  => [
+                'plugin_glpiinventory_deploytasks_id' => $tasks_id,
+                'method'                              => 'deployinstall'
+            ]
+        ]);
 
-        $res  = $DB->query($sql);
         $json  = [];
         $temp_tasks = [];
-        while ($row = $DB->fetchAssoc($res)) {
+        foreach ($iterator as $row) {
             $row['packages'] = importArrayFromDB($row['definition']);
             $row['actions'] = importArrayFromDB($row['action']);
 
@@ -174,20 +176,25 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             $definition = exportArrayToDB([[
               'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
 
+            $job_name = "job_" . $tasks_id . "_" . $i;
+            $now = 'NOW()';
+            $entities_id = '0';
+            $period_type = 'minutes';
+            $period_count = '0';
             $stmt->bind_param(
                 'ssssssssssss',
                 $tasks_id,
-                "job_" . $tasks_id . "_" . $i,
-                'NOW()',
-                '0',
+                $job_name,
+                $now,
+                $entities_id,
                 $plugins_id,
                 $task['method'],
                 $definition,
                 $action,
                 $task['retry_nb'],
                 $task['retry_time'],
-                'minutes',
-                '0'
+                $period_type,
+                $period_count
             );
             $DB->executeStatement($stmt);
         }
@@ -244,15 +251,20 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             case "selection":
                 switch ($params['type']) {
                     case 'Computer':
-                        $query = "SELECT id, name FROM glpi_computers";
+                        $where = [];
                         if (isset($params['query'])) {
-                            $like = $DB->escape($params['query']);
-                            $query .= " WHERE name LIKE '%$like'";
+                            $where['name'] = ['LIKE', '%' . $like];
                         }
-                        $query .= " ORDER BY name ASC";
-                        $query_res = $DB->query($query);
+
                         $i = 0;
-                        while ($row = $DB->fetchArray($query_res)) {
+                        $iterator = $DB->request([
+                            'SELECT' => ['id', 'name'],
+                            'FROM' => 'glpi_computers',
+                            'WHERE' => $where,
+                            'ORDER' => 'name ASC'
+                        ]);
+
+                        foreach ($iterator as $row) {
                             $res['action_selections'][$i]['id'] = $row['id'];
                             $res['action_selections'][$i]['name'] = $row['name'];
                             $i++;
@@ -264,6 +276,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                     case 'Group':
                         $like = [];
                         if (isset($params['query'])) {
+                            //FIXME: not sure escape is mandatory here
                             $like += ['name' => ['LIKE', '%' . $DB->escape($params['query'])]];
                         }
                         $group = new Group();

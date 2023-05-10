@@ -83,23 +83,30 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
 
                     switch ($group->getField('type')) {
                         case 'STATIC':
-                              $query = "SELECT items_id
-                     FROM glpi_plugin_glpiinventory_deploygroups_staticdatas
-                     WHERE groups_id = '$items_id'
-                     AND itemtype = 'Computer'";
-                              $res = $DB->query($query);
-                            while ($row = $DB->fetchAssoc($res)) {
+                            $iterator = $DB->request([
+                                'SELECT' => 'items_id',
+                                'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
+                                'WHERE'  => [
+                                    'groups_id' => $items_id,
+                                    'itemtype'  => 'Computer'
+                                ]
+                            ]);
+                            foreach ($iterator as $row) {
                                 $a_computers_to_wake[] = $row['items_id'];
                             }
                             break;
 
                         case 'DYNAMIC':
-                             $query = "SELECT fields_array
-                     FROM glpi_plugin_glpiinventory_deploygroups_dynamicdatas
-                     WHERE groups_id = '$items_id'
-                     LIMIT 1";
-                             $res = $DB->query($query);
-                             $row = $DB->fetchAssoc($res);
+                            $iterator = $DB->request([
+                                'SELECT' => 'fields_array',
+                                'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
+                                'WHERE'  => [
+                                    'groups_id' => $items_id
+                                ],
+                                'LIMIT' => 1
+                            ]);
+
+                            $row = $iterator->current();
 
                             if (isset($_GET)) {
                                 $get_tmp = $_GET;
@@ -173,15 +180,17 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
             */
             $subnet = '';
             foreach ($a_computers_to_wake as $items_id) {
-                $sql = "SELECT * FROM `glpi_networkports`
-               WHERE `items_id`='" . $items_id . "'
-                  AND `itemtype`='Computer'
-                  AND `mac`!='' ";
-                $result = $DB->query($sql);
-                if ($result) {
-                    while ($data = $DB->fetchArray($result)) {
-                        $subnet = $data['subnet'];
-                    }
+                $iterator = $DB->request([
+                    'FROM'   => 'glpi_networkports',
+                    'WHERE'  => [
+                        'items_id'  => $items_id,
+                        'itemtype'  => 'Computer',
+                        'mac'       => ['!=', '']
+                    ]
+                ]);
+
+                foreach ($iterator as $data) {
+                    $subnet = $data['subnet'];
                 }
             }
             if ($subnet != '') {

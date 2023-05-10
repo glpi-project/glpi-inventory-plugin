@@ -179,17 +179,27 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         echo "</tr>";
         echo "</thead>";
 
-        $sql = "SELECT `glpi_plugin_glpiinventory_taskjobstates`.*
-            FROM `glpi_plugin_glpiinventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs`
-            ON `plugin_glpiinventory_taskjobs_id` = `glpi_plugin_glpiinventory_taskjobs`.`id`
-         WHERE `method` = 'networkdiscovery'
-         GROUP BY `uniqid`
-         ORDER BY `uniqid` DESC
-         LIMIT " . intval($start) . ", " . intval($_SESSION['glpilist_limit']);
+        $iterator = $DB->request([
+            'SELECT' => 'glpi_plugin_glpiinventory_taskjobstates.*',
+            'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_taskjobs' => [
+                    'ON' => [
+                        'glpi_plugin_glpiinventory_taskjobs' => 'id',
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'method' => 'networkdiscovery'
+            ],
+            'GROUPBY' => 'uniqid',
+            'ORDER'  => 'uniqid DESC',
+            'START'  => (int)$start,
+            'LIMIT'  => (int)$_SESSION['glpilist_limit']
+        ]);
 
-        $result = $DB->query($sql);
-        while ($data = $DB->fetchArray($result)) {
+        foreach ($iterator as $data) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['uniqid'] . "</td>";
             $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);

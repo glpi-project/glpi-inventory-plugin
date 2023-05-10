@@ -95,13 +95,17 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         global $DB;
 
         $db_registries = [];
-        $query = "SELECT `id`, `key`, `value`
-                FROM `glpi_plugin_glpiinventory_collects_registries_contents`
-                WHERE `computers_id` = '" . $computers_id . "'
-                  AND `plugin_glpiinventory_collects_registries_id` =
-                  '" . $collects_registries_id . "'";
-        $result = $DB->query($query);
-        while ($data = $DB->fetchAssoc($result)) {
+
+        $iterator = $DB->request([
+            'SELECT' => ['id', 'key', 'value'],
+            'FROM'   => 'glpi_plugin_glpiinventory_collects_registries_contents',
+            'WHERE'  => [
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id
+            ]
+        ]);
+
+        foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);

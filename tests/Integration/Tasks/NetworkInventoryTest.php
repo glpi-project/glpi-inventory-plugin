@@ -331,8 +331,14 @@ class NetworkInventoryTest extends TestCase
         $pfTask  = new PluginGlpiinventoryTask();
         $agent = new Agent();
 
-        $pfTask->getFromDBByCrit(['name' => 'network inventory']);
-        $agent->getFromDBByCrit(['name' => 'computer1']);
+        $this->assertTrue(
+            $pfTask->getFromDBByCrit(['name' => 'network inventory']),
+            'Task not found'
+        );
+        $this->assertTrue(
+            $agent->getFromDBByCrit(['name' => 'computer1']),
+            'Agent not found'
+        );
 
         $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
@@ -352,7 +358,10 @@ class NetworkInventoryTest extends TestCase
 
         $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
         $jobstate           = new PluginGlpiinventoryTaskjobstate();
-        $jobstate->getFromDBByCrit(['itemtype' => 'NetworkEquipment']);
+        $this->assertTrue(
+            $jobstate->getFromDBByCrit(['itemtype' => 'NetworkEquipment']),
+            'TaskJobState not found'
+        );
         $data = $pfNetworkinventory->run($jobstate);
 
         $this->assertEquals('NETWORKING', $data['OPTION']['DEVICE']['attributes']['TYPE']);

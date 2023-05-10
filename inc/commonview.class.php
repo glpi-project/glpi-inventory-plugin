@@ -105,7 +105,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         }
         trigger_error(
             "The requested url type '$name' doesn't exists. " .
-            "Maybe the developper have forgotten to register it in the 'base_urls' variable."
+            "Maybe the developer have forgotten to register it in the 'base_urls' variable."
         );
         return "";
     }

@@ -185,8 +185,17 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $i = 5200;
 
         $pfCollect = new PluginGlpiinventoryCollect();
-        foreach ($pfCollect->find(getEntitiesRestrictCriteria($pfCollect->getTable(), '', '', true), ['id ASC']) as $collect) {
-           //registries
+        $collectors = $pfCollect->find(
+            getEntitiesRestrictCriteria(
+                $pfCollect->getTable(),
+                '',
+                '',
+                true
+            ),
+            ['id ASC']
+        );
+        foreach ($collectors as $collect) {
+            //registries
             $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
             $registries = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
             foreach ($registries as $registry) {
@@ -204,7 +213,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $i++;
             }
 
-           //WMIs
+            //WMIs
             $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
             $wmis = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id'  => $collect['id']], ['id ASC']);
             foreach ($wmis as $wmi) {
@@ -222,7 +231,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $i++;
             }
 
-           //Files
+            //Files
             $pfCollect_File = new PluginGlpiinventoryCollect_File();
             $files = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
             foreach ($files as $file) {
@@ -366,13 +375,13 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         }
                     }
 
-                  //find computers directly associated with this group
+                    //find computers directly associated with this group
                     $computers = $computer_object->find(['groups_id' => $items_id]);
                     foreach ($computers as $computer) {
                         $computers_a_2[] = $computer['id'];
                     }
 
-                //merge two previous array and deduplicate entries
+                    //merge two previous array and deduplicate entries
                     $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
                     break;
 
@@ -382,23 +391,30 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
                     switch ($group->getField('type')) {
                         case 'STATIC':
-                              $query = "SELECT items_id
-                     FROM glpi_plugin_glpiinventory_deploygroups_staticdatas
-                     WHERE groups_id = '$items_id'
-                     AND itemtype = 'Computer'";
-                              $res = $DB->query($query);
-                            while ($row = $DB->fetchAssoc($res)) {
+                            $iterator = $DB->request([
+                                'SELECT' => 'items_id',
+                                'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
+                                'WHERE'  => [
+                                    'groups_id' => $items_id,
+                                    'itemtype'  => 'Computer'
+                                ]
+                            ]);
+
+                            foreach ($iterator as $row) {
                                 $computers[] = $row['items_id'];
                             }
                             break;
 
                         case 'DYNAMIC':
-                             $query = "SELECT fields_array
-                     FROM glpi_plugin_glpiinventory_deploygroups_dynamicdatas
-                     WHERE groups_id = '$items_id'
-                     LIMIT 1";
-                             $res = $DB->query($query);
-                             $row = $DB->fetchAssoc($res);
+                            $iterator = $DB->request([
+                                'SELECT' => 'fields_array',
+                                'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
+                                'WHERE'  => [
+                                    'groups_id' => $items_id
+                                ],
+                                'LIMIT' => 1
+                            ]);
+                            $row = $iterator->current();
 
                             if (isset($_GET)) {
                                 $get_tmp = $_GET;

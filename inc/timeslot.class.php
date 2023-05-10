@@ -213,14 +213,24 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
                         + $date->format('s');
 
        //Get all timeslots currently active
-        $query_timeslot = "SELECT `t`.`id`
-                         FROM `glpi_plugin_glpiinventory_timeslots` as t
-                         INNER JOIN `glpi_plugin_glpiinventory_timeslotentries` as te
-                           ON (`te`.`plugin_glpiinventory_timeslots_id`=`t`.`id`)
-                         WHERE $timeinsecs BETWEEN `te`.`begin`
-                            AND `te`.`end`
-                            AND `day`='" . $day_of_week . "'";
-        foreach ($DB->request($query_timeslot) as $timeslot) {
+        $iterator = $DB->request([
+            'SELECT' => 't.id',
+            'FROM'   => 'glpi_plugin_glpiinventory_timeslots AS t',
+            'INNER JOIN' => [
+                'glpi_plugin_glpiinventory_timeslotentries AS te' => [
+                    'ON' => [
+                        't' => 'id',
+                        'te' => 'plugin_glpiinventory_timeslots_id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                new QueryExpression("'$timeinsecs' BETWEEN `te`.`begin` AND `te`.`end`"),
+                'day' => $day_of_week
+            ]
+        ]);
+
+        foreach ($iterator as $timeslot) {
             $timeslots[] = $timeslot['id'];
         }
 

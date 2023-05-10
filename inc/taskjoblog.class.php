@@ -638,21 +638,33 @@ function appear_array(id) {
 
         $finishState = [2 => 0, 3 => 0, 4 => 0, 5 => 0];
 
-        $query = "SELECT `glpi_plugin_glpiinventory_taskjoblogs`.`state`
-         FROM glpi_plugin_glpiinventory_taskjobstates
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjoblogs`
-            ON plugin_glpiinventory_taskjobstates_id=" .
-               "`glpi_plugin_glpiinventory_taskjobstates`.`id`
-         WHERE `plugin_glpiinventory_taskjobs_id`='" . $taskjobs_id . "'
-         AND (`glpi_plugin_glpiinventory_taskjoblogs`.`state` = '2'
-            OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '3'
-            OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '4'
-            OR `glpi_plugin_glpiinventory_taskjoblogs`.`state` = '5')
-         GROUP BY glpi_plugin_glpiinventory_taskjobstates.uniqid, " .
-              "agents_id";
-        $result = $DB->query($query);
-        if ($result) {
-            while ($datajob = $DB->fetchArray($result)) {
+        $iterator = $DB->request([
+            'SELECT' => [
+                'glpi_plugin_glpiinventory_taskjoblogs.state'
+            ],
+            'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_taskjoblogs' => [
+                    'ON' => [
+                        'glpi_plugin_glpiinventory_taskjoblogs' => 'plugin_glpiinventory_taskjobstates_id',
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'id'
+                    ]
+                ]
+            ],
+            'WHERE'  => [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobs_id,
+                'OR' => [
+                    'glpi_plugin_glpiinventory_taskjoblogs.state' => [2, 3, 4, 5]
+                ]
+            ],
+            'GROUPBY' => [
+                'glpi_plugin_glpiinventory_taskjobstates.uniqid',
+                'agents_id'
+            ]
+        ]);
+
+        if (count($iterator)) {
+            foreach ($iterator as $datajob) {
                 $finishState[$datajob['state']]++;
             }
         }
@@ -741,7 +753,7 @@ function appear_array(id) {
 
 
    /**
-    * Convert comment by replace formated message by translated message
+    * Convert comment by replace formatted message by translated message
     *
     * @param string $comment
     * @return string

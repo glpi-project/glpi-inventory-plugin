@@ -167,18 +167,29 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
             $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryTask");
 
-            $query = "SELECT
-            glpi_plugin_glpiinventory_tasks.id as id,
-            glpi_plugin_glpiinventory_tasks.name as tname,
-            glpi_plugin_glpiinventory_tasks.is_active,
-            glpi_plugin_glpiinventory_taskjobs.method
-            FROM glpi_plugin_glpiinventory_taskjobs
-            LEFT JOIN glpi_plugin_glpiinventory_tasks on plugin_glpiinventory_tasks_id=glpi_plugin_glpiinventory_tasks.id
-            WHERE `actors` LIKE '%\"PluginGlpiinventoryDeployGroup\":\"" . $_GET['id'] . "\"%'
-            ORDER BY glpi_plugin_glpiinventory_tasks.name";
-            $res = $DB->query($query);
+            $iterator = $DB->request([
+                'SELECT' => [
+                    'glpi_plugin_glpiinventory_tasks.id AS id',
+                    'glpi_plugin_glpiinventory_tasks.name AS tname',
+                    'glpi_plugin_glpiinventory_tasks.is_active',
+                    'glpi_plugin_glpiinventory_taskjobs.method'
+                ],
+                'FROM' => 'glpi_plugin_glpiinventory_taskjobs',
+                'LEFT JOIN' => [
+                    'glpi_plugin_glpiinventory_tasks' => [
+                        'ON' => [
+                            'glpi_plugin_glpiinventory_tasks' => 'id',
+                            'glpi_plugin_glpiinventory_taskjobs' => 'plugin_glpiinventory_tasks_id'
+                        ]
+                    ]
+                ],
+                'WHERE' => [
+                    'actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . $_GET['id'] . '"%']
+                ],
+                'ORDER' => 'glpi_plugin_glpiinventory_tasks.name'
+            ]);
 
-            while ($row = $DB->fetchAssoc($res)) {
+            foreach ($iterator as $row) {
                 echo "<tr class='tab_bg_1'>";
                 echo "<td>";
                 echo "<a href='" . $link . "?id=" . $row['id'] . "'>" . $row['tname'] . "</a>";
@@ -654,12 +665,15 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         if (!$check_post_values) {
             if (isset($group->fields['type']) && $group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
                 unset($_SESSION['glpisearch']['Computer']);
-                $query = "SELECT `fields_array`
-                     FROM `glpi_plugin_glpiinventory_deploygroups_dynamicdatas`
-                     WHERE `plugin_glpiinventory_deploygroups_id`='" . $group->getID() . "'";
-                $result = $DB->query($query);
-                if ($DB->numrows($result) > 0) {
-                    $fields_array     = $DB->result($result, 0, 'fields_array');
+                $iterator = $DB->request([
+                    'SELECT' => 'fields_array',
+                    'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
+                    'WHERE'  => ['plugin_glpiinventory_deploygroups_id' => $group->getID()]
+                ]);
+
+                if (count($iterator) > 0) {
+                    $result = $iterator->current();
+                    $fields_array = $result['fields_array'];
                     $computers_params = unserialize($fields_array);
                 }
             }
