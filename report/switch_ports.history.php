@@ -58,7 +58,7 @@ $iterator = $DB->request([
         'glpi_networkports.id AS id'
     ],
     'FROM'   => 'glpi_networkequipments',
-    'JOIN'   => [
+    'LEFT JOIN'   => [
         'glpi_networkports' => [
             'FKEY' => [
                 'glpi_networkequipments' => 'id',
