@@ -121,7 +121,6 @@ $iterator = $DB->request([
         'last_inventory_update' => 'DESC'
     ]
 ]);
-$result = $iterator->next();
 
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
 
