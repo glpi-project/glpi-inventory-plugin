@@ -255,27 +255,43 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         $tasks_id = $param->fields['id'];
 
-       //clean jobslogs
-       //DB::delete() does not supports subqueries
-        $DB->query("DELETE FROM glpi_plugin_glpiinventory_taskjoblogs
-                  WHERE plugin_glpiinventory_taskjobstates_id IN (
-                     SELECT states.id
-                     FROM glpi_plugin_glpiinventory_taskjobstates AS states
-                     INNER JOIN glpi_plugin_glpiinventory_taskjobs AS jobs
-                        ON jobs.id = states.plugin_glpiinventory_taskjobs_id
-                        AND jobs.plugin_glpiinventory_tasks_id = '$tasks_id'
-                  ) ");
+        //clean jobslogs
+        $DB->delete(
+            'glpi_plugin_glpiinventory_taskjoblogs',
+            [
+                'plugin_glpiinventory_taskjobstates_id' => new \QuerySubQuery([
+                    'SELECT' => 'states.id',
+                    'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates AS states',
+                    'INNER JOIN' => [
+                        'glpi_plugin_glpiinventory_taskjobs AS jobs' => [
+                            'FKEY' => [
+                                'jobs' => 'id',
+                                'states' => 'plugin_glpiinventory_taskjobs_id'
+                            ],
+                            'AND' => [
+                                'jobs.plugin_glpiinventory_tasks_id' => $tasks_id
+                            ]
+                        ]
+                    ]
+                ])
+            ]
+        );
 
-       //clean states
-       //DB::delete() does not supports subqueries
-        $DB->query("DELETE FROM glpi_plugin_glpiinventory_taskjobstates
-                  WHERE plugin_glpiinventory_taskjobs_id IN (
-                     SELECT jobs.id
-                     FROM glpi_plugin_glpiinventory_taskjobs AS jobs
-                     WHERE jobs.plugin_glpiinventory_tasks_id = '$tasks_id'
-                  )");
+        //clean states
+        $DB->delete(
+            'glpi_plugin_glpiinventory_taskjobstates',
+            [
+                'plugin_glpiinventory_taskjobs_id' => new \QuerySubQuery([
+                    'SELECT' => 'jobs.id',
+                    'FROM'   => 'glpi_plugin_glpiinventory_taskjobs AS jobs',
+                    'WHERE'  => [
+                        'jobs.plugin_glpiinventory_tasks_id' => $tasks_id
+                    ]
+                ])
+            ]
+        );
 
-       //clean jobs
+        //clean jobs
         $DB->delete(
             'glpi_plugin_glpiinventory_taskjobs',
             [
@@ -1856,47 +1872,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             $results = PluginGlpiinventoryToolbox::fetchAssocByTable($r);
         }
         return $results;
-    }
-
-
-
-   /**
-    * Get tasks in error
-    *
-    * @global object $DB
-    * @return object
-    */
-    public function getTasksInerror()
-    {
-        global $DB;
-
-        $where = '';
-        $where .= getEntitiesRestrictRequest("AND", 'glpi_plugin_glpiinventory_tasks');
-
-        $query = "SELECT `glpi_plugin_glpiinventory_tasks`.*
-         FROM `glpi_plugin_glpiinventory_tasks`
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS taskjobs
-            ON `plugin_glpiinventory_tasks_id` = `glpi_plugin_glpiinventory_tasks`.`id`
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` AS taskjobstates
-            ON taskjobstates.`id` =
-            (SELECT MAX(`id`)
-             FROM glpi_plugin_glpiinventory_taskjobstates
-             WHERE plugin_glpiinventory_taskjobs_id = taskjobs.`id`
-             ORDER BY id DESC
-             LIMIT 1
-            )
-         LEFT JOIN `glpi_plugin_glpiinventory_taskjoblogs`
-            ON `glpi_plugin_glpiinventory_taskjoblogs`.`id` =
-            (SELECT MAX(`id`)
-            FROM `glpi_plugin_glpiinventory_taskjoblogs`
-            WHERE `plugin_glpiinventory_taskjobstates_id`= taskjobstates.`id`
-            ORDER BY id DESC LIMIT 1 )
-         WHERE `glpi_plugin_glpiinventory_taskjoblogs`.`state`='4'
-         " . $where . "
-         GROUP BY plugin_glpiinventory_tasks_id
-         ORDER BY `glpi_plugin_glpiinventory_taskjoblogs`.`date` DESC";
-
-        return $DB->query($query);
     }
 
 

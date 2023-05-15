@@ -214,20 +214,20 @@ function pluginGlpiinventoryGetCurrentVersion()
                 $DB->update(
                     'glpi_plugin_glpiinventory_taskjobs',
                     [
-                    'plugins_id'   => PluginGlpiinventoryModule::getModuleId('glpiinventory')
+                        'plugins_id'   => PluginGlpiinventoryModule::getModuleId('glpiinventory')
                     ],
                     [
-                    'plugins_id'   => $ex_pluginid['plugins_id']
+                        'plugins_id'   => $ex_pluginid['plugins_id']
                     ]
                 );
 
                  $DB->update(
                      'glpi_plugin_glpiinventory_profiles',
                      [
-                     'plugins_id'   => PluginGlpiinventoryModule::getModuleId('glpiinventory')
+                        'plugins_id'   => PluginGlpiinventoryModule::getModuleId('glpiinventory')
                      ],
                      [
-                     'plugins_id'   => $ex_pluginid['plugins_id']
+                        'plugins_id'   => $ex_pluginid['plugins_id']
                      ]
                  );
 
@@ -741,10 +741,10 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $update = $DB->buildUpdate(
             'glpi_plugin_glpiinventory_taskjobs',
             [
-            'targets'   => new \QueryParam()
+                'targets'   => new \QueryParam()
             ],
             [
-            'id'        => new \QueryParam()
+                'id'        => new \QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -1101,29 +1101,53 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
 
    // ********* Clean orphan data ********************************************** //
 
-   // Clean timeslotentries
-    $query = "SELECT glpi_plugin_glpiinventory_timeslotentries.id
-            FROM glpi_plugin_glpiinventory_timeslotentries
-            LEFT JOIN glpi_plugin_glpiinventory_timeslots
-               ON glpi_plugin_glpiinventory_timeslotentries.plugin_glpiinventory_timeslots_id = glpi_plugin_glpiinventory_timeslots.id
-            WHERE glpi_plugin_glpiinventory_timeslots.id IS NULL";
-    $result = $DB->query($query);
-    while ($data = $DB->fetchArray($result)) {
-        $DB->query('DELETE FROM glpi_plugin_glpiinventory_timeslotentries WHERE id=' . $data['id']);
+    // Clean timeslotentries
+    $entries = [];
+    $iterator = $DB->request([
+        'SELECT' => 'glpi_plugin_glpiinventory_timeslotentries.id',
+        'FROM'   => 'glpi_plugin_glpiinventory_timeslotentries',
+        'LEFT JOIN' => [
+            'glpi_plugin_glpiinventory_timeslots' => [
+                'FKEY' => [
+                    'glpi_plugin_glpiinventory_timeslotentries' => 'plugin_glpiinventory_timeslots_id',
+                    'glpi_plugin_glpiinventory_timeslots' => 'id'
+                ]
+            ]
+        ],
+        'WHERE'  => ['glpi_plugin_glpiinventory_timeslots.id' => null]
+    ]);
+
+    if (count($iterator)) {
+        foreach ($iterator as $data) {
+            $entries[] = $data['id'];
+        }
+        $DB->delete('glpi_plugin_glpiinventory_timeslotentries', ['id' => $entries]);
     }
 
-   // Clean entities
-    $query = "SELECT glpi_plugin_glpiinventory_entities.id
-            FROM glpi_plugin_glpiinventory_entities
-            LEFT JOIN glpi_entities
-               ON glpi_plugin_glpiinventory_entities.entities_id = glpi_entities.id
-            WHERE glpi_entities.id IS NULL";
-    $result = $DB->query($query);
-    while ($data = $DB->fetchArray($result)) {
-        $DB->query('DELETE FROM glpi_plugin_glpiinventory_entities WHERE id=' . $data['id']);
+    // Clean entities
+    $entities = [];
+    $iterator = $DB->request([
+        'SELECT' => 'glpi_plugin_glpiinventory_entities.id',
+        'FROM'   => 'glpi_plugin_glpiinventory_entities',
+        'LEFT JOIN' => [
+            'glpi_entities' => [
+                'FKEY' => [
+                    'glpi_plugin_glpiinventory_entities' => 'entities_id',
+                    'glpi_entities' => 'id'
+                ]
+            ]
+        ],
+        'WHERE'  => ['glpi_entities.id' => null]
+    ]);
+
+    if (count($iterator)) {
+        foreach ($iterator as $data) {
+            $entities[] = $data['id'];
+        }
+        $DB->delete('glpi_plugin_glpiinventory_entities', ['id' => $entities]);
     }
 
-   // Clean packages
+    // Clean packages
     $tables = [
       'glpi_plugin_glpiinventory_deploypackages_entities',
       'glpi_plugin_glpiinventory_deploypackages_groups',
@@ -1131,18 +1155,30 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
       'glpi_plugin_glpiinventory_deploypackages_users'
     ];
     foreach ($tables as $table) {
-        $query = "SELECT " . $table . ".id
-               FROM " . $table . "
-               LEFT JOIN glpi_plugin_glpiinventory_deploypackages
-                  ON " . $table . ".plugin_glpiinventory_deploypackages_id = glpi_plugin_glpiinventory_deploypackages.id
-               WHERE glpi_plugin_glpiinventory_deploypackages.id IS NULL";
-        $result = $DB->query($query);
-        while ($data = $DB->fetchArray($result)) {
-            $DB->query('DELETE FROM ' . $table . ' WHERE id=' . $data['id']);
+        $entries = [];
+        $iterator = $DB->request([
+            'SELECT' => $table . '.id',
+            'FROM'   => $table,
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_deploypackages' => [
+                    'FKEY' => [
+                        $table => 'plugin_glpiinventory_deploypackages_id',
+                        'glpi_plugin_glpiinventory_deploypackages' => 'id'
+                    ]
+                ]
+            ],
+            'WHERE'  => ['glpi_plugin_glpiinventory_deploypackages.id' => null]
+        ]);
+
+        if (count($iterator)) {
+            foreach ($iterator as $data) {
+                $entries[] = $data['id'];
+            }
+            $DB->delete($table, ['id' => $entries]);
         }
     }
 
-   // Migrate search params for dynamic groups
+    // Migrate search params for dynamic groups
     doDynamicDataSearchParamsMigration();
 
     installDashboard();
@@ -2019,9 +2055,14 @@ function do_locks_migration($migration)
       ]
     ]);
     foreach ($iterator as $data) {
-        $DB->query("DELETE FROM glpi_plugin_glpiinventory_locks " .
-        "WHERE `tablename`='" . $data['tablename'] . "' AND `items_id`='" . $data['items_id'] . "' " .
-        "ORDER BY ID desc LIMIT " . ($data['cpt'] - 1));
+        $DB->delete(
+            'glpi_plugin_glpiinventory_locks',
+            [
+               'tablename' => $data['tablename'],
+               'items_id'  => $data['items_id']
+            ],
+            ['ORDER' => 'ID desc', 'LIMIT' => ($data['cpt'] - 1)]
+        );
     }
 
    // add unique key
@@ -2168,7 +2209,7 @@ function do_profile_migration($migration)
          ORDER BY cnt";
         $result = $DB->query($query);
         while ($data = $DB->fetchArray($result)) {
-           //DB::delete() not yet supports limit nor order
+            //DB::delete() not yet supports limit nor order
             $queryd = "DELETE FROM `glpi_plugin_glpiinventory_profiles`
                WHERE `type`='" . $data['type'] . "'
                   AND `plugins_id`='" . $data['plugins_id'] . "'
@@ -3066,20 +3107,41 @@ function do_biosascomponentmigration()
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'bios_manufacturers_id'))
     ) {
         $bioses = [];
-       //retrieve exiting
-        $query = "SELECT computers_id, bios_date, bios_version, bios_manufacturers_id, glpi_manufacturers.name AS mname
-                  FROM glpi_plugin_glpiinventory_inventorycomputercomputers
-                  LEFT JOIN glpi_manufacturers
-                     ON glpi_plugin_glpiinventory_inventorycomputercomputers.bios_manufacturers_id = glpi_manufacturers.id
-                     WHERE
-                        bios_date IS NOT NULL
-                        OR bios_version IS NOT NULL AND bios_version != ''
-                        OR bios_manufacturers_id != 0";
-        $result = $DB->query($query);
+        //retrieve exiting
+        $bios_iterator = $DB->request([
+            'SELECT' => [
+                'computers_id',
+                'bios_date',
+                'bios_version',
+                'bios_manufacturers_id',
+                'glpi_manufacturers.name AS mname'
+            ],
+            'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers',
+            'LEFT JOIN' => [
+                'glpi_manufacturers' => [
+                    'FKEY' => [
+                        'glpi_plugin_glpiinventory_inventorycomputercomputers' => 'bios_manufacturers_id',
+                        'glpi_manufacturers' => 'id'
+                    ]
+                ]
+            ],
+            'WHERE' => [
+                [
+                    'OR' => [
+                        'NOT' => ['bios_date' => null],
+                        'AND' => [
+                            'NOT' => ['bios_version' => null],
+                            'bios_version' => ['!=', '']
+                        ],
+                        'bios_manufacturers_id' => ['!=', 0]
+                    ]
+                ]
+            ]
+        ]);
 
         $deviceBios = new DeviceFirmware();
         $item_DeviceBios  = new Item_DeviceFirmware();
-        while ($data = $DB->fetchArray($result)) {
+        foreach ($bios_iterator as $data) {
             if (empty($data['bios_date'])) {
                 continue; // Ignore invalid dates
             }
@@ -4048,21 +4110,34 @@ function do_networkport_migration($migration)
     }
 
    /*
-    *  Clean old ports deleted but have some informations in SNMP tables
+    *  Clean old ports deleted but have some information in SNMP tables
     */
-    $query_select = "SELECT `glpi_plugin_glpiinventory_networkports`.`id`
-                    FROM `glpi_plugin_glpiinventory_networkports`
-                          LEFT JOIN `glpi_networkports`
-                                    ON `glpi_networkports`.`id` = `networkports_id`
-                          LEFT JOIN `glpi_networkequipments`
-                              ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
-                    WHERE `glpi_networkequipments`.`id` IS NULL";
-    $result = $DB->query($query_select);
-    while ($data = $DB->fetchArray($result)) {
+    $iterator = $DB->request([
+        'SELECT' => 'glpi_plugin_glpiinventory_networkports.id',
+        'FROM' => 'glpi_plugin_glpiinventory_networkports',
+        'LEFT JOIN' => [
+            'glpi_networkports' => [
+                'FKEY' => [
+                    'glpi_plugin_glpiinventory_networkports' => 'networkports_id',
+                    'glpi_networkports' => 'id'
+                ]
+            ],
+            'glpi_networkequipments' => [
+                'FKEY' => [
+                    'glpi_networkports' => 'items_id',
+                    'glpi_networkequipments' => 'id'
+                ]
+            ]
+        ],
+        'WHERE' => [
+            'glpi_networkequipments.id' => null
+        ]
+    ]);
+    foreach ($iterator as $data) {
         $DB->delete(
             'glpi_plugin_glpiinventory_networkports',
             [
-            'id'  => $data['id']
+                'id'  => $data['id']
             ]
         );
     }
@@ -5621,11 +5696,25 @@ function do_computerarch_migration($migration)
                 $new_id = $arches->add($arch, [], false);
             }
 
-           //DB::update() does not handle joins for now
-            $sql_u = "UPDATE glpi_plugin_glpiinventory_computeroperatingsystems pf_os SET "
-                     . " pf_os.operatingsystemarchitectures_id='" . $new_id . "',"
-                     . " JOIN operatingsystemarchitectures os_arch WHERE os_arch.name='" . $DB->escape($arch['name']) . "'";
-            $DB->query($sql_u);
+            $DB->update(
+                'glpi_plugin_glpiinventory_computeroperatingsystems AS pf_os',
+                [
+                    'pf_os.operatingsystemarchitectures_id' => $new_id
+                ],
+                [
+                    'os_arch.name' => $arch['name']
+                ],
+                [
+                    'LEFT JOIN' => [
+                        'operatingsystemarchitectures AS os_arch' => [
+                            'ON' => [
+                                'pf_os' => 'operatingsystemarchitectures_id',
+                                'os_arch' => 'id',
+                            ]
+                        ]
+                    ]
+                ]
+            );
         }
 
         $migration->dropTable('glpi_plugin_glpiinventory_computerarches');
@@ -5634,10 +5723,10 @@ function do_computerarch_migration($migration)
         $DB->update(
             'glpi_rules',
             [
-            'sub_type'  => 'RuleDictionnaryOperatingSystemArchitectureCollection'
+                'sub_type'  => 'RuleDictionnaryOperatingSystemArchitectureCollection'
             ],
             [
-            'sub_type'  => 'PluginGlpiinventoryRuleDictionnaryComputerArchCollection'
+                'sub_type'  => 'PluginGlpiinventoryRuleDictionnaryComputerArchCollection'
             ]
         );
     }
@@ -5665,13 +5754,25 @@ function do_operatingsystemedition_migration($migration)
                 $new_id = $ose->add($edition, [], false);
             }
 
-           //DB::update() does not handle joins for now
-            $sql_u = "UPDATE glpi_plugin_glpiinventory_computeroperatingsystems pf_os"
-                     . " JOIN glpi_plugin_glpiinventory_computeroperatingsystemeditions os_edition "
-                     . " ON pf_os.plugin_glpiinventory_computeroperatingsystemeditions_id = os_edition.id "
-                     . " SET pf_os.plugin_glpiinventory_computeroperatingsystemeditions_id='$new_id'"
-                     . " WHERE os_edition.name='" . $DB->escape($edition['name']) . "'";
-            $DB->query($sql_u);
+            $DB->update(
+                'glpi_plugin_glpiinventory_computeroperatingsystems AS pf_os',
+                [
+                    'pf_os.plugin_glpiinventory_computeroperatingsystemeditions_id' => $new_id
+                ],
+                [
+                    'os_edition.name' => $edition['name']
+                ],
+                [
+                    'LEFT JOIN' => [
+                        'glpi_plugin_glpiinventory_computeroperatingsystemeditions AS os_edition' => [
+                            'ON' => [
+                                'pf_os' => 'plugin_glpiinventory_computeroperatingsystemeditions_id',
+                                'os_edition' => 'id'
+                            ]
+                        ]
+                    ]
+                ]
+            );
         }
         $migration->dropTable('glpi_plugin_glpiinventory_computeroperatingsystemeditions');
     }
@@ -6044,30 +6145,51 @@ function do_deployfile_migration($migration)
             );
             $migration->migrationOneTable('glpi_plugin_fusinvdeploy_files');
             if ($DB->fieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
-                 $sql = "SELECT  files.`id`, files.`name`, files.`filesize`, "
-                    . " files.`mimetype`, files.`sha512`, files.`shortsha512`, "
-                    . " files.`create_date`, pkgs.`entities_id`, "
-                    . " pkgs.`is_recursive` "
-                    . " FROM glpi_plugin_fusinvdeploy_files as files "
-                    . " LEFT JOIN glpi_plugin_fusinvdeploy_orders as orders"
-                    . "    ON orders.`id` = files.`plugin_fusinvdeploy_orders_id` "
-                    . " LEFT JOIN glpi_plugin_fusinvdeploy_packages as pkgs "
-                    . "    ON orders.`plugin_fusinvdeploy_packages_id` = pkgs.`id`"
-                    . " WHERE files.`shortsha512` != ''";
-                 $result = $DB->query($sql);
-                if ($DB->numrows($result) > 0) {
+                $iterator = $DB->request([
+                    'SELECT' => [
+                        'files.id',
+                        'files.name',
+                        'files.filesize',
+                        'files.mimetype',
+                        'files.sha512',
+                        'files.shortsha512',
+                        'files.create_date',
+                        'pkgs.entities_id',
+                        'pkgs.is_recursive'
+                    ],
+                    'FROM'   => 'glpi_plugin_fusinvdeploy_files AS files',
+                    'LEFT JOIN' => [
+                        'glpi_plugin_fusinvdeploy_orders AS orders' => [
+                            'FKEY' => [
+                                'orders' => 'id',
+                                'files' => 'plugin_fusinvdeploy_orders_id'
+                            ]
+                        ],
+                        'glpi_plugin_fusinvdeploy_packages AS pkgs' => [
+                            'FKEY' => [
+                                'pkgs' => 'id',
+                                'orders' => 'plugin_fusinvdeploy_packages_id'
+                            ]
+                        ]
+                    ],
+                    'WHERE'  => [
+                        'files.shortsha512' => ['!=', '']
+                    ]
+                ]);
+
+                if (count($iterator) > 0) {
                     $update = $DB->buildUpdate(
                         'glpi_plugin_fusinvdeploy_files',
                         [
-                        'entities_id'  => new \QueryParam(),
-                        'is_recursive' => new \QueryParam(),
+                            'entities_id'  => new \QueryParam(),
+                            'is_recursive' => new \QueryParam(),
                         ],
                         [
-                        'id'           => new \QueryParam()
+                            'id'           => new \QueryParam()
                         ]
                     );
                     $stmt = $DB->prepare($update);
-                    while ($data = $DB->fetchArray($result)) {
+                    foreach ($iterator as $data) {
                             $stmt->bind_param(
                                 'sss',
                                 $data['entities_id'],
@@ -8035,20 +8157,25 @@ function update213to220_ConvertField($migration)
         mysqli_stmt_close($stmt);
         $migration->displayMessage("$i / $nb");
 
-       // Move connections from glpi_plugin_glpiinventory_snmp_history to
-       // glpi_plugin_glpiinventory_snmp_history_connections
-       //echo "Moving creation connections history\n";
-        $query = "SELECT *
-                FROM `glpi_plugin_tracker_snmp_history`
-                WHERE `Field` = '0'
-                  AND ((`old_value` NOT LIKE '%:%')
-                        OR (`old_value` IS NULL))";
+        // Move connections from glpi_plugin_glpiinventory_snmp_history to
+        // glpi_plugin_glpiinventory_snmp_history_connections
+        //echo "Moving creation connections history\n";
+        $hist_iterator = $DB->request([
+            'FROM'   => 'glpi_plugin_tracker_snmp_history',
+            'WHERE'  => [
+                'Field' => 0,
+                'OR' => [
+                    'NOT' => ['old_value' => ['LIKE', '%:%']],
+                    'old_value' => null,
+                ],
+            ]
+        ]);
         $stmt = null;
-        if ($result = $DB->query($query)) {
-            $nb = $DB->numrows($result);
+        if (count($hist_iterator)) {
+            $nb = count($hist_iterator);
             $i = 0;
             $migration->displayMessage("$i / $nb");
-            while ($data = $DB->fetchArray($result)) {
+            foreach ($hist_iterator as $data) {
                 $i++;
 
                 // Search port from mac address
@@ -8115,25 +8242,30 @@ function update213to220_ConvertField($migration)
             mysqli_stmt_close($stmt);
         }
 
-       //echo "Moving deleted connections history\n";
-        $query = "SELECT *
-                FROM `glpi_plugin_tracker_snmp_history`
-                WHERE `Field` = '0'
-                  AND ((`new_value` NOT LIKE '%:%')
-                        OR (`new_value` IS NULL))";
+        //echo "Moving deleted connections history\n";
+        $hist_iterator = $DB->request([
+            'FROM'   => 'glpi_plugin_tracker_snmp_history',
+            'WHERE'  => [
+                'Field' => 0,
+                'OR' => [
+                    'NOT' => ['new_value' => ['LIKE', '%:%']],
+                    ['new_value' => null]
+                ]
+            ]
+        ]);
 
         $stmt = null;
-        if ($result = $DB->query($query)) {
-            $nb = $DB->numrows($result);
+        if (count($hist_iterator)) {
+            $nb = count($hist_iterator);
             $i = 0;
             $migration->displayMessage("$i / $nb");
-            while ($data = $DB->fetchArray($result)) {
+            foreach ($hist_iterator as $data) {
                 $i++;
 
-               // Search port from mac address
+                // Search port from mac address
                 $iterator = $DB->request([
-                'FROM'   => 'glpi_networkports',
-                'WHERE'  => ['mac' => $data['old_value']]
+                    'FROM'   => 'glpi_networkports',
+                    'WHERE'  => ['mac' => $data['old_value']]
                 ]);
                 if (count($iterator) == 1) {
                      $input = [];
@@ -8141,11 +8273,11 @@ function update213to220_ConvertField($migration)
                      $input['FK_port_source'] = $data_port['id'];
 
                      $port_iterator = $DB->request([
-                     'FROM'   => 'glpi_networkports',
-                     'WHERE'  => [
-                     'items_id'  => $data['old_device_ID'],
-                     'itemtype'  => $data['old_device_type']
-                     ]
+                        'FROM'   => 'glpi_networkports',
+                        'WHERE'  => [
+                            'items_id'  => $data['old_device_ID'],
+                            'itemtype'  => $data['old_device_type']
+                        ]
                      ]);
                     if (count($port_iterator) == 1) {
                          $data_port2 = $port_iterator->current();
@@ -8335,13 +8467,24 @@ function migrateTablesFromFusinvDeploy($migration)
             //=== Checks ===
 
             if ($DB->tableExists("glpi_plugin_fusinvdeploy_checks")) {
-                $c_query = "SELECT type, path, value, 'error' as `return`
-               FROM glpi_plugin_fusinvdeploy_checks
-               WHERE plugin_fusinvdeploy_orders_id = $order_id
-               ORDER BY ranking ASC";
-                $c_res = $DB->query($c_query);
+                $iterator = $DB->request([
+                    'SELECT' => [
+                        'type',
+                        'path',
+                        'value',
+                        'error AS return'
+                    ],
+                    'FROM'   => 'glpi_plugin_fusinvdeploy_checks',
+                    'WHERE'  => [
+                        'plugin_fusinvdeploy_orders_id' => $order_id
+                    ],
+                    'ORDER'  => [
+                        'ranking ASC'
+                    ]
+                ]);
+
                 $c_i = 0;
-                while ($c_datas = $DB->fetchAssoc($c_res)) {
+                foreach ($iterator as $c_datas) {
                     foreach ($c_datas as $c_key => $c_value) {
                        //specific case for filesytem sizes, convert to bytes
                         if (
@@ -8362,13 +8505,23 @@ function migrateTablesFromFusinvDeploy($migration)
             $files_list = [];
             //=== Files ===
             if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
-                $f_query =
-                "SELECT id, name, is_p2p as p2p, filesize, mimetype, " .
-                "p2p_retention_days as `p2p-retention-duration`, uncompress, sha512 " .
-                "FROM glpi_plugin_fusinvdeploy_files " .
-                "WHERE plugin_fusinvdeploy_orders_id = $order_id";
-                $f_res = $DB->query($f_query);
-                while ($f_datas = $DB->fetchAssoc($f_res)) {
+                $f_iterator = $DB->request([
+                    'SELECT' => [
+                        'id',
+                        'name',
+                        'is_p2p AS p2p',
+                        'filesize',
+                        'mimetype',
+                        'p2p_retention_days AS p2p-retention-duration',
+                        'uncompress',
+                        'sha512'
+                    ],
+                    'FROM' => 'glpi_plugin_fusinvdeploy_files',
+                    'WHERE' => [
+                        'plugin_fusinvdeploy_orders_id' => $order_id
+                    ]
+                ]);
+                foreach ($f_iterator as $f_datas) {
                   //jump to next entry if sha512 is empty
                   // This kind of entries could happen sometimes on upload errors
                     if (empty($f_datas['sha512'])) {
@@ -8406,53 +8559,66 @@ function migrateTablesFromFusinvDeploy($migration)
             $cmdStatus['REGEX_KO'] = 'errorPattern';
 
             if ($DB->tableExists("glpi_plugin_fusinvdeploy_actions")) {
-                $a_query = "SELECT *
-               FROM glpi_plugin_fusinvdeploy_actions
-               WHERE plugin_fusinvdeploy_orders_id = $order_id
-               ORDER BY ranking ASC";
-                $a_res = $DB->query($a_query);
+                $a_iterator = $DB->request([
+                    'FROM' => 'glpi_plugin_fusinvdeploy_actions',
+                    'WHERE' => [
+                        'plugin_fusinvdeploy_orders_id' => $order_id
+                    ],
+                    'ORDER' => [
+                        'ranking ASC'
+                    ]
+                ]);
+
                 $a_i = 0;
-                while ($a_datas = $DB->fetchAssoc($a_res)) {
-                  //get type
+                foreach ($a_iterator as $a_datas) {
+                    //get type
                     $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
 
-                  //specific case for command type
+                    //specific case for command type
                     $type = str_replace("command", "cmd", $type);
 
-                  //table for action itemtype
+                    //table for action itemtype
                     $a_table = getTableForItemType($a_datas['itemtype']);
 
-                  //get table fields
-                    $at_query = "SELECT *
-                  FROM $a_table
-                  WHERE id = " . $a_datas['items_id'];
-                    $at_res = $DB->query($at_query);
-                    while ($at_datas = $DB->fetchAssoc($at_res)) {
+                    //get table fields
+                    $at_iterator = $DB->request([
+                        'FROM' => $a_table,
+                        'WHERE' => [
+                            'id' => $a_datas['items_id']
+                        ]
+                    ]);
+                    foreach ($at_iterator as $at_datas) {
                         foreach ($at_datas as $at_key => $at_value) {
-                          //we don't store the id field of action itemtype table in json
+                            //we don't store the id field of action itemtype table in json
                             if ($at_key == "id") {
                                 continue;
                             }
 
-                          //specific case for 'path' field
+                            //specific case for 'path' field
                             if ($at_key == "path") {
                                 $o_line['actions'][$a_i][$type]['list'][] = $at_value;
                             } else {
-                            //construct job actions entry
+                                //construct job actions entry
                                 $o_line['actions'][$a_i][$type][$at_key] = $at_value;
                             }
                         }
 
                         //specific case for commands : we must add status and env vars
                         if ($a_datas['itemtype'] === "PluginFusinvdeployAction_Command") {
-                            $ret_cmd_query = "SELECT type, value
-                        FROM glpi_plugin_fusinvdeploy_actions_commandstatus
-                        WHERE plugin_fusinvdeploy_commands_id = " . $at_datas['id'];
-                            $ret_cmd_res = $DB->query($ret_cmd_query);
-                            while ($res_cmd_datas = $DB->fetchAssoc($ret_cmd_res)) {
-                             // Skip empty retchecks type:
-                             // This surely means they have been drop at some point but entry has not been
-                             // removed from database.
+                            $ret_cmd_iterator = $DB->request([
+                                'SELECT' => [
+                                    'type',
+                                    'value'
+                                ],
+                                'FROM' => 'glpi_plugin_fusinvdeploy_actions_commandstatus',
+                                'WHERE' => [
+                                    'plugin_fusinvdeploy_commands_id' => $at_datas['id']
+                                ]
+                            ]);
+                            foreach ($ret_cmd_iterator as $res_cmd_datas) {
+                                // Skip empty retchecks type:
+                                // This surely means they have been drop at some point but entry has not been
+                                // removed from database.
                                 if (!empty($res_cmd_datas['type'])) {
                                       //construct command status array entry
                                       $o_line['actions'][$a_i][$type]['retChecks'][] = [
@@ -8511,22 +8677,31 @@ function migrateTablesFromFusinvDeploy($migration)
                 continue;
             }
             $shortsha = substr($sha, 0, 6);
-            $fp_query = "SELECT  fp.`sha512` as filepart_hash, " .
-            "        f.`sha512`  as file_hash      " .
-            "FROM `glpi_plugin_fusinvdeploy_files` as f " .
-            "INNER JOIN `glpi_plugin_fusinvdeploy_fileparts` as fp " .
-            "ON   f.`id` = fp.`plugin_fusinvdeploy_files_id` " .
-            "     AND f.`shortsha512` = '{$shortsha}' " .
-            "GROUP BY fp.`sha512` " .
-            "ORDER BY fp.`id`";
-
-            $fp_res = $DB->query($fp_query);
-            if ($DB->numrows($fp_res) > 0) {
+            $fp_iterator = $DB->request([
+                'SELECT' => [
+                    'fp.sha512 AS filepart_hash',
+                    'f.sha512  AS file_hash'
+                ],
+                'FROM' => 'glpi_plugin_fusinvdeploy_files AS f',
+                'INNER JOIN' => [
+                    'glpi_plugin_fusinvdeploy_fileparts AS fp' => [
+                        'ON' => [
+                            'f' => 'id',
+                            'fp' => 'plugin_fusinvdeploy_files_id', [
+                                'AND' => ['f.shortsha512' => $shortsha]
+                            ]
+                        ]
+                    ]
+                ],
+                'GROUP BY' => 'fp.sha512',
+                'ORDER' => 'fp.id'
+            ]);
+            if (count($fp_iterator) > 0) {
                 $fhandle = fopen(
                     GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/manifests/{$sha}",
                     'w+'
                 );
-                while ($fp_datas = $DB->fetchAssoc($fp_res)) {
+                foreach ($fp_iterator as $fp_datas) {
                     if ($fp_datas['file_hash'] === $sha) {
                         fwrite($fhandle, $fp_datas['filepart_hash'] . "\n");
                     }
@@ -8540,21 +8715,26 @@ function migrateTablesFromFusinvDeploy($migration)
     if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
         $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_deployfiles`");
         if ($DB->fieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
-            $f_query = implode(
-                " \n",
-                [
-                "SELECT  files.`id`, files.`name`,",
-                "        files.`filesize`, files.`mimetype`,",
-                "        files.`sha512`, files.`shortsha512`,",
-                "        files.`create_date`,",
-                "        files.`entities_id`, files.`is_recursive`",
-                "FROM glpi_plugin_fusinvdeploy_files as files",
-                "WHERE",
-                "  files.`shortsha512` != \"\""
+            $f_iterator = $DB->request([
+                'SELECT' => [
+                    'files.id',
+                    'files.name',
+                    'files.filesize',
+                    'files.mimetype',
+                    'files.sha512',
+                    'files.shortsha512',
+                    'files.create_date',
+                    'files.entities_id',
+                    'files.is_recursive'
+                ],
+                'FROM' => 'glpi_plugin_fusinvdeploy_files AS files',
+                'WHERE' => [
+                    'files.shortsha512' => [
+                        '!=' => ''
+                    ]
                 ]
-            );
-            $f_res = $DB->query($f_query);
-            while ($f_datas = $DB->fetchAssoc($f_res)) {
+            ]);
+            foreach ($f_iterator as $f_datas) {
                  $entry = [
                   "id"        => $f_datas["id"],
                   "name"      => $f_datas["name"],
