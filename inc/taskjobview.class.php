@@ -426,23 +426,45 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
            // remove install suffix from deploy
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
-           // prepare a query to retrieve agent's & computer's id
-            //FIXME; not sure the complex JOIN can be done with iterator...
-            $query_filter = "SELECT agents.`id` as agents_id,
-                                 agents.`items_id`
-                          FROM `glpi_agents` as agents
-                          LEFT JOIN `glpi_computers` as computers
-                             ON computers.id = agents.items_id AND agents.itemtype = 'Computer'
-                          LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as modules
-                             ON modules.`exceptions` LIKE CONCAT('%\"', agents.`id`, '\"%')
-                             OR modules.`is_active` = 1
-                          WHERE UPPER(modules.`modulename`) = '$modulename'
-                             AND computers.is_deleted = 0
-                             AND computers.is_template = 0
-                          GROUP BY agents.`id`, agents.`items_id`";
-            $res_filter = $DB->query($query_filter);
+            // prepare a query to retrieve agent's & computer's id
+            $iterator = $DB->request([
+                'SELECT' => [
+                    'agents.id AS agents_id',
+                    'agents.items_id'
+                ],
+                'FROM' => 'glpi_agents AS agents',
+                'LEFT JOIN' => [
+                    'glpi_computers AS computers' => [
+                        'ON' => [
+                            'computers' => 'id',
+                            'agents' => 'items_id', [
+                                'AND' => [
+                                    'agents.itemtype' => 'Computer'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'glpi_plugin_glpiinventory_agentmodules AS modules' => [
+                        'OR' => [
+                            'exceptions' => ['LIKE', new QueryExpression("CONCAT('%\"', agents.`id`, '\"%')")],
+                            'modules.is_active' => 1
+                        ]
+                    ]
+                ],
+                'WHERE' => [
+                    'RAW' => [
+                        'UPPER(modules.modulename)' => $modulename,
+                    ],
+                    'computers.is_deleted' => 0,
+                    'computers.is_template' => 0
+                ],
+                'GROUP' => [
+                    'agents.id',
+                    'agents.items_id'
+                ]
+            ]);
             $filter_id = [];
-            while ($data_filter = $DB->fetchAssoc($res_filter)) {
+            foreach ($iterator as $data_filter) {
                 if ($itemtype == 'Computer') {
                     $filter_id[] =  $data_filter['items_id'];
                 } else {
