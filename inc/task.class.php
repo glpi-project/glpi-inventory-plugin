@@ -362,38 +362,51 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
        // list of jobstates not allowed to run (ie. filtered by schedule AND timeslots)
         $jobstates_to_cancel = [];
 
-        $query = implode(" \n", [
-         "SELECT",
-         "     task.`id`, task.`name`, task.`is_active`,",
-         "     task.`datetime_start`, task.`datetime_end`,",
-         "     task.`plugin_glpiinventory_timeslots_exec_id` as timeslot_id,",
-         "     job.`id`, job.`name`, job.`method`, job.`actors`,",
-         "     run.`itemtype`, run.`items_id`, run.`state`,",
-         "     run.`id`, run.`agents_id`",
-         "FROM `glpi_plugin_glpiinventory_taskjobstates` run",
-         "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` job",
-         "  ON job.`id` = run.`plugin_glpiinventory_taskjobs_id`",
-         "LEFT JOIN `glpi_plugin_glpiinventory_tasks` task",
-         "  ON task.`id` = job.`plugin_glpiinventory_tasks_id`",
-         "WHERE",
-         "  job.`method` IN ('" . implode("','", $methods) . "')",
-         "  AND run.`state` IN ('" . implode("','", [
-            PluginGlpiinventoryTaskjobstate::PREPARED,
-            PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA,
-            PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA,
-         ]) . "')",
-         "  AND run.`agents_id` = " . $agent_id,
-         // order the result by job.id
-         // TODO: the result should be ordered by the future job.index field when drag AND drop
-         // feature will be properly activated in the taskjobs list.
-         "ORDER BY job.`id`",
+        $iterator = $DB->request([
+            'SELECT' => [
+                'task.id',
+                'task.name',
+                'task.is_active',
+                'task.datetime_start',
+                'task.datetime_end',
+                'task.plugin_glpiinventory_timeslots_exec_id AS timeslot_id',
+                'job.id AS jobid',
+                'job.name AS jobname',
+                'job.method',
+                'job.actors',
+                'run.itemtype',
+                'run.items_id',
+                'run.state',
+                'run.id AS runid',
+                'run.agents_id',
+            ],
+            'FROM' => 'glpi_plugin_glpiinventory_taskjobstates AS run',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_taskjobs AS job' => [
+                    'ON' => [
+                        'job' => 'id',
+                        'run' => 'plugin_glpiinventory_taskjobs_id'
+                    ]
+                ],
+                'glpi_plugin_glpiinventory_tasks AS task' => [
+                    'ON' => [
+                        'task' => 'id',
+                        'job' => 'plugin_glpiinventory_tasks_id'
+                    ]
+                ]
+            ],
+            'WHERE' => [
+                'job.method' => $methods,
+                'run.state' => [
+                    PluginGlpiinventoryTaskjobstate::PREPARED,
+                    PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA,
+                    PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA,
+                ],
+                'run.agents_id' => $agent_id,
+            ],
+            'ORDER' => 'job.id',
         ]);
-
-        $query_result = $DB->query($query);
-        $results = [];
-        if ($query_result) {
-            $results = PluginGlpiinventoryToolbox::fetchAssocByTable($query_result);
-        }
+        $results = PluginGlpiinventoryToolbox::fetchAssocByTableIterator($iterator);
 
         // Fetch a list of unique actors since the same actor can be assigned to many jobs.
         $actors = [];
@@ -427,7 +440,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         $timeslot_ids = [];
         foreach ($results as $result) {
-            $timeslot_ids[$result['task']['timeslot_id']] = 1;
+            $timeslot_ids[$result['task']['plugin_glpiinventory_timeslots_exec_id']] = 1;
         }
         $timeslot_entries = $pfTimeslot->getTimeslotEntries(array_keys($timeslot_ids), $day_of_week);
 
@@ -496,7 +509,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             }
 
            // Cancel the jobstate if it is requested outside of any timeslot.
-            $timeslot_id = $result['task']['timeslot_id'];
+            $timeslot_id = $result['task']['plugin_glpiinventory_timeslots_exec_id'];
 
            // Do nothing if there are no defined timeslots for this jobstate.
             if ($timeslot_id > 0) {
@@ -595,65 +608,82 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             "Preparing tasks jobs, task id: " . $tasks_id
         );
 
-       //Get all active timeslots
+        //Get all active timeslots
         $timeslot  = new PluginGlpiinventoryTimeslot();
         $timeslots = $timeslot->getCurrentActiveTimeslots();
         if (empty($timeslots)) {
-            $query_timeslot = '';
+            $it_timeslot = ['plugin_glpiinventory_timeslots_prep_id' => 0];
         } else {
-            $query_timeslot = "OR (`plugin_glpiinventory_timeslots_prep_id` IN (" . implode(',', $timeslots) . "))";
+            $it_timeslot = [
+                'OR' => [
+                    'plugin_glpiinventory_timeslots_prep_id' => 0,
+                    'plugin_glpiinventory_timeslots_prep_id' => $timeslots
+                ]
+            ];
         }
 
-       //transform methods array into string for database query
-        $methods = "'" . implode("','", $methods) . "'";
-
-       // limit preparation to a specific tasks_id
-        $sql_task_id = "";
+        // limit preparation to a specific tasks_id
+        $it_task_id = [];
         if ($tasks_id) {
-            $sql_task_id = "AND `task`.`id` = $tasks_id";
+            $it_task_id = ['task.id' => $tasks_id];
         }
 
-        $query = implode(" \n", [
-         "SELECT",
-         "     task.`id`, task.`name`, task.`reprepare_if_successful`, ",
-         "     job.`id`, job.`name`, job.`method`, ",
-         "     job.`targets`, job.`actors`,job.`restrict_to_task_entity`",
-         "FROM `glpi_plugin_glpiinventory_taskjobs` job",
-         "LEFT JOIN `glpi_plugin_glpiinventory_tasks` task",
-         "  ON task.`id` = job.`plugin_glpiinventory_tasks_id`",
-         "WHERE task.`is_active` = 1",
-         $sql_task_id,
-         "AND (",
-         /**
-          * Filter jobs by the schedule AND timeslots
-          */
-         // check only if now() >= datetime_start if datetime_end is null
-         "        (   task.`datetime_start` IS NOT NULL AND task.`datetime_end` IS NULL",
-         "              AND '" . $now->format("Y-m-d H:i:s") . "' >= task.`datetime_start` )",
-         "     OR",
-         // check if now() is between datetime_start AND datetime_end
-         "        (   task.`datetime_start` IS NOT NULL AND task.`datetime_end` IS NOT NULL",
-         "              AND '" . $now->format("Y-m-d H:i:s") . "' ",
-         "                    between task.`datetime_start` AND task.`datetime_end` )",
-         "     OR",
-         // finally, check if this task can be run at any time ( datetime_start and datetime_end are
-         // both null)
-         "        ( task.`datetime_start` IS NULL AND task.`datetime_end` IS NULL )",
-         ")",
-         "AND job.`method` IN (" . $methods . ")
-         AND (`plugin_glpiinventory_timeslots_prep_id`='0'
-              $query_timeslot)",
-         // order the result by job.id
-         // TODO: the result should be ordered by the future job.index field when drag and drop
-         // feature will be properly activated in the taskjobs list.
-         "ORDER BY job.`id`",
+        $iterator = $DB->request([
+            'SELECT' => [
+                'task.id',
+                'task.name',
+                'task.reprepare_if_successful',
+                'job.id AS jobid',
+                'job.name AS jobname',
+                'job.method',
+                'job.targets',
+                'job.actors',
+                'job.restrict_to_task_entity'
+            ],
+            'FROM' => 'glpi_plugin_glpiinventory_taskjobs AS job',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_tasks AS task' => [
+                    'FKEY' => [
+                        'task' => 'id',
+                        'job' => 'plugin_glpiinventory_tasks_id'
+                    ]
+                ]
+            ],
+            'WHERE' => array_merge([
+                'task.is_active' => 1,
+                [
+                    'OR' => [
+                        [
+                            [
+                                'NOT' => [
+                                    'task.datetime_start' => null,
+                                ]
+                            ],
+                            'task.datetime_end' => null,
+                            'task.datetime_start' => ['<', $now->format("Y-m-d H:i:s")],
+                        ],
+                        [
+                            ['NOT' => ['task.datetime_start' => null]],
+                            ['NOT' => ['task.datetime_end' => null]],
+                            new QueryExpression(
+                                $DB->quoteValue($now->format("Y-m-d H:i:s")) . ' BETWEEN ' .
+                                $DB->quoteName('task.datetime_start') . ' AND ' .
+                                $DB->quoteName('task.datetime_end')
+                            ),
+                        ],
+                        [
+                            'task.datetime_start' => null,
+                            'task.datetime_end' => null
+                        ]
+                    ]
+                ],
+                'job.method' => $methods,
+            ], $it_timeslot, $it_task_id),
+            'ORDER' => [
+                'job.id'
+            ]
         ]);
-
-        $query_result = $DB->query($query);
-        $results      = [];
-        if ($query_result) {
-            $results = PluginGlpiinventoryToolbox::fetchAssocByTable($query_result);
-        }
+        $results = PluginGlpiinventoryToolbox::fetchAssocByTableIterator($iterator);
 
        // Fetch a list of actors to be prepared. We may have the same actors for each job so this
        // part can speed up the process.
@@ -1749,128 +1779,150 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     {
         global $DB;
 
-        $select = ["tasks" => "task.*"];
-        $where = [];
-        $leftjoin = [];
+        $criteria = [
+            'SELECT' => ['task.*'],
+            'FROM' => 'glpi_plugin_glpiinventory_tasks AS task',
+            'WHERE' => []
+        ];
 
-       // Filter active tasks
+        // Filter active tasks
         if (
             isset($filter['is_active'])
               and is_bool($filter['is_active'])
         ) {
-            $where[] = "task.`is_active` = " . $filter['is_active'];
+            $criteria['WHERE'][] = ['task.is_active' => $filter['is_active']];
         }
 
-       //Filter by running taskjobs
+        //Filter by running taskjobs
         if (
             isset($filter['is_running'])
               and is_bool($filter['is_running'])
         ) {
-           // add taskjobs table JOIN statement if not already set
-            if (!isset($leftjoin['taskjobs'])) {
-                $leftjoin_bak = $leftjoin;
-                $leftjoin_tmp = PluginGlpiinventoryTaskjob::getJoinQuery();
-                $leftjoin = array_merge($leftjoin_bak, $leftjoin_tmp);
-                if (!isset($select["taskjobs"])) {
-                    $select['taskjobs'] = "taskjob.*";
-                }
+            // add taskjobs table JOIN statement
+            if (!isset($criteria['LEFT JOIN'])) {
+                $criteria['SELECT'] = array_merge(
+                    $criteria['SELECT'],
+                    [
+                        'taskjob.id AS taskjob_id',
+                        'taskjob.plugin_glpiinventory_tasks_id AS taskjob_plugin_glpiinventory_tasks_id',
+                        'taskjob.entities_id AS taskjob_entities_id',
+                        'taskjob.name AS taskjob_name',
+                        'taskjob.date_creation AS taskjob_date_creation',
+                        'taskjob.method AS taskjob_method',
+                        'taskjob.targets AS taskjob_targets',
+                        'taskjob.actors AS taskjob_actors',
+                        'taskjob.comment AS taskjob_comment',
+                        'taskjob.rescheduled_taskjob_id AS taskjob_rescheduled_taskjob_id',
+                        'taskjob.statuscomments AS taskjob_statuscomments',
+                        'taskjob.enduser AS taskjob_enduser',
+                        'taskjob.restrict_to_task_entity AS taskjob_restrict_to_task_entity'
+                    ]
+                );
+                $criteria['LEFT JOIN'] = PluginGlpiinventoryTaskjob::getJoinCriteria();
             }
-            $where[] = "`taskjob`.`id` IS NOT NULL";
+            $criteria['WHERE'][] = ['NOT' => ['taskjob.id' => null]];
         }
 
-       //Filter by targets classes
+        //Filter by targets classes
         if (
             isset($filter['targets'])
               and is_array($filter['targets'])
         ) {
-            $where_tmp = [];
-           //check classes existence AND append them to the query filter
+            $it_where = [];
+            //check classes existence AND append them to the query filter
             foreach ($filter['targets'] as $itemclass => $itemid) {
                 if (class_exists($itemclass)) {
-                    $cond = "taskjob.`targets` LIKE '%\"" . $itemclass . "\"";
+                    $like = '"' . $itemclass . '"';
                     //adding itemid if not empty
                     if (!empty($itemid)) {
-                        $cond .= ":\"" . $itemid . "\"";
+                        $like .= ':"' . $itemid . '"';
                     }
-                    //closing LIKE statement
-                    $cond .= "%'";
-                    $where_tmp[] = $cond;
+                    $it_where[] = ['taskjob.targets' => ['LIKE', '%' . $like . '%']];
                 }
             }
-           //join every filtered conditions
-            if (count($where_tmp) > 0) {
-               // add taskjobs table JOIN statement if not already set
-                if (!isset($leftjoin['taskjobs'])) {
-                    $leftjoin_bak = $leftjoin;
-                    $leftjoin_tmp = PluginGlpiinventoryTaskjob::getJoinQuery();
-                    $leftjoin = array_merge($leftjoin_bak, $leftjoin_tmp);
+            //join every filtered conditions
+            if (count($it_where) > 0) {
+                // add taskjobs table JOIN statement if not already set
+                if (!isset($criteria['LEFT JOIN'])) {
+                    $criteria['SELECT'] = array_merge(
+                        $criteria['SELECT'],
+                        [
+                            'taskjob.id AS taskjob_id',
+                            'taskjob.plugin_glpiinventory_tasks_id AS taskjob_plugin_glpiinventory_tasks_id',
+                            'taskjob.entities_id AS taskjob_entities_id',
+                            'taskjob.name AS taskjob_name',
+                            'taskjob.date_creation AS taskjob_date_creation',
+                            'taskjob.method AS taskjob_method',
+                            'taskjob.targets AS taskjob_targets',
+                            'taskjob.actors AS taskjob_actors',
+                            'taskjob.comment AS taskjob_comment',
+                            'taskjob.rescheduled_taskjob_id AS taskjob_rescheduled_taskjob_id',
+                            'taskjob.statuscomments AS taskjob_statuscomments',
+                            'taskjob.enduser AS taskjob_enduser',
+                            'taskjob.restrict_to_task_entity AS taskjob_restrict_to_task_entity'
+                        ]
+                    );
+                    $criteria['LEFT JOIN'] = PluginGlpiinventoryTaskjob::getJoinCriteria();
                 }
-                if (!isset($select["taskjobs"])) {
-                    $select['taskjobs'] = "taskjob.*";
-                }
-                $where[] = "( " . implode("OR", $where_tmp) . " )";
+                $criteria['WHERE'][] = ['OR' => $it_where];
             }
         }
 
-       // Filter by actors classes
+        // Filter by actors classes
         if (
             isset($filter['actors'])
             and is_array($filter['actors'])
         ) {
-            $where_tmp = [];
-           //check classes existence AND append them to the query filter
+            $it_where = [];
+            //check classes existence AND append them to the query filter
             foreach ($filter['actors'] as $itemclass => $itemid) {
                 if (class_exists($itemclass)) {
-                    $cond = "taskjob.`actors` LIKE '%\"" . $itemclass . "\"";
-
+                    $like = '"' . $itemclass . '"';
                     //adding itemid if not empty
                     if (!empty($itemid)) {
-                        $cond .= ":\"" . $itemid . "\"";
+                        $like .= ':"' . $itemid . '"';
                     }
-                    //closing LIKE statement
-                    $cond .= "%'";
-                    $where_tmp[] = $cond;
+                    $it_where[] = ['taskjob.actors' => ['LIKE', '%' . $like . '%']];
                 }
             }
-           //join every filtered conditions
-            if (count($where_tmp) > 0) {
-               // add taskjobs table JOIN statement if not already set
-                if (!isset($leftjoin['taskjobs'])) {
-                    $leftjoin_bak = $leftjoin;
-                    $leftjoin_tmp = PluginGlpiinventoryTaskjob::getJoinQuery();
-                    $leftjoin = array_merge($leftjoin_bak, $leftjoin_tmp);
+            //join every filtered conditions
+            if (count($it_where) > 0) {
+                // add taskjobs table JOIN statement if not already set
+                if (!isset($criteria['LEFT JOIN'])) {
+                    $criteria['SELECT'] = array_merge(
+                        $criteria['SELECT'],
+                        [
+                            'taskjob.id AS taskjob_id',
+                            'taskjob.plugin_glpiinventory_tasks_id AS taskjob_plugin_glpiinventory_tasks_id',
+                            'taskjob.entities_id AS taskjob_entities_id',
+                            'taskjob.name AS taskjob_name',
+                            'taskjob.date_creation AS taskjob_date_creation',
+                            'taskjob.method AS taskjob_method',
+                            'taskjob.targets AS taskjob_targets',
+                            'taskjob.actors AS taskjob_actors',
+                            'taskjob.comment AS taskjob_comment',
+                            'taskjob.rescheduled_taskjob_id AS taskjob_rescheduled_taskjob_id',
+                            'taskjob.statuscomments AS taskjob_statuscomments',
+                            'taskjob.enduser AS taskjob_enduser',
+                            'taskjob.restrict_to_task_entity AS taskjob_restrict_to_task_entity'
+                        ]
+                    );
+                    $criteria['LEFT JOIN'] = PluginGlpiinventoryTaskjob::getJoinCriteria();
                 }
-                if (!isset($select["taskjobs"])) {
-                    $select['taskjobs'] = "taskjob.*";
-                }
-                $where[] = "( " . implode("OR", $where_tmp) . " )";
+                $criteria['WHERE'][] = ['OR' => $it_where];
             }
         }
 
-       // Filter by entity
+        // Filter by entity
         if (
             isset($filter['by_entities'])
             and (bool)$filter['by_entities']
         ) {
-            $where[] = getEntitiesRestrictRequest("", 'task');
+            $criteria['WHERE'][] = getEntitiesRestrictCriteria('task');
         }
 
-        $query =
-         implode(
-             "\n",
-             [
-               "SELECT " . implode(',', $select),
-               "FROM `glpi_plugin_glpiinventory_tasks` as task",
-               implode("\n", $leftjoin),
-               "WHERE\n    " . implode("\nAND ", $where)
-             ]
-         );
-
-        $results = [];
-        $r = $DB->query($query);
-        if ($r) {
-            $results = PluginGlpiinventoryToolbox::fetchAssocByTable($r);
-        }
+        $iterator = $DB->request($criteria);
+        $results = PluginGlpiinventoryToolbox::fetchAssocByTableIterator($iterator);
         return $results;
     }
 
@@ -1892,34 +1944,51 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         ) {
            // If disable task, must end all taskjobstates prepared
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-            $query = implode(" \n", [
-            "SELECT",
-            "     task.`id`, task.`name`, task.`is_active`,",
-            "     task.`datetime_start`, task.`datetime_end`,",
-            "     task.`plugin_glpiinventory_timeslots_prep_id` as timeslot_id,",
-            "     job.`id`, job.`name`, job.`method`, job.`actors`,",
-            "     run.`itemtype`, run.`items_id`, run.`state`,",
-            "     run.`id`, run.`agents_id`",
-            "FROM `glpi_plugin_glpiinventory_taskjobstates` run",
-            "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` job",
-            "  ON job.`id` = run.`plugin_glpiinventory_taskjobs_id`",
-            "LEFT JOIN `glpi_plugin_glpiinventory_tasks` task",
-            "  ON task.`id` = job.`plugin_glpiinventory_tasks_id`",
-            "WHERE",
-            "  run.`state` IN ('" . implode("','", [
-               PluginGlpiinventoryTaskjobstate::PREPARED,
-            ]) . "')",
-            "  AND task.`id` = " . $this->fields['id'],
-            // order the result by job.id
-            // TODO: the result should be ordered by the future job.index field when drag AND drop
-            // feature will be properly activated in the taskjobs list.
-            "ORDER BY job.`id`",
+            $iterator = $DB->request([
+                'SELECT' => [
+                    'task.id',
+                    'task.name',
+                    'task.is_active',
+                    'task.datetime_start',
+                    'task.datetime_end',
+                    'task.plugin_glpiinventory_timeslots_prep_id AS timeslot_id',
+                    'job.id AS jobid',
+                    'job.name AS jobname',
+                    'job.method',
+                    'job.actors',
+                    'run.itemtype',
+                    'run.items_id',
+                    'run.state',
+                    'run.id AS runid',
+                    'run.agents_id'
+                ],
+                'FROM' => 'glpi_plugin_glpiinventory_taskjobstates AS run',
+                'LEFT JOIN' => [
+                    'glpi_plugin_glpiinventory_taskjobs AS job' => [
+                        'FKEY' => [
+                            'run' => 'plugin_glpiinventory_taskjobs_id',
+                            'job' => 'id'
+                        ]
+                    ],
+                    'glpi_plugin_glpiinventory_tasks AS task' => [
+                        'FKEY' => [
+                            'job' => 'plugin_glpiinventory_tasks_id',
+                            'task' => 'id'
+                        ]
+                    ]
+                ],
+                'WHERE' => [
+                    'run.state' => PluginGlpiinventoryTaskjobstate::PREPARED,
+                    'task.id' => $this->fields['id']
+                ],
+                // order the result by job.id
+                // TODO: the result should be ordered by the future job.index field when drag AND drop
+                // feature will be properly activated in the taskjobs list.
+                'ORDER' => [
+                    'job.id'
+                ]
             ]);
-            $query_result = $DB->query($query);
-            $results = [];
-            if ($query_result) {
-                $results = PluginGlpiinventoryToolbox::fetchAssocByTable($query_result);
-            }
+            $results = PluginGlpiinventoryToolbox::fetchAssocByTableIterator($iterator);
             foreach ($results as $data) {
                 $pfTaskjobstate->getFromDB($data['run']['id']);
                 $pfTaskjobstate->cancel(__('Task has been disabled', 'glpiinventory'));

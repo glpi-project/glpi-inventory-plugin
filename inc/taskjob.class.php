@@ -84,6 +84,18 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                "ON taskjob.`plugin_glpiinventory_tasks_id` = task.`id`"];
     }
 
+    public static function getJoinCriteria()
+    {
+        //FIXME: used only for queries using PluginGlpiinventoryToolbox::fetchAssocByTable()
+        return [
+            'glpi_plugin_glpiinventory_taskjobs AS taskjob' => [
+                'ON' => [
+                    'task' => 'id',
+                    'taskjob' => 'plugin_glpiinventory_tasks_id'
+                ]
+            ]
+        ];
+    }
 
    /**
     * Get search function for the class

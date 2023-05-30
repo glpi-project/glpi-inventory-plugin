@@ -255,43 +255,31 @@ class DatabaseTestsCommons extends Assert
             }
         }
 
-       /*
-       * Check if all modules registered
-       */
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_agentmodules`
-         WHERE `modulename`='WAKEONLAN'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, 'WAKEONLAN module not registered');
+        // Check if all modules registered
+        $modules = [
+            'WAKEONLAN',
+            'INVENTORY',
+            'InventoryComputerESX',
+            'NETWORKINVENTORY',
+            'NETWORKDISCOVERY',
+            'DEPLOY',
+            'Collect'
+        ];
+        foreach ($modules as $module) {
+            $iterator = $DB->request([
+                'SELECT' => 'id',
+                'FROM' => 'glpi_plugin_glpiinventory_agentmodules',
+                'WHERE' => ['modulename' => $module]
+            ]);
+            $this->assertEquals(1, count($iterator), $module . ' module not registered');
+        }
 
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_agentmodules`
-         WHERE `modulename`='INVENTORY'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, 'INVENTORY module not registered');
-
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_agentmodules`
-         WHERE `modulename`='InventoryComputerESX'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, 'ESX module not registered');
-
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_agentmodules`
-         WHERE `modulename`='NETWORKINVENTORY'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, 'NETWORKINVENTORY module not registered');
-
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_agentmodules`
-         WHERE `modulename`='NETWORKDISCOVERY'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, 'NETWORKDISCOVERY module not registered');
-
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_agentmodules`
-         WHERE `modulename`='ESX'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 0, 'ESX module may be renommed in InventoryComputerESX');
-
-       //      $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_agentmodules`
-       //         WHERE `modulename`='DEPLOY'";
-       //      $result = $DB->query($query);
-       //      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
+        $iterator = $DB->request([
+            'SELECT' => 'id',
+            'FROM' => 'glpi_plugin_glpiinventory_agentmodules',
+            'WHERE' => ['modulename' => 'ESX']
+        ]);
+        $this->assertEquals(0, count($iterator), 'ESX module may be renommed in InventoryComputerESX');
 
        /*
        * Verify in taskjob definition PluginFusinvsnmpIPRange not exist
@@ -310,22 +298,18 @@ class DatabaseTestsCommons extends Assert
        * Verify cron created
        */
         $crontask = new CronTask();
-        $this->assertTrue(
-            $crontask->getFromDBbyName('PluginGlpiinventoryTask', 'taskscheduler'),
-            'Cron taskscheduler not created'
-        );
-        $this->assertTrue(
-            $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstate', 'cleantaskjob'),
-            'Cron cleantaskjob not created'
-        );
-        $this->assertTrue(
-            $crontask->getFromDBbyName('PluginGlpiinventoryAgentWakeup', 'wakeupAgents'),
-            'Cron wakeupAgents not created'
-        );
-        $this->assertTrue(
-            $crontask->getFromDBbyName('PluginGlpiinventoryTask', 'cleanondemand'),
-            'Cron cleanondemand not created'
-        );
+        $crons = [
+            'taskscheduler' => 'PluginGlpiinventoryTask',
+            'cleantaskjob' => 'PluginGlpiinventoryTaskjobstate',
+            'wakeupAgents' => 'PluginGlpiinventoryAgentWakeup',
+            'cleanondemand' => 'PluginGlpiinventoryTask'
+        ];
+        foreach ($crons as $cron => $class) {
+            $this->assertTrue(
+                $crontask->getFromDBbyName($class, $cron),
+                'Cron ' . $cron . ' not created'
+            );
+        }
 
        /*
         * Verify config fields added
@@ -337,50 +321,41 @@ class DatabaseTestsCommons extends Assert
             $fields = current($data);
             $plugins_id = $fields['id'];
         }
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='ssl_only'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config for plugins " . $plugins_id);
 
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='delete_task'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'delete_task' not added in config");
+        $configs = [
+            'ssl_only',
+            'delete_task',
+            'agent_port',
+            'extradebug',
+            'users_id',
+            'version',
+            'otherserial'
+        ];
+        foreach ($configs as $config) {
+            $iterator = $DB->request([
+                'SELECT' => ['id', 'value'],
+                'FROM' => 'glpi_plugin_glpiinventory_configs',
+                'WHERE' => ['type' => $config]
+            ]);
+            $this->assertEquals(1, count($iterator), 'type ' . $config . ' not added in config');
 
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='agent_port'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'agent_port' not added in config");
+            if ($config === 'version') {
+                $data = $iterator->current();
+                $this->assertEquals(
+                    PLUGIN_GLPIINVENTORY_VERSION,
+                    $data['value'],
+                    "Field 'version' not with right version"
+                );
+            }
+        }
 
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='extradebug'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'extradebug' not added in config");
+        // TODO : test glpi_displaypreferences, rules, SavedSearch...
 
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='users_id'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'users_id' not added in config");
-
-        $query = "SELECT * FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='version'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
-        $data = $DB->fetchAssoc($result);
-        $this->assertEquals($data['value'], PLUGIN_GLPIINVENTORY_VERSION, "Field 'version' not with right version");
-
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_configs`
-         WHERE `type`='otherserial'";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 1, "type 'otherserial' not added in config");
-
-       // TODO : test glpi_displaypreferences, rules, SavedSearch...
-
-       /*
-        * Verify table `glpi_plugin_glpiinventory_inventorycomputerstats` filed with data
-        */
-        $query = "SELECT `id` FROM `glpi_plugin_glpiinventory_inventorycomputerstats`";
-        $result = $DB->query($query);
-        $this->assertEquals($DB->numrows($result), 8760, "Must have table `glpi_plugin_glpiinventory_inventorycomputerstats` not empty");
+        // Verify table `glpi_plugin_glpiinventory_inventorycomputerstats` filed with data
+        $iterator = $DB->request([
+            'SELECT' => 'id',
+            'FROM' => 'glpi_plugin_glpiinventory_inventorycomputerstats'
+        ]);
+        $this->assertEquals(8760, count($iterator), 'Must have table `glpi_plugin_glpiinventory_inventorycomputerstats` not empty');
     }
 }

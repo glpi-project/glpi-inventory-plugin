@@ -235,8 +235,74 @@ class PluginGlpiinventoryToolbox
         return $results;
     }
 
+    /**
+     *  This function fetch rows from a DBMysqlIterator result in an array with each table as a key
+     *
+     *  example:
+     *  $iterator = $DB->request([
+     *     'SELECT' => ['table_a.*', 'table_b.*'],
+     *     'FROM' => 'table_b'
+     *     'LEFT JOIN' => [
+     *          'table_a' => [
+     *              'ON' => [
+     *                  'table_a' => id,
+     *                  'table_b' => 'linked_id'
+     *              ]
+     *          ]
+     *      ]
+     *  ]);
+     *  print_r(fetchTableAssocIterator($iterator))
+     *
+     *  output:
+     *  $results = Array
+     *     (
+     *        [0] => Array
+     *           (
+     *              [table_a] => Array
+     *                 (
+     *                    [id] => 1
+     *                 )
+     *              [table_b] => Array
+     *                 (
+     *                    [id] => 2
+     *                    [linked_id] => 1
+     *                 )
+     *           )
+     *           ...
+     *     )
+     *
+     * @param DBmysqlIterator $iterator
+     * @return array
+     */
+    public static function fetchAssocByTableIterator(DBmysqlIterator $iterator): array
+    {
+        $results = [];
+        //get fields header infos
+        $fields = $iterator->fetchFields();
 
-   /**
+        //associate row data as array[table][field]
+        foreach ($iterator as $row) {
+            $result = [];
+            $i = 0;
+            foreach (array_keys($row) as $col) {
+                $tname = $fields[$i]->table;
+                $fname = $fields[$i]->orgname;
+                if (!isset($result[$tname])) {
+                    $result[$tname] = [];
+                }
+                $result[$tname][$fname] = $row[$col];
+                ++$i;
+            }
+
+            if (count($result) > 0) {
+                $results[] = $result;
+            }
+        }
+        return $results;
+    }
+
+
+    /**
     * Format a json in a pretty json
     *
     * @param string $json
