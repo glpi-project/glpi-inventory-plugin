@@ -3139,7 +3139,7 @@ function do_biosascomponentmigration()
 
                 //handle remote_addr
                 $agent = $computer->getInventoryAgent();
-                if (!is_null($agent) && !empty($data['remote_addr'])) {
+                if (!is_null($agent) && !empty($data['remote_addr']) && empty($agent->fields['remote_addr'])) {
                     $remote_ip = new IPAddress($data['remote_addr']);
                     if ($remote_ip->is_valid()) {
                         $input_agent = [
