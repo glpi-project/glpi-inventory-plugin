@@ -3107,7 +3107,6 @@ function do_biosascomponentmigration()
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'last_boot') &&
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'last_inventory_update')
     ) {
-
         $computers_iterator = $DB->request([
             'SELECT' => [
                 'computers_id',
@@ -3121,7 +3120,6 @@ function do_biosascomponentmigration()
         foreach ($computers_iterator as $data) {
             $computer = new Computer();
             if ($computer->getFromDB($data['computers_id'])) {
-
                 //handle last_inventory_update and last_boot
                 $input_computer = [
                     'id'                    => $computer->fields['id'],
