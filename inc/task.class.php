@@ -663,8 +663,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                             'task.datetime_start' => ['<', $now->format("Y-m-d H:i:s")],
                         ],
                         [
-                            ['NOT' => ['task.datetime_start' => null],
-                            ['NOT' => ['task.datetime_end' => null],
+                            ['NOT' => ['task.datetime_start' => null]],
+                            ['NOT' => ['task.datetime_end' => null]],
                             new QueryExpression(
                                 $DB->quoteValue($now->format("Y-m-d H:i:s")) BETWEEN ' .
                                 $DB->quoteName('task.datetime_start') . ' AND ' .
