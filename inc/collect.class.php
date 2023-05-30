@@ -860,6 +860,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     } else {
                        // Can only happen on file collect
                         $message = __('Path not found', 'glpiinventory');
+                        $pfTaskjobstate->getFromDB($jobstate);
                         $pfTaskjobstate->fail(isset($name) ? "$name: $message" : $message);
                     }
                 }
