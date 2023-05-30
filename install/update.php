@@ -3100,46 +3100,18 @@ function do_biosascomponentmigration()
     global $DB;
 
     //Agent data migration -> remote_addr
+    //Computer data migration -> last_boot / last_inventory_update
     if (
         $DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers') &&
-        $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'remote_addr')
-    ) {
-
-        $computers_iterator = $DB->request([
-            'SELECT' => [
-                'computers_id',
-                'remote_addr'
-            ],
-            'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers'
-        ]);
-
-        foreach ($computers_iterator as $data) {
-            $computer = new Computer();
-            if ($computer->getFromDB($data['computers_id'])) {
-                $agent = $computer->getInventoryAgent();
-                if (!is_null($agent) && !empty($data['remote_addr'])) {
-                    $remote_ip = new IPAddress($data['remote_addr']);
-                    if ($remote_ip->is_valid()) {
-                        $input = [
-                            'id' => $agent->fields['id'],
-                            'remote_addr' => $remote_ip->getTextual()
-                        ];
-                        $agent->update($input);
-                    }
-                }
-            }
-        }
-    }
-
-    //Agent data migration -> last_boot / last_inventory_update
-    if (
-        $DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers') &&
+        $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'remote_addr') &&
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'last_boot') &&
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'last_inventory_update')
     ) {
+
         $computers_iterator = $DB->request([
             'SELECT' => [
                 'computers_id',
+                'remote_addr',
                 'last_boot',
                 'last_inventory_update'
             ],
@@ -3149,22 +3121,26 @@ function do_biosascomponentmigration()
         foreach ($computers_iterator as $data) {
             $computer = new Computer();
             if ($computer->getFromDB($data['computers_id'])) {
-                $input = [
-                    'id' => $computer->fields['id'],
+
+                //handle last_inventory_update and last_boot
+                $input_computer = [
+                    'id'                    => $computer->fields['id'],
+                    'last_boot'             => $data['last_boot'] ?? null,
+                    'last_inventory_update' => $data['last_inventory_update'] ?? null
                 ];
+                $computer->update($input_computer);
 
-                //migrate last_boot date
-                if (!empty($data['last_boot'])) {
-                    $input['last_boot'] = $data['last_boot'];
-                }
-
-                //migrate last_inventory_update date
-                if (!empty($data['last_inventory_update'])) {
-                    $input['last_inventory_update'] = $data['last_inventory_update'];
-                }
-
-                if (count($input) > 1) {
-                    $computer->update($input);
+                //handle remote_addr
+                $agent = $computer->getInventoryAgent();
+                if (!is_null($agent) && !empty($data['remote_addr'])) {
+                    $remote_ip = new IPAddress($data['remote_addr']);
+                    if ($remote_ip->is_valid()) {
+                        $input_agent = [
+                            'id' => $agent->fields['id'],
+                            'remote_addr' => $remote_ip->getTextual()
+                        ];
+                        $agent->update($input_agent);
+                    }
                 }
             }
         }
