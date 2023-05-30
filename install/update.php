@@ -3104,12 +3104,16 @@ function do_biosascomponentmigration()
         $DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers') &&
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'remote_addr')
     ) {
-        //retrieve exiting
-        $query = "SELECT computers_id, remote_addr
-                    FROM glpi_plugin_glpiinventory_inventorycomputercomputers";
-        $result = $DB->query($query);
 
-        while ($data = $DB->fetchArray($result)) {
+        $computers_iterator = $DB->request([
+            'SELECT' => [
+                'computers_id',
+                'remote_addr'
+            ],
+            'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers'
+        ]);
+
+        foreach ($computers_iterator as $data) {
             $computer = new Computer();
             if ($computer->getFromDB($data['computers_id'])) {
                 $agent = $computer->getInventoryAgent();
@@ -3133,12 +3137,16 @@ function do_biosascomponentmigration()
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'last_boot') &&
         $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'last_inventory_update')
     ) {
-        //retrieve exiting
-        $query = "SELECT computers_id, last_boot, last_inventory_update
-                    FROM glpi_plugin_glpiinventory_inventorycomputercomputers";
-        $result = $DB->query($query);
+        $computers_iterator = $DB->request([
+            'SELECT' => [
+                'computers_id',
+                'last_boot',
+                'last_inventory_update'
+            ],
+            'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers'
+        ]);
 
-        while ($data = $DB->fetchArray($result)) {
+        foreach ($computers_iterator as $data) {
             $computer = new Computer();
             if ($computer->getFromDB($data['computers_id'])) {
                 $input = [
