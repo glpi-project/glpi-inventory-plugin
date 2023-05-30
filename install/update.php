@@ -3125,10 +3125,19 @@ function do_biosascomponentmigration()
                 //handle last_inventory_update and last_boot
                 $input_computer = [
                     'id'                    => $computer->fields['id'],
-                    'last_boot'             => $data['last_boot'] ?? null,
-                    'last_inventory_update' => $data['last_inventory_update'] ?? null
                 ];
-                $computer->update($input_computer);
+
+                if (!empty($data['last_boot'])) {
+                    $input_computer['last_boot'] = $data['last_boot'];
+                }
+
+                if (!empty($data['last_inventory_update'])) {
+                    $input_computer['last_inventory_update'] = $data['last_inventory_update'];
+                }
+
+                if (count($input_computer) > 1) {
+                    $computer->update($input_computer);
+                }
 
                 //handle remote_addr
                 $agent = $computer->getInventoryAgent();
