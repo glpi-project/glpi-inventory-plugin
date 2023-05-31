@@ -300,7 +300,35 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
               FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
           ) AS `plugin_computers` ON `plugin_computers`.`computers_id` = `computers`.`id`
           SET
-              `computers`.`last_inventory_update` = `plugin_computers`.`last_inventory_update`
+          `computers`.`last_inventory_update` = `plugin_computers`.`last_inventory_update`
+          WHERE `computers`.`last_inventory_update` IS NULL;"
+        );
+
+        $DB->queryOrDie(
+            "UPDATE `glpi_computers` AS `computers`
+            INNER JOIN (
+              SELECT
+                `computers_id`,
+                `last_boot`
+              FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
+          ) AS `plugin_computers` ON `plugin_computers`.`computers_id` = `computers`.`id`
+          SET
+          `computers`.`last_boot` = `plugin_computers`.`last_boot`
+          WHERE `computers`.`last_boot` IS NULL
+          ;"
+        );
+
+        $DB->queryOrDie(
+            "UPDATE `glpi_agents` AS `agents`
+            INNER JOIN (
+              SELECT
+                `computers_id`,
+                `remote_addr`
+              FROM `glpi_plugin_glpiinventory_inventorycomputercomputers`
+          ) AS `plugin_computers` ON `plugin_computers`.`computers_id` = `agents`.`items_id` AND `agents`.`itemtype` = 'Computer'
+          SET
+          `agents`.`remote_addr` = `plugin_computers`.`remote_addr`
+          WHERE `agents`.`remote_addr` IS NULL OR `agents`.`remote_addr` = ''
           ;"
         );
         $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputercomputers');
