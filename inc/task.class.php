@@ -1209,7 +1209,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             ],
             'WHERE' => array_merge(
                 [
-                    'task.id' => ['!=', null],
+                    'NOT' => ['task.id' => null],
                 ],
                 $active_task,
                 $tasks_list,
