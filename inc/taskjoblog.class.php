@@ -267,9 +267,6 @@ function appear_array(id) {
 }
 
       </script>";
-
-        echo "<script type='text/javascript' src='" . $fi_path . "/lib/prototype.js'></script>";
-        echo "<script type='text/javascript' src='" . $fi_path . "/lib/effects.js'></script>";
     }
 
 
