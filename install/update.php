@@ -3052,7 +3052,7 @@ function do_computercomputer_migration($migration)
       'bios_manufacturers_id'
     ];
 
-    $a_table['renamefields'] = [];
+    $a_table['renamefields']['last_fusioninventory_update'] = 'last_inventory_update';
 
     $a_table['keys']   = [];
     $a_table['keys'][] = ['field' => 'computers_id', 'name' => '', 'type' => 'INDEX'];
