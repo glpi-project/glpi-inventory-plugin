@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-11 10:27+0000\n"
+"POT-Creation-Date: 2023-07-05 08:07+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Ukrainian (Ukraine) (https://app.transifex.com/teclib/teams/28042/uk_UA/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Language: uk_UA\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: inc/task.class.php:2264 inc/task.class.php:2307
+#: inc/task.class.php:2399 inc/task.class.php:2442
 msgid ", actors: "
 msgstr ", виконавці:"
 
@@ -33,7 +33,7 @@ msgstr "Припинити"
 msgid "Abort - Retry - Ignore"
 msgstr "Abort - Retry - Ignore"
 
-#: inc/taskjob.class.php:984 inc/taskjob.class.php:1379
+#: inc/taskjob.class.php:1036 inc/taskjob.class.php:1431
 msgid "Action"
 msgstr "Дія"
 
@@ -41,7 +41,7 @@ msgstr "Дія"
 msgid "Action label"
 msgstr "Мітка дії"
 
-#: b/deploy/index.php:140 inc/deploypackage.class.php:527
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "Дії"
 
@@ -57,7 +57,7 @@ msgstr "Виконавець"
 msgid "Actor Type"
 msgstr "Тип виконавця"
 
-#: inc/taskjobview.class.php:688 inc/taskjobview.class.php:731
+#: inc/taskjobview.class.php:711 inc/taskjobview.class.php:754
 msgid "Actors"
 msgstr "Виконавці"
 
@@ -69,7 +69,7 @@ msgstr "Додати Роботу"
 msgid "Add a target for self-service"
 msgstr "Додати призначення для самообслуговування"
 
-#: inc/deploygroup.class.php:368
+#: inc/deploygroup.class.php:379
 msgid "Add group"
 msgstr "Додати групу"
 
@@ -77,12 +77,12 @@ msgstr "Додати групу"
 msgid "Add task"
 msgstr "Додати завдання"
 
-#: inc/taskjoblog.class.php:767
+#: inc/taskjoblog.class.php:422
 msgid "Add the item"
 msgstr "Додати елемент"
 
-#: inc/deploygroup_staticdata.class.php:154
-#: inc/deploygroup_staticdata.class.php:170 hook.php:454
+#: hook.php:454 inc/deploygroup_staticdata.class.php:154
+#: inc/deploygroup_staticdata.class.php:170
 msgid "Add to static group"
 msgstr "Додати статичну групу"
 
@@ -94,13 +94,12 @@ msgstr "Після дій"
 msgid "After download"
 msgstr "Після завантаження"
 
-#: inc/statediscovery.class.php:169 inc/taskjobstate.class.php:308
-#: inc/stateinventory.class.php:107 inc/taskjoblog.class.php:232
-#: inc/taskjoblog.class.php:423
+#: inc/statediscovery.class.php:179 inc/stateinventory.class.php:118
+#: inc/taskjoblog.class.php:232
 msgid "Agent"
 msgstr "Агент"
 
-#: inc/taskjoblog.class.php:771
+#: inc/taskjoblog.class.php:426
 msgid "Agent communication error, impossible to start agent"
 msgstr "Помилка зв’язку з Агентом, його неможливо запустити"
 
@@ -112,7 +111,7 @@ msgstr "Порт агента"
 msgid "Agent replied with data to the server"
 msgstr "Агент відповів серверу інформацією"
 
-#: inc/taskjoblog.class.php:772
+#: inc/taskjoblog.class.php:427
 msgid "Agent stopped/crashed"
 msgstr "Агент зупинений/поламаний"
 
@@ -172,18 +171,18 @@ msgstr "Мітка дії"
 msgid "Audits"
 msgstr "Аудит"
 
+#: inc/profile.class.php:357 inc/menu.class.php:359
+#: inc/credential.class.php:80 inc/credential.class.php:180
 #: inc/credentialip.class.php:131 inc/credentialip.class.php:154
-#: inc/profile.class.php:357 inc/credential.class.php:80
-#: inc/credential.class.php:180 inc/menu.class.php:359
 msgid "Authentication for remote devices (VMware)"
 msgstr "Аутентифікація для віддалених пристроїв (VMware)"
 
-#: inc/taskjob.class.php:1038 inc/staticmisc.class.php:475
-#: inc/staticmisc.class.php:481
+#: inc/staticmisc.class.php:491 inc/staticmisc.class.php:497
+#: inc/taskjob.class.php:1090
 msgid "Auto managenement dynamic of agents"
 msgstr "Динамічне автоматичне керування Агентами"
 
-#: inc/taskjob.class.php:1040
+#: inc/taskjob.class.php:1092
 msgid "Auto managenement dynamic of agents (same subnet)"
 msgstr "Динамічне автоматичне керування Агентами (в тій самій підмережі)"
 
@@ -267,17 +266,17 @@ msgstr "Кеш інформації"
 msgid "Cancel - Try - Continue"
 msgstr "Cancel - Try - Continue"
 
-#: inc/deployuserinteractiontemplate.class.php:232
 #: inc/deploypackage.class.php:1505
+#: inc/deployuserinteractiontemplate.class.php:232
 msgid "Cancel job"
 msgstr "Закінчити виконання"
 
-#: inc/taskjobview.class.php:766
+#: inc/taskjobview.class.php:789
 msgid "Cancel modifications"
 msgstr "Перервати зміни"
 
-#: inc/taskview.class.php:239 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1376
+#: inc/deploypackage.class.php:1376 inc/taskview.class.php:239
+#: inc/taskjobstate.class.php:144
 msgid "Cancelled"
 msgstr "Перервано"
 
@@ -302,7 +301,7 @@ msgid "Choose"
 msgstr "Оберіть"
 
 #: inc/collect_wmi.class.php:61 inc/collect_wmi.class.php:87
-#: inc/collect_wmi_content.class.php:146
+#: inc/collect_wmi_content.class.php:121
 msgid "Class"
 msgstr "Клас"
 
@@ -314,7 +313,7 @@ msgstr "Очистити агентів"
 msgid "Clean unused files"
 msgstr "Очистити файли, що не використовуються"
 
-#: inc/taskjobview.class.php:717 inc/taskjobview.class.php:739
+#: inc/taskjobview.class.php:740 inc/taskjobview.class.php:762
 msgid "Clear list"
 msgstr "Очистити список"
 
@@ -326,7 +325,7 @@ msgstr "Зібрати"
 msgid "Collect data"
 msgstr "Зібрати дані"
 
-#: inc/staticmisc.class.php:690 inc/collect.class.php:59
+#: inc/staticmisc.class.php:706 inc/collect.class.php:59
 msgid "Collect information"
 msgstr "Збір інформації"
 
@@ -334,7 +333,7 @@ msgstr "Збір інформації"
 msgid "Collect management"
 msgstr "Керування збором даних"
 
-#: inc/collect.class.php:706
+#: inc/collect.class.php:722
 msgid "Collect module has been disabled for this agent"
 msgstr "У цього агента модуль збору інформації вимкнено"
 
@@ -374,8 +373,8 @@ msgstr "Правила комп’ютерів організації"
 msgid "Computer information"
 msgstr "Інформація комп'ютера"
 
-#: inc/collectrule.class.php:73 inc/profile.class.php:307
-#: inc/collectrulecollection.class.php:72
+#: inc/collectrulecollection.class.php:72 inc/profile.class.php:307
+#: inc/collectrule.class.php:73
 msgid "Computer information rules"
 msgstr "Правила інформації комп’ютера"
 
@@ -395,7 +394,7 @@ msgstr "Конфігурація"
 msgid "Configure SNMP credentials"
 msgstr "Конфігурація параметрів аутентифікації SNMP"
 
-#: inc/taskjobview.class.php:776
+#: inc/taskjobview.class.php:799
 msgid "Confirm the final deletion ?"
 msgstr "Підтвердити повне видалення ?"
 
@@ -425,12 +424,12 @@ msgstr ""
 msgid "Create directory"
 msgstr "Створити каталог"
 
-#: inc/task.class.php:2306
+#: inc/task.class.php:2441
 msgid "Created a deployment job, package: "
 msgstr "Завдання розгортання створено, пакет:"
 
-#: inc/collect_registry_content.class.php:169
-#: inc/collect_registry_content.class.php:216
+#: inc/collect_registry_content.class.php:173
+#: inc/collect_registry_content.class.php:220
 msgid "Data"
 msgstr "Дані"
 
@@ -454,14 +453,13 @@ msgstr ""
 "Визначити правила імпорту : об’єднати та створити новий комп’ютер (ОБЕРЕЖНО:"
 " ці ж правила застосовуються для інвентаризації комп’ютерів)"
 
-#: inc/taskjob.class.php:983 inc/taskjob.class.php:1362
-#: inc/taskjoblog.class.php:445
+#: inc/taskjob.class.php:1035 inc/taskjob.class.php:1414
 msgid "Definition"
 msgstr "Визначення"
 
-#: inc/taskjob.class.php:1409 inc/deploycheck.class.php:290
-#: inc/deployaction.class.php:251 inc/deployfile.class.php:244
-#: inc/deployuserinteraction.class.php:300 inc/taskjobview.class.php:284
+#: inc/deployuserinteraction.class.php:300 inc/deployfile.class.php:244
+#: inc/deployaction.class.php:251 inc/taskjobview.class.php:284
+#: inc/taskjob.class.php:1461 inc/deploycheck.class.php:290
 msgid "Delete"
 msgstr "Видалити"
 
@@ -473,7 +471,7 @@ msgstr "Видалити агентів, які не контактували з
 msgid "Delete directory"
 msgstr "Видалити каталог"
 
-#: inc/taskjobview.class.php:722 inc/taskjobview.class.php:744
+#: inc/taskjobview.class.php:745 inc/taskjobview.class.php:767
 msgid "Delete selected items"
 msgstr "Видалити обране"
 
@@ -485,7 +483,7 @@ msgstr "Видалити успішні завдання \"за вимогою\"
 msgid "Delete tasks logs after"
 msgstr "Видалити протоколи завдань після"
 
-#: inc/menu.class.php:427 hook.php:48
+#: hook.php:48 inc/menu.class.php:427
 msgid "Deploy"
 msgstr "Розгортання"
 
@@ -497,27 +495,27 @@ msgstr "У цього агента модуль розгортання вимк�
 msgid "Deploy packages on demand"
 msgstr "Розгортання пакетів за вимогою"
 
-#: inc/task.class.php:2246
+#: inc/task.class.php:2381
 msgid "Deployment job, package: "
 msgstr "Завдання розгортання, пакет:"
 
-#: inc/taskjoblog.class.php:770
+#: inc/taskjoblog.class.php:425
 msgid "Detail"
 msgstr "Деталі"
 
-#: inc/task.class.php:755
+#: inc/task.class.php:801
 msgid "Device no longer defined in definition of job"
 msgstr "Пристрій більше не входить у визначення роботи."
 
-#: inc/statediscovery.class.php:178
+#: inc/statediscovery.class.php:188
 msgid "Devices imported"
 msgstr "Імпортовані пристрої"
 
-#: inc/statediscovery.class.php:177
+#: inc/statediscovery.class.php:187
 msgid "Devices linked"
 msgstr "Пов’язані пристрої"
 
-#: inc/statediscovery.class.php:176
+#: inc/statediscovery.class.php:186
 msgid "Devices not imported"
 msgstr "Пристрої, що не імпортовані"
 
@@ -553,7 +551,7 @@ msgstr "Не пробуджувати"
 msgid "Download"
 msgstr ""
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:782
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:796
 msgid "Dynamic group"
 msgstr "Динамічна група"
 
@@ -578,7 +576,7 @@ msgstr "Закінчення діапазону IP"
 msgid "End time"
 msgstr "Час закінчення"
 
-#: inc/statediscovery.class.php:172 inc/stateinventory.class.php:110
+#: inc/statediscovery.class.php:182 inc/stateinventory.class.php:121
 msgid "Ending date"
 msgstr "Дата закінчення"
 
@@ -590,11 +588,11 @@ msgstr "Правила імпорту та прив’язання обладн�
 msgid "Error"
 msgstr "Помилка"
 
-#: inc/taskjoblog.class.php:662
+#: inc/taskjoblog.class.php:317
 msgid "Error / rescheduled"
 msgstr "Помилка / перенесено"
 
-#: inc/stateinventory.class.php:115
+#: inc/stateinventory.class.php:126
 msgid "Error(s)"
 msgstr "Помилок"
 
@@ -647,9 +645,9 @@ msgstr "Помилка запису файлу на диск"
 msgid "Features"
 msgstr "Функції"
 
-#: inc/deploycheck.class.php:388 inc/deploycheck.class.php:401
-#: inc/deploycheck.class.php:408 inc/collect_file.class.php:86
-#: inc/collect_file.class.php:192 inc/deployfile.class.php:294
+#: inc/collect_file.class.php:86 inc/collect_file.class.php:192
+#: inc/deployfile.class.php:294 inc/deploycheck.class.php:388
+#: inc/deploycheck.class.php:401 inc/deploycheck.class.php:408
 msgid "File"
 msgstr "Файл"
 
@@ -726,8 +724,8 @@ msgstr[1] "Фільтри"
 msgstr[2] "Фільтрів"
 msgstr[3] "Фільтрів"
 
-#: inc/collect.class.php:150 inc/collect.class.php:232
-#: inc/collect.class.php:247
+#: inc/collect.class.php:150 inc/collect.class.php:241
+#: inc/collect.class.php:256
 msgid "Find file"
 msgstr "Шукати файл"
 
@@ -735,8 +733,7 @@ msgstr "Шукати файл"
 msgid "Finished"
 msgstr "Закінчено"
 
-#: inc/statediscovery.class.php:254 inc/taskjobstate.class.php:268
-#: inc/stateinventory.class.php:183
+#: inc/statediscovery.class.php:274 inc/stateinventory.class.php:207
 msgid "Finished tasks"
 msgstr "Закінчені завдання"
 
@@ -753,7 +750,7 @@ msgstr "Каталог рекурсивно"
 msgid "Force start"
 msgstr "Форсувати"
 
-#: inc/taskjob.class.php:1432 inc/taskjoblog.class.php:359
+#: inc/taskjob.class.php:1484
 msgid "Force the end"
 msgstr "Форсувати закінчення"
 
@@ -789,23 +786,23 @@ msgstr "Вільне місце більше чим"
 msgid "From"
 msgstr "З"
 
-#: inc/menu.class.php:53 report/not_queried_recently.php:42
-#: report/switch_ports.history.php:41 report/ports_date_connections.php:40
-#: report/computer_last_inventory.php:40 front/stateinventory.php:37
-#: front/task.form.php:42 front/menu_snmpinventory.php:38
-#: front/collectrule.php:38 front/taskjoblog.php:37
-#: front/credential.form.php:41 front/menu.php:38 front/collect.php:37
-#: front/taskjob.form.php:39 front/task.php:38 front/credential.php:37
-#: front/timeslot.php:40 front/statediscovery.php:37 front/taskjob.php:37
-#: front/iprange.php:37 front/iprange.form.php:39
-#: front/credentialip.form.php:44 front/collectrule.form.php:37
-#: front/credentialip.php:37 front/agentmodule.form.php:37 index.php:48
+#: index.php:48 inc/menu.class.php:53 report/switch_ports.history.php:41
+#: report/computer_last_inventory.php:40 report/not_queried_recently.php:42
+#: report/ports_date_connections.php:40 front/credential.php:37
+#: front/taskjob.php:37 front/timeslot.php:40 front/collect.php:37
+#: front/credential.form.php:41 front/collectrule.php:38
+#: front/taskjob.form.php:39 front/taskjoblog.php:37 front/iprange.form.php:39
+#: front/menu_snmpinventory.php:38 front/credentialip.php:37
+#: front/statediscovery.php:37 front/agentmodule.form.php:37
+#: front/iprange.php:37 front/task.php:38 front/credentialip.form.php:44
+#: front/task.form.php:42 front/collectrule.form.php:37
+#: front/stateinventory.php:37 front/menu.php:38
 msgid "GLPI Inventory"
 msgstr ""
 
-#: inc/deploycheck.class.php:244 inc/deploycheck.class.php:363
-#: inc/deploycheck.class.php:374 inc/deploycheck.class.php:383
-#: inc/deployaction.class.php:442
+#: inc/deployaction.class.php:442 inc/deploycheck.class.php:244
+#: inc/deploycheck.class.php:363 inc/deploycheck.class.php:374
+#: inc/deploycheck.class.php:383
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgstr ""
@@ -823,8 +820,8 @@ msgstr "Загальне"
 msgid "General configuration"
 msgstr "Загальні налаштування"
 
-#: inc/deploytaskjob.class.php:216 inc/profile.class.php:419
-#: inc/menu.class.php:218 front/deploygroup.php:38
+#: inc/profile.class.php:419 inc/menu.class.php:218
+#: inc/deploytaskjob.class.php:223 front/deploygroup.php:38
 msgid "Groups of computers"
 msgstr "Групи комп’ютерів"
 
@@ -844,9 +841,8 @@ msgstr "Я не на цьому комп'ютері: пробудження з �
 msgid "I'm on this computer: local wakeup"
 msgstr "Я на цьому комп'ютері: локальне пробудження"
 
-#: inc/iprange.class.php:88 inc/iprange.class.php:91
-#: inc/staticmisc.class.php:372 inc/staticmisc.class.php:406
-#: inc/menu.class.php:335
+#: inc/staticmisc.class.php:388 inc/staticmisc.class.php:422
+#: inc/iprange.class.php:88 inc/iprange.class.php:91 inc/menu.class.php:335
 msgid "IP Ranges"
 msgstr "Діапазони IP"
 
@@ -884,7 +880,7 @@ msgstr ""
 msgid "Import agent XML file"
 msgstr "Імпортувати XML файл агента"
 
-#: inc/taskjoblog.class.php:773
+#: inc/taskjoblog.class.php:428
 msgid "Import denied"
 msgstr "Імпорт заборонено"
 
@@ -892,7 +888,7 @@ msgstr "Імпорт заборонено"
 msgid "Impossible to read the CSV file"
 msgstr "CVS файл неможливо прочитати"
 
-#: inc/taskview.class.php:234 inc/deploypackage.class.php:1372
+#: inc/deploypackage.class.php:1372 inc/taskview.class.php:234
 msgid "In error"
 msgstr "Є помилки"
 
@@ -904,7 +900,7 @@ msgstr "Iname"
 msgid "Include old jobs"
 msgstr "Також старі завдання"
 
-#: inc/taskjoblog.class.php:101 inc/taskjoblog.class.php:576
+#: inc/taskjoblog.class.php:101
 msgid "Info"
 msgstr "Інформація"
 
@@ -928,7 +924,7 @@ msgstr "Інвентаризація"
 msgid "Inventory group"
 msgstr ""
 
-#: inc/taskjoblog.class.php:769
+#: inc/taskjoblog.class.php:424
 msgid "Inventory started"
 msgstr "Інвентаризацію розпочато"
 
@@ -936,13 +932,12 @@ msgstr "Інвентаризацію розпочато"
 msgid "JSON package representation"
 msgstr "JSON презентація пакету"
 
-#: inc/taskjob.class.php:58 inc/task.class.php:2135
-#: inc/taskjobstate.class.php:307 inc/agentwakeup.class.php:59
-#: inc/taskjoblog.class.php:190
+#: inc/task.class.php:2270 inc/taskjob.class.php:58
+#: inc/agentwakeup.class.php:59 inc/taskjoblog.class.php:190
 msgid "Job"
 msgstr "Робота"
 
-#: inc/taskjobstate.class.php:615
+#: inc/taskjobstate.class.php:520
 #, php-format
 msgid "Job available for next execution at %s"
 msgstr "Наступне виконання завдання о %s"
@@ -969,7 +964,7 @@ msgstr "Завдання відкладено користувачем %1$s"
 msgid "Key"
 msgstr "Ключ"
 
-#: report/not_queried_recently.php:135 report/computer_last_inventory.php:119
+#: report/computer_last_inventory.php:133 report/not_queried_recently.php:135
 msgid "Last inventory"
 msgstr "Остання інвентаризація"
 
@@ -1011,7 +1006,7 @@ msgstr "Максимальна кількість агентів, які мож�
 msgid "Maximum number of retry allowed"
 msgstr ""
 
-#: inc/taskjobstate.class.php:632
+#: inc/taskjobstate.class.php:537
 msgid "Maximum number of retry reached: force deployment"
 msgstr "Досягнута максимальна кількість повторів: розгортання форсовано"
 
@@ -1019,8 +1014,8 @@ msgstr "Досягнута максимальна кількість повто�
 msgid "Menu"
 msgstr "Меню"
 
-#: inc/taskjob.class.php:1001 inc/deployfile.class.php:174
-#: inc/deployfile.class.php:347
+#: inc/deployfile.class.php:174 inc/deployfile.class.php:347
+#: inc/taskjob.class.php:1053
 msgid "Minute(s)"
 msgstr "хвилини"
 
@@ -1028,7 +1023,7 @@ msgstr "хвилини"
 msgid "Mio"
 msgstr "Mio"
 
-#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:259
+#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:272
 msgid "Mirror server address"
 msgstr "Адреси дзеркальних серверів"
 
@@ -1045,17 +1040,17 @@ msgstr "Відсутній тимчасовий каталог"
 msgid "Modification Denied"
 msgstr "Модифікація заборонена"
 
-#: inc/agentmodule.class.php:111 inc/agentmodule.class.php:214
-#: inc/agentmodule.class.php:216 hook.php:48 hook.php:55 hook.php:62
-#: hook.php:69 hook.php:76 hook.php:83 hook.php:90
+#: hook.php:48 hook.php:55 hook.php:62 hook.php:69 hook.php:76 hook.php:83
+#: hook.php:90 inc/agentmodule.class.php:111 inc/agentmodule.class.php:214
+#: inc/agentmodule.class.php:216
 msgid "Module"
 msgstr "Модуль"
 
-#: inc/taskjobview.class.php:613
+#: inc/taskjobview.class.php:636
 msgid "Module method"
 msgstr "Модуль методу"
 
-#: inc/collect_wmi.class.php:60 inc/collect_wmi_content.class.php:145
+#: inc/collect_wmi.class.php:60 inc/collect_wmi_content.class.php:120
 msgid "Moniker"
 msgstr "Псевдонім"
 
@@ -1079,8 +1074,8 @@ msgstr "Ім’я"
 msgid "Network Inventory"
 msgstr "Інвентаризація мережі"
 
-#: inc/staticmisc.class.php:81 inc/config.class.php:420
-#: inc/config.class.php:440 hook.php:83
+#: hook.php:83 inc/staticmisc.class.php:81 inc/config.class.php:420
+#: inc/config.class.php:440
 msgid "Network discovery"
 msgstr "Мережеве виявлення"
 
@@ -1092,9 +1087,9 @@ msgstr ""
 msgid "Network inventory"
 msgstr "Мережева інвентаризація"
 
-#: inc/staticmisc.class.php:87 inc/agentmodule.class.php:134
-#: inc/agentmodule.class.php:242 inc/config.class.php:429
-#: inc/config.class.php:448
+#: inc/staticmisc.class.php:87 inc/config.class.php:429
+#: inc/config.class.php:448 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:242
 msgid "Network inventory (SNMP)"
 msgstr "Мережева інвентаризація (SNMP)"
 
@@ -1110,7 +1105,7 @@ msgstr "Мережеві параметри"
 msgid "Networking"
 msgstr "Мережа"
 
-#: inc/taskjobview.class.php:564 inc/taskjobview.class.php:567
+#: inc/taskjobview.class.php:587 inc/taskjobview.class.php:590
 msgid "New action"
 msgstr "Нова дія"
 
@@ -1134,7 +1129,7 @@ msgstr "Немає під'єднаних користувачів"
 msgid "Non sentitive case"
 msgstr "Ігнорувати регістр символів"
 
-#: inc/taskview.class.php:233 inc/deploypackage.class.php:1371
+#: inc/deploypackage.class.php:1371 inc/taskview.class.php:233
 msgid "Not done yet"
 msgstr "Ще не виконано"
 
@@ -1154,7 +1149,7 @@ msgstr "Кількість днів з останньої інвентариза
 msgid "Number of output lines to retrieve"
 msgstr "Кількість вихідних строчок для відтворення"
 
-#: inc/stateinventory.class.php:112
+#: inc/stateinventory.class.php:123
 msgid "Number per second"
 msgstr "Кількість в секунду"
 
@@ -1178,8 +1173,7 @@ msgstr "OK - Cancel"
 msgid "Off"
 msgstr "Off"
 
-#: inc/taskjoblog.class.php:99 inc/taskjoblog.class.php:560
-#: inc/taskjoblog.class.php:661
+#: inc/taskjoblog.class.php:99 inc/taskjoblog.class.php:316
 msgid "Ok"
 msgstr "Ok"
 
@@ -1203,7 +1197,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "Розширення PHP зупинило завантаження файлу"
 
-#: inc/task.class.php:2096 inc/deploypackage.class.php:96
+#: inc/deploypackage.class.php:96 inc/task.class.php:2231
 msgid "Package"
 msgstr "Пакет"
 
@@ -1231,12 +1225,12 @@ msgstr "Керування пакетами"
 msgid "Packages to import"
 msgstr "Пакети для імпорту"
 
+#: inc/collect_registry_content.class.php:171
 #: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
-#: inc/collect_registry_content.class.php:167
 msgid "Path"
 msgstr "Шлях"
 
-#: inc/collect.class.php:846
+#: inc/collect.class.php:862
 msgid "Path not found"
 msgstr "Шлях не знайдено"
 
@@ -1253,11 +1247,11 @@ msgstr "Шлях до значення"
 msgid "Path/file"
 msgstr "Шлях/файл"
 
-#: inc/taskjob.class.php:982
+#: inc/taskjob.class.php:1034
 msgid "Periodicity"
 msgstr "Періодичність"
 
-#: inc/taskview.class.php:322 inc/task.class.php:143
+#: inc/task.class.php:143 inc/taskview.class.php:322
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
@@ -1278,20 +1272,16 @@ msgstr "Проміжок часу розгортання"
 msgid "Prepare for install"
 msgstr "Підготовка встановлення"
 
-#: inc/taskview.class.php:237 inc/statediscovery.class.php:245
-#: inc/taskjobstate.class.php:139 inc/deploypackage.class.php:1375
-#: inc/stateinventory.class.php:174 inc/taskjoblog.class.php:96
-#: inc/taskjoblog.class.php:546 inc/taskjoblog.class.php:710
+#: inc/deploypackage.class.php:1375 inc/taskview.class.php:237
+#: inc/statediscovery.class.php:265 inc/taskjobstate.class.php:139
+#: inc/stateinventory.class.php:198 inc/taskjoblog.class.php:96
+#: inc/taskjoblog.class.php:365
 msgid "Prepared"
 msgstr "Підготовлено"
 
 #: inc/profile.class.php:372
 msgid "Printer SNMP"
 msgstr ""
-
-#: inc/taskjoblog.class.php:407
-msgid "Process number"
-msgstr "Кількість процесів"
 
 #: inc/communicationnetworkdiscovery.class.php:115
 #, php-format
@@ -1306,11 +1296,11 @@ msgstr "Прогрес"
 msgid "Properties"
 msgstr "Властивості"
 
-#: inc/collect_wmi_content.class.php:147 inc/collect_wmi_content.class.php:198
+#: inc/collect_wmi_content.class.php:122 inc/collect_wmi_content.class.php:173
 msgid "Property"
 msgstr "Властивість"
 
-#: inc/taskjobview.class.php:773
+#: inc/taskjobview.class.php:796
 msgid "Purge"
 msgstr "Витерти"
 
@@ -1330,8 +1320,8 @@ msgstr "Рекурсивно"
 msgid "Regex"
 msgstr "Regex"
 
-#: inc/deploycheck.class.php:55 inc/collect.class.php:148
-#: inc/collect.class.php:196
+#: inc/collect.class.php:148 inc/collect.class.php:205
+#: inc/deploycheck.class.php:55
 msgid "Registry"
 msgstr "Реєстр"
 
@@ -1375,7 +1365,7 @@ msgstr "Інвентаризація віддалених пристроїв"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Віддалені пристрої для інвентаризації (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:229 hook.php:456
+#: hook.php:456 inc/deploygroup_staticdata.class.php:229
 msgid "Remove from static group"
 msgstr ""
 
@@ -1383,7 +1373,7 @@ msgstr ""
 msgid "Restart job"
 msgstr "Перезапустити виконання"
 
-#: inc/taskjobview.class.php:653
+#: inc/taskjobview.class.php:676
 msgid "Restrict scope to task entity"
 msgstr ""
 
@@ -1391,7 +1381,7 @@ msgstr ""
 msgid "Retry"
 msgstr "Повторити"
 
-#: inc/taskjobstate.class.php:630
+#: inc/taskjobstate.class.php:535
 #, php-format
 msgid "Retry #%d"
 msgstr "Повтор №%d"
@@ -1428,13 +1418,9 @@ msgstr "Правила"
 msgid "Rules applied"
 msgstr "Застосовані правила"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1374 inc/taskview.class.php:236
 msgid "Running"
 msgstr "Виконуються"
-
-#: inc/taskjobstate.class.php:262
-msgid "Running tasks"
-msgstr "Завдання, що виконуються"
 
 #: inc/deploycheck.class.php:70
 msgid "SHA-512 hash value matches"
@@ -1444,7 +1430,7 @@ msgstr "Значення SHA-512 однакове"
 msgid "SHA-512 hash value mismatch"
 msgstr "Значення SHA-512 не однакове"
 
-#: inc/iprange_snmpcredential.class.php:213 inc/menu.class.php:351
+#: inc/menu.class.php:351 inc/iprange_snmpcredential.class.php:213
 msgid "SNMP credentials"
 msgstr "Параметри авторизації SNMP"
 
@@ -1464,15 +1450,15 @@ msgstr "Таймаут SNMP"
 msgid "SSL-only for agent"
 msgstr "Для агентів тільки SSL"
 
-#: inc/taskview.class.php:344 inc/task.class.php:110
+#: inc/task.class.php:110 inc/taskview.class.php:344
 msgid "Schedule end"
 msgstr "Закінчення розкладу"
 
-#: inc/taskview.class.php:338 inc/task.class.php:102
+#: inc/task.class.php:102 inc/taskview.class.php:338
 msgid "Schedule start"
 msgstr "Початок розкладу"
 
-#: inc/taskjob.class.php:981
+#: inc/taskjob.class.php:1033
 msgid "Scheduled date"
 msgstr "Запланована дата"
 
@@ -1514,10 +1500,10 @@ msgstr ""
 msgid "Show/Hide details"
 msgstr "Показати/Сховати деталі"
 
+#: inc/collect_file.class.php:65 inc/collect_file.class.php:147
+#: inc/deployfile.class.php:1089 inc/collect.class.php:258
 #: inc/collect_file_content.class.php:97
-#: inc/collect_file_content.class.php:139 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/collect.class.php:249
-#: inc/deployfile.class.php:1089
+#: inc/collect_file_content.class.php:139
 msgid "Size"
 msgstr "Розмір"
 
@@ -1538,21 +1524,21 @@ msgstr "Початок діапазону IP"
 msgid "Start time"
 msgstr "Час початку"
 
-#: inc/statediscovery.class.php:250 inc/stateinventory.class.php:179
-#: inc/taskjoblog.class.php:97 inc/taskjoblog.class.php:552
-#: inc/taskjoblog.class.php:660 inc/taskjoblog.class.php:714
+#: inc/statediscovery.class.php:270 inc/stateinventory.class.php:203
+#: inc/taskjoblog.class.php:97 inc/taskjoblog.class.php:315
+#: inc/taskjoblog.class.php:369
 msgid "Started"
 msgstr "Розпочато"
 
-#: inc/statediscovery.class.php:171 inc/stateinventory.class.php:109
+#: inc/statediscovery.class.php:181 inc/stateinventory.class.php:120
 msgid "Starting date"
 msgstr "Дата початку"
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:764 hook.php:94
+#: hook.php:94 inc/deploygroup.class.php:87 inc/deploygroup.class.php:778
 msgid "Static group"
 msgstr "Статична група"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1373
+#: inc/deploypackage.class.php:1373 inc/taskview.class.php:235
 msgid "Successful"
 msgstr "Успішно"
 
@@ -1564,7 +1550,7 @@ msgstr "Мета"
 msgid "Target Type"
 msgstr "Тип Мети"
 
-#: inc/iprange.class.php:289 inc/deploygroup.class.php:210 hook.php:450
+#: hook.php:450 inc/iprange.class.php:289 inc/deploygroup.class.php:221
 msgid "Target a task"
 msgstr "Мета завдання"
 
@@ -1576,14 +1562,14 @@ msgstr[1] "Цілей розгортання за вимогою"
 msgstr[2] "Цілей розгортання за вимогою"
 msgstr[3] "Цілей розгортання за вимогою"
 
-#: inc/taskjobview.class.php:676 inc/taskjobview.class.php:709
+#: inc/taskjobview.class.php:699 inc/taskjobview.class.php:732
 msgid "Targets"
 msgstr "Цілі"
 
-#: inc/taskview.class.php:161 inc/deploytask.class.php:58
-#: inc/deploytask.class.php:160 inc/profile.class.php:413
-#: inc/task.class.php:2078 inc/task.class.php:2118
-#: inc/statediscovery.class.php:168 inc/stateinventory.class.php:106
+#: inc/task.class.php:2213 inc/task.class.php:2253 inc/taskview.class.php:161
+#: inc/profile.class.php:413 inc/statediscovery.class.php:178
+#: inc/stateinventory.class.php:117 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Завдання"
@@ -1595,7 +1581,7 @@ msgstr[3] "Завдань"
 msgid "Task execution states"
 msgstr "Хід виконання робіт"
 
-#: inc/task.class.php:1859
+#: inc/task.class.php:1994
 msgid "Task has been disabled"
 msgstr "Завдання вимкнено"
 
@@ -1611,7 +1597,7 @@ msgstr "Завдання"
 msgid "Tasks / Groups"
 msgstr ""
 
-#: inc/task.class.php:440
+#: inc/task.class.php:469
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
@@ -1628,23 +1614,27 @@ msgstr[1] "З цим пакетом виконуються наступні за
 msgstr[2] "З цим пакетом виконуються наступні завдання"
 msgstr[3] "З цим пакетом виконуються наступні завдання"
 
-#: inc/taskjobview.class.php:682
+#: inc/taskjobview.class.php:705
 msgid "The items that should be applied for this job."
 msgstr "Елементи, які застосовуються для цієї Роботи"
 
-#: inc/taskjobview.class.php:693
+#: inc/taskjobview.class.php:716
 msgid "The items that should carry out those targets."
 msgstr "Елементи, які займаються цими цілями"
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
+#: inc/deploypackage.class.php:999 inc/deploypackageitem.class.php:330
 msgid "The modified JSON contained a syntax error :"
 msgstr "Змінений JSON містить синтаксичну помилку :"
 
-#: inc/task.class.php:2292
+#: inc/task.class.php:2427
 msgid "The selected task already has a deployment job for another package: "
 msgstr "Обране завдання вже має задачу розгортання іншого пакету:"
 
-#: inc/task.class.php:453
+#: inc/task.class.php:950
+msgid "The task cannot be updated if it is active"
+msgstr ""
+
+#: inc/task.class.php:482
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Завдання було деактивовано після підготовки цієї роботи."
 
@@ -1652,7 +1642,7 @@ msgstr "Завдання було деактивовано після підго
 msgid "The uploaded file was only partially uploaded"
 msgstr "Файл був завантажений лише частково"
 
-#: inc/task.class.php:528
+#: inc/task.class.php:557
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr ""
 "Цей агент більше не відноситься до агентів, призначених до цієї роботи."
@@ -1667,11 +1657,11 @@ msgid ""
 "network printer)"
 msgstr ""
 
-#: inc/task.class.php:474
+#: inc/task.class.php:503
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "Ця робота не може більше виконуватись згідно розкладу завдання."
 
-#: inc/task.class.php:509
+#: inc/task.class.php:538
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr ""
 "Ця робота не може більше виконуватись згідно часового діапазону завдання."
@@ -1680,13 +1670,13 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr "Завдання активне, видалення заборонено"
 
+#: inc/statediscovery.class.php:184 inc/stateinventory.class.php:124
 #: inc/config.class.php:419 inc/config.class.php:428
-#: inc/statediscovery.class.php:174 inc/stateinventory.class.php:113
 msgid "Threads number"
 msgstr "Кількість гілок"
 
-#: inc/timeslot.class.php:66 inc/timeslot.class.php:82
-#: inc/timeslotentry.class.php:82 inc/menu.class.php:264
+#: inc/timeslotentry.class.php:82 inc/timeslot.class.php:66
+#: inc/timeslot.class.php:82 inc/menu.class.php:264
 msgid "Time slot"
 msgstr "Діапазон часу"
 
@@ -1698,11 +1688,11 @@ msgstr "Поле діапазону часу"
 msgid "To"
 msgstr "До"
 
-#: inc/stateinventory.class.php:114
+#: inc/stateinventory.class.php:125
 msgid "To inventory"
 msgstr "До інвентаризації"
 
-#: inc/statediscovery.class.php:175
+#: inc/statediscovery.class.php:185
 msgid "Total discovery devices"
 msgstr "Всього пристроїв виявлено"
 
@@ -1726,8 +1716,8 @@ msgstr "Тип значення"
 msgid "Uncompress"
 msgstr "Розпакувати"
 
-#: inc/statediscovery.class.php:167 inc/taskjobstate.class.php:306
-#: inc/stateinventory.class.php:105 inc/taskjoblog.class.php:216
+#: inc/statediscovery.class.php:177 inc/stateinventory.class.php:116
+#: inc/taskjoblog.class.php:216
 msgid "Unique id"
 msgstr "Унікальний id"
 
@@ -1739,11 +1729,11 @@ msgstr "Одиниця"
 msgid "Unused file"
 msgstr "Файл, що не використовується"
 
-#: inc/taskjoblog.class.php:768
+#: inc/taskjoblog.class.php:423
 msgid "Update the item"
 msgstr "Оновити елемент"
 
-#: inc/task.class.php:2263
+#: inc/task.class.php:2398
 msgid "Updated a deployment job, package: "
 msgstr "Завдання розгортання оновлено, пакет:"
 
@@ -1802,11 +1792,11 @@ msgstr "Хост VMware"
 msgid "VMware host remote inventory"
 msgstr "Віддалена інвентаризація VMware host"
 
+#: inc/collect_registry_content.class.php:172
+#: inc/collect_registry_content.class.php:219
+#: inc/collect_wmi_content.class.php:123 inc/collect_wmi_content.class.php:174
 #: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
 #: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
-#: inc/collect_registry_content.class.php:168
-#: inc/collect_registry_content.class.php:215
-#: inc/collect_wmi_content.class.php:148 inc/collect_wmi_content.class.php:199
 msgid "Value"
 msgstr "Значення"
 
@@ -1814,7 +1804,7 @@ msgstr "Значення"
 msgid "Version"
 msgstr "Версія"
 
-#: inc/collect.class.php:149 inc/collect.class.php:214
+#: inc/collect.class.php:149 inc/collect.class.php:223
 msgid "WMI"
 msgstr "WMI"
 
@@ -1858,7 +1848,7 @@ msgstr "Yes - No"
 msgid "Yes - No - Cancel"
 msgstr "Yes - No - Cancel"
 
-#: inc/task.class.php:2229
+#: inc/task.class.php:2364
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
@@ -1884,7 +1874,7 @@ msgstr "перервати виконання"
 msgid "continue"
 msgstr "продовжити"
 
-#: inc/taskjob.class.php:1011
+#: inc/taskjob.class.php:1063
 msgid "day(s)"
 msgstr "дні"
 
@@ -1892,17 +1882,17 @@ msgstr "дні"
 msgid "deploy on demand task"
 msgstr "завдання розгортання за вимогою"
 
-#: inc/taskjoblog.class.php:766
+#: inc/taskjoblog.class.php:421
 msgid "devices found"
 msgstr "знайдено пристроїв"
 
-#: inc/taskjoblog.class.php:765
+#: inc/taskjoblog.class.php:420
 msgid "devices queried"
 msgstr "опитано пристроїв"
 
-#: inc/taskjob.class.php:1397 inc/deploycheck.class.php:275
-#: inc/deployaction.class.php:236 inc/deployfile.class.php:230
-#: inc/deployuserinteraction.class.php:285
+#: inc/deployuserinteraction.class.php:285 inc/deployfile.class.php:230
+#: inc/deployaction.class.php:236 inc/taskjob.class.php:1449
+#: inc/deploycheck.class.php:275
 msgid "drag"
 msgstr "тягти"
 
@@ -1914,7 +1904,7 @@ msgstr "виконати"
 msgid "filename"
 msgstr "ім’я файлу"
 
-#: inc/taskjob.class.php:1006
+#: inc/taskjob.class.php:1058
 msgid "hour(s)"
 msgstr "години"
 
@@ -1938,7 +1928,7 @@ msgstr "пройшло"
 msgid "path"
 msgstr "шлях"
 
-#: inc/collect_file_content.class.php:138 inc/collect.class.php:234
+#: inc/collect.class.php:243 inc/collect_file_content.class.php:138
 msgid "pathfile"
 msgstr "pathfile"
 
@@ -1978,7 +1968,7 @@ msgstr ""
 msgid "uncompress"
 msgstr "розпакувати"
 
-#: inc/taskjoblog.class.php:732
+#: inc/taskjoblog.class.php:387
 msgid "unknown"
 msgstr "невідомо"
 
