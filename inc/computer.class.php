@@ -3,12 +3,12 @@
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
- * Copyright (C) 2021-2023 Teclib' and contributors.
+ * Copyright (C) 2021 Teclib' and contributors.
  *
  * http://glpi-project.org
  *
  * based on FusionInventory for GLPI
- * Copyright (C) 2010-2023 by the FusionInventory Development Team.
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
  * ---------------------------------------------------------------------
  *
