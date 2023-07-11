@@ -114,7 +114,7 @@ class PackageJsonTest extends TestCase
         $DB->connect();
 
         // create package orders used before 9.1 version
-        $DB->dropTable('glpi_plugin_glpiinventory_deployorders', true);
+        $DB->dropTable('glpi_plugin_glpiinventory_deploypackages', true);
 
         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deploypackages` (
          `id` int unsigned NOT NULL AUTO_INCREMENT,
