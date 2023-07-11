@@ -567,7 +567,6 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $iterator = $DB->request([
             'FROM'   => 'glpi_plugin_glpiinventory_taskjoblogs',
             'WHERE'  => [
-                'state' => [self::FINISHED, self::CANCELLED],
                 'date'  => ['<', new \QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')]
             ],
             'GROUPBY' => 'plugin_glpiinventory_taskjobstates_id'
