@@ -100,20 +100,37 @@ class UpdateTest extends TestCase
                 || strstr($data[0], "fusi")
                 || strstr($data[0], "glpiinventory")
             ) {
-                $DB->query("DROP TABLE " . $data[0]);
+                $DB->dropTable($data[0]);
             }
         }
-        $query = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype` LIKE 'PluginFus%' OR `itemtype` LIKE 'PluginGlpiinventory%'";
-        $DB->queryOrDie($query);
+        $DB->deleteOrDie(
+            'glpi_displaypreferences',
+            [
+                'OR' => [
+                    ['itemtype' => ['LIKE', 'PluginFus%']],
+                    ['itemtype' => ['LIKE', 'PluginGlpiinventory%']]
+                ]
+            ]
+        );
 
-       // Delete all plugin rules
-        $query = "DELETE FROM " . Rule::getTable() . " WHERE sub_type LIKE 'Plugin%'";
-        $DB->queryOrDie($query);
+        // Delete all plugin rules
+        $DB->deleteOrDie(
+            Rule::getTable(),
+            ['sub_type' => ['LIKE', 'Plugin%']]
+        );
 
-        $DB->query('DELETE FROM glpi_ruleactions WHERE id > 105');
-        $DB->query('DELETE FROM glpi_rulecriterias WHERE id > 108');
-        $DB->query('DELETE FROM glpi_rules WHERE id > 105');
+        $DB->delete(
+            'glpi_ruleactions',
+            ['id' => ['>', 105]]
+        );
+        $DB->delete(
+            'glpi_rulecriterias',
+            ['id' => ['>', 108]]
+        );
+        $DB->delete(
+            'glpi_rules',
+            ['id' => ['>', 105]]
+        );
 
         if ($version != '') {
             $sqlfile = "tests/Installation/mysql/i-" . $version . ".sql";

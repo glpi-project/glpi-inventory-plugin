@@ -56,7 +56,7 @@ class InstallationTest extends TestCase
         $result = $DB->query($query);
         while ($data = $DB->fetchArray($result)) {
             if (strstr($data[0], "fusi")) {
-                $DB->query("DROP VIEW " . $data[0]);
+                $DB->dropView($data[0]);
             }
         }
 
@@ -68,7 +68,7 @@ class InstallationTest extends TestCase
                 || strstr($data[0], "fusi")
                 || strstr($data[0], "glpiinventory")
             ) {
-                $DB->query("DROP TABLE " . $data[0]);
+                $DB->dropTable($data[0]);
             }
         }
         $DB->query('TRUNCATE TABLE glpi_plugins');

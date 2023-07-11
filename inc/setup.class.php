@@ -76,8 +76,13 @@ class PluginGlpiinventorySetup
                 or (strstr($data[0], "glpi_plugin_tracker"))
                 or (strstr($data[0], "glpi_dropdown_plugin_tracker"))
             ) {
-                $query_delete = "DROP TABLE `" . $data[0] . "`;";
-                $DB->query($query_delete) or die($DB->error());
+                if (method_exists($DB, 'dropTable')) {
+                    $DB->dropTable($data[0]) or die($DB->error());
+                } else {
+                    //Can be removed once GLPI 10.0.10 is the minimum supported version
+                    $query_delete = "DROP TABLE `" . $data[0] . "`;";
+                    $DB->query($query_delete) or die($DB->error());
+                }
             }
         }
 
@@ -88,14 +93,14 @@ class PluginGlpiinventorySetup
             ]
         );
 
-       //Remove informations related to profiles from the session (to clean menu and breadcrumb)
+        //Remove information related to profiles from the session (to clean menu and breadcrumb)
         PluginGlpiinventoryProfile::removeRightsFromSession();
         return true;
     }
 
 
    /**
-    * Remove a directory and sub-directory
+    * Remove a directory and subdirectory
     *
     * @param string $dir name of the directory
     */

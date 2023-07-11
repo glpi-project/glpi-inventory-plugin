@@ -361,7 +361,12 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
       'glpi_plugin_fusinvdeploy_tasks'
     ];
     foreach ($old_deploy_views as $view) {
-        $DB->query("DROP VIEW IF EXISTS $view");
+        if (method_exists($DB, 'dropView')) {
+            $DB->dropView($view, true);
+        } else {
+            //Can be removed once GLPI 10.0.10 is the minimum supported version
+            $DB->query("DROP VIEW IF EXISTS $view");
+        }
     }
 
     renamePlugin($migration);
@@ -3009,12 +3014,22 @@ function do_computercomputer_migration($migration)
                 $Computer->update($input);
             }
         }
-        $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
-        $DB->query($sql);
+        if (method_exists($DB, 'dropTable')) {
+            $DB->dropTable('glpi_plugin_fusinvinventory_computers');
+        } else {
+            //Can be removed once GLPI 10.0.10 is the minimum supported version
+            $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
+            $DB->query($sql);
+        }
     }
     if ($DB->tableExists("glpi_plugin_fusinvinventory_tmp_agents")) {
-        $sql = "DROP TABLE `glpi_plugin_fusinvinventory_tmp_agents`";
-        $DB->query($sql);
+        if (method_exists($DB, 'dropTable')) {
+            $DB->dropTable('glpi_plugin_fusinvinventory_tmp_agents');
+        } else {
+            //Can be removed once GLPI 10.0.10 is the minimum supported version
+            $sql = "DROP TABLE `glpi_plugin_fusinvinventory_tmp_agents`";
+            $DB->query($sql);
+        }
     }
     $a_table = [];
     $a_table['name'] = 'glpi_plugin_glpiinventory_inventorycomputercomputers';

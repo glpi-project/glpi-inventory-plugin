@@ -113,9 +113,8 @@ class PackageJsonTest extends TestCase
 
         $DB->connect();
 
-       // create package orders used before 9.1 version
-        $query = "DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deploypackages` ";
-        $DB->query($query);
+        // create package orders used before 9.1 version
+        $DB->dropTable('glpi_plugin_glpiinventory_deploypackages', true);
 
         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_glpiinventory_deploypackages` (
          `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -135,9 +134,8 @@ class PackageJsonTest extends TestCase
         (16, 'INST VLC 2.1.5', 'Install VLC 2.1.5 unintall all VLC', 0, 0, '2014-10-17 11:11:02', NULL);";
         $DB->query($query);
 
-       // glpi_plugin_glpiinventory_deployorders
-        $query = "DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_deployorders` ";
-        $DB->query($query);
+        // glpi_plugin_glpiinventory_deployorders
+        $DB->dropTable('glpi_plugin_glpiinventory_deployorders', true);
 
         $query = "CREATE TABLE `glpi_plugin_glpiinventory_deployorders` (
         `id` int unsigned NOT NULL,
