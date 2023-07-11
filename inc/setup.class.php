@@ -79,6 +79,7 @@ class PluginGlpiinventorySetup
                 if (method_exists($DB, 'dropTable')) {
                     $DB->dropTable($data[0]) or die($DB->error());
                 } else {
+                    //Can be removed once GLPI 10.0.10 is the minimum supported version
                     $query_delete = "DROP TABLE `" . $data[0] . "`;";
                     $DB->query($query_delete) or die($DB->error());
                 }
