@@ -374,36 +374,6 @@ class PluginGlpiinventoryToolbox
 
 
    /**
-    * Get information if allow_url_fopen is activated and display message if not
-    *
-    * @param integer $wakecomputer (1 if it's for wakeonlan, 0 if it's for task)
-    * @return boolean
-    */
-    public static function isAllowurlfopen($wakecomputer = 0)
-    {
-
-        if (!ini_get('allow_url_fopen')) {
-            echo "<center>";
-            echo "<table class='tab_cadre' height='30' width='700'>";
-            echo "<tr class='tab_bg_1'>";
-            echo "<td align='center'><strong>";
-            if ($wakecomputer == '0') {
-                echo __('PHP allow_url_fopen is off, remote can\'t work') . " !";
-            } else {
-                echo __('PHP allow_url_fopen is off, can\'t wake agent to do inventory') . " !";
-            }
-            echo "</strong></td>";
-            echo "</tr>";
-            echo "</table>";
-            echo "</center>";
-            echo "<br/>";
-            return false;
-        }
-        return true;
-    }
-
-
-   /**
     * Execute a function as as pllugin user
     *
     * @param string|array $function

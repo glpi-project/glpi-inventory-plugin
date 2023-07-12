@@ -56,8 +56,6 @@ Session::checkRight('plugin_glpiinventory_task', READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
-//PluginGlpiinventoryTaskjob::isAllowurlfopen();
-
 //If there is no form to submit, display the form
 $pfTask->display($_GET);
 
