@@ -102,7 +102,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     */
     public function getMatchingItemsCount(CommonGLPI $item)
     {
-       // Save pagination parameters
+        // Save pagination parameters
         $pagination_params = [];
         foreach (['sort', 'order', 'start'] as $field) {
             if (isset($_SESSION['glpisearch']['Computer'][$field])) {
@@ -119,11 +119,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
 
         $data = Search::prepareDatasForSearch('Computer', $params);
         Search::constructSQL($data);
+        Search::constructData($data);
 
-       // Use our specific constructDatas function rather than Glpi function
-        PluginGlpiinventorySearch::constructDatas($data);
-
-       // Restore pagination parameters
+        // Restore pagination parameters
         foreach ($pagination_params as $key => $value) {
             $_SESSION['glpisearch']['Computer'][$field] = $pagination_params[$field];
         }
@@ -232,17 +230,15 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     {
         $data = Search::prepareDatasForSearch('Computer', $params, $forcedisplay);
         Search::constructSQL($data);
+        Search::constructData($data);
 
-       // Use our specific constructDatas function rather than Glpi function
-        PluginGlpiinventorySearch::constructDatas($data);
-
-       // Remove some fields from the displayed columns
+        // Remove some fields from the displayed columns
         if (Session::isMultiEntitiesMode()) {
            // Remove entity and computer Id
             unset($data['data']['cols'][1]);
             unset($data['data']['cols'][2]);
         } else {
-           // Remove computer Id
+            // Remove computer Id
             unset($data['data']['cols'][1]);
         }
         Search::displayData($data);
@@ -286,10 +282,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 unset($search_params['metacriteria']);
             }
 
-           //force no sort (Search engine will sort by id) for better performance
+            //force no sort (Search engine will sort by id) for better performance
             $search_params['sort'] = '';
 
-           //Only retrieve computers IDs
+            //Only retrieve computers IDs
             $results = self::getDatas(
                 'Computer',
                 $search_params,
@@ -298,15 +294,13 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
 
             $results = Search::prepareDatasForSearch('Computer', $search_params, ['2']);
             Search::constructSQL($results);
-
-           // Use our specific constructDatas function rather than Glpi function
-            PluginGlpiinventorySearch::constructDatas($results);
+            Search::constructData($results);
 
             foreach ($results['data']['rows'] as $id => $row) {
                  $ids[$row['id']] = $row['id'];
             }
 
-           //store results in cache (for reusing on agent communication)
+            //store results in cache (for reusing on agent communication)
             self::storeCache($group, $ids);
         }
 
