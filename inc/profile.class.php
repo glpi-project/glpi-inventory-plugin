@@ -53,7 +53,6 @@ class PluginGlpiinventoryProfile extends Profile
        *    agent
        *    remotecontrol
        *    configuration
-       *    wol
        *    unmanaged
        *    task
        *    iprange
@@ -85,7 +84,6 @@ class PluginGlpiinventoryProfile extends Profile
         $types = ['agent'                  => 'plugin_glpiinventory_agent',
                      'remotecontrol'          => 'plugin_glpiinventory_remotecontrol',
                      'configuration'          => 'plugin_glpiinventory_configuration',
-                     'wol'                    => 'plugin_glpiinventory_wol',
                      'unmanaged'              => 'plugin_glpiinventory_unmanaged',
                      'task'                   => 'plugin_glpiinventory_task',
                      'credential'             => 'plugin_glpiinventory_credential',
@@ -412,9 +410,6 @@ class PluginGlpiinventoryProfile extends Profile
           ['itemtype'  => 'PluginGlpiinventoryTask',
                 'label'     => _n('Task', 'Tasks', 2, 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_task'],
-          ['rights'    => [READ => __('Read')],
-                'label'     => __('Wake On LAN', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_wol'],
           ['itemtype'  => 'PluginGlpiinventoryDeployGroup',
                 'label'     => __('Groups of computers', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_group'],

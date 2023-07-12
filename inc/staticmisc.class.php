@@ -52,13 +52,6 @@ class PluginGlpiinventoryStaticmisc
 
         $a_tasks = [
             [   'module'         => 'glpiinventory',
-                     'classname'      => 'PluginGlpiinventoryWakeonlan',
-                     'method'         => 'wakeonlan',
-                     'name'           => __('Wake On LAN', 'glpiinventory'),
-                     'use_rest'       => false
-            ],
-
-            [   'module'         => 'glpiinventory',
                      'method'         => 'inventory',
                      'selection_type' => 'devices',
                      'hidetask'       => 1,
@@ -129,60 +122,6 @@ class PluginGlpiinventoryStaticmisc
             }
         }
         return $modules_methods;
-    }
-
-
-   /**
-    * Get types of datas available to select for taskjob definition for WakeOnLan method
-    *
-    * @param array $a_itemtype types yet added for definitions
-    * @return array('itemtype'=>'value', 'itemtype'=>'value'...)
-    *   itemtype itemtype of object
-    *   value name of the itemtype
-    */
-    public static function task_definitiontype_wakeonlan($a_itemtype)
-    {
-
-        $a_itemtype['Computer'] = Computer::getTypeName();
-        $a_itemtype['PluginGlpiinventoryDeployGroup']
-                              = PluginGlpiinventoryDeployGroup::getTypeName();
-        return $a_itemtype;
-    }
-
-
-   /**
-    * Get all devices of definition type 'Computer' defined in
-    * task_definitiontype_wakeonlan
-    *
-    * @param string $title (not used)
-    * @return string unique html element id
-    */
-    public static function task_definitionselection_Computer_wakeonlan($title)
-    {
-
-        $options = [];
-        $options['entity'] = $_SESSION['glpiactive_entity'];
-        $options['entity_sons'] = 1;
-        $options['name'] = 'definitionselectiontoadd';
-        $rand = Dropdown::show("Computer", $options);
-        return $rand;
-    }
-
-
-   /**
-    * Get all devices of definition type 'PluginGlpiinventoryDeployGroup'
-    * defined in task_definitiontype_wakeonlan
-    *
-    * @param string $title (not used)
-    * @return string unique html element id
-    */
-    public static function task_definitionselection_PluginGlpiinventoryDeployGroup_wakeonlan($title)
-    {
-        $options = [];
-        $options['entity']      = $_SESSION['glpiactive_entity'];
-        $options['entity_sons'] = 1;
-        $options['name']        = 'definitionselectiontoadd';
-        return Dropdown::show("PluginGlpiinventoryDeployGroup", $options);
     }
 
 

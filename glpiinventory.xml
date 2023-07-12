@@ -19,9 +19,8 @@
    
       1. Komunikace s agenty pro inventarizaci a prozkoumávání sítě.
       2. Správa úloh a plánování.
-      3. Probouzení po síti (WoL).
-      4. Centralizovaná pravidla pro import majetku do GLPI.
-      5. Správa neznámých zařízení (dočasná zóna, v GLPI, před skutečnou správou majetku).
+      3. Centralizovaná pravidla pro import majetku do GLPI.
+      4. Správa neznámých zařízení (dočasná zóna, v GLPI, před skutečnou správou majetku).
 
    - GLPI Inventory Inventory:
       1. Inventura na počítačích (hardware, software, antivirus).
@@ -43,9 +42,8 @@
    
       1. Communication with inventory and network discovery agents.
       2. Tasks management and scheduling.
-      3. Wake on LAN.
-      4. Centralized rules for assets import in GLPI.
-      5. Unknown devices management (temporary zone, in GLPI, before real asset management).
+      3. Centralized rules for assets import in GLPI.
+      4. Unknown devices management (temporary zone, in GLPI, before real asset management).
 
    - GLPI Inventory Inventory:
       1. Local inventory for computers (hardware, software, antivirus).
@@ -67,9 +65,8 @@
 
       1. Communication avec les agents d'inventaire et de découverte.
       2. Gestion et planifications des tâches.
-      3. Wake on lan (réveil des ordinateurs).
-      4. Règles centralisées pour ces plugins d'import de matériel.
-      5. Gestion du matériel inconnu (zone tampon entre vos matériels gérés dans GLPI et ceux présents réellement sur le réseau).
+      3. Règles centralisées pour ces plugins d'import de matériel.
+      4. Gestion du matériel inconnu (zone tampon entre vos matériels gérés dans GLPI et ceux présents réellement sur le réseau).
 
    - GLPI Inventory Inventory :
 
@@ -190,7 +187,6 @@
             <tag>printers</tag>
             <tag>inventory</tag>
             <tag>tracker</tag>
-            <tag>WakeOnLan</tag>
             <tag>VMWare</tag>
             <tag>softwaredeployment</tag>
          </en>
@@ -201,7 +197,6 @@
             <tag>imprimantes</tag>
             <tag>inventaire</tag>
             <tag>tracker</tag>
-            <tag>WakeOnLan</tag>
             <tag>VMWare</tag>
             <tag>télédéploiement</tag>
          </fr>

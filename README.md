@@ -19,8 +19,6 @@ Some icons used in the project comes from the following set of graphics licensed
 
 * [myBaco](http://mybaco.deviantart.com) : icon_icon_InventoryComputerESX.png
 
-* [VistaICO.com](http://www.vistaico.com) : icon_wakeonlan.png
-
 * Aha-Soft : icon_collect.png
 
 * [BlueMalboro](http://bluemalboro.deviantart.com/art/Micro-Icon-Set-42295693) : icon_networkdiscovery.png, icon_networkinventory.png

@@ -626,11 +626,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 unset($modules_methods['networkinventory']);
             }
         }
-        if (!Session::haveRight('plugin_glpiinventory_wol', READ)) {
-            if (isset($modules_methods['wakeonlan'])) {
-                unset($modules_methods['wakeonlan']);
-            }
-        }
 
         echo "<div class='mb-2 row col-20 col-sm-10'>";
         echo "<label>" . __('Module method', 'glpiinventory') . "&nbsp;</label>";

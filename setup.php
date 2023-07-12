@@ -195,23 +195,21 @@ function plugin_init_glpiinventory()
             ['addtabon' => ['Computer']]
         );
 
-       // ##### 3. get informations of the plugin #####
+        // ##### 3. get informations of the plugin #####
 
         $Plugin->getFromDBbyDir('glpiinventory');
         $moduleId = $Plugin->fields['id'];
 
-       // Load config
+        // Load config
         PluginGlpiinventoryConfig::loadCache();
 
-       // ##### 5. Set in session XMLtags of methods #####
-
-        $_SESSION['glpi_plugin_glpiinventory']['xmltags']['WAKEONLAN'] = '';
+        // ##### 5. Set in session XMLtags of methods #####
         $_SESSION['glpi_plugin_glpiinventory']['xmltags']['NETWORKDISCOVERY']
                                              = 'PluginGlpiinventoryCommunicationNetworkDiscovery';
         $_SESSION['glpi_plugin_glpiinventory']['xmltags']['NETWORKINVENTORY']
                                              = 'PluginGlpiinventoryCommunicationNetworkInventory';
 
-       // set default values for task view
+        // set default values for task view
         if (!isset($_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'])) {
             $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] = 2;
         }
@@ -399,7 +397,6 @@ function plugin_init_glpiinventory()
     $PLUGIN_HOOKS[Hooks::HANDLE_ESX_TASK]['glpiinventory'] = 'plugin_glpiinventory_handle_esx_task';
     $PLUGIN_HOOKS[Hooks::HANDLE_COLLECT_TASK]['glpiinventory'] = 'plugin_glpiinventory_handle_collect_task';
     $PLUGIN_HOOKS[Hooks::HANDLE_DEPLOY_TASK]['glpiinventory'] = 'plugin_glpiinventory_handle_deploy_task';
-    $PLUGIN_HOOKS[Hooks::HANDLE_WAKEONLAN_TASK]['glpiinventory'] = 'plugin_glpiinventory_handle_wakeonlan_task';
 }
 
 

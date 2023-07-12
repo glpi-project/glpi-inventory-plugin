@@ -257,7 +257,6 @@ class DatabaseTestsCommons extends Assert
 
         // Check if all modules registered
         $modules = [
-            'WAKEONLAN',
             'INVENTORY',
             'InventoryComputerESX',
             'NETWORKINVENTORY',
