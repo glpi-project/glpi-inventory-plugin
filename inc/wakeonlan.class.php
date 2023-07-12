@@ -126,7 +126,6 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
                             }
 
                             $pfSearch = new Search();
-                            Search::manageGetValues('Computer');
                             $glpilist_limit = $_SESSION['glpilist_limit'];
                             $_SESSION['glpilist_limit'] = 999999999;
                             $result = $pfSearch->constructSQL(
