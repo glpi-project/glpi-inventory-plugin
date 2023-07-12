@@ -198,24 +198,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
         echo '</div>';
         echo '</div>';
-       /* Do not display the search result on the current tab
-       * @mohierf: I do not remove this code if this feature is intended to be reactivated...
-       * -----
-       // Include pagination parameters in the provided parameters
-       foreach ($pagination_params as $key => $value) {
-         $search_params[$key] = $value;
-       }
-       // Add extra parameters for massive action display : only the Add action should be displayed
-       $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
-       $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
-       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
-
-       $data = Search::prepareDatasForSearch('Computer', $search_params);
-       Search::constructSQL($data);
-       Search::constructDatas($data);
-       $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-       Search::displayDatas($data);
-       */
     }
 
 
