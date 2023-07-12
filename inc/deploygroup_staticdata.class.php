@@ -173,7 +173,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
         $data['itemtype'] = 'Computer';
         Search::constructSQL($data);
-        Search::constructDatas($data);
+        Search::constructData($data);
         $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
         $data['itemtype'] = 'PluginGlpiinventoryComputer';
         $limit_backup = $_SESSION['glpilist_limit'];
