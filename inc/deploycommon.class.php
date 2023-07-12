@@ -214,13 +214,13 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                             }
 
                             $pfSearch = new Search();
-                            Search::manageParams('Computer');
                             $glpilist_limit             = $_SESSION['glpilist_limit'];
                             $_SESSION['glpilist_limit'] = 999999999;
-                            $result                     = $pfSearch->constructSQL('Computer', $_GET);
+                            $search_params = Search::manageParams('Computer', $_GET);
+                            $results = Search::getDatas('Computer', $search_params);
                             $_SESSION['glpilist_limit'] = $glpilist_limit;
-                            while ($data = $DB->fetchArray($result)) {
-                                $computers[] = $data['id'];
+                            foreach ($results as $result) {
+                                $computers[] = $result['id'];
                             }
                             if (count($get_tmp) > 0) {
                                 $_GET = $get_tmp;
