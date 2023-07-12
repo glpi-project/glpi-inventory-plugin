@@ -46,8 +46,6 @@ Session::checkRight('plugin_glpiinventory_task', READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
-//PluginGlpiinventoryTaskjob::isAllowurlfopen();
-
 $pfTask = new PluginGlpiinventoryTask();
 
 $pfTask->showList();
