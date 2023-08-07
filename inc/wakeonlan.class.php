@@ -125,8 +125,7 @@ class PluginGlpiinventoryWakeonlan extends PluginGlpiinventoryCommunication
                                 $_GET["glpisearchcount2"] = count($_GET['field2']);
                             }
 
-                            $pfSearch = new PluginGlpiinventorySearch();
-                            Search::manageGetValues('Computer');
+                            $pfSearch = new Search();
                             $glpilist_limit = $_SESSION['glpilist_limit'];
                             $_SESSION['glpilist_limit'] = 999999999;
                             $result = $pfSearch->constructSQL(

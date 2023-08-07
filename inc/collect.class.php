@@ -433,16 +433,14 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 $_GET["glpisearchcount2"] = count($_GET['field2']);
                             }
 
-                            $pfSearch = new PluginGlpiinventorySearch();
+                            $pfSearch = new Search();
                             $glpilist_limit = $_SESSION['glpilist_limit'];
                             $_SESSION['glpilist_limit'] = 999999999;
-                            $result = $pfSearch->constructSQL(
-                                'Computer',
-                                $_GET
-                            );
+                            $search_params = Search::manageParams('Computer', $_GET);
+                            $results = Search::getDatas('Computer', $search_params);
                             $_SESSION['glpilist_limit'] = $glpilist_limit;
-                            while ($data = $DB->fetchArray($result)) {
-                                 $computers[] = $data['id'];
+                            foreach ($results as $result) {
+                                $computers[] = $result['id'];
                             }
                             if (count($get_tmp) > 0) {
                                 $_GET = $get_tmp;

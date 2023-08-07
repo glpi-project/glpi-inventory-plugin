@@ -156,16 +156,16 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         echo "</span>";
         echo "</div>";
 
-       // WITH checking post values
+        // WITH checking post values
         $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, true);
-       //If metacriteria array is empty, remove it as it displays the metacriteria form,
-       //and it's is not we want !
+        //If metacriteria array is empty, remove it as it displays the metacriteria form,
+        //and it's is not we want !
         if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
             unset($search_params['metacriteria']);
         }
         PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
 
-       //Add extra parameters for massive action display : only the Add action should be displayed
+        //Add extra parameters for massive action display : only the Add action should be displayed
         $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
         $search_params['massiveactionparams']['extraparams']['specific_actions']['PluginGlpiinventoryComputer' . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
@@ -173,9 +173,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
         $data['itemtype'] = 'Computer';
         Search::constructSQL($data);
-
-       // Use our specific constructDatas function rather than Glpi function
-        PluginGlpiinventorySearch::constructDatas($data);
+        Search::constructData($data);
         $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
         $data['itemtype'] = 'PluginGlpiinventoryComputer';
         $limit_backup = $_SESSION['glpilist_limit'];
