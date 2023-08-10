@@ -98,7 +98,7 @@ jobs:
           - 3306:3306
         # Set health checks to wait until postgres has started
         options: >-
-          --health-cmd="bash -c 'mysqladmin ping'"
+          --health-cmd="bash -c 'if [[ -n $(command -v mysqladmin) ]]; then mysqladmin ping; else mariadb-admin ping; fi'"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=10
