@@ -134,60 +134,6 @@ function pluginGlpiinventoryGetCurrentVersion()
             $data = $iterator->current();
             return $data['value'];
         }
-        if ($DB->fieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')) {
-            $iterator = $DB->request([
-            'SELECT' => ['plugins_id'],
-            'FROM'   => 'glpi_plugin_fusioninventory_agentmodules',
-            'WHERE'  => ['modulename' => 'WAKEONLAN'],
-            'LIMIT'  => 1
-            ]);
-            if (count($iterator)) {
-                $ex_pluginid = $iterator->current();
-
-                $DB->update(
-                    'glpi_plugin_fusioninventory_taskjobs',
-                    [
-                    'plugins_id'   => PluginGlpiinventoryModule::getModuleId('fusioninventory')
-                    ],
-                    [
-                    'plugins_id'   => $ex_pluginid['plugins_id']
-                    ]
-                );
-
-                 $DB->update(
-                     'glpi_plugin_fusioninventory_profiles',
-                     [
-                     'plugins_id'   => PluginGlpiinventoryModule::getModuleId('fusioninventory')
-                     ],
-                     [
-                     'plugins_id'   => $ex_pluginid['plugins_id']
-                     ]
-                 );
-
-                 $DB->update(
-                     'glpi_plugin_fusioninventory_agentmodules',
-                     [
-                     'plugins_id'   => PluginGlpiinventoryModule::getModuleId('fusioninventory')
-                     ],
-                     [
-                     'plugins_id'   => $ex_pluginid['plugins_id']
-                     ]
-                 );
-
-                 $iterator = $DB->request([
-                   'SELECT' => ['value'],
-                   'FROM'   => 'glpi_plugin_fusioninventory_configs',
-                   'WHERE'  => ['type' => 'version'],
-                   'LIMIT'  => 1
-                 ]);
-
-                 $data = [];
-                if (count($iterator)) {
-                     $data = $iterator->current();
-                     return $data['value'];
-                }
-            }
-        }
     } elseif ($DB->tableExists("glpi_plugin_glpiinventory_configs")) {
         $iterator = $DB->request([
          'SELECT' => ['value'],
@@ -200,60 +146,6 @@ function pluginGlpiinventoryGetCurrentVersion()
         if (count($iterator)) {
             $data = $iterator->current();
             return $data['value'];
-        }
-        if ($DB->fieldExists('glpi_plugin_glpiinventory_agentmodules', 'plugins_id')) {
-            $iterator = $DB->request([
-            'SELECT' => ['plugins_id'],
-            'FROM'   => 'glpi_plugin_glpiinventory_agentmodules',
-            'WHERE'  => ['modulename' => 'WAKEONLAN'],
-            'LIMIT'  => 1
-            ]);
-            if (count($iterator)) {
-                $ex_pluginid = $iterator->current();
-
-                $DB->update(
-                    'glpi_plugin_glpiinventory_taskjobs',
-                    [
-                        'plugins_id'   => PluginGlpiinventoryModule::getModuleId('glpiinventory')
-                    ],
-                    [
-                        'plugins_id'   => $ex_pluginid['plugins_id']
-                    ]
-                );
-
-                 $DB->update(
-                     'glpi_plugin_glpiinventory_profiles',
-                     [
-                        'plugins_id'   => PluginGlpiinventoryModule::getModuleId('glpiinventory')
-                     ],
-                     [
-                        'plugins_id'   => $ex_pluginid['plugins_id']
-                     ]
-                 );
-
-                 $DB->update(
-                     'glpi_plugin_glpiinventory_agentmodules',
-                     [
-                     'plugins_id'   => PluginGlpiinventoryModule::getModuleId('glpiinventory')
-                     ],
-                     [
-                     'plugins_id'   => $ex_pluginid['plugins_id']
-                     ]
-                 );
-
-                 $iterator = $DB->request([
-                   'SELECT' => ['value'],
-                   'FROM'   => 'glpi_plugin_glpiinventory_configs',
-                   'WHERE'  => ['type' => 'version'],
-                   'LIMIT'  => 1
-                 ]);
-
-                 $data = [];
-                if (count($iterator)) {
-                     $data = $iterator->current();
-                     return $data['value'];
-                }
-            }
         }
     }
     return "1.1.0";
@@ -1339,8 +1231,7 @@ function do_agent_migration($migration)
                  "threads_networkdiscovery" => $data['threads_discovery'],
                  "NETORKINVENTORY" => $data['module_snmpquery'],
                  "NETWORKDISCOVERY" => $data['module_netdiscovery'],
-                 "INVENTORY" => $data['module_inventory'],
-                 "WAKEONLAN" => $data['module_wakeonlan']
+                 "INVENTORY" => $data['module_inventory']
                 ];
             }
         }
@@ -1403,7 +1294,6 @@ function do_agent_migration($migration)
       'module_snmpquery',
       'module_netdiscovery',
       'module_inventory',
-      'module_wakeonlan',
       'core_discovery',
       'threads_discovery',
       'core_query',
@@ -1479,24 +1369,6 @@ function do_agent_migration($migration)
             'exceptions'   => exportArrayToDB([])
             ]
         );
-    }
-
-   /*
-    * Add WakeOnLan module appear in version 2.3.0
-    */
-    $iterator = $DB->request([
-      'FROM'   => 'glpi_plugin_glpiinventory_agentmodules',
-      'WHERE'  => ['modulename' => 'WAKEONLAN'],
-      'LIMIT'  => 1
-    ]);
-    if (!count($iterator)) {
-        $agentmodule = new PluginGlpiinventoryAgentmodule();
-        $input = [
-         'modulename'   => "WAKEONLAN",
-         'is_active'  => 0,
-         'exceptions' => exportArrayToDB([])
-        ];
-        $agentmodule->add($input);
     }
 
    /*
@@ -2194,7 +2066,6 @@ function do_profile_migration($migration)
           'deviceinventory',
           'netdiscovery',
           'snmp_query',
-          'wol',
           'configuration'];
 
         $a_table['renamefields'] = [];
