@@ -222,21 +222,22 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
 
         $credentials = new SNMPCredential();
         foreach ($a_data as $data) {
-            echo "<tr class='tab_bg_2'>";
-            echo "<td>";
-            Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
-            echo "</td>";
-            echo "<td>";
-            $credentials->getFromDB($data['snmpcredentials_id']);
-            echo $credentials->getLink();
-            echo "</td>";
-            echo "<td>";
-            echo $credentials->getRealVersion();
-            echo "</td>";
-            echo "<td>";
-            echo $data['rank'];
-            echo "</td>";
-            echo "</tr>";
+            if ($credentials->getFromDB($data['snmpcredentials_id'])) {
+                echo "<tr class='tab_bg_2'>";
+                echo "<td>";
+                Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
+                echo "</td>";
+                echo "<td>";
+                echo $credentials->getLink();
+                echo "</td>";
+                echo "<td>";
+                echo $credentials->getRealVersion();
+                echo "</td>";
+                echo "<td>";
+                echo $data['rank'];
+                echo "</td>";
+                echo "</tr>";
+            }
         }
         echo "</table>";
         $massiveactionparams['ontop'] = false;
