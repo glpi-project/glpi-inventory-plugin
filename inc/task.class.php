@@ -616,8 +616,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         } else {
             $it_timeslot = [
                 'OR' => [
-                    'plugin_glpiinventory_timeslots_prep_id' => 0,
-                    'plugin_glpiinventory_timeslots_prep_id' => $timeslots
+                    [
+                        'plugin_glpiinventory_timeslots_prep_id' => 0,
+                    ],
+                    [
+                        'plugin_glpiinventory_timeslots_prep_id' => $timeslots,
+                    ]
                 ]
             ];
         }
