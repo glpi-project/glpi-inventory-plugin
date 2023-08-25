@@ -28,5 +28,5 @@ Some icons used in the project comes from the following set of graphics licensed
 ## Additional resources
 
 * [Official website](http://glpi-project.org/)
-* [Translations on transifex service](https://www.transifex.com/glpi/glpi-inventory-plugin/)
+* [Translations on transifex service](https://app.transifex.com/teclib/glpi-plugin-glpiinventory/languages/)
 * [Issues](https://github.com/glpi-project/glpi-inventory-plugin)
