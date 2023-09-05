@@ -63,10 +63,12 @@ if (isset($_POST['prepareinstall'])) {
    //If it's a local wakeup, local call to the agent RPC service
     switch ($_POST['wakeup_type']) {
         case 'local':
-            echo '<link rel="import" href="http://127.0.0.1:62354/now">';
-            echo Html::scriptBlock("setTimeout(function(){
-            window.location='{$_SERVER['HTTP_REFERER']}';
-         }, 500);");
+            echo Html::scriptBlock("
+                $.get('http://127.0.0.1:62354/now');
+                setTimeout(function(){
+                    window.location='{$_SERVER['HTTP_REFERER']}';
+                }, 500);
+            ");
             exit;
          break;
         case 'remote':
