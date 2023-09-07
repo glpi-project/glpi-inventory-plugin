@@ -69,34 +69,34 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
     PluginGlpiinventoryCommunicationRest::handleFusionCommunication();
 } else {
-
+    //check if XML data contain an error (not handle by GLPI)
     if (!isset($rawdata)) {
         $rawdata = file_get_contents("php://input");
-     }
+    }
 
     $compressmode = '';
     $content_type = filter_input(INPUT_SERVER, "CONTENT_TYPE");
     if (!empty($xml)) {
-            $compressmode = 'none';
+        $compressmode = 'none';
     } else if ($content_type == "application/x-compress-zlib") {
-            $xml = gzuncompress($rawdata);
-            $compressmode = "zlib";
+        $xml = gzuncompress($rawdata);
+        $compressmode = "zlib";
     } else if ($content_type == "application/x-compress-gzip") {
-            $xml = $pfToolbox->gzdecode($rawdata);
-            $compressmode = "gzip";
+        $xml = $pfToolbox->gzdecode($rawdata);
+        $compressmode = "gzip";
     } else if ($content_type == "application/xml") {
-            $xml = $rawdata;
-            $compressmode = 'none';
+        $xml = $rawdata;
+        $compressmode = 'none';
     } else {
         // try each algorithm successively
         if (($xml = gzuncompress($rawdata))) {
             $compressmode = "zlib";
         } else if (($xml = $pfToolbox->gzdecode($rawdata))) {
             $compressmode = "gzip";
-        } else if (($xml = gzinflate (substr($rawdata, 2)))) {
+        } else if (($xml = gzinflate(substr($rawdata, 2)))) {
             // accept deflate for OCS agent 2.0 compatibility,
             // but use zlib for answer
-            if (strstr($xml, "<QUERY>PROLOG</QUERY>") AND !strstr($xml, "<TOKEN>")) {
+            if (strstr($xml, "<QUERY>PROLOG</QUERY>") && !strstr($xml, "<TOKEN>")) {
                 $compressmode = "zlib";
             } else {
                 $compressmode = "deflate";
@@ -118,7 +118,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
     $communication  = new PluginGlpiinventoryCommunication();
     if (!$pxml) {
-
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
@@ -127,9 +126,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
         return;
     }
 
-    $array = json_decode(json_encode($pxml),TRUE);
-
-    if(!isset($array['CONTENT']['DEVICE']['ERROR'])){
+    $array = json_decode(json_encode($pxml), true);
+    if (!isset($array['CONTENT']['DEVICE']['ERROR'])) {
         //no error redirect inventory to GLPI
         include_once  GLPI_ROOT . '/front/inventory.php';
     } else {
@@ -140,7 +138,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
         $communication->sendMessage($compressmode);
         return;
     }
-
 }
 
 session_destroy();
