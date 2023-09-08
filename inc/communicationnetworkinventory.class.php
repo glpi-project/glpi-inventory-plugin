@@ -141,7 +141,6 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $this->addtaskjoblog();
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } elseif (isset($a_CONTENT->content->error)) {
-
             $itemtype = "";
             if ($a_CONTENT->content->error->type == "NETWORKING" || $a_CONTENT->content->error->type == "STORAGE") {
                 $itemtype = "NetworkEquipment";
