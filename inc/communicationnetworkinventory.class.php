@@ -140,6 +140,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
             $this->addtaskjoblog();
             $response = ['response' => ['RESPONSE' => 'SEND']];
+        } elseif (isset($a_CONTENT->content->error)) {
+            $pfTaskjobstate->fail($a_CONTENT->content->error);
+            $response['response'] = ['RESPONSE' => 'SEND'];
         } elseif (isset($a_CONTENT->content->device->error)) {
             $itemtype = "";
             if ($a_CONTENT->content->device->error->type == "NETWORKING" || $a_CONTENT->content->device->error->type == "STORAGE") {
