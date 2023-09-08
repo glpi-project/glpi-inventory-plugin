@@ -4742,6 +4742,12 @@ function do_printer_migration($migration)
             "PluginFusinvsnmpPrinterLogReport",
             "PluginGlpiinventoryPrinterLogReport"
         );
+
+        changeDisplayPreference(
+            "PluginFusioninventoryPrinterLogReport",
+            "PluginGlpiinventoryPrinterLogReport"
+        );
+
         changeDisplayPreference("5156", "PluginFusinvsnmpPrinterCartridge");
     }
 
