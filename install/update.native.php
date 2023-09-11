@@ -540,7 +540,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         [
             'OR' => [
                 ['sub_type'  => 'PluginFusioninventoryInventoryRuleImport'],
-                ['sub_type'  => 'PluginGlpiinventoryInventoryRuleImport']
+                ['sub_type'  => 'PluginGlpiinventoryInventoryRuleImport'],
+                ['sub_type'  => 'PluginFusioninventoryInventoryRuleRemotework']
             ]
         ]
     );
