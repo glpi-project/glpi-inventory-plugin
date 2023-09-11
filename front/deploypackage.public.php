@@ -69,6 +69,9 @@ if (isset($_POST['prepareinstall'])) {
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
                 $port = (int)$agent->fields['port'];
             }
+            if ($port == 0) {
+                $port = 62354;
+            }
             echo Html::scriptBlock("
                 $.get('http://127.0.0.1:{$port}/now');
                 setTimeout(function(){
