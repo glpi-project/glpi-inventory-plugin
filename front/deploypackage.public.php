@@ -63,10 +63,21 @@ if (isset($_POST['prepareinstall'])) {
    //If it's a local wakeup, local call to the agent RPC service
     switch ($_POST['wakeup_type']) {
         case 'local':
-            echo '<link rel="import" href="http://127.0.0.1:62354/now">';
-            echo Html::scriptBlock("setTimeout(function(){
-            window.location='{$_SERVER['HTTP_REFERER']}';
-         }, 500);");
+            $port = Agent::DEFAULT_PORT;
+            if ($computers_id) {
+                $agent = new Agent();
+                $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+                $port = (int)$agent->fields['port'];
+            }
+            if ($port == 0) {
+                $port = Agent::DEFAULT_PORT;
+            }
+            echo Html::scriptBlock("
+                $.get('http://127.0.0.1:{$port}/now');
+                setTimeout(function(){
+                    window.location='{$_SERVER['HTTP_REFERER']}';
+                }, 500);
+            ");
             exit;
          break;
         case 'remote':
