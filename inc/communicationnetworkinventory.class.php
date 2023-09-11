@@ -140,6 +140,19 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
             $this->addtaskjoblog();
             $response = ['response' => ['RESPONSE' => 'SEND']];
+        } elseif (isset($a_CONTENT->content->error)) {
+            $itemtype = "";
+            if ($a_CONTENT->content->error->type == "NETWORKING" || $a_CONTENT->content->error->type == "STORAGE") {
+                $itemtype = "NetworkEquipment";
+            } elseif ($a_CONTENT->content->error->type == "PRINTER") {
+                $itemtype = "Printer";
+            }
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] ' .
+            $a_CONTENT->content->error->message . ' [[' . $itemtype . '::' .
+            $a_CONTENT->content->error->id . ']]';
+            $this->addtaskjoblog();
+
+            $response['response'] = ['RESPONSE' => 'SEND'];
         } elseif (isset($a_CONTENT->content->device->error)) {
             $itemtype = "";
             if ($a_CONTENT->content->device->error->type == "NETWORKING" || $a_CONTENT->content->device->error->type == "STORAGE") {
