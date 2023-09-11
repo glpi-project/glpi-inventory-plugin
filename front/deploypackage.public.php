@@ -70,7 +70,7 @@ if (isset($_POST['prepareinstall'])) {
                 $port = (int)$agent->fields['port'];
             }
             if ($port == 0) {
-                $port = 62354;
+                $port = Agent::DEFAULT_PORT;
             }
             echo Html::scriptBlock("
                 $.get('http://127.0.0.1:{$port}/now');
