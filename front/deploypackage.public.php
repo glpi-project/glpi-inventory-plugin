@@ -63,8 +63,14 @@ if (isset($_POST['prepareinstall'])) {
    //If it's a local wakeup, local call to the agent RPC service
     switch ($_POST['wakeup_type']) {
         case 'local':
+            $port = 62354;
+            if ($computers_id) {
+                $agent = new Agent();
+                $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+                $port = (int)$agent->fields['port'];
+            }
             echo Html::scriptBlock("
-                $.get('http://127.0.0.1:62354/now');
+                $.get('http://127.0.0.1:{$port}/now');
                 setTimeout(function(){
                     window.location='{$_SERVER['HTTP_REFERER']}';
                 }, 500);
