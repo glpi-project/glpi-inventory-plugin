@@ -63,7 +63,7 @@ if (isset($_POST['prepareinstall'])) {
    //If it's a local wakeup, local call to the agent RPC service
     switch ($_POST['wakeup_type']) {
         case 'local':
-            $port = 62354;
+            $port = Agent::DEFAULT_PORT;
             if ($computers_id) {
                 $agent = new Agent();
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
