@@ -862,6 +862,15 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         }
     }
 
+    $DB->queryOrDie(
+        $DB->buildDelete(
+            'glpi_plugin_glpiinventory_agentmodules',
+            [
+                'modulename' => 'WAKEONLAN'
+            ]
+        )
+    );
+
     // /!\ Keep it at the end
     $migration->executeMigration();
 }
