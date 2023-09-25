@@ -871,6 +871,16 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         )
     );
 
+    $DB->queryOrDie(
+        $DB->buildDelete(
+            'glpi_displaypreferences',
+            [
+                'itemtype' => 'Computer',
+                'num' => 5165
+            ]
+        )
+    );
+
     // /!\ Keep it at the end
     $migration->executeMigration();
 }
