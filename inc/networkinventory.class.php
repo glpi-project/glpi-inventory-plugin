@@ -564,10 +564,32 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $current = $jobstate;
         $agent->getFromDB($current->fields['agents_id']);
 
-        $ip = current(PluginGlpiinventoryToolbox::getIPforDevice(
+        $all_ip = PluginGlpiinventoryToolbox::getIPforDevice(
             $jobstate->fields['itemtype'],
             $jobstate->fields['items_id']
-        ));
+        );
+
+        $ip = '';
+        //only one IP use it
+        if (count($all_ip) == 1) {
+            $ip = current($all_ip);
+        //more than one ip
+        } else if (count($all_ip) > 1) {
+            //ip target is an IPRange
+            if ($jobstate->fields['itemtype'] == 'PluginGlpiinventoryIPRange') {
+                //load related IPRange to get start and end
+                $iprange = new PluginGlpiinventoryIPRange();
+                $iprange->getFromDB($jobstate->fields['items_id']);
+                //check all IP to get one that match IPRange
+                foreach ($all_ip as $value) {
+                    //if ip is in range use it
+                    if (ip2long($value) <= ip2long($iprange->fields['ip_end']) && ip2long($value) <= ip2long($iprange->fields['ip_start'])) {
+                        $ip = $value;
+                        break;
+                    }
+                }
+            }
+        }
 
         $param_attrs = [];
         $device_attrs = [];
