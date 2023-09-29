@@ -588,6 +588,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                         break;
                     }
                 }
+            } else {
+                $ip = current($all_ip);
             }
         }
 
