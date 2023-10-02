@@ -789,6 +789,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         foreach ($iterator as $data) {
             $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
             echo "<tr>";
+            if ($canedit) {
+                echo "<td></td>";
+            }
             echo "<td>";
             echo "<a href='" . $link . "?id=" . $this->fields['id'] . "'>" . $this->fields['name'] . "</a>";
             echo "</td>";
