@@ -583,7 +583,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 //check all IP to get one that match IPRange
                 foreach ($all_ip as $value) {
                     //if ip is in range use it
-                    if (ip2long($value) <= ip2long($iprange->fields['ip_end']) && ip2long($value) <= ip2long($iprange->fields['ip_start'])) {
+                    if (ip2long($value) <= ip2long($iprange->fields['ip_end']) && ip2long($value) >= ip2long($iprange->fields['ip_start'])) {
                         $ip = $value;
                         break;
                     }
