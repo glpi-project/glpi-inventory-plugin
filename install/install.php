@@ -204,11 +204,6 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     */
     $migration->displayMessage("Initialize agent TASKS");
     $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
-    $input = [];
-    $input['modulename'] = "WAKEONLAN";
-    $input['is_active']  = 0;
-    $input['exceptions'] = exportArrayToDB([]);
-    $pfAgentmodule->add($input);
 
     $input = [];
     $input['modulename'] = "INVENTORY";
