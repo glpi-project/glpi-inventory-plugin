@@ -8683,8 +8683,15 @@ function migrateTablesFromFusinvDeploy($migration)
          //"deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
        //   json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
        //);
-        $pfDeployPackageItem = new PluginGlpiinventoryDeployPackageItem();
-        $pfDeployPackageItem->updateOrderJson($order_config['id'], $json_order);
+        $DB->update(
+            PluginGlpiinventoryDeployPackageItem::getTable(),
+            [
+             'json' => Toolbox::addslashes_deep(json_encode($json_order, JSON_UNESCAPED_SLASHES)),
+            ],
+            [
+             'id' => $order_config['id'],
+            ]
+        );
     }
 
    /**
