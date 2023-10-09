@@ -8686,7 +8686,7 @@ function migrateTablesFromFusinvDeploy($migration)
         $DB->update(
             PluginGlpiinventoryDeployPackageItem::getTable(),
             [
-             'json' => $json_order
+             'json' => Toolbox::addslashes_deep(json_encode($json_order, JSON_UNESCAPED_SLASHES)),
             ],
             [
              'id' => $order_config['id'],
