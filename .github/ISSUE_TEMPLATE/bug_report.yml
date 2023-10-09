@@ -68,6 +68,7 @@ body:
       label: GLPI version
       description: What is your GLPI version on server-side?
       options:
+        - 10.0.10
         - 10.0.9
         - 10.0.8
         - 10.0.7
@@ -89,6 +90,7 @@ body:
       label: GLPIInventory plugin
       description: What is your GLPIInventory plugin version on server-side?
       options:
+        - 1.3.0
         - 1.2.3
         - 1.2.2
         - 1.2.1
