@@ -8683,11 +8683,15 @@ function migrateTablesFromFusinvDeploy($migration)
          //"deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
        //   json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
        //);
-        $migration->addField('glpi_plugin_glpiinventory_taskjobs', 'restrict_to_task_entity', 'bool', ['value'   => '1']);
-        $migration->migrationOneTable('glpi_plugin_glpiinventory_taskjobs');
-
-        $pfDeployPackageItem = new PluginGlpiinventoryDeployPackageItem();
-        $pfDeployPackageItem->updateOrderJson($order_config['id'], $json_order);
+        $DB->update(
+            PluginGlpiinventoryDeployPackageItem::getTable(),
+            [
+             'json' => $json_order
+            ],
+            [
+             'id' => Toolbox::addslashes_deep($order_config['id'])
+            ]
+        );
     }
 
    /**
