@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-11 12:10+0000\n"
+"POT-Creation-Date: 2023-10-09 14:36+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: inc/task.class.php:2399 inc/task.class.php:2442
+#: inc/task.class.php:2403 inc/task.class.php:2446
 msgid ", actors: "
 msgstr ", 시행자: "
 
@@ -41,7 +41,7 @@ msgstr "작업"
 msgid "Action label"
 msgstr "작업 라벨"
 
-#: b/deploy/index.php:140 inc/deploypackage.class.php:527
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "작업"
 
@@ -57,7 +57,7 @@ msgstr "시행자 항목"
 msgid "Actor Type"
 msgstr "시행자 유형"
 
-#: inc/taskjobview.class.php:711 inc/taskjobview.class.php:754
+#: inc/taskjobview.class.php:706 inc/taskjobview.class.php:749
 msgid "Actors"
 msgstr "시행자"
 
@@ -81,8 +81,8 @@ msgstr "업무 추가"
 msgid "Add the item"
 msgstr "항목 추가"
 
-#: inc/deploygroup_staticdata.class.php:154
-#: inc/deploygroup_staticdata.class.php:170 hook.php:454
+#: hook.php:447 inc/deploygroup_staticdata.class.php:154
+#: inc/deploygroup_staticdata.class.php:170
 msgid "Add to static group"
 msgstr "정적 그룹 추가"
 
@@ -171,14 +171,14 @@ msgstr "감사 라벨"
 msgid "Audits"
 msgstr "감사"
 
+#: inc/profile.class.php:355 inc/menu.class.php:359
+#: inc/credential.class.php:80 inc/credential.class.php:180
 #: inc/credentialip.class.php:131 inc/credentialip.class.php:154
-#: inc/profile.class.php:357 inc/credential.class.php:80
-#: inc/credential.class.php:180 inc/menu.class.php:359
 msgid "Authentication for remote devices (VMware)"
 msgstr "원격 장치 용 인증 (VMware)"
 
-#: inc/taskjob.class.php:1090 inc/staticmisc.class.php:491
-#: inc/staticmisc.class.php:497
+#: inc/staticmisc.class.php:430 inc/staticmisc.class.php:436
+#: inc/taskjob.class.php:1090
 msgid "Auto managenement dynamic of agents"
 msgstr "에이전트의 동적 자동 관리"
 
@@ -263,17 +263,17 @@ msgstr "캐시 정보"
 msgid "Cancel - Try - Continue"
 msgstr "취소 - 시도 - 재개"
 
-#: inc/deployuserinteractiontemplate.class.php:232
 #: inc/deploypackage.class.php:1505
+#: inc/deployuserinteractiontemplate.class.php:232
 msgid "Cancel job"
 msgstr "작업 취소"
 
-#: inc/taskjobview.class.php:789
+#: inc/taskjobview.class.php:784
 msgid "Cancel modifications"
 msgstr "변경 취소"
 
-#: inc/taskview.class.php:239 inc/taskjobstate.class.php:144
-#: inc/deploypackage.class.php:1376
+#: inc/deploypackage.class.php:1376 inc/taskview.class.php:239
+#: inc/taskjobstate.class.php:144
 msgid "Cancelled"
 msgstr "취소됨"
 
@@ -310,19 +310,19 @@ msgstr "에이전트 청소"
 msgid "Clean unused files"
 msgstr "미사용된 파일들 청소"
 
-#: inc/taskjobview.class.php:740 inc/taskjobview.class.php:762
+#: inc/taskjobview.class.php:735 inc/taskjobview.class.php:757
 msgid "Clear list"
 msgstr "목록 청소"
 
-#: hook.php:90
+#: hook.php:83
 msgid "Collect"
 msgstr "수집"
 
-#: inc/staticmisc.class.php:101
+#: inc/staticmisc.class.php:94
 msgid "Collect data"
 msgstr "데이터 수집"
 
-#: inc/staticmisc.class.php:706 inc/collect.class.php:59
+#: inc/staticmisc.class.php:645 inc/collect.class.php:59
 msgid "Collect information"
 msgstr "정보 수집"
 
@@ -330,7 +330,7 @@ msgstr "정보 수집"
 msgid "Collect management"
 msgstr "관리 수립"
 
-#: inc/collect.class.php:722
+#: inc/collect.class.php:720
 msgid "Collect module has been disabled for this agent"
 msgstr "이 에이전트에 대해 수집 모듈이 비활성화 됨"
 
@@ -354,7 +354,7 @@ msgstr "실행할 명령"
 msgid "Communication mode"
 msgstr "통신 모드"
 
-#: inc/staticmisc.class.php:65
+#: inc/staticmisc.class.php:58
 msgid "Computer Inventory"
 msgstr "컴퓨터 재고"
 
@@ -366,16 +366,16 @@ msgstr ""
 msgid "Computer entity rules"
 msgstr "컴퓨터 개체 규칙"
 
-#: inc/profile.class.php:422 inc/menu.class.php:258
+#: inc/profile.class.php:417 inc/menu.class.php:258
 msgid "Computer information"
 msgstr "컴퓨터 정보"
 
-#: inc/collectrule.class.php:73 inc/profile.class.php:307
-#: inc/collectrulecollection.class.php:72
+#: inc/collectrulecollection.class.php:72 inc/profile.class.php:305
+#: inc/collectrule.class.php:73
 msgid "Computer information rules"
 msgstr "컴퓨터 정보 규칙"
 
-#: inc/deploygroup_staticdata.class.php:384
+#: inc/deploygroup_staticdata.class.php:382
 msgid "Computers imported successfully from CSV file"
 msgstr "CSV 파일에서 컴퓨터를 불러옴"
 
@@ -383,7 +383,7 @@ msgstr "CSV 파일에서 컴퓨터를 불러옴"
 msgid "Computers not inventoried since xx days"
 msgstr "xx 일 이후 컴퓨터 재고 없음"
 
-#: inc/profile.class.php:410
+#: inc/profile.class.php:408
 msgid "Configuration"
 msgstr "구성"
 
@@ -391,7 +391,7 @@ msgstr "구성"
 msgid "Configure SNMP credentials"
 msgstr "SNMP 자격증명 구성"
 
-#: inc/taskjobview.class.php:799
+#: inc/taskjobview.class.php:794
 msgid "Confirm the final deletion ?"
 msgstr "최종 삭제를 확인하시겠습니까?"
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "디렉토리 생성"
 
-#: inc/task.class.php:2441
+#: inc/task.class.php:2445
 msgid "Created a deployment job, package: "
 msgstr "배포 작업, 패키지 생성됨:"
 
@@ -449,13 +449,13 @@ msgstr ""
 msgid "Definition"
 msgstr "정의"
 
+#: inc/deployuserinteraction.class.php:300 inc/deployfile.class.php:244
+#: inc/deployaction.class.php:251 inc/taskjobview.class.php:284
 #: inc/taskjob.class.php:1461 inc/deploycheck.class.php:290
-#: inc/deployaction.class.php:251 inc/deployfile.class.php:244
-#: inc/deployuserinteraction.class.php:300 inc/taskjobview.class.php:284
 msgid "Delete"
 msgstr "삭제"
 
-#: install/update.php:1007
+#: install/update.php:899
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr ""
 
@@ -463,7 +463,7 @@ msgstr ""
 msgid "Delete directory"
 msgstr "디렉토리 삭제"
 
-#: inc/taskjobview.class.php:745 inc/taskjobview.class.php:767
+#: inc/taskjobview.class.php:740 inc/taskjobview.class.php:762
 msgid "Delete selected items"
 msgstr "선택된 항목 삭제"
 
@@ -475,7 +475,7 @@ msgstr ""
 msgid "Delete tasks logs after"
 msgstr ""
 
-#: inc/menu.class.php:427 hook.php:48
+#: hook.php:48 inc/menu.class.php:427
 msgid "Deploy"
 msgstr "배포"
 
@@ -483,11 +483,11 @@ msgstr "배포"
 msgid "Deploy module has been disabled for this agent"
 msgstr "이 에이전트에는 배포 모듈이 비활성화 됨"
 
-#: inc/profile.class.php:231 inc/profile.class.php:337
+#: inc/profile.class.php:229 inc/profile.class.php:335
 msgid "Deploy packages on demand"
 msgstr "요청 시 패키지 배포"
 
-#: inc/task.class.php:2381
+#: inc/task.class.php:2385
 msgid "Deployment job, package: "
 msgstr "작업, 패키지 배포:"
 
@@ -495,7 +495,7 @@ msgstr "작업, 패키지 배포:"
 msgid "Detail"
 msgstr "상세"
 
-#: inc/task.class.php:801
+#: inc/task.class.php:805
 msgid "Device no longer defined in definition of job"
 msgstr "작업 정의에 더 이상 장치가 정의되지 않음"
 
@@ -543,11 +543,11 @@ msgstr "기동 않함"
 msgid "Download"
 msgstr ""
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:796
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:799
 msgid "Dynamic group"
 msgstr "동적 그룹"
 
-#: hook.php:69
+#: hook.php:62
 msgid "ESX/VMWare"
 msgstr "ESX/VMWare"
 
@@ -637,9 +637,9 @@ msgstr "디스크에 파일 쓰기 실패함"
 msgid "Features"
 msgstr "기능"
 
-#: inc/deploycheck.class.php:388 inc/deploycheck.class.php:401
-#: inc/deploycheck.class.php:408 inc/collect_file.class.php:86
-#: inc/collect_file.class.php:192 inc/deployfile.class.php:294
+#: inc/collect_file.class.php:86 inc/collect_file.class.php:192
+#: inc/deployfile.class.php:294 inc/deploycheck.class.php:388
+#: inc/deploycheck.class.php:401 inc/deploycheck.class.php:408
 msgid "File"
 msgstr "파일"
 
@@ -766,23 +766,23 @@ msgstr "남은 공간은 다음보다 큼"
 msgid "From"
 msgstr ""
 
-#: inc/menu.class.php:53 report/not_queried_recently.php:42
-#: report/switch_ports.history.php:41 report/ports_date_connections.php:40
-#: report/computer_last_inventory.php:40 front/stateinventory.php:37
-#: front/task.form.php:42 front/menu_snmpinventory.php:38
-#: front/collectrule.php:38 front/taskjoblog.php:37
-#: front/credential.form.php:41 front/menu.php:38 front/collect.php:37
-#: front/taskjob.form.php:39 front/task.php:38 front/credential.php:37
-#: front/timeslot.php:40 front/statediscovery.php:37 front/taskjob.php:37
-#: front/iprange.php:37 front/iprange.form.php:39
-#: front/credentialip.form.php:44 front/collectrule.form.php:37
-#: front/credentialip.php:37 front/agentmodule.form.php:37 index.php:48
+#: index.php:48 inc/menu.class.php:53 report/switch_ports.history.php:41
+#: report/computer_last_inventory.php:40 report/not_queried_recently.php:42
+#: report/ports_date_connections.php:40 front/credential.php:37
+#: front/taskjob.php:37 front/timeslot.php:40 front/collect.php:37
+#: front/credential.form.php:41 front/collectrule.php:38
+#: front/taskjob.form.php:39 front/taskjoblog.php:37 front/iprange.form.php:39
+#: front/menu_snmpinventory.php:38 front/credentialip.php:37
+#: front/statediscovery.php:37 front/agentmodule.form.php:37
+#: front/iprange.php:37 front/task.php:38 front/credentialip.form.php:44
+#: front/task.form.php:42 front/collectrule.form.php:37
+#: front/stateinventory.php:37 front/menu.php:38
 msgid "GLPI Inventory"
 msgstr "GLPI Inventory"
 
-#: inc/deploycheck.class.php:244 inc/deploycheck.class.php:363
-#: inc/deploycheck.class.php:374 inc/deploycheck.class.php:383
-#: inc/deployaction.class.php:442
+#: inc/deployaction.class.php:442 inc/deploycheck.class.php:244
+#: inc/deploycheck.class.php:363 inc/deploycheck.class.php:374
+#: inc/deploycheck.class.php:383
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgstr ""
@@ -792,7 +792,7 @@ msgstr ""
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
 msgstr ""
 
-#: inc/profile.class.php:174 inc/menu.class.php:231
+#: inc/profile.class.php:172 inc/menu.class.php:231
 msgid "General"
 msgstr "일반"
 
@@ -800,8 +800,8 @@ msgstr "일반"
 msgid "General configuration"
 msgstr "일반 구성"
 
-#: inc/deploytaskjob.class.php:223 inc/profile.class.php:419
-#: inc/menu.class.php:218 front/deploygroup.php:38
+#: inc/profile.class.php:414 inc/menu.class.php:218
+#: inc/deploytaskjob.class.php:223 front/deploygroup.php:38
 msgid "Groups of computers"
 msgstr "컴퓨터 그룹"
 
@@ -821,13 +821,12 @@ msgstr ""
 msgid "I'm on this computer: local wakeup"
 msgstr ""
 
-#: inc/iprange.class.php:88 inc/iprange.class.php:91
-#: inc/staticmisc.class.php:388 inc/staticmisc.class.php:422
-#: inc/menu.class.php:335
+#: inc/staticmisc.class.php:327 inc/staticmisc.class.php:361
+#: inc/iprange.class.php:88 inc/iprange.class.php:91 inc/menu.class.php:335
 msgid "IP Ranges"
 msgstr "IP 범위"
 
-#: inc/iprange.class.php:118 inc/profile.class.php:354
+#: inc/iprange.class.php:118 inc/profile.class.php:352
 msgid "IP range configuration"
 msgstr "IP 범위 구성"
 
@@ -847,7 +846,7 @@ msgstr "무시"
 msgid "Import"
 msgstr "불러오기"
 
-#: inc/deploygroup_staticdata.class.php:338
+#: inc/deploygroup_staticdata.class.php:336
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
@@ -861,11 +860,11 @@ msgstr "에이전트 XML 파일 불러오기"
 msgid "Import denied"
 msgstr "불러오기 거부됨"
 
-#: inc/deploygroup_staticdata.class.php:387
+#: inc/deploygroup_staticdata.class.php:385
 msgid "Impossible to read the CSV file"
 msgstr "CSV 파일을 읽을 수 없음"
 
-#: inc/taskview.class.php:234 inc/deploypackage.class.php:1372
+#: inc/deploypackage.class.php:1372 inc/taskview.class.php:234
 msgid "In error"
 msgstr "오류"
 
@@ -893,7 +892,7 @@ msgstr "상호작용 라벨"
 msgid "Interaction type"
 msgstr ""
 
-#: inc/profile.class.php:184
+#: inc/profile.class.php:182
 msgid "Inventory"
 msgstr "재고"
 
@@ -909,7 +908,7 @@ msgstr "재고 시작됨"
 msgid "JSON package representation"
 msgstr "JSON 패키지 표현"
 
-#: inc/taskjob.class.php:58 inc/task.class.php:2270
+#: inc/task.class.php:2274 inc/taskjob.class.php:58
 #: inc/agentwakeup.class.php:59 inc/taskjoblog.class.php:190
 msgid "Job"
 msgstr "작업"
@@ -941,7 +940,7 @@ msgstr "사용자 %1$s에 의해 작업 연기됨"
 msgid "Key"
 msgstr "키"
 
-#: report/not_queried_recently.php:135 report/computer_last_inventory.php:133
+#: report/computer_last_inventory.php:133 report/not_queried_recently.php:135
 msgid "Last inventory"
 msgstr "최근 재고"
 
@@ -949,7 +948,7 @@ msgstr "최근 재고"
 msgid "Limit"
 msgstr "제한"
 
-#: hook.php:62
+#: hook.php:55
 msgid "Local inventory"
 msgstr "로컬 재고"
 
@@ -963,7 +962,7 @@ msgid ""
 "Make a search to get desired computer, then use massive actions and use %s"
 msgstr ""
 
-#: inc/profile.class.php:328
+#: inc/profile.class.php:326
 msgid "Manage packages"
 msgstr "패키지 관리"
 
@@ -987,12 +986,12 @@ msgstr ""
 msgid "Maximum number of retry reached: force deployment"
 msgstr "최대 재시도 횟수 도달함: 강제 배포"
 
-#: inc/profile.class.php:400
+#: inc/profile.class.php:398
 msgid "Menu"
 msgstr "메뉴"
 
-#: inc/taskjob.class.php:1053 inc/deployfile.class.php:174
-#: inc/deployfile.class.php:347
+#: inc/deployfile.class.php:174 inc/deployfile.class.php:347
+#: inc/taskjob.class.php:1053
 msgid "Minute(s)"
 msgstr "분"
 
@@ -1004,7 +1003,7 @@ msgstr ""
 msgid "Mirror server address"
 msgstr "미러 서버 주소"
 
-#: inc/deploymirror.class.php:72 inc/profile.class.php:334
+#: inc/deploymirror.class.php:72 inc/profile.class.php:332
 #: inc/menu.class.php:409
 msgid "Mirror servers"
 msgstr "미러 서버"
@@ -1017,13 +1016,13 @@ msgstr "임시 폴더 없음"
 msgid "Modification Denied"
 msgstr "변경 거부됨"
 
+#: hook.php:48 hook.php:55 hook.php:62 hook.php:69 hook.php:76 hook.php:83
 #: inc/agentmodule.class.php:111 inc/agentmodule.class.php:214
-#: inc/agentmodule.class.php:216 hook.php:48 hook.php:55 hook.php:62
-#: hook.php:69 hook.php:76 hook.php:83 hook.php:90
+#: inc/agentmodule.class.php:216
 msgid "Module"
 msgstr "모듈"
 
-#: inc/taskjobview.class.php:636
+#: inc/taskjobview.class.php:631
 msgid "Module method"
 msgstr ""
 
@@ -1051,22 +1050,22 @@ msgstr "이름"
 msgid "Network Inventory"
 msgstr "네트워크 재고"
 
-#: inc/staticmisc.class.php:81 inc/config.class.php:420
-#: inc/config.class.php:440 hook.php:83
+#: hook.php:76 inc/staticmisc.class.php:74 inc/config.class.php:420
+#: inc/config.class.php:440
 msgid "Network discovery"
 msgstr "네트워크 탐색"
 
-#: inc/profile.class.php:369
+#: inc/profile.class.php:367
 msgid "Network equipment SNMP"
 msgstr "네트워크 장비 SNMP"
 
-#: hook.php:76
+#: hook.php:69
 msgid "Network inventory"
 msgstr "네트워크 재고"
 
-#: inc/staticmisc.class.php:87 inc/agentmodule.class.php:134
-#: inc/agentmodule.class.php:242 inc/config.class.php:429
-#: inc/config.class.php:448
+#: inc/staticmisc.class.php:80 inc/config.class.php:429
+#: inc/config.class.php:448 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:242
 msgid "Network inventory (SNMP)"
 msgstr "네트워크 재고 (SNMP)"
 
@@ -1106,7 +1105,7 @@ msgstr "접속된 사용자 없음"
 msgid "Non sentitive case"
 msgstr "대소문자 구분 없음"
 
-#: inc/taskview.class.php:233 inc/deploypackage.class.php:1371
+#: inc/deploypackage.class.php:1371 inc/taskview.class.php:233
 msgid "Not done yet"
 msgstr "아직 완료되지 않음"
 
@@ -1174,7 +1173,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "PHP 확장이 파일 업로드를 중지함"
 
-#: inc/task.class.php:2231 inc/deploypackage.class.php:96
+#: inc/deploypackage.class.php:96 inc/task.class.php:2235
 msgid "Package"
 msgstr "패키지"
 
@@ -1182,7 +1181,7 @@ msgstr "패키지"
 msgid "Package actions"
 msgstr "패키지 작업"
 
-#: inc/staticmisc.class.php:93 inc/deploypackage.class.php:1067
+#: inc/staticmisc.class.php:86 inc/deploypackage.class.php:1067
 msgid "Package deploy"
 msgstr "패키지 배포"
 
@@ -1202,12 +1201,12 @@ msgstr "패키지 관리"
 msgid "Packages to import"
 msgstr "불러올 패키지"
 
-#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
 #: inc/collect_registry_content.class.php:171
+#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
 msgid "Path"
 msgstr "경로"
 
-#: inc/collect.class.php:862
+#: inc/collect.class.php:860
 msgid "Path not found"
 msgstr "경로 찾을 수 없음"
 
@@ -1228,11 +1227,11 @@ msgstr "경로/파일"
 msgid "Periodicity"
 msgstr "주기"
 
-#: inc/taskview.class.php:322 inc/task.class.php:143
+#: inc/task.class.php:143 inc/taskview.class.php:322
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:453
+#: setup.php:450
 #, php-format
 msgid "Please remove %s directory."
 msgstr ""
@@ -1249,14 +1248,14 @@ msgstr "준비 시간대"
 msgid "Prepare for install"
 msgstr "설치 준비"
 
-#: inc/taskview.class.php:237 inc/statediscovery.class.php:265
-#: inc/taskjobstate.class.php:139 inc/deploypackage.class.php:1375
+#: inc/deploypackage.class.php:1375 inc/taskview.class.php:237
+#: inc/statediscovery.class.php:265 inc/taskjobstate.class.php:139
 #: inc/stateinventory.class.php:198 inc/taskjoblog.class.php:96
 #: inc/taskjoblog.class.php:365
 msgid "Prepared"
 msgstr "준비됨"
 
-#: inc/profile.class.php:372
+#: inc/profile.class.php:370
 msgid "Printer SNMP"
 msgstr "프린터 SNMP"
 
@@ -1277,7 +1276,7 @@ msgstr "속성"
 msgid "Property"
 msgstr "속성"
 
-#: inc/taskjobview.class.php:796
+#: inc/taskjobview.class.php:791
 msgid "Purge"
 msgstr "제거"
 
@@ -1297,8 +1296,8 @@ msgstr "재귀"
 msgid "Regex"
 msgstr "정규식"
 
-#: inc/deploycheck.class.php:55 inc/collect.class.php:148
-#: inc/collect.class.php:205
+#: inc/collect.class.php:148 inc/collect.class.php:205
+#: inc/deploycheck.class.php:55
 msgid "Registry"
 msgstr "레지스트리"
 
@@ -1338,11 +1337,11 @@ msgstr "레지스트리 값은 다음과 같음"
 msgid "Remote device inventory"
 msgstr "원격 장치 재고"
 
-#: inc/profile.class.php:360 inc/menu.class.php:343
+#: inc/profile.class.php:358 inc/menu.class.php:343
 msgid "Remote devices to inventory (VMware)"
 msgstr "재고에 대한 원격 장치 (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:229 hook.php:456
+#: hook.php:449 inc/deploygroup_staticdata.class.php:227
 msgid "Remove from static group"
 msgstr ""
 
@@ -1350,7 +1349,7 @@ msgstr ""
 msgid "Restart job"
 msgstr "작업 재시작"
 
-#: inc/taskjobview.class.php:676
+#: inc/taskjobview.class.php:671
 msgid "Restrict scope to task entity"
 msgstr ""
 
@@ -1395,7 +1394,7 @@ msgstr "규칙"
 msgid "Rules applied"
 msgstr "규칙 적용됨"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1374
+#: inc/deploypackage.class.php:1374 inc/taskview.class.php:236
 msgid "Running"
 msgstr "실행중"
 
@@ -1407,7 +1406,7 @@ msgstr "SHA-512 해쉬 값 일치함"
 msgid "SHA-512 hash value mismatch"
 msgstr "SHA-512 해쉬 값 일치하지 않음"
 
-#: inc/iprange_snmpcredential.class.php:213 inc/menu.class.php:351
+#: inc/menu.class.php:351 inc/iprange_snmpcredential.class.php:213
 msgid "SNMP credentials"
 msgstr "SNMP 자격 증명"
 
@@ -1427,11 +1426,11 @@ msgstr "SNMP 시간만료"
 msgid "SSL-only for agent"
 msgstr "에이전트 SSL-전용"
 
-#: inc/taskview.class.php:344 inc/task.class.php:110
+#: inc/task.class.php:110 inc/taskview.class.php:344
 msgid "Schedule end"
 msgstr "예약작업 종료"
 
-#: inc/taskview.class.php:338 inc/task.class.php:102
+#: inc/task.class.php:102 inc/taskview.class.php:338
 msgid "Schedule start"
 msgstr "예약작업 시작"
 
@@ -1459,7 +1458,7 @@ msgstr "대소문자 구분"
 msgid "Server has sent data to the agent"
 msgstr "서버에서 에이전트로 데이터 전송"
 
-#: hook.php:386
+#: hook.php:379
 msgid "Setup"
 msgstr "설정"
 
@@ -1477,14 +1476,14 @@ msgstr ""
 msgid "Show/Hide details"
 msgstr "상세 보이기/숨기기"
 
+#: inc/collect_file.class.php:65 inc/collect_file.class.php:147
+#: inc/deployfile.class.php:1089 inc/collect.class.php:258
 #: inc/collect_file_content.class.php:97
-#: inc/collect_file_content.class.php:139 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/collect.class.php:258
-#: inc/deployfile.class.php:1089
+#: inc/collect_file_content.class.php:139
 msgid "Size"
 msgstr "크기"
 
-#: inc/profile.class.php:189 inc/profile.class.php:236
+#: inc/profile.class.php:187 inc/profile.class.php:234
 msgid "Software deployment"
 msgstr "소프트웨어 배포"
 
@@ -1511,11 +1510,11 @@ msgstr "시작됨"
 msgid "Starting date"
 msgstr "시작 일자"
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:778 hook.php:94
+#: hook.php:87 inc/deploygroup.class.php:87 inc/deploygroup.class.php:778
 msgid "Static group"
 msgstr "정적 그룹"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1373
+#: inc/deploypackage.class.php:1373 inc/taskview.class.php:235
 msgid "Successful"
 msgstr "성공함"
 
@@ -1527,7 +1526,7 @@ msgstr "대상 항목"
 msgid "Target Type"
 msgstr "대상 유형"
 
-#: inc/iprange.class.php:289 inc/deploygroup.class.php:221 hook.php:450
+#: hook.php:443 inc/iprange.class.php:289 inc/deploygroup.class.php:221
 msgid "Target a task"
 msgstr "업무 대상 지정"
 
@@ -1536,14 +1535,14 @@ msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "요청시 배포 대상"
 
-#: inc/taskjobview.class.php:699 inc/taskjobview.class.php:732
+#: inc/taskjobview.class.php:694 inc/taskjobview.class.php:727
 msgid "Targets"
 msgstr "대상"
 
-#: inc/taskview.class.php:161 inc/deploytask.class.php:58
-#: inc/deploytask.class.php:160 inc/profile.class.php:413
-#: inc/task.class.php:2213 inc/task.class.php:2253
-#: inc/statediscovery.class.php:178 inc/stateinventory.class.php:117
+#: inc/task.class.php:2217 inc/task.class.php:2257 inc/taskview.class.php:161
+#: inc/profile.class.php:411 inc/statediscovery.class.php:178
+#: inc/stateinventory.class.php:117 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "업무"
@@ -1552,7 +1551,7 @@ msgstr[0] "업무"
 msgid "Task execution states"
 msgstr "업무 실행 상태"
 
-#: inc/task.class.php:1994
+#: inc/task.class.php:1998
 msgid "Task has been disabled"
 msgstr "업무가 비활성화됨"
 
@@ -1580,23 +1579,23 @@ msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] ""
 
-#: inc/taskjobview.class.php:705
+#: inc/taskjobview.class.php:700
 msgid "The items that should be applied for this job."
 msgstr ""
 
-#: inc/taskjobview.class.php:716
+#: inc/taskjobview.class.php:711
 msgid "The items that should carry out those targets."
 msgstr ""
 
-#: inc/deploypackageitem.class.php:330 inc/deploypackage.class.php:999
+#: inc/deploypackage.class.php:999 inc/deploypackageitem.class.php:330
 msgid "The modified JSON contained a syntax error :"
 msgstr "변경된 JSON 에 잘못된 구문 오류가 포함됨 :"
 
-#: inc/task.class.php:2427
+#: inc/task.class.php:2431
 msgid "The selected task already has a deployment job for another package: "
 msgstr "선택된 업무는 이미 다른 패키지에 대한 배포 작업이 있습니다:"
 
-#: inc/task.class.php:950
+#: inc/task.class.php:954
 msgid "The task cannot be updated if it is active"
 msgstr ""
 
@@ -1634,13 +1633,13 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr "이 업무는 활성화 되었습니다. 삭제가 거부됨"
 
-#: inc/config.class.php:419 inc/config.class.php:428
 #: inc/statediscovery.class.php:184 inc/stateinventory.class.php:124
+#: inc/config.class.php:419 inc/config.class.php:428
 msgid "Threads number"
 msgstr "스레드 수"
 
-#: inc/timeslot.class.php:66 inc/timeslot.class.php:82
-#: inc/timeslotentry.class.php:82 inc/menu.class.php:264
+#: inc/timeslotentry.class.php:82 inc/timeslot.class.php:66
+#: inc/timeslot.class.php:82 inc/menu.class.php:264
 msgid "Time slot"
 msgstr "시간대"
 
@@ -1697,7 +1696,7 @@ msgstr "미사용된 파일"
 msgid "Update the item"
 msgstr "항목 수정"
 
-#: inc/task.class.php:2398
+#: inc/task.class.php:2402
 msgid "Updated a deployment job, package: "
 msgstr "작업, 패키지 배포 수정됨:"
 
@@ -1727,7 +1726,7 @@ msgid "User interaction"
 msgid_plural "User interactions"
 msgstr[0] "사용자 상호작용"
 
-#: inc/profile.class.php:331 inc/deployuserinteractiontemplate.class.php:145
+#: inc/profile.class.php:329 inc/deployuserinteractiontemplate.class.php:145
 #: inc/menu.class.php:416 front/deployuserinteractiontemplate.php:38
 msgid "User interaction template"
 msgid_plural "User interaction templates"
@@ -1741,20 +1740,20 @@ msgstr "사용자 상호작용"
 msgid "User postponed the job"
 msgstr "사용자가 연기한 작업"
 
-#: inc/profile.class.php:363 inc/credential.class.php:294
+#: inc/profile.class.php:361 inc/credential.class.php:294
 #: inc/credential.class.php:311
 msgid "VMware host"
 msgstr "VMware 호스트"
 
-#: inc/staticmisc.class.php:73
+#: inc/staticmisc.class.php:66
 msgid "VMware host remote inventory"
 msgstr "VMware 호스트 원격 재고"
 
-#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
-#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 #: inc/collect_registry_content.class.php:172
 #: inc/collect_registry_content.class.php:219
 #: inc/collect_wmi_content.class.php:123 inc/collect_wmi_content.class.php:174
+#: inc/deploycheck.class.php:369 inc/deploycheck.class.php:402
+#: inc/deploycheck.class.php:409 inc/deploycheck.class.php:415
 msgid "Value"
 msgstr "값"
 
@@ -1774,17 +1773,9 @@ msgstr "WMI 속성"
 msgid "WMI value"
 msgstr "WMI 값"
 
-#: inc/staticmisc.class.php:57 inc/profile.class.php:416
-msgid "Wake On LAN"
-msgstr "LAN으로 기동"
-
-#: install/install.php:271
+#: install/install.php:266
 msgid "Wake agents ups"
 msgstr "에이전트 ups 기동"
-
-#: hook.php:55
-msgid "WakeOnLan"
-msgstr "WakeOnLan"
 
 #: inc/commonview.class.php:306
 msgid "Warning:"
@@ -1806,7 +1797,7 @@ msgstr "예 - 아니오"
 msgid "Yes - No - Cancel"
 msgstr "예 - 아니오 - 취소"
 
-#: inc/task.class.php:2364
+#: inc/task.class.php:2368
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
@@ -1844,9 +1835,9 @@ msgstr "장치 찾음"
 msgid "devices queried"
 msgstr "장치 질의됨"
 
-#: inc/taskjob.class.php:1449 inc/deploycheck.class.php:275
-#: inc/deployaction.class.php:236 inc/deployfile.class.php:230
-#: inc/deployuserinteraction.class.php:285
+#: inc/deployuserinteraction.class.php:285 inc/deployfile.class.php:230
+#: inc/deployaction.class.php:236 inc/taskjob.class.php:1449
+#: inc/deploycheck.class.php:275
 msgid "drag"
 msgstr "드래그"
 
@@ -1882,7 +1873,7 @@ msgstr "통과됨"
 msgid "path"
 msgstr "경로"
 
-#: inc/collect_file_content.class.php:138 inc/collect.class.php:243
+#: inc/collect.class.php:243 inc/collect_file_content.class.php:138
 msgid "pathfile"
 msgstr ""
 
