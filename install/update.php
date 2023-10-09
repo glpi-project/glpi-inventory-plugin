@@ -8689,7 +8689,7 @@ function migrateTablesFromFusinvDeploy($migration)
              'json' => $json_order
             ],
             [
-             'id' => Toolbox::addslashes_deep($order_config['id'])
+             'id' => $order_config['id'],
             ]
         );
     }
