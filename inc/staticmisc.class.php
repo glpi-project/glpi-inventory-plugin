@@ -427,13 +427,13 @@ class PluginGlpiinventoryStaticmisc
     {
 
         $array = [];
-        $array["-.1"] = __('Auto managenement dynamic of agents', 'glpiinventory');
+        $array["-.1"] = __('Auto management dynamic of agents', 'glpiinventory');
 
         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
         $array1 = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
         foreach ($array1 as $id => $data) {
             $array["PluginGlpiinventoryAgent-" . $id] =
-                 __('Auto managenement dynamic of agents', 'glpiinventory') . " - " . $data['name'];
+                 __('Auto management dynamic of agents', 'glpiinventory') . " - " . $data['name'];
         }
         return $array;
     }
