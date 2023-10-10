@@ -1380,6 +1380,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         }
         $taskjobs = $pftaskjob->find($tasks_list1);
         $counter_agents = [];
+        $count_results = 0;
         foreach ($taskjobs as $taskjob) {
            // get taskjobstates
             $job_state_iterator = $DB->request([
@@ -1421,8 +1422,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
             $runs_id = [];
 
-           // Parse the query result to update the data to return
-            $count_results = 0;
+            // Parse the query result to update the data to return
             foreach ($job_state_iterator as $result) {
                 PluginGlpiinventoryToolbox::logIfExtradebug(
                     "pluginGlpiinventory-tasks",
