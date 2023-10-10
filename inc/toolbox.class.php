@@ -310,16 +310,10 @@ class PluginGlpiinventoryToolbox
     */
     public static function formatJson($json)
     {
-        $version = phpversion();
-
-        if (version_compare($version, '5.4', 'lt')) {
-            return pretty_json($json);
-        } elseif (version_compare($version, '5.4', 'ge')) {
-            return json_encode(
-                json_decode($json, true),
-                JSON_PRETTY_PRINT
-            );
-        }
+        return json_encode(
+            json_decode($json, true),
+            JSON_PRETTY_PRINT
+        );
     }
 
 

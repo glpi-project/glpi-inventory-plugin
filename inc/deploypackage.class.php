@@ -986,12 +986,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         ];
 
         $error_json = json_last_error();
+        $error_json_message = json_last_error_msg();
 
-        if (version_compare(PHP_VERSION, '5.5.0', "ge")) {
-            $error_json_message = json_last_error_msg();
-        } else {
-            $error_json_message = "";
-        }
         $error = 0;
         if ($error_json != JSON_ERROR_NONE) {
             $error_msg = $json_error_consts[$error_json];
