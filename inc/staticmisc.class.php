@@ -215,6 +215,8 @@ class PluginGlpiinventoryStaticmisc
         if (!empty($agents)) {
             return Dropdown::showFromArray('definitionselectiontoadd', $agents);
         }
+
+        return '';
     }
 
 

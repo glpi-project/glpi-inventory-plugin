@@ -416,9 +416,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             ]);
                             $row = $iterator->current();
 
-                            if (isset($_GET)) {
-                                $get_tmp = $_GET;
-                            }
+                            $get_tmp = $_GET;
                             if (isset($_SESSION["glpisearchcount"]['Computer'])) {
                                  unset($_SESSION["glpisearchcount"]['Computer']);
                             }

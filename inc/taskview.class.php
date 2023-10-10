@@ -393,7 +393,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
     public function showFormButtons($options = [])
     {
-
+        $ID = 0;
         if (isset($this->fields['id'])) {
             $ID = $this->fields['id'];
         }
@@ -489,12 +489,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
    /**
     * Define reprepare_if_successful field when get empty item
+    *
+    * @return bool
     */
     public function getEmpty()
     {
         parent::getEmpty();
         $pfConfig = new PluginGlpiinventoryConfig();
         $this->fields['reprepare_if_successful'] = $pfConfig->getValue('reprepare_job');
+
+        return true;
     }
 
 

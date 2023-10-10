@@ -369,6 +369,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 
        //update order
         $this->updateOrderJson($params['packages_id'], $data);
+        return true;
     }
 
 

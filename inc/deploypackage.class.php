@@ -1432,7 +1432,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $computer->getFromDB($computers_id);
             echo "<tr>";
             echo "<th><img src='$url/pics/computer_icon.png'/> "
-            . __('Computer', 'Computers', 1) . " <i>"
+            . _n('Computer', 'Computers', 1) . " <i>"
             . $computer->fields['name'] . "</i></th>";
             echo "</tr>";
 
@@ -1834,7 +1834,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         global $DB;
 
         $pfTask    = new PluginGlpiinventoryTask();
-        $pfTaskJob = new PluginGlpiinventoryTaskJob();
+        $pfTaskJob = new PluginGlpiinventoryTaskjob();
         $computer  = new Computer();
 
         $computer->getFromDB($computers_id);
@@ -1864,6 +1864,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             'LIMIT'  => 1
         ]);
 
+        $tasks_id = 0;
         // case 1: if exist, we add computer in actors of the taskjob
         if ($iterator->numrows() == 1) {
             foreach ($iterator as $data) {
@@ -1893,10 +1894,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 $tasks_id = $data['plugin_glpiinventory_tasks_id'];
             }
         } else {
-           // case 2: if not exist, create a new task + taskjob
+            // case 2: if not exist, create a new task + taskjob
             $this->getFromDB($packages_id);
 
-           //Add the new task
+            //Add the new task
             $input = [
                 'name'                    => '[deploy on demand] ' . Sanitizer::dbEscape($this->fields['name']),
                 'entities_id'             => $computer->fields['entities_id'],
@@ -1906,8 +1907,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             ];
             $tasks_id = $pfTask->add($input);
 
-           //Add a new job for the newly created task
-           //and enable it
+            //Add a new job for the newly created task
+            //and enable it
             $input = [
             'plugin_glpiinventory_tasks_id' => $tasks_id,
             'entities_id' => $computer->fields['entities_id'],
@@ -1920,7 +1921,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $pfTaskJob->add($input);
         }
 
-       //Prepare the task (and only this one)
+        //Prepare the task (and only this one)
         $pfTask->prepareTaskjobs(['deployinstall'], $tasks_id);
     }
 
@@ -2001,11 +2002,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
    /**
-    * Get the state of the package I have requeted to install
+    * Get the state of the package I have requested to install
     *
     * @param integer $computers_id id of the computer
     * @param integer $taskjobs_id id of the taskjob (where order defined)
-    * @param string $packages_name name of the package
     */
     public function getMyDepoyPackagesState($computers_id, $taskjobs_id)
     {

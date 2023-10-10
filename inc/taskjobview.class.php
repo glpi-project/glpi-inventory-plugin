@@ -356,7 +356,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     */
     public function ajaxModuleTypesDropdown($options)
     {
-
+        $title = '';
         switch ($options['moduletype']) {
             case 'actors':
                 $title = __('Actor Type', 'glpiinventory');
@@ -400,6 +400,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $moduletype = $options['moduletype'];
         $itemtype   = $options['itemtype'];
         $method     = $options['method'];
+        $title      = '';
         if ($itemtype === "") {
             return;
         }
