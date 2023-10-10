@@ -441,13 +441,11 @@ class PluginGlpiinventoryMenu extends CommonGLPI
          'link' => $fi_path . "/front/menu_snmpinventory.php"
         ];
 
-        if (!empty($guide_menu)) {
-            $menu['guide'] = [
+        $menu['guide'] = [
             'name'     => __('Guide', 'glpiinventory'),
             'pic'      => "ti ti-book-2",
             'children' => $guide_menu,
-            ];
-        }
+        ];
 
         TemplateRenderer::getInstance()->display('@glpiinventory/submenu.html.twig', [
          'menu' => $menu,

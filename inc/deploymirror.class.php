@@ -109,7 +109,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
         $agent = new Agent();
         $agent->getFromDB($agents_id);
         $agent = $agent->fields;
-        if (!isset($agent) || !isset($agent['items_id'])) {
+        if (!(int)$agent['items_id'] > 0) {
             return [];
         }
 
