@@ -477,9 +477,9 @@ class PluginGlpiinventoryProfile extends Profile
         foreach ($profile->getAllRights() as $right) {
             if (isset($_SESSION['glpiactiveprofile'][$right['field']])) {
                 unset($_SESSION['glpiactiveprofile'][$right['field']]);
+                ProfileRight::deleteProfileRights([$right['field']]);
             }
         }
-        ProfileRight::deleteProfileRights([$right['field']]);
 
         if (isset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu'])) {
             unset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu']);
