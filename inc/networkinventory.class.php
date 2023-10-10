@@ -389,7 +389,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     ) {
                         $agent_id = current($a_action);
                         if ($agent->getFromDB($agent_id)) {
-                            $a_version = importArrayFromDB($this->fields['version']);
+                            $a_version = importArrayFromDB($agent->fields['version']);
                             $agent_version = '0';
                             if (isset($a_version['INVENTORY'])) {
                                 $agent_version = str_replace('v', '', $a_version['INVENTORY']);
