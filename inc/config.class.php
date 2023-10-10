@@ -390,6 +390,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             case self::ACTION_CLEAN:
                 return __('Clean agents', 'glpiinventory');
         }
+
+        return '';
     }
 
 

@@ -352,7 +352,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     *
     * @param integer $state state number
     * @param string $type div / td
-    * @return string complete node (openned and closed)
+    * @return string complete node (opened and closed)
     */
     public function getDivState($state, $type = 'div')
     {
@@ -392,6 +392,8 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
                      "align='center' width='" . $width . "'>" .
                      "<strong>" . __('Running') . "</strong></" . $type . ">";
         }
+
+        return '';
     }
 
 

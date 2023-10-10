@@ -43,21 +43,21 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
    /**
     * Define the number for the message information constant
     *
-    * @var interger
+    * @var integer
     */
     const MSG_INFO = 0;
 
    /**
     * Define the number for the message warning constant
     *
-    * @var interger
+    * @var integer
     */
     const MSG_WARNING = 1;
 
    /**
     * Define the number for the message error constant
     *
-    * @var interger
+    * @var integer
     */
     const MSG_ERROR = 2;
 

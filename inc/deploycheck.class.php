@@ -430,7 +430,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param array $request_data
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
-    * @return boolean
+    * @return void
     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {

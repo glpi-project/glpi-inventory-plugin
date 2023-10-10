@@ -270,6 +270,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
 
         $available_methods = PluginGlpiinventoryStaticmisc::getmethods();
         $types = [];
+        $moduletype_tmp = '';
         if ($moduletype === 'actors') {
             $types['Agent'] = Agent::getTypeName();
         }
@@ -315,7 +316,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * @param integer $value name of the definition (used for edit taskjob)
     * @param string $entity_restrict restriction of entity if required
     * @param integer $title
-    * @return string unique id of html element
+    * @return void
     */
     public function dropdownvalue(
         $myname,
@@ -490,7 +491,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                     'actionselectadd'  => 'dropdown_actionselectiontoadd' . $rand,
                     'actiontypeid'     => $actiontypeid];
 
-        Ajax::updateItemOnEvent(
+        return Ajax::updateItemOnEvent(
             'addAObject',
             'show_ActionListEmpty',
             Plugin::getWebDir('glpiinventory') . "/ajax/dropdownactionselection.php",
@@ -1423,7 +1424,7 @@ function new_subtype(id) {
    * Duplicate all taskjobs for a task to another one
    * @param $source_tasks_id the ID of the task to clone
    * @param $target_task_id the ID of the cloned task
-   * @return void
+   * @return boolean
    */
     public static function duplicate($source_tasks_id, $target_tasks_id)
     {
