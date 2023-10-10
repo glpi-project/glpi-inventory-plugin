@@ -178,7 +178,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
             self::WTS_BUTTON_OK_ASYNC            => __('OK (asynchronous)', 'glpiinventory'),
             self::WTS_BUTTON_OK_CANCEL           => __('OK - Cancel', 'glpiinventory'),
             self::WTS_BUTTON_YES_NO              => __('Yes - No', 'glpiinventory'),
-            self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('OK - Abort - Retry', 'glpiinventory'),
             self::WTS_BUTTON_RETRY_CANCEL        => __('Retry - Cancel', 'glpiinventory'),
             self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('Abort - Retry - Ignore', 'glpiinventory'),
             self::WTS_BUTTON_CANCEL_TRY_CONTINUE => __('Cancel - Try - Continue', 'glpiinventory'),
