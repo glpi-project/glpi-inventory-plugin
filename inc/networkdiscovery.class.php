@@ -139,11 +139,9 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                     $pfIPRange->fields['ip_start'],
                     $pfIPRange->fields['ip_end']
                 );
-                if (isset($a_agentList)) {
-                     $a_agentListComplete = array_merge($a_agentListComplete, $a_agentList);
-                }
+                $a_agentListComplete = array_merge($a_agentListComplete, $a_agentList);
 
-                if (!isset($a_agentListComplete) or empty($a_agentListComplete)) {
+                if (empty($a_agentListComplete)) {
                     $a_input = [];
                     $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
                     $a_input['agents_id'] = 0;
