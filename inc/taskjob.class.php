@@ -1087,9 +1087,9 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                     $itemname = $class->getTypeName();
                     $class->getFromDB($items_id);
                     if ($items_id == '.1') {
-                        $name = __('Auto managenement dynamic of agents', 'glpiinventory');
+                        $name = __('Auto management dynamic of agents', 'glpiinventory');
                     } elseif ($items_id == '.2') {
-                        $name =  __('Auto managenement dynamic of agents (same subnet)', 'glpiinventory');
+                        $name =  __('Auto management dynamic of agents (same subnet)', 'glpiinventory');
                     } else {
                         $name = $class->getLink(1);
                     }
