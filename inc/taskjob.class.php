@@ -156,18 +156,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-   /**
-    * get task of this task job
-    *
-    * @return object PluginGlpiinventoryTask instance
-    */
-    public function getTask()
-    {
-        $pfTask = new PluginGlpiinventoryTask();
-        $pfTask->getFromDB($this->fields['plugin_glpiinventory_tasks_id']);
-        return $pfTask;
-    }
-
     /**
     * get task with job using IPRange
     *
@@ -255,52 +243,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         );
 
         return $rand;
-    }
-
-
-   /**
-    * Get Itemtypes list for the selected method
-    *
-    * @param string $method
-    * @param string $moduletype
-    * @return array
-    */
-    public function getTypesForModule($method, $moduletype)
-    {
-
-        $available_methods = PluginGlpiinventoryStaticmisc::getmethods();
-        $types = [];
-        $moduletype_tmp = '';
-        if ($moduletype === 'actors') {
-            $types['Agent'] = Agent::getTypeName();
-        }
-
-       /**
-        * TODO: move staticmisc actors and targets related methods to the relevant Module classes
-        * ( I don't have time for this yet and this is why i can live with a simple mapping string
-        * table)
-        */
-        switch ($moduletype) {
-            case 'actors':
-                $moduletype_tmp = 'action';
-                break;
-
-            case 'targets':
-                $moduletype_tmp = 'definition';
-                break;
-        }
-
-        foreach ($available_methods as $available_method) {
-            if ($method == $available_method['method']) {
-                $module = $available_method['module'];
-                $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
-                $class_method = [$class, "task_" . $moduletype_tmp . "type_" . $method];
-                if (is_callable($class_method)) {
-                    $types = call_user_func($class_method, $types);
-                }
-            }
-        }
-        return $types;
     }
 
 
@@ -807,59 +749,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         foreach ($iterator as $data) {
             $this->reinitializeTaskjobs($data['plugin_glpiinventory_tasks_id'], '1');
         }
-    }
-
-
-   /**
-    * Check for configuration consistency.
-    * Remove items targets or actors that have been deleted.
-    *
-    * @return boolean ( What does this return value mean ? -- Kevin Roy <kiniou@gmail.com> )
-    */
-    public function checkConfiguration()
-    {
-
-        $return = true;
-        $input = [];
-        $input['id'] = $this->fields['id'];
-        $targets = importArrayFromDB($this->fields['targets']);
-        foreach ($targets as $num => $data) {
-            $classname = key($data);
-            if ($classname == '') {
-                unset($targets[$num]);
-            } else {
-                $Class = new $classname();
-                if (!$Class->getFromDB(current($data))) {
-                    unset($targets[$num]);
-                }
-            }
-        }
-        if (count($targets) == '0') {
-            $input['targets'] = '';
-            $return = false;
-        } else {
-            $input['targets'] = exportArrayToDB($targets);
-        }
-        $actors = importArrayFromDB($this->fields['actors']);
-        foreach ($actors as $num => $data) {
-            $classname = key($data);
-            $Class = new $classname();
-            if (
-                !$Class->getFromDB(current($data))
-                 and (current($data) != ".1")
-                 and (current($data) != ".2")
-            ) {
-                unset($actors[$num]);
-            }
-        }
-        if (count($actors) == '0') {
-            $input['actors'] = '';
-            $return = false;
-        } else {
-            $input['actors'] = exportArrayToDB($actors);
-        }
-        $this->update($input);
-        return $return;
     }
 
 
