@@ -74,7 +74,7 @@ if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
            . " WHERE a.id IS NOT NULL AND `glpi_networkports`.`itemtype`='NetworkEquipment'"
            . " AND a.date_mod" . $date_search
            . " ORDER BY `glpi_networkports`.`items_id`";
-    $result = $DB->query($query);
+    $result = $DB->doQuery($query);
     echo "<table width='950' class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>";

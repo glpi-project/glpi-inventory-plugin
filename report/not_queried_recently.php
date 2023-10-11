@@ -142,7 +142,7 @@ echo "<th>" . __('SNMP credentials') . "</th>";
 echo "<th>" . __('Status') . "</th>";
 echo "</tr>";
 
-if ($result = $DB->query($query)) {
+if ($result = $DB->doQuery($query)) {
     while ($data = $DB->fetchArray($result)) {
         echo "<tr class='tab_bg_1'>";
         echo "<td>";

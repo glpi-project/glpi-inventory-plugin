@@ -79,7 +79,6 @@ class UpdateTest extends TestCase
 
    /**
     * @dataProvider provider
-    * @runInSeparateProcess
     * @preserveGlobalState disabled
     * @test
     */
@@ -93,7 +92,7 @@ class UpdateTest extends TestCase
         $plugin->uninstall($plugin->fields['id']);
 
         $query = "SHOW TABLES";
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
             if (
                 strstr($data[0], "tracker")

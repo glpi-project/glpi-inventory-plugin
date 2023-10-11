@@ -38,6 +38,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
+define('GLPI_STRICT_DEPRECATED', true); //enable strict depreciations
 define('GLPI_ROOT', __DIR__ . '/../../../');
 define('GLPI_CONFIG_DIR', __DIR__ . '/../../../tests/config');
 define('GLPI_VAR_DIR', __DIR__ . '/files');
@@ -148,3 +149,7 @@ class GlpitestSQLError extends \Exception
 {
 }
 // @codingStandardsIgnoreEnd
+
+set_error_handler(static function (int $errno, string $errstr): never {
+    throw new Exception($errstr, $errno);
+}, E_ALL);

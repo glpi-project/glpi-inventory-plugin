@@ -53,7 +53,7 @@ class DeploygroupTest extends TestCase
             $computer->delete(['id' => $item['id']], true);
         }
 
-        $DB->query("truncate table glpi_computers");
+        $DB->doQuery("TRUNCATE TABLE glpi_computers");
     }
 
 
@@ -291,7 +291,7 @@ class DeploygroupTest extends TestCase
        // Add some computers, with the ID
         $computer = new Computer();
 
-        $DB->query("ALTER TABLE glpi_computers AUTO_INCREMENT = 12345;");
+        $DB->doQuery("ALTER TABLE glpi_computers AUTO_INCREMENT = 12345;");
 
         $input = [
           'entities_id' => 0,
