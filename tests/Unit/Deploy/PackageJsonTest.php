@@ -128,7 +128,7 @@ class PackageJsonTest extends TestCase
          KEY `entities_id` (`entities_id`),
          KEY `date_mod` (`date_mod`)
          ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;";
-        $DB->query($query);
+        $DB->doQuery($query);
 
         $DB->insert(
             'glpi_plugin_glpiinventory_deploypackages',
@@ -154,7 +154,7 @@ class PackageJsonTest extends TestCase
         `json` longtext,
         PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;";
-        $DB->query($query);
+        $DB->doQuery($query);
 
         $DB->insert(
             'glpi_plugin_glpiinventory_deployorders',

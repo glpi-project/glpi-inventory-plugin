@@ -99,7 +99,7 @@ class DatabaseTestsCommons extends Assert
         $a_tables = [];
        // SHOW TABLES;
         $query = "SHOW TABLES";
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
             if (
                 (strstr($data[0], "tracker")
@@ -143,7 +143,7 @@ class DatabaseTestsCommons extends Assert
 
         foreach ($a_tables as $table) {
             $query = "SHOW CREATE TABLE " . $table;
-            $result = $DB->query($query);
+            $result = $DB->doQuery($query);
             while ($data = $DB->fetchArray($result)) {
                 $a_lines = explode("\n", $data['Create Table']);
 

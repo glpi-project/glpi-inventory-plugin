@@ -498,8 +498,8 @@ class CronTaskTest extends TestCase
         $pfTask       = new PluginGlpiinventoryTask();
         $deploycommon = new PluginGlpiinventoryDeployCommon();
 
-        $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjoblogs`");
-        $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
+        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjoblogs`");
+        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
 
         $pfTask->getFromDBByCrit(['name' => 'deploy']);
         $this->assertArrayHasKey('id', $pfTask->fields);
@@ -692,8 +692,8 @@ class CronTaskTest extends TestCase
         $pfTask->delete(['id' => $pfTask->fields['id']], true);
 
        //Clean all taskjoblogs & states
-        $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjoblogs`");
-        $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
+        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjoblogs`");
+        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
 
        //Find the on demand task
         $tasks = $pfTask->find(['name' => 'ondemand']);

@@ -2078,7 +2078,7 @@ function do_profile_migration($migration)
          GROUP BY `type`,`plugins_id`,`profiles_id`
          HAVING cnt >1
          ORDER BY cnt";
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
             //DB::delete() not yet supports limit nor order
             $queryd = "DELETE FROM `glpi_plugin_glpiinventory_profiles`
@@ -2087,7 +2087,7 @@ function do_profile_migration($migration)
                   AND `profiles_id`='" . $data['profiles_id'] . "'
                ORDER BY `id` DESC
                LIMIT " . ($data['cnt'] - 1) . " ";
-            $DB->query($queryd);
+            $DB->doQuery($queryd);
         }
 
         $a_table = [];
@@ -2776,7 +2776,7 @@ function do_rulematchedlog_migration($migration)
                   `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
-        $DB->query($query);
+        $DB->doQuery($query);
     }
     $migration->changeField(
         $newTable,
@@ -3138,7 +3138,7 @@ function do_configlogfield_migration($migration)
                   `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
-        $DB->query($query);
+        $DB->doQuery($query);
     }
     $migration->changeField(
         $newTable,
@@ -3223,7 +3223,7 @@ function do_networkport_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query('CREATE TABLE `' . $newTable . '` (
+        $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -3349,7 +3349,7 @@ function do_networkport_migration($migration)
                      `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
-        $DB->query($query);
+        $DB->doQuery($query);
     }
     $migration->changeField(
         $newTable,
@@ -3421,7 +3421,7 @@ function do_networkport_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query('CREATE TABLE `' . $newTable . '` (
+        $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -3755,7 +3755,7 @@ function do_networkport_migration($migration)
                      `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
-        $DB->query($query);
+        $DB->doQuery($query);
     }
     $migration->changeField(
         $newTable,
@@ -4041,7 +4041,7 @@ function do_printer_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query('CREATE TABLE `' . $newTable . '` (
+        $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -4197,7 +4197,7 @@ function do_printer_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query('CREATE TABLE `' . $newTable . '` (
+        $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -4404,7 +4404,7 @@ function do_printer_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query('CREATE TABLE `' . $newTable . '` (
+        $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -4679,7 +4679,7 @@ function do_networkequipment_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query('CREATE TABLE `' . $newTable . '` (
+        $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -4872,7 +4872,7 @@ function do_networkequipment_migration($migration)
         renamePluginFields($migration, $newTable);
 
         if (!$DB->tableExists($newTable)) {
-            $DB->query('CREATE TABLE `' . $newTable . '` (
+            $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -5101,7 +5101,7 @@ function do_configsecurity_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query('CREATE TABLE `' . $newTable . '` (
+        $DB->doQuery('CREATE TABLE `' . $newTable . '` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC');
@@ -5296,7 +5296,7 @@ function do_statediscovery_migration($migration)
     renamePluginFields($migration, $newTable);
 
     if (!$DB->tableExists($newTable)) {
-        $DB->query("CREATE TABLE `" . $newTable . "` (
+        $DB->doQuery("CREATE TABLE `" . $newTable . "` (
                      `id` int unsigned NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC");
@@ -5901,7 +5901,7 @@ function do_deployuserinteraction_migration($migration)
          KEY `entities_id` (`entities_id`),
          KEY `is_recursive` (`is_recursive`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
-        $DB->query($query);
+        $DB->doQuery($query);
     }
 }
 
@@ -7404,7 +7404,7 @@ function changeDisplayPreference($olditemtype, $newitemtype)
       WHERE (`itemtype` = '" . $newitemtype . "'
       OR `itemtype` = '" . $olditemtype . "')
       group by `users_id`, `num`";
-    $result = $DB->query($query);
+    $result = $DB->doQuery($query);
     while ($data = $DB->fetchArray($result)) {
         if ($data['cnt'] > 1) {
             $ids = explode(' ', $data['id']);
@@ -8235,7 +8235,7 @@ function migratePluginTables($migration, $a_table)
                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC";
         }
 
-        $DB->query($query);
+        $DB->doQuery($query);
     }
 
     foreach ($a_table['renamefields'] as $old => $new) {
@@ -8588,7 +8588,7 @@ function migrateTablesFromFusinvDeploy($migration)
 
    //migrate fusinvdeploy_files
     if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
-        $DB->query("TRUNCATE TABLE `glpi_plugin_glpiinventory_deployfiles`");
+        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_deployfiles`");
         if ($DB->fieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
             $f_iterator = $DB->request([
                 'SELECT' => [

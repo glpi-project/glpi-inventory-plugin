@@ -111,4 +111,11 @@ JSON;
         $printer->getFromDB($printers_id_2);
         $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
     }
+
+    public function testDirectSQL()
+    {
+        global $DB;
+        $this->expectExceptionMessage('Direct query usage is strongly discouraged! Use DB::request() instead.');
+        $DB->query("SELECT * FROM glpi_users");
+    }
 }

@@ -66,7 +66,7 @@ class PluginGlpiinventorySetup
             $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
         }
 
-        $result = $DB->query("SHOW TABLES;");
+        $result = $DB->doQuery("SHOW TABLES;");
         while ($data = $DB->fetchArray($result)) {
             if (
                 (strstr($data[0], "glpi_plugin_glpiinventory_"))
