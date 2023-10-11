@@ -165,3 +165,5 @@ jobs:
       run: cd glpi && php bin/console glpi:plugin:activate -n --ansi --config-dir=tests/config glpiinventory
     - name: run tests
       run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/
+    - name: PHPStan checks
+      run: cd glpi/plugins/glpiinventory && php vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress
