@@ -918,9 +918,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
        // try to find file in other packages
         $rows = $pfDeployPackage->find(
-            ['json' => ['LIKE', '%' . substr($sha512, 0, 6) . '%'],
-            'json' => ['LIKE',
-            '%' . $sha512 . '%']]
+            [
+                ['json' => ['LIKE', '%' . substr($sha512, 0, 6) . '%']],
+                ['json' => ['LIKE', '%' . $sha512 . '%']]
+            ]
         );
 
        //file found in other packages, do not remove parts in repo
