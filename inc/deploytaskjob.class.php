@@ -289,10 +289,6 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                         }
                         $res = json_encode($res);
                         break;
-
-                    case 'PluginGlpiinventoryDeployGroup':
-                        $res = PluginGlpiinventoryDeployGroup::getAllDatas('action_selections');
-                        break;
                 }
                 break;
 
