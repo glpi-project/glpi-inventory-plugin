@@ -1941,6 +1941,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
        // Get packages yet deployed by enduser
         $packages_used = [];
+        $computers_id = 0;
         foreach ($computers_packages as $computers_id => $data) {
             $packages_used[$computers_id] = [];
         }
