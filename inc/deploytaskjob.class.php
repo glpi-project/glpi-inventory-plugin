@@ -253,7 +253,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                     case 'Computer':
                         $where = [];
                         if (isset($params['query'])) {
-                            $where['name'] = ['LIKE', '%' . $like];
+                            $where['name'] = ['LIKE', '%' . $params['query']];
                         }
 
                         $i = 0;
