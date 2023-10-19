@@ -393,7 +393,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
     public function showFormButtons($options = [])
     {
-
+        $ID = 0;
         if (isset($this->fields['id'])) {
             $ID = $this->fields['id'];
         }
@@ -489,12 +489,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
    /**
     * Define reprepare_if_successful field when get empty item
+    *
+    * @return bool
     */
     public function getEmpty()
     {
         parent::getEmpty();
         $pfConfig = new PluginGlpiinventoryConfig();
         $this->fields['reprepare_if_successful'] = $pfConfig->getValue('reprepare_job');
+
+        return true;
     }
 
 
@@ -517,5 +521,541 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         ];
 
         return $tab;
+    }
+
+    /**
+     * Export a list of jobs in CSV format
+     *
+     * @param  array  $params these possible entries:
+     *                        - agent_state_types: array of agent states to filter output
+     *                          (prepared, cancelled, running, success, error)
+     *                        - debug_csv, possible values:
+     *                           - 0 : no debug (really export to csv,
+     *                           - 1 : display params AND html table,
+     *                           - 2: like 1 + display also json of jobs logs
+     *
+     * @return nothing (force a download of csv)
+     */
+    public function csvExport($params = [])
+    {
+        global $CFG_GLPI;
+
+        $default_params = [
+            'agent_state_types' => [],
+            'debug_csv'         => 0
+        ];
+        $params = array_merge($default_params, $params);
+
+        $includeoldjobs    = $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'];
+        $agent_state_types = ['prepared', 'cancelled', 'running', 'success', 'error' ];
+        if (isset($params['agent_state_types'])) {
+            $agent_state_types = $params['agent_state_types'];
+        }
+
+        if (!$params['debug_csv']) {
+            header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
+            header('Pragma: private'); /// IE BUG + SSL
+            header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
+            header("Content-disposition: attachment; filename=export.csv");
+            header("Content-type: text/csv");
+        } else {
+            Html::printCleanArray($params);
+            Html::printCleanArray($agent_state_types);
+        }
+
+        $params['display'] = false;
+        $pfTask            = new PluginGlpiinventoryTask();
+        $data              = json_decode($pfTask->ajaxGetJobLogs($params), true);
+
+        //clean line with state_types with unwanted states
+        foreach ($data['tasks'] as $task_id => &$task) {
+            foreach ($task['jobs'] as $job_id => &$job) {
+                foreach ($job['targets'] as $target_id => &$target) {
+                    foreach ($target['agents'] as $agent_id => &$agent) {
+                        foreach ($agent as $exec_id => $exec) {
+                            if (!in_array($exec['state'], $agent_state_types)) {
+                                unset($agent[$exec_id]);
+                                if (count($agent) === 0) {
+                                    unset($target['agents'][$agent_id]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // clean old temporary variables
+        unset($task, $job, $target, $agent);
+
+        if (!$params['debug_csv']) {
+            define('SEP', $CFG_GLPI['csv_delimiter']);
+            define('NL', "\r\n");
+        } else {
+            define('SEP', '</td><td>');
+            define('NL', '</tr><tr><td>');
+            echo "<table border=1><tr><td>";
+        }
+
+        // cols titles
+        echo "Task_name" . SEP;
+        echo "Job_name" . SEP;
+        echo "Method" . SEP;
+        echo "Target" . SEP;
+        echo "Agent" . SEP;
+        echo "Computer name" . SEP;
+        echo "Date" . SEP;
+        echo "Status" . SEP;
+        echo "Last Message" . NL;
+
+        $agent_obj = new Agent();
+        $computer  = new Computer();
+
+        // prepare an anonymous (and temporory) function
+        // for test if an element is the last of an array
+        $last = function (&$array, $key) {
+            end($array);
+            return $key === key($array);
+        };
+
+        // display lines
+        $csv_array = [];
+        $tab = 0;
+        foreach ($data['tasks'] as $task_id => $task) {
+            echo $task['task_name'] . SEP;
+
+            if (count($task['jobs']) == 0) {
+                echo NL;
+            } else {
+                foreach ($task['jobs'] as $job_id => $job) {
+                    echo $job['name'] . SEP;
+                    echo $job['method'] . SEP;
+                    if (count($job['targets']) == 0) {
+                        echo NL;
+                    } else {
+                        foreach ($job['targets'] as $target_id => $target) {
+                            echo $target['name'] . SEP;
+
+                            if (count($target['agents']) == 0) {
+                                echo NL;
+                            } else {
+                                foreach ($target['agents'] as $agent_id => $agent) {
+                                    $agent_obj->getFromDB($agent_id);
+                                    echo $agent_obj->getName() . SEP;
+                                    $computer->getFromDB($agent_obj->fields['items_id']);
+                                    echo $computer->getname() . SEP;
+
+                                    $log_cpt = 0;
+                                    if (count($agent) == 0) {
+                                        echo NL;
+                                    } else {
+                                        foreach ($agent as $exec_id => $exec) {
+                                            echo $exec['last_log_date'] . SEP;
+                                            echo $exec['state'] . SEP;
+                                            echo $exec['last_log'] . NL;
+                                            $log_cpt++;
+
+                                            if ($includeoldjobs != -1 and $log_cpt >= $includeoldjobs) {
+                                                break;
+                                            }
+
+                                            if (!$last($agent, $exec_id)) {
+                                                echo SEP . SEP . SEP . SEP . SEP . SEP;
+                                            }
+                                        }
+                                    }
+
+                                    if (!$last($target['agents'], $agent_id)) {
+                                        echo SEP . SEP . SEP . SEP;
+                                    }
+                                }
+                            }
+
+                            if (!$last($job['targets'], $target_id)) {
+                                echo SEP . SEP . SEP;
+                            }
+                        }
+                    }
+
+                    if (!$last($task['jobs'], $job_id)) {
+                        echo SEP;
+                    }
+                }
+            }
+        }
+        if ($params['debug_csv'] === 2) {
+            echo "</td></tr></table>";
+
+            //echo original datas
+            echo "<pre>" . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+        }
+
+        // force exit to prevent further display
+        exit;
+    }
+
+
+    /**
+     * Force running the current task
+     **/
+    public function forceRunning()
+    {
+        $methods = [];
+        foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
+            $methods[] = $method['method'];
+        }
+        $this->prepareTaskjobs($methods, $this->getID());
+    }
+
+
+    /**
+     * Prepare task jobs
+     *
+     * @global object $DB
+     * @param array $methods
+     * @param string $task_id; the concerned task
+     * @return true
+     */
+    public function prepareTaskjobs($methods = [], $tasks_id = false)
+    {
+        global $DB;
+
+        $now = new DateTime();
+
+        PluginGlpiinventoryToolbox::logIfExtradebug(
+            "pluginGlpiinventory-jobs",
+            "Preparing tasks jobs, task id: " . $tasks_id
+        );
+
+        //Get all active timeslots
+        $timeslot  = new PluginGlpiinventoryTimeslot();
+        $timeslots = $timeslot->getCurrentActiveTimeslots();
+        if (empty($timeslots)) {
+            $it_timeslot = ['plugin_glpiinventory_timeslots_prep_id' => 0];
+        } else {
+            $it_timeslot = [
+                'OR' => [
+                    [
+                        'plugin_glpiinventory_timeslots_prep_id' => 0,
+                    ],
+                    [
+                        'plugin_glpiinventory_timeslots_prep_id' => $timeslots,
+                    ]
+                ]
+            ];
+        }
+
+        // limit preparation to a specific tasks_id
+        $it_task_id = [];
+        if ($tasks_id) {
+            $it_task_id = ['task.id' => $tasks_id];
+        }
+
+        $iterator = $DB->request([
+            'SELECT' => [
+                'task.id',
+                'task.name',
+                'task.reprepare_if_successful',
+                'job.id AS jobid',
+                'job.name AS jobname',
+                'job.method',
+                'job.targets',
+                'job.actors',
+                'job.restrict_to_task_entity'
+            ],
+            'FROM' => 'glpi_plugin_glpiinventory_taskjobs AS job',
+            'LEFT JOIN' => [
+                'glpi_plugin_glpiinventory_tasks AS task' => [
+                    'FKEY' => [
+                        'task' => 'id',
+                        'job' => 'plugin_glpiinventory_tasks_id'
+                    ]
+                ]
+            ],
+            'WHERE' => array_merge([
+                'task.is_active' => 1,
+                [
+                    'OR' => [
+                        [
+                            [
+                                'NOT' => [
+                                    'task.datetime_start' => null,
+                                ]
+                            ],
+                            'task.datetime_end' => null,
+                            'task.datetime_start' => ['<', $now->format("Y-m-d H:i:s")],
+                        ],
+                        [
+                            ['NOT' => ['task.datetime_start' => null]],
+                            ['NOT' => ['task.datetime_end' => null]],
+                            new QueryExpression(
+                                $DB->quoteValue($now->format("Y-m-d H:i:s")) . ' BETWEEN ' .
+                                $DB->quoteName('task.datetime_start') . ' AND ' .
+                                $DB->quoteName('task.datetime_end')
+                            ),
+                        ],
+                        [
+                            'task.datetime_start' => null,
+                            'task.datetime_end' => null
+                        ]
+                    ]
+                ],
+                'job.method' => $methods,
+            ], $it_timeslot, $it_task_id),
+            'ORDER' => [
+                'job.id'
+            ]
+        ]);
+        $results = PluginGlpiinventoryToolbox::fetchAssocByTableIterator($iterator);
+
+        // Fetch a list of actors to be prepared. We may have the same actors for each job so this
+        // part can speed up the process.
+        //$actors = [];
+
+        // Set basic elements of jobstates
+        $run_base = [
+            'state' => PluginGlpiinventoryTaskjobstate::PREPARED,
+        ];
+        $log_base = [
+            'date'    => $_SESSION['glpi_currenttime'],
+            'state'   => PluginGlpiinventoryTaskjoblog::TASK_PREPARED,
+            'comment' => ''
+        ];
+
+        $jobstate = new PluginGlpiinventoryTaskjobstate();
+        $joblog   = new PluginGlpiinventoryTaskjoblog();
+
+        foreach ($results as $result) {
+            $actors = importArrayFromDB($result['job']['actors']);
+            // Get agents linked to the actors
+            $agent_ids = [];
+            foreach ($this->getAgentsFromActors($actors) as $agent_id) {
+                $agent_ids[$agent_id] = true;
+            }
+            //Continue with next job if there are no agents found from actors.
+            //TODO: This may be good to report this kind of information. We just need to do a list of
+            //agent's ids generated by actors like array('actors_type-id' => array( 'agent_0',...).
+            //Then the following could be put in the targets foreach loop before looping through
+            //agents.
+            if (count($agent_ids) == 0) {
+                continue;
+            }
+            $saved_agent_ids = $agent_ids;
+            $targets = importArrayFromDB($result['job']['targets']);
+            if ($result['job']['method'] == 'networkinventory') {
+                $newtargets = [];
+                $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
+                foreach ($targets as $keyt => $target) {
+                    $item_type = key($target);
+                    $items_id = current($target);
+                    if ($item_type == 'PluginGlpiinventoryIPRange') {
+                        unset($targets[$keyt]);
+                        // In this case get devices of this iprange
+                        $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id, $result['job']['restrict_to_task_entity']);
+                        $newtargets = array_merge($newtargets, $deviceList);
+                    }
+                }
+                $targets = array_merge($targets, $newtargets);
+            }
+
+            $limit = 0;
+            foreach ($targets as $target) {
+                $agent_ids = $saved_agent_ids;
+                $item_type = key($target);
+                $item_id   = current($target);
+                $job_id    = $result['job']['id'];
+                // Filter out agents that are already running the targets.
+                $jobstates_running = $jobstate->find(
+                    ['itemtype' => $item_type,
+                        'items_id' => $item_id,
+                        'plugin_glpiinventory_taskjobs_id' => $job_id,
+                        'NOT'      => ['state' => [
+                            PluginGlpiinventoryTaskjobstate::FINISHED,
+                            PluginGlpiinventoryTaskjobstate::IN_ERROR,
+                            PluginGlpiinventoryTaskjobstate::POSTPONED,
+                            PluginGlpiinventoryTaskjobstate::CANCELLED]],
+                        'agents_id' => array_keys($agent_ids)]
+                );
+                foreach ($jobstates_running as $jobstate_running) {
+                    $jobstate_agent_id = $jobstate_running['agents_id'];
+                    if (isset($agent_ids[$jobstate_agent_id])) {
+                        $agent_ids[$jobstate_agent_id] = false;
+                    }
+                }
+
+                // If task have not reprepare_if_successful, do not reprerare
+                // successful taskjobstate
+                if (!$result['task']['reprepare_if_successful']) {
+                    $jobstates_running = $jobstate->find(
+                        ['itemtype' => $item_type,
+                            'items_id' => $item_id,
+                            'plugin_glpiinventory_taskjobs_id' => $job_id,
+                            'state'    => PluginGlpiinventoryTaskjobstate::FINISHED,
+                            'agents_id'   => array_keys($agent_ids)]
+                    );
+
+                    foreach ($jobstates_running as $jobstate_running) {
+                        $jobstate_agent_id = $jobstate_running['agents_id'];
+                        if (isset($agent_ids[$jobstate_agent_id])) {
+                            $agent_ids[$jobstate_agent_id] = false;
+                        }
+                    }
+                }
+
+                // Cancel agents prepared but not in $agent_ids (like computer
+                // not in dynamic group)
+                $jobstates_tocancel = $jobstate->find([
+                    'itemtype' => $item_type,
+                    'items_id' => $item_id,
+                    'plugin_glpiinventory_taskjobs_id' => $job_id,
+                    'NOT' => [
+                        'OR' => [
+                            'state' => [
+                                PluginGlpiinventoryTaskjobstate::FINISHED,
+                                PluginGlpiinventoryTaskjobstate::IN_ERROR,
+                                PluginGlpiinventoryTaskjobstate::CANCELLED,
+                            ],
+                            'agents_id' => array_keys($agent_ids)]
+                    ]
+                ]);
+
+                foreach ($jobstates_tocancel as $jobstate_tocancel) {
+                    $jobstate->getFromDB($jobstate_tocancel['id']);
+                    $jobstate->cancel(__('Device no longer defined in definition of job', 'glpiinventory'));
+                }
+
+                foreach ($agent_ids as $agent_id => $agent_not_running) {
+                    if ($agent_not_running) {
+                        $limit += 1;
+                        if ($limit > 500) {
+                            $limit = 0;
+                            break;
+                        }
+                        $run = array_merge(
+                            $run_base,
+                            [
+                                'itemtype'                           => $item_type,
+                                'items_id'                           => $item_id,
+                                'plugin_glpiinventory_taskjobs_id' => $job_id,
+                                'agents_id'   => $agent_id,
+                                'uniqid'                             => uniqid(),
+                            ]
+                        );
+
+                        $run_id = $jobstate->add($run);
+                        PluginGlpiinventoryToolbox::logIfExtradebug(
+                            "pluginGlpiinventory-jobs",
+                            "- prepared a job execution: " . print_r($run, true)
+                        );
+                        if ($run_id !== false) {
+                            $log = array_merge(
+                                $log_base,
+                                [
+                                    'plugin_glpiinventory_taskjobstates_id' => $run_id
+                                ]
+                            );
+                            $joblog->add($log);
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Get agents of Computers from Actors defined in taskjobs
+     * TODO: this method should be rewritten to call directly a getAgents() method in the
+     * corresponding itemtype classes.
+     *
+     * @param array $actors
+     * @param bool  $use_cache retrieve agents from cache or not
+     * @return array list of agents
+     */
+    public function getAgentsFromActors($actors = [], $use_cache = false)
+    {
+        $agents    = [];
+        $computers = [];
+        $computer  = new Computer();
+        $agent     = new Agent();
+        $pfToolbox = new PluginGlpiinventoryToolbox();
+        foreach ($actors as $actor) {
+            $itemtype = key($actor);
+            $itemid   = $actor[$itemtype];
+            $item     = getItemForItemtype($itemtype);
+
+            // If this item doesn't exists, we continue to the next actor item.
+            // TODO: remove this faulty actor from the list of job actor.
+            if ($item === false) {
+                trigger_error(
+                    sprintf('Invalid itemtype "%s".', $itemtype),
+                    E_USER_WARNING
+                );
+                continue;
+            }
+            $dbresult = $item->getFromDB($itemid);
+            if ($dbresult === false) {
+                trigger_error(
+                    sprintf('Invalid item "%s" (%s).', $itemtype, $itemid),
+                    E_USER_WARNING
+                );
+                continue;
+            }
+
+            switch ($itemtype) {
+                case 'Computer':
+                    $computers[$itemid] = 1;
+                    break;
+
+                case 'PluginGlpiinventoryDeployGroup':
+                    $group_targets = $pfToolbox->executeAsGlpiinventoryUser(
+                        'PluginGlpiinventoryDeployGroup::getTargetsForGroup',
+                        [$itemid, $use_cache]
+                    );
+                    foreach ($group_targets as $computerid) {
+                        $computers[$computerid] = 1;
+                    }
+                    break;
+
+                case 'Group':
+                    //find computers by user associated with this group
+                    $group_users   = new Group_User();
+                    $members       = [];
+                    $members       = $group_users->getGroupUsers($itemid);
+
+                    foreach ($members as $member) {
+                        $computers_from_user = $computer->find(['users_id' => $member['id']]);
+                        foreach ($computers_from_user as $computer_entry) {
+                            $computers[$computer_entry['id']] = 1;
+                        }
+                    }
+
+                    //find computers directly associated with this group
+                    $computer_from_group = $computer->find(['groups_id' => $itemid]);
+                    foreach ($computer_from_group as $computer_entry) {
+                        $computers[$computer_entry['id']] = 1;
+                    }
+                    break;
+
+                /**
+                 * TODO: The following should be replaced with Dynamic groups
+                 */
+                case Agent::class:
+                    $agents[$itemid] = 1;
+                    break;
+            }
+        }
+
+        //Get agents from the computer's ids list
+        if (count($computers)) {
+            $agents_entries = $agent->find(['itemtype' => 'Computer', 'items_id' => array_keys($computers)]);
+            foreach ($agents_entries as $agent_entry) {
+                $agents[$agent_entry['id']] = 1;
+            }
+        }
+
+        // Return the list of agent's ids.
+        // (We used hash keys to avoid duplicates in the list)
+        return array_keys($agents);
     }
 }

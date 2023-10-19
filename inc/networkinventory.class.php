@@ -276,11 +276,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $a_agentsubnet = [];
             foreach ($a_subnet as $subnet => $num) {
                 $a_agentList = $this->getAgentsSubnet($num, $communication, $subnet);
-                if (!isset($a_agentList)) {
-                    $a_agentsubnet[$subnet] = '';
-                } else {
-                    $a_agentsubnet[$subnet] = $a_agentList;
-                }
+                $a_agentsubnet[$subnet] = $a_agentList;
             }
             $a_input = [];
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
@@ -293,15 +289,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
 
             $taskvalid = 0;
             foreach ($a_agentsubnet as $subnet => $a_agentList) {
-                if (
-                    !isset($a_agentList)
-                    or (isset($a_agentList)
-                       && is_array($a_agentList)
-                       && count($a_agentList) == '0')
-                    or (isset($a_agentList)
-                       && !is_array($a_agentList)
-                       && $a_agentList == '')
-                ) {
+                if (count($a_agentList) == 0) {
                    // No agent available for this subnet
                     for ($i = 0; $i < 2; $i++) {
                         $itemtype = 'Printer';
@@ -401,7 +389,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     ) {
                         $agent_id = current($a_action);
                         if ($agent->getFromDB($agent_id)) {
-                            $a_version = importArrayFromDB($this->fields['version']);
+                            $a_version = importArrayFromDB($agent->fields['version']);
                             $agent_version = '0';
                             if (isset($a_version['INVENTORY'])) {
                                 $agent_version = str_replace('v', '', $a_version['INVENTORY']);

@@ -430,7 +430,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param array $request_data
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
-    * @return boolean
+    * @return void
     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
@@ -603,10 +603,10 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
    /**
    * Return an array corresponding to a check, ready to be serialized
-   * @param params the check's parameters
+   * @param $params the check's parameters
    * @return array the array to be encoded in json and serialized
    */
-    public static function formatCheckForJson($params)
+    public function formatCheckForJson($params)
     {
         if (!isset($params['value'])) {
             $params['value'] = "";
@@ -622,7 +622,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                 if ($params['checkstype'] == "freespaceGreater") {
                     $params['value'] = $params['value'] / (1024 * 1024);
                 } else {
-                    $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
+                    $params['value'] = $params['value'] * $this->getUnitSize($params['unit']);
                 }
             }
         }
@@ -647,7 +647,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     */
     public function add_item($params)
     {
-        $entry = self::formatCheckForJson($params);
+        $entry = $this->formatCheckForJson($params);
 
        //get current order json
         $datas = json_decode(
@@ -670,7 +670,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     */
     public function save_item($params)
     {
-        $entry = self::formatCheckForJson($params);
+        $entry = $this->formatCheckForJson($params);
        //get current order json
         $datas = json_decode($this->getJson($params['id']), true);
 

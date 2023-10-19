@@ -270,65 +270,6 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
 
 
    /**
-    * Display the graph of finished tasks
-    *
-    * @global object $DB
-    * @param integer $taskjobs_id id of the taskjob
-    */
-    public function graphFinish($taskjobs_id)
-    {
-        global $DB;
-
-        $finishState = [2 => 0, 3 => 0, 4 => 0, 5 => 0];
-
-        $iterator = $DB->request([
-            'SELECT' => [
-                'glpi_plugin_glpiinventory_taskjoblogs.state'
-            ],
-            'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
-            'LEFT JOIN' => [
-                'glpi_plugin_glpiinventory_taskjoblogs' => [
-                    'ON' => [
-                        'glpi_plugin_glpiinventory_taskjoblogs' => 'plugin_glpiinventory_taskjobstates_id',
-                        'glpi_plugin_glpiinventory_taskjobstates' => 'id'
-                    ]
-                ]
-            ],
-            'WHERE'  => [
-                'plugin_glpiinventory_taskjobs_id' => $taskjobs_id,
-                'OR' => [
-                    'glpi_plugin_glpiinventory_taskjoblogs.state' => [2, 3, 4, 5]
-                ]
-            ],
-            'GROUPBY' => [
-                'glpi_plugin_glpiinventory_taskjobstates.uniqid',
-                'agents_id'
-            ]
-        ]);
-
-        if (count($iterator)) {
-            foreach ($iterator as $datajob) {
-                $finishState[$datajob['state']]++;
-            }
-        }
-        $input = [];
-        $input[__('Started', 'glpiinventory')] = $finishState[2];
-        $input[__('Ok', 'glpiinventory')]      = $finishState[3];
-        $input[__('Error / rescheduled', 'glpiinventory')] = $finishState[4];
-        $input[__('Error')] = $finishState[5];
-        Stat::showGraph(
-            ['status' => $input],
-            ['title'     => '',
-                         'unit'      => '',
-                         'type'      => 'pie',
-                         'height'    => 150,
-                         'showtotal' => false
-            ]
-        );
-    }
-
-
-   /**
     * Get taskjobstate by uniqid
     *
     * @param string $uuid value uniqid
@@ -352,7 +293,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     *
     * @param integer $state state number
     * @param string $type div / td
-    * @return string complete node (openned and closed)
+    * @return string complete node (opened and closed)
     */
     public function getDivState($state, $type = 'div')
     {
@@ -392,6 +333,8 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
                      "align='center' width='" . $width . "'>" .
                      "<strong>" . __('Running') . "</strong></" . $type . ">";
         }
+
+        return '';
     }
 
 

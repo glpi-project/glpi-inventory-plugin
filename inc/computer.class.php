@@ -62,6 +62,7 @@ class PluginGlpiinventoryComputer extends Computer
                  'id'   => 'fields_plugin',
                  'name' => __('Plugin fields')
                 ];
+                /** @phpstan-ignore-next-line */
                 $fieldsoptions =  plugin_fields_getAddSearchOptions('Computer');
                 foreach ($fieldsoptions as $id => $data) {
                     $data['id'] = $id;

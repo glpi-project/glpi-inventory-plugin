@@ -119,12 +119,12 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         switch ($item->getType()) {
             case 'Computer':
                 return __("Tasks / Groups", "glpiinventory");
-            break;
 
             case 'PluginGlpiinventoryTask':
                 return __("Job executions", "glpiinventory");
-            break;
         }
+
+        return '';
     }
 
 
@@ -282,10 +282,11 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
    /**
     * Process ajax parameters for getLogs() methods
+    * Displays in json format, encoded list of logs grouped by jobstates
     *
     * since 0.85+1.0
     * @param array $params list of ajax expected 'id' and 'last_date' parameters
-    * @return string in json format, encoded list of logs grouped by jobstates
+    * @return void
     */
     public function ajaxGetLogs($params)
     {

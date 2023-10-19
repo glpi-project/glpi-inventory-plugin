@@ -70,6 +70,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             $data[$id] = $this->fields;
         }
 
+        $process_id = 0;
         foreach ($data as $process_id => $input) {
             foreach ($a_input as $field => $value) {
                 if (
