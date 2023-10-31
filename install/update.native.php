@@ -385,8 +385,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core printer logs");
     if ($DB->tableExists('glpi_plugin_glpiinventory_printerlogs')) {
-        $DB->queryOrDie(
-            "INSERT INTO `glpi_printerlogs` (
+        $DB->doQueryOrDie(
+            "INSERT IGNORE INTO `glpi_printerlogs` (
                 `printers_id`,
                 `date`,
                 `total_pages`,
@@ -430,8 +430,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core networkports logs");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkportconnectionlogs')) {
-        $DB->queryOrDie(
-            "INSERT INTO `glpi_networkportconnectionlogs` (
+        $DB->doQueryOrDie(
+            "INSERT IGNORE INTO `glpi_networkportconnectionlogs` (
                 `date`,
                 `connected`,
                 `networkports_id_source`,
@@ -584,8 +584,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     if ($DB->tableExists('glpi_plugin_glpiinventory_rulematchedlogs')) {
         // agents must be migrated before that one
-        $DB->queryOrDie(
-            "INSERT INTO `glpi_rulematchedlogs` (
+        $DB->doQueryOrDie(
+            "INSERT IGNORE INTO `glpi_rulematchedlogs` (
                `date`,
                `items_id`,
                `itemtype`,
@@ -608,8 +608,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core remote management");
     if ($DB->tableExists('glpi_plugin_glpiinventory_computerremotemanagements')) {
         // agents must be migrated before that one
-        $DB->queryOrDie(
-            "INSERT INTO `glpi_items_remotemanagements` (
+        $DB->doQueryOrDie(
+            "INSERT IGNORE INTO `glpi_items_remotemanagements` (
                 `itemtype`,
                 `items_id`,
                 `remoteid`,
