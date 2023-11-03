@@ -40,7 +40,7 @@ Html::header(
     $_SERVER["PHP_SELF"],
     "admin",
     "pluginglpiinventorymenu",
-    "config"
+    "menu"
 );
 
 
