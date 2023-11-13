@@ -180,7 +180,6 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         $_SESSION['glpilist_limit'] = 200;
         Search::displayData($data);
         $_SESSION['glpilist_limit'] = $limit_backup;
-        //$_SESSION['glpisearch']['Computer'] = $backup_computer_search;
 
         //remove trashbin switch
         echo Html::scriptBlock("
