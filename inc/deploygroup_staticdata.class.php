@@ -170,12 +170,10 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         $search_params['massiveactionparams']['extraparams']['specific_actions']['PluginGlpiinventoryComputer' . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-        $data = Search::prepareDatasForSearch('PluginGlpiinventoryComputer', $search_params);
-        $data['itemtype'] = 'Computer';
+        $data = Search::prepareDatasForSearch('Computer', $search_params);
         Search::constructSQL($data);
         Search::constructData($data);
         $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-        $data['itemtype'] = 'PluginGlpiinventoryComputer';
         $limit_backup = $_SESSION['glpilist_limit'];
         $_SESSION['glpilist_limit'] = 200;
         Search::displayData($data);

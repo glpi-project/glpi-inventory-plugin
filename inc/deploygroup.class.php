@@ -659,6 +659,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         global $DB;
 
+        $is_dynamic = $group->isDynamicGroup();
         $computers_params = [];
 
        //Check criteria from DB
@@ -695,7 +696,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         }
 
         $computers_params["reset"] = true;
-        return Search::manageParams('Computer', $computers_params, true, false);
+        return Search::manageParams('Computer', $computers_params, $is_dynamic, false);
     }
 
 
