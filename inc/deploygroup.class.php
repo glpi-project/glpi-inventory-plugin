@@ -470,7 +470,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     */
     public function isDynamicGroup()
     {
-        return ($this->fields['type'] == self::DYNAMIC_GROUP);
+        return (isset($this->fields['type']) && $this->fields['type'] == self::DYNAMIC_GROUP);
     }
 
 
