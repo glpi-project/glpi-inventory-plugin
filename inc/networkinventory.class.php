@@ -57,7 +57,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $pfIPRange = new PluginGlpiinventoryIPRange();
-        $agent = new Agent();
         $a_specificity = [];
         $a_specificity['DEVICE'] = [];
 
@@ -86,7 +85,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             NetworkEquipment::getType() => [],
             Printer::getType() => []
         ];
-        $communication = $pfTask->fields['communication'];
         $a_definition = importArrayFromDB($pfTaskjob->fields['definition']);
         foreach ($a_definition as $datas) {
             $itemtype = key($datas);
@@ -237,14 +235,10 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 }
             }
         }
-        $count_device = count($devices[NetworkEquipment::getType()]) + count($devices[Printer::getType()]);
 
-        $a_actions = importArrayFromDB($pfTaskjob->fields['action']);
-
-       // *** For dynamic agent same subnet, it's an another management ***
+        // *** For dynamic agent same subnet, it's an another management ***
         if (strstr($pfTaskjob->fields['action'], '".2"')) {
             $a_subnet = [];
-            $a_agentList = [];
             $a_devicesubnet = [];
             foreach ($devices[NetworkEquipment::getType()] as $items_id) {
                 $NetworkEquipment->getFromDB($items_id);
@@ -273,11 +267,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                      $a_devicesubnet[$ip_subnet]['Printer'][$items_id] = 1;
                 }
             }
-            $a_agentsubnet = [];
-            foreach ($a_subnet as $subnet => $num) {
-                $a_agentList = $this->getAgentsSubnet($num, $communication, $subnet);
-                $a_agentsubnet[$subnet] = $a_agentList;
-            }
+
             $a_input = [];
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
@@ -288,85 +278,35 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
             $taskvalid = 0;
-            foreach ($a_agentsubnet as $subnet => $a_agentList) {
-                if (count($a_agentList) == 0) {
-                   // No agent available for this subnet
-                    for ($i = 0; $i < 2; $i++) {
-                        $itemtype = 'Printer';
-                        if ($i == '0') {
-                             $itemtype = 'NetworkEquipment';
-                        }
-                        if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                            foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id => $num) {
-                                $a_input['itemtype'] = $itemtype;
-                                $a_input['items_id'] = $items_id;
-                                $a_input['specificity'] = exportArrayToDB(
-                                    $a_specificity['DEVICE'][$itemtype . $items_id]
-                                );
-                                 $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                                 //Add log of taskjob
-                                 $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
-                                 $a_input['state'] = 7;
-                                 $a_input['date'] = date("Y-m-d H:i:s");
-                                 $pfTaskjoblog->add($a_input);
-                                 $pfTaskjobstate->changeStatusFinish(
-                                     $Taskjobstates_id,
-                                     0,
-                                     '',
-                                     1,
-                                     "Unable to find agent to inventory " .
-                                     "this " . $itemtype
-                                 );
-                                 $a_input['state'] = 1;
-                            }
-                        }
+            foreach (array_keys($a_subnet) as $subnet) {
+                // No agent available for this subnet
+                for ($i = 0; $i < 2; $i++) {
+                    $itemtype = 'Printer';
+                    if ($i == '0') {
+                         $itemtype = 'NetworkEquipment';
                     }
-                } else {
-                   // add taskjobstate
-                    $count_device_subnet = 0;
-                    if (isset($a_devicesubnet[$subnet]['NetworkEquipment'])) {
-                        $count_device_subnet += count($a_devicesubnet[$subnet]['NetworkEquipment']);
-                    }
-                    if (isset($a_devicesubnet[$subnet]['Printer'])) {
-                        $count_device_subnet += count($a_devicesubnet[$subnet]['Printer']);
-                    }
-                    $nb_devicebyagent = ceil($count_device_subnet / count($a_agentList));
-                    $nbagent = 0;
-                    $agent_id = array_pop($a_agentList);
-                    $a_input['state'] = 0;
-
-                    for ($i = 0; $i < 2; $i++) {
-                        $itemtype = 'Printer';
-                        if ($i == '0') {
-                            $itemtype = 'NetworkEquipment';
-                        }
-                        if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                            foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id => $num) {
-                                $a_input['itemtype'] = $itemtype;
-                                $a_input['items_id'] = $items_id;
-                                $a_input['specificity'] = exportArrayToDB(
-                                    $a_specificity['DEVICE'][$itemtype . $items_id]
-                                );
-                                if ($nbagent == $nb_devicebyagent) {
-                                       $agent_id = array_pop($a_agentList);
-                                       $nbagent = 0;
-                                }
-                                $a_input['agents_id'] = $agent_id;
-                                $nbagent++;
-                                $taskvalid++;
-                                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                               //Add log of taskjob
-                                $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
-                                $a_input['state'] = 7;
-                                $a_input['date'] = date("Y-m-d H:i:s");
-                                $pfTaskjoblog->add($a_input);
-                                unset($a_input['state']);
-                                $a_input['agents_id'] = 0;
-                                $a_input['state'] = 0;
-                                if ($communication == "push") {
-                                     $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
-                                }
-                            }
+                    if (isset($a_devicesubnet[$subnet][$itemtype])) {
+                        foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id => $num) {
+                            $a_input['itemtype'] = $itemtype;
+                            $a_input['items_id'] = $items_id;
+                            $a_input['specificity'] = exportArrayToDB(
+                                $a_specificity['DEVICE'][$itemtype . $items_id]
+                            );
+                             $Taskjobstates_id = $pfTaskjobstate->add($a_input);
+                             //Add log of taskjob
+                             $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
+                             $a_input['state'] = 7;
+                             $a_input['date'] = date("Y-m-d H:i:s");
+                             $pfTaskjoblog->add($a_input);
+                             $pfTaskjobstate->changeStatusFinish(
+                                 $Taskjobstates_id,
+                                 0,
+                                 '',
+                                 1,
+                                 "Unable to find agent to inventory " .
+                                 "this " . $itemtype
+                             );
+                             $a_input['state'] = 1;
                         }
                     }
                 }
@@ -375,160 +315,35 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
             }
         } else {
-            $a_agentList = [];
-           // *** Only agents not dynamic ***
-            if (
-                (!strstr($pfTaskjob->fields['action'], '".1"'))
-                and (!strstr($pfTaskjob->fields['action'], '".2"'))
-            ) {
-                $agent_require_model = 0;
-                foreach ($a_actions as $a_action) {
-                    if (
-                        (!in_array('.1', $a_action))
-                        and (!in_array('.2', $a_action))
-                    ) {
-                        $agent_id = current($a_action);
-                        if ($agent->getFromDB($agent_id)) {
-                            $a_version = importArrayFromDB($agent->fields['version']);
-                            $agent_version = '0';
-                            if (isset($a_version['INVENTORY'])) {
-                                $agent_version = str_replace('v', '', $a_version['INVENTORY']);
-                            }
+            /**
+             * Manage agents
+             */
+            $a_input = [];
+            $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
+            $a_input['state'] = 1;
+            $a_input['agents_id'] = 0;
+            $a_input['itemtype'] = '';
+            $a_input['items_id'] = 0;
+            $a_input['uniqid'] = $uniqid;
+            $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
-                            if (strnatcmp($agent_version, '2.3.4') < 0) {
-                                $agent_require_model = 1;
-                            }
-                            if ($communication == 'pull') {
-                                $a_agentList[] = $agent_id;
-                            } else {
-                                if ($pfTaskjob->isAgentAlive('1', $agent_id)) {
-                                    $a_agentList[] = $agent_id;
-                                }
-                            }
-                        }
-                    }
-                }
-            } elseif (strstr($pfTaskjob->fields['action'], '".1"')) {
-               /*
-                * Case : dynamic agent
-                */
-                $a_agentList = $this->getAgentsSubnet($count_device, $communication);
-            }
-           /*
-           * Manage agents
-           */
-            if (count($a_agentList) == 0) {
-                $a_input = [];
-                $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-                $a_input['state'] = 1;
-                $a_input['agents_id'] = 0;
-                $a_input['itemtype'] = '';
-                $a_input['items_id'] = 0;
-                $a_input['uniqid'] = $uniqid;
-                $a_input['execution_id'] = $pfTask->fields['execution_id'];
-
-                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                //Add log of taskjob
-                $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
-                $a_input['state'] = 7;
-                $a_input['date'] = date("Y-m-d H:i:s");
-                $pfTaskjoblog->add($a_input);
-                $pfTaskjobstate->changeStatusFinish(
-                    $Taskjobstates_id,
-                    0,
-                    '',
-                    1,
-                    "Unable to find agent to run this job"
-                );
-                $input_taskjob = [];
-                $input_taskjob['id'] = $pfTaskjob->fields['id'];
-               //$input_taskjob['status'] = 0;
-                $pfTaskjob->update($input_taskjob);
-            } elseif ($count_device == 0) {
-                $a_input = [];
-                $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-                $a_input['state'] = 1;
-                $a_input['agents_id'] = 0;
-                $a_input['itemtype'] = '';
-                $a_input['items_id'] = 0;
-                $a_input['uniqid'] = $uniqid;
-                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                //Add log of taskjob
-                $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
-                $a_input['state'] = 7;
-                $a_input['date'] = date("Y-m-d H:i:s");
-                $pfTaskjoblog->add($a_input);
-                $pfTaskjobstate->changeStatusFinish(
-                    $Taskjobstates_id,
-                    0,
-                    '',
-                    0,
-                    "No suitable devices to inventory"
-                );
-                $input_taskjob = [];
-                $input_taskjob['id'] = $pfTaskjob->fields['id'];
-               //$input_taskjob['status'] = 1;
-                $pfTaskjob->update($input_taskjob);
-            } else {
-                foreach ($a_agentList as $agent_id) {
-                   //Add jobstate and put status (waiting on server = 0)
-                    $a_input = [];
-                    $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-                    $a_input['state'] = 0;
-                    $a_input['agents_id'] = $agent_id;
-                    $a_input['uniqid'] = $uniqid;
-                    $a_input['execution_id'] = $pfTask->fields['execution_id'];
-                    $alternate = 0;
-                    for ($d = 0; $d < ceil($count_device / count($a_agentList)); $d++) {
-                        if ($count_device > 0) {
-                            $getdevice = "NetworkEquipment";
-                            if ($alternate == "1") {
-                                 $getdevice = "Printer";
-                                 $alternate = 0;
-                            } else {
-                                $getdevice = "NetworkEquipment";
-                                $alternate++;
-                            }
-                            if (count($devices[NetworkEquipment::getType()]) == '0') {
-                                $getdevice = "Printer";
-                            } elseif (count($devices[Printer::getType()]) == '0') {
-                                $getdevice = "NetworkEquipment";
-                            }
-                            $a_input['itemtype'] = $getdevice;
-
-                            switch ($getdevice) {
-                                case 'NetworkEquipment':
-                                    $a_input['items_id'] = array_pop($devices[NetworkEquipment::getType()]);
-                                    $a_input['specificity'] = exportArrayToDB(
-                                        $a_specificity['DEVICE']['NetworkEquipment' . $a_input['items_id']]
-                                    );
-                                    break;
-
-                                case 'Printer':
-                                    $a_input['items_id'] = array_pop($devices[Printer::getType()]);
-                                    $a_input['specificity'] = exportArrayToDB(
-                                        $a_specificity['DEVICE']['Printer' . $a_input['items_id']]
-                                    );
-                                    break;
-                            }
-                            $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                            //Add log of taskjob
-                            $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
-                            $a_input['state'] = 7;
-                            $a_input['date'] = date("Y-m-d H:i:s");
-                            $pfTaskjoblog->add($a_input);
-                            unset($a_input['state']);
-                            if ($communication == "push") {
-                                $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
-                            }
-                        }
-                    }
-                }
-                $input_taskjob = [];
-                $input_taskjob['id'] = $pfTaskjob->fields['id'];
-                $input_taskjob['status'] = 1;
-                $pfTaskjob->update($input_taskjob);
-            }
+            $Taskjobstates_id = $pfTaskjobstate->add($a_input);
+            //Add log of taskjob
+            $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
+            $a_input['state'] = 7;
+            $a_input['date'] = date("Y-m-d H:i:s");
+            $pfTaskjoblog->add($a_input);
+            $pfTaskjobstate->changeStatusFinish(
+                $Taskjobstates_id,
+                0,
+                '',
+                1,
+                "Unable to find agent to run this job"
+            );
+            $input_taskjob = [];
+            $input_taskjob['id'] = $pfTaskjob->fields['id'];
+            //$input_taskjob['status'] = 0;
+            $pfTaskjob->update($input_taskjob);
         }
         return $uniqid;
     }
@@ -642,123 +457,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             ]
          ] + $auth_nodes
         ];
-    }
-
-
-   /**
-    * Get agents by the subnet given
-    *
-    * @global object $DB
-    * @param integer $nb_computers
-    * @param string $communication
-    * @param string $subnet
-    * @param string $ipstart
-    * @param string $ipend
-    * @return array
-    */
-    public function getAgentsSubnet($nb_computers, $communication, $subnet = '', $ipstart = '', $ipend = '')
-    {
-        global $DB;
-
-        $pfTaskjob = new PluginGlpiinventoryTaskjob();
-        $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
-
-       // Number of computers min by agent
-        $nb_computerByAgentMin = 20;
-        $nb_agentsMax = ceil($nb_computers / $nb_computerByAgentMin);
-
-        $a_agentList = [];
-        $where = [];
-
-        if ($subnet != '') {
-            $where[] = ['glpi_ipaddresses.name' => ['LIKE', $subnet . '%']];
-        } elseif ($ipstart != '' and $ipend != '') {
-            $where[] = new \QueryExpression(
-                'INET_ATON(`glpi_ipaddresses`.`name`) > INET_ATON(\'' . $ipstart . '\')'
-            );
-            $where[] = new \QueryExpression(
-                'INET_ATON(`glpi_ipaddresses`.`name`) < INET_ATON(\'' . $ipend . '\')'
-            );
-        }
-        $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKINVENTORY');
-        $a_agentsid = [];
-        foreach ($a_agents as $a_agent) {
-            $a_agentsid[] = $a_agent['id'];
-        }
-        if (count($a_agentsid) == '0') {
-            return $a_agentList;
-        }
-
-        $criteria = [
-            'SELECT' => [
-                'glpi_agents.id AS a_id',
-                'glpi_ipaddresses.name AS ip',
-                'token'
-            ],
-            'FROM' => 'glpi_agents',
-            'LEFT JOIN' => [
-                'glpi_networkports' => [
-                    'ON' => [
-                        'glpi_networkports' => 'items_id',
-                        'glpi_agents' => 'items_id'
-                    ]
-                ],
-                'glpi_networknames' => [
-                    'ON' => [
-                        'glpi_networknames' => 'items_id',
-                        'glpi_networkports' => 'id',
-                        'AND' => [
-                            'glpi_networknames.itemtype' => 'NetworkPort'
-                        ]
-                    ]
-                ],
-                'glpi_ipaddresses' => [
-                    'ON' => [
-                        'glpi_ipaddresses' => 'items_id',
-                        'glpi_networknames' => 'id',
-                        'AND' => [
-                            'glpi_ipaddresses.itemtype' => 'NetworkName'
-                        ]
-                    ]
-                ],
-                'glpi_computers' => [
-                    'ON' => [
-                        'glpi_computers' => 'id',
-                        'glpi_agents' => 'items_id'
-                    ]
-                ]
-            ],
-            'WHERE' => [
-                'glpi_agents.itemtype' => 'Computer',
-                'glpi_networkports.itemtype' => 'Computer',
-                'glpi_agents.id' => $a_agentsid,
-                'glpi_ipadresses.name' => ['!=', '127.0.0.1']
-            ] + $where
-        ];
-
-
-        $iterator = $DB->request($criteria);
-        Toolbox::logInFile('NET', $iterator->getSql() . "\n");
-        foreach ($iterator as $data) {
-            if ($communication == 'push') {
-                if ($pfTaskjob->isAgentAlive("1", $data['a_id'])) {
-                    if (!in_array($a_agentList, $data['a_id'])) {
-                         $a_agentList[] = $data['a_id'];
-                        if (count($a_agentList) >= $nb_agentsMax) {
-                            return $a_agentList;
-                        }
-                    }
-                }
-            } elseif ($communication == 'pull') {
-                if (!in_array($data['a_id'], $a_agentList)) {
-                    $a_agentList[] = $data['a_id'];
-                    if (count($a_agentList) > $nb_agentsMax) {
-                        return $a_agentList;
-                    }
-                }
-            }
-        }
-        return $a_agentList;
     }
 
 

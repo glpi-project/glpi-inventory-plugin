@@ -167,7 +167,6 @@ class TaskDeployDynamicGroupTest extends TestCase
         $input = [
          'name'           => 'deploy',
          'is_active'      => 1,
-         'communication'  => 'pull'
         ];
         $taskId = $pfTask->add($input);
         $this->assertNotFalse($taskId);

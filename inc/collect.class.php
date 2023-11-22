@@ -340,7 +340,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $job->getFromDB($taskjobs_id);
         $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
-        $communication = $task->fields['communication'];
         $actions       = importArrayFromDB($job->fields['action']);
         $definitions   = importArrayFromDB($job->fields['definition']);
         $taskvalid     = 0;
@@ -490,11 +489,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
                                   $c_input['agents_id'] = $agents_id;
 
-                                  // Push the agent, in the stack of agent to awake
-                                if ($communication == "push") {
-                                    $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
-                                }
-
                                   $jobstates_id = $jobstate->add($c_input);
 
                                   //Add log of taskjob
@@ -521,11 +515,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
                                    $c_input['agents_id'] = $agents_id;
 
-                                   // Push the agent, in the stack of agent to awake
-                                if ($communication == "push") {
-                                    $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
-                                }
-
                                   $jobstates_id = $jobstate->add($c_input);
 
                                   //Add log of taskjob
@@ -551,11 +540,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                   $c_input['uniqid'] = $uniqid;
 
                                   $c_input['agents_id'] = $agents_id;
-
-                                  // Push the agent, in the stack of agent to awake
-                                if ($communication == "push") {
-                                    $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
-                                }
 
                                 $jobstates_id = $jobstate->add($c_input);
 
