@@ -705,10 +705,12 @@ class CronTaskTest extends TestCase
        //Prepare the task
         PluginGlpiinventoryTask::cronTaskscheduler();
 
-       //Set the first job as successfull
-        $query = "SELECT DISTINCT `plugin_glpiinventory_taskjobstates_id`
-                FROM glpi_plugin_glpiinventory_taskjoblogs LIMIT 1";
-        foreach ($DB->request($query) as $data) {
+        //Set the first job as successfull
+        $iterator = $DB->request([
+            'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs',
+            'LIMIT' => 1
+        ]);
+        foreach ($iterator as $data) {
             $pfTaskJobstate->changeStatusFinish($data['plugin_glpiinventory_taskjobstates_id'], 0, '');
         }
 
@@ -721,9 +723,11 @@ class CronTaskTest extends TestCase
         $datetime = new Datetime($_SESSION['glpi_currenttime']);
         $datetime->modify('-4 days');
 
-        $query = "UPDATE `glpi_plugin_glpiinventory_taskjoblogs`
-                SET `date`='" . $datetime->format('Y-m-d') . " 00:00:00'";
-        $DB->query($query);
+        $DB->update(
+            'glpi_plugin_glpiinventory_taskjoblogs',
+            ['date' => $datetime->format('Y-m-d') . " 00:00:00"],
+            [new QueryExpression("1=1")]
+        );
 
        //No task & jobs should be removed because ask for cleaning 5 days from now
         $index = $pfTask->cleanTasksAndJobs(5);
@@ -770,15 +774,19 @@ class CronTaskTest extends TestCase
         ));
 
        //Set the first job as successfull
-        $query = "SELECT DISTINCT `plugin_glpiinventory_taskjobstates_id`
-                FROM glpi_plugin_glpiinventory_taskjoblogs";
-        foreach ($DB->request($query) as $data) {
+        $request = $DB->request([
+            'DISTINCT' => 'plugin_glpiinventory_taskjobstates_id',
+            'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs',
+        ]);
+        foreach ($request as $data) {
             $pfTaskJobstate->changeStatusFinish($data['plugin_glpiinventory_taskjobstates_id'], 0, '');
         }
 
-        $query = "UPDATE `glpi_plugin_glpiinventory_taskjoblogs`
-                SET `date`='" . $datetime->format('Y-m-d') . " 00:00:00'";
-        $DB->query($query);
+        $DB->update(
+            'glpi_plugin_glpiinventory_taskjoblogs',
+            ['date' => $datetime->format('Y-m-d') . " 00:00:00"],
+            [new QueryExpression("1=1")]
+        );
 
        //One taskjob is finished and should be cleaned
         $index = $pfTask->cleanTasksAndJobs(2);
