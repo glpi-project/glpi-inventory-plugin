@@ -243,7 +243,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     *
     * @since 0.85+1.0
     *
-    * @param null|object $datetime The date and time we want to transform into
+    * @param DateTime $datetime The date and time we want to transform into
     *                              cursor. If null the default value is now()
     * @return integer
     */

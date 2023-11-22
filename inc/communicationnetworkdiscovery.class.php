@@ -135,7 +135,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     } else {
                         $refused = $inventory->getMainAsset()->getRefused();
                         $device = $a_CONTENT->content->network_device;
-                        if (isset($refused) && count($refused)) {
+                        if (count($refused)) {
                             $a_text = [];
                             if (isset($device)) {
                                 foreach (["type", "name", "mac", "ips"] as $property) {

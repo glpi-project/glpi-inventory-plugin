@@ -71,7 +71,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * Display list of files
     *
     * @global array $CFG_GLPI
-    * @param object $package PluginGlpiinventoryDeployPackage instance
+    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
     * @param array $data array converted of 'json' field in DB where stored actions
     * @param string $rand unique element id used to identify/update an element
     */

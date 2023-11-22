@@ -674,7 +674,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             'FROM' => 'glpi_plugin_glpiinventory_taskjobs',
             'WHERE' => [
                 'status' => 1,
-                new \QueryExpression($sub_query->getSQL() . ' = 0')
+                new \QueryExpression($sub_query->getQuery() . ' = 0')
             ]
         ]);
 
@@ -889,7 +889,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     *
     * @global array $CFG_GLPI
     * @param string $type
-    * @param string $items_id
+    * @param string $a_items_id
     * @param integer $taskjobs_id
     */
     public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
@@ -1215,8 +1215,8 @@ function new_subtype(id) {
    /**
     * Execution code for massive action
     *
-    * @param object $ma MassiveAction instance
-    * @param object $item item on which execute the code
+    * @param MassiveAction $ma MassiveAction instance
+    * @param CommonDBTM $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
     public static function processMassiveActionsForOneItemtype(

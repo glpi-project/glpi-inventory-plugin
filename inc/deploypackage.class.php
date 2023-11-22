@@ -123,7 +123,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     *
     * Also call canUpdateItem()
     *
-    * @return booleen
+    * @return boolean
    **/
     public function canUpdateContent()
     {
@@ -179,7 +179,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    /**
     * Display form related to the massive action selected
     *
-    * @param object $ma MassiveAction instance
+    * @param MassiveAction $ma MassiveAction instance
     * @return boolean
     */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
@@ -204,13 +204,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    /**
     * Execution code for massive action
     *
-    * @param object $ma MassiveAction instance
-    * @param object $item item on which execute the code
+    * @param MassiveAction $ma MassiveAction instance
+    * @param CommonDBTM $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
-
+        /** @var PluginGlpiinventoryDeployPackage $item  */
         switch ($ma->getAction()) {
             case 'export':
                 foreach ($ids as $key) {
@@ -391,7 +391,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    /**
     * Get all packages in json format
     *
-    * @return json
+    * @return string json
     */
     public function getAllDatas()
     {
@@ -1014,7 +1014,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
@@ -1022,8 +1022,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
 
         if (!$withtemplate) {
-            switch ($item->getType()) {
-                case __CLASS__:
+            switch (get_class($item)) {
+                case self::class:
                     if ($item->canUpdateItem()) {
                         $tabs = [];
                         if ($item->fields['id'] > 0) {
@@ -1054,7 +1054,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     break;
 
-                case 'Computer':
+                case Computer::class:
                     if (
                         Session::haveRight("plugin_glpiinventory_selfpackage", READ)
                         && PluginGlpiinventoryToolbox::isAnInventoryDevice($item)
@@ -1072,7 +1072,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
@@ -1080,7 +1080,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
-        if ($item->getType() == __CLASS__) {
+        if ($item instanceof self) {
             if ($tabnum == 2) {
                 $item->showVisibility();
                 return true;
@@ -1088,7 +1088,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 $item->displayOrderTypeForm();
                 return true;
             }
-        } elseif ($item->getType() == 'Computer') {
+        } elseif ($item instanceof Computer) {
             $package = new self();
             $package->showPackageForMe($_SESSION['glpiID'], $item);
             return true;
@@ -1359,7 +1359,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
    /**
    * Get all available states for a package
-   * @return an array of states and their labels
+   * @return array of states and their labels
    */
     public static function getPackageDeploymentStates()
     {
@@ -1375,8 +1375,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
    /**
    * Get a label for a state
-   * @param state the state
-   * @return the label associated to a state
+   * @param string $state the state
+   * @return string the label associated to a state
    */
     public static function getDeploymentLabelForAState($state)
     {
@@ -1930,13 +1930,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * Get all packages that a user has requested to install
     * on one of it's computer
     *
-    * @global object $DB
     * @param array $computers_packages
-    * @param integer $users_id
+    * @param false|integer $users_id
     * @return array
     */
     public function getMyDepoyPackages($computers_packages, $users_id = false)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
        // Get packages yet deployed by enduser
@@ -2148,8 +2148,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
    /**
    * Duplicate a deploy package
-   * @param $deploypackages_id the ID of the package to duplicate
-   * @return duplication process status
+   * @param integer $deploypackages_id the ID of the package to duplicate
+   * @return boolean duplication process status
    */
     public function duplicate($deploypackages_id)
     {

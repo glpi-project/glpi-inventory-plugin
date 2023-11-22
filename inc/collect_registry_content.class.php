@@ -48,13 +48,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-
+        /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0) {
             if (get_class($item) == 'PluginGlpiinventoryCollect') {
                 if ($item->fields['type'] == 'registry') {

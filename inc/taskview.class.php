@@ -524,7 +524,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
     /**
-     * Export a list of jobs in CSV format
+     * Export a list of jobs in CSV format, and download file
      *
      * @param  array  $params these possible entries:
      *                        - agent_state_types: array of agent states to filter output
@@ -534,7 +534,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      *                           - 1 : display params AND html table,
      *                           - 2: like 1 + display also json of jobs logs
      *
-     * @return nothing (force a download of csv)
+     * @return void
      */
     public function csvExport($params = [])
     {
@@ -711,13 +711,13 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     /**
      * Prepare task jobs
      *
-     * @global object $DB
      * @param array $methods
-     * @param string $task_id; the concerned task
+     * @param false|integer $tasks_id the concerned task
      * @return true
      */
     public function prepareTaskjobs($methods = [], $tasks_id = false)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $now = new DateTime();

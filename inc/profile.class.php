@@ -111,7 +111,7 @@ class PluginGlpiinventoryProfile extends Profile
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
@@ -124,7 +124,7 @@ class PluginGlpiinventoryProfile extends Profile
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
@@ -132,6 +132,7 @@ class PluginGlpiinventoryProfile extends Profile
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pfProfile = new self();
+        /** @var CommonDBTM $item */
         if ($item->fields['interface'] == 'central') {
             $pfProfile->showForm($item->fields['id']);
         } else {

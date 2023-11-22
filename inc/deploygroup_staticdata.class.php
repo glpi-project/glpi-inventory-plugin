@@ -79,7 +79,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string|array name of the tab
     */
@@ -88,7 +88,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 
         if (
             !$withtemplate
-            && ($item->getType() == 'PluginGlpiinventoryDeployGroup')
+            && ($item instanceof PluginGlpiinventoryDeployGroup)
              && $item->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
         ) {
             $tabs[1] = _n('Criterion', 'Criteria', 2);
@@ -114,7 +114,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
@@ -141,7 +141,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
    /**
     * Display criteria form + list of computers
     *
-    * @param object $item PluginGlpiinventoryDeployGroup instance
+    * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
     */
     public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
     {
@@ -291,9 +291,9 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 
    /**
    * Duplicate entries from one group to another
-   * @param $source_deploygroups_id the source group ID
-   * @param $target_deploygroups_id the target group ID
-   * @return the duplication status, as a boolean
+   * @param integer $source_deploygroups_id the source group ID
+   * @param integer $target_deploygroups_id the target group ID
+   * @return boolean the duplication status
    */
     public static function duplicate($source_deploygroups_id, $target_deploygroups_id)
     {
@@ -318,7 +318,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     *
     * @since 9.2+2.0
     *
-    * @param object $item it's an instance of PluginGlpiinventoryDeployGroup class
+    * @param PluginGlpiinventoryDeployGroup $item it's an instance of PluginGlpiinventoryDeployGroup class
     *
     * @return boolean
     */

@@ -110,7 +110,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
@@ -150,17 +150,17 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        if ($item->getType() == 'PluginGlpiinventoryTask') {
+        if ($item instanceof PluginGlpiinventoryTask) {
             $item->showJobLogs();
             return true;
-        } elseif ($item->getType() == 'Computer') {
+        } elseif ($item instanceof Computer) {
             $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
             $pfTaskJobState->showStatesForComputer($item->fields['id']);
             echo "<br>";
@@ -596,7 +596,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
    /**
    * Fill a taskjobstate by it's uuid
    * @since 9.2
-   * @param uniqid taskjobstate's uniqid
+   * @param string $uniqid taskjobstate's uniqid
    */
     public function getFromDBByUniqID($uniqid)
     {

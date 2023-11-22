@@ -65,13 +65,14 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
+        /** @var CommonDBTM $item */
         if (
             !$withtemplate
             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP
@@ -96,8 +97,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     * This function saves and restores the pagination parameters to avoid breaking the pagination in the
     * query results.
     *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
+    * @param CommonGLPI $item the item object
     * @return string name of the tab
     */
     public function getMatchingItemsCount(CommonGLPI $item)
@@ -133,7 +133,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
@@ -174,7 +174,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
    /**
     * Display criteria form + list of computers
     *
-    * @param object $item PluginGlpiinventoryDeployGroup instance
+    * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
+    *
+    * @return void
     */
     public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
     {
@@ -188,7 +190,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
        // WITHOUT checking post values
         $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
        //If metacriteria array is empty, remove it as it displays the metacriteria form,
-       //and it's is not we want !
+       //and it is not we want !
         if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
             unset($search_params['metacriteria']);
         }
@@ -250,9 +252,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     *
     * @since 0.85+1.0
     *
-    * @param group the group object
-    * @param use_cache retrieve computers_id from cache (computers_id_cache field)
-    * @return an array of computer ids
+    * @param PluginGlpiinventoryDeployGroup $group the group object
+    * @param boolean $use_cache retrieve computers_id from cache (computers_id_cache field)
+    * @return array of computer ids
     */
     public static function getTargetsByGroup(PluginGlpiinventoryDeployGroup $group, $use_cache = false)
     {
@@ -338,9 +340,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
 
    /**
    * Duplicate entries from one group to another
-   * @param $source_deploygroups_id the source group ID
-   * @param $target_deploygroups_id the target group ID
-   * @return the duplication status, as a boolean
+   * @param integer $source_deploygroups_id the source group ID
+   * @param integer $target_deploygroups_id the target group ID
+   * @return boolean the duplication status
    */
     public static function duplicate($source_deploygroups_id, $target_deploygroups_id)
     {

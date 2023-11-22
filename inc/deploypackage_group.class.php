@@ -78,7 +78,7 @@ class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation
    /**
     * Logs for the second item are disabled
     *
-    * @var type
+    * @var boolean
     */
     public static $logs_for_item_2     = false;
 
