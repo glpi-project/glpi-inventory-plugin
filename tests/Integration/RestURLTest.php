@@ -37,7 +37,6 @@ class RestURLTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-
        // Delete all entities except root entity
         $entity = new Entity();
         $items = $entity->find();
@@ -100,15 +99,19 @@ class RestURLTest extends TestCase
         $ret = $entity->update($input);
         $this->assertTrue($ret);
 
-       // active all modules
-        $query = "UPDATE `glpi_plugin_glpiinventory_agentmodules`"
-              . " SET `is_active`='1'";
-        $DB->query($query);
+        // active all modules
+        $DB->update(
+            'glpi_plugin_glpiinventory_agentmodules',
+            ['is_active' => 1],
+            [new QueryExpression("1=1")]
+        );
     }
 
 
    /**
     * @test
+    *
+    * @depends prepareDb
     */
     public function getCollectUrlEnt1Entity()
     {
@@ -146,6 +149,8 @@ class RestURLTest extends TestCase
 
    /**
     * @test
+    *
+    * @depends prepareDb
     */
     public function getDeployUrlRootEntity()
     {
@@ -182,6 +187,8 @@ class RestURLTest extends TestCase
 
    /**
     * @test
+    *
+    * @depends prepareDb
     */
     public function getEsxUrlRootEntity()
     {
@@ -218,6 +225,8 @@ class RestURLTest extends TestCase
 
    /**
     * @test
+    *
+    * @depends prepareDb
     */
     public function getCollectUrlRootEntity()
     {

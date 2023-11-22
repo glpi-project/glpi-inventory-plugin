@@ -95,11 +95,15 @@ class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation
         global $DB;
 
         $prof  = [];
-        $query = "SELECT `glpi_plugin_glpiinventory_deploypackages_profiles`.*
-                FROM `glpi_plugin_glpiinventory_deploypackages_profiles`
-                WHERE `plugin_glpiinventory_deploypackages_id` = '$deploypackages_id'";
 
-        foreach ($DB->request($query) as $data) {
+        $iterator = $DB->request([
+            'FROM' => 'glpi_plugin_glpiinventory_deploypackages_profiles',
+            'WHERE' => [
+                'plugin_glpiinventory_deploypackages_id' => $deploypackages_id
+            ]
+        ]);
+
+        foreach ($iterator as $data) {
             $prof[$data['profiles_id']][] = $data;
         }
         return $prof;

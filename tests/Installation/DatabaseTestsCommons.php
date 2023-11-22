@@ -283,9 +283,10 @@ class DatabaseTestsCommons extends Assert
        /*
        * Verify in taskjob definition PluginFusinvsnmpIPRange not exist
        */
-        $query = "SELECT * FROM `glpi_plugin_glpiinventory_taskjobs`";
-        $result = $DB->query($query);
-        while ($data = $DB->fetchArray($result)) {
+        $request = $DB->request([
+            'FROM' => 'glpi_plugin_glpiinventory_taskjobs'
+        ]);
+        foreach ($request as $data) {
             $snmprangeip = 0;
             if (strstr($data['targets'], "PluginFusinvsnmpIPRange")) {
                 $snmprangeip = 1;
