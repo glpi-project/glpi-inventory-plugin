@@ -58,13 +58,14 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         $tab_names = [];
+        /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0 and $this->can('task', READ)) {
             return __('Job configuration', 'glpiinventory');
         }
@@ -75,7 +76,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
@@ -85,25 +86,23 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         $pfTaskJob = new PluginGlpiinventoryTaskjob();
 
-        if ($item->fields['id'] > 0) {
-            if ($item->getType() == 'PluginGlpiinventoryTask') {
-                //keep this code for multi task job if reintroduced
-                //echo "<div id='taskjobs_form'>";
-                //echo "</div>";
-                //echo "<div id='taskjobs_list' class='tab_cadre_fixe'>";
-                //$pfTaskJob->showListForTask($item->fields['id']);
-                //echo "</div>";
+        if ($item instanceof PluginGlpiinventoryTask && $item->fields['id'] > 0) {
+            //keep this code for multi task job if reintroduced
+            //echo "<div id='taskjobs_form'>";
+            //echo "</div>";
+            //echo "<div id='taskjobs_list' class='tab_cadre_fixe'>";
+            //$pfTaskJob->showListForTask($item->fields['id']);
+            //echo "</div>";
 
-                //display the unique job attached to task if needed
-                $taskjobs = $pfTaskJob->getTaskjobs($item->fields['id']);
-                $taskjob_id = 0;
-                if (count($taskjobs)) {
-                    $taskjob_id = reset($taskjobs)['id'];
-                }
-                $pfTaskJob->showForm($taskjob_id, ['task_id' => $item->fields['id']]);
-
-                return true;
+            //display the unique job attached to task if needed
+            $taskjobs = $pfTaskJob->getTaskjobs($item->fields['id']);
+            $taskjob_id = 0;
+            if (count($taskjobs)) {
+                $taskjob_id = reset($taskjobs)['id'];
             }
+            $pfTaskJob->showForm($taskjob_id, ['task_id' => $item->fields['id']]);
+
+            return true;
         }
         return false;
     }

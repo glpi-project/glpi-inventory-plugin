@@ -84,9 +84,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     const WTS_ICON_ERROR               = 'error';
 
 
-   /**
-    * @see CommonGLPI::defineTabs()
-   **/
     public function defineTabs($options = [])
     {
 
@@ -98,9 +95,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     }
 
 
-   /**
-    * @see CommonGLPI::getTabNameForItem()
-   **/
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         $tabs[1] = __('General');
@@ -116,9 +110,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    **/
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        global $CFG_GLPI;
-
-        if ($item->getType() == __CLASS__) {
+        if ($item instanceof self) {
             switch ($tabnum) {
                 case 1:
                     $item->showForm($item->fields['id']);
@@ -167,7 +159,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * Get available buttons for alerts, by interaction type
     *
     * @since 9.2
-    * @param interaction_type the type of interaction
+    * @param string $interaction_type the type of interaction
     * @return array
     */
     public static function getButtons($interaction_type = '')
@@ -196,7 +188,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * Get available icons for alerts, by interaction type
     *
     * @since 9.2
-    * @param interaction_type the type of interaction
+    * @param string $interaction_type the type of interaction
     * @return array
     */
     public static function getIcons($interaction_type = self::ALERT_WTS)
@@ -237,8 +229,10 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * Display a dropdown with the list of available behaviors
     *
     * @since 9.2
-    * @param type the type of bahaviors (if one already selected)
-    * @return rand
+    * @param string $name the name of the dropdown
+    * @param string $behavior the default behavior
+    *
+    * @return integer
     */
     public function dropdownBehaviors($name, $behavior = self::BEHAVIOR_CONTINUE_DEPLOY)
     {
@@ -251,10 +245,10 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
 
    /**
-   * Get the fields to be encoded in json
-   * @since 9.2
-   * @return an array of field names
-   */
+    * Get the fields to be encoded in json
+    * @since 9.2
+    * @return array of field names
+    */
     public function getJsonFields()
     {
         return  array_merge(
@@ -265,10 +259,10 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
 
    /**
-   * Get the fields to be encoded in json
-   * @since 9.2
-   * @return an array of field names
-   */
+    * Get the fields to be encoded in json
+    * @since 9.2
+    * @return array of field names
+    */
     public function getMainFormFields()
     {
         return  ['platform', 'timeout', 'buttons', 'icon',
@@ -277,10 +271,10 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
 
    /**
-   * Get the fields to be encoded in json
-   * @since 9.2
-   * @return an array of field names
-   */
+    * Get the fields to be encoded in json
+    * @since 9.2
+    * @return array of field names
+    */
     public function getBehaviorsFields()
     {
         return  ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
@@ -290,11 +284,12 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
 
    /**
-   * Initialize json fields
-   * @since 9.2
-   *
-   * @return an array of field names
-   */
+    * Initialize json fields
+    * @since 9.2
+    *
+    * @param array $json_fields the json fields
+    * @return array of field names
+    */
     public function initializeJsonFields($json_fields)
     {
         foreach ($this->getJsonFields() as $field) {
@@ -309,8 +304,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    /**
    * Save form data as a json encoded array
    * @since 9.2
-   * @param params form parameters
-   * @return json encoded array
+   * @param array $params form parameters
+   * @return string json encoded array
    */
     public function saveToJson($params = [])
     {
@@ -328,8 +323,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * Add the json template fields to package
    *
    * @since 9.2
-   * @param the input array
-   * @param array now containing input data + data from the template
+   * @param array $params the input array
+    *
+   * @return array now containing input data + data from the template
    */
     public function addJsonFieldsToArray($params = [])
     {
@@ -354,8 +350,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    /**
    * Display an interaction template form
    * @since 9.2
-   * @param $id id of a template to edit
-   * @param options POST form options
+   * @param integer $id      id of a template to edit
+   * @param array   $options POST form options
    */
     public function showForm($id, $options = [])
     {
@@ -562,7 +558,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
    * Show behaviors form
    *
    * @since 9.2
-   * @param ID the template's ID
+    *
+   * @param integer $ID the template's ID
    */
     public function showBehaviors($ID)
     {

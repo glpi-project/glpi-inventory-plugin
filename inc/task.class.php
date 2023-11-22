@@ -169,12 +169,13 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
+        /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0) {
             $nb = 0;
             if ($_SESSION['glpishow_count_on_tabs']) {
@@ -189,7 +190,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return true
@@ -205,7 +206,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
     * Display form
     *
-    * @param object $item
+    * @param CommonDBTM $item
     * @param array $options
     * @return boolean
     */
@@ -344,7 +345,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @global object $DB
     * @param integer $agent_id
-    * @param string $methods
+    * @param array $methods
     * @param array $options
     * @return array
     */
@@ -648,8 +649,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
    /**
    * Get all on demand tasks to clean
-   * @param $interval number of days to look for successful tasks
-   * @return an array of tasks ID to clean
+   * @param integer $interval number of days to look for successful tasks
+   * @return array of tasks ID to clean
    */
     public function cleanTasksAndJobs($interval)
     {
@@ -733,9 +734,9 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
    /**
     * Give cron information
     *
-    * @param $name : task's name
+    * @param string $name task's name
     *
-    * @return arrray of information
+    * @return array
    **/
     public static function cronInfo($name)
     {
@@ -1654,7 +1655,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * Display form related to the massive action selected
     *
     * @global array $CFG_GLPI
-    * @param object $ma MassiveAction instance
+    * @param MassiveAction $ma MassiveAction instance
     * @return boolean
     */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
@@ -1755,8 +1756,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
    /**
     * Execution code for massive action
     *
-    * @param object $ma MassiveAction instance
-    * @param object $item item on which execute the code
+    * @param MassiveAction $ma MassiveAction instance
+    * @param CommonDBTM $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
     public static function processMassiveActionsForOneItemtype(
@@ -1936,8 +1937,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
    /**
    * Duplicate a task
-   * @param $source_tasks_id the ID of the task to duplicate
-   * @return void
+   * @param integer $source_tasks_id the ID of the task to duplicate
+   * @return boolean
    */
     public function duplicate($source_tasks_id)
     {

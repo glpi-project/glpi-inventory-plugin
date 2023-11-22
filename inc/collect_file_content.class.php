@@ -50,8 +50,8 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     *
     * @global object $DB
     * @param integer $computers_id id of the computer
+    * @param array $file_data
     * @param integer $collects_files_id id of collect_file
-    * @param integer $taskjobstates_id id of taskjobstate
     */
     public function updateComputer($computers_id, $file_data, $collects_files_id)
     {

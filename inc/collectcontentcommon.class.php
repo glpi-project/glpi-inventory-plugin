@@ -78,7 +78,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
@@ -98,13 +98,13 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-
+        /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0) {
             $class   = $this->collect_itemtype;
             $collect = $this->getCollectClass();

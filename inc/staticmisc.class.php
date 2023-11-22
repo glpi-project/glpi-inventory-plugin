@@ -183,7 +183,7 @@ class PluginGlpiinventoryStaticmisc
     * defined in task_definitiontype_InventoryComputerESX
     *
     * @global object $DB
-    * @param string (not used)
+    * @param string $title (not used)
     * @return string unique html element id
     */
     public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX($title)
@@ -518,7 +518,6 @@ class PluginGlpiinventoryStaticmisc
     * Get all packages of definition type 'PluginGlpiinventoryDeployPackage'
     * defined in task_definitiontype_deployinstall
     *
-    * @param string $title (not used)
     * @return string unique html element id
     */
     public static function task_definitionselection_PluginGlpiinventoryDeployPackage_deployinstall()
@@ -652,7 +651,6 @@ class PluginGlpiinventoryStaticmisc
     * Get all collects of definition type 'PluginGlpiinventoryCollect'
     * defined in task_definitiontype_collect
     *
-    * @param string (not used)
     * @return string unique html element id
     */
     public static function task_definitionselection_PluginGlpiinventoryCollect_collect()

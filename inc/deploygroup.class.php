@@ -64,7 +64,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
    /**
     * Define the array of itemtype allowed in static groups
     *
-    * @var type
+    * @var array
     */
     protected $static_group_types = ['Computer'];
 
@@ -140,7 +140,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
@@ -227,7 +227,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
    /**
     * Display form related to the massive action selected
     *
-    * @param object $ma MassiveAction instance
+    * @param MassiveAction $ma MassiveAction instance
     * @return boolean
     */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
@@ -252,8 +252,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
    /**
     * Execution code for massive action
     *
-    * @param object $ma MassiveAction instance
-    * @param object $item item on which execute the code
+    * @param MassiveAction $ma MassiveAction instance
+    * @param CommonDBTM $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
     public static function processMassiveActionsForOneItemtype(
@@ -580,8 +580,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
    /**
     * Show criteria to search computers
     *
-    * @param object $item PluginGlpiinventoryDeployGroup instance
+    * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
     * @param array $p
+    *
+    * @return void
     */
     public static function showCriteria(PluginGlpiinventoryDeployGroup $item, $p)
     {
@@ -650,7 +652,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * Get search parameters as an array
     *
     * @global object $DB
-    * @param object $group PluginGlpiinventoryDeployGroup instance
+    * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
     * @param boolean $check_post_values
     * @param boolean $getAll
     * @return array

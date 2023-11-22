@@ -263,8 +263,8 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
 
             $first_ip = $pfIPRange->getIp2long($pfIPRange->fields["ip_start"]);
 
-            $last_ip = long2ip($first_ip + $a_split[1]);
-            $first_ip = long2ip($first_ip + $a_split[0]);
+            $last_ip = long2ip($first_ip + (int)$a_split[1]);
+            $first_ip = long2ip($first_ip + (int)$a_split[0]);
             if ($first_ip != '0.0.0.0' && $last_ip != '0.0.0.0') {
                 $iprange_attrs['IPSTART'] = $first_ip;
                 $iprange_attrs['IPEND'] = $last_ip;

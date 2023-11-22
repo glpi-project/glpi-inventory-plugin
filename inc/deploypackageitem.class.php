@@ -56,7 +56,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    /**
     * Get an event label by its identifier
     * @since 9.2
-    * @return array
+    * @return false|string
     */
     public function getLabelForAType($type)
     {
@@ -72,8 +72,8 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    /**
    * Get the types already in used, so they cannot be selected anymore
    * @since 9.2
-   * @param $package the package to check
-   * @return the types already in used
+   * @param PluginGlpiinventoryDeployPackage $package the package to check
+   * @return array the types already in used
    */
     public function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
     {
@@ -85,7 +85,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     * Display the dropdown to select type of element
     *
     * @global array $CFG_GLPI
-    * @param object $package the package
+    * @param PluginGlpiinventoryDeployPackage $package the package
     * @param array $config order item configuration
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
@@ -172,7 +172,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    /**
     * Display form
     *
-    * @param object $package PluginGlpiinventoryDeployPackage instance
+    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
     * @param array $request_data
     * @param string $rand unique element id used to identify/update an element
     * @param string $mode possible values: init|edit|create
@@ -234,7 +234,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    /**
    * Get an HTML mandatory mark (a red star)
    * @since 9.2
-   * @return the html code for a red star
+   * @return string the html code for a red star
    */
     public function getMandatoryMark()
     {
@@ -243,12 +243,15 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 
 
    /**
-   * Common method to add an item to the package JSON definition
-   *
-   * @since 9.2
-   * @param id the package ID
-   * @param item the item to add to the package definition
-   */
+    * Common method to add an item to the package JSON definition
+    *
+    * @since 9.2
+    * @param integer $id the package ID
+    * @param string $item the item to add to the package definition
+    * @param integer $order the order of the item
+    *
+    * @return void
+    */
     public function addToPackage($id, $item, $order)
     {
        //get current json package defintion
@@ -426,8 +429,10 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    * Display a add or save button
    * @since 9.2
    *
-   * @param pfDeployPackage the package in use
-   * @param mode the mode (edit or create)
+   * @param PluginGlpiinventoryDeployPackage $pfDeployPackage the package in use
+   * @param string $mode the mode (edit or create)
+    *
+    * @return void
    */
     public function addOrSaveButton(PluginGlpiinventoryDeployPackage $pfDeployPackage, $mode)
     {

@@ -86,13 +86,13 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
    /**
     * Get the tab name used for item
     *
-    * @param object $item the item object
+    * @param CommonGLPI $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-
+        /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0) {
             $nb = 0;
             if ($_SESSION['glpishow_count_on_tabs']) {
@@ -112,7 +112,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
    /**
     * Display the content of the tab
     *
-    * @param object $item
+    * @param CommonGLPI $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
     * @return true
@@ -141,7 +141,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
    /**
     * Display form
     *
-    * @param object $item
+    * @param CommonDBTM $item
     * @param array $options
     * @return boolean
     */

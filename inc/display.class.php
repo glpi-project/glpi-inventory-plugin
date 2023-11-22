@@ -49,7 +49,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     * @param integer $width
     * @param integer $height
     */
-    public static function bar($percentage, $message = '', $order = '', $width = '400', $height = '20')
+    public static function bar($percentage, $message = '', $order = '', $width = 400, $height = 20)
     {
         if ((!empty($percentage)) and ($percentage < 0)) {
             $percentage = "";
