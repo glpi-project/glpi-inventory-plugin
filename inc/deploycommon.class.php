@@ -89,8 +89,6 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
         $job->getFromDB($taskjob_id);
         $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
-        $communication = $task->fields['communication'];
-
         $actions     = importArrayFromDB($job->fields['action']);
         $definitions = importArrayFromDB($job->fields['definition']);
         $taskvalid   = 0;
@@ -286,11 +284,6 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                         );
 
                         if (count($jobstates_running) == 0) {
-                            // Push the agent, in the stack of agent to awake
-                            if ($communication == "push") {
-                                $_SESSION['glpi_plugin_glpiinventory']['agents'][$agents_id] = 1;
-                            }
-
                             $jobstates_id = $jobstate->add($c_input);
 
                             //Add log of taskjob

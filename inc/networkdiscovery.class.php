@@ -65,8 +65,6 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
         $pfTaskjob->getFromDB($taskjobs_id);
         $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
 
-        $communication = $pfTask->fields['communication'];
-
        //list all iprange
         $a_iprange = importArrayFromDB($pfTaskjob->fields['definition']);
         $count_ip = 0;
@@ -92,124 +90,43 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 $dynagent = 1;
             } elseif ($agent_id == '.2') {
                 $dynagent = 2;
-            } else {
-               // Detect if agent exists
-                if ($agent->getFromDB($agent_id)) {
-                    if ($pfTask->fields['communication'] == 'pull') {
-                        $a_agentlist[$agent_id] = 1;
-                    } else {
-                        if ($pfTaskjob->isAgentAlive('1', $agent_id)) {
-                            $a_agentlist[$agent_id] = 1;
-                        }
-                    }
-                }
-            }
-        }
-        if ($dynagent == '1') {
-            $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
-            foreach ($a_agents as $data) {
-                if (($count_ip / 10) >= count($a_agentlist)) {
-                    $agent->getFromDB($data['id']);
-                    $a_ip = PluginGlpiinventoryToolbox::getIPforDevice('Computer', $agent->fields['itemss_id']);
-                    foreach ($a_ip as $ip) {
-                        if ($pfTask->fields['communication'] == 'push') {
-                            if ($pfTaskjob->isAgentAlive('1', $data['id'])) {
-                                $a_agentlist[$data['id']] = 1;
-                            }
-                        } elseif ($pfTask->fields['communication'] == 'pull') {
-                            $a_agentlist[$data['id']] = 1;
-                        }
-                    }
-                }
             }
         }
 
         if ($dynagent == '2') {
            // Dynamic with subnet
-            $pfSnmpinventory = new PluginGlpiinventoryNetworkinventory();
             $taskvalid = 0;
             foreach ($a_subnet_nbip as $iprange_id => $nbips) {
                //$maxagentpossible = $nbips/10;
                 $pfIPRange->getFromDB($iprange_id);
-                $a_agentListComplete = [];
-                $a_agentList = $pfSnmpinventory->getAgentsSubnet(
-                    $nbips,
-                    "push",
-                    "",
-                    $pfIPRange->fields['ip_start'],
-                    $pfIPRange->fields['ip_end']
+
+                $a_input = [];
+                $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
+                $a_input['agents_id'] = 0;
+                $a_input['state']        = 1;
+                $a_input['itemtype']     = 'PluginGlpiinventoryIPRange';
+                $a_input['items_id']     = $iprange_id;
+                $a_input['uniqid']       = $uniqid;
+                $a_input['execution_id'] = $pfTask->fields['execution_id'];
+
+                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
+                //Add log of taskjob
+                $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
+                $a_input['state'] = 7;
+                $a_input['date'] = date("Y-m-d H:i:s");
+                $pfTaskjoblog->add($a_input);
+
+                $pfTaskjobstate->changeStatusFinish(
+                    $Taskjobstates_id,
+                    0,
+                    'PluginGlpiinventoryIPRange',
+                    1,
+                    "Unable to find agent to run this job"
                 );
-                $a_agentListComplete = array_merge($a_agentListComplete, $a_agentList);
-
-                if (empty($a_agentListComplete)) {
-                    $a_input = [];
-                    $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-                    $a_input['agents_id'] = 0;
-                    $a_input['state']        = 1;
-                    $a_input['itemtype']     = 'PluginGlpiinventoryIPRange';
-                    $a_input['items_id']     = $iprange_id;
-                    $a_input['uniqid']       = $uniqid;
-                    $a_input['execution_id'] = $pfTask->fields['execution_id'];
-
-                    $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                    //Add log of taskjob
-                    $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
-                    $a_input['state'] = 7;
-                    $a_input['date'] = date("Y-m-d H:i:s");
-                    $pfTaskjoblog->add($a_input);
-
-                    $pfTaskjobstate->changeStatusFinish(
-                        $Taskjobstates_id,
-                        0,
-                        'PluginGlpiinventoryIPRange',
-                        1,
-                        "Unable to find agent to run this job"
-                    );
-                     $input_taskjob = [];
-                     $input_taskjob['id'] = $pfTaskjob->fields['id'];
-                     //$input_taskjob['status'] = 1;
-                     $pfTaskjob->update($input_taskjob);
-                } else {
-                    $s = $pfIPRange->getIp2long($pfIPRange->fields['ip_start']);
-                    $e = $pfIPRange->getIp2long($pfIPRange->fields['ip_end']);
-                    $nbIpAgent = ceil(($e - $s) / count($a_agentListComplete));
-                    $iptimes = 0;
-
-                    foreach ($a_agentListComplete as $agent_id) {
-                        $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
-                        //Add jobstate and put status (waiting on server = 0)
-                        $a_input = [];
-                        $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
-                        $a_input['state'] = 0;
-                        $a_input['agents_id'] = $agent_id;
-                        $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
-                        $a_input['uniqid'] = $uniqid;
-                        $a_input['execution_id'] = $pfTask->fields['execution_id'];
-
-                        $a_input['items_id'] = $iprange_id;
-                        if (($iptimes + $nbIpAgent) > ($e - $s)) {
-                            $a_input['specificity'] = $iptimes . "-" . ($e - $s);
-                        } else {
-                            $a_input['specificity'] = $iptimes . "-" . ($iptimes + $nbIpAgent);
-                        }
-                        $taskvalid++;
-                        $Taskjobstates_id = $pfTaskjobstate->add($a_input);
-                       //Add log of taskjob
-                        $a_input['plugin_glpiinventory_taskjobstates_id'] = $Taskjobstates_id;
-                        $a_input['state'] = 7;
-                        $a_input['date'] = date("Y-m-d H:i:s");
-                        $pfTaskjoblog->add($a_input);
-                        unset($a_input['state']);
-                        $iptimes += $nbIpAgent + 1;
-                        if (($iptimes) >= ($e - $s + 1)) {
-                             break;
-                        }
-                        $input_taskjob = [];
-                        $input_taskjob['id'] = $pfTaskjob->fields['id'];
-                        $input_taskjob['status'] = 1;
-                        $pfTaskjob->update($input_taskjob);
-                    }
-                }
+                 $input_taskjob = [];
+                 $input_taskjob['id'] = $pfTaskjob->fields['id'];
+                 //$input_taskjob['status'] = 1;
+                 $pfTaskjob->update($input_taskjob);
             }
             if ($taskvalid == "0") {
                 $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
@@ -267,9 +184,6 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                         $pfIPRange->getFromDB($iprange_id);
                         $s = $pfIPRange->getIp2long($pfIPRange->fields['ip_start']);
                         $e = $pfIPRange->getIp2long($pfIPRange->fields['ip_end']);
-                        if ($communication == "push") {
-                             $_SESSION['glpi_plugin_glpiinventory']['agents'][$agent_id] = 1;
-                        }
 
                         $a_input['items_id'] = $iprange_id;
                         $nbIpAgent = $numberIpByAgent - $nbIpadded;

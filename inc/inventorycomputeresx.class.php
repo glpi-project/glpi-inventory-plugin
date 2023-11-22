@@ -60,8 +60,6 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
         $job->getFromDB($taskjobs_id);
         $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
-        $communication = $task->fields['communication'];
-
        //list all agents
         $agent_actions     = importArrayFromDB($job->fields['action']);
         $task_definitions  = importArrayFromDB($job->fields['definition']);
@@ -109,10 +107,6 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
         } else {
             foreach ($agent_actions as $targets) {
                 foreach ($targets as $items_id) {
-                    if ($communication == "push") {
-                        $_SESSION['glpi_plugin_glpiinventory']['agents'][$items_id] = 1;
-                    }
-
                     foreach ($task_definitions as $task_definition) {
                         foreach ($task_definition as $task_itemtype => $task_items_id) {
                             $a_input = [];
