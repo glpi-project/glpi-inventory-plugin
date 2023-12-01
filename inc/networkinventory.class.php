@@ -581,6 +581,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 1,
                 "Device have no ip"
             );
+            // Return an empty list to avoid adding an option with no data in the joblist
+            return [];
         } else {
            // Use general config when threads number is set to 0 on the agent
             $param_attrs['THREADS_QUERY'] = $agent->fields["threads_networkinventory"] == 0 ?
