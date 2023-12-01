@@ -634,7 +634,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     "Merged with " . $changestate
                 );
             }
-            $snmpauthlist = $credentials->find();
+            // Only keep required snmp credentials
+            $snmpauthlist = $credentials->find(['id' => $a_extended['snmpcredentials_id']]);
             foreach ($snmpauthlist as $snmpauth) {
                 $auth_node = $pfToolbox->addAuth($snmpauth['id']);
                 if (count($auth_node)) {
