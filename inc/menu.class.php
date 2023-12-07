@@ -299,18 +299,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
            //$rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
         }
 
-       /*if (Session::haveRight('plugin_glpiinventory_rulelocation', READ)) {
-         $rules_menu[4]['name'] = __('Location rules', 'glpiinventory');
-         $rules_menu[4]['pic']  = "ti ti-map-2";
-         $rules_menu[4]['link'] = $fi_path."/front/inventoryrulelocation.php";
-       }*/
-
-        /*if (Session::haveRight("plugin_glpiinventory_rulecollect", READ)) {
-            $rules_menu[5]['name'] = __('Computer collect rules', 'glpiinventory');
-            $rules_menu[5]['pic']  = "ti ti-book";
-            $rules_menu[5]['link'] = $fi_path . "/front/collectrule.php";
-        }*/
-
         if (Session::haveRight('config', READ)) {
             $rules_menu[6]['name'] = Blacklist::getTypeName(1);
             $rules_menu[6]['pic']  = "ti ti-ban";
