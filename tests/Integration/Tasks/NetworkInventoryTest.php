@@ -439,12 +439,6 @@ class NetworkInventoryTest extends TestCase
                ]
             ], [
                'AUTHENTICATION' => [
-                  'ID'        => 1,
-                  'VERSION'   => 1,
-                  'COMMUNITY' => 'public'
-               ]
-            ], [
-               'AUTHENTICATION' => [
                   'ID'        => 2,
                   'VERSION'   => '2c',
                   'COMMUNITY' => 'public'
