@@ -285,33 +285,7 @@ class PluginGlpiinventoryProfile extends Profile
     */
     public function getRightsRules()
     {
-        $rights = [
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
-                'label'     => __('Rules for import and link computers'),
-                'field'     => 'plugin_glpiinventory_ruleimport'
-          ],*/
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleEntity',
-                'label'     => __('Entity rules', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_ruleentity'
-          ],*/
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
-                'label'     => __('Rules for import and link computers'),
-                'field'     => 'plugin_glpiinventory_rulelocation'
-          ],*/
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryComputerBlacklist',
-                'label'     => __('Fields blacklist', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_blacklist'
-          ],*/
-          ['itemtype'  => 'PluginGlpiinventoryCollectRule',
-                'label'     => __('Computer information rules', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_rulecollect'
-          ],
-          /*['itemtype'  => 'PluginGlpiinventoryIgnoredimportdevice',
-                'label'     =>  __('Equipment ignored on import', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_ignoredimportdevice'
-          ],*/
-        ];
-        return $rights;
+        return [];
     }
 
 

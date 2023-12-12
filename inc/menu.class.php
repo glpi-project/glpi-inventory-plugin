@@ -113,7 +113,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
           'task'                       => 'PluginGlpiinventoryTask',
           'timeslot'                   => 'PluginGlpiinventoryTimeslot',
           'unmanaged'                  => 'Unmanaged',
-          'collectrule'                => 'PluginGlpiinventoryCollectRule',
           'configsecurity'             => 'SNMPCredential',
           'credential'                 => 'PluginGlpiinventoryCredential',
           'credentialip'               => 'PluginGlpiinventoryCredentialIp',
