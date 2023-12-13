@@ -101,8 +101,7 @@ class PluginGlpiinventoryProfile extends Profile
                      'reportnetworkequipment' => 'plugin_glpiinventory_reportnetworkequipment',
                      'packages'               => 'plugin_glpiinventory_package',
                      'status'                 => 'plugin_glpiinventory_status',
-                     'collect'                => ['plugin_glpiinventory_collect',
-                                                       'plugin_glpiinventory_rulecollect']];
+                     'collect'                => 'plugin_glpiinventory_collect'];
 
         return $types;
     }
@@ -171,11 +170,6 @@ class PluginGlpiinventoryProfile extends Profile
         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('General', 'glpiinventory')]);
-
-        $rights = $this->getRightsRules();
-        $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
-                                                      'default_class' => 'tab_bg_2',
-                                                      'title'         => _n('Rule', 'Rules', 2)]);
 
         $rights = $this->getRightsInventory();
         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
@@ -272,46 +266,8 @@ class PluginGlpiinventoryProfile extends Profile
         $a_rights = [];
         $a_rights = array_merge($a_rights, $this->getRightsGeneral());
         $a_rights = array_merge($a_rights, $this->getRightsInventory());
-        $a_rights = array_merge($a_rights, $this->getRightsRules());
         $a_rights = array_merge($a_rights, $this->getRightsDeploy());
         return $a_rights;
-    }
-
-
-   /**
-    * Get rights for rules part
-    *
-    * @return array
-    */
-    public function getRightsRules()
-    {
-        $rights = [
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
-                'label'     => __('Rules for import and link computers'),
-                'field'     => 'plugin_glpiinventory_ruleimport'
-          ],*/
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleEntity',
-                'label'     => __('Entity rules', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_ruleentity'
-          ],*/
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryRuleImport',
-                'label'     => __('Rules for import and link computers'),
-                'field'     => 'plugin_glpiinventory_rulelocation'
-          ],*/
-          /*['itemtype'  => 'PluginGlpiinventoryInventoryComputerBlacklist',
-                'label'     => __('Fields blacklist', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_blacklist'
-          ],*/
-          ['itemtype'  => 'PluginGlpiinventoryCollectRule',
-                'label'     => __('Computer information rules', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_rulecollect'
-          ],
-          /*['itemtype'  => 'PluginGlpiinventoryIgnoredimportdevice',
-                'label'     =>  __('Equipment ignored on import', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_ignoredimportdevice'
-          ],*/
-        ];
-        return $rights;
     }
 
 
