@@ -92,6 +92,11 @@
    </authors>
    <versions>
       <version>
+         <num>1.3.4</num>
+         <compatibility>~10.0.10</compatibility>
+         <download_url>https://github.com/glpi-project/glpi-inventory-plugin/releases/download/1.3.4/glpi-glpiinventory-1.3.4.tar.bz2</download_url>
+      </version>
+      <version>
          <num>1.3.3</num>
          <compatibility>~10.0.10</compatibility>
          <download_url>https://github.com/glpi-project/glpi-inventory-plugin/releases/download/1.3.3/glpi-glpiinventory-1.3.3.tar.bz2</download_url>
