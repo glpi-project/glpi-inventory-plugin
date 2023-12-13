@@ -171,11 +171,6 @@ class PluginGlpiinventoryProfile extends Profile
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('General', 'glpiinventory')]);
 
-        $rights = $this->getRightsRules();
-        $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
-                                                      'default_class' => 'tab_bg_2',
-                                                      'title'         => _n('Rule', 'Rules', 2)]);
-
         $rights = $this->getRightsInventory();
         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
@@ -271,20 +266,8 @@ class PluginGlpiinventoryProfile extends Profile
         $a_rights = [];
         $a_rights = array_merge($a_rights, $this->getRightsGeneral());
         $a_rights = array_merge($a_rights, $this->getRightsInventory());
-        $a_rights = array_merge($a_rights, $this->getRightsRules());
         $a_rights = array_merge($a_rights, $this->getRightsDeploy());
         return $a_rights;
-    }
-
-
-   /**
-    * Get rights for rules part
-    *
-    * @return array
-    */
-    public function getRightsRules()
-    {
-        return [];
     }
 
 
