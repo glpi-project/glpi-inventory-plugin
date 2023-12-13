@@ -101,8 +101,7 @@ class PluginGlpiinventoryProfile extends Profile
                      'reportnetworkequipment' => 'plugin_glpiinventory_reportnetworkequipment',
                      'packages'               => 'plugin_glpiinventory_package',
                      'status'                 => 'plugin_glpiinventory_status',
-                     'collect'                => ['plugin_glpiinventory_collect',
-                                                       'plugin_glpiinventory_rulecollect']];
+                     'collect'                => 'plugin_glpiinventory_collect'];
 
         return $types;
     }
