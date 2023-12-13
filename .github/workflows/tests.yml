@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.2', '8.3-rc']
+        php-versions: ['7.4', '8.3']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -68,14 +68,12 @@ jobs:
       matrix:
         include:
           - {php-versions: "7.4", db-image: "mysql:5.7"}
-          - {php-versions: "8.1", db-image: "mysql:8.0"}
-          - {php-versions: "8.1", db-image: "mariadb:10.6"}
-          - {php-versions: "8.1", db-image: "mariadb:11"}
-          - {php-versions: "8.2", db-image: "mysql:8.0"}
-          - {php-versions: "8.2", db-image: "mysql:8.1"}
-          - {php-versions: "8.2", db-image: "mariadb:10.6"}
-          - {php-versions: "8.2", db-image: "mariadb:11"}
-          - {php-versions: "8.3-rc", db-image: "mariadb:11"}
+          - {php-versions: "8.3", db-image: "mysql:5.7"}
+          - {php-versions: "8.3", db-image: "mysql:8.0"}
+          - {php-versions: "8.3", db-image: "mysql:8.1"}
+          - {php-versions: "8.3", db-image: "mysql:8.2"}
+          - {php-versions: "8.3", db-image: "mariadb:10.6"}
+          - {php-versions: "8.3", db-image: "mariadb:11"}
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
