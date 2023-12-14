@@ -51,6 +51,8 @@ body:
       label: GLPI Agent version
       description: Which GLPI agent version is triggering this issue?
       options:
+        - 1.6.1
+        - 1.6
         - 1.5
         - 1.4
         - 1.3
@@ -68,6 +70,7 @@ body:
       label: GLPI version
       description: What is your GLPI version on server-side?
       options:
+        - 10.0.11
         - 10.0.10
         - 10.0.9
         - 10.0.8
@@ -90,6 +93,10 @@ body:
       label: GLPIInventory plugin
       description: What is your GLPIInventory plugin version on server-side?
       options:
+        - 1.3.4
+        - 1.3.3
+        - 1.3.2
+        - 1.3.1
         - 1.3.0
         - 1.2.3
         - 1.2.2
