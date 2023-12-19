@@ -121,7 +121,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
         echo "<th>" . __('Ending date', 'glpiinventory') . "</th>";
         echo "<th>" . __('Total duration') . "</th>";
         echo "<th>" . __('Number per second', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Threads number', 'glpiinventory') . "</th>";
+        echo "<th>" . __('Threads / Timeout configuration', 'glpiinventory') . "</th>";
         echo "<th>" . __('To inventory', 'glpiinventory') . "</th>";
         echo "<th>" . __('Error(s)', 'glpiinventory') . "</th>";
         echo "</tr>";
@@ -175,7 +175,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                     } elseif (strstr($taskjoblog['comment'], " No response from remote host")) {
                         $nb_errors++;
                     } elseif ($taskjoblog['state'] == "1") {
-                        $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
+                        $nb_threads = $taskjoblog['comment'];
                         $start_date = $taskjoblog['date'];
                     }
 
