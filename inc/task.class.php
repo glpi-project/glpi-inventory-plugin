@@ -515,22 +515,34 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
            // Do nothing if there are no defined timeslots for this jobstate.
             if ($timeslot_id > 0) {
                 $timeslot_matched = false;
+                $too_early = false;
 
                // We do nothing if there are no timeslot_entries, meaning this jobstate is not allowed
                // to be executed at the day of request.
                 if (array_key_exists($timeslot_id, $timeslot_entries)) {
                     foreach ($timeslot_entries[$timeslot_id] as $timeslot_entry) {
+                        // The agent woke up too early mark it as too early
+                        if ($timeslot_cursor <= $timeslot_entry['begin']) {
+                            $too_early = true;
+                        }
+
+                        // The timeslot cursor (ie. time of request) matched a timeslot entry
                         if (
                             $timeslot_entry['begin'] <= $timeslot_cursor
                             and $timeslot_cursor <= $timeslot_entry['end']
                         ) {
-                          //The timeslot cursor (ie. time of request) matched a timeslot entry so we can
-                          //break the loop here.
+                            $too_early = false;
                             $timeslot_matched = true;
                             break;
                         }
                     }
                 }
+
+                if ($too_early) {
+                    //This job can no longer be carried out because of the time slot for the task (The agent woke up too early).
+                    continue;
+                }
+
                // If no timeslot matched, cancel this jobstate.
                 if (!$timeslot_matched) {
                     $jobstates_to_cancel[$jobstate->fields['id']] = [
@@ -566,7 +578,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
            //initialized when getting the jobstate from DB (with a getfromDB hook for example)
             $jobstate->method = $result['job']['method'];
 
-           //Add the jobstate to the list since previous checks are good.
+            //Add the jobstate to the list since previous checks are good.
             $jobstates[$jobstate->fields['id']] = $jobstate;
         }
 
