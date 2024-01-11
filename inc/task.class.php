@@ -521,7 +521,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                // to be executed at the day of request.
                 if (array_key_exists($timeslot_id, $timeslot_entries)) {
                     foreach ($timeslot_entries[$timeslot_id] as $timeslot_entry) {
-
                         // The agent woke up too early mark it as too early
                         if ($timeslot_cursor <= $timeslot_entry['begin']) {
                             $too_early = true;
