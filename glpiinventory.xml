@@ -86,7 +86,7 @@
    <homepage>httpis://glpi-project.org</homepage>
    <download>https://github.com/glpi-project/glpi-inventory-plugin/releases</download>
    <issues>https://github.com/glpi-project/glpi-inventory-plugin/issues</issues>
-   <readme>https://raw.githubusercontent.com/glpi-project/glpi-inventory-plugin/master/README.md</readme>
+   <readme>https://raw.githubusercontent.com/glpi-project/glpi-inventory-plugin/main/README.md</readme>
    <authors>
       <author>Teclib'</author>
    </authors>
