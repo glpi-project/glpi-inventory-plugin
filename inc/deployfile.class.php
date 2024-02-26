@@ -60,10 +60,15 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     */
     public function getTypes()
     {
-        return [
-         'Computer' => __("Upload from computer", 'glpiinventory'),
-         'Server'   => __("Upload from server", 'glpiinventory')
+        $types = [
+         'Computer' => __("Upload from computer", 'glpiinventory')
         ];
+
+        if (GLPI_INSTALL_MODE !== 'CLOUD') {
+            $types['Server'] = __("Upload from server", 'glpiinventory');
+        }
+
+        return $types;
     }
 
 

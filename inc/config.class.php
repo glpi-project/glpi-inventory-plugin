@@ -477,13 +477,15 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $options['colspan'] = 1;
         $pfConfig->showFormHeader($options);
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Root folder for sending files from server', 'glpiinventory') . "</td>";
-        echo "<td>";
-        echo "<input type='text' class='form-control' name='server_upload_path' value='" .
-         $pfConfig->getValue('server_upload_path') . "' size='60' />";
-        echo "</td>";
-        echo "</tr>";
+        if (GLPI_INSTALL_MODE !== 'CLOUD') {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>" . __('Root folder for sending files from server', 'glpiinventory') . "</td>";
+            echo "<td>";
+            echo "<input type='text' class='form-control' name='server_upload_path' value='" .
+            $pfConfig->getValue('server_upload_path') . "' size='60' />";
+            echo "</td>";
+            echo "</tr>";
+        }
 
         echo "<tr>";
         echo "<td>" . __('Use this GLPI server as a mirror server', 'glpiinventory') . "</td>";
