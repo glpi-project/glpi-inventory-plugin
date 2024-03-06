@@ -998,10 +998,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 // Delete actors that are not found in the database
                 unset($actors_ok[$k]);
                 $taskjob = new PluginGlpiinventoryTaskjob();
-                if($taskjob->getFromDBByCrit([
+                if (
+                    $taskjob->getFromDBByCrit([
                     'plugin_glpiinventory_tasks_id' => $this->getID(),
                     'actors' => ['LIKE', '%' . exportArrayToDB($actor) . '%']
-                ])) {
+                    ])
+                ) {
                     $taskjob->update([
                         'id' => $taskjob->getID(),
                         'actors' => exportArrayToDB($actors_ok)
