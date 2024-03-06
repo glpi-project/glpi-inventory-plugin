@@ -979,8 +979,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         $computer  = new Computer();
         $agent     = new Agent();
         $pfToolbox = new PluginGlpiinventoryToolbox();
-        $actors_ok = [];
-        foreach ($actors as $actor) {
+        $actors_ok = $actors;
+        foreach ($actors as $k => $actor) {
             $itemtype = key($actor);
             $itemid   = $actor[$itemtype];
             $item     = getItemForItemtype($itemtype);
@@ -995,6 +995,18 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             }
             $dbresult = $item->getFromDB($itemid);
             if ($dbresult === false) {
+                // Delete actors that are not found in the database
+                unset($actors_ok[$k]);
+                $taskjob = new PluginGlpiinventoryTaskjob();
+                if($taskjob->getFromDBByCrit([
+                    'plugin_glpiinventory_tasks_id' => $this->getID(),
+                    'actors' => ['LIKE', '%' . exportArrayToDB($actor) . '%']
+                ])) {
+                    $taskjob->update([
+                        'id' => $taskjob->getID(),
+                        'actors' => exportArrayToDB($actors_ok)
+                    ]);
+                }
                 trigger_error(
                     sprintf('Invalid item "%s" (%s).', $itemtype, $itemid),
                     E_USER_WARNING
@@ -1044,12 +1056,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                     $agents[$itemid] = 1;
                     break;
             }
-            $actors_ok[] = $actor;
-        }
-
-        // Delete actors that are not found in the database
-        if (count($actors_ok) < count($actors)) {
-            $this->update(['actors' => $actors_ok]);
         }
 
         //Get agents from the computer's ids list

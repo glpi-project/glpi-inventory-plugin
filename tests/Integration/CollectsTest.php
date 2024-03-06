@@ -1076,4 +1076,55 @@ class CollectsTest extends TestCase
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
         $this->assertEquals(0, count($pfCollect_File_Contents->fields));
     }
+
+    public function testTaskWithDeletedActor()
+    {
+        // Delete all tasks
+        $pfTask = new PluginGlpiinventoryTask();
+        $items = $pfTask->find();
+        foreach ($items as $item) {
+            $pfTask->delete(['id' => $item['id']], true);
+        }
+
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+
+        $pfTask = new PluginGlpiinventoryTask();
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
+
+        // Create task
+        $input = [
+            'name'        => 'mycollect',
+            'entities_id' => 0,
+            'is_active'   => 1
+        ];
+        $tasks_id = $pfTask->add($input);
+        $this->assertNotFalse($tasks_id);
+
+        $input = [
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id' => 0,
+            'name'    => 'collectjob',
+            'method'  => 'collect',
+            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => 0]]),
+            'actors'  => exportArrayToDB([['Agent' => 0]]),
+        ];
+        $taskjobs_id = $pfTaskjob->add($input);
+        $this->assertNotFalse($taskjobs_id);
+        $methods = [];
+        foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
+            $methods[] = $method['method'];
+        }
+        try {
+            $pfTask->prepareTaskjobs($methods);
+        } catch (\Exception $e) {
+            $msg = "Invalid item \"Agent\" (0).";
+            $this->assertEquals($msg, $e->getMessage());
+        }
+
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
+        $pfTaskjob->getFromDB($taskjobs_id);
+        // Check actors
+        $this->assertEquals('[]', $pfTaskjob->fields['actors']);
+    }
 }
