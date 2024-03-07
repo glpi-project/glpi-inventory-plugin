@@ -112,6 +112,6 @@ if (isset($_GET['save'])) {
         $values['preview'] = $_GET['preview'];
     }
     $group->display($values);
-    PluginGlpiinventoryDeployGroup::getTargetsForGroup($_GET['id']);
+    PluginGlpiinventoryDeployGroup::getTargetsForGroup($id);
     Html::footer();
 }
