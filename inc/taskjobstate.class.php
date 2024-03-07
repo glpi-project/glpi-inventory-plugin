@@ -118,7 +118,13 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     {
         switch ($item->getType()) {
             case 'Computer':
-                return __("Tasks / Groups", "glpiinventory");
+                if (
+                    method_exists($item, 'getInventoryAgent')
+                    && $item->getInventoryAgent() != null
+                ) {
+                    return __("Tasks / Groups", "glpiinventory");
+                }
+                break;
 
             case 'PluginGlpiinventoryTask':
                 return __("Job executions", "glpiinventory");
@@ -622,7 +628,9 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
 
        // Get the agent of the computer
-        $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+        if (!$agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id])) {
+            return;
+        }
         $agents_id = $agent->fields['id'];
 
         $tasks_id = [];
