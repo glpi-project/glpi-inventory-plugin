@@ -622,8 +622,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
 
        // Get the agent of the computer
-        $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
-        $agents_id = $agent->fields['id'] ?? 0;
+        if (!$agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id])) {
+            return;
+        }
+        $agents_id = $agent->fields['id'];
 
         $tasks_id = [];
 
