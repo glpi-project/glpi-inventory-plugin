@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changes
+
+- Displays ```Tasks / Groups``` tab only on computers linked to an agent
+
 
 ## [1.3.5] - 2024-02-26
 
@@ -19,5 +23,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Prevents the task from being cancelled if the agent wakes up too early
 
 ### Added
-
-
