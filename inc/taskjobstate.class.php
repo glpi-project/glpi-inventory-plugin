@@ -118,7 +118,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     {
         switch ($item->getType()) {
             case 'Computer':
-                if ($item->getInventoryAgent() != null) {
+                if (
+                    method_exists($item, 'getInventoryAgent')
+                    && $item->getInventoryAgent() != null
+                ) {
                     return __("Tasks / Groups", "glpiinventory");
                 }
                 break;
