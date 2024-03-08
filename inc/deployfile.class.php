@@ -371,6 +371,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     */
     public static function showServerFileTree($rand)
     {
+        $pfConfig         = new PluginGlpiinventoryConfig();
+        $dir              = $pfConfig->getValue('server_upload_path');
         echo "<script type='text/javascript'>";
         echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -418,7 +420,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         echo '<div class="alert alert-info d-flex" role="alert">';
         echo '<i class="fas fa-exclamation-circle fa-2x me-2"></i>';
-        echo '<p>' . sprintf(__('Files need to be uploaded to %s folder to be displayed here', 'glpiinventory'), '<mark>/files/_plugins/glpiinventory/upload/</mark>') . '</p>';
+        echo '<p>' . sprintf(__('Files need to be uploaded to %s folder to be displayed here', 'glpiinventory'), "<mark>$dir</mark>") . '</p>';
         echo '</div>';
 
         echo "<div id='tree_projectcategory$rand' ></div>";
