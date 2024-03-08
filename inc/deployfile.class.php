@@ -371,6 +371,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     */
     public static function showServerFileTree($rand)
     {
+        $pfConfig         = new PluginGlpiinventoryConfig();
         $dir              = $pfConfig->getValue('server_upload_path');
         echo "<script type='text/javascript'>";
         echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
