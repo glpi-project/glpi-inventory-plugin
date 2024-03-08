@@ -1115,12 +1115,7 @@ class CollectsTest extends TestCase
         foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
             $methods[] = $method['method'];
         }
-        try {
-            $pfTask->prepareTaskjobs($methods);
-        } catch (\Exception $e) {
-            $msg = "Invalid item \"Agent\" (0).";
-            $this->assertEquals($msg, $e->getMessage());
-        }
+        $pfTask->prepareTaskjobs($methods);
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTaskjob->getFromDB($taskjobs_id);

@@ -997,22 +997,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             if ($dbresult === false) {
                 // Delete actors that are not found in the database
                 unset($actors_ok[$k]);
-                $taskjob = new PluginGlpiinventoryTaskjob();
-                if (
-                    $taskjob->getFromDBByCrit([
-                    'plugin_glpiinventory_tasks_id' => $this->getID(),
-                    'actors' => ['LIKE', '%' . exportArrayToDB($actor) . '%']
-                    ])
-                ) {
-                    $taskjob->update([
-                        'id' => $taskjob->getID(),
-                        'actors' => exportArrayToDB($actors_ok)
-                    ]);
-                }
-                trigger_error(
-                    sprintf('Invalid item "%s" (%s).', $itemtype, $itemid),
-                    E_USER_WARNING
-                );
                 continue;
             }
 
@@ -1057,6 +1041,20 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 case Agent::class:
                     $agents[$itemid] = 1;
                     break;
+            }
+        }
+
+        if (count($actors_ok) < count($actors)) {
+            $taskjob = new PluginGlpiinventoryTaskjob();
+            if (
+                $taskjob->getFromDBByCrit([
+                    'plugin_glpiinventory_tasks_id' => $this->getID()
+                ])
+            ) {
+                $taskjob->update([
+                    'id' => $taskjob->getID(),
+                    'actors' => exportArrayToDB($actors_ok)
+                ]);
             }
         }
 
