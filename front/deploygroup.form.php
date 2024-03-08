@@ -62,6 +62,7 @@ if (isset($_GET['save'])) {
         $values['fields_array'] = serialize($criteria);
         $group_item->update($values);
     }
+    PluginGlpiinventoryDeployGroup::getTargetsForGroup((int) $_GET['id']);
 
     Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup") . "?id=" . $_GET['id']);
 } elseif (isset($_FILES['importcsvfile'])) {
@@ -111,5 +112,6 @@ if (isset($_GET['save'])) {
         $values['preview'] = $_GET['preview'];
     }
     $group->display($values);
+    PluginGlpiinventoryDeployGroup::getTargetsForGroup((int) $id);
     Html::footer();
 }
