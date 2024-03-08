@@ -3,3 +3,4 @@ vendor/
 .gh_token
 .idea
 tests/files
+.phpunit.result.cache
