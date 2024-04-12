@@ -129,11 +129,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          'agents_cancelled' => false,
          'agents_success'   => true,
          'agents_error'     => true,
-         'agents_postponed' => false,
+         'agents_notdone'   => false,
          ];
          foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
+             $locale  = PluginGlpiinventoryDeployPackage::getPackageDeploymentStates()[$agent_state_type];
              $agent_state_type = str_replace("agents_", "", $agent_state_type);
-             $locale  = __(ucfirst($agent_state_type), 'glpiinventory');
              $checked = "";
              if ($agent_state_checked) {
                  $checked = "checked='checked'";
@@ -235,7 +235,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             'agents_success':   '" . __('Successful', 'glpiinventory') . "',
             'agents_running':   '" . __('Running', 'glpiinventory') . "',
             'agents_prepared':  '" . __('Prepared', 'glpiinventory') . "',
-            'agents_postponed':  '" . __('Postponed', 'glpiinventory') . "',
             'agents_cancelled': '" . __('Cancelled', 'glpiinventory') . "',
          };
 
