@@ -8544,7 +8544,7 @@ function migrateTablesFromFusinvDeploy($migration)
         $DB->tableExists('glpi_plugin_fusinvdeploy_fileparts')
            && $DB->tableExists('glpi_plugin_fusinvdeploy_files')
     ) {
-        $files_list = $DB->request('glpi_plugin_fusinvdeploy_files');
+        $files_list = $DB->request(['FROM' => 'glpi_plugin_fusinvdeploy_files']);
        // multipart file datas
         foreach ($files_list as $file) {
             $sha = $file['sha512'];
@@ -8650,7 +8650,7 @@ function migrateTablesFromFusinvDeploy($migration)
     *    otherwise.
     */
 
-    $packages = $DB->request('glpi_plugin_glpiinventory_deploypackages');
+    $packages = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_deploypackages']);
     foreach ($packages as $order_config) {
         $json_order = json_decode($order_config['json']);
        //print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");

@@ -712,10 +712,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         //Check if a task has jobstates. In case not, delete the task
         foreach (
-            $DB->request(
-                'glpi_plugin_glpiinventory_tasks',
-                ['is_deploy_on_demand' => 1]
-            ) as $task
+            $DB->request([
+                'FROM' => 'glpi_plugin_glpiinventory_tasks',
+                'WHERE' => ['is_deploy_on_demand' => 1]
+            ]) as $task
         ) {
             $iterator = $DB->request([
                 'COUNT' => 'cpt',
