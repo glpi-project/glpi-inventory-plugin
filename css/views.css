@@ -411,10 +411,10 @@ a.expanded > div.fold {
    font-weight: bolder;
    font-style: normal;
    margin: 2px;
-   padding: 2px;
+   padding: 2px !important;
    border-radius: 3px;
    font-size:0.8em;
-   padding-left: 5px;
+   padding-left: 5px !important;
    text-align: left;
    font-family: monospace;
    border-style: solid;
