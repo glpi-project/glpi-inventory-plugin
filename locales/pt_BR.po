@@ -8,7 +8,7 @@
 # Diego Nobre <diego@koruma.com.br>, 2021
 # Rafael Santos <rafacss@gmail.com>, 2022
 # Matheus Rafael, 2023
-# Eduardo Scott <edu.scott01@gmail.com>, 2023
+# Eduardo Scott <edu.scott01@gmail.com>, 2024
 # 
 #, fuzzy
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-13 14:27+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Eduardo Scott <edu.scott01@gmail.com>, 2023\n"
+"Last-Translator: Eduardo Scott <edu.scott01@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/teclib/teams/28042/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,7 +83,7 @@ msgstr "Adicionar tarefa"
 
 #: inc/taskjoblog.class.php:365
 msgid "Add the item"
-msgstr "Adicionar o item."
+msgstr "Adicionar o item"
 
 #: hook.php:447 inc/deploygroup_staticdata.class.php:154
 #: inc/deploygroup_staticdata.class.php:170
@@ -169,7 +169,7 @@ msgstr "Tarefas associadas"
 
 #: inc/deploycheck.class.php:309 inc/deploycheck.class.php:466
 msgid "Audit label"
-msgstr "Auditoria"
+msgstr "Etiqueta de auditoria"
 
 #: inc/deploypackage.class.php:525
 msgid "Audits"
@@ -184,11 +184,11 @@ msgstr "Autenticação para dispositivos remotos (VMware)"
 #: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
-msgstr ""
+msgstr "Gestão automática e dinâmica de agentes"
 
 #: inc/taskjob.class.php:818
 msgid "Auto management dynamic of agents (same subnet)"
-msgstr ""
+msgstr "Gestão automática dinâmica de agentes (mesma subrede)"
 
 #: inc/iprange.class.php:232
 msgid "Bad IP"
@@ -200,7 +200,7 @@ msgstr "Evento com problemas enviado ao agente"
 
 #: inc/collect_file.class.php:126
 msgid "Base folder"
-msgstr "Pasta Base"
+msgstr "Pasta base"
 
 #: inc/deployuserinteraction.class.php:102
 msgid "Before download"
@@ -390,7 +390,7 @@ msgstr "Configurar credenciais SNMP"
 
 #: inc/taskjobview.class.php:794
 msgid "Confirm the final deletion ?"
-msgstr "Confirmar a exclusão final ?"
+msgstr "Confirmar a exclusão final?"
 
 #: inc/deployuserinteractiontemplate.class.php:221
 msgid "Continue job with no user interaction"
@@ -998,12 +998,12 @@ msgstr "MB"
 
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:272
 msgid "Mirror server address"
-msgstr "Endereços de servidores mirrors"
+msgstr "Endereços de servidores espelho"
 
 #: inc/deploymirror.class.php:72 inc/profile.class.php:289
 #: inc/menu.class.php:396
 msgid "Mirror servers"
-msgstr "Servidores mirrors"
+msgstr "Servidores espelho"
 
 #: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
@@ -1584,7 +1584,7 @@ msgstr "O trabalho selecionado já possui uma tarefa de outro pacote:"
 
 #: inc/task.class.php:601
 msgid "The task cannot be updated if it is active"
-msgstr ""
+msgstr "A tarefa não pode ser atualizada se estiver ativa."
 
 #: inc/task.class.php:483
 msgid "The task has been deactivated after preparation of this job."
@@ -1693,7 +1693,7 @@ msgstr "Trabalho de implantação atualizado, pacote:"
 
 #: inc/deployfile.class.php:623
 msgid "Upload error"
-msgstr ""
+msgstr "Erro de upload"
 
 #: inc/deployfile.class.php:64
 msgid "Upload from computer"

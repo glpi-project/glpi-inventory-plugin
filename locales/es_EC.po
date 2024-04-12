@@ -180,11 +180,11 @@ msgstr "Autenticación para dispositivos remotos (VMware)"
 #: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
-msgstr ""
+msgstr "Dinámica de gestión automática de agentes"
 
 #: inc/taskjob.class.php:818
 msgid "Auto management dynamic of agents (same subnet)"
-msgstr ""
+msgstr "Dinámica de gestión automática de agentes (misma subred)"
 
 #: inc/iprange.class.php:232
 msgid "Bad IP"
@@ -243,7 +243,7 @@ msgstr "Botón de reintento"
 
 #: inc/deployuserinteractiontemplate.class.php:458
 msgid "Button try"
-msgstr "Prueba de botón"
+msgstr "Botón probar"
 
 #: inc/deployuserinteractiontemplate.class.php:455
 msgid "Button yes"
@@ -306,7 +306,7 @@ msgstr "Clase"
 
 #: inc/config.class.php:391
 msgid "Clean agents"
-msgstr "Agentes limpios"
+msgstr "Limpiar agentes"
 
 #: inc/menu.class.php:159
 msgid "Clean unused files"
@@ -318,7 +318,7 @@ msgstr "Borrar lista"
 
 #: hook.php:83
 msgid "Collect"
-msgstr "Recopile"
+msgstr "Recopilar"
 
 #: inc/staticmisc.class.php:94
 msgid "Collect data"
@@ -334,7 +334,7 @@ msgstr "Gestión de cobros"
 
 #: inc/collect.class.php:703
 msgid "Collect module has been disabled for this agent"
-msgstr "El módulo Collect ha sido desactivado para este agente"
+msgstr "El módulo de Recopilación se ha deshabilitado para este agente"
 
 #: inc/deployaction.class.php:72
 msgid "Command"
@@ -358,23 +358,23 @@ msgstr "Modo de comunicación"
 
 #: inc/staticmisc.class.php:58
 msgid "Computer Inventory"
-msgstr "Inventario de ordenadores"
+msgstr "Inventario de computadoras"
 
 #: inc/menu.class.php:295
 msgid "Computer entity rules"
-msgstr "Computer entity rules"
+msgstr "Reglas de entidad de computadoras"
 
 #: inc/profile.class.php:374 inc/menu.class.php:257
 msgid "Computer information"
-msgstr "Información de ordenadores"
+msgstr "Información de computadoras"
 
 #: inc/deploygroup_staticdata.class.php:380
 msgid "Computers imported successfully from CSV file"
-msgstr "Ordenadores importados correctamente del archivo CSV"
+msgstr "Computadoras importadas correctamente del archivo CSV"
 
 #: report/computer_last_inventory.php:59
 msgid "Computers not inventoried since xx days"
-msgstr "Ordenadores no inventariados desde hace xx días"
+msgstr "Computadoras no inventariadas desde hace xx días"
 
 #: inc/profile.class.php:365
 msgid "Configuration"
@@ -386,7 +386,7 @@ msgstr "Configurar credenciales SNMP"
 
 #: inc/taskjobview.class.php:794
 msgid "Confirm the final deletion ?"
-msgstr "Confirmar la eliminación final?"
+msgstr "¿Confirmar la eliminación final?"
 
 #: inc/deployuserinteractiontemplate.class.php:221
 msgid "Continue job with no user interaction"
@@ -400,7 +400,7 @@ msgstr "Copiar"
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
 msgstr ""
-"Cree una nueva Tarea con el módulo de descubrimiento y el agente definidos "
+"Crear una nueva Tarea con el módulo de descubrimiento y el agente definido "
 "previamente"
 
 #: inc/menu.class.php:500
@@ -442,7 +442,7 @@ msgid ""
 "for computer inventory)"
 msgstr ""
 "Definir reglas para la importación : fusionar y crear nuevos dispositivos "
-"(ATENCIÓN: mismas reglas para el inventario de ordenadores)"
+"(ATENCIÓN: mismas reglas para el inventario de computadoras)"
 
 #: inc/taskjob.class.php:761 inc/taskjob.class.php:1140
 msgid "Definition"
@@ -452,7 +452,7 @@ msgstr "Definición"
 #: inc/deployaction.class.php:251 inc/taskjobview.class.php:283
 #: inc/taskjob.class.php:1187 inc/deploycheck.class.php:290
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Eliminar"
 
 #: install/update.php:899
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
@@ -462,11 +462,11 @@ msgstr ""
 
 #: inc/deployaction.class.php:75
 msgid "Delete directory"
-msgstr "Borrar directorio"
+msgstr "Eliminar directorio"
 
 #: inc/taskjobview.class.php:740 inc/taskjobview.class.php:762
 msgid "Delete selected items"
-msgstr "Borrar elementos seleccionados"
+msgstr "Eliminar elementos seleccionados"
 
 #: inc/config.class.php:512
 msgid "Delete successful on demand tasks after (in days)"
@@ -475,11 +475,11 @@ msgstr ""
 
 #: inc/config.class.php:324
 msgid "Delete tasks logs after"
-msgstr "Borrar los registros de tareas después de"
+msgstr "Eliminar los registros de tareas después de"
 
 #: hook.php:48 inc/menu.class.php:414
 msgid "Deploy"
-msgstr "Despliegue"
+msgstr "Desplegar"
 
 #: b/deploy/index.php:66
 msgid "Deploy module has been disabled for this agent"
@@ -487,7 +487,7 @@ msgstr "El módulo de despliegue ha sido desactivado para este agente"
 
 #: inc/profile.class.php:224 inc/profile.class.php:292
 msgid "Deploy packages on demand"
-msgstr "Despliegue de paquetes a petición"
+msgstr "Despliegue de paquetes bajo demanda"
 
 #: inc/task.class.php:1847
 msgid "Deployment job, package: "
@@ -539,7 +539,7 @@ msgstr "Disco o directorio"
 
 #: inc/deploypackage.class.php:1666
 msgid "Don't wakeup"
-msgstr "No te despiertes"
+msgstr "No despertar"
 
 #: inc/deployfile.class.php:196
 msgid "Download"
@@ -555,7 +555,7 @@ msgstr "ESX/VMWare"
 
 #: inc/deploytask.class.php:195
 msgid "Edit impossible, this task is active"
-msgstr "Editar imposible, esta tarea está activa"
+msgstr "Edición imposible, esta tarea está activa"
 
 #: inc/deploypackage.class.php:383 inc/deploypackage.class.php:502
 msgid "Enable deploy on demand for the following group"
@@ -584,7 +584,7 @@ msgstr "Error"
 
 #: inc/stateinventory.class.php:126
 msgid "Error(s)"
-msgstr "Error(s)"
+msgstr "Error(es)"
 
 #: inc/commonview.class.php:311
 msgid "Error:"
@@ -617,7 +617,7 @@ msgstr "Exportar"
 
 #: inc/taskview.class.php:104
 msgid "Export task result"
-msgstr "Export task result"
+msgstr "Exportar el resultado de la tarea"
 
 #: inc/config.class.php:344
 msgid "Extra-debug"
@@ -659,7 +659,7 @@ msgstr "Archivo no encontrado"
 
 #: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
-msgstr "Archivo guardado!"
+msgstr "¡Archivo guardado!"
 
 #: inc/deploycheck.class.php:68
 msgid "File size is equal to"
@@ -692,7 +692,7 @@ msgstr "Los archivos deben cargarse en la carpeta %s para que aparezcan aquí"
 
 #: b/deploy/index.php:139
 msgid "Files preparation"
-msgstr "Preparación de expedientes"
+msgstr "Preparación de archivos"
 
 #: inc/collect_file.class.php:120
 msgid "Filter"
@@ -796,7 +796,7 @@ msgstr "Configuración general"
 #: inc/profile.class.php:371 inc/menu.class.php:217
 #: inc/deploytaskjob.class.php:223 front/deploygroup.php:38
 msgid "Groups of computers"
-msgstr "Grupos de ordenadores"
+msgstr "Grupos de computadoras"
 
 #: inc/menu.class.php:432
 msgid "Guide"
@@ -808,11 +808,11 @@ msgstr "Hive"
 
 #: inc/deploypackage.class.php:1665
 msgid "I'm not on this computer: wakeup from the server"
-msgstr "No estoy en este ordenador: despertar desde el servidor"
+msgstr "No estoy en esta computadora: despertar desde el servidor"
 
 #: inc/deploypackage.class.php:1664
 msgid "I'm on this computer: local wakeup"
-msgstr "Estoy en este ordenador: despertador local"
+msgstr "Estoy en esta computadora: despertar local"
 
 #: inc/staticmisc.class.php:329 inc/staticmisc.class.php:363
 #: inc/iprange.class.php:88 inc/iprange.class.php:91 inc/menu.class.php:322
@@ -830,7 +830,7 @@ msgstr "Si no tiene éxito"
 #: inc/menu.class.php:487
 msgid "If you have devices not typed, import them from unmanaged devices"
 msgstr ""
-"Si tiene dispositivos no escritos, impórtelos desde dispositivos no "
+"Si tiene dispositivos no tipificados, impórtelos desde dispositivos no "
 "administrados"
 
 #: inc/deployuserinteraction.class.php:490
@@ -839,15 +839,15 @@ msgstr "Ignorar"
 
 #: inc/deploypackage.class.php:150 inc/menu.class.php:153
 msgid "Import"
-msgstr "Importación"
+msgstr "Importar"
 
 #: inc/deploygroup_staticdata.class.php:334
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
 msgstr ""
-"Importar una lista de ordenadores desde un archivo CSV (la primera columna "
-"debe contener el ID del ordenador)"
+"Importar una lista de computadoras desde un archivo CSV (la primera columna "
+"debe contener el ID del computador)"
 
 #: inc/menu.class.php:251
 msgid "Import agent XML file"
@@ -863,7 +863,7 @@ msgstr "Imposible leer el archivo CSV"
 
 #: inc/deploypackage.class.php:1368 inc/taskview.class.php:234
 msgid "In error"
-msgstr "Por error"
+msgstr "En error"
 
 #: inc/collect_file.class.php:69
 msgid "Iname"
@@ -954,8 +954,8 @@ msgstr "Inventario local"
 msgid ""
 "Make a search to get desired computer, then use massive actions and use %s"
 msgstr ""
-"Haz una búsqueda para obtener el ordenador deseado, luego usa acciones "
-"masivas y usa %s"
+"Haga una búsqueda para obtener la computadora deseada, luego use acciones "
+"masivas y use %s"
 
 #: inc/profile.class.php:283
 msgid "Manage packages"
@@ -983,7 +983,7 @@ msgstr "Número máximo de reintentos alcanzado: forzar despliegue"
 
 #: inc/profile.class.php:355
 msgid "Menu"
-msgstr "Menu"
+msgstr "Menú"
 
 #: inc/deployfile.class.php:175 inc/deployfile.class.php:348
 #: inc/taskjob.class.php:779
@@ -992,7 +992,7 @@ msgstr "Minuto(s)"
 
 #: inc/deployfile.class.php:1077
 msgid "Mio"
-msgstr "Mio"
+msgstr "MiB"
 
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:272
 msgid "Mirror server address"
@@ -1074,7 +1074,7 @@ msgstr "Opciones de red"
 
 #: inc/menu.class.php:376
 msgid "Networking"
-msgstr "Gestión de redes"
+msgstr "Redes"
 
 #: inc/taskjobview.class.php:587 inc/taskjobview.class.php:590
 msgid "New action"
@@ -1098,7 +1098,7 @@ msgstr "No hay ningún usuario conectado"
 
 #: inc/collect_file.class.php:182
 msgid "Non sentitive case"
-msgstr "Caso no sintitivo"
+msgstr "No distinguir mayúsculas y minúsculas"
 
 #: inc/deploypackage.class.php:1367 inc/taskview.class.php:233
 msgid "Not done yet"
@@ -1269,7 +1269,7 @@ msgstr "Propiedad"
 
 #: inc/taskjobview.class.php:791
 msgid "Purge"
-msgstr "Purga"
+msgstr "Depurar"
 
 #: inc/deployuserinteractiontemplate.class.php:202
 msgid "Question"
@@ -1322,7 +1322,7 @@ msgstr "Inventario remoto de dispositivos"
 
 #: inc/profile.class.php:315 inc/menu.class.php:330
 msgid "Remote devices to inventory (VMware)"
-msgstr "Dispositivos remotos para inventariar (VMware)"
+msgstr "Dispositivos remotos a inventariar (VMware)"
 
 #: hook.php:449 inc/deploygroup_staticdata.class.php:225
 msgid "Remove from static group"
@@ -1347,7 +1347,7 @@ msgstr "Reintentar #%d"
 
 #: inc/deployuserinteractiontemplate.class.php:173
 msgid "Retry - Cancel"
-msgstr "Reintentar: cancelar"
+msgstr "Reintentar - Cancelar"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Retry job after"
@@ -1431,7 +1431,7 @@ msgstr "Seleccione el archivo en el servidor"
 
 #: inc/collect_file.class.php:183
 msgid "Sentitive case"
-msgstr "Caso sentencioso"
+msgstr "Distinguir mayúsculas y minúsculas"
 
 #: inc/taskjobstate.class.php:140
 msgid "Server has sent data to the agent"
@@ -1466,7 +1466,7 @@ msgstr "Tamaño"
 
 #: inc/profile.class.php:182 inc/profile.class.php:229
 msgid "Software deployment"
-msgstr "Implementación de software"
+msgstr "Despliegue de programas"
 
 #: templates/forms/iprange.html.twig inc/iprange.class.php:142
 #: inc/iprange.class.php:234
@@ -1504,14 +1504,14 @@ msgstr "Tipo de destino"
 
 #: hook.php:443 inc/iprange.class.php:289 inc/deploygroup.class.php:221
 msgid "Target a task"
-msgstr "Segmentar una tarea"
+msgstr "Apuntar a una tarea"
 
 #: inc/deploypackage.class.php:1037 inc/deploypackage.class.php:1046
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
-msgstr[0] "Destino para la implementación a petición"
-msgstr[1] "Destinos para la implementación a petición"
-msgstr[2] "Destinos para la implementación a petición"
+msgstr[0] "Destino para el despliegue bajo demanda"
+msgstr[1] "Destinos para el despliegue bajo demanda"
+msgstr[2] "Destinos para el despliegue bajo demanda"
 
 #: inc/taskjobview.class.php:694 inc/taskjobview.class.php:727
 msgid "Targets"
@@ -1598,14 +1598,14 @@ msgstr "Este agente ya no pertenece a los actores definidos en el trabajo."
 
 #: inc/taskview.class.php:327
 msgid "This is an on demand deployment task"
-msgstr "Se trata de una tarea de despliegue bajo demanda"
+msgstr "Esta es una tarea de despliegue bajo demanda"
 
 #: inc/menu.class.php:456
 msgid ""
 "This is the steps to configure plugin for SNMP inventory (swicth, router, "
 "network printer)"
 msgstr ""
-"Estos son los pasos para configurar el plugin para el inventario SNMP "
+"Estos son los pasos para configurar el complemento para el inventario SNMP "
 "(swicth, router, impresora de red)"
 
 #: inc/task.class.php:504
@@ -1679,11 +1679,11 @@ msgstr "Unidad"
 
 #: inc/deployfile.class.php:1090
 msgid "Unused file"
-msgstr "Fichero no utilizado"
+msgstr "Archivo no utilizado"
 
 #: inc/taskjoblog.class.php:366
 msgid "Update the item"
-msgstr "Actualizar el artículo"
+msgstr "Actualizar el elemento"
 
 #: inc/task.class.php:1864
 msgid "Updated a deployment job, package: "
@@ -1691,11 +1691,11 @@ msgstr "Actualizado un trabajo de despliegue, paquete: "
 
 #: inc/deployfile.class.php:623
 msgid "Upload error"
-msgstr ""
+msgstr "Error de carga"
 
 #: inc/deployfile.class.php:64
 msgid "Upload from computer"
-msgstr "Cargar desde el ordenador"
+msgstr "Cargar desde la computadora"
 
 #: inc/deployfile.class.php:65
 msgid "Upload from server"
@@ -1717,9 +1717,9 @@ msgstr "El usuario canceló el trabajo"
 #: inc/deployuserinteraction.class.php:87
 msgid "User interaction"
 msgid_plural "User interactions"
-msgstr[0] "Interacción del usuarios"
-msgstr[1] "Interacciones de los usuarios"
-msgstr[2] "Interacciones de los usuarios"
+msgstr[0] "Interacción del usuario"
+msgstr[1] "Interacciones del usuario"
+msgstr[2] "Interacciones del usuario"
 
 #: inc/profile.class.php:286 inc/deployuserinteractiontemplate.class.php:137
 #: inc/menu.class.php:403 front/deployuserinteractiontemplate.php:38
@@ -1731,7 +1731,7 @@ msgstr[2] "Plantillas de interacción del usuario"
 
 #: inc/deploypackage.class.php:528
 msgid "User interactions"
-msgstr "Interacciones de los usuarios"
+msgstr "Interacciones del usuario"
 
 #: b/deploy/index.php:269
 msgid "User postponed the job"
@@ -1764,7 +1764,7 @@ msgstr "WMI"
 
 #: install/install.php:266
 msgid "Wake agents ups"
-msgstr "Despertar a los agentes"
+msgstr "Despertar los agentes"
 
 #: inc/commonview.class.php:306
 msgid "Warning:"
@@ -1802,7 +1802,7 @@ msgstr ""
 #: inc/menu.class.php:491
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr ""
-"'Inventario de red', utilizado para completar el inventario de los "
+"`Network Inventory`, utilizado para completar el inventario de los "
 "dispositivos descubiertos"
 
 #: inc/deploycheck.class.php:579
@@ -1815,7 +1815,7 @@ msgstr "continuar"
 
 #: inc/taskjob.class.php:789
 msgid "day(s)"
-msgstr "dia(s)"
+msgstr "día(s)"
 
 #: inc/task.class.php:153
 msgid "deploy on demand task"
@@ -1869,7 +1869,7 @@ msgstr "ruta"
 
 #: inc/collect.class.php:244 inc/collect_file_content.class.php:138
 msgid "pathfile"
-msgstr "archivo de ruta"
+msgstr "ruta del archivo"
 
 #: inc/taskview.class.php:84
 msgid "refresh interval"
@@ -1881,11 +1881,11 @@ msgstr "actualizar trabajo"
 
 #: inc/deploycheck.class.php:582
 msgid "report info"
-msgstr "aviso de denuncia"
+msgstr "repote del informe"
 
 #: inc/deploycheck.class.php:583
 msgid "report warning"
-msgstr "aviso de denuncia"
+msgstr "reporte de alerta"
 
 #: inc/deployfile.class.php:173 inc/deployfile.class.php:347
 msgid "retention"

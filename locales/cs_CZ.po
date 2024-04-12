@@ -6,7 +6,7 @@
 # Translators:
 # Cédric Anne, 2021
 # Michal Čermák <michal.cermak79@gmail.com>, 2022
-# David Stepan <stepand@tiscali.cz>, 2022
+# David Stepan <stepand@tiscali.cz>, 2024
 # 
 #, fuzzy
 msgid ""
@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-13 14:27+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: David Stepan <stepand@tiscali.cz>, 2022\n"
+"Last-Translator: David Stepan <stepand@tiscali.cz>, 2024\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -131,7 +131,7 @@ msgstr "Moduly agenta"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Alert display timeout"
-msgstr ""
+msgstr "Časový limit zobrazení upozornění"
 
 #: inc/deployuserinteraction.class.php:475
 msgid "Alert displayed, no input required"
@@ -143,7 +143,7 @@ msgstr "Překročeno trvání výstrahy"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Alert icon"
-msgstr ""
+msgstr "Ikona upozornění"
 
 #: inc/deployuserinteractiontemplate.class.php:464
 msgid "Alert timeout exceeded"
@@ -151,7 +151,7 @@ msgstr "Překročen časový limit výstrahy"
 
 #: front/deployfile_download.php:79
 msgid "An error occurs"
-msgstr ""
+msgstr "Došlo k chybě"
 
 #: inc/menu.class.php:289
 msgid "Asset skipped during import"
@@ -182,11 +182,11 @@ msgstr "Ověření pro vzdálená zařízení (VMware)"
 #: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
-msgstr ""
+msgstr "Automatická dynamika řízení agentů"
 
 #: inc/taskjob.class.php:818
 msgid "Auto management dynamic of agents (same subnet)"
-msgstr ""
+msgstr "Automatická dynamika správy agentů (stejná podsíť)"
 
 #: inc/iprange.class.php:232
 msgid "Bad IP"
@@ -546,7 +546,7 @@ msgstr "Neprobouzet"
 
 #: inc/deployfile.class.php:196
 msgid "Download"
-msgstr ""
+msgstr "Stáhnout"
 
 #: inc/deploygroup.class.php:88 inc/deploygroup.class.php:802
 msgid "Dynamic group"
@@ -587,7 +587,7 @@ msgstr "Chyba"
 
 #: inc/stateinventory.class.php:126
 msgid "Error(s)"
-msgstr "Chyby"
+msgstr "Chyba(y)"
 
 #: inc/commonview.class.php:311
 msgid "Error:"
@@ -595,12 +595,12 @@ msgstr "Chyba:"
 
 #: inc/deploycheck.class.php:354
 msgid "Example of registry key"
-msgstr ""
+msgstr "Příklad klíče registru"
 
 #: inc/deploycheck.class.php:362 inc/deploycheck.class.php:370
 #: inc/deploycheck.class.php:382
 msgid "Example of registry value"
-msgstr ""
+msgstr "Příklad hodnoty registru"
 
 #: inc/agentmodule.class.php:113
 msgid "Exceptions"
@@ -658,7 +658,7 @@ msgstr "Soubor chybí"
 
 #: front/deployfile_download.php:82 front/deployfile_download.php:85
 msgid "File not found"
-msgstr ""
+msgstr "Soubor nenalezen"
 
 #: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
@@ -691,7 +691,7 @@ msgstr "Stažení souborů"
 #: inc/deployfile.class.php:416
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
-msgstr ""
+msgstr "Soubory je třeba nahrát do složky %s, aby se zde zobrazily"
 
 #: b/deploy/index.php:139
 msgid "Files preparation"
@@ -785,12 +785,12 @@ msgstr "GLPI inventář"
 #: inc/deploycheck.class.php:383
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
-msgstr ""
+msgstr "GLPI-Agent nebo Fusioninventory-Agent >= %1s povinné"
 
 #: inc/deploycheck.class.php:355 inc/deploycheck.class.php:372
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
-msgstr ""
+msgstr "GLPI-Agent nebo Fusioninventory-Agent >= %1s doporučeno"
 
 #: inc/profile.class.php:172 inc/menu.class.php:230
 msgid "General"
@@ -885,15 +885,15 @@ msgstr "Info"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Interaction format"
-msgstr ""
+msgstr "Interakční formát"
 
 #: inc/deployuserinteraction.class.php:212
 msgid "Interaction label"
-msgstr "Štítek interakce"
+msgstr "Název interakce"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Interaction type"
-msgstr ""
+msgstr "Typ interakce"
 
 #: inc/profile.class.php:177
 msgid "Inventory"
@@ -960,6 +960,8 @@ msgstr "Místní inventarizace"
 msgid ""
 "Make a search to get desired computer, then use massive actions and use %s"
 msgstr ""
+"Proveďte vyhledávání, abyste získali požadovaný počítač, poté použijte "
+"hromadné akce a použijte %s"
 
 #: inc/profile.class.php:283
 msgid "Manage packages"
@@ -979,7 +981,7 @@ msgstr "Kolik agentů nejvýše v úloze probouzet"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Maximum number of retry allowed"
-msgstr ""
+msgstr "Maximální povolený počet opakování"
 
 #: inc/taskjobstate.class.php:538
 msgid "Maximum number of retry reached: force deployment"
@@ -992,7 +994,7 @@ msgstr "Nabídka"
 #: inc/deployfile.class.php:175 inc/deployfile.class.php:348
 #: inc/taskjob.class.php:779
 msgid "Minute(s)"
-msgstr "minut"
+msgstr "Minuta(ty)"
 
 #: inc/deployfile.class.php:1077
 msgid "Mio"
@@ -1031,7 +1033,7 @@ msgstr "Přezdívka"
 
 #: inc/menu.class.php:245
 msgid "Monitoring / Logs"
-msgstr "Dohledování / záznamy událostí (log)"
+msgstr "Dohled / Logy"
 
 #: inc/deployaction.class.php:73
 msgid "Move"
@@ -1224,12 +1226,12 @@ msgstr "Četnost opakování"
 
 #: inc/task.class.php:143 inc/taskview.class.php:322
 msgid "Permit to re-prepare task after run"
-msgstr ""
+msgstr "Povolit znovu připravení úlohy po spuštění"
 
 #: setup.php:450
 #, php-format
 msgid "Please remove %s directory."
-msgstr ""
+msgstr "Odstraňte prosím adresář %s."
 
 #: inc/taskview.class.php:238 inc/taskjobstate.class.php:145
 msgid "Postponed"
@@ -1330,7 +1332,7 @@ msgstr "Vzdálená zařízení do inventáře (VMware)"
 
 #: hook.php:449 inc/deploygroup_staticdata.class.php:225
 msgid "Remove from static group"
-msgstr ""
+msgstr "Odebrat ze statické skupiny"
 
 #: inc/deploypackage.class.php:1492
 msgid "Restart job"
@@ -1338,7 +1340,7 @@ msgstr "Restartovat úlohu"
 
 #: inc/taskjobview.class.php:671
 msgid "Restrict scope to task entity"
-msgstr ""
+msgstr "Omezit rozsah na entitu úkolu"
 
 #: inc/deployuserinteraction.class.php:481
 msgid "Retry"
@@ -1355,7 +1357,7 @@ msgstr "Zkusit znovu – Storno"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Retry job after"
-msgstr ""
+msgstr "Zopakujte úlohu poté"
 
 #: inc/deployuserinteractiontemplate.class.php:222
 msgid "Retry job later"
@@ -1588,7 +1590,7 @@ msgstr "Označený úkol už má úlohu nasazení pro jiný balíček:"
 
 #: inc/task.class.php:601
 msgid "The task cannot be updated if it is active"
-msgstr ""
+msgstr "Úlohu nelze aktualizovat, pokud je aktivní"
 
 #: inc/task.class.php:483
 msgid "The task has been deactivated after preparation of this job."
@@ -1695,7 +1697,7 @@ msgstr "Aktualizována úloha nasazení, balíček:"
 
 #: inc/deployfile.class.php:623
 msgid "Upload error"
-msgstr ""
+msgstr "Chyba nahrávání"
 
 #: inc/deployfile.class.php:64
 msgid "Upload from computer"
@@ -1817,7 +1819,7 @@ msgstr "pokračovat"
 
 #: inc/taskjob.class.php:789
 msgid "day(s)"
-msgstr "dnů"
+msgstr "den(y)"
 
 #: inc/task.class.php:153
 msgid "deploy on demand task"
@@ -1847,7 +1849,7 @@ msgstr "název souboru"
 
 #: inc/taskjob.class.php:784
 msgid "hour(s)"
-msgstr "hodin"
+msgstr "hodina(y)"
 
 #: inc/collect_wmi.class.php:79
 msgid "moniker"
