@@ -623,7 +623,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         if ($DB->tableExists('glpi_plugin_glpiinventory_configs')) {
             $PF_CONFIG = [];
-            foreach ($DB->request('glpi_plugin_glpiinventory_configs') as $data) {
+            $configs = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_configs']);
+            foreach ($configs as $data) {
                 $PF_CONFIG[$data['type']] = $data['value'];
             }
         }

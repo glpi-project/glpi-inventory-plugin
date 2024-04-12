@@ -837,7 +837,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     }
 
     // Use core configuration entries
-    $plugin_configs = $DB->request('glpi_plugin_glpiinventory_configs');
+    $plugin_configs = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_configs']);
     $mapping = [
         'agents_action'   => 'stale_agents_action',
         'agents_old_days' => 'stale_agents_delay',
