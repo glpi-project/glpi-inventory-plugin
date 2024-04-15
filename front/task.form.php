@@ -36,7 +36,7 @@ include("../../../inc/includes.php");
 $pfTask = new PluginGlpiinventoryTask();
 
 //Submit the task form parameters
-$pfTask->submitForm($_POST);
+$pfTask->submitForm($_REQUEST);
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),
