@@ -31,6 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
+if (isset($_POST['export_jobs'])) {
+    define('GLPI_KEEP_CSRF_TOKEN', true);
+}
 include("../../../inc/includes.php");
 
 $pfTask = new PluginGlpiinventoryTask();
