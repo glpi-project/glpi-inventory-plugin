@@ -1213,8 +1213,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 if (
                     !isset($counters['agents_error'][$agent_id])
                     && !isset($counters['agents_success'][$agent_id])
-                    && !isset($counters['agents_running'][$agent_id])
-                    && !isset($counters['agents_prepared'][$agent_id])
                     && !isset($counters['agents_cancelled'][$agent_id])
                 ) {
                     $counters['agents_notdone'][$agent_id] = $run_id;
