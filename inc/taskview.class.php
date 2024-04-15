@@ -115,7 +115,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
          // Display Export modal
          echo "<div class='fusinv_panel' id='fiTaskExport_modalWindow'>";
-         echo "<form method='POST' class='task_export_form center'
+         echo "<form method='GET' class='task_export_form center'
                      action='" . self::getFormURLWithID($task_id) . "'>";
 
          // states checkboxes

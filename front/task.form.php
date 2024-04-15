@@ -31,15 +31,12 @@
  * ---------------------------------------------------------------------
  */
 
-if (isset($_POST['export_jobs'])) {
-    define('GLPI_KEEP_CSRF_TOKEN', true);
-}
 include("../../../inc/includes.php");
 
 $pfTask = new PluginGlpiinventoryTask();
 
 //Submit the task form parameters
-$pfTask->submitForm($_POST);
+$pfTask->submitForm($_GET);
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),
