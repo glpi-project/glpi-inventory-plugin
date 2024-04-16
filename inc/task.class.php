@@ -895,8 +895,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             'agents_cancelled',
             'agents_running',
             'agents_success',
-            'agents_error',
-            'agents_notdone'
+            'agents_error'
         ];
 
         foreach ($iterator as $result) {
@@ -1126,7 +1125,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                             && !isset($counters['agents_running'][$agent_id])
                             && !isset($counters['agents_success'][$agent_id])
                             && !isset($counters['agents_error'][$agent_id])
-                            && !isset($counters['agents_notdone'][$agent_id])
                         ) {
                             $counters['agents_cancelled'][$agent_id] = $run_id;
                             $agent_state = 'cancelled';
@@ -1185,7 +1183,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         // so we are really in error
                         if (!isset($counters['agents_success'][$agent_id])) {
                             $counters['agents_error'][$agent_id] = $run_id;
-                            unset($counters['agents_notdone'][$agent_id]);
                         }
 
                         $agent_state = 'error';
@@ -1204,18 +1201,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                       // so we are really in success
                         if (!isset($counters['agents_error'][$agent_id])) {
                             $counters['agents_success'][$agent_id] = $run_id;
-                            unset($counters['agents_notdone'][$agent_id]);
                         }
 
                         $agent_state = 'success';
                         break;
-                }
-                if (
-                    !isset($counters['agents_error'][$agent_id])
-                    && !isset($counters['agents_success'][$agent_id])
-                    && !isset($counters['agents_cancelled'][$agent_id])
-                ) {
-                    $counters['agents_notdone'][$agent_id] = $run_id;
                 }
                 if (
                     isset($counters['agents_running'][$agent_id])

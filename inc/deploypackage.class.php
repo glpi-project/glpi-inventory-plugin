@@ -1364,7 +1364,6 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public static function getPackageDeploymentStates()
     {
         return [
-              'agents_notdone'   => __('Not done yet', 'glpiinventory'),
               'agents_error'     => __('In error', 'glpiinventory'),
               'agents_success'   => __('Successful', 'glpiinventory'),
               'agents_running'   => __('Running', 'glpiinventory'),
