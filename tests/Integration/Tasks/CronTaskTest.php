@@ -543,11 +543,6 @@ class CronTaskTest extends TestCase
          'agents_running' => [],
          'agents_success' => [],
          'agents_error' => [],
-         'agents_notdone' => [
-            $agentComputer4Id => 3,
-            $agentComputer3Id => 2,
-            $agentComputer1Id => 1
-         ]
         ];
 
         $counters = $data['tasks'][$pfTask->fields['id']]['jobs'][$pfTaskjob->fields['id']]['targets']['PluginGlpiinventoryDeployPackage_' . $pfDeployPackage->fields['id']]['counters'];
@@ -612,9 +607,6 @@ class CronTaskTest extends TestCase
          'agents_error' => [
             $agentComputer3Id => 2
          ],
-         'agents_notdone' => [
-            $agentComputer4Id => 3
-         ]
         ];
 
         $counters = $data['tasks'][$pfTask->fields['id']]['jobs'][$pfTaskjob->fields['id']]['targets']['PluginGlpiinventoryDeployPackage_' . $pfDeployPackage->fields['id']]['counters'];
@@ -635,9 +627,6 @@ class CronTaskTest extends TestCase
          'agents_error' => [
             $agentComputer3Id => 2
          ],
-         'agents_notdone' => [
-            $agentComputer4Id => 3
-         ]
         ];
         $counters = $data['tasks'][$pfTask->fields['id']]['jobs'][$pfTaskjob->fields['id']]['targets']['PluginGlpiinventoryDeployPackage_' . $pfDeployPackage->fields['id']]['counters'];
         $this->assertEquals($reference, $counters);
@@ -667,9 +656,6 @@ class CronTaskTest extends TestCase
          'agents_error' => [
             $agentComputer3Id => 2
          ],
-         'agents_notdone' => [
-            $agentComputer4Id => 3
-         ]
         ];
         $counters = $data['tasks'][$pfTask->fields['id']]['jobs'][$pfTaskjob->fields['id']]['targets']['PluginGlpiinventoryDeployPackage_' . $pfDeployPackage->fields['id']]['counters'];
         $this->assertEquals($reference, $counters);

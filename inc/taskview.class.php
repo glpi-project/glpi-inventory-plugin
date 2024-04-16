@@ -129,7 +129,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          'agents_cancelled' => false,
          'agents_success'   => true,
          'agents_error'     => true,
-         'agents_notdone'   => false,
          ];
          foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
              $locale  = PluginGlpiinventoryDeployPackage::getPackageDeploymentStates()[$agent_state_type];
@@ -223,14 +222,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                'agents_cancelled',
             ],
             last_finish_states: [
-               'agents_notdone',
                'agents_success',
                'agents_error'
             ]
          };
 
          taskjobs.statuses_names = {
-            'agents_notdone':   '" . __('Not done yet', 'glpiinventory') . "',
             'agents_error':     '" . __('In error', 'glpiinventory') . "',
             'agents_success':   '" . __('Successful', 'glpiinventory') . "',
             'agents_running':   '" . __('Running', 'glpiinventory') . "',

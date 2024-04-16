@@ -818,8 +818,7 @@ taskjobs.update_logs = function (data) {
 
             taskjobs.charts[chart_id].new_data = [
                target_v.counters_computed.agents_success.length,
-               target_v.counters_computed.agents_error.length,
-               target_v.counters_computed.agents_notdone.length
+               target_v.counters_computed.agents_error.length
             ];
 
             if ( ! d3.sum(taskjobs.charts[chart_id].new_data) > 0) {
@@ -867,7 +866,6 @@ taskjobs.update_logs = function (data) {
 
 
 taskjobs.compute_data = function() {
-    //target_debug = "";
     tasks = taskjobs.data.tasks;
     result = [];
     $.each(tasks, function(task_i, task_v) {
@@ -879,7 +877,6 @@ taskjobs.compute_data = function() {
                      agents_prepared:    Object.keys(target_v.counters.agents_prepared),
                      agents_running:     Object.keys(target_v.counters.agents_running),
                      agents_cancelled:   Object.keys(target_v.counters.agents_cancelled),
-                     agents_notdone:     Object.keys(target_v.counters.agents_notdone),
                      agents_error:       Object.keys(target_v.counters.agents_error),
                      agents_success:     Object.keys(target_v.counters.agents_success)
                };
@@ -893,32 +890,13 @@ taskjobs.compute_data = function() {
                }
 
                 counters = target_v.counters_computed;
-                //counters.agents_obsolete = Lazy(counters.agents_notdone).intersection(counters.agents_cancelled).toArray();
-                //counters.agents_notdone = Lazy(counters.agents_notdone).without(counters.agents_obsolete).toArray();
-                counters.agents_notdone = Lazy(counters.agents_notdone).toArray();
                 counters.agents_total =
                     Lazy(counters.agents_success).
                         union(counters.agents_error).
                         toArray();
-
-                //target_debug += "•" + target_v.name + "\n";
-                //target_debug += "prepared     : " + counters.agents_prepared.length + "\n";
-                //target_debug += "running      : " + counters.agents_running.length + "\n";
-                //target_debug += "cancelled    : " + counters.agents_cancelled.length + "\n";
-                //target_debug += "error        : " + counters.agents_error.length + "\n";
-                //target_debug += "success      : " + counters.agents_success.length + "\n";
-                //target_debug += "not done yet : " + counters.agents_notdone.length + "\n";
-                //target_debug += "obsolete     : " + counters.agents_obsolete.length + "\n";
-                //target_debug += "total        : " + counters.agents_total.length + "\n";
-                //percent_success = ((counters.agents_success.length / counters.agents_total.length) * 100).toFixed(2);
-                //percent_failed = ((counters.agents_error.length / counters.agents_total.length) * 100).toFixed(2);
-                //target_debug += percent_success + " % success\n";
-                //target_debug += percent_failed + " % failures\n";
             });
         });
     } );
-    //console.log(target_debug);
-    //$('.debuglogs').text(target_debug);
 };
 
 // Charts functions
@@ -949,17 +927,6 @@ taskjobs.create_progressbar = function(node_container, chart_id, width, height) 
 taskjobs.update_progressbar = function( chart ) {
 
    var data = chart.new_data;
-
-   //var total = 1000000000;
-   //var success = (Math.floor(Math.random() * 2)) * Math.floor(Math.random()*total).toFixed(0);
-   //var error = (Math.floor(Math.random() * 2)) * Math.floor(Math.random()*(total - success)).toFixed(0);
-   //var notdone = total - (success + error).toFixed(0);
-
-   //var data = [
-   //   success,
-   //   error,
-   //   notdone
-   //      ];
 
    remapped = [];
    var x0 = 0;
