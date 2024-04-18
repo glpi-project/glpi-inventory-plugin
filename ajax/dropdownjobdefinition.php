@@ -90,10 +90,10 @@ if (!empty($type) && !empty($actortype)) {
             break;
 
         case "group":
-            $cond = ($actortype == 'assign' ? $cond = '`is_assign`' : $cond = '`is_requester`');
+            $cond = ($actortype == 'assign' ? $cond = 'is_assign' : $cond = 'is_requester');
             Dropdown::show('Group', ['name'      => '_itil_' . $actortype . '[groups_id]',
                                        'entity'    => $entity_restrict,
-                                       'condition' => $cond]);
+                                       'condition' => [$cond => 1]]);
             break;
 
         case "supplier":
