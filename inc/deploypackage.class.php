@@ -2226,15 +2226,15 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                         $job['job']['userinteractions'][$key]
                         = $template->addJsonFieldsToArray($job['job']['userinteractions'][$key]);
                         unset($job['job']['userinteractions'][$key]['template']);
-
-                        $job['job']['userinteractions'][$key]['text']
-                        = str_replace(
-                            PluginGlpiinventoryDeployUserinteraction::RN_TRANSFORMATION,
-                            "\r\n",
-                            $job['job']['userinteractions'][$key]['text']
-                        );
                     }
                 }
+
+                $job['job']['userinteractions'][$key]['text']
+                = str_replace(
+                    PluginGlpiinventoryDeployUserinteraction::RN_TRANSFORMATION,
+                    "\r\n",
+                    $job['job']['userinteractions'][$key]['text']
+                );
             }
         }
         return $job;
