@@ -163,7 +163,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                     $params['metacriteria'] = [];
                 }
                 $params['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
-                self::showList('Computer', $params, ['1', '2']);
+                self::showList('Computer', $params, []);
                 return true;
         }
         return false;
@@ -216,15 +216,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         Search::constructSQL($data);
         Search::constructData($data);
 
-        // Remove some fields from the displayed columns
-        if (Session::isMultiEntitiesMode()) {
-           // Remove entity and computer Id
-            unset($data['data']['cols'][1]);
-            unset($data['data']['cols'][2]);
-        } else {
-            // Remove computer Id
-            unset($data['data']['cols'][1]);
-        }
         Search::displayData($data);
     }
 
