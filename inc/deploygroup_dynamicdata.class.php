@@ -170,7 +170,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     }
 
 
-
    /**
     * Display criteria form + list of computers
     *
