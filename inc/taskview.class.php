@@ -623,6 +623,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             if (count($task['jobs']) == 0) {
                 echo NL;
             } else {
+                $log_cpt = 0;
                 foreach ($task['jobs'] as $job_id => $job) {
                     echo $job['name'] . SEP;
                     echo $job['method'] . SEP;
@@ -641,7 +642,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                     $computer->getFromDB($agent_obj->fields['items_id']);
                                     echo $computer->getname() . SEP;
 
-                                    $log_cpt = 0;
                                     if (count($agent) == 0) {
                                         echo NL;
                                     } else {
@@ -649,11 +649,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                             echo $exec['last_log_date'] . SEP;
                                             echo $exec['state'] . SEP;
                                             echo $exec['last_log'] . NL;
-                                            $log_cpt++;
-
-                                            if ($includeoldjobs != -1 and $log_cpt >= $includeoldjobs) {
-                                                break;
-                                            }
 
                                             if (!$last($agent, $exec_id)) {
                                                 echo SEP . SEP . SEP . SEP . SEP . SEP;
@@ -675,6 +670,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
                     if (!$last($task['jobs'], $job_id)) {
                         echo SEP;
+                    }
+
+                    $log_cpt++;
+
+                    if ($includeoldjobs != -1 and $log_cpt >= $includeoldjobs) {
+                        break;
                     }
                 }
             }
