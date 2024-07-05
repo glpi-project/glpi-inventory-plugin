@@ -246,7 +246,6 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         }
         echo "</table>";
         if ($canedit) {
-            echo "&nbsp;&nbsp;<img src='" . $CFG_GLPI["root_doc"] . "/pics/arrow-left.png' alt=''>";
             echo "<input type='submit' name='delete' value=\"" .
             __('Delete', 'glpiinventory') . "\" class='submit'>";
         }
