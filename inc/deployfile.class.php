@@ -199,7 +199,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             if (!$fileregistry_error) {
                 $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?deployfile_id=" . $file_id;
                 echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
-                    "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></a>";
+                    "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></i></a>";
             }
 
            //sha fingerprint
