@@ -367,11 +367,33 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $current = $jobstate;
         $agent->getFromDB($current->fields['agents_id']);
 
-        $ip = current(PluginGlpiinventoryToolbox::getIPforDevice(
+        $ips = current(PluginGlpiinventoryToolbox::getIPforDevice(
             $jobstate->fields['itemtype'],
             $jobstate->fields['items_id']
         ));
-
+        $a_taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $jobstate->fields['plugin_glpiinventory_taskjobs_id']]);
+        foreach ($a_taskjobs as $a_taskjob) {
+            $a_definition = importArrayFromDB($a_taskjob['targets']);
+            foreach ($a_definition as $datas) {
+                $itemtype = key($datas);
+                $items_id = current($datas);
+    
+                switch ($itemtype) {
+                    case 'PluginGlpiinventoryIPRange':
+                        $pfIPRange->getFromDB($items_id);
+                        foreach ($ips as &$ip) {
+                            if ($pfIPRange->getIp2long($ip) <= $pfIPRange->getIp2long($pfIPRange->fields['ip_end']) && $pfIPRange->getIp2long($pfIPRange->fields['ip_start']) <= $pfIPRange->getIp2long($ip)) {
+                                // in range, assign this IP as device IP
+                                break;
+                            }
+                        }
+                        break;
+                        
+                }
+            }
+        }
+        if(!isset($ip)) $ip = current($ips);
+        
         $param_attrs = [];
         $device_attrs = [];
         $auth_nodes = [];
