@@ -358,11 +358,14 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     public function run($jobstate)
     {
         $agent = new Agent();
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
         $credentials = new SNMPCredential();
         $pfToolbox = new PluginGlpiinventoryToolbox();
         $pfConfig = new PluginGlpiinventoryConfig();
+        $pfIPRange = new PluginGlpiinventoryIPRange();
+        $iPAddress = new IPAddress();
 
         $current = $jobstate;
         $agent->getFromDB($current->fields['agents_id']);
@@ -371,7 +374,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $jobstate->fields['itemtype'],
             $jobstate->fields['items_id']
         );
-        $ip = current($ips);
+        $ip = current($device_ips);
         $a_taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $jobstate->fields['plugin_glpiinventory_taskjobs_id']]);
         foreach ($a_taskjobs as $a_taskjob) {
             $a_definition = importArrayFromDB($a_taskjob['targets']);
@@ -384,9 +387,21 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                         $pfIPRange->getFromDB($items_id);
                         foreach ($device_ips as $device_ip) {
                             if ($pfIPRange->getIp2long($device_ip) <= $pfIPRange->getIp2long($pfIPRange->fields['ip_end']) && $pfIPRange->getIp2long($pfIPRange->fields['ip_start']) <= $pfIPRange->getIp2long($device_ip)) {
-                                // in range, assign this device IP
-                                $id = $device_ip;
-                                break;
+                                // in range
+                                
+                                $a_ipaddresses = $iPAddress->find(
+                                     ['name' => $device_ip]
+                                );
+                                
+                                if(count($a_ipaddresses) > 1) {
+                                    // assign this device IP but continue loop if IP is non unique
+                                    $ip = $device_ip;
+                                    continue;
+                                } else {
+                                    // IP is unique, assign this device IP
+                                    $ip = $device_ip;
+                                    break;
+                                }
                             }
                         }
                         break;
