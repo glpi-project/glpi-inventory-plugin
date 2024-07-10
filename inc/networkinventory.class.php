@@ -367,10 +367,11 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $current = $jobstate;
         $agent->getFromDB($current->fields['agents_id']);
 
-        $ips = current(PluginGlpiinventoryToolbox::getIPforDevice(
+        $device_ips = PluginGlpiinventoryToolbox::getIPforDevice(
             $jobstate->fields['itemtype'],
             $jobstate->fields['items_id']
-        ));
+        );
+        $ip = current($ips);
         $a_taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $jobstate->fields['plugin_glpiinventory_taskjobs_id']]);
         foreach ($a_taskjobs as $a_taskjob) {
             $a_definition = importArrayFromDB($a_taskjob['targets']);
