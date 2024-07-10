@@ -394,7 +394,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 }
             }
         }
-        if(!isset($ip)) $ip = current($ips);
         
         $param_attrs = [];
         $device_attrs = [];
