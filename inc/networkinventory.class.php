@@ -382,9 +382,10 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 switch ($itemtype) {
                     case 'PluginGlpiinventoryIPRange':
                         $pfIPRange->getFromDB($items_id);
-                        foreach ($ips as &$ip) {
-                            if ($pfIPRange->getIp2long($ip) <= $pfIPRange->getIp2long($pfIPRange->fields['ip_end']) && $pfIPRange->getIp2long($pfIPRange->fields['ip_start']) <= $pfIPRange->getIp2long($ip)) {
-                                // in range, assign this IP as device IP
+                        foreach ($device_ips as $device_ip) {
+                            if ($pfIPRange->getIp2long($device_ip) <= $pfIPRange->getIp2long($pfIPRange->fields['ip_end']) && $pfIPRange->getIp2long($pfIPRange->fields['ip_start']) <= $pfIPRange->getIp2long($device_ip)) {
+                                // in range, assign this device IP
+                                $id = $device_ip;
                                 break;
                             }
                         }
