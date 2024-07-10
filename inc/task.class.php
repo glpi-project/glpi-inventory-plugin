@@ -621,7 +621,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return true
     */
-    public static function cronTaskscheduler()
+    public static function cronTaskscheduler($crontask)
     {
 
         ini_set("max_execution_time", "0");
@@ -632,7 +632,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             $methods[] = $method['method'];
         }
 
-        $task->prepareTaskjobs($methods);
+        $task->prepareTaskjobs($methods, false, $crontask);
         return true;
     }
 

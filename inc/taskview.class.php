@@ -712,7 +712,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      * @param false|integer $tasks_id the concerned task
      * @return true
      */
-    public function prepareTaskjobs($methods = [], $tasks_id = false)
+    public function prepareTaskjobs($methods = [], $tasks_id = false, $crontask = null)
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -940,11 +940,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                         );
 
                         $run_id = $jobstate->add($run);
+
                         PluginGlpiinventoryToolbox::logIfExtradebug(
                             "pluginGlpiinventory-jobs",
                             "- prepared a job execution: " . print_r($run, true)
                         );
                         if ($run_id !== false) {
+
+                            if (!is_null($crontask)) {
+                                $crontask->addVolume(1);
+                            }
                             $log = array_merge(
                                 $log_base,
                                 [
