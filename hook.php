@@ -117,7 +117,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
         ],
         'task'         => [
             'itemtype' => PluginGlpiinventoryTask::getType(),
-            'label' => sprintf(__("Number of %s"), __('Tasks')),
+            'label' => sprintf(__("Number of %s"), __('Tasks', 'glpiinventory')),
         ],
         'unmanaged'         => [
             'itemtype' => Unmanaged::getType(),
