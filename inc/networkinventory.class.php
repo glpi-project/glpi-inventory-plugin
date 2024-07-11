@@ -387,19 +387,18 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                         $pfIPRange->getFromDB($items_id);
                         foreach ($device_ips as $device_ip) {
                             if ($pfIPRange->getIp2long($device_ip) <= $pfIPRange->getIp2long($pfIPRange->fields['ip_end']) && $pfIPRange->getIp2long($pfIPRange->fields['ip_start']) <= $pfIPRange->getIp2long($device_ip)) {
-                                // in range
+                                // in range, assign this device IP
+                                $ip = $device_ip;
                                 
                                 $a_ipaddresses = $iPAddress->find(
                                      ['name' => $device_ip]
                                 );
                                 
                                 if(count($a_ipaddresses) > 1) {
-                                    // assign this device IP but continue loop if IP is non unique
-                                    $ip = $device_ip;
+                                    // continue loop if IP is non unique
                                     continue;
                                 } else {
-                                    // IP is unique, assign this device IP
-                                    $ip = $device_ip;
+                                    // exit loop if IP is unique
                                     break;
                                 }
                             }
