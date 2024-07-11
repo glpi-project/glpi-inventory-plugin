@@ -628,5 +628,7 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginGlpiinventoryStateDiscovery', '10', '8', '0'),
           (NULL,'PluginGlpiinventoryStateDiscovery', '11', '9', '0'),
           (NULL,'PluginGlpiinventoryStateDiscovery', '12', '10', '0'),
-   
-          (NULL,'PluginGlpiinventoryCredentialIp', '2', '1', '0');
+
+          (NULL,'PluginGlpiinventoryCredentialIp', '2', '1', '0'),
+
+          (NULL,'PluginGlpiinventoryCredential', '2', '1', '0');
