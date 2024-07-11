@@ -165,7 +165,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             'ORDER' => 'uniqid DESC'
         ]);
         $result = $iterator->next();
-        $number = $result['cpt'];
+        $number = count($iterator);
 
         // Display the pager
         Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/statediscovery.php", '');
