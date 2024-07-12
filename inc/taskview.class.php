@@ -946,7 +946,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             "- prepared a job execution: " . print_r($run, true)
                         );
                         if ($run_id !== false) {
-
                             if (!is_null($crontask)) {
                                 $crontask->addVolume(1);
                             }
