@@ -621,7 +621,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return true
     */
-    public static function cronTaskscheduler($crontask)
+    public static function cronTaskscheduler($crontask = null)
     {
 
         ini_set("max_execution_time", "0");
