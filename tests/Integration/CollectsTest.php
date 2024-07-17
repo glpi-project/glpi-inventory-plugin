@@ -38,28 +38,28 @@ class CollectsTest extends TestCase
     public static function setUpBeforeClass(): void
     {
 
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
             $pfTask->delete(['id' => $item['id']], true);
         }
 
-       // Delete all computers
+        // Delete all computers
         $computer = new Computer();
         $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         foreach ($items as $item) {
             $computer->delete(['id' => $item['id']], true);
         }
 
-       // Delete all agents
+        // Delete all agents
         $agent = new Agent();
         $items = $agent->find();
         foreach ($items as $item) {
             $agent->delete(['id' => $item['id']], true);
         }
 
-       // Delete all collects
+        // Delete all collects
         $pfCollect = new PluginGlpiinventoryCollect();
         $items = $pfCollect->find();
         foreach ($items as $item) {
@@ -68,9 +68,9 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function prepareDb()
     {
 
@@ -127,9 +127,9 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function getSearchOptionsToAdd()
     {
 
@@ -155,7 +155,6 @@ class CollectsTest extends TestCase
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
          'joinparams'       => [
             'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = " . $pfCollect_Registry->fields['id'],
             'jointype'  => 'child'
@@ -172,7 +171,6 @@ class CollectsTest extends TestCase
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
          'joinparams'       => [
             'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = " . $pfCollect_Wmi->fields['id'],
             'jointype'  => 'child'
@@ -190,7 +188,6 @@ class CollectsTest extends TestCase
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
          'joinparams'       => [
             'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
             'jointype'  => 'child'
@@ -208,7 +205,6 @@ class CollectsTest extends TestCase
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
          'joinparams'       => [
             'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
             'jointype'  => 'child'
@@ -218,9 +214,9 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function registryProcessWithAgent()
     {
         global $DB;
@@ -236,7 +232,7 @@ class CollectsTest extends TestCase
         $pfTaskjobstate     = new PluginGlpiinventoryTaskjobstate();
         $computer           = new Computer();
 
-       // Create a registry task with 2 paths to get
+        // Create a registry task with 2 paths to get
         $input = [
           'name'        => 'my registry keys',
           'entities_id' => 0,
@@ -266,7 +262,7 @@ class CollectsTest extends TestCase
         $registry_fi = $pfCollect_Registry->add($input);
         $this->assertNotFalse($registry_fi);
 
-       // Create computer
+        // Create computer
         $input = [
           'name'        => 'pc01',
           'entities_id' => 0
@@ -286,7 +282,7 @@ class CollectsTest extends TestCase
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
 
-       // Create task
+        // Create task
         $input = [
           'name'        => 'mycollect',
           'entities_id' => 0,
@@ -315,7 +311,7 @@ class CollectsTest extends TestCase
         $this->assertEquals(1, count($jobstates));
         $jobstate = current($jobstates);
 
-       // Get jobs
+        // Get jobs
         $resultObject = $pfCollect->communication('getJobs', 'pc01', null);
         $result = json_encode($resultObject);
 
@@ -323,7 +319,7 @@ class CollectsTest extends TestCase
         preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
         $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_tm . '},'
                                           . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/GLPI-Agent\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_fi . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
-       // answer 1
+        // answer 1
         $params = [
           'action'                => 'setAnswer',
           'InstallationDate'      => '2016-07-15',
@@ -343,7 +339,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // answer 2
+        // answer 2
         $params = [
           'action'                  => 'setAnswer',
           'backend-collect-timeout' => 180,
@@ -369,7 +365,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // jobsdone
+        // jobsdone
         $params = [
           'action' => 'jobsDone',
           'uuid'   => $jobstate['uniqid'],
@@ -383,13 +379,13 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function wmiProcessWithAgent()
     {
 
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
@@ -408,7 +404,7 @@ class CollectsTest extends TestCase
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $computer = new Computer();
 
-       // Create a registry task with 2 paths to get
+        // Create a registry task with 2 paths to get
         $input = [
           'name'        => 'my wmi keys',
           'entities_id' => 0,
@@ -438,13 +434,13 @@ class CollectsTest extends TestCase
         $registry_kd = $pfCollect_Wmi->add($input);
         $this->assertNotFalse($registry_kd);
 
-       // get computer
+        // get computer
         $computer->getFromDBByCrit(['name' => 'pc01']);
         $computers_id = $computer->fields['id'];
         $agent->getFromDBByCrit(['name' => 'pc01']);
         $agents_id = $agent->fields['id'];
 
-       // Create task
+        // Create task
         $input = [
           'name'        => 'mycollect',
           'entities_id' => 0,
@@ -474,7 +470,7 @@ class CollectsTest extends TestCase
         $this->assertEquals(1, count($jobstates));
         $jobstate = current($jobstates);
 
-       // Get jobs
+        // Get jobs
         $_GET = [];
         $resultObject = $pfCollect->communication('getJobs', 'pc01', null);
         $result = json_encode($resultObject);
@@ -483,7 +479,7 @@ class CollectsTest extends TestCase
         $this->assertEquals($result, '{"jobs":[{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Name"],"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_kn . '},'
                                           . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_kd . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
 
-       // answer 1
+        // answer 1
         $params = [
           'action' => 'setAnswer',
           'uuid'   => $jobstate['uniqid'],
@@ -497,7 +493,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // answer 2
+        // answer 2
         $params = [
           'action'      => 'setAnswer',
           'uuid'        => $jobstate['uniqid'],
@@ -511,7 +507,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // jobsdone
+        // jobsdone
         $params = [
          'action' => 'jobsDone',
          'uuid'   => $jobstate['uniqid'],
@@ -522,7 +518,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // check data in db
+        // check data in db
         $content = $pfCollect_Wmi_Content->find();
         $items = [];
         foreach ($content as $data) {
@@ -548,13 +544,13 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function filesProcessWithAgent()
     {
 
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
@@ -573,7 +569,7 @@ class CollectsTest extends TestCase
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $computer = new Computer();
 
-       // Create a registry task with 2 paths to get
+        // Create a registry task with 2 paths to get
         $input = [
           'name'        => 'my files search',
           'entities_id' => 0,
@@ -605,13 +601,13 @@ class CollectsTest extends TestCase
         $registry_down = $pfCollect_File->add($input);
         $this->assertNotFalse($registry_down);
 
-       // get computer
+        // get computer
         $computer->getFromDBByCrit(['name' => 'pc01']);
         $computers_id = $computer->fields['id'];
         $agent->getFromDBByCrit(['name' => 'pc01']);
         $agents_id = $agent->fields['id'];
 
-       // Create task
+        // Create task
         $input = [
           'name'        => 'mycollect',
           'entities_id' => 0,
@@ -640,7 +636,7 @@ class CollectsTest extends TestCase
         $this->assertEquals(1, count($jobstates));
         $jobstate = current($jobstates);
 
-       // Get jobs
+        // Get jobs
         $_GET = [];
         $resultObject = $pfCollect->communication('getJobs', 'pc01', null);
         $result = json_encode($resultObject);
@@ -648,7 +644,7 @@ class CollectsTest extends TestCase
         preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
         $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:Users\totoDesktop","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_desktop . '},'
                                           . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
-       // answer 1
+        // answer 1
         $params = [
           'action' => 'setAnswer',
           'uuid'   => $jobstate['uniqid'],
@@ -694,7 +690,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // answer 2
+        // answer 2
         $params = [
           'action' => 'setAnswer',
           'uuid'   => $jobstate['uniqid'],
@@ -725,7 +721,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // jobsdone
+        // jobsdone
         $params = [
           'action' => 'jobsDone',
           'uuid'   => $jobstate['uniqid'],
@@ -737,7 +733,7 @@ class CollectsTest extends TestCase
 
         $this->assertEquals($result, '{}');
 
-       // check data in db
+        // check data in db
         $content = $pfCollect_File_Content->find();
         $items = [];
         foreach ($content as $data) {
@@ -781,9 +777,9 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testFilesCleanComputer()
     {
 
@@ -825,13 +821,13 @@ class CollectsTest extends TestCase
         $collectFileContentId = $pfCollect_File_Contents->add($input);
         $this->assertNotFalse($collectFileContentId);
 
-       //First, check if file contents does exist
+        //First, check if file contents does exist
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
 
         $this->assertEquals(5, count($pfCollect_File_Contents->fields));
 
-       //Second, clean and check if it has been removed
+        //Second, clean and check if it has been removed
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->cleanComputer($computerId);
 
@@ -840,9 +836,9 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testRegistryCleanComputer()
     {
 
@@ -866,13 +862,13 @@ class CollectsTest extends TestCase
         $collectRegistryContentId = $pfCollect_Registry_Contents->add($input);
         $this->assertNotFalse($collectRegistryContentId);
 
-       //First, check if registry contents does exist
+        //First, check if registry contents does exist
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
         $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
 
-       //Second, clean and check if it has been removed
+        //Second, clean and check if it has been removed
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->cleanComputer($computer->fields['id']);
 
@@ -881,9 +877,9 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testWmiCleanComputer()
     {
 
@@ -907,13 +903,13 @@ class CollectsTest extends TestCase
         $collectWmiContentId = $pfCollect_Wmi_Contents->add($input);
         $this->assertNotFalse($collectWmiContentId);
 
-       //First, check if wmi contents does exist
+        //First, check if wmi contents does exist
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $pfCollect_Wmi_Contents->getFromDB($collectWmiContentId);
 
         $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
 
-       //Second, clean and check if it has been removed
+        //Second, clean and check if it has been removed
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $pfCollect_Wmi_Contents->cleanComputer($computer->fields['id']);
 
@@ -922,16 +918,16 @@ class CollectsTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testDeleteComputer()
     {
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-       // Create computer
+        // Create computer
 
         $computer = new Computer();
         $computer->getFromDBByCrit(['name' => 'pc01']);
@@ -939,7 +935,7 @@ class CollectsTest extends TestCase
 
         $pfCollect = new PluginGlpiinventoryCollect();
 
-       //populate wmi data
+        //populate wmi data
         $input = [
          'name'         => 'WMI collect',
          'entities_id'  => $_SESSION['glpiactive_entity'],
@@ -969,13 +965,13 @@ class CollectsTest extends TestCase
         $collectWmiContectId = $pfCollect_Wmi_Contents->add($input);
         $this->assertNotFalse($collectWmiContectId);
 
-       //check if wmi contents does exist
+        //check if wmi contents does exist
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $pfCollect_Wmi_Contents->getFromDB($collectWmiContectId);
 
         $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
 
-       //populate files data
+        //populate files data
         $input = [
          'name'         => 'Files collect',
          'entities_id'  => $_SESSION['glpiactive_entity'],
@@ -1000,13 +996,13 @@ class CollectsTest extends TestCase
         $collectFileContentId = $pfCollect_File_Contents->add($input);
         $this->assertNotFalse($collectFileContentId);
 
-       //check if file contents does exist
+        //check if file contents does exist
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
 
         $this->assertEquals(5, count($pfCollect_File_Contents->fields));
 
-       //populate registry data
+        //populate registry data
         $input = [
          'name'         => 'Registry collect',
          'entities_id'  => $_SESSION['glpiactive_entity'],
@@ -1038,13 +1034,13 @@ class CollectsTest extends TestCase
         $collectRegistryContentId = $pfCollect_Registry_Contents->add($input);
         $this->assertNotFalse($collectRegistryContentId);
 
-       // check if registry contents does exist
+        // check if registry contents does exist
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
         $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
 
-       // delete computer and check if it has been put in trash
+        // delete computer and check if it has been put in trash
         $computer->delete(['id' => $computers_id]);
         $this->assertTrue($computer->getFromDB($computers_id));
 
@@ -1060,7 +1056,7 @@ class CollectsTest extends TestCase
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
         $this->assertEquals(5, count($pfCollect_File_Contents->fields));
 
-       // purge computer and check if it has been removed
+        // purge computer and check if it has been removed
         $computer->delete(['id' => $computers_id], true);
         $this->assertFalse($computer->getFromDB($computers_id));
 
