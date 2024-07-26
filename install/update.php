@@ -8838,11 +8838,6 @@ function encryptCredentials(Migration $migration): Migration
 {
     global $DB;
 
-    $date = Config::getConfigurationValue('glpiinventory', 'credentials_encryption_migration');
-    if ($date === null) {
-        $date = Session::getCurrentTime();
-    }
-
     $key = new GLPIKey();
     $credentials = (new PluginGlpiinventoryCredential())->find([
         'password' => ['<>', ""]
