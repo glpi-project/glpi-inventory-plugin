@@ -1078,10 +1078,16 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     // Add missing index on `glpi_plugin_glpiinventory_taskjoblogs`
     $migration = addTaskJobLogIndex($migration);
 
-    $migration->addConfig([
-        'credentials_encryption_migration' => Session::getCurrentTime()
-    ], "glpiinventory");
-    $migration = encryptCredentials($migration);
+    $credential_migration_was_already_executed = Config::getConfigurationValue(
+        'glpiinventory',
+        'credentials_encryption_migration_was_executed'
+    ) ?? false;
+    if (!$credential_migration_was_already_executed) {
+        $migration = encryptCredentials($migration);
+        $migration->addConfig([
+            'credentials_encryption_migration_was_executed' => true
+        ], "glpiinventory");
+    }
 
     $migration->executeMigration();
 }
@@ -8839,7 +8845,7 @@ function encryptCredentials(Migration $migration): Migration
 
     $key = new GLPIKey();
     $credentials = (new PluginGlpiinventoryCredential())->find([
-        'date_mod' => ['<', $date]
+        'password' => ['<>', ""]
     ]);
 
     foreach ($credentials as $row) {
@@ -8850,7 +8856,6 @@ function encryptCredentials(Migration $migration): Migration
             PluginGlpiinventoryCredential::getTable(),
             [
                 'password' => $encrypted_password,
-                'date_mod' => Session::getCurrentTime(),
             ],
             ['id' => $row['id']]
         );
