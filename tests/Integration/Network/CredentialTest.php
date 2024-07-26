@@ -1,5 +1,4 @@
 <?php
-use PHPUnit\Framework\TestCase;
 
 /**
  * ---------------------------------------------------------------------
@@ -31,6 +30,8 @@ use PHPUnit\Framework\TestCase;
  * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
+
+use PHPUnit\Framework\TestCase;
 
 class CredentialTest extends TestCase
 {
