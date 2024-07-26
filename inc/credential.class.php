@@ -249,6 +249,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     */
     public function prepareInputForAdd($input)
     {
+        $input = self::encodePasswordInInput($input);
         return self::checkBeforeInsert($input);
     }
 
@@ -261,6 +262,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     */
     public function prepareInputForUpdate($input)
     {
+        $input = self::encodePasswordInInput($input);
         return $input;
     }
 
@@ -428,5 +430,34 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         parent::displayHeader();
 
         PluginGlpiinventoryMenu::displayMenu("mini");
+    }
+
+    public function post_getFromDB()
+    {
+        parent::post_getFromDB();
+        $this->decodePasswordField();
+    }
+
+    private function encodePasswordInInput(array $input): array
+    {
+        $password = $input['password'] ?? "";
+        if (empty($password)) {
+            return $input;
+        }
+
+        $key = new GLPIKey();
+        $input['password'] = $key->encrypt($password);
+        return $input;
+    }
+
+    private function decodePasswordField(): void
+    {
+        $password = $this->fields['password'] ?? "";
+        if (empty($password)) {
+            return;
+        }
+
+        $key = new GLPIKey();
+        $this->fields['password'] = $key->decrypt($password);
     }
 }
