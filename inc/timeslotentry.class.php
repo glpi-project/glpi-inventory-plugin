@@ -216,7 +216,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
             echo "</td>";
             echo "<td colspan='2'>";
             if ($canedit) {
-                echo "<input type='submit' class='submit' name='purge-" . $dbentry['id'] . "' value='".__('Delete')."' />";
+                echo "<input type='submit' class='submit' name='purge-" . $dbentry['id'] . "' value='" . __('Delete') . "' />";
             }
             echo "</td>";
             echo "</tr>";
