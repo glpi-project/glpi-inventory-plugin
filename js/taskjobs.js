@@ -712,7 +712,7 @@ taskjobs.update_logs = function (data) {
          var targets_cpt = 0;
 
          if(job_v.targets.length === 0) {
-            $(targets_selector).html('The preparation of the task did not return any targets');
+            $(targets_selector).html(__('The preparation of the task did not return any targets', 'glpiinventory'));
          }
 
          $.each( job_v.targets, function( target_i, target_v) {

@@ -117,7 +117,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
         ],
         'task'         => [
             'itemtype' => PluginGlpiinventoryTask::getType(),
-            'label' => sprintf(__("Number of %s"), __('Tasks')),
+            'label' => sprintf(__("Number of %s"), __('Tasks', 'glpiinventory')),
         ],
         'unmanaged'         => [
             'itemtype' => Unmanaged::getType(),
@@ -125,7 +125,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
         ],
         'computer'         => [
             'itemtype' => Computer::getType(),
-            'label' =>  sprintf(__("%s inventoried"), Computer::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Computer::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 42,
@@ -135,7 +135,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         'printer'         => [
             'itemtype' => Printer::getType(),
-            'label' =>  sprintf(__("%s inventoried"), Printer::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Printer::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
@@ -145,7 +145,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         'networkequipement'         => [
             'itemtype' => NetworkEquipment::getType(),
-            'label' =>  sprintf(__("%s inventoried"), NetworkEquipment::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), NetworkEquipment::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
@@ -155,7 +155,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         'phone'         => [
             'itemtype' => Phone::getType(),
-            'label' =>  sprintf(__("%s inventoried"), Phone::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Phone::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
