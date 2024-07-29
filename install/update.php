@@ -1078,6 +1078,17 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     // Add missing index on `glpi_plugin_glpiinventory_taskjoblogs`
     $migration = addTaskJobLogIndex($migration);
 
+    $credential_migration_was_already_executed = Config::getConfigurationValue(
+        'glpiinventory',
+        'credentials_encryption_migration_was_executed'
+    ) ?? false;
+    if (!$credential_migration_was_already_executed) {
+        $migration = encryptCredentials($migration);
+        $migration->addConfig([
+            'credentials_encryption_migration_was_executed' => true
+        ], "glpiinventory");
+    }
+
     $migration->executeMigration();
 }
 
@@ -8821,4 +8832,30 @@ function renamePluginFields(Migration $migration, string $table)
     if ($has_changes) {
         $migration->migrationOneTable($table);
     }
+}
+
+function encryptCredentials(Migration $migration): Migration
+{
+    global $DB;
+
+    $key = new GLPIKey();
+    $credentials = (new PluginGlpiinventoryCredential())->find([
+        'password' => ['<>', ""]
+    ]);
+
+    foreach ($credentials as $row) {
+        $password = $row['password'];
+        $encrypted_password = $key->encrypt($password);
+
+        $query = $DB->buildUpdate(
+            PluginGlpiinventoryCredential::getTable(),
+            [
+                'password' => $encrypted_password,
+            ],
+            ['id' => $row['id']]
+        );
+        $migration->addPostQuery($query);
+    }
+
+    return $migration;
 }
