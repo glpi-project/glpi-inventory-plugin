@@ -470,17 +470,17 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals('192.168.40.254', $pfIpRange->fields['ip_end']);
 
         $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
-                'name'        => 'networkdiscovery',
-                'method'      => 'networkdiscovery',
-                'actors'      => '[{"PluginGlpiinventoryIPRange":"1"}]'
+                'name'        => 'networkinventory',
+                'method'      => 'networkinventory',
+                'targets'      => '[{"PluginGlpiinventoryIPRange":"'.$iprange_id.'"}]'
                ];
         $taskjobs_id = $pfTaskJob->add($input);
         $this->assertGreaterThan(0, $taskjobs_id);
         $this->assertTrue($pfTaskJob->getFromDB($taskjobs_id));
-        $this->assertEquals('networkdiscovery', $pfTaskJob->fields['name']);
+        $this->assertEquals('networkinventory', $pfTaskJob->fields['name']);
         $this->assertEquals(
             '[{"PluginGlpiinventoryIPRange":"1"}]',
-            $pfTaskJob->fields['actors']
+            $pfTaskJob->fields['targets']
         );
 
         $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
