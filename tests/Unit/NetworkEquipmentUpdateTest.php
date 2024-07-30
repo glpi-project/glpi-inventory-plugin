@@ -484,7 +484,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         );
 
         $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
-        $ip = $pfNetworkinventory->getDeviceIPOfIPRange('NetworkEquipment', $networkEquipment->fields['id'], $taskjobs_id);
+        $ip = $pfNetworkinventory->getDeviceIPOfTaskjobID('NetworkEquipment', $networkEquipment->fields['id'], $taskjobs_id);
         $this->assertEquals('192.168.40.67', $ip);
     }
 }
