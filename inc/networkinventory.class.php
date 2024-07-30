@@ -367,10 +367,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $current = $jobstate;
         $agent->getFromDB($current->fields['agents_id']);
 
-        $ip = current(PluginGlpiinventoryToolbox::getIPforDevice(
-            $jobstate->fields['itemtype'],
-            $jobstate->fields['items_id']
-        ));
+        $ip = $this->getDeviceIPOfTaskID($jobstate->fields['itemtype'], $jobstate->fields['items_id'], $jobstate->fields['plugin_glpiinventory_taskjobs_id']);
 
         $param_attrs = [];
         $device_attrs = [];
@@ -553,5 +550,61 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         }
 
         return $devicesList;
+    }
+
+    /**
+    * Get the device IP in the IP range
+    *
+    * @global object $DB
+    * @param string $job_itemtype
+    * @param integer $job_items_id
+    * @param integer $tasks_id
+    * @return array
+    */
+    public function getDeviceIPOfTaskID($job_itemtype, $job_items_id, $tasks_id)
+    {
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
+        $pfIPRange = new PluginGlpiinventoryIPRange();
+        $iPAddress = new IPAddress();
+
+        $device_ips = PluginGlpiinventoryToolbox::getIPforDevice(
+            $job_itemtype,
+            $job_items_id
+        );
+        $ip = current($device_ips);
+        $a_taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $tasks_id]);
+        foreach ($a_taskjobs as $a_taskjob) {
+            $a_definition = importArrayFromDB($a_taskjob['targets']);
+            foreach ($a_definition as $datas) {
+                $itemtype = key($datas);
+                $items_id = current($datas);
+
+                switch ($itemtype) {
+                    case 'PluginGlpiinventoryIPRange':
+                        $pfIPRange->getFromDB($items_id);
+                        foreach ($device_ips as $device_ip) {
+                            if ($pfIPRange->getIp2long($device_ip) <= $pfIPRange->getIp2long($pfIPRange->fields['ip_end']) && $pfIPRange->getIp2long($pfIPRange->fields['ip_start']) <= $pfIPRange->getIp2long($device_ip)) {
+                                // in range, assign this device IP
+                                $ip = $device_ip;
+
+                                $a_ipaddresses = $iPAddress->find(
+                                    ['name' => $device_ip]
+                                );
+
+                                if (count($a_ipaddresses) > 1) {
+                                    // continue loop if IP is non unique
+                                    continue;
+                                } else {
+                                    // exit loop if IP is unique
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        return $ip;
     }
 }
