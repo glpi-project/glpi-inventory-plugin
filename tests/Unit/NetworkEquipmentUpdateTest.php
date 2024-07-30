@@ -466,8 +466,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
                 'ip_end' => '192.168.40.254'];
         $iprange_id = $pfIpRange->add($input);
         $this->assertTrue($pfIpRange->getFromDB($iprange_id));
-        $this->assertEquals('192.168.40.1', $pfTask->fields['ip_start']);
-        $this->assertEquals('192.168.40.254', $pfTask->fields['ip_end']);
+        $this->assertEquals('192.168.40.1', $pfIpRange->fields['ip_start']);
+        $this->assertEquals('192.168.40.254', $pfIpRange->fields['ip_end']);
 
         $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
                 'name'        => 'networkdiscovery',
