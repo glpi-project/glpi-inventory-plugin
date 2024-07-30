@@ -479,7 +479,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertTrue($pfTaskJob->getFromDB($taskjobs_id));
         $this->assertEquals('networkinventory', $pfTaskJob->fields['name']);
         $this->assertEquals(
-            '[{"PluginGlpiinventoryIPRange":"1"}]',
+            '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]',
             $pfTaskJob->fields['targets']
         );
 
