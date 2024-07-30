@@ -381,7 +381,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             foreach ($a_definition as $datas) {
                 $itemtype = key($datas);
                 $items_id = current($datas);
-    
+
                 switch ($itemtype) {
                     case 'PluginGlpiinventoryIPRange':
                         $pfIPRange->getFromDB($items_id);
@@ -389,12 +389,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                             if ($pfIPRange->getIp2long($device_ip) <= $pfIPRange->getIp2long($pfIPRange->fields['ip_end']) && $pfIPRange->getIp2long($pfIPRange->fields['ip_start']) <= $pfIPRange->getIp2long($device_ip)) {
                                 // in range, assign this device IP
                                 $ip = $device_ip;
-                                
+
                                 $a_ipaddresses = $iPAddress->find(
-                                     ['name' => $device_ip]
+                                    ['name' => $device_ip]
                                 );
-                                
-                                if(count($a_ipaddresses) > 1) {
+
+                                if (count($a_ipaddresses) > 1) {
                                     // continue loop if IP is non unique
                                     continue;
                                 } else {
@@ -404,11 +404,10 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                             }
                         }
                         break;
-                        
                 }
             }
         }
-        
+
         $param_attrs = [];
         $device_attrs = [];
         $auth_nodes = [];
