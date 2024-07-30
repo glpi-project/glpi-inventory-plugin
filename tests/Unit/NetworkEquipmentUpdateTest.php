@@ -472,7 +472,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
                 'name'        => 'networkinventory',
                 'method'      => 'networkinventory',
-                'targets'     => '[{"PluginGlpiinventoryIPRange":"'.$iprange_id.'"}]'
+                'targets'     => '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]'
                ];
         $taskjobs_id = $pfTaskJob->add($input);
         $this->assertGreaterThan(0, $taskjobs_id);
