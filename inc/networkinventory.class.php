@@ -367,7 +367,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $current = $jobstate;
         $agent->getFromDB($current->fields['agents_id']);
 
-        $ip = $this->getDeviceIPOfTaskjobID($jobstate->fields['itemtype'], $jobstate->fields['items_id'], $jobstate->fields['plugin_glpiinventory_taskjobs_id']);
+        $ip = $this->getDeviceIPOfTaskID($jobstate->fields['itemtype'], $jobstate->fields['items_id'], $jobstate->fields['plugin_glpiinventory_taskjobs_id']);
 
         $param_attrs = [];
         $device_attrs = [];
@@ -558,10 +558,10 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @global object $DB
     * @param string $job_itemtype
     * @param integer $job_items_id
-    * @param integer $taskjobs_id
+    * @param integer $tasks_id
     * @return array
     */
-    public function getDeviceIPOfTaskjobID($job_itemtype, $job_items_id, $taskjobs_id)
+    public function getDeviceIPOfTaskID($job_itemtype, $job_items_id, $tasks_id)
     {
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfIPRange = new PluginGlpiinventoryIPRange();
@@ -572,7 +572,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $job_items_id
         );
         $ip = current($device_ips);
-        $a_taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $taskjobs_id]);
+        $a_taskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $tasks_id]);
         foreach ($a_taskjobs as $a_taskjob) {
             $a_definition = importArrayFromDB($a_taskjob['targets']);
             foreach ($a_definition as $datas) {
