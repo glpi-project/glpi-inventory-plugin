@@ -439,4 +439,52 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $expected = 4 + 1; //4 standard ports (10001, 10002, 5005, 5006) + 1 management port
         $this->assertEquals($expected, count($a_networkports), 'Number of network ports must be ' . $expected);
     }
+
+   /**
+    * @test
+    * @depends AddNetworkEquipment
+    */
+    public function getDeviceIPOfTaskjobID()
+    {
+        $pfTask    = new PluginGlpiinventoryTask();
+        $pfTaskJob = new PluginGlpiinventoryTaskJob();
+        $pfIpRange = new PluginGlpiinventoryIPRange();
+        $networkEquipment = new NetworkEquipment();
+        $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
+
+        $input = ['name' => 'MyTask', 'entities_id' => 0,
+                'reprepare_if_successful' => 1, 'comment' => 'MyComments',
+                'is_active' => 1];
+        $tasks_id = $pfTask->add($input);
+        $this->assertGreaterThan(0, $tasks_id);
+
+        $this->assertTrue($pfTask->getFromDB($tasks_id));
+        $this->assertEquals('MyTask', $pfTask->fields['name']);
+        $this->assertEquals(1, $pfTask->fields['is_active']);
+
+        $input = ['ip_start' => '192.168.40.1',
+                'ip_end' => '192.168.40.254'];
+        $iprange_id = $pfIpRange->add($input);
+        $this->assertTrue($pfIpRange->getFromDB($iprange_id));
+        $this->assertEquals('192.168.40.1', $pfIpRange->fields['ip_start']);
+        $this->assertEquals('192.168.40.254', $pfIpRange->fields['ip_end']);
+
+        $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
+                'name'        => 'networkinventory',
+                'method'      => 'networkinventory',
+                'targets'     => '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]'
+               ];
+        $taskjobs_id = $pfTaskJob->add($input);
+        $this->assertGreaterThan(0, $taskjobs_id);
+        $this->assertTrue($pfTaskJob->getFromDB($taskjobs_id));
+        $this->assertEquals('networkinventory', $pfTaskJob->fields['name']);
+        $this->assertEquals(
+            '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]',
+            $pfTaskJob->fields['targets']
+        );
+
+        $networkEquipment->getFromDBByCrit(['name' => 'switchr2d2']);
+        $ip = $pfNetworkinventory->getDeviceIPOfTaskID('NetworkEquipment', $networkEquipment->fields['id'], $tasks_id);
+        $this->assertEquals('192.168.40.67', $ip);
+    }
 }
