@@ -164,7 +164,6 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             'GROUP' => 'uniqid',
             'ORDER' => 'uniqid DESC'
         ]);
-        $result = $iterator->next();
         $number = count($iterator);
 
         // Display the pager
