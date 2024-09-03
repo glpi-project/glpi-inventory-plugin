@@ -266,9 +266,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 ['2']
             );
 
-            $results = Search::prepareDatasForSearch('Computer', $search_params, ['2']);
-            Search::constructSQL($results);
-            Search::constructData($results);
 
             foreach ($results['data']['rows'] as $id => $row) {
                  $ids[$row['id']] = $row['id'];
