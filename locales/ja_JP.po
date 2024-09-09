@@ -5,15 +5,16 @@
 # 
 # Translators:
 # INOUE Daisuke, 2024
+# Stanislas <skita@teclib.com>, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-06 09:00+0000\n"
+"POT-Creation-Date: 2024-09-09 06:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: INOUE Daisuke, 2024\n"
+"Last-Translator: Stanislas <skita@teclib.com>, 2024\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +25,7 @@ msgstr ""
 #: hook.php:128 hook.php:138 hook.php:148 hook.php:158
 #, php-format
 msgid "%s inventoried"
-msgstr ""
+msgstr "%sリストされた"
 
 #: inc/task.class.php:1870 inc/task.class.php:1913
 msgid ", actors: "
@@ -1546,7 +1547,7 @@ msgstr "修正した JSON に構文エラーが含まれています : "
 
 #: js/taskjobs.js:715
 msgid "The preparation of the task did not return any targets"
-msgstr ""
+msgstr "タスクの準備で対象が返されませんでした"
 
 #: inc/task.class.php:1898
 msgid "The selected task already has a deployment job for another package: "
@@ -1592,7 +1593,7 @@ msgstr "タスクが稼働中です。削除できません。"
 
 #: inc/stateinventory.class.php:124
 msgid "Threads / Timeout configuration"
-msgstr ""
+msgstr "スレッド・タイムアウト設定"
 
 #: inc/statediscovery.class.php:184 inc/config.class.php:421
 #: inc/config.class.php:430
