@@ -37,135 +37,128 @@ class DeployactionTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
+        $items  = $pfTask->find();
         foreach ($items as $item) {
             $pfTask->delete(['id' => $item['id']], true);
         }
     }
 
-
-
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetReturnActionNames()
     {
         $action = new PluginGlpiinventoryDeployAction();
         $this->assertEquals(5, count($action->getReturnActionNames()));
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function getGetTypes()
     {
         $action = new PluginGlpiinventoryDeployAction();
         $this->assertEquals(5, count($action->getTypes()));
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetLabelForAType()
     {
         $action = new PluginGlpiinventoryDeployAction();
         $this->assertEquals(
             __('Command', 'glpiinventory'),
-            $action->getLabelForAType('cmd')
+            $action->getLabelForAType('cmd'),
         );
         $this->assertEquals(
             __('Move', 'glpiinventory'),
-            $action->getLabelForAType('move')
+            $action->getLabelForAType('move'),
         );
         $this->assertEquals(
             __('Copy', 'glpiinventory'),
-            $action->getLabelForAType('copy')
+            $action->getLabelForAType('copy'),
         );
         $this->assertEquals(
             __('Delete directory', 'glpiinventory'),
-            $action->getLabelForAType('delete')
+            $action->getLabelForAType('delete'),
         );
         $this->assertEquals(
             __('Create directory', 'glpiinventory'),
-            $action->getLabelForAType('mkdir')
+            $action->getLabelForAType('mkdir'),
         );
         $this->assertEquals(
             'foo',
-            $action->getLabelForAType('foo')
+            $action->getLabelForAType('foo'),
         );
     }
 
-
-   /**
-   * @test
-   */
+    /**
+    * @test
+    */
     public function testAdd_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $input = ['name'        => 'test1',
-                'entities_id' => 0];
+        $input           = ['name' => 'test1',
+            'entities_id'          => 0];
         $packages_id = $pfDeployPackage->add($input);
 
         $action = new PluginGlpiinventoryDeployAction();
-        $params = ['id'                => $packages_id,
-                 'actionstype'       => 'cmd',
-                 'name'              => 'Command ls',
-                 'exec'              => 'ls -lah',
-                 'logLineLimit'      => '100',
-                 'retChecks'         => ['type' => 'okCode', 'values' => [127]],
-                ];
+        $params = ['id'    => $packages_id,
+            'actionstype'  => 'cmd',
+            'name'         => 'Command ls',
+            'exec'         => 'ls -lah',
+            'logLineLimit' => '100',
+            'retChecks'    => ['type' => 'okCode', 'values' => [127]],
+        ];
         $action->add_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}}],"userinteractions":[]},"associatedFiles":[]}';
         $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
         $this->assertEquals($expected, $json);
 
-        $params = ['id'                => $packages_id,
-                 'actionstype'       => 'move',
-                 'name'              => 'Move to /tmp',
-                 'from'              => '*',
-                 'to'                => '/tmp/'
-                ];
+        $params = ['id'   => $packages_id,
+            'actionstype' => 'move',
+            'name'        => 'Move to /tmp',
+            'from'        => '*',
+            'to'          => '/tmp/',
+        ];
         $action->add_item($params);
 
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}}],"userinteractions":[]},"associatedFiles":[]}';
         $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
         $this->assertEquals($expected, $json);
 
-        $params = ['id'                => $packages_id,
-                 'actionstype'       => 'copy',
-                 'name'              => 'Copy to /tmp',
-                 'from'              => '*',
-                 'to'                => '/tmp/'
-                ];
+        $params = ['id'   => $packages_id,
+            'actionstype' => 'copy',
+            'name'        => 'Copy to /tmp',
+            'from'        => '*',
+            'to'          => '/tmp/',
+        ];
         $action->add_item($params);
 
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}}],"userinteractions":[]},"associatedFiles":[]}';
         $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
         $this->assertEquals($expected, $json);
 
-        $params = ['id'                => $packages_id,
-                 'actionstype'       => 'mkdir',
-                 'name'              => 'Create directory /tmp/foo',
-                 'to'                => '/tmp/foo'
-                ];
+        $params = ['id'   => $packages_id,
+            'actionstype' => 'mkdir',
+            'name'        => 'Create directory /tmp/foo',
+            'to'          => '/tmp/foo',
+        ];
         $action->add_item($params);
 
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}}],"userinteractions":[]},"associatedFiles":[]}';
         $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
         $this->assertEquals($expected, $json);
-        $params = ['id'                => $packages_id,
-                 'actionstype'       => 'delete',
-                 'name'              => 'Delete directory /tmp/foo',
-                 'to'                => '/tmp/foo'
-                ];
+        $params = ['id'   => $packages_id,
+            'actionstype' => 'delete',
+            'name'        => 'Delete directory /tmp/foo',
+            'to'          => '/tmp/foo',
+        ];
         $action->add_item($params);
 
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}],"userinteractions":[]},"associatedFiles":[]}';
@@ -173,190 +166,186 @@ class DeployactionTest extends TestCase
         $this->assertEquals($expected, $json);
     }
 
-
-   /**
-   * @test
-   */
+    /**
+    * @test
+    */
     public function testSave_item()
     {
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $input = ['name'        => 'test1',
-                'entities_id' => 0,
-                'json'        => $json];
+        $input           = ['name' => 'test1',
+            'entities_id'          => 0,
+            'json'                 => $json];
         $packages_id = $pfDeployPackage->add($input);
 
         $action = new PluginGlpiinventoryDeployAction();
-        $params = ['id'                => $packages_id,
-                 'index'             => 0,
-                 'actionstype'       => 'cmd',
-                 'name'              => 'Command ls -la \'s',
-                 'exec'              => 'ls -la',
-                 'logLineLimit'      => '100',
-                 'retChecks'         => ['type' => 'okCode', 'values' => [127]],
-                ];
+        $params = ['id'    => $packages_id,
+            'index'        => 0,
+            'actionstype'  => 'cmd',
+            'name'         => 'Command ls -la \'s',
+            'exec'         => 'ls -la',
+            'logLineLimit' => '100',
+            'retChecks'    => ['type' => 'okCode', 'values' => [127]],
+        ];
         $action->save_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -la","name":"Command ls -la \'s","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
         $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
         $this->assertEquals($expected, $json);
     }
 
-
-   /**
-   * @test
-   */
+    /**
+    * @test
+    */
     public function testRemove_item()
     {
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $input = ['name'        => 'test1',
-                'entities_id' => 0,
-                'json'        => $json
-               ];
+        $input           = ['name' => 'test1',
+            'entities_id'          => 0,
+            'json'                 => $json,
+        ];
         $packages_id = $pfDeployPackage->add($input);
 
         $action = new PluginGlpiinventoryDeployAction();
-        $action->remove_item(['packages_id'    => $packages_id,
-                            'action_entries' => [0 => 'on']]);
+        $action->remove_item(['packages_id' => $packages_id,
+            'action_entries'                => [0 => 'on']]);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
         $json     = $action->getJson($packages_id);
         $this->assertEquals($expected, $json);
 
-        $action->remove_item(['packages_id'    => $packages_id,
-                            'action_entries' => [0 => 'on', 1 => 'on']]);
+        $action->remove_item(['packages_id' => $packages_id,
+            'action_entries'                => [0 => 'on', 1 => 'on']]);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
         $json     = $action->getJson($packages_id);
         $this->assertEquals($expected, $json);
     }
 
-
-   /**
-   * @test
-   */
+    /**
+    * @test
+    */
     public function testMove_item()
     {
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $input = ['name'        => 'test1',
-                'entities_id' => 0,
-                'json'        => $json
-               ];
+        $input           = ['name' => 'test1',
+            'entities_id'          => 0,
+            'json'                 => $json,
+        ];
         $packages_id = $pfDeployPackage->add($input);
         $action      = new PluginGlpiinventoryDeployAction();
 
-        $action->move_item(['id'        => $packages_id,
-                          'old_index' => 0,
-                          'new_index' => 1]);
+        $action->move_item(['id' => $packages_id,
+            'old_index'          => 0,
+            'new_index'          => 1]);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
         $json     = $action->getJson($packages_id);
         $this->assertEquals($expected, $json);
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testRunCommand()
     {
         global $DB;
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $pfDeployCommon = new PluginGlpiinventoryDeployCommon();
-        $pfTask = new PluginGlpiinventoryTask();
-        $pfTaskjob = new PluginGlpiinventoryTaskjob();
-        $computer = new Computer();
-        $agent = new Agent();
-        $entity = new Entity();
-        $action = new PluginGlpiinventoryDeployAction();
+        $pfDeployCommon  = new PluginGlpiinventoryDeployCommon();
+        $pfTask          = new PluginGlpiinventoryTask();
+        $pfTaskjob       = new PluginGlpiinventoryTaskjob();
+        $computer        = new Computer();
+        $agent           = new Agent();
+        $entity          = new Entity();
+        $action          = new PluginGlpiinventoryDeployAction();
 
         $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
         $input = [
-         'id'             => $entity->fields['id'],
-         'agent_base_url' => 'http://127.0.0.1/glpi'
+            'id'             => $entity->fields['id'],
+            'agent_base_url' => 'http://127.0.0.1/glpi',
         ];
         $this->assertTrue($entity->update($input));
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls","name":"echo","logLineLimit":"10"}}],"userinteractions":[]},"associatedFiles":[]}';
-        $input = [
-         'name'        => 'cmd test',
-         'entities_id' => 0,
-         'json'        => $json
+        $json            = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls","name":"echo","logLineLimit":"10"}}],"userinteractions":[]},"associatedFiles":[]}';
+        $input           = [
+            'name'        => 'cmd test',
+            'entities_id' => 0,
+            'json'        => $json,
         ];
         $packages_id = $pfDeployPackage->add($input);
         $this->assertNotFalse($packages_id);
 
         $params = [
-         'id'           => $packages_id,
-         'index'        => 0,
-         'actionstype'  => 'exec',
-         'name'         => 'echo',
-         'exec'         => 'echo "test de l\'echo" >> /tmp/echo',
-         'logLineLimit' => '10',
-         'retChecks'    => ['type' => 'okCode', 'values' => [0]],
+            'id'           => $packages_id,
+            'index'        => 0,
+            'actionstype'  => 'exec',
+            'name'         => 'echo',
+            'exec'         => 'echo "test de l\'echo" >> /tmp/echo',
+            'logLineLimit' => '10',
+            'retChecks'    => ['type' => 'okCode', 'values' => [0]],
         ];
         $action->save_item($params);
 
-       // create task
+        // create task
         $input = [
-         'entities_id' => 0,
-         'name'        => 'deploy',
-         'is_active'   => 1
+            'entities_id' => 0,
+            'name'        => 'deploy',
+            'is_active'   => 1,
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
-       // Create computers + agents
+        // Create computers + agents
         $input = [
-         'entities_id' => 0,
-         'name'        => 'computer1'
+            'entities_id' => 0,
+            'name'        => 'computer1',
         ];
         $computers_id = $computer->add($input);
         $this->assertNotFalse($computers_id);
 
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
-        $input = [
-         'entities_id' => 0,
-         'name'        => 'portdavid',
-         'version'     => '{"INVENTORY":"v2.4"}',
-         'deviceid'    => 'portdavid',
-         'useragent'   => 'FusionInventory-Agent_v2.4',
-         'items_id'    => $computers_id,
-         'itemtype'    => 'Computer',
-         'agenttypes_id' => $agenttype['id']
+        $input     = [
+            'entities_id'   => 0,
+            'name'          => 'portdavid',
+            'version'       => '{"INVENTORY":"v2.4"}',
+            'deviceid'      => 'portdavid',
+            'useragent'     => 'FusionInventory-Agent_v2.4',
+            'items_id'      => $computers_id,
+            'itemtype'      => 'Computer',
+            'agenttypes_id' => $agenttype['id'],
         ];
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
 
-       // create takjob
+        // create takjob
         $input = [
-         'plugin_glpiinventory_tasks_id' => $tasks_id,
-         'entities_id'                     => 0,
-         'name'                            => 'deploy',
-         'method'                          => 'deployinstall',
-         'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
-         'actors'                          => '[{"Computer":"' . $computers_id . '"}]'
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id'                   => 0,
+            'name'                          => 'deploy',
+            'method'                        => 'deployinstall',
+            'targets'                       => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
+            'actors'                        => '[{"Computer":"' . $computers_id . '"}]',
         ];
         $taskjobId = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobId);
 
-       // prepare task
+        // prepare task
         PluginGlpiinventoryTask::cronTaskscheduler();
 
         $taskjobstates = $pfTask->getTaskjobstatesForAgent(
             $agents_id,
-            ['deployinstall']
+            ['deployinstall'],
         );
         $this->assertEquals(1, count($taskjobstates));
 
         foreach ($taskjobstates as $taskjobstate) {
             $data = $pfDeployCommon->run($taskjobstate);
 
-            $this->assertStringNotContainsString($data['job']['actions'][0]['exec']['exec'], "&gt;", "&gt; found instead >");
-            $this->assertStringContainsString(">>", $data['job']['actions'][0]['exec']['exec'], "We may have >>");
+            $this->assertStringNotContainsString($data['job']['actions'][0]['exec']['exec'], '&gt;', '&gt; found instead >');
+            $this->assertStringContainsString('>>', $data['job']['actions'][0]['exec']['exec'], 'We may have >>');
         }
     }
 }

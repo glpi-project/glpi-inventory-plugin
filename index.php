@@ -31,26 +31,26 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../inc/includes.php");
+include('../../inc/includes.php');
 
 //Agent posting an inventory or asking for orders using REST
-$rawdata = file_get_contents("php://input");
-$action = filter_input(INPUT_GET, "action");
-$machineid = filter_input(INPUT_GET, "machineid");
+$rawdata   = file_get_contents('php://input');
+$action    = filter_input(INPUT_GET, 'action');
+$machineid = filter_input(INPUT_GET, 'machineid');
 if (
     (!empty($action)
     && !empty($machineid))
       || !empty($rawdata)
 ) {
-    include_once("front/communication.php");
+    include_once('front/communication.php');
 } else {
     Html::header(
         __('GLPI Inventory', 'glpiinventory'),
         $_SERVER['PHP_SELF'],
-        "plugins",
-        "glpiinventory"
+        'plugins',
+        'glpiinventory',
     );
 
-    Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/menu.php");
+    Html::redirect(Plugin::getWebDir('glpiinventory') . '/front/menu.php');
     Html::footer();
 }

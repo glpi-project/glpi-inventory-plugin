@@ -31,21 +31,21 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "glpiinventory",
-    "agentmodules"
+    $_SERVER['PHP_SELF'],
+    'admin',
+    'glpiinventory',
+    'agentmodules',
 );
 
 Session::checkRight(PluginGlpiinventoryAgentmodule::$rightname, READ);
 
 $agentmodule = new PluginGlpiinventoryAgentmodule();
 
-if (isset($_POST["agent_add"])) {
+if (isset($_POST['agent_add'])) {
     $agentmodule->getFromDB($_POST['id']);
     $a_agentList         = importArrayFromDB($agentmodule->fields['exceptions']);
     $a_agentList[]       = $_POST['agent_to_add'][0];
@@ -54,31 +54,31 @@ if (isset($_POST["agent_add"])) {
     $input['id']         = $_POST['id'];
     $agentmodule->update($input);
     Html::back();
-} elseif (isset($_POST["agent_delete"])) {
+} elseif (isset($_POST['agent_delete'])) {
     $agentmodule->getFromDB($_POST['id']);
-    $a_agentList         = importArrayFromDB($agentmodule->fields['exceptions']);
+    $a_agentList = importArrayFromDB($agentmodule->fields['exceptions']);
     foreach ($a_agentList as $key => $value) {
         if ($value == $_POST['agent_to_delete'][0]) {
             unset($a_agentList[$key]);
         }
     }
-    $input = [];
+    $input               = [];
     $input['exceptions'] = exportArrayToDB($a_agentList);
-    $input['id'] = $_POST['id'];
+    $input['id']         = $_POST['id'];
     $agentmodule->update($input);
     Html::back();
-} elseif (isset($_POST["updateexceptions"])) {
+} elseif (isset($_POST['updateexceptions'])) {
     $a_modules = $agentmodule->find();
     foreach ($a_modules as $data) {
-        $a_agentList        = importArrayFromDB($data['exceptions']);
-        $agentModule        = 0;
+        $a_agentList = importArrayFromDB($data['exceptions']);
+        $agentModule = 0;
         if (
             isset($_POST['activation-' . $data['modulename']])
             && $_POST['activation-' . $data['modulename']] != 0
         ) {
-            $agentModule     = 1;
+            $agentModule = 1;
         }
-        $agentModuleBase    = 0;
+        $agentModuleBase = 0;
         if (in_array($_POST['id'], $a_agentList)) {
             $agentModuleBase = 1;
         }
@@ -100,7 +100,7 @@ if (isset($_POST["agent_add"])) {
                     }
                 }
             } elseif (($agentModule == 0) and ($agentModuleBase == 0)) {
-                $a_agentList[]  = $_POST['id'];
+                $a_agentList[] = $_POST['id'];
             }
         }
         $data['exceptions'] = exportArrayToDB($a_agentList);
@@ -108,7 +108,7 @@ if (isset($_POST["agent_add"])) {
     }
 
     Html::back();
-} elseif (isset($_POST["update"])) {
+} elseif (isset($_POST['update'])) {
     $agentmodule->getFromDB($_POST['id']);
     $input = [];
     if (
@@ -123,7 +123,7 @@ if (isset($_POST["agent_add"])) {
         $a_agentList         = [];
         $input['exceptions'] = exportArrayToDB($a_agentList);
     }
-    $input['id']  = $_POST['id'];
+    $input['id'] = $_POST['id'];
 
     $agentmodule->update($input);
     Html::back();

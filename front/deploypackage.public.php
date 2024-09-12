@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 Session::checkLoginUser();
 
 if (Session::getCurrentInterface() !== 'helpdesk') {
@@ -40,10 +40,10 @@ if (Session::getCurrentInterface() !== 'helpdesk') {
 
 Html::helpHeader(
     __('GLPI Inventory'),
-    $_SERVER["PHP_SELF"],
-    "plugins",
-    "pluginglpiinventorymenu",
-    "deploypackage"
+    $_SERVER['PHP_SELF'],
+    'plugins',
+    'pluginglpiinventorymenu',
+    'deploypackage',
 );
 $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
@@ -59,15 +59,15 @@ if (isset($_POST['prepareinstall'])) {
         }
     }
 
-   //Try to wakeup the agent to perform the deployment task
-   //If it's a local wakeup, local call to the agent RPC service
+    //Try to wakeup the agent to perform the deployment task
+    //If it's a local wakeup, local call to the agent RPC service
     switch ($_POST['wakeup_type']) {
         case 'local':
             $port = Agent::DEFAULT_PORT;
             if ($computers_id) {
                 $agent = new Agent();
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
-                $port = (int)$agent->fields['port'];
+                $port = (int) $agent->fields['port'];
             }
             if ($port == 0) {
                 $port = Agent::DEFAULT_PORT;
@@ -79,10 +79,10 @@ if (isset($_POST['prepareinstall'])) {
                 }, 500);
             ");
             exit;
-         break;
+            break;
         case 'remote':
             if ($computers_id) {
-               //Remote call to wakeup the agent, from the server
+                //Remote call to wakeup the agent, from the server
                 $agent = new Agent();
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
                 PluginGlpiinventoryAgentWakeup::wakeUp($agent);
@@ -96,10 +96,10 @@ if (isset($_POST['prepareinstall'])) {
 } else {
     Html::header(
         __('GLPI Inventory'),
-        $_SERVER["PHP_SELF"],
-        "plugins",
-        "pluginglpiinventorymenu",
-        "deploypackage"
+        $_SERVER['PHP_SELF'],
+        'plugins',
+        'pluginglpiinventorymenu',
+        'deploypackage',
     );
 
     $pfDeployPackage->showPackageForMe($_SESSION['glpiID']);

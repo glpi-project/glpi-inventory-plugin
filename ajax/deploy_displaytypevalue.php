@@ -31,15 +31,15 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
+include('../../../inc/includes.php');
+header('Content-Type: text/html; charset=UTF-8');
 Html::header_nocache();
 Session::checkCentralAccess();
 
-$rand      = filter_input(INPUT_POST, "rand");
-$mode      = filter_input(INPUT_POST, "mode");
-$type      = filter_input(INPUT_POST, "type");
-$classname = filter_input(INPUT_POST, "class");
+$rand      = filter_input(INPUT_POST, 'rand');
+$mode      = filter_input(INPUT_POST, 'mode');
+$type      = filter_input(INPUT_POST, 'type');
+$classname = filter_input(INPUT_POST, 'class');
 
 if (empty($rand) && (empty($type))) {
     exit();
@@ -50,18 +50,18 @@ if (
     || !in_array(
         $classname,
         ['PluginGlpiinventoryDeployCheck',
-                'PluginGlpiinventoryDeployFile',
-                'PluginGlpiinventoryDeployAction',
-                'PluginGlpiinventoryDeployUserinteraction'
-        ]
+            'PluginGlpiinventoryDeployFile',
+            'PluginGlpiinventoryDeployAction',
+            'PluginGlpiinventoryDeployUserinteraction',
+        ],
     )
 ) {
     exit();
 }
 $class        = new $classname();
 $request_data = [
-    'packages_id' => filter_input(INPUT_POST, "packages_id"),
-    'orders_id'   => filter_input(INPUT_POST, "orders_id"),
-    'value'       => filter_input(INPUT_POST, "value")
+    'packages_id' => filter_input(INPUT_POST, 'packages_id'),
+    'orders_id'   => filter_input(INPUT_POST, 'orders_id'),
+    'value'       => filter_input(INPUT_POST, 'value'),
 ];
 $class->displayAjaxValues(null, $request_data, $rand, $mode);

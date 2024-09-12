@@ -47,9 +47,9 @@ define('GLPI_LOG_DIR', GLPI_VAR_DIR . '/_log');
 define(
     'PLUGINS_DIRECTORIES',
     [
-      GLPI_ROOT . '/plugins',
-      GLPI_ROOT . '/tests/fixtures/plugins',
-    ]
+        GLPI_ROOT . '/plugins',
+        GLPI_ROOT . '/tests/fixtures/plugins',
+    ],
 );
 
 define('TU_USER', '_test_user');
@@ -57,7 +57,7 @@ define('TU_PASS', 'PhpUnit_4');
 
 global $CFG_GLPI, $GLPI_CACHE;
 
-include(GLPI_ROOT . "/inc/based_config.php");
+include(GLPI_ROOT . '/inc/based_config.php');
 
 if (!file_exists(GLPI_CONFIG_DIR . '/config_db.php')) {
     die("\nConfiguration file for tests not found\n\nrun: bin/console glpi:database:install --config-dir=tests/config ...\n\n");
@@ -75,11 +75,11 @@ foreach (get_defined_constants() as $constant_name => $constant_value) {
 
 //init cache
 if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FILENAME)) {
-   // Use configured cache for cache tests
+    // Use configured cache for cache tests
     $cache_manager = new CacheManager();
-    $GLPI_CACHE = $cache_manager->getCoreCacheInstance();
+    $GLPI_CACHE    = $cache_manager->getCoreCacheInstance();
 } else {
-   // Use "in-memory" cache for other tests
+    // Use "in-memory" cache for other tests
     $GLPI_CACHE = new SimpleCache(new ArrayAdapter());
 }
 
@@ -91,8 +91,8 @@ include_once __DIR__ . '/LogTest.php';
 
 // $_SESSION['glpiprofiles'][4]['entities'] = [0 => ['id' => 0, 'is_recursive' => true]];
 // $_SESSION['glpidefault_entity'] = 0;
-$auth = new Auth();
-$user = new User();
+$auth                = new Auth();
+$user                = new User();
 $auth->auth_succeded = true;
 $user->getFromDB(2);
 $auth->user = $user;
@@ -136,18 +136,10 @@ if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export')) {
 }
 
 // @codingStandardsIgnoreStart
-class GlpitestPHPerror extends \Exception
-{
-}
-class GlpitestPHPwarning extends \Exception
-{
-}
-class GlpitestPHPnotice extends \Exception
-{
-}
-class GlpitestSQLError extends \Exception
-{
-}
+class GlpitestPHPerror extends \Exception {}
+class GlpitestPHPwarning extends \Exception {}
+class GlpitestPHPnotice extends \Exception {}
+class GlpitestSQLError extends \Exception {}
 // @codingStandardsIgnoreEnd
 
 set_error_handler(static function (int $errno, string $errstr): never {

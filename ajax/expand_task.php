@@ -31,10 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 Session::checkCentralAccess();
 
-header("Content-Type: text/json; charset=UTF-8");
+header('Content-Type: text/json; charset=UTF-8');
 Html::header_nocache();
 
-$_SESSION['plugin_glpiinventory_tasks_expanded'][intval(filter_input(INPUT_GET, "task_id"))] = filter_input(INPUT_GET, "expanded");
+$_SESSION['plugin_glpiinventory_tasks_expanded'][intval(filter_input(INPUT_GET, 'task_id'))] = filter_input(INPUT_GET, 'expanded');

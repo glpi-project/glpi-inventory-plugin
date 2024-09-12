@@ -32,7 +32,7 @@
  */
 
 ob_start();
-include("../../../../inc/includes.php");
+include('../../../../inc/includes.php');
 ob_end_clean();
 
 //Store deploy task version
@@ -45,9 +45,9 @@ if (isset($_GET['version'])) {
 
 $response = false;
 //Agent communication using REST protocol
-switch (filter_input(INPUT_GET, "action")) {
+switch (filter_input(INPUT_GET, 'action')) {
     case 'getJobs':
-        $machineid = filter_input(INPUT_GET, "machineid");
+        $machineid = filter_input(INPUT_GET, 'machineid');
         if (isset($machineid)) {
             $agent          = new Agent();
             $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
@@ -58,30 +58,30 @@ switch (filter_input(INPUT_GET, "action")) {
             if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep($machineid)])) {
                 $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                     $agent->fields['id'],
-                    ['deployinstall']
+                    ['deployinstall'],
                 );
-                if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent->fields['id'])) {
+                if (!$pfAgentModule->isAgentCanDo('DEPLOY', $agent->fields['id'])) {
                     foreach ($taskjobstates as $taskjobstate) {
                         $taskjobstate->cancel(
-                            __("Deploy module has been disabled for this agent", 'glpiinventory')
+                            __('Deploy module has been disabled for this agent', 'glpiinventory'),
                         );
                     }
-                     $response = "{}";
+                    $response = '{}';
                 } else {
                     $package      = new PluginGlpiinventoryDeployPackage();
                     $deploycommon = new PluginGlpiinventoryDeployCommon();
 
-                   //sort taskjobs by key id
-                   /**
-                    * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
-                    * manipulated by drag and drop (cf. Task::getTaskjobsForAgent() ).
-                    */
-                   ////start of json response
+                    //sort taskjobs by key id
+                    /**
+                     * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
+                     * manipulated by drag and drop (cf. Task::getTaskjobsForAgent() ).
+                     */
+                    ////start of json response
                     $order                  = new stdClass();
                     $order->jobs            = [];
                     $order->associatedFiles = new stdClass();
 
-                   ////aggregate json orders in a single json response
+                    ////aggregate json orders in a single json response
                     foreach ($taskjobstates as $taskjobstate) {
                         // TODO: The run() method should be renamed as getData() and moved to the Package
                         // class since we want package configuration (Order class may be useless ... needs
@@ -97,27 +97,27 @@ switch (filter_input(INPUT_GET, "action")) {
                         //check response depending on the
                         $jobstate_order = $package->buildJson(
                             $deploy_task_version,
-                            $jobstate_order
+                            $jobstate_order,
                         );
 
-                         // Append order to the final json
-                         $order->jobs[] = $jobstate_order['job'];
+                        // Append order to the final json
+                        $order->jobs[] = $jobstate_order['job'];
 
-                         // Update associated files list
+                        // Update associated files list
                         foreach ($jobstate_order['associatedFiles'] as $hash => $associatedFiles) {
                             if (!property_exists($order->associatedFiles, $hash)) {
                                 $order->associatedFiles->$hash = $associatedFiles;
                             }
                         }
-                         $taskjobstate->changeStatus(
-                             $taskjobstate->fields['id'],
-                             $taskjobstate::SERVER_HAS_SENT_DATA
-                         );
+                        $taskjobstate->changeStatus(
+                            $taskjobstate->fields['id'],
+                            $taskjobstate::SERVER_HAS_SENT_DATA,
+                        );
                     }
 
-                   // return an empty dictionnary if there are no jobs.
+                    // return an empty dictionnary if there are no jobs.
                     if (count($order->jobs) == 0) {
-                        $response = "{}";
+                        $response = '{}';
                     } else {
                         $response = json_encode($order);
                     }
@@ -128,33 +128,33 @@ switch (filter_input(INPUT_GET, "action")) {
 
     case 'getFilePart':
         $DB->close();
-        PluginGlpiinventoryDeployFilepart::httpSendFile(filter_input(INPUT_GET, "file"));
+        PluginGlpiinventoryDeployFilepart::httpSendFile(filter_input(INPUT_GET, 'file'));
         exit;
-      break;
+        break;
 
     case 'setStatus':
         $partjob_mapping = [
-         "checking"    => __('Checks', 'glpiinventory'),
-         "downloading" => __('Files download', 'glpiinventory'),
-         "prepare"     => __('Files preparation', 'glpiinventory'),
-         "processing"  => __('Actions', 'glpiinventory'),
+            'checking'    => __('Checks', 'glpiinventory'),
+            'downloading' => __('Files download', 'glpiinventory'),
+            'prepare'     => __('Files preparation', 'glpiinventory'),
+            'processing'  => __('Actions', 'glpiinventory'),
         ];
 
         $error = false;
 
         $params = [
-         'machineid' => filter_input(INPUT_GET, "machineid"),
-         'uuid'      => filter_input(INPUT_GET, "uuid")
+            'machineid' => filter_input(INPUT_GET, 'machineid'),
+            'uuid'      => filter_input(INPUT_GET, 'uuid'),
         ];
 
-        if (filter_input(INPUT_GET, "status") == 'ko') {
+        if (filter_input(INPUT_GET, 'status') == 'ko') {
             $params['code'] = 'ko';
-            $fi_currentStep = filter_input(INPUT_GET, "currentStep");
+            $fi_currentStep = filter_input(INPUT_GET, 'currentStep');
             if (!empty($fi_currentStep)) {
-                $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
-                . ":" . filter_input(INPUT_GET, "msg");
+                $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, 'currentStep')]
+                . ':' . filter_input(INPUT_GET, 'msg');
             } else {
-                $params['msg'] = filter_input(INPUT_GET, "msg");
+                $params['msg'] = filter_input(INPUT_GET, 'msg');
             }
             $error = true;
         }
@@ -162,20 +162,20 @@ switch (filter_input(INPUT_GET, "action")) {
 
         if ($error != true) {
             if (
-                filter_input(INPUT_GET, "msg") === 'job successfully completed'
-                || filter_input(INPUT_GET, "msg") === 'job skipped'
+                filter_input(INPUT_GET, 'msg')    === 'job successfully completed'
+                || filter_input(INPUT_GET, 'msg') === 'job skipped'
             ) {
-               //Job has ended  or has been skipped and status should be ok
+                //Job has ended  or has been skipped and status should be ok
                 $params['code'] = 'ok';
-                $params['msg']  = filter_input(INPUT_GET, "msg");
+                $params['msg']  = filter_input(INPUT_GET, 'msg');
             } else {
                 $params['code'] = 'running';
-                $fi_currentStep = filter_input(INPUT_GET, "currentStep");
+                $fi_currentStep = filter_input(INPUT_GET, 'currentStep');
                 if (!empty($fi_currentStep)) {
-                    $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
-                    . ":" . filter_input(INPUT_GET, "msg");
+                    $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, 'currentStep')]
+                    . ':' . filter_input(INPUT_GET, 'msg');
                 } else {
-                    $params['msg'] = filter_input(INPUT_GET, "msg");
+                    $params['msg'] = filter_input(INPUT_GET, 'msg');
                 }
             }
         }
@@ -184,57 +184,56 @@ switch (filter_input(INPUT_GET, "action")) {
 
             $tmp_msg = implode("\n", $params['msg']);
             $flags   = null;
-            $tmp_msg =
-            stripcslashes(
+            $tmp_msg = stripcslashes(
                 htmlspecialchars(
                     $tmp_msg,
                     $htmlspecialchars_flags,
                     'UTF-8',
-                    false
-                )
+                    false,
+                ),
             );
             $params['msg'] = nl2br($tmp_msg);
         }
 
-       //Generic method to update logs
+        //Generic method to update logs
         PluginGlpiinventoryCommunicationRest::updateLog($params);
         break;
 
     case 'setUserEvent':
         $params = [
-         'machineid' => filter_input(INPUT_GET, "machineid"),
-         'uuid'      => filter_input(INPUT_GET, "uuid")
+            'machineid' => filter_input(INPUT_GET, 'machineid'),
+            'uuid'      => filter_input(INPUT_GET, 'uuid'),
         ];
 
-       //Action : postpone, cancel, continue
-        $behavior = filter_input(INPUT_GET, "behavior");
+        //Action : postpone, cancel, continue
+        $behavior = filter_input(INPUT_GET, 'behavior');
 
-       //before, after_download, after_download_failure,
-       //after_failure, after
-        $type    = filter_input(INPUT_GET, "type");
+        //before, after_download, after_download_failure,
+        //after_failure, after
+        $type = filter_input(INPUT_GET, 'type');
 
-       //on_nouser, on_ok, on_cancel, on_abort, on_retry, on_ignore,
-       //on_yes, on_no, on_tryagain, on_continue, on_timeout, on_async,
-       //on_multiusers
-        $event   = filter_input(INPUT_GET, "event");
+        //on_nouser, on_ok, on_cancel, on_abort, on_retry, on_ignore,
+        //on_yes, on_no, on_tryagain, on_continue, on_timeout, on_async,
+        //on_multiusers
+        $event = filter_input(INPUT_GET, 'event');
 
-       //The user who did the interaction
-        $user    = filter_input(INPUT_GET, "user");
+        //The user who did the interaction
+        $user = filter_input(INPUT_GET, 'user');
 
-       //Process response if an agent provides a behavior, a type and an event
-       //the user parameter is not mandatory
+        //Process response if an agent provides a behavior, a type and an event
+        //the user parameter is not mandatory
         if (
-            $behavior !== false && $type !== false
-            && $event !== false && $user !== false
+            $behavior                                         !== false && $type !== false
+                                                    && $event !== false && $user !== false
         ) {
-            $interaction    = new PluginGlpiinventoryDeployUserinteraction();
-            $cancel         = false;
-            $postpone       = false;
-            $params['msg']  = $interaction->getLogMessage(
+            $interaction   = new PluginGlpiinventoryDeployUserinteraction();
+            $cancel        = false;
+            $postpone      = false;
+            $params['msg'] = $interaction->getLogMessage(
                 $behavior,
                 $type,
                 $event,
-                $user
+                $user,
             );
             switch ($behavior) {
                 case PluginGlpiinventoryDeployUserinteraction::RESPONSE_STOP:
@@ -247,8 +246,8 @@ switch (filter_input(INPUT_GET, "action")) {
                     break;
 
                 case PluginGlpiinventoryDeployUserinteraction::RESPONSE_POSTPONE:
-                     $params['code'] = 'running';
-                     $postpone       = true;
+                    $params['code'] = 'running';
+                    $postpone       = true;
                     break;
 
                 case PluginGlpiinventoryDeployUserinteraction::RESPONSE_BAD_EVENT:
@@ -256,10 +255,10 @@ switch (filter_input(INPUT_GET, "action")) {
                     break;
             }
 
-           //Generic method to update logs
+            //Generic method to update logs
             PluginGlpiinventoryCommunicationRest::updateLog($params);
 
-           //If needed : cancel or postpone the job
+            //If needed : cancel or postpone the job
             if ($cancel || $postpone) {
                 $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
                 $pfTaskjobstate->getFromDBByUniqID($params['uuid']);
@@ -275,5 +274,5 @@ switch (filter_input(INPUT_GET, "action")) {
 if ($response !== false) {
     echo $response;
 } else {
-    echo json_encode((object)[]);
+    echo json_encode((object) []);
 }

@@ -41,31 +41,29 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'agent';
 
-
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
-        return "Stat";
+        return 'Stat';
     }
 
-
-   /**
-    * Init stats
-    *
-    * @global object $DB
-    */
+    /**
+     * Init stats
+     *
+     * @global object $DB
+     */
     public static function init()
     {
         global $DB;
@@ -73,9 +71,9 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
         $insert = $DB->buildInsert(
             'glpi_plugin_glpiinventory_inventorycomputerstats',
             [
-            'day'    => new \QueryParam(),
-            'hour'   => new \QueryParam()
-            ]
+                'day'  => new \QueryParam(),
+                'hour' => new \QueryParam(),
+            ],
         );
         $stmt = $DB->prepare($insert);
 
@@ -84,7 +82,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
                 $stmt->bind_param(
                     'ss',
                     $d,
-                    $h
+                    $h,
                 );
                 $DB->executeStatement($stmt);
             }
@@ -92,12 +90,11 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
         mysqli_stmt_close($stmt);
     }
 
-
-   /**
-    * Increment computer states
-    *
-    * @global object $DB
-    */
+    /**
+     * Increment computer states
+     *
+     * @global object $DB
+     */
     public static function increment()
     {
         global $DB;
@@ -105,28 +102,27 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
         $DB->update(
             'glpi_plugin_glpiinventory_inventorycomputerstats',
             [
-            'counter'   => new \QueryExpression($DB->quoteName('counter') . ' + 1')
+                'counter' => new \QueryExpression($DB->quoteName('counter') . ' + 1'),
             ],
             [
-            'day'    => date('z'),
-            'hour'   => date('G')
-            ]
+                'day'  => date('z'),
+                'hour' => date('G'),
+            ],
         );
     }
 
-
-   /**
-    * Get stats for each hours for last xx hours
-    *
-    * @global object $DB
-    * @param integer $nb
-    * @return integer
-    */
+    /**
+     * Get stats for each hours for last xx hours
+     *
+     * @global object $DB
+     * @param integer $nb
+     * @return integer
+     */
     public static function getLastHours($nb = 11)
     {
         global $DB;
 
-        $a_counters = [];
+        $a_counters        = [];
         $a_counters['key'] = 'test';
 
         $timestamp = date('U');
@@ -135,26 +131,27 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
 
             $iterator = $DB->request([
                 'SELECT' => [
-                    'counter'
+                    'counter',
                 ],
-                'FROM' => 'glpi_plugin_glpiinventory_inventorycomputerstats',
+                'FROM'  => 'glpi_plugin_glpiinventory_inventorycomputerstats',
                 'WHERE' => [
-                    'day' => date('z', $timestampSearch),
-                    'hour' => date('G', $timestampSearch)
+                    'day'  => date('z', $timestampSearch),
+                    'hour' => date('G', $timestampSearch),
                 ],
-                'LIMIT' => 1
+                'LIMIT' => 1,
             ]);
 
             $data = $iterator->current();
-            $cnt = 0;
+            $cnt  = 0;
             if (!is_null($data)) {
-                $cnt = (int)$data['counter'];
+                $cnt = (int) $data['counter'];
             }
             $a_counters['values'][] = [
-             'label' => date('H', $timestampSearch) . ":00",
-             'value' => $cnt
+                'label' => date('H', $timestampSearch) . ':00',
+                'value' => $cnt,
             ];
         }
+
         return $a_counters;
     }
 }

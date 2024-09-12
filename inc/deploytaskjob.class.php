@@ -42,35 +42,33 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
 {
-   /**
-    * Is this use can create a deploy task job
-    *
-    * @return boolean
-    */
+    /**
+     * Is this use can create a deploy task job
+     *
+     * @return boolean
+     */
     public static function canCreate()
     {
         return true;
     }
 
-
-   /**
-    * Is this use can view a deploy task job
-    *
-    * @return boolean
-    */
+    /**
+     * Is this use can view a deploy task job
+     *
+     * @return boolean
+     */
     public static function canView()
     {
         return true;
     }
 
-
-   /**
-    * Get all data
-    *
-    * @global object $DB
-    * @param array $params
-    * @return string in JSON format
-    */
+    /**
+     * Get all data
+     *
+     * @global object $DB
+     * @param array $params
+     * @return string in JSON format
+     */
     public function getAllDatas($params)
     {
         global $DB;
@@ -78,18 +76,18 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
         $tasks_id = $params['tasks_id'];
 
         $iterator = $DB->request([
-            'FROM'   => $this->getTable(),
-            'WHERE'  => [
+            'FROM'  => $this->getTable(),
+            'WHERE' => [
                 'plugin_glpiinventory_deploytasks_id' => $tasks_id,
-                'method'                              => 'deployinstall'
-            ]
+                'method'                              => 'deployinstall',
+            ],
         ]);
 
-        $json  = [];
+        $json       = [];
         $temp_tasks = [];
         foreach ($iterator as $row) {
             $row['packages'] = importArrayFromDB($row['definition']);
-            $row['actions'] = importArrayFromDB($row['action']);
+            $row['actions']  = importArrayFromDB($row['action']);
 
             $temp_tasks[] = $row;
         }
@@ -117,52 +115,52 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                 }
             }
         }
+
         return json_encode($json);
     }
 
-
-   /**
-    * Save data
-    *
-    * @global object $DB
-    * @param array $params
-    */
+    /**
+     * Save data
+     *
+     * @global object $DB
+     * @param array $params
+     */
     public function saveDatas($params)
     {
         global $DB;
 
         $tasks_id = $params['tasks_id'];
-        $tasks = json_decode($params['tasks']);
+        $tasks    = json_decode($params['tasks']);
 
-       //remove old jobs from task
+        //remove old jobs from task
         $this->deleteByCriteria(['plugin_glpiinventory_deploytasks_id' => $tasks_id], true);
 
-       //get plugin id
+        //get plugin id
         $plug = new Plugin();
         $plug->getFromDBbyDir('fusinvdeploy');
         $plugins_id = $plug->getField('id');
 
-       //insert new rows
+        //insert new rows
         $sql_tasks = [];
-        $i = 0;
+        $i         = 0;
 
         $qparam = new QueryParam();
-        $query = $DB::buildInsert(
+        $query  = $DB::buildInsert(
             $this->getTable(),
             [
-            'plugin_glpiinventory_deploytasks_id'   => $qparam,
-            'name'                                    => $qparam,
-            'date_creation'                           => $qparam,
-            'entities_id'                             => $qparam,
-            'plugins_id'                              => $qparam,
-            'method'                                  => $qparam,
-            'definition'                              => $qparam,
-            'action'                                  => $qparam,
-            'retry_nb'                                => $qparam,
-            'retry_time'                              => $qparam,
-            'periodicity_type'                        => $qparam,
-            'periodicity_count'                       => $qparam
-            ]
+                'plugin_glpiinventory_deploytasks_id' => $qparam,
+                'name'                                => $qparam,
+                'date_creation'                       => $qparam,
+                'entities_id'                         => $qparam,
+                'plugins_id'                          => $qparam,
+                'method'                              => $qparam,
+                'definition'                          => $qparam,
+                'action'                              => $qparam,
+                'retry_nb'                            => $qparam,
+                'retry_time'                          => $qparam,
+                'periodicity_type'                    => $qparam,
+                'periodicity_count'                   => $qparam,
+            ],
         );
         $stmt = $DB->prepare($query);
 
@@ -172,14 +170,14 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             //encode action and definition
             //$action = exportArrayToDB(array(array(
             //    $task['action_type'] => $task['action_selection'])));
-            $action = exportArrayToDB($task['action']);
+            $action     = exportArrayToDB($task['action']);
             $definition = exportArrayToDB([[
-              'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
+                'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
 
-            $job_name = "job_" . $tasks_id . "_" . $i;
-            $now = 'NOW()';
-            $entities_id = '0';
-            $period_type = 'minutes';
+            $job_name     = 'job_' . $tasks_id . '_' . $i;
+            $now          = 'NOW()';
+            $entities_id  = '0';
+            $period_type  = 'minutes';
             $period_count = '0';
             $stmt->bind_param(
                 'ssssssssssss',
@@ -194,46 +192,43 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                 $task['retry_nb'],
                 $task['retry_time'],
                 $period_type,
-                $period_count
+                $period_count,
             );
             $DB->executeStatement($stmt);
         }
         mysqli_stmt_close($stmt);
     }
 
-
-   /**
-    * Get the different type of task job actions
-    *
-    * @return array
-    */
+    /**
+     * Get the different type of task job actions
+     *
+     * @return array
+     */
     public static function getActionTypes()
     {
-
         return [
-         [
-            'name' => __('Computers'),
-            'value' => 'Computer',
-         ],
-         [
-            'name' => __('Group'),
-            'value' => 'Group',
-         ],
-         [
-            'name' => __('Groups of computers', 'glpiinventory'),
-            'value' => 'PluginGlpiinventoryDeployGroup',
-         ]
+            [
+                'name'  => __('Computers'),
+                'value' => 'Computer',
+            ],
+            [
+                'name'  => __('Group'),
+                'value' => 'Group',
+            ],
+            [
+                'name'  => __('Groups of computers', 'glpiinventory'),
+                'value' => 'PluginGlpiinventoryDeployGroup',
+            ],
         ];
     }
 
-
-   /**
-    * Get actions
-    *
-    * @global object $DB
-    * @param array $params
-    * @return string in JSON format
-    */
+    /**
+     * Get actions
+     *
+     * @global object $DB
+     * @param array $params
+     * @return string in JSON format
+     */
     public static function getActions($params)
     {
         global $DB;
@@ -243,12 +238,12 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             exit;
         }
         switch ($params['get']) {
-            case "type":
+            case 'type':
                 $res = json_encode([
-                'action_types' => self::getActionTypes()
+                    'action_types' => self::getActionTypes(),
                 ]);
                 break;
-            case "selection":
+            case 'selection':
                 switch ($params['type']) {
                     case 'Computer':
                         $where = [];
@@ -256,16 +251,16 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                             $where['name'] = ['LIKE', '%' . $params['query']];
                         }
 
-                        $i = 0;
+                        $i        = 0;
                         $iterator = $DB->request([
                             'SELECT' => ['id', 'name'],
-                            'FROM' => 'glpi_computers',
-                            'WHERE' => $where,
-                            'ORDER' => 'name ASC'
+                            'FROM'   => 'glpi_computers',
+                            'WHERE'  => $where,
+                            'ORDER'  => 'name ASC',
                         ]);
 
                         foreach ($iterator as $row) {
-                            $res['action_selections'][$i]['id'] = $row['id'];
+                            $res['action_selections'][$i]['id']   = $row['id'];
                             $res['action_selections'][$i]['name'] = $row['name'];
                             $i++;
                         }
@@ -279,11 +274,11 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                             //FIXME: not sure escape is mandatory here
                             $like += ['name' => ['LIKE', '%' . $DB->escape($params['query'])]];
                         }
-                        $group = new Group();
+                        $group       = new Group();
                         $group_datas = $group->find($like);
-                        $i = 0;
+                        $i           = 0;
                         foreach ($group_datas as $group_data) {
-                            $res['action_selections'][$i]['id'] = $group_data['id'];
+                            $res['action_selections'][$i]['id']   = $group_data['id'];
                             $res['action_selections'][$i]['name'] = $group_data['name'];
                             $i++;
                         }
@@ -292,12 +287,13 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                 }
                 break;
 
-            case "oneSelection":
+            case 'oneSelection':
                 break;
 
             default:
                 $res = '';
         }
+
         return $res;
     }
 }

@@ -31,29 +31,29 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Session::checkRight('plugin_glpiinventory_package', READ);
 
 session_write_close(); // unlock session to ensure GLPI is still usable while huge file downloads is done in background
 
-$deployfile_id = (int)($_GET['deployfile_id'] ?? 0);
+$deployfile_id = (int) ($_GET['deployfile_id'] ?? 0);
 
 $deploy = new PluginGlpiinventoryDeployFile();
 if ($deployfile_id > 0 && $deploy->getFromDB($deployfile_id)) {
     if ($deploy->checkPresenceFile($deploy->fields['sha512'])) {
         //get all repository file path
         $part_path = $deploy->getFilePath($deploy->fields['sha512']);
-        $mimetype = $deploy->fields['mimetype'];
-        $filesize = $deploy->fields['filesize'];
-        $filename = $deploy->fields['name'];
+        $mimetype  = $deploy->fields['mimetype'];
+        $filesize  = $deploy->fields['filesize'];
+        $filename  = $deploy->fields['name'];
 
         if ($filename != '' && $part_path !== false && count($part_path)) {
             // Make sure there is nothing in the output buffer (In case stuff was added by core or misbehaving plugin).
             // If there is any extra data, the sent file will be corrupted.
             // 1. Turn off any extra buffering level. Keep one buffering level if PHP output_buffering directive is not "off".
-            $ob_config = ini_get('output_buffering');
-            $max_buffering_level = $ob_config !== false && (strtolower($ob_config) === 'on' || (is_numeric($ob_config) && (int)$ob_config > 0))
+            $ob_config           = ini_get('output_buffering');
+            $max_buffering_level = $ob_config !== false && (strtolower($ob_config) === 'on' || (is_numeric($ob_config) && (int) $ob_config > 0))
                 ? 1
                 : 0;
             while (ob_get_level() > $max_buffering_level) {

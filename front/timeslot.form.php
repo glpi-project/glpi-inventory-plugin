@@ -31,37 +31,37 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
+if (!isset($_GET['id'])) {
+    $_GET['id'] = '';
 }
 
 $pfTimeslot = new PluginGlpiinventoryTimeslot();
 //Add a new timeslot
-if (isset($_POST["add"])) {
+if (isset($_POST['add'])) {
     $pfTimeslot->check(-1, CREATE, $_POST);
     if ($newID = $pfTimeslot->add($_POST)) {
         if ($_SESSION['glpibackcreated']) {
-            Html::redirect($pfTimeslot->getFormURL() . "?id=" . $newID);
+            Html::redirect($pfTimeslot->getFormURL() . '?id=' . $newID);
         }
     }
     Html::back();
 
-   // delete a timeslot
-} elseif (isset($_POST["delete"])) {
+    // delete a timeslot
+} elseif (isset($_POST['delete'])) {
     $pfTimeslot->check($_POST['id'], DELETE);
     $ok = $pfTimeslot->delete($_POST);
     $pfTimeslot->redirectToList();
-} elseif (isset($_POST["purge"])) {
+} elseif (isset($_POST['purge'])) {
     $pfTimeslot->check($_POST['id'], PURGE);
     $pfTimeslot->delete($_POST, 1);
     $pfTimeslot->redirectToList();
 
-   //update a timeslot
-} elseif (isset($_POST["update"])) {
+    //update a timeslot
+} elseif (isset($_POST['update'])) {
     $pfTimeslot->check($_POST['id'], UPDATE);
     $pfTimeslot->update($_POST);
     Html::back();
@@ -69,12 +69,12 @@ if (isset($_POST["add"])) {
     Html::header(
         PluginGlpiinventoryTimeslot::getTypeName(2),
         $_SERVER['PHP_SELF'],
-        "admin",
-        "pluginglpiinventorymenu",
-        "timeslot"
+        'admin',
+        'pluginglpiinventorymenu',
+        'timeslot',
     );
 
-    PluginGlpiinventoryMenu::displayMenu("mini");
-    $pfTimeslot->display(['id' => $_GET["id"]]);
+    PluginGlpiinventoryMenu::displayMenu('mini');
+    $pfTimeslot->display(['id' => $_GET['id']]);
     Html::footer();
 }

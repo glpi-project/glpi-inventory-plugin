@@ -31,16 +31,16 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdownlocation.php")) {
-    include("../../../inc/includes.php");
-    header("Content-Type: text/html; charset=UTF-8");
+if (strpos($_SERVER['PHP_SELF'], 'dropdownlocation.php')) {
+    include('../../../inc/includes.php');
+    header('Content-Type: text/html; charset=UTF-8');
     Html::header_nocache();
 }
 
 Session::checkCentralAccess();
 
 $pfDeployMirror = new PluginGlpiinventoryDeployMirror();
-$id = filter_input(INPUT_POST, "id");
+$id             = filter_input(INPUT_POST, 'id');
 if ($id != '') {
     $pfDeployMirror->getFromDB($id);
 } else {
@@ -49,8 +49,8 @@ if ($id != '') {
 
 Location::dropdown(
     [
-            'value'        => $pfDeployMirror->fields["locations_id"],
-            'entity'       => $pfDeployMirror->fields["entities_id"],
-            'entity_sons'  => filter_input(INPUT_POST, "is_recursive"),
-         ]
+        'value'       => $pfDeployMirror->fields['locations_id'],
+        'entity'      => $pfDeployMirror->fields['entities_id'],
+        'entity_sons' => filter_input(INPUT_POST, 'is_recursive'),
+    ],
 );

@@ -40,13 +40,12 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryComputer extends Computer
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
-    public static $rightname = "plugin_glpiinventory_group";
-
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
+    public static $rightname = 'plugin_glpiinventory_group';
 
     public function rawSearchOptions()
     {
@@ -57,15 +56,15 @@ class PluginGlpiinventoryComputer extends Computer
         if ($plugin->isInstalled('fields')) {
             if ($plugin->isActivated('fields')) {
                 // Include Fields hook from correct installation folder (marketplace or plugins)
-                include_once(Plugin::GetPhpDir("fields") . "/hook.php");
+                include_once(Plugin::GetPhpDir('fields') . '/hook.php');
                 $options['fields_plugin'] = [
-                 'id'   => 'fields_plugin',
-                 'name' => __('Plugin fields')
+                    'id'   => 'fields_plugin',
+                    'name' => __('Plugin fields'),
                 ];
                 /** @phpstan-ignore-next-line */
-                $fieldsoptions =  plugin_fields_getAddSearchOptions('Computer');
+                $fieldsoptions = plugin_fields_getAddSearchOptions('Computer');
                 foreach ($fieldsoptions as $id => $data) {
-                    $data['id'] = $id;
+                    $data['id']   = $id;
                     $options[$id] = $data;
                 }
             }
@@ -86,33 +85,30 @@ class PluginGlpiinventoryComputer extends Computer
         return 'glpi_computers';
     }
 
-
-   /**
-    * Define the standard massive actions to hide for this class
-    *
-    * @return array list of massive actions to hide
-    */
+    /**
+     * Define the standard massive actions to hide for this class
+     *
+     * @return array list of massive actions to hide
+     */
     public function getForbiddenStandardMassiveAction()
     {
-
         $forbidden   = parent::getForbiddenStandardMassiveAction();
         $forbidden[] = 'update';
         $forbidden[] = 'add';
         $forbidden[] = 'delete';
+
         return $forbidden;
     }
 
-
-   /**
-    * Execution code for massive action
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @param CommonDBTM $item item on which execute the code
-    * @param array $ids list of ID on which execute the code
-    */
+    /**
+     * Execution code for massive action
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @param CommonDBTM $item item on which execute the code
+     * @param array $ids list of ID on which execute the code
+     */
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
-
         $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
         switch ($ma->getAction()) {
             case 'add':
@@ -122,17 +118,17 @@ class PluginGlpiinventoryComputer extends Computer
                             !countElementsInTable(
                                 $group_item->getTable(),
                                 [
-                                'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
-                                'itemtype'                               => 'Computer',
-                                'items_id'                               => $key,
-                                ]
+                                    'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
+                                    'itemtype'                             => 'Computer',
+                                    'items_id'                             => $key,
+                                ],
                             )
                         ) {
                             $group_item->add([
-                            'plugin_glpiinventory_deploygroups_id'
-                            => $_POST['id'],
-                            'itemtype' => 'Computer',
-                            'items_id' => $key]);
+                                'plugin_glpiinventory_deploygroups_id'
+                                           => $_POST['id'],
+                                'itemtype' => 'Computer',
+                                'items_id' => $key]);
                             $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                         } else {
                             $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
@@ -142,15 +138,16 @@ class PluginGlpiinventoryComputer extends Computer
                         $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
                     }
                 }
+
                 return;
 
             case 'deleteitem':
                 foreach ($ids as $key) {
                     if (
                         $group_item->deleteByCriteria(['items_id' => $key,
-                                                       'itemtype' => 'Computer',
-                                                       'plugin_glpiinventory_deploygroups_id'
-                                                          => $_POST['item_items_id']])
+                            'itemtype'                            => 'Computer',
+                            'plugin_glpiinventory_deploygroups_id'
+                               => $_POST['item_items_id']])
                     ) {
                         $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                     } else {
@@ -160,22 +157,23 @@ class PluginGlpiinventoryComputer extends Computer
         }
     }
 
-
-   /**
-    * Display form related to the massive action selected
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @return boolean
-    */
+    /**
+     * Display form related to the massive action selected
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @return boolean
+     */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         if ($ma->getAction() == 'add') {
-            echo "<br><br>" . Html::submit(
+            echo '<br><br>' . Html::submit(
                 _x('button', 'Add'),
-                ['name' => 'massiveaction']
+                ['name' => 'massiveaction'],
             );
+
             return true;
         }
+
         return parent::showMassiveActionsSubForm($ma);
     }
 }

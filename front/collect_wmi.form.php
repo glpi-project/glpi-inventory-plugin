@@ -31,14 +31,14 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
 
-if (isset($_POST["add"])) {
+if (isset($_POST['add'])) {
     $pfCollect_Wmi->add($_POST);
     Html::back();
-} elseif (isset($_POST["delete_x"])) {
+} elseif (isset($_POST['delete_x'])) {
     $pfCollect_Wmi->delete($_POST);
     Html::back();
 }

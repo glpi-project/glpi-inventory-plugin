@@ -42,73 +42,73 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
 {
     public $type = 'registry';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Found entry', 'Found entries', $nb, 'glpiinventory');
     }
 
-   /**
-    * Get Hives of the registry
-    *
-    * @return array list of hives
-    */
+    /**
+     * Get Hives of the registry
+     *
+     * @return array list of hives
+     */
     public static function getHives()
     {
         return [
-         "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",
+            'HKEY_LOCAL_MACHINE' => 'HKEY_LOCAL_MACHINE',
         ];
     }
 
     public function getListHeaders()
     {
         return [
-         __('Name'),
-         __('Hive', 'glpiinventory'),
-         __("Path", "glpiinventory"),
-         __("Key", "glpiinventory"),
-         __("Action")
+            __('Name'),
+            __('Hive', 'glpiinventory'),
+            __('Path', 'glpiinventory'),
+            __('Key', 'glpiinventory'),
+            __('Action'),
         ];
     }
 
     public function displayOneRow($row = [])
     {
         return [
-         $row['name'],
-         $row['hive'],
-         $row['path'],
-         $row['key']
+            $row['name'],
+            $row['hive'],
+            $row['path'],
+            $row['key'],
         ];
     }
 
     public function displayNewSpecificities()
     {
-        echo "<td>" . __('Hive', 'glpiinventory') . "</td>";
-        echo "<td>";
+        echo '<td>' . __('Hive', 'glpiinventory') . '</td>';
+        echo '<td>';
         Dropdown::showFromArray(
             'hive',
-            PluginGlpiinventoryCollect_Registry::getHives()
+            PluginGlpiinventoryCollect_Registry::getHives(),
         );
-        echo "</td>";
+        echo '</td>';
         echo "</tr>\n";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>";
+        echo '<td>';
         echo __('Path', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
+        echo '</td>';
+        echo '<td>';
         echo "<input type='text' name='path' value='' size='80' />";
-        echo "</td>";
-        echo "<td>";
+        echo '</td>';
+        echo '<td>';
         echo __('Key', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
+        echo '</td>';
+        echo '<td>';
         echo "<input type='text' name='key' value='' />";
-        echo "</td>";
+        echo '</td>';
     }
 }

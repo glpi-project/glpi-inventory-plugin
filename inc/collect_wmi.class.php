@@ -42,12 +42,12 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
 {
     public $type = 'wmi';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Found WMI', 'Found WMIs', $nb, 'glpiinventory');
@@ -56,44 +56,44 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
     public function getListHeaders()
     {
         return [
-         __("Name"),
-         __("Moniker", "glpiinventory"),
-         __("Class", "glpiinventory"),
-         __("Properties", "glpiinventory"),
-         __("Action")
+            __('Name'),
+            __('Moniker', 'glpiinventory'),
+            __('Class', 'glpiinventory'),
+            __('Properties', 'glpiinventory'),
+            __('Action'),
         ];
     }
 
     public function displayOneRow($row = [])
     {
         return [
-         $row['name'],
-         $row['moniker'],
-         $row['class'],
-         $row['properties']
+            $row['name'],
+            $row['moniker'],
+            $row['class'],
+            $row['properties'],
         ];
     }
 
     public function displayNewSpecificities()
     {
-        echo "<td>" . __('moniker', 'glpiinventory') . "</td>";
-        echo "<td>";
+        echo '<td>' . __('moniker', 'glpiinventory') . '</td>';
+        echo '<td>';
         echo "<input type='text' name='moniker' value='' size='50' />";
-        echo "</td>";
+        echo '</td>';
         echo "</tr>\n";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>";
+        echo '<td>';
         echo __('Class', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
+        echo '</td>';
+        echo '<td>';
         echo "<input type='text' name='class' value='' />";
-        echo "</td>";
-        echo "<td>";
+        echo '</td>';
+        echo '<td>';
         echo __('Properties', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
+        echo '</td>';
+        echo '<td>';
         echo "<input type='text' name='properties' value='' size='50' />";
-        echo "</td>";
+        echo '</td>';
     }
 }

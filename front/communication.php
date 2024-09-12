@@ -32,11 +32,11 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-    include_once("../../../inc/includes.php");
+    include_once('../../../inc/includes.php');
 }
 
-if (!class_exists("PluginGlpiinventoryConfig")) {
-    header("Content-Type: application/xml");
+if (!class_exists('PluginGlpiinventoryConfig')) {
+    header('Content-Type: application/xml');
     echo "<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
    <ERROR>Plugin GLPI Inventory not installed!</ERROR>
@@ -46,11 +46,11 @@ if (!class_exists("PluginGlpiinventoryConfig")) {
 }
 
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-    ini_set("memory_limit", "-1");
-    ini_set("max_execution_time", "0");
+    ini_set('memory_limit', '-1');
+    ini_set('max_execution_time', '0');
     ini_set('display_errors', 1);
 
-    if (session_id() == "") {
+    if (session_id() == '') {
         session_start();
     }
 
@@ -61,11 +61,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
     $_SESSION['glpi_glpiinventory_nolock'] = true;
     ini_set('display_errors', 'On');
     error_reporting(E_ALL | E_STRICT);
-    $_SESSION['glpi_use_mode'] = 0;
-    $_SESSION['glpiparententities'] = '';
+    $_SESSION['glpi_use_mode']       = 0;
+    $_SESSION['glpiparententities']  = '';
     $_SESSION['glpishowallentities'] = true;
 
-    header("server-type: glpi/glpiinventory " . PLUGIN_GLPIINVENTORY_VERSION);
+    header('server-type: glpi/glpiinventory ' . PLUGIN_GLPIINVENTORY_VERSION);
 
     PluginGlpiinventoryCommunicationRest::handleFusionCommunication();
 } else {

@@ -40,66 +40,65 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
-    public static $rightname = "plugin_glpiinventory_group";
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
+    public static $rightname = 'plugin_glpiinventory_group';
 
-   /**
-    * Itemtype of the item linked
-    *
-    * @var string
-    */
+    /**
+     * Itemtype of the item linked
+     *
+     * @var string
+     */
     public static $itemtype = 'PluginGlpiinventoryDeployGroup';
 
-   /**
-    * id field of the item linked
-    *
-    * @var string
-    */
+    /**
+     * id field of the item linked
+     *
+     * @var string
+     */
     public static $items_id = 'plugin_glpiinventory_deploygroups_id';
 
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-
         /** @var CommonDBTM $item */
         if (
             !$withtemplate
             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP
         ) {
             $tabs[1] = _n('Criterion', 'Criteria', 2);
-           // Get the count of matching items
+            // Get the count of matching items
             $count = self::getMatchingItemsCount($item);
             if ($_SESSION['glpishow_count_on_tabs']) {
                 $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
             } else {
                 $tabs[2] = _n('Associated item', 'Associated items', $count);
             }
+
             return $tabs;
         }
+
         return '';
     }
 
-
-   /**
-    * Get the count of items matching the dynamic search criteria
-    *
-    * This function saves and restores the pagination parameters to avoid breaking the pagination in the
-    * query results.
-    *
-    * @param CommonGLPI $item the item object
-    * @return string name of the tab
-    */
+    /**
+     * Get the count of items matching the dynamic search criteria
+     *
+     * This function saves and restores the pagination parameters to avoid breaking the pagination in the
+     * query results.
+     *
+     * @param CommonGLPI $item the item object
+     * @return string name of the tab
+     */
     public function getMatchingItemsCount(CommonGLPI $item)
     {
         // Save pagination parameters
@@ -110,7 +109,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             }
         }
 
-        $params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+        $params                                             = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
         $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
         if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
             $params['metacriteria'] = [];
@@ -125,37 +124,37 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         foreach ($pagination_params as $key => $value) {
             $_SESSION['glpisearch']['Computer'][$field] = $pagination_params[$field];
         }
+
         return $data['data']['totalcount'];
     }
 
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         switch ($tabnum) {
             case 1:
                 self::showCriteriaAndSearch($item);
+
                 return true;
 
             case 2:
-               // Save pagination parameters
+                // Save pagination parameters
                 $pagination_params = [];
                 foreach (['sort', 'order', 'start'] as $field) {
                     if (isset($_SESSION['glpisearch']['Computer'][$field])) {
                         $pagination_params[$field] = $_SESSION['glpisearch']['Computer'][$field];
                     }
                 }
-                $params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+                $params                                             = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
                 $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-               // Include pagination parameters in the provided parameters
+                // Include pagination parameters in the provided parameters
                 foreach ($pagination_params as $key => $value) {
                     $params[$key] = $value;
                 }
@@ -164,32 +163,33 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 }
                 $params['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
                 self::showList('Computer', $params, []);
+
                 return true;
         }
+
         return false;
     }
 
-
-   /**
-    * Display criteria form + list of computers
-    *
-    * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
-    *
-    * @return void
-    */
+    /**
+     * Display criteria form + list of computers
+     *
+     * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
+     *
+     * @return void
+     */
     public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
     {
-       // Save pagination parameters
+        // Save pagination parameters
         $pagination_params = [];
         foreach (['sort', 'order', 'start'] as $field) {
             if (isset($_SESSION['glpisearch']['Computer'][$field])) {
                 $pagination_params[$field] = $_SESSION['glpisearch']['Computer'][$field];
             }
         }
-       // WITHOUT checking post values
+        // WITHOUT checking post values
         $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
-       //If metacriteria array is empty, remove it as it displays the metacriteria form,
-       //and it is not we want !
+        //If metacriteria array is empty, remove it as it displays the metacriteria form,
+        //and it is not we want !
         if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
             unset($search_params['metacriteria']);
         }
@@ -201,14 +201,13 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         echo '</div>';
     }
 
-
-   /**
-    * Display list of computers in the group
-    *
-    * @param string $itemtype
-    * @param array $params
-    * @param array $forcedisplay
-    */
+    /**
+     * Display list of computers in the group
+     *
+     * @param string $itemtype
+     * @param array $params
+     * @param array $forcedisplay
+     */
     public static function showList($itemtype, $params, $forcedisplay)
     {
         $data = Search::prepareDatasForSearch('Computer', $params, $forcedisplay);
@@ -218,15 +217,14 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         Search::displayData($data);
     }
 
-
-   /**
-    * Get data, so computer list
-    *
-    * @param string $itemtype
-    * @param array $params
-    * @param array $forcedisplay
-    * @return array
-    */
+    /**
+     * Get data, so computer list
+     *
+     * @param string $itemtype
+     * @param array $params
+     * @param array $forcedisplay
+     * @return array
+     */
     public static function getDatas($itemtype, $params, array $forcedisplay = [])
     {
         $data = Search::prepareDatasForSearch('Computer', $params, $forcedisplay);
@@ -236,16 +234,15 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         return $data;
     }
 
-
-   /**
-    * Get computers belonging to a dynamic group
-    *
-    * @since 0.85+1.0
-    *
-    * @param PluginGlpiinventoryDeployGroup $group the group object
-    * @param boolean $use_cache retrieve computers_id from cache (computers_id_cache field)
-    * @return array of computer ids
-    */
+    /**
+     * Get computers belonging to a dynamic group
+     *
+     * @since 0.85+1.0
+     *
+     * @param PluginGlpiinventoryDeployGroup $group the group object
+     * @param boolean $use_cache retrieve computers_id from cache (computers_id_cache field)
+     * @return array of computer ids
+     */
     public static function getTargetsByGroup(PluginGlpiinventoryDeployGroup $group, $use_cache = false)
     {
         $ids = [];
@@ -263,12 +260,12 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             $results = self::getDatas(
                 'Computer',
                 $search_params,
-                ['2']
+                ['2'],
             );
 
 
             foreach ($results['data']['rows'] as $id => $row) {
-                 $ids[$row['id']] = $row['id'];
+                $ids[$row['id']] = $row['id'];
             }
 
             //store results in cache (for reusing on agent communication)
@@ -278,13 +275,12 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         return $ids;
     }
 
-
-   /**
-    * Store a set of computers id in db
-    * @param  PluginGlpiinventoryDeployGroup $group the instance of fi group
-    * @param  array                            $ids   the list of id to store
-    * @return bool
-    */
+    /**
+     * Store a set of computers id in db
+     * @param  PluginGlpiinventoryDeployGroup $group the instance of fi group
+     * @param  array                            $ids   the list of id to store
+     * @return bool
+     */
     public static function storeCache(PluginGlpiinventoryDeployGroup $group, $ids = [])
     {
         global $DB;
@@ -292,21 +288,21 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         $result = $DB->update(
             self::getTable(),
             [
-            'computers_id_cache' => $DB->escape(json_encode($ids))
+                'computers_id_cache' => $DB->escape(json_encode($ids)),
             ],
             [
-            'plugin_glpiinventory_deploygroups_id' => $group->getID()
-            ]
+                'plugin_glpiinventory_deploygroups_id' => $group->getID(),
+            ],
         );
+
         return $result;
     }
 
-
-   /**
-    * Retrieve the id of computer stored in db for a group
-    * @param  PluginGlpiinventoryDeployGroup $group the instance of the group
-    * @return array                            the list of compuers id
-    */
+    /**
+     * Retrieve the id of computer stored in db for a group
+     * @param  PluginGlpiinventoryDeployGroup $group the instance of the group
+     * @return array                            the list of compuers id
+     */
     public static function retrieveCache(PluginGlpiinventoryDeployGroup $group)
     {
         global $DB;
@@ -314,7 +310,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         $ids  = false;
         $data = getAllDataFromTable(
             self::getTable(),
-            ['plugin_glpiinventory_deploygroups_id' => $group->getID()]
+            ['plugin_glpiinventory_deploygroups_id' => $group->getID()],
         );
         if (count($data)) {
             $first = array_shift($data);
@@ -324,13 +320,12 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         return $ids;
     }
 
-
-   /**
-   * Duplicate entries from one group to another
-   * @param integer $source_deploygroups_id the source group ID
-   * @param integer $target_deploygroups_id the target group ID
-   * @return boolean the duplication status
-   */
+    /**
+    * Duplicate entries from one group to another
+    * @param integer $source_deploygroups_id the source group ID
+    * @param integer $target_deploygroups_id the target group ID
+    * @return boolean the duplication status
+    */
     public static function duplicate($source_deploygroups_id, $target_deploygroups_id)
     {
         $result         = true;
@@ -345,6 +340,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 $result = false;
             }
         }
+
         return $result;
     }
 }

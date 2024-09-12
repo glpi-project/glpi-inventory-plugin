@@ -31,15 +31,15 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 if (PluginGlpiinventoryMenu::canView()) {
     Html::header(
         __('GLPI Inventory', 'glpiinventory'),
-        $_SERVER["PHP_SELF"],
-        "admin",
-        "glpiinventory",
-        "menu"
+        $_SERVER['PHP_SELF'],
+        'admin',
+        'glpiinventory',
+        'menu',
     );
 
     PluginGlpiinventoryMenu::displayMenu();

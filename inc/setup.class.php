@@ -40,12 +40,12 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventorySetup
 {
-   /**
-    * Uninstall process when uninstall the plugin
-    *
-    * @global object $DB
-    * @return true
-    */
+    /**
+     * Uninstall process when uninstall the plugin
+     *
+     * @global object $DB
+     * @return true
+     */
     public static function uninstall()
     {
         global $DB;
@@ -53,12 +53,12 @@ class PluginGlpiinventorySetup
         CronTask::Unregister('glpiinventory');
         PluginGlpiinventoryProfile::uninstallProfile();
 
-        $pfSetup  = new PluginGlpiinventorySetup();
-        $user     = new User();
+        $pfSetup = new PluginGlpiinventorySetup();
+        $user    = new User();
 
         if (class_exists('PluginGlpiinventoryConfig')) {
-            $inventory_config      = new PluginGlpiinventoryConfig();
-            $users_id = $inventory_config->getValue('users_id');
+            $inventory_config = new PluginGlpiinventoryConfig();
+            $users_id         = $inventory_config->getValue('users_id');
             $user->delete(['id' => $users_id], 1);
         }
 
@@ -66,15 +66,15 @@ class PluginGlpiinventorySetup
             $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
         }
 
-        $result = $DB->doQuery("SHOW TABLES;");
+        $result = $DB->doQuery('SHOW TABLES;');
         while ($data = $DB->fetchArray($result)) {
             if (
-                (strstr($data[0], "glpi_plugin_glpiinventory_"))
-                 or (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
-                 or (strstr($data[0], "glpi_plugin_fusinvinventory_"))
-                or (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
-                or (strstr($data[0], "glpi_plugin_tracker"))
-                or (strstr($data[0], "glpi_dropdown_plugin_tracker"))
+                (strstr($data[0], 'glpi_plugin_glpiinventory_'))
+                 or (strstr($data[0], 'glpi_plugin_fusinvsnmp_'))
+                 or (strstr($data[0], 'glpi_plugin_fusinvinventory_'))
+                 or (strstr($data[0], 'glpi_dropdown_plugin_fusioninventory'))
+                 or (strstr($data[0], 'glpi_plugin_tracker'))
+                 or (strstr($data[0], 'glpi_dropdown_plugin_tracker'))
             ) {
                 $DB->dropTable($data[0]) or die($DB->error());
             }
@@ -83,21 +83,21 @@ class PluginGlpiinventorySetup
         $DB->deleteOrDie(
             'glpi_displaypreferences',
             [
-            'itemtype' => ['LIKE', 'PluginGlpiinventory%']
-            ]
+                'itemtype' => ['LIKE', 'PluginGlpiinventory%'],
+            ],
         );
 
         //Remove information related to profiles from the session (to clean menu and breadcrumb)
         PluginGlpiinventoryProfile::removeRightsFromSession();
+
         return true;
     }
 
-
-   /**
-    * Remove a directory and subdirectory
-    *
-    * @param string $dir name of the directory
-    */
+    /**
+     * Remove a directory and subdirectory
+     *
+     * @param string $dir name of the directory
+     */
     public function rrmdir($dir)
     {
         $pfSetup = new PluginGlpiinventorySetup();
@@ -105,11 +105,11 @@ class PluginGlpiinventorySetup
         if (is_dir($dir)) {
             $objects = scandir($dir);
             foreach ($objects as $object) {
-                if ($object != "." && $object != "..") {
-                    if (filetype($dir . "/" . $object) == "dir") {
-                        $pfSetup->rrmdir($dir . "/" . $object);
+                if ($object != '.' && $object != '..') {
+                    if (filetype($dir . '/' . $object) == 'dir') {
+                        $pfSetup->rrmdir($dir . '/' . $object);
                     } else {
-                        unlink($dir . "/" . $object);
+                        unlink($dir . '/' . $object);
                     }
                 }
             }
@@ -118,24 +118,25 @@ class PluginGlpiinventorySetup
         }
     }
 
-
-   /**
-    * Creation of user
-    *
-    * @return integer id of the user "Plugin GLPI Inventory"
-    */
+    /**
+     * Creation of user
+     *
+     * @return integer id of the user "Plugin GLPI Inventory"
+     */
     public function createGlpiInventoryUser()
     {
-        $user = new User();
+        $user    = new User();
         $a_users = $user->find(['name' => 'Plugin_GLPI_Inventory']);
         if (count($a_users) == '0') {
-            $input = [];
-            $input['name'] = 'Plugin_GLPI_Inventory';
-            $input['password'] = mt_rand(30, 39);
-            $input['firstname'] = "Plugin GLPI Inventory";
+            $input              = [];
+            $input['name']      = 'Plugin_GLPI_Inventory';
+            $input['password']  = mt_rand(30, 39);
+            $input['firstname'] = 'Plugin GLPI Inventory';
+
             return $user->add($input);
         } else {
             $user = current($a_users);
+
             return $user['id'];
         }
     }

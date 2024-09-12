@@ -31,20 +31,20 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Session::checkRight('plugin_glpiinventory_configuration', READ);
 
 Html::header(
     __('Features', 'glpiinventory'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "pluginglpiinventorymenu",
-    "menu"
+    $_SERVER['PHP_SELF'],
+    'admin',
+    'pluginglpiinventorymenu',
+    'menu',
 );
 
 
-PluginGlpiinventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu('mini');
 
 $pfConfig = new PluginGlpiinventoryConfig();
 

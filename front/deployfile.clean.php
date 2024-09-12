@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Session::checkLoginUser();
 
@@ -39,10 +39,10 @@ Session::checkRight('plugin_glpiinventory_package', PURGE);
 
 Html::header(
     __('GLPI Inventory DEPLOY'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "pluginglpiinventorymenu",
-    "deploypackage"
+    $_SERVER['PHP_SELF'],
+    'admin',
+    'pluginglpiinventorymenu',
+    'deploypackage',
 );
 
 $pfDeployfile = new PluginGlpiinventoryDeployFile();
@@ -52,12 +52,12 @@ if (isset($_GET['delete'])) {
     Html::back();
 }
 
-PluginGlpiinventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu('mini');
 
 $pfDeployfile->numberUnusedFiles();
 
-echo "<center>";
+echo '<center>';
 echo "<a href='" . $_SERVER['PHP_SELF'] . "?delete=1' class='vsubmit'>Delete unused files</a>";
-echo "</center>";
+echo '</center>';
 
 Html::footer();

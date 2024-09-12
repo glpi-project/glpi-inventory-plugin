@@ -31,20 +31,20 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdownactionselection.php")) {
-    include("../../../inc/includes.php");
-    header("Content-Type: text/html; charset=UTF-8");
+if (strpos($_SERVER['PHP_SELF'], 'dropdownactionselection.php')) {
+    include('../../../inc/includes.php');
+    header('Content-Type: text/html; charset=UTF-8');
     Html::header_nocache();
 }
 if (!defined('GLPI_ROOT')) {
-    die("Can not acces directly to this file");
+    die('Can not acces directly to this file');
 }
 Session::checkCentralAccess();
 
 echo "<script type='text/javascript'>
 var select = document.getElementById('actionlist');
-var obj = document.getElementById('" . filter_input(INPUT_POST, "actionselectadd") . "');
-var actiontype = document.getElementById('" . filter_input(INPUT_POST, "actiontypeid") . "');
+var obj = document.getElementById('" . filter_input(INPUT_POST, 'actionselectadd') . "');
+var actiontype = document.getElementById('" . filter_input(INPUT_POST, 'actiontypeid') . "');
 
 var list = document.getElementById('actionselection').innerHTML;
 

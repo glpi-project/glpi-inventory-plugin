@@ -31,11 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
-$loggedin = [];
+$loggedin           = [];
 $loggedin['result'] = 1;
-if (!isset($_SESSION["glpiname"])) {
+if (!isset($_SESSION['glpiname'])) {
     if (!getLoginUserID()) {
         $loggedin['result'] = 0;
     }

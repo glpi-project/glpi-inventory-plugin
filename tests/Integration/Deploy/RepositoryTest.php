@@ -35,17 +35,16 @@ use PHPUnit\Framework\TestCase;
 
 class RepositoryTest extends TestCase
 {
-    private $packages_1_id   = 0;
-    private $packages_2_id   = 0;
-    private $filename        = "";
-    private $sha512          = "";
+    private $packages_1_id = 0;
+    private $packages_2_id = 0;
+    private $filename      = '';
+    private $sha512        = '';
 
     public static function setUpBeforeClass(): void
     {
-
-       // Delete all packages
+        // Delete all packages
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $items = $pfDeployPackage->find();
+        $items           = $pfDeployPackage->find();
         foreach ($items as $item) {
             $pfDeployPackage->delete(['id' => $item['id']], true);
         }
@@ -53,143 +52,140 @@ class RepositoryTest extends TestCase
 
     protected function setUp(): void
     {
-
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
-       // create a package
+        // create a package
         $this->packages_1_id = $pfDeployPackage->add([
-         'name' => 'test package 1',
-         'entities_id' => 0
+            'name'        => 'test package 1',
+            'entities_id' => 0,
         ]);
         $this->assertNotFalse($this->packages_1_id);
 
-       // create a second package
+        // create a second package
         $this->packages_2_id = $pfDeployPackage->add([
-         'name' => 'test package 2',
-         'entities_id' => 0
+            'name'        => 'test package 2',
+            'entities_id' => 0,
         ]);
         $this->assertNotFalse($this->packages_2_id);
 
-       // get plugin config
-        $config = new PluginGlpiinventoryConfig();
-        $server_upload_path = $config->getValue("server_upload_path");
+        // get plugin config
+        $config             = new PluginGlpiinventoryConfig();
+        $server_upload_path = $config->getValue('server_upload_path');
 
-       // create a file in upload folder
-        $this->filename = $server_upload_path . "/file1";
-        $file_created = file_put_contents($this->filename, "test repository");
+        // create a file in upload folder
+        $this->filename = $server_upload_path . '/file1';
+        $file_created   = file_put_contents($this->filename, 'test repository');
         $this->assertNotFalse($file_created);
         $this->sha512 = hash_file('sha512', $this->filename);
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function cleanFiles()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployFile    = new PluginGlpiinventoryDeployFile();
 
-       // create a file for this package
+        // create a file for this package
         $data_file = [
-         'id'        => $this->packages_1_id,
-         'itemtype'  => 'PluginGlpiinventoryDeployFile',
-         'filestype' => 'Server',
-         'filename'  => $this->filename,
+            'id'        => $this->packages_1_id,
+            'itemtype'  => 'PluginGlpiinventoryDeployFile',
+            'filestype' => 'Server',
+            'filename'  => $this->filename,
         ];
         $ret = PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
         $this->assertTrue($ret, 'File not right added');
 
-       // check json of the package
+        // check json of the package
         $pfDeployPackage->getFromDB($this->packages_1_id);
         $json = json_decode($pfDeployPackage->fields['json'], true);
         $this->assertTrue(isset($json['associatedFiles'][$this->sha512]));
 
-       // retrieve the sha512 of the single part
+        // retrieve the sha512 of the single part
         $sha512_part = trim(file_get_contents(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $this->sha512), "\n");
-        $fulldir  = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR .
+        $fulldir     = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR .
                      $pfDeployFile->getDirBySha512($sha512_part);
         $firstdir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . substr($sha512_part, 0, 1);
 
-       // check the directories are created
+        // check the directories are created
         $this->asserttrue(is_dir($fulldir));
         $this->asserttrue(is_dir($firstdir));
 
-       // check presence of file in repo
+        // check presence of file in repo
         $this->assertTrue($pfDeployFile->checkPresenceFile($this->sha512));
 
-       // add the same file to the second package
+        // add the same file to the second package
         $data_file['id'] = $this->packages_2_id;
         PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
 
-       // remove file from the first package
+        // remove file from the first package
         $data_file = [
-         'packages_id'     => $this->packages_1_id,
-         'itemtype'        => 'PluginGlpiinventoryDeployFile',
-         'file_entries'    => [0 => 1]
+            'packages_id'  => $this->packages_1_id,
+            'itemtype'     => 'PluginGlpiinventoryDeployFile',
+            'file_entries' => [0 => 1],
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
 
-       // check json of the package
+        // check json of the package
         $pfDeployPackage->getFromDB($this->packages_1_id);
         $json = json_decode($pfDeployPackage->fields['json'], true);
         $this->assertFalse(isset($json['associatedFiles'][$this->sha512]));
 
-       // check presence of file in repo
-       // it must be still here, the file is used in package 2
+        // check presence of file in repo
+        // it must be still here, the file is used in package 2
         $this->assertTrue($pfDeployFile->checkPresenceFile($this->sha512));
 
-       // remove file from the second package
+        // remove file from the second package
         $data_file = [
-         'packages_id'     => $this->packages_2_id,
-         'itemtype'        => 'PluginGlpiinventoryDeployFile',
-         'file_entries'    => [0 => 1]
+            'packages_id'  => $this->packages_2_id,
+            'itemtype'     => 'PluginGlpiinventoryDeployFile',
+            'file_entries' => [0 => 1],
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
 
-       // check json of the package
+        // check json of the package
         $pfDeployPackage->getFromDB($this->packages_2_id);
         $json = json_decode($pfDeployPackage->fields['json'], true);
         $this->assertFalse(isset($json['associatedFiles'][$this->sha512]));
 
-       // check presence of file in repo
-       // Now, we removed it from both package, it must be removed from repository
+        // check presence of file in repo
+        // Now, we removed it from both package, it must be removed from repository
         $this->assertFalse($pfDeployFile->checkPresenceFile($this->sha512));
 
-       // check the previous directories created in repository are cleaned
+        // check the previous directories created in repository are cleaned
         $this->assertFalse(is_dir($fulldir));
         $this->assertFalse(is_dir($firstdir));
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function cleanPackage()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployFile    = new PluginGlpiinventoryDeployFile();
 
-       // create a file and it to both packages
+        // create a file and it to both packages
         $data_file = [
-         'id'        => $this->packages_1_id,
-         'itemtype'  => 'PluginGlpiinventoryDeployFile',
-         'filestype' => 'Server',
-         'filename'  => $this->filename,
+            'id'        => $this->packages_1_id,
+            'itemtype'  => 'PluginGlpiinventoryDeployFile',
+            'filestype' => 'Server',
+            'filename'  => $this->filename,
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
         $data_file['id'] = $this->packages_2_id;
         PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
 
-       // remove a package and check presence of file
+        // remove a package and check presence of file
         $pfDeployPackage->delete([
-         'id' => $this->packages_1_id
+            'id' => $this->packages_1_id,
         ], true);
         $this->assertTrue($pfDeployFile->checkPresenceFile($this->sha512));
 
-       // remove a package and check absence of file
+        // remove a package and check absence of file
         $pfDeployPackage->delete([
-         'id' => $this->packages_2_id
+            'id' => $this->packages_2_id,
         ], true);
         $this->assertfalse($pfDeployFile->checkPresenceFile($this->sha512));
     }

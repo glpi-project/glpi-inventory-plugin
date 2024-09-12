@@ -31,19 +31,19 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "pluginglpiinventorymenu",
-    "taskjoblog"
+    $_SERVER['PHP_SELF'],
+    'admin',
+    'pluginglpiinventorymenu',
+    'taskjoblog',
 );
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
-PluginGlpiinventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu('mini');
 
 Search::show('PluginGlpiinventoryTaskjoblog');
 

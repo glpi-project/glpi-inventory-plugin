@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-require_once("DatabaseTestsCommons.php");
+require_once('DatabaseTestsCommons.php');
 
 use PHPUnit\Framework\TestCase;
 
@@ -39,34 +39,34 @@ class InstallationTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // clean log files
-        file_put_contents("../../files/_log/php-errors.log", '');
-        file_put_contents("../../files/_log/sql-errors.log", '');
+        // clean log files
+        file_put_contents('../../files/_log/php-errors.log', '');
+        file_put_contents('../../files/_log/sql-errors.log', '');
     }
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testInstall()
     {
         global $DB;
 
-       // Delete if Table of FusionInventory or Tracker yet in DB
-        $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
+        // Delete if Table of FusionInventory or Tracker yet in DB
+        $query  = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
         $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
-            if (strstr($data[0], "fusi")) {
+            if (strstr($data[0], 'fusi')) {
                 $DB->dropView($data[0]);
             }
         }
 
-        $query = "SHOW TABLES";
+        $query  = 'SHOW TABLES';
         $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
             if (
-                strstr($data[0], "tracker")
-                || strstr($data[0], "fusi")
-                || strstr($data[0], "glpiinventory")
+                strstr($data[0], 'tracker')
+                || strstr($data[0], 'fusi')
+                || strstr($data[0], 'glpiinventory')
             ) {
                 $DB->dropTable($data[0]);
             }
@@ -75,20 +75,19 @@ class InstallationTest extends TestCase
         $this->install();
     }
 
-
     protected function install()
     {
-        $output     = [];
-        $returncode = 0;
+        $output             = [];
+        $returncode         = 0;
         $outputActivate     = [];
         $returncodeActivate = 0;
-        $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory";
+        $command            = 'cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory';
         exec($command, $output, $returncode);
 
-        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory";
+        $commandActivate = 'cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory';
         exec($commandActivate, $outputActivate, $returncodeActivate);
 
-       // Check if errors in logs
+        // Check if errors in logs
         $GLPIlog = new GLPIlogs();
         $GLPIlog->testSQLlogs();
         $GLPIlog->testPHPlogs();
@@ -97,11 +96,11 @@ class InstallationTest extends TestCase
             0,
             $returncode,
             "Error when installing plugin in CLI mode\n" .
-            implode("\n", $output) . "\n" . $command . "\n"
+            implode("\n", $output) . "\n" . $command . "\n",
         );
 
         $DatabaseTestsCommonsTest = new DatabaseTestsCommons();
-        $DatabaseTestsCommonsTest->checkInstall("glpiinventory", "install new version");
+        $DatabaseTestsCommonsTest->checkInstall('glpiinventory', 'install new version');
 
         PluginGlpiinventoryConfig::loadCache();
     }

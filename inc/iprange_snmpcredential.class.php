@@ -40,56 +40,55 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
 {
-   /**
-    * Itemtype for the first part of relation
-    *
-    * @var string
-    */
-    public static $itemtype_1    = 'PluginGlpiinventoryIPRange';
+    /**
+     * Itemtype for the first part of relation
+     *
+     * @var string
+     */
+    public static $itemtype_1 = 'PluginGlpiinventoryIPRange';
 
-   /**
-    * id field name for the first part of relation
-    *
-    * @var string
-    */
-    public static $items_id_1    = 'plugin_glpiinventory_ipranges_id';
+    /**
+     * id field name for the first part of relation
+     *
+     * @var string
+     */
+    public static $items_id_1 = 'plugin_glpiinventory_ipranges_id';
 
-   /**
-    * Restrict the first item to the current entity
-    *
-    * @var string
-    */
+    /**
+     * Restrict the first item to the current entity
+     *
+     * @var string
+     */
     public static $take_entity_1 = true;
 
-   /**
-    * Itemtype for the second part of relation
-    *
-    * @var string
-    */
-    public static $itemtype_2    = 'SNMPCredential';
+    /**
+     * Itemtype for the second part of relation
+     *
+     * @var string
+     */
+    public static $itemtype_2 = 'SNMPCredential';
 
-   /**
-    * id field name for the second part of relation
-    *
-    * @var string
-    */
-    public static $items_id_2    = 'snmpcredentials_id';
+    /**
+     * id field name for the second part of relation
+     *
+     * @var string
+     */
+    public static $items_id_2 = 'snmpcredentials_id';
 
-   /**
-    * Not restrict the second item to the current entity
-    *
-    * @var string
-    */
+    /**
+     * Not restrict the second item to the current entity
+     *
+     * @var string
+     */
     public static $take_entity_2 = false;
 
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
@@ -99,55 +98,55 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
                 $nb = countElementsInTable(
                     PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
                     [
-                        'plugin_glpiinventory_ipranges_id' => $item->getID()
-                    ]
+                        'plugin_glpiinventory_ipranges_id' => $item->getID(),
+                    ],
                 );
             }
+
             return self::createTabEntry(__('Associated SNMP credentials', 'glpiinventory'), $nb);
         }
+
         return '';
     }
 
-
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return true
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return true
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pfIPRange_credentials = new self();
         $pfIPRange_credentials->showItemForm($item);
+
         return true;
     }
 
-
-   /**
-    * Get standard massive action forbidden (hide in massive action list)
-    *
-    * @return array
-    */
+    /**
+     * Get standard massive action forbidden (hide in massive action list)
+     *
+     * @return array
+     */
     public function getForbiddenStandardMassiveAction()
     {
-        $forbidden = parent::getForbiddenStandardMassiveAction();
+        $forbidden   = parent::getForbiddenStandardMassiveAction();
         $forbidden[] = 'update';
+
         return $forbidden;
     }
 
-
-   /**
-    * Display form
-    *
-    * @param CommonDBTM $item
-    * @param array $options
-    * @return boolean
-    */
+    /**
+     * Display form
+     *
+     * @param CommonDBTM $item
+     * @param array $options
+     * @return boolean
+     */
     public function showItemForm(CommonDBTM $item, array $options = [])
     {
-
         $ID = $item->getField('id');
 
         if ($item->isNewID($ID)) {
@@ -162,11 +161,11 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
         $a_data = getAllDataFromTable(
             self::getTable(),
             [
-            'WHERE' => [
-               'plugin_glpiinventory_ipranges_id' => $item->getID()
+                'WHERE' => [
+                    'plugin_glpiinventory_ipranges_id' => $item->getID(),
+                ],
+                'ORDER' => 'rank',
             ],
-            'ORDER' => 'rank'
-            ]
         );
         $a_used = [];
         foreach ($a_data as $data) {
@@ -178,27 +177,27 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr class='tab_bg_2'>";
-        echo "<th colspan='2'>" . __('Add SNMP credentials') . "</th>";
-        echo "</tr>";
+        echo "<th colspan='2'>" . __('Add SNMP credentials') . '</th>';
+        echo '</tr>';
         echo "<tr class='tab_bg_2'>";
-        echo "<td>";
+        echo '<td>';
         Dropdown::show(SNMPCredential::getType(), ['used' => $a_used]);
-        echo "</td>";
-        echo "<td>";
+        echo '</td>';
+        echo '<td>';
         echo Html::hidden(
             'plugin_glpiinventory_ipranges_id',
-            ['value' => $item->getID()]
+            ['value' => $item->getID()],
         );
         echo "<input type='submit' name='add' value=\"" .
           _sx('button', 'Associate') . "\" class='submit'>";
-        echo "</td>";
-        echo "</tr>";
+        echo '</td>';
+        echo '</tr>';
 
-        echo "</table>";
+        echo '</table>';
         Html::closeForm();
-        echo "</div>";
+        echo '</div>';
 
-       // Display list of auth associated with IP range
+        // Display list of auth associated with IP range
         $rand = mt_rand();
 
         echo "<div class='spaced'>";
@@ -208,41 +207,42 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr class='tab_bg_2'>";
-        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
-        echo "<th>";
+        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . '</th>';
+        echo '<th>';
         echo __('SNMP credentials', 'glpiinventory');
-        echo "</th>";
-        echo "<th>";
+        echo '</th>';
+        echo '<th>';
         echo __('Version', 'glpiinventory');
-        echo "</th>";
-        echo "<th>";
+        echo '</th>';
+        echo '<th>';
         echo __('By order of priority', 'glpiinventory');
-        echo "</th>";
-        echo "</tr>";
+        echo '</th>';
+        echo '</tr>';
 
         $credentials = new SNMPCredential();
         foreach ($a_data as $data) {
             if ($credentials->getFromDB($data['snmpcredentials_id'])) {
                 echo "<tr class='tab_bg_2'>";
-                echo "<td>";
-                Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
-                echo "</td>";
-                echo "<td>";
+                echo '<td>';
+                Html::showMassiveActionCheckBox(__CLASS__, $data['id']);
+                echo '</td>';
+                echo '<td>';
                 echo $credentials->getLink();
-                echo "</td>";
-                echo "<td>";
+                echo '</td>';
+                echo '<td>';
                 echo $credentials->getRealVersion();
-                echo "</td>";
-                echo "<td>";
+                echo '</td>';
+                echo '<td>';
                 echo $data['rank'];
-                echo "</td>";
-                echo "</tr>";
+                echo '</td>';
+                echo '</tr>';
             }
         }
-        echo "</table>";
+        echo '</table>';
         $massiveactionparams['ontop'] = false;
         Html::showMassiveActions($massiveactionparams);
-        echo "</div>";
+        echo '</div>';
+
         return true;
     }
 }

@@ -43,43 +43,42 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     public $shortname = 'files';
     public $json_name = 'associatedFiles';
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_package';
 
-    const REGISTRY_NO_DB_ENTRY = 0x1;
-    const REGISTRY_NO_MANIFEST = 0x2;
+    public const REGISTRY_NO_DB_ENTRY = 0x1;
+    public const REGISTRY_NO_MANIFEST = 0x2;
 
-   /**
-    * Get the 2 types to add files
-    *
-    * @return array
-    */
+    /**
+     * Get the 2 types to add files
+     *
+     * @return array
+     */
     public function getTypes()
     {
         $types = [
-         'Computer' => __("Upload from computer", 'glpiinventory')
+            'Computer' => __('Upload from computer', 'glpiinventory'),
         ];
 
         if (GLPI_INSTALL_MODE !== 'CLOUD') {
-            $types['Server'] = __("Upload from server", 'glpiinventory');
+            $types['Server'] = __('Upload from server', 'glpiinventory');
         }
 
         return $types;
     }
 
-
-   /**
-    * Display list of files
-    *
-    * @global array $CFG_GLPI
-    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-    * @param array $data array converted of 'json' field in DB where stored actions
-    * @param string $rand unique element id used to identify/update an element
-    */
+    /**
+     * Display list of files
+     *
+     * @global array $CFG_GLPI
+     * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
+     * @param array $data array converted of 'json' field in DB where stored actions
+     * @param string $rand unique element id used to identify/update an element
+     */
     public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         global $CFG_GLPI;
@@ -87,14 +86,14 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         $package_id = $package->getID();
         $canedit    = $package->canUpdateContent();
 
-       // compute short shas to find the corresponding entries in database
+        // compute short shas to find the corresponding entries in database
         $short_shas = [];
         foreach ($data['jobs']['associatedFiles'] as $sha512) {
             $short_shas[] = substr($sha512, 0, 6);
         }
-       // find corresponding file entries
+        // find corresponding file entries
         $files = $this->find(['shortsha512' => $short_shas]);
-       // do a quick mapping between database id and short shas
+        // do a quick mapping between database id and short shas
         $files_mapping = [];
         foreach ($files as $file) {
             $files_mapping[$file['shortsha512']] = $file['id'];
@@ -105,7 +104,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         foreach ($data['jobs']['associatedFiles'] as $sha512) {
             $short_sha = substr($sha512, 0, 6);
 
-            $file_id = 0;
+            $file_id            = 0;
             $fileregistry_error = 0;
             // check if the files is registered in database
             if (!array_key_exists($short_sha, $files_mapping)) {
@@ -118,14 +117,13 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
             // get database entries
             if (!$fileregistry_error) {
-                $file_id = $files_mapping[$short_sha];
+                $file_id   = $files_mapping[$short_sha];
                 $file_name = $files[$file_id]['name'];
                 $file_size = $files[$file_id]['filesize'];
 
                 //mimetype icon
                 if (isset($files[$file_id]['mimetype'])) {
-                    $file_mimetype =
-                    str_replace('/', '__', $files[$file_id]['mimetype']);
+                    $file_mimetype = str_replace('/', '__', $files[$file_id]['mimetype']);
                 } else {
                     $file_mimetype = null;
                 }
@@ -135,18 +133,17 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 $file_size     = null;
                 $file_mimetype = null;
             }
-            $file_uncompress = $data['associatedFiles'][$sha512]['uncompress'];
-            $file_p2p        = $data['associatedFiles'][$sha512]['p2p'];
-            $file_p2p_retention_duration =
-            $data['associatedFiles'][$sha512]['p2p-retention-duration'];
+            $file_uncompress             = $data['associatedFiles'][$sha512]['uncompress'];
+            $file_p2p                    = $data['associatedFiles'][$sha512]['p2p'];
+            $file_p2p_retention_duration = $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
             // start new line
-            $pics_path = Plugin::getWebDir('glpiinventory') . "/pics/";
+            $pics_path = Plugin::getWebDir('glpiinventory') . '/pics/';
             echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
                 Html::showCheckbox(['name' => 'file_entries[' . $i . ']', 'value' => 0]);
-                echo "</td>";
+                echo '</td>';
             }
             echo "<td class='filename'>";
             if (
@@ -159,14 +156,14 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
 
             //filename
-            echo "&nbsp;";
+            echo '&nbsp;';
             if ($canedit) {
                 echo "<a class='edit'
                      onclick=\"edit_subtype('file', $package_id, $rand ,this)\">";
             }
             echo $file_name;
             if ($canedit) {
-                echo "</a>";
+                echo '</a>';
             }
 
             //p2p icon
@@ -174,13 +171,13 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 isset($file_p2p)
                 && $file_p2p != 0
             ) {
-                echo "<a title='" . __('p2p', 'glpiinventory') . ", "
-                . __("retention", 'glpiinventory') . " : " .
-                $file_p2p_retention_duration . " " .
-                __("Minute(s)", 'glpiinventory') . "' class='more'>";
+                echo "<a title='" . __('p2p', 'glpiinventory') . ', '
+                . __('retention', 'glpiinventory') . ' : ' .
+                $file_p2p_retention_duration . ' ' .
+                __('Minute(s)', 'glpiinventory') . "' class='more'>";
                 echo "<img src='" . $pics_path . "p2p.png' />";
-                echo "<sup>" . $file_p2p_retention_duration . "</sup>";
-                echo "</a>";
+                echo '<sup>' . $file_p2p_retention_duration . '</sup>';
+                echo '</a>';
             }
 
             //uncompress icon
@@ -197,40 +194,40 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
             //download file
             if (!$fileregistry_error) {
-                $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?deployfile_id=" . $file_id;
+                $path = Plugin::getWebDir('glpiinventory') . '/front/deployfile_download.php?deployfile_id=' . $file_id;
                 echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
                     "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></i></a>";
             }
 
-           //sha fingerprint
-            $sha_status = "good";
+            //sha fingerprint
+            $sha_status = 'good';
             if ($fileregistry_error != 0) {
-                $sha_status = "bad";
+                $sha_status = 'bad';
             }
             echo "<div class='fingerprint'>";
             echo "<div class='fingerprint_" . $sha_status . "'>" . $sha512;
             if ($fileregistry_error & self::REGISTRY_NO_DB_ENTRY) {
                 echo "<div class='fingerprint_badmsg'>" .
-                  __("This file is not correctly registered in database.") . "<br/>" .
-                  __("You can fix it by uploading or selecting the good one.");
-                echo "</div>";
+                  __('This file is not correctly registered in database.') . '<br/>' .
+                  __('You can fix it by uploading or selecting the good one.');
+                echo '</div>';
             }
             if ($fileregistry_error & self::REGISTRY_NO_MANIFEST) {
                 echo "<div class='fingerprint_badmsg'>" .
-                  __("This file doesn't have any manifest file associated.") . "<br/>" .
-                  __("You must upload the file.");
-                echo "</div>";
+                  __("This file doesn't have any manifest file associated.") . '<br/>' .
+                  __('You must upload the file.');
+                echo '</div>';
             }
-            echo "</div>";
-            echo "</div>";
+            echo '</div>';
+            echo '</div>';
 
-           //filesize
+            //filesize
             if (!$fileregistry_error) {
                 echo "<div class='size'>";
-                echo __('Size') . ": " . $this->processFilesize($file_size);
-                echo "</div>";
+                echo __('Size') . ': ' . $this->processFilesize($file_size);
+                echo '</div>';
             }
-            echo "</td>";
+            echo '</td>';
             if ($canedit) {
                 echo "<td class='rowhandler control' title='" .
                     __('drag', 'glpiinventory') .
@@ -239,29 +236,28 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $i++;
         }
         if ($canedit) {
-            echo "<tr><th>";
+            echo '<tr><th>';
             echo Html::getCheckAllAsCheckbox("filesList$rand", mt_rand());
             echo "</th><th colspan='3' class='mark'></th></tr>";
         }
-        echo "</table>";
+        echo '</table>';
         if ($canedit) {
-            echo "&nbsp;&nbsp;<img src='" . $CFG_GLPI["root_doc"] . "/pics/arrow-left.png' alt=''>";
+            echo "&nbsp;&nbsp;<img src='" . $CFG_GLPI['root_doc'] . "/pics/arrow-left.png' alt=''>";
             echo "<input type='submit' name='delete' value=\"" .
             __('Delete', 'glpiinventory') . "\" class='submit'>";
         }
     }
 
-
-   /**
-    * Display different fields relative the file selected
-    *
-    * @global array $CFG_GLPI
-    * @param array $config
-    * @param array $request_data
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode mode in use (create, edit...)
-    * @return void
-    */
+    /**
+     * Display different fields relative the file selected
+     *
+     * @global array $CFG_GLPI
+     * @param array $config
+     * @param array $request_data
+     * @param string $rand unique element id used to identify/update an element
+     * @param string $mode mode in use (create, edit...)
+     * @return void
+     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         $fi_path = Plugin::getWebDir('glpiinventory');
@@ -280,9 +276,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         if ($mode === self::CREATE) {
             $source = $request_data['value'];
-           /**
-            * No need to continue if there is no selected source
-            */
+            /**
+             * No need to continue if there is no selected source
+             */
             if ($source === '0') {
                 return;
             }
@@ -293,86 +289,85 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         }
 
         echo "<table class='package_item'>";
-       /*
-       * Display file upload input only in 'create' mode
-       */
-        echo "<tr>";
-        echo "<th>" . __("File", 'glpiinventory') . "</th>";
-        echo "<td>";
+        /*
+        * Display file upload input only in 'create' mode
+        */
+        echo '<tr>';
+        echo '<th>' . __('File', 'glpiinventory') . '</th>';
+        echo '<td>';
         if ($mode === self::CREATE) {
             switch ($request_data['value']) {
-                case "Computer":
+                case 'Computer':
                     echo "<input type='file' name='file' value='" .
-                    __("filename", 'glpiinventory') . "' />";
-                    echo " <i>" . $this->getMaxUploadSize() . "</i>";
+                    __('filename', 'glpiinventory') . "' />";
+                    echo ' <i>' . $this->getMaxUploadSize() . '</i>';
                     break;
 
-                case "Server":
+                case 'Server':
                     echo "<input type='text' name='filename' id='server_filename$rand'" .
                     " style='width:500px;float:left' />";
-                    echo "<input type='button' class='submit' value='" . __("Choose", 'glpiinventory') .
+                    echo "<input type='button' class='submit' value='" . __('Choose', 'glpiinventory') .
                     "' onclick='fileModal$rand.show();' />";
                     Ajax::createModalWindow(
                         "fileModal$rand",
-                        $fi_path . "/ajax/deployfilemodal.php",
-                        ['title' => __('Select the file on server', 'glpiinventory'),
-                        'extraparams' => [
-                           'rand' => $rand
-                        ]]
+                        $fi_path . '/ajax/deployfilemodal.php',
+                        ['title'          => __('Select the file on server', 'glpiinventory'),
+                            'extraparams' => [
+                                'rand' => $rand,
+                            ]],
                     );
                     break;
             }
         } else {
-           /*
-            * Display only name in 'edit' mode
-            */
+            /*
+             * Display only name in 'edit' mode
+             */
             echo $config['data']['name'];
         }
-        echo "</td>";
-        echo "</tr>";
+        echo '</td>';
+        echo '</tr>';
 
-        echo "<tr>";
-        echo "<th>" . __("Uncompress", 'glpiinventory') . "<img style='float:right' " .
+        echo '<tr>';
+        echo '<th>' . __('Uncompress', 'glpiinventory') . "<img style='float:right' " .
          "src='" . $fi_path . "/pics/uncompress.png' /></th>";
-        echo "<td>";
+        echo '<td>';
         Html::showCheckbox(['name' => 'uncompress', 'checked' => $uncompress]);
-        echo "</td>";
-        echo "</tr>";
+        echo '</td>';
+        echo '</tr>';
 
-        echo "<tr>";
-        echo "<th>" . __("P2P", 'glpiinventory') .
+        echo '<tr>';
+        echo '<th>' . __('P2P', 'glpiinventory') .
               "<img style='float:right' src='" . $fi_path .
               "/pics/p2p.png' /></th>";
-        echo "<td>";
+        echo '<td>';
         Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
-        echo "</td>";
-        echo "</tr>";
+        echo '</td>';
+        echo '</tr>';
 
-        echo "<tr>";
-        echo "<th>" . __("retention", 'glpiinventory') .
-                  " - " . __("Minute(s)", 'glpiinventory') . "</th>";
-        echo "<td>";
+        echo '<tr>';
+        echo '<th>' . __('retention', 'glpiinventory') .
+                  ' - ' . __('Minute(s)', 'glpiinventory') . '</th>';
+        echo '<td>';
         echo "<input type='number' name='p2p-retention-duration' value='$p2p_retention_duration' />";
-        echo "</td>";
-        echo "</tr>";
+        echo '</td>';
+        echo '</tr>';
 
         $this->addOrSaveButton($pfDeployPackage, $mode);
 
-        echo "</table>";
+        echo '</table>';
     }
 
-
-   /**
-    * Show files / directory on server.
-    * This is used when get a file on the server
-    *
-    * @global array $CFG_GLPI
-    * @param string $rand unique element id used to identify/update an element
-    */
+    /**
+     * Show files / directory on server.
+     * This is used when get a file on the server
+     *
+     * @global array $CFG_GLPI
+     * @param string $rand unique element id used to identify/update an element
+     */
     public static function showServerFileTree($rand)
     {
-        $pfConfig         = new PluginGlpiinventoryConfig();
-        $dir              = $pfConfig->getValue('server_upload_path');
+        $pfConfig = new PluginGlpiinventoryConfig();
+        $dir      = $pfConfig->getValue('server_upload_path');
         echo "<script type='text/javascript'>";
         echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -404,7 +399,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
          }
       });";
 
-       // SET the root node.
+        // SET the root node.
         echo "var Tree_Category_Root$rand = new Ext.tree.AsyncTreeNode({
          text     : '',
          draggable   : false,
@@ -412,11 +407,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
       });
       Tree_Category$rand.setRootNode(Tree_Category_Root$rand);";
 
-       // Render the tree.
+        // Render the tree.
         echo "Tree_Category$rand.render();
             Tree_Category_Root$rand.expand();";
 
-        echo "</script>";
+        echo '</script>';
 
         echo '<div class="alert alert-info d-flex" role="alert">';
         echo '<i class="fas fa-exclamation-circle fa-2x me-2"></i>';
@@ -424,35 +419,33 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo '</div>';
 
         echo "<div id='tree_projectcategory$rand' ></div>";
-        echo "</div>";
+        echo '</div>';
     }
 
-
-   /**
-    * Get files / directories on server
-    *
-    * @param string $node
-    */
+    /**
+     * Get files / directories on server
+     *
+     * @param string $node
+     */
     public static function getServerFileTree($node)
     {
-
         $nodes            = [];
         $pfConfig         = new PluginGlpiinventoryConfig();
         $dir              = $pfConfig->getValue('server_upload_path');
         $security_problem = false;
-        if ($node != "-1") {
-            if (strstr($node, "..")) {
+        if ($node != '-1') {
+            if (strstr($node, '..')) {
                 $security_problem = true;
             }
             $matches = [];
-            preg_match("/^(" . str_replace("/", "\/", $dir) . ")(.*)$/", $node, $matches);
+            preg_match('/^(' . str_replace('/', "\/", $dir) . ')(.*)$/', $node, $matches);
             if (count($matches) != 3) {
                 $security_problem = true;
             }
         }
 
         if (!$security_problem) {
-           // leaf node
+            // leaf node
             if ($node != -1) {
                 $dir = $node;
             }
@@ -460,11 +453,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             if (($handle = opendir($dir))) {
                 $folders = $files = [];
 
-               //list files in dir selected
-               //we store folders and files separately to sort them alphabetically separately
+                //list files in dir selected
+                //we store folders and files separately to sort them alphabetically separately
                 while (false !== ($entry = readdir($handle))) {
-                    if ($entry != "." && $entry != "..") {
-                        $filepath = $dir . "/" . $entry;
+                    if ($entry != '.' && $entry != '..') {
+                        $filepath = $dir . '/' . $entry;
                         if (is_dir($filepath)) {
                             $folders[$filepath] = $entry;
                         } else {
@@ -473,11 +466,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                     }
                 }
 
-               //sort folders and files (and maintain index association)
+                //sort folders and files (and maintain index association)
                 asort($folders);
                 asort($files);
 
-               //add folders in json
+                //add folders in json
                 foreach ($folders as $filepath => $entry) {
                     $path['text']      = $entry;
                     $path['id']        = $filepath;
@@ -488,7 +481,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                     $nodes[] = $path;
                 }
 
-               //add files in json
+                //add files in json
                 foreach ($files as $filepath => $entry) {
                     $path['text']      = $entry;
                     $path['id']        = $filepath;
@@ -504,32 +497,31 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         print json_encode($nodes);
     }
 
-
-   /**
-    * Add a new item in files of the package
-    *
-    * @param array $params list of fields with value of the file
-    */
+    /**
+     * Add a new item in files of the package
+     *
+     * @param array $params list of fields with value of the file
+     */
     public function add_item($params)
     {
         switch ($params['filestype']) {
             case 'Server':
                 return $this->uploadFileFromServer($params);
-            break;
+                break;
 
             default:
                 return $this->uploadFileFromComputer($params);
         }
+
         return false;
     }
 
-
-   /**
-    * Remove an item
-    *
-    * @param array $params
-    * @return boolean
-    */
+    /**
+     * Remove an item
+     *
+     * @param array $params
+     * @return boolean
+     */
     public function remove_item($params)
     {
         if (!isset($params['file_entries'])) {
@@ -538,18 +530,18 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         $shasToRemove = [];
 
-       //get current order json
+        //get current order json
         $data = json_decode($this->getJson($params['packages_id']), true);
 
         $files = $data['jobs']['associatedFiles'];
-       //remove selected checks
+        //remove selected checks
 
         foreach ($params['file_entries'] as $index => $checked) {
-            if ($checked >= "1" || $checked == "on") {
-               //get sha512
+            if ($checked >= '1' || $checked == 'on') {
+                //get sha512
                 $sha512 = $data['jobs']['associatedFiles'][$index];
 
-               //remove file
+                //remove file
                 unset($files[$index]);
                 unset($data['associatedFiles'][$sha512]);
 
@@ -557,10 +549,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
         }
         $data['jobs']['associatedFiles'] = array_values($files);
-       //update order
+        //update order
         $this->updateOrderJson($params['packages_id'], $data);
 
-       //remove files in repo
+        //remove files in repo
         foreach ($shasToRemove as $sha512) {
             $this->removeFileInRepo($sha512);
         }
@@ -568,48 +560,46 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         return true;
     }
 
-
-   /**
-    * Save the item in files
-    *
-    * @param array $params list of fields with value of the file
-    */
+    /**
+     * Save the item in files
+     *
+     * @param array $params list of fields with value of the file
+     */
     public function save_item($params)
     {
-       //get current order json
+        //get current order json
         $data = json_decode($this->getJson($params['id']), true);
 
-       //get sha512
+        //get sha512
         $sha512 = $data['jobs'][$this->json_name][$params['index']];
 
-       //get file in json
+        //get file in json
         $file = $data[$this->json_name][$sha512];
 
-       //remove value in json
+        //remove value in json
         unset($data[$this->json_name][$sha512]);
 
-       //update values
+        //update values
         $file['p2p']                    = isset($params['p2p']) ? $params['p2p'] : 0;
         $file['p2p-retention-duration'] = $params['p2p-retention-duration'];
         $file['uncompress']             = isset($params['uncompress']) ? $params['uncompress'] : 0;
 
-       //add modified entry
+        //add modified entry
         $data[$this->json_name][$sha512] = $file;
 
-       //update order
+        //update order
         $this->updateOrderJson($params['id'], $data);
     }
 
-
-   /**
-    * Upload file from user computer
-    *
-    * @param array $params
-    * @return boolean
-    */
+    /**
+     * Upload file from user computer
+     *
+     * @param array $params
+     * @return boolean
+     */
     public function uploadFileFromComputer($params)
     {
-        if (isset($params["id"])) {
+        if (isset($params['id'])) {
             //file uploaded?
             if (
                 isset($_FILES['file']['tmp_name'])
@@ -624,42 +614,43 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 $filename = $_FILES['file']['name'];
             }
 
-           //file upload errors
+            //file upload errors
             if (isset($_FILES['file']['error'])) {
                 $error = true;
-                $msg = __("Upload error", 'glpiinventory');
+                $msg   = __('Upload error', 'glpiinventory');
                 switch ($_FILES['file']['error']) {
                     case UPLOAD_ERR_INI_SIZE:
                     case UPLOAD_ERR_FORM_SIZE:
-                        $msg = __("Transfer error: the file size is too big", 'glpiinventory');
+                        $msg = __('Transfer error: the file size is too big', 'glpiinventory');
                         break;
 
                     case UPLOAD_ERR_PARTIAL:
-                        $msg = __("The uploaded file was only partially uploaded", 'glpiinventory');
+                        $msg = __('The uploaded file was only partially uploaded', 'glpiinventory');
                         break;
 
                     case UPLOAD_ERR_NO_FILE:
-                        $msg = __("No file was uploaded", 'glpiinventory');
+                        $msg = __('No file was uploaded', 'glpiinventory');
                         break;
 
                     case UPLOAD_ERR_NO_TMP_DIR:
-                        $msg = __("Missing a temporary folder", 'glpiinventory');
+                        $msg = __('Missing a temporary folder', 'glpiinventory');
                         break;
 
                     case UPLOAD_ERR_CANT_WRITE:
-                        $msg = __("Failed to write file to disk", 'glpiinventory');
+                        $msg = __('Failed to write file to disk', 'glpiinventory');
                         break;
 
                     case UPLOAD_ERR_EXTENSION:
-                        $msg = __("PHP extension stopped the file upload", 'glpiinventory');
+                        $msg = __('PHP extension stopped the file upload', 'glpiinventory');
                         break;
 
                     case UPLOAD_ERR_OK:
-                       //no error, continue
+                        //no error, continue
                         $error = false;
                 }
                 if ($error) {
                     Session::addMessageAfterRedirect($msg);
+
                     return false;
                 }
             }
@@ -674,39 +665,40 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 'p2p'                    => isset($params['p2p']) ? $params['p2p'] : 0,
                 'uncompress'             => isset($params['uncompress']) ? $params['uncompress'] : 0,
                 'p2p-retention-duration' => (is_numeric($params['p2p-retention-duration'])
-                                              ? $params['p2p-retention-duration'] : 0)
+                                              ? $params['p2p-retention-duration'] : 0),
             ];
 
             //Add file in repo
             if (isset($filename) && $this->addFileInRepo($data)) {
                 Session::addMessageAfterRedirect(__('File saved!', 'glpiinventory'));
+
                 return true;
             } else {
                 Session::addMessageAfterRedirect(__('Failed to copy file', 'glpiinventory'));
+
                 return false;
             }
         }
         Session::addMessageAfterRedirect(__('File missing', 'glpiinventory'));
+
         return false;
     }
 
-
-   /**
-    * Upload file from temp folder in server
-    *
-    * @param array $params
-    * @return boolean
-    */
+    /**
+     * Upload file from temp folder in server
+     *
+     * @param array $params
+     * @return boolean
+     */
     public function uploadFileFromServer($params)
     {
-
         if (preg_match('/\.\./', $params['filename'])) {
             die;
         }
 
-        if (isset($params["id"])) {
+        if (isset($params['id'])) {
             $file_path = $params['filename'];
-            $filename = basename($file_path);
+            $filename  = basename($file_path);
             $mime_type = '';
             if (
                 function_exists('finfo_open')
@@ -719,78 +711,79 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
             $filesize = filesize($file_path);
 
-           //prepare file data for insertion in repo
+            //prepare file data for insertion in repo
             $data = [
-            'file_tmp_name' => $file_path,
-            'mime_type'     => $mime_type,
-            'filesize'      => $filesize,
-            'filename'      => $filename,
-            'p2p'           => isset($params['p2p']) ? $params['p2p'] : 0,
-            'uncompress'    => isset($params['uncompress']) ? $params['uncompress'] : 0,
-            'p2p-retention-duration' => (
-               isset($params['p2p-retention-duration'])
-               && is_numeric($params['p2p-retention-duration'])
-                  ? $params['p2p-retention-duration']
-                  : 0
-             ),
-             'id'            => $params['id']
+                'file_tmp_name'          => $file_path,
+                'mime_type'              => $mime_type,
+                'filesize'               => $filesize,
+                'filename'               => $filename,
+                'p2p'                    => isset($params['p2p']) ? $params['p2p'] : 0,
+                'uncompress'             => isset($params['uncompress']) ? $params['uncompress'] : 0,
+                'p2p-retention-duration' => (
+                    isset($params['p2p-retention-duration'])
+                    && is_numeric($params['p2p-retention-duration'])
+                       ? $params['p2p-retention-duration']
+                       : 0
+                ),
+                'id' => $params['id'],
             ];
 
-           //Add file in repo
+            //Add file in repo
             if ($filename && $this->addFileInRepo($data)) {
                 Session::addMessageAfterRedirect(__('File saved!', 'glpiinventory'));
+
                 return true;
             } else {
                 Session::addMessageAfterRedirect(__('Failed to copy file', 'glpiinventory'));
+
                 return false;
             }
         }
         Session::addMessageAfterRedirect(__('File missing', 'glpiinventory'));
+
         return false;
     }
 
-
-   /**
-    * Get directories based on sha512
-    *
-    * @param string $sha512
-    * @return string the directories based on sha512
-    */
+    /**
+     * Get directories based on sha512
+     *
+     * @param string $sha512
+     * @return string the directories based on sha512
+     */
     public function getDirBySha512($sha512)
     {
-        $first = substr($sha512, 0, 1);
+        $first  = substr($sha512, 0, 1);
         $second = substr($sha512, 0, 2);
 
         return "$first/$second";
     }
 
-
-   /**
-   * Create a configuration request data
-   *
-   * @since 9.2
-   */
+    /**
+    * Create a configuration request data
+    *
+    * @since 9.2
+    */
     public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data)
     {
         $element = $package->getSubElement($this->json_name, $request_data['index']);
         $config  = [];
         if ($element) {
             $config = [
-            'hash' => $element,
-            'data' => $package->getAssociatedFile($element),
+                'hash' => $element,
+                'data' => $package->getAssociatedFile($element),
             ];
         }
+
         return $config;
     }
 
-
-   /**
-    * Move uploaded file part in right/final directory
-    *
-    * @param string $filePath path of the file + filename
-    * @param boolean $skip_creation
-    * @return string
-    */
+    /**
+     * Move uploaded file part in right/final directory
+     *
+     * @param string $filePath path of the file + filename
+     * @param boolean $skip_creation
+     * @return string
+     */
     public function registerFilepart($filePath, $skip_creation = false)
     {
         $sha512 = hash_file('sha512', $filePath);
@@ -803,22 +796,22 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
             copy($filePath, $dir . '/' . $sha512);
         }
+
         return $sha512;
     }
 
-
-   /**
-    * Add file in the repository
-    *
-    * @param array $params
-    * @return boolean
-    */
+    /**
+     * Add file in the repository
+     *
+     * @param array $params
+     * @return boolean
+     */
     public function addFileInRepo($params)
     {
         $filename      = addslashes($params['filename']);
         $file_tmp_name = $params['file_tmp_name'];
         $maxPartSize   = 1024 * 1024;
-        $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/", "filestore");
+        $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/', 'filestore');
         $sha512        = hash_file('sha512', $file_tmp_name);
         $short_sha512  = substr($sha512, 0, 6);
 
@@ -827,14 +820,13 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $file_present_in_repo = true;
         }
 
-        $file_present_in_db =
-         (!empty($this->find(['shortsha512' => $short_sha512])));
+        $file_present_in_db = (!empty($this->find(['shortsha512' => $short_sha512])));
 
         $new_entry = [
-         'name'                   => $filename,
-         'p2p'                    => $params['p2p'],
-         'p2p-retention-duration' => $params['p2p-retention-duration'],
-         'uncompress'             => $params['uncompress'],
+            'name'                   => $filename,
+            'p2p'                    => $params['p2p'],
+            'p2p-retention-duration' => $params['p2p-retention-duration'],
+            'uncompress'             => $params['uncompress'],
         ];
 
         $fdIn = fopen($file_tmp_name, 'rb');
@@ -850,11 +842,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 if (feof($fdIn) || filesize($tmpFilepart) >= $maxPartSize) {
                     $part_sha512 = $this->registerFilepart(
                         $tmpFilepart,
-                        $file_present_in_repo
+                        $file_present_in_repo,
                     );
-                     unlink($tmpFilepart);
+                    unlink($tmpFilepart);
 
-                     $multiparts[] = $part_sha512;
+                    $multiparts[] = $part_sha512;
                 }
             }
             if (feof($fdIn)) {
@@ -867,11 +859,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             gzclose($fdPart);
         } while (1);
 
-       //create manifest file
+        //create manifest file
         if (!$file_present_in_repo) {
             $handle = fopen(
                 PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512,
-                "w+"
+                'w+',
             );
             if ($handle) {
                 foreach ($multiparts as $sha) {
@@ -881,76 +873,75 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
         }
 
-       //TODO: Add a new files interface to list, create, manage entities and visibility
-       // entity on a file is just anticipated and will be fully used later
+        //TODO: Add a new files interface to list, create, manage entities and visibility
+        // entity on a file is just anticipated and will be fully used later
         if (!$file_present_in_db) {
             $entry = [
-            "name"         => $filename,
-            "filesize"     => $params['filesize'],
-            "mimetype"     => $params['mime_type'],
-            "sha512"       => $sha512,
-            "shortsha512"  => $short_sha512,
-            "comments"     => "",
-            "date_mod"     => date('Y-m-d H:i:s'),
-            "entities_id"  => 0,
-            "is_recursive" => 1
+                'name'         => $filename,
+                'filesize'     => $params['filesize'],
+                'mimetype'     => $params['mime_type'],
+                'sha512'       => $sha512,
+                'shortsha512'  => $short_sha512,
+                'comments'     => '',
+                'date_mod'     => date('Y-m-d H:i:s'),
+                'entities_id'  => 0,
+                'is_recursive' => 1,
             ];
             $this->add($entry);
         }
 
-       //get current package json
+        //get current package json
         $data = json_decode($this->getJson($params['id']), true);
 
-       //add new entry
+        //add new entry
         $data[$this->json_name][$sha512] = $new_entry;
         if (!in_array($sha512, $data['jobs'][$this->json_name])) {
             $data['jobs'][$this->json_name][] = $sha512;
         }
-       //update package
+        //update package
         $this->updateOrderJson($params['id'], $data);
 
         return true;
     }
 
-
-   /**
-    * Remove file from the repository
-    *
-    * @param string $sha512 sha512 of the file
-    * @return boolean
-    */
+    /**
+     * Remove file from the repository
+     *
+     * @param string $sha512 sha512 of the file
+     * @return boolean
+     */
     public function removeFileInRepo($sha512)
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
-       // try to find file in other packages
+        // try to find file in other packages
         $rows = $pfDeployPackage->find(
             [
                 ['json' => ['LIKE', '%' . substr($sha512, 0, 6) . '%']],
-                ['json' => ['LIKE', '%' . $sha512 . '%']]
-            ]
+                ['json' => ['LIKE', '%' . $sha512 . '%']],
+            ],
         );
 
-       //file found in other packages, do not remove parts in repo
+        //file found in other packages, do not remove parts in repo
         if (count($rows) > 0) {
             return false;
         }
 
-       //get sha512 parts in manifest
+        //get sha512 parts in manifest
         if (!file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512)) {
             return true;
         }
         $multiparts = file(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512);
 
-       //parse all files part
+        //parse all files part
         foreach ($multiparts as $part_sha512) {
-            $firstdir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . substr($part_sha512, 0, 1) . "/";
+            $firstdir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . substr($part_sha512, 0, 1) . '/';
             $fulldir  = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($part_sha512) . '/';
 
-           //delete file parts
+            //delete file parts
             unlink(trim($fulldir . $part_sha512));
 
-           //delete folders if empty
+            //delete folders if empty
             if (is_dir($fulldir)) {
                 $count_second_folder = count(scandir($fulldir)) - 2;
                 if ($count_second_folder === 0) {
@@ -965,7 +956,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
         }
 
-       //remove manifest
+        //remove manifest
         if (file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512)) {
             unlink(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512);
         }
@@ -985,12 +976,12 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             return false;
         }
 
-        $path = [];
-        $handle = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512, "r");
-        $error = $handle === false;
+        $path   = [];
+        $handle = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512, 'r');
+        $error  = $handle === false;
         if ($handle) {
             while (($buffer = fgets($handle)) !== false) {
-                $path[] = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
+                $path[] = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($buffer) . '/' . trim($buffer, "\n");
             }
             if (!feof($handle)) {
                 $error = true;
@@ -1000,54 +991,54 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         if ($error) {
             trigger_error(
                 sprintf('Unable to read file %s manifest.', $sha512),
-                E_USER_WARNING
+                E_USER_WARNING,
             );
+
             return false;
         }
 
         return $path;
     }
 
-
-   /**
-    * Check if the manifest relative to the sha512 exist
-    *
-    * @param string $sha512 sha512 of the file
-    * @return boolean
-    */
+    /**
+     * Check if the manifest relative to the sha512 exist
+     *
+     * @param string $sha512 sha512 of the file
+     * @return boolean
+     */
     public function checkPresenceManifest($sha512)
     {
         if (!file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512)) {
             return false;
         }
+
         return true;
     }
 
-
-   /**
-    * Check if the file relative to the sha512 exist
-    *
-    * @param string $sha512 sha512 of the file
-    * @return boolean
-    */
+    /**
+     * Check if the file relative to the sha512 exist
+     *
+     * @param string $sha512 sha512 of the file
+     * @return boolean
+     */
     public function checkPresenceFile($sha512)
     {
-       //Do not continue if the manifest is not found
+        //Do not continue if the manifest is not found
         if (!$this->checkPresenceManifest($sha512)) {
             return false;
         }
 
-       //Does the file needs to be created ?
-       // Even if fileparts exists, we need to be sure
-       // the manifest file is created
-        $fileparts_ok = true;
+        //Does the file needs to be created ?
+        // Even if fileparts exists, we need to be sure
+        // the manifest file is created
+        $fileparts_ok  = true;
         $fileparts_cnt = 0;
-        $handle = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512, "r");
+        $handle        = fopen(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512, 'r');
         if ($handle) {
             while (($buffer = fgets($handle)) !== false) {
                 $fileparts_cnt++;
-                $path = $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
-               //Check if the filepart exists
+                $path = $this->getDirBySha512($buffer) . '/' . trim($buffer, "\n");
+                //Check if the filepart exists
                 if (!file_exists(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $path)) {
                     $fileparts_ok = false;
                     break;
@@ -1055,95 +1046,93 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
             fclose($handle);
         }
-       // Does the file is empty ?
+        // Does the file is empty ?
         if ($fileparts_cnt == 0) {
             return false;
         }
 
-       //Does the file needs to be replaced ?
+        //Does the file needs to be replaced ?
         if (!$fileparts_ok) {
             return false;
         }
-       //Nothing to do because the manifest and associated fileparts seems to be fine.
+
+        //Nothing to do because the manifest and associated fileparts seems to be fine.
         return true;
     }
 
-
-   /**
-    * Get the maximum size the php can accept for upload file
-    *
-    * @return string
-    */
+    /**
+     * Get the maximum size the php can accept for upload file
+     *
+     * @return string
+     */
     public function getMaxUploadSize()
     {
-        $max_upload   = (int)(ini_get('upload_max_filesize'));
-        $max_post     = (int)(ini_get('post_max_size'));
-        $memory_limit = (int)(ini_get('memory_limit'));
+        $max_upload   = (int) (ini_get('upload_max_filesize'));
+        $max_post     = (int) (ini_get('post_max_size'));
+        $memory_limit = (int) (ini_get('memory_limit'));
 
         return __('Max file size', 'glpiinventory')
-         . " : " . min($max_upload, $max_post, $memory_limit) . __('Mio', 'glpiinventory');
+         . ' : ' . min($max_upload, $max_post, $memory_limit) . __('Mio', 'glpiinventory');
     }
 
-
-   /**
-    * List number of files not used in packages
-    */
+    /**
+     * List number of files not used in packages
+     */
     public function numberUnusedFiles()
     {
         echo "<table width='950' class='tab_cadre_fixe'>";
 
-        echo "<tr>";
-        echo "<th>";
+        echo '<tr>';
+        echo '<th>';
         echo __('Unused file', 'glpiinventory');
-        echo "</th>";
-        echo "<th>";
+        echo '</th>';
+        echo '<th>';
         echo __('Size', 'glpiinventory');
-        echo "</th>";
-        echo "</tr>";
+        echo '</th>';
+        echo '</tr>';
 
         $a_files = $this->find();
         foreach ($a_files as $data) {
             $cnt = countElementsInTable(
                 'glpi_plugin_glpiinventory_deploypackages',
-                ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']]
+                ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']],
             );
             if ($cnt == 0) {
-                 echo "<tr class='tab_bg_1'>";
-                 echo "<td>";
-                 echo $data['name'];
-                 echo "</td>";
-                 echo "<td>";
-                 echo round($data['filesize'] / 1000000, 1) . " " . __('Mio');
-                 echo "</td>";
-                 echo "</tr>";
+                echo "<tr class='tab_bg_1'>";
+                echo '<td>';
+                echo $data['name'];
+                echo '</td>';
+                echo '<td>';
+                echo round($data['filesize'] / 1000000, 1) . ' ' . __('Mio');
+                echo '</td>';
+                echo '</tr>';
             }
         }
-        echo "</table>";
+        echo '</table>';
     }
 
-
-   /**
-    * Delete the files not used in packages
-    */
+    /**
+     * Delete the files not used in packages
+     */
     public function deleteUnusedFiles()
     {
         $a_files = $this->find();
         foreach ($a_files as $data) {
             $cnt = countElementsInTable(
                 'glpi_plugin_glpiinventory_deploypackages',
-                ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']]
+                ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']],
             );
             if ($cnt == 0) {
-                 $this->delete($data);
-                 $manifest_filename = PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $data['sha512'];
+                $this->delete($data);
+                $manifest_filename = PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $data['sha512'];
                 if (file_exists($manifest_filename)) {
-                    $handle = @fopen($manifest_filename, "r");
+                    $handle = @fopen($manifest_filename, 'r');
                     if ($handle) {
                         while (!feof($handle)) {
                             $buffer = trim(fgets($handle));
                             if ($buffer != '') {
-                                 $part_path = $this->getDirBySha512($buffer) . "/" . $buffer;
-                                 unlink(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $part_path);
+                                $part_path = $this->getDirBySha512($buffer) . '/' . $buffer;
+                                unlink(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $part_path);
                             }
                         }
                         fclose($handle);

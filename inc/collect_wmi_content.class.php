@@ -46,14 +46,14 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
 
     public $type = 'wmi';
 
-   /**
-    * update wmi data to compute (add and update) with data sent by the agent
-    *
-    * @global object $DB
-    * @param integer $computers_id id of the computer
-    * @param array $wmi_data
-    * @param integer $collects_wmis_id
-    */
+    /**
+     * update wmi data to compute (add and update) with data sent by the agent
+     *
+     * @global object $DB
+     * @param integer $computers_id id of the computer
+     * @param array $wmi_data
+     * @param integer $collects_wmis_id
+     */
     public function updateComputer($computers_id, $wmi_data, $collects_wmis_id)
     {
         global $DB;
@@ -64,15 +64,15 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             'SELECT' => ['id', 'property', 'value'],
             'FROM'   => 'glpi_plugin_glpiinventory_collects_wmis_contents',
             'WHERE'  => [
-                'computers_id' => $computers_id,
-                'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id
-            ]
+                'computers_id'                          => $computers_id,
+                'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
+            ],
         ]);
 
         foreach ($iterator as $data) {
             $wmi_id = $data['id'];
             unset($data['id']);
-            $data1 = Toolbox::addslashes_deep($data);
+            $data1            = Toolbox::addslashes_deep($data);
             $db_wmis[$wmi_id] = $data1;
         }
 
@@ -81,8 +81,8 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             foreach ($db_wmis as $keydb => $arraydb) {
                 if ($arraydb['property'] == $key) {
                     $input = ['property' => $arraydb['property'],
-                              'id'       => $keydb,
-                              'value'    => $value];
+                        'id'             => $keydb,
+                        'value'          => $value];
                     $this->update($input);
                     unset($wmi_data[$key]);
                     unset($db_wmis[$keydb]);
@@ -96,36 +96,35 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         }
         foreach ($wmi_data as $key => $value) {
             $input = [
-            'computers_id' => $computers_id,
-            'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
-            'property'     => $key,
-            'value'        => $value
+                'computers_id'                          => $computers_id,
+                'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
+                'property'                              => $key,
+                'value'                                 => $value,
             ];
             $this->add($input);
         }
     }
 
-   /**
-    * Display wmi information of computer
-    *
-    * @param integer $computers_id id of computer
-    */
+    /**
+     * Display wmi information of computer
+     *
+     * @param integer $computers_id id of computer
+     */
     public function showForComputer($computers_id)
     {
-
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
         echo "<table class='tab_cadre_fixe'>";
 
-        echo "<tr>";
-        echo "<th>" . __('Moniker', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Class', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Property', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Value', 'glpiinventory') . "</th>";
-        echo "</tr>";
+        echo '<tr>';
+        echo '<th>' . __('Moniker', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Class', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Property', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Value', 'glpiinventory') . '</th>';
+        echo '</tr>';
 
         $a_data = $this->find(
             ['computers_id' => $computers_id],
-            ['plugin_glpiinventory_collects_wmis_id', 'property']
+            ['plugin_glpiinventory_collects_wmis_id', 'property'],
         );
         foreach ($a_data as $data) {
             echo "<tr class='tab_bg_1'>";
@@ -142,41 +141,40 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             echo '<td>';
             echo $data['value'];
             echo '</td>';
-            echo "</tr>";
+            echo '</tr>';
         }
         echo '</table>';
     }
 
-
-   /**
-    * Display wmi information of collect_wmi_id
-    *
-    * @param integer $collects_wmis_id
-    */
+    /**
+     * Display wmi information of collect_wmi_id
+     *
+     * @param integer $collects_wmis_id
+     */
     public function showContent($collects_wmis_id)
     {
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
-        $computer = new Computer();
+        $computer      = new Computer();
 
         $pfCollect_Wmi->getFromDB($collects_wmis_id);
 
         echo "<table class='tab_cadre_fixe'>";
 
-        echo "<tr>";
+        echo '<tr>';
         echo "<th colspan='3'>";
         echo $pfCollect_Wmi->fields['class'];
-        echo "</th>";
-        echo "</tr>";
+        echo '</th>';
+        echo '</tr>';
 
-        echo "<tr>";
-        echo "<th>" . __('Computer') . "</th>";
-        echo "<th>" . __('Property', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Value', 'glpiinventory') . "</th>";
-        echo "</tr>";
+        echo '<tr>';
+        echo '<th>' . __('Computer') . '</th>';
+        echo '<th>' . __('Property', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Value', 'glpiinventory') . '</th>';
+        echo '</tr>';
 
         $a_data = $this->find(
             ['plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id],
-            ['property']
+            ['property'],
         );
         foreach ($a_data as $data) {
             echo "<tr class='tab_bg_1'>";
@@ -190,7 +188,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             echo '<td>';
             echo $data['value'];
             echo '</td>';
-            echo "</tr>";
+            echo '</tr>';
         }
         echo '</table>';
     }

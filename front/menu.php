@@ -31,15 +31,15 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 if (PluginGlpiinventoryMenu::canView()) {
     Html::header(
         __('GLPI Inventory', 'glpiinventory'),
-        $_SERVER["PHP_SELF"],
-        "admin",
-        "pluginglpiinventorymenu",
-        "menu"
+        $_SERVER['PHP_SELF'],
+        'admin',
+        'pluginglpiinventorymenu',
+        'menu',
     );
 
     echo Html::manageRefreshPage();
@@ -49,7 +49,7 @@ if (PluginGlpiinventoryMenu::canView()) {
     $dashboard = new Glpi\Dashboard\Grid('plugin_glpiinventory_dashboard');
     echo "<div class='dashboard card p-3'>";
     $dashboard->show();
-    echo "</div>";
+    echo '</div>';
 } else {
     Html::displayRightError();
 }

@@ -31,18 +31,18 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 Session::checkLoginUser();
 
 Html::header(
     __('GLPI Inventory'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "pluginglpiinventorymenu",
-    "deploypackage"
+    $_SERVER['PHP_SELF'],
+    'admin',
+    'pluginglpiinventorymenu',
+    'deploypackage',
 );
 
-PluginGlpiinventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu('mini');
 
 $package = new PluginGlpiinventoryDeployPackage();
 $package->showList();

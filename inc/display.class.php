@@ -40,21 +40,21 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDisplay extends CommonDBTM
 {
-   /**
-    * Display static progress bar (used for SNMP cartridge state)
-    *
-    * @param integer $percentage
-    * @param string $message
-    * @param string $order
-    * @param integer $width
-    * @param integer $height
-    */
+    /**
+     * Display static progress bar (used for SNMP cartridge state)
+     *
+     * @param integer $percentage
+     * @param string $message
+     * @param string $order
+     * @param integer $width
+     * @param integer $height
+     */
     public static function bar($percentage, $message = '', $order = '', $width = 400, $height = 20)
     {
         if ((!empty($percentage)) and ($percentage < 0)) {
-            $percentage = "";
+            $percentage = '';
         } elseif ((!empty($percentage)) and ($percentage > 100)) {
-            $percentage = "";
+            $percentage = '';
         }
         echo "<div>
                <table class='tab_cadre' width='" . $width . "'>
@@ -63,9 +63,9 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
 
         if (
             (!empty($percentage))
-              || ($percentage == "0")
+              || ($percentage == '0')
         ) {
-            echo $percentage . "% " . $message;
+            echo $percentage . '% ' . $message;
         }
 
         echo                  "</td>
@@ -78,24 +78,24 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
                                  </tr>
                                  <tr>";
         if (empty($percentage)) {
-            echo "<td></td>";
+            echo '<td></td>';
         } else {
             echo "                              <td bgcolor='";
             if ($order != '') {
                 if ($percentage > 80) {
-                    echo "red";
+                    echo 'red';
                 } elseif ($percentage > 60) {
-                    echo "orange";
+                    echo 'orange';
                 } else {
-                    echo "green";
+                    echo 'green';
                 }
             } else {
                 if ($percentage < 20) {
-                    echo "red";
+                    echo 'red';
                 } elseif ($percentage < 40) {
-                    echo "orange";
+                    echo 'orange';
                 } else {
-                    echo "green";
+                    echo 'green';
                 }
             }
             if ($percentage == 0) {
@@ -110,63 +110,57 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
             echo "                           <td height='" . $height . "' width='" .
                  ($width - (($width * $percentage) / 100)) . "'></td>";
         }
-        echo "                        </tr>
+        echo '                        </tr>
                            </table>
                         </td>
                      </tr>
                </table>
-            </div>";
+            </div>';
     }
 
-
-   /**
-    * Disable debug mode to not see php errors
-    */
+    /**
+     * Disable debug mode to not see php errors
+     */
     public static function disableDebug()
     {
         error_reporting(0);
         set_error_handler(['PluginGlpiinventoryDisplay', 'error_handler']);
     }
 
-
-   /**
-   * Enable debug mode if user is in debug mode
-   **/
+    /**
+    * Enable debug mode if user is in debug mode
+    **/
     public static function reenableusemode()
     {
         Toolbox::setDebugMode();
     }
 
+    /**
+     * When debug is disabled, we transfer every errors in this emtpy function.
+     *
+     * @param integer $errno
+     * @param string $errstr
+     * @param string $errfile
+     * @param integer $errline
+     */
+    public static function error_handler($errno, $errstr, $errfile, $errline) {}
 
-   /**
-    * When debug is disabled, we transfer every errors in this emtpy function.
-    *
-    * @param integer $errno
-    * @param string $errstr
-    * @param string $errfile
-    * @param integer $errline
-    */
-    public static function error_handler($errno, $errstr, $errfile, $errline)
-    {
-    }
-
-
-   /**
-    * Display progress bar
-    *
-    * @global array $CFG_GLPI
-    * @param integer $width
-    * @param integer $percent
-    * @param array $options
-    * @return string
-    */
+    /**
+     * Display progress bar
+     *
+     * @global array $CFG_GLPI
+     * @param integer $width
+     * @param integer $percent
+     * @param array $options
+     * @return string
+     */
     public static function getProgressBar($width, $percent, $options = [])
     {
         global $CFG_GLPI;
 
-        $param = [];
-        $param['title'] = __('Progress', 'glpiinventory');
-        $param['simple'] = false;
+        $param                 = [];
+        $param['title']        = __('Progress', 'glpiinventory');
+        $param['simple']       = false;
         $param['forcepadding'] = false;
 
         if (is_array($options) && count($options)) {
@@ -176,21 +170,22 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
         }
 
         $percentwidth = floor($percent * $width / 100);
-        $output = "<div class='center'><table class='tab_cadre' width='" . ($width + 20) . "px'>";
+        $output       = "<div class='center'><table class='tab_cadre' width='" . ($width + 20) . "px'>";
         if (!$param['simple']) {
-            $output .= "<tr><th class='center'>" . $param['title'] . "&nbsp;" . $percent . "%</th></tr>";
+            $output .= "<tr><th class='center'>" . $param['title'] . '&nbsp;' . $percent . '%</th></tr>';
         }
         $output .= "<tr><td>
-                <table><tr><td class='center' style='background:url(" . $CFG_GLPI["root_doc"] .
+                <table><tr><td class='center' style='background:url(" . $CFG_GLPI['root_doc'] .
                 "/pics/loader.png) repeat-x;' width='.$percentwidth' height='12'>";
         if ($param['simple']) {
-            $output .= $percent . "%";
+            $output .= $percent . '%';
         } else {
             $output .= '&nbsp;';
         }
-        $output .= "</td></tr></table></td>";
-        $output .= "</tr></table>";
-        $output .= "</div>";
+        $output .= '</td></tr></table></td>';
+        $output .= '</tr></table>';
+        $output .= '</div>';
+
         return $output;
     }
 }

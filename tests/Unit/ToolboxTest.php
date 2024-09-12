@@ -36,11 +36,11 @@ use PHPUnit\Framework\TestCase;
 class ToolboxTest extends TestCase
 {
     public $formatJson_input = [
-      'test_text' => 'Lorem Ipsum',
-      'test_number' => 1234,
-      'test_float' => 1234.5678,
-      'test_array' => [ 1,2,3,4, 'lorem_ipsum' ],
-      'test_hash' => ['lorem' => 'ipsum', 'ipsum' => 'lorem']
+        'test_text'   => 'Lorem Ipsum',
+        'test_number' => 1234,
+        'test_float'  => 1234.5678,
+        'test_array'  => [1, 2, 3, 4, 'lorem_ipsum'],
+        'test_hash'   => ['lorem' => 'ipsum', 'ipsum' => 'lorem'],
     ];
 
     public $formatJson_expected = <<<JSON
@@ -62,51 +62,48 @@ class ToolboxTest extends TestCase
 }
 JSON;
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function formatJson()
     {
-
         $this->assertEquals(
             $this->formatJson_expected,
-            PluginGlpiinventoryToolbox::formatJson(json_encode($this->formatJson_input))
+            PluginGlpiinventoryToolbox::formatJson(json_encode($this->formatJson_input)),
         );
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function isAnInventoryDevice()
     {
         $computer = new Computer();
 
         $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
-        $values = ['name'         => 'comp',
-                 'is_dynamic'   => 1,
-                 'entities_id'  => 0,
-                 'is_recursive' => 0];
+        $values = ['name'  => 'comp',
+            'is_dynamic'   => 1,
+            'entities_id'  => 0,
+            'is_recursive' => 0];
         $computers_id = $computer->add($values);
         $computer->getFromDB($computers_id);
 
         $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
         $printer = new Printer();
-        $values  = ['name'         => 'printer',
-                  'is_dynamic'   => 1,
-                  'entities_id'  => 0,
-                  'is_recursive' => 0];
+        $values  = ['name' => 'printer',
+            'is_dynamic'   => 1,
+            'entities_id'  => 0,
+            'is_recursive' => 0];
         $printers_id = $printer->add($values);
         $printer->getFromDB($printers_id);
         $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
-        $values  = ['name'         => 'printer2',
-                  'is_dynamic'   => 0,
-                  'entities_id'  => 0,
-                  'is_recursive' => 0];
+        $values = ['name'  => 'printer2',
+            'is_dynamic'   => 0,
+            'entities_id'  => 0,
+            'is_recursive' => 0];
         $printers_id_2 = $printer->add($values);
         $printer->getFromDB($printers_id_2);
         $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
@@ -116,6 +113,6 @@ JSON;
     {
         global $DB;
         $this->expectExceptionMessage('Direct query usage is strongly discouraged! Use DB::request() instead.');
-        $DB->query("SELECT * FROM glpi_users");
+        $DB->query('SELECT * FROM glpi_users');
     }
 }

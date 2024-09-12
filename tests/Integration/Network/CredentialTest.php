@@ -38,31 +38,31 @@ class CredentialTest extends TestCase
     public function testPasswordIsDecrypted(): void
     {
         $credentials = new PluginGlpiinventoryCredential();
-        $id = $credentials->add([
-            'name'     => "Test",
-            'username' => "raw_username",
-            'password' => "raw_password",
+        $id          = $credentials->add([
+            'name'     => 'Test',
+            'username' => 'raw_username',
+            'password' => 'raw_password',
             'itemtype' => PluginGlpiinventoryInventoryComputerESX::class,
         ]);
         $credentials->getFromDB($id);
 
         // We expect the password to be decrypted by getFromDb
-        $this->assertEquals("raw_password", $credentials->fields['password']);
+        $this->assertEquals('raw_password', $credentials->fields['password']);
     }
 
     public function testPasswordIsEncrypted(): void
     {
         $credentials = new PluginGlpiinventoryCredential();
-        $id = $credentials->add([
-            'name'     => "Test",
-            'username' => "raw_username",
-            'password' => "raw_password",
+        $id          = $credentials->add([
+            'name'     => 'Test',
+            'username' => 'raw_username',
+            'password' => 'raw_password',
             'itemtype' => PluginGlpiinventoryInventoryComputerESX::class,
         ]);
         $data = $credentials->find(['id' => $id]);
-        $row = current($data);
+        $row  = current($data);
 
         // find return raw database values, should be encrypted
-        $this->assertNotEquals("raw_password", $row['password']);
+        $this->assertNotEquals('raw_password', $row['password']);
     }
 }

@@ -31,10 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 Session::checkCentralAccess();
 
-header("Content-Type: text/json; charset=UTF-8");
+header('Content-Type: text/json; charset=UTF-8');
 Html::header_nocache();
 
 if (isset($_REQUEST['jobstate_id'])) {

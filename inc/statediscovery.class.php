@@ -40,32 +40,31 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryStateDiscovery extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_task';
 
-
-   /**
-    * Update state of discovery
-    *
-    * @param integer $p_number
-    * @param array $a_input
-    * @param integer $agent_id
-    */
+    /**
+     * Update state of discovery
+     *
+     * @param integer $p_number
+     * @param array $a_input
+     * @param integer $agent_id
+     */
     public function updateState($p_number, $a_input, $agent_id)
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
-            'agents_id'  => $agent_id]
+                'agents_id'                    => $agent_id],
         );
-        if (count($data) == "0") {
-            $input = [];
+        if (count($data) == '0') {
+            $input                                    = [];
             $input['plugin_glpiinventory_taskjob_id'] = $p_number;
-            $input['agents_id'] = $agent_id;
-            $id = $this->add($input);
+            $input['agents_id']                       = $agent_id;
+            $id                                       = $this->add($input);
             $this->getFromDB($id);
             $data[$id] = $this->fields;
         }
@@ -74,7 +73,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         foreach ($data as $process_id => $input) {
             foreach ($a_input as $field => $value) {
                 if (
-                    $field == 'nb_ip'
+                    $field    == 'nb_ip'
                     || $field == 'nb_found'
                     || $field == 'nb_error'
                     || $field == 'nb_exists'
@@ -87,7 +86,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             }
             $this->update($input);
         }
-       // If discovery and query are finished, we will end Process
+        // If discovery and query are finished, we will end Process
         $this->getFromDB($process_id);
         $doEnd = 1;
         if (
@@ -98,23 +97,22 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         }
 
         if ($doEnd == '1') {
-            $this->endState($p_number, date("Y-m-d H:i:s"), $agent_id);
+            $this->endState($p_number, date('Y-m-d H:i:s'), $agent_id);
         }
     }
 
-
-   /**
-    * End the state process
-    *
-    * @param integer $p_number
-    * @param string $date_end
-    * @param integer $agent_id
-    */
+    /**
+     * End the state process
+     *
+     * @param integer $p_number
+     * @param string $date_end
+     * @param integer $agent_id
+     */
     public function endState($p_number, $date_end, $agent_id)
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
-            'agents_id'  => $agent_id]
+                'agents_id'                    => $agent_id],
         );
         foreach ($data as $input) {
             $input['end_time'] = $date_end;
@@ -122,135 +120,134 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         }
     }
 
-
-   /**
-    * Display the discovery state
-    *
-    * @global object $DB
-    * @global array $CFG_GLPI
-    * @param array $options
-    */
+    /**
+     * Display the discovery state
+     *
+     * @global object $DB
+     * @global array $CFG_GLPI
+     * @param array $options
+     */
     public function display($options = [])
     {
         global $DB, $CFG_GLPI;
 
-        $agent = new Agent();
-        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $agent            = new Agent();
+        $pfTaskjobstate   = new PluginGlpiinventoryTaskjobstate();
+        $pfTaskjoblog     = new PluginGlpiinventoryTaskjoblog();
         $pfStateInventory = new PluginGlpiinventoryStateInventory();
-        $pfTaskjob = new PluginGlpiinventoryTaskjob();
-        $pfTask = new PluginGlpiinventoryTask();
+        $pfTaskjob        = new PluginGlpiinventoryTaskjob();
+        $pfTask           = new PluginGlpiinventoryTask();
 
         $start = 0;
-        if (isset($_REQUEST["start"])) {
-            $start = $_REQUEST["start"];
+        if (isset($_REQUEST['start'])) {
+            $start = $_REQUEST['start'];
         }
 
         // Total Number of events
         $iterator = $DB->request([
-            'COUNT' => 'cpt',
-            'FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
+            'COUNT'     => 'cpt',
+            'FROM'      => 'glpi_plugin_glpiinventory_taskjobstates',
             'LEFT JOIN' => [
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'FKEY' => [
                         'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
-                        'glpi_plugin_glpiinventory_taskjobs' => 'id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobs'      => 'id',
+                    ],
+                ],
             ],
             'WHERE' => [
-                'method' => 'networkdiscovery'
+                'method' => 'networkdiscovery',
             ],
             'GROUP' => 'uniqid',
-            'ORDER' => 'uniqid DESC'
+            'ORDER' => 'uniqid DESC',
         ]);
         $number = count($iterator);
 
         // Display the pager
-        Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/statediscovery.php", '');
+        Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . '/front/statediscovery.php', '');
 
         echo "<div class='card'>";
         echo "<table class='table table-hover card-table'>";
 
-        echo "<thead>";
+        echo '<thead>';
         echo "<tr class='tab_bg_1'>";
-        echo "<th>" . __('Unique id', 'glpiinventory') . "</th>";
-        echo "<th>" . _n('Task', 'Tasks', 1, 'glpiinventory') . "</th>";
-        echo "<th>" . __('Agent', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Status') . "</th>";
-        echo "<th>" . __('Starting date', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Ending date', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Total duration') . "</th>";
-        echo "<th>" . __('Threads number', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Total discovery devices', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Devices not imported', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Devices linked', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Devices imported', 'glpiinventory') . "</th>";
-        echo "</tr>";
-        echo "</thead>";
+        echo '<th>' . __('Unique id', 'glpiinventory') . '</th>';
+        echo '<th>' . _n('Task', 'Tasks', 1, 'glpiinventory') . '</th>';
+        echo '<th>' . __('Agent', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Status') . '</th>';
+        echo '<th>' . __('Starting date', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Ending date', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Total duration') . '</th>';
+        echo '<th>' . __('Threads number', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Total discovery devices', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Devices not imported', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Devices linked', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Devices imported', 'glpiinventory') . '</th>';
+        echo '</tr>';
+        echo '</thead>';
 
         $iterator = $DB->request([
-            'SELECT' => 'glpi_plugin_glpiinventory_taskjobstates.*',
-            'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
+            'SELECT'    => 'glpi_plugin_glpiinventory_taskjobstates.*',
+            'FROM'      => 'glpi_plugin_glpiinventory_taskjobstates',
             'LEFT JOIN' => [
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'ON' => [
-                        'glpi_plugin_glpiinventory_taskjobs' => 'id',
-                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobs'      => 'id',
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                    ],
+                ],
             ],
-            'WHERE'  => [
-                'method' => 'networkdiscovery'
+            'WHERE' => [
+                'method' => 'networkdiscovery',
             ],
             'GROUPBY' => 'uniqid',
-            'ORDER'  => 'uniqid DESC',
-            'START'  => (int)$start,
-            'LIMIT'  => (int)$_SESSION['glpilist_limit']
+            'ORDER'   => 'uniqid DESC',
+            'START'   => (int) $start,
+            'LIMIT'   => (int) $_SESSION['glpilist_limit'],
         ]);
 
         foreach ($iterator as $data) {
             echo "<tr class='tab_bg_1'>";
-            echo "<td>" . $data['uniqid'] . "</td>";
+            echo '<td>' . $data['uniqid'] . '</td>';
             $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
             $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
-            echo "<td>";
-            $link = $pfTask->getLinkURL() . '&forcetab=PluginGlpiinventoryTaskjobstate$1';
+            echo '<td>';
+            $link  = $pfTask->getLinkURL() . '&forcetab=PluginGlpiinventoryTaskjobstate$1';
             $label = $pfTask->getNameID([]);
 
             echo "<a href='$link'>$label</a>";
-            echo "</td>";
+            echo '</td>';
             $agent->getFromDB($data['agents_id']);
-            echo "<td>" . $agent->getLink(1) . "</td>";
-            $nb_found = 0;
-            $nb_threads = 0;
-            $start_date = "";
-            $end_date = "";
+            echo '<td>' . $agent->getLink(1) . '</td>';
+            $nb_found           = 0;
+            $nb_threads         = 0;
+            $start_date         = '';
+            $end_date           = '';
             $notimporteddevices = 0;
-            $updateddevices = 0;
-            $createddevices = 0;
-            $a_taskjobstates = $pfTaskjobstate->find(['uniqid' => $data['uniqid']]);
+            $updateddevices     = 0;
+            $createddevices     = 0;
+            $a_taskjobstates    = $pfTaskjobstate->find(['uniqid' => $data['uniqid']]);
             foreach ($a_taskjobstates as $datastate) {
                 $a_taskjoblog = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $datastate['id']]);
                 foreach ($a_taskjoblog as $taskjoblog) {
-                    if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
-                        $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);
-                    } elseif (strstr($taskjoblog['comment'], "==importdenied==")) {
+                    if (strstr($taskjoblog['comment'], ' ==devicesfound==')) {
+                        $nb_found += str_replace(' ==devicesfound==', '', $taskjoblog['comment']);
+                    } elseif (strstr($taskjoblog['comment'], '==importdenied==')) {
                         $notimporteddevices++;
-                    } elseif (strstr($taskjoblog['comment'], "==updatetheitem==")) {
+                    } elseif (strstr($taskjoblog['comment'], '==updatetheitem==')) {
                         $updateddevices++;
-                    } elseif (strstr($taskjoblog['comment'], "==addtheitem==")) {
+                    } elseif (strstr($taskjoblog['comment'], '==addtheitem==')) {
                         $createddevices++;
-                    } elseif ($taskjoblog['state'] == "1") {
-                        $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
+                    } elseif ($taskjoblog['state'] == '1') {
+                        $nb_threads = str_replace(' threads', '', $taskjoblog['comment']);
                         $start_date = $taskjoblog['date'];
                     }
 
                     if (
-                        ($taskjoblog['state'] == "2")
-                        or ($taskjoblog['state'] == "3")
-                        or ($taskjoblog['state'] == "4")
-                        or ($taskjoblog['state'] == "5")
+                        ($taskjoblog['state'] == '2')
+                        or ($taskjoblog['state'] == '3')
+                        or ($taskjoblog['state'] == '4')
+                        or ($taskjoblog['state'] == '5')
                     ) {
                         if (!strstr($taskjoblog['comment'], 'Merged with ')) {
                             $end_date = $taskjoblog['date'];
@@ -258,8 +255,8 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
                     }
                 }
             }
-           // State
-            echo "<td>";
+            // State
+            echo '<td>';
             switch ($data['state']) {
                 case 0:
                     echo __('Prepared', 'glpiinventory');
@@ -274,41 +271,41 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
                     echo __('Finished tasks', 'glpiinventory');
                     break;
             }
-            echo "</td>";
+            echo '</td>';
 
-            echo "<td>" . Html::convDateTime($start_date) . "</td>";
-            echo "<td>" . Html::convDateTime($end_date) . "</td>";
+            echo '<td>' . Html::convDateTime($start_date) . '</td>';
+            echo '<td>' . Html::convDateTime($end_date) . '</td>';
 
             if ($end_date == '') {
-                $end_date = date("Y-m-d H:i:s");
+                $end_date = date('Y-m-d H:i:s');
             }
             if ($start_date == '') {
-                echo "<td>-</td>";
+                echo '<td>-</td>';
             } else {
                 $interval = '';
                 if (phpversion() >= 5.3) {
-                    $date1 = new DateTime($start_date);
-                    $date2 = new DateTime($end_date);
-                    $interval = $date1->diff($date2);
+                    $date1        = new DateTime($start_date);
+                    $date2        = new DateTime($end_date);
+                    $interval     = $date1->diff($date2);
                     $display_date = '';
                     if ($interval->h > 0) {
-                        $display_date .= $interval->h . "h ";
+                        $display_date .= $interval->h . 'h ';
                     } elseif ($interval->i > 0) {
-                        $display_date .= $interval->i . "min ";
+                        $display_date .= $interval->i . 'min ';
                     }
-                    echo "<td>" . $display_date . $interval->s . "s</td>";
+                    echo '<td>' . $display_date . $interval->s . 's</td>';
                 } else {
                     $interval = $pfStateInventory->dateDiff($start_date, $end_date);
                 }
             }
-            echo "<td>" . $nb_threads . "</td>";
-            echo "<td>" . $nb_found . "</td>";
-            echo "<td>" . $notimporteddevices . "</td>";
-            echo "<td>" . $updateddevices . "</td>";
-            echo "<td>" . $createddevices . "</td>";
-            echo "</tr>";
+            echo '<td>' . $nb_threads . '</td>';
+            echo '<td>' . $nb_found . '</td>';
+            echo '<td>' . $notimporteddevices . '</td>';
+            echo '<td>' . $updateddevices . '</td>';
+            echo '<td>' . $createddevices . '</td>';
+            echo '</tr>';
         }
-        echo "</table>";
-        echo "</div>";
+        echo '</table>';
+        echo '</div>';
     }
 }

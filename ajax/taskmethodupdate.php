@@ -31,18 +31,18 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskmethodupdate.php")) {
-    include("../../../inc/includes.php");
-    header("Content-Type: text/html; charset=UTF-8");
+if (strpos($_SERVER['PHP_SELF'], 'taskmethodupdate.php')) {
+    include('../../../inc/includes.php');
+    header('Content-Type: text/html; charset=UTF-8');
     Html::header_nocache();
 }
 
 Session::checkCentralAccess();
 
-if (filter_input(INPUT_POST, "method") != '') {
+if (filter_input(INPUT_POST, 'method') != '') {
     $pfTaskjob = new PluginGlpiinventoryTaskjob();
     $pfTaskjob->updateMethod(
-        filter_input(INPUT_POST, "method"),
-        filter_input(INPUT_POST, "taskjobs_id")
+        filter_input(INPUT_POST, 'method'),
+        filter_input(INPUT_POST, 'taskjobs_id'),
     );
 }

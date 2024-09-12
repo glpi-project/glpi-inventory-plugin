@@ -40,49 +40,51 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
-    public static $rightname        = 'plugin_glpiinventory_collect';
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
+    public static $rightname = 'plugin_glpiinventory_collect';
     public $collect_itemtype = '';
     public $collect_table    = '';
     public $type             = '';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         $class = get_called_class();
+
         return $class::getTypeName();
     }
 
-   /**
-    * Get the collect associated with the content class
-    * @since 9.2+2.0
-    *
-    * @return string the collect class name
-    */
+    /**
+     * Get the collect associated with the content class
+     * @since 9.2+2.0
+     *
+     * @return string the collect class name
+     */
     public function getCollectClass()
     {
         $class = get_called_class();
         $item  = new $class();
+
         return $item->collect_itemtype;
     }
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $class            = get_called_class();
@@ -92,16 +94,17 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
                 $pfCollectContent->showForCollect($item->fields['id']);
                 break;
         }
+
         return true;
     }
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
@@ -113,17 +116,17 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
                     if ($item->fields['type'] == $this->type) {
                         $a_colfiles = getAllDataFromTable(
                             $collect::getTable(),
-                            ['plugin_glpiinventory_collects_id' => $item->fields['id']]
+                            ['plugin_glpiinventory_collects_id' => $item->fields['id']],
                         );
                         if (count($a_colfiles) == 0) {
-                             return '';
+                            return '';
                         }
-                         $in = array_keys($a_colfiles);
-                         $fk = getForeignKeyFieldForItemType($collect);
+                        $in = array_keys($a_colfiles);
+                        $fk = getForeignKeyFieldForItemType($collect);
                         if (
                             $nb = countElementsInTable(
                                 $this->getTable(),
-                                [$fk => $in]
+                                [$fk => $in],
                             ) > 0
                         ) {
                             return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb);
@@ -132,15 +135,16 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
                     break;
             }
         }
+
         return '';
     }
 
-   /**
-    * Delete all contents linked to the computer (most cases when delete a
-    * computer)
-    *
-    * @param integer $computers_id
-    */
+    /**
+     * Delete all contents linked to the computer (most cases when delete a
+     * computer)
+     *
+     * @param integer $computers_id
+     */
     public static function cleanComputer($computers_id)
     {
         $classname = get_called_class();
@@ -148,23 +152,23 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
         $content->deleteByCriteria(['computers_id' => $computers_id]);
     }
 
-   /**
-    * Show all files defined
-    *
-    * @param integer $collects_id id of collect
-    */
+    /**
+     * Show all files defined
+     *
+     * @param integer $collects_id id of collect
+     */
     public function showForCollect($collects_id)
     {
         global $DB;
         $class  = $this->collect_itemtype;
         $params = [
-         'FROM'   => $class::getTable(),
-         'FIELDS' => [
-            'id'
-         ],
-         'WHERE'  => [
-            'plugin_glpiinventory_collects_id' => $collects_id
-         ]
+            'FROM'   => $class::getTable(),
+            'FIELDS' => [
+                'id',
+            ],
+            'WHERE' => [
+                'plugin_glpiinventory_collects_id' => $collects_id,
+            ],
         ];
         $iterator = $DB->request($params);
         foreach ($iterator as $data) {
@@ -172,7 +176,5 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
         }
     }
 
-    public function showContent($id)
-    {
-    }
+    public function showContent($id) {}
 }

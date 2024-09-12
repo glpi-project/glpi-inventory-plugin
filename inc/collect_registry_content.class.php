@@ -45,13 +45,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
     public $type = 'registry';
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
@@ -60,16 +60,16 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 if ($item->fields['type'] == 'registry') {
                     $a_colregs = getAllDataFromTable(
                         'glpi_plugin_glpiinventory_collects_registries',
-                        ['plugin_glpiinventory_collects_id' => $item->fields['id']]
+                        ['plugin_glpiinventory_collects_id' => $item->fields['id']],
                     );
                     if (count($a_colregs) == 0) {
-                          return '';
+                        return '';
                     }
                     $in = array_keys($a_colregs);
                     if (
                         countElementsInTable(
                             'glpi_plugin_glpiinventory_collects_registries_contents',
-                            ['plugin_glpiinventory_collects_registries_id' => $in]
+                            ['plugin_glpiinventory_collects_registries_id' => $in],
                         ) > 0
                     ) {
                         return __('Windows registry content', 'glpiinventory');
@@ -77,19 +77,19 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 }
             }
         }
+
         return '';
     }
 
-
-   /**
-    * Update computer registry values (add and update) related to this
-    * collect registry id
-    *
-    * @global object $DB
-    * @param integer $computers_id id of the computer
-    * @param array $registry_data registry info sent by agent
-    * @param integer $collects_registries_id id of collect_registry
-    */
+    /**
+     * Update computer registry values (add and update) related to this
+     * collect registry id
+     *
+     * @global object $DB
+     * @param integer $computers_id id of the computer
+     * @param array $registry_data registry info sent by agent
+     * @param integer $collects_registries_id id of collect_registry
+     */
     public function updateComputer($computers_id, $registry_data, $collects_registries_id)
     {
         global $DB;
@@ -100,15 +100,15 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             'SELECT' => ['id', 'key', 'value'],
             'FROM'   => 'glpi_plugin_glpiinventory_collects_registries_contents',
             'WHERE'  => [
-                'computers_id' => $computers_id,
-                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id
-            ]
+                'computers_id'                                => $computers_id,
+                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
+            ],
         ]);
 
         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
-            $data1 = Toolbox::addslashes_deep($data);
+            $data1                 = Toolbox::addslashes_deep($data);
             $db_registries[$idtmp] = $data1;
         }
 
@@ -116,9 +116,9 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         foreach ($registry_data as $key => $value) {
             foreach ($db_registries as $keydb => $arraydb) {
                 if ($arraydb['key'] == $key) {
-                    $input = ['key'   => $arraydb['key'],
-                              'id'    => $keydb,
-                              'value' => $value];
+                    $input = ['key' => $arraydb['key'],
+                        'id'        => $keydb,
+                        'value'     => $value];
                     $this->update($input);
                     unset($registry_data[$key]);
                     unset($db_registries[$keydb]);
@@ -131,31 +131,31 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             $this->delete(['id' => $id], true);
         }
         foreach ($registry_data as $key => $value) {
-            if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
+            if (preg_match('/^0x[0-9a-fA-F]{1,}$/', $value)) {
                 $value = hexdec($value);
             }
             $input = [
-            'computers_id' => $computers_id,
-            'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
-            'key'          => $key,
-            'value'        => $value
+                'computers_id'                                => $computers_id,
+                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
+                'key'                                         => $key,
+                'value'                                       => $value,
             ];
             $this->add($input);
         }
     }
 
-   /**
-    * Show registries keys of the computer
-    *
-    * @param integer $computers_id id of the computer
-    */
+    /**
+     * Show registries keys of the computer
+     *
+     * @param integer $computers_id id of the computer
+     */
     public function showForComputer($computers_id)
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         echo "<table class='tab_cadre_fixe'>";
         $a_data = $this->find(
             ['computers_id' => $computers_id],
-            ['plugin_glpiinventory_collects_registries_id', 'key']
+            ['plugin_glpiinventory_collects_registries_id', 'key'],
         );
         $previous_key = 0;
         foreach ($a_data as $data) {
@@ -167,11 +167,11 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 echo '</th>';
                 echo '</tr>';
 
-                echo "<tr>";
-                echo "<th>" . __('Path', 'glpiinventory') . "</th>";
-                echo "<th>" . __('Value', 'glpiinventory') . "</th>";
-                echo "<th>" . __('Data', 'glpiinventory') . "</th>";
-                echo "</tr>";
+                echo '<tr>';
+                echo '<th>' . __('Path', 'glpiinventory') . '</th>';
+                echo '<th>' . __('Value', 'glpiinventory') . '</th>';
+                echo '<th>' . __('Data', 'glpiinventory') . '</th>';
+                echo '</tr>';
 
                 $previous_key = $data['plugin_glpiinventory_collects_registries_id'];
             }
@@ -187,42 +187,41 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             echo '<td>';
             echo $data['value'];
             echo '</td>';
-            echo "</tr>";
+            echo '</tr>';
         }
         echo '</table>';
     }
 
-
-   /**
-    * Display registry keys / values of collect_registry id
-    *
-    * @param integer $collects_registries_id
-    */
+    /**
+     * Display registry keys / values of collect_registry id
+     *
+     * @param integer $collects_registries_id
+     */
     public function showContent($collects_registries_id)
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
-        $computer = new Computer();
+        $computer           = new Computer();
 
         $pfCollect_Registry->getFromDB($collects_registries_id);
 
         echo "<table class='tab_cadre_fixe'>";
 
-        echo "<tr>";
+        echo '<tr>';
         echo "<th colspan='3'>";
         echo $pfCollect_Registry->fields['hive'] .
            $pfCollect_Registry->fields['path'];
-        echo "</th>";
-        echo "</tr>";
+        echo '</th>';
+        echo '</tr>';
 
-        echo "<tr>";
-        echo "<th>" . __('Computer') . "</th>";
-        echo "<th>" . __('Value', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Data', 'glpiinventory') . "</th>";
-        echo "</tr>";
+        echo '<tr>';
+        echo '<th>' . __('Computer') . '</th>';
+        echo '<th>' . __('Value', 'glpiinventory') . '</th>';
+        echo '<th>' . __('Data', 'glpiinventory') . '</th>';
+        echo '</tr>';
 
         $a_data = $this->find(
             ['plugin_glpiinventory_collects_registries_id' => $collects_registries_id],
-            ['key']
+            ['key'],
         );
         foreach ($a_data as $data) {
             echo "<tr class='tab_bg_1'>";
@@ -236,7 +235,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             echo '<td>';
             echo $data['value'];
             echo '</td>';
-            echo "</tr>";
+            echo '</tr>';
         }
         echo '</table>';
     }

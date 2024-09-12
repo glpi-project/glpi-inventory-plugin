@@ -31,20 +31,20 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdown_taskjob.php")) {
-    include("../../../inc/includes.php");
-    header("Content-Type: text/html; charset=UTF-8");
+if (strpos($_SERVER['PHP_SELF'], 'dropdown_taskjob.php')) {
+    include('../../../inc/includes.php');
+    header('Content-Type: text/html; charset=UTF-8');
     Html::header_nocache();
 }
 if (!defined('GLPI_ROOT')) {
-    die("Can not access directly to this file");
+    die('Can not access directly to this file');
 }
 
 Session::checkCentralAccess();
-$id = filter_input(INPUT_POST, "id");
+$id = filter_input(INPUT_POST, 'id');
 if (!empty($id) and $id > 0) {
     Dropdown::show('PluginGlpiinventoryTaskjob', [
-             'name' => "taskjobs_id",
-             'condition' => ['plugin_glpiinventory_tasks_id' => $id]
+        'name'      => 'taskjobs_id',
+        'condition' => ['plugin_glpiinventory_tasks_id' => $id],
     ]);
 }

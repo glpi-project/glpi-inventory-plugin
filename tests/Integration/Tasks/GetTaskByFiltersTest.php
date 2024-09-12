@@ -35,27 +35,26 @@ use PHPUnit\Framework\TestCase;
 
 class GetTaskByFiltersTest extends TestCase
 {
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function GetTaskWithoutJobs()
     {
-
         $pfTask = new PluginGlpiinventoryTask();
 
-       // create task
+        // create task
         $input = [
-          'entities_id' => 0,
-          'name'        => 'deploy',
-          'is_active'   => 1
+            'entities_id' => 0,
+            'name'        => 'deploy',
+            'is_active'   => 1,
         ];
         $pfTask->add($input);
 
         $running_tasks = $pfTask->getItemsFromDB(
             [
-            'is_running'  => true,
-            'is_active'   => true
-            ]
+                'is_running' => true,
+                'is_active'  => true,
+            ],
         );
         $this->assertEquals([], $running_tasks, 'Not find task because not have job');
     }

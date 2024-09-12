@@ -31,17 +31,17 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdowntype.php")) {
-    include("../../../inc/includes.php");
-    header("Content-Type: text/html; charset=UTF-8");
+if (strpos($_SERVER['PHP_SELF'], 'dropdowntype.php')) {
+    include('../../../inc/includes.php');
+    header('Content-Type: text/html; charset=UTF-8');
     Html::header_nocache();
 }
 
 Session::checkCentralAccess();
 
-$typename = filter_input(INPUT_POST, "typename");
-$method = filter_input(INPUT_POST, "method");
-$taskjobs_id = filter_input(INPUT_POST, "taskjobs_id");
+$typename    = filter_input(INPUT_POST, 'typename');
+$method      = filter_input(INPUT_POST, 'method');
+$taskjobs_id = filter_input(INPUT_POST, 'taskjobs_id');
 
 $pfTaskjob = new PluginGlpiinventoryTaskjob();
 if (
@@ -52,8 +52,8 @@ if (
     $pfTaskjob->dropdownType(
         $typename,
         $method,
-        filter_input(INPUT_POST, "value"),
+        filter_input(INPUT_POST, 'value'),
         $taskjobs_id,
-        ""
+        '',
     );
 }

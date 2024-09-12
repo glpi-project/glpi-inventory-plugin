@@ -40,12 +40,12 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryModule extends CommonDBTM
 {
-   /**
-    * Get all installed modules
-    *
-    * @param boolean $p_inactive Show inactive modules
-    * @return array
-    */
+    /**
+     * Get all installed modules
+     *
+     * @param boolean $p_inactive Show inactive modules
+     * @return array
+     */
     public static function getAll($p_inactive = false)
     {
         $plugin = new Plugin();
@@ -56,13 +56,12 @@ class PluginGlpiinventoryModule extends CommonDBTM
         }
     }
 
-
-   /**
-    * Get module id or plugin id
-    *
-    * @param string $p_name the module name
-    * @return integer|false plugin id or FALSE if module is not active or not a module
-    */
+    /**
+     * Get module id or plugin id
+     *
+     * @param string $p_name the module name
+     * @return integer|false plugin id or FALSE if module is not active or not a module
+     */
     public static function getModuleId($p_name)
     {
         $index = false;
@@ -73,23 +72,23 @@ class PluginGlpiinventoryModule extends CommonDBTM
             $index = array_search($p_name, $_SESSION['glpi_plugins']);
             if (!$index) {
                 $plugin = new Plugin();
-                $data = $plugin->find(['directory' => $p_name]);
+                $data   = $plugin->find(['directory' => $p_name]);
                 if (count($data)) {
                     $fields = current($data);
-                    $index = $fields['id'];
+                    $index  = $fields['id'];
                 }
             }
         }
+
         return $index;
     }
 
-
-   /**
-    * Get module name
-    *
-    * @param integer $p_id the module id
-    * @return string|false false if module is not active or not a module
-    */
+    /**
+     * Get module name
+     *
+     * @param integer $p_id the module id
+     * @return string|false false if module is not active or not a module
+     */
     public static function getModuleName($p_id)
     {
         if (isset($_SESSION['glpi_plugins'][$p_id])) {

@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-require_once("DatabaseTestsCommons.php");
+require_once('DatabaseTestsCommons.php');
 
 use PHPUnit\Framework\TestCase;
 
@@ -39,15 +39,14 @@ class UpdateTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // clean log files
-        file_put_contents("../../files/_log/php-errors.log", '');
-        file_put_contents("../../files/_log/sql-errors.log", '');
+        // clean log files
+        file_put_contents('../../files/_log/php-errors.log', '');
+        file_put_contents('../../files/_log/sql-errors.log', '');
     }
-
 
     public static function tearDownAfterClass(): void
     {
-       // Creation of folders if not created in tests
+        // Creation of folders if not created in tests
         if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory')) {
             mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
         }
@@ -74,30 +73,27 @@ class UpdateTest extends TestCase
         }
     }
 
-
-
-
-   /**
-    * @dataProvider provider
-    * @preserveGlobalState disabled
-    * @test
-    */
+    /**
+     * @dataProvider provider
+     * @preserveGlobalState disabled
+     * @test
+     */
     public function update($version = '', $verify = false, $nbrules = 0)
     {
         global $DB;
 
-       // uninstall the plugin
+        // uninstall the plugin
         $plugin = new Plugin();
         $plugin->getFromDBByCrit(['directory' => 'glpiinventory']);
         $plugin->uninstall($plugin->fields['id']);
 
-        $query = "SHOW TABLES";
+        $query  = 'SHOW TABLES';
         $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
             if (
-                strstr($data[0], "tracker")
-                || strstr($data[0], "fusi")
-                || strstr($data[0], "glpiinventory")
+                strstr($data[0], 'tracker')
+                || strstr($data[0], 'fusi')
+                || strstr($data[0], 'glpiinventory')
             ) {
                 $DB->dropTable($data[0]);
             }
@@ -107,75 +103,75 @@ class UpdateTest extends TestCase
             [
                 'OR' => [
                     ['itemtype' => ['LIKE', 'PluginFus%']],
-                    ['itemtype' => ['LIKE', 'PluginGlpiinventory%']]
-                ]
-            ]
+                    ['itemtype' => ['LIKE', 'PluginGlpiinventory%']],
+                ],
+            ],
         );
 
         // Delete all plugin rules
         $DB->deleteOrDie(
             Rule::getTable(),
-            ['sub_type' => ['LIKE', 'Plugin%']]
+            ['sub_type' => ['LIKE', 'Plugin%']],
         );
 
         $DB->delete(
             'glpi_ruleactions',
-            ['id' => ['>', 105]]
+            ['id' => ['>', 105]],
         );
         $DB->delete(
             'glpi_rulecriterias',
-            ['id' => ['>', 108]]
+            ['id' => ['>', 108]],
         );
         $DB->delete(
             'glpi_rules',
-            ['id' => ['>', 105]]
+            ['id' => ['>', 105]],
         );
 
         if ($version != '') {
-            $sqlfile = "tests/Installation/mysql/i-" . $version . ".sql";
-           // Load specific plugin version in database
+            $sqlfile = 'tests/Installation/mysql/i-' . $version . '.sql';
+            // Load specific plugin version in database
             $result = $this->load_mysql_file(
                 $DB->dbuser,
                 $DB->dbhost,
                 $DB->dbdefault,
                 $DB->dbpassword,
-                $sqlfile
+                $sqlfile,
             );
             $this->assertEquals(
                 0,
                 $result['returncode'],
-                "Failed to install plugin " . $sqlfile . ":\n" .
-                implode("\n", $result['output'])
+                'Failed to install plugin ' . $sqlfile . ":\n" .
+                implode("\n", $result['output']),
             );
 
-            $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --config-dir=tests/config";
-            $outputMy = [];
+            $commandMy    = 'cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --config-dir=tests/config';
+            $outputMy     = [];
             $returncodeMy = 0;
             exec($commandMy, $outputMy, $returncodeMy);
             $this->assertEquals(
                 0,
                 $returncodeMy,
-                sprintf("Result code from glpi:migration:myisam_to_innodb was '%s'.\n%s", $returncodeMy, implode("\n", $outputMy))
+                sprintf("Result code from glpi:migration:myisam_to_innodb was '%s'.\n%s", $returncodeMy, implode("\n", $outputMy)),
             );
         }
-        $outputInstall = [];
+        $outputInstall     = [];
         $returncodeInstall = 0;
-        $commandInstall = "cd ../../ && php bin/console glpi:plugin:install -n -q --config-dir=tests/config --username=glpi glpiinventory";
+        $commandInstall    = 'cd ../../ && php bin/console glpi:plugin:install -n -q --config-dir=tests/config --username=glpi glpiinventory';
         exec($commandInstall, $outputInstall, $returncodeInstall);
         $this->assertEquals(
             0,
             $returncodeInstall,
-            sprintf("Result code from glpi:plugin:install was '%s'.\n%s", $returncodeInstall, implode("\n", $outputInstall))
+            sprintf("Result code from glpi:plugin:install was '%s'.\n%s", $returncodeInstall, implode("\n", $outputInstall)),
         );
 
         $outputActivate     = [];
         $returncodeActivate = 0;
-        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n -q --config-dir=tests/config glpiinventory";
+        $commandActivate    = 'cd ../../ && php bin/console glpi:plugin:activate -n -q --config-dir=tests/config glpiinventory';
         exec($commandActivate, $outputActivate, $returncodeActivate);
         $this->assertEquals(
             0,
             $returncodeActivate,
-            sprintf("Result code from glpi:plugin:activate was '%s'.\n%s", $returncodeActivate, implode("\n", $outputActivate))
+            sprintf("Result code from glpi:plugin:activate was '%s'.\n%s", $returncodeActivate, implode("\n", $outputActivate)),
         );
 
         $GLPIlog = new GLPIlogs();
@@ -183,7 +179,7 @@ class UpdateTest extends TestCase
         $GLPIlog->testPHPlogs();
 
         $DatabaseTestsCommons = new DatabaseTestsCommons();
-        $DatabaseTestsCommons->checkInstall("glpiinventory", "upgrade from " . $version);
+        $DatabaseTestsCommons->checkInstall('glpiinventory', 'upgrade from ' . $version);
 
         $this->verifyEntityRules($nbrules);
         $this->checkDeployMirrors();
@@ -197,8 +193,8 @@ class UpdateTest extends TestCase
     {
         if (!file_exists($file)) {
             return [
-            'returncode' => 1,
-            'output' => ["ERROR: File '{$file}' does not exist !"]
+                'returncode' => 1,
+                'output'     => ["ERROR: File '{$file}' does not exist !"],
             ];
         }
 
@@ -208,22 +204,22 @@ class UpdateTest extends TestCase
             return $result;
         }
 
-        $cmd = $result . " " . $dbdefault . " < " . $file . " 2>&1";
+        $cmd = $result . ' ' . $dbdefault . ' < ' . $file . ' 2>&1';
 
         $returncode = 0;
-        $output = [];
+        $output     = [];
         exec(
             $cmd,
             $output,
-            $returncode
+            $returncode,
         );
         array_unshift($output, "Output of '{$cmd}'");
+
         return [
-         'returncode' => $returncode,
-         'output' => $output
+            'returncode' => $returncode,
+            'output'     => $output,
         ];
     }
-
 
     public function construct_mysql_options($dbuser = '', $dbhost = '', $dbpassword = '', $cmd_base = 'mysql')
     {
@@ -231,8 +227,8 @@ class UpdateTest extends TestCase
 
         if (empty($dbuser) || empty($dbhost)) {
             return [
-            'returncode' => 2,
-            'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"]
+                'returncode' => 2,
+                'output'     => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"],
             ];
         }
         $cmd = [$cmd_base];
@@ -240,37 +236,36 @@ class UpdateTest extends TestCase
         if (strpos($dbhost, ':') !== false) {
             $dbhost = explode(':', $dbhost);
             if (!empty($dbhost[0])) {
-                $cmd[] = "--host " . $dbhost[0];
+                $cmd[] = '--host ' . $dbhost[0];
             }
             if (is_numeric($dbhost[1])) {
-                $cmd[] = "--port " . $dbhost[1];
+                $cmd[] = '--port ' . $dbhost[1];
             } else {
-               // The dbhost's second part is assumed to be a socket file if it is not numeric.
-                $cmd[] = "--socket " . $dbhost[1];
+                // The dbhost's second part is assumed to be a socket file if it is not numeric.
+                $cmd[] = '--socket ' . $dbhost[1];
             }
         } else {
-            $cmd[] = "--host " . $dbhost;
+            $cmd[] = '--host ' . $dbhost;
         }
 
-        $cmd[] = "--user " . $dbuser;
+        $cmd[] = '--user ' . $dbuser;
 
         if (!empty($dbpassword)) {
             $cmd[] = "-p'" . urldecode($dbpassword) . "'";
         }
+
         return implode(' ', $cmd);
     }
 
-
     public function provider()
     {
-       // version, verifyConfig, nb entity rules
+        // version, verifyConfig, nb entity rules
         return [
-         '0.83+2.1'     => ["0.83+2.1", true, 1],
-         /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
-         'empty tables' => ["", false, 0],
+            '0.83+2.1' => ['0.83+2.1', true, 1],
+            /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
+            'empty tables' => ['', false, 0],
         ];
     }
-
 
     private function verifyEntityRules($nbrules = 0)
     {
@@ -283,20 +278,19 @@ class UpdateTest extends TestCase
         }
 
         $cnt_old = countElementsInTable(
-            "glpi_rules",
-            ['sub_type' => 'PluginFusinvinventoryRuleEntity']
+            'glpi_rules',
+            ['sub_type' => 'PluginFusinvinventoryRuleEntity'],
         );
 
-        $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
+        $this->assertEquals(0, $cnt_old, 'May not have entity rules with old itemtype name');
 
         $cnt_new = countElementsInTable(
-            "glpi_rules",
-            ['sub_type' => 'RuleImportEntity']
+            'glpi_rules',
+            ['sub_type' => 'RuleImportEntity'],
         );
 
-        $this->assertEquals($nbrules, $cnt_new, "May have " . $nbrules . " entity rules");
+        $this->assertEquals($nbrules, $cnt_new, 'May have ' . $nbrules . ' entity rules');
     }
-
 
     private function verifyConfig()
     {
@@ -305,24 +299,23 @@ class UpdateTest extends TestCase
 
         $a_configs = getAllDataFromTable(
             'glpi_plugin_glpiinventory_configs',
-            ['type' => 'states_id_default']
+            ['type' => 'states_id_default'],
         );
 
-        $this->assertEquals(1, count($a_configs), "May have conf states_id_default");
+        $this->assertEquals(1, count($a_configs), 'May have conf states_id_default');
 
         $a_config = current($a_configs);
-        $this->assertEquals(1, $a_config['value'], "May keep states_id_default to 1");
+        $this->assertEquals(1, $a_config['value'], 'May keep states_id_default to 1');
     }
-
 
     private function checkDeployMirrors()
     {
         global $DB;
 
-       //check is the field is_active has correctly been added to mirror servers
+        //check is the field is_active has correctly been added to mirror servers
         $this->assertTrue($DB->fieldExists(
             'glpi_plugin_glpiinventory_deploymirrors',
-            'is_active'
+            'is_active',
         ));
     }
 }

@@ -35,48 +35,47 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteLinkedObjectsTest extends TestCase
 {
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function IpRangeDeleteConfigSecurity()
     {
-
-        $iprange = new PluginGlpiinventoryIPRange();
+        $iprange             = new PluginGlpiinventoryIPRange();
         $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
 
-       // Delete all IPRanges
+        // Delete all IPRanges
         $items = $iprange->find();
         foreach ($items as $item) {
             $iprange->delete(['id' => $item['id']], true);
         }
 
         $input = [
-          'name'        => 'Office',
-          'ip_start'    => '192.168.0.1',
-          'ip_end'      => '192.168.0.254',
-          'entities_id' => 0
+            'name'        => 'Office',
+            'ip_start'    => '192.168.0.1',
+            'ip_end'      => '192.168.0.254',
+            'entities_id' => 0,
         ];
         $ipranges_id = $iprange->add($input);
 
         $list_iprange = $iprange->find();
-        $this->assertEquals(1, count($list_iprange), "IP Range not right added");
+        $this->assertEquals(1, count($list_iprange), 'IP Range not right added');
 
         $input = [
-          'plugin_glpiinventory_ipranges_id' => $ipranges_id,
-          'snmpcredentials_id' => 1,
-          'rank' => 1
+            'plugin_glpiinventory_ipranges_id' => $ipranges_id,
+            'snmpcredentials_id'               => 1,
+            'rank'                             => 1,
         ];
         $iprange_credentials->add($input);
 
         $list_security = $iprange_credentials->find();
-        $this->assertEquals(1, count($list_security), "SNMP community not added to iprange");
+        $this->assertEquals(1, count($list_security), 'SNMP community not added to iprange');
 
         $iprange->delete(['id' => $ipranges_id]);
 
         $list_iprange = $iprange->find();
-        $this->assertEquals(0, count($list_iprange), "IP Range not right deleted");
+        $this->assertEquals(0, count($list_iprange), 'IP Range not right deleted');
 
         $list_security = $iprange_credentials->find();
-        $this->assertEquals(0, count($list_security), "SNMP community not deleted with iprange");
+        $this->assertEquals(0, count($list_security), 'SNMP community not deleted with iprange');
     }
 }

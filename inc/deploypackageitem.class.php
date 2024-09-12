@@ -42,22 +42,21 @@ if (!defined('GLPI_ROOT')) {
 */
 class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 {
-   //Display modes
-    const CREATE      = 'create';
-    const EDIT        = 'edit';
-    const INIT        = 'init';
+    //Display modes
+    public const CREATE = 'create';
+    public const EDIT   = 'edit';
+    public const INIT   = 'init';
 
     public $shortname = '';
 
-   //The section name in the JSON representation
+    //The section name in the JSON representation
     public $json_name = '';
 
-
-   /**
-    * Get an event label by its identifier
-    * @since 9.2
-    * @return false|string
-    */
+    /**
+     * Get an event label by its identifier
+     * @since 9.2
+     * @return false|string
+     */
     public function getLabelForAType($type)
     {
         $types = $this->getTypes();
@@ -68,28 +67,26 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         }
     }
 
-
-   /**
-   * Get the types already in used, so they cannot be selected anymore
-   * @since 9.2
-   * @param PluginGlpiinventoryDeployPackage $package the package to check
-   * @return array the types already in used
-   */
+    /**
+    * Get the types already in used, so they cannot be selected anymore
+    * @since 9.2
+    * @param PluginGlpiinventoryDeployPackage $package the package to check
+    * @return array the types already in used
+    */
     public function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
     {
         return [];
     }
 
-
-   /**
-    * Display the dropdown to select type of element
-    *
-    * @global array $CFG_GLPI
-    * @param PluginGlpiinventoryDeployPackage $package the package
-    * @param array $config order item configuration
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode mode in use (create, edit...)
-    */
+    /**
+     * Display the dropdown to select type of element
+     *
+     * @global array $CFG_GLPI
+     * @param PluginGlpiinventoryDeployPackage $package the package
+     * @param array $config order item configuration
+     * @param string $rand unique element id used to identify/update an element
+     * @param string $mode mode in use (create, edit...)
+     */
     public function displayDropdownType(
         PluginGlpiinventoryDeployPackage $package,
         $config,
@@ -98,179 +95,175 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     ) {
         global $CFG_GLPI;
 
-       //In case of a file item, there's no type, so don't display dropdown
-       //in edition mode
+        //In case of a file item, there's no type, so don't display dropdown
+        //in edition mode
         if (!isset($config['type']) && $mode == self::EDIT) {
             return true;
         }
 
-       /*
-       * Display dropdown html
-       */
+        /*
+        * Display dropdown html
+        */
         echo "<table class='package_item'>";
-        echo "<tr>";
-        echo "<th>" . _n("Type", "Types", 1) . "</th>";
-        echo "<td>";
+        echo '<tr>';
+        echo '<th>' . _n('Type', 'Types', 1) . '</th>';
+        echo '<td>';
 
-        $type_field = $this->shortname . "type";
+        $type_field = $this->shortname . 'type';
 
         if ($mode === self::CREATE) {
-            $types      = $this->getTypes();
+            $types = $this->getTypes();
             array_unshift($types, Dropdown::EMPTY_VALUE);
 
             Dropdown::showFromArray(
                 $type_field,
                 $types,
-                ['rand' => $rand,
-                                  'used' => $this->getTypesAlreadyInUse($package)
-                ]
+                ['rand'    => $rand,
+                    'used' => $this->getTypesAlreadyInUse($package),
+                ],
             );
             $params = [
-                     'value'  => '__VALUE__',
-                     'rand'   => $rand,
-                     'myname' => 'method',
-                     'type'   => $this->shortname,
-                     'class'  => get_class($this),
-                     'mode'   => $mode
+                'value'  => '__VALUE__',
+                'rand'   => $rand,
+                'myname' => 'method',
+                'type'   => $this->shortname,
+                'class'  => get_class($this),
+                'mode'   => $mode,
             ];
 
             Ajax::updateItemOnEvent(
-                "dropdown_" . $type_field . $rand,
-                "show_" . $this->shortname . "_value$rand",
+                'dropdown_' . $type_field . $rand,
+                'show_' . $this->shortname . "_value$rand",
                 Plugin::getWebDir('glpiinventory') .
-                "/ajax/deploy_displaytypevalue.php",
+                '/ajax/deploy_displaytypevalue.php',
                 $params,
-                ["change", "load"]
+                ['change', 'load'],
             );
         } else {
             echo Html::hidden($type_field, ['value' => $config['type']]);
             echo $this->getLabelForAType($config['type']);
         }
 
-        echo "</td>";
-        echo "</tr></table>";
+        echo '</td>';
+        echo '</tr></table>';
     }
 
-
-   /**
-   * Create a configuration request data
-   *
-   * @since 9.2
-   */
+    /**
+    * Create a configuration request data
+    *
+    * @since 9.2
+    */
     public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data)
     {
         $config  = [];
         $element = $package->getSubElement($this->json_name, $request_data['index']);
         if (is_array($element) && count($element)) {
-            $config = [ 'type' => $element['type'],
-                     'data' => $element];
+            $config = ['type' => $element['type'],
+                'data'        => $element];
         }
+
         return $config;
     }
 
-
-   /**
-    * Display form
-    *
-    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-    * @param array $request_data
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode possible values: init|edit|create
-    */
+    /**
+     * Display form
+     *
+     * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
+     * @param array $request_data
+     * @param string $rand unique element id used to identify/update an element
+     * @param string $mode possible values: init|edit|create
+     */
     public function displayForm(
         PluginGlpiinventoryDeployPackage $package,
         $request_data,
         $rand,
         $mode
     ) {
-       /*
-        * Get element config in 'edit' mode
-        */
+        /*
+         * Get element config in 'edit' mode
+         */
         $config = null;
         if ($mode === self::EDIT && isset($request_data['index'])) {
-           /*
-            * Add an hidden input about element's index to be updated
-            */
+            /*
+             * Add an hidden input about element's index to be updated
+             */
             echo Html::hidden('index', ['value' => $request_data['index']]);
             $config = $this->getItemConfig($package, $request_data);
         }
 
-       /*
-       * Display start of div form
-       */
+        /*
+        * Display start of div form
+        */
         if (in_array($mode, [self::INIT], true)) {
             echo "<div id='" . $this->shortname . "_block$rand' style='display:none'>";
         }
 
-       /*
-       * Display element's dropdownType in 'create' or 'edit' mode
-       */
+        /*
+        * Display element's dropdownType in 'create' or 'edit' mode
+        */
         if (in_array($mode, [self::CREATE, self::EDIT], true)) {
             $this->displayDropdownType($package, $config, $rand, $mode);
         }
 
-       /*
-       * Display element's values in 'edit' mode only.
-       * In 'create' mode, those values are refreshed with dropdownType 'change'
-       * javascript event.
-       */
+        /*
+        * Display element's values in 'edit' mode only.
+        * In 'create' mode, those values are refreshed with dropdownType 'change'
+        * javascript event.
+        */
         if (in_array($mode, [self::CREATE, self::EDIT], true)) {
             echo "<span id='show_" . $this->shortname . "_value{$rand}'>";
             if ($mode === self::EDIT) {
                 $this->displayAjaxValues($config, $request_data, $rand, $mode);
             }
-            echo "</span>";
+            echo '</span>';
         }
 
-       /*
-       * Close form div
-       */
+        /*
+        * Close form div
+        */
         if (in_array($mode, [self::INIT], true)) {
-            echo "</div>";
+            echo '</div>';
         }
     }
 
-
-   /**
-   * Get an HTML mandatory mark (a red star)
-   * @since 9.2
-   * @return string the html code for a red star
-   */
+    /**
+    * Get an HTML mandatory mark (a red star)
+    * @since 9.2
+    * @return string the html code for a red star
+    */
     public function getMandatoryMark()
     {
         return "&nbsp;<span class='red'>*</span>";
     }
 
-
-   /**
-    * Common method to add an item to the package JSON definition
-    *
-    * @since 9.2
-    * @param integer $id the package ID
-    * @param string $item the item to add to the package definition
-    * @param integer $order the order of the item
-    *
-    * @return void
-    */
+    /**
+     * Common method to add an item to the package JSON definition
+     *
+     * @since 9.2
+     * @param integer $id the package ID
+     * @param string $item the item to add to the package definition
+     * @param integer $order the order of the item
+     *
+     * @return void
+     */
     public function addToPackage($id, $item, $order)
     {
-       //get current json package defintion
+        //get current json package defintion
         $data = json_decode($this->getJson($id), true);
 
-       //add new entry
+        //add new entry
         $data['jobs'][$order][] = $item;
 
-       //Update package
+        //Update package
         $this->updateOrderJson($id, $data);
     }
 
-
-   /**
-    * Get the json
-    *
-    * @param integer $packages_id id of the order
-    * @return boolean|string the string is in json format
-    */
+    /**
+     * Get the json
+     *
+     * @param integer $packages_id id of the order
+     * @return boolean|string the string is in json format
+     */
     public function getJson($packages_id)
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -282,47 +275,45 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         }
     }
 
-
     public function prepareDataToSave($params, $entry)
     {
-       //get current order json
+        //get current order json
         $data = json_decode($this->getJson($params['id']), true);
 
-       //unset index
+        //unset index
         unset($data['jobs'][$this->json_name][$params['index']]);
 
-       //add new data at index position
-       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
+        //add new data at index position
+        //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
         array_splice(
             $data['jobs'][$this->json_name],
             $params['index'],
             0,
-            [$entry]
+            [$entry],
         );
 
         return $data;
     }
 
-
-   /**
-    * Update the order json
-    *
-    * @param integer $packages_id
-    * @param array $data
-    * @return integer error number
-    */
+    /**
+     * Update the order json
+     *
+     * @param integer $packages_id
+     * @param array $data
+     * @return integer error number
+     */
     public function updateOrderJson($packages_id, $data)
     {
         $pfDeployPackage   = new PluginGlpiinventoryDeployPackage();
         $options           = JSON_UNESCAPED_SLASHES;
         $json              = json_encode($data, $options);
         $json_error_consts = [
-         JSON_ERROR_NONE           => "JSON_ERROR_NONE",
-         JSON_ERROR_DEPTH          => "JSON_ERROR_DEPTH",
-         JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
-         JSON_ERROR_CTRL_CHAR      => "JSON_ERROR_CTRL_CHAR",
-         JSON_ERROR_SYNTAX         => "JSON_ERROR_SYNTAX",
-         JSON_ERROR_UTF8           => "JSON_ERROR_UTF8"
+            JSON_ERROR_NONE           => 'JSON_ERROR_NONE',
+            JSON_ERROR_DEPTH          => 'JSON_ERROR_DEPTH',
+            JSON_ERROR_STATE_MISMATCH => 'JSON_ERROR_STATE_MISMATCH',
+            JSON_ERROR_CTRL_CHAR      => 'JSON_ERROR_CTRL_CHAR',
+            JSON_ERROR_SYNTAX         => 'JSON_ERROR_SYNTAX',
+            JSON_ERROR_UTF8           => 'JSON_ERROR_UTF8',
         ];
         $error_json         = json_last_error();
         $error_json_message = json_last_error_msg();
@@ -330,116 +321,115 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         if ($error_json != JSON_ERROR_NONE) {
             $error_msg = $json_error_consts[$error_json];
             Session::addMessageAfterRedirect(
-                __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>" .
-                $error_msg . "<br/>" . $error_json_message,
+                __('The modified JSON contained a syntax error :', 'glpiinventory') . '<br/>' .
+                $error_msg . '<br/>' . $error_json_message,
                 false,
                 ERROR,
-                false
+                false,
             );
             $error = 1;
         } else {
-            $error = $pfDeployPackage->update(['id'   => $packages_id,
-                                            'json' => Toolbox::addslashes_deep($json)]);
+            $error = $pfDeployPackage->update(['id' => $packages_id,
+                'json'                              => Toolbox::addslashes_deep($json)]);
         }
+
         return $error;
     }
 
-
-   /**
-    * Remove an item
-    *
-    * @param array $params
-    * @return boolean
-    */
+    /**
+     * Remove an item
+     *
+     * @param array $params
+     * @return boolean
+     */
     public function remove_item($params)
     {
         if (!isset($params[$this->shortname . '_entries'])) {
             return false;
         }
 
-       //get current order json
+        //get current order json
         $data = json_decode($this->getJson($params['packages_id']), true);
-       //remove selected checks
+        //remove selected checks
         foreach ($params[$this->shortname . '_entries'] as $index => $checked) {
-            if ($checked >= "1" || $checked == "on") {
+            if ($checked >= '1' || $checked == 'on') {
                 unset($data['jobs'][$this->shortname][$index]);
             }
         }
 
-       //Ensure actions list is an array and not a dictionnary
-       //Note: This happens when removing an array element from the begining
+        //Ensure actions list is an array and not a dictionnary
+        //Note: This happens when removing an array element from the begining
         $data['jobs'][$this->shortname] = array_values($data['jobs'][$this->shortname]);
 
-       //update order
+        //update order
         $this->updateOrderJson($params['packages_id'], $data);
+
         return true;
     }
 
-
-   /**
-    * Move an item
-    *
-    * @param array $params
-    */
+    /**
+     * Move an item
+     *
+     * @param array $params
+     */
     public function move_item($params)
     {
-       //get current order json
+        //get current order json
         $data = json_decode($this->getJson($params['id']), true);
 
-       //get data on old index
+        //get data on old index
         $moved_check = $data['jobs'][$this->json_name][$params['old_index']];
 
-       //remove this old index in json
+        //remove this old index in json
         unset($data['jobs'][$this->json_name][$params['old_index']]);
 
-       //insert it in new index (array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
+        //insert it in new index (array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
         array_splice($data['jobs'][$this->json_name], $params['new_index'], 0, [$moved_check]);
 
-       //update order
+        //update order
         $this->updateOrderJson($params['id'], $data);
     }
 
-
-   /**
-    * Get the size of file
-    *
-    * @param integer $filesize
-    * @return string
-    */
+    /**
+     * Get the size of file
+     *
+     * @param integer $filesize
+     * @return string
+     */
     public function processFilesize($filesize)
     {
         if (is_numeric($filesize)) {
             if ($filesize >= (1024 * 1024 * 1024)) {
-                $filesize = round($filesize / (1024 * 1024 * 1024), 1) . "GiB";
+                $filesize = round($filesize / (1024 * 1024 * 1024), 1) . 'GiB';
             } elseif ($filesize >= 1024 * 1024) {
-                $filesize = round($filesize /  (1024 * 1024), 1) . "MiB";
+                $filesize = round($filesize / (1024 * 1024), 1) . 'MiB';
             } elseif ($filesize >= 1024) {
-                $filesize = round($filesize / 1024, 1) . "KB";
+                $filesize = round($filesize / 1024, 1) . 'KB';
             } else {
-                $filesize = $filesize . "B";
+                $filesize = $filesize . 'B';
             }
+
             return $filesize;
         } else {
             return NOT_AVAILABLE;
         }
     }
 
-
-   /**
-   * Display a add or save button
-   * @since 9.2
-   *
-   * @param PluginGlpiinventoryDeployPackage $pfDeployPackage the package in use
-   * @param string $mode the mode (edit or create)
+    /**
+    * Display a add or save button
+    * @since 9.2
     *
-    * @return void
-   */
+    * @param PluginGlpiinventoryDeployPackage $pfDeployPackage the package in use
+    * @param string $mode the mode (edit or create)
+     *
+     * @return void
+    */
     public function addOrSaveButton(PluginGlpiinventoryDeployPackage $pfDeployPackage, $mode)
     {
-        echo "<tr>";
-        echo "<td>";
-        echo "</td>";
-        echo "<td>";
+        echo '<tr>';
+        echo '<td>';
+        echo '</td>';
+        echo '<td>';
         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             if ($mode === self::EDIT) {
                 echo "<input type='submit' name='save_item' value=\"" .
@@ -449,10 +439,9 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
                 _sx('button', 'Add') . "\" class='submit' >";
             }
         }
-        echo "</td>";
-        echo "</tr>";
+        echo '</td>';
+        echo '</tr>';
     }
-
 
     public function getItemValues($packages_id)
     {

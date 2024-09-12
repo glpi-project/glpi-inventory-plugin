@@ -42,14 +42,14 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
 {
     global $CFG_GLPI, $DB;
 
-    ini_set("memory_limit", "-1");
-    ini_set("max_execution_time", "0");
+    ini_set('memory_limit', '-1');
+    ini_set('max_execution_time', '0');
 
     $migration = new $migrationname($version);
 
-   /*
-    * Load classes
-    */
+    /*
+     * Load classes
+     */
     require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/commonview.class.php');
     require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/taskjobview.class.php');
     require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/taskview.class.php');
@@ -60,76 +60,76 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
         require_once($file);
     }
 
-    $migration->displayMessage("GLPI Inventory plugin installation");
+    $migration->displayMessage('GLPI Inventory plugin installation');
 
-   // Get information of plugin
+    // Get information of plugin
 
-   /*
-    * Clean if plugin has been installed and uninstalled (not clean correctly)
-    */
-    $migration->displayMessage("Clean data from old installation of the plugin");
+    /*
+     * Clean if plugin has been installed and uninstalled (not clean correctly)
+     */
+    $migration->displayMessage('Clean data from old installation of the plugin');
 
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype'  => [
-            '5150',
-            '5151',
-            '5152',
-            '5153',
-            '5156',
-            '5157',
-            '5158',
-            '5159',
-            '5161',
-            '5165',
-            '5166',
-            '5167',
-            '5168',
-         ]
-        ]
+            'itemtype' => [
+                '5150',
+                '5151',
+                '5152',
+                '5153',
+                '5156',
+                '5157',
+                '5158',
+                '5159',
+                '5161',
+                '5165',
+                '5166',
+                '5167',
+                '5168',
+            ],
+        ],
     );
 
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginGlpiinventory%']
-        ]
+            'itemtype' => ['LIKE', 'PluginGlpiinventory%'],
+        ],
     );
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginFusioninventory%']
-        ]
+            'itemtype' => ['LIKE', 'PluginFusioninventory%'],
+        ],
     );
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginFusinvinventory%']
-        ]
+            'itemtype' => ['LIKE', 'PluginFusinvinventory%'],
+        ],
     );
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginFusinvsnmp%']
-        ]
+            'itemtype' => ['LIKE', 'PluginFusinvsnmp%'],
+        ],
     );
 
-   // Purge network ports have itemtype tp 5153
+    // Purge network ports have itemtype tp 5153
     $networkPort = new NetworkPort();
-    $iterator = $DB->request([
-      'FROM'   => 'glpi_networkports',
-      'WHERE'  => ['itemtype' => '5153']
+    $iterator    = $DB->request([
+        'FROM'  => 'glpi_networkports',
+        'WHERE' => ['itemtype' => '5153'],
     ]);
     foreach ($iterator as $data) {
         $networkPort->delete(['id' => $data['id']], 1);
     }
 
-   /*
-    * Remove old rules
-    */
-    $migration->displayMessage("Clean rules from old installation of the plugin");
-    $Rule = new Rule();
+    /*
+     * Remove old rules
+     */
+    $migration->displayMessage('Clean rules from old installation of the plugin');
+    $Rule    = new Rule();
     $a_rules = $Rule->find(['sub_type' => 'PluginGlpiinventoryInventoryRuleImport']);
     foreach ($a_rules as $data) {
         $Rule->delete($data);
@@ -144,19 +144,19 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
         $Rule->delete($data);
     }
 
-   /*
-    * Create DB structure
-    */
-    $migration->displayMessage("Creation tables in database");
-    $DB_file = PLUGIN_GLPI_INVENTORY_DIR . "/install/mysql/plugin_glpiinventory-empty.sql";
+    /*
+     * Create DB structure
+     */
+    $migration->displayMessage('Creation tables in database');
+    $DB_file = PLUGIN_GLPI_INVENTORY_DIR . '/install/mysql/plugin_glpiinventory-empty.sql';
     if (!$DB->runFile($DB_file)) {
-        $migration->displayMessage("Error on creation tables in database");
+        $migration->displayMessage('Error on creation tables in database');
     }
 
-   /*
-    * Creation of folders
-    */
-    $migration->displayMessage("Creation of folders");
+    /*
+     * Creation of folders
+     */
+    $migration->displayMessage('Creation of folders');
     if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory')) {
         mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
     }
@@ -167,9 +167,9 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
         mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/upload');
     }
 
-   /*
-    * Deploy folders
-    */
+    /*
+     * Deploy folders
+     */
     if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')) {
         mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files');
     }
@@ -186,107 +186,107 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
         mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export');
     }
 
-   /*
-    * Manage profiles
-    */
-    $migration->displayMessage("Initialize profiles");
+    /*
+     * Manage profiles
+     */
+    $migration->displayMessage('Initialize profiles');
     PluginGlpiinventoryProfile::initProfile();
 
-   /*
-    * Add config
-    */
-    $migration->displayMessage("Initialize configuration");
+    /*
+     * Add config
+     */
+    $migration->displayMessage('Initialize configuration');
     $pfConfig = new PluginGlpiinventoryConfig();
     $pfConfig->initConfigModule();
 
-   /*
-    * Register Agent TASKS
-    */
-    $migration->displayMessage("Initialize agent TASKS");
+    /*
+     * Register Agent TASKS
+     */
+    $migration->displayMessage('Initialize agent TASKS');
     $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
 
-    $input = [];
-    $input['modulename'] = "INVENTORY";
+    $input               = [];
+    $input['modulename'] = 'INVENTORY';
     $input['is_active']  = 1;
     $input['exceptions'] = exportArrayToDB([]);
     $pfAgentmodule->add($input);
 
-    $input = [];
-    $input['modulename'] = "InventoryComputerESX";
+    $input               = [];
+    $input['modulename'] = 'InventoryComputerESX';
     $input['is_active']  = 0;
     $input['exceptions'] = exportArrayToDB([]);
     $pfAgentmodule->add($input);
 
-    $input = [];
-    $input['modulename'] = "NETWORKINVENTORY";
+    $input               = [];
+    $input['modulename'] = 'NETWORKINVENTORY';
     $input['is_active']  = 0;
     $input['exceptions'] = exportArrayToDB([]);
     $pfAgentmodule->add($input);
 
-    $input = [];
-    $input['modulename'] = "NETWORKDISCOVERY";
+    $input               = [];
+    $input['modulename'] = 'NETWORKDISCOVERY';
     $input['is_active']  = 0;
     $input['exceptions'] = exportArrayToDB([]);
     $pfAgentmodule->add($input);
 
-    $input = [];
-    $input['modulename'] = "DEPLOY";
+    $input               = [];
+    $input['modulename'] = 'DEPLOY';
     $input['is_active']  = 1;
     $input['exceptions'] = exportArrayToDB([]);
     $pfAgentmodule->add($input);
 
-    $input = [];
-    $input['modulename'] = "Collect";
+    $input               = [];
+    $input['modulename'] = 'Collect';
     $input['is_active']  = 1;
     $input['exceptions'] = exportArrayToDB([]);
     $pfAgentmodule->add($input);
 
-   /*
-    * Add cron task
-    */
-    $migration->displayMessage("Initialize cron task");
+    /*
+     * Add cron task
+     */
+    $migration->displayMessage('Initialize cron task');
     CronTask::Register(
         'PluginGlpiinventoryTask',
         'taskscheduler',
         '60',
-        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
+        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30],
     );
     CronTask::Register(
         'PluginGlpiinventoryTaskjobstate',
         'cleantaskjob',
         (3600 * 24),
-        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
+        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30],
     );
     CronTask::Register(
         'PluginGlpiinventoryAgentWakeup',
         'wakeupAgents',
         120,
-        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-        'comment' => Toolbox::addslashes_deep(__(
-            'Wake agents ups',
-            'glpiinventory'
-        ))]
+        ['mode'       => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
+            'comment' => Toolbox::addslashes_deep(__(
+                'Wake agents ups',
+                'glpiinventory',
+            ))],
     );
     CronTask::Register(
         'PluginGlpiinventoryTask',
         'cleanondemand',
         86400,
-        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-        'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]
+        ['mode'       => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
+            'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))],
     );
 
-   /*
-    * Add notification for configuration management
-    */
+    /*
+     * Add notification for configuration management
+     */
 
     CronTask::Register(
         'PluginGlpiinventoryTaskjobstate',
         'cleantaskjob',
         (3600 * 24),
-        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
+        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30],
     );
 
-    require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
+    require_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/inventorycomputerstat.class.php');
     PluginGlpiinventoryInventoryComputerStat::init();
 
     installDashboard();
@@ -299,25 +299,25 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     $agent_base_url = Entity::getUsedConfig('agent_base_url', 0, 'agent_base_url', '');
 
     if (empty($agent_base_url)) {
-        $full_url = $_SERVER['PHP_SELF'] ?? null;
-        $https = filter_input(INPUT_SERVER, "HTTPS");
-        $http_host = filter_input(INPUT_SERVER, "HTTP_HOST");
+        $full_url  = $_SERVER['PHP_SELF'] ?? null;
+        $https     = filter_input(INPUT_SERVER, 'HTTPS');
+        $http_host = filter_input(INPUT_SERVER, 'HTTP_HOST');
 
         if ($full_url && (strpos($full_url, '/ajax/marketplace.php') !== false || strpos($full_url, '/front/plugin.form.php') !== false)) {
             $agent_base_url = str_replace(
                 ['/ajax/marketplace.php', '/front/plugin.form.php'],
                 '',
-                (!empty($https) ? 'https://' : 'http://') . $http_host . $full_url
+                (!empty($https) ? 'https://' : 'http://') . $http_host . $full_url,
             );
             if ($agent_base_url !== $CFG_GLPI['url_base']) {
                 $DB->update(
                     'glpi_entities',
                     [
-                        'agent_base_url' => $agent_base_url
+                        'agent_base_url' => $agent_base_url,
                     ],
                     [
-                        'id'             => 0
-                    ]
+                        'id' => 0,
+                    ],
                 );
             }
         }

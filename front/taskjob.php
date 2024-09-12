@@ -31,23 +31,23 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "pluginglpiinventorymenu",
-    "taskjob"
+    $_SERVER['PHP_SELF'],
+    'admin',
+    'pluginglpiinventorymenu',
+    'taskjob',
 );
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
-PluginGlpiinventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu('mini');
 
 echo "<div class='monitoring-logs'>";
 $pfTask = new PluginGlpiinventoryTask();
 $pfTask->showJobLogs();
-echo "</div>";
+echo '</div>';
 
 Html::footer();

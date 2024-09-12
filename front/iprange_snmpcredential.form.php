@@ -31,21 +31,21 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_SNMPCredential();
 
-if (isset($_POST["add"])) {
+if (isset($_POST['add'])) {
     $a_data = current(
         getAllDataFromTable(
             PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
             [
-            'WHERE' => [
-               'plugin_glpiinventory_ipranges_id' => $_POST['plugin_glpiinventory_ipranges_id']
+                'WHERE' => [
+                    'plugin_glpiinventory_ipranges_id' => $_POST['plugin_glpiinventory_ipranges_id'],
+                ],
+                'ORDER' => 'rank DESC',
             ],
-            'ORDER' => 'rank DESC'
-            ]
-        )
+        ),
     );
     $_POST['rank'] = 1;
     if (isset($a_data['rank'])) {

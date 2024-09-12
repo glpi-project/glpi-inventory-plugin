@@ -31,32 +31,32 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Session::checkLoginUser();
 
-if (isset($_GET["popup"])) {
-    $_SESSION["glpipopup"]["name"] = $_GET["popup"];
+if (isset($_GET['popup'])) {
+    $_SESSION['glpipopup']['name'] = $_GET['popup'];
 }
 
-if (isset($_SESSION["glpipopup"]["name"])) {
-    switch ($_SESSION["glpipopup"]["name"]) {
-        case "test_rule":
+if (isset($_SESSION['glpipopup']['name'])) {
+    switch ($_SESSION['glpipopup']['name']) {
+        case 'test_rule':
             Html::popHeader(__('Test'), $_SERVER['PHP_SELF']);
-            include "../../../front/rule.test.php";
+            include '../../../front/rule.test.php';
             break;
 
-        case "test_all_rules":
+        case 'test_all_rules':
             Html::popHeader(__('Test rules engine'), $_SERVER['PHP_SELF']);
-            include "../../../front/rulesengine.test.php";
+            include '../../../front/rulesengine.test.php';
             break;
 
-        case "show_cache":
+        case 'show_cache':
             Html::popHeader(__('Cache informations', 'glpiinventory'), $_SERVER['PHP_SELF']);
-            include "../../../front/rule.cache.php";
+            include '../../../front/rule.cache.php';
             break;
     }
-    echo "<div class='center'><br><a href='javascript:window.close()'>" . __('Back') . "</a>";
-    echo "</div>";
+    echo "<div class='center'><br><a href='javascript:window.close()'>" . __('Back') . '</a>';
+    echo '</div>';
     Html::popFooter();
 }

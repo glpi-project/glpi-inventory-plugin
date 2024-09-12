@@ -31,11 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
+include('../../../inc/includes.php');
+header('Content-Type: text/html; charset=UTF-8');
 Html::header_nocache();
 Session::checkCentralAccess();
 
 PluginGlpiinventoryDeployFile::showServerFileTree(
-    filter_input(INPUT_POST, "rand")
+    filter_input(INPUT_POST, 'rand'),
 );

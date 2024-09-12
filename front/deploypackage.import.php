@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include('../../../inc/includes.php');
 
 Session::checkLoginUser();
 
@@ -39,10 +39,10 @@ Session::checkRight('plugin_glpiinventory_package', CREATE);
 
 Html::header(
     __('GLPI Inventory DEPLOY'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "pluginglpiinventorymenu",
-    "deploypackage"
+    $_SERVER['PHP_SELF'],
+    'admin',
+    'pluginglpiinventorymenu',
+    'deploypackage',
 );
 
 $package = new PluginGlpiinventoryDeployPackage();
@@ -51,7 +51,7 @@ if (isset($_POST['importfile'])) {
     Html::back();
 }
 
-PluginGlpiinventoryMenu::displayMenu("mini");
+PluginGlpiinventoryMenu::displayMenu('mini');
 
 
 $package->listPackagesToImport();

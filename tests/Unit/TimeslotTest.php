@@ -37,426 +37,414 @@ class TimeslotTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // Delete all timeslots
+        // Delete all timeslots
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
-        $items = $pfTimeslot->find();
+        $items      = $pfTimeslot->find();
         foreach ($items as $item) {
             $pfTimeslot->delete(['id' => $item['id']], true);
         }
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addTimeslot()
     {
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
-        $input = [
-          'entities_id'  => 0,
-          'is_recursive' => 0,
-          'name'         => 'unitdefault'
+        $input      = [
+            'entities_id'  => 0,
+            'is_recursive' => 0,
+            'name'         => 'unitdefault',
         ];
         $pfTimeslot->add($input);
         $cnt = countElementsInTable('glpi_plugin_glpiinventory_timeslots');
-        $this->assertEquals(1, $cnt, "Timeslot may be added");
+        $this->assertEquals(1, $cnt, 'Timeslot may be added');
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addSimpleEntrieslot()
     {
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-        $pfTimeslot = new PluginGlpiinventoryTimeslot();
+        $pfTimeslot      = new PluginGlpiinventoryTimeslot();
 
         $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
         $input = [
-          'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-          'entities_id'  => 0,
-          'is_recursive' => 0,
-          'day'          => 1,
-          'begin'        => 7215,
-          'end'          => 43200
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'entities_id'                       => 0,
+            'is_recursive'                      => 0,
+            'day'                               => 1,
+            'begin'                             => 7215,
+            'end'                               => 43200,
         ];
         $pfTimeslotEntry->add($input);
 
         $input = [
-          'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-          'entities_id'  => 0,
-          'is_recursive' => 0,
-          'day'          => 1,
-          'begin'        => 72000,
-          'end'          => 79200
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'entities_id'                       => 0,
+            'is_recursive'                      => 0,
+            'day'                               => 1,
+            'begin'                             => 72000,
+            'end'                               => 79200,
         ];
         $pfTimeslotEntry->add($input);
 
         $input = [
-          'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-          'entities_id'  => 0,
-          'is_recursive' => 0,
-          'day'          => 3,
-          'begin'        => 39600,
-          'end'          => 79200
+            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+            'entities_id'                       => 0,
+            'is_recursive'                      => 0,
+            'day'                               => 3,
+            'begin'                             => 39600,
+            'end'                               => 79200,
         ];
         $pfTimeslotEntry->add($input);
 
         $references = [
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 7215,
-            'end'          => 43200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 72000,
-            'end'          => 79200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 3,
-            'begin'        => 39600,
-            'end'          => 79200
-         ]
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 7215,
+                'end'                               => 43200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 72000,
+                'end'                               => 79200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 3,
+                'begin'                             => 39600,
+                'end'                               => 79200,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
-        $items = [];
+        $items  = [];
         foreach ($a_data as $data) {
             unset($data['id']);
             $items[] = $data;
         }
 
-        $this->assertEquals($references, $items, "May have 3 entries");
+        $this->assertEquals($references, $items, 'May have 3 entries');
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntriesTimeslotYetAdded()
     {
-
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-        $pfTimeslot = new PluginGlpiinventoryTimeslot();
+        $pfTimeslot      = new PluginGlpiinventoryTimeslot();
 
         $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
         $input = [
-          'timeslots_id' => $pfTimeslot->fields['id'],
-          'beginday'     => 1,
-          'lastday'      => 1,
-          'beginhours'   => 7230,
-          'lasthours'    => 43140
+            'timeslots_id' => $pfTimeslot->fields['id'],
+            'beginday'     => 1,
+            'lastday'      => 1,
+            'beginhours'   => 7230,
+            'lasthours'    => 43140,
         ];
         $pfTimeslotEntry->addEntry($input);
 
         $input = [
-          'timeslots_id' => $pfTimeslot->fields['id'],
-          'beginday'     => 1,
-          'lastday'      => 1,
-          'beginhours'   => 72000,
-          'lasthours'    => 79140
+            'timeslots_id' => $pfTimeslot->fields['id'],
+            'beginday'     => 1,
+            'lastday'      => 1,
+            'beginhours'   => 72000,
+            'lasthours'    => 79140,
         ];
         $pfTimeslotEntry->addEntry($input);
 
         $references = [
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 7215,
-            'end'          => 43200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 72000,
-            'end'          => 79200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 3,
-            'begin'        => 39600,
-            'end'          => 79200
-         ]
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 7215,
+                'end'                               => 43200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 72000,
+                'end'                               => 79200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 3,
+                'begin'                             => 39600,
+                'end'                               => 79200,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries', ['ORDER' => 'id']);
-        $items = [];
+        $items  = [];
         foreach ($a_data as $data) {
             unset($data['id']);
             $items[] = $data;
         }
-        $this->assertEquals($references, $items, "May have 2 entries " . print_r($items, true));
+        $this->assertEquals($references, $items, 'May have 2 entries ' . print_r($items, true));
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntriesTimeslotNotInRanges()
     {
-
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-        $pfTimeslot = new PluginGlpiinventoryTimeslot();
+        $pfTimeslot      = new PluginGlpiinventoryTimeslot();
 
         $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
         $input = [
-          'timeslots_id' => $pfTimeslot->fields['id'],
-          'beginday'     => 1,
-          'lastday'      => 1,
-          'beginhours'   => 15,
-          'lasthours'    => 30
+            'timeslots_id' => $pfTimeslot->fields['id'],
+            'beginday'     => 1,
+            'lastday'      => 1,
+            'beginhours'   => 15,
+            'lasthours'    => 30,
         ];
         $pfTimeslotEntry->addEntry($input);
 
         $references = [
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 7215,
-            'end'          => 43200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 72000,
-            'end'          => 79200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 3,
-            'begin'        => 39600,
-            'end'          => 79200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 15,
-            'end'          => 30
-         ]
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 7215,
+                'end'                               => 43200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 72000,
+                'end'                               => 79200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 3,
+                'begin'                             => 39600,
+                'end'                               => 79200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 15,
+                'end'                               => 30,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
-        $items = [];
+        $items  = [];
         foreach ($a_data as $data) {
             unset($data['id']);
             $items[] = $data;
         }
-        $this->assertEquals($references, $items, "May have 3 entries " . print_r($items, true));
+        $this->assertEquals($references, $items, 'May have 3 entries ' . print_r($items, true));
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntryIn3Ranges()
     {
-
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-        $pfTimeslot = new PluginGlpiinventoryTimeslot();
+        $pfTimeslot      = new PluginGlpiinventoryTimeslot();
 
         $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
         $input = [
-          'timeslots_id' => $pfTimeslot->fields['id'],
-          'beginday'     => 1,
-          'lastday'      => 1,
-          'beginhours'   => 0,
-          'lasthours'    => 79215
+            'timeslots_id' => $pfTimeslot->fields['id'],
+            'beginday'     => 1,
+            'lastday'      => 1,
+            'beginhours'   => 0,
+            'lasthours'    => 79215,
         ];
         $pfTimeslotEntry->addEntry($input);
 
         $references = [
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 3,
-            'begin'        => 39600,
-            'end'          => 79200
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 0,
-            'end'          => 79215
-         ]
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 3,
+                'begin'                             => 39600,
+                'end'                               => 79200,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 0,
+                'end'                               => 79215,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
-        $items = [];
+        $items  = [];
         foreach ($a_data as $data) {
             unset($data['id']);
             $items[] = $data;
         }
-        $this->assertEquals($references, $items, "May have 2 entries " . print_r($items, true));
+        $this->assertEquals($references, $items, 'May have 2 entries ' . print_r($items, true));
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntryForTwoDays()
     {
-
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-        $pfTimeslot = new PluginGlpiinventoryTimeslot();
+        $pfTimeslot      = new PluginGlpiinventoryTimeslot();
 
         $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
         $input = [
-          'timeslots_id' => $pfTimeslot->fields['id'],
-          'beginday'     => 1,
-          'lastday'      => 4,
-          'beginhours'   => 79230,
-          'lasthours'    => 36000
+            'timeslots_id' => $pfTimeslot->fields['id'],
+            'beginday'     => 1,
+            'lastday'      => 4,
+            'beginhours'   => 79230,
+            'lasthours'    => 36000,
         ];
         $pfTimeslotEntry->addEntry($input);
 
         $references = [
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 0,
-            'end'          => 79215
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 79230,
-            'end'          => 86400
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 2,
-            'begin'        => 0,
-            'end'          => 86400
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 3,
-            'begin'        => 0,
-            'end'          => 86400
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 4,
-            'begin'        => 0,
-            'end'          => 36000
-         ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 0,
+                'end'                               => 79215,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 79230,
+                'end'                               => 86400,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 2,
+                'begin'                             => 0,
+                'end'                               => 86400,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 3,
+                'begin'                             => 0,
+                'end'                               => 86400,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 4,
+                'begin'                             => 0,
+                'end'                               => 36000,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
-        $items = [];
+        $items  = [];
         foreach ($a_data as $data) {
             unset($data['id']);
             $items[] = $data;
         }
-        $this->assertEquals($references, $items, "May have 4 entries " . print_r($items, true));
+        $this->assertEquals($references, $items, 'May have 4 entries ' . print_r($items, true));
     }
 
-
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntryForTwoDaysYetAdded()
     {
-
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-        $pfTimeslot = new PluginGlpiinventoryTimeslot();
+        $pfTimeslot      = new PluginGlpiinventoryTimeslot();
 
         $pfTimeslot->getFromDBByCrit(['name' => 'unitdefault']);
 
         $input = [
-          'timeslots_id' => $pfTimeslot->fields['id'],
-          'beginday'     => 2,
-          'lastday'      => 3,
-          'beginhours'   => 60,
-          'lasthours'    => 36015
+            'timeslots_id' => $pfTimeslot->fields['id'],
+            'beginday'     => 2,
+            'lastday'      => 3,
+            'beginhours'   => 60,
+            'lasthours'    => 36015,
         ];
         $pfTimeslotEntry->addEntry($input);
 
         $references = [
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 0,
-            'end'          => 79215
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 1,
-            'begin'        => 79230,
-            'end'          => 86400
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 2,
-            'begin'        => 0,
-            'end'          => 86400
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 3,
-            'begin'        => 0,
-            'end'          => 86400
-         ],
-         [
-            'entities_id'  => 0,
-            'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
-            'is_recursive' => 0,
-            'day'          => 4,
-            'begin'        => 0,
-            'end'          => 36000
-         ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 0,
+                'end'                               => 79215,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 1,
+                'begin'                             => 79230,
+                'end'                               => 86400,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 2,
+                'begin'                             => 0,
+                'end'                               => 86400,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 3,
+                'begin'                             => 0,
+                'end'                               => 86400,
+            ],
+            [
+                'entities_id'                       => 0,
+                'plugin_glpiinventory_timeslots_id' => $pfTimeslot->fields['id'],
+                'is_recursive'                      => 0,
+                'day'                               => 4,
+                'begin'                             => 0,
+                'end'                               => 36000,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
-        $items = [];
+        $items  = [];
         foreach ($a_data as $data) {
             unset($data['id']);
             $items[] = $data;
         }
-        $this->assertEquals($references, $items, "May have 4 entries " . print_r($items, true));
+        $this->assertEquals($references, $items, 'May have 4 entries ' . print_r($items, true));
     }
 }
