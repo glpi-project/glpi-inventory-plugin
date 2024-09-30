@@ -1691,7 +1691,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
-                        'url'             => Plugin::getWebDir('glpiinventory') . "/ajax/dropdown_taskjob.php"
+                        'url'             => plugin_glpiinventory_geturl() . "/ajax/dropdown_taskjob.php"
                   ]
                 ]);
                 echo "</td>";
@@ -1730,7 +1730,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "taskjob$rand",
-                        'url'             => Plugin::getWebDir('glpiinventory') . "/ajax/dropdown_taskjob.php"
+                        'url'             => plugin_glpiinventory_geturl() . "/ajax/dropdown_taskjob.php"
                   ]
                 ]);
                 echo "</td>";

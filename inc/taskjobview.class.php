@@ -562,7 +562,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $pfTask = $this->getTask();
 
         echo "<form method='post' name='form_taskjob' action='" .
-            Plugin::getWebDir('glpiinventory') . "/front/taskjob.form.php''>";
+            plugin_glpiinventory_geturl() . "/front/taskjob.form.php''>";
 
         if (!$new_item) {
             echo "<input type='hidden' name='id' value='" . $id . "' />";
@@ -980,7 +980,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $add_redirect = "&edit_job=$jobs_id#taskjobs_form";
             }
 
-            Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/task.form.php?id=" .
+            Html::redirect(plugin_glpiinventory_geturl() . "/front/task.form.php?id=" .
                                  $postvars['plugin_glpiinventory_tasks_id'] . $add_redirect);
         } elseif (isset($postvars["delete"])) {
            // * delete taskjob

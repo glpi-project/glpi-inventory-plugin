@@ -51,6 +51,6 @@ if (
         "glpiinventory"
     );
 
-    Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/menu.php");
+    Html::redirect(plugin_glpiinventory_geturl() . "/front/menu.php");
     Html::footer();
 }

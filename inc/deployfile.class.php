@@ -141,7 +141,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
             // start new line
-            $pics_path = Plugin::getWebDir('glpiinventory') . "/pics/";
+            $pics_path = plugin_glpiinventory_geturl() . "/pics/";
             echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
@@ -197,7 +197,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
             //download file
             if (!$fileregistry_error) {
-                $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?deployfile_id=" . $file_id;
+                $path = plugin_glpiinventory_geturl() . "/front/deployfile_download.php?deployfile_id=" . $file_id;
                 echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
                     "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></i></a>";
             }
@@ -264,7 +264,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
-        $fi_path = Plugin::getWebDir('glpiinventory');
+        $fi_path = plugin_glpiinventory_geturl();
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
@@ -376,7 +376,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo "<script type='text/javascript'>";
         echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
-         dataUrl:'" . Plugin::getWebDir('glpiinventory') . "/ajax/serverfilestreesons.php'
+         dataUrl:'" . plugin_glpiinventory_geturl() . "/ajax/serverfilestreesons.php'
       });";
 
         echo "var Tree_Category$rand = new Ext.tree.TreePanel({
