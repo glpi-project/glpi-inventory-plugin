@@ -59,7 +59,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     *
     * @return boolean
     */
-    public static function canView()
+    public static function canView(): bool
     {
         $can_display = false;
         $profile = new PluginGlpiinventoryProfile();
@@ -79,7 +79,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     *
     * @return boolean
     */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return false;
     }

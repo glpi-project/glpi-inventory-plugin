@@ -125,7 +125,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     *
     * @return boolean
    **/
-    public function canUpdateContent()
+    public function canUpdateContent(): bool
     {
        // check if a task is currently running with this package
         if (count($this->running_tasks)) {

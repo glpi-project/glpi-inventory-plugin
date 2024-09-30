@@ -62,7 +62,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     *
     * @return true
     */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }

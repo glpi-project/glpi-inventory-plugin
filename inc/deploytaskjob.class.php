@@ -47,7 +47,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return boolean
     */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }
@@ -58,7 +58,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     *
     * @return boolean
     */
-    public static function canView()
+    public static function canView(): bool
     {
         return true;
     }

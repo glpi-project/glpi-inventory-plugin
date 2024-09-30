@@ -65,7 +65,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return boolean
     */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }
