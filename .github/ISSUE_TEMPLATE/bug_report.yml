@@ -1,126 +1,104 @@
 name: Bug Report
-description: File a bug report
-labels: ["bug"]
+description: Create a report to help us improve glpiinventory
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
-  - type: textarea
-    id: description
+
+        Dear GLPI plugin user.
+
+        **⚠️ Please never use standard issues to report security problems. See [security policy](https://github.com/pluginsGLPI/glpiinventory/security/policy) for more details. ⚠️**
+
+        BEFORE SUBMITTING YOUR ISSUE, please make sure to read and follow these steps:
+
+        * We do not track feature requests nor enhancements here. Propose them on the [suggest dedicated site](https://suggest.glpi-project.org).
+        * Keep this tracker in ENGLISH. If you want support in your language, the [community forum](https://forum.glpi-project.org) is the best place.
+        * Always try to reproduce your issue at least on latest stable release.
+
+        The GLPI team.
+  - type: markdown
     attributes:
-      label: Describe the bug
-      description: A clear and concise description of what the bug is.
-    validations:
-      required: true
-  - type: textarea
-    id: reproduce
+      value: |
+        ## Professional Support
+
+        We do not guarantee any processing / resolution time for community issues.
+
+        If you need a quick fix or any guarantee, you should consider to buy a GLPI Network Subscription.
+
+        More information here: https://glpi-project.org/subscriptions/
+  - type: checkboxes
+    id: terms
     attributes:
-      label: To reproduce
-      description: "Steps to reproduce the behavior:"
-      placeholder: |
-        1.
-        2.
-        3.
-        ...
-    validations:
-      required: true
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected behavior
-      placeholder: A clear and concise description of what you expected to happen.
-    validations:
-      required: true
-  - type: dropdown
-    id: os
-    attributes:
-      label: Operating system
-      description: On which operating system is the GLPI agent that is experiencing this issue?
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow hereinabove rules and [Contribution guide](https://github.com/glpi-project/glpi/blob/main/CONTRIBUTING.md)
       options:
-        - Windows
-        - Linux
-        - MacOSX
-        - Other (See additional context below)
-      multiple: true
+        - label: I agree to follow this project's Code of Conduct
     validations:
       required: true
-  - type: dropdown
-    id: version
+  - type: checkboxes
     attributes:
-      label: GLPI Agent version
-      description: Which GLPI agent version is triggering this issue?
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
       options:
-        - 1.6.1
-        - 1.6
-        - 1.5
-        - 1.4
-        - 1.3
-        - 1.2
-        - 1.1
-        - 1.0
-        - Nightly build (git version in additional context below)
-        - Other (See additional context below)
-      multiple: true
+        - label: I have searched the existing issues
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: glpi-version
     attributes:
-      label: GLPI version
-      description: What is your GLPI version on server-side?
-      options:
-        - 10.0.12
-        - 10.0.11
-        - 10.0.10
-        - 10.0.9
-        - 10.0.8
-        - 10.0.7
-        - 10.0.6
-        - 10.0.5
-        - 10.0.4
-        - 10.0.3
-        - 10.0.2
-        - 10.0.1
-        - 10.0.0
-        - Other (See additional context below)
-        - development release (See additional context below)
-      multiple: true
+      label: GLPI Version
+      description: What version of our GLPI are you running?
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: plugin-version
     attributes:
-      label: GLPIInventory plugin
-      description: What is your GLPIInventory plugin version on server-side?
-      options:
-        - 1.3.5
-        - 1.3.4
-        - 1.3.3
-        - 1.3.2
-        - 1.3.1
-        - 1.3.0
-        - 1.2.3
-        - 1.2.2
-        - 1.2.1
-        - 1.2.0
-        - 1.1.0
-        - 1.0.6
-        - 1.0.5
-        - 1.0.4
-        - 1.0.3
-        - 1.0.2
-        - 1.0.1
-        - 1.0.0
-        - Other (See additional context below)
-        - development release (See additional context below)
-      multiple: true
+      label: Plugin version
+      description: What version of `glpiinventory` are you running?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Bug description
+      description: A concise description of the problem you are experiencing and what you expected to happen.
     validations:
       required: false
   - type: textarea
-    id: context
+    id: logs
     attributes:
-      label: Additional context
-      placeholder: Add any other context about the problem here.
+      label: Relevant log output
+      description: |
+        Please copy and paste any relevant log output. Find them in `*-error.log` files under `glpi/files/_log/`.
+
+        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+      render: shell
+  - type: input
+    id: url
+    attributes:
+      label: Page URL
+      description: If applicable, page URL where the bug happens.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Steps To reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. With this config...
+        2. Go to...
+        3. Scroll down to...
+        4. See error...
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Your GLPI setup information
+      description: Please copy and paste information you will find in GLPI in `Setup > General` menu, `System` tab.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: Add any other context about the problem here.
     validations:
       required: false
