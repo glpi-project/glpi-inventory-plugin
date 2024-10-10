@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 01:00+0000\n"
-"PO-Revision-Date: 2024-09-11 01:00+0000\n"
+"POT-Creation-Date: 2024-10-10 00:43+0000\n"
+"PO-Revision-Date: 2024-10-10 00:43+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -42,7 +42,7 @@ msgstr "Action"
 msgid "Action label"
 msgstr "Action label"
 
-#: b/deploy/index.php:140 inc/deploypackage.class.php:527
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr "Actions"
 
@@ -82,8 +82,8 @@ msgstr "Add task"
 msgid "Add the item"
 msgstr "Add the item"
 
-#: hook.php:447 inc/deploygroup_staticdata.class.php:154
-#: inc/deploygroup_staticdata.class.php:170
+#: inc/deploygroup_staticdata.class.php:154
+#: inc/deploygroup_staticdata.class.php:170 hook.php:447
 msgid "Add to static group"
 msgstr "Add to static group"
 
@@ -95,8 +95,8 @@ msgstr "After actions"
 msgid "After download"
 msgstr "After download"
 
-#: inc/stateinventory.class.php:118 inc/taskjoblog.class.php:232
-#: inc/statediscovery.class.php:179
+#: inc/stateinventory.class.php:118 inc/statediscovery.class.php:179
+#: inc/taskjoblog.class.php:232
 msgid "Agent"
 msgstr "Agent"
 
@@ -172,14 +172,14 @@ msgstr "Audit label"
 msgid "Audits"
 msgstr "Audits"
 
-#: inc/credential.class.php:80 inc/credential.class.php:180
-#: inc/menu.class.php:346 inc/credentialip.class.php:131
-#: inc/credentialip.class.php:154 inc/profile.class.php:312
+#: inc/profile.class.php:312 inc/credential.class.php:80
+#: inc/credential.class.php:180 inc/menu.class.php:346
+#: inc/credentialip.class.php:131 inc/credentialip.class.php:154
 msgid "Authentication for remote devices (VMware)"
 msgstr "Authentication for remote devices (VMware)"
 
-#: inc/taskjob.class.php:816 inc/staticmisc.class.php:432
-#: inc/staticmisc.class.php:438
+#: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
+#: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
 msgstr "Auto management dynamic of agents"
 
@@ -265,8 +265,8 @@ msgstr "Cache informations"
 msgid "Cancel - Try - Continue"
 msgstr "Cancel - Try - Continue"
 
-#: inc/deploypackage.class.php:1500
 #: inc/deployuserinteractiontemplate.class.php:223
+#: inc/deploypackage.class.php:1500
 msgid "Cancel job"
 msgstr "Cancel job"
 
@@ -274,8 +274,8 @@ msgstr "Cancel job"
 msgid "Cancel modifications"
 msgstr "Cancel modifications"
 
-#: inc/taskjobstate.class.php:150 inc/deploypackage.class.php:1371
-#: inc/taskview.class.php:235
+#: inc/deploypackage.class.php:1371 inc/taskview.class.php:235
+#: inc/taskjobstate.class.php:150
 msgid "Cancelled"
 msgstr "Cancelled"
 
@@ -299,8 +299,8 @@ msgstr "Checksum SHA512"
 msgid "Choose"
 msgstr "Choose"
 
-#: inc/collect_wmi.class.php:61 inc/collect_wmi.class.php:87
-#: inc/collect_wmi_content.class.php:121
+#: inc/collect_wmi_content.class.php:121 inc/collect_wmi.class.php:61
+#: inc/collect_wmi.class.php:87
 msgid "Class"
 msgstr "Class"
 
@@ -364,7 +364,7 @@ msgstr "Computer Inventory"
 msgid "Computer entity rules"
 msgstr "Computer entity rules"
 
-#: inc/menu.class.php:257 inc/profile.class.php:374
+#: inc/profile.class.php:374 inc/menu.class.php:257
 msgid "Computer information"
 msgstr "Computer information"
 
@@ -447,9 +447,9 @@ msgstr ""
 msgid "Definition"
 msgstr "Definition"
 
-#: inc/taskjobview.class.php:283 inc/deployaction.class.php:250
-#: inc/deploycheck.class.php:289 inc/deployuserinteraction.class.php:299
-#: inc/taskjob.class.php:1186 inc/deployfile.class.php:250
+#: inc/taskjobview.class.php:283 inc/deploycheck.class.php:289
+#: inc/deployuserinteraction.class.php:299 inc/taskjob.class.php:1186
+#: inc/deployfile.class.php:250 inc/deployaction.class.php:250
 msgid "Delete"
 msgstr "Delete"
 
@@ -473,7 +473,7 @@ msgstr "Delete successful on demand tasks after (in days)"
 msgid "Delete tasks logs after"
 msgstr "Delete tasks logs after"
 
-#: hook.php:48 inc/menu.class.php:414
+#: inc/menu.class.php:414 hook.php:48
 msgid "Deploy"
 msgstr "Deploy"
 
@@ -632,8 +632,8 @@ msgid "Features"
 msgstr "Features"
 
 #: inc/deploycheck.class.php:387 inc/deploycheck.class.php:400
-#: inc/deploycheck.class.php:407 inc/deployfile.class.php:300
-#: inc/collect_file.class.php:86 inc/collect_file.class.php:192
+#: inc/deploycheck.class.php:407 inc/collect_file.class.php:86
+#: inc/collect_file.class.php:192 inc/deployfile.class.php:300
 msgid "File"
 msgstr "File"
 
@@ -752,22 +752,22 @@ msgstr "Free space is greater than"
 msgid "From"
 msgstr "From"
 
-#: index.php:48 report/computer_last_inventory.php:40
-#: report/not_queried_recently.php:42 report/ports_date_connections.php:40
-#: report/switch_ports.history.php:41 inc/menu.class.php:53 front/menu.php:38
-#: front/timeslot.php:40 front/task.php:38 front/stateinventory.php:37
-#: front/iprange.form.php:39 front/agentmodule.form.php:37
-#: front/menu_snmpinventory.php:38 front/taskjob.form.php:39
-#: front/credential.php:37 front/statediscovery.php:37 front/iprange.php:37
-#: front/collect.php:37 front/credential.form.php:41 front/task.form.php:42
-#: front/credentialip.php:37 front/credentialip.form.php:44
-#: front/taskjob.php:37 front/taskjoblog.php:37
+#: front/stateinventory.php:37 front/timeslot.php:40 front/collect.php:37
+#: front/task.php:38 front/statediscovery.php:37 front/taskjoblog.php:37
+#: front/taskjob.form.php:39 front/iprange.php:37 front/credentialip.php:37
+#: front/menu.php:38 front/agentmodule.form.php:37
+#: front/credentialip.form.php:44 front/iprange.form.php:39
+#: front/taskjob.php:37 front/menu_snmpinventory.php:38
+#: front/credential.form.php:41 front/task.form.php:42 front/credential.php:37
+#: inc/menu.class.php:53 report/switch_ports.history.php:41
+#: report/not_queried_recently.php:42 report/computer_last_inventory.php:40
+#: report/ports_date_connections.php:40 index.php:48
 msgid "GLPI Inventory"
 msgstr "GLPI Inventory"
 
-#: inc/deployaction.class.php:443 inc/deploycheck.class.php:244
-#: inc/deploycheck.class.php:362 inc/deploycheck.class.php:373
-#: inc/deploycheck.class.php:382
+#: inc/deploycheck.class.php:244 inc/deploycheck.class.php:362
+#: inc/deploycheck.class.php:373 inc/deploycheck.class.php:382
+#: inc/deployaction.class.php:443
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgstr "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
@@ -777,7 +777,7 @@ msgstr "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
 msgstr "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
 
-#: inc/menu.class.php:230 inc/profile.class.php:172
+#: inc/profile.class.php:172 inc/menu.class.php:230
 msgid "General"
 msgstr "General"
 
@@ -785,8 +785,8 @@ msgstr "General"
 msgid "General configuration"
 msgstr "General configuration"
 
-#: inc/menu.class.php:217 inc/deploytaskjob.class.php:223
-#: inc/profile.class.php:371 front/deploygroup.php:38
+#: front/deploygroup.php:38 inc/profile.class.php:371 inc/menu.class.php:217
+#: inc/deploytaskjob.class.php:223
 msgid "Groups of computers"
 msgstr "Groups of computers"
 
@@ -812,7 +812,7 @@ msgstr "I'm on this computer: local wakeup"
 msgid "IP Ranges"
 msgstr "IP Ranges"
 
-#: inc/iprange.class.php:118 inc/profile.class.php:309
+#: inc/profile.class.php:309 inc/iprange.class.php:118
 msgid "IP range configuration"
 msgstr "IP range configuration"
 
@@ -828,7 +828,7 @@ msgstr "If you have devices not typed, import them from unmanaged devices"
 msgid "Ignore"
 msgstr "Ignore"
 
-#: inc/menu.class.php:153 inc/deploypackage.class.php:150
+#: inc/deploypackage.class.php:150 inc/menu.class.php:153
 msgid "Import"
 msgstr "Import"
 
@@ -896,8 +896,8 @@ msgstr "Inventory started"
 msgid "JSON package representation"
 msgstr "JSON package representation"
 
-#: inc/taskjob.class.php:58 inc/taskjoblog.class.php:190
-#: inc/task.class.php:1741 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190 inc/task.class.php:1741
+#: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Job"
 
@@ -928,7 +928,7 @@ msgstr "Job postponed by the user %1$s"
 msgid "Key"
 msgstr "Key"
 
-#: report/computer_last_inventory.php:133 report/not_queried_recently.php:135
+#: report/not_queried_recently.php:135 report/computer_last_inventory.php:133
 msgid "Last inventory"
 msgstr "Last inventory"
 
@@ -988,8 +988,8 @@ msgstr "Mio"
 msgid "Mirror server address"
 msgstr "Mirror server address"
 
-#: inc/menu.class.php:396 inc/deploymirror.class.php:72
-#: inc/profile.class.php:289
+#: inc/profile.class.php:289 inc/menu.class.php:396
+#: inc/deploymirror.class.php:72
 msgid "Mirror servers"
 msgstr "Mirror servers"
 
@@ -1001,9 +1001,9 @@ msgstr "Missing a temporary folder"
 msgid "Modification Denied"
 msgstr "Modification Denied"
 
-#: hook.php:48 hook.php:55 hook.php:62 hook.php:69 hook.php:76 hook.php:83
 #: inc/agentmodule.class.php:111 inc/agentmodule.class.php:214
-#: inc/agentmodule.class.php:216
+#: inc/agentmodule.class.php:216 hook.php:48 hook.php:55 hook.php:62
+#: hook.php:69 hook.php:76 hook.php:83
 msgid "Module"
 msgstr "Module"
 
@@ -1011,7 +1011,7 @@ msgstr "Module"
 msgid "Module method"
 msgstr "Module method"
 
-#: inc/collect_wmi.class.php:60 inc/collect_wmi_content.class.php:120
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi.class.php:60
 msgid "Moniker"
 msgstr "Moniker"
 
@@ -1035,8 +1035,8 @@ msgstr "Name"
 msgid "Network Inventory"
 msgstr "Network Inventory"
 
-#: hook.php:76 inc/staticmisc.class.php:74 inc/config.class.php:422
-#: inc/config.class.php:442
+#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "Network discovery"
 
@@ -1048,9 +1048,9 @@ msgstr "Network equipment SNMP"
 msgid "Network inventory"
 msgstr "Network inventory"
 
-#: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/staticmisc.class.php:80 inc/config.class.php:431
-#: inc/config.class.php:450
+#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/staticmisc.class.php:80 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:242
 msgid "Network inventory (SNMP)"
 msgstr "Network inventory (SNMP)"
 
@@ -1178,8 +1178,8 @@ msgstr "Package management"
 msgid "Packages to import"
 msgstr "Packages to import"
 
-#: inc/collect_registry_content.class.php:171 inc/collect_registry.class.php:73
-#: inc/collect_registry.class.php:102
+#: inc/collect_registry.class.php:73 inc/collect_registry.class.php:102
+#: inc/collect_registry_content.class.php:171
 msgid "Path"
 msgstr "Path"
 
@@ -1225,10 +1225,10 @@ msgstr "Preparation timeslot"
 msgid "Prepare for install"
 msgstr "Prepare for install"
 
-#: inc/stateinventory.class.php:198 inc/taskjobstate.class.php:145
+#: inc/stateinventory.class.php:198 inc/statediscovery.class.php:265
+#: inc/deploypackage.class.php:1370 inc/taskview.class.php:234
 #: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:306
-#: inc/statediscovery.class.php:265 inc/deploypackage.class.php:1370
-#: inc/taskview.class.php:234
+#: inc/taskjobstate.class.php:145
 msgid "Prepared"
 msgstr "Prepared"
 
@@ -1306,11 +1306,11 @@ msgstr "Registry value not equals to"
 msgid "Remote device inventory"
 msgstr "Remote device inventory"
 
-#: inc/menu.class.php:330 inc/profile.class.php:315
+#: inc/profile.class.php:315 inc/menu.class.php:330
 msgid "Remote devices to inventory (VMware)"
 msgstr "Remote devices to inventory (VMware)"
 
-#: hook.php:449 inc/deploygroup_staticdata.class.php:225
+#: inc/deploygroup_staticdata.class.php:225 hook.php:449
 msgid "Remove from static group"
 msgstr "Remove from static group"
 
@@ -1445,9 +1445,9 @@ msgstr ""
 msgid "Show/Hide details"
 msgstr "Show/Hide details"
 
-#: inc/deployfile.class.php:1100 inc/collect.class.php:256
 #: inc/collect_file_content.class.php:97 inc/collect_file_content.class.php:139
 #: inc/collect_file.class.php:65 inc/collect_file.class.php:147
+#: inc/collect.class.php:256 inc/deployfile.class.php:1100
 msgid "Size"
 msgstr "Size"
 
@@ -1464,8 +1464,8 @@ msgstr "Start of IP range"
 msgid "Start time"
 msgstr "Start time"
 
-#: inc/stateinventory.class.php:203 inc/taskjoblog.class.php:97
-#: inc/taskjoblog.class.php:310 inc/statediscovery.class.php:270
+#: inc/stateinventory.class.php:203 inc/statediscovery.class.php:270
+#: inc/taskjoblog.class.php:97 inc/taskjoblog.class.php:310
 msgid "Started"
 msgstr "Started"
 
@@ -1473,7 +1473,7 @@ msgstr "Started"
 msgid "Starting date"
 msgstr "Starting date"
 
-#: hook.php:87 inc/deploygroup.class.php:87 inc/deploygroup.class.php:781
+#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:781 hook.php:87
 msgid "Static group"
 msgstr "Static group"
 
@@ -1489,7 +1489,7 @@ msgstr "Target Item"
 msgid "Target Type"
 msgstr "Target Type"
 
-#: hook.php:443 inc/deploygroup.class.php:221 inc/iprange.class.php:289
+#: inc/iprange.class.php:289 inc/deploygroup.class.php:221 hook.php:443
 msgid "Target a task"
 msgstr "Target a task"
 
@@ -1504,8 +1504,8 @@ msgid "Targets"
 msgstr "Targets"
 
 #: inc/stateinventory.class.php:117 inc/statediscovery.class.php:178
-#: inc/taskview.class.php:160 inc/task.class.php:1684 inc/task.class.php:1724
-#: inc/profile.class.php:368 inc/deploytask.class.php:58
+#: inc/taskview.class.php:160 inc/profile.class.php:368 inc/task.class.php:1684
+#: inc/task.class.php:1724 inc/deploytask.class.php:58
 #: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
@@ -1524,7 +1524,7 @@ msgstr "Task has been disabled"
 msgid "Task management"
 msgstr "Task management"
 
-#: hook.php:120 inc/menu.class.php:270 inc/task.class.php:227
+#: inc/menu.class.php:270 inc/task.class.php:227 hook.php:120
 msgid "Tasks"
 msgstr "Tasks"
 
@@ -1554,7 +1554,7 @@ msgstr "The items that should be applied for this job."
 msgid "The items that should carry out those targets."
 msgstr "The items that should carry out those targets."
 
-#: inc/deploypackageitem.class.php:333 inc/deploypackage.class.php:995
+#: inc/deploypackage.class.php:995 inc/deploypackageitem.class.php:333
 msgid "The modified JSON contained a syntax error :"
 msgstr "The modified JSON contained a syntax error :"
 
@@ -1615,8 +1615,8 @@ msgstr "Threads / Timeout configuration"
 msgid "Threads number"
 msgstr "Threads number"
 
-#: inc/timeslotentry.class.php:82 inc/menu.class.php:263
-#: inc/timeslot.class.php:66 inc/timeslot.class.php:82
+#: inc/menu.class.php:263 inc/timeslot.class.php:66 inc/timeslot.class.php:82
+#: inc/timeslotentry.class.php:82
 msgid "Time slot"
 msgstr "Time slot"
 
@@ -1656,8 +1656,8 @@ msgstr "Type of value"
 msgid "Uncompress"
 msgstr "Uncompress"
 
-#: inc/stateinventory.class.php:116 inc/taskjoblog.class.php:216
-#: inc/statediscovery.class.php:177
+#: inc/stateinventory.class.php:116 inc/statediscovery.class.php:177
+#: inc/taskjoblog.class.php:216
 msgid "Unique id"
 msgstr "Unique id"
 
@@ -1708,9 +1708,9 @@ msgid_plural "User interactions"
 msgstr[0] "User interaction"
 msgstr[1] "User interactions"
 
-#: inc/menu.class.php:403 inc/profile.class.php:286
-#: inc/deployuserinteractiontemplate.class.php:137
 #: front/deployuserinteractiontemplate.php:38
+#: inc/deployuserinteractiontemplate.class.php:137 inc/profile.class.php:286
+#: inc/menu.class.php:403
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "User interaction template"
@@ -1724,8 +1724,8 @@ msgstr "User interactions"
 msgid "User postponed the job"
 msgstr "User postponed the job"
 
-#: inc/credential.class.php:296 inc/credential.class.php:313
-#: inc/profile.class.php:318
+#: inc/profile.class.php:318 inc/credential.class.php:296
+#: inc/credential.class.php:313
 msgid "VMware host"
 msgstr "VMware host"
 
@@ -1734,10 +1734,10 @@ msgid "VMware host remote inventory"
 msgstr "VMware host remote inventory"
 
 #: inc/collect_registry_content.class.php:172
-#: inc/collect_registry_content.class.php:219 inc/deploycheck.class.php:368
-#: inc/deploycheck.class.php:401 inc/deploycheck.class.php:408
-#: inc/deploycheck.class.php:414 inc/collect_wmi_content.class.php:123
-#: inc/collect_wmi_content.class.php:174
+#: inc/collect_registry_content.class.php:219
+#: inc/collect_wmi_content.class.php:123 inc/collect_wmi_content.class.php:174
+#: inc/deploycheck.class.php:368 inc/deploycheck.class.php:401
+#: inc/deploycheck.class.php:408 inc/deploycheck.class.php:414
 msgid "Value"
 msgstr "Value"
 
@@ -1813,9 +1813,9 @@ msgstr "devices found"
 msgid "devices queried"
 msgstr "devices queried"
 
-#: inc/deployaction.class.php:236 inc/deploycheck.class.php:275
-#: inc/deployuserinteraction.class.php:285 inc/taskjob.class.php:1175
-#: inc/deployfile.class.php:236
+#: inc/deploycheck.class.php:275 inc/deployuserinteraction.class.php:285
+#: inc/taskjob.class.php:1175 inc/deployfile.class.php:236
+#: inc/deployaction.class.php:236
 msgid "drag"
 msgstr "drag"
 
@@ -1851,7 +1851,7 @@ msgstr "passed"
 msgid "path"
 msgstr "path"
 
-#: inc/collect.class.php:242 inc/collect_file_content.class.php:138
+#: inc/collect_file_content.class.php:138 inc/collect.class.php:242
 msgid "pathfile"
 msgstr "pathfile"
 
