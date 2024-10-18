@@ -148,7 +148,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             $backup_criteria = $_SESSION['glpisearch']['Computer'];
         }
 
-
         switch ($tabnum) {
             case 1:
                 self::showCriteriaAndSearch($item);
@@ -157,7 +156,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 return true;
 
             case 2:
-
                 $pagination_params = [];
                 foreach (['sort', 'order', 'start'] as $field) {
                     if (isset($_SESSION['glpisearch']['Computer'][$field])) {
@@ -175,10 +173,8 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 }
                 $params['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
                 self::showList('Computer', $params, []);
-
                 //restore session data
                 $_SESSION['glpisearch']['Computer'] = $backup_criteria;
-
                 return true;
         }
         return false;
@@ -214,7 +210,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
         echo '</div>';
         echo '</div>';
-
     }
 
 
