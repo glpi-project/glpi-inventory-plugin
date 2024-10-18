@@ -140,13 +140,24 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
+        // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
+        // to isolate the search performed in the dynamic group,
+        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch']['Computer'])
+        $backup_criteria = [];
+        if (isset($_SESSION['glpisearch']['Computer'])) {
+            $backup_criteria = $_SESSION['glpisearch']['Computer'];
+        }
+
+
         switch ($tabnum) {
             case 1:
                 self::showCriteriaAndSearch($item);
+                //restore session data
+                $_SESSION['glpisearch']['Computer'] = $backup_criteria;
                 return true;
 
             case 2:
-               // Save pagination parameters
+
                 $pagination_params = [];
                 foreach (['sort', 'order', 'start'] as $field) {
                     if (isset($_SESSION['glpisearch']['Computer'][$field])) {
@@ -164,6 +175,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 }
                 $params['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
                 self::showList('Computer', $params, []);
+
+                //restore session data
+                $_SESSION['glpisearch']['Computer'] = $backup_criteria;
+
                 return true;
         }
         return false;
@@ -199,6 +214,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         PluginGlpiinventoryDeployGroup::showCriteria($item, $search_params);
         echo '</div>';
         echo '</div>';
+
     }
 
 
