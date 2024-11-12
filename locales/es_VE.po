@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Francisco Bolivar, 2023
+# Francisco Bolivar, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 00:43+0000\n"
+"POT-Creation-Date: 2024-11-11 00:45+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Francisco Bolivar, 2023\n"
+"Last-Translator: Francisco Bolivar, 2024\n"
 "Language-Team: Spanish (Venezuela) (https://app.transifex.com/teclib/teams/28042/es_VE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: hook.php:128 hook.php:138 hook.php:148 hook.php:158
 #, php-format
 msgid "%s inventoried"
-msgstr ""
+msgstr "%s inventariado"
 
 #: inc/task.class.php:1870 inc/task.class.php:1913
 msgid ", actors: "
@@ -1577,7 +1577,7 @@ msgstr "El JSON modificado contenía un error de sintaxis:"
 
 #: js/taskjobs.js:715
 msgid "The preparation of the task did not return any targets"
-msgstr ""
+msgstr "La preparación de la tarea no arrojó ningún resultado"
 
 #: inc/task.class.php:1898
 msgid "The selected task already has a deployment job for another package: "
@@ -1628,7 +1628,7 @@ msgstr "Esta tarea está activa. No es posible su eliminación"
 
 #: inc/stateinventory.class.php:124
 msgid "Threads / Timeout configuration"
-msgstr ""
+msgstr "Configuración de subprocesos y tiempos de espera"
 
 #: inc/statediscovery.class.php:184 inc/config.class.php:421
 #: inc/config.class.php:430
