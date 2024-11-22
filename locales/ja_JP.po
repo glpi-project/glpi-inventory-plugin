@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# INOUE Daisuke, 2024
 # Stanislas <skita@teclib.com>, 2024
+# INOUE Daisuke, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-30 00:44+0000\n"
+"POT-Creation-Date: 2024-11-22 00:48+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Stanislas <skita@teclib.com>, 2024\n"
+"Last-Translator: INOUE Daisuke, 2024\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -745,7 +745,7 @@ msgstr "空き容量が大きい"
 
 #: inc/deployaction.class.php:304
 msgid "From"
-msgstr "はじまり"
+msgstr "元"
 
 #: front/stateinventory.php:37 front/timeslot.php:40 front/collect.php:37
 #: front/task.php:38 front/statediscovery.php:37 front/taskjoblog.php:37
@@ -1611,7 +1611,7 @@ msgstr "タイムスロット エントリー"
 
 #: inc/deployaction.class.php:306
 msgid "To"
-msgstr "終わり"
+msgstr "先"
 
 #: inc/stateinventory.class.php:125
 msgid "To inventory"
@@ -1668,11 +1668,11 @@ msgstr "アップロード エラー"
 
 #: inc/deployfile.class.php:64
 msgid "Upload from computer"
-msgstr "コンピューターをもとに更新"
+msgstr "コンピューターからアップロード"
 
 #: inc/deployfile.class.php:68
 msgid "Upload from server"
-msgstr "サーバーをもとに更新"
+msgstr "サーバーのファイルを利用"
 
 #: inc/config.class.php:491
 msgid "Use this GLPI server as a mirror server"
