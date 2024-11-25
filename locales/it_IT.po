@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Cédric Anne, 2021
-# Davide <spam@habilitas.it>, 2023
+# Davide <spam@habilitas.it>, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19 00:47+0000\n"
+"POT-Creation-Date: 2024-11-25 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Davide <spam@habilitas.it>, 2023\n"
+"Last-Translator: Davide <spam@habilitas.it>, 2024\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/teclib/teams/28042/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: hook.php:128 hook.php:138 hook.php:148 hook.php:158
 #, php-format
 msgid "%s inventoried"
-msgstr ""
+msgstr "%s inventariati"
 
 #: inc/task.class.php:1870 inc/task.class.php:1913
 msgid ", actors: "
@@ -186,11 +186,11 @@ msgstr "Autenticazione per dispositivi remoti (VMware)"
 #: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
-msgstr ""
+msgstr "Gestione dinamica automatica degli agenti"
 
 #: inc/taskjob.class.php:818
 msgid "Auto management dynamic of agents (same subnet)"
-msgstr ""
+msgstr "Gestione dinamica automatica degli agenti (stessa sottorete)"
 
 #: inc/iprange.class.php:232
 msgid "Bad IP"
@@ -1581,7 +1581,7 @@ msgstr "La JSON modificata presenta un errore di sintassi :"
 
 #: js/taskjobs.js:715
 msgid "The preparation of the task did not return any targets"
-msgstr ""
+msgstr "La preparazione dell'attività non ha riportato alcun obbiettivo"
 
 #: inc/task.class.php:1898
 msgid "The selected task already has a deployment job for another package: "
@@ -1636,7 +1636,7 @@ msgstr "Attività in esecuzione. Eliminazione non permessa"
 
 #: inc/stateinventory.class.php:124
 msgid "Threads / Timeout configuration"
-msgstr ""
+msgstr "Configurazione thread/timeout"
 
 #: inc/statediscovery.class.php:184 inc/config.class.php:421
 #: inc/config.class.php:430
@@ -1707,7 +1707,7 @@ msgstr "Aggiorna un pacchetto del compito di distribuzione:"
 
 #: inc/deployfile.class.php:630
 msgid "Upload error"
-msgstr ""
+msgstr "Errore di caricamento"
 
 #: inc/deployfile.class.php:64
 msgid "Upload from computer"
