@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 00:48+0000\n"
+"POT-Creation-Date: 2024-11-25 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: INOUE Daisuke, 2024\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -272,7 +272,7 @@ msgstr "取消 - 実行 - 続行"
 #: inc/deployuserinteractiontemplate.class.php:223
 #: inc/deploypackage.class.php:1500
 msgid "Cancel job"
-msgstr "ジョブ取消"
+msgstr "ジョブを取消"
 
 #: inc/taskjobview.class.php:784
 msgid "Cancel modifications"
@@ -897,12 +897,12 @@ msgstr "ジョブ"
 #: inc/taskjobstate.class.php:527
 #, php-format
 msgid "Job available for next execution at %s"
-msgstr "%s の次の実行が可能なジョブ"
+msgstr "%s に次の実行のためにジョブが有効に "
 
 #: inc/deployuserinteraction.class.php:435
 #, php-format
 msgid "Job cancelled by the user %1$s"
-msgstr "%1$s がジョブを取消"
+msgstr "%1$s がジョブを取り消し"
 
 #: inc/taskjobview.class.php:70
 msgid "Job configuration"
@@ -915,7 +915,7 @@ msgstr "ジョブ実行"
 #: inc/deployuserinteraction.class.php:449
 #, php-format
 msgid "Job postponed by the user %1$s"
-msgstr "%1$s がジョブを延期しました"
+msgstr "%1$s ユーザーがジョブを延期"
 
 #: inc/collect_registry.class.php:74 inc/collect_registry.class.php:108
 msgid "Key"
@@ -1329,11 +1329,11 @@ msgstr "再試行 - 取消"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Retry job after"
-msgstr "後にジョブを再試行"
+msgstr "後でジョブを再試行"
 
 #: inc/deployuserinteractiontemplate.class.php:222
 msgid "Retry job later"
-msgstr "後でジョブを再試行"
+msgstr "時間をあけてジョブを再試行"
 
 #: inc/deployaction.class.php:56
 msgid "Return code is equal to"
@@ -1535,7 +1535,7 @@ msgstr[0] "以下のタスクが、このパッケージを実行中"
 
 #: inc/taskjobview.class.php:700
 msgid "The items that should be applied for this job."
-msgstr "このタスクに割当てるべきアイテム。"
+msgstr "このジョブに割り当てるアイテム。"
 
 #: inc/taskjobview.class.php:711
 msgid "The items that should carry out those targets."
@@ -1551,7 +1551,7 @@ msgstr "タスクの準備で対象が返されませんでした"
 
 #: inc/task.class.php:1898
 msgid "The selected task already has a deployment job for another package: "
-msgstr "選択したタスクは、別のパッケージの配置ジョブを担当しています : "
+msgstr "選択したジョブは、別のパッケージの配置ジョブを担当しています : "
 
 #: inc/task.class.php:613
 msgid "The task cannot be updated if it is active"
@@ -1559,7 +1559,7 @@ msgstr "有効なタスクは更新できません"
 
 #: inc/task.class.php:483
 msgid "The task has been deactivated after preparation of this job."
-msgstr "このジョブの準備後に、タスクは無効になりました。"
+msgstr "このジョブの準備後、タスクが無効になりました。"
 
 #: inc/deployfile.class.php:638
 msgid "The uploaded file was only partially uploaded"
@@ -1567,7 +1567,7 @@ msgstr "アップロードしたファイルは、一部のみアップロード
 
 #: inc/task.class.php:570
 msgid "This agent does not belong anymore in the actors defined in the job."
-msgstr "このエージェントは、このジョブの実行エージェントとしてはすでに登録されていません。"
+msgstr "このエージェントは、このジョブの実行エージェントとしてすでに登録されていません。"
 
 #: inc/taskview.class.php:323
 msgid "This is an on demand deployment task"
@@ -1581,11 +1581,11 @@ msgstr "このステップで、プラグインの SNMP インベントリー（
 
 #: inc/task.class.php:504
 msgid "This job can not be executed anymore due to the task's schedule."
-msgstr "タスクのスケジュールに従うと、このジョブは二度と実行されることはありません。"
+msgstr "タスクのスケジュールに従うと、このジョブは今後実行されません。"
 
 #: inc/task.class.php:551
 msgid "This job can not be executed anymore due to the task's timeslot."
-msgstr "タスクのタイムスロットに従うと、このジョブは二度と実行されることはありません。"
+msgstr "タスクのタイムスロットに従うと、このジョブは今後実行されません。"
 
 #: inc/deploytask.class.php:230
 msgid "This task is active. delete denied"
@@ -1681,11 +1681,11 @@ msgstr "この GLPI サーバーをミラーサーバーとして扱う"
 #: inc/deployuserinteraction.class.php:442
 #, php-format
 msgid "User %1$s agreed to continue the job"
-msgstr "ユーザー、%1$s がジョブの続行に同意した"
+msgstr "%1$s ユーザーがジョブの続行に同意しました"
 
 #: b/deploy/index.php:267
 msgid "User canceled the job"
-msgstr "ユーザーがジョブを取消しました"
+msgstr "ユーザーがジョブを取り消しました"
 
 #: inc/deployuserinteraction.class.php:87
 msgid "User interaction"
@@ -1842,7 +1842,7 @@ msgstr "更新間隔"
 
 #: inc/deploypackage.class.php:1507
 msgid "refresh job"
-msgstr "更新ジョブ"
+msgstr "ジョブを更新"
 
 #: inc/deploycheck.class.php:581
 msgid "report info"
