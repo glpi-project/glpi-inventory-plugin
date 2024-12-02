@@ -57,7 +57,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
     {
         return [
          __("Name"),
-         __("Moniker", "glpiinventory"),
+         "Moniker",
          __("Class", "glpiinventory"),
          __("Properties", "glpiinventory"),
          __("Action")
@@ -76,7 +76,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
 
     public function displayNewSpecificities()
     {
-        echo "<td>" . __('moniker', 'glpiinventory') . "</td>";
+        echo "<td>moniker</td>";
         echo "<td>";
         echo "<input type='text' name='moniker' value='' size='50' />";
         echo "</td>";
