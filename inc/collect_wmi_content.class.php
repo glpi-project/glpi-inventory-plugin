@@ -117,7 +117,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         echo "<table class='tab_cadre_fixe'>";
 
         echo "<tr>";
-        echo "<th>" . __('Moniker', 'glpiinventory') . "</th>";
+        echo "<th>Moniker</th>";
         echo "<th>" . __('Class', 'glpiinventory') . "</th>";
         echo "<th>" . __('Property', 'glpiinventory') . "</th>";
         echo "<th>" . __('Value', 'glpiinventory') . "</th>";
