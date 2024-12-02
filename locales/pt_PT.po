@@ -6,15 +6,16 @@
 # Translators:
 # Cédric Anne, 2021
 # Gonçalo Dumas, 2024
+# Pedro B., 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19 00:47+0000\n"
+"POT-Creation-Date: 2024-12-02 00:51+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Gonçalo Dumas, 2024\n"
+"Last-Translator: Pedro B., 2024\n"
 "Language-Team: Portuguese (Portugal) (https://app.transifex.com/teclib/teams/28042/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgstr ""
 #: hook.php:128 hook.php:138 hook.php:148 hook.php:158
 #, php-format
 msgid "%s inventoried"
-msgstr ""
+msgstr "%s inventariado"
 
 #: inc/task.class.php:1870 inc/task.class.php:1913
 msgid ", actors: "
@@ -380,7 +381,7 @@ msgstr "Computadores importados de arquivo CSV com sucesso"
 
 #: report/computer_last_inventory.php:59
 msgid "Computers not inventoried since xx days"
-msgstr "Computadores não inventariados desde xx dias"
+msgstr "Computadores não inventariados desde há xx dias"
 
 #: inc/profile.class.php:365
 msgid "Configuration"
@@ -392,11 +393,11 @@ msgstr "Configurar credenciais SNMP"
 
 #: inc/taskjobview.class.php:794
 msgid "Confirm the final deletion ?"
-msgstr "Confirmar a exclusão final ?"
+msgstr "Confirma a eliminação final ?"
 
 #: inc/deployuserinteractiontemplate.class.php:221
 msgid "Continue job with no user interaction"
-msgstr "Continuar trabalho sem interação do usuário"
+msgstr "Continuar trabalho sem interação do utilizador"
 
 #: inc/deployaction.class.php:74
 msgid "Copy"
@@ -924,7 +925,7 @@ msgstr "Trabalho disponível para próxima execução em %s"
 #: inc/deployuserinteraction.class.php:435
 #, php-format
 msgid "Job cancelled by the user %1$s"
-msgstr "Trabalho cancelado pelo usuário %1$s"
+msgstr "Trabalho cancelado pelo utilizador %1$s"
 
 #: inc/taskjobview.class.php:70
 msgid "Job configuration"
@@ -937,7 +938,7 @@ msgstr "Execução de tarefas"
 #: inc/deployuserinteraction.class.php:449
 #, php-format
 msgid "Job postponed by the user %1$s"
-msgstr "Trabalho adiado pelo usuário %1$s"
+msgstr "Trabalho adiado pelo utilizador %1$s"
 
 #: inc/collect_registry.class.php:74 inc/collect_registry.class.php:108
 msgid "Key"
@@ -1041,7 +1042,7 @@ msgstr "Mover"
 
 #: inc/deployuserinteraction.class.php:501
 msgid "Multiple users connected"
-msgstr "Múltiplos usuário conectados"
+msgstr "Múltiplos utilizadores conectados"
 
 #: inc/collect_file.class.php:68
 msgid "Name"
@@ -1100,7 +1101,7 @@ msgstr "Nenhum pacote disponível para instalação"
 
 #: inc/deployuserinteraction.class.php:498
 msgid "No user connected"
-msgstr "Nenhum usuário conectado"
+msgstr "Nenhum utilizador conectado"
 
 #: inc/collect_file.class.php:182
 msgid "Non sentitive case"
@@ -1580,7 +1581,7 @@ msgstr "O JSON modificado continha um erro de sintaxe:"
 
 #: js/taskjobs.js:715
 msgid "The preparation of the task did not return any targets"
-msgstr ""
+msgstr "A preparação da tarefa não retornou nenhum alvo"
 
 #: inc/task.class.php:1898
 msgid "The selected task already has a deployment job for another package: "
@@ -1718,35 +1719,35 @@ msgstr "Use este servidor GLPI como um servidor mirror"
 #: inc/deployuserinteraction.class.php:442
 #, php-format
 msgid "User %1$s agreed to continue the job"
-msgstr "Usuário %1$s concordou em continuar o trabalho"
+msgstr "Utilizador %1$s concordou em continuar o trabalho"
 
 #: b/deploy/index.php:267
 msgid "User canceled the job"
-msgstr "Usuário cancelou trabalho"
+msgstr "Utilizador cancelou o trabalho"
 
 #: inc/deployuserinteraction.class.php:87
 msgid "User interaction"
 msgid_plural "User interactions"
-msgstr[0] "Interação do usuário"
-msgstr[1] "Interações do usuário"
-msgstr[2] "Interações do usuário"
+msgstr[0] "Interação do utilizador"
+msgstr[1] "Interações do utilizador"
+msgstr[2] "Interações do utilizador"
 
 #: front/deployuserinteractiontemplate.php:38
 #: inc/deployuserinteractiontemplate.class.php:137 inc/profile.class.php:286
 #: inc/menu.class.php:403
 msgid "User interaction template"
 msgid_plural "User interaction templates"
-msgstr[0] "Modelo de interação de usuário"
-msgstr[1] "Modelos de interação de usuário"
-msgstr[2] "Modelos de interação de usuário"
+msgstr[0] "Modelo de interação de utilizador"
+msgstr[1] "Modelos de interação de utilizador"
+msgstr[2] "Modelos de interação de utilizador"
 
 #: inc/deploypackage.class.php:528
 msgid "User interactions"
-msgstr "Interações de usuário"
+msgstr "Interações do utilizador"
 
 #: b/deploy/index.php:269
 msgid "User postponed the job"
-msgstr "Usuário adiou trabalho"
+msgstr "Utilizador adiou o trabalho"
 
 #: inc/profile.class.php:318 inc/credential.class.php:296
 #: inc/credential.class.php:313
