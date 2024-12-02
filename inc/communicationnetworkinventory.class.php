@@ -90,7 +90,6 @@ class PluginGlpiinventoryCommunicationNetworkInventory
 
         if (!isset($a_CONTENT->jobid)) {
             if (isset($a_CONTENT->content->processnumber)) {
-                // @phpstan-ignore-next-line
                 $a_CONTENT->jobid = $a_CONTENT->content->processnumber;
             } else {
                 $a_CONTENT->jobid = 1;

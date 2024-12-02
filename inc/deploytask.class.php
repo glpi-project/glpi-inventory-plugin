@@ -179,13 +179,6 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     */
     public function showActions($id)
     {
-
-       //load extjs plugins library
-        echo "<script type='text/javascript'>";
-        require_once GLPI_ROOT . "/plugins/fusinvdeploy/lib/extjs/Spinner.js";
-        require_once GLPI_ROOT . "/plugins/fusinvdeploy/lib/extjs/SpinnerField.js";
-        echo "</script>";
-
         $this->getFromDB($id);
         if ($this->getField('is_active') == 1) {
             echo "<div class='box' style='margin-bottom:20px;'>";
@@ -208,9 +201,6 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
             </tr>
          </tbody>
       </table>";
-
-       // Include JS
-        require GLPI_ROOT . "/plugins/fusinvdeploy/js/task_job.front.php";
     }
 
 

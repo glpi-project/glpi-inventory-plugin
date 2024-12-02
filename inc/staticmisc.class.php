@@ -43,7 +43,7 @@ class PluginGlpiinventoryStaticmisc
    /**
     * Get task methods of this plugin
     *
-    * @return array('module'=>'value', 'method'=>'value')
+    * @return array an array of the form ('module'=>'value', 'method'=>'value')
     *   module value name of plugin
     *   method value name of method
     */
@@ -128,7 +128,7 @@ class PluginGlpiinventoryStaticmisc
    /**
     * Get all methods of this plugin
     *
-    * @return array('module'=>'value', 'method'=>'value')
+    * @return array an array of the form('module'=>'value', 'method'=>'value')
     *   module value name of plugin
     *   method value name of method
     *
@@ -166,7 +166,8 @@ class PluginGlpiinventoryStaticmisc
     * Get types of datas available to select for taskjob definition for ESX method
     *
     * @param array $a_itemtype array types yet added for definitions
-    * @return array('itemtype'=>'value', 'itemtype'=>'value'...)
+    *
+    * @return array an array of the form ('itemtype'=>'value', 'itemtype'=>'value'...)
     *   itemtype itemtype of object
     *   value name of the itemtype
     */

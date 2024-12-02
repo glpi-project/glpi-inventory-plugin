@@ -1306,8 +1306,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *                          - refresh: the value of "refresh interval" list
     *                          - display: true for direct display of JSON result else returns a JSON encoded string
     *
-    * @return depends on @param $options['display'].
-    * @return string, empty if JSON results are displayed
+    * @return string empty if JSON results are displayed
     */
     public function ajaxGetJobLogs($options = [])
     {
