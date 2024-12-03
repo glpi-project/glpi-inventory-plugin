@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19 00:47+0000\n"
+"POT-Creation-Date: 2024-12-03 00:51+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Soporte Infraestructura Standby, 2023\n"
 "Language-Team: Spanish (Ecuador) (https://app.transifex.com/teclib/teams/28042/es_EC/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr ""
 
-#: inc/task.class.php:1870 inc/task.class.php:1913
+#: inc/task.class.php:1869 inc/task.class.php:1912
 msgid ", actors: "
 msgstr ", actores: "
 
@@ -182,7 +182,7 @@ msgstr "Auditorías"
 msgid "Authentication for remote devices (VMware)"
 msgstr "Autenticación para dispositivos remotos (VMware)"
 
-#: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
+#: inc/staticmisc.class.php:433 inc/staticmisc.class.php:439
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
 msgstr "Dinámica de gestión automática de agentes"
@@ -329,7 +329,7 @@ msgstr "Recopilar"
 msgid "Collect data"
 msgstr "Recopilar datos"
 
-#: inc/collect.class.php:59 inc/staticmisc.class.php:646
+#: inc/collect.class.php:59 inc/staticmisc.class.php:647
 msgid "Collect information"
 msgstr "Recopilar información"
 
@@ -420,7 +420,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Crear directorio"
 
-#: inc/task.class.php:1912
+#: inc/task.class.php:1911
 msgid "Created a deployment job, package: "
 msgstr "Creado un trabajo de despliegue, paquete: "
 
@@ -494,7 +494,7 @@ msgstr "El módulo de despliegue ha sido desactivado para este agente"
 msgid "Deploy packages on demand"
 msgstr "Despliegue de paquetes bajo demanda"
 
-#: inc/task.class.php:1852
+#: inc/task.class.php:1851
 msgid "Deployment job, package: "
 msgstr "Trabajo de despliegue, paquete: "
 
@@ -558,7 +558,7 @@ msgstr "Grupo dinámico"
 msgid "ESX/VMWare"
 msgstr "ESX/VMWare"
 
-#: inc/deploytask.class.php:195
+#: inc/deploytask.class.php:188
 msgid "Edit impossible, this task is active"
 msgstr "Edición imposible, esta tarea está activa"
 
@@ -819,8 +819,8 @@ msgstr "No estoy en esta computadora: despertar desde el servidor"
 msgid "I'm on this computer: local wakeup"
 msgstr "Estoy en esta computadora: despertar local"
 
-#: inc/menu.class.php:322 inc/staticmisc.class.php:329
-#: inc/staticmisc.class.php:363 inc/iprange.class.php:88
+#: inc/menu.class.php:322 inc/staticmisc.class.php:330
+#: inc/staticmisc.class.php:364 inc/iprange.class.php:88
 #: inc/iprange.class.php:91
 msgid "IP Ranges"
 msgstr "Rangos IP"
@@ -911,7 +911,7 @@ msgstr "Inventario iniciado"
 msgid "JSON package representation"
 msgstr "Representación del paquete JSON"
 
-#: inc/taskjoblog.class.php:190 inc/task.class.php:1741
+#: inc/taskjoblog.class.php:190 inc/task.class.php:1740
 #: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Trabajo"
@@ -1026,10 +1026,6 @@ msgstr "Módulo"
 #: inc/taskjobview.class.php:631
 msgid "Module method"
 msgstr "Método modular"
-
-#: inc/collect_wmi_content.class.php:120 inc/collect_wmi.class.php:60
-msgid "Moniker"
-msgstr "Apodo"
 
 #: inc/menu.class.php:245
 msgid "Monitoring / Logs"
@@ -1166,7 +1162,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "La extensión PHP detuvo la carga de archivos"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1702
+#: inc/deploypackage.class.php:96 inc/task.class.php:1701
 msgid "Package"
 msgstr "Paquete"
 
@@ -1521,7 +1517,7 @@ msgstr "Objetivos"
 
 #: inc/stateinventory.class.php:117 inc/statediscovery.class.php:178
 #: inc/taskview.class.php:160 inc/profile.class.php:368
-#: inc/task.class.php:1684 inc/task.class.php:1724 inc/deploytask.class.php:58
+#: inc/task.class.php:1683 inc/task.class.php:1723 inc/deploytask.class.php:58
 #: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
@@ -1533,7 +1529,7 @@ msgstr[2] "Tareas"
 msgid "Task execution states"
 msgstr "Estados de ejecución de tareas"
 
-#: inc/task.class.php:1636
+#: inc/task.class.php:1635
 msgid "Task has been disabled"
 msgstr "La tarea se ha deshabilitado"
 
@@ -1581,7 +1577,7 @@ msgstr "El JSON modificado contenía un error de sintaxis :"
 msgid "The preparation of the task did not return any targets"
 msgstr ""
 
-#: inc/task.class.php:1898
+#: inc/task.class.php:1897
 msgid "The selected task already has a deployment job for another package: "
 msgstr ""
 "La tarea seleccionada ya tiene un trabajo de despliegue para otro paquete: "
@@ -1624,7 +1620,7 @@ msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr ""
 "Este trabajo ya no puede ejecutarse debido a la franja horaria de la tarea."
 
-#: inc/deploytask.class.php:230
+#: inc/deploytask.class.php:220
 msgid "This task is active. delete denied"
 msgstr "Esta tarea está activa. supresión denegada"
 
@@ -1695,7 +1691,7 @@ msgstr "Archivo no utilizado"
 msgid "Update the item"
 msgstr "Actualizar el elemento"
 
-#: inc/task.class.php:1869
+#: inc/task.class.php:1868
 msgid "Updated a deployment job, package: "
 msgstr "Actualizado un trabajo de despliegue, paquete: "
 
@@ -1797,7 +1793,7 @@ msgstr "Sí - No"
 msgid "Yes - No - Cancel"
 msgstr "Sí - No - Cancelar"
 
-#: inc/task.class.php:1835
+#: inc/task.class.php:1834
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
@@ -1857,10 +1853,6 @@ msgstr "nombre de archivo"
 #: inc/taskjob.class.php:784
 msgid "hour(s)"
 msgstr "hora(s)"
-
-#: inc/collect_wmi.class.php:79
-msgid "moniker"
-msgstr "apodo"
 
 #: inc/deploycheck.class.php:129
 msgid "otherwise"

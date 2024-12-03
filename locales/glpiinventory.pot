@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 13:52+0100\n"
+"POT-Creation-Date: 2024-12-03 00:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
@@ -43,7 +43,7 @@ msgstr ""
 msgid "Action label"
 msgstr ""
 
-#: b/deploy/index.php:140 inc/deploypackage.class.php:527
+#: inc/deploypackage.class.php:527 b/deploy/index.php:140
 msgid "Actions"
 msgstr ""
 
@@ -173,9 +173,9 @@ msgstr ""
 msgid "Audits"
 msgstr ""
 
-#: inc/profile.class.php:312 inc/credentialip.class.php:131
-#: inc/credentialip.class.php:154 inc/menu.class.php:346
-#: inc/credential.class.php:80 inc/credential.class.php:180
+#: inc/profile.class.php:312 inc/credential.class.php:80
+#: inc/credential.class.php:180 inc/menu.class.php:346
+#: inc/credentialip.class.php:131 inc/credentialip.class.php:154
 msgid "Authentication for remote devices (VMware)"
 msgstr ""
 
@@ -266,8 +266,8 @@ msgstr ""
 msgid "Cancel - Try - Continue"
 msgstr ""
 
-#: inc/deploypackage.class.php:1500
 #: inc/deployuserinteractiontemplate.class.php:223
+#: inc/deploypackage.class.php:1500
 msgid "Cancel job"
 msgstr ""
 
@@ -275,8 +275,8 @@ msgstr ""
 msgid "Cancel modifications"
 msgstr ""
 
-#: inc/taskview.class.php:235 inc/taskjobstate.class.php:150
-#: inc/deploypackage.class.php:1371
+#: inc/deploypackage.class.php:1371 inc/taskview.class.php:235
+#: inc/taskjobstate.class.php:150
 msgid "Cancelled"
 msgstr ""
 
@@ -300,8 +300,8 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: inc/collect_wmi.class.php:61 inc/collect_wmi.class.php:87
-#: inc/collect_wmi_content.class.php:121
+#: inc/collect_wmi_content.class.php:121 inc/collect_wmi.class.php:61
+#: inc/collect_wmi.class.php:87
 msgid "Class"
 msgstr ""
 
@@ -443,9 +443,9 @@ msgstr ""
 msgid "Definition"
 msgstr ""
 
-#: inc/taskjobview.class.php:283 inc/deployuserinteraction.class.php:299
-#: inc/deployfile.class.php:250 inc/deploycheck.class.php:289
-#: inc/deployaction.class.php:250 inc/taskjob.class.php:1186
+#: inc/taskjobview.class.php:283 inc/deploycheck.class.php:289
+#: inc/deployuserinteraction.class.php:299 inc/taskjob.class.php:1186
+#: inc/deployfile.class.php:250 inc/deployaction.class.php:250
 msgid "Delete"
 msgstr ""
 
@@ -627,9 +627,9 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-#: inc/deployfile.class.php:300 inc/deploycheck.class.php:387
-#: inc/deploycheck.class.php:400 inc/deploycheck.class.php:407
-#: inc/collect_file.class.php:86 inc/collect_file.class.php:192
+#: inc/deploycheck.class.php:387 inc/deploycheck.class.php:400
+#: inc/deploycheck.class.php:407 inc/collect_file.class.php:86
+#: inc/collect_file.class.php:192 inc/deployfile.class.php:300
 msgid "File"
 msgstr ""
 
@@ -748,15 +748,16 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: front/menu.php:38 front/stateinventory.php:37 front/task.php:38
-#: front/statediscovery.php:37 front/collect.php:37 front/iprange.form.php:39
-#: front/agentmodule.form.php:37 front/credentialip.form.php:44
-#: front/iprange.php:37 front/timeslot.php:40 front/menu_snmpinventory.php:38
-#: front/credential.form.php:41 front/taskjoblog.php:37 front/taskjob.php:37
-#: front/task.form.php:42 front/credential.php:37 front/credentialip.php:37
-#: front/taskjob.form.php:39 index.php:48 inc/menu.class.php:53
-#: report/switch_ports.history.php:41 report/ports_date_connections.php:40
-#: report/computer_last_inventory.php:40 report/not_queried_recently.php:42
+#: front/stateinventory.php:37 front/timeslot.php:40 front/collect.php:37
+#: front/task.php:38 front/statediscovery.php:37 front/taskjoblog.php:37
+#: front/taskjob.form.php:39 front/iprange.php:37 front/credentialip.php:37
+#: front/menu.php:38 front/agentmodule.form.php:37
+#: front/credentialip.form.php:44 front/iprange.form.php:39
+#: front/taskjob.php:37 front/menu_snmpinventory.php:38
+#: front/credential.form.php:41 front/task.form.php:42 front/credential.php:37
+#: inc/menu.class.php:53 report/switch_ports.history.php:41
+#: report/not_queried_recently.php:42 report/computer_last_inventory.php:40
+#: report/ports_date_connections.php:40 index.php:48
 msgid "GLPI Inventory"
 msgstr ""
 
@@ -780,8 +781,8 @@ msgstr ""
 msgid "General configuration"
 msgstr ""
 
-#: front/deploygroup.php:38 inc/profile.class.php:371
-#: inc/deploytaskjob.class.php:223 inc/menu.class.php:217
+#: front/deploygroup.php:38 inc/profile.class.php:371 inc/menu.class.php:217
+#: inc/deploytaskjob.class.php:223
 msgid "Groups of computers"
 msgstr ""
 
@@ -801,8 +802,9 @@ msgstr ""
 msgid "I'm on this computer: local wakeup"
 msgstr ""
 
-#: inc/staticmisc.class.php:330 inc/staticmisc.class.php:364
-#: inc/iprange.class.php:88 inc/iprange.class.php:91 inc/menu.class.php:322
+#: inc/menu.class.php:322 inc/staticmisc.class.php:330
+#: inc/staticmisc.class.php:364 inc/iprange.class.php:88
+#: inc/iprange.class.php:91
 msgid "IP Ranges"
 msgstr ""
 
@@ -844,7 +846,7 @@ msgstr ""
 msgid "Impossible to read the CSV file"
 msgstr ""
 
-#: inc/taskview.class.php:231 inc/deploypackage.class.php:1367
+#: inc/deploypackage.class.php:1367 inc/taskview.class.php:231
 msgid "In error"
 msgstr ""
 
@@ -888,8 +890,8 @@ msgstr ""
 msgid "JSON package representation"
 msgstr ""
 
-#: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190 inc/task.class.php:1740
+#: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr ""
 
@@ -920,7 +922,7 @@ msgstr ""
 msgid "Key"
 msgstr ""
 
-#: report/computer_last_inventory.php:133 report/not_queried_recently.php:135
+#: report/not_queried_recently.php:135 report/computer_last_inventory.php:133
 msgid "Last inventory"
 msgstr ""
 
@@ -966,8 +968,8 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: inc/deployfile.class.php:180 inc/deployfile.class.php:353
-#: inc/taskjob.class.php:779
+#: inc/taskjob.class.php:779 inc/deployfile.class.php:180
+#: inc/deployfile.class.php:353
 msgid "Minute(s)"
 msgstr ""
 
@@ -1022,8 +1024,8 @@ msgstr ""
 msgid "Network Inventory"
 msgstr ""
 
-#: inc/staticmisc.class.php:74 inc/config.class.php:422
-#: inc/config.class.php:442 hook.php:76
+#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr ""
 
@@ -1035,9 +1037,9 @@ msgstr ""
 msgid "Network inventory"
 msgstr ""
 
-#: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/staticmisc.class.php:80 inc/config.class.php:431
-#: inc/config.class.php:450
+#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/staticmisc.class.php:80 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:242
 msgid "Network inventory (SNMP)"
 msgstr ""
 
@@ -1212,10 +1214,10 @@ msgstr ""
 msgid "Prepare for install"
 msgstr ""
 
-#: inc/taskview.class.php:234 inc/stateinventory.class.php:198
-#: inc/taskjobstate.class.php:145 inc/statediscovery.class.php:265
+#: inc/stateinventory.class.php:198 inc/statediscovery.class.php:265
+#: inc/deploypackage.class.php:1370 inc/taskview.class.php:234
 #: inc/taskjoblog.class.php:96 inc/taskjoblog.class.php:306
-#: inc/deploypackage.class.php:1370
+#: inc/taskjobstate.class.php:145
 msgid "Prepared"
 msgstr ""
 
@@ -1260,8 +1262,8 @@ msgstr ""
 msgid "Regex"
 msgstr ""
 
-#: inc/collect.class.php:149 inc/collect.class.php:206
-#: inc/deploycheck.class.php:55
+#: inc/deploycheck.class.php:55 inc/collect.class.php:149
+#: inc/collect.class.php:206
 msgid "Registry"
 msgstr ""
 
@@ -1346,7 +1348,7 @@ msgstr ""
 msgid "Rules"
 msgstr ""
 
-#: inc/taskview.class.php:233 inc/deploypackage.class.php:1369
+#: inc/deploypackage.class.php:1369 inc/taskview.class.php:233
 msgid "Running"
 msgstr ""
 
@@ -1358,7 +1360,7 @@ msgstr ""
 msgid "SHA-512 hash value mismatch"
 msgstr ""
 
-#: inc/iprange_snmpcredential.class.php:213 inc/menu.class.php:338
+#: inc/menu.class.php:338 inc/iprange_snmpcredential.class.php:213
 msgid "SNMP credentials"
 msgstr ""
 
@@ -1429,9 +1431,9 @@ msgstr ""
 msgid "Show/Hide details"
 msgstr ""
 
-#: inc/deployfile.class.php:1100 inc/collect.class.php:256
-#: inc/collect_file.class.php:65 inc/collect_file.class.php:147
 #: inc/collect_file_content.class.php:97 inc/collect_file_content.class.php:139
+#: inc/collect_file.class.php:65 inc/collect_file.class.php:147
+#: inc/collect.class.php:256 inc/deployfile.class.php:1100
 msgid "Size"
 msgstr ""
 
@@ -1461,7 +1463,7 @@ msgstr ""
 msgid "Static group"
 msgstr ""
 
-#: inc/taskview.class.php:232 inc/deploypackage.class.php:1368
+#: inc/deploypackage.class.php:1368 inc/taskview.class.php:232
 msgid "Successful"
 msgstr ""
 
@@ -1473,7 +1475,7 @@ msgstr ""
 msgid "Target Type"
 msgstr ""
 
-#: inc/deploygroup.class.php:221 inc/iprange.class.php:289 hook.php:443
+#: inc/iprange.class.php:289 inc/deploygroup.class.php:221 hook.php:443
 msgid "Target a task"
 msgstr ""
 
@@ -1487,10 +1489,10 @@ msgstr[1] ""
 msgid "Targets"
 msgstr ""
 
-#: inc/profile.class.php:368 inc/taskview.class.php:160
-#: inc/deploytask.class.php:58 inc/deploytask.class.php:160
 #: inc/stateinventory.class.php:117 inc/statediscovery.class.php:178
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/taskview.class.php:160 inc/profile.class.php:368 inc/task.class.php:1683
+#: inc/task.class.php:1723 inc/deploytask.class.php:58
+#: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] ""
@@ -1504,11 +1506,11 @@ msgstr ""
 msgid "Task has been disabled"
 msgstr ""
 
-#: inc/task.class.php:58 inc/menu.class.php:241
+#: inc/menu.class.php:241 inc/task.class.php:58
 msgid "Task management"
 msgstr ""
 
-#: inc/task.class.php:227 inc/menu.class.php:270 hook.php:120
+#: inc/menu.class.php:270 inc/task.class.php:227 hook.php:120
 msgid "Tasks"
 msgstr ""
 
@@ -1536,7 +1538,7 @@ msgstr ""
 msgid "The items that should carry out those targets."
 msgstr ""
 
-#: inc/deploypackageitem.class.php:333 inc/deploypackage.class.php:995
+#: inc/deploypackage.class.php:995 inc/deploypackageitem.class.php:333
 msgid "The modified JSON contained a syntax error :"
 msgstr ""
 
@@ -1595,8 +1597,8 @@ msgstr ""
 msgid "Threads number"
 msgstr ""
 
-#: inc/timeslotentry.class.php:82 inc/timeslot.class.php:66
-#: inc/timeslot.class.php:82 inc/menu.class.php:263
+#: inc/menu.class.php:263 inc/timeslot.class.php:66 inc/timeslot.class.php:82
+#: inc/timeslotentry.class.php:82
 msgid "Time slot"
 msgstr ""
 
@@ -1688,8 +1690,9 @@ msgid_plural "User interactions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: front/deployuserinteractiontemplate.php:38 inc/profile.class.php:286
-#: inc/deployuserinteractiontemplate.class.php:137 inc/menu.class.php:403
+#: front/deployuserinteractiontemplate.php:38
+#: inc/deployuserinteractiontemplate.class.php:137 inc/profile.class.php:286
+#: inc/menu.class.php:403
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] ""
@@ -1712,11 +1715,11 @@ msgstr ""
 msgid "VMware host remote inventory"
 msgstr ""
 
-#: inc/deploycheck.class.php:368 inc/deploycheck.class.php:401
-#: inc/deploycheck.class.php:408 inc/deploycheck.class.php:414
-#: inc/collect_wmi_content.class.php:123 inc/collect_wmi_content.class.php:174
 #: inc/collect_registry_content.class.php:172
 #: inc/collect_registry_content.class.php:219
+#: inc/collect_wmi_content.class.php:123 inc/collect_wmi_content.class.php:174
+#: inc/deploycheck.class.php:368 inc/deploycheck.class.php:401
+#: inc/deploycheck.class.php:408 inc/deploycheck.class.php:414
 msgid "Value"
 msgstr ""
 
@@ -1790,9 +1793,9 @@ msgstr ""
 msgid "devices queried"
 msgstr ""
 
-#: inc/deployuserinteraction.class.php:285 inc/deployfile.class.php:236
-#: inc/deploycheck.class.php:275 inc/deployaction.class.php:236
-#: inc/taskjob.class.php:1175
+#: inc/deploycheck.class.php:275 inc/deployuserinteraction.class.php:285
+#: inc/taskjob.class.php:1175 inc/deployfile.class.php:236
+#: inc/deployaction.class.php:236
 msgid "drag"
 msgstr ""
 
@@ -1824,7 +1827,7 @@ msgstr ""
 msgid "path"
 msgstr ""
 
-#: inc/collect.class.php:242 inc/collect_file_content.class.php:138
+#: inc/collect_file_content.class.php:138 inc/collect.class.php:242
 msgid "pathfile"
 msgstr ""
 

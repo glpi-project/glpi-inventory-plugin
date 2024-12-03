@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 00:51+0000\n"
+"POT-Creation-Date: 2024-12-03 00:51+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Pedro B., 2024\n"
 "Language-Team: Portuguese (Portugal) (https://app.transifex.com/teclib/teams/28042/pt_PT/)\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr "%s inventariado"
 
-#: inc/task.class.php:1870 inc/task.class.php:1913
+#: inc/task.class.php:1869 inc/task.class.php:1912
 msgid ", actors: "
 msgstr ", atores:."
 
@@ -184,7 +184,7 @@ msgstr "Auditorias"
 msgid "Authentication for remote devices (VMware)"
 msgstr "Autenticação para dispositivos remotos (VMware)"
 
-#: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
+#: inc/staticmisc.class.php:433 inc/staticmisc.class.php:439
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
 msgstr "Gestão automática dinâmica de agentes"
@@ -331,7 +331,7 @@ msgstr "Recolher"
 msgid "Collect data"
 msgstr "Recolher dados"
 
-#: inc/collect.class.php:59 inc/staticmisc.class.php:646
+#: inc/collect.class.php:59 inc/staticmisc.class.php:647
 msgid "Collect information"
 msgstr "Recolher Informação"
 
@@ -422,7 +422,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Criar diretório"
 
-#: inc/task.class.php:1912
+#: inc/task.class.php:1911
 msgid "Created a deployment job, package: "
 msgstr "Trabalho de implantação criado, pacote:."
 
@@ -493,7 +493,7 @@ msgstr "Módulo de implementação desabilitado para este agente"
 msgid "Deploy packages on demand"
 msgstr "Implantar pacotes sob demanda"
 
-#: inc/task.class.php:1852
+#: inc/task.class.php:1851
 msgid "Deployment job, package: "
 msgstr "Trabalho de implantação, pacote"
 
@@ -557,7 +557,7 @@ msgstr "Grupo dinâmico"
 msgid "ESX/VMWare"
 msgstr "ESX/VMWare"
 
-#: inc/deploytask.class.php:195
+#: inc/deploytask.class.php:188
 msgid "Edit impossible, this task is active"
 msgstr "Impossível editar, esta tarefa está ativa"
 
@@ -820,8 +820,8 @@ msgstr "Eu não estou neste computador: acordar do servidor"
 msgid "I'm on this computer: local wakeup"
 msgstr "Estou neste computador: acordar local"
 
-#: inc/menu.class.php:322 inc/staticmisc.class.php:329
-#: inc/staticmisc.class.php:363 inc/iprange.class.php:88
+#: inc/menu.class.php:322 inc/staticmisc.class.php:330
+#: inc/staticmisc.class.php:364 inc/iprange.class.php:88
 #: inc/iprange.class.php:91
 msgid "IP Ranges"
 msgstr "Faixas de IP"
@@ -912,7 +912,7 @@ msgstr "Inventário começou"
 msgid "JSON package representation"
 msgstr "Representação do pacote JSON"
 
-#: inc/taskjoblog.class.php:190 inc/task.class.php:1741
+#: inc/taskjoblog.class.php:190 inc/task.class.php:1740
 #: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Ação"
@@ -1027,10 +1027,6 @@ msgstr "Módulo"
 #: inc/taskjobview.class.php:631
 msgid "Module method"
 msgstr "Método do módulo"
-
-#: inc/collect_wmi_content.class.php:120 inc/collect_wmi.class.php:60
-msgid "Moniker"
-msgstr "Apelido"
 
 #: inc/menu.class.php:245
 msgid "Monitoring / Logs"
@@ -1167,7 +1163,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "Extensão PHP parou o envio do arquivo"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1702
+#: inc/deploypackage.class.php:96 inc/task.class.php:1701
 msgid "Package"
 msgstr "Pacote"
 
@@ -1522,7 +1518,7 @@ msgstr "Alvos"
 
 #: inc/stateinventory.class.php:117 inc/statediscovery.class.php:178
 #: inc/taskview.class.php:160 inc/profile.class.php:368
-#: inc/task.class.php:1684 inc/task.class.php:1724 inc/deploytask.class.php:58
+#: inc/task.class.php:1683 inc/task.class.php:1723 inc/deploytask.class.php:58
 #: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
@@ -1534,7 +1530,7 @@ msgstr[2] "Tarefas"
 msgid "Task execution states"
 msgstr "Estados de execução das tarefas"
 
-#: inc/task.class.php:1636
+#: inc/task.class.php:1635
 msgid "Task has been disabled"
 msgstr "A tarefa foi desativada"
 
@@ -1583,7 +1579,7 @@ msgstr "O JSON modificado continha um erro de sintaxe:"
 msgid "The preparation of the task did not return any targets"
 msgstr "A preparação da tarefa não retornou nenhum alvo"
 
-#: inc/task.class.php:1898
+#: inc/task.class.php:1897
 msgid "The selected task already has a deployment job for another package: "
 msgstr "O trabalho selecionado já possui uma tarefa de outro pacote:."
 
@@ -1625,7 +1621,7 @@ msgstr ""
 "Esta tarefa não pode mais ser executada devido ao intervalo de tempo da "
 "tarefa."
 
-#: inc/deploytask.class.php:230
+#: inc/deploytask.class.php:220
 msgid "This task is active. delete denied"
 msgstr "Impossível excluir, esta tarefa está ativa"
 
@@ -1696,7 +1692,7 @@ msgstr "Arquivo não utilizado"
 msgid "Update the item"
 msgstr "Atualizar o item"
 
-#: inc/task.class.php:1869
+#: inc/task.class.php:1868
 msgid "Updated a deployment job, package: "
 msgstr "Trabalho de implantação atualizado, pacote:."
 
@@ -1798,7 +1794,7 @@ msgstr "Sim - Não"
 msgid "Yes - No - Cancel"
 msgstr "Sim - Não - Cancelar"
 
-#: inc/task.class.php:1835
+#: inc/task.class.php:1834
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
@@ -1858,10 +1854,6 @@ msgstr "nome de arquivo"
 #: inc/taskjob.class.php:784
 msgid "hour(s)"
 msgstr "hora(s)"
-
-#: inc/collect_wmi.class.php:79
-msgid "moniker"
-msgstr "apelido"
 
 #: inc/deploycheck.class.php:129
 msgid "otherwise"

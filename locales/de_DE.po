@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19 00:47+0000\n"
+"POT-Creation-Date: 2024-12-03 00:51+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: iDazai, 2023\n"
 "Language-Team: German (Germany) (https://app.transifex.com/teclib/teams/28042/de_DE/)\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr ""
 
-#: inc/task.class.php:1870 inc/task.class.php:1913
+#: inc/task.class.php:1869 inc/task.class.php:1912
 msgid ", actors: "
 msgstr ", Aktoren:"
 
@@ -184,7 +184,7 @@ msgstr "Revidiert"
 msgid "Authentication for remote devices (VMware)"
 msgstr "Authentifizierung mit Remote-Gerät (VMware)"
 
-#: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
+#: inc/staticmisc.class.php:433 inc/staticmisc.class.php:439
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
 msgstr "Dynamische automatische Verwaltung von Agenten"
@@ -330,7 +330,7 @@ msgstr "Sammeln"
 msgid "Collect data"
 msgstr "Sammel Daten"
 
-#: inc/collect.class.php:59 inc/staticmisc.class.php:646
+#: inc/collect.class.php:59 inc/staticmisc.class.php:647
 msgid "Collect information"
 msgstr "Informationen sammeln"
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Erstelle Verzeichnis"
 
-#: inc/task.class.php:1912
+#: inc/task.class.php:1911
 msgid "Created a deployment job, package: "
 msgstr "Erstellt einen Ausrollvorgang, Paket:"
 
@@ -497,7 +497,7 @@ msgstr "Bereitstellungsmodul wurde deaktiviert für diesen Agenten"
 msgid "Deploy packages on demand"
 msgstr "Ausrollpakete auf Anfrage"
 
-#: inc/task.class.php:1852
+#: inc/task.class.php:1851
 msgid "Deployment job, package: "
 msgstr "Ausrollvorgang, Paket:"
 
@@ -561,7 +561,7 @@ msgstr "Dynamische Gruppe"
 msgid "ESX/VMWare"
 msgstr "ESX/VMWare"
 
-#: inc/deploytask.class.php:195
+#: inc/deploytask.class.php:188
 msgid "Edit impossible, this task is active"
 msgstr "Änderung nicht möglich, Aufgabe ist aktiv"
 
@@ -820,8 +820,8 @@ msgstr "Ich bin nicht an diesem Computer: Starten vom Server"
 msgid "I'm on this computer: local wakeup"
 msgstr "Ich bin an diesem Computer: lokales Starten"
 
-#: inc/menu.class.php:322 inc/staticmisc.class.php:329
-#: inc/staticmisc.class.php:363 inc/iprange.class.php:88
+#: inc/menu.class.php:322 inc/staticmisc.class.php:330
+#: inc/staticmisc.class.php:364 inc/iprange.class.php:88
 #: inc/iprange.class.php:91
 msgid "IP Ranges"
 msgstr "IP-Adressbereich"
@@ -912,7 +912,7 @@ msgstr "Inventar gestartet"
 msgid "JSON package representation"
 msgstr "JSON Paket Darstellung"
 
-#: inc/taskjoblog.class.php:190 inc/task.class.php:1741
+#: inc/taskjoblog.class.php:190 inc/task.class.php:1740
 #: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Aufgabe / Befehl"
@@ -1026,10 +1026,6 @@ msgstr "Modul"
 #: inc/taskjobview.class.php:631
 msgid "Module method"
 msgstr "Modul-Methode"
-
-#: inc/collect_wmi_content.class.php:120 inc/collect_wmi.class.php:60
-msgid "Moniker"
-msgstr "Name"
 
 #: inc/menu.class.php:245
 msgid "Monitoring / Logs"
@@ -1166,7 +1162,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "PHP-Erweiterung hat den Upload gestoppt"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1702
+#: inc/deploypackage.class.php:96 inc/task.class.php:1701
 msgid "Package"
 msgstr "Paket"
 
@@ -1520,7 +1516,7 @@ msgstr "Ziele"
 
 #: inc/stateinventory.class.php:117 inc/statediscovery.class.php:178
 #: inc/taskview.class.php:160 inc/profile.class.php:368
-#: inc/task.class.php:1684 inc/task.class.php:1724 inc/deploytask.class.php:58
+#: inc/task.class.php:1683 inc/task.class.php:1723 inc/deploytask.class.php:58
 #: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
@@ -1531,7 +1527,7 @@ msgstr[1] "Aufgaben"
 msgid "Task execution states"
 msgstr "Ausführungsstatus der Aufgabe"
 
-#: inc/task.class.php:1636
+#: inc/task.class.php:1635
 msgid "Task has been disabled"
 msgstr "Aufgabe wurde deaktiviert"
 
@@ -1579,7 +1575,7 @@ msgstr "Die modifizierte JSON enthält einen Syntax-Fehler:"
 msgid "The preparation of the task did not return any targets"
 msgstr ""
 
-#: inc/task.class.php:1898
+#: inc/task.class.php:1897
 msgid "The selected task already has a deployment job for another package: "
 msgstr ""
 "Der ausgewählte Auftrag hat einen Ausrollvorgang für ein anderes Paket:"
@@ -1624,7 +1620,7 @@ msgstr ""
 "Dieser Vorgang kann nicht mehr ausgeführt werden während dem Zeitfenster der"
 " Aufgabe."
 
-#: inc/deploytask.class.php:230
+#: inc/deploytask.class.php:220
 msgid "This task is active. delete denied"
 msgstr "Die Aufgabe ist aktiv. Löschen fehlgeschlagen"
 
@@ -1695,7 +1691,7 @@ msgstr "Ungenutzte Datei"
 msgid "Update the item"
 msgstr "Element aktualisieren"
 
-#: inc/task.class.php:1869
+#: inc/task.class.php:1868
 msgid "Updated a deployment job, package: "
 msgstr "Aktualisiere einen Ausroll-Vorgang, Paket:"
 
@@ -1795,7 +1791,7 @@ msgstr "Ja - Nein"
 msgid "Yes - No - Cancel"
 msgstr "Ja - Nein - Abbrechen"
 
-#: inc/task.class.php:1835
+#: inc/task.class.php:1834
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
@@ -1854,10 +1850,6 @@ msgstr "Dateiname"
 #: inc/taskjob.class.php:784
 msgid "hour(s)"
 msgstr "Stunde(n)"
-
-#: inc/collect_wmi.class.php:79
-msgid "moniker"
-msgstr "Name"
 
 #: inc/deploycheck.class.php:129
 msgid "otherwise"

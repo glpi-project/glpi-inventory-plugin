@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19 00:47+0000\n"
+"POT-Creation-Date: 2024-12-03 00:51+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr ""
 
-#: inc/task.class.php:1870 inc/task.class.php:1913
+#: inc/task.class.php:1869 inc/task.class.php:1912
 msgid ", actors: "
 msgstr ", 시행자: "
 
@@ -182,7 +182,7 @@ msgstr "감사"
 msgid "Authentication for remote devices (VMware)"
 msgstr "원격 장치 용 인증 (VMware)"
 
-#: inc/staticmisc.class.php:432 inc/staticmisc.class.php:438
+#: inc/staticmisc.class.php:433 inc/staticmisc.class.php:439
 #: inc/taskjob.class.php:816
 msgid "Auto management dynamic of agents"
 msgstr ""
@@ -327,7 +327,7 @@ msgstr "수집"
 msgid "Collect data"
 msgstr "데이터 수집"
 
-#: inc/collect.class.php:59 inc/staticmisc.class.php:646
+#: inc/collect.class.php:59 inc/staticmisc.class.php:647
 msgid "Collect information"
 msgstr "정보 수집"
 
@@ -414,7 +414,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "디렉토리 생성"
 
-#: inc/task.class.php:1912
+#: inc/task.class.php:1911
 msgid "Created a deployment job, package: "
 msgstr "배포 작업, 패키지 생성됨:"
 
@@ -483,7 +483,7 @@ msgstr "이 에이전트에는 배포 모듈이 비활성화 됨"
 msgid "Deploy packages on demand"
 msgstr "요청 시 패키지 배포"
 
-#: inc/task.class.php:1852
+#: inc/task.class.php:1851
 msgid "Deployment job, package: "
 msgstr "작업, 패키지 배포:"
 
@@ -547,7 +547,7 @@ msgstr "동적 그룹"
 msgid "ESX/VMWare"
 msgstr "ESX/VMWare"
 
-#: inc/deploytask.class.php:195
+#: inc/deploytask.class.php:188
 msgid "Edit impossible, this task is active"
 msgstr "이 작업이 활성화되어, 수정할 수 없음"
 
@@ -800,8 +800,8 @@ msgstr ""
 msgid "I'm on this computer: local wakeup"
 msgstr ""
 
-#: inc/menu.class.php:322 inc/staticmisc.class.php:329
-#: inc/staticmisc.class.php:363 inc/iprange.class.php:88
+#: inc/menu.class.php:322 inc/staticmisc.class.php:330
+#: inc/staticmisc.class.php:364 inc/iprange.class.php:88
 #: inc/iprange.class.php:91
 msgid "IP Ranges"
 msgstr "IP 범위"
@@ -888,7 +888,7 @@ msgstr "재고 시작됨"
 msgid "JSON package representation"
 msgstr "JSON 패키지 표현"
 
-#: inc/taskjoblog.class.php:190 inc/task.class.php:1741
+#: inc/taskjoblog.class.php:190 inc/task.class.php:1740
 #: inc/taskjob.class.php:58 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "작업"
@@ -1000,10 +1000,6 @@ msgstr "모듈"
 
 #: inc/taskjobview.class.php:631
 msgid "Module method"
-msgstr ""
-
-#: inc/collect_wmi_content.class.php:120 inc/collect_wmi.class.php:60
-msgid "Moniker"
 msgstr ""
 
 #: inc/menu.class.php:245
@@ -1141,7 +1137,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "PHP 확장이 파일 업로드를 중지함"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1702
+#: inc/deploypackage.class.php:96 inc/task.class.php:1701
 msgid "Package"
 msgstr "패키지"
 
@@ -1492,7 +1488,7 @@ msgstr "대상"
 
 #: inc/stateinventory.class.php:117 inc/statediscovery.class.php:178
 #: inc/taskview.class.php:160 inc/profile.class.php:368
-#: inc/task.class.php:1684 inc/task.class.php:1724 inc/deploytask.class.php:58
+#: inc/task.class.php:1683 inc/task.class.php:1723 inc/deploytask.class.php:58
 #: inc/deploytask.class.php:160
 msgid "Task"
 msgid_plural "Tasks"
@@ -1502,7 +1498,7 @@ msgstr[0] "업무"
 msgid "Task execution states"
 msgstr "업무 실행 상태"
 
-#: inc/task.class.php:1636
+#: inc/task.class.php:1635
 msgid "Task has been disabled"
 msgstr "업무가 비활성화됨"
 
@@ -1546,7 +1542,7 @@ msgstr "변경된 JSON 에 잘못된 구문 오류가 포함됨 :"
 msgid "The preparation of the task did not return any targets"
 msgstr ""
 
-#: inc/task.class.php:1898
+#: inc/task.class.php:1897
 msgid "The selected task already has a deployment job for another package: "
 msgstr "선택된 업무는 이미 다른 패키지에 대한 배포 작업이 있습니다:"
 
@@ -1584,7 +1580,7 @@ msgstr ""
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr ""
 
-#: inc/deploytask.class.php:230
+#: inc/deploytask.class.php:220
 msgid "This task is active. delete denied"
 msgstr "이 업무는 활성화 되었습니다. 삭제가 거부됨"
 
@@ -1655,7 +1651,7 @@ msgstr "미사용된 파일"
 msgid "Update the item"
 msgstr "항목 수정"
 
-#: inc/task.class.php:1869
+#: inc/task.class.php:1868
 msgid "Updated a deployment job, package: "
 msgstr "작업, 패키지 배포 수정됨:"
 
@@ -1753,7 +1749,7 @@ msgstr "예 - 아니오"
 msgid "Yes - No - Cancel"
 msgstr "예 - 아니오 - 취소"
 
-#: inc/task.class.php:1835
+#: inc/task.class.php:1834
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
@@ -1808,10 +1804,6 @@ msgstr "파일명"
 #: inc/taskjob.class.php:784
 msgid "hour(s)"
 msgstr "시간"
-
-#: inc/collect_wmi.class.php:79
-msgid "moniker"
-msgstr ""
 
 #: inc/deploycheck.class.php:129
 msgid "otherwise"
