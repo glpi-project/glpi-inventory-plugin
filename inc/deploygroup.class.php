@@ -661,6 +661,15 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         global $DB;
 
+        // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
+        // to isolate the search performed in the dynamic group,
+        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch']['Computer'])
+        $backup_criteria = [];
+        if (isset($_SESSION['glpisearch']['Computer'])) {
+            $backup_criteria = $_SESSION['glpisearch']['Computer'];
+        }
+
+
         $is_dynamic = $group->isDynamicGroup();
         $computers_params = [];
 
@@ -698,7 +707,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         }
 
         $computers_params["reset"] = true;
-        return Search::manageParams('Computer', $computers_params, $is_dynamic, false);
+        $managed_criteria =  Search::manageParams('Computer', $computers_params, $is_dynamic, false);
+
+        //restore session data
+        $_SESSION['glpisearch']['Computer'] = $backup_criteria;
+
+        return $managed_criteria;
     }
 
 
