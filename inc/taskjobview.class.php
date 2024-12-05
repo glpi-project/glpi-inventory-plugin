@@ -928,7 +928,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             Session::checkRight('plugin_glpiinventory_task', CREATE);
             if (isset($postvars['add'])) {
                 if (!isset($postvars['entities_id'])) {
-                    $postvars['entities_id'] = $_SESSION['glpidefault_entity'];
+                    $postvars['entities_id'] = $_SESSION['glpidefault_entity'] ?? 0;
                 }
                // Get entity of task
                 $pfTask = new PluginGlpiinventoryTask();
