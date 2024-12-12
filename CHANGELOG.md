@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix the link for pinned item
 - The columns could not be added in the computer search view (collect).
 - Fix `invalid item` for obsolete agents.
 - Fix upload directory set in configuration.
