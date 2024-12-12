@@ -469,19 +469,8 @@ taskjobs.update_agents_view = function (chart_id) {
          });
       filtered_agents = filtered_agents.map(function(d) { return [d,true]; } ).toObject();
 
-      var total_agents_to_view = chart.agents.reject( function(d) {
-         //remove pinned agents from the list since we concat them next.
-         if ( chart.pinned_agents[d[0]] ) {
-            return true;
-         }
-         if ( filtered_agents[d[0]] ) {
-            return false;
-         } else {
-            return true;
-         }
-      });
-
-      var agents_to_view = Lazy(pinned_agents.toArray()).concat(total_agents_to_view.toArray()).first(chart.view_limit);
+      var total_agents_to_view = chart.agents;
+      var agents_to_view = Lazy(total_agents_to_view.toArray()).first(chart.view_limit);
 
       taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
       taskjobs.agents_chart[chart_id].agents_to_view = agents_to_view.toArray();
@@ -501,7 +490,7 @@ taskjobs.display_agents_view = function(chart_id) {
       .datum(agents)
       .call(agents_chart(chart_id));
 
-      var agents_hidden = chart.total_agents_to_view - agents.length;
+      var agents_hidden = 0;
       if (agents_hidden <= 0) {
          taskjobs.agents_chart[chart_id].view_limit = 10;
       }
