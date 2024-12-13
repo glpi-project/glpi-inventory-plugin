@@ -490,10 +490,7 @@ taskjobs.display_agents_view = function(chart_id) {
       .datum(agents)
       .call(agents_chart(chart_id));
 
-      var agents_hidden = 0;
-      if (agents_hidden <= 0) {
-         taskjobs.agents_chart[chart_id].view_limit = 10;
-      }
+      var agents_hidden = chart.total_agents_to_view - agents.length;
       var limit_to_add = 10;
       var button_text = [];
       if (agents_hidden > 0) {
