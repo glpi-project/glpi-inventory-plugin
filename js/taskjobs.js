@@ -469,7 +469,13 @@ taskjobs.update_agents_view = function (chart_id) {
          });
       filtered_agents = filtered_agents.map(function(d) { return [d,true]; } ).toObject();
 
-      var total_agents_to_view = chart.agents;
+      var total_agents_to_view = chart.agents.reject( function(d) {
+            if ( filtered_agents[d[0]] ) {
+                return false;
+            } else {
+                return true;
+            }
+        });
       var agents_to_view = Lazy(total_agents_to_view.toArray()).first(chart.view_limit);
 
       taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
