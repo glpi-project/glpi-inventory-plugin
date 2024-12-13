@@ -480,7 +480,7 @@ taskjobs.update_agents_view = function (chart_id) {
 
       taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
       taskjobs.agents_chart[chart_id].agents_to_view = agents_to_view.toArray();
-      taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size() + pinned_agents.size();
+      taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size();
       taskjobs.agents_chart[chart_id].debug = total_agents_to_view;
    }
    taskjobs.agents_chart[chart_id].display_agents = true;
