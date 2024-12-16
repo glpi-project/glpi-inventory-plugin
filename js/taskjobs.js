@@ -470,22 +470,17 @@ taskjobs.update_agents_view = function (chart_id) {
       filtered_agents = filtered_agents.map(function(d) { return [d,true]; } ).toObject();
 
       var total_agents_to_view = chart.agents.reject( function(d) {
-         //remove pinned agents from the list since we concat them next.
-         if ( chart.pinned_agents[d[0]] ) {
-            return true;
-         }
-         if ( filtered_agents[d[0]] ) {
-            return false;
-         } else {
-            return true;
-         }
-      });
-
-      var agents_to_view = Lazy(pinned_agents.toArray()).concat(total_agents_to_view.toArray()).first(chart.view_limit);
+            if ( filtered_agents[d[0]] ) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+      var agents_to_view = Lazy(total_agents_to_view.toArray()).first(chart.view_limit);
 
       taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
       taskjobs.agents_chart[chart_id].agents_to_view = agents_to_view.toArray();
-      taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size() + pinned_agents.size();
+      taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size();
       taskjobs.agents_chart[chart_id].debug = total_agents_to_view;
    }
    taskjobs.agents_chart[chart_id].display_agents = true;
@@ -502,9 +497,6 @@ taskjobs.display_agents_view = function(chart_id) {
       .call(agents_chart(chart_id));
 
       var agents_hidden = chart.total_agents_to_view - agents.length;
-      if (agents_hidden <= 0) {
-         taskjobs.agents_chart[chart_id].view_limit = 10;
-      }
       var limit_to_add = 10;
       var button_text = [];
       if (agents_hidden > 0) {
