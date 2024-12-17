@@ -201,8 +201,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
        //and it is not we want !
        unset($search_params['reset']);
 
-       Toolbox::logDebug($_SESSION['glpisearch']['Computer']['criteria'] = $search_params['criteria']);
-
         if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
             unset($search_params['metacriteria']);
         }
