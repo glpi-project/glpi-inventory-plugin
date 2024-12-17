@@ -195,11 +195,13 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
                 $pagination_params[$field] = $_SESSION['glpisearch']['Computer'][$field];
             }
         }
-       // WITHOUT checking post values
+        // WITHOUT checking post values
         $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($item, false);
-       //If metacriteria array is empty, remove it as it displays the metacriteria form,
-       //and it is not we want !
-       unset($search_params['reset']);
+        //If metacriteria array is empty, remove it as it displays the metacriteria form,
+        //and it is not we want !
+        unset($search_params['reset']);
+
+        $_SESSION['glpisearch']['Computer']['criteria'] = $search_params['criteria'];
 
         if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
             unset($search_params['metacriteria']);
