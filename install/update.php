@@ -6934,7 +6934,7 @@ function do_collect_migration($migration)
                                                 'value'   => null];
     $a_table['fields']['key']       = ['type'    => 'string',
                                              'value'   => null];
-    $a_table['fields']['value']     = ['type'    => 'string',
+    $a_table['fields']['value']     = ['type'    => 'text',
                                              'value'   => null];
 
     $a_table['oldfields']  = [];
