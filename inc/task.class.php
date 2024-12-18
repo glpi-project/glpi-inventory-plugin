@@ -1332,19 +1332,21 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         session_write_close();
 
         $logs = $this->getJoblogs($task_ids, true, false);
-        PluginGlpiinventoryToolbox::logIfExtradebug(
-            "pluginGlpiinventory-tasks",
-            "ajaxGetJobLogs, agents: " . count($logs['agents'])
-        );
-        PluginGlpiinventoryToolbox::logIfExtradebug(
-            "pluginGlpiinventory-tasks",
-            "ajaxGetJobLogs, tasks: " . count($logs['tasks'])
-        );
+        if (PluginGlpiinventoryConfig::isExtradebugActive()) {
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+                "pluginGlpiinventory-tasks",
+                "ajaxGetJobLogs, agents: " . count($logs['agents'])
+            );
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+                "pluginGlpiinventory-tasks",
+                "ajaxGetJobLogs, tasks: " . count($logs['tasks'])
+            );
 
-        PluginGlpiinventoryToolbox::logIfExtradebug(
-            "pluginGlpiinventory-tasks",
-            "ajaxGetJobLogs: " . print_r($logs, true)
-        );
+            PluginGlpiinventoryToolbox::logIfExtradebug(
+                "pluginGlpiinventory-tasks",
+                "ajaxGetJobLogs: " . print_r($logs, true)
+            );
+        }
         $out = json_encode($logs);
         if (
             isset($options['display'])
