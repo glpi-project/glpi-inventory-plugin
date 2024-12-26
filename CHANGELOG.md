@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Isolate dynamic group criteria to prevent their global reapplication in GLPI.
+
 ## [1.4.0] - 2024-09-06
 
 ### Fixed
