@@ -367,7 +367,10 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         $current = $jobstate;
         $agent->getFromDB($current->fields['agents_id']);
 
-        $ip = $this->getDeviceIPOfTaskID($jobstate->fields['itemtype'], $jobstate->fields['items_id'], $jobstate->fields['plugin_glpiinventory_taskjobs_id']);
+        $taskjob = new PluginGlpiinventoryTaskjob();
+        $taskjob->getFromDB($jobstate->fields['plugin_glpiinventory_taskjobs_id']);
+
+        $ip = $this->getDeviceIPOfTaskID($jobstate->fields['itemtype'], $jobstate->fields['items_id'], $taskjob->fields['plugin_glpiinventory_tasks_id']);
 
         $param_attrs = [];
         $device_attrs = [];
