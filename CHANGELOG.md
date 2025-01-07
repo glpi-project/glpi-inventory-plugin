@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Fixed
+
 - Ensure that the `Taskjob` identifier is used to extract the device IP.
 - Isolate dynamic group criteria to prevent their global reapplication in GLPI.
+- Fixes memory exhaustion when "extra-debug" is disabled
 
 ## [1.4.0] - 2024-09-06
 
