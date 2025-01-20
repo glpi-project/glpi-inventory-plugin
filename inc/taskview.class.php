@@ -85,13 +85,13 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             null,
             [
             "off"  => __('Off', 'glpiinventory'),
-            "1"    => '1 ' . _n('second', 'seconds', 1),
-            "5"    => '5 ' . _n('second', 'seconds', 5),
-            "10"   => '10 ' . _n('second', 'seconds', 10),
-            "60"   => '1 ' . _n('minute', 'minutes', 1),
-            "120"  => '2 ' . _n('minute', 'minutes', 2),
-            "300"  => '5 ' . _n('minute', 'minutes', 5),
-            "600"  => '10 ' . _n('minute', 'minutes', 10),
+            "1"    => sprintf(_n('%s second', '%s seconds', 1), 1),
+            "5"    => sprintf(_n('%s second', '%s seconds', 5), 5),
+            "10"   => sprintf(_n('%s second', '%s seconds', 10), 10),
+            "60"   => sprintf(_n('%s minute', '%s minutes', 1), 1),
+            "120"  => sprintf(_n('%s minute', '%s minutes', 2), 2),
+            "300"  => sprintf(_n('%s minute', '%s minutes', 5), 5),
+            "600"  => sprintf(_n('%s minute', '%s minutes', 10), 10),
             ],
             ['value' => $_SESSION['glpi_plugin_glpiinventory']['refresh']]
         );
@@ -101,7 +101,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         echo '<a class="openExportDialog pointer btn btn-icon btn-sm btn-secondary me-1 pe-2">';
         echo '<i class="ti ti-save"></i>';
-        echo'<span class="d-none d-xxl-block">' .  __('Export task result', 'glpinventory') . '</span>';
+        echo'<span class="d-none d-xxl-block">' .  __('Export task result', 'glpiinventory') . '</span>';
         echo '</a>';
 
         // Add a manual refresh button
