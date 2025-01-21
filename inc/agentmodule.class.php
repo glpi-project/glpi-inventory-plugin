@@ -212,9 +212,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
         echo "<th>" . __('Module', 'glpiinventory') . "</th>";
-        echo "<th>Activation</th>";
+        echo "<th>" . __('Activation', 'glpiinventory') . "</th>";
         echo "<th>" . __('Module', 'glpiinventory') . "</th>";
-        echo "<th>Activation</th>";
+        echo "<th>" . __('Activation', 'glpiinventory') . "</th>";
         echo "</tr>";
 
         $a_modules = $this->find();
