@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 00:44+0000\n"
+"POT-Creation-Date: 2025-01-09 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Ukrainian (Ukraine) (https://app.transifex.com/teclib/teams/28042/uk_UA/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr ""
 
-#: inc/task.class.php:1869 inc/task.class.php:1912
+#: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
 msgstr ", виконавці:"
 
@@ -420,7 +420,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Створити каталог"
 
-#: inc/task.class.php:1911
+#: inc/task.class.php:1913
 msgid "Created a deployment job, package: "
 msgstr "Завдання розгортання створено, пакет:"
 
@@ -491,7 +491,7 @@ msgstr "У цього агента модуль розгортання вимк�
 msgid "Deploy packages on demand"
 msgstr "Розгортання пакетів за вимогою"
 
-#: inc/task.class.php:1851
+#: inc/task.class.php:1853
 msgid "Deployment job, package: "
 msgstr "Завдання розгортання, пакет:"
 
@@ -913,7 +913,7 @@ msgid "JSON package representation"
 msgstr "JSON презентація пакету"
 
 #: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/task.class.php:1742 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Робота"
 
@@ -1161,7 +1161,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "Розширення PHP зупинило завантаження файлу"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1701
+#: inc/deploypackage.class.php:96 inc/task.class.php:1703
 msgid "Package"
 msgstr "Пакет"
 
@@ -1516,7 +1516,7 @@ msgstr "Цілі"
 #: inc/taskview.class.php:160 inc/stateinventory.class.php:117
 #: inc/statediscovery.class.php:178 inc/profile.class.php:368
 #: inc/deploytask.class.php:58 inc/deploytask.class.php:160
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/task.class.php:1685 inc/task.class.php:1725
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Завдання"
@@ -1528,7 +1528,7 @@ msgstr[3] "Завдань"
 msgid "Task execution states"
 msgstr "Хід виконання робіт"
 
-#: inc/task.class.php:1635
+#: inc/task.class.php:1637
 msgid "Task has been disabled"
 msgstr "Завдання вимкнено"
 
@@ -1577,7 +1577,7 @@ msgstr "Змінений JSON містить синтаксичну помилк
 msgid "The preparation of the task did not return any targets"
 msgstr ""
 
-#: inc/task.class.php:1897
+#: inc/task.class.php:1899
 msgid "The selected task already has a deployment job for another package: "
 msgstr "Обране завдання вже має задачу розгортання іншого пакету:"
 
@@ -1688,7 +1688,7 @@ msgstr "Файл, що не використовується"
 msgid "Update the item"
 msgstr "Оновити елемент"
 
-#: inc/task.class.php:1868
+#: inc/task.class.php:1870
 msgid "Updated a deployment job, package: "
 msgstr "Завдання розгортання оновлено, пакет:"
 
@@ -1791,7 +1791,7 @@ msgstr "Yes - No"
 msgid "Yes - No - Cancel"
 msgstr "Yes - No - Cancel"
 
-#: inc/task.class.php:1834
+#: inc/task.class.php:1836
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."

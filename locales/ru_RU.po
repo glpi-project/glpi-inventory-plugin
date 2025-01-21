@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 00:44+0000\n"
+"POT-Creation-Date: 2025-01-09 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Alexander Sokolov <a.sokolov@outlook.com>, 2022\n"
 "Language-Team: Russian (Russia) (https://app.transifex.com/teclib/teams/28042/ru_RU/)\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr ""
 
-#: inc/task.class.php:1869 inc/task.class.php:1912
+#: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
 msgstr ", участник:"
 
@@ -419,7 +419,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Создать директорию"
 
-#: inc/task.class.php:1911
+#: inc/task.class.php:1913
 msgid "Created a deployment job, package: "
 msgstr "Создано задание развертывания, пакет:"
 
@@ -492,7 +492,7 @@ msgstr "Модуль развертывания был выключен у эт�
 msgid "Deploy packages on demand"
 msgstr "Установить пакет по требованию"
 
-#: inc/task.class.php:1851
+#: inc/task.class.php:1853
 msgid "Deployment job, package: "
 msgstr "Задание развертывания, пакет:"
 
@@ -914,7 +914,7 @@ msgid "JSON package representation"
 msgstr "Представление пакета в формате json"
 
 #: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/task.class.php:1742 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Задание"
 
@@ -1163,7 +1163,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "Мудуль PHP остановил загрузку файлов"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1701
+#: inc/deploypackage.class.php:96 inc/task.class.php:1703
 msgid "Package"
 msgstr "Пакет"
 
@@ -1520,7 +1520,7 @@ msgstr "Цели"
 #: inc/taskview.class.php:160 inc/stateinventory.class.php:117
 #: inc/statediscovery.class.php:178 inc/profile.class.php:368
 #: inc/deploytask.class.php:58 inc/deploytask.class.php:160
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/task.class.php:1685 inc/task.class.php:1725
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Задача"
@@ -1532,7 +1532,7 @@ msgstr[3] "Задачи"
 msgid "Task execution states"
 msgstr "Состояние выполнения задания"
 
-#: inc/task.class.php:1635
+#: inc/task.class.php:1637
 msgid "Task has been disabled"
 msgstr "Задача была отключена"
 
@@ -1581,7 +1581,7 @@ msgstr "Модифицированный JSON содержит синтакси�
 msgid "The preparation of the task did not return any targets"
 msgstr ""
 
-#: inc/task.class.php:1897
+#: inc/task.class.php:1899
 msgid "The selected task already has a deployment job for another package: "
 msgstr "У выбранной задачи уже есть задание развертывания для другого пакета:"
 
@@ -1694,7 +1694,7 @@ msgstr "Неиспользуемый файл"
 msgid "Update the item"
 msgstr "Обновление элемента"
 
-#: inc/task.class.php:1868
+#: inc/task.class.php:1870
 msgid "Updated a deployment job, package: "
 msgstr "Обновлено задание развертывания, пакет:"
 
@@ -1797,7 +1797,7 @@ msgstr "Да - Нет"
 msgid "Yes - No - Cancel"
 msgstr "Да - Нет - Отменить"
 
-#: inc/task.class.php:1834
+#: inc/task.class.php:1836
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 00:44+0000\n"
+"POT-Creation-Date: 2025-01-09 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Soporte Infraestructura Standby, 2023\n"
 "Language-Team: Spanish (Ecuador) (https://app.transifex.com/teclib/teams/28042/es_EC/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr ""
 
-#: inc/task.class.php:1869 inc/task.class.php:1912
+#: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
 msgstr ", actores: "
 
@@ -420,7 +420,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Crear directorio"
 
-#: inc/task.class.php:1911
+#: inc/task.class.php:1913
 msgid "Created a deployment job, package: "
 msgstr "Creado un trabajo de despliegue, paquete: "
 
@@ -494,7 +494,7 @@ msgstr "El módulo de despliegue ha sido desactivado para este agente"
 msgid "Deploy packages on demand"
 msgstr "Despliegue de paquetes bajo demanda"
 
-#: inc/task.class.php:1851
+#: inc/task.class.php:1853
 msgid "Deployment job, package: "
 msgstr "Trabajo de despliegue, paquete: "
 
@@ -912,7 +912,7 @@ msgid "JSON package representation"
 msgstr "Representación del paquete JSON"
 
 #: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/task.class.php:1742 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Trabajo"
 
@@ -1162,7 +1162,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "La extensión PHP detuvo la carga de archivos"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1701
+#: inc/deploypackage.class.php:96 inc/task.class.php:1703
 msgid "Package"
 msgstr "Paquete"
 
@@ -1518,7 +1518,7 @@ msgstr "Objetivos"
 #: inc/taskview.class.php:160 inc/stateinventory.class.php:117
 #: inc/statediscovery.class.php:178 inc/profile.class.php:368
 #: inc/deploytask.class.php:58 inc/deploytask.class.php:160
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/task.class.php:1685 inc/task.class.php:1725
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Tarea"
@@ -1529,7 +1529,7 @@ msgstr[2] "Tareas"
 msgid "Task execution states"
 msgstr "Estados de ejecución de tareas"
 
-#: inc/task.class.php:1635
+#: inc/task.class.php:1637
 msgid "Task has been disabled"
 msgstr "La tarea se ha deshabilitado"
 
@@ -1577,7 +1577,7 @@ msgstr "El JSON modificado contenía un error de sintaxis :"
 msgid "The preparation of the task did not return any targets"
 msgstr ""
 
-#: inc/task.class.php:1897
+#: inc/task.class.php:1899
 msgid "The selected task already has a deployment job for another package: "
 msgstr ""
 "La tarea seleccionada ya tiene un trabajo de despliegue para otro paquete: "
@@ -1691,7 +1691,7 @@ msgstr "Archivo no utilizado"
 msgid "Update the item"
 msgstr "Actualizar el elemento"
 
-#: inc/task.class.php:1868
+#: inc/task.class.php:1870
 msgid "Updated a deployment job, package: "
 msgstr "Actualizado un trabajo de despliegue, paquete: "
 
@@ -1792,7 +1792,7 @@ msgstr "Sí - No"
 msgid "Yes - No - Cancel"
 msgstr "Sí - No - Cancelar"
 
-#: inc/task.class.php:1834
+#: inc/task.class.php:1836
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."

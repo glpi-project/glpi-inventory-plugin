@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 00:44+0000\n"
+"POT-Creation-Date: 2025-01-09 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Davide <spam@habilitas.it>, 2024\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/teclib/teams/28042/it_IT/)\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr "%s inventariati"
 
-#: inc/task.class.php:1869 inc/task.class.php:1912
+#: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
 msgstr ", attori: "
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Crea directory"
 
-#: inc/task.class.php:1911
+#: inc/task.class.php:1913
 msgid "Created a deployment job, package: "
 msgstr "Crea un pacchetto del compito di distribuzione:"
 
@@ -494,7 +494,7 @@ msgstr "Il modulo di distribuzione di questo agente è stato disattivato"
 msgid "Deploy packages on demand"
 msgstr "Distribuisci i pacchetti su richiesta"
 
-#: inc/task.class.php:1851
+#: inc/task.class.php:1853
 msgid "Deployment job, package: "
 msgstr "Pacchetto del compito di distribuzione:"
 
@@ -913,7 +913,7 @@ msgid "JSON package representation"
 msgstr "Rappresentazione del pacchetto JSON"
 
 #: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/task.class.php:1742 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Compito"
 
@@ -1164,7 +1164,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "PHP extension ha impedito il caricamento del file"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1701
+#: inc/deploypackage.class.php:96 inc/task.class.php:1703
 msgid "Package"
 msgstr "Pacchetto"
 
@@ -1520,7 +1520,7 @@ msgstr "Obiettivi"
 #: inc/taskview.class.php:160 inc/stateinventory.class.php:117
 #: inc/statediscovery.class.php:178 inc/profile.class.php:368
 #: inc/deploytask.class.php:58 inc/deploytask.class.php:160
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/task.class.php:1685 inc/task.class.php:1725
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Compito"
@@ -1531,7 +1531,7 @@ msgstr[2] "Attività"
 msgid "Task execution states"
 msgstr "Stati di esecuzione dell'attività"
 
-#: inc/task.class.php:1635
+#: inc/task.class.php:1637
 msgid "Task has been disabled"
 msgstr "L'attività è stata disabilitata"
 
@@ -1579,7 +1579,7 @@ msgstr "La JSON modificata presenta un errore di sintassi :"
 msgid "The preparation of the task did not return any targets"
 msgstr "La preparazione dell'attività non ha riportato alcun obbiettivo"
 
-#: inc/task.class.php:1897
+#: inc/task.class.php:1899
 msgid "The selected task already has a deployment job for another package: "
 msgstr ""
 "L'attività selezionata ha già un compito di distribuzione per un altro "
@@ -1697,7 +1697,7 @@ msgstr "File non utilizzato"
 msgid "Update the item"
 msgstr "Aggiorna l'elemento"
 
-#: inc/task.class.php:1868
+#: inc/task.class.php:1870
 msgid "Updated a deployment job, package: "
 msgstr "Aggiorna un pacchetto del compito di distribuzione:"
 
@@ -1798,7 +1798,7 @@ msgstr "Si - No"
 msgid "Yes - No - Cancel"
 msgstr "Si - No - Annulla"
 
-#: inc/task.class.php:1834
+#: inc/task.class.php:1836
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
