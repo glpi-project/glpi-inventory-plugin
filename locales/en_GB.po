@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-06 00:47+0000\n"
-"PO-Revision-Date: 2025-01-06 00:47+0000\n"
+"POT-Creation-Date: 2025-01-21 00:43+0000\n"
+"PO-Revision-Date: 2025-01-21 00:43+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr "%s inventoried"
 
-#: inc/task.class.php:1869 inc/task.class.php:1912
+#: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
 msgstr ", actors: "
 
@@ -414,7 +414,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Create directory"
 
-#: inc/task.class.php:1911
+#: inc/task.class.php:1913
 msgid "Created a deployment job, package: "
 msgstr "Created a deployment job, package: "
 
@@ -485,7 +485,7 @@ msgstr "Deploy module has been disabled for this agent"
 msgid "Deploy packages on demand"
 msgstr "Deploy packages on demand"
 
-#: inc/task.class.php:1851
+#: inc/task.class.php:1853
 msgid "Deployment job, package: "
 msgstr "Deployment job, package: "
 
@@ -897,7 +897,7 @@ msgid "JSON package representation"
 msgstr "JSON package representation"
 
 #: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/task.class.php:1742 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Job"
 
@@ -1146,7 +1146,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "PHP extension stopped the file upload"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1701
+#: inc/deploypackage.class.php:96 inc/task.class.php:1703
 msgid "Package"
 msgstr "Package"
 
@@ -1502,7 +1502,7 @@ msgstr "Targets"
 #: inc/taskview.class.php:160 inc/stateinventory.class.php:117
 #: inc/statediscovery.class.php:178 inc/profile.class.php:368
 #: inc/deploytask.class.php:58 inc/deploytask.class.php:160
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/task.class.php:1685 inc/task.class.php:1725
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Task"
@@ -1512,7 +1512,7 @@ msgstr[1] "Tasks"
 msgid "Task execution states"
 msgstr "Task execution states"
 
-#: inc/task.class.php:1635
+#: inc/task.class.php:1637
 msgid "Task has been disabled"
 msgstr "Task has been disabled"
 
@@ -1558,7 +1558,7 @@ msgstr "The modified JSON contained a syntax error :"
 msgid "The preparation of the task did not return any targets"
 msgstr "The preparation of the task did not return any targets"
 
-#: inc/task.class.php:1897
+#: inc/task.class.php:1899
 msgid "The selected task already has a deployment job for another package: "
 msgstr "The selected task already has a deployment job for another package: "
 
@@ -1669,7 +1669,7 @@ msgstr "Unused file"
 msgid "Update the item"
 msgstr "Update the item"
 
-#: inc/task.class.php:1868
+#: inc/task.class.php:1870
 msgid "Updated a deployment job, package: "
 msgstr "Updated a deployment job, package: "
 
@@ -1768,7 +1768,7 @@ msgstr "Yes - No"
 msgid "Yes - No - Cancel"
 msgstr "Yes - No - Cancel"
 
-#: inc/task.class.php:1834
+#: inc/task.class.php:1836
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."

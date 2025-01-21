@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 00:44+0000\n"
+"POT-Creation-Date: 2025-01-09 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2024\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr "%s zinventarizované"
 
-#: inc/task.class.php:1869 inc/task.class.php:1912
+#: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
 msgstr ", účastníci: "
 
@@ -420,7 +420,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Vytvoriť adresár"
 
-#: inc/task.class.php:1911
+#: inc/task.class.php:1913
 msgid "Created a deployment job, package: "
 msgstr "Vytvorená úloha nasadenia, balíček:"
 
@@ -492,7 +492,7 @@ msgstr "Modul nasadenia bol pre tohto agenta vypnutý"
 msgid "Deploy packages on demand"
 msgstr "Nasadiť balíčky na vyžiadanie"
 
-#: inc/task.class.php:1851
+#: inc/task.class.php:1853
 msgid "Deployment job, package: "
 msgstr "Úloha nasadenia, balíček:"
 
@@ -913,7 +913,7 @@ msgid "JSON package representation"
 msgstr "Reprezentácia JSON balíčku"
 
 #: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/task.class.php:1742 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "Úloha"
 
@@ -1162,7 +1162,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "PHP rozšírenie zastavilo nahrávanie súboru"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1701
+#: inc/deploypackage.class.php:96 inc/task.class.php:1703
 msgid "Package"
 msgstr "Balíček"
 
@@ -1519,7 +1519,7 @@ msgstr "Ciele"
 #: inc/taskview.class.php:160 inc/stateinventory.class.php:117
 #: inc/statediscovery.class.php:178 inc/profile.class.php:368
 #: inc/deploytask.class.php:58 inc/deploytask.class.php:160
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/task.class.php:1685 inc/task.class.php:1725
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Úloha"
@@ -1531,7 +1531,7 @@ msgstr[3] "Úlohy"
 msgid "Task execution states"
 msgstr "Stavy vykonávania úloh"
 
-#: inc/task.class.php:1635
+#: inc/task.class.php:1637
 msgid "Task has been disabled"
 msgstr "Úloha bola vypnutá"
 
@@ -1580,7 +1580,7 @@ msgstr "Upravený JSON obsahoval syntaktickú chybu:"
 msgid "The preparation of the task did not return any targets"
 msgstr "Príprava úlohy nevrátila žiadne ciele"
 
-#: inc/task.class.php:1897
+#: inc/task.class.php:1899
 msgid "The selected task already has a deployment job for another package: "
 msgstr "Vybraná úloha už má úlohu nasadenia pre iný balíček:"
 
@@ -1691,7 +1691,7 @@ msgstr "Nepoužitý súbor"
 msgid "Update the item"
 msgstr "Aktualizovať položku"
 
-#: inc/task.class.php:1868
+#: inc/task.class.php:1870
 msgid "Updated a deployment job, package: "
 msgstr "Aktualizovaná úloha nasadenia, balíček:"
 
@@ -1794,7 +1794,7 @@ msgstr "Áno - Nie"
 msgid "Yes - No - Cancel"
 msgstr "Áno - Nie - Zrušiť"
 
-#: inc/task.class.php:1834
+#: inc/task.class.php:1836
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."

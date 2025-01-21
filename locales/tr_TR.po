@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 00:47+0000\n"
+"POT-Creation-Date: 2025-01-09 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2024\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "%s inventoried"
 msgstr "%s envantere alındı"
 
-#: inc/task.class.php:1869 inc/task.class.php:1912
+#: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
 msgstr ", aktörler: "
 
@@ -419,7 +419,7 @@ msgstr ""
 msgid "Create directory"
 msgstr "Klasör oluştur"
 
-#: inc/task.class.php:1911
+#: inc/task.class.php:1913
 msgid "Created a deployment job, package: "
 msgstr "Bir dağıtım işi, paket oluşturuldu:"
 
@@ -492,7 +492,7 @@ msgstr "Bu aracının dağıtma modülü devre dışı bırakılmış"
 msgid "Deploy packages on demand"
 msgstr "Paketleri isteğe göre dağıt"
 
-#: inc/task.class.php:1851
+#: inc/task.class.php:1853
 msgid "Deployment job, package: "
 msgstr "Dağıtım işi, paket:"
 
@@ -908,7 +908,7 @@ msgid "JSON package representation"
 msgstr "JSON paketi gösterimi"
 
 #: inc/taskjoblog.class.php:190 inc/taskjob.class.php:58
-#: inc/task.class.php:1740 inc/agentwakeup.class.php:59
+#: inc/task.class.php:1742 inc/agentwakeup.class.php:59
 msgid "Job"
 msgstr "İş"
 
@@ -1158,7 +1158,7 @@ msgstr "P2P"
 msgid "PHP extension stopped the file upload"
 msgstr "PHP eklentisi dosya yüklemeyi durdurdu"
 
-#: inc/deploypackage.class.php:96 inc/task.class.php:1701
+#: inc/deploypackage.class.php:96 inc/task.class.php:1703
 msgid "Package"
 msgstr "Paket"
 
@@ -1513,7 +1513,7 @@ msgstr "Hedefler"
 #: inc/taskview.class.php:160 inc/stateinventory.class.php:117
 #: inc/statediscovery.class.php:178 inc/profile.class.php:368
 #: inc/deploytask.class.php:58 inc/deploytask.class.php:160
-#: inc/task.class.php:1683 inc/task.class.php:1723
+#: inc/task.class.php:1685 inc/task.class.php:1725
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Görev"
@@ -1523,7 +1523,7 @@ msgstr[1] "Görevler"
 msgid "Task execution states"
 msgstr "Görev yürütme durumları"
 
-#: inc/task.class.php:1635
+#: inc/task.class.php:1637
 msgid "Task has been disabled"
 msgstr "Görev devre dışı bırakılmış"
 
@@ -1570,7 +1570,7 @@ msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
 msgid "The preparation of the task did not return any targets"
 msgstr "Görevin hazırlanması herhangi bir hedefe ulaşmadı"
 
-#: inc/task.class.php:1897
+#: inc/task.class.php:1899
 msgid "The selected task already has a deployment job for another package: "
 msgstr "Seçilmiş görevin zaten başka bir paket için dağıtım işi var: "
 
@@ -1681,7 +1681,7 @@ msgstr "Kullanılmayan dosya"
 msgid "Update the item"
 msgstr "Ögeyi güncelle"
 
-#: inc/task.class.php:1868
+#: inc/task.class.php:1870
 msgid "Updated a deployment job, package: "
 msgstr "Bir dağıtım işi, paket güncellendi: "
 
@@ -1780,7 +1780,7 @@ msgstr "Evet - Hayır"
 msgid "Yes - No - Cancel"
 msgstr "Evet - Hayır - İptal"
 
-#: inc/task.class.php:1834
+#: inc/task.class.php:1836
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
