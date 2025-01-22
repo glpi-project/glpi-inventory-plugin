@@ -466,11 +466,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             ) {
                 $jobstates_to_cancel[$jobstate->fields['id']] = [
                 'jobstate' => $jobstate,
-                'reason'   => __(
-                    "The agent is requesting a configuration that has already been sent to him by the server. It is more likely that the agent is subject to a critical error.",
-                    'glpiinventory'
-                ),
-                 'code'     => $jobstate::IN_ERROR
+                'reason'   => "The agent is requesting a configuration that has already been sent to him by the server. It is more likely that the agent is subject to a critical error.",
+                'code'     => $jobstate::IN_ERROR
                 ];
                 continue;
             }
@@ -479,10 +476,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             if ($result['task']['is_active'] == 0) {
                 $jobstates_to_cancel[$jobstate->fields['id']] = [
                 'jobstate' => $jobstate,
-                'reason'   => __(
-                    'The task has been deactivated after preparation of this job.',
-                    'glpiinventory'
-                )
+                'reason'   => "The task has been deactivated after preparation of this job."
                 ];
                 continue;
             };
@@ -500,10 +494,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 if (!($schedule_start <= $now and $now <= $schedule_end)) {
                     $jobstates_to_cancel[$jobstate->fields['id']] = [
                     'jobstate' => $jobstate,
-                    'reason'   => __(
-                        "This job can not be executed anymore due to the task's schedule.",
-                        'glpiinventory'
-                    )
+                    'reason'   => "This job can not be executed anymore due to the task's schedule."
                     ];
                     continue;
                 }
@@ -547,10 +538,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 if (!$timeslot_matched) {
                     $jobstates_to_cancel[$jobstate->fields['id']] = [
                     'jobstate' => $jobstate,
-                    'reason'   => __(
-                        "This job can not be executed anymore due to the task's timeslot.",
-                        'glpiinventory'
-                    )
+                    'reason'   => "This job can not be executed anymore due to the task's timeslot."
                     ];
                     continue;
                 }
@@ -566,10 +554,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             if (!in_array($agent_id, $agents)) {
                 $jobstates_to_cancel[$jobstate->fields['id']] = [
                 'jobstate' => $jobstate,
-                'reason'   => __(
-                    'This agent does not belong anymore in the actors defined in the job.',
-                    'glpiinventory'
-                )
+                'reason'   => "This agent does not belong anymore in the actors defined in the job."
                 ];
                 continue;
             }
