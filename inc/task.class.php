@@ -754,11 +754,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     {
 
         switch ($name) {
-            case 'taskScheduler':
-                return ['description' => __('Inventory task scheduler')];
+            case 'taskscheduler':
+                return ['description' => __('Inventory task scheduler', 'glpiinventory')];
 
-            case 'cleanOnDemand':
-                return ['description' => __('Clean on demand deployment tasks')];
+            case 'cleanondemand':
+                return ['description' => __('Clean on demand deployment tasks', 'glpiinventory')];
         }
         return [];
     }

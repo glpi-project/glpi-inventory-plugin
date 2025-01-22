@@ -261,17 +261,13 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
         'PluginGlpiinventoryAgentWakeup',
         'wakeupAgents',
         120,
-        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-        'comment' => Toolbox::addslashes_deep(
-            'Wake agents ups'
-        )]
+        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
     );
     CronTask::Register(
         'PluginGlpiinventoryTask',
         'cleanondemand',
         86400,
-        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-        'comment' => Toolbox::addslashes_deep('Clean on demand deployment tasks')]
+        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
     );
 
    /*
