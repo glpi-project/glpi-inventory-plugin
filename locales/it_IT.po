@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-09 00:46+0000\n"
+"POT-Creation-Date: 2025-01-22 00:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Davide <spam@habilitas.it>, 2024\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/teclib/teams/28042/it_IT/)\n"
@@ -50,6 +50,10 @@ msgstr "Etichetta azione"
 #: b/deploy/index.php:140 inc/deploypackage.class.php:527
 msgid "Actions"
 msgstr "Azioni"
+
+#: inc/agentmodule.class.php:215 inc/agentmodule.class.php:217
+msgid "Activation"
+msgstr ""
 
 #: inc/agentmodule.class.php:112
 msgid "Activation (by default)"

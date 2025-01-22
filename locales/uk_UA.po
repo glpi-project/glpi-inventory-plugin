@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-09 00:46+0000\n"
+"POT-Creation-Date: 2025-01-22 00:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Ukrainian (Ukraine) (https://app.transifex.com/teclib/teams/28042/uk_UA/)\n"
@@ -49,6 +49,10 @@ msgstr "Мітка дії"
 #: b/deploy/index.php:140 inc/deploypackage.class.php:527
 msgid "Actions"
 msgstr "Дії"
+
+#: inc/agentmodule.class.php:215 inc/agentmodule.class.php:217
+msgid "Activation"
+msgstr ""
 
 #: inc/agentmodule.class.php:112
 msgid "Activation (by default)"
