@@ -594,15 +594,15 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         }
 
         // cols titles
-        echo "Task_name" . SEP;
-        echo "Job_name" . SEP;
-        echo "Method" . SEP;
-        echo "Target" . SEP;
-        echo "Agent" . SEP;
-        echo "Computer name" . SEP;
-        echo "Date" . SEP;
-        echo "Status" . SEP;
-        echo "Last Message" . NL;
+        echo __('Task name', 'glpiinventory') . SEP;
+        echo __('Job name', 'glpiinventory') . SEP;
+        echo __('Method', 'glpiinventory') . SEP;
+        echo __('Target', 'glpiinventory') . SEP;
+        echo __('Agent', 'glpiinventory') . SEP;
+        echo __('Computer name', 'glpiinventory') . SEP;
+        echo __('Date', 'glpiinventory') . SEP;
+        echo __('Status', 'glpiinventory') . SEP;
+        echo __('Last message', 'glpiinventory') . NL;
 
         $agent_obj = new Agent();
         $computer  = new Computer();
