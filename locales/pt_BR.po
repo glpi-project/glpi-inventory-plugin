@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-21 00:43+0000\n"
+"POT-Creation-Date: 2025-01-22 00:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>, 2025\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/teclib/teams/28042/pt_BR/)\n"
@@ -29,7 +29,7 @@ msgstr ""
 #: hook.php:128 hook.php:138 hook.php:148 hook.php:158
 #, php-format
 msgid "%s inventoried"
-msgstr "%s inventariado"
+msgstr "%s inventariados(as)"
 
 #: inc/task.class.php:1871 inc/task.class.php:1914
 msgid ", actors: "
@@ -54,6 +54,10 @@ msgstr "Etiqueta de ação"
 #: b/deploy/index.php:140 inc/deploypackage.class.php:527
 msgid "Actions"
 msgstr "Ações"
+
+#: inc/agentmodule.class.php:215 inc/agentmodule.class.php:217
+msgid "Activation"
+msgstr "Ativação"
 
 #: inc/agentmodule.class.php:112
 msgid "Activation (by default)"
@@ -1270,7 +1274,7 @@ msgstr "Propriedade"
 
 #: inc/taskjobview.class.php:791
 msgid "Purge"
-msgstr "Apagar"
+msgstr "Excluir"
 
 #: inc/deployuserinteractiontemplate.class.php:202
 msgid "Question"
