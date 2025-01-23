@@ -56,7 +56,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     public static function cronInfo(): array
     {
         return [
-            'description' => __('Wake agents ups', 'glpiinventory')
+            'description' => __('Wake agents up', 'glpiinventory')
         ];
     }
 
