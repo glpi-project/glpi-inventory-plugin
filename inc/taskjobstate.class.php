@@ -558,6 +558,19 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     }
 
 
+    /**
+     * Get cron task's description
+     *
+     * @return array
+     */
+    public static function cronInfo(): array
+    {
+        return [
+            'description' => __('Clean taskjob (retention time)', 'glpiinventory')
+        ];
+    }
+
+
    /**
     * Cron task: clean taskjob (retention time)
     *

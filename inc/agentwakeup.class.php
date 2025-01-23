@@ -48,6 +48,19 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     public static $rightname = 'plugin_glpiinventory_taskjob';
 
 
+    /**
+     * Get cron task's description
+     *
+     * @return array
+     */
+    public static function cronInfo(): array
+    {
+        return [
+            'description' => __('Wake agents up', 'glpiinventory')
+        ];
+    }
+
+
    /**
     * Get name of this type by language of the user connected
     *
