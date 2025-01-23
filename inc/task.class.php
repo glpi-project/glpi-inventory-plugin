@@ -479,7 +479,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             if ($result['task']['is_active'] == 0) {
                 $msg = "The task has been deactivated after preparation of this job.";
                 $translatable_msg = __("The task has been deactivated after preparation of this job.", 'glpiinventory');
-                
+
                 $jobstates_to_cancel[$jobstate->fields['id']] = [
                 'jobstate' => $jobstate,
                 'reason'   => $msg
