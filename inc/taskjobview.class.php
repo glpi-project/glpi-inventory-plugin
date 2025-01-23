@@ -430,7 +430,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $iterator = $DB->request([
                 'SELECT' => [
                     'agents.id AS agents_id',
-                    'agents.items_id'
+                    'agents.items_id',
+                    'agents.version'
                 ],
                 'FROM' => 'glpi_agents AS agents',
                 'LEFT JOIN' => [
@@ -456,7 +457,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                         'UPPER(modules.modulename)' => $modulename,
                     ],
                     'computers.is_deleted' => 0,
-                    'computers.is_template' => 0
+                    'computers.is_template' => 0,
+                    'NOT' => ['version' => null]
                 ],
                 'GROUP' => [
                     'agents.id',
