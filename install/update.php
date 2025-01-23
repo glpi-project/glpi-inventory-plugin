@@ -888,26 +888,15 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     if ($crontask->getFromDBbyName('PluginGlpiinventoryTaskjob', 'updatedynamictasks')) {
         $crontask->delete($crontask->fields);
     }
-    if (!$crontask->getFromDBbyName('PluginGlpiinventoryAgent', 'cleanoldagents')) {
-        CronTask::Register(
-            'PluginGlpiinventoryAgent',
-            'cleanoldagents',
-            86400,
-            ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-                               'hourmin' => 22, 'hourmax' => 6,
-            'comment' => Toolbox::addslashes_deep(__(
-                'Delete agents that have not contacted the server since "xxx" days.',
-                'glpiinventory'
-            ))]
-        );
+    if ($crontask->getFromDBbyName('PluginGlpiinventoryAgent', 'cleanoldagents')) {
+        $crontask->delete($crontask->fields);
     }
     if (!$crontask->getFromDBbyName('PluginGlpiinventoryTask', 'cleanondemand')) {
         CronTask::Register(
             'PluginGlpiinventoryTask',
             'cleanondemand',
             86400,
-            ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-            'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]
+            ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
         );
     }
 
@@ -920,8 +909,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
             'PluginGlpiinventoryAgentWakeup',
             'wakeupAgents',
             120,
-            ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-            'comment' => Toolbox::addslashes_deep(__('Wake agents ups'))]
+            ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
         );
     }
 
