@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 00:44+0000\n"
+"POT-Creation-Date: 2025-01-24 00:43+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: French (France) (https://app.transifex.com/teclib/teams/28042/fr_FR/)\n"
@@ -318,6 +318,14 @@ msgstr "Classe"
 msgid "Clean agents"
 msgstr "Supprimer les agents"
 
+#: inc/task.class.php:761
+msgid "Clean on demand deployment tasks"
+msgstr ""
+
+#: inc/taskjobstate.class.php:569
+msgid "Clean taskjob (retention time)"
+msgstr ""
+
 #: inc/menu.class.php:159
 msgid "Clean unused files"
 msgstr "Supprimer les fichiers non utilisés"
@@ -464,11 +472,6 @@ msgstr "Périmètre"
 #: inc/taskjob.class.php:1186 inc/deployuserinteraction.class.php:299
 msgid "Delete"
 msgstr "Supprimer"
-
-#: install/update.php:899
-msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
-"Effacer les agents qui n'ont pas contacté le serveur depuis \"xxx\" jours."
 
 #: inc/deployaction.class.php:75
 msgid "Delete directory"
@@ -913,11 +916,15 @@ msgstr "Groupe d'inventaire"
 msgid "Inventory started"
 msgstr "Inventaire débuté"
 
+#: inc/task.class.php:758
+msgid "Inventory task scheduler"
+msgstr ""
+
 #: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr "Représentation du paquet au format JSON"
 
-#: inc/taskjoblog.class.php:190 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190 inc/agentwakeup.class.php:72
 #: inc/task.class.php:1742 inc/taskjob.class.php:58
 msgid "Job"
 msgstr "Job"
@@ -1775,9 +1782,9 @@ msgstr "Version"
 msgid "WMI"
 msgstr "WMI"
 
-#: install/install.php:266
-msgid "Wake agents ups"
-msgstr "Réveiller les agents"
+#: inc/agentwakeup.class.php:59
+msgid "Wake agents up"
+msgstr ""
 
 #: inc/commonview.class.php:306
 msgid "Warning:"

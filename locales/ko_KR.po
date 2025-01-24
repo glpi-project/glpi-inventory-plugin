@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 00:44+0000\n"
+"POT-Creation-Date: 2025-01-24 00:43+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -315,6 +315,14 @@ msgstr "클래스"
 msgid "Clean agents"
 msgstr "에이전트 청소"
 
+#: inc/task.class.php:761
+msgid "Clean on demand deployment tasks"
+msgstr ""
+
+#: inc/taskjobstate.class.php:569
+msgid "Clean taskjob (retention time)"
+msgstr ""
+
 #: inc/menu.class.php:159
 msgid "Clean unused files"
 msgstr "미사용된 파일들 청소"
@@ -454,10 +462,6 @@ msgstr "정의"
 #: inc/taskjob.class.php:1186 inc/deployuserinteraction.class.php:299
 msgid "Delete"
 msgstr "삭제"
-
-#: install/update.php:899
-msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
 
 #: inc/deployaction.class.php:75
 msgid "Delete directory"
@@ -887,11 +891,15 @@ msgstr "재고 그룹"
 msgid "Inventory started"
 msgstr "재고 시작됨"
 
+#: inc/task.class.php:758
+msgid "Inventory task scheduler"
+msgstr ""
+
 #: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr "JSON 패키지 표현"
 
-#: inc/taskjoblog.class.php:190 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190 inc/agentwakeup.class.php:72
 #: inc/task.class.php:1742 inc/taskjob.class.php:58
 msgid "Job"
 msgstr "작업"
@@ -1727,9 +1735,9 @@ msgstr "버전"
 msgid "WMI"
 msgstr "WMI"
 
-#: install/install.php:266
-msgid "Wake agents ups"
-msgstr "에이전트 ups 기동"
+#: inc/agentwakeup.class.php:59
+msgid "Wake agents up"
+msgstr ""
 
 #: inc/commonview.class.php:306
 msgid "Warning:"
