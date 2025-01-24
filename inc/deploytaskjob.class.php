@@ -212,7 +212,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
 
         return [
          [
-            'name' => __('Computers'),
+            'name' => _n('Computer', 'Computers', Session::getPluralNumber()),
             'value' => 'Computer',
          ],
          [
