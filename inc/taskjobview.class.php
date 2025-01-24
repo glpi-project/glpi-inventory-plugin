@@ -426,13 +426,36 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
            // remove install suffix from deploy
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
+            switch (strtoupper($modulename)) {
+                case "INVENTORYCOMPUTERESX":
+                    $moduleactive = "agents.use_module_esx_remote_inventory";
+                    break;
+                case "NETWORKDISCOVERY":
+                    $moduleactive = "agents.use_module_network_discovery";
+                    break;
+                case "NETWORKINVENTORY":
+                    $moduleactive = "agents.use_module_network_inventory";
+                    break;
+                case "DEPLOY":
+                    $moduleactive = "agents.use_module_package_deployment";
+                    break;
+                case "COLLECT":
+                    $moduleactive = "agents.use_module_collect_data";
+                    break;
+            }
+
+            $agent_columns = [
+                'agents.id AS agents_id',
+                'agents.items_id'
+            ];
+
+            if (isset($moduleactive)) {
+                array_push($agent_columns, $moduleactive);
+            }
+
             // prepare a query to retrieve agent's & computer's id
             $iterator = $DB->request([
-                'SELECT' => [
-                    'agents.id AS agents_id',
-                    'agents.items_id',
-                    'agents.version'
-                ],
+                'SELECT' => $agent_columns,
                 'FROM' => 'glpi_agents AS agents',
                 'LEFT JOIN' => [
                     'glpi_computers AS computers' => [
@@ -458,7 +481,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     ],
                     'computers.is_deleted' => 0,
                     'computers.is_template' => 0,
-                    'NOT' => ['version' => null]
+                    (isset($moduleactive) ? $moduleactive : '1') => 1
                 ],
                 'GROUP' => [
                     'agents.id',
