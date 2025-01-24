@@ -542,7 +542,7 @@ class PluginGlpiinventoryStaticmisc
     public static function task_actiontype_deployinstall($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-                   'Computer'                         => __('Computers'),
+                   'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
                    'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
                    'Group'                            => __('Group')
                   ];
@@ -672,7 +672,7 @@ class PluginGlpiinventoryStaticmisc
     public static function task_actiontype_collect($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-                   'Computer'                         => __('Computers'),
+                   'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
                    'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
                    'Group'                            => __('Group')
                   ];
