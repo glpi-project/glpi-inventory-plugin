@@ -750,7 +750,7 @@ class CronTaskTest extends TestCase
         PluginGlpiinventoryTask::cronTaskscheduler();
 
         $iterator = $DB->request([
-            'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs'
+            'FROM' => 'glpi_plugin_glpiinventory_taskjobstates'
         ]);
         foreach ($iterator as $data) {
             fwrite(STDERR, print_r(var_dump($data), true));
