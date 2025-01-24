@@ -749,6 +749,13 @@ class CronTaskTest extends TestCase
        //Reprepare the task
         PluginGlpiinventoryTask::cronTaskscheduler();
 
+        $iterator = $DB->request([
+            'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs'
+        ]);
+        foreach ($iterator as $data) {
+            fwrite(STDERR, print_r(var_dump($data), TRUE));
+        }
+
        //One taskjob is finished and should be cleaned
         $index = $pfTask->cleanTasksAndJobs(3);
 
