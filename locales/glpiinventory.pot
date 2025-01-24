@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 00:44+0000\n"
+"POT-Creation-Date: 2025-01-24 00:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -313,6 +313,14 @@ msgstr ""
 msgid "Clean agents"
 msgstr ""
 
+#: inc/task.class.php:761
+msgid "Clean on demand deployment tasks"
+msgstr ""
+
+#: inc/taskjobstate.class.php:569
+msgid "Clean taskjob (retention time)"
+msgstr ""
+
 #: inc/menu.class.php:159
 msgid "Clean unused files"
 msgstr ""
@@ -451,10 +459,6 @@ msgstr ""
 #: inc/deployaction.class.php:250 inc/deployfile.class.php:250
 #: inc/taskjob.class.php:1186 inc/deployuserinteraction.class.php:299
 msgid "Delete"
-msgstr ""
-
-#: install/update.php:899
-msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr ""
 
 #: inc/deployaction.class.php:75
@@ -889,11 +893,15 @@ msgstr ""
 msgid "Inventory started"
 msgstr ""
 
+#: inc/task.class.php:758
+msgid "Inventory task scheduler"
+msgstr ""
+
 #: inc/deploypackage.class.php:677
 msgid "JSON package representation"
 msgstr ""
 
-#: inc/taskjoblog.class.php:190 inc/agentwakeup.class.php:59
+#: inc/taskjoblog.class.php:190 inc/agentwakeup.class.php:72
 #: inc/task.class.php:1742 inc/taskjob.class.php:58
 msgid "Job"
 msgstr ""
@@ -1733,8 +1741,8 @@ msgstr ""
 msgid "WMI"
 msgstr ""
 
-#: install/install.php:266
-msgid "Wake agents ups"
+#: inc/agentwakeup.class.php:59
+msgid "Wake agents up"
 msgstr ""
 
 #: inc/commonview.class.php:306
