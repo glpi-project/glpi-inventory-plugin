@@ -694,7 +694,6 @@ class CronTaskTest extends TestCase
         //Set the first job as successfull
         $iterator = $DB->request([
             'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs',
-            'ORDER' => 'id',
             'LIMIT' => 1
         ]);
         foreach ($iterator as $data) {
