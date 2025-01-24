@@ -422,7 +422,7 @@ function agents_chart(chart_id) {
                         rows.push(
                            "<tr class='run log'>" +
                            "<td>" + log['log.date'] +"</td>"+
-                           "<td>" + taskjobs.logstatuses_names[log['log.state']] +"</td>"+
+                           "<td>" + __(taskjobs.logstatuses_names[log['log.state']], 'glpiinventory') +"</td>"+
                            "<td class='comment'>" + __(log['log.comment'], 'glpiinventory') +"</td>"+
                            "</tr>"
                         );
@@ -775,7 +775,7 @@ taskjobs.update_logs = function (data) {
                   counter_value = target_v.counters_computed[counter_key];
                   counter_type = counter_key;
                   counter_empty = (counter_value.length === 0);
-                  counter_type_name = taskjobs.statuses_names[counter_type];
+                  counter_type_name = __(taskjobs.statuses_names[counter_type], 'glpiinventory');
                   counter_selector = target_selector + ' .' + counter_type;
 
                   taskjobs.create_block(
