@@ -93,12 +93,12 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     {
 
         $elements = [
-         self::TASK_PREPARED           => __('Prepared', 'glpiinventory'),
-         self::TASK_STARTED            => __('Started', 'glpiinventory'),
-         self::TASK_RUNNING            => __('Running'),
-         self::TASK_OK                 => __('Ok', 'glpiinventory'),
-         self::TASK_ERROR              => __('Error'),
-         self::TASK_INFO               => __('Info', 'glpiinventory'),
+         self::TASK_PREPARED           => 'Prepared',
+         self::TASK_STARTED            => 'Started',
+         self::TASK_RUNNING            => 'Running',
+         self::TASK_OK                 => 'Ok',
+         self::TASK_ERROR              => 'Error',
+         self::TASK_INFO               => 'Info',
         ];
 
         return $elements;
