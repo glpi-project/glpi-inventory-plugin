@@ -679,7 +679,7 @@ class CronTaskTest extends TestCase
 
        //Clean all taskjoblogs & states
         $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjoblogs`");
-        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
+        // $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
 
        //Find the on demand task
         $tasks = $pfTask->find(['name' => 'ondemand']);
@@ -753,7 +753,7 @@ class CronTaskTest extends TestCase
             'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs'
         ]);
         foreach ($iterator as $data) {
-            fwrite(STDERR, print_r(var_dump($data), TRUE));
+            fwrite(STDERR, print_r(var_dump($data), true));
         }
 
        //One taskjob is finished and should be cleaned
