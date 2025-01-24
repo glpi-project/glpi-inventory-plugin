@@ -692,6 +692,7 @@ class CronTaskTest extends TestCase
         PluginGlpiinventoryTask::cronTaskscheduler();
 
         //Set the first job as successfull
+        // commit to just see if main is inerror too
         $iterator = $DB->request([
             'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs',
             'LIMIT' => 1
