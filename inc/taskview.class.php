@@ -228,11 +228,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          };
 
          taskjobs.statuses_names = {
-            'agents_error':     '" . __('In error', 'glpiinventory') . "',
-            'agents_success':   '" . __('Successful', 'glpiinventory') . "',
-            'agents_running':   '" . __('Running', 'glpiinventory') . "',
-            'agents_prepared':  '" . __('Prepared', 'glpiinventory') . "',
-            'agents_cancelled': '" . __('Cancelled', 'glpiinventory') . "',
+            'agents_error':     'In error',
+            'agents_success':   'Successful',
+            'agents_running':   'Running',
+            'agents_prepared':  'Prepared',
+            'agents_cancelled': 'Cancelled'
          };
 
          taskjobs.logstatuses_names = " .
