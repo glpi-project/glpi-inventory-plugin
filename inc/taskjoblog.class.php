@@ -356,7 +356,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             if ($classname != '' && class_exists($classname)) {
                 $Class = new $classname();
                 $Class->getFromDB($matches[2][$num]);
-                $comment = $Class->getTypeName() + " " + str_replace($commentvalue, $Class->getLink(), $comment);
+                $comment = $Class->getTypeName() . " " . str_replace($commentvalue, $Class->getLink(), $comment);
             }
         }
         if (strstr($comment, "==")) {
