@@ -413,14 +413,26 @@ function agents_chart(chart_id) {
                 var rows = [];
                    // TODO: replace this with proper templating
                    $.each(d.logs, function(run_id, run) {
+                     var taskjob_state = null;
+                     $.each(d, function (taskjobstate_id, taskjobstate) {
+                        if (typeof taskjobstate['last_log_id'] !== undefined && 
+                             typeof run.logs[0]['log.id'] !== undefined &&
+                             taskjobstate['last_log_id'] == run.logs[0]['log.id']) {
+                           taskjob_state = taskjobstate['state'];
+                        }
+                        if (taskjob_state !== null) {
+                           return false; // break
+                        }
+                     });
+                     
                      rows.push(
-                        "<tr class='run header'><th colspan='3'>"+
+                        "<tr class='run header" + ((taskjob_state !== null) ? ' run_' + taskjob_state : '' ) + "'><th colspan='3'>"+
                         run.run +
                         "</th></tr>"
                      );
                       $.each(run.logs, function(log_index, log) {
                         rows.push(
-                           "<tr class='run log'>" +
+                           "<tr class='run log" + ((taskjob_state !== null) ? ' run_' + taskjob_state : '' ) + "'>" +
                            "<td>" + log['log.date'] +"</td>"+
                            "<td>" + taskjobs.logstatuses_names[log['log.state']] +"</td>"+
                            "<td class='comment'>" + __(log['log.comment'], 'glpiinventory') +"</td>"+
