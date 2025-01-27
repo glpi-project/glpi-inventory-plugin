@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-24 00:43+0000\n"
+"POT-Creation-Date: 2025-01-27 00:47+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Pedro B., 2024\n"
 "Language-Team: Portuguese (Portugal) (https://app.transifex.com/teclib/teams/28042/pt_PT/)\n"
@@ -1557,7 +1557,7 @@ msgstr "Tarefas"
 msgid "Tasks / Groups"
 msgstr "Tarefas / Grupos"
 
-#: inc/task.class.php:470
+#: inc/task.class.php:468
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
@@ -1598,7 +1598,7 @@ msgstr "O trabalho selecionado já possui uma tarefa de outro pacote:."
 msgid "The task cannot be updated if it is active"
 msgstr "A tarefa não pode ser atualizada se estiver ativa"
 
-#: inc/task.class.php:483
+#: inc/task.class.php:481
 msgid "The task has been deactivated after preparation of this job."
 msgstr "A tarefa foi desativada após a preparação deste trabalho."
 
@@ -1606,7 +1606,7 @@ msgstr "A tarefa foi desativada após a preparação deste trabalho."
 msgid "The uploaded file was only partially uploaded"
 msgstr "O arquivo enviado foi apenas parcialmente enviado"
 
-#: inc/task.class.php:570
+#: inc/task.class.php:568
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "Esse agente não pertence mais aos atores definidos na tarefa."
 
@@ -1622,11 +1622,11 @@ msgstr ""
 "Estas são as etapas para configurar o plugin para inventário SNMP (switch, "
 "router, impressora de rede)"
 
-#: inc/task.class.php:504
+#: inc/task.class.php:502
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "Esta tarefa não pode mais ser executada devido à agenda da tarefa."
 
-#: inc/task.class.php:551
+#: inc/task.class.php:549
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr ""
 "Esta tarefa não pode mais ser executada devido ao intervalo de tempo da "
