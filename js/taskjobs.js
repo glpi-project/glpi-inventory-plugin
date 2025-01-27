@@ -423,7 +423,7 @@ function agents_chart(chart_id) {
                            "<tr class='run log'>" +
                            "<td>" + log['log.date'] +"</td>"+
                            "<td>" + taskjobs.logstatuses_names[log['log.state']] +"</td>"+
-                           "<td class='comment'>" + __(log['log.comment'], 'glpiinventory') +"</td>"+
+                           "<td class='comment'>" + log['log.comment'] +"</td>"+
                            "</tr>"
                         );
                       });
