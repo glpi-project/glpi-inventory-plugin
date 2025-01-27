@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-24 00:43+0000\n"
+"POT-Creation-Date: 2025-01-27 00:47+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Juan Fortuna <juan.fortuna@gmail.com>, 2022\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/teclib/teams/28042/es_ES/)\n"
@@ -1552,7 +1552,7 @@ msgstr "Tareas"
 msgid "Tasks / Groups"
 msgstr "Tareas / Grupos"
 
-#: inc/task.class.php:470
+#: inc/task.class.php:468
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
@@ -1593,7 +1593,7 @@ msgstr ""
 msgid "The task cannot be updated if it is active"
 msgstr ""
 
-#: inc/task.class.php:483
+#: inc/task.class.php:481
 msgid "The task has been deactivated after preparation of this job."
 msgstr ""
 "La tarea ha sido desactivada después de la preparación de este trabajo."
@@ -1602,7 +1602,7 @@ msgstr ""
 msgid "The uploaded file was only partially uploaded"
 msgstr "El fichero enviado lo fue sólo parcialmente"
 
-#: inc/task.class.php:570
+#: inc/task.class.php:568
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "Este agente ya no pertenece a los actores definidos en el trabajo."
 
@@ -1618,12 +1618,12 @@ msgstr ""
 "Pasos para configurar el plugin para realizar inventario SNMP (swicth, "
 "router, red, impresora)"
 
-#: inc/task.class.php:504
+#: inc/task.class.php:502
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr ""
 "Este trabajo no se puede ejecutar más debido a la programación de la tarea."
 
-#: inc/task.class.php:551
+#: inc/task.class.php:549
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr "Este trabajo ya no se puede ejecutar debido al horario de la tarea."
 

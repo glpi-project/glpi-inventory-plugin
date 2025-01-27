@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-24 00:43+0000\n"
+"POT-Creation-Date: 2025-01-27 00:47+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2024\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -1558,7 +1558,7 @@ msgstr "Úlohy"
 msgid "Tasks / Groups"
 msgstr "Úlohy / skupiny"
 
-#: inc/task.class.php:470
+#: inc/task.class.php:468
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
@@ -1599,7 +1599,7 @@ msgstr "Vybraná úloha už má úlohu nasadenia pre iný balíček:"
 msgid "The task cannot be updated if it is active"
 msgstr "Úloha nemôže byť aktualizovaná, ak je aktívna"
 
-#: inc/task.class.php:483
+#: inc/task.class.php:481
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Úloha bola deaktivovaná po príprave tejto úlohy."
 
@@ -1607,7 +1607,7 @@ msgstr "Úloha bola deaktivovaná po príprave tejto úlohy."
 msgid "The uploaded file was only partially uploaded"
 msgstr "Nahratý súbor bol nahratý iba čiastočne"
 
-#: inc/task.class.php:570
+#: inc/task.class.php:568
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "Tento agent už nepatrí k účastníkom definovaných v úlohe."
 
@@ -1623,11 +1623,11 @@ msgstr ""
 "Toto sú kroky na konfiguráciu pluginu pre SNMP inventár (switch, router, "
 "sieťová tlačiareň)"
 
-#: inc/task.class.php:504
+#: inc/task.class.php:502
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "Túto úlohu už nie je možné vykonať kvôli naplánovaniu úlohy."
 
-#: inc/task.class.php:551
+#: inc/task.class.php:549
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr "Táto úloha už nemôže byť vykonaná kvôli časovému oknu úlohy."
 
