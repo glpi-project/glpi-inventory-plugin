@@ -347,6 +347,8 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     public static function convertComment($comment)
     {
         $matches = [];
+       // Attempt to translate fixed strings (e.g. error messages, see PR#601)
+        $comment = __($comment, 'glpiinventory');
        // Search for replace [[itemtype::items_id]] by link
         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
         foreach ($matches[0] as $num => $commentvalue) {
@@ -354,7 +356,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             if ($classname != '' && class_exists($classname)) {
                 $Class = new $classname();
                 $Class->getFromDB($matches[2][$num]);
-                $comment = str_replace($commentvalue, $Class->getLink(), $comment);
+                $comment = $Class->getTypeName() + " " + str_replace($commentvalue, $Class->getLink(), $comment);
             }
         }
         if (strstr($comment, "==")) {
