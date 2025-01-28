@@ -370,6 +370,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             'detail'          => __('Detail', 'glpiinventory'),
             'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
             'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
+            'totalupdated'    => __('Total updated:', 'glpiinventory'),
             'importdenied'    => __('Import denied', 'glpiinventory')
             ];
             foreach ($matches[0] as $num => $commentvalue) {
