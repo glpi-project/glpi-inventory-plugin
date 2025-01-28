@@ -531,6 +531,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             'condition' => $condition
             ]
         );
+        $item = getItemForItemtype($itemtype);
         $itemtype_name = $item->getTypeName();
         $item_key_id = $item->getForeignKeyField();
         $dropdown_rand_id = "dropdown_" . $item_key_id . $dropdown_rand;
