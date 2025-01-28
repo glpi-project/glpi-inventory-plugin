@@ -97,16 +97,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         );
 
        // display export button
-        echo "<div class='col mt-auto'>";
+        echo "<div class='col d-flex align-items-center'>";
 
         echo '<a class="openExportDialog pointer btn btn-icon btn-sm btn-secondary me-1 pe-2">';
-        echo '<i class="ti ti-save"></i>';
+        echo '<i class="ti ti-device-floppy"></i>';
         echo'<span class="d-none d-xxl-block">' .  __('Export task result', 'glpiinventory') . '</span>';
         echo '</a>';
 
         // Add a manual refresh button
         echo "<div class='refresh_button submit'>";
-        echo "<span></span>";
+        echo "<span class='fa fa-sync'></span>";
         echo "</div>"; // .refresh_button
         echo "</div>";
 
