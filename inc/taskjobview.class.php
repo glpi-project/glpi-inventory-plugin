@@ -482,18 +482,18 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     'agents.items_id'
                 ]
             ];
-            
+
             if (isset($moduleactive)) {
                 array_push($crit['SELECT'], $moduleactive);
                 $crit['WHERE'] += [ $moduleactive => 1 ];
             }
-            
+
             $item = getItemForItemtype($itemtype);
             if ($item->isEntityAssign()) {
                 // get entity ID from task ID
                 $pfTask = new PluginGlpiinventoryTask();
                 $pfTask->getFromDB($taskid);
-                
+
                 $crit['WHERE'] += getEntitiesRestrictCriteria(
                     'agents',
                     '',
@@ -501,9 +501,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     $item->maybeRecursive()
                 );
             }
-            
+
             $iterator = $DB->request($crit);
-            
+
             $filter_id = [];
             foreach ($iterator as $data_filter) {
                 if ($itemtype == 'Computer') {
