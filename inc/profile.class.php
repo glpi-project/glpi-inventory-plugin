@@ -116,7 +116,7 @@ class PluginGlpiinventoryProfile extends Profile
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        return self::createTabEntry('GLPI Inventory');
+        return self::createTabEntry(__('GLPI Inventory', 'glpiinventory'));
     }
 
 
