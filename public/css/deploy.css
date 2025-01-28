@@ -138,7 +138,7 @@ a.edit {
 }
 /* drag and drop element */
 .drag {
-   background-image: url("../pics/drag.png");
+   /* background-image: url("../pics/drag.png"); */
    background-repeat: repeat-x;
    cursor: move;
    width: 16px;
