@@ -149,7 +149,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
        // Add icon for import package
         $label = __('Import', 'glpiinventory');
-        $link = "<i class=\"ti ti-upload\" title=\"$label\"" .
+        $link = "<i class=\"ti ti-download\" title=\"$label\"" .
             "></i><span class='d-none d-xxl-block'>$label</span>";
         $options['deploypackage']['links'][$link] = '/' . $fi_rel_path . '/front/deploypackage.import.php';
 
