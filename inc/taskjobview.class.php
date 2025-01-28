@@ -399,6 +399,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $moduletype = $options['moduletype'];
         $itemtype   = $options['itemtype'];
         $method     = $options['method'];
+        $taskid     = $options['taskid'];
         $title      = '';
         if ($itemtype === "") {
             return;
@@ -444,18 +445,12 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     break;
             }
 
-            $agent_columns = [
-                'agents.id AS agents_id',
-                'agents.items_id'
-            ];
-
-            if (isset($moduleactive)) {
-                array_push($agent_columns, $moduleactive);
-            }
-
             // prepare a query to retrieve agent's & computer's id
-            $iterator = $DB->request([
-                'SELECT' => $agent_columns,
+            $crit = [
+                'SELECT' => [
+                    'agents.id AS agents_id',
+                    'agents.items_id'
+                ],
                 'FROM' => 'glpi_agents AS agents',
                 'LEFT JOIN' => [
                     'glpi_computers AS computers' => [
@@ -480,14 +475,35 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                         'UPPER(modules.modulename)' => $modulename,
                     ],
                     'computers.is_deleted' => 0,
-                    'computers.is_template' => 0,
-                    (isset($moduleactive) ? $moduleactive : '1') => 1
+                    'computers.is_template' => 0
                 ],
                 'GROUP' => [
                     'agents.id',
                     'agents.items_id'
                 ]
-            ]);
+            ];
+            
+            if (isset($moduleactive)) {
+                array_push($crit['SELECT'], $moduleactive);
+                $crit['WHERE'] += [ $moduleactive => 1 ];
+            }
+            
+            $item = getItemForItemtype($itemtype);
+            if ($item->isEntityAssign()) {
+                // get entity ID from task ID
+                $pfTask = new PluginGlpiinventoryTask();
+                $pfTask->getFromDB($taskid);
+                
+                $crit['WHERE'] += getEntitiesRestrictCriteria(
+                    'agents',
+                    '',
+                    $pfTask->fields['entities_id'] ?? 0,
+                    $item->maybeRecursive()
+                );
+            }
+            
+            $iterator = $DB->request($crit);
+            
             $filter_id = [];
             foreach ($iterator as $data_filter) {
                 if ($itemtype == 'Computer') {
@@ -515,7 +531,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             'condition' => $condition
             ]
         );
-        $item = getItemForItemtype($itemtype);
         $itemtype_name = $item->getTypeName();
         $item_key_id = $item->getForeignKeyField();
         $dropdown_rand_id = "dropdown_" . $item_key_id . $dropdown_rand;
