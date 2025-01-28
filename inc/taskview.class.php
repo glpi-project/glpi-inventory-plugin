@@ -206,7 +206,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                      data-counter_type='{{counter_type}}'
                      data-chart_id='{{chart_id}}'
                      title='" . __("Show/Hide details", "glpiinventory") . "'>
-                     <div class='fold'></div>
+                     <div class='fa fold'></div>
                      <span class='counter_name'>{{counter_type_name}}</span>
                      <span class='counter_value'>{{counter_value}}</span>
                   </a>
