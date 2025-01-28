@@ -316,7 +316,7 @@ function agents_chart(chart_id) {
             // add a link to another page
             var links = d3.select(this).selectAll('a.link').data([d]);
             links.enter().append('a')
-            .attr('class', 'link btn')
+            .attr('class', 'fa fa-link link')
             .attr('href', d[1][0].link);
 
             // add a checkbox for bulk actions
