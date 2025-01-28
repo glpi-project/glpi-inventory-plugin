@@ -144,6 +144,7 @@ a.edit {
    width: 16px;
    height: 16px;
    border:0 !important;
+   margin-right: 0.1em;
 }
 /* self-service */
 #onetimedeploy_form table i.ti-devices-pc {
