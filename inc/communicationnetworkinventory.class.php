@@ -129,7 +129,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 $agent->fields['id'],
                 'Agent',
                 '0',
-                'Total updated:' . $cnt
+                '==totalupdated==' . $cnt
             );
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } elseif (isset($a_CONTENT->content->agent->start)) {
