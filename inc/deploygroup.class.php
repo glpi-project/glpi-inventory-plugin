@@ -98,7 +98,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     */
     public static function getTypeName($nb = 0)
     {
-        return __('Inventory group', 'glpiinventory');
+        return _n('Inventory group', 'Inventory groups', $nb, 'glpiinventory');
     }
 
 
