@@ -81,7 +81,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devices found==';
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devicesfound==';
                     $this->addtaskjoblog();
                 }
             }
@@ -150,7 +150,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             }
                             $itemtype_discovered = $refused = $inventory->getMainAsset()->getItemtype();
                             if ($itemtype_discovered == Computer::class) {
-                                $a_text[] = "<br>[info]: " . __("If a real 'computer' please install agent on it (glpiinventory plugin is not design for this) otherwise check SNMP credentials from the IP range", "glpiinventory");
+                                $a_text[] = "<br>[==info==]: ==errrealcomputer==";
                             }
                             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
                             $this->addtaskjoblog();
