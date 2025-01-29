@@ -316,7 +316,7 @@ function agents_chart(chart_id) {
             // add a link to another page
             var links = d3.select(this).selectAll('a.link').data([d]);
             links.enter().append('a')
-            .attr('class', 'link btn')
+            .attr('class', 'fa fa-link link')
             .attr('href', d[1][0].link);
 
             // add a checkbox for bulk actions
@@ -337,24 +337,27 @@ function agents_chart(chart_id) {
             });
 
             // display name
-            var names = d3.select(this).selectAll('a.name').data([d]);
-            names.enter().append('a')
-            .attr('class', 'name')
-            .on('click', function(d) {
-               var args = {
-                  chart_id: chart_id,
-                  data: d
-               };
-               if ( !agent_is_pinned(args) ) {
-                  pin_agent(args);
-               } else {
-                  unpin_agent(args);
-               }
-            });
+            var names = d3.select(this).selectAll('a.name').data([d])
+            var spans = names.enter().append('span');
+            spans.append('i')
+               .attr('class', 'fa-solid fa-thumbtack');
+            spans.append('a')
+               .attr('class', 'name')
+               .on('click', function(d) {
+                  var args = {
+                     chart_id: chart_id,
+                     data: d
+                  };
+                  if ( !agent_is_pinned(args) ) {
+                     pin_agent(args);
+                  } else {
+                     unpin_agent(args);
+                  }
+               })
+               .attr('href', 'javascript:void(0)')
+               .text(taskjobs.data.agents[d[0]]);
 
             names.exit().remove();
-            names.attr('href', 'javascript:void(0)')
-              .text(taskjobs.data.agents[d[0]]);
 
             //add date
             var dates = d3.select(this).selectAll('span.date').data([d]);
@@ -525,7 +528,7 @@ taskjobs.display_agents_view = function(chart_id) {
             return (Object.keys(chart.checked_agents).length > 0)?null:'none';
          })
          .on('click', function(e) {
-            $('.refresh_button > span').addClass('fetching');
+            $('.refresh_button > span').addClass('fa-spin');
             var params = [];
             $("input.check_restart:checked").each(function(index) {
                var position = $(this).parent().index();
@@ -547,7 +550,7 @@ taskjobs.display_agents_view = function(chart_id) {
                   $("input.check_restart:checked").each(function() {
                      $(this).attr('checked', false);
                   });
-                  $('.refresh_button > span').removeClass('fetching');
+                  $('.refresh_button > span').removeClass('fa-spin');
                }
                 });
          });
@@ -829,7 +832,10 @@ taskjobs.update_logs = function (data) {
    });
 
    //stop loading icon rotation
-   $('.refresh_button span').removeClass('computing');
+   $('.refresh_button span')
+      .removeClass('fa-spin')
+      .removeClass('fa-gear')
+      .addClass('fa-sync');
 
    if (taskjobs.blocks_seen) {
       cache = taskjobs.blocks_seen;
@@ -1114,8 +1120,8 @@ taskjobs.update_progressbar = function( chart ) {
 
 taskjobs.get_logs = function( ajax_url, task_id ) {
     $('.refresh_button > span')
-        .addClass('fetching')
-        .removeClass('computing');
+        .addClass('fa-spin')
+        .removeClass('fa-gear');
 
     var data = {
          "task_id"       : task_id,
@@ -1128,8 +1134,8 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
          data: data,
          success: function( data, textStatus, jqXHR) {
             $('.refresh_button > span')
-                .addClass('computing')
-                .removeClass('fetching');
+                .addClass('fa-gear')
+                .removeClass('fa-sync');
 
             //small timeout to view icon changing
             setTimeout(function() {

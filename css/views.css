@@ -280,15 +280,25 @@ td:not(#foo) > input[type=radio]:checked + label {
    display: block;
 }
 
+.monitoring-logs .task_block:first-child {
+  padding-top: 10px;
+ }
+
 .monitoring-logs .task_block > h3 {
-   cursor: pointer;
-   background: url(../../../pics/expand.gif) no-repeat left center;
-   padding-left: 20px;
-   display: inline-block;
+ display: inline-block;
 }
 
-.monitoring-logs .task_block.expand > h3 {
-   background: url(../../../pics/collapse.gif) no-repeat left center;
+.monitoring-logs .task_block > h3 > i {
+ cursor: pointer;
+ padding-right: 20px;
+}
+
+.monitoring-logs .task_block > h3 > i::before {
+ content: "\f0fe";
+}
+
+.monitoring-logs .task_block.expand > h3 > i::before {
+ content: "\f146";
 }
 
 .jobs_block .job_block {
@@ -320,15 +330,18 @@ td:not(#foo) > input[type=radio]:checked + label {
 
 a > div.fold {
     display: inline-block;
-    background-image: url('../pics/toggle-expand.png');
     width: 14px;
-    height: 14px;
+    height: 13px;
     vertical-align: bottom;
     cursor: pointer;
 }
 
-a.expanded > div.fold {
-    background-image: url('../pics/toggle.png');
+a > div.fold::before {
+    content: "\f0fe";
+}
+
+a.expanded > div.fold::before {
+    content: "\f146";
 }
 
 .job_target h4 > a {
@@ -589,12 +602,17 @@ a.expanded > div.fold {
     margin: 5px;
 }
 
-.agent_block.pinned > a.name{
-   padding-left: 20px;
-   margin-left: 68px;
-   background: url('../../../pics/menu_show.png');
-   background: url('../pics/pinned.png');
-   background-repeat: no-repeat;
+.agent_block > span > i {
+   display: none;
+}
+
+.agent_block.pinned > span > i {
+   margin-left: 20px;
+   color: black;
+   font-size: 13px;
+   vertical-align: middle;
+   padding-right: 4px;
+   display: inline-block;
 }
 
 .agent_block > span.comment {
@@ -612,11 +630,12 @@ a.expanded > div.fold {
 }
 
 .agent_block > a.link {
-   background: url(../pics/link.png) no-repeat;
    display: inline-block;
    width: 14px;
    height: 14px;
    float: left;
+   color: black;
+   font-size: 13px;
 }
 
 .agent_block input[type=checkbox] {
@@ -626,18 +645,12 @@ a.expanded > div.fold {
 }
 
 
-.agent_block > a.btn {
-   display: inline-block;
-   width: 14px;
-   height: 14px;
-   float: left;
-}
 .agent_block > a.restart > i,
 .agent_block > a.cancel > i {
    color: red;
 }
 
-.agent_block > a.btn:hover {
+.agent_block > a.link:hover {
    opacity: .7;
 }
 
@@ -779,23 +792,14 @@ table.runs td.comment {
    display: block;
    float: right;
    cursor: pointer;
+   margin-left: auto;
 }
 
 .refresh_button > span {
-   width: 32px;
-   height:32px;
+   font-size: 32px;
    margin: 0;
    padding: 0;
    display: block;
-   background-image: url('../pics/monitoring_refresh.gif');
-   background-repeat: no-repeat;
-}
-
-.refresh_button > span.fetching {
-   background-image: url('../pics/monitoring_fetching.gif');
-}
-.refresh_button > span.computing {
-   background-image: url('../pics/monitoring_computing.gif');
 }
 
 .task_export_form > label {
