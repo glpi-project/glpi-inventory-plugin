@@ -351,19 +351,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
 
         $matches = [];
 
-       // Attempt to translate non-fixed strings (e.g. "Unable to find agent to inventory [[NetworkDevice]]" turns into "Unable to find agent to inventory %1")
-        // preg_match_all("/\[\[(\w+)(\:\:(.*))?\]\]/", $comment, $matches);
-        preg_match_all("/\[\[(\w+)(\:\:(.*))?\]\]/", $comment, $matches);
         foreach ($matches[0] as $num => $commentvalue) {
-            $comment = str_replace($commentvalue, '%' . ($num + 1) . '$s', $comment);
-        }
-
-       // Translates the non-fixed string
-        $comment = __($comment, 'glpiinventory');
-
-       // Re-do the translated string (e.g. "Não foi possível encontrar o agente para inventário [[NetDevice]]" in pt-BR)
-        foreach ($matches[0] as $num => $commentvalue) {
-            $comment = str_replace('%' . ($num + 1) . '$s', $commentvalue, $comment);
            // Search for replace [[itemtype::items_id]] by link
             $classname = $matches[1][$num];
             if ($classname != '' && class_exists($classname)) {
