@@ -388,6 +388,6 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
                 $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);
             }
         }
-        return str_replace([",[", "\\'"], ["<br/>[", "'"], __($comment, 'glpiinventory')));
+        return str_replace([",[", "\\'"], ["<br/>[", "'"], __($comment, 'glpiinventory'));
     }
 }
