@@ -130,7 +130,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             && is_numeric($_GET['id'])
         ) {
             $pfTaskjob = new PluginGlpiinventoryTaskjob();
-            $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . $_GET['id'] . '"%']]);
+            $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . (int)$_GET['id'] . '"%']]);
             $count = count($data);
         }
         return $count;
@@ -184,7 +184,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                     ]
                 ],
                 'WHERE' => [
-                    'actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . $_GET['id'] . '"%']
+                    'actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . (int)$_GET['id'] . '"%']
                 ],
                 'ORDER' => 'glpi_plugin_glpiinventory_tasks.name'
             ]);
