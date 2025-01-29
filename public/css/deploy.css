@@ -29,6 +29,10 @@
  * ---------------------------------------------------------------------
  */
 
+.select2-container--default .select2-results__group {
+   font-weight: 600;
+}
+
 table.package_item {
    width: 100%;
 }
