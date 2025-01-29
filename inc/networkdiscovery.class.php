@@ -277,15 +277,14 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
         $iprange_attrs['ENTITY'] = $pfIPRange->fields["entities_id"];
 
         if ($changestate == '0') {
-            $msg = __('%1$s threads %2$s timeout', 'glpiinventory');
             $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
             $pfTaskjoblog->addTaskjoblog(
                 $pfTaskjobstate->fields['id'],
                 '0',
                 'Agent',
                 '1',
-                $agent->fields["threads_networkdiscovery"] . ' threads ' .
-                                 $agent->fields["timeout_networkdiscovery"] . ' timeout'
+                $agent->fields["threads_networkdiscovery"] . ' ==threads== ' .
+                                 $agent->fields["timeout_networkdiscovery"] . ' ==timeout=='
             );
             $changestate = $pfTaskjobstate->fields['id'];
         } else {
