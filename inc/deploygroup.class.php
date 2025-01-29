@@ -114,7 +114,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $this->addDefaultFormTab($ong);
 
         $count = self::getMatchingItemsCount("PluginGlpiinventoryTaskjob");
-        $ong[$this->getType() . '$task'] = self::createTabEntry(_n('Associated task', 'Associated tasks', Session::getPluralNumber(), 'glpiinventory'), $count);
+        if ($_SESSION['glpishow_count_on_tabs']) {
+            $tabs[2] = self::createTabEntry(_n('Associated task', 'Associated tasks', Session::getPluralNumber(), 'glpiinventory'), $count);
+        } else {
+            $tabs[2] = _n('Associated task', 'Associated tasks', Session::getPluralNumber());
+        }
 
         $this->addStandardTab('Log', $ong, $options);
         return $ong;
