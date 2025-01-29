@@ -148,17 +148,16 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $options['config']['page'] = PluginGlpiinventoryConfig::getFormURL(false);
 
        // Add icon for import package
-        $img = Html::image(
-            $fi_full_path . "/pics/menu_import.png",
-            ['alt' => __('Import', 'glpiinventory')]
-        );
-        $options['deploypackage']['links'][$img] = '/' . $fi_rel_path . '/front/deploypackage.import.php';
+        $label = __('Import', 'glpiinventory');
+        $link = "<i class=\"ti ti-download\" title=\"$label\"" .
+            "></i><span class='d-none d-xxl-block'>$label</span>";
+        $options['deploypackage']['links'][$link] = '/' . $fi_rel_path . '/front/deploypackage.import.php';
+
        // Add icon for clean unused deploy files
-        $img = Html::image(
-            $fi_full_path . "/pics/menu_cleanfiles.png",
-            ['alt' => __('Clean unused files', 'glpiinventory')]
-        );
-        $options['deploypackage']['links'][$img] = '/' . $fi_rel_path . '/front/deployfile.clean.php';
+        $label = __('Clean unused files', 'glpiinventory');
+        $link = "<i class=\"ti ti-box-off\" title=\"$label\"" .
+            "></i><span class='d-none d-xxl-block'>$label</span>";
+        $options['deploypackage']['links'][$link] = '/' . $fi_rel_path . '/front/deployfile.clean.php';
 
         $options['agent'] = [
            'title' => Agent::getTypeName(),
