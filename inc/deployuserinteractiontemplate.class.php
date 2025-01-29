@@ -421,7 +421,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
        // Minutes
         for ($i = 30; $i < 60; $i += 5) {
-            $tab[$i] = sprintf(_n('%d second', '%d seconds', $i), $i);
+            $tab[$i] = sprintf(_n('%s second', '%s seconds', $i), $i);
         }
 
         $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
