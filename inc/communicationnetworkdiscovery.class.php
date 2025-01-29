@@ -77,11 +77,12 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     && (!isset($a_CONTENT->content->agent->exit))
                 ) {
                     $nb_devices = 1;
+                    $msg = __('%1$s devices found', 'glpiinventory');
                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devicesfound==';
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[[' . $nb_devices . ']] devices found';
                     $this->addtaskjoblog();
                 }
             }
@@ -112,11 +113,12 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                      );
 
                      $message = sprintf(
-                         __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory'),
+                         'Processed: %1$s Created: %2$s Updated: %3$s',
                          $updated + $created,
                          $created,
                          $updated
                      );
+                     $translatable_message = __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory');
                     $pfTaskjobstate->changeStatusFinish(
                         $a_CONTENT->jobid,
                         $agent->fields['id'],
@@ -150,7 +152,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             }
                             $itemtype_discovered = $refused = $inventory->getMainAsset()->getItemtype();
                             if ($itemtype_discovered == Computer::class) {
-                                $a_text[] = "<br>[info]: " . __("If a real 'computer' please install agent on it (glpiinventory plugin is not design for this) otherwise check SNMP credentials from the IP range");
+                                $a_text[] = "<br>[info]: " . __("If a real 'computer' please install agent on it (glpiinventory plugin is not design for this) otherwise check SNMP credentials from the IP range", "glpiinventory");
                             }
                             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
                             $this->addtaskjoblog();

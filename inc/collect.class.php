@@ -457,6 +457,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             //get agent if for this computer
             $agents_id = $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer_id]);
             if ($agents_id === false) {
+                $msg = __('No agent found for %1$s', 'glpiinventory');
                 $jobstates_id = $jobstate->add($c_input);
                 $jobstate->changeStatusFinish(
                     $jobstates_id,

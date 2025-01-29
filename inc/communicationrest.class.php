@@ -208,7 +208,7 @@ class PluginGlpiinventoryCommunicationRest
         $p              = [];
         $p['machineid'] = ''; //DeviceId
         $p['uuid']      = ''; //Task uuid
-        $p['msg']       = 'ok'; //status of the task
+        $p['msg']       = ''; //status of the task
         $p['code']      = ''; //current step of processing
         $p['sendheaders'] = true;
 

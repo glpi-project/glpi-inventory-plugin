@@ -121,7 +121,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                     0,
                     'PluginGlpiinventoryIPRange',
                     1,
-                    "Unable to find agent to run this job"
+                    "==unabletofindagent=="
                 );
                  $input_taskjob = [];
                  $input_taskjob['id'] = $pfTaskjob->fields['id'];
@@ -154,7 +154,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 0,
                 'PluginGlpiinventoryIPRange',
                 1,
-                "Unable to find agent to run this job"
+                "==unabletofindagent=="
             );
             $input_taskjob = [];
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
@@ -277,6 +277,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
         $iprange_attrs['ENTITY'] = $pfIPRange->fields["entities_id"];
 
         if ($changestate == '0') {
+            $msg = __('%1$s threads %2$s timeout', 'glpiinventory');
             $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
             $pfTaskjoblog->addTaskjoblog(
                 $pfTaskjobstate->fields['id'],
@@ -288,6 +289,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             );
             $changestate = $pfTaskjobstate->fields['id'];
         } else {
+            $msg = __('Merged with %1$s', 'glpiinventory');
             $pfTaskjobstate->changeStatusFinish(
                 $pfTaskjobstate->fields['id'],
                 $taskjobstatedatas['items_id'],

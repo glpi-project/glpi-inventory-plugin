@@ -99,7 +99,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
                         0,
                         'PluginGlpiinventoryInventoryComputerESX',
                         1,
-                        "Unable to find agent to run this job"
+                        "==unabletofindagent=="
                     );
                 }
             }

@@ -346,24 +346,38 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     */
     public static function convertComment($comment)
     {
-        $matches = [];
        // Attempt to translate fixed strings (e.g. error messages, see PR#601)
         $comment = __($comment, 'glpiinventory');
-       // Search for replace [[itemtype::items_id]] by link
-        preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
+
+        $matches = [];
+
+       // Attempt to translate non-fixed strings (e.g. "Unable to find agent to inventory [[NetworkDevice]]" turns into "Unable to find agent to inventory %1")
+        // preg_match_all("/\[\[(\w+)(\:\:(.*))?\]\]/", $comment, $matches);
+        preg_match_all("/\[\[(\w+)(\:\:(.*))?\]\]/", $comment, $matches);
         foreach ($matches[0] as $num => $commentvalue) {
+            $comment = str_replace($commentvalue, '%' . $num+1 . '$s', $comment);
+        }
+
+       // Translates the non-fixed string
+        $comment = __($comment, 'glpiinventory');
+
+       // Re-do the translated string (e.g. "Não foi possível encontrar o agente para inventário [[NetDevice]]" in pt-BR)
+        foreach ($matches[0] as $num => $commentvalue) {
+            $comment = str_replace('%' . $num+1 . '$s', $commentvalue, $comment);
+           // Search for replace [[itemtype::items_id]] by link
             $classname = $matches[1][$num];
             if ($classname != '' && class_exists($classname)) {
                 $Class = new $classname();
-                $Class->getFromDB($matches[2][$num]);
+                $Class->getFromDB($matches[3][$num]);
                 $comment = str_replace($commentvalue, $Class->getTypeName(1) . " " . $Class->getLink(), $comment);
+            } else {
+                $comment = str_replace($commentvalue, $matches[1][$num], $comment);
             }
         }
+
         if (strstr($comment, "==")) {
             preg_match_all("/==([\w\d]+)==/", $comment, $matches);
             $a_text = [
-            'devicesqueried'  => __('devices queried', 'glpiinventory'),
-            'devicesfound'    => __('devices found', 'glpiinventory'),
             'addtheitem'      => __('Add the item', 'glpiinventory'),
             'updatetheitem'   => __('Update the item', 'glpiinventory'),
             'inventorystarted' => __('Inventory started', 'glpiinventory'),
@@ -371,7 +385,10 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
             'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
             'totalupdated'    => __('Total updated:', 'glpiinventory'),
-            'importdenied'    => __('Import denied', 'glpiinventory')
+            'importdenied'    => __('Import denied', 'glpiinventory'),
+            'devicenoip'      => __('Device have no ip', 'glpiinventory'),
+            'unabletofindagent' => __('Unable to find agent to run this job', 'glpiinventory'),
+            'actioncancelled' => __('Action cancelled by user', 'glpiinventory')
             ];
             foreach ($matches[0] as $num => $commentvalue) {
                 $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);

@@ -731,7 +731,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                      0,
                      '',
                      1,
-                     "Action cancelled by user"
+                     "==actioncancelled=="
                  );
             }
         }

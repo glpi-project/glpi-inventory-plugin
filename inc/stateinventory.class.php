@@ -170,8 +170,8 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
             foreach ($a_taskjobstates as $datastate) {
                 $a_taskjoblog = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $datastate['id']]);
                 foreach ($a_taskjoblog as $taskjoblog) {
-                    if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
-                        $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);
+                    if (strstr($taskjoblog['comment'], " devices queried")) {
+                        $nb_query += str_replace(" devices queried", "", $taskjoblog['comment']);
                     } elseif (strstr($taskjoblog['comment'], " No response from remote host")) {
                         $nb_errors++;
                     } elseif ($taskjoblog['state'] == "1") {
