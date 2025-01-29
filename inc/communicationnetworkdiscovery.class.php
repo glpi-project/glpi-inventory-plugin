@@ -77,12 +77,11 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     && (!isset($a_CONTENT->content->agent->exit))
                 ) {
                     $nb_devices = 1;
-                    $msg = __('%1$s devices found', 'glpiinventory');
                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[[' . $nb_devices . ']] devices found';
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devices found==';
                     $this->addtaskjoblog();
                 }
             }
@@ -113,12 +112,11 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                      );
 
                      $message = sprintf(
-                         'Processed: %1$s Created: %2$s Updated: %3$s',
+                         '==processed==: %1$s ==created==: %2$s ==updated==: %3$s',
                          $updated + $created,
                          $created,
                          $updated
                      );
-                     $translatable_message = __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory');
                     $pfTaskjobstate->changeStatusFinish(
                         $a_CONTENT->jobid,
                         $agent->fields['id'],
