@@ -110,6 +110,11 @@ a.edit {
    cursor: pointer;
 }
 
+i.package_action {
+   font-size: 32px;
+   vertical-align: middle;
+}
+
 .filename .size {
    font-size: 8px;
 }
