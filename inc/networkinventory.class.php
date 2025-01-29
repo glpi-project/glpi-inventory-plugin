@@ -286,7 +286,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                          $itemtype = 'NetworkEquipment';
                     }
                     if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                        $msg = __('Unable to find agent to inventory this %1$s', 'glpiinventory');
                         foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id => $num) {
                             $a_input['itemtype'] = $itemtype;
                             $a_input['items_id'] = $items_id;
@@ -304,8 +303,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                                  0,
                                  '',
                                  1,
-                                 "Unable to find agent to inventory " .
-                                 "this [[" . $itemtype . "::" . $items_id . "]]"
+                                 "==unabletofindagentitemtype== " .
+                                 "[[" . $itemtype . "::" . $items_id . "]]"
                              );
                              $a_input['state'] = 1;
                         }
@@ -419,25 +418,23 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $device_attrs['AUTHSNMP_ID'] = $a_extended['snmpcredentials_id'];
 
             if ($changestate == '0') {
-                $msg = __('%1$s threads %2$s timeout', 'glpiinventory');
                 $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
                 $pfTaskjoblog->addTaskjoblog(
                     $taskjobstatedatas['id'],
                     '0',
                     'Agent',
                     '1',
-                    '[[' . $param_attrs['THREADS_QUERY'] . ']] threads ' .
-                    '[[' . $param_attrs['TIMEOUT'] . ']] timeout'
+                    $param_attrs['THREADS_QUERY'] . ' ==threads== ' .
+                    $param_attrs['TIMEOUT'] . ' ==timeout=='
                 );
                 $changestate = $pfTaskjobstate->fields['id'];
             } else {
-                $msg = __('Merged with %1$s', 'glpiinventory');
                 $pfTaskjobstate->changeStatusFinish(
                     $taskjobstatedatas['id'],
                     $taskjobstatedatas['items_id'],
                     $taskjobstatedatas['itemtype'],
                     0,
-                    "Merged with [[" . $changestate . "]]"
+                    "==mergedwith== " . $changestate
                 );
             }
             // Only keep required snmp credentials
