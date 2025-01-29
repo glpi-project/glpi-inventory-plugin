@@ -113,7 +113,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
     $counters = [
         'agent'        => [
             'itemtype' => Agent::getType(),
-            'label' => sprintf(__("Number of %s"), Agent::getTypeName(2)),
+            'label' => sprintf(__("Number of %s"), Agent::getTypeName(Session::getPluralNumber())),
         ],
         'task'         => [
             'itemtype' => PluginGlpiinventoryTask::getType(),
@@ -121,11 +121,11 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
         ],
         'unmanaged'         => [
             'itemtype' => Unmanaged::getType(),
-            'label' => sprintf(__("Number of %s"), Unmanaged::getTypeName(2)),
+            'label' => sprintf(__("Number of %s"), Unmanaged::getTypeName(Session::getPluralNumber())),
         ],
         'computer'         => [
             'itemtype' => Computer::getType(),
-            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Computer::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Computer::getTypeName(Session::getPluralNumber())),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 42,
@@ -135,7 +135,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         'printer'         => [
             'itemtype' => Printer::getType(),
-            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Printer::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Printer::getTypeName(Session::getPluralNumber())),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
@@ -145,7 +145,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         'networkequipement'         => [
             'itemtype' => NetworkEquipment::getType(),
-            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), NetworkEquipment::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), NetworkEquipment::getTypeName(Session::getPluralNumber())),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
@@ -155,7 +155,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         'phone'         => [
             'itemtype' => Phone::getType(),
-            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Phone::getTypeName(2)),
+            'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Phone::getTypeName(Session::getPluralNumber())),
             'apply_filters' =>  [
                 'link'          => 'AND',
                 'field'         => 72,
