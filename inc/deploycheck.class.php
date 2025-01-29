@@ -239,7 +239,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             if ($check['return'] === 'startnow') {
                 echo "<br />";
                 $warning = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.4.2');
-                echo "<i class='ti ti-exclamation-circle' style='color: #FFA500;'></i>";
+                echo "<i class='ti ti-exclamation-circle'></i>";
                 echo "<span class='red'><i>" . $warning . "</i></span>";
             }
 
@@ -553,7 +553,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             echo "<tr>";
             echo "<td></td>";
             echo "<td>";
-            echo "<i class='ti ti-exclamation-circle' style='color: #FFA500;'></i>";
+            echo "<i class='ti ti-exclamation-circle'></i>";
             echo "<span class='red'><i>" . $values['warning_message'] . "</i></span></td>";
             echo "</tr>";
         }
