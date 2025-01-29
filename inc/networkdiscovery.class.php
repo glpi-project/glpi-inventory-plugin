@@ -288,13 +288,12 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             );
             $changestate = $pfTaskjobstate->fields['id'];
         } else {
-            $msg = __('Merged with %1$s', 'glpiinventory');
             $pfTaskjobstate->changeStatusFinish(
                 $pfTaskjobstate->fields['id'],
                 $taskjobstatedatas['items_id'],
                 $taskjobstatedatas['itemtype'],
                 0,
-                "Merged with " . $changestate
+                "==mergedwith== " . $changestate
             );
         }
         $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
