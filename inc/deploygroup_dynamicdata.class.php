@@ -78,9 +78,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP
         ) {
             $tabs[1] = _n('Criterion', 'Criteria', 2);
-           // Get the count of matching items
-            $count = self::getMatchingItemsCount($item);
             if ($_SESSION['glpishow_count_on_tabs']) {
+               // Get the count of matching items
+                $count = self::getMatchingItemsCount($item);
                 $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', Session::getPluralNumber()), $count);
             } else {
                 $tabs[2] = _n('Associated item', 'Associated items', Session::getPluralNumber());
