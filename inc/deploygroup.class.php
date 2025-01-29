@@ -114,7 +114,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $this->addDefaultFormTab($ong);
 
         $count = self::getMatchingItemsCount("PluginGlpiinventoryTaskjob");
-        $ong[$this->getType() . '$task'] = self::createTabEntry(_n('Associated task', 'Associated tasks', $count), $count);
+        $ong[$this->getType() . '$task'] = self::createTabEntry(__('Associated tasks', 'glpiinventory'), $count);
 
         $this->addStandardTab('Log', $ong, $options);
         return $ong;
@@ -160,7 +160,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             echo __('Active');
             echo "</th>";
             echo "<th>";
-            echo __('Module method');
+            echo __('Module method', 'glpiinventory');
             echo "</th>";
             echo "</tr>";
 
@@ -818,5 +818,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             echo "</tr>";
         }
         echo "</table>";
+    }
+
+
+    public static function getIcon() {
+        return 'ti ti-devices-pc';
     }
 }
