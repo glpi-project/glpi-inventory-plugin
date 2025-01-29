@@ -452,28 +452,32 @@ a.expanded > div.fold::before {
    align-items: flex-start;
 }
 
-.target_block  div.target_stats .agents_success {
+.target_block  div.target_stats .agents_success,
+.agent_block > table.runs > .run.header.run_success > th {
    color: green;
    background: #AAFFAA;
    font-weight: bolder;
    font-style: normal;
 }
 
-.target_block  div.target_stats .agents_error {
+.target_block  div.target_stats .agents_error,
+.agent_block > table.runs > .run.header.run_error > th {
    color: white;
    background: red;
    font-weight: bolder;
    font-style: normal;
 }
 
-.target_block  div.target_stats .agents_running {
+.target_block  div.target_stats .agents_running,
+.agent_block > table.runs > .run.header.run_running > th {
    color: #000077;
    background: #AAAAFF;
    font-weight: bolder;
    font-style: normal;
 }
 
-.target_block  div.target_stats .agents_cancelled {
+.target_block  div.target_stats .agents_cancelled,
+.agent_block > table.runs > .run.header.run_cancelled > th {
    color: white;
    background: #9c7964;
    font-weight: bolder;
@@ -551,7 +555,7 @@ a.expanded > div.fold::before {
    background: #AFA;
    border-color: green;
 }
-.agent_block.agent_success > * {
+.agent_block > table.runs > .run.log.run_success > * {
    color: green;
 }
 
@@ -560,7 +564,7 @@ a.expanded > div.fold::before {
    border-color: red;
 }
 
-.agent_block.agent_error > * {
+.agent_block > table.runs > .run.log.run_error > * {
     color: red;
 }
 
@@ -568,21 +572,21 @@ a.expanded > div.fold::before {
    border-color: #777;
 }
 
-.agent_block.agent_prepared > *{
+.agent_block > table.runs > .run.log.run_prepared > * {
    color: #444;
 }
 
 .agent_block.agent_cancelled {
    border-color: #785036;
 }
-.agent_block.agent_cancelled > *{
+.agent_block > table.runs > .run.log.run_cancelled > * {
    color: #785036;
 
 }
 .agent_block.agent_running {
    border-color: #7777EE;
 }
-.agent_block.agent_running > * {
+.agent_block > table.runs > .run.log.run_running > * {
    color: blue;
 }
 
