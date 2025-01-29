@@ -104,8 +104,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
             $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
             $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[[' . $nb_devices . ']]' .
-              '  ==devicesqueried==';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices .
+              ' ==devicesqueried==';
             $this->addtaskjoblog();
         }
 
@@ -129,7 +129,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 $agent->fields['id'],
                 'Agent',
                 '0',
-                '==totalupdated==:[[' . $cnt . ']]'
+                '==totalupdated==:' . $cnt
             );
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } elseif (isset($a_CONTENT->content->agent->start)) {
