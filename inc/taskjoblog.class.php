@@ -355,7 +355,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         // preg_match_all("/\[\[(\w+)(\:\:(.*))?\]\]/", $comment, $matches);
         preg_match_all("/\[\[(\w+)(\:\:(.*))?\]\]/", $comment, $matches);
         foreach ($matches[0] as $num => $commentvalue) {
-            $comment = str_replace($commentvalue, '%' . $num+1 . '$s', $comment);
+            $comment = str_replace($commentvalue, '%' . ($num + 1) . '$s', $comment);
         }
 
        // Translates the non-fixed string
@@ -363,7 +363,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
 
        // Re-do the translated string (e.g. "Não foi possível encontrar o agente para inventário [[NetDevice]]" in pt-BR)
         foreach ($matches[0] as $num => $commentvalue) {
-            $comment = str_replace('%' . $num+1 . '$s', $commentvalue, $comment);
+            $comment = str_replace('%' . ($num + 1) . '$s', $commentvalue, $comment);
            // Search for replace [[itemtype::items_id]] by link
             $classname = $matches[1][$num];
             if ($classname != '' && class_exists($classname)) {
