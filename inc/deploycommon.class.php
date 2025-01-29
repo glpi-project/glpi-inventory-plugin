@@ -263,14 +263,13 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer_id]);
                 $agents_id = $agent->fields['id'] ?? false;
                 if ($agents_id === false) {
-                    $msg = __('No agent found for %1$s', 'glpiinventory');
                     $jobstates_id = $jobstate->add($c_input);
                     $jobstate->changeStatusFinish(
                         $jobstates_id,
                         0,
                         '',
                         1,
-                        "No agent found for [[Computer::" . $computer_id . "]]"
+                        "==noagentfound== [[Computer::" . $computer_id . "]]"
                     );
                 } else {
                     if ($agentmodule->isAgentCanDo('DEPLOY', $agents_id)) {
