@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 00:47+0000\n"
+"POT-Creation-Date: 2025-01-29 00:44+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>, 2025\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/teclib/teams/28042/pt_BR/)\n"
@@ -1411,7 +1411,7 @@ msgstr "Criação de modelos SNMP"
 
 #: inc/config.class.php:441 inc/config.class.php:449
 msgid "SNMP timeout"
-msgstr "SNMP tempo limite"
+msgstr "Tempo limite de SNMP (em segundos)"
 
 #: inc/config.class.php:317
 msgid "SSL-only for agent"
@@ -1847,7 +1847,7 @@ msgstr "dispositivos encontrados"
 
 #: inc/taskjoblog.class.php:363
 msgid "devices queried"
-msgstr "dispositivos enfileirados"
+msgstr "dispositivo(s) enfileirado(s)"
 
 #: inc/deploycheck.class.php:275 inc/deployaction.class.php:236
 #: inc/deployfile.class.php:236 inc/taskjob.class.php:1175
@@ -1889,7 +1889,7 @@ msgstr "caminho"
 
 #: inc/taskview.class.php:84
 msgid "refresh interval"
-msgstr "Intervalo de atualização"
+msgstr "Intervalo de refresh"
 
 #: inc/deploypackage.class.php:1507
 msgid "refresh job"
