@@ -205,20 +205,19 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                     }
                 } else {
                     echo "<b>";
-                    if ($key == 'exec') {
-                        echo __('Command to execute', 'glpiinventory');
-                    } else {
-                        switch ($key) {
-                            case 'name':
-                                echo __('Action label', 'glpiinventory');
-                                break;
-                            case 'logLineLimit':
-                                echo __('Number of output lines to retrieve', 'glpiinventory');
-                                break;
-                            default:
-                                echo $key;
-                                break;
-                        }
+                    switch ($key) {
+                        case 'exec':
+                            echo __('Command to execute', 'glpiinventory');
+                            break;
+                        case 'name':
+                            echo __('Action label', 'glpiinventory');
+                            break;
+                        case 'logLineLimit':
+                            echo __('Number of output lines to retrieve', 'glpiinventory');
+                            break;
+                        default:
+                            echo $key;
+                            break;
                     }
                     echo "</b>";
                     if ($key === "exec") {
@@ -226,6 +225,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                           "padding-left:2px;white-space: pre-wrap;'>$value</pre>";
                     } else {
                         echo " $value ";
+                        echo "<br>";
                     }
                 }
             }
