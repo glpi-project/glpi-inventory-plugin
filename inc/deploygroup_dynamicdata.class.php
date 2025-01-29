@@ -81,9 +81,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
            // Get the count of matching items
             $count = self::getMatchingItemsCount($item);
             if ($_SESSION['glpishow_count_on_tabs']) {
-                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
+                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', Session::getPluralNumber()), $count);
             } else {
-                $tabs[2] = _n('Associated item', 'Associated items', $count);
+                $tabs[2] = _n('Associated item', 'Associated items', Session::getPluralNumber());
             }
             return $tabs;
         }
