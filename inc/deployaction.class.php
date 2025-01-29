@@ -208,7 +208,17 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                     if ($key == 'exec') {
                         echo __('Command to execute', 'glpiinventory');
                     } else {
-                        echo $key;
+                        switch ($key) {
+                            case 'name':
+                                echo __('Action label', 'glpiinventory');
+                                break;
+                            case 'logLineLimit':
+                                echo __('Number of output lines to retrieve', 'glpiinventory');
+                                break;
+                            default:
+                                echo $key;
+                                break;
+                        }
                     }
                     echo "</b>";
                     if ($key === "exec") {
