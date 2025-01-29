@@ -332,7 +332,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             switch ($request_data['value']) {
                 case "Computer":
                     echo "<input type='file' name='file' value='" .
-                    __("filename", 'glpiinventory') . "' />";
+                    __("filename", 'glpiinventory') . "' class='form-control' />";
                     echo " <i>" . $this->getMaxUploadSize() . "</i>";
                     break;
 
