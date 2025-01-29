@@ -280,15 +280,25 @@ td:not(#foo) > input[type=radio]:checked + label {
    display: block;
 }
 
+.monitoring-logs .task_block:first-child {
+  padding-top: 10px;
+ }
+
 .monitoring-logs .task_block > h3 {
-   cursor: pointer;
-   background: url(../../../pics/expand.gif) no-repeat left center;
-   padding-left: 20px;
-   display: inline-block;
+ display: inline-block;
 }
 
-.monitoring-logs .task_block.expand > h3 {
-   background: url(../../../pics/collapse.gif) no-repeat left center;
+.monitoring-logs .task_block > h3 > i {
+ cursor: pointer;
+ padding-right: 20px;
+}
+
+.monitoring-logs .task_block > h3 > i::before {
+ content: "\f0fe";
+}
+
+.monitoring-logs .task_block.expand > h3 > i::before {
+ content: "\f146";
 }
 
 .jobs_block .job_block {
