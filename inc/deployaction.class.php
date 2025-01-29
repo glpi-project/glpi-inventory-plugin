@@ -444,7 +444,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                 'value' => $config_data['logLineLimit'] ?? 10,
             ];
             Dropdown::showNumber('logLineLimit', $options);
-            echo "&nbsp;<i class='ti ti-exclamation-circle' style='color: #FFA500; vertical-align: middle;'></i><span class='red'><i>";
+            echo "&nbsp;<i class='ti ti-exclamation-circle'></i><span class='red'><i>";
             echo sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.3.20');
             echo "</i></span></td>";
             echo "</tr>";
