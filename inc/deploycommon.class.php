@@ -269,7 +269,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                         0,
                         '',
                         1,
-                        "No agent found for [[Computer::" . $computer_id . "]]"
+                        "==noagentfound== [[Computer::" . $computer_id . "]]"
                     );
                 } else {
                     if ($agentmodule->isAgentCanDo('DEPLOY', $agents_id)) {

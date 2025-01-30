@@ -121,7 +121,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                     0,
                     'PluginGlpiinventoryIPRange',
                     1,
-                    "Unable to find agent to run this job"
+                    "==unabletofindagent=="
                 );
                  $input_taskjob = [];
                  $input_taskjob['id'] = $pfTaskjob->fields['id'];
@@ -154,7 +154,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 0,
                 'PluginGlpiinventoryIPRange',
                 1,
-                "Unable to find agent to run this job"
+                "==unabletofindagent=="
             );
             $input_taskjob = [];
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
@@ -283,8 +283,8 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 '0',
                 'Agent',
                 '1',
-                $agent->fields["threads_networkdiscovery"] . ' threads ' .
-                                 $agent->fields["timeout_networkdiscovery"] . ' timeout'
+                $agent->fields["threads_networkdiscovery"] . ' ==threads== ' .
+                                 $agent->fields["timeout_networkdiscovery"] . ' ==timeout=='
             );
             $changestate = $pfTaskjobstate->fields['id'];
         } else {
@@ -293,7 +293,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 $taskjobstatedatas['items_id'],
                 $taskjobstatedatas['itemtype'],
                 0,
-                "Merged with " . $changestate
+                "==mergedwith== " . $changestate
             );
         }
         $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();

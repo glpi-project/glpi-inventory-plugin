@@ -463,7 +463,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     0,
                     '',
                     1,
-                    "No agent found for [[Computer::" . $computer_id . "]]"
+                    "==noagentfound== [[Computer::" . $computer_id . "]]"
                 );
             } else {
                 foreach ($definitions as $definition) {

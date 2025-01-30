@@ -303,8 +303,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                                  0,
                                  '',
                                  1,
-                                 "Unable to find agent to inventory " .
-                                 "this " . $itemtype
+                                 "==unabletofindagentitemtype== " .
+                                 "[[" . $itemtype . "::" . $items_id . "]]"
                              );
                              $a_input['state'] = 1;
                         }
@@ -338,7 +338,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 0,
                 '',
                 1,
-                "Unable to find agent to run this job"
+                "==unabletofindagent=="
             );
             $input_taskjob = [];
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
@@ -382,7 +382,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 $jobstate->fields['items_id'],
                 $jobstate->fields['itemtype'],
                 1,
-                "Device have no ip"
+                "==devicenoip=="
             );
             // Return an empty list to avoid adding an option with no data in the joblist
             return [];
@@ -424,8 +424,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     '0',
                     'Agent',
                     '1',
-                    $param_attrs['THREADS_QUERY'] . ' threads ' .
-                    $param_attrs['TIMEOUT'] . ' timeout'
+                    $param_attrs['THREADS_QUERY'] . ' ==threads== ' .
+                    $param_attrs['TIMEOUT'] . ' ==timeout=='
                 );
                 $changestate = $pfTaskjobstate->fields['id'];
             } else {
@@ -434,7 +434,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     $taskjobstatedatas['items_id'],
                     $taskjobstatedatas['itemtype'],
                     0,
-                    "Merged with " . $changestate
+                    "==mergedwith== " . $changestate
                 );
             }
             // Only keep required snmp credentials
