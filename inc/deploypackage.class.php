@@ -146,7 +146,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
 
         $actions = [];
-        if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
+        if (isset($_SERVER["HTTP_REFERER"]) && strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
             $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'import'] = __('Import', 'glpiinventory');
         } else {
             $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfert'] = __('Transfer');
@@ -166,7 +166,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public function getForbiddenStandardMassiveAction()
     {
         $forbidden = parent::getForbiddenStandardMassiveAction();
-        if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
+        if (isset($_SERVER["HTTP_REFERER"]) && strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
             $forbidden[] = 'update';
             $forbidden[] = 'add';
             $forbidden[] = 'delete';
