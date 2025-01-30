@@ -366,7 +366,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             'updatetheitem'   => __('Update the item', 'glpiinventory'),
             'inventorystarted' => __('Inventory started', 'glpiinventory'),
             'detail'          => __('Details'),
-            'info'            => _n('Information', 'Informations', 1),
+            'info'            => _n('Information', 'Information', 1),
             'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
             'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
             'importdenied'    => __('Import denied', 'glpiinventory'),
