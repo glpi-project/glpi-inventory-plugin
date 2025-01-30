@@ -98,7 +98,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     */
     public static function getTypeName($nb = 0)
     {
-        return __('Inventory group', 'glpiinventory');
+        return _n('Inventory group', 'Inventory groups', $nb, 'glpiinventory');
     }
 
 
@@ -113,8 +113,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $ong = [];
         $this->addDefaultFormTab($ong);
 
-        $count = self::getMatchingItemsCount("PluginGlpiinventoryTaskjob");
-        $ong[$this->getType() . '$task'] = self::createTabEntry(_n('Associated task', 'Associated tasks', $count), $count);
+        if ($_SESSION['glpishow_count_on_tabs']) {
+            $count = self::getMatchingItemsCount("PluginGlpiinventoryTaskjob");
+            $tabs[2] = self::createTabEntry(_n('Associated task', 'Associated tasks', Session::getPluralNumber(), 'glpiinventory'), $count);
+        } else {
+            $tabs[2] = _n('Associated task', 'Associated tasks', Session::getPluralNumber());
+        }
 
         $this->addStandardTab('Log', $ong, $options);
         return $ong;
@@ -160,7 +164,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             echo __('Active');
             echo "</th>";
             echo "<th>";
-            echo __('Module method');
+            echo __('Module method', 'glpiinventory');
             echo "</th>";
             echo "</tr>";
 
@@ -818,5 +822,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             echo "</tr>";
         }
         echo "</table>";
+    }
+
+
+    public static function getIcon()
+    {
+        return 'ti ti-devices-pc';
     }
 }
