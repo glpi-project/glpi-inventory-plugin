@@ -1036,7 +1036,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                                     _n(
                                         'Target for deploy on demand',
                                         'Targets for deploy on demand',
-                                        $nb,
+                                        Session::getPluralNumber,
                                         'glpiinventory'
                                     ),
                                     $nb
@@ -1045,7 +1045,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                                 $tabs[2] = _n(
                                     'Target for deploy on demand',
                                     'Targets for deploy on demand',
-                                    2,
+                                    Session::getPluralNumber,
                                     'glpiinventory'
                                 );
                             }
