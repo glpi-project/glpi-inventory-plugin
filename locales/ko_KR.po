@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 00:47+0000\n"
+"POT-Creation-Date: 2025-01-30 00:43+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -42,7 +42,7 @@ msgstr "중단 - 재시도 - 무시"
 msgid "Action"
 msgstr "작업"
 
-#: inc/deployaction.class.php:351
+#: inc/deployaction.class.php:213 inc/deployaction.class.php:361
 msgid "Action label"
 msgstr "작업 라벨"
 
@@ -128,7 +128,7 @@ msgstr "에이전트 멈춤/충돌"
 msgid "Agent wakeup interval (in minutes)"
 msgstr "에이전트 기동 간격 (분 단위)"
 
-#: inc/menu.class.php:211
+#: inc/menu.class.php:210
 msgid "Agents management"
 msgstr "에이전트 관리"
 
@@ -160,7 +160,7 @@ msgstr "경고 시간초과 초과됨"
 msgid "An error occurs"
 msgstr ""
 
-#: inc/menu.class.php:289
+#: inc/menu.class.php:288
 msgid "Asset skipped during import"
 msgstr "불러오기 중 에셋 건너뜀"
 
@@ -181,7 +181,7 @@ msgid "Audits"
 msgstr "감사"
 
 #: inc/credential.class.php:80 inc/credential.class.php:180
-#: inc/menu.class.php:346 inc/profile.class.php:312
+#: inc/menu.class.php:345 inc/profile.class.php:312
 #: inc/credentialip.class.php:131 inc/credentialip.class.php:154
 msgid "Authentication for remote devices (VMware)"
 msgstr "원격 장치 용 인증 (VMware)"
@@ -323,7 +323,7 @@ msgstr ""
 msgid "Clean taskjob (retention time)"
 msgstr ""
 
-#: inc/menu.class.php:159
+#: inc/menu.class.php:157
 msgid "Clean unused files"
 msgstr "미사용된 파일들 청소"
 
@@ -363,7 +363,7 @@ msgstr "명령 출력 내용"
 msgid "Command output does not contains"
 msgstr "명령 출력에 다음이 포함되지 않음"
 
-#: inc/deployaction.class.php:209
+#: inc/deployaction.class.php:210
 msgid "Command to execute"
 msgstr "실행할 명령"
 
@@ -375,11 +375,11 @@ msgstr "통신 모드"
 msgid "Computer Inventory"
 msgstr "컴퓨터 재고"
 
-#: inc/menu.class.php:295
+#: inc/menu.class.php:294
 msgid "Computer entity rules"
 msgstr "컴퓨터 개체 규칙"
 
-#: inc/menu.class.php:257 inc/profile.class.php:374
+#: inc/menu.class.php:256 inc/profile.class.php:374
 msgid "Computer information"
 msgstr "컴퓨터 정보"
 
@@ -395,7 +395,7 @@ msgstr "xx 일 이후 컴퓨터 재고 없음"
 msgid "Configuration"
 msgstr "구성"
 
-#: inc/menu.class.php:462
+#: inc/menu.class.php:461
 msgid "Configure SNMP credentials"
 msgstr "SNMP 자격증명 구성"
 
@@ -411,12 +411,12 @@ msgstr "사용자 상호 작용없이 작업 재개"
 msgid "Copy"
 msgstr "복사"
 
-#: inc/menu.class.php:483
+#: inc/menu.class.php:482
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
 msgstr ""
 
-#: inc/menu.class.php:500
+#: inc/menu.class.php:499
 msgid ""
 "Create a new Task with network inventory module and the agent defined "
 "previously"
@@ -435,19 +435,19 @@ msgstr "배포 작업, 패키지 생성됨:"
 msgid "Data"
 msgstr "데이터"
 
-#: inc/menu.class.php:475
+#: inc/menu.class.php:474
 msgid "Define IP Ranges of your network + related SNMP credentials"
 msgstr ""
 
-#: inc/menu.class.php:479
+#: inc/menu.class.php:478
 msgid "Define an agent allowed to discover the network"
 msgstr ""
 
-#: inc/menu.class.php:496
+#: inc/menu.class.php:495
 msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr ""
 
-#: inc/menu.class.php:466
+#: inc/menu.class.php:465
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
@@ -458,7 +458,7 @@ msgid "Definition"
 msgstr "정의"
 
 #: inc/deploycheck.class.php:289 inc/taskjobview.class.php:283
-#: inc/deployaction.class.php:250 inc/deployfile.class.php:250
+#: inc/deployaction.class.php:260 inc/deployfile.class.php:250
 #: inc/taskjob.class.php:1186 inc/deployuserinteraction.class.php:299
 msgid "Delete"
 msgstr "삭제"
@@ -479,7 +479,7 @@ msgstr ""
 msgid "Delete tasks logs after"
 msgstr ""
 
-#: inc/menu.class.php:414 hook.php:48
+#: inc/menu.class.php:413 hook.php:48
 msgid "Deploy"
 msgstr "배포"
 
@@ -531,7 +531,7 @@ msgstr "디렉토리 누락됨"
 msgid "Disabled"
 msgstr "비활성화됨"
 
-#: inc/menu.class.php:354
+#: inc/menu.class.php:353
 msgid "Discovery status"
 msgstr "검색 상태"
 
@@ -576,7 +576,7 @@ msgstr "종료 시간"
 msgid "Ending date"
 msgstr "종료 날짜"
 
-#: inc/menu.class.php:281
+#: inc/menu.class.php:280
 msgid "Equipment import and link rules"
 msgstr ""
 
@@ -605,7 +605,7 @@ msgstr ""
 msgid "Exceptions"
 msgstr "예외"
 
-#: inc/deployaction.class.php:378
+#: inc/deployaction.class.php:388
 msgid "Execution checks"
 msgstr "실행 확인"
 
@@ -750,7 +750,7 @@ msgstr[0] "검색된 파일"
 msgid "Free space is greater than"
 msgstr "남은 공간은 다음보다 큼"
 
-#: inc/deployaction.class.php:304
+#: inc/deployaction.class.php:314
 msgid "From"
 msgstr ""
 
@@ -764,12 +764,13 @@ msgstr ""
 #: front/taskjob.form.php:39 front/credential.php:37 front/iprange.form.php:39
 #: front/menu_snmpinventory.php:38 front/stateinventory.php:37
 #: front/taskjob.php:37 front/task.php:38 inc/menu.class.php:53
+#: inc/profile.class.php:119
 msgid "GLPI Inventory"
 msgstr "GLPI Inventory"
 
 #: inc/deploycheck.class.php:244 inc/deploycheck.class.php:362
 #: inc/deploycheck.class.php:373 inc/deploycheck.class.php:382
-#: inc/deployaction.class.php:443
+#: inc/deployaction.class.php:453
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgstr ""
@@ -779,20 +780,20 @@ msgstr ""
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
 msgstr ""
 
-#: inc/menu.class.php:230 inc/profile.class.php:172
+#: inc/menu.class.php:229 inc/profile.class.php:172
 msgid "General"
 msgstr "일반"
 
-#: inc/menu.class.php:223
+#: inc/menu.class.php:222
 msgid "General configuration"
 msgstr "일반 구성"
 
-#: front/deploygroup.php:38 inc/menu.class.php:217
+#: front/deploygroup.php:38 inc/menu.class.php:216
 #: inc/deploytaskjob.class.php:223 inc/profile.class.php:371
 msgid "Groups of computers"
 msgstr "컴퓨터 그룹"
 
-#: inc/menu.class.php:432
+#: inc/menu.class.php:431
 msgid "Guide"
 msgstr "지침서"
 
@@ -809,7 +810,7 @@ msgid "I'm on this computer: local wakeup"
 msgstr ""
 
 #: inc/staticmisc.class.php:330 inc/staticmisc.class.php:364
-#: inc/menu.class.php:322 inc/iprange.class.php:88 inc/iprange.class.php:91
+#: inc/menu.class.php:321 inc/iprange.class.php:88 inc/iprange.class.php:91
 msgid "IP Ranges"
 msgstr "IP 범위"
 
@@ -821,7 +822,7 @@ msgstr "IP 범위 구성"
 msgid "If not successful"
 msgstr "성공하지 않을 시"
 
-#: inc/menu.class.php:487
+#: inc/menu.class.php:486
 msgid "If you have devices not typed, import them from unmanaged devices"
 msgstr "입력되지 않은 장치를 소유한 경우, 미관리된 장치에서 불러오기"
 
@@ -829,7 +830,7 @@ msgstr "입력되지 않은 장치를 소유한 경우, 미관리된 장치에�
 msgid "Ignore"
 msgstr "무시"
 
-#: inc/deploypackage.class.php:150 inc/menu.class.php:153
+#: inc/deploypackage.class.php:150 inc/menu.class.php:151
 msgid "Import"
 msgstr "불러오기"
 
@@ -839,7 +840,7 @@ msgid ""
 "the computer ID)"
 msgstr "CSV 파일에서 컴퓨터 목록 불러오기 (첫 열은 컴퓨터 ID가 포함되야 함)"
 
-#: inc/menu.class.php:251
+#: inc/menu.class.php:250
 msgid "Import agent XML file"
 msgstr "에이전트 XML 파일 불러오기"
 
@@ -990,7 +991,7 @@ msgstr ""
 msgid "Mirror server address"
 msgstr "미러 서버 주소"
 
-#: inc/menu.class.php:396 inc/profile.class.php:289
+#: inc/menu.class.php:395 inc/profile.class.php:289
 #: inc/deploymirror.class.php:72
 msgid "Mirror servers"
 msgstr "미러 서버"
@@ -1013,7 +1014,7 @@ msgstr "모듈"
 msgid "Module method"
 msgstr ""
 
-#: inc/menu.class.php:245
+#: inc/menu.class.php:244
 msgid "Monitoring / Logs"
 msgstr "모니터 / 로그"
 
@@ -1052,7 +1053,7 @@ msgstr "네트워크 재고"
 msgid "Network inventory (SNMP)"
 msgstr "네트워크 재고 (SNMP)"
 
-#: inc/menu.class.php:360
+#: inc/menu.class.php:359
 msgid "Network inventory status"
 msgstr "네트워크 재고 상태"
 
@@ -1060,7 +1061,7 @@ msgstr "네트워크 재고 상태"
 msgid "Network options"
 msgstr "네트워크 선택사항"
 
-#: inc/menu.class.php:376
+#: inc/menu.class.php:375
 msgid "Networking"
 msgstr "네트워크 형성"
 
@@ -1100,7 +1101,7 @@ msgstr "마지막 재고 이후 (최소) 일 수"
 msgid "Number of days since last inventory"
 msgstr "마지막 재고 이후 일 수"
 
-#: inc/deployaction.class.php:433
+#: inc/deployaction.class.php:216 inc/deployaction.class.php:443
 msgid "Number of output lines to retrieve"
 msgstr "검색할 출력 줄 수"
 
@@ -1168,7 +1169,7 @@ msgstr "패키지 배포"
 msgid "Package exported in"
 msgstr "내보낸 패키지"
 
-#: inc/menu.class.php:389 inc/config.class.php:231
+#: inc/menu.class.php:388 inc/config.class.php:231
 msgid "Package management"
 msgstr "패키지 관리"
 
@@ -1304,7 +1305,7 @@ msgstr "레지스트리 값은 다음과 같음"
 msgid "Remote device inventory"
 msgstr "원격 장치 재고"
 
-#: inc/menu.class.php:330 inc/profile.class.php:315
+#: inc/menu.class.php:329 inc/profile.class.php:315
 msgid "Remote devices to inventory (VMware)"
 msgstr "재고에 대한 원격 장치 (VMware)"
 
@@ -1353,7 +1354,7 @@ msgstr "반환 코드가 다음과 같지 않음"
 msgid "Root folder for sending files from server"
 msgstr "서버에서 파일을 전송하기 위한 최상위 폴더"
 
-#: inc/menu.class.php:309
+#: inc/menu.class.php:308
 msgid "Rules"
 msgstr "규칙"
 
@@ -1369,15 +1370,15 @@ msgstr "SHA-512 해쉬 값 일치함"
 msgid "SHA-512 hash value mismatch"
 msgstr "SHA-512 해쉬 값 일치하지 않음"
 
-#: inc/iprange_snmpcredential.class.php:213 inc/menu.class.php:338
+#: inc/iprange_snmpcredential.class.php:213 inc/menu.class.php:337
 msgid "SNMP credentials"
 msgstr "SNMP 자격 증명"
 
-#: inc/menu.class.php:426
+#: inc/menu.class.php:425
 msgid "SNMP inventory"
 msgstr "SNMP 재고"
 
-#: inc/menu.class.php:368
+#: inc/menu.class.php:367
 msgid "SNMP models creation"
 msgstr "SNMP 모델 생성"
 
@@ -1513,11 +1514,11 @@ msgstr "업무 실행 상태"
 msgid "Task has been disabled"
 msgstr "업무가 비활성화됨"
 
-#: inc/menu.class.php:241 inc/task.class.php:58
+#: inc/menu.class.php:240 inc/task.class.php:58
 msgid "Task management"
 msgstr "업무 관리"
 
-#: inc/menu.class.php:270 inc/task.class.php:227 hook.php:120
+#: inc/menu.class.php:269 inc/task.class.php:227 hook.php:120
 msgid "Tasks"
 msgstr "업무"
 
@@ -1549,7 +1550,7 @@ msgstr ""
 msgid "The modified JSON contained a syntax error :"
 msgstr "변경된 JSON 에 잘못된 구문 오류가 포함됨 :"
 
-#: js/taskjobs.js:707
+#: js/taskjobs.js:722
 msgid "The preparation of the task did not return any targets"
 msgstr ""
 
@@ -1577,7 +1578,7 @@ msgstr "이 에이전트는 작업에 정의된 수행자에 더 이상 속하�
 msgid "This is an on demand deployment task"
 msgstr ""
 
-#: inc/menu.class.php:456
+#: inc/menu.class.php:455
 msgid ""
 "This is the steps to configure plugin for SNMP inventory (swicth, router, "
 "network printer)"
@@ -1604,7 +1605,7 @@ msgstr ""
 msgid "Threads number"
 msgstr "스레드 수"
 
-#: inc/menu.class.php:263 inc/timeslot.class.php:66 inc/timeslot.class.php:82
+#: inc/menu.class.php:262 inc/timeslot.class.php:66 inc/timeslot.class.php:82
 #: inc/timeslotentry.class.php:82
 msgid "Time slot"
 msgstr "시간대"
@@ -1613,7 +1614,7 @@ msgstr "시간대"
 msgid "Time slot entry"
 msgstr "시간대 진입"
 
-#: inc/deployaction.class.php:306
+#: inc/deployaction.class.php:316
 msgid "To"
 msgstr ""
 
@@ -1696,7 +1697,7 @@ msgid "User interaction"
 msgid_plural "User interactions"
 msgstr[0] "사용자 상호작용"
 
-#: front/deployuserinteractiontemplate.php:38 inc/menu.class.php:403
+#: front/deployuserinteractiontemplate.php:38 inc/menu.class.php:402
 #: inc/deployuserinteractiontemplate.class.php:137 inc/profile.class.php:286
 msgid "User interaction template"
 msgid_plural "User interaction templates"
@@ -1765,11 +1766,11 @@ msgid ""
 "package."
 msgstr ""
 
-#: inc/menu.class.php:470
+#: inc/menu.class.php:469
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr ""
 
-#: inc/menu.class.php:491
+#: inc/menu.class.php:490
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr ""
 
@@ -1797,13 +1798,13 @@ msgstr "장치 찾음"
 msgid "devices queried"
 msgstr "장치 질의됨"
 
-#: inc/deploycheck.class.php:275 inc/deployaction.class.php:236
+#: inc/deploycheck.class.php:275 inc/deployaction.class.php:246
 #: inc/deployfile.class.php:236 inc/taskjob.class.php:1175
 #: inc/deployuserinteraction.class.php:285
 msgid "drag"
 msgstr "드래그"
 
-#: inc/deployaction.class.php:317
+#: inc/deployaction.class.php:327
 msgid "exec"
 msgstr "exec"
 
@@ -1827,7 +1828,7 @@ msgstr "p2p"
 msgid "passed"
 msgstr "통과됨"
 
-#: inc/deployaction.class.php:332
+#: inc/deployaction.class.php:342
 msgid "path"
 msgstr "경로"
 
@@ -1855,7 +1856,7 @@ msgstr "경고 보고서"
 msgid "retention"
 msgstr "보유"
 
-#: inc/deployaction.class.php:223
+#: inc/deployaction.class.php:233
 msgid "return codes saved for this command"
 msgstr "이 명령에 대한 반환 코드 저장됨"
 
