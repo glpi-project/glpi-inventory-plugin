@@ -97,7 +97,8 @@ class PackageSelfDeployTest extends TestCase
          'items_id' => $computerId,
          'entities_id' => 0,
          'agenttypes_id' => $agenttype['id'],
-         'deviceid' => "Computer$computerId"
+         'deviceid' => "Computer$computerId",
+         'use_module_package_deployment' => 1
         ]);
         $pfDeployGroup->add([
          'name' => 'all',
