@@ -277,7 +277,8 @@ class CollectsTest extends TestCase
           'itemtype'     => Computer::getType(),
           'items_id'     => $computers_id,
           'deviceid'     => 'pc01',
-         'agenttypes_id' => $agenttype['id']
+          'agenttypes_id' => $agenttype['id'],
+          'use_module_collect_data' => 1
         ];
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
