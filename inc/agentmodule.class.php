@@ -402,7 +402,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
         if ($agentModule['is_active'] == 0) {
             if (in_array($agents_id, $a_agentExceptList)) {
-                if (isset($module_active) && count($a_agentModList) == 0) return false;
+                if (isset($module_active) && count($a_agentModList) == 0) {
+                    return false;
+                }
                 return true;
             } else {
                 return false;
@@ -411,7 +413,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             if (in_array($agents_id, $a_agentExceptList) && count($a_agentModList) > 0) {
                 return false;
             } else {
-                if (isset($module_active) && count($a_agentModList) == 0) return false;
+                if (isset($module_active) && count($a_agentModList) == 0) {
+                    return false;
+                }
                 return true;
             }
         }
