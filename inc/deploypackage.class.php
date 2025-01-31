@@ -1425,7 +1425,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
              action='$url/front/deploypackage.public.php'
              enctype=\"multipart/form-data\">";
 
-        echo "<table class='tab_cadre_fixe deploypackage'>";
+        echo "<table class='tab_cadre_fixe'>";
         foreach ($my_packages as $computers_id => $data) {
             $package_to_install = [];
             $computer->getFromDB($computers_id);
