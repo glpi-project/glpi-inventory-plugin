@@ -85,7 +85,9 @@ class RestURLTest extends TestCase
          'agenttypes_id' => $agenttype['id'],
          'itemtype' => '',
          'items_id' => 0,
-         'use_module_collect_data' => 1
+         'use_module_collect_data' => 1,
+         'use_module_package_deployment' => 1,
+         'use_module_esx_remote_inventory' => 1
         ];
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
