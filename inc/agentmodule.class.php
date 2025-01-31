@@ -410,7 +410,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
                 return false;
             }
         } else {
-            if (in_array($agents_id, $a_agentExceptList) && count($a_agentModList) > 0) {
+            if (in_array($agents_id, $a_agentExceptList)) {
                 return false;
             } else {
                 if (isset($module_active) && count($a_agentModList) == 0) {
