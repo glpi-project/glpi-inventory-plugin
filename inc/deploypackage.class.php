@@ -1744,7 +1744,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         }
 
        //Get packages used for the user or a specific computer
-        $packages_used = $this->getMyDepoyPackages($my_packages, $users_id);
+        $packages_used = $this->getMyDeployPackages($my_packages, $users_id);
 
        //Get packages that a the user can deploy
         $packages = $this->canUserDeploySelf();
@@ -1805,7 +1805,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                          if (isset($packages_used[$comp_id][$package['id']])) {
                              $taskjobs_id = $packages_used[$comp_id][$package['id']];
                              $my_packages[$comp_id][$package['id']]['taskjobs_id'] = $taskjobs_id;
-                             $last_job_state = $this->getMyDepoyPackagesState($comp_id, $taskjobs_id);
+                             $last_job_state = $this->getMyDeployPackagesState($comp_id, $taskjobs_id);
                              if ($last_job_state) {
                                  $my_packages[$comp_id][$package['id']]['last_taskjobstate']
                                  = $last_job_state;
@@ -1824,7 +1824,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * taskjob
     *
     * @global object $DB
-    * @param integer $computers_id id of the computer where depoy package
+    * @param integer $computers_id id of the computer where deploy package
     * @param integer $packages_id id of the package to install in computer
     * @param integer $users_id id of the user have requested the installation
     */
@@ -1933,7 +1933,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param false|integer $users_id
     * @return array
     */
-    public function getMyDepoyPackages($computers_packages, $users_id = false)
+    public function getMyDeployPackages($computers_packages, $users_id = false)
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -2007,7 +2007,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * @param integer $computers_id id of the computer
     * @param integer $taskjobs_id id of the taskjob (where order defined)
     */
-    public function getMyDepoyPackagesState($computers_id, $taskjobs_id)
+    public function getMyDeployPackagesState($computers_id, $taskjobs_id)
     {
         $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
         $agent        = new Agent();
