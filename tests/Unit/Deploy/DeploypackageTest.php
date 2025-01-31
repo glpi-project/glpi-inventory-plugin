@@ -78,7 +78,8 @@ class DeploypackageTest extends TestCase
           'useragent'   => 'FusionInventory-Agent_v2.3.21',
           'itemtype' => Computer::getType(),
           'items_id' => $computers_id,
-          'agenttypes_id' => $agenttype['id']
+          'agenttypes_id' => $agenttype['id'],
+          'use_module_package_deployment' => 1
         ];
         $this->assertNotFalse($agent->add($input));
 
