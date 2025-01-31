@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 00:43+0000\n"
+"POT-Creation-Date: 2025-01-31 00:45+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: iDazai, 2023\n"
 "Language-Team: German (Germany) (https://app.transifex.com/teclib/teams/28042/de_DE/)\n"
@@ -80,7 +80,7 @@ msgstr "Füge eine Aufgabe hinzu"
 msgid "Add a target for self-service"
 msgstr "Füge ein Ziel für Selbstbedienung hinzu"
 
-#: inc/deploygroup.class.php:379
+#: inc/deploygroup.class.php:383
 msgid "Add group"
 msgstr "Gruppe hinzufügen"
 
@@ -169,6 +169,12 @@ msgstr "Inventar übersprungen während dem Import"
 #: inc/iprange_snmpcredential.class.php:106
 msgid "Associated SNMP credentials"
 msgstr "Verknüpfte SNMP Zugangsdaten"
+
+#: inc/deploygroup.class.php:118
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/task.class.php:184
 msgid "Associated tasks"
@@ -560,7 +566,7 @@ msgstr "Nicht starten"
 msgid "Download"
 msgstr "Download"
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:816
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:820
 msgid "Dynamic group"
 msgstr "Dynamische Gruppe"
 
@@ -909,7 +915,9 @@ msgstr "Inventar"
 
 #: inc/deploygroup.class.php:101
 msgid "Inventory group"
-msgstr "Inventargruppe"
+msgid_plural "Inventory groups"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/taskjoblog.class.php:367
 msgid "Inventory started"
@@ -1034,7 +1042,7 @@ msgstr "Änderung verweigert"
 msgid "Module"
 msgstr "Modul"
 
-#: inc/taskjobview.class.php:631
+#: inc/taskjobview.class.php:631 inc/deploygroup.class.php:167
 msgid "Module method"
 msgstr "Modul-Methode"
 
@@ -1495,7 +1503,7 @@ msgstr "gestartet"
 msgid "Starting date"
 msgstr "Startdatum"
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:795 hook.php:87
+#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:799 hook.php:87
 msgid "Static group"
 msgstr "Statische Gruppe"
 
@@ -1511,7 +1519,7 @@ msgstr "Ziel-Element"
 msgid "Target Type"
 msgstr "Ziel-Art"
 
-#: inc/deploygroup.class.php:221 inc/iprange.class.php:289 hook.php:443
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:443
 msgid "Target a task"
 msgstr "Wähle einen Task"
 
