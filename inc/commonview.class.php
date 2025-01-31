@@ -166,7 +166,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
         echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:" . "</label>";
-        echo "<div class='col-sm-6'>";
+        echo "<div class='col-sm-6 d-flex align-items-center'>";
         $options['name'] = $varname;
         $options['checked'] = $this->fields[$varname];
         $options['zero_on_empty'] = true;
