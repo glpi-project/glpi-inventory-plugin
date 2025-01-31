@@ -146,7 +146,7 @@ a.edit {
    border:0 !important;
 }
 /* self-service */
-table.deploypackage i.ti-devices-pc {
+#onetimedeploy_form table i.ti-devices-pc {
    color: var(--tblr-primary);
    font-size: 26px;
 }
