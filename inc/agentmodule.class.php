@@ -373,20 +373,49 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     public function isAgentCanDo($module_name, $agents_id)
     {
 
+        switch (strtoupper($module_name)) {
+            case "INVENTORYCOMPUTERESX":
+                $module_active = "use_module_esx_remote_inventory";
+                break;
+            case "NETWORKDISCOVERY":
+                $module_active = "use_module_network_discovery";
+                break;
+            case "NETWORKINVENTORY":
+                $module_active = "use_module_network_inventory";
+                break;
+            case "DEPLOY":
+                $module_active = "use_module_package_deployment";
+                break;
+            case "COLLECT":
+                $module_active = "use_module_collect_data";
+                break;
+        }
+
+        $a_agentModList = [];
+        if (isset($module_active)) {
+            $agent = new Agent();
+            $a_agentModList = $agent->find(['id' => $agents_id, $module_active => 1]);
+        }
+
         $agentModule = $this->getActivationExceptions($module_name);
+        $a_agentExceptList = importArrayFromDB($agentModule['exceptions']);
 
         if ($agentModule['is_active'] == 0) {
-            $a_agentList = importArrayFromDB($agentModule['exceptions']);
-            if (in_array($agents_id, $a_agentList)) {
+            if (in_array($agents_id, $a_agentExceptList)) {
+                if (isset($module_active) && count($a_agentModList) == 0) {
+                    return false;
+                }
                 return true;
             } else {
                 return false;
             }
         } else {
-            $a_agentList = importArrayFromDB($agentModule['exceptions']);
-            if (in_array($agents_id, $a_agentList)) {
+            if (in_array($agents_id, $a_agentExceptList)) {
                 return false;
             } else {
+                if (isset($module_active) && count($a_agentModList) == 0) {
+                    return false;
+                }
                 return true;
             }
         }

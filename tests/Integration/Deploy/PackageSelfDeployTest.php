@@ -97,7 +97,8 @@ class PackageSelfDeployTest extends TestCase
          'items_id' => $computerId,
          'entities_id' => 0,
          'agenttypes_id' => $agenttype['id'],
-         'deviceid' => "Computer$computerId"
+         'deviceid' => "Computer$computerId",
+         'use_module_package_deployment' => 1
         ]);
         $pfDeployGroup->add([
          'name' => 'all',
@@ -378,7 +379,8 @@ class PackageSelfDeployTest extends TestCase
          'items_id' => $computerId2,
          'entities_id' => 0,
          'agenttypes_id' => $agenttype['id'],
-         'deviceid' => "Computer$computerId2"
+         'deviceid' => "Computer$computerId2",
+         'use_module_package_deployment' => 1
         ]);
         $this->assertNotFalse($agentId);
 
@@ -463,7 +465,8 @@ class PackageSelfDeployTest extends TestCase
          'items_id' => $computerId3,
          'entities_id' => 0,
          'agenttypes_id' => $agenttype['id'],
-         'deviceid' => "Computer$computerId3"
+         'deviceid' => "Computer$computerId3",
+         'use_module_package_deployment' => 1
         ]);
 
         $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
