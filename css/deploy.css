@@ -145,3 +145,8 @@ a.edit {
    height: 16px;
    border:0 !important;
 }
+/* self-service */
+table.deploypackage i.ti-devices-pc {
+   color: var(--tblr-primary);
+   font-size: 26px;
+}
