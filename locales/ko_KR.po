@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 00:43+0000\n"
+"POT-Creation-Date: 2025-01-31 00:45+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -78,7 +78,7 @@ msgstr "작업 추가"
 msgid "Add a target for self-service"
 msgstr "셀프-서비스 용 대상 추가"
 
-#: inc/deploygroup.class.php:379
+#: inc/deploygroup.class.php:383
 msgid "Add group"
 msgstr "그룹 추가"
 
@@ -167,6 +167,11 @@ msgstr "불러오기 중 에셋 건너뜀"
 #: inc/iprange_snmpcredential.class.php:106
 msgid "Associated SNMP credentials"
 msgstr "연결된 SNMP 자격증명"
+
+#: inc/deploygroup.class.php:118
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] ""
 
 #: inc/task.class.php:184
 msgid "Associated tasks"
@@ -547,7 +552,7 @@ msgstr "기동 않함"
 msgid "Download"
 msgstr ""
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:816
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:820
 msgid "Dynamic group"
 msgstr "동적 그룹"
 
@@ -886,7 +891,8 @@ msgstr "재고"
 
 #: inc/deploygroup.class.php:101
 msgid "Inventory group"
-msgstr "재고 그룹"
+msgid_plural "Inventory groups"
+msgstr[0] ""
 
 #: inc/taskjoblog.class.php:367
 msgid "Inventory started"
@@ -1010,7 +1016,7 @@ msgstr "변경 거부됨"
 msgid "Module"
 msgstr "모듈"
 
-#: inc/taskjobview.class.php:631
+#: inc/taskjobview.class.php:631 inc/deploygroup.class.php:167
 msgid "Module method"
 msgstr ""
 
@@ -1469,7 +1475,7 @@ msgstr "시작됨"
 msgid "Starting date"
 msgstr "시작 일자"
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:795 hook.php:87
+#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:799 hook.php:87
 msgid "Static group"
 msgstr "정적 그룹"
 
@@ -1485,7 +1491,7 @@ msgstr "대상 항목"
 msgid "Target Type"
 msgstr "대상 유형"
 
-#: inc/deploygroup.class.php:221 inc/iprange.class.php:289 hook.php:443
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:443
 msgid "Target a task"
 msgstr "업무 대상 지정"
 

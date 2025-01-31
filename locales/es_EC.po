@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 00:43+0000\n"
+"POT-Creation-Date: 2025-01-31 00:45+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Soporte Infraestructura Standby, 2023\n"
 "Language-Team: Spanish (Ecuador) (https://app.transifex.com/teclib/teams/28042/es_EC/)\n"
@@ -78,7 +78,7 @@ msgstr "Agregar un trabajo"
 msgid "Add a target for self-service"
 msgstr "Agregar un destino para el autoservicio"
 
-#: inc/deploygroup.class.php:379
+#: inc/deploygroup.class.php:383
 msgid "Add group"
 msgstr "Agregar grupo"
 
@@ -167,6 +167,13 @@ msgstr "Activo omitido durante la importación"
 #: inc/iprange_snmpcredential.class.php:106
 msgid "Associated SNMP credentials"
 msgstr "Credenciales SNMP asociadas"
+
+#: inc/deploygroup.class.php:118
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: inc/task.class.php:184
 msgid "Associated tasks"
@@ -556,7 +563,7 @@ msgstr "No despertar"
 msgid "Download"
 msgstr "Descargar"
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:816
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:820
 msgid "Dynamic group"
 msgstr "Grupo dinámico"
 
@@ -907,7 +914,10 @@ msgstr "Inventario"
 
 #: inc/deploygroup.class.php:101
 msgid "Inventory group"
-msgstr "Grupo de inventario"
+msgid_plural "Inventory groups"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: inc/taskjoblog.class.php:367
 msgid "Inventory started"
@@ -1033,7 +1043,7 @@ msgstr "Modificación denegada"
 msgid "Module"
 msgstr "Módulo"
 
-#: inc/taskjobview.class.php:631
+#: inc/taskjobview.class.php:631 inc/deploygroup.class.php:167
 msgid "Module method"
 msgstr "Método modular"
 
@@ -1494,7 +1504,7 @@ msgstr "Comenzó"
 msgid "Starting date"
 msgstr "Fecha de inicio"
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:795 hook.php:87
+#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:799 hook.php:87
 msgid "Static group"
 msgstr "Grupo estático"
 
@@ -1510,7 +1520,7 @@ msgstr "Elemento de destino"
 msgid "Target Type"
 msgstr "Tipo de destino"
 
-#: inc/deploygroup.class.php:221 inc/iprange.class.php:289 hook.php:443
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:443
 msgid "Target a task"
 msgstr "Apuntar a una tarea"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 00:43+0000\n"
+"POT-Creation-Date: 2025-01-31 00:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr ""
 msgid "Add a target for self-service"
 msgstr ""
 
-#: inc/deploygroup.class.php:379
+#: inc/deploygroup.class.php:383
 msgid "Add group"
 msgstr ""
 
@@ -164,6 +164,12 @@ msgstr ""
 #: inc/iprange_snmpcredential.class.php:106
 msgid "Associated SNMP credentials"
 msgstr ""
+
+#: inc/deploygroup.class.php:118
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/task.class.php:184
 msgid "Associated tasks"
@@ -545,7 +551,7 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:816
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:820
 msgid "Dynamic group"
 msgstr ""
 
@@ -888,7 +894,9 @@ msgstr ""
 
 #: inc/deploygroup.class.php:101
 msgid "Inventory group"
-msgstr ""
+msgid_plural "Inventory groups"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/taskjoblog.class.php:367
 msgid "Inventory started"
@@ -1012,7 +1020,7 @@ msgstr ""
 msgid "Module"
 msgstr ""
 
-#: inc/taskjobview.class.php:631
+#: inc/taskjobview.class.php:631 inc/deploygroup.class.php:167
 msgid "Module method"
 msgstr ""
 
@@ -1471,7 +1479,7 @@ msgstr ""
 msgid "Starting date"
 msgstr ""
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:795 hook.php:87
+#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:799 hook.php:87
 msgid "Static group"
 msgstr ""
 
@@ -1487,7 +1495,7 @@ msgstr ""
 msgid "Target Type"
 msgstr ""
 
-#: inc/deploygroup.class.php:221 inc/iprange.class.php:289 hook.php:443
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:443
 msgid "Target a task"
 msgstr ""
 

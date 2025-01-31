@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 00:43+0000\n"
+"POT-Creation-Date: 2025-01-31 00:45+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2024\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -80,7 +80,7 @@ msgstr "Přidat úlohu"
 msgid "Add a target for self-service"
 msgstr "Přidat cíl pro samoobsluhu"
 
-#: inc/deploygroup.class.php:379
+#: inc/deploygroup.class.php:383
 msgid "Add group"
 msgstr "Přidat skupinu"
 
@@ -169,6 +169,14 @@ msgstr "Majetek vynechaný při importu"
 #: inc/iprange_snmpcredential.class.php:106
 msgid "Associated SNMP credentials"
 msgstr "Související SNMP přihlašovací údaje"
+
+#: inc/deploygroup.class.php:118
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: inc/task.class.php:184
 msgid "Associated tasks"
@@ -561,7 +569,7 @@ msgstr "Neprobouzet"
 msgid "Download"
 msgstr "Stáhnout"
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:816
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:820
 msgid "Dynamic group"
 msgstr "Dynamická skupina"
 
@@ -915,7 +923,11 @@ msgstr "Inventář"
 
 #: inc/deploygroup.class.php:101
 msgid "Inventory group"
-msgstr "Inventární skupina"
+msgid_plural "Inventory groups"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: inc/taskjoblog.class.php:367
 msgid "Inventory started"
@@ -1041,7 +1053,7 @@ msgstr "Změny odepřeny"
 msgid "Module"
 msgstr "Modul"
 
-#: inc/taskjobview.class.php:631
+#: inc/taskjobview.class.php:631 inc/deploygroup.class.php:167
 msgid "Module method"
 msgstr "Metoda modulu"
 
@@ -1502,7 +1514,7 @@ msgstr "Zahájeno"
 msgid "Starting date"
 msgstr "Datum začátku"
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:795 hook.php:87
+#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:799 hook.php:87
 msgid "Static group"
 msgstr "Statická skupina"
 
@@ -1518,7 +1530,7 @@ msgstr "Položka cíle"
 msgid "Target Type"
 msgstr "Typ cíle"
 
-#: inc/deploygroup.class.php:221 inc/iprange.class.php:289 hook.php:443
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:443
 msgid "Target a task"
 msgstr "Zacílit úlohu"
 

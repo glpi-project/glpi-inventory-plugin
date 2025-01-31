@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 00:43+0000\n"
+"POT-Creation-Date: 2025-01-31 00:45+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Ukrainian (Ukraine) (https://app.transifex.com/teclib/teams/28042/uk_UA/)\n"
@@ -78,7 +78,7 @@ msgstr "Додати Роботу"
 msgid "Add a target for self-service"
 msgstr "Додати призначення для самообслуговування"
 
-#: inc/deploygroup.class.php:379
+#: inc/deploygroup.class.php:383
 msgid "Add group"
 msgstr "Додати групу"
 
@@ -167,6 +167,14 @@ msgstr "Актив проігноровано під час імпорту"
 #: inc/iprange_snmpcredential.class.php:106
 msgid "Associated SNMP credentials"
 msgstr "Пов’язані параметри аутентифікаціі SNMP"
+
+#: inc/deploygroup.class.php:118
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: inc/task.class.php:184
 msgid "Associated tasks"
@@ -555,7 +563,7 @@ msgstr "Не пробуджувати"
 msgid "Download"
 msgstr ""
 
-#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:816
+#: inc/deploygroup.class.php:88 inc/deploygroup.class.php:820
 msgid "Dynamic group"
 msgstr "Динамічна група"
 
@@ -910,7 +918,11 @@ msgstr "Інвентаризація"
 
 #: inc/deploygroup.class.php:101
 msgid "Inventory group"
-msgstr ""
+msgid_plural "Inventory groups"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: inc/taskjoblog.class.php:367
 msgid "Inventory started"
@@ -1034,7 +1046,7 @@ msgstr "Модифікація заборонена"
 msgid "Module"
 msgstr "Модуль"
 
-#: inc/taskjobview.class.php:631
+#: inc/taskjobview.class.php:631 inc/deploygroup.class.php:167
 msgid "Module method"
 msgstr "Модуль методу"
 
@@ -1493,7 +1505,7 @@ msgstr "Розпочато"
 msgid "Starting date"
 msgstr "Дата початку"
 
-#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:795 hook.php:87
+#: inc/deploygroup.class.php:87 inc/deploygroup.class.php:799 hook.php:87
 msgid "Static group"
 msgstr "Статична група"
 
@@ -1509,7 +1521,7 @@ msgstr "Мета"
 msgid "Target Type"
 msgstr "Тип Мети"
 
-#: inc/deploygroup.class.php:221 inc/iprange.class.php:289 hook.php:443
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:443
 msgid "Target a task"
 msgstr "Мета завдання"
 
