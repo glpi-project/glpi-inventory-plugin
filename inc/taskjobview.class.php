@@ -427,24 +427,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
            // remove install suffix from deploy
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
-            switch (strtoupper($modulename)) {
-                case "INVENTORYCOMPUTERESX":
-                    $moduleactive = "agents.use_module_esx_remote_inventory";
-                    break;
-                case "NETWORKDISCOVERY":
-                    $moduleactive = "agents.use_module_network_discovery";
-                    break;
-                case "NETWORKINVENTORY":
-                    $moduleactive = "agents.use_module_network_inventory";
-                    break;
-                case "DEPLOY":
-                    $moduleactive = "agents.use_module_package_deployment";
-                    break;
-                case "COLLECT":
-                    $moduleactive = "agents.use_module_collect_data";
-                    break;
-            }
-
             // prepare a query to retrieve agent's & computer's id
             $crit = [
                 'SELECT' => [
@@ -483,11 +465,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 ]
             ];
 
-            if (isset($moduleactive)) {
-                array_push($crit['SELECT'], $moduleactive);
-                $crit['WHERE'] += [ $moduleactive => 1 ];
-            }
-
             $item = getItemForItemtype($itemtype);
             if ($item->isEntityAssign()) {
                 // get entity ID from task ID
@@ -509,7 +486,10 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 if ($itemtype == 'Computer') {
                     $filter_id[] =  $data_filter['items_id'];
                 } else {
-                    $filter_id[] =  $data_filter['agents_id'];
+                    $pfAgentModule = new PluginGlpiinventoryAgentmodule();
+                    if ($pfAgentModule->isAgentCanDo($modulename, $data_filter['agents_id'])) {
+                        $filter_id[] =  $data_filter['agents_id'];
+                    }
                 }
             }
 
