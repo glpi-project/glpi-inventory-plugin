@@ -166,7 +166,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public function getForbiddenStandardMassiveAction()
     {
         $forbidden = parent::getForbiddenStandardMassiveAction();
-        if (isset($_SERVER["HTTP_REFERER"]) && strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
+        if (strstr($_SERVER["HTTP_REFERER"] ?? '', 'deploypackage.import.php')) {
             $forbidden[] = 'update';
             $forbidden[] = 'add';
             $forbidden[] = 'delete';
