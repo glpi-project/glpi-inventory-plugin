@@ -84,7 +84,8 @@ class RestURLTest extends TestCase
          'deviceid'   => 'toto-device',
          'agenttypes_id' => $agenttype['id'],
          'itemtype' => '',
-         'items_id' => 0
+         'items_id' => 0,
+         'use_module_collect_data' => 1
         ];
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
