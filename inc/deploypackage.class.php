@@ -1430,7 +1430,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $package_to_install = [];
             $computer->getFromDB($computers_id);
             echo "<tr>";
-            echo "<th><img src='$url/pics/computer_icon.png'/> "
+            echo "<th><i class='ti ti-devices-pc align-bottom'></i> "
             . _n('Computer', 'Computers', 1) . " <i>"
             . $computer->fields['name'] . "</i></th>";
             echo "</tr>";
