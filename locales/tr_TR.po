@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-31 00:45+0000\n"
+"POT-Creation-Date: 2025-02-03 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -172,8 +172,8 @@ msgstr "Atanmış SNMP kimlik doğrulama bilgileri"
 #: inc/deploygroup.class.php:118
 msgid "Associated task"
 msgid_plural "Associated tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "İlgili görev"
+msgstr[1] "İlgili görevler"
 
 #: inc/task.class.php:184
 msgid "Associated tasks"
@@ -912,8 +912,8 @@ msgstr "Envanter"
 #: inc/deploygroup.class.php:101
 msgid "Inventory group"
 msgid_plural "Inventory groups"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Envanter grubu"
+msgstr[1] "Envanter grupları"
 
 #: inc/taskjoblog.class.php:367
 msgid "Inventory started"
