@@ -129,7 +129,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 $agent->fields['id'],
                 'Agent',
                 '0',
-                'Total updated:' . $cnt
+                '==totalupdated==:' . $cnt
             );
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } elseif (isset($a_CONTENT->content->agent->start)) {
@@ -192,8 +192,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 } else {
                     $item = $inventory->getMainAsset()->getItem();
                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
-                        '[==detail==] ==updatetheitem== ' . $item->getTypeName() .
-                        ' [[' . $item::getType() . '::' . $item->fields['id'] . ']]';
+                        '[==detail==] ==updatetheitem== ' .
+                        '[[' . $item::getType() . '::' . $item->fields['id'] . ']]';
                     $this->addtaskjoblog();
                 }
                 $response = ['response' => ['RESPONSE' => 'SEND']];

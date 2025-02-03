@@ -354,7 +354,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             if ($classname != '' && class_exists($classname)) {
                 $Class = new $classname();
                 $Class->getFromDB($matches[2][$num]);
-                $comment = str_replace($commentvalue, $Class->getLink(), $comment);
+                $comment = str_replace($commentvalue, $Class->getTypeName(1) . " " . $Class->getLink(), $comment);
             }
         }
         if (strstr($comment, "==")) {
@@ -365,15 +365,29 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             'addtheitem'      => __('Add the item', 'glpiinventory'),
             'updatetheitem'   => __('Update the item', 'glpiinventory'),
             'inventorystarted' => __('Inventory started', 'glpiinventory'),
-            'detail'          => __('Detail', 'glpiinventory'),
+            'detail'          => __('Details'),
+            'info'            => _n('Information', 'Information', 1),
             'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
             'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
-            'importdenied'    => __('Import denied', 'glpiinventory')
+            'importdenied'    => __('Import denied', 'glpiinventory'),
+            'totalupdated'    => __('Total updated:', 'glpiinventory'),
+            'devicenoip'      => __('Device have no ip', 'glpiinventory'),
+            'unabletofindagent' => __('Unable to find agent to run this job', 'glpiinventory'),
+            'unabletofindagentitemtype' => __('Unable to find agent to inventory this', 'glpiinventory'),
+            'actioncancelled' => __('Action cancelled by user', 'glpiinventory'),
+            'noagentfound'    => __('No agent found for', 'glpiinventory'),
+            'errrealcomputer' => __("If a real 'computer' please install agent on it (glpiinventory plugin is not design for this) otherwise check SNMP credentials from the IP range", "glpiinventory"),
+            'mergedwith'      => __('Merged with', 'glpiinventory'),
+            'processed'       => __('Processed', 'glpiinventory'),
+            'created'         => __('Created', 'glpiinventory'),
+            'updated'         => __('Updated', 'glpiinventory'),
+            'threads'         => __('threads', 'glpiinventory'),
+            'timeout'         => __('timeout', 'glpiinventory')
             ];
             foreach ($matches[0] as $num => $commentvalue) {
                 $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);
             }
         }
-        return str_replace(",[", "<br/>[", $comment);
+        return str_replace([",[", "\\'"], ["<br/>[", "'"], __($comment, 'glpiinventory'));
     }
 }
