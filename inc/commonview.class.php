@@ -129,7 +129,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     public function showTextField($title, $varname)
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:</label>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
         echo "<div class='col-sm-6'>";
         echo Html::input($varname, ['value' => $this->fields[$varname]]);
         echo "</div>";
@@ -147,7 +147,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     public function showIntegerField($title, $varname, $options = [])
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:</label>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
         echo "<div class='col-sm-6'>";
         Dropdown::showNumber($varname, $options);
         echo "</div>";
@@ -165,7 +165,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     public function showCheckboxField($title, $varname, $options = [])
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:" . "</label>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
         echo "<div class='col-sm-6 d-flex align-items-center'>";
         $options['name'] = $varname;
         $options['checked'] = $this->fields[$varname];
@@ -188,7 +188,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     public function showDropdownForItemtype($title, $itemtype, $options = [])
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:" . "</label>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
         echo "<div class='col-sm-6'>";
         $dropdown_options = array_merge(
             [
@@ -261,7 +261,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         $options['value'] = $value;
 
         echo "<div class='mb-2 row col-12 col-sm-6'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:</label>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
         echo "<div class='col-sm-6 datetime'>";
         Html::showDateTimeField(
             $varname,
@@ -281,7 +281,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     public function showTextArea($title, $varname)
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
-        echo "<label class='form-label col-sm-4 col-form-label'>" . $title . "&nbsp;:</label>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
         echo "<div class='col-sm-6'>";
         echo
          "<textarea class='autogrow form-control' name='" . $varname . "' >" .
