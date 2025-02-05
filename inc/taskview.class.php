@@ -310,7 +310,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         echo "<tr class='tab_bg_1'>";
         echo "<td colspan='4'>";
-        echo "<div class='row'>";
+        echo "<div class='row flex-row align-items-start flex-grow-1'>";
 
         $this->showTextField(__('Name'), "name");
         $this->showTextArea(__('Comments'), "comment");
@@ -394,8 +394,23 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             $ID = $this->fields['id'];
         }
 
-        echo "<tr>";
-        echo "<td class='center' colspan='2'>";
+        echo "<tr class='border-top'>";
+        echo "<td class='right pt-3' colspan='4'>";
+        if (!$this->isNewID($ID) && $this->can($ID, PURGE)) {
+            echo Html::submit("<i class='fas fa-trash me-1'></i>" . _x('button', 'Delete permanently'), [
+            'name'    => 'purge',
+            'confirm' => __('Confirm the final deletion?'),
+            'class '  => 'btn btn-outline-danger me-2',
+            ]);
+        }
+
+        if ($this->fields['is_active']) {
+            echo Html::submit("<i class='fas fa-bolt me-1'></i>" . __('Force start', 'glpiinventory'), [
+            'name' => 'forcestart',
+            'class' => 'btn btn-outline-warning me-2',
+            ]);
+        }
+
         if ($this->isNewID($ID)) {
             echo Html::submit(_x('button', 'Add'), [
                 'name' => 'add',
@@ -403,28 +418,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             ]);
         } else {
             echo Html::hidden('id', ['value' => $ID]);
-            echo Html::submit("<i class='fas fa-save me-1'></i>" . _x('button', 'Save'), [
+            echo Html::submit("<i class='far fa-save me-1'></i>" . _x('button', 'Save'), [
             'name'  => 'update',
-            'class' => 'btn btn-primary'
-            ]);
-        }
-        echo "</td>";
-
-        if ($this->fields['is_active']) {
-            echo "<td class='center'>";
-            echo Html::submit("<i class='fas fa-bolt me-1'></i>" . __('Force start', 'glpiinventory'), [
-            'name' => 'forcestart',
-            'class' => 'btn btn-warning',
-            ]);
-            echo "</td>";
-        }
-
-        echo "<td class='center'>";
-        if (!$this->isNewID($ID) && $this->can($ID, PURGE)) {
-            echo Html::submit("<i class='fas fa-trash me-1'></i>" . _x('button', 'Delete permanently'), [
-            'name'    => 'purge',
-            'confirm' => __('Confirm the final deletion?'),
-            'class '  => 'btn btn-danger',
+            'class' => 'btn btn-primary me-2'
             ]);
         }
         echo "</td>";
