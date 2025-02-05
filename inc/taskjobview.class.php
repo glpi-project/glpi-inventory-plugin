@@ -628,7 +628,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         }
 
         echo "<div class='mb-2 row col-20 col-sm-10'>";
-        echo "<label>" . __('Module method', 'glpiinventory') . "&nbsp;</label>";
+        echo "<label class='form-label col-form-label'>" . __('Module method', 'glpiinventory') . "&nbsp;</label>";
 
         if (!isset($options['width'])) {
             $options['width'] = '40%';
@@ -773,27 +773,23 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             echo '</tr>';
         } else {
             echo "<tr>";
-            echo "<td class='center'>";
-            echo Html::submit(__('Update'), ['name' => 'update', 'class' => 'btn btn-primary']);
-            echo "</td>";
-
-            echo "<td class='center' colspan='2'>
-                  <div id='cancel_job_changes_button' style='display:none'>
-                     <button type='button' class='btn btn-secondary'
-                            onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>" .
-                            __('Cancel modifications', 'glpiinventory') . "</button>
-                  </div>
-               </td>";
-
-            echo "<td class='center'>";
+            echo "<td class='right' colspan='4'>";
             echo "<input type='submit'
                       name='delete'
                       value=\"" . __('Purge', 'glpiinventory') . "\"
-                      class='btn btn-danger' " .
+                      class='btn btn-outline-danger me-2' " .
                       Html::addConfirmationOnAction(__(
                           'Confirm the final deletion ?',
                           'glpiinventory'
-                      )) . ">";
+                      )) . ">&nbsp;";
+
+            echo "<div id='cancel_job_changes_button' style='display:none'>
+                      <button type='button' class='btn btn-secondary me-2'
+                             onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>" .
+                             __('Cancel modifications', 'glpiinventory') . "</button>
+                   </div>";
+
+            echo Html::submit(__('Update'), ['name' => 'update', 'class' => 'btn btn-primary me-2']);
             echo "</td>";
             echo '</tr>';
         }
