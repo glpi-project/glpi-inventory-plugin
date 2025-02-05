@@ -395,7 +395,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         }
 
         echo "<tr>";
-        echo "<td colspan='2'>";
+        echo "<td class='center' colspan='2'>";
         if ($this->isNewID($ID)) {
             echo Html::submit(_x('button', 'Add'), [
                 'name' => 'add',
@@ -411,7 +411,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "</td>";
 
         if ($this->fields['is_active']) {
-            echo "<td>";
+            echo "<td class='center'>";
             echo Html::submit("<i class='fas fa-bolt me-1'></i>" . __('Force start', 'glpiinventory'), [
             'name' => 'forcestart',
             'class' => 'btn btn-warning',
@@ -419,7 +419,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             echo "</td>";
         }
 
-        echo "<td>";
+        echo "<td class='center'>";
         if (!$this->isNewID($ID) && $this->can($ID, PURGE)) {
             echo Html::submit("<i class='fas fa-trash me-1'></i>" . _x('button', 'Delete permanently'), [
             'name'    => 'purge',
