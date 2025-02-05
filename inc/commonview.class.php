@@ -189,7 +189,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
         echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
-        echo "<div class='col-sm-6'>";
+        echo "<div class='col-sm-6' style='max-width: 270px;'>";
         $dropdown_options = array_merge(
             [
             'width' => '90%',
