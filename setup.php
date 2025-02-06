@@ -59,6 +59,11 @@ define(
     GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/manifests/"
 );
 
+define(
+    "PLUGIN_GLPI_INVENTORY_UPLOAD_DIR",
+    GLPI_PLUGIN_DOC_DIR . "/glpiinventory/upload/"
+);
+
 /**
  * Check if the script name finish by
  *

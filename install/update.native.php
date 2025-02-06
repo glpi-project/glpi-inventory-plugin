@@ -882,6 +882,11 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         )
     );
 
+    //server_upload_path is no longer configurable from UI, see PLUGIN_GLPI_INVENTORY_UPLOAD_DIR
+    $migration->addPostQuery(
+        $DB->buildDelete('glpi_plugin_glpiinventory_configs', ['type' => 'server_upload_path'])
+    );
+
     // /!\ Keep it at the end
     $migration->executeMigration();
 }

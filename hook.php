@@ -456,7 +456,7 @@ function plugin_glpiinventory_MassiveActions($type)
 
 
 /**
- * Manage massice actions fields display
+ * Manage massive actions fields display
  *
  * @param array $options
  * @return boolean

@@ -371,8 +371,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     */
     public static function showServerFileTree($rand)
     {
-        $pfConfig         = new PluginGlpiinventoryConfig();
-        $dir              = $pfConfig->getValue('server_upload_path');
         echo "<script type='text/javascript'>";
         echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -420,7 +418,13 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         echo '<div class="alert alert-info d-flex" role="alert">';
         echo '<i class="fas fa-exclamation-circle fa-2x me-2"></i>';
-        echo '<p>' . sprintf(__('Files need to be uploaded to %s folder to be displayed here', 'glpiinventory'), "<mark>$dir</mark>") . '</p>';
+        echo sprintf(
+            '<p>%s</p>',
+            sprintf(
+                __('Files need to be uploaded to %s folder to be displayed here', 'glpiinventory'),
+                sprintf('<mark>%s</mark>', PLUGIN_GLPI_INVENTORY_UPLOAD_DIR)
+            )
+        );
         echo '</div>';
 
         echo "<div id='tree_projectcategory$rand' ></div>";
@@ -437,73 +441,64 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     {
 
         $nodes            = [];
-        $pfConfig         = new PluginGlpiinventoryConfig();
-        $dir              = $pfConfig->getValue('server_upload_path');
-        $security_problem = false;
-        if ($node != "-1") {
-            if (strstr($node, "..")) {
-                $security_problem = true;
-            }
-            $matches = [];
-            preg_match("/^(" . str_replace("/", "\/", $dir) . ")(.*)$/", $node, $matches);
-            if (count($matches) != 3) {
-                $security_problem = true;
+
+        $current_directory = PLUGIN_GLPI_INVENTORY_UPLOAD_DIR;
+        if ($node != -1) {
+            $node_directory = realpath($node);
+            if ($node_directory !== false) {
+                $current_directory = PLUGIN_GLPI_INVENTORY_UPLOAD_DIR . str_replace(
+                    PLUGIN_GLPI_INVENTORY_UPLOAD_DIR,
+                    '',
+                    $node_directory
+                );
             }
         }
 
-        if (!$security_problem) {
-           // leaf node
-            if ($node != -1) {
-                $dir = $node;
-            }
+        if (($handle = opendir($current_directory))) {
+            $folders = $files = [];
 
-            if (($handle = opendir($dir))) {
-                $folders = $files = [];
-
-               //list files in dir selected
-               //we store folders and files separately to sort them alphabetically separately
-                while (false !== ($entry = readdir($handle))) {
-                    if ($entry != "." && $entry != "..") {
-                        $filepath = $dir . "/" . $entry;
-                        if (is_dir($filepath)) {
-                            $folders[$filepath] = $entry;
-                        } else {
-                            $files[$filepath] = $entry;
-                        }
+            //list files in dir selected
+            //we store folders and files separately to sort them alphabetically separately
+            while (false !== ($entry = readdir($handle))) {
+                if ($entry != "." && $entry != "..") {
+                    $filepath = $current_directory . "/" . $entry;
+                    if (is_dir($filepath)) {
+                        $folders[$filepath] = $entry;
+                    } else {
+                        $files[$filepath] = $entry;
                     }
                 }
-
-               //sort folders and files (and maintain index association)
-                asort($folders);
-                asort($files);
-
-               //add folders in json
-                foreach ($folders as $filepath => $entry) {
-                    $path['text']      = $entry;
-                    $path['id']        = $filepath;
-                    $path['draggable'] = false;
-                    $path['leaf']      = false;
-                    $path['cls']       = 'folder';
-
-                    $nodes[] = $path;
-                }
-
-               //add files in json
-                foreach ($files as $filepath => $entry) {
-                    $path['text']      = $entry;
-                    $path['id']        = $filepath;
-                    $path['draggable'] = false;
-                    $path['leaf']      = true;
-                    $path['cls']       = 'file';
-
-                    $nodes[] = $path;
-                }
-                closedir($handle);
             }
+
+            //sort folders and files (and maintain index association)
+            asort($folders);
+            asort($files);
+
+            //add folders in json
+            foreach ($folders as $filepath => $entry) {
+                $nodes[] = self::getJSTreeNode($filepath, $entry, 'folder');
+            }
+
+            //add files in json
+            foreach ($files as $filepath => $entry) {
+                $nodes[] = self::getJSTreeNode($filepath, $entry, 'file');
+            }
+            closedir($handle);
         }
+
         print json_encode($nodes);
     }
 
+    private static function getJSTreeNode(string $filepath, string $entry, string $type): array
+    {
+        return [
+            'text' => htmlentities($entry, ENT_QUOTES, 'UTF-8'),
+            'id' => htmlentities($filepath, ENT_QUOTES, 'UTF-8'),
+            'draggable' => false,
+            'leaf' => $type === 'file',
+            'cls' => $type
+        ];
+    }
 
    /**
     * Add a new item in files of the package
@@ -515,8 +510,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         switch ($params['filestype']) {
             case 'Server':
                 return $this->uploadFileFromServer($params);
-            break;
-
             default:
                 return $this->uploadFileFromComputer($params);
         }

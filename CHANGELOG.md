@@ -5,13 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.5.0] - Unreleased
 
 ### Fixed
 
 - Ensure that the `Taskjob` identifier is used to extract the device IP.
 - Isolate dynamic group criteria to prevent their global reapplication in GLPI.
 - Fixes memory exhaustion when "extra-debug" is disabled
+- Remove "server_upload_path" configuration from database. This is a BC break if you use that for package deployment.
+- It now relies on `GLPI_PLUGIN_DOC_DIR/glpiinventory/upload/`; GLPI_PLUGIN_DOC_DIR by default set to `files/_plugins/` under your GLPI instance.
 
 ## [1.4.0] - 2024-09-06
 

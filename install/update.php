@@ -767,18 +767,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     $a_input['extradebug'] = 0;
     $a_input['users_id'] = 0;
 
-   //Deploy configuration options
-    $a_input['server_upload_path'] =
-         Toolbox::addslashes_deep(
-             implode(
-                 DIRECTORY_SEPARATOR,
-                 [
-                  GLPI_PLUGIN_DOC_DIR,
-                  'glpiinventory',
-                  'upload'
-                 ]
-             )
-         );
+    //Deploy configuration options
     $a_input['alert_winpath']    = 1;
     $a_input['server_as_mirror'] = 1;
     $a_input['mirror_match']     = 0;

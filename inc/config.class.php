@@ -122,18 +122,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $input['timeout_networkdiscovery'] = 1;
         $input['timeout_networkinventory'] = 15;
 
-       //deploy config variables
-        $input['server_upload_path'] =
-              Toolbox::addslashes_deep(
-                  implode(
-                      DIRECTORY_SEPARATOR,
-                      [
-                        GLPI_PLUGIN_DOC_DIR,
-                        'glpiinventory',
-                        'upload'
-                      ]
-                  )
-              );
+        //deploy config variables
         $input['alert_winpath']         = 1;
         $input['server_as_mirror']      = 1;
         $input['manage_osname']         = 1;
@@ -477,16 +466,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $options['colspan'] = 1;
         $pfConfig->showFormHeader($options);
 
-        if (GLPI_INSTALL_MODE !== 'CLOUD') {
-            echo "<tr class='tab_bg_1'>";
-            echo "<td>" . __('Root folder for sending files from server', 'glpiinventory') . "</td>";
-            echo "<td>";
-            echo "<input type='text' class='form-control' name='server_upload_path' value='" .
-            $pfConfig->getValue('server_upload_path') . "' size='60' />";
-            echo "</td>";
-            echo "</tr>";
-        }
-
         echo "<tr>";
         echo "<td>" . __('Use this GLPI server as a mirror server', 'glpiinventory') . "</td>";
         echo "<td>";
@@ -611,7 +590,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * Load all configuration in global variable $PF_CONFIG
     *
     * Test if table exists before loading cache
-    * The only case where table doesn't exists is when you click on
+    * The only case where table doesn't exist is when you click on
     * uninstall the plugin and it's already uninstalled
     *
     * @global object $DB

@@ -56,26 +56,23 @@ class RepositoryTest extends TestCase
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
-       // create a package
+        // create a package
         $this->packages_1_id = $pfDeployPackage->add([
          'name' => 'test package 1',
          'entities_id' => 0
         ]);
         $this->assertNotFalse($this->packages_1_id);
 
-       // create a second package
+        // create a second package
         $this->packages_2_id = $pfDeployPackage->add([
          'name' => 'test package 2',
          'entities_id' => 0
         ]);
         $this->assertNotFalse($this->packages_2_id);
 
-       // get plugin config
-        $config = new PluginGlpiinventoryConfig();
-        $server_upload_path = $config->getValue("server_upload_path");
 
-       // create a file in upload folder
-        $this->filename = $server_upload_path . "/file1";
+        // create a file in upload folder
+        $this->filename =  PLUGIN_GLPI_INVENTORY_UPLOAD_DIR . "/file1";
         $file_created = file_put_contents($this->filename, "test repository");
         $this->assertNotFalse($file_created);
         $this->sha512 = hash_file('sha512', $this->filename);
