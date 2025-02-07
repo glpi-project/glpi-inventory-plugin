@@ -314,20 +314,19 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $this->showFormHeader($options);
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('SSL-only for agent', 'glpiinventory') . "</td>";
-        echo "<td width='20%'>";
+        echo "<td colspan='4'>";
+        echo "<div class='row flex-row align-items-start flex-grow-1'>";
+
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . __('SSL-only for agent', 'glpiinventory') . "</label>";
+        echo "<div class='col-sm-6 d-flex align-items-center'>";
         Dropdown::showYesNo("ssl_only", $this->isFieldActive('ssl_only'));
-        echo "</td>";
+        echo "</div>";
+        echo "</div>";
 
-        echo "<td>" . __('Agent port', 'glpiinventory') . "</td>";
-        echo "<td>";
-        echo "<input type='text' class='form-control' name='agent_port' value='" . $this->getValue('agent_port') . "'/>";
-        echo "</td>";
-        echo "</tr>";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Delete tasks logs after', 'glpiinventory') . "</td>";
-        echo "<td>";
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . __('Delete tasks logs after', 'glpiinventory') . "</label>";
+        echo "<div class='col-sm-6 d-flex align-items-center'>";
         Dropdown::showNumber(
             "delete_task",
             [
@@ -337,22 +336,33 @@ class PluginGlpiinventoryConfig extends CommonDBTM
                             'unit'  => 'day'
                            ]
         );
-        echo "</td>";
+        echo "</div>";
+        echo "</div>";
 
-        echo "<td>" . __('Re-prepare successful jobs', 'glpiinventory') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("reprepare_job", $this->isFieldActive('reprepare_job'));
-        echo "</td>";
-        echo "</tr>";
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . __('Agent port', 'glpiinventory') . "</label>";
+        echo "<div class='col-sm-6 d-flex align-items-center'>";
+        echo "<input type='text' class='form-control' name='agent_port' value='" . $this->getValue('agent_port') . "'/>";
+        echo "</div>";
+        echo "</div>";
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Extra-debug', 'glpiinventory') . "</td>";
-        echo "<td>";
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . __('Extra-debug', 'glpiinventory') . "</label>";
+        echo "<div class='col-sm-6 d-flex align-items-center'>";
         Dropdown::showYesNo("extradebug", $this->isFieldActive('extradebug'));
-        echo "</td>";
+        echo "</div>";
+        echo "</div>";
 
-        echo "<td>" . __('Maximum number of agents to wake up in a task', 'glpiinventory') . "</td>";
-        echo "<td width='20%'>";
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . __('Re-prepare successful jobs', 'glpiinventory') . "</label>";
+        echo "<div class='col-sm-6 d-flex align-items-center'>";
+        Dropdown::showYesNo("reprepare_job", $this->isFieldActive('reprepare_job'));
+        echo "</div>";
+        echo "</div>";
+
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . __('Maximum number of agents to wake up in a task', 'glpiinventory') . "</label>";
+        echo "<div class='col-sm-6 d-flex align-items-center'>";
         Dropdown::showNumber(
             "wakeup_agent_max",
             [
@@ -361,8 +371,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
                             'max' => 100
                            ]
         );
-        echo "</td>";
+        echo "</div>";
+        echo "</div>";
 
+        echo "</div>";
+        echo "</td>";
         echo "</tr>";
 
         $options['candel'] = false;
@@ -415,41 +428,58 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
-        echo "<td align='center'>";
+        echo "<td colspan='4'>";
+        echo "<div class='row flex-row align-items-start flex-grow-1'>";
+
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-9 col-form-label text-sm-end'>" . 
+            __('Threads number', 'glpiinventory') . "&nbsp;" .
+            "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")" . "</label>";
+        echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("threads_networkdiscovery", [
              'value' => $pfConfig->getValue('threads_networkdiscovery'),
              'min'   => 1,
              'max'   => 400]);
-        echo "</td>";
+        echo "</div>";
+        echo "</div>";
 
-        echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
-        echo "<td align='center'>";
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-9 col-form-label text-sm-end'>" . 
+            __('Threads number', 'glpiinventory') . "&nbsp;" .
+            "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")" . "</label>";
+        echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("threads_networkinventory", [
              'value' => $pfConfig->getValue('threads_networkinventory'),
              'min'   => 1,
              'max'   => 400]);
-        echo "</td>";
-        echo "</tr>";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('SNMP timeout', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
-        echo "<td align='center'>";
+        echo "</div>";
+        echo "</div>";
+        
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-9 col-form-label text-sm-end'>" . 
+            __('SNMP timeout', 'glpiinventory') . "&nbsp;" .
+            "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")" . "</label>";
+        echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("timeout_networkdiscovery", [
              'value' => $pfConfig->getValue('timeout_networkdiscovery'),
              'min'   => 1,
              'max'   => 60]);
-        echo "</td>";
-        echo "<td>" . __('SNMP timeout', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
-        echo "<td align='center'>";
+        echo "</div>";
+        echo "</div>";
+
+        echo "<div class='mb-2 row col-12 col-sm-6'>";
+        echo "<label class='form-label col-sm-9 col-form-label text-sm-end'>" . 
+            __('SNMP timeout', 'glpiinventory') . "&nbsp;" .
+            "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")" . "</label>";
+        echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("timeout_networkinventory", [
              'value' => $pfConfig->getValue('timeout_networkinventory'),
              'min'   => 1,
              'max'   => 60]);
+        echo "</div>";
+        echo "</div>";
+
+        echo "</div>";
         echo "</td>";
         echo "</tr>";
 
@@ -476,7 +506,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         if (GLPI_INSTALL_MODE !== 'CLOUD') {
             echo "<tr class='tab_bg_1'>";
-            echo "<td>" . __('Root folder for sending files from server', 'glpiinventory') . "</td>";
+            echo "<td class='right form-label'>" . __('Root folder for sending files from server', 'glpiinventory') . "</td>";
             echo "<td>";
             echo "<input type='text' class='form-control' name='server_upload_path' value='" .
             $pfConfig->getValue('server_upload_path') . "' size='60' />";
@@ -485,14 +515,14 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         }
 
         echo "<tr>";
-        echo "<td>" . __('Use this GLPI server as a mirror server', 'glpiinventory') . "</td>";
+        echo "<td class='right form-label'>" . __('Use this GLPI server as a mirror server', 'glpiinventory') . "</td>";
         echo "<td>";
         Dropdown::showYesNo("server_as_mirror", $pfConfig->getValue('server_as_mirror'));
         echo "</td>";
         echo "</tr>";
 
         echo "<tr>";
-        echo "<td>" . __('Match mirrors to agents', 'glpiinventory') . "</td>";
+        echo "<td class='right form-label'>" . __('Match mirrors to agents', 'glpiinventory') . "</td>";
         echo "<td>";
         $mirror_options = [
          PluginGlpiinventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
@@ -508,7 +538,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "</tr>";
 
         echo "<tr>";
-        echo "<td>" . __('Delete successful on demand tasks after (in days)', 'glpiinventory') . "</td>";
+        echo "<td class='right form-label'>" . __('Delete successful on demand tasks after (in days)', 'glpiinventory') . "</td>";
         echo "<td width='20%'>";
         $toadd = [-1 => __('Never')];
         Dropdown::showNumber("clean_on_demand_tasks", [
