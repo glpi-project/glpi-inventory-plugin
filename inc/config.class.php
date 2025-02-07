@@ -318,6 +318,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "<td width='20%'>";
         Dropdown::showYesNo("ssl_only", $this->isFieldActive('ssl_only'));
         echo "</td>";
+
+        echo "<td>" . __('Agent port', 'glpiinventory') . "</td>";
+        echo "<td>";
+        echo "<input type='text' class='form-control' name='agent_port' value='" . $this->getValue('agent_port') . "'/>";
+        echo "</td>";
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
@@ -334,9 +339,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         );
         echo "</td>";
 
-        echo "<td>" . __('Agent port', 'glpiinventory') . "</td>";
+        echo "<td>" . __('Re-prepare successful jobs', 'glpiinventory') . "</td>";
         echo "<td>";
-        echo "<input type='text' class='form-control' name='agent_port' value='" . $this->getValue('agent_port') . "'/>";
+        Dropdown::showYesNo("reprepare_job", $this->isFieldActive('reprepare_job'));
         echo "</td>";
         echo "</tr>";
 
@@ -346,14 +351,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showYesNo("extradebug", $this->isFieldActive('extradebug'));
         echo "</td>";
 
-        echo "<td>" . __('Re-prepare successful jobs', 'glpiinventory') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("reprepare_job", $this->isFieldActive('reprepare_job'));
-        echo "</td>";
-        echo "</tr>";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td colspan =2></td>";
         echo "<td>" . __('Maximum number of agents to wake up in a task', 'glpiinventory') . "</td>";
         echo "<td width='20%'>";
         Dropdown::showNumber(
@@ -365,7 +362,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
                            ]
         );
         echo "</td>";
-
         echo "</tr>";
 
         $options['candel'] = false;
