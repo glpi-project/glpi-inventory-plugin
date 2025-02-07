@@ -362,6 +362,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
                            ]
         );
         echo "</td>";
+
         echo "</tr>";
 
         $options['candel'] = false;
