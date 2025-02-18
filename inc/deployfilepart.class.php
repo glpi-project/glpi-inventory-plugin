@@ -64,7 +64,6 @@ class PluginGlpiinventoryDeployFilepart
 
         if (!is_file($filePath)) {
             header("HTTP/1.1 404");
-            print "\n" . $filePath . "\n\n";
             exit;
         } elseif (!is_readable($filePath) || !str_starts_with(realpath($filePath), realpath($repoPath))) {
             header("HTTP/1.1 403");
