@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 00:51+0000\n"
-"PO-Revision-Date: 2025-02-17 00:51+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
+"PO-Revision-Date: 2025-02-26 00:46+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -108,7 +108,7 @@ msgstr "Agent"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Agent communication error, impossible to start agent"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "Agent port"
 
@@ -289,7 +289,7 @@ msgstr "Cancel modifications"
 msgid "Cancelled"
 msgstr "Cancelled"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "Change the status"
 
@@ -314,7 +314,7 @@ msgstr "Choose"
 msgid "Class"
 msgstr "Class"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "Clean agents"
 
@@ -479,11 +479,11 @@ msgstr "Delete directory"
 msgid "Delete selected items"
 msgstr "Delete selected items"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Delete successful on demand tasks after (in days)"
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr "Delete tasks logs after"
 
@@ -629,15 +629,15 @@ msgstr "Export"
 msgid "Export task result"
 msgstr "Export task result"
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "Extra-debug"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "Failed to copy file"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "Failed to write file to disk"
 
@@ -659,7 +659,7 @@ msgstr "File exists"
 msgid "File is missing"
 msgstr "File is missing"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "File missing"
 
@@ -667,7 +667,7 @@ msgstr "File missing"
 msgid "File not found"
 msgstr "File not found"
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "File saved!"
 
@@ -695,7 +695,7 @@ msgstr "Files"
 msgid "Files download"
 msgstr "Files download"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr "Files need to be uploaded to %s folder to be displayed here"
@@ -971,15 +971,15 @@ msgstr ""
 msgid "Manage packages"
 msgstr "Manage packages"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "Match mirrors to agents"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "Max file size"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Maximum number of agents to wake up in a task"
 
@@ -1000,7 +1000,7 @@ msgstr "Menu"
 msgid "Minute(s)"
 msgstr "Minute(s)"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "Mio"
 
@@ -1013,7 +1013,7 @@ msgstr "Mirror server address"
 msgid "Mirror servers"
 msgstr "Mirror servers"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "Missing a temporary folder"
 
@@ -1047,11 +1047,11 @@ msgstr "Multiple users connected"
 msgid "Name"
 msgstr "Name"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "Network Inventory"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "Network discovery"
@@ -1065,7 +1065,7 @@ msgid "Network inventory"
 msgstr "Network inventory"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "Network inventory (SNMP)"
@@ -1074,7 +1074,7 @@ msgstr "Network inventory (SNMP)"
 msgid "Network inventory status"
 msgstr "Network inventory status"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "Network options"
 
@@ -1090,7 +1090,7 @@ msgstr "New action"
 msgid "No active session"
 msgstr "No active session"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "No file was uploaded"
 
@@ -1162,7 +1162,7 @@ msgstr "Order list"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "PHP extension stopped the file upload"
 
@@ -1186,7 +1186,7 @@ msgstr "Package deployment"
 msgid "Package exported in"
 msgstr "Package exported in"
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "Package management"
 
@@ -1224,7 +1224,7 @@ msgstr "Periodicity"
 msgid "Permit to re-prepare task after run"
 msgstr "Permit to re-prepare task after run"
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Please remove %s directory."
@@ -1277,7 +1277,7 @@ msgstr "Purge"
 msgid "Question"
 msgstr "Question"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "Re-prepare successful jobs"
 
@@ -1367,10 +1367,6 @@ msgstr "Return code is equal to"
 msgid "Return code is not equal to"
 msgstr "Return code is not equal to"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "Root folder for sending files from server"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "Rules"
@@ -1399,11 +1395,11 @@ msgstr "SNMP inventory"
 msgid "SNMP models creation"
 msgstr "SNMP models creation"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "SNMP timeout"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "SSL-only for agent"
 
@@ -1462,7 +1458,7 @@ msgid "Show/Hide details"
 msgstr "Show/Hide details"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97 inc/collect_file_content.class.php:139
 msgid "Size"
 msgstr "Size"
@@ -1590,7 +1586,7 @@ msgstr "The task cannot be updated if it is active"
 msgid "The task has been deactivated after preparation of this job."
 msgstr "The task has been deactivated after preparation of this job."
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "The uploaded file was only partially uploaded"
 
@@ -1626,7 +1622,7 @@ msgstr "This task is active. delete denied"
 msgid "Threads / Timeout configuration"
 msgstr "Threads / Timeout configuration"
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "Threads number"
@@ -1652,7 +1648,7 @@ msgstr "To inventory"
 msgid "Total discovery devices"
 msgstr "Total discovery devices"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "Transfer error: the file size is too big"
 
@@ -1681,7 +1677,7 @@ msgstr "Unique id"
 msgid "Unit"
 msgstr "Unit"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Unused file"
 
@@ -1693,7 +1689,7 @@ msgstr "Update the item"
 msgid "Updated a deployment job, package: "
 msgstr "Updated a deployment job, package: "
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr "Upload error"
 
@@ -1705,7 +1701,7 @@ msgstr "Upload from computer"
 msgid "Upload from server"
 msgstr "Upload from server"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "Use this GLPI server as a mirror server"
 
@@ -1906,14 +1902,14 @@ msgstr "uncompress"
 msgid "unknown"
 msgstr "unknown"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr "with both"
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr "with entity"
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr "with location"

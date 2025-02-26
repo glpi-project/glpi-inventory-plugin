@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 00:46+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Finnish (Finland) (https://app.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -112,7 +112,7 @@ msgstr "Agentti "
 msgid "Agent communication error, impossible to start agent"
 msgstr "Agentin yhteysvirhe. Agenttia ei voi käynnistää."
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "Agentin portti"
 
@@ -293,7 +293,7 @@ msgstr "Peru muutokset"
 msgid "Cancelled"
 msgstr "Peruttu"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "Muuta tilaa"
 
@@ -318,7 +318,7 @@ msgstr "Valitse"
 msgid "Class"
 msgstr "Luokka"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "Siivoa agentit"
 
@@ -484,13 +484,13 @@ msgstr "Poista hakemisto"
 msgid "Delete selected items"
 msgstr "Poista valitut kohteet"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr ""
 "Poista onnistuneet pyyntöön perustuvat käyttöönottotehtävät jälkeen "
 "(päivissä)"
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr "Poista tehtävien lokit, kun on kulunut "
 
@@ -637,15 +637,15 @@ msgstr "Vienti"
 msgid "Export task result"
 msgstr ""
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "Extra-debug"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "Tiedoston kopiointi epäonnistui"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "Tiedostoa ei voida kirjoittaa levylle "
 
@@ -667,7 +667,7 @@ msgstr "Tiedosto on olemassa"
 msgid "File is missing"
 msgstr "Tiedosto ei ole olemassa"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "Tiedosto puuttuu"
 
@@ -675,7 +675,7 @@ msgstr "Tiedosto puuttuu"
 msgid "File not found"
 msgstr ""
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "Tiedoston tallennus onnistui"
 
@@ -703,7 +703,7 @@ msgstr "Tiedostot"
 msgid "Files download"
 msgstr "Tiedostojen lataus"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
@@ -980,15 +980,15 @@ msgstr ""
 msgid "Manage packages"
 msgstr "Hallinnoi paketteja"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "Sovita peilipalvelimet agenteille"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "Tiedoston enimmäiskoko"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Herätettävien agenttien enimmäismäärä tehtävää kohden"
 
@@ -1009,7 +1009,7 @@ msgstr "Tehtävälista"
 msgid "Minute(s)"
 msgstr "minuuttia"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "Mt"
 
@@ -1022,7 +1022,7 @@ msgstr "Peilipalvelimen osoite"
 msgid "Mirror servers"
 msgstr "Peilipalvelimet"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "Väliaikaiskansio puuttuu"
 
@@ -1056,11 +1056,11 @@ msgstr "Useita käyttäjiä yhteydessä"
 msgid "Name"
 msgstr "Nimi"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "Verkkokartoitus"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "Verkon löytäminen"
@@ -1074,7 +1074,7 @@ msgid "Network inventory"
 msgstr "Verkkokartoitus"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "Verkon kartoitus (SNMP)"
@@ -1083,7 +1083,7 @@ msgstr "Verkon kartoitus (SNMP)"
 msgid "Network inventory status"
 msgstr "Verkon kartoituksen tila"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "Verkkoasetukset"
 
@@ -1099,7 +1099,7 @@ msgstr "Uusi toiminto"
 msgid "No active session"
 msgstr "Ei aktiivista istuntoa"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "Yhtään tiedostoa ei ladattu"
 
@@ -1171,7 +1171,7 @@ msgstr "Järjestysluettelo"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "PHP-laajennus keskeytti tiedoston latauksen"
 
@@ -1195,7 +1195,7 @@ msgstr "Paketin käyttöönotto"
 msgid "Package exported in"
 msgstr "Paketin käyttöönotto"
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "Paketin hallinta"
 
@@ -1233,7 +1233,7 @@ msgstr "Jaksottaisuus"
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr ""
@@ -1286,7 +1286,7 @@ msgstr "Poista pysyvästi"
 msgid "Question"
 msgstr "Kysymys"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "Uudelleenvalmistele onnistuneet työt"
 
@@ -1376,10 +1376,6 @@ msgstr "Paluuarvo on yhtä suuri kuin"
 msgid "Return code is not equal to"
 msgstr "Paluuarvo on eri suuri kuin"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "Siirtohakemisto tiedostojen lähetykseen"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "Säännöt"
@@ -1408,11 +1404,11 @@ msgstr ""
 msgid "SNMP models creation"
 msgstr "SNMP-mallin luonti"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "SNMP-timeout"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "Yhteys agenttin vain SSL:än avulla"
 
@@ -1467,7 +1463,7 @@ msgid "Show/Hide details"
 msgstr "Näytä/piilota tiedot"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139
 msgid "Size"
@@ -1597,7 +1593,7 @@ msgstr ""
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Tehtävä on deaktivoitu tämän työn valmistelun jälkeen."
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "Tiedosto ladattiin vain osittain"
 
@@ -1631,7 +1627,7 @@ msgstr "Poisto ei ole mahdollinen, sillä tämä tehtävä on aktiivinen."
 msgid "Threads / Timeout configuration"
 msgstr ""
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "Säikeiden lukumäärä"
@@ -1657,7 +1653,7 @@ msgstr "Kartoitettavat"
 msgid "Total discovery devices"
 msgstr "Löydettyjen laitteiden kokonaismäärä"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "Siirtovirhe: tiedosto on liian suuri."
 
@@ -1686,7 +1682,7 @@ msgstr "Yksilöllinen tunniste"
 msgid "Unit"
 msgstr "Yksikkö"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Käyttämätön tiedosto"
 
@@ -1698,7 +1694,7 @@ msgstr "Päivitä kohde"
 msgid "Updated a deployment job, package: "
 msgstr "Päivitetty käyttöönottotyö, paketti:"
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr ""
 
@@ -1710,7 +1706,7 @@ msgstr "Lataa tietokoneelta"
 msgid "Upload from server"
 msgstr "Lataa palvelimelta"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "Käytä tätä GLPI-palvelinta peilipalvelimena"
 
@@ -1910,14 +1906,14 @@ msgstr "pura"
 msgid "unknown"
 msgstr "tuntematon"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr "molemmilla"
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr "yksiköllä"
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr "sijainnilla"

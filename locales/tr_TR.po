@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 00:46+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -113,7 +113,7 @@ msgstr "Aracı"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Aracı iletişim hatası, aracı başlatılamadı"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "Aracı bağlantı noktası"
 
@@ -294,7 +294,7 @@ msgstr "Değişiklikleri iptal et"
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "Durumu değiştir"
 
@@ -319,7 +319,7 @@ msgstr "Seçin"
 msgid "Class"
 msgstr "Sınıf"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "Aracıları temizle"
 
@@ -486,11 +486,11 @@ msgstr "Klasörü sil"
 msgid "Delete selected items"
 msgstr "Seçilmiş ögeleri sil"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr "Şundan sonra görev günlükleri silinsin"
 
@@ -636,15 +636,15 @@ msgstr "Dışa aktar"
 msgid "Export task result"
 msgstr "Görev sonuçlarını dışa aktar"
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "Ek hata ayıklama"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "Dosya kopyalanamadı"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "Dosya diske yazılamadı"
 
@@ -666,7 +666,7 @@ msgstr "Dosya var olan"
 msgid "File is missing"
 msgstr "Dosya eksik olan"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "Dosya eksik"
 
@@ -674,7 +674,7 @@ msgstr "Dosya eksik"
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "Dosya kaydedildi!"
 
@@ -702,7 +702,7 @@ msgstr "Dosyalar"
 msgid "Files download"
 msgstr "Dosyalar indiriliyor"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr "Burada görüntülenmesi için dosyalar %s klasörüne yüklenmelidir"
@@ -983,15 +983,15 @@ msgstr ""
 msgid "Manage packages"
 msgstr "Paket yönetimi"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "Yansıları aracılarla eşleştirme"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "En büyük dosya boyutu"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Bir görevin uyandıracağı en fazla aracı sayısı"
 
@@ -1012,7 +1012,7 @@ msgstr "Menü"
 msgid "Minute(s)"
 msgstr "dakika"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "MB"
 
@@ -1025,7 +1025,7 @@ msgstr "Yansı sunucu adresi"
 msgid "Mirror servers"
 msgstr "Yansı sunucular"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "Bir geçici klasör bulunamadı"
 
@@ -1059,11 +1059,11 @@ msgstr "Birden çok kullanıcı bağlı"
 msgid "Name"
 msgstr "Ad"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "Ağ envanteri"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "Ağ keşfi"
@@ -1077,7 +1077,7 @@ msgid "Network inventory"
 msgstr "Ağ envanteri"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "Ağ envanteri (SNMP)"
@@ -1086,7 +1086,7 @@ msgstr "Ağ envanteri (SNMP)"
 msgid "Network inventory status"
 msgstr "Ağ envanteri durumu"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "Ağ ayarları"
 
@@ -1102,7 +1102,7 @@ msgstr "Yeni işlem"
 msgid "No active session"
 msgstr "Etkin bir oturum bulunamadı"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "Henüz bir dosya yüklenmemiş"
 
@@ -1174,7 +1174,7 @@ msgstr "Listeyi sırala"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "PHP eklentisi dosya yüklemeyi durdurdu"
 
@@ -1198,7 +1198,7 @@ msgstr "Paket dağıtımı"
 msgid "Package exported in"
 msgstr "Paket şuraya dışa aktarıldı"
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "Paket yönetimi"
 
@@ -1236,7 +1236,7 @@ msgstr "Sıklık"
 msgid "Permit to re-prepare task after run"
 msgstr "Çalıştırıldıktan sonra görev yeniden hazırlanabilsin"
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Lütfen %s klasörünü silin"
@@ -1289,7 +1289,7 @@ msgstr "Sil"
 msgid "Question"
 msgstr "Soru"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "Başarılı işler yeniden hazırlansın"
 
@@ -1379,10 +1379,6 @@ msgstr "Dönüş kodu şuna eşit olan"
 msgid "Return code is not equal to"
 msgstr "Dönüş kodu şundan farklı olan"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "Sunucudan gönderilecek dosyaların kök klasörü"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "Kurallar"
@@ -1411,11 +1407,11 @@ msgstr "SNMP envanteri"
 msgid "SNMP models creation"
 msgstr "SNMP modeli oluşturma"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "SNMP zaman aşımı"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "Aracı yalnızca SSL kullansın"
 
@@ -1472,7 +1468,7 @@ msgid "Show/Hide details"
 msgstr "Ayrıntıları görüntüle./ gizle"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139
 msgid "Size"
@@ -1602,7 +1598,7 @@ msgstr "Görev etkinse güncellenemez"
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "Dosyanın yalnızca bir kısmı yüklenebildi"
 
@@ -1638,7 +1634,7 @@ msgstr "Bu görev etkin olduğundan silinemez"
 msgid "Threads / Timeout configuration"
 msgstr "İşlemler / Zaman aşımı yapılandırması"
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "İşlem sayısı"
@@ -1664,7 +1660,7 @@ msgstr "Envantere"
 msgid "Total discovery devices"
 msgstr "Toplam keşfedilen aygıt"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "Aktarım hatası: Dosya boyutu çok büyük"
 
@@ -1693,7 +1689,7 @@ msgstr "Eşsiz kimlik"
 msgid "Unit"
 msgstr "Birim"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Kullanılmayan dosya"
 
@@ -1705,7 +1701,7 @@ msgstr "Ögeyi güncelle"
 msgid "Updated a deployment job, package: "
 msgstr "Bir dağıtım işi, paket güncellendi: "
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr "Yükleme sorunu"
 
@@ -1717,7 +1713,7 @@ msgstr "Bilgisayardan yükle"
 msgid "Upload from server"
 msgstr "Sunucudan yükle"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
 
@@ -1916,14 +1912,14 @@ msgstr "ayıkla"
 msgid "unknown"
 msgstr "bilinmiyor"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr "ikisine de göre"
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr "varlığa göre"
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr "konuma göre"

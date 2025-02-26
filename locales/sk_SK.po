@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 00:46+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2024\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -112,7 +112,7 @@ msgstr "Agent"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Chyba komunikácie s agentom, nie je možné spustiť agenta"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "Port agenta"
 
@@ -297,7 +297,7 @@ msgstr "Zrušiť úpravy"
 msgid "Cancelled"
 msgstr "Zrušené"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "Zmeniť stav"
 
@@ -322,7 +322,7 @@ msgstr "Zvoliť"
 msgid "Class"
 msgstr "Trieda"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "Vyčistiť agentov"
 
@@ -488,11 +488,11 @@ msgstr "Zmazať adresár"
 msgid "Delete selected items"
 msgstr "Zmazať označené položky"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Zmazať úspešné úlohy na vyžiadanie po (v dňoch)"
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr "Vymazať logy úloh po"
 
@@ -638,15 +638,15 @@ msgstr "Export"
 msgid "Export task result"
 msgstr "Export výsledku úlohy"
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "Podrobnejšie ladenie"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "Nepodarilo sa skopírovať súbor"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "Nepodarilo sa zapísať súbor na disk"
 
@@ -668,7 +668,7 @@ msgstr "Súbor existuje"
 msgid "File is missing"
 msgstr "Súbor chýba"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "Súbor chýba"
 
@@ -676,7 +676,7 @@ msgstr "Súbor chýba"
 msgid "File not found"
 msgstr " Súbor sa nenašiel"
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "Súbor sa uložil!"
 
@@ -704,7 +704,7 @@ msgstr "Súbory"
 msgid "Files download"
 msgstr "Stiahnutie súborov"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr "Súbory je potrebné nahrať do adresára %s, aby sa tu zobrazili"
@@ -991,15 +991,15 @@ msgstr ""
 msgid "Manage packages"
 msgstr "Spravovať balíčky"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "Priradiť zrkadlá k agentom"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "Maximálna veľkosť súboru"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Maximálny počet agentov, ktorých prebudiť v úlohe"
 
@@ -1020,7 +1020,7 @@ msgstr "Menu"
 msgid "Minute(s)"
 msgstr "minúty"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "MiB"
 
@@ -1033,7 +1033,7 @@ msgstr "Adresa servera zrkadla"
 msgid "Mirror servers"
 msgstr "Zrkadlové servery"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "Chýbajúci dočasný adresár"
 
@@ -1067,11 +1067,11 @@ msgstr "Pripojených viacero používateľov"
 msgid "Name"
 msgstr "Názov"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "Inventár siete"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "Zisťovanie siete"
@@ -1085,7 +1085,7 @@ msgid "Network inventory"
 msgstr "Inventár siete"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "Inventár siete (SNMP)"
@@ -1094,7 +1094,7 @@ msgstr "Inventár siete (SNMP)"
 msgid "Network inventory status"
 msgstr "Stav inventára siete"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "Možnosti siete"
 
@@ -1110,7 +1110,7 @@ msgstr "Nová akcia"
 msgid "No active session"
 msgstr "Žiadne aktívne sedenie"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "Nebol nahratý žiadny súbor"
 
@@ -1182,7 +1182,7 @@ msgstr "Poradie zozamu"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "PHP rozšírenie zastavilo nahrávanie súboru"
 
@@ -1206,7 +1206,7 @@ msgstr "Nasadenie balíčkov"
 msgid "Package exported in"
 msgstr "Balíček exportovaný do"
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "Správa balíčkov"
 
@@ -1244,7 +1244,7 @@ msgstr "Periodicita"
 msgid "Permit to re-prepare task after run"
 msgstr "Povoliť znova pripraviť úlohu po spustení"
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Prosím odstráňte adresár %s."
@@ -1297,7 +1297,7 @@ msgstr "Vyčistiť"
 msgid "Question"
 msgstr "Otázka"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "Znova pripraviť úspešné úlohy"
 
@@ -1387,10 +1387,6 @@ msgstr "Návratový kód sa rovná"
 msgid "Return code is not equal to"
 msgstr "Návratový kód sa nerovná"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "Koreňový adresár pre odosielanie súborov zo servera"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "Pravidlá"
@@ -1419,11 +1415,11 @@ msgstr "SNMP inventarizácia"
 msgid "SNMP models creation"
 msgstr "Vytváranie SNMP modelov"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "Časový limit SNMP"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "Použiť pre agentov iba SSL"
 
@@ -1480,7 +1476,7 @@ msgid "Show/Hide details"
 msgstr "Zobraziť/skryť detaily"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139
 msgid "Size"
@@ -1616,7 +1612,7 @@ msgstr "Úloha nemôže byť aktualizovaná, ak je aktívna"
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Úloha bola deaktivovaná po príprave tejto úlohy."
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "Nahratý súbor bol nahratý iba čiastočne"
 
@@ -1652,7 +1648,7 @@ msgstr "Táto úloha je aktívna, zmazanie bolo zamietnuté"
 msgid "Threads / Timeout configuration"
 msgstr "Konfigurácia vlákien / časového limitu"
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "Počet vlákien"
@@ -1678,7 +1674,7 @@ msgstr "Do inventára"
 msgid "Total discovery devices"
 msgstr "Celkovo zistených zariadení"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "Chyba prenosu: súbor je príliš veľký"
 
@@ -1707,7 +1703,7 @@ msgstr "Jedinečný identifikátor"
 msgid "Unit"
 msgstr "Jednotka"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Nepoužitý súbor"
 
@@ -1719,7 +1715,7 @@ msgstr "Aktualizovať položku"
 msgid "Updated a deployment job, package: "
 msgstr "Aktualizovaná úloha nasadenia, balíček:"
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr "Chyba nahrávania"
 
@@ -1731,7 +1727,7 @@ msgstr "Nahrať z počítača"
 msgid "Upload from server"
 msgstr "Nahrať zo servera"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "Použiť tento GLPI server ako zrkadlo"
 
@@ -1936,14 +1932,14 @@ msgstr "rozbaliť"
 msgid "unknown"
 msgstr "neznáme"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr "s oboma"
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr "s entitou"
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr "s umiestnením"
