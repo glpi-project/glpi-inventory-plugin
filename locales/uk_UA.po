@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 00:46+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Ukrainian (Ukraine) (https://app.transifex.com/teclib/teams/28042/uk_UA/)\n"
@@ -112,7 +112,7 @@ msgstr "Агент"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Помилка зв’язку з Агентом, його неможливо запустити"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "Порт агента"
 
@@ -297,7 +297,7 @@ msgstr "Перервати зміни"
 msgid "Cancelled"
 msgstr "Перервано"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "Змінити статус"
 
@@ -322,7 +322,7 @@ msgstr "Оберіть"
 msgid "Class"
 msgstr "Клас"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "Очистити агентів"
 
@@ -487,11 +487,11 @@ msgstr "Видалити каталог"
 msgid "Delete selected items"
 msgstr "Видалити обране"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Видалити успішні завдання \"за вимогою\" через (дні)"
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr "Видалити протоколи завдань після"
 
@@ -637,15 +637,15 @@ msgstr "Експорт"
 msgid "Export task result"
 msgstr ""
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "Додаткова відладка"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "Помилка копіювання файлу"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "Помилка запису файлу на диск"
 
@@ -667,7 +667,7 @@ msgstr "Файл існує"
 msgid "File is missing"
 msgstr "Файл відсутній"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "Файл відсутній"
 
@@ -675,7 +675,7 @@ msgstr "Файл відсутній"
 msgid "File not found"
 msgstr ""
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "Файл збережено!"
 
@@ -703,7 +703,7 @@ msgstr "Файли"
 msgid "Files download"
 msgstr "Завантаження файлів"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
@@ -990,15 +990,15 @@ msgstr ""
 msgid "Manage packages"
 msgstr "Керувати пакетами"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "Пов'язати дзеркала до агентів"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "Максимальний розмір файлу"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Максимальна кількість агентів, які можуть буди задіяні для завдання"
 
@@ -1019,7 +1019,7 @@ msgstr "Меню"
 msgid "Minute(s)"
 msgstr "хвилини"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "Mio"
 
@@ -1032,7 +1032,7 @@ msgstr "Адреси дзеркальних серверів"
 msgid "Mirror servers"
 msgstr "Дзеркальні сервери"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "Відсутній тимчасовий каталог"
 
@@ -1066,11 +1066,11 @@ msgstr "Під'єднано декілька користувачів"
 msgid "Name"
 msgstr "Ім’я"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "Інвентаризація мережі"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "Мережеве виявлення"
@@ -1084,7 +1084,7 @@ msgid "Network inventory"
 msgstr "Мережева інвентаризація"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "Мережева інвентаризація (SNMP)"
@@ -1093,7 +1093,7 @@ msgstr "Мережева інвентаризація (SNMP)"
 msgid "Network inventory status"
 msgstr "Стан інвентаризації мережі"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "Мережеві параметри"
 
@@ -1109,7 +1109,7 @@ msgstr "Нова дія"
 msgid "No active session"
 msgstr "Нема активних сесій"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "Файл не завантажено"
 
@@ -1181,7 +1181,7 @@ msgstr "Сортувати список"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "Розширення PHP зупинило завантаження файлу"
 
@@ -1205,7 +1205,7 @@ msgstr "Розгортання пакетів"
 msgid "Package exported in"
 msgstr "Пакет експортовано до"
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "Керування пакетами"
 
@@ -1243,7 +1243,7 @@ msgstr "Періодичність"
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr ""
@@ -1296,7 +1296,7 @@ msgstr "Витерти"
 msgid "Question"
 msgstr "Запитання"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "Перепідготувати успішні завдання"
 
@@ -1386,10 +1386,6 @@ msgstr "Код повернення є рівним до"
 msgid "Return code is not equal to"
 msgstr "Код повернення не є рівним до"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "Кореневий каталог для надсилання файлів з сервера"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "Правила"
@@ -1418,11 +1414,11 @@ msgstr ""
 msgid "SNMP models creation"
 msgstr "Створення моделі SNMP"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "Таймаут SNMP"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "Для агентів тільки SSL"
 
@@ -1477,7 +1473,7 @@ msgid "Show/Hide details"
 msgstr "Показати/Сховати деталі"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139
 msgid "Size"
@@ -1613,7 +1609,7 @@ msgstr ""
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Завдання було деактивовано після підготовки цієї роботи."
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "Файл був завантажений лише частково"
 
@@ -1649,7 +1645,7 @@ msgstr "Завдання активне, видалення заборонено
 msgid "Threads / Timeout configuration"
 msgstr ""
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "Кількість гілок"
@@ -1675,7 +1671,7 @@ msgstr "До інвентаризації"
 msgid "Total discovery devices"
 msgstr "Всього пристроїв виявлено"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "Помилка передачі: файл занадто великий"
 
@@ -1704,7 +1700,7 @@ msgstr "Унікальний id"
 msgid "Unit"
 msgstr "Одиниця"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Файл, що не використовується"
 
@@ -1716,7 +1712,7 @@ msgstr "Оновити елемент"
 msgid "Updated a deployment job, package: "
 msgstr "Завдання розгортання оновлено, пакет:"
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr ""
 
@@ -1728,7 +1724,7 @@ msgstr "Завантажити з комп’ютера"
 msgid "Upload from server"
 msgstr "Завантажити з сервера"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "Використовувати сервер GLPI у якості дзеркального сервера"
 
@@ -1935,14 +1931,14 @@ msgstr "розпакувати"
 msgid "unknown"
 msgstr "невідомо"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr "з обома"
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr "з організацією"
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr "з розташуванням"

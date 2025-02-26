@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 00:46+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: INOUE Daisuke, 2024\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -113,7 +113,7 @@ msgstr "エージェント"
 msgid "Agent communication error, impossible to start agent"
 msgstr "エージェントとの通信エラー。エージェントの開始不能"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "エージェント ポート"
 
@@ -292,7 +292,7 @@ msgstr "変更取消"
 msgid "Cancelled"
 msgstr "取消済"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "状態の変更"
 
@@ -317,7 +317,7 @@ msgstr "選択"
 msgid "Class"
 msgstr "クラス"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "エージェントの初期化"
 
@@ -477,11 +477,11 @@ msgstr "ディレクトリーの削除"
 msgid "Delete selected items"
 msgstr "選択したアイテムの削除"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "成功したオンデマンドタスクを削除するまでの日数"
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr "タスクのログを削除するまでの期間"
 
@@ -627,15 +627,15 @@ msgstr "エクスポート"
 msgid "Export task result"
 msgstr "エクスポート タスク結果"
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "拡張デバッグ"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "ファイルコピー失敗"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "ディスクへのファイル書き込みに失敗"
 
@@ -657,7 +657,7 @@ msgstr "ファイルがある"
 msgid "File is missing"
 msgstr "ファイルが見つかません"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "ファイル不明"
 
@@ -665,7 +665,7 @@ msgstr "ファイル不明"
 msgid "File not found"
 msgstr "ファイルがない"
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "ファイルを保存しました！"
 
@@ -693,7 +693,7 @@ msgstr "ファイル"
 msgid "Files download"
 msgstr "ファイル ダウンロード"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr "ここに表示するには、ファイルを %s フォルダーにアップロードする必要があります。"
@@ -961,15 +961,15 @@ msgstr "目的のコンピューターを検索し、一括操作で %s を利�
 msgid "Manage packages"
 msgstr "パッケージ管理"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "エージェントをミラーに結びつける"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "最大ファイルサイズ"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "タスクで起動指示するエージェントの最大数"
 
@@ -990,7 +990,7 @@ msgstr "メニュー"
 msgid "Minute(s)"
 msgstr "分間"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "MB"
 
@@ -1003,7 +1003,7 @@ msgstr "ミラーサーバー アドレス"
 msgid "Mirror servers"
 msgstr "ミラーサーバー"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "一時フォルダーが見つかりません"
 
@@ -1037,11 +1037,11 @@ msgstr "複数ユーザーが接続"
 msgid "Name"
 msgstr "名前"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "ネットワーク インベントリー"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "ネットワーク探索"
@@ -1055,7 +1055,7 @@ msgid "Network inventory"
 msgstr "ネットワーク インベントリー"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "ネットワーク インベントリー（SNMP）"
@@ -1064,7 +1064,7 @@ msgstr "ネットワーク インベントリー（SNMP）"
 msgid "Network inventory status"
 msgstr "ネットワーク インベントリー状態"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "ネットワーク設定"
 
@@ -1080,7 +1080,7 @@ msgstr "新しい操作"
 msgid "No active session"
 msgstr "稼働中のセッションなし"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "アップロードしたファイルはありません"
 
@@ -1152,7 +1152,7 @@ msgstr "命令リスト"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "PHP 拡張モジュールがファイルアップロードを停止しました"
 
@@ -1176,7 +1176,7 @@ msgstr "パッケージ配置"
 msgid "Package exported in"
 msgstr "パッケージのエクスポート先 : "
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "パッケージ管理"
 
@@ -1214,7 +1214,7 @@ msgstr "周期性"
 msgid "Permit to re-prepare task after run"
 msgstr "実行後、タスクの再準備を許可"
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr "%s ディレクトリーを削除してください。"
@@ -1267,7 +1267,7 @@ msgstr "抹消"
 msgid "Question"
 msgstr "質問"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "成功ジョブを再準備"
 
@@ -1357,10 +1357,6 @@ msgstr "戻り値が等しい"
 msgid "Return code is not equal to"
 msgstr "戻り値が等しくない"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "サーバーからファイルを送信するルートフォルダー"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "ルール"
@@ -1389,11 +1385,11 @@ msgstr "SNMP インベントリー"
 msgid "SNMP models creation"
 msgstr "SNMP モデル作成"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "SNMP タイムアウト"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "エージェントに SSL のみ"
 
@@ -1450,7 +1446,7 @@ msgid "Show/Hide details"
 msgstr "詳細の表示・非表示"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139
 msgid "Size"
@@ -1575,7 +1571,7 @@ msgstr "有効なタスクは更新できません"
 msgid "The task has been deactivated after preparation of this job."
 msgstr "このジョブの準備後、タスクが無効になりました。"
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "アップロードしたファイルは、一部のみアップロードされました"
 
@@ -1609,7 +1605,7 @@ msgstr "タスクが稼働中です。削除できません。"
 msgid "Threads / Timeout configuration"
 msgstr "スレッド・タイムアウト設定"
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "スレッド数"
@@ -1635,7 +1631,7 @@ msgstr "インベントリー対象"
 msgid "Total discovery devices"
 msgstr "総探索デバイス数"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "転送エラー : ファイルサイズが大きすぎます"
 
@@ -1664,7 +1660,7 @@ msgstr "ユニーク ID"
 msgid "Unit"
 msgstr "ユニット"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "不使用ファイル"
 
@@ -1676,7 +1672,7 @@ msgstr "アイテムを更新"
 msgid "Updated a deployment job, package: "
 msgstr "配置ジョブ更新済み。パッケージ : "
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr "アップロード エラー"
 
@@ -1688,7 +1684,7 @@ msgstr "コンピューターからアップロード"
 msgid "Upload from server"
 msgstr "サーバーのファイルを利用"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "この GLPI サーバーをミラーサーバーとして扱う"
 
@@ -1885,14 +1881,14 @@ msgstr "要、解凍・展開"
 msgid "unknown"
 msgstr "不明"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr "両方"
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr "エンティティー"
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr "場所"

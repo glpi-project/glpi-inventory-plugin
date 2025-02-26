@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 00:46+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -112,7 +112,7 @@ msgstr "에이전트"
 msgid "Agent communication error, impossible to start agent"
 msgstr "에이전트 통신 오류, 에이전트를 시작할 수 없음"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "에이전트 포트"
 
@@ -291,7 +291,7 @@ msgstr "변경 취소"
 msgid "Cancelled"
 msgstr "취소됨"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "상태 변경"
 
@@ -316,7 +316,7 @@ msgstr "선택"
 msgid "Class"
 msgstr "클래스"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "에이전트 청소"
 
@@ -476,11 +476,11 @@ msgstr "디렉토리 삭제"
 msgid "Delete selected items"
 msgstr "선택된 항목 삭제"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr ""
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr ""
 
@@ -626,15 +626,15 @@ msgstr "내보내기"
 msgid "Export task result"
 msgstr ""
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "추가-디버그"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "파일 복사 실패함"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "디스크에 파일 쓰기 실패함"
 
@@ -656,7 +656,7 @@ msgstr "파일 존재함"
 msgid "File is missing"
 msgstr "파일 누락됨"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "파일 누락"
 
@@ -664,7 +664,7 @@ msgstr "파일 누락"
 msgid "File not found"
 msgstr ""
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "파일 저장됨!"
 
@@ -692,7 +692,7 @@ msgstr "파일"
 msgid "Files download"
 msgstr "파일 다운로드"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
@@ -960,15 +960,15 @@ msgstr ""
 msgid "Manage packages"
 msgstr "패키지 관리"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "에이전트에 일치하는 미러"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "최대 파일 크기"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "업무 시 기동할 에이전트 최대 수"
 
@@ -989,7 +989,7 @@ msgstr "메뉴"
 msgid "Minute(s)"
 msgstr "분"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr ""
 
@@ -1002,7 +1002,7 @@ msgstr "미러 서버 주소"
 msgid "Mirror servers"
 msgstr "미러 서버"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "임시 폴더 없음"
 
@@ -1036,11 +1036,11 @@ msgstr "복수 사용자 접속됨"
 msgid "Name"
 msgstr "이름"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "네트워크 재고"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "네트워크 탐색"
@@ -1054,7 +1054,7 @@ msgid "Network inventory"
 msgstr "네트워크 재고"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "네트워크 재고 (SNMP)"
@@ -1063,7 +1063,7 @@ msgstr "네트워크 재고 (SNMP)"
 msgid "Network inventory status"
 msgstr "네트워크 재고 상태"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "네트워크 선택사항"
 
@@ -1079,7 +1079,7 @@ msgstr "새 작업"
 msgid "No active session"
 msgstr "활성화 세션 없음"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "업로드된 파일 없음"
 
@@ -1151,7 +1151,7 @@ msgstr "주문 목록"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "PHP 확장이 파일 업로드를 중지함"
 
@@ -1175,7 +1175,7 @@ msgstr "패키지 배포"
 msgid "Package exported in"
 msgstr "내보낸 패키지"
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "패키지 관리"
 
@@ -1213,7 +1213,7 @@ msgstr "주기"
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr ""
@@ -1266,7 +1266,7 @@ msgstr "제거"
 msgid "Question"
 msgstr "질문"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "성공한 작업 재-준비"
 
@@ -1356,10 +1356,6 @@ msgstr "반환 코드는 다음과 같음"
 msgid "Return code is not equal to"
 msgstr "반환 코드가 다음과 같지 않음"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "서버에서 파일을 전송하기 위한 최상위 폴더"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "규칙"
@@ -1388,11 +1384,11 @@ msgstr "SNMP 재고"
 msgid "SNMP models creation"
 msgstr "SNMP 모델 생성"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "SNMP 시간만료"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "에이전트 SSL-전용"
 
@@ -1447,7 +1443,7 @@ msgid "Show/Hide details"
 msgstr "상세 보이기/숨기기"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139
 msgid "Size"
@@ -1572,7 +1568,7 @@ msgstr ""
 msgid "The task has been deactivated after preparation of this job."
 msgstr ""
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "업로드 된 파일이 부분적으로만 업로드 됨"
 
@@ -1606,7 +1602,7 @@ msgstr "이 업무는 활성화 되었습니다. 삭제가 거부됨"
 msgid "Threads / Timeout configuration"
 msgstr ""
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "스레드 수"
@@ -1632,7 +1628,7 @@ msgstr ""
 msgid "Total discovery devices"
 msgstr "총 탐색 장치"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "전송 오류: 파일 크기가 너무 큼"
 
@@ -1661,7 +1657,7 @@ msgstr "고유 id"
 msgid "Unit"
 msgstr "단위"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "미사용된 파일"
 
@@ -1673,7 +1669,7 @@ msgstr "항목 수정"
 msgid "Updated a deployment job, package: "
 msgstr "작업, 패키지 배포 수정됨:"
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr ""
 
@@ -1685,7 +1681,7 @@ msgstr "컴퓨터에서 업로드"
 msgid "Upload from server"
 msgstr "서버에서 업로드"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "이 GLPI 서버를 미러 서버로 사용"
 
@@ -1882,14 +1878,14 @@ msgstr "압축해제"
 msgid "unknown"
 msgstr "알 수 없음"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr ""
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr ""
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr ""

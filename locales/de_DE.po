@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 00:46+0000\n"
+"POT-Creation-Date: 2025-02-26 00:46+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: iDazai, 2023\n"
 "Language-Team: German (Germany) (https://app.transifex.com/teclib/teams/28042/de_DE/)\n"
@@ -114,7 +114,7 @@ msgstr "Agent"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Verbindungsfehler zum Agent, starten des Agenten nicht möglich"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:326
 msgid "Agent port"
 msgstr "Netzwerkports des Agents"
 
@@ -295,7 +295,7 @@ msgstr "Setze Änderung zurück"
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: inc/config.class.php:388
+#: inc/config.class.php:377
 msgid "Change the status"
 msgstr "Ändere den Status"
 
@@ -320,7 +320,7 @@ msgstr "Auswählen"
 msgid "Class"
 msgstr "Klasse"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:380
 msgid "Clean agents"
 msgstr "Agenten bereinigen"
 
@@ -490,11 +490,11 @@ msgstr "Lösche Verzeichnis"
 msgid "Delete selected items"
 msgstr "Lösche ausgewähltes Element"
 
-#: inc/config.class.php:514
+#: inc/config.class.php:493
 msgid "Delete successful on demand tasks after (in days)"
 msgstr "Löschen von erfolgreichen On-Demand-Aufgaben nach (in Tagen)"
 
-#: inc/config.class.php:324
+#: inc/config.class.php:313
 msgid "Delete tasks logs after"
 msgstr "Lösche Aufgaben-Log nach"
 
@@ -640,15 +640,15 @@ msgstr "Export"
 msgid "Export task result"
 msgstr "Aufgabenergebnis exportieren"
 
-#: inc/config.class.php:344
+#: inc/config.class.php:333
 msgid "Extra-debug"
 msgstr "Extra-Debug"
 
-#: inc/deployfile.class.php:685 inc/deployfile.class.php:744
+#: inc/deployfile.class.php:678 inc/deployfile.class.php:737
 msgid "Failed to copy file"
 msgstr "Datei konnte nicht kopiert werden"
 
-#: inc/deployfile.class.php:650
+#: inc/deployfile.class.php:643
 msgid "Failed to write file to disk"
 msgstr "Datei konnte nicht gespeichert werden"
 
@@ -670,7 +670,7 @@ msgstr "Datei existiert"
 msgid "File is missing"
 msgstr "Datei fehlt"
 
-#: inc/deployfile.class.php:689 inc/deployfile.class.php:748
+#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
 msgid "File missing"
 msgstr "Datei fehlt"
 
@@ -678,7 +678,7 @@ msgstr "Datei fehlt"
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: inc/deployfile.class.php:682 inc/deployfile.class.php:741
+#: inc/deployfile.class.php:675 inc/deployfile.class.php:734
 msgid "File saved!"
 msgstr "Datei gespeichert!"
 
@@ -706,7 +706,7 @@ msgstr "Dateien"
 msgid "Files download"
 msgstr "Dateien herunterladen"
 
-#: inc/deployfile.class.php:423
+#: inc/deployfile.class.php:424
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
@@ -986,15 +986,15 @@ msgstr ""
 msgid "Manage packages"
 msgstr "Verwalte Pakete"
 
-#: inc/config.class.php:498
+#: inc/config.class.php:477
 msgid "Match mirrors to agents"
 msgstr "Abgleich von Spiegeln mit Agenten"
 
-#: inc/deployfile.class.php:1083
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "Maximale Dateigrösse"
 
-#: inc/config.class.php:357
+#: inc/config.class.php:346
 msgid "Maximum number of agents to wake up in a task"
 msgstr "Maximale Anzahl von Agenten zum starten je Vorgang"
 
@@ -1015,7 +1015,7 @@ msgstr "Menü"
 msgid "Minute(s)"
 msgstr "Minute(n)"
 
-#: inc/deployfile.class.php:1084
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "Mio"
 
@@ -1028,7 +1028,7 @@ msgstr "Spiegelserver Adresse"
 msgid "Mirror servers"
 msgstr "Spiegelserver"
 
-#: inc/deployfile.class.php:646
+#: inc/deployfile.class.php:639
 msgid "Missing a temporary folder"
 msgstr "Temporäres Verzeichnis fehlt"
 
@@ -1062,11 +1062,11 @@ msgstr "Verschiedene Benutzer sind verbunden"
 msgid "Name"
 msgstr "Name"
 
-#: inc/config.class.php:230
+#: inc/config.class.php:219
 msgid "Network Inventory"
 msgstr "Netzwerkinventar"
 
-#: inc/config.class.php:422 inc/config.class.php:442
+#: inc/config.class.php:411 inc/config.class.php:431
 #: inc/staticmisc.class.php:74 hook.php:76
 msgid "Network discovery"
 msgstr "Netzwerkdiscovery"
@@ -1080,7 +1080,7 @@ msgid "Network inventory"
 msgstr "Netzwerkinventar"
 
 #: inc/agentmodule.class.php:134 inc/agentmodule.class.php:242
-#: inc/config.class.php:431 inc/config.class.php:450
+#: inc/config.class.php:420 inc/config.class.php:439
 #: inc/staticmisc.class.php:80
 msgid "Network inventory (SNMP)"
 msgstr "Netzwerkinventar (SNMP)"
@@ -1089,7 +1089,7 @@ msgstr "Netzwerkinventar (SNMP)"
 msgid "Network inventory status"
 msgstr "Status Netzwerkinventar"
 
-#: inc/config.class.php:416
+#: inc/config.class.php:405
 msgid "Network options"
 msgstr "Netzwerkoptionen"
 
@@ -1105,7 +1105,7 @@ msgstr "Neue Aufgabe"
 msgid "No active session"
 msgstr "Keine aktive Sitzung"
 
-#: inc/deployfile.class.php:642
+#: inc/deployfile.class.php:635
 msgid "No file was uploaded"
 msgstr "Dateien wurde nicht heraufgeladen"
 
@@ -1177,7 +1177,7 @@ msgstr "Sortierung"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:654
+#: inc/deployfile.class.php:647
 msgid "PHP extension stopped the file upload"
 msgstr "PHP-Erweiterung hat den Upload gestoppt"
 
@@ -1201,7 +1201,7 @@ msgstr "Paketverteilung"
 msgid "Package exported in"
 msgstr "Paket exportiert in"
 
-#: inc/config.class.php:231 inc/menu.class.php:388
+#: inc/config.class.php:220 inc/menu.class.php:388
 msgid "Package management"
 msgstr "Paketverwaltung"
 
@@ -1239,7 +1239,7 @@ msgstr "Häufigkeit"
 msgid "Permit to re-prepare task after run"
 msgstr "Erneutes Vorbereiten der Aufgabe nach Ausführung zulassen"
 
-#: setup.php:450
+#: setup.php:455
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Bitte das Verzeichnis %s löschen."
@@ -1292,7 +1292,7 @@ msgstr "Löschen"
 msgid "Question"
 msgstr "Frage"
 
-#: inc/config.class.php:349
+#: inc/config.class.php:338
 msgid "Re-prepare successful jobs"
 msgstr "Erfolgreiche Jobs neu vorbereiten"
 
@@ -1382,10 +1382,6 @@ msgstr "Rückgabewert ist gleich"
 msgid "Return code is not equal to"
 msgstr "Rückgabewert ist nicht gleich"
 
-#: inc/config.class.php:482
-msgid "Root folder for sending files from server"
-msgstr "Wurzelverzeichnis um Dateien vom Server zu senden"
-
 #: inc/menu.class.php:308
 msgid "Rules"
 msgstr "Regeln"
@@ -1414,11 +1410,11 @@ msgstr "SNMP Inventar"
 msgid "SNMP models creation"
 msgstr "SNMP Modellerstellung"
 
-#: inc/config.class.php:441 inc/config.class.php:449
+#: inc/config.class.php:430 inc/config.class.php:438
 msgid "SNMP timeout"
 msgstr "SNMP timeout"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:306
 msgid "SSL-only for agent"
 msgstr "Nur SSL für die Kommunikation mit dem Agent verwenden"
 
@@ -1475,7 +1471,7 @@ msgid "Show/Hide details"
 msgstr "Zeige/Verstecke Details"
 
 #: inc/collect.class.php:256 inc/collect_file.class.php:65
-#: inc/collect_file.class.php:147 inc/deployfile.class.php:1100
+#: inc/collect_file.class.php:147 inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:139
 msgid "Size"
@@ -1607,7 +1603,7 @@ msgstr "Die Aufgabe kann nicht aktualisiert werden, wenn sie aktiv ist"
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Die Aufgabe wurde deaktiviert nach der Vorbereitung des Vorgangs"
 
-#: inc/deployfile.class.php:638
+#: inc/deployfile.class.php:631
 msgid "The uploaded file was only partially uploaded"
 msgstr "Die hochgeladene Datei ist unvollständig"
 
@@ -1647,7 +1643,7 @@ msgstr "Die Aufgabe ist aktiv. Löschen fehlgeschlagen"
 msgid "Threads / Timeout configuration"
 msgstr ""
 
-#: inc/config.class.php:421 inc/config.class.php:430
+#: inc/config.class.php:410 inc/config.class.php:419
 #: inc/statediscovery.class.php:184
 msgid "Threads number"
 msgstr "Anzahl Threads"
@@ -1673,7 +1669,7 @@ msgstr "Zum Inventar"
 msgid "Total discovery devices"
 msgstr "Anzahl entdeckte Geräte"
 
-#: inc/deployfile.class.php:634
+#: inc/deployfile.class.php:627
 msgid "Transfer error: the file size is too big"
 msgstr "Übertragunsfehler: Die Datei ist zu groß"
 
@@ -1702,7 +1698,7 @@ msgstr "Eindeutige ID"
 msgid "Unit"
 msgstr "EInheit"
 
-#: inc/deployfile.class.php:1097
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Ungenutzte Datei"
 
@@ -1714,7 +1710,7 @@ msgstr "Element aktualisieren"
 msgid "Updated a deployment job, package: "
 msgstr "Aktualisiere einen Ausroll-Vorgang, Paket:"
 
-#: inc/deployfile.class.php:630
+#: inc/deployfile.class.php:623
 msgid "Upload error"
 msgstr "Uploadfehler"
 
@@ -1726,7 +1722,7 @@ msgstr "Von Computer heraufladen"
 msgid "Upload from server"
 msgstr "Hochgeladen vom Server"
 
-#: inc/config.class.php:491
+#: inc/config.class.php:470
 msgid "Use this GLPI server as a mirror server"
 msgstr "Diesen GLPI-Server als Spiegelserver verwenden"
 
@@ -1929,14 +1925,14 @@ msgstr "dekomprimieren"
 msgid "unknown"
 msgstr "Unbekannt"
 
-#: inc/config.class.php:503
+#: inc/config.class.php:482
 msgid "with both"
 msgstr "mit beiden"
 
-#: inc/config.class.php:502
+#: inc/config.class.php:481
 msgid "with entity"
 msgstr "mit Entität"
 
-#: inc/config.class.php:501
+#: inc/config.class.php:480
 msgid "with location"
 msgstr "mit Standort"
