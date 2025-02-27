@@ -303,7 +303,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             switch ($request_data['value']) {
                 case "Computer":
                     echo "<input type='file' name='file' value='" .
-                    __("filename", 'glpiinventory') . "' />";
+                    __("filename", 'glpiinventory') . "' class='form-control' />";
                     echo " <i>" . $this->getMaxUploadSize() . "</i>";
                     break;
 
@@ -332,8 +332,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo "</tr>";
 
         echo "<tr>";
-        echo "<th>" . __("Uncompress", 'glpiinventory') . "<img style='float:right' " .
-         "src='" . $fi_path . "/pics/uncompress.png' /></th>";
+        echo "<th>" . __("Uncompress", 'glpiinventory') . "<i style='float:right; color:gray;' class='ti ti-file-zip'></i></th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'uncompress', 'checked' => $uncompress]);
         echo "</td>";
@@ -341,8 +340,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         echo "<tr>";
         echo "<th>" . __("P2P", 'glpiinventory') .
-              "<img style='float:right' src='" . $fi_path .
-              "/pics/p2p.png' /></th>";
+              "<i style='float:right; color:gray;' class='ti ti-vector-triangle'></i></th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
         echo "</td>";
