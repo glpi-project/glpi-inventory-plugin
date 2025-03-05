@@ -258,6 +258,10 @@ td:not(#foo) > input[type=radio]:checked + label {
    font-weight: bolder;
 }
 
+#cancel_job_changes_button {
+  float: left;
+}
+
 /* Logs monitoring styles */
 
 .jobs_block {
