@@ -561,7 +561,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         }
         $pfTask = $this->getTask();
 
-        echo "<form method='post' name='form_taskjob' action='" .
+        echo "<form method='post' id='taskjobs_form' name='form_taskjob' action='" .
             Plugin::getWebDir('glpiinventory') . "/front/taskjob.form.php''>";
 
         if (!$new_item) {
