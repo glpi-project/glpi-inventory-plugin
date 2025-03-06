@@ -774,6 +774,12 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         } else {
             echo "<tr>";
             echo "<td class='right' colspan='4'>";
+            echo "<button type='button' id='cancel_job_changes_button' style='display:none'
+                             class='btn btn-outline-secondary me-2'
+                             onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>" .
+                             __('Cancel modifications', 'glpiinventory') . "
+                   </button>&nbsp;";
+
             echo "<input type='submit'
                       name='delete'
                       value=\"" . __('Purge', 'glpiinventory') . "\"
@@ -782,12 +788,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                           'Confirm the final deletion ?',
                           'glpiinventory'
                       )) . ">&nbsp;";
-
-            echo "<div id='cancel_job_changes_button' style='display:none'>
-                      <button type='button' class='btn btn-secondary me-2'
-                             onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>" .
-                             __('Cancel modifications', 'glpiinventory') . "</button>
-                   </div>";
 
             echo Html::submit(__('Update'), ['name' => 'update', 'class' => 'btn btn-primary me-2']);
             echo "</td>";
