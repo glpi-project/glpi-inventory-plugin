@@ -437,7 +437,7 @@ function agents_chart(chart_id) {
                         var logComment = log['log.comment'];
                         var parts = logComment.split(/(<a.*?>|<\/a>)/);
                         if (parts.length > 1) {
-                            logComment = __(parts[0], 'glpiinventory') + parts[1] + parts[2] + parts[3] + __(parts[4], 'glpiinventory');
+                            logComment = __(parts[0], 'glpiinventory') + parts[1] + parts[2] + parts[3] + parts[4];
                         }
 
                         rows.push(
