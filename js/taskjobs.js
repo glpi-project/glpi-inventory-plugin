@@ -434,11 +434,17 @@ function agents_chart(chart_id) {
                         "</th></tr>"
                      );
                       $.each(run.logs, function(log_index, log) {
+                        var logComment = log['log.comment'];
+                        var parts = logComment.split(/(<a.*?>|<\/a>)/);
+                        
+                        var logComment = __(parts[0], 'glpiinventory');
+                        logComment += parts.slice(1).join(' ');
+
                         rows.push(
                            "<tr class='run log" + ((taskjob_state !== null) ? ' run_' + taskjob_state : '' ) + "'>" +
                            "<td>" + log['log.date'] +"</td>"+
                            "<td>" + taskjobs.logstatuses_names[log['log.state']] +"</td>"+
-                           "<td class='comment'>" + __(log['log.comment'], 'glpiinventory') +"</td>"+
+                           "<td class='comment'>" + logComment +"</td>"+
                            "</tr>"
                         );
                       });
