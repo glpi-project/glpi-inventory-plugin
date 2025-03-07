@@ -436,9 +436,9 @@ function agents_chart(chart_id) {
                       $.each(run.logs, function(log_index, log) {
                         var logComment = log['log.comment'];
                         var parts = logComment.split(/(<a.*?>|<\/a>)/);
-                        if (parts.length > 1) {
-                            logComment = __(parts[0], 'glpiinventory') + parts[1] + parts[2] + parts[3] + parts[4];
-                        }
+                        
+                        var logComment = __(parts[0], 'glpiinventory'); 
+                        var logComment += parts.slice(1).join(' ');
 
                         rows.push(
                            "<tr class='run log" + ((taskjob_state !== null) ? ' run_' + taskjob_state : '' ) + "'>" +
