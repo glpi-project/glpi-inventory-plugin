@@ -42,7 +42,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
 {
     public $collect_itemtype = 'PluginGlpiinventoryCollect_File';
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
-    public $type             = 'file';
+    public $collect_type     = 'file';
 
    /**
     * Update computer files (add and update files) related to this

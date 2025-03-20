@@ -47,7 +47,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     */
     public static $rightname = 'plugin_glpiinventory_collect';
 
-    public $type = '';
+    public $collect_type = '';
 
    /**
     * Get name of this type by language of the user connected
@@ -73,7 +73,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     {
         /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0) {
-            if ($item->fields['type'] == $this->type) {
+            if ($item->fields['type'] == $this->collect_type) {
                 return __('Collect configuration');
             }
         }

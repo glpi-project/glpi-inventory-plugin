@@ -43,7 +43,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     public $collect_itemtype = 'PluginGlpiinventoryCollect_Registry';
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_registries';
 
-    public $type = 'registry';
+    public $collect_type = 'registry';
 
    /**
     * Get the tab name used for item
