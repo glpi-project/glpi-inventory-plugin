@@ -493,7 +493,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * Get a specific value to display
     *
     * @param string $field
-    * @param array $values
+    * @param string|array $values
     * @param array $options
     * @return string
     */

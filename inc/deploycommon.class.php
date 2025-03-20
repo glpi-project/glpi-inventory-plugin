@@ -56,8 +56,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
     public function definitionFiltered($definition_type, $definitions_filter)
     {
         if (
-            !is_null($definitions_filter)
-              && is_array($definitions_filter)
+              is_array($definitions_filter)
               && count($definitions_filter) > 0
               && !in_array($definition_type, $definitions_filter)
         ) {
@@ -310,8 +309,8 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
    /**
     * run function, so return data to send to the agent for deploy
     *
-    * @param object $taskjobstate PluginGlpiinventoryTaskjobstate instance
-    * @return array
+    * @param PluginGlpiinventoryTaskjobstate $taskjobstate PluginGlpiinventoryTaskjobstate instance
+    * @return false|array
     */
     public function run($taskjobstate)
     {

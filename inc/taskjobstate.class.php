@@ -233,7 +233,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                     );
                 }
             } else {
-                return ceil($globalState);
+                return (string)ceil($globalState);
             }
         }
         return '';
@@ -389,16 +389,16 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
         $log_input = [];
         if ($error == "1") {
-            $log_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_ERROR;
+            $log_input['state'] = (string)PluginGlpiinventoryTaskjoblog::TASK_ERROR;
             $input['state']     = self::IN_ERROR;
         } else {
-            $log_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_OK;
+            $log_input['state'] = (string)PluginGlpiinventoryTaskjoblog::TASK_OK;
             $input['state']     = self::FINISHED;
         }
 
         $this->update($input);
-        $log_input['plugin_glpiinventory_taskjobstates_id'] = $taskjobstates_id;
-        $log_input['items_id'] = $items_id;
+        $log_input['plugin_glpiinventory_taskjobstates_id'] = (string)$taskjobstates_id;
+        $log_input['items_id'] = (string)$items_id;
         $log_input['itemtype'] = $itemtype;
         $log_input['date']     = $_SESSION['glpi_currenttime'];
         $log_input['comment']  = $message;
@@ -459,8 +459,8 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     * Update the state of a jobstate
     * @since 9.2
     *
-    * @param string $joblog_state the state of the joblog to set
-    * @param string $jobstate_state the state of the jobstate to set
+    * @param string|int $joblog_state the state of the joblog to set
+    * @param string|int $jobstate_state the state of the jobstate to set
     * @param string $reason
     */
     public function updateState($joblog_state, $jobstate_state, $reason = '')
@@ -525,7 +525,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
                     $reason = sprintf(
                         __('Job available for next execution at %s', 'glpiinventory'),
-                        Html::convDateTime($params['date_start'], 'glpiinventory')
+                        Html::convDateTime($params['date_start'])
                     );
 
                     $log_input = [
@@ -602,7 +602,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             $stmt = $DB->prepare($delete);
             foreach ($iterator as $data) {
                  $pfTaskjobstate->getFromDB($data['plugin_glpiinventory_taskjobstates_id']);
-                 $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
+                 $pfTaskjobstate->delete($pfTaskjobstate->fields, true);
 
                  $stmt->bind_param('s', $data['plugin_glpiinventory_taskjobstates_id']);
                  $DB->executeStatement($stmt);

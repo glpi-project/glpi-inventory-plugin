@@ -831,7 +831,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             $jobstate['id'],
                             $jobstate['items_id'],
                             $jobstate['itemtype'],
-                            $flag,
+                            (string)$flag,
                             isset($name) ? "$name: $message" : $message
                         );
                     } else {
@@ -856,7 +856,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     $jobstate['id'],
                     $jobstate['items_id'],
                     $jobstate['itemtype'],
-                    $jobstate['state'] == PluginGlpiinventoryTaskjobstate::IN_ERROR ? "1" : ""
+                    $jobstate['state'] == PluginGlpiinventoryTaskjobstate::IN_ERROR ? 1 : 0
                 );
 
                 break;

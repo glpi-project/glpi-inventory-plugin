@@ -160,7 +160,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
             echo "<a href='$link'>$label</a>";
             echo "</td>";
             $agent->getFromDB($data['agents_id']);
-            echo "<td>" . $agent->getLink(1) . "</td>";
+            echo "<td>" . $agent->getLink() . "</td>";
             $nb_query = 0;
             $nb_threads = 0;
             $start_date = "";

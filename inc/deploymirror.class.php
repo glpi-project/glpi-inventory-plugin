@@ -95,7 +95,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     * Location is retrieved from the computer data.
     *
     * @global array $PF_CONFIG
-    * @param integer $agents_id
+    * @param ?integer $agents_id
     * @return array
     */
     public static function getList($agents_id)

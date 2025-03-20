@@ -214,7 +214,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                     break;
             }
 
-            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool)($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
                 Html::showCheckbox(['name' => 'checks_entries[' . $i . ']']);
@@ -298,7 +298,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param array $data fields yet defined in edit mode
     * @param string $mode mode in use (create, edit...)
     *
-    * @return string|false
+    * @return array
     */
     public function getValues($type, $data, $mode)
     {
@@ -456,9 +456,6 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
         }
 
         $values = $this->getValues($type, $config_data, $mode);
-        if ($values === false) {
-            return false;
-        }
 
         echo "<table class='package_item'>";
         echo "<tr>";

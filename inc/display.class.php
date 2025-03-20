@@ -52,19 +52,16 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     public static function bar($percentage, $message = '', $order = '', $width = 400, $height = 20)
     {
         if ((!empty($percentage)) and ($percentage < 0)) {
-            $percentage = "";
+            $percentage = 0;
         } elseif ((!empty($percentage)) and ($percentage > 100)) {
-            $percentage = "";
+            $percentage = 100;
         }
         echo "<div>
                <table class='tab_cadre' width='" . $width . "'>
                      <tr>
                         <td align='center' width='" . $width . "'>";
 
-        if (
-            (!empty($percentage))
-              || ($percentage == "0")
-        ) {
+        if (!empty($percentage)) {
             echo $percentage . "% " . $message;
         }
 
@@ -98,11 +95,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
                     echo "green";
                 }
             }
-            if ($percentage == 0) {
-                echo "' height='" . $height . "' width='1'>&nbsp;</td>";
-            } else {
-                echo "' height='" . $height . "' width='" . (($width * $percentage) / 100) . "'>&nbsp;</td>";
-            }
+            echo "' height='" . $height . "' width='" . (($width * $percentage) / 100) . "'>&nbsp;</td>";
         }
         if ($percentage == 0) {
             echo "                           <td height='" . $height . "' width='1'></td>";
@@ -156,11 +149,11 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     *
     * @global array $CFG_GLPI
     * @param integer $width
-    * @param integer $percent
+    * @param integer|float $percent
     * @param array $options
     * @return string
     */
-    public static function getProgressBar($width, $percent, $options = [])
+    public static function getProgressBar($width, $percent, array $options = [])
     {
         global $CFG_GLPI;
 
@@ -169,7 +162,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
         $param['simple'] = false;
         $param['forcepadding'] = false;
 
-        if (is_array($options) && count($options)) {
+        if (count($options)) {
             foreach ($options as $key => $val) {
                 $param[$key] = $val;
             }

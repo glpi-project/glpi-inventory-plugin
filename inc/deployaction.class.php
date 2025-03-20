@@ -176,7 +176,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
         $i = 0;
         foreach ($data['jobs'][$this->json_name] as $action) {
-            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool)($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
                 Html::showCheckbox(['name' => 'actions_entries[' . $i . ']']);
@@ -353,7 +353,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                 break;
 
             default:
-                return false;
+                return;
         }
 
         echo "<table class='package_item'>";

@@ -485,7 +485,7 @@ class PluginGlpiinventoryStaticmisc
     * Get selection type for network discovery
     *
     * @param string $itemtype
-    * @return array
+    * @return string
     */
     public static function task_selection_type_networkdiscovery($itemtype)
     {

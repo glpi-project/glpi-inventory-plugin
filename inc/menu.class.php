@@ -504,10 +504,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $i = 1;
         foreach ($a_steps as $data) {
             echo "<tr class='tab_bg_1'>";
-            if (
-                isset($data['title'])
-                 && $data['title']
-            ) {
+            if (isset($data['title'])) {
                 echo "<th colspan='2'>";
                 echo $data['text'];
                 echo "</th>";

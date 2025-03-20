@@ -147,7 +147,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
             $computer->getFromDB($data['computers_id']);
-            echo $computer->getLink(1);
+            echo $computer->getLink();
             echo '</td>';
             echo '<td>';
             echo $data['pathfile'];

@@ -44,7 +44,7 @@ class PluginGlpiinventoryToolbox
     * Log if extra debug enabled
     *
     * @param string $file
-    * @param string $message
+    * @param string|array $message
     */
     public static function logIfExtradebug($file, $message)
     {
@@ -268,7 +268,7 @@ class PluginGlpiinventoryToolbox
     * @param array $options
     * @return string unique html element id
     */
-    public static function showHours($name, $options = [])
+    public static function showHours(string $name, array $options = [])
     {
 
         $p['value']          = '';
@@ -278,7 +278,7 @@ class PluginGlpiinventoryToolbox
         $p['begin']          = 0;
         $p['end']            = (24 * 3600);
 
-        if (is_array($options) && count($options)) {
+        if (count($options)) {
             foreach ($options as $key => $val) {
                 $p[$key] = $val;
             }
@@ -312,11 +312,11 @@ class PluginGlpiinventoryToolbox
 
 
    /**
-    * Execute a function as as pllugin user
+    * Execute a function as plugin user
     *
     * @param string|array $function
     * @param array $args
-    * @return array the normaly returned value from executed callable
+    * @return array the normally returned value from executed callable
     */
     public function executeAsGlpiinventoryUser($function, array $args = [])
     {

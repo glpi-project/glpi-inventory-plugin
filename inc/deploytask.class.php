@@ -238,11 +238,11 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
             foreach ($a_taskjobstatuss as $a_taskjobstatus) {
                 $a_taskjoblogs = $log->find(['plugin_glpiinventory_taskjobstates_id' => $a_taskjobstatus['id']]);
                 foreach ($a_taskjoblogs as $a_taskjoblog) {
-                    $log->delete($a_taskjoblog, 1);
+                    $log->delete($a_taskjoblog, true);
                 }
-                $status->delete($a_taskjobstatus, 1);
+                $status->delete($a_taskjobstatus, true);
             }
-            $job->delete($a_taskjob, 1);
+            $job->delete($a_taskjob, true);
         }
         return true;
     }

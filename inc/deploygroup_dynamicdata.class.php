@@ -62,17 +62,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     public static $items_id = 'plugin_glpiinventory_deploygroups_id';
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        /** @var CommonDBTM $item */
+        /** @var PluginGlpiinventoryDeployGroup $item */
         if (
             !$withtemplate
             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP
@@ -97,10 +90,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     * This function saves and restores the pagination parameters to avoid breaking the pagination in the
     * query results.
     *
-    * @param CommonGLPI $item the item object
-    * @return string name of the tab
+    * @param PluginGlpiinventoryDeployGroup $item the item object
+    * @return int
     */
-    public function getMatchingItemsCount(CommonGLPI $item)
+    public function getMatchingItemsCount(PluginGlpiinventoryDeployGroup $item)
     {
         // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
         // to isolate the search performed in the dynamic group,
@@ -146,6 +139,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             $backup_criteria = $_SESSION['glpisearch']['Computer'];
         }
 
+        /** @var PluginGlpiinventoryDeployGroup $item */
         switch ($tabnum) {
             case 1:
                 self::showCriteriaAndSearch($item);

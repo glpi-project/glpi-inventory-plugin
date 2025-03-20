@@ -302,8 +302,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             Plugin::getWebDir('glpiinventory') . "/ajax/taskjobaddtype.php",
             $params,
             ["click"],
-            "-1",
-            "-1",
+            -1,
+            -1,
             [__('Add')]
         );
 
@@ -580,7 +580,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                 }
                 if (
                     ($data['date_scheduled_timestamp'] + $period) <= date('U')
-                    and $period = ! '0'
                 ) {
                     $periodtotal = $period;
                     for ($i = 2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
@@ -664,7 +663,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         ]);
 
         foreach ($iterator as $data) {
-            $this->reinitializeTaskjobs($data['plugin_glpiinventory_tasks_id'], '1');
+            $this->reinitializeTaskjobs($data['plugin_glpiinventory_tasks_id'], 1);
         }
     }
 
@@ -689,9 +688,9 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                 ['plugin_glpiinventory_taskjobstates_id' => $a_taskjobstate['id']]
             );
             foreach ($a_taskjoblogs as $a_taskjoblog) {
-                 $pfTaskjoblog->delete($a_taskjoblog, 1);
+                 $pfTaskjoblog->delete($a_taskjoblog, true);
             }
-            $pfTaskjobstate->delete($a_taskjobstate, 1);
+            $pfTaskjobstate->delete($a_taskjobstate, true);
         }
     }
 
@@ -754,7 +753,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             $link_item = $pfTaskjob->getFormURL();
             $link  = $link_item;
             $link .= (strpos($link, '?') ? '&amp;' : '?') . 'id=' . $pfTaskjob->fields['id'];
-            echo "<td><a href='" . $link . "'>" . $pfTaskjob->getNameID(1) . "</a></td>";
+            echo "<td><a href='" . $link . "'>" . $pfTaskjob->getNameID() . "</a></td>";
             echo "<td>" . Dropdown::getYesNo($pfTask->fields['is_active']) . "</td>";
             echo "<td>" . $pfTask->fields['datetime_start'] . "</td>";
             $a_time = '';
@@ -1110,7 +1109,7 @@ function new_subtype(id) {
         echo "<table class='tab_cadrehov package_item_list' id='table_taskjob_$rand' style='width: 950px'>";
         $i = 0;
         foreach ($a_taskjobs as $data) {
-            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool)($i % 2));
             echo "<td class='control'>";
             Html::showCheckbox(['name'    => 'taskjob_entries[]',
                                   'value'   => $i]);

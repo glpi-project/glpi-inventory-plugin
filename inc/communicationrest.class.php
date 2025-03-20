@@ -245,7 +245,7 @@ class PluginGlpiinventoryCommunicationRest
                         $taskjobstate->fields['id'],
                         $taskjobstate->fields['items_id'],
                         $taskjobstate->fields['itemtype'],
-                        PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
+                        (string)PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
                         $p['msg']
                     );
                     break;

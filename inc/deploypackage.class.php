@@ -553,7 +553,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             echo "<img src='" . Plugin::getWebDir('glpiinventory') . "/pics/$subtype.png' />";
             echo "&nbsp;" . __($label, 'glpiinventory');
             if ($canedit) {
-                $this->plusButtonSubtype($this->getID(), $subtype, $rand);
+                $this->plusButtonSubtype($this->getID(), $subtype, (string)$rand);
             }
             echo "</th>";
             echo "</tr>";
@@ -579,7 +579,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
             $classname = "PluginGlpiinventoryDeploy" . ucfirst($subtype);
             $class     = new $classname();
-            $class->displayForm($this, $datas, $rand, "init");
+            $class->displayForm($this, $datas, (string)$rand, "init");
             Html::closeForm();
 
             $json_subtype = $json_subtypes[$subtype];
@@ -597,7 +597,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 echo Html::hidden('remove_item');
                 echo Html::hidden('itemtype', ['value' => $classname]);
                 echo Html::hidden('packages_id', ['value' => $this->getID()]);
-                $class->displayList($this, $datas, $rand);
+                $class->displayList($this, $datas, (string)$rand);
                 Html::closeForm();
                 echo "</div>";
             }
@@ -645,7 +645,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     *
     * @global array $CFG_GLPI
     * @param string $dom_id
-    * @param boolean $clone
+    * @param false|string $clone
     */
     public static function plusButton($dom_id, $clone = false)
     {
@@ -706,19 +706,15 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             switch ($action_type) {
                 case "add_item":
                     return $class->add_item($params);
-                break;
 
                 case "save_item":
                     return $class->save_item($params);
-                break;
 
                 case "remove_item":
                     return $class->remove_item($params);
-                break;
 
                 case "move_item":
                     return $class->move_item($params);
-                break;
             }
         } else {
             Toolbox::logDebug("package subtype not found : " . $params['itemtype']);
@@ -918,7 +914,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     *
     * @param string $subtype
     * @param integer $index
-    * @return string
+    * @return string|array
     */
     public function getSubElement($subtype, $index)
     {
@@ -1011,13 +1007,6 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     }
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
@@ -1217,7 +1206,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     echo "<td>" . __('Group') . "</td>";
                     echo "<td>";
-                    $names     = Dropdown::getDropdownName('glpi_groups', $data['groups_id'], 1);
+                    $names     = Dropdown::getDropdownName('glpi_groups', $data['groups_id'], true);
                     $groupname = sprintf(
                         __('%1$s %2$s'),
                         $names["name"],
@@ -1259,7 +1248,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     echo "<td>" . Entity::getTypeName(1) . "</td>";
                     echo "<td>";
-                    $names      = Dropdown::getDropdownName('glpi_entities', $data['entities_id'], 1);
+                    $names      = Dropdown::getDropdownName('glpi_entities', $data['entities_id'], true);
                     $entityname = sprintf(
                         __('%1$s %2$s'),
                         $names["name"],
@@ -1291,7 +1280,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     echo "<td>" . _n('Profile', 'Profiles', 1) . "</td>";
                     echo "<td>";
-                    $names       = Dropdown::getDropdownName('glpi_profiles', $data['profiles_id'], 1);
+                    $names       = Dropdown::getDropdownName('glpi_profiles', $data['profiles_id'], true);
                     $profilename = sprintf(
                         __('%1$s %2$s'),
                         $names["name"],
@@ -1716,7 +1705,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     * Get deploy packages available to install on user computer(s) and for
     * packages requested the state of deploy
     *
-    * @param integer $users_id id of the user
+    * @param false|integer $users_id id of the user
     */
     public function getPackageForMe($users_id, $computers_id = false)
     {

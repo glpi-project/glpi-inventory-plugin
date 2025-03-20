@@ -150,15 +150,8 @@ class PluginGlpiinventoryProfile extends Profile
     */
     public function showForm($profiles_id, $options = [])
     {
-
-        $openform = true;
-        $closeform = true;
-
         echo "<div class='firstbloc'>";
-        if (
-            ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
-            && $openform
-        ) {
+        if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))) {
             $profile = new Profile();
             echo "<form method='post' action='" . $profile->getFormURL() . "'>";
         }
@@ -180,10 +173,7 @@ class PluginGlpiinventoryProfile extends Profile
         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('Software deployment', 'glpiinventory')]);
-        if (
-            $canedit
-            && $closeform
-        ) {
+        if ($canedit) {
             echo "<div class='center'>";
             echo Html::hidden('id', ['value' => $profiles_id]);
             echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);

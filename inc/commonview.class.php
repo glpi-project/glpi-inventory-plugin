@@ -208,7 +208,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     * Display dropdown form element with array data
     *
     * @param string $title
-    * @param string $varname
+    * @param ?string $varname
     * @param array $values
     * @param array $options
     * @return string the rand number can be used with ajax to update something
