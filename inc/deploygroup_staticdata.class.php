@@ -371,7 +371,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         ];
         if (isset($files_data['importcsvfile']['tmp_name'])) {
             if (($handle = fopen($files_data['importcsvfile']['tmp_name'], "r")) !== false) {
-                while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"])) !== false) {
+                while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"], '"', '')) !== false) {
                     $input['items_id'] = str_replace(' ', '', $data[0]);
                     if ($computer->getFromDB($input['items_id'])) {
                         $pfDeployGroup_static->add($input);
