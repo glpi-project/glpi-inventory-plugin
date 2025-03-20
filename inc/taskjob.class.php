@@ -70,23 +70,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-   /**
-    * Get join query in SQL
-    *
-    * @return array
-    */
-    public static function getJoinQuery()
-    {
-        //FIXME: used only for queries using PluginGlpiinventoryToolbox::fetchAssocByTable()
-        return [
-          'taskjobs' =>
-               "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` as taskjob\n" .
-               "ON taskjob.`plugin_glpiinventory_tasks_id` = task.`id`"];
-    }
-
     public static function getJoinCriteria()
     {
-        //FIXME: used only for queries using PluginGlpiinventoryToolbox::fetchAssocByTable()
         return [
             'glpi_plugin_glpiinventory_taskjobs AS taskjob' => [
                 'ON' => [

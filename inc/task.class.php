@@ -643,8 +643,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     */
     public static function cronCleanOnDemand($task = null)
     {
-        global $DB;
-
+        //FIXME: still used? If not, self::cleanTasksAndJobs() may no longer be used too
         $config   = new PluginGlpiinventoryConfig();
         $interval = $config->getValue('clean_on_demand_tasks');
 
