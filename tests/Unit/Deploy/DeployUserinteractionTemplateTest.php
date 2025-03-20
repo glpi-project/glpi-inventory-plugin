@@ -111,14 +111,8 @@ class DeployUserinteractionTemplateTest extends TestCase
     */
     public function testGetButtons()
     {
-        $buttons  = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons(PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS);
-        $this->assertEquals(8, count($buttons));
-
-        $buttons = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons('foo');
-        $this->assertFalse($buttons);
-
         $buttons = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons();
-        $this->assertFalse($buttons);
+        $this->assertEquals(8, count($buttons));
     }
 
 
@@ -167,19 +161,8 @@ class DeployUserinteractionTemplateTest extends TestCase
     */
     public function testGetIcons()
     {
-        $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons(PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS);
-        $this->assertEquals(5, count($icons));
-        $this->assertEquals($icons, [ PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_NONE     => __('None'),
-                                    PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_WARNING  => __('Warning'),
-                                    PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
-                                    PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_ERROR    => __('Error'),
-                                    PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
-                                   ]);
-
-        $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons('foo');
-        $this->assertFalse($icons);
-
         $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons();
+        $this->assertEquals(5, count($icons));
         $this->assertEquals($icons, [ PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_NONE     => __('None'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_WARNING  => __('Warning'),
                                     PluginGlpiinventoryDeployUserinteractionTemplate::WTS_ICON_INFO     => _n('Information', 'Informations', 1),

@@ -156,16 +156,13 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
 
    /**
-    * Get available buttons for alerts, by interaction type
+    * Get available buttons for alerts
     *
-    * @since 9.2
-    * @param string $interaction_type the type of interaction
     * @return array
     */
-    public static function getButtons($interaction_type = '')
+    public static function getButtons()
     {
-        $interactions = [
-         self::ALERT_WTS => [
+        return  [
             self::WTS_BUTTON_OK_SYNC             => __('OK', 'glpiinventory'),
             self::WTS_BUTTON_OK_ASYNC            => __('OK (asynchronous)', 'glpiinventory'),
             self::WTS_BUTTON_OK_CANCEL           => __('OK - Cancel', 'glpiinventory'),
@@ -174,39 +171,25 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
             self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('Abort - Retry - Ignore', 'glpiinventory'),
             self::WTS_BUTTON_CANCEL_TRY_CONTINUE => __('Cancel - Try - Continue', 'glpiinventory'),
             self::WTS_BUTTON_YES_NO_CANCEL       => __('Yes - No - Cancel', 'glpiinventory')
-         ]
         ];
-        if (isset($interactions[$interaction_type])) {
-            return $interactions[$interaction_type];
-        } else {
-            return false;
-        }
     }
 
 
    /**
-    * Get available icons for alerts, by interaction type
+    * Get available icons for alerts
     *
     * @since 9.2
-    * @param string $interaction_type the type of interaction
     * @return array
     */
-    public static function getIcons($interaction_type = self::ALERT_WTS)
+    public static function getIcons()
     {
-        $icons = [
-         self::ALERT_WTS => [
+        return [
             self::WTS_ICON_NONE     => __('None'),
             self::WTS_ICON_WARNING  => __('Warning'),
-            self::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
+            self::WTS_ICON_INFO     => _n('Information', 'Information', 1),
             self::WTS_ICON_ERROR    => __('Error'),
             self::WTS_ICON_QUESTION => __('Question', 'glpiinventory')
-         ]
         ];
-        if (isset($icons[$interaction_type])) {
-            return $icons[$interaction_type];
-        } else {
-            return false;
-        }
     }
 
 
