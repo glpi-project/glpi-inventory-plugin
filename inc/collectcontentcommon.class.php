@@ -48,7 +48,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     public static $rightname        = 'plugin_glpiinventory_collect';
     public $collect_itemtype = '';
     public $collect_table    = '';
-    public $type             = '';
+    public $collect_type     = '';
 
    /**
     * Get name of this type by language of the user connected
@@ -110,7 +110,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
             $collect = $this->getCollectClass();
             switch (get_class($item)) {
                 case 'PluginGlpiinventoryCollect':
-                    if ($item->fields['type'] == $this->type) {
+                    if ($item->fields['type'] == $this->collect_type) {
                         $a_colfiles = getAllDataFromTable(
                             $collect::getTable(),
                             ['plugin_glpiinventory_collects_id' => $item->fields['id']]

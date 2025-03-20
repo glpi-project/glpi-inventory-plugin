@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectCommon
 {
-    public $type = 'registry';
+    public $collect_type = 'registry';
 
    /**
     * Get name of this type by language of the user connected

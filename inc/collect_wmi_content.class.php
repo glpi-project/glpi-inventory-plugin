@@ -44,7 +44,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     public $collect_itemtype = 'PluginGlpiinventoryCollect_Wmi';
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_wmis';
 
-    public $type = 'wmi';
+    public $collect_type = 'wmi';
 
    /**
     * update wmi data to compute (add and update) with data sent by the agent

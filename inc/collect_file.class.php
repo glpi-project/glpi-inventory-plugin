@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
 {
-    public $type = 'file';
+    public $collect_type = 'file';
 
    /**
     * Get name of this type by language of the user connected

@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
 {
-    public $type = 'wmi';
+    public $collect_type = 'wmi';
 
    /**
     * Get name of this type by language of the user connected
