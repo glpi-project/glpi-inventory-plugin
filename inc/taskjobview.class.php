@@ -64,9 +64,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        $tab_names = [];
         /** @var CommonDBTM $item */
-        if ($item->fields['id'] > 0 and $this->can('task', READ)) {
+        if ($item->fields['id'] > 0 and Session::haveRight('task', READ)) {
             return __('Job configuration', 'glpiinventory');
         }
         return '';
@@ -530,12 +529,10 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     *
     * @param integer $id id of the taskjob
     * @param array $options
-    * @return true
+    * @return bool
     */
     public function showForm($id, $options = [])
     {
-        global $CFG_GLPI;
-
         $new_item = false;
         if ($id > 0) {
             if ($this->getFromDB($id)) {
@@ -553,7 +550,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     __('A job can not be created outside a task form'),
                     self::MSG_ERROR
                 );
-                return;
+                return false;
             }
             $this->getEmpty();
             $this->fields['plugin_glpiinventory_tasks_id'] = $options['task_id'];
@@ -634,10 +631,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $options['width'] = '40%';
         }
 
-        if (!is_null("method")) {
-            $options['value'] = $this->fields["method"];
-        }
-
+        $options['value'] = $this->fields["method"];
         $options["on_change"] = "task_method_change(this.value)";
 
         $modules_methods_rand = Dropdown::showFromArray(
@@ -670,14 +664,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "<div " . $style . "id='entity_restrict' class='mb-2 col-20 col-sm-10'>";
         echo "<label>" . __('Restrict scope to task entity', 'glpiinventory') . "&nbsp;</label>";
 
-        if (!isset($options['width'])) {
-            $options['width'] = '40%';
-        }
         $options['name'] = 'restrict_to_task_entity';
-        if (!is_null("restrict_to_task_entity")) {
-            $options['value'] = 1;
-            $options['checked'] = $this->fields["restrict_to_task_entity"];
-        }
+        $options['value'] = 1;
+        $options['checked'] = $this->fields["restrict_to_task_entity"];
         echo Html::getCheckbox($options);
         echo Html::showToolTip(__('Only for IPRange, restrict target to task entity. Unchecked if assets are not in the same entity as the task'), ['display' => true]);
         echo "</div>";

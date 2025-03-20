@@ -57,7 +57,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
    /**
     * Restrict the first item to the current entity
     *
-    * @var string
+    * @var bool
     */
     public static $take_entity_1 = true;
 
@@ -78,7 +78,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
    /**
     * Not restrict the second item to the current entity
     *
-    * @var string
+    * @var bool
     */
     public static $take_entity_2 = false;
 
@@ -120,6 +120,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pfIPRange_credentials = new self();
+        /** @var CommonDBTM $item */
         $pfIPRange_credentials->showItemForm($item);
         return true;
     }

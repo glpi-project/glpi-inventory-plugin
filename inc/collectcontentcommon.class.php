@@ -118,13 +118,13 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
                         if (count($a_colfiles) == 0) {
                              return '';
                         }
-                         $in = array_keys($a_colfiles);
-                         $fk = getForeignKeyFieldForItemType($collect);
+                        $in = array_keys($a_colfiles);
+                        $fk = getForeignKeyFieldForItemType($collect);
                         if (
-                            $nb = countElementsInTable(
+                            ($nb = countElementsInTable(
                                 $this->getTable(),
                                 [$fk => $in]
-                            ) > 0
+                            )) > 0
                         ) {
                             return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb);
                         }

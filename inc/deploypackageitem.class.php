@@ -247,8 +247,8 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     *
     * @since 9.2
     * @param integer $id the package ID
-    * @param string $item the item to add to the package definition
-    * @param integer $order the order of the item
+    * @param array $item the item to add to the package definition
+    * @param string $order the order of the item
     *
     * @return void
     */
@@ -403,7 +403,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
    /**
     * Get the size of file
     *
-    * @param integer $filesize
+    * @param mixed $filesize
     * @return string
     */
     public function processFilesize($filesize)
@@ -466,7 +466,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
-        return true;
+        return;
     }
 
     public function getTypes()

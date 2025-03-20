@@ -573,7 +573,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     * Log when extra-debug is activated
     *
     * @param string $file name of log file to update
-    * @param string $message the message to put in log file
+    * @param string|string[] $message the message to put in log file
     */
     public static function logIfExtradebug($file, $message)
     {

@@ -116,11 +116,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     public function getLabelForAType($event)
     {
         $events = $this->getTypes();
-        if (isset($events[$event])) {
-            return $events[$event];
-        } else {
-            return false;
-        }
+        return $events[$event] ?? '';
     }
 
 
@@ -135,8 +131,6 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
-        global $CFG_GLPI;
-
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
         if (isset($request_data['packages_id'])) {
@@ -158,9 +152,6 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
         }
 
         $values = $this->getValues($type, $config_data, $mode);
-        if ($values === false) {
-            return false;
-        }
 
         echo "<table class='package_item'>";
         echo "<tr>";
@@ -203,7 +194,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * @param array $data fields yet defined in edit mode
     * @param string $mode mode in use (create, edit...)
     *
-    * @return string|false
+    * @return array
     */
     public function getValues($type, $data, $mode)
     {
@@ -260,7 +251,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
         echo "<table class='tab_cadrehov package_item_list' id='table_userinteractions_$rand'>";
         foreach ($data['jobs']['userinteractions'] as $interaction) {
-            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool)($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
                 Html::showCheckbox(['name' => 'userinteractions_entries[' . $i . ']']);
@@ -305,14 +296,14 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
    * Get of a short description of a user interaction
    *
    * @since 9.2
-   * @param string $interaction an array representing an interaction
+   * @param array $interaction an array representing an interaction
    * @return string a short description
    */
     public function getInteractionDescription($interaction)
     {
         $text = '';
 
-        if (isset($interaction['label']) && !empty($interaction['label'])) {
+        if (isset($interaction['label'])) {
             $text = $interaction['label'];
         } elseif (isset($interaction['name'])) {
             $text .= $interaction['name'];

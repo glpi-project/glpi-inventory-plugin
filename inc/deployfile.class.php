@@ -64,7 +64,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
          'Computer' => __("Upload from computer", 'glpiinventory')
         ];
 
-        if (GLPI_INSTALL_MODE !== 'CLOUD') {
+        if (GLPI_INSTALL_MODE !== 'CLOUD') { //@phpstan-ignore-line
             $types['Server'] = __("Upload from server", 'glpiinventory');
         }
 
@@ -142,7 +142,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
             // start new line
             $pics_path = Plugin::getWebDir('glpiinventory') . "/pics/";
-            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool)($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
                 Html::showCheckbox(['name' => 'file_entries[' . $i . ']', 'value' => 0]);
@@ -315,10 +315,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                     Ajax::createModalWindow(
                         "fileModal$rand",
                         $fi_path . "/ajax/deployfilemodal.php",
-                        ['title' => __('Select the file on server', 'glpiinventory'),
-                        'extraparams' => [
-                           'rand' => $rand
-                        ]]
+                        [
+                            'title' => __('Select the file on server', 'glpiinventory'),
+                            'extraparams' => ['rand' => $rand]
+                        ]
                     );
                     break;
             }
@@ -513,7 +513,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             default:
                 return $this->uploadFileFromComputer($params);
         }
-        return false;
     }
 
 
@@ -970,7 +969,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * Return all subpart path
     *
     * @param string $sha512 sha512 of the file
-    * @return array
+    * @return array|false
     */
     public function getFilePath($sha512)
     {

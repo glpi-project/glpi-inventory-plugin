@@ -252,10 +252,11 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             }
             foreach ($devices[Printer::getType()] as $items_id) {
                 $a_ports = $NetworkPort->find(
-                    ['itemtype' => 'Printer',
-                    'items_id' => $items_id,
-                    ['ip']     => ['!=',
-                    '127.0.0.1']]
+                    [
+                        'itemtype' => 'Printer',
+                        'items_id' => $items_id,
+                        'ip'       => ['!=', '127.0.0.1']
+                    ]
                 );
                 foreach ($a_ports as $a_port) {
                      $a_ip = explode(".", $a_port['ip']);
@@ -277,7 +278,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $a_input['uniqid'] = $uniqid;
             $a_input['execution_id'] = $pfTask->fields['execution_id'];
 
-            $taskvalid = 0;
             foreach (array_keys($a_subnet) as $subnet) {
                 // No agent available for this subnet
                 for ($i = 0; $i < 2; $i++) {
@@ -311,9 +311,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     }
                 }
             }
-            if ($taskvalid == "0") {
-                $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
-            }
+            $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
         } else {
             /**
              * Manage agents
@@ -399,7 +397,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
 
             $param_attrs['PID'] = $current->fields['id'];
 
-            $changestate = 0;
             $taskjobstatedatas = $jobstate->fields;
 
             $a_extended = ['snmpcredentials_id' => 0];
@@ -417,26 +414,16 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $device_attrs['IP'] = $ip;
             $device_attrs['AUTHSNMP_ID'] = $a_extended['snmpcredentials_id'];
 
-            if ($changestate == '0') {
-                $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
-                $pfTaskjoblog->addTaskjoblog(
-                    $taskjobstatedatas['id'],
-                    '0',
-                    'Agent',
-                    '1',
-                    $param_attrs['THREADS_QUERY'] . ' threads ' .
-                    $param_attrs['TIMEOUT'] . ' timeout'
-                );
-                $changestate = $pfTaskjobstate->fields['id'];
-            } else {
-                $pfTaskjobstate->changeStatusFinish(
-                    $taskjobstatedatas['id'],
-                    $taskjobstatedatas['items_id'],
-                    $taskjobstatedatas['itemtype'],
-                    0,
-                    "Merged with " . $changestate
-                );
-            }
+            $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
+            $pfTaskjoblog->addTaskjoblog(
+                $taskjobstatedatas['id'],
+                0,
+                'Agent',
+                '1',
+                $param_attrs['THREADS_QUERY'] . ' threads ' .
+                $param_attrs['TIMEOUT'] . ' timeout'
+            );
+
             // Only keep required snmp credentials
             $snmpauthlist = $credentials->find(['id' => $a_extended['snmpcredentials_id']]);
             foreach ($snmpauthlist as $snmpauth) {

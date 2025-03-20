@@ -175,7 +175,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        /** @var CommonDBTM $item */
+        /** @var PluginGlpiinventoryIPRange $item */
         if ($item->fields['id'] > 0) {
             $nb = 0;
             if ($_SESSION['glpishow_count_on_tabs']) {
@@ -198,6 +198,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pf_Task = new self();
+        /** @var PluginGlpiinventoryIPRange $item */
         $pf_Task->showItemForm($item);
         return true;
     }
@@ -206,11 +207,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
     * Display form
     *
-    * @param CommonDBTM $item
+    * @param PluginGlpiinventoryIPRange $item
     * @param array $options
     * @return boolean
     */
-    public function showItemForm(CommonDBTM $item, array $options = [])
+    public function showItemForm(PluginGlpiinventoryIPRange $item, array $options = [])
     {
         $ID = $item->getField('id');
 
@@ -218,7 +219,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             return false;
         }
 
-        $rand = mt_rand();
         $a_data = PluginGlpiinventoryTaskjob::getTaskfromIPRange($item);
 
         echo "<table class='tab_cadre_fixe'>";
@@ -316,7 +316,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $a_taskjobs = $pfTaskjob->find(['method' => $method]);
         $task_id = 0;
         foreach ($a_taskjobs as $a_taskjob) {
-            $pfTaskjob->delete($a_taskjob, 1);
+            $pfTaskjob->delete($a_taskjob, true);
             if (
                 ($task_id != $a_taskjob['plugin_glpiinventory_tasks_id'])
                 and ($task_id != '0')
@@ -324,7 +324,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 // Search if this task have other taskjobs, if not, we will delete it
                 $findtaskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $task_id]);
                 if (count($findtaskjobs) == '0') {
-                    $pfTask->delete(['id' => $task_id], 1);
+                    $pfTask->delete(['id' => $task_id], true);
                 }
             }
             $task_id = $a_taskjob['plugin_glpiinventory_tasks_id'];
@@ -333,7 +333,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
            // Search if this task have other taskjobs, if not, we will delete it
             $findtaskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $task_id]);
             if (count($findtaskjobs) == '0') {
-                $pfTask->delete(['id' => $task_id], 1);
+                $pfTask->delete(['id' => $task_id], true);
             }
         }
     }
@@ -605,7 +605,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * Prepare data before update in database
     *
     * @param array $input
-    * @return array
+    * @return false|array
     */
     public function prepareInputForUpdate($input)
     {
@@ -661,7 +661,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
    /**
    * Get all on demand tasks to clean
    * @param integer $interval number of days to look for successful tasks
-   * @return array of tasks ID to clean
+   * @return int
    */
     public function cleanTasksAndJobs($interval)
     {
@@ -799,7 +799,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * @param bool $only_active, set to true to include only active tasks
     * @return array
     */
-    public function getJoblogs($task_ids = [], $with_logs = true, $only_active = false)
+    public function getJoblogs(array $task_ids = [], $with_logs = true, $only_active = false)
     {
         global $DB;
 
@@ -810,7 +810,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         // The concerned tasks list
         $tasks_list = [];
-        if (is_array($task_ids) && count($task_ids) > 0) {
+        if (count($task_ids) > 0) {
             $tasks_list = ['task.id' => $task_ids];
         }
 
@@ -921,7 +921,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
             $job_id = $result['job_id'];
             $jobs_handle = &$logs[$task_id]['jobs'];
-            if (!array_key_exists($job_id, $jobs_handle)) {
+            if (!isset($jobs_handle[$job_id])) {
                 $jobs_handle[$job_id] = [
                 'name'    => $result['job_name'],
                 'id'      => $result['job_id'],
@@ -1018,7 +1018,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
        // Parse the query result to update the data to return
         $tasks_list1 = [];
-        if (is_array($task_ids) && count($task_ids) > 0) {
+        if (count($task_ids) > 0) {
             $tasks_list1 += ['plugin_glpiinventory_tasks_id' => $task_ids];
         }
         $taskjobs = $pftaskjob->find($tasks_list1);
@@ -1089,7 +1089,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 if (!isset($logs[$task_id])) {
                     continue;
                 }
-                $job_id = $taskjob['id'];
+                $job_id = (int)$taskjob['id'];
                 $jobs   = &$logs[$task_id]['jobs'];
                 if (!isset($jobs[$job_id])) {
                     continue;
@@ -1441,27 +1441,25 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
               and is_bool($filter['is_running'])
         ) {
             // add taskjobs table JOIN statement
-            if (!isset($criteria['LEFT JOIN'])) {
-                $criteria['SELECT'] = array_merge(
-                    $criteria['SELECT'],
-                    [
-                        'taskjob.id AS taskjob_id',
-                        'taskjob.plugin_glpiinventory_tasks_id AS taskjob_plugin_glpiinventory_tasks_id',
-                        'taskjob.entities_id AS taskjob_entities_id',
-                        'taskjob.name AS taskjob_name',
-                        'taskjob.date_creation AS taskjob_date_creation',
-                        'taskjob.method AS taskjob_method',
-                        'taskjob.targets AS taskjob_targets',
-                        'taskjob.actors AS taskjob_actors',
-                        'taskjob.comment AS taskjob_comment',
-                        'taskjob.rescheduled_taskjob_id AS taskjob_rescheduled_taskjob_id',
-                        'taskjob.statuscomments AS taskjob_statuscomments',
-                        'taskjob.enduser AS taskjob_enduser',
-                        'taskjob.restrict_to_task_entity AS taskjob_restrict_to_task_entity'
-                    ]
-                );
-                $criteria['LEFT JOIN'] = PluginGlpiinventoryTaskjob::getJoinCriteria();
-            }
+            $criteria['SELECT'] = array_merge(
+                $criteria['SELECT'],
+                [
+                    'taskjob.id AS taskjob_id',
+                    'taskjob.plugin_glpiinventory_tasks_id AS taskjob_plugin_glpiinventory_tasks_id',
+                    'taskjob.entities_id AS taskjob_entities_id',
+                    'taskjob.name AS taskjob_name',
+                    'taskjob.date_creation AS taskjob_date_creation',
+                    'taskjob.method AS taskjob_method',
+                    'taskjob.targets AS taskjob_targets',
+                    'taskjob.actors AS taskjob_actors',
+                    'taskjob.comment AS taskjob_comment',
+                    'taskjob.rescheduled_taskjob_id AS taskjob_rescheduled_taskjob_id',
+                    'taskjob.statuscomments AS taskjob_statuscomments',
+                    'taskjob.enduser AS taskjob_enduser',
+                    'taskjob.restrict_to_task_entity AS taskjob_restrict_to_task_entity'
+                ]
+            );
+            $criteria['LEFT JOIN'] = PluginGlpiinventoryTaskjob::getJoinCriteria();
             $criteria['WHERE'][] = ['NOT' => ['taskjob.id' => null]];
         }
 
@@ -1574,9 +1572,9 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * Do actions after updated the item
     *
     * @global object $DB
-    * @param integer $history
+    * @param bool $history
     */
-    public function post_updateItem($history = 1)
+    public function post_updateItem($history = true)
     {
         global $DB;
 
