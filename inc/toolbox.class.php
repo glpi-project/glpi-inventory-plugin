@@ -179,62 +179,6 @@ class PluginGlpiinventoryToolbox
 
 
    // *********************** Functions used for inventory *********************** //
-
-   /**
-    *  This function fetch rows from a MySQL result in an array with each table as a key
-    *
-    *  example:
-    *  $query =
-    *     "SELECT table_a.*,table_b.* ".
-    *     "FROM table_b ".
-    *     "LEFT JOIN table_a ON table_a.id = table_b.linked_id";
-    *  $result = mysqli_query( $query );
-    *  print_r( fetchTableAssoc( $result ) )
-    *
-    *  output:
-    *  $results = Array
-    *     (
-    *        [0] => Array
-    *           (
-    *              [table_a] => Array
-    *                 (
-    *                    [id] => 1
-    *                 )
-    *              [table_b] => Array
-    *                 (
-    *                    [id] => 2
-    *                    [linked_id] => 1
-    *                 )
-    *           )
-    *           ...
-    *     )
-    *
-    * @param object $mysql_result
-    * @return array
-    */
-    public static function fetchAssocByTable($mysql_result)
-    {
-        $results = [];
-       //get fields header infos
-        $fields = mysqli_fetch_fields($mysql_result);
-       //associate row data as array[table][field]
-        while ($row = mysqli_fetch_row($mysql_result)) {
-            $result = [];
-            for ($i = 0; $i < count($row); $i++) {
-                $tname = $fields[$i]->table;
-                $fname = $fields[$i]->name;
-                if (!isset($result[$tname])) {
-                    $result[$tname] = [];
-                }
-                $result[$tname][$fname] = $row[$i];
-            }
-            if (count($result) > 0) {
-                $results[] = $result;
-            }
-        }
-        return $results;
-    }
-
     /**
      *  This function fetch rows from a DBMysqlIterator result in an array with each table as a key
      *

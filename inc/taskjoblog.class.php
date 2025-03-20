@@ -268,26 +268,6 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $this->addToDB();
     }
 
-
-   /**
-    * Get taskjobstate by uniqid
-    *
-    * @param string $uuid value uniqid
-    * @return array with data of table glpi_plugin_glpiinventory_taskjobstates
-    */
-    public static function getByUniqID($uuid)
-    {
-        $a_datas = getAllDataFromTable(
-            'glpi_plugin_glpiinventory_taskjobstates',
-            ['uniqid' => $uuid],
-            "1"
-        );
-        foreach ($a_datas as $a_data) {
-            return $a_data;
-        }
-        return [];
-    }
-
    /**
     * Get div with text/color depend on state
     *
