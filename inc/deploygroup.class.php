@@ -384,7 +384,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             $title = "";
         }
         Html::displayTitle(
-            $CFG_GLPI['root_doc'] . "/plugins/fusinvdeploy/pics/menu_group.png",
+            '',
             $title,
             $title,
             $buttons
