@@ -879,7 +879,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         if (count($data_structure['result']) <= 0) {
             // Not useful to go further, we will not have any result to send!
-            // Perharps the required tasks are not even active ;)
+            // Perhaps the required tasks are not even active ;)
             return ['tasks' => $logs, 'agents' => $agents];
         }
 
@@ -905,13 +905,13 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 "Job: " . print_r($result, true)
             );
 
-            $task_id = $result['task_id'];
+            $task_id = (int)$result['task_id'];
             if (!array_key_exists($task_id, $logs)) {
                 $logs[$task_id] = [
-                 'task_name' => $result['task_name'],
-                 'task_id'   => $result['task_id'],
-                 'expanded'  => false,
-                 'jobs'      => []
+                    'task_name' => $result['task_name'],
+                    'task_id'   => $result['task_id'],
+                    'expanded'  => false,
+                    'jobs'      => []
                 ];
             }
 
@@ -919,15 +919,15 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 $logs[$task_id]['expanded'] = $expanded[$task_id];
             }
 
-            $job_id = $result['job_id'];
+            $job_id = (int)$result['job_id'];
             /** @var array  $jobs_handle */
             $jobs_handle = &$logs[$task_id]['jobs'];
             if (!isset($jobs_handle[$job_id])) {
                 $jobs_handle[$job_id] = [
-                'name'    => $result['job_name'],
-                'id'      => $result['job_id'],
-                'method'  => $result['job_method'],
-                'targets' => []
+                    'name'    => $result['job_name'],
+                    'id'      => $result['job_id'],
+                    'method'  => $result['job_method'],
+                    'targets' => []
                 ];
             }
             $targets = importArrayFromDB($result['job_targets']);
