@@ -15,14 +15,6 @@ Some icons used in the project comes from the following set of graphics licensed
 
 * Fugue Icons is copyright by [Yusuke Kamiyamame](http://p.yusukekamiyamane.com/) and made available under a [Creative Commons Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/deed).
 
-* [Icojam](http://www.icojam.com) : icon_deployinstall.png, icon_deployuninstall.png
-
-* [myBaco](http://mybaco.deviantart.com) : icon_icon_InventoryComputerESX.png
-
-* Aha-Soft : icon_collect.png
-
-* [BlueMalboro](http://bluemalboro.deviantart.com/art/Micro-Icon-Set-42295693) : icon_networkdiscovery.png, icon_networkinventory.png
-
 ## Additional resources
 
 * [Official website](http://glpi-project.org/)
