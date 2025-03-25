@@ -920,6 +920,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             }
 
             $job_id = $result['job_id'];
+            /** @var array  $jobs_handle */
             $jobs_handle = &$logs[$task_id]['jobs'];
             if (!isset($jobs_handle[$job_id])) {
                 $jobs_handle[$job_id] = [
@@ -1090,6 +1091,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     continue;
                 }
                 $job_id = (int)$taskjob['id'];
+                /** @var array $jobs */
                 $jobs   = &$logs[$task_id]['jobs'];
                 if (!isset($jobs[$job_id])) {
                     continue;
@@ -1265,7 +1267,9 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                      $run_id = $log_result['run_id'];
                      $run_data = $runs_id[$run_id];
 
+                     /** @var array $jobs */
                      $jobs    = &$logs[$run_data['task_id']]['jobs'];
+                     /** @var array $targets */
                      $targets = &$jobs[$run_data['jobs_id']]['targets'];
 
                      $targets[$run_data['target_id']]['agents'][$run_data['agent_id']][] = [
