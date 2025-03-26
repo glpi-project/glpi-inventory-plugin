@@ -38,6 +38,9 @@ use Ramsey\Uuid\Uuid;
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QueryParam;
+
 /**
  * Get the current version of the plugin
  *
@@ -595,8 +598,8 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
             'glpi_displaypreferences',
             [
                 'itemtype'  => 'PluginGlpiinventoryTaskjoblog',
-                'num'       => new \QueryParam(),
-                'rank'      => new \QueryParam(),
+                'num'       => new QueryParam(),
+                'rank'      => new QueryParam(),
                 'users_id'  => 0
             ]
         );
@@ -633,10 +636,10 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $update = $DB->buildUpdate(
             'glpi_plugin_glpiinventory_taskjobs',
             [
-                'targets'   => new \QueryParam()
+                'targets'   => new QueryParam()
             ],
             [
-                'id'        => new \QueryParam()
+                'id'        => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -699,10 +702,10 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $update = $DB->buildUpdate(
             'glpi_plugin_glpiinventory_taskjobs',
             [
-                'actors' => new \QueryParam()
+                'actors' => new QueryParam()
             ],
             [
-                'id'     => new \QueryParam()
+                'id'     => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -911,11 +914,11 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $update = $DB->buildUpdate(
             'glpi_items_softwareversions',
             [
-                'entities_id'  => new \QueryParam()
+                'entities_id'  => new QueryParam()
             ],
             [
                 'itemtype'     => 'Computer',
-                'items_id'     => new \QueryParam(),
+                'items_id'     => new QueryParam(),
                 'is_dynamic'   => 1,
                 'entities_id'  => 0
             ]
@@ -1513,12 +1516,12 @@ function do_agent_migration($migration)
             $update = $DB->buildUpdate(
                 'glpi_plugin_glpiinventory_agents',
                 [
-                    'threads_networkdiscovery' => new \QueryParam(),
-                    'threads_networkinventory' => new \QueryParam(),
-                    'senddico'                 => new \QueryParam()
+                    'threads_networkdiscovery' => new QueryParam(),
+                    'threads_networkinventory' => new QueryParam(),
+                    'senddico'                 => new QueryParam()
                 ],
                 [
-                    'id'                       => new \QueryParam()
+                    'id'                       => new QueryParam()
                 ]
             );
             $stmt = $DB->prepare($update);
@@ -1563,7 +1566,7 @@ function do_agent_migration($migration)
         [
             'itemtype'           => 'PluginGlpiinventoryAgent',
             'id_search_option'   => 8,
-            'old_value'          => new \QueryExpression($DB->quoteName('new_value'))
+            'old_value'          => new QueryExpression($DB->quoteName('new_value'))
         ]
     );
 
@@ -1614,7 +1617,7 @@ function do_config_migration($migration)
             $delete = $DB->buildDelete(
                 'glpi_plugin_glpiinventory_configs',
                 [
-                    $id => new \QueryParam()
+                    $id => new QueryParam()
                 ]
             );
             $stmt = $DB->prepare($delete);
@@ -2032,7 +2035,7 @@ function do_iprangeconfigsecurity_migration($migration)
         $delete = $DB->buildDelete(
             'glpi_plugin_glpiinventory_ipranges_configsecurities',
             [
-                'id' => new \QueryParam()
+                'id' => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($delete);
@@ -2367,11 +2370,11 @@ function do_unmanaged_migration($migration)
             $update = $DB->buildUpdate(
                 'glpi_plugin_glpiinventory_unmanageds',
                 [
-                    'sysdescr'                                   => new \QueryParam(),
-                    'plugin_glpiinventory_configsecurities_id' => new \QueryParam()
+                    'sysdescr'                                 => new QueryParam(),
+                    'plugin_glpiinventory_configsecurities_id' => new QueryParam()
                 ],
                 [
-                    'id'                                         => new \QueryParam()
+                    'id'                                       => new QueryParam()
                 ]
             );
             $stmt = $DB->prepare($update);
@@ -3056,7 +3059,7 @@ function do_computercomputer_migration($migration)
                 'is_dynamic'   => 1
             ],
             [
-                'id'           => new \QueryParam()
+                'id'           => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -4668,7 +4671,7 @@ function do_printer_migration($migration)
         $delete = $DB->buildDelete(
             'glpi_plugin_glpiinventory_printers',
             [
-                'id' => new \QueryParam()
+                'id' => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($delete);
@@ -4731,7 +4734,7 @@ function do_printer_migration($migration)
                 'is_dynamic'   => 1
             ],
             [
-                'id'           => new \QueryParam()
+                'id'           => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -5153,7 +5156,7 @@ function do_networkequipment_migration($migration)
         $delete = $DB->buildDelete(
             'glpi_plugin_glpiinventory_networkequipments',
             [
-                'id'  => new \QueryParam()
+                'id'  => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($delete);
@@ -5180,7 +5183,7 @@ function do_networkequipment_migration($migration)
                 'is_dynamic'   => 1
             ],
             [
-                'id'           => new \QueryParam()
+                'id'           => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -6188,11 +6191,11 @@ function do_deployfile_migration($migration)
                     $update = $DB->buildUpdate(
                         'glpi_plugin_fusinvdeploy_files',
                         [
-                            'entities_id'  => new \QueryParam(),
-                            'is_recursive' => new \QueryParam(),
+                            'entities_id'  => new QueryParam(),
+                            'is_recursive' => new QueryParam(),
                         ],
                         [
-                            'id'           => new \QueryParam()
+                            'id'           => new QueryParam()
                         ]
                     );
                     $stmt = $DB->prepare($update);
@@ -7353,7 +7356,7 @@ function do_rule_migration($migration)
                 'value'  => 1
             ],
             [
-                'rules_id'  => new \QueryParam(),
+                'rules_id'  => new QueryParam(),
                 'value'     => 0,
                 'field'     => '_fusion'
             ]
@@ -7535,10 +7538,10 @@ function doDynamicDataSearchParamsMigration()
         $update = $DB->buildUpdate(
             'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
             [
-                'fields_array' => new \QueryParam()
+                'fields_array' => new QueryParam()
             ],
             [
-                'id'           => new \QueryParam()
+                'id'           => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -8249,10 +8252,10 @@ function update213to220_ConvertField($migration)
         $update = $DB->buildUpdate(
             'glpi_plugin_tracker_snmp_history',
             [
-                'Field'  => new \QueryParam()
+                'Field'  => new QueryParam()
             ],
             [
-                'Field'  => new \QueryParam()
+                'Field'  => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($update);
@@ -8312,10 +8315,10 @@ function update213to220_ConvertField($migration)
                             $insert = $DB->buildInsert(
                                 'glpi_plugin_fusinvsnmp_networkportconnectionlogs',
                                 [
-                                    'date_mod'                    => new \QueryParam(),
-                                    'creation'                    => new \QueryParam(),
-                                    'networkports_id_source'      => new \QueryParam(),
-                                    'networkports_id_destination' => new \QueryParam()
+                                    'date_mod'                    => new QueryParam(),
+                                    'creation'                    => new QueryParam(),
+                                    'networkports_id_source'      => new QueryParam(),
+                                    'networkports_id_destination' => new QueryParam()
                                 ]
                             );
                             $stmt = $DB->prepare($insert);
@@ -8403,10 +8406,10 @@ function update213to220_ConvertField($migration)
                                 $insert = $DB->buildInsert(
                                     'glpi_plugin_fusinvsnmp_networkportconnectionlogs',
                                     [
-                                        'date_mod'                    => new \QueryParam(),
-                                        'creation'                    => new \QueryParam(),
-                                        'networkports_id_source'      => new \QueryParam(),
-                                        'networkports_id_destination' => new \QueryParam()
+                                        'date_mod'                    => new QueryParam(),
+                                        'creation'                    => new QueryParam(),
+                                        'networkports_id_source'      => new QueryParam(),
+                                        'networkports_id_destination' => new QueryParam()
                                     ]
                                 );
                                     $stmt = $DB->prepare($insert);
@@ -8758,10 +8761,10 @@ function migrateTablesFromFusinvDeploy($migration)
             $update = $DB->buildUpdate(
                 'glpi_plugin_glpiinventory_deployorders',
                 [
-                    'json'   => new \QueryParam()
+                    'json'   => new QueryParam()
                 ],
                 [
-                    'id'     => new \QueryParam()
+                    'id'     => new QueryParam()
                 ]
             );
             $stmt = $DB->prepare($update);
@@ -9020,7 +9023,7 @@ function renamePlugin(Migration $migration)
         $DB->update(
             $table_name,
             [
-                $itemtype_col => new \QueryExpression(
+                $itemtype_col => new QueryExpression(
                     'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
                 )
             ],

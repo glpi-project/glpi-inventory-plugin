@@ -35,6 +35,9 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
 
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QueryParam;
+
 /**
  * Manage the state of task jobs.
  */
@@ -589,7 +592,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $iterator = $DB->request([
             'FROM'   => 'glpi_plugin_glpiinventory_taskjoblogs',
             'WHERE'  => [
-                'date'  => ['<', new \QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')]
+                'date'  => ['<', new QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')]
             ],
             'GROUPBY' => 'plugin_glpiinventory_taskjobstates_id'
         ]);
@@ -598,7 +601,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             $delete = $DB->buildDelete(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
-                    'plugin_glpiinventory_taskjobstates_id' => new \QueryParam()
+                    'plugin_glpiinventory_taskjobstates_id' => new QueryParam()
                 ]
             );
             $stmt = $DB->prepare($delete);
