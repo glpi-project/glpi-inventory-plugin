@@ -91,9 +91,6 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function prepareDb()
     {
         global $DB;
@@ -322,9 +319,6 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function prepareTask()
     {
 
@@ -350,10 +344,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function getDevicesToInventory()
+    public function testGetDevicesToInventory()
     {
 
         $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
@@ -371,10 +362,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PrinterToInventoryWithIp()
+    public function testPrinterToInventoryWithIp()
     {
 
         $printer       = new Printer();
@@ -451,10 +439,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PrinterToInventoryWithoutIp()
+    public function testPrinterToInventoryWithoutIp()
     {
 
         $printer       = new Printer();
