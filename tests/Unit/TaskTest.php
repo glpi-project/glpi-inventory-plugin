@@ -45,7 +45,7 @@ class TaskTest extends TestCase
     }
 
 
-    public function addTask()
+    public function testAddTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskJob();
@@ -77,7 +77,7 @@ class TaskTest extends TestCase
     }
 
 
-    public function duplicateTask()
+    public function testDuplicateTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskJob();
@@ -110,7 +110,7 @@ class TaskTest extends TestCase
     }
 
 
-    public function deleteTask()
+    public function testDeleteTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskJob();

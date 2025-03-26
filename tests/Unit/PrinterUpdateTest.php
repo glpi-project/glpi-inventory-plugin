@@ -41,8 +41,6 @@ class PrinterUpdateTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        global $DB;
-
        // Delete all printers
         $printer = new Printer();
         $items = $printer->find();
@@ -57,7 +55,7 @@ class PrinterUpdateTest extends TestCase
         $_SESSION["glpiID"] = 2;
     }
 
-    public function AddPrinter()
+    public function testAddPrinter()
     {
         $this->update_time = date('Y-m-d H:i:s');
         $_SESSION['glpi_currenttime'] = $this->update_time;
@@ -111,11 +109,10 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function PrinterGeneral()
+    public function testPrinterGeneral()
     {
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
-        $printerId = $printer->fields['id'];
         unset($printer->fields['id']);
         unset($printer->fields['date_mod']);
         unset($printer->fields['date_creation']);
@@ -191,18 +188,16 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function PrinterSnmpExtension()
+    public function testPrinterSnmpExtension()
     {
-
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
         $this->assertEquals($printer->fields['sysdescr'], 'HP ETHERNET MULTI-ENVIRONMENT');
     }
 
 
-    public function PrinterPageCounter()
+    public function testPrinterPageCounter()
     {
-
         $printerlog = new PrinterLog();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
@@ -212,7 +207,7 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function PrinterCartridgeBlack()
+    public function testPrinterCartridgeBlack()
     {
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
@@ -227,7 +222,7 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function PrinterCartridgeCyan()
+    public function testPrinterCartridgeCyan()
     {
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
@@ -242,7 +237,7 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function PrinterCartridgeYellow()
+    public function testPrinterCartridgeYellow()
     {
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
@@ -257,7 +252,7 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function PrinterCartridgeMagenta()
+    public function testPrinterCartridgeMagenta()
     {
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
@@ -271,7 +266,7 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function PrinterAllCartridges()
+    public function testPrinterAllCartridges()
     {
         $cartridge_info = new Printer_CartridgeInfo();
         $a_cartridge = $cartridge_info->find();
@@ -279,7 +274,7 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-    public function NewPrinterFromNetdiscovery()
+    public function testNewPrinterFromNetdiscovery()
     {
 
         $networkName = new NetworkName();
@@ -382,8 +377,8 @@ class PrinterUpdateTest extends TestCase
         );
     }
 
-    #[Depends('NewPrinterFromNetdiscovery')]
-    public function updatePrinterFromNetdiscovery()
+    #[Depends('testNewPrinterFromNetdiscovery')]
+    public function testUpdatePrinterFromNetdiscovery()
     {
         global $DB;
 
@@ -488,8 +483,8 @@ class PrinterUpdateTest extends TestCase
         );
     }
 
-    #[Depends('NewPrinterFromNetdiscovery')]
-    public function updatePrinterFromNetdiscoveryToInventory()
+    #[Depends('testNewPrinterFromNetdiscovery')]
+    public function testUpdatePrinterFromNetdiscoveryToInventory()
     {
         $_SESSION["plugin_glpiinventory_entity"] = 0;
 
