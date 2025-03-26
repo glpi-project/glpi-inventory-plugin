@@ -16,5 +16,8 @@
             "php": "8.2"
         },
         "sort-packages": true
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.12"
     }
 }
