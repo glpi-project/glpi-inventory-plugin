@@ -598,7 +598,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 echo Html::hidden('remove_item');
                 echo Html::hidden('itemtype', ['value' => $classname]);
                 echo Html::hidden('packages_id', ['value' => $this->getID()]);
-                $class->displayList($this, $datas, (string)$rand);
+                $class->displayDeployList($this, $datas, (string)$rand);
                 Html::closeForm();
                 echo "</div>";
             }
