@@ -139,7 +139,7 @@ jobs:
         repository: glpi-project/glpi
         path: glpi
         fetch-depth: 1
-        ref: 10.0/bugfixes
+        ref: main
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install dependencies
