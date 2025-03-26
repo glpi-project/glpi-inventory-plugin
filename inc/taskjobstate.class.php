@@ -35,6 +35,9 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
 
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QueryParam;
+
 /**
  * Manage the state of task jobs.
  */
@@ -404,7 +407,6 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $log_input['itemtype'] = $itemtype;
         $log_input['date']     = $_SESSION['glpi_currenttime'];
         $log_input['comment']  = $message;
-        $log_input             = Toolbox::addslashes_deep($log_input);
         $pfTaskjoblog->add($log_input);
 
         $pfTaskjob->getFromDB($this->fields['plugin_glpiinventory_taskjobs_id']);
@@ -475,7 +477,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             'itemtype' => $this->fields['itemtype'],
             'date'     => $_SESSION['glpi_currenttime'],
             'state'    => $joblog_state,
-            'comment'  => Toolbox::addslashes_deep($reason),
+            'comment'  => $reason
         ];
 
         $log->add($log_input);
@@ -521,7 +523,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        'comment'  => Toolbox::addslashes_deep($reason),
+                        'comment'  => $reason
                     ];
                     $log->add($log_input);
 
@@ -536,7 +538,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
-                        'comment'  => Toolbox::addslashes_deep($reason),
+                        'comment'  => $reason
                     ];
                     $log->add($log_input);
 
@@ -551,7 +553,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        'comment'  => Toolbox::addslashes_deep($reason),
+                        'comment'  => $reason
                     ];
                     $log->add($log_input);
                 }
@@ -589,7 +591,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $iterator = $DB->request([
             'FROM'   => 'glpi_plugin_glpiinventory_taskjoblogs',
             'WHERE'  => [
-                'date'  => ['<', new \QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')],
+                'date'  => ['<', new QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')]
             ],
             'GROUPBY' => 'plugin_glpiinventory_taskjobstates_id',
         ]);
@@ -598,7 +600,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             $delete = $DB->buildDelete(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
-                    'plugin_glpiinventory_taskjobstates_id' => new \QueryParam(),
+                    'plugin_glpiinventory_taskjobstates_id' => new QueryParam()
                 ]
             );
             $stmt = $DB->prepare($delete);

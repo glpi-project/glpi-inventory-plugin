@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
 
+use Glpi\DBAL\QueryExpression;
+
 /**
  * Manage the display part of tasks.
  */
@@ -398,18 +400,26 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "<tr class='border-top'>";
         echo "<td class='right pt-3' colspan='4'>";
         if (!$this->isNewID($ID) && $this->can($ID, PURGE)) {
-            echo Html::submit("<i class='fas fa-trash me-1'></i>" . _x('button', 'Delete permanently'), [
-                'name'    => 'purge',
-                'confirm' => __('Confirm the final deletion?'),
-                'class '  => 'btn btn-outline-danger me-2',
-            ]);
+            echo Html::submit(
+                _x('button', 'Delete permanently'),
+                [
+                    'icon' => 'fas fa-trash me-1',
+                    'name'    => 'purge',
+                    'confirm' => __('Confirm the final deletion?'),
+                    'class '  => 'btn btn-outline-danger me-2',
+                ]
+            );
         }
 
         if ($this->fields['is_active']) {
-            echo Html::submit("<i class='fas fa-bolt me-1'></i>" . __('Force start', 'glpiinventory'), [
-                'name' => 'forcestart',
-                'class' => 'btn btn-outline-warning me-2',
-            ]);
+            echo Html::submit(
+                __('Force start', 'glpiinventory'),
+                [
+                    'icon' => 'fas fa-bolt me-1',
+                    'name' => 'forcestart',
+                    'class' => 'btn btn-outline-warning me-2',
+                ]
+            );
         }
 
         if ($this->isNewID($ID)) {
@@ -419,10 +429,14 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             ]);
         } else {
             echo Html::hidden('id', ['value' => $ID]);
-            echo Html::submit("<i class='far fa-save me-1'></i>" . _x('button', 'Save'), [
-                'name'  => 'update',
-                'class' => 'btn btn-primary me-2',
-            ]);
+            echo Html::submit(
+                _x('button', 'Save'),
+                [
+                    'icon' => 'far fa-save me-1',
+                    'name'  => 'update',
+                    'class' => 'btn btn-primary me-2'
+                ]
+            );
         }
         echo "</td>";
         echo "</tr>";

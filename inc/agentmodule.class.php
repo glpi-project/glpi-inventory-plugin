@@ -208,8 +208,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
         echo "<br/>";
         if ($canedit) {
-            echo "<form name='form_ic' method='post' action='" . Plugin::getWebDir('glpiinventory') .
-               "/front/agentmodule.form.php'>";
+            echo "<form name='form_ic' method='post' action='" .
+               "/plugins/glpiinventory/front/agentmodule.form.php'>";
         }
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
@@ -434,7 +434,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      */
     public static function getUrlForModule($modulename, $entities_id = -1)
     {
-        $plugin_dir = '/' . Plugin::getWebDir('glpiinventory', false);
+        $plugin_dir = '/plugins/glpiinventory';
 
         $entity = new Entity();
         $base_url = $entity->getUsedConfig('agent_base_url', $entities_id, 'agent_base_url', '');

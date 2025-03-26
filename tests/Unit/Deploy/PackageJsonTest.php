@@ -31,14 +31,12 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class PackageJsonTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function JsonCreateNewPackage()
+    public function testJsonCreateNewPackage()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
@@ -54,10 +52,7 @@ class PackageJsonTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function AddItem()
+    public function testAddItem()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
@@ -83,11 +78,8 @@ class PackageJsonTest extends TestCase
         $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
     }
 
-    /**
-     * @test
-     * @depends AddItem
-     */
-    public function duplicate()
+    #[Depends('testAddItem')]
+    public function testDuplicate()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $packages        = $pfDeployPackage->find(['name' => 'test2']);
@@ -105,10 +97,7 @@ class PackageJsonTest extends TestCase
         $this->assertEquals(0, $package['entities_id']);
     }
 
-    /**
-     * @test
-     */
-    public function Migration_to_91()
+    public function testMigration_to_91()
     {
         global $DB;
 
@@ -189,7 +178,7 @@ class PackageJsonTest extends TestCase
         $jsons = [];
         $names = [];
         foreach ($packages as $package) {
-            $jsons[] = $package['json'];
+            $jsons[] = stripslashes($package['json']);
             $names[] = $package['name'];
         }
         $ref = [

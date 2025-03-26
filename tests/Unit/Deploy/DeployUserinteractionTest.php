@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class DeployUserinteractionTest extends TestCase
@@ -48,9 +49,6 @@ class DeployUserinteractionTest extends TestCase
 
 
 
-    /**
-     * @test
-     */
     public function testGetTypeName()
     {
         $this->assertEquals(
@@ -68,9 +66,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetTypes()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -79,9 +74,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetLabelForAType()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -108,9 +100,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetValues()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -149,9 +138,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetInteractionDescription()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -182,9 +168,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testAdd_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -206,7 +189,7 @@ class DeployUserinteractionTest extends TestCase
         ];
         $interaction->add_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 1","title":"My title","text":"my text","type":"before","template":0}]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($interaction->getJson($packages_id));
+        $json     = $interaction->getJson($packages_id);
         $this->assertEquals($expected, $json);
 
         $params = ['id'                   => $packages_id,
@@ -219,15 +202,12 @@ class DeployUserinteractionTest extends TestCase
         ];
         $interaction->add_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 1","title":"My title","text":"my text","type":"before","template":0},{"name":"interaction 2","title":"My title","text":"my text","type":"after","template":0}]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($interaction->getJson($packages_id));
+        $json     = $interaction->getJson($packages_id);
         $this->assertEquals($expected, $json);
     }
 
 
-    /**
-     * @test
-     * @depends testAdd_item
-     */
+    #[Depends('testAdd_item')]
     public function testSave_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -246,15 +226,12 @@ class DeployUserinteractionTest extends TestCase
         ];
         $interaction->save_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 1","title":"My title","text":"my text","type":"after","template":1},{"name":"interaction 2","title":"My title","text":"my text","type":"after","template":0}]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($interaction->getJson($pfDeployPackage->fields['id']));
+        $json     = $interaction->getJson($pfDeployPackage->fields['id']);
         $this->assertEquals($expected, $json);
     }
 
 
-    /**
-     * @test
-     * @depends testAdd_item
-     */
+    #[Depends('testAdd_item')]
     public function testMove_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -272,10 +249,7 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends testAdd_item
-     */
+    #[Depends('testAdd_item')]
     public function testRemove_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;

@@ -71,9 +71,6 @@ class DeploymirrorIntTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
     public function testDefineEntitiesConfiguration()
     {
         global $DB;
@@ -214,9 +211,6 @@ class DeploymirrorIntTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testEntitiesMirrorDisabled()
     {
 
@@ -235,9 +229,6 @@ class DeploymirrorIntTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testRootEntityMirrorNoLocation()
     {
 
@@ -263,9 +254,6 @@ class DeploymirrorIntTest extends TestCase
         $this->assertEquals($result, $mirrors);
     }
 
-    /**
-     * @test
-     */
     public function testRootEntityMirrorWithLocation()
     {
 
@@ -293,9 +281,6 @@ class DeploymirrorIntTest extends TestCase
         $this->assertEquals($result, $mirrors);
     }
 
-    /**
-     * @test
-     */
     public function testEntityAMirrorWithLocation()
     {
 
@@ -312,9 +297,6 @@ class DeploymirrorIntTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testEntityBMirrorWithLocation()
     {
 
@@ -331,9 +313,6 @@ class DeploymirrorIntTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testRootEntityMirrorWithEntity()
     {
         global $PF_CONFIG;
@@ -360,9 +339,6 @@ class DeploymirrorIntTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testEntityAMirrorWithEntity()
     {
         global $PF_CONFIG;
@@ -390,9 +366,6 @@ class DeploymirrorIntTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testEntityBMirrorWithEntity()
     {
         global $PF_CONFIG;

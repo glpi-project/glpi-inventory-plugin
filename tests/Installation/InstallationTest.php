@@ -44,9 +44,6 @@ class InstallationTest extends TestCase
         file_put_contents("../../files/_log/sql-errors.log", '');
     }
 
-    /**
-     * @test
-     */
     public function testInstall()
     {
         global $DB;

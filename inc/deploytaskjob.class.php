@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\DBAL\QueryParam;
+
 /**
  * Manage the deploy task job.
  *
@@ -47,7 +49,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
      *
      * @return boolean
      */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }
@@ -58,7 +60,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
      *
      * @return boolean
      */
-    public static function canView()
+    public static function canView(): bool
     {
         return true;
     }

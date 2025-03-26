@@ -33,6 +33,8 @@
 
 require_once("DatabaseTestsCommons.php");
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\TestCase;
 
 class UpdateTest extends TestCase
@@ -77,12 +79,9 @@ class UpdateTest extends TestCase
 
 
 
-    /**
-     * @dataProvider provider
-     * @preserveGlobalState disabled
-     * @test
-     */
-    public function update($version = '', $verify = false, $nbrules = 0)
+    #[DataProvider('provider')]
+    #[PreserveGlobalState(false)]
+    public function testUpdate($version = '', $verify = false, $nbrules = 0)
     {
         global $DB;
 
@@ -261,7 +260,7 @@ class UpdateTest extends TestCase
     }
 
 
-    public function provider()
+    public static function provider(): array
     {
         // version, verifyConfig, nb entity rules
         return [

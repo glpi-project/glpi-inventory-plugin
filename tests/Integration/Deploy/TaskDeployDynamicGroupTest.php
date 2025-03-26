@@ -129,10 +129,7 @@ class TaskDeployDynamicGroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function TaskWithComputer()
+    public function testTaskWithComputer()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
 

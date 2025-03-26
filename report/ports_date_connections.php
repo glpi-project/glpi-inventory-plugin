@@ -186,7 +186,7 @@ function displaySearchForm()
 
     // Display Reset search
     echo "<td>";
-    echo "<a href='" . Plugin::getWebDir('glpiinventory') . "/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"" . __('Blank') . "\" alt=\"" . __('Blank') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/reset.png' class='calendrier'></a>";
+    echo "<a href='" . "/plugins/glpiinventory/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"" . __('Blank') . "\" alt=\"" . __('Blank') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/reset.png' class='calendrier'></a>";
     echo "</td>";
 
     echo "<td>";
@@ -253,8 +253,6 @@ function getValues($get, $post)
     $get = array_merge($get, $post);
     if (isset($get["field"])) {
         foreach ($get["field"] as $index => $value) {
-            $get["contains"][$index] = stripslashes($get["contains"][$index]);
-            $get["contains"][$index] = htmlspecialchars_decode($get["contains"][$index]);
             switch ($value) {
                 case 14:
                     if (strpos($get["contains"][$index], "=") == 1) {

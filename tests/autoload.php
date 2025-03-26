@@ -32,6 +32,7 @@
  */
 
 use Glpi\Cache\CacheManager;
+use Glpi\Kernel\Kernel;
 use Glpi\Cache\SimpleCache;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
@@ -39,11 +40,12 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 define('GLPI_STRICT_DEPRECATED', true); //enable strict depreciations
-define('GLPI_ROOT', __DIR__ . '/../../../');
+//define('GLPI_ROOT', __DIR__ . '/../../../');
 define('GLPI_CONFIG_DIR', __DIR__ . '/../../../tests/config');
 define('GLPI_VAR_DIR', __DIR__ . '/files');
 define('GLPI_URI', (getenv('GLPI_URI') ?: 'http://localhost:8088'));
 define('GLPI_LOG_DIR', GLPI_VAR_DIR . '/_log');
+include(__DIR__ . "/../../../vendor/autoload.php");
 define(
     'PLUGINS_DIRECTORIES',
     [
@@ -55,9 +57,12 @@ define(
 define('TU_USER', '_test_user');
 define('TU_PASS', 'PhpUnit_4');
 
+$kernel = new Kernel('testing');
+$kernel->boot();
+
 global $CFG_GLPI, $GLPI_CACHE;
 
-include(GLPI_ROOT . "/inc/based_config.php");
+//include(GLPI_ROOT . "/inc/based_config.php");
 
 if (!file_exists(GLPI_CONFIG_DIR . '/config_db.php')) {
     die("\nConfiguration file for tests not found\n\nrun: bin/console glpi:database:install --config-dir=tests/config ...\n\n");
@@ -85,7 +90,7 @@ if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FIL
 
 global $PLUGIN_HOOKS;
 
-include_once GLPI_ROOT . 'inc/includes.php';
+include_once GLPI_ROOT . '/inc/includes.php';
 include_once GLPI_ROOT . '/plugins/glpiinventory/vendor/autoload.php';
 include_once __DIR__ . '/LogTest.php';
 

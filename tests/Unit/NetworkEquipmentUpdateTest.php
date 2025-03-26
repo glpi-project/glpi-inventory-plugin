@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class NetworkEquipmentUpdateTest extends TestCase
@@ -64,10 +65,7 @@ class NetworkEquipmentUpdateTest extends TestCase
         $GLPI_CACHE->set('glpi_inventory_ports_types', null);
     }
 
-    /**
-     * @test
-     */
-    public function AddNetworkEquipment()
+    public function testAddNetworkEquipment()
     {
         global $DB, $GLPI_CACHE;
 
@@ -212,11 +210,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
         $this->assertEquals(1, count($networkEquipment->find()));
     }
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function NetworkEquipmentGeneral()
+    #[Depends('testAddNetworkEquipment')]
+    public function testNetworkEquipmentGeneral()
     {
 
         $networkEquipment = new NetworkEquipment();
@@ -246,7 +241,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
             'contact'              => null,
             'contact_num'          => null,
             'users_id_tech'        => 0,
-            'groups_id_tech'       => 0,
+            'groups_id_tech'       => [],
             'comment'              => null,
             'locations_id'         => 0,
             'networks_id'          => 0,
@@ -255,7 +250,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
             'is_template'          => 0,
             'template_name'        => null,
             'users_id'             => 0,
-            'groups_id'            => 0,
+            'groups_id'            => [],
             'states_id'            => 0,
             'ticket_tco'           => '0.0000',
             'is_dynamic'           => 1,
@@ -272,11 +267,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals($a_reference, $networkEquipment->fields);
     }
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function NetworkEquipmentInternalPorts()
+    #[Depends('testAddNetworkEquipment')]
+    public function testNetworkEquipmentInternalPorts()
     {
         $networkPort = new NetworkPort();
         $networkName = new NetworkName();
@@ -319,11 +311,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals(['192.168.30.67', '192.168.40.67', '192.168.50.67'], $a_ips);
     }
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function UnmanagedNetworkPort()
+    #[Depends('testAddNetworkEquipment')]
+    public function testUnmanagedNetworkPort()
     {
         $networkPort = new NetworkPort();
 
@@ -341,11 +330,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
     }
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function NetworkPortConnection()
+    #[Depends('testAddNetworkEquipment')]
+    public function testNetworkPortConnection()
     {
         $networkPort = new NetworkPort();
         $networkPort_NetworkPort = new NetworkPort_NetworkPort();
@@ -372,11 +358,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
     }
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function NetworkPortAggregation()
+    #[Depends('testAddNetworkEquipment')]
+    public function testNetworkPortAggregation()
     {
         $networkPort = new NetworkPort();
         $networkPortAggregate = new NetworkPortAggregate();
@@ -401,11 +384,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
     }
 
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function VlansPort10002()
+    #[Depends('testAddNetworkEquipment')]
+    public function testVlansPort10002()
     {
         $networkPort = new NetworkPort();
         $networkEquipment = new NetworkEquipment();
@@ -432,11 +412,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
     }
 
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function NetworkPortCreated()
+    #[Depends('testAddNetworkEquipment')]
+    public function testNetworkPortCreated()
     {
 
         $networkPort = new NetworkPort();
@@ -446,11 +423,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals($expected, count($a_networkports), 'Number of network ports must be ' . $expected);
     }
 
-    /**
-     * @test
-     * @depends AddNetworkEquipment
-     */
-    public function getDeviceIPOfTaskjobID()
+    #[Depends('testAddNetworkEquipment')]
+    public function testgetDeviceIPOfTaskjobID()
     {
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskJob();

@@ -106,7 +106,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
         $number = count($iterator);
 
         // Display the pager
-        Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/stateinventory.php", '');
+        Html::printPager($start, $number, "/plugins/glpiinventory/front/stateinventory.php", '');
 
         echo "<div class='card'>";
         echo "<table class='table table-hover card-table'>";

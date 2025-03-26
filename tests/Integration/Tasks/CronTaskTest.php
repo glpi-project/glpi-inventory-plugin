@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
 use PHPUnit\Framework\TestCase;
 
 class CronTaskTest extends TestCase
@@ -82,10 +83,7 @@ class CronTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareDb()
+    public function testPrepareDb()
     {
         global $DB;
 
@@ -248,13 +246,8 @@ class CronTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTask()
+    public function testPrepareTask()
     {
-        global $DB;
-
         PluginGlpiinventoryTask::cronTaskscheduler();
 
         $pfTask = new PluginGlpiinventoryTask();
@@ -302,10 +295,7 @@ class CronTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTaskWithNewComputer()
+    public function testPrepareTaskWithNewComputer()
     {
         global $DB;
 
@@ -357,10 +347,7 @@ class CronTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTaskWithdynamicgroupchanged()
+    public function testPrepareTaskWithdynamicgroupchanged()
     {
 
         $computer = new Computer();
@@ -410,10 +397,7 @@ class CronTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTaskDisabled()
+    public function testPrepareTaskDisabled()
     {
 
         $pfTask = new PluginGlpiinventoryTask();
@@ -439,13 +423,8 @@ class CronTaskTest extends TestCase
         $this->assertEquals($ref_prepared, $data['tasks']);
     }
 
-    /**
-     * @test
-     */
-    public function prepareTaskNoLogs()
+    public function testPrepareTaskNoLogs()
     {
-        global $DB;
-
         $pfTask = new PluginGlpiinventoryTask();
 
         $pfTask->getFromDBByCrit(['name' => 'deploy']);
@@ -486,10 +465,7 @@ class CronTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTaskNotRePrepareIfSuccessful()
+    public function testPrepareTaskNotRePrepareIfSuccessful()
     {
         global $DB;
 
@@ -663,10 +639,7 @@ class CronTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function cleanTasksAndJobs()
+    public function testCleanTasksAndJobs()
     {
         global $DB;
 

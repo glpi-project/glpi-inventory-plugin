@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class DeploymirrorTest extends TestCase
@@ -53,9 +54,6 @@ class DeploymirrorTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
     public function testAddMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
@@ -72,10 +70,7 @@ class DeploymirrorTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends testAddMirror
-     */
+    #[Depends('testAddMirror')]
     public function testUpdateMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
@@ -93,10 +88,7 @@ class DeploymirrorTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends testUpdateMirror
-     */
+    #[Depends('testUpdateMirror')]
     public function testDeleteLocationFromMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
@@ -121,10 +113,7 @@ class DeploymirrorTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends testDeleteLocationFromMirror
-     */
+    #[Depends('testDeleteLocationFromMirror')]
     public function testDeleteMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();

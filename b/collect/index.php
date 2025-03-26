@@ -31,8 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
 ob_start();
 include("../../../../inc/includes.php");
 ob_end_clean();
@@ -41,6 +39,6 @@ ob_end_clean();
 
 $pfCollect = new PluginGlpiinventoryCollect();
 
-$response = $pfCollect->communication(Sanitizer::sanitize(filter_input(INPUT_GET, "action")), filter_input(INPUT_GET, "machineid"), Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")));
+$response = $pfCollect->communication(filter_input(INPUT_GET, "action"), filter_input(INPUT_GET, "machineid"), filter_input(INPUT_GET, "uuid"));
 
 echo json_encode($response);

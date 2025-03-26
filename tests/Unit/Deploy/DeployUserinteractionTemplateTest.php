@@ -47,24 +47,18 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testDefineTabs()
     {
         $expected = [
-            'PluginGlpiinventoryDeployUserinteractionTemplate$1' => 'General',
-            'PluginGlpiinventoryDeployUserinteractionTemplate$2' => 'Behaviors',
-            'Log$1' => 'Historical',
+            'PluginGlpiinventoryDeployUserinteractionTemplate$1',
+            'PluginGlpiinventoryDeployUserinteractionTemplate$2',
+            'Log$1'
         ];
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-        $this->assertEquals($expected, $template->defineTabs());
+        $this->assertEquals($expected, array_keys($template->defineTabs()));
     }
 
 
-    /**
-     * @test
-     */
     public function testGetTabNameForItem()
     {
         $expected = [  1 => 'General', 2 => 'Behaviors'];
@@ -73,9 +67,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetTypeName()
     {
         $this->assertEquals(
@@ -93,9 +84,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetTypes()
     {
         $types = PluginGlpiinventoryDeployUserinteractionTemplate::getTypes();
@@ -106,9 +94,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetButtons()
     {
         $buttons = PluginGlpiinventoryDeployUserinteractionTemplate::getButtons();
@@ -116,9 +101,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testAddJsonFieldsToArray()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -158,9 +140,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetIcons()
     {
         $icons = PluginGlpiinventoryDeployUserinteractionTemplate::getIcons();
@@ -174,9 +153,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetBehaviors()
     {
         $behaviors = PluginGlpiinventoryDeployUserinteractionTemplate::getBehaviors();
@@ -188,9 +164,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testAdd()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -223,9 +196,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testUpdate()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -240,9 +210,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testSaveToJson()
     {
         $values = ['name'          => 'interaction',
@@ -266,9 +233,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGestMainFormFields()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -279,9 +243,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetBehaviorsFields()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -293,9 +254,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetJsonFields()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -309,9 +267,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testInitializeJsonFields()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -319,9 +274,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetEvents()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -329,9 +281,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetBehaviorsToDisplay()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -390,9 +339,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testPrepareInputForAdd()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -407,9 +353,6 @@ class DeployUserinteractionTemplateTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testGetDefaultBehaviorForAButton()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();

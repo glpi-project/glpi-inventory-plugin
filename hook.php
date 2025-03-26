@@ -205,9 +205,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
  */
 function plugin_glpiinventory_giveItem($type, $id, $data, $num)
 {
-    global $CFG_GLPI, $DB;
-
-    $searchopt = &Search::getOptions($type);
+    $searchopt = Search::getOptions($type);
     $table = $searchopt[$id]["table"];
     $field = $searchopt[$id]["field"];
 
@@ -463,7 +461,7 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
 function plugin_glpiinventory_addSelect($type, $id, $num)
 {
 
-    $searchopt = &Search::getOptions($type);
+    $searchopt = Search::getOptions($type);
     $table = $searchopt[$id]["table"];
     $field = $searchopt[$id]["field"];
 
@@ -674,10 +672,9 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                         return "";
                     }
                 } elseif ($field == 'name') {
-                    $val = stripslashes($val);
                     //decode a json query to match task names in taskjobs list
                     $names = json_decode($val);
-                    if ($names !== null && is_array($names)) {
+                    if (is_array($names)) {
                         $names = array_map(
                             function ($a) {
                                 return "\"" . $a . "\"";

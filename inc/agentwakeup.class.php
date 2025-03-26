@@ -76,9 +76,9 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     /**
      * Check if can wake up an agent
      *
-     * @return true
+    * @return bool
      */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }

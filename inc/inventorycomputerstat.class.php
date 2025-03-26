@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\DBAL\QueryParam;
+
 /**
  * Manage the computer inventory stats (number of inventories arrived in
  * the plugin and regroued by hour).
@@ -73,8 +75,8 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
         $insert = $DB->buildInsert(
             'glpi_plugin_glpiinventory_inventorycomputerstats',
             [
-                'day'    => new \QueryParam(),
-                'hour'   => new \QueryParam(),
+                'day'    => new QueryParam(),
+                'hour'   => new QueryParam()
             ]
         );
         $stmt = $DB->prepare($insert);
