@@ -46,9 +46,6 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function addTimeslot()
     {
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
@@ -63,9 +60,6 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function addSimpleEntrieslot()
     {
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
@@ -140,9 +134,6 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function addEntriesTimeslotYetAdded()
     {
 
@@ -205,9 +196,6 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function addEntriesTimeslotNotInRanges()
     {
 
@@ -269,9 +257,6 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function addEntryIn3Ranges()
     {
 
@@ -317,9 +302,6 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function addEntryForTwoDays()
     {
 
@@ -389,9 +371,6 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function addEntryForTwoDaysYetAdded()
     {
 

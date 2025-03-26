@@ -31,13 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class PackageJsonTest extends TestCase
 {
-   /**
-    * @test
-    */
     public function JsonCreateNewPackage()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -54,9 +52,6 @@ class PackageJsonTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function AddItem()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -83,10 +78,7 @@ class PackageJsonTest extends TestCase
         $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
     }
 
-   /**
-    * @test
-    * @depends AddItem
-    */
+    #[Depends('AddItem')]
     public function duplicate()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -105,9 +97,6 @@ class PackageJsonTest extends TestCase
         $this->assertEquals(0, $package['entities_id']);
     }
 
-   /**
-    * @test
-    */
     public function Migration_to_91()
     {
         global $DB;

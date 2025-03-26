@@ -63,9 +63,6 @@ class ToolboxTest extends TestCase
 JSON;
 
 
-   /**
-    * @test
-    */
     public function formatJson()
     {
 
@@ -76,9 +73,6 @@ JSON;
     }
 
 
-   /**
-    * @test
-    */
     public function isAnInventoryDevice()
     {
         $computer = new Computer();

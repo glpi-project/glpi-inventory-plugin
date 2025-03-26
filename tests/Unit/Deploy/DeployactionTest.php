@@ -47,11 +47,6 @@ class DeployactionTest extends TestCase
     }
 
 
-
-
-   /**
-    * @test
-    */
     public function testGetReturnActionNames()
     {
         $action = new PluginGlpiinventoryDeployAction();
@@ -59,9 +54,6 @@ class DeployactionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function getGetTypes()
     {
         $action = new PluginGlpiinventoryDeployAction();
@@ -69,9 +61,6 @@ class DeployactionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetLabelForAType()
     {
         $action = new PluginGlpiinventoryDeployAction();
@@ -102,9 +91,6 @@ class DeployactionTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testAdd_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -175,9 +161,6 @@ class DeployactionTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testSave_item()
     {
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
@@ -205,9 +188,6 @@ class DeployactionTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testRemove_item()
     {
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
@@ -236,9 +216,6 @@ class DeployactionTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testMove_item()
     {
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
@@ -261,9 +238,6 @@ class DeployactionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testRunCommand()
     {
         global $DB;

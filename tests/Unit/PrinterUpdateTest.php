@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class PrinterUpdateTest extends TestCase
@@ -56,9 +57,6 @@ class PrinterUpdateTest extends TestCase
         $_SESSION["glpiID"] = 2;
     }
 
-   /**
-    * @test
-    */
     public function AddPrinter()
     {
         $this->update_time = date('Y-m-d H:i:s');
@@ -113,9 +111,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterGeneral()
     {
         $printer = new Printer();
@@ -196,9 +191,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterSnmpExtension()
     {
 
@@ -208,9 +200,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterPageCounter()
     {
 
@@ -223,9 +212,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterCartridgeBlack()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -241,9 +227,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterCartridgeCyan()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -259,9 +242,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterCartridgeYellow()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -277,9 +257,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterCartridgeMagenta()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -294,9 +271,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function PrinterAllCartridges()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -305,9 +279,6 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function NewPrinterFromNetdiscovery()
     {
 
@@ -411,11 +382,7 @@ class PrinterUpdateTest extends TestCase
         );
     }
 
-
-   /**
-    * @test
-    * @depends NewPrinterFromNetdiscovery
-    */
+    #[Depends('NewPrinterFromNetdiscovery')]
     public function updatePrinterFromNetdiscovery()
     {
         global $DB;
@@ -521,10 +488,7 @@ class PrinterUpdateTest extends TestCase
         );
     }
 
-   /**
-    * @test
-    * @depends NewPrinterFromNetdiscovery
-    */
+    #[Depends('NewPrinterFromNetdiscovery')]
     public function updatePrinterFromNetdiscoveryToInventory()
     {
         $_SESSION["plugin_glpiinventory_entity"] = 0;

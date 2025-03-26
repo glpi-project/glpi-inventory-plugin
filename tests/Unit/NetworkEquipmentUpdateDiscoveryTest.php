@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class NetworkEquipmentUpdateDiscoveryTest extends TestCase
@@ -149,9 +150,6 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function AddNetworkEquipment()
     {
        // Load session rights
@@ -184,10 +182,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function NewNetworkEquipmentHasPorts()
     {
         $networkports = getAllDataFromTable('glpi_networkports');
@@ -212,10 +207,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function NewNetworkEquipmentHasIpAdresses()
     {
         $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
@@ -246,10 +238,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function UpdateNetworkEquipment()
     {
 
@@ -274,10 +263,8 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $this->assertEquals(1, count($networkEquipment->find()));
     }
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    #[Depends('UpdateNetworkEquipment')]
+
     public function UpdateNetworkEquipmentOnlyOneNetworkName()
     {
         $networkNames = getAllDataFromTable('glpi_networknames');
@@ -285,10 +272,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    #[Depends('UpdateNetworkEquipment')]
     public function UpdateNetworkEquipmentOnlyOneIpaddress()
     {
         $Ips = getAllDataFromTable('glpi_ipaddresses');
@@ -296,10 +280,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    #[Depends('UpdateNetworkEquipment')]
     public function UpdatedNetworkEquipmentHasPorts()
     {
         $networkports = getAllDataFromTable('glpi_networkports');
@@ -326,10 +307,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    #[Depends('UpdateNetworkEquipment')]
     public function UpdateNetworkEquipmentHasIpAdresses()
     {
         $ipaddresses = getAllDataFromTable('glpi_ipaddresses');

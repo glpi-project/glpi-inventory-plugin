@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class DeployUserinteractionTest extends TestCase
@@ -48,9 +49,6 @@ class DeployUserinteractionTest extends TestCase
 
 
 
-   /**
-    * @test
-    */
     public function testGetTypeName()
     {
         $this->assertEquals(
@@ -68,9 +66,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetTypes()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -79,9 +74,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetLabelForAType()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -108,9 +100,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetValues()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -149,9 +138,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetInteractionDescription()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -182,9 +168,6 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testAdd_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -224,10 +207,7 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testAdd_item
-    */
+    #[Depends('testAdd_item')]
     public function testSave_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -251,10 +231,7 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testAdd_item
-    */
+    #[Depends('testAdd_item')]
     public function testMove_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -272,10 +249,7 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testAdd_item
-    */
+    #[Depends('testAdd_item')]
     public function testRemove_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;

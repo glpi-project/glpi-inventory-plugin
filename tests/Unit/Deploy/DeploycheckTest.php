@@ -35,9 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeploycheckTest extends TestCase
 {
-   /**
-    * @test
-    */
     public function testGetTypes()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -50,9 +47,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function getGetLabelForAType()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -69,9 +63,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetUnitLabel()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -85,9 +76,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetAuditDescription()
     {
         $check       = new PluginGlpiinventoryDeployCheck();
@@ -105,9 +93,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetUnitSize()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -118,9 +103,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetRegistryTypes()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -139,9 +121,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetValues()
     {
         $check    = new PluginGlpiinventoryDeployCheck();
@@ -209,9 +188,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetLabelsAndTypes()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -430,9 +406,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testGetAllReturnValues()
     {
         $check  = new PluginGlpiinventoryDeployCheck();
@@ -447,9 +420,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testGetValueForReturn()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -463,9 +433,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testAdd_item()
     {
         $check           = new PluginGlpiinventoryDeployCheck();
@@ -544,9 +511,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testSave_item()
     {
         $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
@@ -574,9 +538,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testRemove_item()
     {
         $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
@@ -605,9 +566,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testMove_item()
     {
         $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';

@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class DeploygroupTest extends TestCase
@@ -57,9 +58,6 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function AddGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -80,10 +78,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends AddGroup
-    */
+    #[Depends('AddGroup')]
     public function cloneStaticGroup()
     {
         $computer      = new Computer();
@@ -131,10 +126,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends cloneStaticGroup
-    */
+    #[Depends('cloneStaticGroup')]
     public function cloneDynamicGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -169,10 +161,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends cloneDynamicGroup
-    */
+    #[Depends('cloneDynamicGroup')]
     public function updateGroup()
     {
        //Get the group have the name "Windows computers"
@@ -194,10 +183,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends updateGroup
-    */
+    #[Depends('updateGroup')]
     public function switchDynamicToStaticGroup()
     {
        //Get the group have the name "Windows computers"
@@ -225,10 +211,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends cloneDynamicGroup
-    */
+    #[Depends('cloneDynamicGroup')]
     public function deleteDynamicGroup()
     {
 
@@ -255,10 +238,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends cloneStaticGroup
-    */
+    #[Depends('cloneStaticGroup')]
     public function deleteStaticGroup()
     {
 
@@ -284,9 +264,6 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function ImportCsvStaticGroup()
     {
         global $DB;

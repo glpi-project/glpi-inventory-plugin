@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class NetworkEquipmentUpdateTest extends TestCase
@@ -64,9 +65,6 @@ class NetworkEquipmentUpdateTest extends TestCase
         $GLPI_CACHE->set('glpi_inventory_ports_types', null);
     }
 
-   /**
-    * @test
-    */
     public function AddNetworkEquipment()
     {
         global $DB, $GLPI_CACHE;
@@ -212,10 +210,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
         $this->assertEquals(1, count($networkEquipment->find()));
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function NetworkEquipmentGeneral()
     {
 
@@ -272,10 +267,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals($a_reference, $networkEquipment->fields);
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function NetworkEquipmentInternalPorts()
     {
         $networkPort = new NetworkPort();
@@ -319,10 +311,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals(['192.168.30.67', '192.168.40.67', '192.168.50.67'], $a_ips);
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function UnmanagedNetworkPort()
     {
         $networkPort = new NetworkPort();
@@ -341,10 +330,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function NetworkPortConnection()
     {
         $networkPort = new NetworkPort();
@@ -372,10 +358,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function NetworkPortAggregation()
     {
         $networkPort = new NetworkPort();
@@ -401,10 +384,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function VlansPort10002()
     {
         $networkPort = new NetworkPort();
@@ -432,10 +412,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function NetworkPortCreated()
     {
 
@@ -446,10 +423,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals($expected, count($a_networkports), 'Number of network ports must be ' . $expected);
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    #[Depends('AddNetworkEquipment')]
     public function getDeviceIPOfTaskjobID()
     {
         $pfTask    = new PluginGlpiinventoryTask();
