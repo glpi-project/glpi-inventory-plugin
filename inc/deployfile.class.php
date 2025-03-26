@@ -807,7 +807,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     */
     public function addFileInRepo($params)
     {
-        $filename      = addslashes($params['filename']);
+        $filename      = $params['filename'];
         $file_tmp_name = $params['file_tmp_name'];
         $maxPartSize   = 1024 * 1024;
         $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/", "filestore");

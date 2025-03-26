@@ -1000,7 +1000,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $error = $pfDeployPackage->update(
                 [
                     'id'   => $packages_id,
-                    'json' => Toolbox::addslashes_deep($json)
+                    'json' => $json
                 ]
             );
         }
@@ -2158,7 +2158,6 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         );
         unset($input['id']);
 
-        $input = Toolbox::addslashes_deep($input);
         if (!$this->add($input)) {
             $result = false;
         }

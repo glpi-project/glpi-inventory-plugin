@@ -6315,7 +6315,7 @@ function do_deploypackage_migration($migration)
             $pfDeployPackage->getFromDB($install['plugin_glpiinventory_deploypackages_id']);
             $input = [
                 'id'   => $pfDeployPackage->fields['id'],
-                'json' => addslashes($install['json']),
+                'json' => $install['json'],
             ];
             $pfDeployPackage->update($input);
         }
@@ -7398,16 +7398,14 @@ function do_rule_migration($migration)
 
    //Deploy configuration options
     $a_input['server_upload_path'] =
-         Toolbox::addslashes_deep(
-             implode(
-                 DIRECTORY_SEPARATOR,
-                 [
-                     GLPI_PLUGIN_DOC_DIR,
-                     'glpiinventory',
-                     'upload'
-                 ]
-             )
-         );
+        implode(
+            DIRECTORY_SEPARATOR,
+            [
+                GLPI_PLUGIN_DOC_DIR,
+                'glpiinventory',
+                'upload'
+            ]
+        );
     $a_input['alert_winpath']    = 1;
     $a_input['server_as_mirror'] = 1;
     $a_input['mirror_match']     = 0;
@@ -8927,7 +8925,7 @@ function migrateTablesFromFusinvDeploy($migration)
         $DB->update(
             PluginGlpiinventoryDeployPackage::getTable(),
             [
-                'json' => Toolbox::addslashes_deep(json_encode($json_order, JSON_UNESCAPED_SLASHES)),
+                'json' => json_encode($json_order, JSON_UNESCAPED_SLASHES),
             ],
             [
                 'id' => $order_config['id'],

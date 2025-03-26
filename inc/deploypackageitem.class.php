@@ -338,8 +338,9 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
             );
             $error = 1;
         } else {
-            $error = $pfDeployPackage->update(['id'   => $packages_id,
-                'json' => Toolbox::addslashes_deep($json)
+            $error = $pfDeployPackage->update([
+                'id'   => $packages_id,
+                'json' => $json
             ]);
         }
         return $error;

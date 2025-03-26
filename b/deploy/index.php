@@ -55,7 +55,7 @@ switch (filter_input(INPUT_GET, "action")) {
             $pfTaskjob      = new PluginGlpiinventoryTaskjob();
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-            if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep($machineid)])) {
+            if ($agent->getFromDBByCrit(['deviceid' => $machineid])) {
                 $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                     $agent->fields['id'],
                     ['deployinstall']

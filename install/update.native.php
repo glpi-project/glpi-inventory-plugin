@@ -95,7 +95,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 $data_agent['agent_port']
             );
 
-            $new_id = $agent->add(Toolbox::addslashes_deep($data_agent));
+            $new_id = $agent->add($data_agent);
             $agents_mapping[$old_id] = $new_id;
         }
 
@@ -488,7 +488,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 $data_unmanaged['plugin_glpiinventory_configsecurities_id']
             );
 
-            $new_id = $unmanaged->add(Toolbox::addslashes_deep($data_unmanaged));
+            $new_id = $unmanaged->add($data_unmanaged);
             $unmanageds_mapping[$old_id] = $new_id;
         }
         $migration->dropTable('glpi_plugin_glpiinventory_unmanageds');
@@ -639,14 +639,12 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         foreach ($iterator as $row) {
             $fields = importArrayFromDB($row['tablefields']);
             foreach ($fields as $field) {
-                $input = Toolbox::addslashes_deep(
-                    [
-                        'itemtype' => getItemTypeForTable($row['tablename']),
-                        'items_id' => $row['items_id'],
-                        'field'    => $field,
-                        'is_global' => ($row['items_id'] == 0) ? 1 : 0
-                    ]
-                );
+                $input = [
+                    'itemtype' => getItemTypeForTable($row['tablename']),
+                    'items_id' => $row['items_id'],
+                    'field'    => $field,
+                    'is_global' => ($row['items_id'] == 0) ? 1 : 0
+                ];
 
                 if (countElementsInTable($lock_table, $input) > 0) {
                     continue; // Field is already locked

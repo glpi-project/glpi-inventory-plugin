@@ -1958,7 +1958,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             );
             $input['is_active'] = 0;
             unset($input['id']);
-            $input              = Toolbox::addslashes_deep($input);
             if ($target_task_id = $this->add($input)) {
                  //Clone taskjobs
                  $result
