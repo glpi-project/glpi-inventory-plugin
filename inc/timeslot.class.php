@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\DBAL\QueryExpression;
+
 /**
  * Manage the timeslot for tasks. It's the time in the week the task run.
  */

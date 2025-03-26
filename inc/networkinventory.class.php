@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
 
+use Glpi\DBAL\QueryExpression;
+
 /**
  * Manage network inventory task jobs.
  */
@@ -208,7 +210,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     'WHERE' => [
                         $cur_itemtype::getTable() . '.is_deleted' => 0,
                         'snmpcredentials_id' => ['!=', 0],
-                        new \QueryExpression('inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' . $DB->quote($pfIPRange->fields['ip_end']) . ')'),
+                        new QueryExpression('inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' . $DB->quote($pfIPRange->fields['ip_end']) . ')'),
                     ],
                     'GROUPBY' => $cur_itemtype::getTable() . '.id',
                 ];
@@ -513,7 +515,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 'WHERE' => [
                     $itemtype::getTable() . '.is_deleted' => 0,
                     'snmpcredentials_id' => ['!=', '0'],
-                    new \QueryExpression(
+                    new QueryExpression(
                         'inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN ' .
                         'inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' .
                         $DB->quote($pfIPRange->fields['ip_end']) . ')'

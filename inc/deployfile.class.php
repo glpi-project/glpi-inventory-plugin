@@ -80,7 +80,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * @param array $data array converted of 'json' field in DB where stored actions
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         global $CFG_GLPI;
 
@@ -141,7 +141,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
             // start new line
-            $pics_path = Plugin::getWebDir('glpiinventory') . "/pics/";
+            $pics_path = "/plugins/glpiinventory/pics/";
             echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
@@ -197,7 +197,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
             //download file
             if (!$fileregistry_error) {
-                $path = Plugin::getWebDir('glpiinventory') . "/front/deployfile_download.php?deployfile_id=" . $file_id;
+                $path = "/plugins/glpiinventory/front/deployfile_download.php?deployfile_id=" . $file_id;
                 echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
                     "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></i></a>";
             }
@@ -264,7 +264,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
-        $fi_path = Plugin::getWebDir('glpiinventory');
+        $fi_path = '/plugins/glpiinventory';
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
@@ -374,7 +374,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo "<script type='text/javascript'>";
         echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
-         dataUrl:'" . Plugin::getWebDir('glpiinventory') . "/ajax/serverfilestreesons.php'
+         dataUrl:'/plugins/glpiinventory/ajax/serverfilestreesons.php'
       });";
 
         echo "var Tree_Category$rand = new Ext.tree.TreePanel({
@@ -807,7 +807,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      */
     public function addFileInRepo($params)
     {
-        $filename      = addslashes($params['filename']);
+        $filename      = $params['filename'];
         $file_tmp_name = $params['file_tmp_name'];
         $maxPartSize   = 1024 * 1024;
         $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/", "filestore");

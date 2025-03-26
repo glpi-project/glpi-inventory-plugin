@@ -60,9 +60,9 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * Check if can create an IP range
      *
-     * @return true
+    * @return bool
      */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }

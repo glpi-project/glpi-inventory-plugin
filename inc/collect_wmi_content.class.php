@@ -72,8 +72,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         foreach ($iterator as $data) {
             $wmi_id = $data['id'];
             unset($data['id']);
-            $data1 = Toolbox::addslashes_deep($data);
-            $db_wmis[$wmi_id] = $data1;
+            $db_wmis[$wmi_id] = $data;
         }
 
         unset($wmi_data['_sid']);

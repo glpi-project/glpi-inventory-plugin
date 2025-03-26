@@ -59,7 +59,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      *
      * @return boolean
      */
-    public static function canView()
+    public static function canView(): bool
     {
         $can_display = false;
         $profile = new PluginGlpiinventoryProfile();
@@ -79,7 +79,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      *
      * @return boolean
      */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return false;
     }
@@ -104,8 +104,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      */
     public static function getAdditionalMenuOptions()
     {
-        $fi_full_path = Plugin::getWebDir('glpiinventory');
-        $fi_rel_path  = Plugin::getWebDir('glpiinventory', false);
+        $fi_path  = '/plugins/glpiinventory';
 
         $elements = [
             'iprange'                    => 'PluginGlpiinventoryIPRange',
@@ -152,13 +151,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $label = __('Import', 'glpiinventory');
         $link = "<i class=\"ti ti-download\" title=\"$label\"" .
             "></i><span class='d-none d-xxl-block'>$label</span>";
-        $options['deploypackage']['links'][$link] = '/' . $fi_rel_path . '/front/deploypackage.import.php';
+        $options['deploypackage']['links'][$link] = '/' . $fi_path . '/front/deploypackage.import.php';
 
         // Add icon for clean unused deploy files
         $label = __('Clean unused files', 'glpiinventory');
         $link = "<i class=\"ti ti-box-off\" title=\"$label\"" .
             "></i><span class='d-none d-xxl-block'>$label</span>";
-        $options['deploypackage']['links'][$link] = '/' . $fi_rel_path . '/front/deployfile.clean.php';
+        $options['deploypackage']['links'][$link] = '/' . $fi_path . '/front/deployfile.clean.php';
 
         $options['agent'] = [
             'title' => Agent::getTypeName(),
@@ -184,7 +183,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     {
         global $CFG_GLPI;
 
-        $fi_path = Plugin::getWebDir('glpiinventory');
+        $fi_path = '/plugins/glpiinventory';
 
         $menu = [];
 
@@ -448,7 +447,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      */
     public static function displayMenuSNMPInventory()
     {
-        $fi_path = Plugin::getWebDir('glpiinventory');
+        $fi_path = '/plugins/glpiinventory';
 
         echo "<table class='tab_cadre_fixe'>";
 

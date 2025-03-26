@@ -689,7 +689,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
                 $pfTask         = new PluginGlpiinventoryTask();
 
-                $pfAgent->getFromDBByCrit(['deviceid' => addslashes($machineId)]);
+                $pfAgent->getFromDBByCrit(['deviceid' => $machineId]);
                 $agent = $pfAgent->fields;
                 if (isset($agent['id'])) {
                     $taskjobstates = $pfTask->getTaskjobstatesForAgent(
@@ -795,7 +795,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             if (!empty($a_values['path']) && isset($a_values['size'])) {
                                 // update files content
                                 $params = [
-                                    'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
+                                    'machineid' => $pfAgent->fields['deviceid'],
                                     'uuid'      => $uuid,
                                     'code'      => 'running',
                                     'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size'],

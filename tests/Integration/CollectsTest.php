@@ -127,10 +127,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function getSearchOptionsToAdd()
+    public function testGetSearchOptionsToAdd()
     {
 
         $pfCollect = new PluginGlpiinventoryCollect();
@@ -214,10 +211,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function registryProcessWithAgent()
+    public function testRegistryProcessWithAgent()
     {
         global $DB;
 
@@ -380,10 +374,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function wmiProcessWithAgent()
+    public function testWmiProcessWithAgent()
     {
 
         // Delete all tasks
@@ -545,10 +536,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function filesProcessWithAgent()
+    public function testFilesProcessWithAgent()
     {
 
         // Delete all tasks
@@ -603,9 +591,9 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($registry_down);
 
         // get computer
-        $computer->getFromDBByCrit(['name' => 'pc01']);
+        $this->assertTrue($computer->getFromDBByCrit(['name' => 'pc01']), 'Computer pc01 does not exists');
         $computers_id = $computer->fields['id'];
-        $agent->getFromDBByCrit(['name' => 'pc01']);
+        $this->assertTrue($agent->getFromDBByCrit(['name' => 'pc01']), 'Agent for computer pc01 does not exists');
         $agents_id = $agent->fields['id'];
 
         // Create task
@@ -643,15 +631,15 @@ class CollectsTest extends TestCase
         $result = json_encode($resultObject);
 
         preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
-        $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:Users\totoDesktop","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_desktop . '},'
-                                          . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
+        $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:\\\Users\\\toto\\\Desktop","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_desktop . '},'
+                                          . '{"function":"findFile","dir":"C:\\\Users\\\toto\\\Downloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
         // answer 1
         $params = [
             'action' => 'setAnswer',
             'uuid'   => $jobstate['uniqid'],
             '_sid'   => $registry_desktop,
             '_cpt'   => '3',
-            'path'   => 'C:\\Users\\toto\\Desktop/06_import_tickets.php',
+            'path'   => 'C:\Users\toto\Desktop/06_import_tickets.php',
             'size'   => 5053,
             'sendheaders' => false, //for test
         ];
@@ -666,7 +654,7 @@ class CollectsTest extends TestCase
             'uuid'   => $jobstate['uniqid'],
             '_sid'   => $registry_desktop,
             '_cpt'   => '2',
-            'path'   => 'C:\\Users\\toto\\Desktop/glpiinventory.txt',
+            'path'   => 'C:\Users\toto\Desktop/glpiinventory.txt',
             'size'   => 28,
             'sendheaders' => false, //for test
         ];
@@ -681,7 +669,7 @@ class CollectsTest extends TestCase
             'uuid'   => $jobstate['uniqid'],
             '_sid'   => $registry_desktop,
             '_cpt'   => '1',
-            'path'   => 'C:\\Users\\toto\\Desktop/desktop.ini',
+            'path'   => 'C:\Users\toto\Desktop/desktop.ini',
             'size'   => 282,
             'sendheaders' => false, //for test
         ];
@@ -697,7 +685,7 @@ class CollectsTest extends TestCase
             'uuid'   => $jobstate['uniqid'],
             '_sid'   => $registry_down,
             '_cpt'   => '2',
-            'path'   => 'C:\\Users\\toto\\Downloads/jxpiinstall.exe',
+            'path'   => 'C:\Users\toto\Downloads/jxpiinstall.exe',
             'size'   => 738368,
             'sendheaders' => false, //for test
         ];
@@ -712,7 +700,7 @@ class CollectsTest extends TestCase
             'uuid'   => $jobstate['uniqid'],
             '_sid'   => $registry_down,
             '_cpt'   => '1',
-            'path'   => 'C:\\Users\\toto\\Downloads/npp.6.9.2.Installer.exe',
+            'path'   => 'C:\Users\toto\Downloads/npp.6.9.2.Installer.exe',
             'size'   => 4211112,
             'sendheaders' => false, //for test
         ];
@@ -778,9 +766,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testFilesCleanComputer()
     {
 
@@ -837,9 +822,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testRegistryCleanComputer()
     {
 
@@ -878,9 +860,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testWmiCleanComputer()
     {
 
@@ -919,9 +898,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testDeleteComputer()
     {
 

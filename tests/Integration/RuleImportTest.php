@@ -38,13 +38,15 @@ class RuleImportTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         // Reinit rules
-        \RuleImportAsset::initRules();
+        $rules = new \RuleImportAsset();
+        $rules->initRules();
     }
 
     public static function tearDownAfterClass(): void
     {
         // Reinit rules
-        \RuleImportAsset::initRules();
+        $rules = new \RuleImportAsset();
+        $rules->initRules();
     }
 
     public function setUp(): void
@@ -58,10 +60,7 @@ class RuleImportTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function changeRulesForPrinterRules()
+    public function testChangeRulesForPrinterRules()
     {
 
         $rule = new Rule();
@@ -131,12 +130,9 @@ class RuleImportTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PrinterDiscoveryImport()
+    public function testPrinterDiscoveryImport()
     {
-        $this->changeRulesForPrinterRules();
+        $this->testChangeRulesForPrinterRules();
 
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
@@ -194,9 +190,9 @@ class RuleImportTest extends TestCase
     /**
      * @test
      */
-    public function PrinterDiscoveryImportDenied()
+    public function testPrinterDiscoveryImportDenied()
     {
-        $this->changeRulesForPrinterRules();
+        $this->testChangeRulesForPrinterRules();
 
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>

@@ -137,8 +137,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
             Ajax::updateItemOnEvent(
                 "dropdown_" . $type_field . $rand,
                 "show_" . $this->shortname . "_value$rand",
-                Plugin::getWebDir('glpiinventory') .
-                "/ajax/deploy_displaytypevalue.php",
+                "/plugins/glpiinventory/ajax/deploy_displaytypevalue.php",
                 $params,
                 ["change", "load"]
             );
@@ -339,8 +338,9 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
             );
             $error = 1;
         } else {
-            $error = $pfDeployPackage->update(['id'   => $packages_id,
-                'json' => Toolbox::addslashes_deep($json),
+            $error = $pfDeployPackage->update([
+                'id'   => $packages_id,
+                'json' => $json
             ]);
         }
         return $error;

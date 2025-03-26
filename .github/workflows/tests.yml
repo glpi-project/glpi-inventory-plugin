@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.4']
+        php-versions: ['8.2', '8.4']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -67,10 +67,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - {php-versions: "7.4", db-image: "mysql:5.7"}
-          - {php-versions: "8.4", db-image: "mysql:5.7"}
+          - {php-versions: "8.2", db-image: "mysql:8.0"}
           - {php-versions: "8.4", db-image: "mysql:8.0"}
-          - {php-versions: "8.4", db-image: "mysql:8.1"}
+          - {php-versions: "8.4", db-image: "mysql:8.4"}
           - {php-versions: "8.4", db-image: "mariadb:10.6"}
           - {php-versions: "8.4", db-image: "mariadb:11"}
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
@@ -140,7 +139,7 @@ jobs:
         repository: glpi-project/glpi
         path: glpi
         fetch-depth: 1
-        ref: 10.0/bugfixes
+        ref: main
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install dependencies
@@ -167,4 +166,4 @@ jobs:
     - name: run Install tests
       run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/Installation/
     - name: PHPStan checks
-      run: cd glpi/plugins/glpiinventory && php vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress
+      run: cd glpi/plugins/glpiinventory && php ../../vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress

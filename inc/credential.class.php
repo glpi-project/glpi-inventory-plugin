@@ -372,7 +372,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         $ajparams = ['itemtype' => '__VALUE__',
             'id'       => $p['id'],
         ];
-        $url       = Plugin::getWebDir('glpiinventory') . "/ajax/dropdownCredentials.php";
+        $url       = "/plugins/glpiinventory/ajax/dropdownCredentials.php";
         Ajax::updateItemOnSelectEvent(
             "dropdown_plugin_glpiinventory_credentials_id$rand",
             "span_credentials",
