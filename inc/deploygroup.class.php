@@ -615,10 +615,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         }
         $p['showbookmark'] = false;
 
-        $save_fold_status = $_SESSION['glpifold_search'];
-        $_SESSION['glpifold_search'] = 0;
         Search::showGenericSearch($itemtype, $p);
-        $_SESSION['glpifold_search'] = $save_fold_status;
     }
 
 

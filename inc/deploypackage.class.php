@@ -125,7 +125,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     *
     * @return boolean
    **/
-    public function canUpdateContent()
+    public function canUpdateContent(): bool
     {
        // check if a task is currently running with this package
         if (count($this->running_tasks)) {
@@ -551,7 +551,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         foreach ($subtypes as $subtype => $label) {
             echo "<tr>";
             echo "<th id='th_title_{$subtype}_$rand'>";
-            echo "<img src='" . Plugin::getWebDir('glpiinventory') . "/pics/$subtype.png' />";
+            echo "<img src='" . "/plugins/glpiinventory/pics/$subtype.png' />";
             echo "&nbsp;" . __($label, 'glpiinventory');
             if ($canedit) {
                 $this->plusButtonSubtype($this->getID(), $subtype, (string)$rand);
@@ -598,7 +598,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 echo Html::hidden('remove_item');
                 echo Html::hidden('itemtype', ['value' => $classname]);
                 echo Html::hidden('packages_id', ['value' => $this->getID()]);
-                $class->displayList($this, $datas, (string)$rand);
+                $class->displayDeployList($this, $datas, (string)$rand);
                 Html::closeForm();
                 echo "</div>";
             }
@@ -1000,7 +1000,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $error = $pfDeployPackage->update(
                 [
                     'id'   => $packages_id,
-                    'json' => Toolbox::addslashes_deep($json)
+                    'json' => $json
                 ]
             );
         }
@@ -1412,7 +1412,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $joblogs_labels = PluginGlpiinventoryTaskjoblog::dropdownStateValues();
 
        // Display for each computer, list of packages you can deploy
-        $url = Plugin::getWebDir('glpiinventory');
+        $url = '/plugins/glpiinventory';
         echo "<form name='onetimedeploy_form' id='onetimedeploy_form'
              method='POST'
              action='$url/front/deploypackage.public.php'
@@ -2158,7 +2158,6 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         );
         unset($input['id']);
 
-        $input = Toolbox::addslashes_deep($input);
         if (!$this->add($input)) {
             $result = false;
         }
@@ -2223,37 +2222,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                         unset($job['job']['userinteractions'][$key]['template']);
                     }
                 }
-
-                $job['job']['userinteractions'][$key]['text']
-                = str_replace(
-                    PluginGlpiinventoryDeployUserinteraction::RN_TRANSFORMATION,
-                    "\r\n",
-                    $job['job']['userinteractions'][$key]['text']
-                );
             }
         }
         return $job;
-    }
-
-
-   /**
-   * Transform \r\n in an userinteraction text
-   * @since 9.2
-   * @param array $params the input parameters
-   * @return array $params input parameters with text modified
-   */
-    public function escapeText($params)
-    {
-       //Hack to keep \r\n in the user interaction text
-       //before going to stripslashes_deep
-        if (isset($params['text'])) {
-            $params['text']
-            = str_replace(
-                '\r\n',
-                PluginGlpiinventoryDeployUserinteraction::RN_TRANSFORMATION,
-                $params['text']
-            );
-        }
-        return $params;
     }
 }
