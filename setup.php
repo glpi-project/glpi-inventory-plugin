@@ -239,7 +239,7 @@ function plugin_init_glpiinventory()
         $PLUGIN_HOOKS['add_javascript']['glpiinventory'] = [];
         $PLUGIN_HOOKS['add_css']['glpiinventory'] = [];
         if (
-            strpos($_SERVER['SCRIPT_NAME'], Plugin::getWebDir('glpiinventory', false)) != false
+            strpos($_SERVER['SCRIPT_NAME'], 'plugins/glpiinventory')
             || strpos($_SERVER['SCRIPT_NAME'], "front/printer.form.php") != false
             || strpos($_SERVER['SCRIPT_NAME'], "front/computer.form.php") != false
         ) {

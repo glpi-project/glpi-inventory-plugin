@@ -164,7 +164,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
             $title = "";
         }
         Html::displayTitle(
-            Plugin::getWebDir('glpiinventory') . "/pics/task.png",
+            "/plugins/glpiinventory/pics/task.png",
             $title,
             $title,
             $buttons

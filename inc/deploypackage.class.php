@@ -551,7 +551,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         foreach ($subtypes as $subtype => $label) {
             echo "<tr>";
             echo "<th id='th_title_{$subtype}_$rand'>";
-            echo "<img src='" . Plugin::getWebDir('glpiinventory') . "/pics/$subtype.png' />";
+            echo "<img src='" . "/plugins/glpiinventory/pics/$subtype.png' />";
             echo "&nbsp;" . __($label, 'glpiinventory');
             if ($canedit) {
                 $this->plusButtonSubtype($this->getID(), $subtype, (string)$rand);
@@ -1412,7 +1412,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $joblogs_labels = PluginGlpiinventoryTaskjoblog::dropdownStateValues();
 
        // Display for each computer, list of packages you can deploy
-        $url = Plugin::getWebDir('glpiinventory');
+        $url = '/plugins/glpiinventory';
         echo "<form name='onetimedeploy_form' id='onetimedeploy_form'
              method='POST'
              action='$url/front/deploypackage.public.php'

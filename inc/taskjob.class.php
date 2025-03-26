@@ -224,7 +224,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         Ajax::updateItemOnEvent(
             'dropdown_' . ucfirst($myname) . 'Type' . $rand,
             "show_" . ucfirst($myname) . "List" . $taskjobs_id,
-            Plugin::getWebDir('glpiinventory') . "/ajax/dropdowntypelist.php",
+            "/plugins/glpiinventory/ajax/dropdowntypelist.php",
             $params
         );
 
@@ -303,7 +303,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         Ajax::updateItemOnEvent(
             [$iddropdown . $rand , "add_button_" . $_POST['name'] . $taskjobs_id],
             "Additem_$rand",
-            Plugin::getWebDir('glpiinventory') . "/ajax/taskjobaddtype.php",
+            "/plugins/glpiinventory/ajax/taskjobaddtype.php",
             $params,
             ["click"],
             -1,
@@ -359,7 +359,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         Ajax::updateItemOnSelectEvent(
             'dropdown_ActionType' . $rand,
             "show_ActionList",
-            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownactionlist.php",
+            "/plugins/glpiinventory/ajax/dropdownactionlist.php",
             $params
         );
 
@@ -426,7 +426,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         return Ajax::updateItemOnEvent(
             'addAObject',
             'show_ActionListEmpty',
-            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownactionselection.php",
+            "/plugins/glpiinventory/ajax/dropdownactionselection.php",
             $params,
             ["click"]
         );
@@ -867,7 +867,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         echo "<script type='text/javascript'>";
         Ajax::updateItemJsCode(
             "show" . $type . "list" . $taskjobs_id . "_",
-            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownlist.php",
+            "/plugins/glpiinventory/ajax/dropdownlist.php",
             $params
         );
         echo "</script>";
@@ -906,7 +906,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         echo "<script type='text/javascript'>";
         Ajax::updateItemJsCode(
             "show" . $type . "list" . $taskjobs_id . "_",
-            Plugin::getWebDir('glpiinventory') . "/ajax/dropdownlist.php",
+            "/plugins/glpiinventory/ajax/dropdownlist.php",
             $params
         );
         echo "</script>";
