@@ -54,7 +54,7 @@ if (!empty($fi_machineid)) {
             $pfTaskjob      = new PluginGlpiinventoryTaskjob();
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-            if ($agent->getFromDBByCrit(['deviceid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid"))])) {
+            if ($agent->getFromDBByCrit(['deviceid' => filter_input(INPUT_GET, "machineid")])) {
                 $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                     $agent->fields['id'],
                     ['InventoryComputerESX']
