@@ -338,6 +338,7 @@ class ComputerEntityTest extends TestCase
 
     protected function inventoryPc1()
     {
+        global $CFG_GLPI;
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>
