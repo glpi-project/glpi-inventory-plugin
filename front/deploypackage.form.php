@@ -114,9 +114,6 @@ if (isset($data["add"])) {
         }
         if (!is_null($item)) {
             $item->add($_POST);
-           //         Event::log($_POST["plugin_glpiinventory_deploypackages_id"], "sla", 4, "tools",
-           //                    //TRANS: %s is the user login
-           //                    sprintf(__('%s adds a target'), $_SESSION["glpiname"]));
         }
     }
     Html::back();
