@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class RestURLTest extends TestCase
@@ -55,10 +56,7 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function prepareDb()
+    public function testPrepareDb()
     {
         global $DB;
 
@@ -111,12 +109,8 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
-    public function getCollectUrlEnt1Entity()
+    #[Depends('testPrepareDb')]
+    public function testGetCollectUrlEnt1Entity()
     {
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;
@@ -150,12 +144,8 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
-    public function getDeployUrlRootEntity()
+    #[Depends('testPrepareDb')]
+    public function testGetDeployUrlRootEntity()
     {
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;
@@ -188,12 +178,8 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
-    public function getEsxUrlRootEntity()
+    #[Depends('testPrepareDb')]
+    public function testGetEsxUrlRootEntity()
     {
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;
@@ -226,12 +212,8 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
-    public function getCollectUrlRootEntity()
+    #[Depends('testPrepareDb')]
+    public function testGetCollectUrlRootEntity()
     {
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;

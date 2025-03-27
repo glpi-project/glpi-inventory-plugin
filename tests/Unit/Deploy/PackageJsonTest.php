@@ -52,7 +52,7 @@ class PackageJsonTest extends TestCase
     }
 
 
-    public function AddItem()
+    public function testAddItem()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
@@ -78,8 +78,8 @@ class PackageJsonTest extends TestCase
         $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
     }
 
-    #[Depends('AddItem')]
-    public function duplicate()
+    #[Depends('testAddItem')]
+    public function testDuplicate()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $packages        = $pfDeployPackage->find(['name' => 'test2']);
@@ -97,7 +97,7 @@ class PackageJsonTest extends TestCase
         $this->assertEquals(0, $package['entities_id']);
     }
 
-    public function Migration_to_91()
+    public function testMigration_to_91()
     {
         global $DB;
 

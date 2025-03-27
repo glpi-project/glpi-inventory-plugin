@@ -79,7 +79,7 @@ class DeploygroupTest extends TestCase
 
 
     #[Depends('AddGroup')]
-    public function cloneStaticGroup()
+    public function testCloneStaticGroup()
     {
         $computer      = new Computer();
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -126,8 +126,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    #[Depends('cloneStaticGroup')]
-    public function cloneDynamicGroup()
+    #[Depends('testCloneStaticGroup')]
+    public function testCloneDynamicGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $input = ['name'    => 'Dynamic group',
@@ -161,8 +161,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    #[Depends('cloneDynamicGroup')]
-    public function updateGroup()
+    #[Depends('testCloneDynamicGroup')]
+    public function testUpdateGroup()
     {
        //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -183,8 +183,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    #[Depends('updateGroup')]
-    public function switchDynamicToStaticGroup()
+    #[Depends('testUpdateGroup')]
+    public function testSwitchDynamicToStaticGroup()
     {
        //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -211,8 +211,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    #[Depends('cloneDynamicGroup')]
-    public function deleteDynamicGroup()
+    #[Depends('testCloneDynamicGroup')]
+    public function testDeleteDynamicGroup()
     {
 
         $pfDeploygroup  = new PluginGlpiinventoryDeployGroup();
@@ -238,8 +238,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    #[Depends('cloneStaticGroup')]
-    public function deleteStaticGroup()
+    #[Depends('testCloneStaticGroup')]
+    public function testDeleteStaticGroup()
     {
 
        //Get the group have the name "Windows computers"
@@ -264,7 +264,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-    public function ImportCsvStaticGroup()
+    public function testImportCsvStaticGroup()
     {
         global $DB;
 
