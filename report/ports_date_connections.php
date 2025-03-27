@@ -254,8 +254,6 @@ function getValues($get, $post)
     $get = array_merge($get, $post);
     if (isset($get["field"])) {
         foreach ($get["field"] as $index => $value) {
-            $get["contains"][$index] = stripslashes($get["contains"][$index]);
-            $get["contains"][$index] = htmlspecialchars_decode($get["contains"][$index]);
             switch ($value) {
                 case 14:
                     if (strpos($get["contains"][$index], "=") == 1) {

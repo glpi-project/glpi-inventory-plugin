@@ -71,10 +71,6 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
    //The agent received a malformed or non existing event
     const RESPONSE_BAD_EVENT       = 'error_bad_event';
 
-   //String to replace a \r\n, to avoid stripcslashes issue
-    const RN_TRANSFORMATION        = "$#r$#n";
-
-
    /**
     * Get name of this type by language of the user connected
     *
@@ -222,12 +218,6 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             $values['template_value']    = isset($data['template']) ? $data['template'] : "";
         }
 
-       //Trick to add \r\n in the description text area
-        $values['description_value'] = str_replace(
-            self::RN_TRANSFORMATION,
-            "\r\n",
-            $values['description_value']
-        );
         return $values;
     }
 

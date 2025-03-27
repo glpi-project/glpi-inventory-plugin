@@ -189,7 +189,7 @@ class DeployUserinteractionTest extends TestCase
         ];
         $interaction->add_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 1","title":"My title","text":"my text","type":"before","template":0}]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($interaction->getJson($packages_id));
+        $json     = $interaction->getJson($packages_id);
         $this->assertEquals($expected, $json);
 
         $params = ['id'                   => $packages_id,
@@ -202,7 +202,7 @@ class DeployUserinteractionTest extends TestCase
         ];
         $interaction->add_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 1","title":"My title","text":"my text","type":"before","template":0},{"name":"interaction 2","title":"My title","text":"my text","type":"after","template":0}]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($interaction->getJson($packages_id));
+        $json     = $interaction->getJson($packages_id);
         $this->assertEquals($expected, $json);
     }
 
@@ -226,7 +226,7 @@ class DeployUserinteractionTest extends TestCase
         ];
         $interaction->save_item($params);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 1","title":"My title","text":"my text","type":"after","template":1},{"name":"interaction 2","title":"My title","text":"my text","type":"after","template":0}]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($interaction->getJson($pfDeployPackage->fields['id']));
+        $json     = $interaction->getJson($pfDeployPackage->fields['id']);
         $this->assertEquals($expected, $json);
     }
 

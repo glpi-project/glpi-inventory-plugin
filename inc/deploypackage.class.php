@@ -2222,37 +2222,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                         unset($job['job']['userinteractions'][$key]['template']);
                     }
                 }
-
-                $job['job']['userinteractions'][$key]['text']
-                = str_replace(
-                    PluginGlpiinventoryDeployUserinteraction::RN_TRANSFORMATION,
-                    "\r\n",
-                    $job['job']['userinteractions'][$key]['text']
-                );
             }
         }
         return $job;
-    }
-
-
-   /**
-   * Transform \r\n in an userinteraction text
-   * @since 9.2
-   * @param array $params the input parameters
-   * @return array $params input parameters with text modified
-   */
-    public function escapeText($params)
-    {
-       //Hack to keep \r\n in the user interaction text
-       //before going to stripslashes_deep
-        if (isset($params['text'])) {
-            $params['text']
-            = str_replace(
-                '\r\n',
-                PluginGlpiinventoryDeployUserinteraction::RN_TRANSFORMATION,
-                $params['text']
-            );
-        }
-        return $params;
     }
 }

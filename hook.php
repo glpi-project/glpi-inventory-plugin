@@ -709,10 +709,9 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                         return "";
                     }
                 } elseif ($field == 'name') {
-                    $val = stripslashes($val);
-                   //decode a json query to match task names in taskjobs list
+                    //decode a json query to match task names in taskjobs list
                     $names = json_decode($val);
-                    if ($names !== null && is_array($names)) {
+                    if (is_array($names)) {
                         $names = array_map(
                             function ($a) {
                                 return "\"" . $a . "\"";
