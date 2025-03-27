@@ -158,13 +158,13 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
         global $DB;
         $class  = $this->collect_itemtype;
         $params = [
-         'FROM'   => $class::getTable(),
-         'FIELDS' => [
-            'id'
-         ],
-         'WHERE'  => [
-            'plugin_glpiinventory_collects_id' => $collects_id
-         ]
+            'FROM'   => $class::getTable(),
+            'FIELDS' => [
+                'id'
+            ],
+            'WHERE'  => [
+                'plugin_glpiinventory_collects_id' => $collects_id
+            ]
         ];
         $iterator = $DB->request($params);
         foreach ($iterator as $data) {

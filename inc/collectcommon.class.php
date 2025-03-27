@@ -109,7 +109,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     public function getListHeaders()
     {
         return [
-         __('Name')
+            __('Name')
         ];
     }
 
@@ -123,7 +123,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     public function displayOneRow($row = [])
     {
         return [
-         $row['name']
+            $row['name']
         ];
     }
 
@@ -136,8 +136,8 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     {
         global $DB;
         $params = [
-         'FROM'  => $this->getTable(),
-         'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id]
+            'FROM'  => $this->getTable(),
+            'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id]
         ];
         $iterator = $DB->request($params);
 
@@ -215,16 +215,16 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         $tab = [];
 
         $tab[] = [
-         'id'           => 'common',
-         'name'         => __('Characteristics')
+            'id'           => 'common',
+            'name'         => __('Characteristics')
         ];
 
         $tab[] = [
-         'id'           => '1',
-         'table'        => $this->getTable(),
-         'field'        => 'name',
-         'name'         => __('Name'),
-         'datatype'     => 'itemlink'
+            'id'           => '1',
+            'table'        => $this->getTable(),
+            'field'        => 'name',
+            'name'         => __('Name'),
+            'datatype'     => 'itemlink'
         ];
 
         return $tab;

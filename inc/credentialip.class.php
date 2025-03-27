@@ -90,11 +90,14 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     public function getAdditionalFields()
     {
         return [['name'  => 'itemtype',
-                         'label' => __('Type'),
-                         'type'  => 'credentials'],
-                   ['name'  => 'ip',
-                         'label' => __('IP'),
-                         'type'  => 'text']];
+            'label' => __('Type'),
+            'type'  => 'credentials'
+        ],
+            ['name'  => 'ip',
+                'label' => __('IP'),
+                'type'  => 'text'
+            ]
+        ];
     }
 
 
@@ -127,41 +130,41 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
         $tab = [];
 
         $tab[] = [
-         'id'   => 'common',
-         'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
+            'id'   => 'common',
+            'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
         ];
 
         $tab[] = [
-         'id'       => '1',
-         'table'    => $this->getTable(),
-         'field'    => 'name',
-         'name'     => __('Name'),
-         'datatype' => 'itemlink',
+            'id'       => '1',
+            'table'    => $this->getTable(),
+            'field'    => 'name',
+            'name'     => __('Name'),
+            'datatype' => 'itemlink',
         ];
 
         $tab[] = [
-         'id'       => '2',
-         'table'    => 'glpi_entities',
-         'field'    => 'completename',
-         'name'     => Entity::getTypeName(1),
-         'datatype' => 'dropdown',
+            'id'       => '2',
+            'table'    => 'glpi_entities',
+            'field'    => 'completename',
+            'name'     => Entity::getTypeName(1),
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
-         'id'            => '3',
-         'table'         => $this->getTable(),
-         'field'         => 'name',
-         'name'          => __('Authentication for remote devices (VMware)', 'glpiinventory'),
-         'datatype'      => 'itemlink',
-         'itemlink_type' => 'PluginGlpiinventoryCredential',
+            'id'            => '3',
+            'table'         => $this->getTable(),
+            'field'         => 'name',
+            'name'          => __('Authentication for remote devices (VMware)', 'glpiinventory'),
+            'datatype'      => 'itemlink',
+            'itemlink_type' => 'PluginGlpiinventoryCredential',
         ];
 
         $tab[] = [
-         'id'       => '4',
-         'table'    => $this->getTable(),
-         'field'    => 'ip',
-         'name'     => __('IP'),
-         'datatype' => 'string',
+            'id'       => '4',
+            'table'    => $this->getTable(),
+            'field'    => 'ip',
+            'name'     => __('IP'),
+            'datatype' => 'string',
         ];
 
         return $tab;

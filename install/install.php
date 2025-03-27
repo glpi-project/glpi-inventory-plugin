@@ -72,54 +72,54 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype'  => [
-            '5150',
-            '5151',
-            '5152',
-            '5153',
-            '5156',
-            '5157',
-            '5158',
-            '5159',
-            '5161',
-            '5165',
-            '5166',
-            '5167',
-            '5168',
-         ]
+            'itemtype'  => [
+                '5150',
+                '5151',
+                '5152',
+                '5153',
+                '5156',
+                '5157',
+                '5158',
+                '5159',
+                '5161',
+                '5165',
+                '5166',
+                '5167',
+                '5168',
+            ]
         ]
     );
 
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginGlpiinventory%']
+            'itemtype' => ['LIKE', 'PluginGlpiinventory%']
         ]
     );
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginFusioninventory%']
+            'itemtype' => ['LIKE', 'PluginFusioninventory%']
         ]
     );
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginFusinvinventory%']
+            'itemtype' => ['LIKE', 'PluginFusinvinventory%']
         ]
     );
     $DB->delete(
         'glpi_displaypreferences',
         [
-         'itemtype' => ['LIKE', 'PluginFusinvsnmp%']
+            'itemtype' => ['LIKE', 'PluginFusinvsnmp%']
         ]
     );
 
    // Purge network ports have itemtype tp 5153
     $networkPort = new NetworkPort();
     $iterator = $DB->request([
-      'FROM'   => 'glpi_networkports',
-      'WHERE'  => ['itemtype' => '5153']
+        'FROM'   => 'glpi_networkports',
+        'WHERE'  => ['itemtype' => '5153']
     ]);
     foreach ($iterator as $data) {
         $networkPort->delete(['id' => $data['id']], 1);

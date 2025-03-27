@@ -52,31 +52,31 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     public function getTypes()
     {
         return [
-         __('Registry', 'glpiinventory') => [
-                  'winkeyExists'       => __("Registry key exists", 'glpiinventory'),
-                  'winvalueExists'     => __("Registry value exists", 'glpiinventory'),
-                  'winkeyMissing'      => __("Registry key missing", 'glpiinventory'),
-                  'winvalueMissing'    => __("Registry value missing", 'glpiinventory'),
-                  'winkeyEquals'       => __("Registry value equals to", 'glpiinventory'),
-                  'winkeyNotEquals'    => __("Registry value not equals to", 'glpiinventory'),
-                  'winvalueType'       => __("Type of registry value equals to", 'glpiinventory')
-               ],
-               __('File') => [
-                  'fileExists'         => __("File exists", 'glpiinventory'),
-                  'fileMissing'        => __("File is missing", 'glpiinventory'),
-                  'fileSizeGreater'    => __("File size is greater than", 'glpiinventory'),
-                  'fileSizeEquals'     => __("File size is equal to", 'glpiinventory'),
-                  'fileSizeLower'      => __("File size is lower than", 'glpiinventory'),
-                  'fileSHA512'         => __("SHA-512 hash value matches", 'glpiinventory'),
-                  'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'glpiinventory'),
-               ],
-               __('Directory') => [
-                  'directoryExists'    => __("Directory exists", 'glpiinventory'),
-                  'directoryMissing'   => __("Directory is missing", 'glpiinventory'),
-               ],
-             __('Other') => [
-            'freespaceGreater'   => __("Free space is greater than", 'glpiinventory')
-             ]
+            __('Registry', 'glpiinventory') => [
+                'winkeyExists'       => __("Registry key exists", 'glpiinventory'),
+                'winvalueExists'     => __("Registry value exists", 'glpiinventory'),
+                'winkeyMissing'      => __("Registry key missing", 'glpiinventory'),
+                'winvalueMissing'    => __("Registry value missing", 'glpiinventory'),
+                'winkeyEquals'       => __("Registry value equals to", 'glpiinventory'),
+                'winkeyNotEquals'    => __("Registry value not equals to", 'glpiinventory'),
+                'winvalueType'       => __("Type of registry value equals to", 'glpiinventory')
+            ],
+            __('File') => [
+                'fileExists'         => __("File exists", 'glpiinventory'),
+                'fileMissing'        => __("File is missing", 'glpiinventory'),
+                'fileSizeGreater'    => __("File size is greater than", 'glpiinventory'),
+                'fileSizeEquals'     => __("File size is equal to", 'glpiinventory'),
+                'fileSizeLower'      => __("File size is lower than", 'glpiinventory'),
+                'fileSHA512'         => __("SHA-512 hash value matches", 'glpiinventory'),
+                'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'glpiinventory'),
+            ],
+            __('Directory') => [
+                'directoryExists'    => __("Directory exists", 'glpiinventory'),
+                'directoryMissing'   => __("Directory is missing", 'glpiinventory'),
+            ],
+            __('Other') => [
+                'freespaceGreater'   => __("Free space is greater than", 'glpiinventory')
+            ]
         ];
     }
 
@@ -108,11 +108,11 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     public function getUnitLabel()
     {
         return [
-               "B"  => __('o'),
-               "KB" => __('Kio'),
-               "MB" => __('Mio'),
-               "GB" => __('Gio')
-             ];
+            "B"  => __('o'),
+            "KB" => __('Kio'),
+            "MB" => __('Mio'),
+            "GB" => __('Gio')
+        ];
     }
 
 
@@ -142,10 +142,10 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     public function getUnitSize($unit)
     {
         $units = [ "B"  => 1,
-                 "KB" => 1024,
-                 "MB" => 1024 * 1024,
-                 "GB" => 1024 * 1024 * 1024
-               ];
+            "KB" => 1024,
+            "MB" => 1024 * 1024,
+            "GB" => 1024 * 1024 * 1024
+        ];
         if (array_key_exists($unit, $units)) {
             return $units[$unit];
         } else {
@@ -163,14 +163,14 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     public function getRegistryTypes()
     {
         return [
-         'REG_SZ'                  => 'REG_SZ',
-         'REG_DWORD'               => 'REG_DWORD',
-         'REG_BINARY'              => 'REG_BINARY',
-         'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
-         'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
-         'REG_LINK'                => 'REG_LINK',
-         'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
-         'REG_NONE'                => 'REG_NONE'
+            'REG_SZ'                  => 'REG_SZ',
+            'REG_DWORD'               => 'REG_DWORD',
+            'REG_BINARY'              => 'REG_BINARY',
+            'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
+            'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
+            'REG_LINK'                => 'REG_LINK',
+            'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
+            'REG_NONE'                => 'REG_NONE'
         ];
     }
 
@@ -303,17 +303,17 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     public function getValues($type, $data, $mode)
     {
         $values = [
-         'warning_message' => false,
-         'name_value'  => "",
-         'name_label'  => __('Audit label', 'glpiinventory'),
-         'name_type'   => "input",
-         'path_label'  => "",
-         'path_value'  => "",
-         'path_comment' => "",
-         'value_type'  => "input",
-         'value_label' => "",
-         'value'       => "",
-         'return'      => "error"
+            'warning_message' => false,
+            'name_value'  => "",
+            'name_label'  => __('Audit label', 'glpiinventory'),
+            'name_type'   => "input",
+            'path_label'  => "",
+            'path_value'  => "",
+            'path_comment' => "",
+            'value_type'  => "input",
+            'value_label' => "",
+            'value'       => "",
+            'return'      => "error"
         ];
 
         if ($mode === self::EDIT) {
@@ -573,11 +573,11 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     public function getAllReturnValues()
     {
         return  ["error"   => __('abort job', 'glpiinventory'),
-               "skip"    => __("skip job", 'glpiinventory'),
-               "startnow" => __("start job now", 'glpiinventory'),
-               "info"    => __("report info", 'glpiinventory'),
-               "warning" => __("report warning", 'glpiinventory')
-              ];
+            "skip"    => __("skip job", 'glpiinventory'),
+            "startnow" => __("start job now", 'glpiinventory'),
+            "info"    => __("report info", 'glpiinventory'),
+            "warning" => __("report warning", 'glpiinventory')
+        ];
     }
 
 
@@ -625,11 +625,11 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
        //prepare updated check entry to insert in json
         $entry = [
-         'name'   => $params['name'],
-         'type'   => $params['checkstype'],
-         'path'   => $params['path'],
-         'value'  => strval($params['value']),
-         'return' => $params['return']
+            'name'   => $params['name'],
+            'type'   => $params['checkstype'],
+            'path'   => $params['path'],
+            'value'  => strval($params['value']),
+            'return' => $params['return']
         ];
 
         return $entry;

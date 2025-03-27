@@ -59,8 +59,8 @@ class PluginGlpiinventoryComputer extends Computer
                 // Include Fields hook from correct installation folder (marketplace or plugins)
                 include_once(Plugin::GetPhpDir("fields") . "/hook.php");
                 $options['fields_plugin'] = [
-                 'id'   => 'fields_plugin',
-                 'name' => __('Plugin fields')
+                    'id'   => 'fields_plugin',
+                    'name' => __('Plugin fields')
                 ];
                 /** @phpstan-ignore-next-line */
                 $fieldsoptions =  plugin_fields_getAddSearchOptions('Computer');
@@ -122,17 +122,18 @@ class PluginGlpiinventoryComputer extends Computer
                             !countElementsInTable(
                                 $group_item->getTable(),
                                 [
-                                'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
-                                'itemtype'                               => 'Computer',
-                                'items_id'                               => $key,
+                                    'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
+                                    'itemtype'                               => 'Computer',
+                                    'items_id'                               => $key,
                                 ]
                             )
                         ) {
                             $group_item->add([
-                            'plugin_glpiinventory_deploygroups_id'
+                                'plugin_glpiinventory_deploygroups_id'
                             => $_POST['id'],
-                            'itemtype' => 'Computer',
-                            'items_id' => $key]);
+                                'itemtype' => 'Computer',
+                                'items_id' => $key
+                            ]);
                             $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                         } else {
                             $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
@@ -148,9 +149,10 @@ class PluginGlpiinventoryComputer extends Computer
                 foreach ($ids as $key) {
                     if (
                         $group_item->deleteByCriteria(['items_id' => $key,
-                                                       'itemtype' => 'Computer',
-                                                       'plugin_glpiinventory_deploygroups_id'
-                                                          => $_POST['item_items_id']])
+                            'itemtype' => 'Computer',
+                            'plugin_glpiinventory_deploygroups_id'
+                                                          => $_POST['item_items_id']
+                        ])
                     ) {
                         $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                     } else {

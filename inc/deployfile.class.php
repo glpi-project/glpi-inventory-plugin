@@ -61,7 +61,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     public function getTypes()
     {
         $types = [
-         'Computer' => __("Upload from computer", 'glpiinventory')
+            'Computer' => __("Upload from computer", 'glpiinventory')
         ];
 
         if (GLPI_INSTALL_MODE !== 'CLOUD') { //@phpstan-ignore-line
@@ -713,19 +713,19 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
            //prepare file data for insertion in repo
             $data = [
-            'file_tmp_name' => $file_path,
-            'mime_type'     => $mime_type,
-            'filesize'      => $filesize,
-            'filename'      => $filename,
-            'p2p'           => isset($params['p2p']) ? $params['p2p'] : 0,
-            'uncompress'    => isset($params['uncompress']) ? $params['uncompress'] : 0,
-            'p2p-retention-duration' => (
+                'file_tmp_name' => $file_path,
+                'mime_type'     => $mime_type,
+                'filesize'      => $filesize,
+                'filename'      => $filename,
+                'p2p'           => isset($params['p2p']) ? $params['p2p'] : 0,
+                'uncompress'    => isset($params['uncompress']) ? $params['uncompress'] : 0,
+                'p2p-retention-duration' => (
                isset($params['p2p-retention-duration'])
                && is_numeric($params['p2p-retention-duration'])
                   ? $params['p2p-retention-duration']
                   : 0
              ),
-             'id'            => $params['id']
+                'id'            => $params['id']
             ];
 
            //Add file in repo
@@ -768,8 +768,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         $config  = [];
         if ($element) {
             $config = [
-            'hash' => $element,
-            'data' => $package->getAssociatedFile($element),
+                'hash' => $element,
+                'data' => $package->getAssociatedFile($element),
             ];
         }
         return $config;
@@ -823,10 +823,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
          (!empty($this->find(['shortsha512' => $short_sha512])));
 
         $new_entry = [
-         'name'                   => $filename,
-         'p2p'                    => $params['p2p'],
-         'p2p-retention-duration' => $params['p2p-retention-duration'],
-         'uncompress'             => $params['uncompress'],
+            'name'                   => $filename,
+            'p2p'                    => $params['p2p'],
+            'p2p-retention-duration' => $params['p2p-retention-duration'],
+            'uncompress'             => $params['uncompress'],
         ];
 
         $fdIn = fopen($file_tmp_name, 'rb');
@@ -877,15 +877,15 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
        // entity on a file is just anticipated and will be fully used later
         if (!$file_present_in_db) {
             $entry = [
-            "name"         => $filename,
-            "filesize"     => $params['filesize'],
-            "mimetype"     => $params['mime_type'],
-            "sha512"       => $sha512,
-            "shortsha512"  => $short_sha512,
-            "comments"     => "",
-            "date_mod"     => date('Y-m-d H:i:s'),
-            "entities_id"  => 0,
-            "is_recursive" => 1
+                "name"         => $filename,
+                "filesize"     => $params['filesize'],
+                "mimetype"     => $params['mime_type'],
+                "sha512"       => $sha512,
+                "shortsha512"  => $short_sha512,
+                "comments"     => "",
+                "date_mod"     => date('Y-m-d H:i:s'),
+                "entities_id"  => 0,
+                "is_recursive" => 1
             ];
             $this->add($entry);
         }

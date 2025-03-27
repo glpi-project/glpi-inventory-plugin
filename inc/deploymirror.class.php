@@ -225,8 +225,8 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     {
         $this->initForm($id, $options);
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/deploymirror.html.twig', [
-         'item'   => $this,
-         'params' => $options,
+            'item'   => $this,
+            'params' => $options,
         ]);
 
         return true;
@@ -244,71 +244,71 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
         $tab = [];
 
         $tab[] = [
-         'id'   => 'common',
-         'name' => self::getTypeName(),
+            'id'   => 'common',
+            'name' => self::getTypeName(),
         ];
 
         $tab[] = [
-         'id'            => '1',
-         'table'         => $this->getTable(),
-         'field'         => 'name',
-         'name'          => __('Name'),
-         'datatype'      => 'itemlink',
-         'itemlink_type' => $this->getType()
+            'id'            => '1',
+            'table'         => $this->getTable(),
+            'field'         => 'name',
+            'name'          => __('Name'),
+            'datatype'      => 'itemlink',
+            'itemlink_type' => $this->getType()
         ];
 
         $tab[] = [
-         'id'        => '19',
-         'table'     => $this->getTable(),
-         'field'     => 'date_mod',
-         'name'      => __('Last update'),
-         'datatype'  => 'datetime',
+            'id'        => '19',
+            'table'     => $this->getTable(),
+            'field'     => 'date_mod',
+            'name'      => __('Last update'),
+            'datatype'  => 'datetime',
         ];
 
         $tab[] = [
-         'id'           => '2',
-         'table'        => $this->getTable(),
-         'field'        => 'url',
-         'name'         => __('Mirror server address', 'glpiinventory'),
-         'datatype'     => 'string'
+            'id'           => '2',
+            'table'        => $this->getTable(),
+            'field'        => 'url',
+            'name'         => __('Mirror server address', 'glpiinventory'),
+            'datatype'     => 'string'
         ];
 
         $tab[] = [
-         'id'        => '6',
-         'table'     => $this->getTable(),
-         'field'     => 'is_active',
-         'name'      => __('Active'),
-         'datatype'  => 'bool',
+            'id'        => '6',
+            'table'     => $this->getTable(),
+            'field'     => 'is_active',
+            'name'      => __('Active'),
+            'datatype'  => 'bool',
         ];
 
         $tab[] = [
-         'id'        => '16',
-         'table'     => $this->getTable(),
-         'field'     => 'comment',
-         'name'      => __('Comments'),
-         'datatype'  => 'text',
+            'id'        => '16',
+            'table'     => $this->getTable(),
+            'field'     => 'comment',
+            'name'      => __('Comments'),
+            'datatype'  => 'text',
         ];
 
         $tab[] = [
-         'id'       => '80',
-         'table'    => 'glpi_entities',
-         'field'    => 'completename',
-         'name'     => Entity::getTypeName(1),
-         'datatype' => 'dropdown',
+            'id'       => '80',
+            'table'    => 'glpi_entities',
+            'field'    => 'completename',
+            'name'     => Entity::getTypeName(1),
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
-         'id'        => '86',
-         'table'     => $this->getTable(),
-         'field'     => 'is_recursive',
-         'name'      => __('Child entities'),
-         'datatype'  => 'bool',
+            'id'        => '86',
+            'table'     => $this->getTable(),
+            'field'     => 'is_recursive',
+            'name'      => __('Child entities'),
+            'datatype'  => 'bool',
         ];
 
         $name = _n('Volume', 'Volumes', Session::getPluralNumber());
         $tab[] = [
-          'id'                 => 'disk',
-          'name'               => $name
+            'id'                 => 'disk',
+            'name'               => $name
         ];
 
         $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
@@ -326,7 +326,8 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     public function getSpecificMassiveActions($checkitem = null)
     {
         return [__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfer'
-               => __('Transfer')];
+               => __('Transfer')
+        ];
     }
 
 

@@ -66,9 +66,10 @@ echo __('Number of days (minimum) since last inventory', 'glpiinventory') . " :&
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", [
-                'value' => $nbdays,
-                'min'   => 1,
-                'max'   => 365]);
+    'value' => $nbdays,
+    'min'   => 1,
+    'max'   => 365
+]);
 echo "</td>";
 echo "</tr>";
 

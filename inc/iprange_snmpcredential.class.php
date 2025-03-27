@@ -163,10 +163,10 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
         $a_data = getAllDataFromTable(
             self::getTable(),
             [
-            'WHERE' => [
-               'plugin_glpiinventory_ipranges_id' => $item->getID()
-            ],
-            'ORDER' => 'rank'
+                'WHERE' => [
+                    'plugin_glpiinventory_ipranges_id' => $item->getID()
+                ],
+                'ORDER' => 'rank'
             ]
         );
         $a_used = [];

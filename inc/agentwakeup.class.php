@@ -115,26 +115,26 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
         $timeslot = new PluginGlpiinventoryTimeslot();
         $timeslots = $timeslot->getCurrentActiveTimeslots();
         $query_timeslots = [
-         'plugin_glpiinventory_timeslots_exec_id'   => 0
+            'plugin_glpiinventory_timeslots_exec_id'   => 0
         ];
         if (!empty($timeslots)) {
             array_push($query_timeslots, [
-            'plugin_glpiinventory_timeslots_exec_id' => $timeslots
+                'plugin_glpiinventory_timeslots_exec_id' => $timeslots
             ]);
         }
        //Get all active task requiring an agent wakeup
        //Check all tasks without timeslot or task with a current active timeslot
         $iterator = $DB->request([
-         'SELECT' => ['id', 'wakeup_agent_counter', 'wakeup_agent_time', 'last_agent_wakeup'],
-         'FROM'   => 'glpi_plugin_glpiinventory_tasks',
-         'WHERE'  => [
-            'wakeup_agent_counter'  => ['>', 0],
-            'wakeup_agent_time'     => ['>', 0],
-            'is_active'             => 1,
-            [
-               'OR'   => $query_timeslots
+            'SELECT' => ['id', 'wakeup_agent_counter', 'wakeup_agent_time', 'last_agent_wakeup'],
+            'FROM'   => 'glpi_plugin_glpiinventory_tasks',
+            'WHERE'  => [
+                'wakeup_agent_counter'  => ['>', 0],
+                'wakeup_agent_time'     => ['>', 0],
+                'is_active'             => 1,
+                [
+                    'OR'   => $query_timeslots
+                ]
             ]
-         ]
         ]);
 
         foreach ($iterator as $task) {
@@ -158,26 +158,26 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
            //For each task, get a number of taskjobs at the PREPARED state
            //(the maximum is defined in wakeup_agent_counter)
             $iterator2 = $DB->request([
-            'SELECT'    => [
-               'glpi_plugin_glpiinventory_taskjobstates.agents_id',
-            ],
-            'FROM'      => [
-               'glpi_plugin_glpiinventory_taskjobstates'
-            ],
-            'LEFT JOIN' => [
-               'glpi_plugin_glpiinventory_taskjobs' => [
-                  'FKEY' => [
-                     'glpi_plugin_glpiinventory_taskjobs'    => 'id',
-                     'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                  ]
-               ]
-            ],
-            'WHERE'     => [
-               'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_tasks_id' => $task['id'],
-               'glpi_plugin_glpiinventory_taskjobstates.state'  => PluginGlpiinventoryTaskjobstate::PREPARED
-            ],
-            'ORDER'     => 'glpi_plugin_glpiinventory_taskjobstates.id',
-            'START'     => 0,
+                'SELECT'    => [
+                    'glpi_plugin_glpiinventory_taskjobstates.agents_id',
+                ],
+                'FROM'      => [
+                    'glpi_plugin_glpiinventory_taskjobstates'
+                ],
+                'LEFT JOIN' => [
+                    'glpi_plugin_glpiinventory_taskjobs' => [
+                        'FKEY' => [
+                            'glpi_plugin_glpiinventory_taskjobs'    => 'id',
+                            'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
+                        ]
+                    ]
+                ],
+                'WHERE'     => [
+                    'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_tasks_id' => $task['id'],
+                    'glpi_plugin_glpiinventory_taskjobstates.state'  => PluginGlpiinventoryTaskjobstate::PREPARED
+                ],
+                'ORDER'     => 'glpi_plugin_glpiinventory_taskjobstates.id',
+                'START'     => 0,
             ]);
             $counter = 0;
 
@@ -213,10 +213,10 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
             $DB->update(
                 'glpi_plugin_glpiinventory_tasks',
                 [
-                'last_agent_wakeup' => $_SESSION['glpi_currenttime']
+                    'last_agent_wakeup' => $_SESSION['glpi_currenttime']
                 ],
                 [
-                'id' => $tasks
+                    'id' => $tasks
                 ]
             );
 

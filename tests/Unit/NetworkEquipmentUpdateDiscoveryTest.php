@@ -38,53 +38,53 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     public $item_id = 0;
 
     public $networkports_reference = [
-      [
-         'items_id'            => 1,
-         'itemtype'            => 'NetworkEquipment',
-         'entities_id'         => 0,
-         'is_recursive'        => 0,
-         'logical_number'      => 0,
-         'name'                => 'Management',
-         'instantiation_type'  => 'NetworkPortAggregate',
-         'mac'                 => '38:22:d6:3c:da:e7',
-         'comment'             => null,
-         'is_deleted'          => 0,
-         'is_dynamic'          => 1,
-         'ifmtu' => 0,
-         'ifspeed' => 0,
-         'ifinternalstatus' => null,
-         'ifconnectionstatus' => 0,
-         'iflastchange' => null,
-         'ifinbytes' => 0,
-         'ifinerrors' => 0,
-         'ifoutbytes' => 0,
-         'ifouterrors' => 0,
-         'ifstatus' => null,
-         'ifdescr' => null,
-         'ifalias' => null,
-         'portduplex' => null,
-         'trunk' => 0,
-         'lastup' => null
-      ]
+        [
+            'items_id'            => 1,
+            'itemtype'            => 'NetworkEquipment',
+            'entities_id'         => 0,
+            'is_recursive'        => 0,
+            'logical_number'      => 0,
+            'name'                => 'Management',
+            'instantiation_type'  => 'NetworkPortAggregate',
+            'mac'                 => '38:22:d6:3c:da:e7',
+            'comment'             => null,
+            'is_deleted'          => 0,
+            'is_dynamic'          => 1,
+            'ifmtu' => 0,
+            'ifspeed' => 0,
+            'ifinternalstatus' => null,
+            'ifconnectionstatus' => 0,
+            'iflastchange' => null,
+            'ifinbytes' => 0,
+            'ifinerrors' => 0,
+            'ifoutbytes' => 0,
+            'ifouterrors' => 0,
+            'ifstatus' => null,
+            'ifdescr' => null,
+            'ifalias' => null,
+            'portduplex' => null,
+            'trunk' => 0,
+            'lastup' => null
+        ]
     ];
 
     public $ipaddresses_reference = [
-      [
-         'entities_id'   => 0,
-         'items_id'      => 1,
-         'itemtype'      => 'NetworkName',
-         'version'       => 4,
-         'name'          => '99.99.10.10',
-         'binary_0'      => 0,
-         'binary_1'      => 0,
-         'binary_2'      => 65535,
-         'binary_3'      => 1667435018,
-         'is_deleted'    => 0,
-         'is_dynamic'    => 1,
-         'mainitems_id'  => 1,
-         'mainitemtype'  => 'NetworkEquipment'
+        [
+            'entities_id'   => 0,
+            'items_id'      => 1,
+            'itemtype'      => 'NetworkName',
+            'version'       => 4,
+            'name'          => '99.99.10.10',
+            'binary_0'      => 0,
+            'binary_1'      => 0,
+            'binary_2'      => 65535,
+            'binary_3'      => 1667435018,
+            'is_deleted'    => 0,
+            'is_dynamic'    => 1,
+            'mainitems_id'  => 1,
+            'mainitemtype'  => 'NetworkEquipment'
 
-      ]
+        ]
     ];
 
     protected $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
@@ -163,9 +163,9 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $networkEquipment = new NetworkEquipment();
 
         $input = [
-          'name' => 'switch H3C',
-          'serial' => '042ff',
-          'entities_id' => '0'
+            'name' => 'switch H3C',
+            'serial' => '042ff',
+            'entities_id' => '0'
         ];
         $this->item_id = $networkEquipment->add($input);
         $this->assertNotFalse($this->item_id, "Add network equipment failed");

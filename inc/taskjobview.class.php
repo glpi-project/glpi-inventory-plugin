@@ -47,10 +47,10 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     {
         parent::__construct();
         $this->base_urls = array_merge($this->base_urls, [
-         'fi.job.create' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
-         'fi.job.edit' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
-         'fi.job.moduletypes' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduletypes.php",
-         'fi.job.moduleitems' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduleitems.php",
+            'fi.job.create' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
+            'fi.job.edit' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
+            'fi.job.moduletypes' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduletypes.php",
+            'fi.job.moduleitems' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduleitems.php",
         ]);
     }
 
@@ -298,7 +298,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
        // Find taskjobs tied to the selected task
         $taskjobs = $this->find(
             ['plugin_glpiinventory_tasks_id' => $task_id,
-             'rescheduled_taskjob_id'          => 0],
+                'rescheduled_taskjob_id'          => 0
+            ],
             ['id']
         );
         return $taskjobs;
@@ -485,8 +486,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $title,
             $itemtype,
             [
-            'width'     => "95%",
-            'condition' => $condition
+                'width'     => "95%",
+                'condition' => $condition
             ]
         );
         $item = getItemForItemtype($itemtype);
@@ -1040,16 +1041,16 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $tab = [];
 
         $tab[] = [
-         'id'           => 'common',
-         'name'         => __('Characteristics')
+            'id'           => 'common',
+            'name'         => __('Characteristics')
         ];
 
         $tab[] = [
-         'id'           => '1',
-         'table'        => $this->getTable(),
-         'field'        => 'name',
-         'name'         => __('Name'),
-         'datatype'     => 'itemlink'
+            'id'           => '1',
+            'table'        => $this->getTable(),
+            'field'        => 'name',
+            'name'         => __('Name'),
+            'datatype'     => 'itemlink'
         ];
 
         return $tab;

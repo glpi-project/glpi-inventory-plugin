@@ -2,8 +2,10 @@
 <ruleset>
     <file>.</file>
     <exclude-pattern>/.git/</exclude-pattern>
-    <exclude-pattern>/lib/</exclude-pattern>
-    <exclude-pattern>/vendor/</exclude-pattern>
+    <exclude-pattern type="relative">^lib/</exclude-pattern>
+    <exclude-pattern type="relative">^node_modules/</exclude-pattern>
+    <exclude-pattern type="relative">^tests/files/</exclude-pattern>
+    <exclude-pattern type="relative">^vendor/</exclude-pattern>
 
     <arg name="warning-severity" value="0" />
     <arg value="p" />
@@ -16,4 +18,6 @@
        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />
        <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps" />
     </rule>
+
+    <rule ref="Generic.Arrays.ArrayIndent"></rule>
 </ruleset>

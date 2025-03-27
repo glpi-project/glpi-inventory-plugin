@@ -53,11 +53,11 @@ class NetworkEquipmentUpdateTest extends TestCase
         $DB->update(
             NetworkPortType::getTable(),
             [
-            'is_importable' => 0,
-            'instantiation_type' => null
+                'is_importable' => 0,
+                'instantiation_type' => null
             ],
             [
-            'value_decimal' => [53, 54]
+                'value_decimal' => [53, 54]
             ]
         );
 
@@ -75,11 +75,11 @@ class NetworkEquipmentUpdateTest extends TestCase
             $DB->update(
                 NetworkPortType::getTable(),
                 [
-                'is_importable' => 1,
-                'instantiation_type' => 'NetworkPortEthernet'
+                    'is_importable' => 1,
+                    'instantiation_type' => 'NetworkPortEthernet'
                 ],
                 [
-                'value_decimal' => [53, 54]
+                    'value_decimal' => [53, 54]
                 ]
             )
         );
@@ -197,8 +197,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
         $networkEquipment = new NetworkEquipment();
 
         $this->items_id = $networkEquipment->add([
-         'serial'      => 'FOC147UJEU4',
-         'entities_id' => 0
+            'serial'      => 'FOC147UJEU4',
+            'entities_id' => 0
         ]);
 
         $this->assertGreaterThan(0, $this->items_id);
@@ -237,36 +237,36 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
         );
 
         $a_reference = [
-          'name'                 => 'switchr2d2',
-          'serial'               => 'FOC147UJEU4',
-          'entities_id'          => 0,
-          'is_recursive'         => 0,
-          'ram'                  => null,
-          'otherserial'          => null,
-          'contact'              => null,
-          'contact_num'          => null,
-          'users_id_tech'        => 0,
-          'groups_id_tech'       => 0,
-          'comment'              => null,
-          'locations_id'         => 0,
-          'networks_id'          => 0,
-          'networkequipmentmodels_id' => 0,
-          'is_deleted'           => 0,
-          'is_template'          => 0,
-          'template_name'        => null,
-          'users_id'             => 0,
-          'groups_id'            => 0,
-          'states_id'            => 0,
-          'ticket_tco'           => '0.0000',
-          'is_dynamic'           => 1,
-          'uuid'                 => null,
-          'sysdescr'             => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
+            'name'                 => 'switchr2d2',
+            'serial'               => 'FOC147UJEU4',
+            'entities_id'          => 0,
+            'is_recursive'         => 0,
+            'ram'                  => null,
+            'otherserial'          => null,
+            'contact'              => null,
+            'contact_num'          => null,
+            'users_id_tech'        => 0,
+            'groups_id_tech'       => 0,
+            'comment'              => null,
+            'locations_id'         => 0,
+            'networks_id'          => 0,
+            'networkequipmentmodels_id' => 0,
+            'is_deleted'           => 0,
+            'is_template'          => 0,
+            'template_name'        => null,
+            'users_id'             => 0,
+            'groups_id'            => 0,
+            'states_id'            => 0,
+            'ticket_tco'           => '0.0000',
+            'is_dynamic'           => 1,
+            'uuid'                 => null,
+            'sysdescr'             => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
-         'cpu'                   => 0,
-         'uptime'                => '157 days, 02:14:44.00',
-         'snmpcredentials_id'    => 0
+            'cpu'                   => 0,
+            'uptime'                => '157 days, 02:14:44.00',
+            'snmpcredentials_id'    => 0
         ];
 
         $this->assertEquals($a_reference, $networkEquipment->fields);
@@ -287,9 +287,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
         $a_networkports = $networkPort->find(
             ['instantiation_type' => 'NetworkPortAggregate',
-             'itemtype'           => 'NetworkEquipment',
-             'items_id'           => $networkEquipment->fields['id'],
-            'logical_number'     => 0]
+                'itemtype'           => 'NetworkEquipment',
+                'items_id'           => $networkEquipment->fields['id'],
+                'logical_number'     => 0
+            ]
         );
 
         $this->assertEquals(1, count($a_networkports), 'Number internal ports');
@@ -300,13 +301,15 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
        // May have 3 IP
         $a_networkname = current($networkName->find(
             ['items_id' => $a_networkport['id'],
-             'itemtype' => 'NetworkPort'],
+                'itemtype' => 'NetworkPort'
+            ],
             [],
             1
         ));
         $a_ips_fromDB = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-             'items_id' => $a_networkname['id']],
+                'items_id' => $a_networkname['id']
+            ],
             ['name']
         );
         $a_ips = [];
@@ -326,7 +329,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
         $a_networkports = $networkPort->find(
             ['mac'      => 'cc:f9:54:a1:03:35',
-            'itemtype' => 'Unmanaged']
+                'itemtype' => 'Unmanaged'
+            ]
         );
 
         $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
@@ -361,7 +365,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
         $a_networkports = $networkPort->find(
             ['items_id' => $unmanaged->fields['id'],
-            'itemtype' => 'Unmanaged']
+                'itemtype' => 'Unmanaged'
+            ]
         );
 
         $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
@@ -408,9 +413,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
         $a_networkports = $networkPort->find(
             ['instantiation_type' => 'NetworkPortEthernet',
-             'itemtype'           => 'NetworkEquipment',
-             'items_id'           => $networkEquipment->fields['id'],
-            'name'               => 'Fa0/2']
+                'itemtype'           => 'NetworkEquipment',
+                'items_id'           => $networkEquipment->fields['id'],
+                'name'               => 'Fa0/2'
+            ]
         );
 
         $this->assertEquals(
@@ -453,8 +459,9 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
 
         $input = ['name' => 'MyTask', 'entities_id' => 0,
-                'reprepare_if_successful' => 1, 'comment' => 'MyComments',
-                'is_active' => 1];
+            'reprepare_if_successful' => 1, 'comment' => 'MyComments',
+            'is_active' => 1
+        ];
         $tasks_id = $pfTask->add($input);
         $this->assertGreaterThan(0, $tasks_id);
 
@@ -463,17 +470,18 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals(1, $pfTask->fields['is_active']);
 
         $input = ['ip_start' => '192.168.40.1',
-                'ip_end' => '192.168.40.254'];
+            'ip_end' => '192.168.40.254'
+        ];
         $iprange_id = $pfIpRange->add($input);
         $this->assertTrue($pfIpRange->getFromDB($iprange_id));
         $this->assertEquals('192.168.40.1', $pfIpRange->fields['ip_start']);
         $this->assertEquals('192.168.40.254', $pfIpRange->fields['ip_end']);
 
         $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
-                'name'        => 'networkinventory',
-                'method'      => 'networkinventory',
-                'targets'     => '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]'
-               ];
+            'name'        => 'networkinventory',
+            'method'      => 'networkinventory',
+            'targets'     => '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]'
+        ];
         $taskjobs_id = $pfTaskJob->add($input);
         $this->assertGreaterThan(0, $taskjobs_id);
         $this->assertTrue($pfTaskJob->getFromDB($taskjobs_id));

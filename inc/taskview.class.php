@@ -47,7 +47,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     {
         parent::__construct();
         $this->base_urls = array_merge($this->base_urls, [
-         'fi.job.logs' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_logs.php",
+            'fi.job.logs' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_logs.php",
         ]);
     }
 
@@ -66,15 +66,15 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             __("Include old jobs", 'glpiinventory'),
             null,
             [
-            1   => __('Last'),
-            2   => 2,
-            5   => 5,
-            10  => 10,
-            25  => 25,
-            50  => 50,
-            100 => 100,
-            250 => 250,
-            -1  => __('All')
+                1   => __('Last'),
+                2   => 2,
+                5   => 5,
+                10  => 10,
+                25  => 25,
+                50  => 50,
+                100 => 100,
+                250 => 250,
+                -1  => __('All')
             ],
             ['value' => $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs']]
         );
@@ -84,14 +84,14 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             __("refresh interval", "glpiinventory"),
             null,
             [
-            "off"  => __('Off', 'glpiinventory'),
-            "1"    => sprintf(_n('%s second', '%s seconds', 1), 1),
-            "5"    => sprintf(_n('%s second', '%s seconds', 5), 5),
-            "10"   => sprintf(_n('%s second', '%s seconds', 10), 10),
-            "60"   => sprintf(_n('%s minute', '%s minutes', 1), 1),
-            "120"  => sprintf(_n('%s minute', '%s minutes', 2), 2),
-            "300"  => sprintf(_n('%s minute', '%s minutes', 5), 5),
-            "600"  => sprintf(_n('%s minute', '%s minutes', 10), 10),
+                "off"  => __('Off', 'glpiinventory'),
+                "1"    => sprintf(_n('%s second', '%s seconds', 1), 1),
+                "5"    => sprintf(_n('%s second', '%s seconds', 5), 5),
+                "10"   => sprintf(_n('%s second', '%s seconds', 10), 10),
+                "60"   => sprintf(_n('%s minute', '%s minutes', 1), 1),
+                "120"  => sprintf(_n('%s minute', '%s minutes', 2), 2),
+                "300"  => sprintf(_n('%s minute', '%s minutes', 5), 5),
+                "600"  => sprintf(_n('%s minute', '%s minutes', 10), 10),
             ],
             ['value' => $_SESSION['glpi_plugin_glpiinventory']['refresh']]
         );
@@ -124,11 +124,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          echo "<div class='state_checkboxes'>";
          // set options checked by default
          $agent_state_types = [
-         'agents_prepared'  => false,
-         'agents_running'   => true,
-         'agents_cancelled' => false,
-         'agents_success'   => true,
-         'agents_error'     => true,
+             'agents_prepared'  => false,
+             'agents_running'   => true,
+             'agents_cancelled' => false,
+             'agents_success'   => true,
+             'agents_error'     => true,
          ];
          foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
              $locale  = PluginGlpiinventoryDeployPackage::getPackageDeploymentStates()[$agent_state_type];
@@ -327,8 +327,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             $this->showCheckboxField(__('Active'), "is_active");
 
             $datetime_field_options = [
-            'timestep'   => 1,
-            'maybeempty' => true,
+                'timestep'   => 1,
+                'maybeempty' => true,
             ];
             $this->showDateTimeField(
                 __('Schedule start', 'glpiinventory'),
@@ -346,24 +346,25 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 __('Preparation timeslot', 'glpiinventory'),
                 "PluginGlpiinventoryTimeslot",
                 ['name'  => 'plugin_glpiinventory_timeslots_prep_id',
-                                        'value' => $this->fields['plugin_glpiinventory_timeslots_prep_id']
-                                       ]
+                    'value' => $this->fields['plugin_glpiinventory_timeslots_prep_id']
+                ]
             );
 
             $this->showDropdownForItemtype(
                 __('Execution timeslot', 'glpiinventory'),
                 "PluginGlpiinventoryTimeslot",
                 ['name'  => 'plugin_glpiinventory_timeslots_exec_id',
-                  'value' => $this->fields['plugin_glpiinventory_timeslots_exec_id']]
+                    'value' => $this->fields['plugin_glpiinventory_timeslots_exec_id']
+                ]
             );
 
             $this->showIntegerField(
                 __('Agent wakeup interval (in minutes)', 'glpiinventory'),
                 "wakeup_agent_time",
                 ['value' => $this->fields['wakeup_agent_time'],
-                                  'toadd' => ['0' => __('Never')],
-                                  'min'   => 1,
-                                  'step'  => 1
+                    'toadd' => ['0' => __('Never')],
+                    'min'   => 1,
+                    'step'  => 1
                 ]
             );
 
@@ -371,9 +372,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 __('Number of agents to wake up', 'glpiinventory'),
                 "wakeup_agent_counter",
                 ['value' => $this->fields['wakeup_agent_counter'],
-                                  'toadd' => ['0' => __('None')],
-                                  'min'   => 0,
-                                  'step'  => 1
+                    'toadd' => ['0' => __('None')],
+                    'min'   => 0,
+                    'step'  => 1
                 ]
             );
         }
@@ -398,16 +399,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "<td class='right pt-3' colspan='4'>";
         if (!$this->isNewID($ID) && $this->can($ID, PURGE)) {
             echo Html::submit("<i class='fas fa-trash me-1'></i>" . _x('button', 'Delete permanently'), [
-            'name'    => 'purge',
-            'confirm' => __('Confirm the final deletion?'),
-            'class '  => 'btn btn-outline-danger me-2',
+                'name'    => 'purge',
+                'confirm' => __('Confirm the final deletion?'),
+                'class '  => 'btn btn-outline-danger me-2',
             ]);
         }
 
         if ($this->fields['is_active']) {
             echo Html::submit("<i class='fas fa-bolt me-1'></i>" . __('Force start', 'glpiinventory'), [
-            'name' => 'forcestart',
-            'class' => 'btn btn-outline-warning me-2',
+                'name' => 'forcestart',
+                'class' => 'btn btn-outline-warning me-2',
             ]);
         }
 
@@ -419,8 +420,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         } else {
             echo Html::hidden('id', ['value' => $ID]);
             echo Html::submit("<i class='far fa-save me-1'></i>" . _x('button', 'Save'), [
-            'name'  => 'update',
-            'class' => 'btn btn-primary me-2'
+                'name'  => 'update',
+                'class' => 'btn btn-primary me-2'
             ]);
         }
         echo "</td>";
@@ -500,16 +501,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         $tab = [];
 
         $tab[] = [
-         'id'           => 'common',
-         'name'         => __('Characteristics')
+            'id'           => 'common',
+            'name'         => __('Characteristics')
         ];
 
         $tab[] = [
-         'id'           => '1',
-         'table'        => $this->getTable(),
-         'field'        => 'name',
-         'name'         => __('Name'),
-         'datatype'     => 'itemlink'
+            'id'           => '1',
+            'table'        => $this->getTable(),
+            'field'        => 'name',
+            'name'         => __('Name'),
+            'datatype'     => 'itemlink'
         ];
 
         return $tab;
@@ -866,8 +867,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             PluginGlpiinventoryTaskjobstate::FINISHED,
                             PluginGlpiinventoryTaskjobstate::IN_ERROR,
                             PluginGlpiinventoryTaskjobstate::POSTPONED,
-                            PluginGlpiinventoryTaskjobstate::CANCELLED]],
-                        'agents_id' => array_keys($agent_ids)]
+                            PluginGlpiinventoryTaskjobstate::CANCELLED
+                        ]
+                        ],
+                        'agents_id' => array_keys($agent_ids)
+                    ]
                 );
                 foreach ($jobstates_running as $jobstate_running) {
                     $jobstate_agent_id = $jobstate_running['agents_id'];
@@ -884,7 +888,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             'items_id' => $item_id,
                             'plugin_glpiinventory_taskjobs_id' => $job_id,
                             'state'    => PluginGlpiinventoryTaskjobstate::FINISHED,
-                            'agents_id'   => array_keys($agent_ids)]
+                            'agents_id'   => array_keys($agent_ids)
+                        ]
                     );
 
                     foreach ($jobstates_running as $jobstate_running) {
@@ -908,7 +913,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                 PluginGlpiinventoryTaskjobstate::IN_ERROR,
                                 PluginGlpiinventoryTaskjobstate::CANCELLED,
                             ],
-                            'agents_id' => array_keys($agent_ids)]
+                            'agents_id' => array_keys($agent_ids)
+                        ]
                     ]
                 ]);
 

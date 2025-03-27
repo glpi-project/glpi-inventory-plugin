@@ -81,8 +81,9 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             foreach ($db_wmis as $keydb => $arraydb) {
                 if ($arraydb['property'] == $key) {
                     $input = ['property' => $arraydb['property'],
-                              'id'       => $keydb,
-                              'value'    => $value];
+                        'id'       => $keydb,
+                        'value'    => $value
+                    ];
                     $this->update($input);
                     unset($wmi_data[$key]);
                     unset($db_wmis[$keydb]);
@@ -96,10 +97,10 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         }
         foreach ($wmi_data as $key => $value) {
             $input = [
-            'computers_id' => $computers_id,
-            'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
-            'property'     => $key,
-            'value'        => $value
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
+                'property'     => $key,
+                'value'        => $value
             ];
             $this->add($input);
         }

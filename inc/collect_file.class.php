@@ -57,18 +57,18 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
     public function getListHeaders()
     {
         return [
-         __("Name"),
-         __("Limit", "glpiinventory"),
-         __("Folder", "glpiinventory"),
-         __("Recursive", "glpiinventory"),
-         __("Regex", "glpiinventory"),
-         __("Size", "glpiinventory"),
-         __("Checksum SHA512", "glpiinventory"),
-         __("Checksum SHA2", "glpiinventory"),
-         __("Name", "glpiinventory"),
-         __("Iname", "glpiinventory"),
-         __("Type", "glpiinventory"),
-         __("Action")
+            __("Name"),
+            __("Limit", "glpiinventory"),
+            __("Folder", "glpiinventory"),
+            __("Recursive", "glpiinventory"),
+            __("Regex", "glpiinventory"),
+            __("Size", "glpiinventory"),
+            __("Checksum SHA512", "glpiinventory"),
+            __("Checksum SHA2", "glpiinventory"),
+            __("Name", "glpiinventory"),
+            __("Iname", "glpiinventory"),
+            __("Type", "glpiinventory"),
+            __("Action")
         ];
     }
 
@@ -89,17 +89,17 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         }
 
         return [
-         $row['name'],
-         $row['limit'],
-         $row['dir'],
-         $row['is_recursive'],
-         $row['filter_regex'],
-         $filter,
-         $row['filter_checksumsha512'],
-         $row['filter_checksumsha2'],
-         $row['filter_name'],
-         $row['filter_iname'],
-         $type
+            $row['name'],
+            $row['limit'],
+            $row['dir'],
+            $row['is_recursive'],
+            $row['filter_regex'],
+            $filter,
+            $row['filter_checksumsha512'],
+            $row['filter_checksumsha2'],
+            $row['filter_name'],
+            $row['filter_iname'],
+            $type
         ];
     }
 
@@ -108,10 +108,10 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         echo "<td>" . __('Limit', 'glpiinventory') . "</td>";
         echo "<td>";
         Dropdown::showNumber('limit', [
-                           'min'   => 1,
-                           'max'   => 100,
-                           'value' => 5
-                           ]);
+            'min'   => 1,
+            'max'   => 100,
+            'value' => 5
+        ]);
         echo "</td>";
         echo "</tr>\n";
 
@@ -148,11 +148,11 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         echo "</td>";
         echo "<td>";
         Dropdown::showFromArray('sizetype', [
-          'none'    => __('Disabled', 'glpiinventory'),
-          'equals'  => '=',
-          'greater' => '>',
-          'lower'   => '<'
-         ]);
+            'none'    => __('Disabled', 'glpiinventory'),
+            'equals'  => '=',
+            'greater' => '>',
+            'lower'   => '<'
+        ]);
         echo "<input type='text' name='size' value='' />";
         echo "</td>";
         echo "</tr>\n";
@@ -178,10 +178,10 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         echo "</td>";
         echo "<td>";
         Dropdown::showFromArray('filter_nametype', [
-          'none'  => __('Disabled', 'glpiinventory'),
-          'iname'  => __('Non sentitive case', 'glpiinventory'),
-          'name' => __('Sentitive case', 'glpiinventory')
-         ]);
+            'none'  => __('Disabled', 'glpiinventory'),
+            'iname'  => __('Non sentitive case', 'glpiinventory'),
+            'name' => __('Sentitive case', 'glpiinventory')
+        ]);
         echo "<input type='text' name='filter_name' value='' />";
         echo "</td>";
         echo "<td>";
@@ -191,7 +191,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         Dropdown::showFromArray('type', [
             'file' => __('File', 'glpiinventory'),
             'dir'  => __('Folder', 'glpiinventory')
-         ]);
+        ]);
         echo "</td>";
     }
 

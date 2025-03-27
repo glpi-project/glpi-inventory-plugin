@@ -144,29 +144,29 @@ class TaskDeployDynamicGroupTest extends TestCase
         $agent                     = new Agent();
 
         $input = [
-         'name' => 'test',
-         'type' => 'DYNAMIC'
+            'name' => 'test',
+            'type' => 'DYNAMIC'
         ];
         $groupId = $pfDeployGroup->add($input);
         $this->assertNotFalse($groupId);
 
         $input = [
-         'plugin_glpiinventory_deploygroups_id' => $groupId,
-         'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:4:{s:4:"link";s:3:"AND";s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:3:"^pc";}}s:12:"metacriteria";N;}'
+            'plugin_glpiinventory_deploygroups_id' => $groupId,
+            'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:4:{s:4:"link";s:3:"AND";s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:3:"^pc";}}s:12:"metacriteria";N;}'
         ];
         $groupDynamicId = $pfDeployGroup_Dynamicdata->add($input);
         $this->assertNotFalse($groupDynamicId);
 
         $input = [
-         'name'        => 'ls',
-         'entities_id' => 0
+            'name'        => 'ls',
+            'entities_id' => 0
         ];
         $packageId = $pfDeployPackage->add($input);
         $this->assertNotFalse($packageId);
 
         $input = [
-         'name'           => 'deploy',
-         'is_active'      => 1,
+            'name'           => 'deploy',
+            'is_active'      => 1,
         ];
         $taskId = $pfTask->add($input);
         $this->assertNotFalse($taskId);
@@ -174,12 +174,12 @@ class TaskDeployDynamicGroupTest extends TestCase
         $a_plugins = current(getAllDataFromTable('glpi_plugins', ['directory' => 'glpiinventory']));
 
         $input = [
-         'plugin_glpiinventory_tasks_id' => $taskId,
-         'name'        => 'deploy',
-         'plugins_id'  => $a_plugins['id'],
-         'method'      => 'deployinstall',
-         'actors'      => '[{"PluginGlpiinventoryDeployGroup":"' . $groupId . '"}]',
-         'targets'     => '[{"PluginGlpiinventoryDeployPackage":"' . $packageId . '"}]'
+            'plugin_glpiinventory_tasks_id' => $taskId,
+            'name'        => 'deploy',
+            'plugins_id'  => $a_plugins['id'],
+            'method'      => 'deployinstall',
+            'actors'      => '[{"PluginGlpiinventoryDeployGroup":"' . $groupId . '"}]',
+            'targets'     => '[{"PluginGlpiinventoryDeployPackage":"' . $packageId . '"}]'
         ];
         $taskjobId = $pfTaskJob->add($input);
         $this->assertNotFalse($taskjobId);
@@ -198,149 +198,149 @@ class TaskDeployDynamicGroupTest extends TestCase
         $agentsId = array_keys($agent->find(['itemtype' => Computer::getType(), 'items_id' => $this->computers_ids]));
 
         $a_reference = [
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ],
-         [
-            'plugin_glpiinventory_taskjobs_id' => $taskjobId,
-            'items_id'                           => $packageId,
-            'itemtype'                           => "PluginGlpiinventoryDeployPackage",
-            'state'                              => 0,
-            'agents_id'   => array_shift($agentsId),
-            'specificity'                        => null,
-            'date_start'                         => null,
-            'nb_retry'                           => 0,
-            'max_retry'                          => 1
-         ]
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ],
+            [
+                'plugin_glpiinventory_taskjobs_id' => $taskjobId,
+                'items_id'                           => $packageId,
+                'itemtype'                           => "PluginGlpiinventoryDeployPackage",
+                'state'                              => 0,
+                'agents_id'   => array_shift($agentsId),
+                'specificity'                        => null,
+                'date_start'                         => null,
+                'nb_retry'                           => 0,
+                'max_retry'                          => 1
+            ]
         ];
 
         $this->assertEquals($a_reference, $items);

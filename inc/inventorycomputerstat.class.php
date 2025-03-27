@@ -73,8 +73,8 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
         $insert = $DB->buildInsert(
             'glpi_plugin_glpiinventory_inventorycomputerstats',
             [
-            'day'    => new \QueryParam(),
-            'hour'   => new \QueryParam()
+                'day'    => new \QueryParam(),
+                'hour'   => new \QueryParam()
             ]
         );
         $stmt = $DB->prepare($insert);

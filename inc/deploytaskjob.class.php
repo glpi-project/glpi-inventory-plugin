@@ -150,18 +150,18 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
         $query = $DB::buildInsert(
             $this->getTable(),
             [
-            'plugin_glpiinventory_deploytasks_id'   => $qparam,
-            'name'                                    => $qparam,
-            'date_creation'                           => $qparam,
-            'entities_id'                             => $qparam,
-            'plugins_id'                              => $qparam,
-            'method'                                  => $qparam,
-            'definition'                              => $qparam,
-            'action'                                  => $qparam,
-            'retry_nb'                                => $qparam,
-            'retry_time'                              => $qparam,
-            'periodicity_type'                        => $qparam,
-            'periodicity_count'                       => $qparam
+                'plugin_glpiinventory_deploytasks_id'   => $qparam,
+                'name'                                    => $qparam,
+                'date_creation'                           => $qparam,
+                'entities_id'                             => $qparam,
+                'plugins_id'                              => $qparam,
+                'method'                                  => $qparam,
+                'definition'                              => $qparam,
+                'action'                                  => $qparam,
+                'retry_nb'                                => $qparam,
+                'retry_time'                              => $qparam,
+                'periodicity_type'                        => $qparam,
+                'periodicity_count'                       => $qparam
             ]
         );
         $stmt = $DB->prepare($query);
@@ -174,7 +174,9 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             //    $task['action_type'] => $task['action_selection'])));
             $action = exportArrayToDB($task['action']);
             $definition = exportArrayToDB([[
-              'PluginGlpiinventoryDeployPackage' => $task['package_id']]]);
+                'PluginGlpiinventoryDeployPackage' => $task['package_id']
+            ]
+            ]);
 
             $job_name = "job_" . $tasks_id . "_" . $i;
             $now = 'NOW()';
@@ -211,18 +213,18 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     {
 
         return [
-         [
-            'name' => _n('Computer', 'Computers', Session::getPluralNumber()),
-            'value' => 'Computer',
-         ],
-         [
-            'name' => __('Group'),
-            'value' => 'Group',
-         ],
-         [
-            'name' => __('Groups of computers', 'glpiinventory'),
-            'value' => 'PluginGlpiinventoryDeployGroup',
-         ]
+            [
+                'name' => _n('Computer', 'Computers', Session::getPluralNumber()),
+                'value' => 'Computer',
+            ],
+            [
+                'name' => __('Group'),
+                'value' => 'Group',
+            ],
+            [
+                'name' => __('Groups of computers', 'glpiinventory'),
+                'value' => 'PluginGlpiinventoryDeployGroup',
+            ]
         ];
     }
 
@@ -245,7 +247,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
         switch ($params['get']) {
             case "type":
                 $res = json_encode([
-                'action_types' => self::getActionTypes()
+                    'action_types' => self::getActionTypes()
                 ]);
                 break;
             case "selection":

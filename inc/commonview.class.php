@@ -82,11 +82,11 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         $fi_path = Plugin::getWebDir('glpiinventory');
 
         $this->base_urls = [
-         'fi.base'   => $fi_path,
-         'fi.ajax'   => $fi_path . "/ajax",
-         'fi.front'  => $fi_path . "/front",
-         'fi.pics'   => $fi_path . "/pics",
-         'glpi.pics' => $CFG_GLPI['root_doc'] . "/pics",
+            'fi.base'   => $fi_path,
+            'fi.ajax'   => $fi_path . "/ajax",
+            'fi.front'  => $fi_path . "/front",
+            'fi.pics'   => $fi_path . "/pics",
+            'glpi.pics' => $CFG_GLPI['root_doc'] . "/pics",
         ];
     }
 
@@ -192,8 +192,8 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         echo "<div class='col-sm-6' style='max-width: 270px;'>";
         $dropdown_options = array_merge(
             [
-            'width' => '90%',
-            'display' => true,
+                'width' => '90%',
+                'display' => true,
             ],
             $options
         );

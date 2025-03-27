@@ -81,16 +81,16 @@ class ComputerEntityTest extends TestCase
         $entity = new Entity();
 
         self::$entities_id_1 = $entity->add([
-         'name'        => 'ent1',
-         'entities_id' => 0,
-         'comment'     => '',
+            'name'        => 'ent1',
+            'entities_id' => 0,
+            'comment'     => '',
         ]);
         $this->assertNotFalse(self::$entities_id_1);
 
         self::$entities_id_2 = $entity->add([
-         'name'        => 'ent2',
-         'entities_id' => 0,
-         'comment'     => ''
+            'name'        => 'ent2',
+            'entities_id' => 0,
+            'comment'     => ''
         ]);
         $this->assertNotFalse(self::$entities_id_2);
 
@@ -102,27 +102,27 @@ class ComputerEntityTest extends TestCase
         $ruleAction = new RuleAction();
 
         $input = [
-         'sub_type'   => RuleImportEntity::class,
-         'name'       => 'pc1',
-         'match'      => 'AND',
-         'is_active'  => 1
+            'sub_type'   => RuleImportEntity::class,
+            'name'       => 'pc1',
+            'match'      => 'AND',
+            'is_active'  => 1
         ];
         $rules_id = $rule->add($input);
         $this->assertNotFalse($rules_id);
 
         $input = [
-         'rules_id'   => $rules_id,
-         'criteria'   => 'name',
-         'condition'  => 0,
-         'pattern'    => 'pc1'
+            'rules_id'   => $rules_id,
+            'criteria'   => 'name',
+            'condition'  => 0,
+            'pattern'    => 'pc1'
         ];
         $this->assertNotFalse($ruleCriteria->add($input));
 
         $input = [
-         'rules_id'      => $rules_id,
-         'action_type'   => 'assign',
-         'field'         => 'entities_id',
-         'value'         => self::$entities_id_1
+            'rules_id'      => $rules_id,
+            'action_type'   => 'assign',
+            'field'         => 'entities_id',
+            'value'         => self::$entities_id_1
         ];
         $this->assertNotFalse($ruleAction->add($input));
 
@@ -259,21 +259,21 @@ class ComputerEntityTest extends TestCase
         $DB->update(
             Rule::getTable(),
             [
-            'is_active' => 0
+                'is_active' => 0
             ],
             [
-            'sub_type' => RuleImportAsset::class
+                'sub_type' => RuleImportAsset::class
             ]
         );
 
        // Add rule name + restrict entity search
         $rulecollection = new RuleImportAssetCollection();
         $input = [
-         'is_active' => 1,
-         'name'      => 'Computer name + restrict',
-         'match'     => 'AND',
-         'sub_type'  => RuleImportAsset::class,
-         'ranking'   => 1
+            'is_active' => 1,
+            'name'      => 'Computer name + restrict',
+            'match'     => 'AND',
+            'sub_type'  => RuleImportAsset::class,
+            'ranking'   => 1
         ];
         $rule_id = $rulecollection->add($input);
         $this->assertNotFalse($rule_id);
@@ -282,44 +282,44 @@ class ComputerEntityTest extends TestCase
         $rule = $rulecollection->getRuleClass();
         $rulecriteria = new RuleCriteria(get_class($rule));
         $input = [
-         'rules_id'  => $rule_id,
-         'criteria'  => 'name',
-         'pattern'   => 1,
-         'condition' => RuleImportAsset::PATTERN_FIND,
+            'rules_id'  => $rule_id,
+            'criteria'  => 'name',
+            'pattern'   => 1,
+            'condition' => RuleImportAsset::PATTERN_FIND,
         ];
         $this->assertNotFalse($rulecriteria->add($input));
 
         $input = [
-         'rules_id'  => $rule_id,
-         'criteria'  => 'name',
-         'pattern'   => 1,
-         'condition' => RuleImportAsset::PATTERN_EXISTS,
+            'rules_id'  => $rule_id,
+            'criteria'  => 'name',
+            'pattern'   => 1,
+            'condition' => RuleImportAsset::PATTERN_EXISTS,
         ];
         $this->assertNotFalse($rulecriteria->add($input));
 
         $input = [
-         'rules_id'  => $rule_id,
-         'criteria'  => 'entityrestrict',
-         'pattern'   => '',
-         'condition' => RuleImportAsset::PATTERN_ENTITY_RESTRICT,
+            'rules_id'  => $rule_id,
+            'criteria'  => 'entityrestrict',
+            'pattern'   => '',
+            'condition' => RuleImportAsset::PATTERN_ENTITY_RESTRICT,
         ];
         $this->assertNotFalse($rulecriteria->add($input));
 
         $input = [
-         'rules_id'  => $rule_id,
-         'criteria'  => 'itemtype',
-         'pattern'   => 'Computer',
-         'condition' => RuleImportAsset::PATTERN_IS,
+            'rules_id'  => $rule_id,
+            'criteria'  => 'itemtype',
+            'pattern'   => 'Computer',
+            'condition' => RuleImportAsset::PATTERN_IS,
         ];
         $this->assertNotFalse($rulecriteria->add($input));
 
        // Add action
         $ruleaction = new RuleAction(get_class($rule));
         $input = [
-         'rules_id'    => $rule_id,
-         'action_type' => 'assign',
-         'field'       => '_fusion',
-         'value'       => '1',
+            'rules_id'    => $rule_id,
+            'action_type' => 'assign',
+            'field'       => '_fusion',
+            'value'       => '1',
         ];
         $this->assertNotFalse($ruleaction->add($input));
 

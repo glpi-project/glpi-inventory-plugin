@@ -117,8 +117,9 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             foreach ($db_registries as $keydb => $arraydb) {
                 if ($arraydb['key'] == $key) {
                     $input = ['key'   => $arraydb['key'],
-                              'id'    => $keydb,
-                              'value' => $value];
+                        'id'    => $keydb,
+                        'value' => $value
+                    ];
                     $this->update($input);
                     unset($registry_data[$key]);
                     unset($db_registries[$keydb]);
@@ -135,10 +136,10 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 $value = hexdec($value);
             }
             $input = [
-            'computers_id' => $computers_id,
-            'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
-            'key'          => $key,
-            'value'        => $value
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
+                'key'          => $key,
+                'value'        => $value
             ];
             $this->add($input);
         }

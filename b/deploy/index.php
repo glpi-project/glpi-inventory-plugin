@@ -134,17 +134,17 @@ switch (filter_input(INPUT_GET, "action")) {
 
     case 'setStatus':
         $partjob_mapping = [
-         "checking"    => __('Checks', 'glpiinventory'),
-         "downloading" => __('Files download', 'glpiinventory'),
-         "prepare"     => __('Files preparation', 'glpiinventory'),
-         "processing"  => __('Actions', 'glpiinventory'),
+            "checking"    => __('Checks', 'glpiinventory'),
+            "downloading" => __('Files download', 'glpiinventory'),
+            "prepare"     => __('Files preparation', 'glpiinventory'),
+            "processing"  => __('Actions', 'glpiinventory'),
         ];
 
         $error = false;
 
         $params = [
-         'machineid' => filter_input(INPUT_GET, "machineid"),
-         'uuid'      => filter_input(INPUT_GET, "uuid")
+            'machineid' => filter_input(INPUT_GET, "machineid"),
+            'uuid'      => filter_input(INPUT_GET, "uuid")
         ];
 
         if (filter_input(INPUT_GET, "status") == 'ko') {
@@ -202,8 +202,8 @@ switch (filter_input(INPUT_GET, "action")) {
 
     case 'setUserEvent':
         $params = [
-         'machineid' => filter_input(INPUT_GET, "machineid"),
-         'uuid'      => filter_input(INPUT_GET, "uuid")
+            'machineid' => filter_input(INPUT_GET, "machineid"),
+            'uuid'      => filter_input(INPUT_GET, "uuid")
         ];
 
        //Action : postpone, cancel, continue

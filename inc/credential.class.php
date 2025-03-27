@@ -90,14 +90,18 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     {
 
         return [['name'  => 'itemtype',
-                         'label' => __('Type'),
-                         'type'  => 'credential_itemtype'],
-                   ['name'  => 'username',
-                         'label' => __('Login'),
-                         'type'  => 'text'],
-                   ['name'  => 'password',
-                         'label' => __('Password'),
-                         'type'  => 'password']];
+            'label' => __('Type'),
+            'type'  => 'credential_itemtype'
+        ],
+            ['name'  => 'username',
+                'label' => __('Login'),
+                'type'  => 'text'
+            ],
+            ['name'  => 'password',
+                'label' => __('Password'),
+                'type'  => 'password'
+            ]
+        ];
     }
 
 
@@ -176,39 +180,39 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         $tab = [];
 
         $tab[] = [
-         'id'   => 'common',
-         'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
+            'id'   => 'common',
+            'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
         ];
 
         $tab[] = [
-         'id'       => '1',
-         'table'    => $this->getTable(),
-         'field'    => 'name',
-         'name'     => __('Name'),
-         'datatype' => 'itemlink',
+            'id'       => '1',
+            'table'    => $this->getTable(),
+            'field'    => 'name',
+            'name'     => __('Name'),
+            'datatype' => 'itemlink',
         ];
 
         $tab[] = [
-         'id'       => '2',
-         'table'    => 'glpi_entities',
-         'field'    => 'completename',
-         'name'     => Entity::getTypeName(1),
-         'datatype' => 'dropdown',
+            'id'       => '2',
+            'table'    => 'glpi_entities',
+            'field'    => 'completename',
+            'name'     => Entity::getTypeName(1),
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
-         'id'            => '3',
-         'table'         => $this->getTable(),
-         'field'         => 'itemtype',
-         'name'          => __('Type'),
-         'massiveaction' => false,
+            'id'            => '3',
+            'table'         => $this->getTable(),
+            'field'         => 'itemtype',
+            'name'          => __('Type'),
+            'massiveaction' => false,
         ];
 
         $tab[] = [
-         'id'    => '4',
-         'table' => $this->getTable(),
-         'field' => 'username',
-         'name'  => __('Login'),
+            'id'    => '4',
+            'table' => $this->getTable(),
+            'field' => 'username',
+            'name'  => __('Login'),
         ];
 
         return $tab;
@@ -293,8 +297,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     {
 
         $credential = ['itemtype' => 'PluginGlpiinventoryInventoryComputerESX', //Credential itemtype
-                           'name'    => __('VMware host', 'glpiinventory'), //Label
-                           'targets' => ['Computer']];
+            'name'    => __('VMware host', 'glpiinventory'), //Label
+            'targets' => ['Computer']
+        ];
         if ($credential['itemtype'] == $credential_itemtype) {
             return $credential;
         }
@@ -310,7 +315,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     public static function getCredentialsItemTypes()
     {
         return ['PluginGlpiinventoryInventoryComputerESX' =>
-                           __('VMware host', 'glpiinventory')];
+                           __('VMware host', 'glpiinventory')
+        ];
     }
 
 
@@ -366,7 +372,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
             ['value' => $p['itemtype']]
         );
         $ajparams = ['itemtype' => '__VALUE__',
-                        'id'       => $p['id']];
+            'id'       => $p['id']
+        ];
         $url       = Plugin::getWebDir('glpiinventory') . "/ajax/dropdownCredentials.php";
         Ajax::updateItemOnSelectEvent(
             "dropdown_plugin_glpiinventory_credentials_id$rand",
@@ -405,7 +412,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
             $value = $params['id'];
         }
         Dropdown::show($params['itemtype'], ['entity_sons' => true,
-                                                'value'       => $value]);
+            'value'       => $value
+        ]);
     }
 
 

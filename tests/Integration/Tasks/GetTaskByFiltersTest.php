@@ -45,16 +45,16 @@ class GetTaskByFiltersTest extends TestCase
 
        // create task
         $input = [
-          'entities_id' => 0,
-          'name'        => 'deploy',
-          'is_active'   => 1
+            'entities_id' => 0,
+            'name'        => 'deploy',
+            'is_active'   => 1
         ];
         $pfTask->add($input);
 
         $running_tasks = $pfTask->getItemsFromDB(
             [
-            'is_running'  => true,
-            'is_active'   => true
+                'is_running'  => true,
+                'is_active'   => true
             ]
         );
         $this->assertEquals([], $running_tasks, 'Not find task because not have job');

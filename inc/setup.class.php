@@ -83,7 +83,7 @@ class PluginGlpiinventorySetup
         $DB->deleteOrDie(
             'glpi_displaypreferences',
             [
-            'itemtype' => ['LIKE', 'PluginGlpiinventory%']
+                'itemtype' => ['LIKE', 'PluginGlpiinventory%']
             ]
         );
 

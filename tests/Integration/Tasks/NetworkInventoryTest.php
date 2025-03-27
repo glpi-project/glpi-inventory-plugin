@@ -115,64 +115,64 @@ class NetworkInventoryTest extends TestCase
 
        // Create entities
         $entity1Id = $entity->add([
-         'name'        => 'ent1',
-         'entities_id' => 0,
-         'comment'     => ''
+            'name'        => 'ent1',
+            'entities_id' => 0,
+            'comment'     => ''
         ]);
         $this->assertNotFalse($entity1Id);
 
         $entity2Id = $entity->add([
-         'name'        => 'ent2',
-         'entities_id' => 0,
-         'comment'     => ''
+            'name'        => 'ent2',
+            'entities_id' => 0,
+            'comment'     => ''
         ]);
         $this->assertNotFalse($entity2Id);
 
         $entity11Id = $entity->add([
-         'name'        => 'ent1.1',
-         'entities_id' => $entity1Id,
-         'comment'     => ''
+            'name'        => 'ent1.1',
+            'entities_id' => $entity1Id,
+            'comment'     => ''
         ]);
         $this->assertNotFalse($entity11Id);
 
        // Create computers + agents
         $input = [
-          'entities_id' => 0,
-          'name'        => 'computer1'
+            'entities_id' => 0,
+            'name'        => 'computer1'
         ];
         $computers_id = $computer->add($input);
         $this->assertNotFalse($computers_id);
 
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $input = [
-          'entities_id' => 0,
-          'name'        => 'computer1',
-          'version'     => '{"INVENTORY":"v2.3.11"}',
-          'deviceid'    => 'computer1',
-          'useragent'   => 'FusionInventory-Agent_v2.3.11',
-          'itemtype' => Computer::getType(),
-          'items_id' => $computers_id,
-          'agenttypes_id' => $agenttype['id']
+            'entities_id' => 0,
+            'name'        => 'computer1',
+            'version'     => '{"INVENTORY":"v2.3.11"}',
+            'deviceid'    => 'computer1',
+            'useragent'   => 'FusionInventory-Agent_v2.3.11',
+            'itemtype' => Computer::getType(),
+            'items_id' => $computers_id,
+            'agenttypes_id' => $agenttype['id']
         ];
         $agent1Id = $agent->add($input);
         $this->assertNotFalse($agent1Id);
 
        // Create Network Equipments
         $input = [
-          'name'        => 'sw0',
-          'entities_id' => 0,
-          'snmpcredentials_id' => 2
+            'name'        => 'sw0',
+            'entities_id' => 0,
+            'snmpcredentials_id' => 2
         ];
         $netequipId = $networkEquipment->add($input);
         $this->assertNotFalse($netequipId);
 
         $input = [
-          'entities_id'        => 0,
-          'name'               => 'management',
-          'items_id'           => $netequipId,
-          'itemtype'           => 'NetworkEquipment',
-          'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => ['-1' => '10.0.0.10']
+            'entities_id'        => 0,
+            'name'               => 'management',
+            'items_id'           => $netequipId,
+            'itemtype'           => 'NetworkEquipment',
+            'instantiation_type' => 'NetworkPortAggregate',
+            'NetworkName__ipaddresses' => ['-1' => '10.0.0.10']
         ];
         $networkPort->splitInputForElements($input);
         $netportId = $networkPort->add($input);
@@ -181,20 +181,20 @@ class NetworkInventoryTest extends TestCase
         $networkPort->updateDependencies(true);
 
         $input = [
-          'name'        => 'sw1',
-          'entities_id' => $entity1Id,
-          'snmpcredentials_id' => 2
+            'name'        => 'sw1',
+            'entities_id' => $entity1Id,
+            'snmpcredentials_id' => 2
         ];
         $netEquipId = $networkEquipment->add($input);
         $this->assertNotFalse($netEquipId);
 
         $input = [
-          'entities_id'        => $entity1Id,
-          'name'               => 'management',
-          'items_id'           => $netequipId,
-          'itemtype'           => 'NetworkEquipment',
-          'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => ['-1' => '10.0.0.11']
+            'entities_id'        => $entity1Id,
+            'name'               => 'management',
+            'items_id'           => $netequipId,
+            'itemtype'           => 'NetworkEquipment',
+            'instantiation_type' => 'NetworkPortAggregate',
+            'NetworkName__ipaddresses' => ['-1' => '10.0.0.11']
         ];
         $networkPort->splitInputForElements($input);
         $netportId = $networkPort->add($input);
@@ -203,20 +203,20 @@ class NetworkInventoryTest extends TestCase
         $networkPort->updateDependencies(true);
 
         $input = [
-          'name'        => 'sw2',
-          'entities_id' => $entity2Id,
-          'snmpcredentials_id' => 2
+            'name'        => 'sw2',
+            'entities_id' => $entity2Id,
+            'snmpcredentials_id' => 2
         ];
         $netequipId = $networkEquipment->add($input);
         $this->assertNotFalse($netequipId);
 
         $input = [
-          'entities_id'        => $entity2Id,
-          'name'               => 'management',
-          'items_id'           => $netequipId,
-          'itemtype'           => 'NetworkEquipment',
-          'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => ['-1' => '10.0.0.12']
+            'entities_id'        => $entity2Id,
+            'name'               => 'management',
+            'items_id'           => $netequipId,
+            'itemtype'           => 'NetworkEquipment',
+            'instantiation_type' => 'NetworkPortAggregate',
+            'NetworkName__ipaddresses' => ['-1' => '10.0.0.12']
         ];
         $networkPort->splitInputForElements($input);
         $netportId = $networkPort->add($input);
@@ -225,20 +225,20 @@ class NetworkInventoryTest extends TestCase
         $networkPort->updateDependencies(true);
 
         $input = [
-          'name'        => 'sw3/1.1',
-          'entities_id' => $entity11Id,
-          'snmpcredentials_id' => 2
+            'name'        => 'sw3/1.1',
+            'entities_id' => $entity11Id,
+            'snmpcredentials_id' => 2
         ];
         $netequipId = $networkEquipment->add($input);
         $this->assertNotFalse($netequipId);
 
         $input = [
-          'entities_id'        => $entity11Id,
-          'name'               => 'management',
-          'items_id'           => $netequipId,
-          'itemtype'           => 'NetworkEquipment',
-          'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => ['-1' => '10.0.0.21']
+            'entities_id'        => $entity11Id,
+            'name'               => 'management',
+            'items_id'           => $netequipId,
+            'itemtype'           => 'NetworkEquipment',
+            'instantiation_type' => 'NetworkPortAggregate',
+            'NetworkName__ipaddresses' => ['-1' => '10.0.0.21']
         ];
         $networkPort->splitInputForElements($input);
         $netportId = $networkPort->add($input);
@@ -249,42 +249,42 @@ class NetworkInventoryTest extends TestCase
        // Create Printers
 
         $input = [
-         'name'        => 'printer 001',
-         'entities_id' => 0,
-         'snmpcredentials_id' => 2
+            'name'        => 'printer 001',
+            'entities_id' => 0,
+            'snmpcredentials_id' => 2
         ];
         $printers_id = $printer->add($input);
         $this->assertNotFalse($printers_id);
 
         $networkports_id = $networkPort->add([
-          'itemtype'           => 'Printer',
-          'instantiation_type' => 'NetworkPortEthernet',
-          'items_id'           => $printers_id,
-          'entities_id'        => 0
+            'itemtype'           => 'Printer',
+            'instantiation_type' => 'NetworkPortEthernet',
+            'items_id'           => $printers_id,
+            'entities_id'        => 0
         ]);
         $this->assertNotFalse($networkports_id);
 
         $networknames_id = $networkName->add([
-          'entities_id' => 0,
-          'itemtype'    => 'NetworkPort',
-          'items_id'    => $networkports_id
+            'entities_id' => 0,
+            'itemtype'    => 'NetworkPort',
+            'items_id'    => $networkports_id
         ]);
         $this->assertNotFalse($networknames_id);
 
         $ipId = $iPAddress->add([
-          'entities_id' => 0,
-          'itemtype'    => 'NetworkName',
-          'items_id'    => $networknames_id,
-          'name'        => '192.168.200.124'
+            'entities_id' => 0,
+            'itemtype'    => 'NetworkName',
+            'items_id'    => $networknames_id,
+            'name'        => '192.168.200.124'
         ]);
         $this->assertNotFalse($ipId);
 
        // Add IPRange
         $input = [
-          'entities_id' => 1,
-          'name'        => 'Office',
-          'ip_start'    => '10.0.0.1',
-          'ip_end'      => '10.0.0.254'
+            'entities_id' => 1,
+            'name'        => 'Office',
+            'ip_start'    => '10.0.0.1',
+            'ip_end'      => '10.0.0.254'
         ];
         $ipranges_id = $pfIPRange->add($input);
         $this->assertNotFalse($ipranges_id);
@@ -293,27 +293,27 @@ class NetworkInventoryTest extends TestCase
         $module = new PluginGlpiinventoryAgentmodule();
         $module->getFromDBByCrit(['modulename' => 'NETWORKINVENTORY']);
         $module->update([
-         'id'        => $module->fields['id'],
-         'is_active' => 1
+            'id'        => $module->fields['id'],
+            'is_active' => 1
         ]);
 
        // create task
         $input = [
-          'entities_id' => 0,
-          'name'        => 'network inventory',
-          'is_active'   => 1
+            'entities_id' => 0,
+            'name'        => 'network inventory',
+            'is_active'   => 1
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
        // create taskjob
         $input = [
-          'plugin_glpiinventory_tasks_id' => $tasks_id,
-          'entities_id'                     => 0,
-          'name'                            => 'inventory',
-          'method'                          => 'networkinventory',
-          'targets'                         => '[{"PluginGlpiinventoryIPRange":"' . $ipranges_id . '"}]',
-          'actors'                          => '[{"Agent":"' . $agent1Id . '"}]'
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id'                     => 0,
+            'name'                            => 'inventory',
+            'method'                          => 'networkinventory',
+            'targets'                         => '[{"PluginGlpiinventoryIPRange":"' . $ipranges_id . '"}]',
+            'actors'                          => '[{"Agent":"' . $agent1Id . '"}]'
         ];
         $taskjobId = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobId);
@@ -343,7 +343,7 @@ class NetworkInventoryTest extends TestCase
         $data = $pfTask->getJoblogs([$pfTask->fields['id']]);
 
         $ref = [
-          $agent->fields['id'] => 'computer1',
+            $agent->fields['id'] => 'computer1',
         ];
 
         $this->assertEquals($ref, $data['agents']);
@@ -391,21 +391,21 @@ class NetworkInventoryTest extends TestCase
        // Add task
        // create task
         $input = [
-          'entities_id' => 0,
-          'name'        => 'printer inventory',
-          'is_active'   => 1
+            'entities_id' => 0,
+            'name'        => 'printer inventory',
+            'is_active'   => 1
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
        // create taskjob
         $input = [
-          'plugin_glpiinventory_tasks_id' => $tasks_id,
-          'entities_id'                     => 0,
-          'name'                            => 'printer inventory',
-          'method'                          => 'networkinventory',
-          'targets'                         => '[{"Printer":"' . $printer->fields['id'] . '"}]',
-          'actors'                          => '[{"Agent":"' . $agent->fields['id'] . '"}]'
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id'                     => 0,
+            'name'                            => 'printer inventory',
+            'method'                          => 'networkinventory',
+            'targets'                         => '[{"Printer":"' . $printer->fields['id'] . '"}]',
+            'actors'                          => '[{"Agent":"' . $agent->fields['id'] . '"}]'
         ];
         $taskjobId = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobId);
@@ -419,32 +419,32 @@ class NetworkInventoryTest extends TestCase
         $jobstate->getFromDBByCrit(['itemtype' => 'Printer']);
 
         $ref = [
-         'OPTION' => [
-            'NAME' => 'SNMPQUERY',
-            'PARAM' => [
-               'content' => '',
-               'attributes' => [
-                  'THREADS_QUERY' => '10',
-                  'TIMEOUT'       => '15',
-                  'PID'           => $jobstate->fields['id']
-               ]
-            ],
-            'DEVICE' => [
-               'content' => '',
-               'attributes' => [
-                  'TYPE'        => 'PRINTER',
-                  'ID'          => $printer->fields['id'],
-                  'IP'          => '192.168.200.124',
-                  'AUTHSNMP_ID' => 2
-               ]
-            ], [
-               'AUTHENTICATION' => [
-                  'ID'        => 2,
-                  'VERSION'   => '2c',
-                  'COMMUNITY' => 'public'
-               ]
+            'OPTION' => [
+                'NAME' => 'SNMPQUERY',
+                'PARAM' => [
+                    'content' => '',
+                    'attributes' => [
+                        'THREADS_QUERY' => '10',
+                        'TIMEOUT'       => '15',
+                        'PID'           => $jobstate->fields['id']
+                    ]
+                ],
+                'DEVICE' => [
+                    'content' => '',
+                    'attributes' => [
+                        'TYPE'        => 'PRINTER',
+                        'ID'          => $printer->fields['id'],
+                        'IP'          => '192.168.200.124',
+                        'AUTHSNMP_ID' => 2
+                    ]
+                ], [
+                    'AUTHENTICATION' => [
+                        'ID'        => 2,
+                        'VERSION'   => '2c',
+                        'COMMUNITY' => 'public'
+                    ]
+                ]
             ]
-         ]
         ];
 
         $this->assertEquals([$ref], $message, 'XML of SNMP inventory task');
@@ -481,21 +481,21 @@ class NetworkInventoryTest extends TestCase
        // Add task
        // create task
         $input = [
-          'entities_id' => 0,
-          'name'        => 'network inventory',
-          'is_active'   => 1
+            'entities_id' => 0,
+            'name'        => 'network inventory',
+            'is_active'   => 1
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
        // create taskjob
         $input = [
-          'plugin_glpiinventory_tasks_id' => $tasks_id,
-          'entities_id'                     => 0,
-          'name'                            => 'inventory',
-          'method'                          => 'networkinventory',
-          'targets'                         => '[{"Printer":"' . $printer->fields['id'] . '"}]',
-          'actors'                          => '[{"Agent":"' . $agent->fields['id'] . '"}]'
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id'                     => 0,
+            'name'                            => 'inventory',
+            'method'                          => 'networkinventory',
+            'targets'                         => '[{"Printer":"' . $printer->fields['id'] . '"}]',
+            'actors'                          => '[{"Agent":"' . $agent->fields['id'] . '"}]'
         ];
         $pfTaskjob->add($input);
 
