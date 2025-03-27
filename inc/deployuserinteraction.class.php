@@ -68,7 +68,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
    //The agent notice that the job must be canceled
     const RESPONSE_STOP            = 'stop';
 
-   //The agent recieved a malformed or non existing event
+   //The agent received a malformed or non existing event
     const RESPONSE_BAD_EVENT       = 'error_bad_event';
 
    //String to replace a \r\n, to avoid stripcslashes issue
