@@ -58,15 +58,15 @@ class RepositoryTest extends TestCase
 
         // create a package
         $this->packages_1_id = $pfDeployPackage->add([
-         'name' => 'test package 1',
-         'entities_id' => 0
+            'name' => 'test package 1',
+            'entities_id' => 0
         ]);
         $this->assertNotFalse($this->packages_1_id);
 
         // create a second package
         $this->packages_2_id = $pfDeployPackage->add([
-         'name' => 'test package 2',
-         'entities_id' => 0
+            'name' => 'test package 2',
+            'entities_id' => 0
         ]);
         $this->assertNotFalse($this->packages_2_id);
 
@@ -89,10 +89,10 @@ class RepositoryTest extends TestCase
 
        // create a file for this package
         $data_file = [
-         'id'        => $this->packages_1_id,
-         'itemtype'  => 'PluginGlpiinventoryDeployFile',
-         'filestype' => 'Server',
-         'filename'  => $this->filename,
+            'id'        => $this->packages_1_id,
+            'itemtype'  => 'PluginGlpiinventoryDeployFile',
+            'filestype' => 'Server',
+            'filename'  => $this->filename,
         ];
         $ret = PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
         $this->assertTrue($ret, 'File not right added');
@@ -121,9 +121,9 @@ class RepositoryTest extends TestCase
 
        // remove file from the first package
         $data_file = [
-         'packages_id'     => $this->packages_1_id,
-         'itemtype'        => 'PluginGlpiinventoryDeployFile',
-         'file_entries'    => [0 => 1]
+            'packages_id'     => $this->packages_1_id,
+            'itemtype'        => 'PluginGlpiinventoryDeployFile',
+            'file_entries'    => [0 => 1]
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
 
@@ -138,9 +138,9 @@ class RepositoryTest extends TestCase
 
        // remove file from the second package
         $data_file = [
-         'packages_id'     => $this->packages_2_id,
-         'itemtype'        => 'PluginGlpiinventoryDeployFile',
-         'file_entries'    => [0 => 1]
+            'packages_id'     => $this->packages_2_id,
+            'itemtype'        => 'PluginGlpiinventoryDeployFile',
+            'file_entries'    => [0 => 1]
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
 
@@ -169,10 +169,10 @@ class RepositoryTest extends TestCase
 
        // create a file and it to both packages
         $data_file = [
-         'id'        => $this->packages_1_id,
-         'itemtype'  => 'PluginGlpiinventoryDeployFile',
-         'filestype' => 'Server',
-         'filename'  => $this->filename,
+            'id'        => $this->packages_1_id,
+            'itemtype'  => 'PluginGlpiinventoryDeployFile',
+            'filestype' => 'Server',
+            'filename'  => $this->filename,
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data_file);
         $data_file['id'] = $this->packages_2_id;
@@ -180,13 +180,13 @@ class RepositoryTest extends TestCase
 
        // remove a package and check presence of file
         $pfDeployPackage->delete([
-         'id' => $this->packages_1_id
+            'id' => $this->packages_1_id
         ], true);
         $this->assertTrue($pfDeployFile->checkPresenceFile($this->sha512));
 
        // remove a package and check absence of file
         $pfDeployPackage->delete([
-         'id' => $this->packages_2_id
+            'id' => $this->packages_2_id
         ], true);
         $this->assertfalse($pfDeployFile->checkPresenceFile($this->sha512));
     }

@@ -50,9 +50,9 @@ if (
     || !in_array(
         $classname,
         ['PluginGlpiinventoryDeployCheck',
-                'PluginGlpiinventoryDeployFile',
-                'PluginGlpiinventoryDeployAction',
-                'PluginGlpiinventoryDeployUserinteraction'
+            'PluginGlpiinventoryDeployFile',
+            'PluginGlpiinventoryDeployAction',
+            'PluginGlpiinventoryDeployUserinteraction'
         ]
     )
 ) {

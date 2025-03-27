@@ -93,48 +93,48 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $tab = [];
 
         $tab[] = [
-         'id' => 'common',
-         'name' => __('Task')
+            'id' => 'common',
+            'name' => __('Task')
         ];
 
         $tab[] = [
-         'id'        => '1',
-         'table'     => $this->getTable(),
-         'field'     => 'name',
-         'name'      => __('Name'),
-         'datatype'  => 'itemlink',
+            'id'        => '1',
+            'table'     => $this->getTable(),
+            'field'     => 'name',
+            'name'      => __('Name'),
+            'datatype'  => 'itemlink',
         ];
 
         $tab[] = [
-         'id'        => '2',
-         'table'     => 'glpi_entities',
-         'field'     => 'completename',
-         'linkfield' => 'entities_id',
-         'name'      => Entity::getTypeName(1),
+            'id'        => '2',
+            'table'     => 'glpi_entities',
+            'field'     => 'completename',
+            'linkfield' => 'entities_id',
+            'name'      => Entity::getTypeName(1),
         ];
 
         $tab[] = [
-         'id'            => '4',
-         'table'         => 'glpi_plugin_glpiinventory_tasks',
-         'field'         => 'name',
-         'linkfield'     => 'plugin_glpiinventory_tasks_id',
-         'name'          => __('Task'),
-         'datatype'      => 'itemlink',
-         'itemlink_type' => 'PluginGlpiinventoryTask',
+            'id'            => '4',
+            'table'         => 'glpi_plugin_glpiinventory_tasks',
+            'field'         => 'name',
+            'linkfield'     => 'plugin_glpiinventory_tasks_id',
+            'name'          => __('Task'),
+            'datatype'      => 'itemlink',
+            'itemlink_type' => 'PluginGlpiinventoryTask',
         ];
 
         $tab[] = [
-         'id'        => '5',
-         'table'     => $this->getTable(),
-         'field'     => 'status',
-         'name'      => __('Status'),
+            'id'        => '5',
+            'table'     => $this->getTable(),
+            'field'     => 'status',
+            'name'      => __('Status'),
         ];
 
         $tab[] = [
-         'id'        => '6',
-         'table'     => $this->getTable(),
-         'field'     => 'id',
-         'name'      => __('ID'),
+            'id'        => '6',
+            'table'     => $this->getTable(),
+            'field'     => 'id',
+            'name'      => __('ID'),
         ];
 
         return $tab;
@@ -218,7 +218,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             'name'            => $myname,
             'method'          => $method,
             $myname . 'typeid'  => 'dropdown_' . ucfirst($myname) . 'Type' . $rand,
-            'taskjobs_id'     => $taskjobs_id];
+            'taskjobs_id'     => $taskjobs_id
+        ];
 
         Ajax::updateItemOnEvent(
             'dropdown_' . ucfirst($myname) . 'Type' . $rand,
@@ -269,12 +270,14 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
         if (
             is_callable([$class, "task_" . $_POST['name'] . "selection_" .
-            $definitiontype . "_" . $method])
+            $definitiontype . "_" . $method
+            ])
         ) {
             $rand = call_user_func(
                 [$class,
-                                      "task_" . $_POST['name'] . "selection_" . $definitiontype . "_" .
-                                          $method],
+                    "task_" . $_POST['name'] . "selection_" . $definitiontype . "_" .
+                                          $method
+                ],
                 $title
             );
 
@@ -290,12 +293,13 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
               "name='add_button_" . $_POST['name'] . "' value=\"" . __('Add') .
               "\" class='submit'></center>";
         $params = ['items_id'  => '__VALUE0__',
-                      'add_button_' . $_POST['name'] . $taskjobs_id => '__VALUE1__',
-                      'itemtype'  => $definitiontype,
-                      'rand'      => $rand,
-                      'myname'    => 'items_id',
-                      'type'      => $_POST['name'],
-                      'taskjobs_id' => $taskjobs_id];
+            'add_button_' . $_POST['name'] . $taskjobs_id => '__VALUE1__',
+            'itemtype'  => $definitiontype,
+            'rand'      => $rand,
+            'myname'    => 'items_id',
+            'type'      => $_POST['name'],
+            'taskjobs_id' => $taskjobs_id
+        ];
         Ajax::updateItemOnEvent(
             [$iddropdown . $rand , "add_button_" . $_POST['name'] . $taskjobs_id],
             "Additem_$rand",
@@ -351,7 +355,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             'myname' => $myname,
             'method' => $method,
             'actiontypeid' => 'dropdown_' . $myname . $rand
-            ];
+        ];
         Ajax::updateItemOnSelectEvent(
             'dropdown_ActionType' . $rand,
             "show_ActionList",
@@ -413,10 +417,11 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         }
 
         $params = ['selection'        => '__VALUE__',
-                    'entity_restrict'  => $entity_restrict,
-                    'myname'           => $myname,
-                    'actionselectadd'  => 'dropdown_actionselectiontoadd' . $rand,
-                    'actiontypeid'     => $actiontypeid];
+            'entity_restrict'  => $entity_restrict,
+            'myname'           => $myname,
+            'actionselectadd'  => 'dropdown_actionselectiontoadd' . $rand,
+            'actiontypeid'     => $actiontypeid
+        ];
 
         return Ajax::updateItemOnEvent(
             'addAObject',
@@ -512,16 +517,19 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             $a_taskjobstateuniq = current($a_taskjobstateuniqs);
             $a_taskjobstate = $pfTaskjobstate->find(
                 ['plugin_glpiinventory_taskjobs_id' => $dataJob['id'],
-                'uniqid'                             => $a_taskjobstateuniq['uniqid']]
+                    'uniqid'                             => $a_taskjobstateuniq['uniqid']
+                ]
             );
             $taskjobstatefinished = 0;
 
             foreach ($a_taskjobstate as $statedata) {
                  $a_joblog = $pfTaskjoblog->find(
                      ['plugin_glpiinventory_taskjobstates_id' => $statedata['id'],
-                     'state'                                   => [2,
-                     4,
-                     5]]
+                         'state'                                   => [2,
+                             4,
+                             5
+                         ]
+                     ]
                  );
                 if (count($a_joblog) > 0) {
                      $taskjobstatefinished++;
@@ -567,10 +575,10 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             $DB->update(
                 $pfTaskjob->getTable(),
                 [
-                'status' => 0
+                    'status' => 0
                 ],
                 [
-                'plugin_glpiinventory_tasks_id' => $data['id']
+                    'plugin_glpiinventory_tasks_id' => $data['id']
                 ]
             );
 
@@ -971,10 +979,10 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
        // add this new state and first log
         if ($run_id = $jobstate->add($run)) {
             $log = [
-            'date'    => date("Y-m-d H:i:s"),
-            'state'   => PluginGlpiinventoryTaskjoblog::TASK_PREPARED,
-            'plugin_glpiinventory_taskjobstates_id' => $run_id,
-            'comment' => ''
+                'date'    => date("Y-m-d H:i:s"),
+                'state'   => PluginGlpiinventoryTaskjoblog::TASK_PREPARED,
+                'plugin_glpiinventory_taskjobstates_id' => $run_id,
+                'comment' => ''
             ];
             if ($joblog->add($log)) {
                //wake up agent (only if task support wakeup)
@@ -1112,7 +1120,8 @@ function new_subtype(id) {
             echo Search::showNewLine(Search::HTML_OUTPUT, (bool)($i % 2));
             echo "<td class='control'>";
             Html::showCheckbox(['name'    => 'taskjob_entries[]',
-                                  'value'   => $i]);
+                'value'   => $i
+            ]);
             echo "</td>";
             echo "<td>";
             echo "<a class='edit' " .

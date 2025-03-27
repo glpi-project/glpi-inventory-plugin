@@ -80,21 +80,21 @@ class CollectsTest extends TestCase
         $pfCollect = new PluginGlpiinventoryCollect();
 
         $input = [
-         'name'         => 'Registry collect',
-         'entities_id'  => 0,
-         'is_recursive' => 0,
-         'type'         => 'registry',
-         'is_active'    => 1
+            'name'         => 'Registry collect',
+            'entities_id'  => 0,
+            'is_recursive' => 0,
+            'type'         => 'registry',
+            'is_active'    => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
 
         $input = [
-         'name'                                 => 'Registry collection',
-         'plugin_glpiinventory_collects_id'   => $collects_id,
-         'hive'                                 => 'HKEY_LOCAL_MACHINE',
-         'path'                                 => '/',
-         'key'                                  => 'daKey'
+            'name'                                 => 'Registry collection',
+            'plugin_glpiinventory_collects_id'   => $collects_id,
+            'hive'                                 => 'HKEY_LOCAL_MACHINE',
+            'path'                                 => '/',
+            'key'                                  => 'daKey'
         ];
 
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
@@ -102,9 +102,9 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($collectRegistryId);
 
         $input = [
-          'name'                                => 'WMI',
-          'plugin_glpiinventory_collects_id'  => $collects_id,
-          'moniker'                             => 'DaWMI'
+            'name'                                => 'WMI',
+            'plugin_glpiinventory_collects_id'  => $collects_id,
+            'moniker'                             => 'DaWMI'
         ];
 
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
@@ -112,13 +112,13 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($collectWmiId);
 
         $input = [
-         'name'                                 => 'PHP files',
-         'plugin_glpiinventory_collects_id'   => $collects_id,
-         'dir'                                  => '/var/www',
-         'is_recursive'                         => 1,
-         'filter_regex'                         => '*\.php',
-         'filter_is_file'                       => 1,
-         'filter_is_dir'                        => 0
+            'name'                                 => 'PHP files',
+            'plugin_glpiinventory_collects_id'   => $collects_id,
+            'dir'                                  => '/var/www',
+            'is_recursive'                         => 1,
+            'filter_regex'                         => '*\.php',
+            'filter_is_file'                       => 1,
+            'filter_is_dir'                        => 0
         ];
 
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
@@ -147,68 +147,68 @@ class CollectsTest extends TestCase
         $pfCollect_File->getFromDBByCrit(['name' => 'PHP files']);
 
         $expected = [
-         'table'            => 'glpi_plugin_glpiinventory_collects_registries_contents',
-         'field'            => 'value',
-         'linkfield'        => '',
-         'name'             => __('Registry', 'glpiinventory') . " - Registry collection",
-         'joinparams'       => ['jointype' => 'child'],
-         'datatype'         => 'text',
-         'forcegroupby'     => true,
-         'massiveaction'    => false,
-         'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = " . $pfCollect_Registry->fields['id'],
-            'jointype'  => 'child'
-         ]
+            'table'            => 'glpi_plugin_glpiinventory_collects_registries_contents',
+            'field'            => 'value',
+            'linkfield'        => '',
+            'name'             => __('Registry', 'glpiinventory') . " - Registry collection",
+            'joinparams'       => ['jointype' => 'child'],
+            'datatype'         => 'text',
+            'forcegroupby'     => true,
+            'massiveaction'    => false,
+            'joinparams'       => [
+                'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = " . $pfCollect_Registry->fields['id'],
+                'jointype'  => 'child'
+            ]
         ];
         $this->assertEquals($expected, $sopts[5200]);
 
         $expected = [
-         'table'            => 'glpi_plugin_glpiinventory_collects_wmis_contents',
-         'field'            => 'value',
-         'linkfield'        => '',
-         'name'             => __('WMI', 'glpiinventory') . " - WMI",
-         'joinparams'       => ['jointype' => 'child'],
-         'datatype'         => 'text',
-         'forcegroupby'     => true,
-         'massiveaction'    => false,
-         'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = " . $pfCollect_Wmi->fields['id'],
-            'jointype'  => 'child'
-         ]
+            'table'            => 'glpi_plugin_glpiinventory_collects_wmis_contents',
+            'field'            => 'value',
+            'linkfield'        => '',
+            'name'             => __('WMI', 'glpiinventory') . " - WMI",
+            'joinparams'       => ['jointype' => 'child'],
+            'datatype'         => 'text',
+            'forcegroupby'     => true,
+            'massiveaction'    => false,
+            'joinparams'       => [
+                'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = " . $pfCollect_Wmi->fields['id'],
+                'jointype'  => 'child'
+            ]
         ];
         $this->assertEquals($expected, $sopts[5201]);
 
         $expected = [
-         'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
-         'field'            => 'pathfile',
-         'linkfield'        => '',
-         'name'             => __('Find file', 'glpiinventory') . " - PHP files" .
+            'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
+            'field'            => 'pathfile',
+            'linkfield'        => '',
+            'name'             => __('Find file', 'glpiinventory') . " - PHP files" .
             " - " . __('pathfile', 'glpiinventory'),
-         'joinparams'       => ['jointype' => 'child'],
-         'datatype'         => 'text',
-         'forcegroupby'     => true,
-         'massiveaction'    => false,
-         'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
-            'jointype'  => 'child'
-         ]
+            'joinparams'       => ['jointype' => 'child'],
+            'datatype'         => 'text',
+            'forcegroupby'     => true,
+            'massiveaction'    => false,
+            'joinparams'       => [
+                'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
+                'jointype'  => 'child'
+            ]
         ];
         $this->assertEquals($expected, $sopts[5202]);
 
         $expected = [
-         'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
-         'field'            => 'size',
-         'linkfield'        => '',
-         'name'             => __('Find file', 'glpiinventory') . " - PHP files" .
+            'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
+            'field'            => 'size',
+            'linkfield'        => '',
+            'name'             => __('Find file', 'glpiinventory') . " - PHP files" .
                                     " - " . __('Size', 'glpiinventory'),
-         'joinparams'       => ['jointype' => 'child'],
-         'datatype'         => 'text',
-         'forcegroupby'     => true,
-         'massiveaction'    => false,
-         'joinparams'       => [
-            'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
-            'jointype'  => 'child'
-         ]
+            'joinparams'       => ['jointype' => 'child'],
+            'datatype'         => 'text',
+            'forcegroupby'     => true,
+            'massiveaction'    => false,
+            'joinparams'       => [
+                'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
+                'jointype'  => 'child'
+            ]
         ];
         $this->assertEquals($expected, $sopts[5203]);
     }
@@ -234,71 +234,71 @@ class CollectsTest extends TestCase
 
         // Create a registry task with 2 paths to get
         $input = [
-          'name'        => 'my registry keys',
-          'entities_id' => 0,
-          'type'        => 'registry',
-          'is_active'   => 1
+            'name'        => 'my registry keys',
+            'entities_id' => 0,
+            'type'        => 'registry',
+            'is_active'   => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
 
         $input = [
-          'name' => 'Teamviewer',
-          'plugin_glpiinventory_collects_id' => $collects_id,
-          'hive' => 'HKEY_LOCAL_MACHINE',
-          'path' => '/software/Wow6432Node/TeamViewer/',
-          'key'  => '*',
+            'name' => 'Teamviewer',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE',
+            'path' => '/software/Wow6432Node/TeamViewer/',
+            'key'  => '*',
         ];
         $registry_tm = $pfCollect_Registry->add($input);
         $this->assertNotFalse($registry_tm);
 
         $input = [
-          'name' => 'GLPI Agent',
-          'plugin_glpiinventory_collects_id' => $collects_id,
-          'hive' => 'HKEY_LOCAL_MACHINE',
-          'path' => '/software/GLPI-Agent/',
-          'key'  => '*',
+            'name' => 'GLPI Agent',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE',
+            'path' => '/software/GLPI-Agent/',
+            'key'  => '*',
         ];
         $registry_fi = $pfCollect_Registry->add($input);
         $this->assertNotFalse($registry_fi);
 
         // Create computer
         $input = [
-          'name'        => 'pc01',
-          'entities_id' => 0
+            'name'        => 'pc01',
+            'entities_id' => 0
         ];
         $computers_id = $computer->add($input);
         $this->assertNotFalse($computers_id);
 
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $input = [
-          'name'         => 'pc01',
-          'entities_id'  => 0,
-          'itemtype'     => Computer::getType(),
-          'items_id'     => $computers_id,
-          'deviceid'     => 'pc01',
-          'agenttypes_id' => $agenttype['id'],
-          'use_module_collect_data' => 1
+            'name'         => 'pc01',
+            'entities_id'  => 0,
+            'itemtype'     => Computer::getType(),
+            'items_id'     => $computers_id,
+            'deviceid'     => 'pc01',
+            'agenttypes_id' => $agenttype['id'],
+            'use_module_collect_data' => 1
         ];
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
 
         // Create task
         $input = [
-          'name'        => 'mycollect',
-          'entities_id' => 0,
-          'is_active'   => 1
+            'name'        => 'mycollect',
+            'entities_id' => 0,
+            'is_active'   => 1
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
         $input = [
-          'plugin_glpiinventory_tasks_id' => $tasks_id,
-          'entities_id' => 0,
-          'name'    => 'collectjob',
-          'method'  => 'collect',
-          'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
-          'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id' => 0,
+            'name'    => 'collectjob',
+            'method'  => 'collect',
+            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
+            'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
         ];
         $taskjobs_id = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobs_id);
@@ -322,17 +322,17 @@ class CollectsTest extends TestCase
                                           . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/GLPI-Agent\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_fi . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
         // answer 1
         $params = [
-          'action'                => 'setAnswer',
-          'InstallationDate'      => '2016-07-15',
-          'Version'               => '11.0.62308',
-          'UpdateVersion'         => '11.0.59518\0\0',
-          'InstallationRev'       => '1110',
-          '_cpt'                  => '1',
-          'MIDInitiativeGUID'     => '{da2b3220-3d00-4f0f-93af-d38604c78405}',
-          'ClientIC'              => '0x41A3B7BA',
-          'uuid'                  => $jobstate['uniqid'],
-          '_sid'                  => $registry_tm,
-          'InstallationDirectory' => 'C:\\Program Files (x86)\\TeamViewer'
+            'action'                => 'setAnswer',
+            'InstallationDate'      => '2016-07-15',
+            'Version'               => '11.0.62308',
+            'UpdateVersion'         => '11.0.59518\0\0',
+            'InstallationRev'       => '1110',
+            '_cpt'                  => '1',
+            'MIDInitiativeGUID'     => '{da2b3220-3d00-4f0f-93af-d38604c78405}',
+            'ClientIC'              => '0x41A3B7BA',
+            'uuid'                  => $jobstate['uniqid'],
+            '_sid'                  => $registry_tm,
+            'InstallationDirectory' => 'C:\\Program Files (x86)\\TeamViewer'
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -342,22 +342,22 @@ class CollectsTest extends TestCase
 
         // answer 2
         $params = [
-          'action'                  => 'setAnswer',
-          'backend-collect-timeout' => 180,
-          'httpd-port'              => '62354',
-          'no-ssl-check'            => 1,
-          'server'                  => 'http://10.0.2.2/glpi090/plugins/glpiinventory/',
-          'logfile'                 => 'C:\\Program Files\\GLPI-Agent\\glpi-agent.log',
-          'timeout'                 => 180,
-          'httpd-trust'             => '127.0.0.1/32',
-          'uuid'                    => $jobstate['uniqid'],
-          '_sid'                    => $registry_tm,
-          '_cpt'                    => '1',
-          'httpd-ip'                => '0.0.0.0',
-          'logger'                  => 'File',
-          'debug'                   => '1',
-          'delaytime'               => '3600',
-          'logfile-maxsize'         => '16'
+            'action'                  => 'setAnswer',
+            'backend-collect-timeout' => 180,
+            'httpd-port'              => '62354',
+            'no-ssl-check'            => 1,
+            'server'                  => 'http://10.0.2.2/glpi090/plugins/glpiinventory/',
+            'logfile'                 => 'C:\\Program Files\\GLPI-Agent\\glpi-agent.log',
+            'timeout'                 => 180,
+            'httpd-trust'             => '127.0.0.1/32',
+            'uuid'                    => $jobstate['uniqid'],
+            '_sid'                    => $registry_tm,
+            '_cpt'                    => '1',
+            'httpd-ip'                => '0.0.0.0',
+            'logger'                  => 'File',
+            'debug'                   => '1',
+            'delaytime'               => '3600',
+            'logfile-maxsize'         => '16'
         ];
 
         $_GET = $params;
@@ -368,9 +368,9 @@ class CollectsTest extends TestCase
 
         // jobsdone
         $params = [
-          'action' => 'jobsDone',
-          'uuid'   => $jobstate['uniqid'],
-          ];
+            'action' => 'jobsDone',
+            'uuid'   => $jobstate['uniqid'],
+        ];
 
         $_GET = $params;
         $resultObject = $pfCollect->communication('jobsDone', null, $jobstate['uniqid']);
@@ -407,30 +407,30 @@ class CollectsTest extends TestCase
 
         // Create a registry task with 2 paths to get
         $input = [
-          'name'        => 'my wmi keys',
-          'entities_id' => 0,
-          'type'        => 'wmi',
-          'is_active'   => 1
+            'name'        => 'my wmi keys',
+            'entities_id' => 0,
+            'type'        => 'wmi',
+            'is_active'   => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
 
         $input = [
-          'name'       => 'keyboad name',
-          'plugin_glpiinventory_collects_id' => $collects_id,
-          'moniker'    => '',
-          'class'      => 'Win32_Keyboard',
-          'properties' => 'Name',
+            'name'       => 'keyboad name',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'moniker'    => '',
+            'class'      => 'Win32_Keyboard',
+            'properties' => 'Name',
         ];
         $registry_kn = $pfCollect_Wmi->add($input);
         $this->assertNotFalse($registry_kn);
 
         $input = [
-          'name'       => 'keyboad description',
-          'plugin_glpiinventory_collects_id' => $collects_id,
-          'moniker'    => '',
-          'class'      => 'Win32_Keyboard',
-          'properties' => 'Description',
+            'name'       => 'keyboad description',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'moniker'    => '',
+            'class'      => 'Win32_Keyboard',
+            'properties' => 'Description',
         ];
         $registry_kd = $pfCollect_Wmi->add($input);
         $this->assertNotFalse($registry_kd);
@@ -443,20 +443,20 @@ class CollectsTest extends TestCase
 
         // Create task
         $input = [
-          'name'        => 'mycollect',
-          'entities_id' => 0,
-          'is_active'   => 1
+            'name'        => 'mycollect',
+            'entities_id' => 0,
+            'is_active'   => 1
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
         $input = [
-          'plugin_glpiinventory_tasks_id' => $tasks_id,
-          'entities_id' => 0,
-          'name'    => 'collectjob',
-          'method'  => 'collect',
-          'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
-          'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id' => 0,
+            'name'    => 'collectjob',
+            'method'  => 'collect',
+            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
+            'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
         ];
         $taskjobs_id = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobs_id);
@@ -482,11 +482,11 @@ class CollectsTest extends TestCase
 
         // answer 1
         $params = [
-          'action' => 'setAnswer',
-          'uuid'   => $jobstate['uniqid'],
-          '_sid'   => $registry_kn,
-          '_cpt'   => '1',
-          'Name'   => 'Enhanced (101- or 102-key)'
+            'action' => 'setAnswer',
+            'uuid'   => $jobstate['uniqid'],
+            '_sid'   => $registry_kn,
+            '_cpt'   => '1',
+            'Name'   => 'Enhanced (101- or 102-key)'
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -496,11 +496,11 @@ class CollectsTest extends TestCase
 
         // answer 2
         $params = [
-          'action'      => 'setAnswer',
-          'uuid'        => $jobstate['uniqid'],
-          '_sid'        => $registry_kd,
-          '_cpt'        => '1',
-          'Description' => 'Standard PS/2 Keyboard'
+            'action'      => 'setAnswer',
+            'uuid'        => $jobstate['uniqid'],
+            '_sid'        => $registry_kd,
+            '_cpt'        => '1',
+            'Description' => 'Standard PS/2 Keyboard'
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -510,8 +510,8 @@ class CollectsTest extends TestCase
 
         // jobsdone
         $params = [
-         'action' => 'jobsDone',
-         'uuid'   => $jobstate['uniqid'],
+            'action' => 'jobsDone',
+            'uuid'   => $jobstate['uniqid'],
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('jobsDone', null, $jobstate['uniqid']);
@@ -528,18 +528,18 @@ class CollectsTest extends TestCase
         }
 
         $reference = [
-         [
-            'computers_id' => $computers_id,
-            'plugin_glpiinventory_collects_wmis_id' => $registry_kn,
-            'property'     => 'Name',
-            'value'        => 'Enhanced (101- or 102-key)'
-         ],
-         [
-            'computers_id' => $computers_id,
-            'plugin_glpiinventory_collects_wmis_id' => $registry_kd,
-            'property'     => 'Description',
-            'value'        => 'Standard PS/2 Keyboard'
-         ]
+            [
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_wmis_id' => $registry_kn,
+                'property'     => 'Name',
+                'value'        => 'Enhanced (101- or 102-key)'
+            ],
+            [
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_wmis_id' => $registry_kd,
+                'property'     => 'Description',
+                'value'        => 'Standard PS/2 Keyboard'
+            ]
         ];
         $this->assertEquals($reference, $items);
     }
@@ -572,32 +572,32 @@ class CollectsTest extends TestCase
 
         // Create a registry task with 2 paths to get
         $input = [
-          'name'        => 'my files search',
-          'entities_id' => 0,
-          'type'        => 'file',
-          'is_active'   => 1
+            'name'        => 'my files search',
+            'entities_id' => 0,
+            'type'        => 'file',
+            'is_active'   => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
 
         $input = [
-          'name'           => 'desktop',
-          'plugin_glpiinventory_collects_id' => $collects_id,
-          'dir'            => 'C:\Users\toto\Desktop',
-          'limit'          => 10,
-          'is_recursive'   => 1,
-          'filter_is_file' => 1,
+            'name'           => 'desktop',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'dir'            => 'C:\Users\toto\Desktop',
+            'limit'          => 10,
+            'is_recursive'   => 1,
+            'filter_is_file' => 1,
         ];
         $registry_desktop = $pfCollect_File->add($input);
         $this->assertNotFalse($registry_desktop);
 
         $input = [
-          'name'           => 'downloads',
-          'plugin_glpiinventory_collects_id' => $collects_id,
-          'dir'            => 'C:\Users\toto\Downloads',
-          'limit'          => 10,
-          'is_recursive'   => 1,
-          'filter_is_file' => 1,
+            'name'           => 'downloads',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'dir'            => 'C:\Users\toto\Downloads',
+            'limit'          => 10,
+            'is_recursive'   => 1,
+            'filter_is_file' => 1,
         ];
         $registry_down = $pfCollect_File->add($input);
         $this->assertNotFalse($registry_down);
@@ -610,20 +610,20 @@ class CollectsTest extends TestCase
 
         // Create task
         $input = [
-          'name'        => 'mycollect',
-          'entities_id' => 0,
-          'is_active'   => 1
+            'name'        => 'mycollect',
+            'entities_id' => 0,
+            'is_active'   => 1
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
         $input = [
-          'plugin_glpiinventory_tasks_id' => $tasks_id,
-          'entities_id' => 0,
-          'name'    => 'collectjob',
-          'method'  => 'collect',
-          'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
-          'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id' => 0,
+            'name'    => 'collectjob',
+            'method'  => 'collect',
+            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
+            'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
         ];
         $taskjobs_id = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobs_id);
@@ -647,13 +647,13 @@ class CollectsTest extends TestCase
                                           . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
         // answer 1
         $params = [
-          'action' => 'setAnswer',
-          'uuid'   => $jobstate['uniqid'],
-          '_sid'   => $registry_desktop,
-          '_cpt'   => '3',
-          'path'   => 'C:\\Users\\toto\\Desktop/06_import_tickets.php',
-          'size'   => 5053,
-          'sendheaders' => false //for test
+            'action' => 'setAnswer',
+            'uuid'   => $jobstate['uniqid'],
+            '_sid'   => $registry_desktop,
+            '_cpt'   => '3',
+            'path'   => 'C:\\Users\\toto\\Desktop/06_import_tickets.php',
+            'size'   => 5053,
+            'sendheaders' => false //for test
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -662,13 +662,13 @@ class CollectsTest extends TestCase
         $this->assertEquals($result, '{}');
 
         $params = [
-          'action' => 'setAnswer',
-          'uuid'   => $jobstate['uniqid'],
-          '_sid'   => $registry_desktop,
-          '_cpt'   => '2',
-          'path'   => 'C:\\Users\\toto\\Desktop/glpiinventory.txt',
-          'size'   => 28,
-          'sendheaders' => false //for test
+            'action' => 'setAnswer',
+            'uuid'   => $jobstate['uniqid'],
+            '_sid'   => $registry_desktop,
+            '_cpt'   => '2',
+            'path'   => 'C:\\Users\\toto\\Desktop/glpiinventory.txt',
+            'size'   => 28,
+            'sendheaders' => false //for test
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -677,13 +677,13 @@ class CollectsTest extends TestCase
         $this->assertEquals($result, '{}');
 
         $params = [
-          'action' => 'setAnswer',
-          'uuid'   => $jobstate['uniqid'],
-          '_sid'   => $registry_desktop,
-          '_cpt'   => '1',
-          'path'   => 'C:\\Users\\toto\\Desktop/desktop.ini',
-          'size'   => 282,
-          'sendheaders' => false //for test
+            'action' => 'setAnswer',
+            'uuid'   => $jobstate['uniqid'],
+            '_sid'   => $registry_desktop,
+            '_cpt'   => '1',
+            'path'   => 'C:\\Users\\toto\\Desktop/desktop.ini',
+            'size'   => 282,
+            'sendheaders' => false //for test
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -693,13 +693,13 @@ class CollectsTest extends TestCase
 
         // answer 2
         $params = [
-          'action' => 'setAnswer',
-          'uuid'   => $jobstate['uniqid'],
-          '_sid'   => $registry_down,
-          '_cpt'   => '2',
-          'path'   => 'C:\\Users\\toto\\Downloads/jxpiinstall.exe',
-          'size'   => 738368,
-          'sendheaders' => false //for test
+            'action' => 'setAnswer',
+            'uuid'   => $jobstate['uniqid'],
+            '_sid'   => $registry_down,
+            '_cpt'   => '2',
+            'path'   => 'C:\\Users\\toto\\Downloads/jxpiinstall.exe',
+            'size'   => 738368,
+            'sendheaders' => false //for test
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -708,13 +708,13 @@ class CollectsTest extends TestCase
         $this->assertEquals($result, '{}');
 
         $params = [
-          'action' => 'setAnswer',
-          'uuid'   => $jobstate['uniqid'],
-          '_sid'   => $registry_down,
-          '_cpt'   => '1',
-          'path'   => 'C:\\Users\\toto\\Downloads/npp.6.9.2.Installer.exe',
-          'size'   => 4211112,
-          'sendheaders' => false //for test
+            'action' => 'setAnswer',
+            'uuid'   => $jobstate['uniqid'],
+            '_sid'   => $registry_down,
+            '_cpt'   => '1',
+            'path'   => 'C:\\Users\\toto\\Downloads/npp.6.9.2.Installer.exe',
+            'size'   => 4211112,
+            'sendheaders' => false //for test
         ];
         $_GET = $params;
         $resultObject = $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
@@ -724,9 +724,9 @@ class CollectsTest extends TestCase
 
         // jobsdone
         $params = [
-          'action' => 'jobsDone',
-          'uuid'   => $jobstate['uniqid'],
-          ];
+            'action' => 'jobsDone',
+            'uuid'   => $jobstate['uniqid'],
+        ];
 
         $_GET = $params;
         $resultObject = $pfCollect->communication('jobsDone', null, $jobstate['uniqid']);
@@ -743,36 +743,36 @@ class CollectsTest extends TestCase
         }
 
         $reference = [
-         [
-            'computers_id' => "$computers_id",
-            'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
-            'pathfile'     => 'C:/Users/toto/Desktop/06_import_tickets.php',
-            'size'         => '5053'
-         ],
-         [
-            'computers_id' => "$computers_id",
-            'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
-            'pathfile'     => 'C:/Users/toto/Desktop/glpiinventory.txt',
-            'size'         => '28'
-         ],
-         [
-            'computers_id' => "$computers_id",
-            'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
-            'pathfile'     => 'C:/Users/toto/Desktop/desktop.ini',
-            'size'         => '282'
-         ],
-         [
-            'computers_id' => "$computers_id",
-            'plugin_glpiinventory_collects_files_id' => "$registry_down",
-            'pathfile'     => 'C:/Users/toto/Downloads/jxpiinstall.exe',
-            'size'         => '738368'
-         ],
-         [
-            'computers_id' => "$computers_id",
-            'plugin_glpiinventory_collects_files_id' => "$registry_down",
-            'pathfile'     => 'C:/Users/toto/Downloads/npp.6.9.2.Installer.exe',
-            'size'         => '4211112'
-         ]
+            [
+                'computers_id' => "$computers_id",
+                'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
+                'pathfile'     => 'C:/Users/toto/Desktop/06_import_tickets.php',
+                'size'         => '5053'
+            ],
+            [
+                'computers_id' => "$computers_id",
+                'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
+                'pathfile'     => 'C:/Users/toto/Desktop/glpiinventory.txt',
+                'size'         => '28'
+            ],
+            [
+                'computers_id' => "$computers_id",
+                'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
+                'pathfile'     => 'C:/Users/toto/Desktop/desktop.ini',
+                'size'         => '282'
+            ],
+            [
+                'computers_id' => "$computers_id",
+                'plugin_glpiinventory_collects_files_id' => "$registry_down",
+                'pathfile'     => 'C:/Users/toto/Downloads/jxpiinstall.exe',
+                'size'         => '738368'
+            ],
+            [
+                'computers_id' => "$computers_id",
+                'plugin_glpiinventory_collects_files_id' => "$registry_down",
+                'pathfile'     => 'C:/Users/toto/Downloads/npp.6.9.2.Installer.exe',
+                'size'         => '4211112'
+            ]
         ];
         $this->assertEquals($reference, $items);
     }
@@ -791,19 +791,19 @@ class CollectsTest extends TestCase
         $computer = new Computer();
 
         $input = [
-         'name'        => 'pc02',
-         'entities_id' => 0
+            'name'        => 'pc02',
+            'entities_id' => 0
         ];
 
         $computerId = $computer->add($input);
         $this->assertNotFalse($computerId);
 
         $input = [
-         'name'         => 'Files collect to clean',
-         'entities_id'  => $_SESSION['glpiactive_entity'],
-         'is_recursive' => '0',
-         'type'         => 'registry',
-         'is_active'    => 1
+            'name'         => 'Files collect to clean',
+            'entities_id'  => $_SESSION['glpiactive_entity'],
+            'is_recursive' => '0',
+            'type'         => 'registry',
+            'is_active'    => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
@@ -813,10 +813,10 @@ class CollectsTest extends TestCase
         $file_id = $pfCollect_File->fields['id'];
 
         $input = [
-         'computers_id'                                     => $computerId,
-         'plugin_glpiinventory_collects_registries_id'    => $file_id,
-         'key'                                              => 'test_key',
-         'value'                                            => 'test_value'
+            'computers_id'                                     => $computerId,
+            'plugin_glpiinventory_collects_registries_id'    => $file_id,
+            'key'                                              => 'test_key',
+            'value'                                            => 'test_value'
         ];
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $collectFileContentId = $pfCollect_File_Contents->add($input);
@@ -854,10 +854,10 @@ class CollectsTest extends TestCase
         $computer->getFromDBByCrit(['name' => 'pc01']);
 
         $input = [
-         'computers_id'                                     => $computer->fields['id'],
-         'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Registry->fields['id'],
-         'key'                                              => 'test_key',
-         'value'                                            => 'test_value'
+            'computers_id'                                     => $computer->fields['id'],
+            'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Registry->fields['id'],
+            'key'                                              => 'test_key',
+            'value'                                            => 'test_value'
         ];
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $collectRegistryContentId = $pfCollect_Registry_Contents->add($input);
@@ -895,10 +895,10 @@ class CollectsTest extends TestCase
         $computer->getFromDBByCrit(['name' => 'pc01']);
 
         $input = [
-         'computers_id'                                     => $computer->fields['id'],
-         'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Wmi->fields['id'],
-         'key'                                              => 'test_key',
-         'value'                                            => 'test_value'
+            'computers_id'                                     => $computer->fields['id'],
+            'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Wmi->fields['id'],
+            'key'                                              => 'test_key',
+            'value'                                            => 'test_value'
         ];
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $collectWmiContentId = $pfCollect_Wmi_Contents->add($input);
@@ -938,29 +938,29 @@ class CollectsTest extends TestCase
 
         //populate wmi data
         $input = [
-         'name'         => 'WMI collect',
-         'entities_id'  => $_SESSION['glpiactive_entity'],
-         'is_recursive' => '0',
-         'type'         => 'registry',
-         'is_active'    => 1
+            'name'         => 'WMI collect',
+            'entities_id'  => $_SESSION['glpiactive_entity'],
+            'is_recursive' => '0',
+            'type'         => 'registry',
+            'is_active'    => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
 
         $input = [
-          'name'                                => 'WMI',
-          'plugin_glpiinventory_collects_id'  => $collects_id,
-          'moniker'                             => 'DaWMI'
+            'name'                                => 'WMI',
+            'plugin_glpiinventory_collects_id'  => $collects_id,
+            'moniker'                             => 'DaWMI'
         ];
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
         $wmi_id = $pfCollect_Wmi->add($input);
         $this->assertNotFalse($wmi_id);
 
         $input = [
-         'computers_id'                                     => $computers_id,
-         'plugin_glpiinventory_collects_registries_id'    => $wmi_id,
-         'key'                                              => 'test_key',
-         'value'                                            => 'test_value'
+            'computers_id'                                     => $computers_id,
+            'plugin_glpiinventory_collects_registries_id'    => $wmi_id,
+            'key'                                              => 'test_key',
+            'value'                                            => 'test_value'
         ];
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $collectWmiContectId = $pfCollect_Wmi_Contents->add($input);
@@ -974,11 +974,11 @@ class CollectsTest extends TestCase
 
         //populate files data
         $input = [
-         'name'         => 'Files collect',
-         'entities_id'  => $_SESSION['glpiactive_entity'],
-         'is_recursive' => '0',
-         'type'         => 'registry',
-         'is_active'    => 1
+            'name'         => 'Files collect',
+            'entities_id'  => $_SESSION['glpiactive_entity'],
+            'is_recursive' => '0',
+            'type'         => 'registry',
+            'is_active'    => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
@@ -988,10 +988,10 @@ class CollectsTest extends TestCase
         $file_id = $pfCollect_File->fields['id'];
 
         $input = [
-         'computers_id'                                     => $computers_id,
-         'plugin_glpiinventory_collects_registries_id'    => $file_id,
-         'key'                                              => 'test_key',
-         'value'                                            => 'test_value'
+            'computers_id'                                     => $computers_id,
+            'plugin_glpiinventory_collects_registries_id'    => $file_id,
+            'key'                                              => 'test_key',
+            'value'                                            => 'test_value'
         ];
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $collectFileContentId = $pfCollect_File_Contents->add($input);
@@ -1005,31 +1005,31 @@ class CollectsTest extends TestCase
 
         //populate registry data
         $input = [
-         'name'         => 'Registry collect',
-         'entities_id'  => $_SESSION['glpiactive_entity'],
-         'is_recursive' => '0',
-         'type'         => 'registry',
-         'is_active'    => 1
+            'name'         => 'Registry collect',
+            'entities_id'  => $_SESSION['glpiactive_entity'],
+            'is_recursive' => '0',
+            'type'         => 'registry',
+            'is_active'    => 1
         ];
         $collects_id = $pfCollect->add($input);
         $this->assertNotFalse($collects_id);
 
         $input = [
-         'name'                                 => 'Registry collection',
-         'plugin_glpiinventory_collects_id'   => $collects_id,
-         'hive'                                 => 'HKEY_LOCAL_MACHINE',
-         'path'                                 => '/',
-         'key'                                  => 'daKey'
+            'name'                                 => 'Registry collection',
+            'plugin_glpiinventory_collects_id'   => $collects_id,
+            'hive'                                 => 'HKEY_LOCAL_MACHINE',
+            'path'                                 => '/',
+            'key'                                  => 'daKey'
         ];
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         $registry_id = $pfCollect_Registry->add($input);
         $this->assertNotFalse($registry_id);
 
         $input = [
-         'computers_id'                                     => $computers_id,
-         'plugin_glpiinventory_collects_registries_id'    => $registry_id,
-         'key'                                              => 'test_key',
-         'value'                                            => 'test_value'
+            'computers_id'                                     => $computers_id,
+            'plugin_glpiinventory_collects_registries_id'    => $registry_id,
+            'key'                                              => 'test_key',
+            'value'                                            => 'test_value'
         ];
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $collectRegistryContentId = $pfCollect_Registry_Contents->add($input);

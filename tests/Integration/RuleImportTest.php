@@ -67,11 +67,11 @@ class RuleImportTest extends TestCase
         $rule = new Rule();
        // Add a rule test check model
         $input = [
-         'is_active' => 1,
-         'name'      => 'Printer model',
-         'match'     => 'AND',
-         'sub_type'  => \RuleImportAsset::class,
-         'ranking'   => 1,
+            'is_active' => 1,
+            'name'      => 'Printer model',
+            'match'     => 'AND',
+            'sub_type'  => \RuleImportAsset::class,
+            'ranking'   => 1,
         ];
         $rule_id = $rule->add($input);
         $this->assertNotFalse($rule_id);
@@ -79,10 +79,10 @@ class RuleImportTest extends TestCase
        // Add criteria
         $rulecriteria = new RuleCriteria();
         $input = [
-         'rules_id'  => $rule_id,
-         'criteria'  => 'serial',
-         'pattern'   => '1',
-         'condition' => \RuleImportAsset::PATTERN_FIND
+            'rules_id'  => $rule_id,
+            'criteria'  => 'serial',
+            'pattern'   => '1',
+            'condition' => \RuleImportAsset::PATTERN_FIND
         ];
         $ret = $rulecriteria->add($input);
         $this->assertNotFalse($ret);
@@ -90,41 +90,41 @@ class RuleImportTest extends TestCase
        // Add action
         $ruleaction = new RuleAction();
         $input = [
-         'rules_id'    => $rule_id,
-         'action_type' => 'assign',
-         'field'       => '_inventory',
-         'value'       => \RuleImportAsset::RULE_ACTION_LINK_OR_IMPORT
+            'rules_id'    => $rule_id,
+            'action_type' => 'assign',
+            'field'       => '_inventory',
+            'value'       => \RuleImportAsset::RULE_ACTION_LINK_OR_IMPORT
         ];
         $ret = $ruleaction->add($input);
         $this->assertNotFalse($ret);
 
        // Denied import
         $input = [
-         'is_active' => 1,
-         'name'      => 'Deny printer import',
-         'match'     => 'AND',
-         'sub_type'  => \RuleImportAsset::class,
-         'ranking'   => 3,
+            'is_active' => 1,
+            'name'      => 'Deny printer import',
+            'match'     => 'AND',
+            'sub_type'  => \RuleImportAsset::class,
+            'ranking'   => 3,
         ];
         $rule_id = $rule->add($input);
         $this->assertNotFalse($rule_id);
 
        // Add criteria
         $input = [
-         'rules_id'  => $rule_id,
-         'criteria'  => 'name',
-         'pattern'   => '0',
-         'condition' => \RuleImportAsset::PATTERN_EXISTS
+            'rules_id'  => $rule_id,
+            'criteria'  => 'name',
+            'pattern'   => '0',
+            'condition' => \RuleImportAsset::PATTERN_EXISTS
         ];
         $ret = $rulecriteria->add($input);
         $this->assertNotFalse($ret);
 
        // Add action
         $input = [
-         'rules_id'    => $rule_id,
-         'action_type' => 'assign',
-         'field'       => '_inventory',
-         'value'       => \RuleImportAsset::RULE_ACTION_DENIED
+            'rules_id'    => $rule_id,
+            'action_type' => 'assign',
+            'field'       => '_inventory',
+            'value'       => \RuleImportAsset::RULE_ACTION_DENIED
         ];
         $ret = $ruleaction->add($input);
         $this->assertNotFalse($ret);
@@ -164,8 +164,8 @@ class RuleImportTest extends TestCase
         $printer = new Printer();
         $this->assertNotFalse(
             $printer->add([
-            'entities_id' => '0',
-            'serial'      => 'E8J596100'
+                'entities_id' => '0',
+                'serial'      => 'E8J596100'
             ])
         );
 

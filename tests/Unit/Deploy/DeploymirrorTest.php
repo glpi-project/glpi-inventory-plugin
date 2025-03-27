@@ -60,11 +60,11 @@ class DeploymirrorTest extends TestCase
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $input = [
-         'name'    => 'MyMirror',
-         'comment' => 'MyComment',
-         'url'     => 'http://localhost:8080/mirror',
-         'entities_id' => 0,
-         'locations_id' => 0
+            'name'    => 'MyMirror',
+            'comment' => 'MyComment',
+            'url'     => 'http://localhost:8080/mirror',
+            'entities_id' => 0,
+            'locations_id' => 0
         ];
         $mirrors_id = $pfDeploymirror->add($input);
         $this->assertGreaterThan(0, $mirrors_id);
@@ -82,10 +82,10 @@ class DeploymirrorTest extends TestCase
         $pfDeploymirror->getFromDBByCrit(['name' => 'MyMirror']);
         $this->assertNotNull($pfDeploymirror->fields['id']);
         $input  = ['id'      => $pfDeploymirror->fields['id'],
-                 'name'    => 'Mirror 1',
-                 'comment' => 'MyComment 2',
-                 'url'     => 'http://localhost:8088/mirror',
-                ];
+            'name'    => 'Mirror 1',
+            'comment' => 'MyComment 2',
+            'url'     => 'http://localhost:8088/mirror',
+        ];
         $this->assertTrue($pfDeploymirror->update($input));
         $this->assertTrue($pfDeploymirror->getFromDB($input['id']));
         $this->assertEquals('Mirror 1', $pfDeploymirror->fields['name']);
@@ -102,15 +102,15 @@ class DeploymirrorTest extends TestCase
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $location       = new Location();
         $locations_id = $location->add(['name'         => 'MyLocation',
-                                      'entities_id'  => 0,
-                                      'is_recursive' => 1
-                                     ]);
+            'entities_id'  => 0,
+            'is_recursive' => 1
+        ]);
        //Add the location to the mirror
         $pfDeploymirror->getFromDBByCrit(['name' => 'Mirror 1']);
         $this->assertNotNull($pfDeploymirror->fields['id']);
         $input          = ['id'           => $pfDeploymirror->fields['id'],
-                         'locations_id' => $locations_id
-                        ];
+            'locations_id' => $locations_id
+        ];
         $this->assertTrue($pfDeploymirror->update($input));
 
        //Purge location

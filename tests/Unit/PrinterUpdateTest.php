@@ -92,8 +92,8 @@ class PrinterUpdateTest extends TestCase
         $printer = new Printer();
 
         $this->items_id = $printer->add([
-         'serial'      => 'VRG5XUT5',
-         'entities_id' => 0
+            'serial'      => 'VRG5XUT5',
+            'entities_id' => 0
         ]);
 
         $this->assertGreaterThan(0, $this->items_id);
@@ -138,43 +138,43 @@ class PrinterUpdateTest extends TestCase
         $autoupdate->getFromDBByCrit(['name' => 'GLPI Native Inventory']);
 
         $a_reference = [
-         'name'                 => 'ARC12-B09-N',
-         'serial'               => 'VRG5XUT5',
-         'otherserial'          => null,
-         'manufacturers_id'     => $manufacturer->fields['id'],
-         'locations_id'         => 0,
-         'printermodels_id'     => $model->fields['id'],
-         'memory_size'          => '64',
-         'entities_id'          => 0,
-         'is_recursive'         => 0,
-         'contact'              => null,
-         'contact_num'          => null,
-         'users_id_tech'        => 0,
-         'groups_id_tech'       => 0,
-         'have_serial'          => 0,
-         'have_parallel'        => 0,
-         'have_usb'             => 0,
-         'have_wifi'            => 0,
-         'have_ethernet'        => 1,
-         'comment'              => null,
-         'networks_id'          => 0,
-         'printertypes_id'      => $type->fields['id'],
-         'is_global'            => 0,
-         'is_deleted'           => 0,
-         'is_template'          => 0,
-         'template_name'        => null,
-         'init_pages_counter'   => 0,
-         'last_pages_counter'   => 15134,
-         'users_id'             => 0,
-         'groups_id'            => 0,
-         'states_id'            => 0,
-         'ticket_tco'           => '0.0000',
-         'is_dynamic'           => 1,
-         'uuid'                 => null,
-         'sysdescr'             => 'HP ETHERNET MULTI-ENVIRONMENT',
-         'last_inventory_update' => $_SESSION['glpi_currenttime'],
-         'snmpcredentials_id' => 0,
-         'autoupdatesystems_id' => $autoupdate->fields['id']
+            'name'                 => 'ARC12-B09-N',
+            'serial'               => 'VRG5XUT5',
+            'otherserial'          => null,
+            'manufacturers_id'     => $manufacturer->fields['id'],
+            'locations_id'         => 0,
+            'printermodels_id'     => $model->fields['id'],
+            'memory_size'          => '64',
+            'entities_id'          => 0,
+            'is_recursive'         => 0,
+            'contact'              => null,
+            'contact_num'          => null,
+            'users_id_tech'        => 0,
+            'groups_id_tech'       => 0,
+            'have_serial'          => 0,
+            'have_parallel'        => 0,
+            'have_usb'             => 0,
+            'have_wifi'            => 0,
+            'have_ethernet'        => 1,
+            'comment'              => null,
+            'networks_id'          => 0,
+            'printertypes_id'      => $type->fields['id'],
+            'is_global'            => 0,
+            'is_deleted'           => 0,
+            'is_template'          => 0,
+            'template_name'        => null,
+            'init_pages_counter'   => 0,
+            'last_pages_counter'   => 15134,
+            'users_id'             => 0,
+            'groups_id'            => 0,
+            'states_id'            => 0,
+            'ticket_tco'           => '0.0000',
+            'is_dynamic'           => 1,
+            'uuid'                 => null,
+            'sysdescr'             => 'HP ETHERNET MULTI-ENVIRONMENT',
+            'last_inventory_update' => $_SESSION['glpi_currenttime'],
+            'snmpcredentials_id' => 0,
+            'autoupdatesystems_id' => $autoupdate->fields['id']
         ];
 
         $this->assertEquals($a_reference, $printer->fields);
@@ -233,9 +233,9 @@ class PrinterUpdateTest extends TestCase
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
         $a_cartridge = $cartridge_info->find([
-         'printers_id' => $printer->fields['id'],
-         'property' => 'tonerblack',
-         'value' => 60
+            'printers_id' => $printer->fields['id'],
+            'property' => 'tonerblack',
+            'value' => 60
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
@@ -251,9 +251,9 @@ class PrinterUpdateTest extends TestCase
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
         $a_cartridge = $cartridge_info->find([
-         'printers_id' => $printer->fields['id'],
-         'property' => 'tonercyan',
-         'value' => 40
+            'printers_id' => $printer->fields['id'],
+            'property' => 'tonercyan',
+            'value' => 40
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
@@ -269,9 +269,9 @@ class PrinterUpdateTest extends TestCase
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
 
         $a_cartridge = $cartridge_info->find([
-         'printers_id' => $printer->fields['id'],
-         'property' => 'toneryellow',
-         'value' => 80
+            'printers_id' => $printer->fields['id'],
+            'property' => 'toneryellow',
+            'value' => 80
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
@@ -286,9 +286,9 @@ class PrinterUpdateTest extends TestCase
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
         $a_cartridge = $cartridge_info->find([
-         'printers_id' => $printer->fields['id'],
-         'property' => 'tonermagenta',
-         'value' => 100
+            'printers_id' => $printer->fields['id'],
+            'property' => 'tonermagenta',
+            'value' => 100
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
@@ -340,8 +340,8 @@ class PrinterUpdateTest extends TestCase
 
         $printer = new Printer();
         $printers_id = $printer->add([
-         'serial' => 'MY89AQG0V9050N',
-         'entities_id' => 0
+            'serial' => 'MY89AQG0V9050N',
+            'entities_id' => 0
         ]);
         $this->assertNotFalse($printers_id);
         $this->assertTrue($printer->getFromDB($printers_id));
@@ -384,7 +384,8 @@ class PrinterUpdateTest extends TestCase
        // check ip
         $a_networknames = $networkName->find(
             ['itemtype' => 'NetworkPort',
-            'items_id' => $a_port['id']]
+                'items_id' => $a_port['id']
+            ]
         );
         $this->assertEquals(
             '1',
@@ -394,7 +395,8 @@ class PrinterUpdateTest extends TestCase
         $a_networkname = current($a_networknames);
         $a_ipaddresses = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-            'items_id' => $a_networkname['id']]
+                'items_id' => $a_networkname['id']
+            ]
         );
         $this->assertEquals(
             '1',
@@ -492,7 +494,8 @@ class PrinterUpdateTest extends TestCase
        // check ip
         $a_networknames = $networkName->find(
             ['itemtype' => 'NetworkPort',
-            'items_id' => $a_port['id']]
+                'items_id' => $a_port['id']
+            ]
         );
         $this->assertEquals(
             '1',
@@ -502,7 +505,8 @@ class PrinterUpdateTest extends TestCase
         $a_networkname = current($a_networknames);
         $a_ipaddresses = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-            'items_id' => $a_networkname['id']]
+                'items_id' => $a_networkname['id']
+            ]
         );
         $this->assertEquals(
             '1',
@@ -551,8 +555,8 @@ class PrinterUpdateTest extends TestCase
        //First: discover the device
         $printer     = new Printer();
         $printers_id = $printer->add([
-         'serial'      => '8512418234',
-         'entities_id' => 0
+            'serial'      => '8512418234',
+            'entities_id' => 0
         ]);
         $printer->getFromDB($printers_id);
 

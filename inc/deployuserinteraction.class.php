@@ -100,11 +100,11 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     public function getTypes()
     {
         return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'glpiinventory'),
-              self::EVENT_AFTER_DOWNLOAD   => __("After download", 'glpiinventory'),
-              self::EVENT_AFTER_ACTIONS    => __("After actions", 'glpiinventory'),
-              self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'glpiinventory'),
-              self::EVENT_ACTION_FAILURE   => __("On actions failure", 'glpiinventory')
-             ];
+            self::EVENT_AFTER_DOWNLOAD   => __("After download", 'glpiinventory'),
+            self::EVENT_AFTER_ACTIONS    => __("After actions", 'glpiinventory'),
+            self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'glpiinventory'),
+            self::EVENT_ACTION_FAILURE   => __("On actions failure", 'glpiinventory')
+        ];
     }
 
 
@@ -199,20 +199,20 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     public function getValues($type, $data, $mode)
     {
         $values = [
-         'name_value'          => "",
-         'name_label'          => __('Interaction label', 'glpiinventory'),
-         'name_type'           => "input",
-         'title_label'         => __('Title') . $this->getMandatoryMark(),
-         'title_value'         => "",
-         'title_type'          => "input",
-         'description_label'   => __('Message'),
-         'description_type'    => "text",
-         'description_value'   => "",
-         'template_label'
+            'name_value'          => "",
+            'name_label'          => __('Interaction label', 'glpiinventory'),
+            'name_type'           => "input",
+            'title_label'         => __('Title') . $this->getMandatoryMark(),
+            'title_value'         => "",
+            'title_type'          => "input",
+            'description_label'   => __('Message'),
+            'description_type'    => "text",
+            'description_value'   => "",
+            'template_label'
             => PluginGlpiinventoryDeployUserinteractionTemplate::getTypeName(1)
                . $this->getMandatoryMark(),
-         'template_value'      => "",
-         'template_type'       => "dropdown",
+            'template_value'      => "",
+            'template_type'       => "dropdown",
         ];
 
         if ($mode === self::EDIT) {
@@ -339,11 +339,11 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
        //prepare new check entry to insert in json
         $entry = [
-         'name'        => $params['name'],
-         'title'       => $params['title'],
-         'text'        => $params['text'],
-         'type'        => $params['userinteractionstype'],
-         'template'    => $params['template']
+            'name'        => $params['name'],
+            'title'       => $params['title'],
+            'text'        => $params['text'],
+            'type'        => $params['userinteractionstype'],
+            'template'    => $params['template']
         ];
 
        //Add to package defintion
@@ -366,11 +366,11 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
         }
        //prepare new check entry to insert in json
         $entry = [
-         'name'        => $params['name'],
-         'title'       => $params['title'],
-         'text'        => $params['text'],
-         'type'        => $params['userinteractionstype'],
-         'template'    => $params['template']
+            'name'        => $params['name'],
+            'title'       => $params['title'],
+            'text'        => $params['text'],
+            'type'        => $params['userinteractionstype'],
+            'template'    => $params['template']
         ];
 
        //update order

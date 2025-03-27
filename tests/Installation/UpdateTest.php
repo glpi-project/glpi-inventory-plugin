@@ -197,8 +197,8 @@ class UpdateTest extends TestCase
     {
         if (!file_exists($file)) {
             return [
-            'returncode' => 1,
-            'output' => ["ERROR: File '{$file}' does not exist !"]
+                'returncode' => 1,
+                'output' => ["ERROR: File '{$file}' does not exist !"]
             ];
         }
 
@@ -219,8 +219,8 @@ class UpdateTest extends TestCase
         );
         array_unshift($output, "Output of '{$cmd}'");
         return [
-         'returncode' => $returncode,
-         'output' => $output
+            'returncode' => $returncode,
+            'output' => $output
         ];
     }
 
@@ -231,8 +231,8 @@ class UpdateTest extends TestCase
 
         if (empty($dbuser) || empty($dbhost)) {
             return [
-            'returncode' => 2,
-            'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"]
+                'returncode' => 2,
+                'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"]
             ];
         }
         $cmd = [$cmd_base];
@@ -265,9 +265,9 @@ class UpdateTest extends TestCase
     {
        // version, verifyConfig, nb entity rules
         return [
-         '0.83+2.1'     => ["0.83+2.1", true, 1],
+            '0.83+2.1'     => ["0.83+2.1", true, 1],
          /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
-         'empty tables' => ["", false, 0],
+            'empty tables' => ["", false, 0],
         ];
     }
 

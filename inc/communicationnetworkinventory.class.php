@@ -100,8 +100,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $cnt = countElementsInTable(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
-                'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                'comment'                                 => ["LIKE", '%[==detail==] ==updatetheitem== %'],
+                    'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                    'comment'                                 => ["LIKE", '%[==detail==] ==updatetheitem== %'],
                 ]
             );
 

@@ -435,17 +435,17 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
         }
 
         return [
-         'OPTION' => [
-            'NAME' => 'SNMPQUERY',
-            'PARAM' => [
-               'content' => '',
-               'attributes' => $param_attrs
-            ],
-            'DEVICE' => [
-               'content' => '',
-               'attributes' => $device_attrs
-            ]
-         ] + $auth_nodes
+            'OPTION' => [
+                'NAME' => 'SNMPQUERY',
+                'PARAM' => [
+                    'content' => '',
+                    'attributes' => $param_attrs
+                ],
+                'DEVICE' => [
+                    'content' => '',
+                    'attributes' => $device_attrs
+                ]
+            ] + $auth_nodes
         ];
     }
 

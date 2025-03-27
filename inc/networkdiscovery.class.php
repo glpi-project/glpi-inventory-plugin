@@ -243,17 +243,17 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
         }
 
         return [
-         'OPTION' => [
-            'NAME' => 'NETDISCOVERY',
-            'PARAM' => [
-               'content' => '',
-               'attributes' => $param_attrs
-            ],
-            'RANGEIP' => [
-               'content'   => '',
-               'attributes' => $iprange_attrs
-            ]
-         ] + $auth_nodes
+            'OPTION' => [
+                'NAME' => 'NETDISCOVERY',
+                'PARAM' => [
+                    'content' => '',
+                    'attributes' => $param_attrs
+                ],
+                'RANGEIP' => [
+                    'content'   => '',
+                    'attributes' => $iprange_attrs
+                ]
+            ] + $auth_nodes
         ];
     }
 }

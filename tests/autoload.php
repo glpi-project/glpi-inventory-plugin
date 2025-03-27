@@ -47,8 +47,8 @@ define('GLPI_LOG_DIR', GLPI_VAR_DIR . '/_log');
 define(
     'PLUGINS_DIRECTORIES',
     [
-      GLPI_ROOT . '/plugins',
-      GLPI_ROOT . '/tests/fixtures/plugins',
+        GLPI_ROOT . '/plugins',
+        GLPI_ROOT . '/tests/fixtures/plugins',
     ]
 );
 

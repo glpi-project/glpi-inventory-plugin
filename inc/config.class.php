@@ -215,9 +215,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         if ($item->getType() == __CLASS__) {
             return [
-             __('General setup'),
-             __('Network Inventory', 'glpiinventory'),
-             __('Package management', 'glpiinventory')
+                __('General setup'),
+                __('Network Inventory', 'glpiinventory'),
+                __('Package management', 'glpiinventory')
             ];
         }
         return '';
@@ -315,11 +315,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber(
             "delete_task",
             [
-                            'value' => $this->getValue('delete_task'),
-                            'min'   => 1,
-                            'max'   => 240,
-                            'unit'  => 'day'
-                           ]
+                'value' => $this->getValue('delete_task'),
+                'min'   => 1,
+                'max'   => 240,
+                'unit'  => 'day'
+            ]
         );
         echo "</td>";
 
@@ -348,10 +348,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber(
             "wakeup_agent_max",
             [
-                            'value' => $this->getValue('wakeup_agent_max'),
-                            'min' => 1,
-                            'max' => 100
-                           ]
+                'value' => $this->getValue('wakeup_agent_max'),
+                'min' => 1,
+                'max' => 100
+            ]
         );
         echo "</td>";
 
@@ -411,18 +411,20 @@ class PluginGlpiinventoryConfig extends CommonDBTM
               "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("threads_networkdiscovery", [
-             'value' => $pfConfig->getValue('threads_networkdiscovery'),
-             'min'   => 1,
-             'max'   => 400]);
+            'value' => $pfConfig->getValue('threads_networkdiscovery'),
+            'min'   => 1,
+            'max'   => 400
+        ]);
         echo "</td>";
 
         echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;" .
               "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("threads_networkinventory", [
-             'value' => $pfConfig->getValue('threads_networkinventory'),
-             'min'   => 1,
-             'max'   => 400]);
+            'value' => $pfConfig->getValue('threads_networkinventory'),
+            'min'   => 1,
+            'max'   => 400
+        ]);
         echo "</td>";
         echo "</tr>";
 
@@ -431,17 +433,19 @@ class PluginGlpiinventoryConfig extends CommonDBTM
               "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("timeout_networkdiscovery", [
-             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
-             'min'   => 1,
-             'max'   => 60]);
+            'value' => $pfConfig->getValue('timeout_networkdiscovery'),
+            'min'   => 1,
+            'max'   => 60
+        ]);
         echo "</td>";
         echo "<td>" . __('SNMP timeout', 'glpiinventory') . "&nbsp;" .
               "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("timeout_networkinventory", [
-             'value' => $pfConfig->getValue('timeout_networkinventory'),
-             'min'   => 1,
-             'max'   => 60]);
+            'value' => $pfConfig->getValue('timeout_networkinventory'),
+            'min'   => 1,
+            'max'   => 60
+        ]);
         echo "</td>";
         echo "</tr>";
 
@@ -477,9 +481,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "<td>" . __('Match mirrors to agents', 'glpiinventory') . "</td>";
         echo "<td>";
         $mirror_options = [
-         PluginGlpiinventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
-         PluginGlpiinventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'glpiinventory'),
-         PluginGlpiinventoryDeployMirror::MATCH_BOTH     => __('with both', 'glpiinventory')
+            PluginGlpiinventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
+            PluginGlpiinventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'glpiinventory'),
+            PluginGlpiinventoryDeployMirror::MATCH_BOTH     => __('with both', 'glpiinventory')
         ];
         Dropdown::showFromArray(
             'mirror_match',
@@ -494,10 +498,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "<td width='20%'>";
         $toadd = [-1 => __('Never')];
         Dropdown::showNumber("clean_on_demand_tasks", [
-         'value' => $pfConfig->getValue('clean_on_demand_tasks'),
-         'min'   => 1,
-         'max'   => 1000,
-         'toadd' => $toadd]);
+            'value' => $pfConfig->getValue('clean_on_demand_tasks'),
+            'min'   => 1,
+            'max'   => 1000,
+            'toadd' => $toadd
+        ]);
         echo "</td>";
         echo "</tr>";
 
@@ -522,7 +527,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             return $existing_value;
         } else {
             return $this->add(['type'  => $name,
-                                 'value' => $value]);
+                'value' => $value
+            ]);
         }
     }
 

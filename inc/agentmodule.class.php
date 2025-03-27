@@ -143,8 +143,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             $checked = $data['is_active'];
 
             Html::showCheckbox(['name'    => 'activation',
-                                  'value'   => '1',
-                                  'checked' => $checked]);
+                'value'   => '1',
+                'checked' => $checked
+            ]);
             echo "</td>";
             echo "<td>";
              echo "<table>";
@@ -156,7 +157,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
                  $a_used[] = $agent_id;
             }
             Dropdown::show("Agent", ["name" => "agent_to_add[]",
-                                                               "used" => $a_used]);
+                "used" => $a_used
+            ]);
              echo "</td>";
              echo "<td align='center'>";
              echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='" .
@@ -259,8 +261,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
                 }
             }
             Html::showCheckbox(['name'    => "activation-" . $data["modulename"],
-                                  'value'   => '1',
-                                  'checked' => $checked]);
+                'value'   => '1',
+                'checked' => $checked
+            ]);
             echo "</td>";
             if ($i == 1) {
                 echo "</tr>";

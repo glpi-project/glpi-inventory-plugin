@@ -57,10 +57,10 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     {
         foreach ($file_data as $key => $value) {
             $input = [
-            'computers_id' => $computers_id,
-            'plugin_glpiinventory_collects_files_id' => $collects_files_id,
-            'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
-            'size'         => $value['size']
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_files_id' => $collects_files_id,
+                'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
+                'size'         => $value['size']
             ];
             $this->add($input);
         }

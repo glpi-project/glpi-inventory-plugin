@@ -56,21 +56,21 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
     public function getListHeaders()
     {
         return [
-         __("Name"),
-         "Moniker",
-         __("Class", "glpiinventory"),
-         __("Properties", "glpiinventory"),
-         __("Action")
+            __("Name"),
+            "Moniker",
+            __("Class", "glpiinventory"),
+            __("Properties", "glpiinventory"),
+            __("Action")
         ];
     }
 
     public function displayOneRow($row = [])
     {
         return [
-         $row['name'],
-         $row['moniker'],
-         $row['class'],
-         $row['properties']
+            $row['name'],
+            $row['moniker'],
+            $row['class'],
+            $row['properties']
         ];
     }
 

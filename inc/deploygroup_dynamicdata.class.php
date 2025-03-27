@@ -299,10 +299,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         $result = $DB->update(
             self::getTable(),
             [
-            'computers_id_cache' => $DB->escape(json_encode($ids))
+                'computers_id_cache' => $DB->escape(json_encode($ids))
             ],
             [
-            'plugin_glpiinventory_deploygroups_id' => $group->getID()
+                'plugin_glpiinventory_deploygroups_id' => $group->getID()
             ]
         );
         return $result;

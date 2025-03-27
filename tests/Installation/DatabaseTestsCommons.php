@@ -67,21 +67,21 @@ class DatabaseTestsCommons extends Assert
 
                     $s_type[0] = preg_replace(
                         [
-                        '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
-                        '/ CHARACTER SET utf8(mb3|mb4)?/'
+                            '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
+                            '/ CHARACTER SET utf8(mb3|mb4)?/'
                         ],
                         [
-                        '',
-                        ''
+                            '',
+                            ''
                         ],
                         $s_type[0]
                     );
 
                     $column_replacements = [
                      // Remove comments
-                     '/ COMMENT \'.+\'/i' => '',
+                        '/ COMMENT \'.+\'/i' => '',
                      // Remove integer display width
-                     '/((tiny|small|medium|big)?int)\(\d+\)/i' => '$1',
+                        '/((tiny|small|medium|big)?int)\(\d+\)/i' => '$1',
                     ];
                     $s_type[0] = preg_replace(
                         array_keys($column_replacements),
@@ -116,23 +116,23 @@ class DatabaseTestsCommons extends Assert
             ) {
                 $data[0] = preg_replace(
                     [
-                    '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
-                    '/ CHARACTER SET utf8(mb3|mb4)?/'
+                        '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
+                        '/ CHARACTER SET utf8(mb3|mb4)?/'
                     ],
                     [
-                    '',
-                    '',
+                        '',
+                        '',
                     ],
                     $data[0]
                 );
                 $data[0] = str_replace(
                     [
-                    '( ',
-                    ' )'
+                        '( ',
+                        ' )'
                     ],
                     [
-                    '(',
-                    ')'
+                        '(',
+                        ')'
                     ],
                     $data[0]
                 );
@@ -161,12 +161,12 @@ class DatabaseTestsCommons extends Assert
                             $s_type = explode("COMMENT", $s_line[2]);
                             $s_type[0] = preg_replace(
                                 [
-                                '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
-                                '/ CHARACTER SET utf8(mb3|mb4)?/'
+                                    '/ COLLATE utf8(mb3|mb4)?_unicode_ci/',
+                                    '/ CHARACTER SET utf8(mb3|mb4)?/'
                                 ],
                                 [
-                                '',
-                                ''
+                                    '',
+                                    ''
                                 ],
                                 trim($s_type[0])
                             );
@@ -205,9 +205,9 @@ class DatabaseTestsCommons extends Assert
 
                             $column_replacements = [
                            // Remove comments
-                            '/ COMMENT \'.+\'/i' => '',
+                                '/ COMMENT \'.+\'/i' => '',
                            // Remove integer display width
-                            '/((tiny|small|medium|big)?int)\(\d+\)/i' => '$1',
+                                '/((tiny|small|medium|big)?int)\(\d+\)/i' => '$1',
                             ];
                             $s_type[0] = preg_replace(
                                 array_keys($column_replacements),

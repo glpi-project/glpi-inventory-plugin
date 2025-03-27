@@ -52,48 +52,48 @@ class PluginGlpiinventoryStaticmisc
 
         $a_tasks = [
             [   'module'         => 'glpiinventory',
-                     'method'         => 'inventory',
-                     'selection_type' => 'devices',
-                     'hidetask'       => 1,
-                     'name'           => __('Computer Inventory', 'glpiinventory'),
-                     'use_rest'       => false
+                'method'         => 'inventory',
+                'selection_type' => 'devices',
+                'hidetask'       => 1,
+                'name'           => __('Computer Inventory', 'glpiinventory'),
+                'use_rest'       => false
             ],
 
             [   'module'         => 'glpiinventory',
-                     'classname'      => 'PluginGlpiinventoryInventoryComputerESX',
-                     'method'         => 'InventoryComputerESX',
-                     'selection_type' => 'devices',
-                     'name'           => __('VMware host remote inventory', 'glpiinventory'),
-                     'task'           => 'ESX',
-                     'use_rest'       => true
+                'classname'      => 'PluginGlpiinventoryInventoryComputerESX',
+                'method'         => 'InventoryComputerESX',
+                'selection_type' => 'devices',
+                'name'           => __('VMware host remote inventory', 'glpiinventory'),
+                'task'           => 'ESX',
+                'use_rest'       => true
             ],
 
             [   'module'         => 'glpiinventory',
-                     'classname'      => 'PluginGlpiinventoryNetworkDiscovery',
-                     'method'         => 'networkdiscovery',
-                     'name'           => __('Network discovery', 'glpiinventory')
+                'classname'      => 'PluginGlpiinventoryNetworkDiscovery',
+                'method'         => 'networkdiscovery',
+                'name'           => __('Network discovery', 'glpiinventory')
             ],
 
             [   'module'         => 'glpiinventory',
-                     'classname'      => 'PluginGlpiinventoryNetworkInventory',
-                     'method'         => 'networkinventory',
-                     'name'           => __('Network inventory (SNMP)', 'glpiinventory')
+                'classname'      => 'PluginGlpiinventoryNetworkInventory',
+                'method'         => 'networkinventory',
+                'name'           => __('Network inventory (SNMP)', 'glpiinventory')
             ],
 
             [   'module'         => 'glpiinventory',
-                     'classname'      => 'PluginGlpiinventoryDeployCommon',
-                     'method'         => 'deployinstall',
-                     'name'           => __('Package deploy', 'glpiinventory'),
-                     'task'           => "DEPLOY",
-                     'use_rest'       => true
+                'classname'      => 'PluginGlpiinventoryDeployCommon',
+                'method'         => 'deployinstall',
+                'name'           => __('Package deploy', 'glpiinventory'),
+                'task'           => "DEPLOY",
+                'use_rest'       => true
             ],
 
             [   'module'         => 'glpiinventory',
-                     'classname'      => 'PluginGlpiinventoryCollect',
-                     'method'         => 'collect',
-                     'name'           => __('Collect data', 'glpiinventory'),
-                     'task'           => "Collect",
-                     'use_rest'       => true
+                'classname'      => 'PluginGlpiinventoryCollect',
+                'method'         => 'collect',
+                'name'           => __('Collect data', 'glpiinventory'),
+                'task'           => "Collect",
+                'use_rest'       => true
             ]
         ];
         return $a_tasks;
@@ -233,7 +233,8 @@ class PluginGlpiinventoryStaticmisc
     public static function task_actiontype_InventoryComputerESX($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE ,
-              Agent::class => Agent::getTypeName(Session::getPluralNumber())];
+            Agent::class => Agent::getTypeName(Session::getPluralNumber())
+        ];
     }
 
 
@@ -310,7 +311,8 @@ class PluginGlpiinventoryStaticmisc
     public static function task_ESX_getParameters($entities_id)
     {
         return ['periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
-                    "remote" => PluginGlpiinventoryAgentmodule::getUrlForModule('ESX', $entities_id)];
+            "remote" => PluginGlpiinventoryAgentmodule::getUrlForModule('ESX', $entities_id)
+        ];
     }
 
 
@@ -511,7 +513,8 @@ class PluginGlpiinventoryStaticmisc
     public static function task_definitiontype_deployinstall($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-                   'PluginGlpiinventoryDeployPackage' => __('Package')];
+            'PluginGlpiinventoryDeployPackage' => __('Package')
+        ];
     }
 
 
@@ -542,10 +545,10 @@ class PluginGlpiinventoryStaticmisc
     public static function task_actiontype_deployinstall($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-                   'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
-                   'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
-                   'Group'                            => __('Group')
-                  ];
+            'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
+            'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
+            'Group'                            => __('Group')
+        ];
     }
 
 
@@ -565,21 +568,21 @@ class PluginGlpiinventoryStaticmisc
          implode(
              " ",
              [
-               '`id` IN ( ',
-               '  SELECT agents.`items_id`',
-               '  FROM `glpi_agents` as agents',
-               '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
-               '  ON module.modulename = "DEPLOY"',
-               '  WHERE',
-               '     agents.`itemtype` = \'Computer\'',
-               '     AND (',
-               '           (  module.is_active=1',
-               '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-               '        OR (  module.is_active=0',
-               '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-               '     )',
-               ')'
-              ]
+                 '`id` IN ( ',
+                 '  SELECT agents.`items_id`',
+                 '  FROM `glpi_agents` as agents',
+                 '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
+                 '  ON module.modulename = "DEPLOY"',
+                 '  WHERE',
+                 '     agents.`itemtype` = \'Computer\'',
+                 '     AND (',
+                 '           (  module.is_active=1',
+                 '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+                 '        OR (  module.is_active=0',
+                 '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+                 '     )',
+                 ')'
+             ]
          );
         return Dropdown::show("Computer", $options);
     }
@@ -626,8 +629,8 @@ class PluginGlpiinventoryStaticmisc
     public static function task_deploy_getParameters($entities_id)
     {
         return [
-         "task" => "Deploy",
-         "remote" => PluginGlpiinventoryAgentmodule::getUrlForModule('Deploy', $entities_id)
+            "task" => "Deploy",
+            "remote" => PluginGlpiinventoryAgentmodule::getUrlForModule('Deploy', $entities_id)
         ];
     }
 
@@ -644,7 +647,8 @@ class PluginGlpiinventoryStaticmisc
     public static function task_definitiontype_collect($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-                   'PluginGlpiinventoryCollect' => __('Collect information', 'glpiinventory')];
+            'PluginGlpiinventoryCollect' => __('Collect information', 'glpiinventory')
+        ];
     }
 
 
@@ -672,10 +676,10 @@ class PluginGlpiinventoryStaticmisc
     public static function task_actiontype_collect($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-                   'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
-                   'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
-                   'Group'                            => __('Group')
-                  ];
+            'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
+            'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
+            'Group'                            => __('Group')
+        ];
     }
 
 
@@ -695,21 +699,21 @@ class PluginGlpiinventoryStaticmisc
          implode(
              " ",
              [
-               '`id` IN ( ',
-               '  SELECT agents.`items_id`',
-               '  FROM `glpi_agents` as agents',
-               '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
-               '  ON module.modulename = "Collect"',
-               '  WHERE',
-               '     agents.`itemtype` = \'Computer\'',
-               '     AND (',
-               '           (  module.is_active=1',
-               '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-               '        OR (  module.is_active=0',
-               '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-               '     )',
-               ')'
-              ]
+                 '`id` IN ( ',
+                 '  SELECT agents.`items_id`',
+                 '  FROM `glpi_agents` as agents',
+                 '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
+                 '  ON module.modulename = "Collect"',
+                 '  WHERE',
+                 '     agents.`itemtype` = \'Computer\'',
+                 '     AND (',
+                 '           (  module.is_active=1',
+                 '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+                 '        OR (  module.is_active=0',
+                 '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+                 '     )',
+                 ')'
+             ]
          );
         return Dropdown::show("Computer", $options);
     }
@@ -757,8 +761,8 @@ class PluginGlpiinventoryStaticmisc
     public static function task_collect_getParameters($entities_id)
     {
         return [
-         "task" => "Collect",
-         "remote" => PluginGlpiinventoryAgentmodule::getUrlForModule('Collect', $entities_id)
+            "task" => "Collect",
+            "remote" => PluginGlpiinventoryAgentmodule::getUrlForModule('Collect', $entities_id)
         ];
     }
 }

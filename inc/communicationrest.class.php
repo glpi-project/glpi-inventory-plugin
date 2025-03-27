@@ -118,9 +118,9 @@ class PluginGlpiinventoryCommunicationRest
                         && countElementsInTable(
                             'glpi_plugin_glpiinventory_taskjobstates',
                             [
-                            'agents_id' => $a_agent['id'],
-                            'itemtype' => $classname,
-                            'state' => 0,
+                                'agents_id' => $a_agent['id'],
+                                'itemtype' => $classname,
+                                'state' => 0,
                             ]
                         ) > 0
                     ) {
@@ -231,9 +231,9 @@ class PluginGlpiinventoryCommunicationRest
 
        //Get task job status : identifier is the uuid given by the agent
         $params = ['FROM' => getTableForItemType("PluginGlpiinventoryTaskjobstate"),
-                 'FIELDS' => 'id',
-                 'WHERE' => ['uniqid' => $p['uuid']]
-                ];
+            'FIELDS' => 'id',
+            'WHERE' => ['uniqid' => $p['uuid']]
+        ];
         foreach ($DB->request($params) as $jobstate) {
             $taskjobstate->getFromDB($jobstate['id']);
 

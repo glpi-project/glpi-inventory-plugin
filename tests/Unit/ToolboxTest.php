@@ -36,11 +36,11 @@ use PHPUnit\Framework\TestCase;
 class ToolboxTest extends TestCase
 {
     public $formatJson_input = [
-      'test_text' => 'Lorem Ipsum',
-      'test_number' => 1234,
-      'test_float' => 1234.5678,
-      'test_array' => [ 1,2,3,4, 'lorem_ipsum' ],
-      'test_hash' => ['lorem' => 'ipsum', 'ipsum' => 'lorem']
+        'test_text' => 'Lorem Ipsum',
+        'test_number' => 1234,
+        'test_float' => 1234.5678,
+        'test_array' => [ 1,2,3,4, 'lorem_ipsum' ],
+        'test_hash' => ['lorem' => 'ipsum', 'ipsum' => 'lorem']
     ];
 
     public $formatJson_expected = <<<JSON
@@ -86,9 +86,10 @@ JSON;
         $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($computer));
 
         $values = ['name'         => 'comp',
-                 'is_dynamic'   => 1,
-                 'entities_id'  => 0,
-                 'is_recursive' => 0];
+            'is_dynamic'   => 1,
+            'entities_id'  => 0,
+            'is_recursive' => 0
+        ];
         $computers_id = $computer->add($values);
         $computer->getFromDB($computers_id);
 
@@ -96,17 +97,19 @@ JSON;
 
         $printer = new Printer();
         $values  = ['name'         => 'printer',
-                  'is_dynamic'   => 1,
-                  'entities_id'  => 0,
-                  'is_recursive' => 0];
+            'is_dynamic'   => 1,
+            'entities_id'  => 0,
+            'is_recursive' => 0
+        ];
         $printers_id = $printer->add($values);
         $printer->getFromDB($printers_id);
         $this->assertTrue(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
 
         $values  = ['name'         => 'printer2',
-                  'is_dynamic'   => 0,
-                  'entities_id'  => 0,
-                  'is_recursive' => 0];
+            'is_dynamic'   => 0,
+            'entities_id'  => 0,
+            'is_recursive' => 0
+        ];
         $printers_id_2 = $printer->add($values);
         $printer->getFromDB($printers_id_2);
         $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));

@@ -93,12 +93,12 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     {
 
         $elements = [
-         self::TASK_PREPARED           => __('Prepared', 'glpiinventory'),
-         self::TASK_STARTED            => __('Started', 'glpiinventory'),
-         self::TASK_RUNNING            => __('Running'),
-         self::TASK_OK                 => __('Ok', 'glpiinventory'),
-         self::TASK_ERROR              => __('Error'),
-         self::TASK_INFO               => __('Info', 'glpiinventory'),
+            self::TASK_PREPARED           => __('Prepared', 'glpiinventory'),
+            self::TASK_STARTED            => __('Started', 'glpiinventory'),
+            self::TASK_RUNNING            => __('Running'),
+            self::TASK_OK                 => __('Ok', 'glpiinventory'),
+            self::TASK_ERROR              => __('Error'),
+            self::TASK_INFO               => __('Info', 'glpiinventory'),
         ];
 
         return $elements;
@@ -133,14 +133,16 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         global $DB;
 
         $params = ['FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
-                 'LEFT JOIN' => ['glpi_plugin_glpiinventory_taskjoblogs',
-                     ['FKEY' => ['glpi_plugin_glpiinventory_taskjoblogs'   => 'plugin_glpiinventory_taskjobstates_id',
-                                 'glpi_plugin_glpiinventory_taskjobstates' => 'id']]
-                     ],
-                 'FIELDS' => ['itemtype'],
-                 'WHERE'  => ['glpi_plugin_glpiinventory_taskjobstates.id' => $taskjoblogs_id],
-                 'LIMIT'  => 1
-                ];
+            'LEFT JOIN' => ['glpi_plugin_glpiinventory_taskjoblogs',
+                ['FKEY' => ['glpi_plugin_glpiinventory_taskjoblogs'   => 'plugin_glpiinventory_taskjobstates_id',
+                    'glpi_plugin_glpiinventory_taskjobstates' => 'id'
+                ]
+                ]
+            ],
+            'FIELDS' => ['itemtype'],
+            'WHERE'  => ['glpi_plugin_glpiinventory_taskjobstates.id' => $taskjoblogs_id],
+            'LIMIT'  => 1
+        ];
         $iterator = $DB->request($params);
         if ($iterator->numrows()) {
             $data = $iterator->current();
@@ -162,82 +164,82 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $tab = [];
 
         $tab[] = [
-         'id' => 'common',
-         'name' => __('Logs')
+            'id' => 'common',
+            'name' => __('Logs')
         ];
 
         $tab[] = [
-         'id'            => '1',
-         'table'         => $this->getTable(),
-         'field'         => 'id',
-         'name'          => __('ID'),
-         'massiveaction' => false, // implicit field is i,
+            'id'            => '1',
+            'table'         => $this->getTable(),
+            'field'         => 'id',
+            'name'          => __('ID'),
+            'massiveaction' => false, // implicit field is i,
         ];
 
         $tab[] = [
-         'id'            => '2',
-         'table'         => 'glpi_plugin_glpiinventory_tasks',
-         'field'         => 'name',
-         'name'          => _n('Task', 'Tasks', 2),
-         'datatype'      => 'itemlink',
-         'itemlink_type' => "PluginGlpiinventoryTask",
+            'id'            => '2',
+            'table'         => 'glpi_plugin_glpiinventory_tasks',
+            'field'         => 'name',
+            'name'          => _n('Task', 'Tasks', 2),
+            'datatype'      => 'itemlink',
+            'itemlink_type' => "PluginGlpiinventoryTask",
         ];
 
         $tab[] = [
-         'id'            => '3',
-         'table'         => 'glpi_plugin_glpiinventory_taskjobs',
-         'field'         => 'name',
-         'name'          => __('Job', 'glpiinventory'),
-         'datatype'      => 'itemlink',
-         'itemlink_type' => "PluginGlpiinventoryTaskjob",
+            'id'            => '3',
+            'table'         => 'glpi_plugin_glpiinventory_taskjobs',
+            'field'         => 'name',
+            'name'          => __('Job', 'glpiinventory'),
+            'datatype'      => 'itemlink',
+            'itemlink_type' => "PluginGlpiinventoryTaskjob",
         ];
 
         $tab[] = [
-         'id'         => '4',
-         'table'      => $this->getTable(),
-         'field'      => 'state',
-         'name'       => __('Status'),
-         'searchtype' => 'equals',
+            'id'         => '4',
+            'table'      => $this->getTable(),
+            'field'      => 'state',
+            'name'       => __('Status'),
+            'searchtype' => 'equals',
         ];
 
         $tab[] = [
-         'id'            => '5',
-         'table'         => $this->getTable(),
-         'field'         => 'date',
-         'name'          => _n('Date', 'Dates', 1),
-         'datatype'      => 'datetime',
-         'massiveaction' => false,
+            'id'            => '5',
+            'table'         => $this->getTable(),
+            'field'         => 'date',
+            'name'          => _n('Date', 'Dates', 1),
+            'datatype'      => 'datetime',
+            'massiveaction' => false,
         ];
 
         $tab[] = [
-         'id'       => '6',
-         'table'    => 'glpi_plugin_glpiinventory_taskjobstates',
-         'field'    => 'uniqid',
-         'name'     => __('Unique id', 'glpiinventory'),
-         'datatype' => 'string',
+            'id'       => '6',
+            'table'    => 'glpi_plugin_glpiinventory_taskjobstates',
+            'field'    => 'uniqid',
+            'name'     => __('Unique id', 'glpiinventory'),
+            'datatype' => 'string',
         ];
 
         $tab[] = [
-         'id'       => '7',
-         'table'    => $this->getTable(),
-         'field'    => 'comment',
-         'name'     => __('Comments'),
-         'datatype' => 'string',
+            'id'       => '7',
+            'table'    => $this->getTable(),
+            'field'    => 'comment',
+            'name'     => __('Comments'),
+            'datatype' => 'string',
         ];
 
         $tab[] = [
-         'id'           => '8',
-         'table'        => "glpi_agents",
-         'field'        => 'name',
-         'name'         => __('Agent', 'glpiinventory'),
-         'datatype'     => 'itemlink',
-         'forcegroupby' => true,
-         'joinparams'   => [
-            'beforejoin' => [
-               'table'      => 'glpi_plugin_glpiinventory_taskjobstates',
-               'joinparams' => ['jointype' => 'child'],
+            'id'           => '8',
+            'table'        => "glpi_agents",
+            'field'        => 'name',
+            'name'         => __('Agent', 'glpiinventory'),
+            'datatype'     => 'itemlink',
+            'forcegroupby' => true,
+            'joinparams'   => [
+                'beforejoin' => [
+                    'table'      => 'glpi_plugin_glpiinventory_taskjobstates',
+                    'joinparams' => ['jointype' => 'child'],
+                ],
             ],
-         ],
         ];
         return $tab;
     }
@@ -340,15 +342,15 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         if (strstr($comment, "==")) {
             preg_match_all("/==([\w\d]+)==/", $comment, $matches);
             $a_text = [
-            'devicesqueried'  => __('devices queried', 'glpiinventory'),
-            'devicesfound'    => __('devices found', 'glpiinventory'),
-            'addtheitem'      => __('Add the item', 'glpiinventory'),
-            'updatetheitem'   => __('Update the item', 'glpiinventory'),
-            'inventorystarted' => __('Inventory started', 'glpiinventory'),
-            'detail'          => __('Detail', 'glpiinventory'),
-            'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
-            'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
-            'importdenied'    => __('Import denied', 'glpiinventory')
+                'devicesqueried'  => __('devices queried', 'glpiinventory'),
+                'devicesfound'    => __('devices found', 'glpiinventory'),
+                'addtheitem'      => __('Add the item', 'glpiinventory'),
+                'updatetheitem'   => __('Update the item', 'glpiinventory'),
+                'inventorystarted' => __('Inventory started', 'glpiinventory'),
+                'detail'          => __('Detail', 'glpiinventory'),
+                'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
+                'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
+                'importdenied'    => __('Import denied', 'glpiinventory')
             ];
             foreach ($matches[0] as $num => $commentvalue) {
                 $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);

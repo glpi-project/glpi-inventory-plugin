@@ -109,10 +109,10 @@ class PluginGlpiinventoryToolbox
         $credentials = new SNMPCredential();
         if ($credentials->getFromDB($p_id)) {
             $node = [
-            'AUTHENTICATION' => [
-               'ID' => $p_id,
-               'VERSION' => $credentials->getRealVersion()
-            ]
+                'AUTHENTICATION' => [
+                    'ID' => $p_id,
+                    'VERSION' => $credentials->getRealVersion()
+                ]
             ];
 
             if ($credentials->fields['snmpversion'] == '3') {
@@ -150,19 +150,23 @@ class PluginGlpiinventoryToolbox
         $a_ips = [];
         $a_ports = $NetworkPort->find(
             ['itemtype'           => $itemtype,
-             'items_id'           => $items_id,
-            'instantiation_type' => ['!=',
-            'NetworkPortLocal']]
+                'items_id'           => $items_id,
+                'instantiation_type' => ['!=',
+                    'NetworkPortLocal'
+                ]
+            ]
         );
         foreach ($a_ports as $a_port) {
             $a_networknames = $networkName->find(
                 ['itemtype' => 'NetworkPort',
-                'items_id' => $a_port['id']]
+                    'items_id' => $a_port['id']
+                ]
             );
             foreach ($a_networknames as $a_networkname) {
                  $a_ipaddresses = $iPAddress->find(
                      ['itemtype' => 'NetworkName',
-                     'items_id' => $a_networkname['id']]
+                         'items_id' => $a_networkname['id']
+                     ]
                  );
                 foreach ($a_ipaddresses as $data) {
                     if (
@@ -329,7 +333,8 @@ class PluginGlpiinventoryToolbox
 
         foreach (
             ['glpiID', 'glpiname','glpiactiveentities_string',
-            'glpiactiveentities', 'glpiparententities'] as $session_key
+                'glpiactiveentities', 'glpiparententities'
+            ] as $session_key
         ) {
             if (isset($_SESSION[$session_key])) {
                 $OLD_SESSION[$session_key] = $_SESSION[$session_key];

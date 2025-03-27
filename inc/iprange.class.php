@@ -114,58 +114,58 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
         $tab = [];
 
         $tab[] = [
-         'id' => 'common',
-         'name' => __('IP range configuration', 'glpiinventory')
+            'id' => 'common',
+            'name' => __('IP range configuration', 'glpiinventory')
         ];
 
         $tab[] = [
-         'id'           => '1',
-         'table'        => $this->getTable(),
-         'field'        => 'name',
-         'name'         => __('Name'),
-         'datatype'     => 'itemlink'
+            'id'           => '1',
+            'table'        => $this->getTable(),
+            'field'        => 'name',
+            'name'         => __('Name'),
+            'datatype'     => 'itemlink'
         ];
 
         $tab[] = [
-         'id'        => '2',
-         'table'     => 'glpi_entities',
-         'field'     => 'completename',
-         'linkfield' => 'entities_id',
-         'name'      => Entity::getTypeName(1),
-         'datatype'  => 'dropdown',
+            'id'        => '2',
+            'table'     => 'glpi_entities',
+            'field'     => 'completename',
+            'linkfield' => 'entities_id',
+            'name'      => Entity::getTypeName(1),
+            'datatype'  => 'dropdown',
         ];
 
         $tab[] = [
-         'id'        => '3',
-         'table'     => $this->getTable(),
-         'field'     => 'ip_start',
-         'name'      => __('Start of IP range', 'glpiinventory'),
+            'id'        => '3',
+            'table'     => $this->getTable(),
+            'field'     => 'ip_start',
+            'name'      => __('Start of IP range', 'glpiinventory'),
         ];
 
         $tab[] = [
-         'id'        => '4',
-         'table'     => $this->getTable(),
-         'field'     => 'ip_end',
-         'name'      => __('End of IP range', 'glpiinventory'),
+            'id'        => '4',
+            'table'     => $this->getTable(),
+            'field'     => 'ip_end',
+            'name'      => __('End of IP range', 'glpiinventory'),
         ];
 
         $tab[] = [
-         'id'            => '5',
-         'table'         => SNMPCredential::getTable(),
-         'field'         => 'name',
-         'datatype'      => 'dropdown',
-         'right'         => 'all',
-         'name'          => SNMPCredential::getTypeName(1),
-         'forcegroupby'  => true,
-         'massiveaction' => false,
-         'joinparams'    => [
-            'beforejoin' => [
-               'table'      => PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
-               'joinparams' => [
-                  'jointype' => 'child',
-               ],
+            'id'            => '5',
+            'table'         => SNMPCredential::getTable(),
+            'field'         => 'name',
+            'datatype'      => 'dropdown',
+            'right'         => 'all',
+            'name'          => SNMPCredential::getTypeName(1),
+            'forcegroupby'  => true,
+            'massiveaction' => false,
+            'joinparams'    => [
+                'beforejoin' => [
+                    'table'      => PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
+                    'joinparams' => [
+                        'jointype' => 'child',
+                    ],
+                ],
             ],
-         ],
         ];
 
         return $tab;
@@ -199,8 +199,8 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     {
         $this->initForm($id, $options);
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/iprange.html.twig', [
-         'item'   => $this,
-         'params' => $options,
+            'item'   => $this,
+            'params' => $options,
         ]);
 
         return true;

@@ -113,9 +113,9 @@ function plugin_init_glpiinventory()
         $Plugin->registerClass(
             'PluginGlpiinventoryAgentmodule',
             [
-            'addtabon' => [
-               'Agent',
-            ]
+                'addtabon' => [
+                    'Agent',
+                ]
             ]
         );
         $Plugin->registerClass('PluginGlpiinventoryConfig');
@@ -124,19 +124,19 @@ function plugin_init_glpiinventory()
         $Plugin->registerClass(
             'PluginGlpiinventoryTaskjob',
             [
-            'addtabon' => [
-               'PluginGlpiinventoryTask',
-            ]
+                'addtabon' => [
+                    'PluginGlpiinventoryTask',
+                ]
             ]
         );
 
         $Plugin->registerClass(
             'PluginGlpiinventoryTaskjobstate',
             [
-            'addtabon' => [
-               'PluginGlpiinventoryTask',
-               'Computer',
-            ]
+                'addtabon' => [
+                    'PluginGlpiinventoryTask',
+                    'Computer',
+                ]
             ]
         );
 
@@ -223,7 +223,8 @@ function plugin_init_glpiinventory()
         }
 
         $PLUGIN_HOOKS['import_item']['glpiinventory'] = [
-          'Computer' => ['Plugin']];
+            'Computer' => ['Plugin']
+        ];
 
         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_glpiinventory_ipranges';
 
@@ -294,19 +295,19 @@ function plugin_init_glpiinventory()
 
         $PLUGIN_HOOKS['pre_item_update']['glpiinventory'] = [
             'Plugin' => 'plugin_pre_item_update_glpiinventory'
-          ];
+        ];
 
         $PLUGIN_HOOKS['pre_item_purge']['glpiinventory'] = [
-         'Computer'                 => 'plugin_pre_item_purge_glpiinventory',
-         'NetworkPort_NetworkPort'  => 'plugin_pre_item_purge_glpiinventory',
-         ];
+            'Computer'                 => 'plugin_pre_item_purge_glpiinventory',
+            'NetworkPort_NetworkPort'  => 'plugin_pre_item_purge_glpiinventory',
+        ];
         $p = [
-         'NetworkPort_NetworkPort'            => 'plugin_item_purge_glpiinventory',
-         'PluginGlpiinventoryTask'          => ['PluginGlpiinventoryTask', 'purgeTask'],
-         'PluginGlpiinventoryTaskjob'       => ['PluginGlpiinventoryTaskjob', 'purgeTaskjob'],
-         'PluginGlpiinventoryTimeslot'      => 'plugin_item_purge_glpiinventory',
-         'Entity'                             => 'plugin_item_purge_glpiinventory',
-         'PluginGlpiinventoryDeployPackage' => 'plugin_item_purge_glpiinventory'
+            'NetworkPort_NetworkPort'            => 'plugin_item_purge_glpiinventory',
+            'PluginGlpiinventoryTask'          => ['PluginGlpiinventoryTask', 'purgeTask'],
+            'PluginGlpiinventoryTaskjob'       => ['PluginGlpiinventoryTaskjob', 'purgeTaskjob'],
+            'PluginGlpiinventoryTimeslot'      => 'plugin_item_purge_glpiinventory',
+            'Entity'                             => 'plugin_item_purge_glpiinventory',
+            'PluginGlpiinventoryDeployPackage' => 'plugin_item_purge_glpiinventory'
         ];
         $PLUGIN_HOOKS['item_purge']['glpiinventory'] = $p;
 
@@ -370,14 +371,14 @@ function plugin_init_glpiinventory()
                 $PLUGIN_HOOKS['add_javascript']['glpiinventory'] = array_merge(
                     $PLUGIN_HOOKS['add_javascript']['glpiinventory'],
                     [
-                     "lib/nvd3/nv.d3.min.js"
+                        "lib/nvd3/nv.d3.min.js"
                     ]
                 );
                // Add graph css
                 $PLUGIN_HOOKS['add_css']['glpiinventory'] = array_merge(
                     $PLUGIN_HOOKS['add_css']['glpiinventory'],
                     [
-                     "lib/nvd3/nv.d3.css"
+                        "lib/nvd3/nv.d3.css"
                     ]
                 );
             }
@@ -413,28 +414,28 @@ function plugin_init_glpiinventory()
 function plugin_version_glpiinventory()
 {
     return ['name'           => 'GLPI Inventory',
-           'shortname'      => 'glpiinventory',
-           'version'        => PLUGIN_GLPIINVENTORY_VERSION,
-           'license'        => 'AGPLv3+',
-           'oldname'        => 'fusioninventory',
-           'author'         => 'Teclib\'',
-           'homepage'       => 'https://github.com/glpi-project/glpi-inventory-plugin',
-           'requirements'   => [
-              'glpi' => [
-                  'min' => PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION,
-                  'max' => PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION,
-                  'dev' => PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE == 0
-               ],
-               'php' => [
-                  'exts'   => [
-                     'fileinfo'  => [
+        'shortname'      => 'glpiinventory',
+        'version'        => PLUGIN_GLPIINVENTORY_VERSION,
+        'license'        => 'AGPLv3+',
+        'oldname'        => 'fusioninventory',
+        'author'         => 'Teclib\'',
+        'homepage'       => 'https://github.com/glpi-project/glpi-inventory-plugin',
+        'requirements'   => [
+            'glpi' => [
+                'min' => PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION,
+                'max' => PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION,
+                'dev' => PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE == 0
+            ],
+            'php' => [
+                'exts'   => [
+                    'fileinfo'  => [
                         'required'  => true,
                         'class'     => 'finfo'
-                     ]
-                  ]
-               ]
+                    ]
+                ]
             ]
-         ];
+        ]
+    ];
 }
 
 

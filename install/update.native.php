@@ -68,7 +68,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             'glpi_plugin_glpiinventory_unmanageds',
         ];
         $iterator = $DB->request([
-          'FROM' => 'glpi_plugin_glpiinventory_agents'
+            'FROM' => 'glpi_plugin_glpiinventory_agents'
         ]);
         $agent = new Agent();
 
@@ -156,13 +156,13 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     if ($DB->tableExists('glpi_plugin_glpiinventory_configsecurities')) {
         $cs_mapping = [];
         $cs_tables = [
-          'glpi_plugin_glpiinventory_unmanageds',
-          'glpi_plugin_glpiinventory_ipranges_configsecurities',
-          'glpi_plugin_glpiinventory_networkequipments',
-          'glpi_plugin_glpiinventory_printers'
+            'glpi_plugin_glpiinventory_unmanageds',
+            'glpi_plugin_glpiinventory_ipranges_configsecurities',
+            'glpi_plugin_glpiinventory_networkequipments',
+            'glpi_plugin_glpiinventory_printers'
         ];
         $iterator = $DB->request([
-          'FROM' => 'glpi_plugin_glpiinventory_configsecurities'
+            'FROM' => 'glpi_plugin_glpiinventory_configsecurities'
         ]);
         $snmpcred = new SNMPCredential();
         foreach ($iterator as $cs) {
@@ -533,9 +533,9 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $DB->update(
         'glpi_rules',
         [
-         'sub_type'  => 'RuleImportAsset',
-         'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
-         'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ria ?? 0))
+            'sub_type'  => 'RuleImportAsset',
+            'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
+            'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ria ?? 0))
         ],
         [
             'OR' => [
@@ -548,9 +548,9 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $DB->update(
         'glpi_rules',
         [
-         'sub_type'  => 'RuleImportEntity',
-         'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
-         'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_rie ?? 0))
+            'sub_type'  => 'RuleImportEntity',
+            'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
+            'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_rie ?? 0))
         ],
         [
             'OR' => [
@@ -634,7 +634,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         $lock = new Lockedfield();
         $lock_table = $lock->getTable();
         $iterator = $DB->request([
-         'FROM' => 'glpi_plugin_glpiinventory_locks'
+            'FROM' => 'glpi_plugin_glpiinventory_locks'
         ]);
         foreach ($iterator as $row) {
             $fields = importArrayFromDB($row['tablefields']);

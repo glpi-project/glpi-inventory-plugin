@@ -54,8 +54,9 @@ class TaskTest extends TestCase
         $pfTaskJob = new PluginGlpiinventoryTaskJob();
 
         $input = ['name' => 'MyTask', 'entities_id' => 0,
-                'reprepare_if_successful' => 1, 'comment' => 'MyComments',
-                'is_active' => 1];
+            'reprepare_if_successful' => 1, 'comment' => 'MyComments',
+            'is_active' => 1
+        ];
         $tasks_id = $pfTask->add($input);
         $this->assertGreaterThan(0, $tasks_id);
 
@@ -64,10 +65,10 @@ class TaskTest extends TestCase
         $this->assertEquals(1, $pfTask->fields['is_active']);
 
         $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
-                'name'        => 'deploy',
-                'method'      => 'deploy',
-                'actors'      => '[{"PluginGlpiinventoryDeployGroup":"1"}]'
-               ];
+            'name'        => 'deploy',
+            'method'      => 'deploy',
+            'actors'      => '[{"PluginGlpiinventoryDeployGroup":"1"}]'
+        ];
         $taskjobs_id = $pfTaskJob->add($input);
         $this->assertGreaterThan(0, $taskjobs_id);
         $this->assertTrue($pfTaskJob->getFromDB($taskjobs_id));

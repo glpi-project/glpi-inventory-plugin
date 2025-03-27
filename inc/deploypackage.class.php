@@ -106,10 +106,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $this->running_tasks =
                PluginGlpiinventoryTask::getItemsFromDB(
                    [
-                      'is_active'   => true,
-                      'is_running'  => true,
-                      'targets'     => [__CLASS__ => $this->fields['id']],
-                      'by_entities' => false,
+                       'is_active'   => true,
+                       'is_running'  => true,
+                       'targets'     => [__CLASS__ => $this->fields['id']],
+                       'by_entities' => false,
                    ]
                );
         }
@@ -302,13 +302,14 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         if (!isset($input['json'])) {
             $input['json'] = json_encode([
-             'jobs' => [
-                 'checks'           => [],
-                 'associatedFiles'  => [],
-                 'actions'          => [],
-                 'userinteractions' => []
-             ],
-             'associatedFiles' => []]);
+                'jobs' => [
+                    'checks'           => [],
+                    'associatedFiles'  => [],
+                    'actions'          => [],
+                    'userinteractions' => []
+                ],
+                'associatedFiles' => []
+            ]);
         }
 
         return parent::prepareInputForAdd($input);
@@ -324,64 +325,64 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         $tab = [];
         $tab[] = [
-         'id' => 'common',
-         'name' => __('Characteristics')
+            'id' => 'common',
+            'name' => __('Characteristics')
         ];
 
         $tab[] = [
-         'id'            => '1',
-         'table'         => $this->getTable(),
-         'field'         => 'name',
-         'name'          => __('Name'),
-         'datatype'      => 'itemlink',
-         'itemlink_link' => $this->getType()
+            'id'            => '1',
+            'table'         => $this->getTable(),
+            'field'         => 'name',
+            'name'          => __('Name'),
+            'datatype'      => 'itemlink',
+            'itemlink_link' => $this->getType()
         ];
 
         $tab[] = [
-         'id'        => '2',
-         'table'     => $this->getTable(),
-         'field'     => 'id',
-         'name'      => __('ID'),
+            'id'        => '2',
+            'table'     => $this->getTable(),
+            'field'     => 'id',
+            'name'      => __('ID'),
         ];
 
         $tab[] = [
-         'id'        => '16',
-         'table'     => $this->getTable(),
-         'field'     => 'comment',
-         'name'      => __('Comments'),
-         'datatype'  => 'text',
+            'id'        => '16',
+            'table'     => $this->getTable(),
+            'field'     => 'comment',
+            'name'      => __('Comments'),
+            'datatype'  => 'text',
         ];
 
         $tab[] = [
-         'id'        => '19',
-         'table'     => $this->getTable(),
-         'field'     => 'date_mod',
-         'name'      => __('Last update'),
-         'datatype'  => 'datetime',
+            'id'        => '19',
+            'table'     => $this->getTable(),
+            'field'     => 'date_mod',
+            'name'      => __('Last update'),
+            'datatype'  => 'datetime',
         ];
 
         $tab[] = [
-         'id'       => '80',
-         'table'    => 'glpi_entities',
-         'field'    => 'completename',
-         'name'     => Entity::getTypeName(1),
-         'datatype' => 'dropdown',
+            'id'       => '80',
+            'table'    => 'glpi_entities',
+            'field'    => 'completename',
+            'name'     => Entity::getTypeName(1),
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
-         'id'        => '86',
-         'table'     => $this->getTable(),
-         'field'     => 'is_recursive',
-         'name'      => __('Child entities'),
-         'datatype'  => 'bool',
+            'id'        => '86',
+            'table'     => $this->getTable(),
+            'field'     => 'is_recursive',
+            'name'      => __('Child entities'),
+            'datatype'  => 'bool',
         ];
 
         $tab[] = [
-         'id'       => '20',
-         'table'    => 'glpi_plugin_glpiinventory_deploygroups',
-         'field'    => 'name',
-         'name'     => __('Enable deploy on demand for the following group', 'glpiinventory'),
-         'datatype' => 'dropdown',
+            'id'       => '20',
+            'table'    => 'glpi_plugin_glpiinventory_deploygroups',
+            'field'    => 'name',
+            'name'     => __('Enable deploy on demand for the following group', 'glpiinventory'),
+            'datatype' => 'dropdown',
         ];
 
         return $tab;
@@ -522,16 +523,16 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         global $CFG_GLPI;
 
         $subtypes = [
-         'check'           => __("Audits", 'glpiinventory'),
-         'file'            => __("Files", 'glpiinventory'),
-         'action'          => __("Actions", 'glpiinventory'),
-         'userinteraction' => __("User interactions", 'glpiinventory')
+            'check'           => __("Audits", 'glpiinventory'),
+            'file'            => __("Files", 'glpiinventory'),
+            'action'          => __("Actions", 'glpiinventory'),
+            'userinteraction' => __("User interactions", 'glpiinventory')
         ];
         $json_subtypes = [
-         'check'           => 'checks',
-         'file'            => 'associatedFiles',
-         'action'          => 'actions',
-         'userinteraction' => 'userinteractions'
+            'check'           => 'checks',
+            'file'            => 'associatedFiles',
+            'action'          => 'actions',
+            'userinteraction' => 'userinteractions'
         ];
 
         $rand  = mt_rand();
@@ -696,11 +697,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         if (
             in_array($item_type, [
-                                 'PluginGlpiinventoryDeployCheck',
-                                 'PluginGlpiinventoryDeployFile',
-                                 'PluginGlpiinventoryDeployAction',
-                                 'PluginGlpiinventoryDeployUserinteraction'
-                              ])
+                'PluginGlpiinventoryDeployCheck',
+                'PluginGlpiinventoryDeployFile',
+                'PluginGlpiinventoryDeployAction',
+                'PluginGlpiinventoryDeployUserinteraction'
+            ])
         ) {
             $class = new $item_type();
             switch ($action_type) {
@@ -733,8 +734,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $this->getFromDB($packages_id);
         if (empty($this->fields['uuid'])) {
             $input = [
-             'id'   => $this->fields['id'],
-             'uuid' => Rule::getUuid()
+                'id'   => $this->fields['id'],
+                'uuid' => Rule::getUuid()
             ];
             $this->update($input);
         }
@@ -745,11 +746,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $input = $this->fields;
         unset($input['id']);
         $a_xml = [
-          'package'    => $input,
-          'files'      => [],
-          'manifests'  => [],
-          'repository' => [],
-          'orders'     => [['json' => $this->fields['json']]],
+            'package'    => $input,
+            'files'      => [],
+            'manifests'  => [],
+            'repository' => [],
+            'orders'     => [['json' => $this->fields['json']]],
         ];
         $json = json_decode($this->fields['json'], true);
         $a_files = $json['associatedFiles'];
@@ -973,12 +974,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $json = json_encode($datas, $options);
 
         $json_error_consts = [
-         JSON_ERROR_NONE           => "JSON_ERROR_NONE",
-         JSON_ERROR_DEPTH          => "JSON_ERROR_DEPTH",
-         JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
-         JSON_ERROR_CTRL_CHAR      => "JSON_ERROR_CTRL_CHAR",
-         JSON_ERROR_SYNTAX         => "JSON_ERROR_SYNTAX",
-         JSON_ERROR_UTF8           => "JSON_ERROR_UTF8"
+            JSON_ERROR_NONE           => "JSON_ERROR_NONE",
+            JSON_ERROR_DEPTH          => "JSON_ERROR_DEPTH",
+            JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
+            JSON_ERROR_CTRL_CHAR      => "JSON_ERROR_CTRL_CHAR",
+            JSON_ERROR_SYNTAX         => "JSON_ERROR_SYNTAX",
+            JSON_ERROR_UTF8           => "JSON_ERROR_UTF8"
         ];
 
         $error_json = json_last_error();
@@ -998,8 +999,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         } else {
             $error = $pfDeployPackage->update(
                 [
-                'id'   => $packages_id,
-                'json' => Toolbox::addslashes_deep($json)
+                    'id'   => $packages_id,
+                    'json' => Toolbox::addslashes_deep($json)
                 ]
             );
         }
@@ -1132,7 +1133,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
             $addrand = Dropdown::showItemTypes('_type', $types);
             $params  = ['type'  => '__VALUE__',
-                          'right' => 'plugin_glpiinventory_selfpackage'];
+                'right' => 'plugin_glpiinventory_selfpackage'
+            ];
 
             Ajax::updateItemOnSelectEvent(
                 "dropdown__type" . $addrand,
@@ -1155,10 +1157,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $massiveactionparams
             = ['num_displayed'
                         => $nb,
-                    'container'
+                'container'
                         => 'mass' . __CLASS__ . $rand,
-                    'specific_actions'
-                         => ['delete' => _x('button', 'Delete permanently')] ];
+                'specific_actions'
+                         => ['delete' => _x('button', 'Delete permanently')]
+            ];
             Html::showMassiveActions($massiveactionparams);
         }
         echo "<table class='tab_cadre_fixehov'>";
@@ -1353,11 +1356,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public static function getPackageDeploymentStates()
     {
         return [
-              'agents_error'     => __('In error', 'glpiinventory'),
-              'agents_success'   => __('Successful', 'glpiinventory'),
-              'agents_running'   => __('Running', 'glpiinventory'),
-              'agents_prepared'  => __('Prepared', 'glpiinventory'),
-              'agents_cancelled' => __('Cancelled', 'glpiinventory')             ];
+            'agents_error'     => __('In error', 'glpiinventory'),
+            'agents_success'   => __('Successful', 'glpiinventory'),
+            'agents_running'   => __('Running', 'glpiinventory'),
+            'agents_prepared'  => __('Prepared', 'glpiinventory'),
+            'agents_cancelled' => __('Cancelled', 'glpiinventory')
+        ];
     }
 
 
@@ -1650,9 +1654,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 echo "&nbsp;";
                 if (!$self_service) {
                     $options = ['local'  => __("I'm on this computer: local wakeup", 'glpiinventory'),
-                           'remote' => __("I'm not on this computer: wakeup from the server", 'glpiinventory'),
-                           'none'   => __("Don't wakeup", 'glpiinventory')
-                        ];
+                        'remote' => __("I'm not on this computer: wakeup from the server", 'glpiinventory'),
+                        'none'   => __("Don't wakeup", 'glpiinventory')
+                    ];
                     Dropdown::showFromArray(
                         'wakeup_type',
                         $options,
@@ -1788,7 +1792,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     if (isset($computers[$comp_id])) {
                          $my_packages[$comp_id][$package['id']]
                          = ['name'     => $package['name'],
-                         'agent_id' => $agent->getId()];
+                             'agent_id' => $agent->getId()
+                         ];
 
                          //The package has already been deployed or requested to deploy
                          if (isset($packages_used[$comp_id][$package['id']])) {
@@ -1872,9 +1877,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     $enduser[$users_id] = [$computers_id];
                 }
                 $input = [
-                'id'      => $data['id'],
-                'actors'  => exportArrayToDB($actors),
-                'enduser' => exportArrayToDB($enduser)
+                    'id'      => $data['id'],
+                    'actors'  => exportArrayToDB($actors),
+                    'enduser' => exportArrayToDB($enduser)
                 ];
 
                 //Update the job with the new actor
@@ -1898,13 +1903,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             //Add a new job for the newly created task
             //and enable it
             $input = [
-            'plugin_glpiinventory_tasks_id' => $tasks_id,
-            'entities_id' => $computer->fields['entities_id'],
-            'name'        => 'deploy',
-            'method'      => 'deployinstall',
-            'targets'     => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
-            'actors'      => exportArrayToDB([['Computer' => $computers_id]]),
-            'enduser'     => exportArrayToDB([$users_id  => [$computers_id]]),
+                'plugin_glpiinventory_tasks_id' => $tasks_id,
+                'entities_id' => $computer->fields['entities_id'],
+                'name'        => 'deploy',
+                'method'      => 'deployinstall',
+                'targets'     => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
+                'actors'      => exportArrayToDB([['Computer' => $computers_id]]),
+                'enduser'     => exportArrayToDB([$users_id  => [$computers_id]]),
             ];
             $pfTaskJob->add($input);
         }
@@ -2008,7 +2013,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $last_job_state = [];
         $taskjobstates  = current($pfTaskJobState->find(
             ['plugin_glpiinventory_taskjobs_id' => $taskjobs_id,
-            'agents_id'   => $agents_id],
+                'agents_id'   => $agents_id
+            ],
             ['id DESC'],
             1
         ));

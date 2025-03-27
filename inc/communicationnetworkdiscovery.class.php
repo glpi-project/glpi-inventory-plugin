@@ -99,15 +99,15 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     $updated = countElementsInTable(
                         'glpi_plugin_glpiinventory_taskjoblogs',
                         [
-                        'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                        'comment' => ['LIKE', '%==updatetheitem==%'],
+                            'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                            'comment' => ['LIKE', '%==updatetheitem==%'],
                         ]
                     );
                      $created = countElementsInTable(
                          'glpi_plugin_glpiinventory_taskjoblogs',
                          [
-                         'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                         'comment' => ['LIKE', '%==addtheitem==%'],
+                             'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                             'comment' => ['LIKE', '%==addtheitem==%'],
                          ]
                      );
 

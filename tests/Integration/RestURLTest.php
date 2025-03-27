@@ -70,24 +70,24 @@ class RestURLTest extends TestCase
         $config   = new PluginGlpiinventoryConfig();
 
         $entityId = $entity->add([
-         'name'        => 'ent1',
-         'entities_id' => 0,
-         'comment'     => '',
-         'agent_base_url' => 'http://10.0.2.2/glpi085'
+            'name'        => 'ent1',
+            'entities_id' => 0,
+            'comment'     => '',
+            'agent_base_url' => 'http://10.0.2.2/glpi085'
         ]);
         $this->assertNotFalse($entityId);
 
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $input = [
-         'name'        => 'toto',
-         'entities_id' => $entityId,
-         'deviceid'   => 'toto-device',
-         'agenttypes_id' => $agenttype['id'],
-         'itemtype' => '',
-         'items_id' => 0,
-         'use_module_collect_data' => 1,
-         'use_module_package_deployment' => 1,
-         'use_module_esx_remote_inventory' => 1
+            'name'        => 'toto',
+            'entities_id' => $entityId,
+            'deviceid'   => 'toto-device',
+            'agenttypes_id' => $agenttype['id'],
+            'itemtype' => '',
+            'items_id' => 0,
+            'use_module_collect_data' => 1,
+            'use_module_package_deployment' => 1,
+            'use_module_esx_remote_inventory' => 1
         ];
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
@@ -96,8 +96,8 @@ class RestURLTest extends TestCase
 
         $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
         $input = [
-         'id'             => $entity->fields['id'],
-         'agent_base_url' => 'http://127.0.0.1/glpi085'
+            'id'             => $entity->fields['id'],
+            'agent_base_url' => 'http://127.0.0.1/glpi085'
         ];
         $ret = $entity->update($input);
         $this->assertTrue($ret);
@@ -127,17 +127,17 @@ class RestURLTest extends TestCase
 
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
-         'itemtype' => 'PluginGlpiinventoryCollect',
-         'agents_id' => $agent->fields['id']
+            'itemtype' => 'PluginGlpiinventoryCollect',
+            'agents_id' => $agent->fields['id']
         ];
         $ret = $pfTaskjobstate->add($input);
         $this->assertNotFalse($ret);
 
        // Get answer
         $input = [
-          'action'    => 'getConfig',
-          'task'      => ['COLLECT' => '1.0.0'],
-          'machineid' => 'toto-device'
+            'action'    => 'getConfig',
+            'task'      => ['COLLECT' => '1.0.0'],
+            'machineid' => 'toto-device'
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);
@@ -166,16 +166,16 @@ class RestURLTest extends TestCase
 
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
-         'itemtype' => 'PluginGlpiinventoryDeployPackage',
-         'agents_id' => $agent->fields['id']
+            'itemtype' => 'PluginGlpiinventoryDeployPackage',
+            'agents_id' => $agent->fields['id']
         ];
         $pfTaskjobstate->add($input);
 
        // Get answer
         $input = [
-          'action'    => 'getConfig',
-          'task'      => ['Deploy' => '1.0.0'],
-          'machineid' => 'toto-device'
+            'action'    => 'getConfig',
+            'task'      => ['Deploy' => '1.0.0'],
+            'machineid' => 'toto-device'
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);
@@ -204,16 +204,16 @@ class RestURLTest extends TestCase
 
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
-         'itemtype' => 'PluginGlpiinventoryCredentialIp',
-         'agents_id' => $agent->fields['id']
+            'itemtype' => 'PluginGlpiinventoryCredentialIp',
+            'agents_id' => $agent->fields['id']
         ];
         $pfTaskjobstate->add($input);
 
        // Get answer
         $input = [
-          'action'    => 'getConfig',
-          'task'      => ['ESX' => '1.0.0'],
-          'machineid' => 'toto-device'
+            'action'    => 'getConfig',
+            'task'      => ['ESX' => '1.0.0'],
+            'machineid' => 'toto-device'
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);
@@ -248,9 +248,9 @@ class RestURLTest extends TestCase
 
        // Get answer
         $input = [
-          'action'    => 'getConfig',
-          'task'      => ['COLLECT' => '1.0.0'],
-          'machineid' => 'toto-device'
+            'action'    => 'getConfig',
+            'task'      => ['COLLECT' => '1.0.0'],
+            'machineid' => 'toto-device'
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);

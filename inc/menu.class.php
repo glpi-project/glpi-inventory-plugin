@@ -108,20 +108,20 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $fi_rel_path  = Plugin::getWebDir('glpiinventory', false);
 
         $elements = [
-          'iprange'                    => 'PluginGlpiinventoryIPRange',
-          'config'                     => 'PluginGlpiinventoryConfig',
-          'task'                       => 'PluginGlpiinventoryTask',
-          'timeslot'                   => 'PluginGlpiinventoryTimeslot',
-          'unmanaged'                  => 'Unmanaged',
-          'configsecurity'             => 'SNMPCredential',
-          'credential'                 => 'PluginGlpiinventoryCredential',
-          'credentialip'               => 'PluginGlpiinventoryCredentialIp',
-          'collect'                    => 'PluginGlpiinventoryCollect',
-          'deploypackage'              => 'PluginGlpiinventoryDeployPackage',
-          'deploymirror'               => 'PluginGlpiinventoryDeployMirror',
-          'deploygroup'                => 'PluginGlpiinventoryDeployGroup',
-          'deployuserinteractiontemplate' => 'PluginGlpiinventoryDeployUserinteractionTemplate',
-          'ignoredimportdevice'        => 'RefusedEquipment'
+            'iprange'                    => 'PluginGlpiinventoryIPRange',
+            'config'                     => 'PluginGlpiinventoryConfig',
+            'task'                       => 'PluginGlpiinventoryTask',
+            'timeslot'                   => 'PluginGlpiinventoryTimeslot',
+            'unmanaged'                  => 'Unmanaged',
+            'configsecurity'             => 'SNMPCredential',
+            'credential'                 => 'PluginGlpiinventoryCredential',
+            'credentialip'               => 'PluginGlpiinventoryCredentialIp',
+            'collect'                    => 'PluginGlpiinventoryCollect',
+            'deploypackage'              => 'PluginGlpiinventoryDeployPackage',
+            'deploymirror'               => 'PluginGlpiinventoryDeployMirror',
+            'deploygroup'                => 'PluginGlpiinventoryDeployGroup',
+            'deployuserinteractiontemplate' => 'PluginGlpiinventoryDeployUserinteractionTemplate',
+            'ignoredimportdevice'        => 'RefusedEquipment'
         ];
         $options = [];
 
@@ -132,8 +132,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         }
         foreach ($elements as $type => $itemtype) {
             $options[$type] = [
-              'title' => $itemtype::getTypeName(),
-              'page'  => $itemtype::getSearchURL(false)];
+                'title' => $itemtype::getTypeName(),
+                'page'  => $itemtype::getSearchURL(false)
+            ];
             $options[$type]['links']['search'] = $itemtype::getSearchURL(false);
             if ($itemtype::canCreate()) {
                 if ($type != 'ignoredimportdevice') {
@@ -160,11 +161,12 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $options['deploypackage']['links'][$link] = '/' . $fi_rel_path . '/front/deployfile.clean.php';
 
         $options['agent'] = [
-           'title' => Agent::getTypeName(),
-           'page'  => Agent::getSearchURL(false),
-           'links' => [
-               'search' => Agent::getSearchURL(false)
-           ]];
+            'title' => Agent::getTypeName(),
+            'page'  => Agent::getSearchURL(false),
+            'links' => [
+                'search' => Agent::getSearchURL(false)
+            ]
+        ];
         if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
             $options['agent']['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
         }
@@ -226,9 +228,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (!empty($general_menu)) {
             $menu['general'] = [
-            'name'     => __('General', 'glpiinventory'),
-            'pic'     => "ti ti-settings",
-            'children' => $general_menu,
+                'name'     => __('General', 'glpiinventory'),
+                'pic'     => "ti ti-settings",
+                'children' => $general_menu,
             ];
         }
 
@@ -266,9 +268,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (!empty($tasks_menu)) {
             $menu['tasks'] = [
-            'name'     => __('Tasks', 'glpiinventory'),
-            'pic'     => "ti ti-list-check",
-            'children' => $tasks_menu,
+                'name'     => __('Tasks', 'glpiinventory'),
+                'pic'     => "ti ti-list-check",
+                'children' => $tasks_menu,
             ];
         }
 
@@ -305,9 +307,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (!empty($rules_menu)) {
             $menu['rules'] = [
-            'name'     => __('Rules', 'glpiinventory'),
-            'pic'     => "ti ti-book",
-            'children' => $rules_menu,
+                'name'     => __('Rules', 'glpiinventory'),
+                'pic'     => "ti ti-book",
+                'children' => $rules_menu,
             ];
         }
 
@@ -318,63 +320,63 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (Session::haveRight('plugin_glpiinventory_iprange', READ)) {
             $network_menu[] = [
-            'name' => __('IP Ranges', 'glpiinventory'),
-            'pic'  => "ti ti-viewfinder",
-            'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange')
+                'name' => __('IP Ranges', 'glpiinventory'),
+                'pic'  => "ti ti-viewfinder",
+                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange')
             ];
         }
 
         if (Session::haveRight('plugin_glpiinventory_credentialip', READ)) {
             $network_menu[] = [
-            'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
-            'pic'  => "ti ti-devices-pc",
-            'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredentialip')
+                'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
+                'pic'  => "ti ti-devices-pc",
+                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredentialip')
             ];
         }
 
         if (Session::haveRight('plugin_glpiinventory_configsecurity', READ)) {
             $network_menu[] = [
-            'name' => __('SNMP credentials', 'glpiinventory'),
-            'pic'  => "ti ti-lock",
-            'link' => SNMPCredential::getSearchURL()
+                'name' => __('SNMP credentials', 'glpiinventory'),
+                'pic'  => "ti ti-lock",
+                'link' => SNMPCredential::getSearchURL()
             ];
         }
 
         if (Session::haveRight('plugin_glpiinventory_credential', READ)) {
             $network_menu[] = [
-            'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
-            'pic'  => "ti ti-lock",
-            'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredential')
+                'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
+                'pic'  => "ti ti-lock",
+                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredential')
             ];
         }
 
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $network_menu[] = [
-            'name' => __('Discovery status', 'glpiinventory'),
-            'pic'  =>   "ti ti-activity",
-            'link' =>   $fi_path . "/front/statediscovery.php"
+                'name' => __('Discovery status', 'glpiinventory'),
+                'pic'  =>   "ti ti-activity",
+                'link' =>   $fi_path . "/front/statediscovery.php"
             ];
 
             $network_menu[] = [
-               'name' => __('Network inventory status', 'glpiinventory'),
-               'pic' =>    "ti ti-activity",
-               'link' =>   $fi_path . "/front/stateinventory.php",
+                'name' => __('Network inventory status', 'glpiinventory'),
+                'pic' =>    "ti ti-activity",
+                'link' =>   $fi_path . "/front/stateinventory.php",
             ];
         }
 
         if (Session::haveRight('plugin_glpiinventory_model', READ)) {
             $network_menu[] = [
-            'name' => __('SNMP models creation', 'glpiinventory'),
-            'pic'  => "ti ti-model",
-            'link' => $fi_path . "/front/constructmodel.php"
+                'name' => __('SNMP models creation', 'glpiinventory'),
+                'pic'  => "ti ti-model",
+                'link' => $fi_path . "/front/constructmodel.php"
             ];
         }
 
         if (!empty($network_menu)) {
             $menu['network'] = [
-            'name'     => __('Networking', 'glpiinventory'),
-            'pic'     => "ti ti-network",
-            'children' => $network_menu,
+                'name'     => __('Networking', 'glpiinventory'),
+                'pic'     => "ti ti-network",
+                'children' => $network_menu,
             ];
         }
 
@@ -385,9 +387,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (Session::haveRight('plugin_glpiinventory_package', READ)) {
             $deploy_menu[] = [
-            'name' => __('Package management', 'glpiinventory'),
-            'pic'  => "ti ti-package",
-            'link' => $fi_path . "/front/deploypackage.php"
+                'name' => __('Package management', 'glpiinventory'),
+                'pic'  => "ti ti-package",
+                'link' => $fi_path . "/front/deploypackage.php"
             ];
         }
 
@@ -410,9 +412,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         if (!empty($deploy_menu)) {
             $menu['deploy'] = [
-            'name'     => __('Deploy', 'glpiinventory'),
-            'pic'     => "ti ti-share",
-            'children' => $deploy_menu,
+                'name'     => __('Deploy', 'glpiinventory'),
+                'pic'     => "ti ti-share",
+                'children' => $deploy_menu,
             ];
         }
 
@@ -422,9 +424,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $guide_menu = [];
 
         $guide_menu[] = [
-         'name' => __('SNMP inventory', 'glpiinventory'),
-         'pic'  => "ti ti-book",
-         'link' => $fi_path . "/front/menu_snmpinventory.php"
+            'name' => __('SNMP inventory', 'glpiinventory'),
+            'pic'  => "ti ti-book",
+            'link' => $fi_path . "/front/menu_snmpinventory.php"
         ];
 
         $menu['guide'] = [
@@ -434,7 +436,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         ];
 
         TemplateRenderer::getInstance()->display('@glpiinventory/submenu.html.twig', [
-         'menu' => $menu,
+            'menu' => $menu,
         ]);
     }
 
@@ -457,48 +459,48 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         echo "</tr>";
 
         $a_steps = [
-          [
-              'text' => __('Configure SNMP credentials', 'glpiinventory'),
-              'url'  => SNMPCredential::getFormURL(),
-          ],
-          [
-              'text' => __('Define rules for import : merge and create new devices (CAUTION: same rules for computer inventory)', 'glpiinventory'),
-              'url'  => RuleImportAsset::getFormURL(),
-          ],
-          [
-              'text' => __('`Network Discovery`, used to discover the devices on the network', 'glpiinventory'),
-              'url'  => "",
-              'title' => true
-          ],
-          [
-              'text' => __('Define IP Ranges of your network + related SNMP credentials', 'glpiinventory'),
-              'url'  => $fi_path . "/front/iprange.php"
-          ],
-          [
-              'text' => __('Define an agent allowed to discover the network', 'glpiinventory'),
-              'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
-          ],
-          [
-              'text' => __('Create a new Task with discovery module and the agent defined previously', 'glpiinventory'),
-              'url'  => $fi_path . "/front/task.php"
-          ],
-          [
-              'text' => __('If you have devices not typed, import them from unmanaged devices', 'glpiinventory'),
-              'url'  => Unmanaged::getSearchURL()
-          ],
-          [
-              'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'glpiinventory'),
-              'url'  => "",
-              'title' => true
-          ],
-          [
-              'text' => __('Define an agent allowed to inventory the network by SNMP', 'glpiinventory'),
-              'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
-          ],
-          [
-              'text' => __('Create a new Task with network inventory module and the agent defined previously', 'glpiinventory'),
-              'url'  => $fi_path . "/front/task.php"
-          ],
+            [
+                'text' => __('Configure SNMP credentials', 'glpiinventory'),
+                'url'  => SNMPCredential::getFormURL(),
+            ],
+            [
+                'text' => __('Define rules for import : merge and create new devices (CAUTION: same rules for computer inventory)', 'glpiinventory'),
+                'url'  => RuleImportAsset::getFormURL(),
+            ],
+            [
+                'text' => __('`Network Discovery`, used to discover the devices on the network', 'glpiinventory'),
+                'url'  => "",
+                'title' => true
+            ],
+            [
+                'text' => __('Define IP Ranges of your network + related SNMP credentials', 'glpiinventory'),
+                'url'  => $fi_path . "/front/iprange.php"
+            ],
+            [
+                'text' => __('Define an agent allowed to discover the network', 'glpiinventory'),
+                'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
+            ],
+            [
+                'text' => __('Create a new Task with discovery module and the agent defined previously', 'glpiinventory'),
+                'url'  => $fi_path . "/front/task.php"
+            ],
+            [
+                'text' => __('If you have devices not typed, import them from unmanaged devices', 'glpiinventory'),
+                'url'  => Unmanaged::getSearchURL()
+            ],
+            [
+                'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'glpiinventory'),
+                'url'  => "",
+                'title' => true
+            ],
+            [
+                'text' => __('Define an agent allowed to inventory the network by SNMP', 'glpiinventory'),
+                'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
+            ],
+            [
+                'text' => __('Create a new Task with network inventory module and the agent defined previously', 'glpiinventory'),
+                'url'  => $fi_path . "/front/task.php"
+            ],
         ];
 
         $i = 1;

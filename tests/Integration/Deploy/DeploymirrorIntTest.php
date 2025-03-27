@@ -81,30 +81,30 @@ class DeploymirrorIntTest extends TestCase
         $entity   = new Entity();
 
         $entityAId = $entity->add([
-         'name'        => 'entity A',
-         'entities_id' => 0,
-         'comment'     => '',
-         'tag'         => 'entA',
-         'agent_base_url' => 'http://localhost:8080/glpi',
-         'transfers_id' => 0
+            'name'        => 'entity A',
+            'entities_id' => 0,
+            'comment'     => '',
+            'tag'         => 'entA',
+            'agent_base_url' => 'http://localhost:8080/glpi',
+            'transfers_id' => 0
         ]);
         $this->assertNotFalse($entityAId);
 
         $entityBId = $entity->add([
-         'name'        => 'entity B',
-         'entities_id' => 0,
-         'comment'     => '',
-         'tag'         => 'entB',
-         'agent_base_url' => 'http://localhost:8080/glpi',
-         'transfers_id' => 0
+            'name'        => 'entity B',
+            'entities_id' => 0,
+            'comment'     => '',
+            'tag'         => 'entB',
+            'agent_base_url' => 'http://localhost:8080/glpi',
+            'transfers_id' => 0
         ]);
         $this->assertNotFalse($entityBId);
 
         $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
         $input = [
-         'id' => 0,
-         'agent_base_url' => 'http://localhost:8080/glpi',
-         'transfers_id_auto' => 0
+            'id' => 0,
+            'agent_base_url' => 'http://localhost:8080/glpi',
+            'transfers_id_auto' => 0
         ];
         $ret = $entity->update($input);
         $this->assertNotFalse($ret);
@@ -117,9 +117,9 @@ class DeploymirrorIntTest extends TestCase
         $ret = $location->getFromDBByCrit(['name' => 'MyLocation']);
         if (!$ret) {
             $locations_id = $location->add([
-            'name'         => 'MyLocation',
-            'entities_id'  => 0,
-            'is_recursive' => 1
+                'name'         => 'MyLocation',
+                'entities_id'  => 0,
+                'is_recursive' => 1
             ]);
             $this->assertNotFalse($locations_id);
         } else {
@@ -130,13 +130,13 @@ class DeploymirrorIntTest extends TestCase
 
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $input = [
-         'name'         => 'Mirror Location',
-         'comment'      => 'MyComment',
-         'url'          => 'http://localhost:8085/mirror',
-         'entities_id'  => 0,
-         'locations_id' => $locations_id,
-         'is_active'    => 0,
-         'is_recursive' => 1
+            'name'         => 'Mirror Location',
+            'comment'      => 'MyComment',
+            'url'          => 'http://localhost:8085/mirror',
+            'entities_id'  => 0,
+            'locations_id' => $locations_id,
+            'is_active'    => 0,
+            'is_recursive' => 1
         ];
         $mirrors_locations_id = $pfDeploymirror->add($input);
         $this->assertNotFalse($mirrors_locations_id);
@@ -144,12 +144,12 @@ class DeploymirrorIntTest extends TestCase
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $entity->getFromDBByCrit(['name' => 'entity A']);
         $input = [
-         'name'         => 'Mirror Entity A',
-         'comment'      => 'MyComment',
-         'url'          => 'http://localhost:8088/mirror',
-         'entities_id'  => $entity->fields['id'],
-         'locations_id' => $locations_id,
-         'is_active'    => 1
+            'name'         => 'Mirror Entity A',
+            'comment'      => 'MyComment',
+            'url'          => 'http://localhost:8088/mirror',
+            'entities_id'  => $entity->fields['id'],
+            'locations_id' => $locations_id,
+            'is_active'    => 1
         ];
         $mirrors2_id = $pfDeploymirror->add($input);
         $this->assertNotFalse($mirrors2_id);
@@ -158,57 +158,57 @@ class DeploymirrorIntTest extends TestCase
         $agent    = new Agent();
 
         $computerRootId = $computer->add([
-         'name'         => 'computer root',
-         'serial'       => 'abcd',
-         'entities_id'  => 0,
-         'is_recursive' => 0,
+            'name'         => 'computer root',
+            'serial'       => 'abcd',
+            'entities_id'  => 0,
+            'is_recursive' => 0,
         ]);
         $this->assertNotFalse($computerRootId);
 
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $agentRootId = $agent->add([
-         'name'         => 'computer-root',
-         'itemtype' => Computer::getType(),
-         'items_id' => $computerRootId,
-         'entities_id'  => 0,
-         'agenttypes_id' => $agenttype['id'],
-         'deviceid' => 'computer-root'
+            'name'         => 'computer-root',
+            'itemtype' => Computer::getType(),
+            'items_id' => $computerRootId,
+            'entities_id'  => 0,
+            'agenttypes_id' => $agenttype['id'],
+            'deviceid' => 'computer-root'
         ]);
         $this->assertNotFalse($agentRootId);
 
         $computerEntAId = $computer->add([
-         'name'         => 'computer EntityA',
-         'serial'       => 'abce',
-         'entities_id'  => $entityAId,
-         'is_recursive' => 0,
-         'locations_id' => $locations_id
+            'name'         => 'computer EntityA',
+            'serial'       => 'abce',
+            'entities_id'  => $entityAId,
+            'is_recursive' => 0,
+            'locations_id' => $locations_id
         ]);
         $this->assertNotFalse($computerEntAId);
         $agentEntAId = $agent->add([
-         'name'         => 'computer-EntityA',
-         'itemtype' => Computer::getType(),
-         'items_id' => $computerEntAId,
-         'entities_id'  => $entityAId,
-         'agenttypes_id' => $agenttype['id'],
-         'deviceid' => 'computer-EntityA'
+            'name'         => 'computer-EntityA',
+            'itemtype' => Computer::getType(),
+            'items_id' => $computerEntAId,
+            'entities_id'  => $entityAId,
+            'agenttypes_id' => $agenttype['id'],
+            'deviceid' => 'computer-EntityA'
         ]);
         $this->assertNotFalse($agentEntAId);
 
         $computerEntBId = $computer->add([
-         'name'         => 'computer EntityB',
-         'serial'       => 'abcf',
-         'entities_id'  => $entityBId,
-         'is_recursive' => 0,
-         'locations_id' => $locations_id
+            'name'         => 'computer EntityB',
+            'serial'       => 'abcf',
+            'entities_id'  => $entityBId,
+            'is_recursive' => 0,
+            'locations_id' => $locations_id
         ]);
         $this->assertNotFalse($computerEntBId);
         $agentEntBId = $agent->add([
-         'name'         => 'computer-EntityB',
-         'itemtype' => Computer::getType(),
-         'items_id' => $computerEntBId,
-         'entities_id'  => $entityBId,
-         'agenttypes_id' => $agenttype['id'],
-         'deviceid' => 'computer-EntityB'
+            'name'         => 'computer-EntityB',
+            'itemtype' => Computer::getType(),
+            'items_id' => $computerEntBId,
+            'entities_id'  => $entityBId,
+            'agenttypes_id' => $agenttype['id'],
+            'deviceid' => 'computer-EntityB'
         ]);
         $this->assertNotFalse($agentEntBId);
     }
@@ -247,8 +247,8 @@ class DeploymirrorIntTest extends TestCase
         $pfDeploymirror->getFromDBByCrit(['name' => 'Mirror Location']);
 
         $input = [
-         'id'        => $pfDeploymirror->fields['id'],
-         'is_active' => 1
+            'id'        => $pfDeploymirror->fields['id'],
+            'is_active' => 1
         ];
         $ret = $pfDeploymirror->update($input);
         $this->assertNotFalse($ret);
@@ -258,7 +258,7 @@ class DeploymirrorIntTest extends TestCase
 
         $mirrors = PluginGlpiinventoryDeployMirror::getList($agent->fields['id']);
         $result = [
-         0 => $this->serverUrl
+            0 => $this->serverUrl
         ];
         $this->assertEquals($result, $mirrors);
     }
@@ -276,8 +276,8 @@ class DeploymirrorIntTest extends TestCase
         $location->getFromDBByCrit(['name' => 'MyLocation']);
 
         $ret = $computer->update([
-         'id'           => $computer->fields['id'],
-         'locations_id' => $location->fields['id']
+            'id'           => $computer->fields['id'],
+            'locations_id' => $location->fields['id']
         ]);
         $this->assertNotFalse($ret);
 
@@ -287,8 +287,8 @@ class DeploymirrorIntTest extends TestCase
 
         $mirrors = PluginGlpiinventoryDeployMirror::getList($agent->fields['id']);
         $result  = [
-         0 => "http://localhost:8085/mirror",
-         1 => $this->serverUrl
+            0 => "http://localhost:8085/mirror",
+            1 => $this->serverUrl
         ];
         $this->assertEquals($result, $mirrors);
     }
@@ -304,9 +304,9 @@ class DeploymirrorIntTest extends TestCase
 
         $mirrors = PluginGlpiinventoryDeployMirror::getList($agent->fields['id']);
         $result  = [
-         0 => "http://localhost:8088/mirror",
-         1 => "http://localhost:8085/mirror",
-         2 => $this->serverUrl
+            0 => "http://localhost:8088/mirror",
+            1 => "http://localhost:8085/mirror",
+            2 => $this->serverUrl
         ];
         $this->assertEquals($result, $mirrors);
     }
@@ -324,8 +324,8 @@ class DeploymirrorIntTest extends TestCase
         $mirrors = PluginGlpiinventoryDeployMirror::getList($agent->fields['id']);
 
         $result  = [
-         0 => "http://localhost:8085/mirror",
-         1 => $this->serverUrl
+            0 => "http://localhost:8085/mirror",
+            1 => $this->serverUrl
         ];
         $this->assertEquals($result, $mirrors);
     }
@@ -345,16 +345,16 @@ class DeploymirrorIntTest extends TestCase
 
         $computer->getFromDBByCrit(['name' => 'computer root']);
         $computer->update([
-         'id'           => $computer->fields['id'],
-         'locations_id' => 0
+            'id'           => $computer->fields['id'],
+            'locations_id' => 0
         ]);
 
         $agent->getFromDBByCrit(['name' => 'computer-root']);
 
         $mirrors = PluginGlpiinventoryDeployMirror::getList($agent->fields['id']);
         $result  = [
-         0 => 'http://localhost:8085/mirror',
-         1 => $this->serverUrl
+            0 => 'http://localhost:8085/mirror',
+            1 => $this->serverUrl
         ];
         $this->assertEquals($result, $mirrors);
     }
@@ -374,17 +374,17 @@ class DeploymirrorIntTest extends TestCase
 
         $computer->getFromDBByCrit(['name' => 'computer EntityA']);
         $computer->update([
-         'id'           => $computer->fields['id'],
-         'locations_id' => 0
+            'id'           => $computer->fields['id'],
+            'locations_id' => 0
         ]);
 
         $agent->getFromDBByCrit(['name' => 'computer-EntityA']);
 
         $mirrors = PluginGlpiinventoryDeployMirror::getList($agent->fields['id']);
         $result  = [
-         0 => "http://localhost:8088/mirror",
-         1 => "http://localhost:8085/mirror",
-         2 => $this->serverUrl
+            0 => "http://localhost:8088/mirror",
+            1 => "http://localhost:8085/mirror",
+            2 => $this->serverUrl
         ];
         $this->assertEquals($result, $mirrors);
     }
@@ -404,16 +404,16 @@ class DeploymirrorIntTest extends TestCase
 
         $computer->getFromDBByCrit(['name' => 'computer EntityB']);
         $computer->update([
-         'id'           => $computer->fields['id'],
-         'locations_id' => 0
+            'id'           => $computer->fields['id'],
+            'locations_id' => 0
         ]);
 
         $agent->getFromDBByCrit(['name' => 'computer-EntityB']);
 
         $mirrors = PluginGlpiinventoryDeployMirror::getList($agent->fields['id']);
         $result  = [
-         0 => "http://localhost:8085/mirror",
-         1 => $this->serverUrl
+            0 => "http://localhost:8085/mirror",
+            1 => $this->serverUrl
         ];
         $this->assertEquals($result, $mirrors);
     }

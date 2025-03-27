@@ -254,8 +254,8 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     public function post_addItem()
     {
         $options = [
-         'id'              => $this->getField('id'),
-         'date_creation'   => date("Y-m-d H:i:s")
+            'id'              => $this->getField('id'),
+            'date_creation'   => date("Y-m-d H:i:s")
         ];
         $this->update($options);
     }

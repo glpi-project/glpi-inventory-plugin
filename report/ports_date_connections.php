@@ -170,7 +170,8 @@ function displaySearchForm()
     Html::showDateField(
         "dropdown_calendar",
         ['value' => (isset($_GET["dropdown_calendar"])
-        ? $_GET["dropdown_calendar"] : 0)]
+        ? $_GET["dropdown_calendar"] : 0)
+        ]
     );
     echo "</td>";
 
@@ -179,7 +180,8 @@ function displaySearchForm()
     Dropdown::show(
         "Location",
         ['name' => "location",
-        'value' => (isset($_GET["location"]) ? $_GET["location"] : "")]
+            'value' => (isset($_GET["location"]) ? $_GET["location"] : "")
+        ]
     );
     echo "</td>";
 

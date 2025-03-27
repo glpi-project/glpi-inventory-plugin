@@ -43,7 +43,8 @@ if (isset($_GET['plugin_glpiinventory_deploygroups_id'])) {
 if (isset($_GET['save'])) {
     $group_item = new PluginGlpiinventoryDeployGroup_Dynamicdata();
     $criteria = ['criteria'     =>  isset($_GET['criteria']) ? $_GET['criteria'] : [],
-                 'metacriteria' => isset($_GET['metacriteria']) ? $_GET['metacriteria'] : []];
+        'metacriteria' => isset($_GET['metacriteria']) ? $_GET['metacriteria'] : []
+    ];
     if (
         !countElementsInTable(
             $group_item->getTable(),
