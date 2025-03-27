@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
 
 /**
  * The main function to update the plugin
@@ -109,7 +110,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     if ($old_agent_id == $new_agent_id) {
                         continue;
                     }
-                    $DB->doQueryOrDie(
+                    $DB->doQuery(
                         $DB->buildUpdate(
                             $agent_table,
                             [
@@ -138,7 +139,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 }
                 $new_agent_ids[] = $agents_mapping[$old_agent_id];
             }
-            $DB->doQueryOrDie(
+            $DB->doQuery(
                 $DB->buildUpdate(
                     'glpi_plugin_glpiinventory_agentmodules',
                     [
@@ -203,7 +204,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     continue;
                 }
                 foreach ($cs_mapping as $old_cs_id => $new_cs_id) {
-                    $DB->doQueryOrDie(
+                    $DB->doQuery(
                         $DB->buildUpdate(
                             $cs_table,
                             [
@@ -244,7 +245,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core network ports");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkports')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_networkports` AS `ports`
             INNER JOIN (
               SELECT
@@ -291,7 +292,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core computers");
     if ($DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_computers` AS `computers`
             INNER JOIN (
               SELECT
@@ -304,7 +305,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
           WHERE `computers`.`last_inventory_update` IS NULL;"
         );
 
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_computers` AS `computers`
             INNER JOIN (
               SELECT
@@ -318,7 +319,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
           ;"
         );
 
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_agents` AS `agents`
             INNER JOIN (
               SELECT
@@ -337,7 +338,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core network equipments");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkequipments')) {
         // agents and snmp credentials must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_networkequipments` AS `neteq`
             INNER JOIN (
               SELECT
@@ -363,7 +364,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core printers");
     if ($DB->tableExists('glpi_plugin_glpiinventory_printers')) {
         // agents and snmp credentials must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_printers` AS `printers`
             INNER JOIN (
               SELECT
@@ -385,7 +386,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core printer logs");
     if ($DB->tableExists('glpi_plugin_glpiinventory_printerlogs')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_printerlogs` (
                 `printers_id`,
                 `date`,
@@ -430,7 +431,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core networkports logs");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkportconnectionlogs')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_networkportconnectionlogs` (
                 `date`,
                 `connected`,
@@ -449,7 +450,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core network ports types");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkporttypes')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_networkporttypes` AS `types`
             INNER JOIN (
               SELECT
@@ -584,7 +585,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     if ($DB->tableExists('glpi_plugin_glpiinventory_rulematchedlogs')) {
         // agents must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_rulematchedlogs` (
                `date`,
                `items_id`,
@@ -608,7 +609,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core remote management");
     if ($DB->tableExists('glpi_plugin_glpiinventory_computerremotemanagements')) {
         // agents must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_items_remotemanagements` (
                 `itemtype`,
                 `items_id`,
@@ -664,7 +665,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core entities");
     if ($DB->tableExists('glpi_plugin_glpiinventory_entities')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_entities` AS `entities`
             INNER JOIN (
               SELECT
@@ -816,7 +817,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 }
             }
 
-            $DB->doQueryOrDie(
+            $DB->doQuery(
                 $DB->buildUpdate(
                     'glpi_plugin_glpiinventory_taskjobs',
                     [
@@ -861,7 +862,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         }
     }
 
-    $DB->doQueryOrDie(
+    $DB->doQuery(
         $DB->buildDelete(
             'glpi_plugin_glpiinventory_agentmodules',
             [
@@ -870,7 +871,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         )
     );
 
-    $DB->doQueryOrDie(
+    $DB->doQuery(
         $DB->buildDelete(
             'glpi_displaypreferences',
             [
