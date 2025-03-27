@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
 
+use Glpi\DBAL\QueryExpression;
+
 /**
  * Manage the task jobs.
  */
@@ -658,7 +660,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             'COUNT' => 'cpt',
             'FROM' => 'glpi_plugin_glpiinventory_taskjobstates',
             'WHERE' => [
-                new \QueryExpression('plugin_glpiinventory_taskjobs_id = glpi_plugin_glpiinventory_taskjobs.id'),
+                new QueryExpression('plugin_glpiinventory_taskjobs_id = glpi_plugin_glpiinventory_taskjobs.id'),
                 'state' => ['<', 3]
             ]
         ]);
@@ -666,7 +668,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             'FROM' => 'glpi_plugin_glpiinventory_taskjobs',
             'WHERE' => [
                 'status' => 1,
-                new \QueryExpression($sub_query->getQuery() . ' = 0')
+                new QueryExpression($sub_query->getQuery() . ' = 0')
             ]
         ]);
 

@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
 use PHPUnit\Framework\TestCase;
 
 class CronTaskTest extends TestCase

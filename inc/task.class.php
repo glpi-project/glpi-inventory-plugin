@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
 
+use Glpi\DBAL\QueryExpression;
+
 /**
  * Manage the task system.
  */
@@ -1232,7 +1234,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         'log.date AS log_last_date',
                         'log.comment AS log_last_comment',
                         'log.plugin_glpiinventory_taskjobstates_id AS run_id',
-                        new \QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp'))
+                        new QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp'))
                     ],
                     'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs AS log',
                     'WHERE' => [
