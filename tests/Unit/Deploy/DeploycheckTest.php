@@ -35,9 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeploycheckTest extends TestCase
 {
-   /**
-    * @test
-    */
     public function testGetTypes()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -50,9 +47,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function getGetLabelForAType()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -69,9 +63,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetUnitLabel()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -85,9 +76,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetAuditDescription()
     {
         $check       = new PluginGlpiinventoryDeployCheck();
@@ -105,9 +93,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetUnitSize()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -118,9 +103,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetRegistryTypes()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -139,9 +121,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetValues()
     {
         $check    = new PluginGlpiinventoryDeployCheck();
@@ -209,9 +188,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
     public function testGetLabelsAndTypes()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -430,9 +406,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testGetAllReturnValues()
     {
         $check  = new PluginGlpiinventoryDeployCheck();
@@ -447,9 +420,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testGetValueForReturn()
     {
         $check = new PluginGlpiinventoryDeployCheck();
@@ -463,9 +433,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testAdd_item()
     {
         $check           = new PluginGlpiinventoryDeployCheck();
@@ -485,7 +452,7 @@ class DeploycheckTest extends TestCase
         ];
         $check->add_item($params);
         $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
+        $json     = $check->getJson($packages_id);
         $this->assertEquals($expected, $json);
 
         $params = ['id'                 => $packages_id,
@@ -498,7 +465,7 @@ class DeploycheckTest extends TestCase
         ];
         $check->add_item($params);
         $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
+        $json     = $check->getJson($packages_id);
         $this->assertEquals($expected, $json);
 
         $params = ['id'                 => $packages_id,
@@ -511,7 +478,7 @@ class DeploycheckTest extends TestCase
         ];
         $check->add_item($params);
         $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
+        $json     = $check->getJson($packages_id);
         $this->assertEquals($expected, $json);
 
        //Test that 5,5 is converted in 5.5 before computing the value in byte
@@ -525,7 +492,7 @@ class DeploycheckTest extends TestCase
         ];
         $check->add_item($params);
         $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"More than 5.5 Gb  #2","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
+        $json     = $check->getJson($packages_id);
         $this->assertEquals($expected, $json);
 
        //Test that a float value like 9.20 is not converted in 9.2
@@ -539,14 +506,11 @@ class DeploycheckTest extends TestCase
         ];
         $check->add_item($params);
         $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"More than 5.5 Gb  #2","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"Test with float","type":"winkeyEquals","path":"HKEY_LOCAL_MACHINE\SOFTWARE\FusionInventory-Agent\debug","value":"9.20","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
+        $json     = $check->getJson($packages_id);
         $this->assertEquals($expected, $json);
     }
 
 
-   /**
-   * @test
-   */
     public function testSave_item()
     {
         $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
@@ -569,14 +533,11 @@ class DeploycheckTest extends TestCase
         ];
         $check->save_item($params);
         $expected = '{"jobs":{"checks":[{"name":"Value type is REG_SZ","type":"winvalueType","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":"REG_SZ","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-        $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
+        $json     = $check->getJson($packages_id);
         $this->assertEquals($expected, $json);
     }
 
 
-   /**
-   * @test
-   */
     public function testRemove_item()
     {
         $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
@@ -605,9 +566,6 @@ class DeploycheckTest extends TestCase
     }
 
 
-   /**
-   * @test
-   */
     public function testMove_item()
     {
         $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
