@@ -74,7 +74,7 @@ function plugin_glpiinventory_script_endswith($scriptname)
 {
     //append plugin directory to avoid dumb errors...
     $requested = 'glpiinventory/front/' . $scriptname;
-    $current = parse_url($_SERVER['REQUEST_URI'])['path'];
+    $current = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'];
 
     return str_ends_with($current, $requested);
 }
@@ -92,7 +92,7 @@ function plugin_init_glpiinventory()
 
     $PLUGIN_HOOKS[Hooks::CSRF_COMPLIANT]['glpiinventory'] = true;
 
-    $current_url = parse_url($_SERVER['REQUEST_URI'])['path'];
+    $current_url = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'];
 
     $Plugin = new Plugin();
 
