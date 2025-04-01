@@ -346,14 +346,10 @@ function plugin_glpiinventory_install()
 {
     ini_set("max_execution_time", "0");
 
-    if (basename($_SERVER['SCRIPT_NAME']) != "cli_install.php") {
-        if (!isCommandLine()) {
-            Html::header(__('Setup', 'glpiinventory'), $_SERVER['PHP_SELF'], "config", "plugins");
-        }
-        $migrationname = 'Migration';
-    } else {
-        $migrationname = 'CliMigration';
+    if (!isCommandLine()) {
+        Html::header(__('Setup', 'glpiinventory'), $_SERVER['PHP_SELF'], "config", "plugins");
     }
+    $migrationname = 'Migration';
 
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.php");
     $version_detected = pluginGlpiinventoryGetCurrentVersion();
