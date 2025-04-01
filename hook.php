@@ -299,7 +299,6 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
 }
 
 
-
 /**
  * Manage search options values
  *
