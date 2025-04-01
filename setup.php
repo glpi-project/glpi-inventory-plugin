@@ -95,7 +95,6 @@ function plugin_init_glpiinventory()
     $current_url = parse_url($_SERVER['REQUEST_URI'])['path'];
 
     $Plugin = new Plugin();
-    $moduleId = 0;
 
     $debug_mode = false;
     if (isset($_SESSION['glpi_use_mode'])) {
@@ -205,7 +204,6 @@ function plugin_init_glpiinventory()
         // ##### 3. get informations of the plugin #####
 
         $Plugin->getFromDBbyDir('glpiinventory');
-        $moduleId = $Plugin->fields['id'];
 
         // Load config
         PluginGlpiinventoryConfig::loadCache();
@@ -387,7 +385,6 @@ function plugin_init_glpiinventory()
         }
     } else { // plugin not active, need $moduleId for uninstall check
         include_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/module.class.php');
-        $moduleId = PluginGlpiinventoryModule::getModuleId('glpiinventory');
     }
 
    // exclude some pages from splitted layout
