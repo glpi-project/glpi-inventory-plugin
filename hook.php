@@ -195,6 +195,44 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
 
 
 /**
+ * Manage search options values
+ *
+ * @global object $DB
+ * @param object $item
+ * @return boolean
+ */
+function plugin_glpiinventory_searchOptionsValues($item)
+{
+    global $DB;
+
+    if (
+        $item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjoblogs'
+           and $item['searchoption']['field'] == 'state'
+    ) {
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $elements = $pfTaskjoblog->dropdownStateValues();
+        Dropdown::showFromArray($item['name'], $elements, ['value' => $item['value']]);
+        return true;
+    } elseif (
+        $item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjobstates'
+           and $item['searchoption']['field'] == 'uniqid'
+    ) {
+        $elements = [];
+        $iterator = $DB->request([
+            'FROM'      => $item['searchoption']['table'],
+            'GROUPBY'   => 'uniqid',
+            'ORDER'     => 'uniqid'
+        ]);
+        foreach ($iterator as $data) {
+            $elements[$data['uniqid']] = $data['uniqid'];
+        }
+        Dropdown::showFromArray($item['name'], $elements, ['value' => $item['value']]);
+        return true;
+    }
+}
+
+
+/**
  * Manage the installation process
  *
  * @return boolean
