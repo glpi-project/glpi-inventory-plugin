@@ -338,37 +338,6 @@ function plugin_glpiinventory_searchOptionsValues($item)
 
 
 /**
- * Define Dropdown tables to be manage in GLPI
- *
- * @return array
- */
-function plugin_glpiinventory_getDropdown()
-{
-    return [];
-}
-
-
-/**
- * Manage GLPI cron
- *
- * @return integer
- */
-function cron_plugin_glpiinventory()
-{
-   //   TODO :Disable for the moment (may be check if functions is good or not
-   //   $ptud = new PluginGlpiinventoryUnmanaged;
-   //   $ptud->cleanOrphelinsConnections();
-   //   $ptud->FusionUnknownKnownDevice();
-   //   TODO : regarder les 2 lignes juste en dessous !!!!!
-   //   #Clean server script processes history
-   //   $pfisnmph = new PluginGlpiinventoryNetworkPortLog;
-   //   $pfisnmph->cronCleanHistory();
-
-    return 1;
-}
-
-
-/**
  * Manage the installation process
  *
  * @return boolean
