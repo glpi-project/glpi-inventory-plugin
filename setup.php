@@ -335,26 +335,6 @@ function plugin_init_glpiinventory()
 
         if (isset($_SESSION["glpiname"])) {
            /*
-           $report_list = [];
-           if (Session::haveRight('plugin_glpiinventory_reportprinter', READ)) {
-            $report_list["front/printerlogreport.php"] = __('Printed page counter', 'glpiinventory');
-
-           }
-           if (Session::haveRight('plugin_glpiinventory_reportnetworkequipment', READ)) {
-            $report_list["report/switch_ports.history.php"] = __('Switch ports history', 'glpiinventory');
-
-            $report_list["report/ports_date_connections.php"] = __('Unused switch ports', 'glpiinventory');
-
-            $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory', 'glpiinventory');
-
-           }
-           if (Session::haveRight('computer', READ)) {
-            $report_list["report/computer_last_inventory.php"] = __('Computers not inventoried since xx days', 'glpiinventory');
-           }
-           $PLUGIN_HOOKS['reports']['glpiinventory'] = $report_list;
-           */
-
-           /*
             * Deploy submenu entries
             */
 
