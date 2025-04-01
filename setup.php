@@ -73,10 +73,10 @@ define(
 function plugin_glpiinventory_script_endswith($scriptname)
 {
     //append plugin directory to avoid dumb errors...
-    $scriptname = 'glpiinventory/front/' . $scriptname;
-    $script_name = $_SERVER['SCRIPT_NAME'];
+    $requested = 'glpiinventory/front/' . $scriptname;
+    $current = parse_url($_SERVER['REQUEST_URI'])['path'];
 
-    return substr($script_name, -strlen($scriptname)) === $scriptname;
+    return str_ends_with($current, $requested);
 }
 
 
@@ -91,6 +91,8 @@ function plugin_init_glpiinventory()
     global $PLUGIN_HOOKS, $CFG_GLPI, $PF_CONFIG;
 
     $PLUGIN_HOOKS['csrf_compliant']['glpiinventory'] = true;
+
+    $current_url = parse_url($_SERVER['REQUEST_URI'])['path'];
 
     $Plugin = new Plugin();
     $moduleId = 0;
@@ -239,9 +241,9 @@ function plugin_init_glpiinventory()
         $PLUGIN_HOOKS['add_javascript']['glpiinventory'] = [];
         $PLUGIN_HOOKS['add_css']['glpiinventory'] = [];
         if (
-            strpos($_SERVER['SCRIPT_NAME'], Plugin::getWebDir('glpiinventory', false)) != false
-            || strpos($_SERVER['SCRIPT_NAME'], "front/printer.form.php") != false
-            || strpos($_SERVER['SCRIPT_NAME'], "front/computer.form.php") != false
+            str_contains($current_url, 'plugins/glpiinventory')
+            || str_ends_with($current_url, "front/printer.form.php")
+            || str_ends_with($current_url, "front/computer.form.php")
         ) {
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/views.css";
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/deploy.css";
@@ -329,7 +331,7 @@ function plugin_init_glpiinventory()
         }
 
        // load task view css for computer self deploy (tech)
-        if (strpos($_SERVER['SCRIPT_NAME'], "front/computer.form.php") != false) {
+        if (str_ends_with($current_url, "front/computer.form.php")) {
             $PLUGIN_HOOKS['add_css']['glpiinventory'][] = "css/views.css";
         }
 
@@ -364,8 +366,8 @@ function plugin_init_glpiinventory()
 
            // Load nvd3 for printerpage counter graph
             if (
-                strstr($_SERVER['SCRIPT_NAME'], '/front/printer.form.php')
-                 || strstr($_SERVER['SCRIPT_NAME'], 'glpiinventory/front/menu.php')
+                str_ends_with($current_url, '/front/printer.form.php')
+                 || str_ends_with($current_url, 'glpiinventory/front/menu.php')
             ) {
                // Add graph javascript
                 $PLUGIN_HOOKS['add_javascript']['glpiinventory'] = array_merge(
