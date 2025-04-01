@@ -358,10 +358,6 @@ function plugin_init_glpiinventory()
             * Deploy submenu entries
             */
 
-            if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {// Config page
-                $PLUGIN_HOOKS['submenu_entry']['glpiinventory']['config'] = 'front/config.form.php';
-            }
-
            // Load nvd3 for printerpage counter graph
             if (
                 str_ends_with($current_url, '/front/printer.form.php')
