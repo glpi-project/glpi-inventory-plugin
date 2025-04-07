@@ -180,9 +180,12 @@ taskjobs.show_moduletypes = function(ajax_url, moduletype) {
 
 taskjobs.show_moduleitems = function(ajax_url, moduletype, itemtype) {
    taskjobs.hide_moduleitems_dropdown();
+   const queryString = window.location.search;
+   const urlParams = new URLSearchParams(queryString);
    $.ajax({
       url: ajax_url,
       data: {
+         "taskid" : (typeof urlParams.get('id') !== null ? urlParams.get('id') : 0),
          "itemtype" : itemtype,
          "moduletype" : moduletype,
          "method" : $('#method_selected').text()
