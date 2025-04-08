@@ -55,7 +55,7 @@ switch (filter_input(INPUT_GET, "action")) {
             $pfTaskjob      = new PluginGlpiinventoryTaskjob();
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-            if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep($machineid)])) {
+            if ($agent->getFromDBByCrit(['deviceid' => $machineid])) {
                 $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                     $agent->fields['id'],
                     ['deployinstall']
@@ -184,15 +184,6 @@ switch (filter_input(INPUT_GET, "action")) {
 
             $tmp_msg = implode("\n", $params['msg']);
             $flags   = null;
-            $tmp_msg =
-            stripcslashes(
-                htmlspecialchars(
-                    $tmp_msg,
-                    $htmlspecialchars_flags,
-                    'UTF-8',
-                    false
-                )
-            );
             $params['msg'] = nl2br($tmp_msg);
         }
 
