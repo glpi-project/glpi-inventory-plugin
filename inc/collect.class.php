@@ -876,6 +876,12 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $items = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
         foreach ($items as $item) {
             $pfCollect_Registry->delete(['id' => $item['id']], true);
+            // Delete all registry content
+            $pfCollect_Registry_Content = new PluginGlpiinventoryCollect_Registry_Content();
+            $subitems = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $item['id']]);
+            foreach ($subitems as $subitem) {
+                $pfCollect_Registry_Content->delete(['id' => $subitem['id']], true);
+            }
         }
 
         // Delete all WMI
@@ -883,6 +889,13 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $items = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
         foreach ($items as $item) {
             $pfCollect_Wmi->delete(['id' => $item['id']], true);
+            // Delete all WMI content
+            $pfCollect_Wmi_Content = new PluginGlpiinventoryCollect_Wmi_Content();
+            $subitems = $pfCollect_Wmi_Content->find(['plugin_glpiinventory_collects_wmis_id' => $item['id']]);
+            foreach ($subitems as $subitem) {
+                $dt = $pfCollect_Wmi_Content->delete(['id' => $subitem['id']], true);
+                echo 't';
+            }
         }
 
         // Delete all File
@@ -890,7 +903,14 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $items = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
         foreach ($items as $item) {
             $pfCollect_File->delete(['id' => $item['id']], true);
+            // Delete all File content
+            $pfCollect_File_Content = new PluginGlpiinventoryCollect_File_Content();
+            $subitems = $pfCollect_File_Content->find(['plugin_glpiinventory_collects_files_id' => $item['id']]);
+            foreach ($subitems as $subitem) {
+                $pfCollect_File_Content->delete(['id' => $subitem['id']], true);
+            }
         }
+
         parent::post_deleteItem();
     }
 }
