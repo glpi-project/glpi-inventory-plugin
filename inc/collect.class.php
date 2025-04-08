@@ -893,8 +893,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             $pfCollect_Wmi_Content = new PluginGlpiinventoryCollect_Wmi_Content();
             $subitems = $pfCollect_Wmi_Content->find(['plugin_glpiinventory_collects_wmis_id' => $item['id']]);
             foreach ($subitems as $subitem) {
-                $dt = $pfCollect_Wmi_Content->delete(['id' => $subitem['id']], true);
-                echo 't';
+                $pfCollect_Wmi_Content->delete(['id' => $subitem['id']], true);
             }
         }
 
