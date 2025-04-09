@@ -339,7 +339,6 @@ function agents_chart(chart_id) {
             // display name
             var names = d3.select(this).selectAll('a.name').data([d]);
 
-            // Gérer les nouveaux éléments (enter)
             var spans = names.enter().append('span');
             spans.append('i')
             .attr('class', 'fa-solid fa-thumbtack');
@@ -347,13 +346,12 @@ function agents_chart(chart_id) {
             .attr('class', 'name')
             .attr('href', 'javascript:void(0)');
 
-            // Gérer les éléments qui sortent (exit)
             names.exit().remove();
 
-            // Mettre à jour TOUS les éléments (nouveaux + existants)
+            // Update all elements (olds + news)
             d3.select(this).selectAll('a.name')
             .text(function(d) { 
-                // Afficher le nom de l'agent plutôt que juste l'état
+                // Update name displayed
                 return taskjobs.data.agents[d[0]]; 
             })
             .on('click', function(d) {
