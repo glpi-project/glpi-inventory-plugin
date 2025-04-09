@@ -337,27 +337,36 @@ function agents_chart(chart_id) {
             });
 
             // display name
-            var names = d3.select(this).selectAll('a.name').data([d])
+            var names = d3.select(this).selectAll('a.name').data([d]);
+
+            // Gérer les nouveaux éléments (enter)
             var spans = names.enter().append('span');
             spans.append('i')
-               .attr('class', 'fa-solid fa-thumbtack');
+            .attr('class', 'fa-solid fa-thumbtack');
             spans.append('a')
-               .attr('class', 'name')
-               .on('click', function(d) {
-                  var args = {
-                     chart_id: chart_id,
-                     data: d
-                  };
-                  if ( !agent_is_pinned(args) ) {
-                     pin_agent(args);
-                  } else {
-                     unpin_agent(args);
-                  }
-               })
-               .attr('href', 'javascript:void(0)')
-               .text(taskjobs.data.agents[d[0]]);
+            .attr('class', 'name')
+            .attr('href', 'javascript:void(0)');
 
+            // Gérer les éléments qui sortent (exit)
             names.exit().remove();
+
+            // Mettre à jour TOUS les éléments (nouveaux + existants)
+            d3.select(this).selectAll('a.name')
+            .text(function(d) { 
+                // Afficher le nom de l'agent plutôt que juste l'état
+                return taskjobs.data.agents[d[0]]; 
+            })
+            .on('click', function(d) {
+                var args = {
+                    chart_id: chart_id,
+                    data: d
+                };
+                if (!agent_is_pinned(args)) {
+                    pin_agent(args);
+                } else {
+                    unpin_agent(args);
+                }
+            });
 
             //add date
             var dates = d3.select(this).selectAll('span.date').data([d]);
@@ -434,17 +443,11 @@ function agents_chart(chart_id) {
                         "</th></tr>"
                      );
                       $.each(run.logs, function(log_index, log) {
-                        var logComment = log['log.comment'];
-                        var parts = logComment.split(/(<a.*?>|<\/a>)/);
-                        
-                        var logComment = __(parts[0], 'glpiinventory');
-                        logComment += parts.slice(1).join(' ');
-
                         rows.push(
                            "<tr class='run log" + ((taskjob_state !== null) ? ' run_' + taskjob_state : '' ) + "'>" +
                            "<td>" + log['log.date'] +"</td>"+
                            "<td>" + taskjobs.logstatuses_names[log['log.state']] +"</td>"+
-                           "<td class='comment'>" + logComment +"</td>"+
+                           "<td class='comment'>" + __(log['log.comment'], 'glpiinventory') +"</td>"+
                            "</tr>"
                         );
                       });
