@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 ob_start();
 include("../../../../inc/includes.php");
 ob_end_clean();
@@ -40,14 +42,14 @@ ob_end_clean();
 //we set it to 0
 $deploy_task_version = 0;
 if (isset($_GET['version'])) {
-    $deploy_task_version = $_GET['version'];
+    $deploy_task_version = Sanitizer::sanitize($_GET['version']);
 }
 
 $response = false;
 //Agent communication using REST protocol
-switch (filter_input(INPUT_GET, "action")) {
+switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
     case 'getJobs':
-        $machineid = filter_input(INPUT_GET, "machineid");
+        $machineid = Sanitizer::sanitize(filter_input(INPUT_GET, "machineid"));
         if (isset($machineid)) {
             $agent          = new Agent();
             $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
@@ -128,7 +130,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
     case 'getFilePart':
         $DB->close();
-        PluginGlpiinventoryDeployFilepart::httpSendFile(filter_input(INPUT_GET, "file"));
+        PluginGlpiinventoryDeployFilepart::httpSendFile(Sanitizer::sanitize(filter_input(INPUT_GET, "file")));
         exit;
       break;
 
@@ -143,39 +145,38 @@ switch (filter_input(INPUT_GET, "action")) {
         $error = false;
 
         $params = [
-            'machineid' => filter_input(INPUT_GET, "machineid"),
-            'uuid'      => filter_input(INPUT_GET, "uuid")
+            'machineid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid")),
+            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid"))
         ];
 
-        if (filter_input(INPUT_GET, "status") == 'ko') {
+        if (Sanitizer::sanitize(filter_input(INPUT_GET, "status")) == 'ko') {
             $params['code'] = 'ko';
-            $fi_currentStep = filter_input(INPUT_GET, "currentStep");
+            $fi_currentStep = Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"));
             if (!empty($fi_currentStep)) {
-                $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
-                . ":" . filter_input(INPUT_GET, "msg");
+                $params['msg'] = $partjob_mapping[Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"))]
+                . ":" . Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
             } else {
-                $params['msg'] = filter_input(INPUT_GET, "msg");
+                $params['msg'] = Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
             }
             $error = true;
         }
 
-
         if ($error != true) {
             if (
-                filter_input(INPUT_GET, "msg") === 'job successfully completed'
-                || filter_input(INPUT_GET, "msg") === 'job skipped'
+                Sanitizer::sanitize(filter_input(INPUT_GET, "msg")) === 'job successfully completed'
+                || Sanitizer::sanitize(filter_input(INPUT_GET, "msg")) === 'job skipped'
             ) {
                //Job has ended  or has been skipped and status should be ok
                 $params['code'] = 'ok';
-                $params['msg']  = filter_input(INPUT_GET, "msg");
+                $params['msg']  = Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
             } else {
                 $params['code'] = 'running';
-                $fi_currentStep = filter_input(INPUT_GET, "currentStep");
+                $fi_currentStep = Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"));
                 if (!empty($fi_currentStep)) {
-                    $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
-                    . ":" . filter_input(INPUT_GET, "msg");
+                    $params['msg'] = $partjob_mapping[Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"))]
+                    . ":" . Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
                 } else {
-                    $params['msg'] = filter_input(INPUT_GET, "msg");
+                    $params['msg'] = Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
                 }
             }
         }
@@ -202,24 +203,24 @@ switch (filter_input(INPUT_GET, "action")) {
 
     case 'setUserEvent':
         $params = [
-            'machineid' => filter_input(INPUT_GET, "machineid"),
-            'uuid'      => filter_input(INPUT_GET, "uuid")
+            'machineid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid")),
+            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid"))
         ];
 
        //Action : postpone, cancel, continue
-        $behavior = filter_input(INPUT_GET, "behavior");
+        $behavior = Sanitizer::sanitize(filter_input(INPUT_GET, "behavior"));
 
        //before, after_download, after_download_failure,
        //after_failure, after
-        $type    = filter_input(INPUT_GET, "type");
+        $type    = Sanitizer::sanitize(filter_input(INPUT_GET, "type"));
 
        //on_nouser, on_ok, on_cancel, on_abort, on_retry, on_ignore,
        //on_yes, on_no, on_tryagain, on_continue, on_timeout, on_async,
        //on_multiusers
-        $event   = filter_input(INPUT_GET, "event");
+        $event   = Sanitizer::sanitize(filter_input(INPUT_GET, "event"));
 
        //The user who did the interaction
-        $user    = filter_input(INPUT_GET, "user");
+        $user    = Sanitizer::sanitize(filter_input(INPUT_GET, "user"));
 
        //Process response if an agent provides a behavior, a type and an event
        //the user parameter is not mandatory

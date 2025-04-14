@@ -31,8 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 //This call is to check that the ESX inventory service is up and running
-$fi_status = filter_input(INPUT_GET, "status");
+$fi_status = Sanitizer::sanitize(filter_input(INPUT_GET, "status"));
 if (!empty($fi_status)) {
     return 'ok';
 }
@@ -42,16 +44,16 @@ ob_end_clean();
 
 $response = false;
 //Agent communication using REST protocol
-$fi_machineid = filter_input(INPUT_GET, "machineid");
+$fi_machineid = Sanitizer::sanitize(filter_input(INPUT_GET, "machineid"));
 if (!empty($fi_machineid)) {
-    switch (filter_input(INPUT_GET, "action")) {
+    switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
         case 'getJobs':
             $agent        = new Agent();
             $pfTask         = new PluginGlpiinventoryTask();
             $pfTaskjob      = new PluginGlpiinventoryTaskjob();
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-            if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep(filter_input(INPUT_GET, "machineid"))])) {
+            if ($agent->getFromDBByCrit(['deviceid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid"))])) {
                 $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                     $agent->fields['id'],
                     ['InventoryComputerESX']
@@ -83,7 +85,7 @@ if (!empty($fi_machineid)) {
 
         case 'setLog':
            //Generic method to update logs
-            PluginGlpiinventoryCommunicationRest::updateLog($_GET);
+            PluginGlpiinventoryCommunicationRest::updateLog(Sanitizer::sanitize($_GET));
             break;
     }
 
