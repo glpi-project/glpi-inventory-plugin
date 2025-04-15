@@ -46,7 +46,7 @@ $response = false;
 //Agent communication using REST protocol
 $fi_machineid = Sanitizer::sanitize(filter_input(INPUT_GET, "machineid"));
 if (!empty($fi_machineid)) {
-    switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
+    switch (filter_input(INPUT_GET, "action")) {
         case 'getJobs':
             $agent        = new Agent();
             $pfTask         = new PluginGlpiinventoryTask();
