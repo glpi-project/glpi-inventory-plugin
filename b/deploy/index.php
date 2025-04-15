@@ -42,7 +42,7 @@ ob_end_clean();
 //we set it to 0
 $deploy_task_version = 0;
 if (isset($_GET['version'])) {
-    $deploy_task_version = Sanitizer::sanitize($_GET['version']);
+    $deploy_task_version = $_GET['version'];
 }
 
 $response = false;
