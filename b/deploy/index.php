@@ -149,7 +149,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
             'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid"))
         ];
 
-        if (Sanitizer::sanitize(filter_input(INPUT_GET, "status")) == 'ko') {
+        if (filter_input(INPUT_GET, "status") == 'ko') {
             $params['code'] = 'ko';
             $fi_currentStep = Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"));
             if (!empty($fi_currentStep)) {
