@@ -173,7 +173,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
                 $params['code'] = 'running';
                 $fi_currentStep = Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"));
                 if (!empty($fi_currentStep)) {
-                    $params['msg'] = $partjob_mapping[Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"))]
+                    $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
                     . ":" . Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
                 } else {
                     $params['msg'] = Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
