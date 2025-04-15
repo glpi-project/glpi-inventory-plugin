@@ -57,7 +57,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
             $pfTaskjob      = new PluginGlpiinventoryTaskjob();
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-            if ($agent->getFromDBByCrit(['deviceid' => Toolbox::addslashes_deep($machineid)])) {
+            if ($agent->getFromDBByCrit(['deviceid' => $machineid])) {
                 $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                     $agent->fields['id'],
                     ['deployinstall']
@@ -154,29 +154,29 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
             $fi_currentStep = Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"));
             if (!empty($fi_currentStep)) {
                 $params['msg'] = $partjob_mapping[Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"))]
-                . ":" . Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
+                . ":" . filter_input(INPUT_GET, "msg");
             } else {
-                $params['msg'] = Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
+                $params['msg'] = filter_input(INPUT_GET, "msg");
             }
             $error = true;
         }
 
         if ($error != true) {
             if (
-                Sanitizer::sanitize(filter_input(INPUT_GET, "msg")) === 'job successfully completed'
-                || Sanitizer::sanitize(filter_input(INPUT_GET, "msg")) === 'job skipped'
+                filter_input(INPUT_GET, "msg") === 'job successfully completed'
+                || filter_input(INPUT_GET, "msg") === 'job skipped'
             ) {
                //Job has ended  or has been skipped and status should be ok
                 $params['code'] = 'ok';
-                $params['msg']  = Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
+                $params['msg']  = filter_input(INPUT_GET, "msg");
             } else {
                 $params['code'] = 'running';
-                $fi_currentStep = Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"));
+                $fi_currentStep = filter_input(INPUT_GET, "currentStep");
                 if (!empty($fi_currentStep)) {
                     $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
-                    . ":" . Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
+                    . ":" . filter_input(INPUT_GET, "msg");
                 } else {
-                    $params['msg'] = Sanitizer::sanitize(filter_input(INPUT_GET, "msg"));
+                    $params['msg'] = filter_input(INPUT_GET, "msg");
                 }
             }
         }
@@ -195,6 +195,8 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
                 )
             );
             $params['msg'] = nl2br($tmp_msg);
+        } else {
+            $params['msg'] = Sanitizer::sanitize($params['msg']);
         }
 
        //Generic method to update logs

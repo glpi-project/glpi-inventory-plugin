@@ -41,6 +41,6 @@ ob_end_clean();
 
 $pfCollect = new PluginGlpiinventoryCollect();
 
-$response = $pfCollect->communication(Sanitizer::sanitize(filter_input(INPUT_GET, "action")), Sanitizer::sanitize(filter_input(INPUT_GET, "machineid")), Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")));
+$response = $pfCollect->communication(Sanitizer::sanitize(filter_input(INPUT_GET, "action")), filter_input(INPUT_GET, "machineid"), Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")));
 
 echo json_encode($response);
