@@ -85,7 +85,7 @@ if (!empty($fi_machineid)) {
 
         case 'setLog':
            //Generic method to update logs
-            PluginGlpiinventoryCommunicationRest::updateLog(Sanitizer::sanitize($_GET));
+            PluginGlpiinventoryCommunicationRest::updateLog($_GET);
             break;
     }
 
