@@ -36,37 +36,22 @@ Session::checkLoginUser();
 
 $package = new PluginGlpiinventoryDeployPackage();
 if (isset($_POST['update_json'])) {
-    $json_clean = stripcslashes($_POST['json']);
-
-    $json = json_decode($json_clean, true);
+    $json = json_decode($_POST['json'], true);
 
     $ret = PluginGlpiinventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
     Html::back();
     exit;
 } elseif (isset($_POST['add_item'])) {
-    $data = array_map(
-        ['Toolbox', 'stripslashes_deep'],
-        $package->escapeText($_POST)
-    );
-    PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data);
+    PluginGlpiinventoryDeployPackage::alterJSON('add_item', $_POST);
     Html::back();
 } elseif (isset($_POST['save_item'])) {
-    $data = array_map(
-        ['Toolbox', 'stripslashes_deep'],
-        $package->escapeText($_POST)
-    );
-    PluginGlpiinventoryDeployPackage::alterJSON('save_item', $data);
+    PluginGlpiinventoryDeployPackage::alterJSON('save_item', $_POST);
     Html::back();
 } elseif (isset($_POST['remove_item'])) {
-    $data = array_map(
-        ['Toolbox', 'stripslashes_deep'],
-        $package->escapeText($_POST)
-    );
-    PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data);
+    PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $_POST);
     Html::back();
 }
 
-//$data = Toolbox::stripslashes_deep($_POST);
 $data = $_POST;
 
 //general form
