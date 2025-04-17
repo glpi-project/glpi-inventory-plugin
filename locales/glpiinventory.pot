@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-17 00:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,7 @@ msgid "Add the item"
 msgstr ""
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr ""
 
@@ -1212,7 +1212,7 @@ msgstr ""
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr ""
@@ -1314,7 +1314,7 @@ msgstr ""
 msgid "Remote devices to inventory (VMware)"
 msgstr ""
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr ""
 
@@ -1423,7 +1423,7 @@ msgstr ""
 msgid "Server has sent data to the agent"
 msgstr ""
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr ""
 
@@ -1486,7 +1486,7 @@ msgstr ""
 msgid "Target Type"
 msgstr ""
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr ""
 

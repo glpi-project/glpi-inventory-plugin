@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-03 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2024\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -93,7 +93,7 @@ msgid "Add the item"
 msgstr "Přidat položku"
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr "Přidat do statické skupiny"
 
@@ -1246,7 +1246,7 @@ msgstr "Četnost opakování"
 msgid "Permit to re-prepare task after run"
 msgstr "Povolit znovu připravení úlohy po spuštění"
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Odstraňte prosím adresář %s."
@@ -1348,7 +1348,7 @@ msgstr "Inventura zařízení na dálku"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Vzdálená zařízení do inventáře (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr "Odebrat ze statické skupiny"
 
@@ -1457,7 +1457,7 @@ msgstr "Rozlišovat malá/velká písmena"
 msgid "Server has sent data to the agent"
 msgstr "Server odeslal data agentovi"
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr "Nastavení"
 
@@ -1522,7 +1522,7 @@ msgstr "Položka cíle"
 msgid "Target Type"
 msgstr "Typ cíle"
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr "Zacílit úlohu"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-03 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Soporte Infraestructura Standby, 2023\n"
 "Language-Team: Spanish (Ecuador) (https://app.transifex.com/teclib/teams/28042/es_EC/)\n"
@@ -91,7 +91,7 @@ msgid "Add the item"
 msgstr "Agregar el elemento"
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr "Agregar al grupo estático"
 
@@ -1236,7 +1236,7 @@ msgstr "Periodicidad"
 msgid "Permit to re-prepare task after run"
 msgstr "Permitir volver a preparar la tarea después de ejecutarla"
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Por favor, elimine el directorio %s."
@@ -1338,7 +1338,7 @@ msgstr "Inventario remoto de dispositivos"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Dispositivos remotos a inventariar (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr "Eliminar del grupo estático"
 
@@ -1447,7 +1447,7 @@ msgstr "Distinguir mayúsculas y minúsculas"
 msgid "Server has sent data to the agent"
 msgstr "El servidor ha enviado datos al agente"
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr "Configurar"
 
@@ -1512,7 +1512,7 @@ msgstr "Elemento de destino"
 msgid "Target Type"
 msgstr "Tipo de destino"
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr "Apuntar a una tarea"
 

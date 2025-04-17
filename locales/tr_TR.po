@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-03 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -92,7 +92,7 @@ msgid "Add the item"
 msgstr "Ögeyi ekle"
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr "Durağan gruba ekle"
 
@@ -1232,7 +1232,7 @@ msgstr "Sıklık"
 msgid "Permit to re-prepare task after run"
 msgstr "Çalıştırıldıktan sonra görev yeniden hazırlanabilsin"
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Lütfen %s klasörünü silin"
@@ -1334,7 +1334,7 @@ msgstr "Uzak aygıt envanteri"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Envantere eklenecek uzak aygıtlar (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr "Durağan gruptan çıkar"
 
@@ -1443,7 +1443,7 @@ msgstr "Büyük-küçük harfe duyarlı"
 msgid "Server has sent data to the agent"
 msgstr "Sunucu aracıya veri gönderdi"
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr "Kur"
 
@@ -1508,7 +1508,7 @@ msgstr "Hedef öge"
 msgid "Target Type"
 msgstr "Hedef türü"
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr "Bir görevi hedefle"
 
