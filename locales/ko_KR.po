@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-03 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -91,7 +91,7 @@ msgid "Add the item"
 msgstr "항목 추가"
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr "정적 그룹 추가"
 
@@ -1209,7 +1209,7 @@ msgstr "주기"
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr ""
@@ -1311,7 +1311,7 @@ msgstr "원격 장치 재고"
 msgid "Remote devices to inventory (VMware)"
 msgstr "재고에 대한 원격 장치 (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr ""
 
@@ -1420,7 +1420,7 @@ msgstr "대소문자 구분"
 msgid "Server has sent data to the agent"
 msgstr "서버에서 에이전트로 데이터 전송"
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr "설정"
 
@@ -1483,7 +1483,7 @@ msgstr "대상 항목"
 msgid "Target Type"
 msgstr "대상 유형"
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr "업무 대상 지정"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-03 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: INOUE Daisuke, 2025\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -91,7 +91,7 @@ msgid "Add the item"
 msgstr "アイテムを追加"
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr "静的グループに追加"
 
@@ -1209,7 +1209,7 @@ msgstr "周期性"
 msgid "Permit to re-prepare task after run"
 msgstr "実行後、タスクの再準備を許可"
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr "%s ディレクトリーを削除してください。"
@@ -1311,7 +1311,7 @@ msgstr "リモートデバイス インベントリー"
 msgid "Remote devices to inventory (VMware)"
 msgstr "インベントリー対象のリモートデバイス（VMware）"
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr "静的グループから削除"
 
@@ -1420,7 +1420,7 @@ msgstr "大文字小文字を区別する"
 msgid "Server has sent data to the agent"
 msgstr "サーバーからエージェントにデータを送信済"
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr "セットアップ"
 
@@ -1485,7 +1485,7 @@ msgstr "対象アイテム"
 msgid "Target Type"
 msgstr "対象の型"
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr "タスクと対象を結びつける"
 

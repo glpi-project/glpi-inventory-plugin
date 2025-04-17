@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-03 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Davide <spam@habilitas.it>, 2024\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/teclib/teams/28042/it_IT/)\n"
@@ -92,7 +92,7 @@ msgid "Add the item"
 msgstr "Aggiungi l'elemento"
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr "Aggiungi ad un gruppo statico"
 
@@ -1240,7 +1240,7 @@ msgstr "Ricorrenza"
 msgid "Permit to re-prepare task after run"
 msgstr "Permetti di ripreparare l'attività dopo l'esecuzione"
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr "Rimuovere la cartella %s"
@@ -1342,7 +1342,7 @@ msgstr "Inventario delle periferiche remote"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Dispositivi remoti da inventariare (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr "Rimuovere dal gruppo statico"
 
@@ -1451,7 +1451,7 @@ msgstr "Distingue maiuscole/minuscole"
 msgid "Server has sent data to the agent"
 msgstr "Il server ha inviato le informazioni all'agente"
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr "Configurazione"
 
@@ -1516,7 +1516,7 @@ msgstr "Obiettivo dell'elemento"
 msgid "Target Type"
 msgstr "Tipo di obiettivo"
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr "Obiettivo dell'attività"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 00:49+0000\n"
+"POT-Creation-Date: 2025-04-03 00:49+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Polish (Poland) (https://app.transifex.com/teclib/teams/28042/pl_PL/)\n"
@@ -91,7 +91,7 @@ msgid "Add the item"
 msgstr "Dodaj element"
 
 #: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:450
+#: inc/deploygroup_staticdata.class.php:171 hook.php:415
 msgid "Add to static group"
 msgstr "Dodaj do statycznej grupy"
 
@@ -1241,7 +1241,7 @@ msgstr "Okresowość"
 msgid "Permit to re-prepare task after run"
 msgstr ""
 
-#: setup.php:456
+#: setup.php:431
 #, php-format
 msgid "Please remove %s directory."
 msgstr ""
@@ -1343,7 +1343,7 @@ msgstr "Inwentaryzacja zdalnego urządzenia"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Zdalne urządzenia do inwentaryzacji (VMware)"
 
-#: inc/deploygroup_staticdata.class.php:226 hook.php:452
+#: inc/deploygroup_staticdata.class.php:226 hook.php:417
 msgid "Remove from static group"
 msgstr ""
 
@@ -1452,7 +1452,7 @@ msgstr "Uwzględniaj wielkość"
 msgid "Server has sent data to the agent"
 msgstr "Serwer wysłał dane do agenta"
 
-#: hook.php:382
+#: hook.php:350
 msgid "Setup"
 msgstr ""
 
@@ -1515,7 +1515,7 @@ msgstr "Pozycja celu"
 msgid "Target Type"
 msgstr "Typ celu"
 
-#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:446
+#: inc/deploygroup.class.php:225 inc/iprange.class.php:289 hook.php:411
 msgid "Target a task"
 msgstr "Cel zadania"
 
