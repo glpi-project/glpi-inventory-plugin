@@ -319,6 +319,13 @@ function agents_chart(chart_id) {
             .attr('class', 'fa fa-link link')
             .attr('href', d[1][0].link);
 
+            // Update - Update all elements (new + existing)
+            d3.select(this).selectAll('a.link')
+                .attr('href', function(d) {
+                    return d[1][0].link;
+                })
+                .attr('class', 'fa fa-link link');
+
             // add a checkbox for bulk actions
             var checkb = d3.select(this).selectAll('input').data([d]);
             checkb.enter().append('input')
@@ -350,9 +357,9 @@ function agents_chart(chart_id) {
 
             // Update all elements (olds + news)
             d3.select(this).selectAll('a.name')
-            .text(function(d) { 
+            .text(function(d) {
                 // Update name displayed
-                return taskjobs.data.agents[d[0]]; 
+                return taskjobs.data.agents[d[0]];
             })
             .on('click', function(d) {
                 var args = {
