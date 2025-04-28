@@ -393,7 +393,8 @@ function agents_chart(chart_id) {
             // if agent in error, add a control to relanch it
             if (d[1][0].state == 'error') {
                var restarts =  d3.select(this).selectAll('a.restart').data([d]);
-               names.enter().insert('a', '.check_restart')
+               console.log(restarts);
+               restarts.enter().insert('a', '.check_restart')
                  .attr('class', 'restart btn')
                  .attr('title', 'restart')
                  .on('click', function(d) {
@@ -410,8 +411,21 @@ function agents_chart(chart_id) {
                  })
                  .append('i')
                     .attr('class', 'fa fa-bolt');
-               names.exit().remove();
-               names.attr('href', 'javascript:void(0)');
+                restarts.exit().remove();
+                d3.select(this).selectAll('a.name')
+                    .attr('href', 'javascript:void(0)');
+            } else { //check if restart button exists and remove it
+                var restarts = d3.select(this).selectAll('a.restart.btn').data([]);
+
+                // Exit - Supprimer tous les boutons existants car data est vide []
+                restarts.exit().remove();
+
+                // Pas besoin d'ajouter de nouveaux boutons (enter) puisqu'on veut les supprimer
+
+                // S'assurer que les attributs de lien name restent correctement définis
+                // car l'original modifiait aussi names.attr('href',...)
+                d3.select(this).selectAll('a.name')
+                    .attr('href', 'javascript:void(0)');
             }
 
             // add executions logs for pinned agents
