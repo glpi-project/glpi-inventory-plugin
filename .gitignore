@@ -3,4 +3,6 @@ vendor/
 .gh_token
 .idea
 tests/files
+!templates/example.odt
+!templates/*.html.twig
 .phpunit.result.cache
