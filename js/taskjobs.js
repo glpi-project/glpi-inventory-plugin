@@ -418,10 +418,6 @@ function agents_chart(chart_id) {
 
                 // Exit - Remove all existing buttons since data is empty []
                 restarts.exit().remove();
-
-                // No need to add new buttons (enter) since we want to remove them
-                // Ensure the name link attributes remain correctly set
-                // because the original code also modified names.attr('href',...)
                 d3.select(this).selectAll('a.name')
                     .attr('href', 'javascript:void(0)');
             }
