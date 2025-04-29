@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [1.5.1] - 2025-04-29
+
 ### Fixed
 
 - Fix implementation of link in task log
 - Fix wrong name displayed in taskjob state page
 - Fixed restart button appearing on non-error tasks in task status page
+
+### Security
+
+- Strengthened parameter validation across the collect, deploy, and esx entry points to better prevent SQL injections
 
 ## [1.5.0] - 2025-02-25
 
