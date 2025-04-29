@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Security
 
-- Strengthened parameter validation across the collect, deploy, and esx entry points to better prevent SQL injections
+- [CVE-2025-32786] Strengthened parameter validation across the collect, deploy, and esx entry points to better prevent SQL injections
 
 ## [1.5.0] - 2025-02-25
 
