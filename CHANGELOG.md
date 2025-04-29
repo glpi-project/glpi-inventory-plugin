@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix implementation of link in task log
 - Fix wrong name displayed in taskjob state page
+- Fixed restart button appearing on non-error tasks in task status page
 
 ## [1.5.0] - 2025-02-25
 
