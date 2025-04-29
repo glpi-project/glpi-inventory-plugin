@@ -415,8 +415,6 @@ function agents_chart(chart_id) {
                     .attr('href', 'javascript:void(0)');
             } else { //check if restart button exists and remove it
                 var restarts = d3.select(this).selectAll('a.restart.btn').data([]);
-
-                // Exit - Remove all existing buttons since data is empty []
                 restarts.exit().remove();
                 d3.select(this).selectAll('a.name')
                     .attr('href', 'javascript:void(0)');
