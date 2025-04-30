@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [1.5.2] - 2025-04-30
+
 ### Fixed
 
 - Fix warning about missing pics
+- Fix JS loading detection
 
 ## [1.5.1] - 2025-04-29
 
