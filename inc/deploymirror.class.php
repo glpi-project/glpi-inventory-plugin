@@ -84,7 +84,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
 
         $ong = [];
         $this->addDefaultFormTab($ong)
-         ->addStandardTab('Log', $ong, $options);
+         ->addStandardTab(Log::class, $ong, $options);
 
         return $ong;
     }

@@ -120,7 +120,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             $tabs[2] = _n('Associated task', 'Associated tasks', Session::getPluralNumber());
         }
 
-        $this->addStandardTab('Log', $ong, $options);
+        $this->addStandardTab(Log::class, $ong, $options);
         return $ong;
     }
 
