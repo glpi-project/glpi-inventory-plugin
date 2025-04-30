@@ -239,7 +239,7 @@ function plugin_init_glpiinventory()
         $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'] = [];
         $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'] = [];
         if (
-            str_contains($current_url,   Plugin::getWebDir('glpiinventory', false))
+            str_contains($current_url, Plugin::getWebDir('glpiinventory', false))
             || str_ends_with($current_url, "front/printer.form.php")
             || str_ends_with($current_url, "front/computer.form.php")
         ) {
