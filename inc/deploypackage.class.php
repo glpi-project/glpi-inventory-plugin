@@ -528,6 +528,14 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             'action'          => __("Actions", 'glpiinventory'),
             'userinteraction' => __("User interactions", 'glpiinventory')
         ];
+
+        $subtypes_icon = [
+            'check'           => 'check',
+            'file'            => 'file',
+            'action'          => 'settings',
+            'userinteraction' => 'template',
+        ];
+
         $json_subtypes = [
             'check'           => 'checks',
             'file'            => 'associatedFiles',
@@ -551,7 +559,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         foreach ($subtypes as $subtype => $label) {
             echo "<tr>";
             echo "<th id='th_title_{$subtype}_$rand'>";
-            echo "<img src='" . Plugin::getWebDir('glpiinventory') . "/pics/$subtype.png' />";
+            echo "<span><i class='ti ti-{$subtypes_icon[$subtype]}'></i></span>";
             echo "&nbsp;" . __($label, 'glpiinventory');
             if ($canedit) {
                 $this->plusButtonSubtype($this->getID(), $subtype, (string)$rand);
