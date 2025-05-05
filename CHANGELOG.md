@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+### Fixed
+
+- Fix `getFilePart` for `deploy` module
+
 ## [1.5.2] - 2025-04-30
 
 ### Fixed
