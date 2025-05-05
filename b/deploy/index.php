@@ -129,8 +129,8 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
         break;
 
     case 'getFilePart':
-        $DB->close();
         PluginGlpiinventoryDeployFilepart::httpSendFile(Sanitizer::sanitize(filter_input(INPUT_GET, "file")));
+        $DB->close();
         exit;
       break;
 
