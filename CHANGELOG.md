@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix `getFilePart` for `deploy` module
+- Fix `Target` drop-down list to filter on active target only
 
 ## [1.5.2] - 2025-04-30
 
