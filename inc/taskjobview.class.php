@@ -478,7 +478,10 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $condition = ['id' => $filter_id];
             }
         }
-        $condition['is_active'] = 1;
+        $itemtype_class = new $itemtype();
+        if ($DB->fieldExists($itemtype_class->getTable(), 'is_active')) {
+            $condition['is_active'] = 1;
+        }
 
        /**
         * get Itemtype choices dropdown
