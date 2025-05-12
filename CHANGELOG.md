@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix `getFilePart` for `deploy` module
 - Fix `Target` drop-down list to filter on active target only (if is_active fields exist) #679 & #682
+- Fix check right for `Task`
 
 ## [1.5.2] - 2025-04-30
 

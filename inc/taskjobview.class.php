@@ -65,7 +65,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
-        if ($item->fields['id'] > 0 and Session::haveRight('task', READ)) {
+        if ($item->fields['id'] > 0 and Session::haveRight('plugin_glpiinventory_task', READ)) {
             return __('Job configuration', 'glpiinventory');
         }
         return '';
