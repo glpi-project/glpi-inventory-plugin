@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+- Fix bad `includes` for `ESX` module
+
 ## [1.5.3] - 2025-05-12
 
 ### Fixed

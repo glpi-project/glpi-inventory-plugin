@@ -33,14 +33,15 @@
 
 use Glpi\Toolbox\Sanitizer;
 
+ob_start();
+include("../../../../inc/includes.php");
+ob_end_clean();
+
 //This call is to check that the ESX inventory service is up and running
 $fi_status = Sanitizer::sanitize(filter_input(INPUT_GET, "status"));
 if (!empty($fi_status)) {
     return 'ok';
 }
-ob_start();
-include("../../../../inc/includes.php");
-ob_end_clean();
 
 $response = false;
 //Agent communication using REST protocol
