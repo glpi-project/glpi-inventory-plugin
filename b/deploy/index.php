@@ -185,15 +185,6 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
 
             $tmp_msg = implode("\n", $params['msg']);
             $flags   = null;
-            $tmp_msg =
-            stripcslashes(
-                htmlspecialchars(
-                    $tmp_msg,
-                    $htmlspecialchars_flags,
-                    'UTF-8',
-                    false
-                )
-            );
             $params['msg'] = nl2br($tmp_msg);
         } else {
             $params['msg'] = Sanitizer::sanitize($params['msg']);

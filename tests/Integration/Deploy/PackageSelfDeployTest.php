@@ -170,10 +170,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PackageNoTarget()
+    public function testPackageNoTarget()
     {
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -189,10 +186,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PackageTargetEntity()
+    public function testPackageTargetEntity()
     {
 
         $pfDeployPackage        = new PluginGlpiinventoryDeployPackage();
@@ -220,10 +214,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PackageTargetgroup()
+    public function testPackageTargetgroup()
     {
 
         $pfDeployPackage       = new PluginGlpiinventoryDeployPackage();
@@ -263,10 +254,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PackageTargetUser()
+    public function testPackageTargetUser()
     {
         $pfDeployPackage      = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_User = new PluginGlpiinventoryDeployPackage_User();
@@ -300,10 +288,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PackageTargetProfile()
+    public function testPackageTargetProfile()
     {
         $pfDeployPackage         = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_Profile = new PluginGlpiinventoryDeployPackage_Profile();
@@ -337,10 +322,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function ReportMyPackage()
+    public function testReportMyPackage()
     {
         global $DB;
 
@@ -436,10 +418,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function ReportComputerPackages()
+    public function testReportComputerPackages()
     {
         global $DB;
 
@@ -513,10 +492,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function ReportComputerPackagesDeployDisabled()
+    public function testReportComputerPackagesDeployDisabled()
     {
 
        // Disable deploy feature for all agents

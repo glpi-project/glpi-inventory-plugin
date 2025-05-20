@@ -58,10 +58,7 @@ class RuleImportTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function changeRulesForPrinterRules()
+    public function testChangeRulesForPrinterRules()
     {
 
         $rule = new Rule();
@@ -131,10 +128,7 @@ class RuleImportTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PrinterDiscoveryImport()
+    public function testPrinterDiscoveryImport()
     {
         $this->changeRulesForPrinterRules();
 
@@ -194,7 +188,7 @@ class RuleImportTest extends TestCase
    /**
     * @test
     */
-    public function PrinterDiscoveryImportDenied()
+    public function testPrinterDiscoveryImportDenied()
     {
         $this->changeRulesForPrinterRules();
 

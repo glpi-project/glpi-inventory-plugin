@@ -127,10 +127,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function getSearchOptionsToAdd()
+    public function testGetSearchOptionsToAdd()
     {
 
         $pfCollect = new PluginGlpiinventoryCollect();
@@ -214,10 +211,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function registryProcessWithAgent()
+    public function testRegistryProcessWithAgent()
     {
         global $DB;
 
@@ -380,10 +374,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function wmiProcessWithAgent()
+    public function testWmiProcessWithAgent()
     {
 
         // Delete all tasks
@@ -545,10 +536,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function filesProcessWithAgent()
+    public function testFilesProcessWithAgent()
     {
 
         // Delete all tasks
@@ -778,9 +766,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testFilesCleanComputer()
     {
 
@@ -837,9 +822,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testRegistryCleanComputer()
     {
 
@@ -878,9 +860,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testWmiCleanComputer()
     {
 
@@ -919,9 +898,6 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testDeleteComputer()
     {
 

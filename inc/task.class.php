@@ -35,6 +35,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
 
+use Glpi\DBAL\QueryExpression;
+
 /**
  * Manage the task system.
  */
@@ -65,7 +67,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @return boolean
     */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }
@@ -1232,7 +1234,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         'log.date AS log_last_date',
                         'log.comment AS log_last_comment',
                         'log.plugin_glpiinventory_taskjobstates_id AS run_id',
-                        new \QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp'))
+                        new QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp'))
                     ],
                     'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs AS log',
                     'WHERE' => [
@@ -1693,7 +1695,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
-                        'url'             => Plugin::getWebDir('glpiinventory') . "/ajax/dropdown_taskjob.php"
+                        'url'             => "/plugins/glpiinventory/ajax/dropdown_taskjob.php"
                     ]
                 ]);
                 echo "</td>";
@@ -1732,7 +1734,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "taskjob$rand",
-                        'url'             => Plugin::getWebDir('glpiinventory') . "/ajax/dropdown_taskjob.php"
+                        'url'             => "/plugins/glpiinventory/ajax/dropdown_taskjob.php"
                     ]
                 ]);
                 echo "</td>";
@@ -1958,7 +1960,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             );
             $input['is_active'] = 0;
             unset($input['id']);
-            $input              = Toolbox::addslashes_deep($input);
             if ($target_task_id = $this->add($input)) {
                  //Clone taskjobs
                  $result
