@@ -399,6 +399,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $moduletype = $options['moduletype'];
         $itemtype   = $options['itemtype'];
         $method     = $options['method'];
+        $taskid     = $options['taskid'];
         $title      = '';
         if ($itemtype === "") {
             return;
@@ -427,7 +428,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
             // prepare a query to retrieve agent's & computer's id
-            $iterator = $DB->request([
+            $crit = [
                 'SELECT' => [
                     'agents.id AS agents_id',
                     'agents.items_id'
@@ -462,13 +463,33 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     'agents.id',
                     'agents.items_id'
                 ]
-            ]);
+            ];
+
+            $item = getItemForItemtype($itemtype);
+            if ($item->isEntityAssign()) {
+                // get entity ID from task ID
+                $pfTask = new PluginGlpiinventoryTask();
+                $pfTask->getFromDB($taskid);
+
+                $crit['WHERE'] += getEntitiesRestrictCriteria(
+                    'agents',
+                    '',
+                    $pfTask->fields['entities_id'] ?? 0,
+                    $item->maybeRecursive()
+                );
+            }
+
+            $iterator = $DB->request($crit);
+
             $filter_id = [];
             foreach ($iterator as $data_filter) {
                 if ($itemtype == 'Computer') {
                     $filter_id[] =  $data_filter['items_id'];
                 } else {
-                    $filter_id[] =  $data_filter['agents_id'];
+                    $pfAgentModule = new PluginGlpiinventoryAgentmodule();
+                    if ($pfAgentModule->isAgentCanDo($modulename, $data_filter['agents_id'])) {
+                        $filter_id[] =  $data_filter['agents_id'];
+                    }
                 }
             }
 
