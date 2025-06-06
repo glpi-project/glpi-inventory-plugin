@@ -750,7 +750,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 'task.id',
                 'task.name',
                 'task.reprepare_if_successful',
-                'job.id',
+                'job.id AS jobid',
                 'job.name AS jobname',
                 'job.method',
                 'job.targets',
@@ -801,6 +801,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             ]
         ]);
         $results = PluginGlpiinventoryToolbox::fetchAssocByTableIterator($iterator);
+        var_dump($results);
 
         // Fetch a list of actors to be prepared. We may have the same actors for each job so this
         // part can speed up the process.
@@ -857,8 +858,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 $agent_ids = $saved_agent_ids;
                 $item_type = key($target);
                 $item_id   = current($target);
-                var_dump($result['job']);
-                $job_id    = $result['job']['id'];
+                $job_id    = $result['job']['jobid'];
                 // Filter out agents that are already running the targets.
                 $jobstates_running = $jobstate->find(
                     ['itemtype' => $item_type,
