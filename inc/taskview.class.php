@@ -750,7 +750,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 'task.id',
                 'task.name',
                 'task.reprepare_if_successful',
-                'job.id AS jobid',
+                'job.id',
                 'job.name AS jobname',
                 'job.method',
                 'job.targets',
@@ -858,7 +858,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 $item_type = key($target);
                 $item_id   = current($target);
                 var_dump($result['job']);
-                $job_id    = $result['job']['jobid'];
+                $job_id    = $result['job']['id'];
                 // Filter out agents that are already running the targets.
                 $jobstates_running = $jobstate->find(
                     ['itemtype' => $item_type,
