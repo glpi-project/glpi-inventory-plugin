@@ -857,6 +857,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 $agent_ids = $saved_agent_ids;
                 $item_type = key($target);
                 $item_id   = current($target);
+                var_dump($result['job']);
                 $job_id    = $result['job']['jobid'];
                 // Filter out agents that are already running the targets.
                 $jobstates_running = $jobstate->find(
