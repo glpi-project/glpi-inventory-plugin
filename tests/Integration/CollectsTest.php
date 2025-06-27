@@ -631,8 +631,8 @@ class CollectsTest extends TestCase
         $result = json_encode($resultObject);
 
         preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
-        $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:Users\totoDesktop","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_desktop . '},'
-                                          . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
+        $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:Users\toto\Desktop","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_desktop . '},'
+                                          . '{"function":"findFile","dir":"C:Users\toto\Downloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
         // answer 1
         $params = [
             'action' => 'setAnswer',
