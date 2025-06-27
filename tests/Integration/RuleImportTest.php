@@ -37,14 +37,16 @@ class RuleImportTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // Reinit rules
-        \RuleImportAsset::initRules();
+        // Reinit rules
+        $rules = new \RuleImportAsset();
+        $rules->initRules();
     }
 
     public static function tearDownAfterClass(): void
     {
-       // Reinit rules
-        \RuleImportAsset::initRules();
+        // Reinit rules
+        $rules = new \RuleImportAsset();
+        $rules->initRules();
     }
 
     public function setUp(): void
