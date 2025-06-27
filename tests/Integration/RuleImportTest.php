@@ -132,7 +132,7 @@ class RuleImportTest extends TestCase
 
     public function testPrinterDiscoveryImport()
     {
-        $this->changeRulesForPrinterRules();
+        $this->testChangeRulesForPrinterRules();
 
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
@@ -192,7 +192,7 @@ class RuleImportTest extends TestCase
     */
     public function testPrinterDiscoveryImportDenied()
     {
-        $this->changeRulesForPrinterRules();
+        $this->testChangeRulesForPrinterRules();
 
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
