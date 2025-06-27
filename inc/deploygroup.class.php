@@ -40,74 +40,74 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployGroup extends CommonDBTM
 {
-   /**
-    * Define constant name of static group
-    *
-    * @var string
-    */
-    const STATIC_GROUP  = 'STATIC';
+    /**
+     * Define constant name of static group
+     *
+     * @var string
+     */
+    public const STATIC_GROUP  = 'STATIC';
 
-   /**
-    * Define constant name of dynamic group
-    *
-    * @var string
-    */
-    const DYNAMIC_GROUP = 'DYNAMIC';
+    /**
+     * Define constant name of dynamic group
+     *
+     * @var string
+     */
+    public const DYNAMIC_GROUP = 'DYNAMIC';
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = "plugin_glpiinventory_group";
 
-   /**
-    * Define the array of itemtype allowed in static groups
-    *
-    * @var array
-    */
+    /**
+     * Define the array of itemtype allowed in static groups
+     *
+     * @var array
+     */
     protected $static_group_types = ['Computer'];
 
-   /**
-    * We activate the history.
-    *
-    * @var boolean
-    */
+    /**
+     * We activate the history.
+     *
+     * @var boolean
+     */
     public $dohistory = true;
 
     public array $grouptypes;
 
 
-   /**
-    * __contruct function used to define the 2 types of groups
-    */
+    /**
+     * __contruct function used to define the 2 types of groups
+     */
     public function __construct()
     {
         $this->grouptypes = [
             self::STATIC_GROUP  => __('Static group', 'glpiinventory'),
-            self::DYNAMIC_GROUP => __('Dynamic group', 'glpiinventory')
+            self::DYNAMIC_GROUP => __('Dynamic group', 'glpiinventory'),
         ];
     }
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Inventory group', 'Inventory groups', $nb, 'glpiinventory');
     }
 
 
-   /**
-    * Define tabs to display on form page
-    *
-    * @param array $options
-    * @return array containing the tabs name
-    */
+    /**
+     * Define tabs to display on form page
+     *
+     * @param array $options
+     * @return array containing the tabs name
+     */
     public function defineTabs($options = [])
     {
         $ong = [];
@@ -134,21 +134,21 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             && is_numeric($_GET['id'])
         ) {
             $pfTaskjob = new PluginGlpiinventoryTaskjob();
-            $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . (int)$_GET['id'] . '"%']]);
+            $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . (int) $_GET['id'] . '"%']]);
             $count = count($data);
         }
         return $count;
     }
 
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         global $DB;
@@ -176,21 +176,21 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                     'glpi_plugin_glpiinventory_tasks.id AS id',
                     'glpi_plugin_glpiinventory_tasks.name AS tname',
                     'glpi_plugin_glpiinventory_tasks.is_active',
-                    'glpi_plugin_glpiinventory_taskjobs.method'
+                    'glpi_plugin_glpiinventory_taskjobs.method',
                 ],
                 'FROM' => 'glpi_plugin_glpiinventory_taskjobs',
                 'LEFT JOIN' => [
                     'glpi_plugin_glpiinventory_tasks' => [
                         'ON' => [
                             'glpi_plugin_glpiinventory_tasks' => 'id',
-                            'glpi_plugin_glpiinventory_taskjobs' => 'plugin_glpiinventory_tasks_id'
-                        ]
-                    ]
+                            'glpi_plugin_glpiinventory_taskjobs' => 'plugin_glpiinventory_tasks_id',
+                        ],
+                    ],
                 ],
                 'WHERE' => [
-                    'actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . (int)$_GET['id'] . '"%']
+                    'actors' => ['LIKE', '%"PluginGlpiinventoryDeployGroup":"' . (int) $_GET['id'] . '"%'],
                 ],
-                'ORDER' => 'glpi_plugin_glpiinventory_tasks.name'
+                'ORDER' => 'glpi_plugin_glpiinventory_tasks.name',
             ]);
 
             foreach ($iterator as $row) {
@@ -213,12 +213,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Get the massive actions for this object
-    *
-    * @param object|null $checkitem
-    * @return array list of actions
-    */
+    /**
+     * Get the massive actions for this object
+     *
+     * @param object|null $checkitem
+     * @return array list of actions
+     */
     public function getSpecificMassiveActions($checkitem = null)
     {
         $actions = [];
@@ -228,12 +228,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Display form related to the massive action selected
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @return boolean
-    */
+    /**
+     * Display form related to the massive action selected
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @return boolean
+     */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         switch ($ma->getAction()) {
@@ -253,13 +253,13 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Execution code for massive action
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @param CommonDBTM $item item on which execute the code
-    * @param array $ids list of ID on which execute the code
-    */
+    /**
+     * Execution code for massive action
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @param CommonDBTM $item item on which execute the code
+     * @param array $ids list of ID on which execute the code
+     */
     public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
@@ -283,7 +283,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                             $values = [
                                 'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
                                 'itemtype' => 'Computer',
-                                'items_id' => $id
+                                'items_id' => $id,
                             ];
                             $group_item->add($values);
                             $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
@@ -310,7 +310,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                             $values = [
                                 'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
                                 'itemtype' => 'Computer',
-                                'items_id' => $id
+                                'items_id' => $id,
                             ];
                             if ($group_item->getFromDBByCrit($values)) {
                                 $group_item->deleteByCriteria($values);
@@ -330,7 +330,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                             //set action massive ok for this item
                             $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                         } else {
-                          // KO
+                            // KO
                             $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                         }
                     }
@@ -369,11 +369,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Display title of the page
-    *
-    * @global array $CFG_GLPI
-    */
+    /**
+     * Display title of the page
+     *
+     * @global array $CFG_GLPI
+     */
     public function title()
     {
         global $CFG_GLPI;
@@ -394,13 +394,13 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Display form
-    *
-    * @param integer $ID
-    * @param array $options
-    * @return true
-    */
+    /**
+     * Display form
+     *
+     * @param integer $ID
+     * @param array $options
+     * @return true
+     */
     public function showForm($ID, array $options = [])
     {
 
@@ -431,11 +431,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
+    /**
+     * Get search function for the class
+     *
+     * @return array
+     */
     public function rawSearchOptions()
     {
 
@@ -452,7 +452,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             'field'         => 'name',
             'name'          => __('Name'),
             'datatype'      => 'itemlink',
-            'massiveaction' => false
+            'massiveaction' => false,
         ];
 
         $tab[] = [
@@ -469,36 +469,36 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Check if this group is a dynamic group or not
-    *
-    * @return boolean
-    */
+    /**
+     * Check if this group is a dynamic group or not
+     *
+     * @return boolean
+     */
     public function isDynamicGroup()
     {
         return (isset($this->fields['type']) && $this->fields['type'] == self::DYNAMIC_GROUP);
     }
 
 
-   /**
-    * Check if this group is a static group or not
-    *
-    * @return boolean
-    */
+    /**
+     * Check if this group is a static group or not
+     *
+     * @return boolean
+     */
     public function isStaticGroup()
     {
         return ($this->fields['type'] == self::STATIC_GROUP);
     }
 
 
-   /**
-    * Get a specific value to display
-    *
-    * @param string $field
-    * @param string|array $values
-    * @param array $options
-    * @return string
-    */
+    /**
+     * Get a specific value to display
+     *
+     * @param string $field
+     * @param string|array $values
+     * @param array $options
+     * @return string
+     */
     public static function getSpecificValueToDisplay($field, $values, array $options = [])
     {
         $group = new self();
@@ -512,13 +512,13 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Display dropdown to select dynamic of static group
-    *
-    * @param string $name
-    * @param string $value
-    * @return string
-    */
+    /**
+     * Display dropdown to select dynamic of static group
+     *
+     * @param string $name
+     * @param string $value
+     * @return string
+     */
     public static function dropdownGroupType($name = 'type', $value = 'STATIC')
     {
         $group = new self();
@@ -538,15 +538,15 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Get specific value to select
-    *
-    * @param string $field
-    * @param string $name
-    * @param string|array $values
-    * @param array $options
-    * @return string
-    */
+    /**
+     * Get specific value to select
+     *
+     * @param string $field
+     * @param string $name
+     * @param string|array $values
+     * @param array $options
+     * @return string
+     */
     public static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
     {
 
@@ -562,14 +562,14 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-   * Get the URL to pass to the search engine
-   * @since 9.2
-   *
-   * @param integer $deploygroup_id the ID of the group
-   * @param boolean $is_dynamic is the group dynamic or static
-   * @return string the target
-   */
+    /**
+    * Get the URL to pass to the search engine
+    * @since 9.2
+    *
+    * @param integer $deploygroup_id the ID of the group
+    * @param boolean $is_dynamic is the group dynamic or static
+    * @return string the target
+    */
     public static function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false)
     {
         $target = PluginGlpiinventoryDeployGroup::getFormURLWithID($deploygroup_id);
@@ -583,14 +583,14 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Show criteria to search computers
-    *
-    * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
-    * @param array $p
-    *
-    * @return void
-    */
+    /**
+     * Show criteria to search computers
+     *
+     * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
+     * @param array $p
+     *
+     * @return void
+     */
     public static function showCriteria(PluginGlpiinventoryDeployGroup $item, $p)
     {
 
@@ -603,7 +603,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             $p['addhidden'] = [
                 'plugin_glpiinventory_deploygroups_id' => $item->getID(),
                 'id'                                     => $item->getID(),
-                'start'                                  => 0
+                'start'                                  => 0,
             ];
         }
         if ($is_dynamic) {
@@ -622,13 +622,13 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Get targets for the group
-    *
-    * @param integer $groups_id id of the group
-    * @param bool    $use_cache retrieve agents from cache or not (only for dynamic groups)
-    * @return array list of computers
-    */
+    /**
+     * Get targets for the group
+     *
+     * @param integer $groups_id id of the group
+     * @param bool    $use_cache retrieve agents from cache or not (only for dynamic groups)
+     * @return array list of computers
+     */
     public static function getTargetsForGroup($groups_id, $use_cache = false)
     {
         $results = [];
@@ -639,7 +639,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             foreach (
                 $staticgroup->find(
                     ['plugin_glpiinventory_deploygroups_id' => $groups_id,
-                        'itemtype'                               => 'Computer'
+                        'itemtype'                               => 'Computer',
                     ]
                 ) as $tmpgroup
             ) {
@@ -655,15 +655,15 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Get search parameters as an array
-    *
-    * @global object $DB
-    * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
-    * @param boolean $check_post_values
-    * @param boolean $getAll
-    * @return array
-    */
+    /**
+     * Get search parameters as an array
+     *
+     * @global object $DB
+     * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
+     * @param boolean $check_post_values
+     * @param boolean $getAll
+     * @return array
+     */
     public static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false)
     {
         global $DB;
@@ -680,14 +680,14 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $is_dynamic = $group->isDynamicGroup();
         $computers_params = [];
 
-       //Check criteria from DB
+        //Check criteria from DB
         if (!$check_post_values) {
             if (isset($group->fields['type']) && $group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
                 unset($_SESSION['glpisearch']['Computer']);
                 $iterator = $DB->request([
                     'SELECT' => 'fields_array',
                     'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
-                    'WHERE'  => ['plugin_glpiinventory_deploygroups_id' => $group->getID()]
+                    'WHERE'  => ['plugin_glpiinventory_deploygroups_id' => $group->getID()],
                 ]);
 
                 if (count($iterator) > 0) {
@@ -723,9 +723,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Clean when purge a deploy group
-    */
+    /**
+     * Clean when purge a deploy group
+     */
     public function cleanDBOnPurge()
     {
         $dynamic_group = new PluginGlpiinventoryDeployGroup_Dynamicdata();
@@ -742,11 +742,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-   /**
-    * Display for a computer the groups where it is
-    *
-    * @param integer $computers_id
-    */
+    /**
+     * Display for a computer the groups where it is
+     *
+     * @param integer $computers_id
+     */
     public function showForComputer($computers_id)
     {
         global $DB;
@@ -757,7 +757,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             Html::openMassiveActionsForm('mass' . PluginGlpiinventoryDeployGroup_Staticdata::class . $rand);
             $massiveactionparams = [
                 'num_displayed' => $_SESSION['glpilist_limit'],
-                'container'     => 'mass' . PluginGlpiinventoryDeployGroup_Staticdata::class . $rand
+                'container'     => 'mass' . PluginGlpiinventoryDeployGroup_Staticdata::class . $rand,
             ];
             Html::showMassiveActions($massiveactionparams);
         }

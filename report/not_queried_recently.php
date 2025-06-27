@@ -60,7 +60,7 @@ echo "<td>";
 Dropdown::showNumber("nbdays", [
     'value' => $nbdays,
     'min'   => 1,
-    'max'   => 365
+    'max'   => 365,
 ]);
 echo "</td>";
 echo "</tr>";

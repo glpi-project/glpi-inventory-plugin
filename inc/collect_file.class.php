@@ -42,12 +42,12 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
 {
     public $collect_type = 'file';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Found file', 'Found files', $nb, 'glpiinventory');
@@ -68,7 +68,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
             __("Name", "glpiinventory"),
             __("Iname", "glpiinventory"),
             __("Type", "glpiinventory"),
-            __("Action")
+            __("Action"),
         ];
     }
 
@@ -99,7 +99,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
             $row['filter_checksumsha2'],
             $row['filter_name'],
             $row['filter_iname'],
-            $type
+            $type,
         ];
     }
 
@@ -110,7 +110,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         Dropdown::showNumber('limit', [
             'min'   => 1,
             'max'   => 100,
-            'value' => 5
+            'value' => 5,
         ]);
         echo "</td>";
         echo "</tr>\n";
@@ -151,7 +151,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
             'none'    => __('Disabled', 'glpiinventory'),
             'equals'  => '=',
             'greater' => '>',
-            'lower'   => '<'
+            'lower'   => '<',
         ]);
         echo "<input type='text' name='size' value='' />";
         echo "</td>";
@@ -180,7 +180,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         Dropdown::showFromArray('filter_nametype', [
             'none'  => __('Disabled', 'glpiinventory'),
             'iname'  => __('Non sentitive case', 'glpiinventory'),
-            'name' => __('Sentitive case', 'glpiinventory')
+            'name' => __('Sentitive case', 'glpiinventory'),
         ]);
         echo "<input type='text' name='filter_name' value='' />";
         echo "</td>";
@@ -190,18 +190,18 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         echo "<td>";
         Dropdown::showFromArray('type', [
             'file' => __('File', 'glpiinventory'),
-            'dir'  => __('Folder', 'glpiinventory')
+            'dir'  => __('Folder', 'glpiinventory'),
         ]);
         echo "</td>";
     }
 
 
-   /**
-    * After purge item, delete collect files
-    */
+    /**
+     * After purge item, delete collect files
+     */
     public function post_purgeItem()
     {
-       // Delete all File
+        // Delete all File
         $pfCollectFileContent = new PluginGlpiinventoryCollect_File_Content();
         $items = $pfCollectFileContent->find(['plugin_glpiinventory_collects_files_id' => $this->fields['id']]);
         foreach ($items as $item) {

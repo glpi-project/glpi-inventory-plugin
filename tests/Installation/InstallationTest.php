@@ -39,19 +39,19 @@ class InstallationTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // clean log files
+        // clean log files
         file_put_contents("../../files/_log/php-errors.log", '');
         file_put_contents("../../files/_log/sql-errors.log", '');
     }
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testInstall()
     {
         global $DB;
 
-       // Delete if Table of FusionInventory or Tracker yet in DB
+        // Delete if Table of FusionInventory or Tracker yet in DB
         $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
         $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
@@ -88,7 +88,7 @@ class InstallationTest extends TestCase
         $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory";
         exec($commandActivate, $outputActivate, $returncodeActivate);
 
-       // Check if errors in logs
+        // Check if errors in logs
         $GLPIlog = new GLPIlogs();
         $GLPIlog->testSQLlogs();
         $GLPIlog->testPHPlogs();

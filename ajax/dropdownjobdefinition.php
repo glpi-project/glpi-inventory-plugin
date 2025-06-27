@@ -48,8 +48,8 @@ if (!empty($type) && !empty($actortype)) {
     switch ($type) {
         case "user":
             $right = 'all';
-           /// TODO : review depending of itil object
-           // Only steal or own ticket whit empty assign
+            /// TODO : review depending of itil object
+            // Only steal or own ticket whit empty assign
             if ($actortype == 'assign') {
                 $right = "own_ticket";
                 if (!$item->canAssign()) {
@@ -60,7 +60,7 @@ if (!empty($type) && !empty($actortype)) {
             $options = ['name'        => '_itil_' . $actortype . '[users_id]',
                 'entity'      => $entity_restrict,
                 'right'       => $right,
-                'ldap_import' => true
+                'ldap_import' => true,
             ];
             $withemail = false;
             if ($CFG_GLPI["use_mailing"]) {
@@ -68,14 +68,14 @@ if (!empty($type) && !empty($actortype)) {
                 $withemail = (!empty($allow_email) ? $allow_email : false);
                 $paramscomment = ['value'       => '__VALUE__',
                     'allow_email' => $withemail,
-                    'field'       => "_itil_" . $actortype
+                    'field'       => "_itil_" . $actortype,
                 ];
-               // Fix rand value
+                // Fix rand value
                 $options['rand']     = $rand;
                 $options['toupdate'] = ['value_fieldname' => 'value',
                     'to_update'  => "notif_user_$rand",
                     'url'        => $CFG_GLPI["root_doc"] . "/ajax/uemailUpdate.php",
-                    'moreparams' => $paramscomment
+                    'moreparams' => $paramscomment,
                 ];
             }
             $rand = User::dropdown($options);
@@ -96,13 +96,13 @@ if (!empty($type) && !empty($actortype)) {
             $cond = $actortype == 'assign' ? 'is_assign' : 'is_requester';
             Dropdown::show('Group', ['name'      => '_itil_' . $actortype . '[groups_id]',
                 'entity'    => $entity_restrict,
-                'condition' => [$cond => 1]
+                'condition' => [$cond => 1],
             ]);
             break;
 
         case "supplier":
             Dropdown::show('Supplier', ['name'   => 'suppliers_id_assign',
-                'entity' => $entity_restrict
+                'entity' => $entity_restrict,
             ]);
             break;
     }

@@ -42,35 +42,35 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
 {
-   /**
-    * Is this use can create a deploy task job
-    *
-    * @return boolean
-    */
+    /**
+     * Is this use can create a deploy task job
+     *
+     * @return boolean
+     */
     public static function canCreate()
     {
         return true;
     }
 
 
-   /**
-    * Is this use can view a deploy task job
-    *
-    * @return boolean
-    */
+    /**
+     * Is this use can view a deploy task job
+     *
+     * @return boolean
+     */
     public static function canView()
     {
         return true;
     }
 
 
-   /**
-    * Get all data
-    *
-    * @global object $DB
-    * @param array $params
-    * @return string in JSON format
-    */
+    /**
+     * Get all data
+     *
+     * @global object $DB
+     * @param array $params
+     * @return string in JSON format
+     */
     public function getAllDatas($params)
     {
         global $DB;
@@ -81,8 +81,8 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             'FROM'   => $this->getTable(),
             'WHERE'  => [
                 'plugin_glpiinventory_deploytasks_id' => $tasks_id,
-                'method'                              => 'deployinstall'
-            ]
+                'method'                              => 'deployinstall',
+            ],
         ]);
 
         $json  = [];
@@ -121,12 +121,12 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     }
 
 
-   /**
-    * Save data
-    *
-    * @global object $DB
-    * @param array $params
-    */
+    /**
+     * Save data
+     *
+     * @global object $DB
+     * @param array $params
+     */
     public function saveDatas($params)
     {
         global $DB;
@@ -134,15 +134,15 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
         $tasks_id = $params['tasks_id'];
         $tasks = json_decode($params['tasks']);
 
-       //remove old jobs from task
+        //remove old jobs from task
         $this->deleteByCriteria(['plugin_glpiinventory_deploytasks_id' => $tasks_id], true);
 
-       //get plugin id
+        //get plugin id
         $plug = new Plugin();
         $plug->getFromDBbyDir('fusinvdeploy');
         $plugins_id = $plug->getField('id');
 
-       //insert new rows
+        //insert new rows
         $sql_tasks = [];
         $i = 0;
 
@@ -161,7 +161,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                 'retry_nb'                                => $qparam,
                 'retry_time'                              => $qparam,
                 'periodicity_type'                        => $qparam,
-                'periodicity_count'                       => $qparam
+                'periodicity_count'                       => $qparam,
             ]
         );
         $stmt = $DB->prepare($query);
@@ -174,8 +174,8 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             //    $task['action_type'] => $task['action_selection'])));
             $action = exportArrayToDB($task['action']);
             $definition = exportArrayToDB([[
-                'PluginGlpiinventoryDeployPackage' => $task['package_id']
-            ]
+                'PluginGlpiinventoryDeployPackage' => $task['package_id'],
+            ],
             ]);
 
             $job_name = "job_" . $tasks_id . "_" . $i;
@@ -204,11 +204,11 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     }
 
 
-   /**
-    * Get the different type of task job actions
-    *
-    * @return array
-    */
+    /**
+     * Get the different type of task job actions
+     *
+     * @return array
+     */
     public static function getActionTypes()
     {
 
@@ -224,18 +224,18 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             [
                 'name' => __('Groups of computers', 'glpiinventory'),
                 'value' => 'PluginGlpiinventoryDeployGroup',
-            ]
+            ],
         ];
     }
 
 
-   /**
-    * Get actions
-    *
-    * @global object $DB
-    * @param array $params
-    * @return string in JSON format
-    */
+    /**
+     * Get actions
+     *
+     * @global object $DB
+     * @param array $params
+     * @return string in JSON format
+     */
     public static function getActions($params)
     {
         global $DB;
@@ -247,7 +247,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
         switch ($params['get']) {
             case "type":
                 $res = json_encode([
-                    'action_types' => self::getActionTypes()
+                    'action_types' => self::getActionTypes(),
                 ]);
                 break;
             case "selection":
@@ -263,7 +263,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                             'SELECT' => ['id', 'name'],
                             'FROM' => 'glpi_computers',
                             'WHERE' => $where,
-                            'ORDER' => 'name ASC'
+                            'ORDER' => 'name ASC',
                         ]);
 
                         foreach ($iterator as $row) {

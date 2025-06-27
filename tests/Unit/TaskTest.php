@@ -45,9 +45,9 @@ class TaskTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();
@@ -55,7 +55,7 @@ class TaskTest extends TestCase
 
         $input = ['name' => 'MyTask', 'entities_id' => 0,
             'reprepare_if_successful' => 1, 'comment' => 'MyComments',
-            'is_active' => 1
+            'is_active' => 1,
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertGreaterThan(0, $tasks_id);
@@ -67,7 +67,7 @@ class TaskTest extends TestCase
         $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
             'name'        => 'deploy',
             'method'      => 'deploy',
-            'actors'      => '[{"PluginGlpiinventoryDeployGroup":"1"}]'
+            'actors'      => '[{"PluginGlpiinventoryDeployGroup":"1"}]',
         ];
         $taskjobs_id = $pfTaskJob->add($input);
         $this->assertGreaterThan(0, $taskjobs_id);
@@ -80,9 +80,9 @@ class TaskTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function duplicateTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();
@@ -116,9 +116,9 @@ class TaskTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function deleteTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();

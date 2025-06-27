@@ -45,6 +45,6 @@ $id = filter_input(INPUT_POST, "id");
 if (!empty($id) and $id > 0) {
     Dropdown::show('PluginGlpiinventoryTaskjob', [
         'name' => "taskjobs_id",
-        'condition' => ['plugin_glpiinventory_tasks_id' => $id]
+        'condition' => ['plugin_glpiinventory_tasks_id' => $id],
     ]);
 }

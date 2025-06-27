@@ -68,22 +68,22 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
                             __("Deploy module has been disabled for this agent", 'glpiinventory')
                         );
                     }
-                     $response = "{}";
+                    $response = "{}";
                 } else {
                     $package      = new PluginGlpiinventoryDeployPackage();
                     $deploycommon = new PluginGlpiinventoryDeployCommon();
 
-                   //sort taskjobs by key id
-                   /**
-                    * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
-                    * manipulated by drag and drop (cf. Task::getTaskjobsForAgent() ).
-                    */
-                   ////start of json response
+                    //sort taskjobs by key id
+                    /**
+                     * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
+                     * manipulated by drag and drop (cf. Task::getTaskjobsForAgent() ).
+                     */
+                    ////start of json response
                     $order                  = new stdClass();
                     $order->jobs            = [];
                     $order->associatedFiles = new stdClass();
 
-                   ////aggregate json orders in a single json response
+                    ////aggregate json orders in a single json response
                     foreach ($taskjobstates as $taskjobstate) {
                         // TODO: The run() method should be renamed as getData() and moved to the Package
                         // class since we want package configuration (Order class may be useless ... needs
@@ -102,22 +102,22 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
                             $jobstate_order
                         );
 
-                         // Append order to the final json
-                         $order->jobs[] = $jobstate_order['job'];
+                        // Append order to the final json
+                        $order->jobs[] = $jobstate_order['job'];
 
-                         // Update associated files list
+                        // Update associated files list
                         foreach ($jobstate_order['associatedFiles'] as $hash => $associatedFiles) {
                             if (!property_exists($order->associatedFiles, $hash)) {
                                 $order->associatedFiles->$hash = $associatedFiles;
                             }
                         }
-                         $taskjobstate->changeStatus(
-                             $taskjobstate->fields['id'],
-                             $taskjobstate::SERVER_HAS_SENT_DATA
-                         );
+                        $taskjobstate->changeStatus(
+                            $taskjobstate->fields['id'],
+                            $taskjobstate::SERVER_HAS_SENT_DATA
+                        );
                     }
 
-                   // return an empty dictionnary if there are no jobs.
+                    // return an empty dictionnary if there are no jobs.
                     if (count($order->jobs) == 0) {
                         $response = "{}";
                     } else {
@@ -132,7 +132,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
         PluginGlpiinventoryDeployFilepart::httpSendFile(Sanitizer::sanitize(filter_input(INPUT_GET, "file")));
         $DB->close();
         exit;
-      break;
+        break;
 
     case 'setStatus':
         $partjob_mapping = [
@@ -146,7 +146,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
 
         $params = [
             'machineid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid")),
-            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid"))
+            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")),
         ];
 
         if (filter_input(INPUT_GET, "status") == 'ko') {
@@ -166,7 +166,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
                 filter_input(INPUT_GET, "msg") === 'job successfully completed'
                 || filter_input(INPUT_GET, "msg") === 'job skipped'
             ) {
-               //Job has ended  or has been skipped and status should be ok
+                //Job has ended  or has been skipped and status should be ok
                 $params['code'] = 'ok';
                 $params['msg']  = filter_input(INPUT_GET, "msg");
             } else {
@@ -199,33 +199,33 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
             $params['msg'] = Sanitizer::sanitize($params['msg']);
         }
 
-       //Generic method to update logs
+        //Generic method to update logs
         PluginGlpiinventoryCommunicationRest::updateLog($params);
         break;
 
     case 'setUserEvent':
         $params = [
             'machineid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid")),
-            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid"))
+            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")),
         ];
 
-       //Action : postpone, cancel, continue
+        //Action : postpone, cancel, continue
         $behavior = Sanitizer::sanitize(filter_input(INPUT_GET, "behavior"));
 
-       //before, after_download, after_download_failure,
-       //after_failure, after
+        //before, after_download, after_download_failure,
+        //after_failure, after
         $type    = Sanitizer::sanitize(filter_input(INPUT_GET, "type"));
 
-       //on_nouser, on_ok, on_cancel, on_abort, on_retry, on_ignore,
-       //on_yes, on_no, on_tryagain, on_continue, on_timeout, on_async,
-       //on_multiusers
+        //on_nouser, on_ok, on_cancel, on_abort, on_retry, on_ignore,
+        //on_yes, on_no, on_tryagain, on_continue, on_timeout, on_async,
+        //on_multiusers
         $event   = Sanitizer::sanitize(filter_input(INPUT_GET, "event"));
 
-       //The user who did the interaction
+        //The user who did the interaction
         $user    = Sanitizer::sanitize(filter_input(INPUT_GET, "user"));
 
-       //Process response if an agent provides a behavior, a type and an event
-       //the user parameter is not mandatory
+        //Process response if an agent provides a behavior, a type and an event
+        //the user parameter is not mandatory
         if (
             $behavior !== false && $type !== false
             && $event !== false && $user !== false
@@ -250,8 +250,8 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
                     break;
 
                 case PluginGlpiinventoryDeployUserinteraction::RESPONSE_POSTPONE:
-                     $params['code'] = 'running';
-                     $postpone       = true;
+                    $params['code'] = 'running';
+                    $postpone       = true;
                     break;
 
                 case PluginGlpiinventoryDeployUserinteraction::RESPONSE_BAD_EVENT:
@@ -259,10 +259,10 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
                     break;
             }
 
-           //Generic method to update logs
+            //Generic method to update logs
             PluginGlpiinventoryCommunicationRest::updateLog($params);
 
-           //If needed : cancel or postpone the job
+            //If needed : cancel or postpone the job
             if ($cancel || $postpone) {
                 $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
                 $pfTaskjobstate->getFromDBByUniqID($params['uuid']);
@@ -278,5 +278,5 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
 if ($response !== false) {
     echo $response;
 } else {
-    echo json_encode((object)[]);
+    echo json_encode((object) []);
 }

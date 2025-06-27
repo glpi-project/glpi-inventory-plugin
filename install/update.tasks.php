@@ -42,9 +42,9 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
 {
     global $DB;
 
-   /*
-    * Table glpi_plugin_glpiinventory_tasks
-    */
+    /*
+     * Table glpi_plugin_glpiinventory_tasks
+     */
     $table = [];
     $table['name'] = 'glpi_plugin_glpiinventory_tasks';
     $table['oldname'] = [];
@@ -52,43 +52,43 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
     $table['fields']  = [
         'id' => [
             'type'    => 'autoincrement',
-            'value'   => ''
+            'value'   => '',
         ],
         'entities_id' => [
             'type'    => 'int unsigned NOT NULL DEFAULT 0',
-            'value'   => null
+            'value'   => null,
         ],
         'name' => [
             'type'    => 'string',
-            'value'   => null
+            'value'   => null,
         ],
         'date_creation' => [
             'type'    => 'datetime',
-            'value'   => null
+            'value'   => null,
         ],
         'comment'    => [
             'type'    => 'text',
-            'value'   => null
+            'value'   => null,
         ],
         'is_active'  => [
             'type'    => 'bool',
-            'value'   => null
+            'value'   => null,
         ],
         'datetime_start' => [
             'type'    => 'datetime',
-            'value'   => null
+            'value'   => null,
         ],
         'datetime_end' => [
             'type'    => 'datetime',
-            'value'   => null
+            'value'   => null,
         ],
         'plugin_glpiinventory_timeslots_prep_id' => [
             'type'    => 'int unsigned NOT NULL DEFAULT 0',
-            'value'   => null
+            'value'   => null,
         ],
         'plugin_glpiinventory_timeslots_exec_id' => [
             'type'    => 'int unsigned NOT NULL DEFAULT 0',
-            'value'   => null
+            'value'   => null,
         ],
     ];
 
@@ -98,12 +98,12 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
         "periodicity_count",
         "periodicity_type",
         "execution_id",
-        "is_advancedmode"
+        "is_advancedmode",
     ];
 
     $table['renamefields'] = [
         'date_scheduled'                      => 'datetime_start',
-        'plugin_glpiinventory_timeslots_id' => 'plugin_glpiinventory_timeslots_prep_id'
+        'plugin_glpiinventory_timeslots_id' => 'plugin_glpiinventory_timeslots_prep_id',
     ];
 
     $table['keys']   = [];
@@ -116,9 +116,9 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
 
     migratePluginTables($migration, $table);
 
-   /*
-    * Table glpi_plugin_glpiinventory_taskjobs
-    */
+    /*
+     * Table glpi_plugin_glpiinventory_taskjobs
+     */
     $table = [];
     $table['name'] = 'glpi_plugin_glpiinventory_taskjobs';
     $table['oldname'] = [];
@@ -133,109 +133,109 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
         'periodicity_count',
         'periodicity_type',
         'execution_id',
-        'ranking'
+        'ranking',
     ];
 
     $table['renamefields'] = [
         'definition' => 'targets',
-        'action' => 'actors'
+        'action' => 'actors',
     ];
 
     $table['fields'] = [
         'id' => [
             'type'    => 'autoincrement',
-            'value'   => ''
+            'value'   => '',
         ],
         'plugin_glpiinventory_tasks_id' => [
             'type'    => 'int unsigned NOT NULL DEFAULT 0',
-            'value'   => null
+            'value'   => null,
         ],
         'entities_id' => [
             'type'    => 'int unsigned NOT NULL DEFAULT 0',
-            'value'   => null
+            'value'   => null,
         ],
         'name' => [
             'type'    => 'string',
-            'value'   => null
+            'value'   => null,
         ],
         'date_creation' => [
             'type'    => 'datetime',
-            'value'   => null
+            'value'   => null,
         ],
         'method' => [
             'type'    => 'string',
-            'value'   => null
+            'value'   => null,
         ],
         'targets' => [
             'type'    => 'text',
-            'value'   => null
+            'value'   => null,
         ],
         'actors' => [
             'type'    => 'text',
-            'value'   => null
+            'value'   => null,
         ],
         'comment' => [
             'type'    => 'text',
-            'value'   => null
-        ]
+            'value'   => null,
+        ],
     ];
 
     $table['keys']   = [];
     $table['keys'][] = [
         'field' => 'plugin_glpiinventory_tasks_id',
-        'name' => '', 'type' => 'INDEX'
+        'name' => '', 'type' => 'INDEX',
     ];
     $table['keys'][] = [
         'field' => 'entities_id',
         'name' => '',
-        'type' => 'INDEX'
+        'type' => 'INDEX',
     ];
     $table['keys'][] = [
         'field' => 'method',
         'name' => '',
-        'type' => 'INDEX'
+        'type' => 'INDEX',
     ];
 
     $table['oldkeys'] = [
         'plugins_id',
         'users_id',
-        'rescheduled_taskjob_id'
+        'rescheduled_taskjob_id',
     ];
 
     migratePluginTables($migration, $table);
 
-   // * Update method name changed
+    // * Update method name changed
     $DB->update(
         'glpi_plugin_glpiinventory_taskjobs',
         [
-            'method' => 'InventoryComputerESX'
+            'method' => 'InventoryComputerESX',
         ],
         [
-            'method' => 'ESX'
+            'method' => 'ESX',
         ]
     );
     $DB->update(
         'glpi_plugin_glpiinventory_taskjobs',
         [
-            'method' => 'networkinventory'
+            'method' => 'networkinventory',
         ],
         [
-            'method' => 'snmpinventory'
+            'method' => 'snmpinventory',
         ]
     );
     $DB->update(
         'glpi_plugin_glpiinventory_taskjobs',
         [
-            'method' => 'networkdiscovery'
+            'method' => 'networkdiscovery',
         ],
         [
-            'method' => 'netdiscovery'
+            'method' => 'netdiscovery',
         ]
     );
 
-   /*
-    * Table glpi_plugin_glpiinventory_taskjoblogs
-    */
+    /*
+     * Table glpi_plugin_glpiinventory_taskjoblogs
+     */
     $table = [];
     $table['name'] = 'glpi_plugin_glpiinventory_taskjoblogs';
     $table['oldname'] = [];
@@ -243,53 +243,53 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
     $table['fields']  = [
         'id' => [
             'type' => 'BIGINT unsigned NOT NULL AUTO_INCREMENT',
-            'value' => ''
+            'value' => '',
         ],
         'plugin_glpiinventory_taskjobstates_id' => [
             'type' => 'int unsigned NOT NULL DEFAULT 0',
-            'value' => null
+            'value' => null,
         ],
         'date' => [
             'type' => 'datetime',
-            'value' => null
+            'value' => null,
         ],
         'items_id' => [
             'type' => 'int unsigned NOT NULL DEFAULT 0',
-            'value' => null
+            'value' => null,
         ],
         'itemtype' => [
             'type' => 'varchar(100) DEFAULT NULL',
-            'value' => null
+            'value' => null,
         ],
         'state' => [
             'type' => 'integer',
-            'value' => null
+            'value' => null,
         ],
         'comment' => [
             'type' => 'text',
-            'value' => null
-        ]
+            'value' => null,
+        ],
     ];
 
     $table['oldfields']  = [];
 
     $table['renamefields'] = [
-        'plugin_glpiinventory_taskjobstatus_id' => 'plugin_glpiinventory_taskjobstates_id'
+        'plugin_glpiinventory_taskjobstatus_id' => 'plugin_glpiinventory_taskjobstates_id',
     ];
 
     $table['keys']   = [
         ['field' => ['plugin_glpiinventory_taskjobstates_id', 'state', 'date'],
-            'name' => 'plugin_glpiinventory_taskjobstates_id', 'type' => 'INDEX'
-        ]
+            'name' => 'plugin_glpiinventory_taskjobstates_id', 'type' => 'INDEX',
+        ],
     ];
 
     $table['oldkeys'] = [
-        'plugin_glpiinventory_taskjobstatus_id'
+        'plugin_glpiinventory_taskjobstatus_id',
     ];
 
     migratePluginTables($migration, $table);
 
-   // rename comments for new lang system (gettext in 0.84)
+    // rename comments for new lang system (gettext in 0.84)
     $texts = [
         'fusinvsnmp::1' => 'devicesqueried',
         'fusinvsnmp::2' => 'devicesfound',
@@ -300,21 +300,21 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
         'fusinvsnmp::7' => 'detail',
         'fusioninventory::1' => 'badtoken',
         'fusioninventory::2' => 'agentcrashed',
-        'fusioninventory::3' => 'importdenied'
+        'fusioninventory::3' => 'importdenied',
     ];
 
     $iterator = $DB->request([
         'FROM'   => $table['name'],
-        'WHERE'  => ['comment' => ['LIKE', '%==%']]
+        'WHERE'  => ['comment' => ['LIKE', '%==%']],
     ]);
     if (count($iterator)) {
         $update = $DB->buildUpdate(
             $table['name'],
             [
-                'comment'   => new \QueryParam()
+                'comment'   => new \QueryParam(),
             ],
             [
-                'id'        => new \QueryParam()
+                'id'        => new \QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -334,82 +334,82 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
         mysqli_stmt_close($stmt);
     }
 
-   /*
-    * Table glpi_plugin_glpiinventory_taskjobstates
-    */
+    /*
+     * Table glpi_plugin_glpiinventory_taskjobstates
+     */
     $table = [];
     $table['name'] = 'glpi_plugin_glpiinventory_taskjobstates';
     $table['oldname'] = [
-        'glpi_plugin_glpiinventory_taskjobstatus'
+        'glpi_plugin_glpiinventory_taskjobstatus',
     ];
 
     $table['fields'] = [
         'id' => [
             'type' => 'bigint unsigned not null auto_increment',
-            'value' => '0'
+            'value' => '0',
         ],
         'plugin_glpiinventory_taskjobs_id' => [
             'type' => 'int unsigned NOT NULL DEFAULT 0',
-            'value' => null
+            'value' => null,
         ],
         'items_id' => [
             'type' => 'int unsigned NOT NULL DEFAULT 0',
-            'value' => null
+            'value' => null,
         ],
         'itemtype' => [
             'type' => 'varchar(100) DEFAULT NULL',
-            'value' => null
+            'value' => null,
         ],
         'agents_id' => [
             'type' => 'int unsigned NOT NULL DEFAULT 0',
-            'value' => null
+            'value' => null,
         ],
         'specificity' => [
             'type' => 'text',
-            'value' => null
+            'value' => null,
         ],
         'uniqid' => [
             'type' => 'string',
-            'value' => null
+            'value' => null,
         ],
         'state' => [
             'type' => 'integer',
-            'value' => null
+            'value' => null,
         ],
         'date_start' => [
             'type' => 'datetime',
-            'value' => null
+            'value' => null,
         ],
         'nb_retry' => [
             'type' => 'integer',
-            'value' => 0
+            'value' => 0,
         ],
         'max_retry' => [
             'type' => 'integer',
-            'value' => 1
-        ]
+            'value' => 1,
+        ],
     ];
 
     $table['renamefields'] = [
         'plugin_glpiinventory_agents_id' => 'agents_id',
     ];
     $table['oldfields'] = [
-        'execution_id'
+        'execution_id',
     ];
 
     $table['keys'] = [
         [
             'field' => [
-                'plugin_glpiinventory_taskjobs_id'
+                'plugin_glpiinventory_taskjobs_id',
             ],
-            'name' => '', 'type' => 'INDEX'
+            'name' => '', 'type' => 'INDEX',
         ],
         [
             'field' => [
                 'agents_id',
-                'state'
+                'state',
             ],
-            'name' => '', 'type' => 'INDEX'
+            'name' => '', 'type' => 'INDEX',
         ],
         [
             'field' => [
@@ -418,11 +418,11 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
                 'items_id',
                 'itemtype',
                 'id',
-                'state'
+                'state',
             ],
             'name' => 'plugin_glpiinventory_agents_items_states',
-            'type' => 'INDEX'
-        ]
+            'type' => 'INDEX',
+        ],
 
     ];
     $table['oldkeys'] = [

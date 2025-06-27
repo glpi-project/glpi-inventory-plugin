@@ -35,16 +35,16 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteLinkedObjectsTest extends TestCase
 {
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function IpRangeDeleteConfigSecurity()
     {
 
         $iprange = new PluginGlpiinventoryIPRange();
         $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
 
-       // Delete all IPRanges
+        // Delete all IPRanges
         $items = $iprange->find();
         foreach ($items as $item) {
             $iprange->delete(['id' => $item['id']], true);
@@ -54,7 +54,7 @@ class DeleteLinkedObjectsTest extends TestCase
             'name'        => 'Office',
             'ip_start'    => '192.168.0.1',
             'ip_end'      => '192.168.0.254',
-            'entities_id' => 0
+            'entities_id' => 0,
         ];
         $ipranges_id = $iprange->add($input);
 
@@ -64,7 +64,7 @@ class DeleteLinkedObjectsTest extends TestCase
         $input = [
             'plugin_glpiinventory_ipranges_id' => $ipranges_id,
             'snmpcredentials_id' => 1,
-            'rank' => 1
+            'rank' => 1,
         ];
         $iprange_credentials->add($input);
 

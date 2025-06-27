@@ -38,7 +38,7 @@ class DeployUserinteractionTest extends TestCase
     public static function setUpBeforeClass(): void
     {
 
-       // Delete all packages
+        // Delete all packages
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $items = $pfDeployPackage->find();
         foreach ($items as $item) {
@@ -48,9 +48,9 @@ class DeployUserinteractionTest extends TestCase
 
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetTypeName()
     {
         $this->assertEquals(
@@ -68,9 +68,9 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetTypes()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -79,9 +79,9 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetLabelForAType()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -108,9 +108,9 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetValues()
     {
         $interaction = new PluginGlpiinventoryDeployUserinteraction();
@@ -127,7 +127,7 @@ class DeployUserinteractionTest extends TestCase
             'description_value' => 'text',
             'template_label'    => 'User interaction template&nbsp;<span class=\'red\'>*</span>',
             'template_value'    => 1,
-            'template_type'     => 'dropdown'
+            'template_type'     => 'dropdown',
         ];
         $this->assertEquals($expected, $values);
 
@@ -143,15 +143,15 @@ class DeployUserinteractionTest extends TestCase
             'description_value' => '',
             'template_label'    => 'User interaction template&nbsp;<span class=\'red\'>*</span>',
             'template_value'    => '',
-            'template_type'     => 'dropdown'
+            'template_type'     => 'dropdown',
         ];
         $this->assertEquals($expected, $values);
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetInteractionDescription()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
@@ -182,16 +182,16 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testAdd_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = ['name'        => 'test1',
-            'entities_id' => 0
+            'entities_id' => 0,
         ];
         $packages_id = $pfDeployPackage->add($input);
 
@@ -224,10 +224,10 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testAdd_item
-    */
+    /**
+     * @test
+     * @depends testAdd_item
+     */
     public function testSave_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -251,10 +251,10 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testAdd_item
-    */
+    /**
+     * @test
+     * @depends testAdd_item
+     */
     public function testMove_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -264,7 +264,7 @@ class DeployUserinteractionTest extends TestCase
         $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
         $interaction->move_item(['id'        => $pfDeployPackage->fields['id'],
             'old_index' => 0,
-            'new_index' => 1
+            'new_index' => 1,
         ]);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 2","title":"My title","text":"my text","type":"after","template":0},{"name":"interaction 1","title":"My title","text":"my text","type":"after","template":1}]},"associatedFiles":[]}';
         $json     = $interaction->getJson($pfDeployPackage->fields['id']);
@@ -272,10 +272,10 @@ class DeployUserinteractionTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testAdd_item
-    */
+    /**
+     * @test
+     * @depends testAdd_item
+     */
     public function testRemove_item()
     {
         $_SESSION['glpiactiveentities_string'] = 0;
@@ -284,14 +284,14 @@ class DeployUserinteractionTest extends TestCase
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
         $interaction->remove_item(['packages_id'              => $pfDeployPackage->fields['id'],
-            'userinteractions_entries' => [0 => 'on']
+            'userinteractions_entries' => [0 => 'on'],
         ]);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[{"name":"interaction 1","title":"My title","text":"my text","type":"after","template":1}]},"associatedFiles":[]}';
         $json     = $interaction->getJson($pfDeployPackage->fields['id']);
         $this->assertEquals($expected, $json);
 
         $interaction->remove_item(['packages_id'              => $pfDeployPackage->fields['id'],
-            'userinteractions_entries' => [0 => 'on']
+            'userinteractions_entries' => [0 => 'on'],
         ]);
         $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
         $json     = $interaction->getJson($pfDeployPackage->fields['id']);

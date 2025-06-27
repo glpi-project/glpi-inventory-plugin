@@ -40,56 +40,56 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation
 {
-   /**
-    * Itemtype for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the first part of relation
+     *
+     * @var string
+     */
     public static $itemtype_1          = 'PluginGlpiinventoryDeployPackage';
 
-   /**
-    * id field name for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the first part of relation
+     *
+     * @var string
+     */
     public static $items_id_1          = 'plugin_glpiinventory_deploypackages_id';
 
-   /**
-    * Itemtype for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the second part of relation
+     *
+     * @var string
+     */
     public static $itemtype_2          = 'Group';
 
-   /**
-    * id field name for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the second part of relation
+     *
+     * @var string
+     */
     public static $items_id_2          = 'groups_id';
 
-   /**
-    * Set we don't check parent right of the second item
-    *
-    * @var integer
-    */
+    /**
+     * Set we don't check parent right of the second item
+     *
+     * @var integer
+     */
     public static $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
 
-   /**
-    * Logs for the second item are disabled
-    *
-    * @var boolean
-    */
+    /**
+     * Logs for the second item are disabled
+     *
+     * @var boolean
+     */
     public static $logs_for_item_2     = false;
 
 
-   /**
-    * Get groups for a deploypackage
-    *
-    * @global object $DB
-    * @param integer $deploypackages_id ID of the deploypackage
-    * @return array list of groups linked to a deploypackage
-   **/
+    /**
+     * Get groups for a deploypackage
+     *
+     * @global object $DB
+     * @param integer $deploypackages_id ID of the deploypackage
+     * @return array list of groups linked to a deploypackage
+    **/
     public static function getGroups($deploypackages_id)
     {
         global $DB;
@@ -99,8 +99,8 @@ class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation
         $iterator = $DB->request([
             'FROM'   => self::getTable(),
             'WHERE'  => [
-                'plugin_glpiinventory_deploypackages_id' => $deploypackages_id
-            ]
+                'plugin_glpiinventory_deploypackages_id' => $deploypackages_id,
+            ],
         ]);
 
         foreach ($iterator as $data) {

@@ -41,31 +41,31 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'agent';
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return "Stat";
     }
 
 
-   /**
-    * Init stats
-    *
-    * @global object $DB
-    */
+    /**
+     * Init stats
+     *
+     * @global object $DB
+     */
     public static function init()
     {
         global $DB;
@@ -74,7 +74,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
             'glpi_plugin_glpiinventory_inventorycomputerstats',
             [
                 'day'    => new \QueryParam(),
-                'hour'   => new \QueryParam()
+                'hour'   => new \QueryParam(),
             ]
         );
         $stmt = $DB->prepare($insert);

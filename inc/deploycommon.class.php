@@ -43,22 +43,22 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
 {
-   /**
-    * Check if definition_type is present in definitions_filter array.
-    * This function returns true if the definition_type is not in
-    * definitions_filter array.
-    * If definitions_filter is NULL, this check is inhibited and return false.
-    *
-    * @param string $definition_type
-    * @param null|array $definitions_filter
-    * @return boolean
-    */
+    /**
+     * Check if definition_type is present in definitions_filter array.
+     * This function returns true if the definition_type is not in
+     * definitions_filter array.
+     * If definitions_filter is NULL, this check is inhibited and return false.
+     *
+     * @param string $definition_type
+     * @param null|array $definitions_filter
+     * @return boolean
+     */
     public function definitionFiltered($definition_type, $definitions_filter)
     {
         if (
-              is_array($definitions_filter)
-              && count($definitions_filter) > 0
-              && !in_array($definition_type, $definitions_filter)
+            is_array($definitions_filter)
+            && count($definitions_filter) > 0
+            && !in_array($definition_type, $definitions_filter)
         ) {
             return true;
         }
@@ -66,14 +66,14 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
     }
 
 
-   /**
-    * Prepare a takjob, get all devices and put in taskjobstate each task
-    * for each device for each agent
-    *
-    * @global object $DB
-    * @param integer $taskjob_id id of the taskjob
-    * @param null|array $definitions_filter
-    */
+    /**
+     * Prepare a takjob, get all devices and put in taskjobstate each task
+     * for each device for each agent
+     *
+     * @global object $DB
+     * @param integer $taskjob_id id of the taskjob
+     * @param null|array $definitions_filter
+     */
     public function prepareRun($taskjob_id, $definitions_filter = null)
     {
         global $DB;
@@ -111,7 +111,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                     }
                     $computer_object = new Computer();
 
-                   //find computers by user associated with this group
+                    //find computers by user associated with this group
                     $group_users   = new Group_User();
                     $group         = new Group();
                     $group->getFromDB($items_id);
@@ -125,26 +125,26 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                         $computers = $computer_object->find(
                             ['users_id'    => $member['id'],
                                 'is_deleted'  => 0,
-                                'is_template' => 0
+                                'is_template' => 0,
                             ]
                         );
                         foreach ($computers as $computer) {
-                               $computers_a_1[] = $computer['id'];
+                            $computers_a_1[] = $computer['id'];
                         }
                     }
 
-                 //find computers directly associated with this group
+                    //find computers directly associated with this group
                     $computers = $computer_object->find(
                         ['groups_id'   => $items_id,
                             'is_deleted'  => 0,
-                            'is_template' => 0
+                            'is_template' => 0,
                         ]
                     );
                     foreach ($computers as $computer) {
-                         $computers_a_2[] = $computer['id'];
+                        $computers_a_2[] = $computer['id'];
                     }
 
-                   //merge two previous array and deduplicate entries
+                    //merge two previous array and deduplicate entries
                     $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
                     break;
 
@@ -162,8 +162,8 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                                 'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
                                 'WHERE'  => [
                                     'groups_id' => $items_id,
-                                    'itemtype'  => 'Computer'
-                                ]
+                                    'itemtype'  => 'Computer',
+                                ],
                             ]);
                             foreach ($iterator as $row) {
                                 $computers[] = $row['items_id'];
@@ -184,9 +184,9 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                                 'SELECT' => 'fields_array',
                                 'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
                                 'WHERE'  => [
-                                    'groups_id' => $items_id
+                                    'groups_id' => $items_id,
                                 ] + $where,
-                                'LIMIT'  => 1
+                                'LIMIT'  => 1,
                             ]);
 
                             //No dynamic groups have been found : break
@@ -228,9 +228,9 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
             }
         }
 
-       //Remove duplicatas from array
-       //We are using isset for faster processing than array_unique because we might have many
-       //entries in this list.
+        //Remove duplicatas from array
+        //We are using isset for faster processing than array_unique because we might have many
+        //entries in this list.
         $tmp_computers = [];
         foreach ($computers as $computer) {
             if (!isset($tmp_computers[$computer])) {
@@ -248,7 +248,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
         $package = new PluginGlpiinventoryDeployPackage();
 
         foreach ($computers as $computer_id) {
-           //Unique Id match taskjobstatuses for an agent(computer)
+            //Unique Id match taskjobstatuses for an agent(computer)
 
             foreach ($definitions as $definition) {
                 $uniqid = uniqid();
@@ -260,7 +260,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                 $c_input['date']     = date("Y-m-d H:i:s");
                 $c_input['uniqid']   = $uniqid;
 
-               //get agent for this computer
+                //get agent for this computer
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer_id]);
                 $agents_id = $agent->fields['id'] ?? false;
                 if ($agents_id === false) {
@@ -280,7 +280,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                             ['itemtype'                         => 'PluginGlpiinventoryDeployPackage',
                                 'items_id'                         => $package->fields['id'],
                                 'state'                            => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED],
-                                'agents_id' => $agents_id
+                                'agents_id' => $agents_id,
                             ]
                         );
 
@@ -308,54 +308,54 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
     }
 
 
-   /**
-    * run function, so return data to send to the agent for deploy
-    *
-    * @param PluginGlpiinventoryTaskjobstate $taskjobstate PluginGlpiinventoryTaskjobstate instance
-    * @return false|array
-    */
+    /**
+     * run function, so return data to send to the agent for deploy
+     *
+     * @param PluginGlpiinventoryTaskjobstate $taskjobstate PluginGlpiinventoryTaskjobstate instance
+     * @return false|array
+     */
     public function run($taskjobstate)
     {
 
-       //Check if the job has been postponed
+        //Check if the job has been postponed
         if (
             !is_null($taskjobstate->fields['date_start'])
             && $taskjobstate->fields['date_start'] > $_SESSION['glpi_currenttime']
         ) {
-           //If the job is postponed and the execution date is in the future,
-           //skip the job for now
+            //If the job is postponed and the execution date is in the future,
+            //skip the job for now
             return false;
         }
 
-       //get order by type and package id
+        //get order by type and package id
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage->getFromDB($taskjobstate->fields['items_id']);
-       //decode order data
+        //decode order data
         $order_data = json_decode($pfDeployPackage->fields['json'], true);
 
-       /* TODO:
-       * This has to be done properly in each corresponding classes.
-       * Meanwhile, I just split the data to rebuild a proper and compliant JSON
-       */
+        /* TODO:
+        * This has to be done properly in each corresponding classes.
+        * Meanwhile, I just split the data to rebuild a proper and compliant JSON
+        */
         $order_job = $order_data['jobs'];
-       //add uniqid to response data
+        //add uniqid to response data
         $order_job['uuid'] = $taskjobstate->fields['uniqid'];
 
-       /* TODO:
-       * Orders should only contain job data and associatedFiles should be retrieved from the
-       * list inside Orders data like the following :
-       *
-       * $order_files = []
-       * foreach ($order_job["associatedFiles"] as $hash) {
-       *    if (!isset($order_files[$hash]) {
-       *       $order_files[$hash] = PluginGlpiinventoryDeployFile::getByHash($hash);
-       *       $order_files[$hash]['mirrors'] = $mirrors
-       *    }
-       * }
-       */
+        /* TODO:
+        * Orders should only contain job data and associatedFiles should be retrieved from the
+        * list inside Orders data like the following :
+        *
+        * $order_files = []
+        * foreach ($order_job["associatedFiles"] as $hash) {
+        *    if (!isset($order_files[$hash]) {
+        *       $order_files[$hash] = PluginGlpiinventoryDeployFile::getByHash($hash);
+        *       $order_files[$hash]['mirrors'] = $mirrors
+        *    }
+        * }
+        */
         $order_files = $order_data['associatedFiles'];
 
-       //Add mirrors to associatedFiles
+        //Add mirrors to associatedFiles
         $mirrors = PluginGlpiinventoryDeployMirror::getList(
             $taskjobstate->fields['agents_id']
         );
@@ -373,12 +373,12 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                 }
             }
         }
-       //Send an empty json dict instead of empty json list
+        //Send an empty json dict instead of empty json list
         if (count($order_files) == 0) {
-            $order_files = (object)[];
+            $order_files = (object) [];
         }
 
-       // Fix some command like : echo "write in file" >> c:\TEMP\HELLO.txt
+        // Fix some command like : echo "write in file" >> c:\TEMP\HELLO.txt
         if (isset($order_job['actions'])) {
             foreach ($order_job['actions'] as $key => $value) {
                 if (isset($value['cmd']) && isset($value['cmd']['exec'])) {
@@ -389,7 +389,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
 
         $order = [
             "job"             => $order_job,
-            "associatedFiles" => $order_files
+            "associatedFiles" => $order_files,
         ];
         return $order;
     }

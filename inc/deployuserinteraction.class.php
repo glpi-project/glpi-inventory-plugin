@@ -44,75 +44,75 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     public $shortname = 'userinteractions';
     public $json_name = 'userinteractions';
 
-   //--------------- Events ---------------------------------------//
+    //--------------- Events ---------------------------------------//
 
-   //Audits are all been executed successfully, just before download
-    const EVENT_BEFORE_DOWNLOAD    = 'before';
-   //File download has been done, just before actions execution
-    const EVENT_AFTER_DOWNLOAD  = 'after_download';
-   //Actions have been executed, deployement is finished
-    const EVENT_AFTER_ACTIONS   = 'after';
-   //At least one downlod has failed
-    const EVENT_DOWNLOAD_FAILURE = 'after_download_failure';
-   //At least one action has failed
-    const EVENT_ACTION_FAILURE   = 'after_failure';
+    //Audits are all been executed successfully, just before download
+    public const EVENT_BEFORE_DOWNLOAD    = 'before';
+    //File download has been done, just before actions execution
+    public const EVENT_AFTER_DOWNLOAD  = 'after_download';
+    //Actions have been executed, deployement is finished
+    public const EVENT_AFTER_ACTIONS   = 'after';
+    //At least one downlod has failed
+    public const EVENT_DOWNLOAD_FAILURE = 'after_download_failure';
+    //At least one action has failed
+    public const EVENT_ACTION_FAILURE   = 'after_failure';
 
-   //--------------- Responses ---------------------------------------//
+    //--------------- Responses ---------------------------------------//
 
-   //The agent notice that the job must continue
-    const RESPONSE_CONTINUE        = 'continue';
+    //The agent notice that the job must continue
+    public const RESPONSE_CONTINUE        = 'continue';
 
-   //The agent notice that the job must be postponed
-    const RESPONSE_POSTPONE        = 'postpone';
+    //The agent notice that the job must be postponed
+    public const RESPONSE_POSTPONE        = 'postpone';
 
-   //The agent notice that the job must be canceled
-    const RESPONSE_STOP            = 'stop';
+    //The agent notice that the job must be canceled
+    public const RESPONSE_STOP            = 'stop';
 
-   //The agent received a malformed or non existing event
-    const RESPONSE_BAD_EVENT       = 'error_bad_event';
+    //The agent received a malformed or non existing event
+    public const RESPONSE_BAD_EVENT       = 'error_bad_event';
 
-   //String to replace a \r\n, to avoid stripcslashes issue
-    const RN_TRANSFORMATION        = "$#r$#n";
+    //String to replace a \r\n, to avoid stripcslashes issue
+    public const RN_TRANSFORMATION        = "$#r$#n";
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
-         return _n(
-             'User interaction',
-             'User interactions',
-             $nb,
-             'glpiinventory'
-         );
+        return _n(
+            'User interaction',
+            'User interactions',
+            $nb,
+            'glpiinventory'
+        );
     }
 
 
-   /**
-    * Get events with name => description
-    * @since 9.2
-    * @return array
-    */
+    /**
+     * Get events with name => description
+     * @since 9.2
+     * @return array
+     */
     public function getTypes()
     {
         return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'glpiinventory'),
             self::EVENT_AFTER_DOWNLOAD   => __("After download", 'glpiinventory'),
             self::EVENT_AFTER_ACTIONS    => __("After actions", 'glpiinventory'),
             self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'glpiinventory'),
-            self::EVENT_ACTION_FAILURE   => __("On actions failure", 'glpiinventory')
+            self::EVENT_ACTION_FAILURE   => __("On actions failure", 'glpiinventory'),
         ];
     }
 
 
-   /**
-    * Get an event label by its identifier
-    * @since 9.2
-    * @return string
-    */
+    /**
+     * Get an event label by its identifier
+     * @since 9.2
+     * @return string
+     */
     public function getLabelForAType($event)
     {
         $events = $this->getTypes();
@@ -120,15 +120,15 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-   /**
-    * Display different fields relative the check selected
-    *
-    * @param array $config
-    * @param array $request_data
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode mode in use (create, edit...)
-    * @return void
-    */
+    /**
+     * Display different fields relative the check selected
+     *
+     * @param array $config
+     * @param array $request_data
+     * @param string $rand unique element id used to identify/update an element
+     * @param string $mode mode in use (create, edit...)
+     * @return void
+     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -139,9 +139,9 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             $pfDeployPackage->getEmpty();
         }
 
-       /*
-       * Get type from request params
-       */
+        /*
+        * Get type from request params
+        */
         $type = null;
         if ($mode === self::CREATE) {
             $type = $request_data['value'];
@@ -187,15 +187,15 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-   /**
-    * Get fields for the check type requested
-    *
-    * @param string $type the type of check
-    * @param array $data fields yet defined in edit mode
-    * @param string $mode mode in use (create, edit...)
-    *
-    * @return array
-    */
+    /**
+     * Get fields for the check type requested
+     *
+     * @param string $type the type of check
+     * @param array $data fields yet defined in edit mode
+     * @param string $mode mode in use (create, edit...)
+     *
+     * @return array
+     */
     public function getValues($type, $data, $mode)
     {
         $values = [
@@ -216,13 +216,13 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
         ];
 
         if ($mode === self::EDIT) {
-            $values['name_value']        = isset($data['name']) ? $data['name'] : "";
-            $values['title_value']       = isset($data['title']) ? $data['title'] : "";
-            $values['description_value'] = isset($data['text']) ? $data['text'] : "";
-            $values['template_value']    = isset($data['template']) ? $data['template'] : "";
+            $values['name_value']        = $data['name'] ?? "";
+            $values['title_value']       = $data['title'] ?? "";
+            $values['description_value'] = $data['text'] ?? "";
+            $values['template_value']    = $data['template'] ?? "";
         }
 
-       //Trick to add \r\n in the description text area
+        //Trick to add \r\n in the description text area
         $values['description_value'] = str_replace(
             self::RN_TRANSFORMATION,
             "\r\n",
@@ -232,13 +232,13 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-   /**
-    * Display list of user interactions
-    *
-    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-    * @param array $data array converted of 'json' field in DB where stored checks
-    * @param string $rand unique element id used to identify/update an element
-    */
+    /**
+     * Display list of user interactions
+     *
+     * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
+     * @param array $data array converted of 'json' field in DB where stored checks
+     * @param string $rand unique element id used to identify/update an element
+     */
     public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         /** @var array $CFG_GLPI */
@@ -251,15 +251,15 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
         echo "<table class='tab_cadrehov package_item_list' id='table_userinteractions_$rand'>";
         foreach ($data['jobs']['userinteractions'] as $interaction) {
-            echo Search::showNewLine(Search::HTML_OUTPUT, (bool)($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
                 Html::showCheckbox(['name' => 'userinteractions_entries[' . $i . ']']);
                 echo "</td>";
             }
 
-           //Get the audit full description (with type and return value)
-           //to be displayed in the UI
+            //Get the audit full description (with type and return value)
+            //to be displayed in the UI
             $text = $this->getInteractionDescription($interaction);
             echo "<td>";
             if ($canedit) {
@@ -292,13 +292,13 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-   /**
-   * Get of a short description of a user interaction
-   *
-   * @since 9.2
-   * @param array $interaction an array representing an interaction
-   * @return string a short description
-   */
+    /**
+    * Get of a short description of a user interaction
+    *
+    * @since 9.2
+    * @param array $interaction an array representing an interaction
+    * @return string a short description
+    */
     public function getInteractionDescription($interaction)
     {
         $text = '';
@@ -323,11 +323,11 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-   /**
-    * Add a new item in checks of the package
-    *
-    * @param array $params list of fields with value of the check
-    */
+    /**
+     * Add a new item in checks of the package
+     *
+     * @param array $params list of fields with value of the check
+     */
     public function add_item($params)
     {
         if (!isset($params['text'])) {
@@ -337,25 +337,25 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             $params['template'] = 0;
         }
 
-       //prepare new check entry to insert in json
+        //prepare new check entry to insert in json
         $entry = [
             'name'        => $params['name'],
             'title'       => $params['title'],
             'text'        => $params['text'],
             'type'        => $params['userinteractionstype'],
-            'template'    => $params['template']
+            'template'    => $params['template'],
         ];
 
-       //Add to package defintion
+        //Add to package defintion
         $this->addToPackage($params['id'], $entry, 'userinteractions');
     }
 
 
-   /**
-    * Save the item in checks
-    *
-    * @param array $params list of fields with value of the check
-    */
+    /**
+     * Save the item in checks
+     *
+     * @param array $params list of fields with value of the check
+     */
     public function save_item($params)
     {
         if (!isset($params['value'])) {
@@ -364,16 +364,16 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
         if (!isset($params['name'])) {
             $params['name'] = "";
         }
-       //prepare new check entry to insert in json
+        //prepare new check entry to insert in json
         $entry = [
             'name'        => $params['name'],
             'title'       => $params['title'],
             'text'        => $params['text'],
             'type'        => $params['userinteractionstype'],
-            'template'    => $params['template']
+            'template'    => $params['template'],
         ];
 
-       //update order
+        //update order
         $this->updateOrderJson(
             $params['id'],
             $this->prepareDataToSave($params, $entry)
@@ -404,17 +404,17 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-   /**
-   * Get a log message depending on an agent response
-   * @since 9.2
-   *
-   * @param string $behavior the behavior the agent must adopt for the job
-   * @param string $type the type of event that triggered the user interaction
-   * @param string $event the button clicked by the user
-   *         (or the what's happened in special cases, as defined in a template)
-   * @param integer $user userid the user who performed the interaction
-   * @return string the message to be display in a taskjob log
-   */
+    /**
+    * Get a log message depending on an agent response
+    * @since 9.2
+    *
+    * @param string $behavior the behavior the agent must adopt for the job
+    * @param string $type the type of event that triggered the user interaction
+    * @param string $event the button clicked by the user
+    *         (or the what's happened in special cases, as defined in a template)
+    * @param integer $user userid the user who performed the interaction
+    * @return string the message to be display in a taskjob log
+    */
     public function getLogMessage($behavior, $type, $event, $user)
     {
         $message  = self::getTypeName(1);

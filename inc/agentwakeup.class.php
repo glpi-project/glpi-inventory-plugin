@@ -40,11 +40,11 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryAgentWakeup extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_taskjob';
 
 
@@ -56,47 +56,47 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     public static function cronInfo(): array
     {
         return [
-            'description' => __('Wake agents up', 'glpiinventory')
+            'description' => __('Wake agents up', 'glpiinventory'),
         ];
     }
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return __('Job', 'glpiinventory');
     }
 
 
-   /**
-    * Check if can wake up an agent
-    *
-    * @return true
-    */
+    /**
+     * Check if can wake up an agent
+     *
+     * @return true
+     */
     public static function canCreate()
     {
         return true;
     }
 
 
-   /*
-    * @function cronWakeupAgents
-    * This function update already running tasks with dynamic groups
-    */
+    /*
+     * @function cronWakeupAgents
+     * This function update already running tasks with dynamic groups
+     */
 
 
-   /**
-    * Cron task: wake up agents. Configuration is in each tasks
-    *
-    * @global object $DB
-    * @param object $crontask
-    * @return boolean true if successfully, otherwise false
-    */
+    /**
+     * Cron task: wake up agents. Configuration is in each tasks
+     *
+     * @global object $DB
+     * @param object $crontask
+     * @return boolean true if successfully, otherwise false
+     */
     public static function cronWakeupAgents($crontask)
     {
         global $DB;
@@ -104,26 +104,26 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
         $wakeupArray       = [];
         $tasks             = [];
         $unavailableAgents = [];
-       //Get the maximum number of agent to wakeup,
-       //as allowed in the general configuration
+        //Get the maximum number of agent to wakeup,
+        //as allowed in the general configuration
         $config = new PluginGlpiinventoryConfig();
         $agent  = new Agent();
 
         $maxWakeUp   = $config->getValue('wakeup_agent_max');
 
-       //Get all active timeslots
+        //Get all active timeslots
         $timeslot = new PluginGlpiinventoryTimeslot();
         $timeslots = $timeslot->getCurrentActiveTimeslots();
         $query_timeslots = [
-            'plugin_glpiinventory_timeslots_exec_id'   => 0
+            'plugin_glpiinventory_timeslots_exec_id'   => 0,
         ];
         if (!empty($timeslots)) {
             array_push($query_timeslots, [
-                'plugin_glpiinventory_timeslots_exec_id' => $timeslots
+                'plugin_glpiinventory_timeslots_exec_id' => $timeslots,
             ]);
         }
-       //Get all active task requiring an agent wakeup
-       //Check all tasks without timeslot or task with a current active timeslot
+        //Get all active task requiring an agent wakeup
+        //Check all tasks without timeslot or task with a current active timeslot
         $iterator = $DB->request([
             'SELECT' => ['id', 'wakeup_agent_counter', 'wakeup_agent_time', 'last_agent_wakeup'],
             'FROM'   => 'glpi_plugin_glpiinventory_tasks',
@@ -132,9 +132,9 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
                 'wakeup_agent_time'     => ['>', 0],
                 'is_active'             => 1,
                 [
-                    'OR'   => $query_timeslots
-                ]
-            ]
+                    'OR'   => $query_timeslots,
+                ],
+            ],
         ]);
 
         foreach ($iterator as $task) {
@@ -150,31 +150,31 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
                 $maxWakeUpTask = $maxWakeUp;
             }
 
-           //Store task ID
+            //Store task ID
             if (!in_array($task['id'], $tasks)) {
                 $tasks[] = $task['id'];
             }
 
-           //For each task, get a number of taskjobs at the PREPARED state
-           //(the maximum is defined in wakeup_agent_counter)
+            //For each task, get a number of taskjobs at the PREPARED state
+            //(the maximum is defined in wakeup_agent_counter)
             $iterator2 = $DB->request([
                 'SELECT'    => [
                     'glpi_plugin_glpiinventory_taskjobstates.agents_id',
                 ],
                 'FROM'      => [
-                    'glpi_plugin_glpiinventory_taskjobstates'
+                    'glpi_plugin_glpiinventory_taskjobstates',
                 ],
                 'LEFT JOIN' => [
                     'glpi_plugin_glpiinventory_taskjobs' => [
                         'FKEY' => [
                             'glpi_plugin_glpiinventory_taskjobs'    => 'id',
-                            'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                        ]
-                    ]
+                            'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                        ],
+                    ],
                 ],
                 'WHERE'     => [
                     'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_tasks_id' => $task['id'],
-                    'glpi_plugin_glpiinventory_taskjobstates.state'  => PluginGlpiinventoryTaskjobstate::PREPARED
+                    'glpi_plugin_glpiinventory_taskjobstates.state'  => PluginGlpiinventoryTaskjobstate::PREPARED,
                 ],
                 'ORDER'     => 'glpi_plugin_glpiinventory_taskjobstates.id',
                 'START'     => 0,
@@ -199,28 +199,28 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
                     }
                 }
 
-               // check if max number of agent reached for this task
+                // check if max number of agent reached for this task
                 if ($counter >= $maxWakeUpTask) {
                     break;
                 }
             }
         }
 
-       //Number of agents successfully woken up
+        //Number of agents successfully woken up
         $wokeup = 0;
         if (!empty($tasks)) {
-           //Update last wake up time each task
+            //Update last wake up time each task
             $DB->update(
                 'glpi_plugin_glpiinventory_tasks',
                 [
-                    'last_agent_wakeup' => $_SESSION['glpi_currenttime']
+                    'last_agent_wakeup' => $_SESSION['glpi_currenttime'],
                 ],
                 [
-                    'id' => $tasks
+                    'id' => $tasks,
                 ]
             );
 
-           //Try to wake up agents one by one
+            //Try to wake up agents one by one
             foreach ($wakeupArray as $ID) {
                 $agent->getFromDB($ID);
                 if (self::wakeUp($agent)) {
@@ -233,11 +233,11 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
         return true;
     }
 
-   /**
-    * Send a request to the remote agent to run now
-    *
-    * @return boolean true if send successfully, otherwise false
-    */
+    /**
+     * Send a request to the remote agent to run now
+     *
+     * @return boolean true if send successfully, otherwise false
+     */
     public static function wakeUp(Agent $agent)
     {
         try {

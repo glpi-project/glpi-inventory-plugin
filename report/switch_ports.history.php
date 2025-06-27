@@ -55,24 +55,24 @@ $iterator = $DB->request([
     'SELECT' => [
         'glpi_networkequipments.name AS name',
         'glpi_networkports.name AS pname',
-        'glpi_networkports.id AS id'
+        'glpi_networkports.id AS id',
     ],
     'FROM'   => 'glpi_networkequipments',
     'LEFT JOIN'   => [
         'glpi_networkports' => [
             'FKEY' => [
                 'glpi_networkequipments' => 'id',
-                'glpi_networkports'      => 'items_id'
-            ]
-        ]
+                'glpi_networkports'      => 'items_id',
+            ],
+        ],
     ],
     'WHERE' => [
-        'itemtype' => 'NetworkEquipment'
+        'itemtype' => 'NetworkEquipment',
     ],
     'ORDER' => [
         'glpi_networkequipments.name',
-        'glpi_networkports.logical_number'
-    ]
+        'glpi_networkports.logical_number',
+    ],
 ]);
 
 $selected = '';
@@ -93,7 +93,7 @@ echo "</tr>";
 
 echo "<tr>";
 echo "<td align='center'>";
-echo "<input type='submit' value='" . __('Validate')  . "' class='submit' />";
+echo "<input type='submit' value='" . __('Validate') . "' class='submit' />";
 echo "</td>";
 echo "</tr>";
 

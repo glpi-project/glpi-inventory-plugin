@@ -35,9 +35,9 @@ use PHPUnit\Framework\TestCase;
 
 class DeploypackageTest extends TestCase
 {
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testGetTypeName()
     {
         $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName());
@@ -46,9 +46,9 @@ class DeploypackageTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testIsDeployEnabled()
     {
         global $DB;
@@ -58,14 +58,14 @@ class DeploypackageTest extends TestCase
         $module   = new PluginGlpiinventoryAgentmodule();
         $package  = new PluginGlpiinventoryDeployPackage();
 
-       //Enable deploy feature for all agents
+        //Enable deploy feature for all agents
         $module->getFromDBByCrit(['modulename' => 'DEPLOY']);
         $module->update(['id' => $module->fields['id'], 'is_active' => 1]);
 
-       // Create a computer
+        // Create a computer
         $input = [
             'entities_id' => 0,
-            'name'        => 'computer1'
+            'name'        => 'computer1',
         ];
         $computers_id = $computer->add($input);
 
@@ -79,13 +79,13 @@ class DeploypackageTest extends TestCase
             'itemtype' => Computer::getType(),
             'items_id' => $computers_id,
             'agenttypes_id' => $agenttype['id'],
-            'use_module_package_deployment' => 1
+            'use_module_package_deployment' => 1,
         ];
         $this->assertNotFalse($agent->add($input));
 
         $this->assertTrue($package->isDeployEnabled($computers_id));
 
-       //Disable deploy feature for all agents
+        //Disable deploy feature for all agents
         $module->update(['id' => $module->fields['id'], 'is_active' => 0]);
 
         $this->assertFalse($package->isDeployEnabled($computers_id));

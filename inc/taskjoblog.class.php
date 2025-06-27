@@ -40,55 +40,55 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTaskjoblog extends CommonDBTM
 {
-   /**
-    * Define state task started
-    *
-    * @var integer
-    */
-    const TASK_STARTED = 1;
+    /**
+     * Define state task started
+     *
+     * @var integer
+     */
+    public const TASK_STARTED = 1;
 
-   /**
-    * Define state task OK / successful
-    *
-    * @var integer
-    */
-    const TASK_OK = 2;
+    /**
+     * Define state task OK / successful
+     *
+     * @var integer
+     */
+    public const TASK_OK = 2;
 
-   /**
-    * Define state task in error
-    *
-    * @var integer
-    */
-    const TASK_ERROR = 4;
+    /**
+     * Define state task in error
+     *
+     * @var integer
+     */
+    public const TASK_ERROR = 4;
 
-   /**
-    * Define state task information
-    *
-    * @var integer
-    */
-    const TASK_INFO = 5;
+    /**
+     * Define state task information
+     *
+     * @var integer
+     */
+    public const TASK_INFO = 5;
 
-   /**
-    * Define state task running
-    *
-    * @var integer
-    */
-    const TASK_RUNNING = 6;
+    /**
+     * Define state task running
+     *
+     * @var integer
+     */
+    public const TASK_RUNNING = 6;
 
-   /**
-    * Define state task prepared, so wait agent contact the server to get
-    * this task
-    *
-    * @var integer
-    */
-    const TASK_PREPARED = 7;
+    /**
+     * Define state task prepared, so wait agent contact the server to get
+     * this task
+     *
+     * @var integer
+     */
+    public const TASK_PREPARED = 7;
 
 
-   /**
-    * return array with state mapping name
-    *
-    * @return array with all elements
-    */
+    /**
+     * return array with state mapping name
+     *
+     * @return array with all elements
+     */
     public static function dropdownStateValues()
     {
 
@@ -105,12 +105,12 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     }
 
 
-   /**
-    * Get state name
-    *
-    * @param integer $state
-    * @return string
-    */
+    /**
+     * Get state name
+     *
+     * @param integer $state
+     * @return string
+     */
     public static function getStateName($state = -1)
     {
         $state_names = self::dropdownStateValues();
@@ -121,13 +121,13 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         }
     }
 
-   /**
-    * Get itemtype of task job state
-    *
-    * @global object $DB
-    * @param integer $taskjoblogs_id
-    * @return string
-    */
+    /**
+     * Get itemtype of task job state
+     *
+     * @global object $DB
+     * @param integer $taskjoblogs_id
+     * @return string
+     */
     public static function getStateItemtype($taskjoblogs_id)
     {
         global $DB;
@@ -135,13 +135,13 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $params = ['FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
             'LEFT JOIN' => ['glpi_plugin_glpiinventory_taskjoblogs',
                 ['FKEY' => ['glpi_plugin_glpiinventory_taskjoblogs'   => 'plugin_glpiinventory_taskjobstates_id',
-                    'glpi_plugin_glpiinventory_taskjobstates' => 'id'
-                ]
-                ]
+                    'glpi_plugin_glpiinventory_taskjobstates' => 'id',
+                ],
+                ],
             ],
             'FIELDS' => ['itemtype'],
             'WHERE'  => ['glpi_plugin_glpiinventory_taskjobstates.id' => $taskjoblogs_id],
-            'LIMIT'  => 1
+            'LIMIT'  => 1,
         ];
         $iterator = $DB->request($params);
         if ($iterator->numrows()) {
@@ -153,11 +153,11 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     }
 
 
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
+    /**
+     * Get search function for the class
+     *
+     * @return array
+     */
     public function rawSearchOptions()
     {
 
@@ -165,7 +165,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
 
         $tab[] = [
             'id' => 'common',
-            'name' => __('Logs')
+            'name' => __('Logs'),
         ];
 
         $tab[] = [
@@ -245,16 +245,16 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     }
 
 
-   /**
-    * Add a new line of log for a taskjob status
-    *
-    * @global object $DB
-    * @param integer $taskjobstates_id id of the taskjobstate
-    * @param integer $items_id id of the item associated with taskjob status
-    * @param string $itemtype type name of the item associated with taskjob status
-    * @param string $state state of this taskjobstate
-    * @param string $comment the comment of this insertion
-    */
+    /**
+     * Add a new line of log for a taskjob status
+     *
+     * @global object $DB
+     * @param integer $taskjobstates_id id of the taskjobstate
+     * @param integer $items_id id of the item associated with taskjob status
+     * @param string $itemtype type name of the item associated with taskjob status
+     * @param string $state state of this taskjobstate
+     * @param string $comment the comment of this insertion
+     */
     public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment)
     {
         global $DB;
@@ -270,13 +270,13 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $this->addToDB();
     }
 
-   /**
-    * Get div with text/color depend on state
-    *
-    * @param integer $state state number
-    * @param string $type div / td
-    * @return string complete node (opened and closed)
-    */
+    /**
+     * Get div with text/color depend on state
+     *
+     * @param integer $state state number
+     * @param string $type div / td
+     * @return string complete node (opened and closed)
+     */
     public function getDivState($state, $type = 'div')
     {
 
@@ -320,16 +320,16 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     }
 
 
-   /**
-    * Convert comment by replace formatted message by translated message
-    *
-    * @param string $comment
-    * @return string
-    */
+    /**
+     * Convert comment by replace formatted message by translated message
+     *
+     * @param string $comment
+     * @return string
+     */
     public static function convertComment($comment)
     {
         $matches = [];
-       // Search for replace [[itemtype::items_id]] by link
+        // Search for replace [[itemtype::items_id]] by link
         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
         foreach ($matches[0] as $num => $commentvalue) {
             $classname = $matches[1][$num];
@@ -350,7 +350,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
                 'detail'          => __('Detail', 'glpiinventory'),
                 'badtoken'        => __('Agent communication error, impossible to start agent', 'glpiinventory'),
                 'agentcrashed'    => __('Agent stopped/crashed', 'glpiinventory'),
-                'importdenied'    => __('Import denied', 'glpiinventory')
+                'importdenied'    => __('Import denied', 'glpiinventory'),
             ];
             foreach ($matches[0] as $num => $commentvalue) {
                 $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);

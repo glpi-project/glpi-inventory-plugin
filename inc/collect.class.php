@@ -107,7 +107,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             foreach (
                 ['PluginGlpiinventoryCollect_File_Content',
                     'PluginGlpiinventoryCollect_Wmi_Content',
-                    'PluginGlpiinventoryCollect_Registry_Content'
+                    'PluginGlpiinventoryCollect_Registry_Content',
                 ] as $itemtype
             ) {
                 $collect_item = new $itemtype();
@@ -149,7 +149,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         return [
             'registry' => __('Registry', 'glpiinventory'),
             'wmi'      => __('WMI', 'glpiinventory'),
-            'file'     => __('Find file', 'glpiinventory')
+            'file'     => __('Find file', 'glpiinventory'),
         ];
     }
 
@@ -160,7 +160,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
         $tab[] = [
             'id'           => 'common',
-            'name'         => __('Characteristics')
+            'name'         => __('Characteristics'),
         ];
 
         $tab[] = [
@@ -168,7 +168,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             'table'        => $this->getTable(),
             'field'        => 'name',
             'name'         => __('Name'),
-            'datatype'     => 'itemlink'
+            'datatype'     => 'itemlink',
         ];
 
         return $tab;
@@ -210,7 +210,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = " . $registry['id'],
-                    'jointype' => 'child'
+                    'jointype' => 'child',
                 ];
                 $i++;
             }
@@ -228,7 +228,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = " . $wmi['id'],
-                    'jointype' => 'child'
+                    'jointype' => 'child',
                 ];
                 $i++;
             }
@@ -248,7 +248,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $file['id'],
-                    'jointype' => 'child'
+                    'jointype' => 'child',
                 ];
                 $i++;
 
@@ -263,7 +263,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $file['id'],
-                    'jointype' => 'child'
+                    'jointype' => 'child',
                 ];
                 $i++;
             }
@@ -397,8 +397,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
                                 'WHERE'  => [
                                     'groups_id' => $items_id,
-                                    'itemtype'  => 'Computer'
-                                ]
+                                    'itemtype'  => 'Computer',
+                                ],
                             ]);
 
                             foreach ($iterator as $row) {
@@ -411,9 +411,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 'SELECT' => 'fields_array',
                                 'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
                                 'WHERE'  => [
-                                    'groups_id' => $items_id
+                                    'groups_id' => $items_id,
                                 ],
-                                'LIMIT' => 1
+                                'LIMIT' => 1,
                             ]);
                             $row = $iterator->current();
 
@@ -591,7 +591,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         'function' => 'getFromRegistry',
                         'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
                         'uuid'     => $taskjobstate->fields['uniqid'],
-                        '_sid'     => $reg['id']
+                        '_sid'     => $reg['id'],
                     ];
                 }
                 break;
@@ -605,7 +605,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         'class'      => $wmi['class'],
                         'properties' => [$wmi['properties']],
                         'uuid'       => $taskjobstate->fields['uniqid'],
-                        '_sid'       => $wmi['id']
+                        '_sid'       => $wmi['id'],
                     ];
                     if ($wmi['moniker'] != '') {
                         $datawmi['moniker'] = $wmi['moniker'];
@@ -626,10 +626,10 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         'recursive' => $files['is_recursive'],
                         'filter'    => [
                             'is_file' => $files['filter_is_file'],
-                            'is_dir'  => $files['filter_is_dir']
+                            'is_dir'  => $files['filter_is_dir'],
                         ],
                         'uuid'      => $taskjobstate->fields['uniqid'],
-                        '_sid'       => $files['id']
+                        '_sid'       => $files['id'],
                     ];
                     if ($files['filter_regex'] != '') {
                         $datafile['filter']['regex'] = $files['filter_regex'];
@@ -659,7 +659,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         'glpi_plugin_glpiinventory_collects_files_contents',
                         [
                             'plugin_glpiinventory_collects_files_id'   => $files['id'],
-                            'computers_id'                               => $agent['items_id']
+                            'computers_id'                               => $agent['items_id'],
                         ]
                     );
                 }
@@ -722,7 +722,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 'itemtype'                                   => 'Agent',
                                 'date'                                       => date("Y-m-d H:i:s"),
                                 'comment'                                    => '',
-                                'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED
+                                'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
                             ];
                             $pfTaskjoblog->add($a_input);
 
@@ -747,7 +747,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $jobstate = current($pfTaskjobstate->find(
                     [
                         'uniqid' => $uuid,
-                        'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
+                        'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED],
                     ],
                     [],
                     1
@@ -766,8 +766,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         $response->token = Session::getNewCSRFToken();
                         unset($a_values['_glpi_csrf_token']);
                     }
-                    $sid = isset($a_values['_sid']) ? $a_values['_sid'] : 0;
-                    $cpt = isset($a_values['_cpt']) ? $a_values['_cpt'] : 0;
+                    $sid = $a_values['_sid'] ?? 0;
+                    $cpt = $a_values['_cpt'] ?? 0;
                     unset($a_values['action']);
                     unset($a_values['uuid']);
                     unset($a_values['_cpt']);
@@ -798,7 +798,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                     'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
                                     'uuid'      => $uuid,
                                     'code'      => 'running',
-                                    'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size']
+                                    'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size'],
                                 ];
                                 if (isset($a_values['sendheaders'])) {
                                     $params['sendheaders'] = $a_values['sendheaders'];
@@ -837,7 +837,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             $jobstate['id'],
                             $jobstate['items_id'],
                             $jobstate['itemtype'],
-                            (string)$flag,
+                            (string) $flag,
                             isset($name) ? "$name: $message" : $message
                         );
                     } else {
@@ -853,7 +853,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $jobstate = current($pfTaskjobstate->find(
                     [
                         'uniqid' => $uuid,
-                        'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
+                        'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED],
                     ],
                     [],
                     1

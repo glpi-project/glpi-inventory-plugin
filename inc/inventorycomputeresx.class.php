@@ -40,13 +40,13 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommunication
 {
-   /**
-    * Get all devices and put in taskjobstate each task for
-    * each device for each agent
-    *
-    * @param integer $taskjobs_id id of taskjob esx
-    * @return string uniqid value
-    */
+    /**
+     * Get all devices and put in taskjobstate each task for
+     * each device for each agent
+     *
+     * @param integer $taskjobs_id id of taskjob esx
+     * @return string uniqid value
+     */
     public function prepareRun($taskjobs_id)
     {
 
@@ -60,7 +60,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
         $job->getFromDB($taskjobs_id);
         $task->getFromDB($job->fields['plugin_glpiinventory_tasks_id']);
 
-       //list all agents
+        //list all agents
         $agent_actions     = importArrayFromDB($job->fields['action']);
         $task_definitions  = importArrayFromDB($job->fields['definition']);
         $agent_actionslist = [];
@@ -74,7 +74,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
             }
         }
 
-       // *** Add jobstate
+        // *** Add jobstate
         if (empty($agent_actionslist)) {
             $a_input = [];
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
@@ -120,7 +120,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
                             $a_input['execution_id']                       = $task->fields['execution_id'];
 
                             $jobstates_id = $jobstate->add($a_input);
-                          //Add log of taskjob
+                            //Add log of taskjob
                             $a_input['plugin_glpiinventory_taskjobstates_id'] = $jobstates_id;
                             $a_input['state'] = PluginGlpiinventoryTaskjoblog::TASK_PREPARED;
 
@@ -138,12 +138,12 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
     }
 
 
-   /**
-    * Get ESX jobs for this agent
-    *
-    * @param object $taskjobstate
-    * @return array
-    */
+    /**
+     * Get ESX jobs for this agent
+     *
+     * @param object $taskjobstate
+     * @return array
+     */
     public function run($taskjobstate)
     {
         $credential     = new PluginGlpiinventoryCredential();

@@ -43,6 +43,6 @@ $pfJobstate = new PluginGlpiinventoryTaskjobstate();
 
 $params = [
     "id"        => filter_input(INPUT_GET, "id"),
-    "last_date" => filter_input(INPUT_GET, "last_date")
+    "last_date" => filter_input(INPUT_GET, "last_date"),
 ];
 $pfJobstate->ajaxGetLogs($params);

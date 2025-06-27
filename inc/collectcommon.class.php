@@ -40,21 +40,21 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCollectCommon extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_collect';
 
     public $collect_type = '';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return '';
@@ -62,13 +62,13 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
 
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
@@ -81,14 +81,14 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     }
 
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $class     = get_called_class();
@@ -100,44 +100,44 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         return true;
     }
 
-   /**
-   * Get headers to be displayed, as an array
-   * @since 9.2+2.0
-   *
-   * @return array a list of header labels to be displayed
-   */
+    /**
+    * Get headers to be displayed, as an array
+    * @since 9.2+2.0
+    *
+    * @return array a list of header labels to be displayed
+    */
     public function getListHeaders()
     {
         return [
-            __('Name')
+            __('Name'),
         ];
     }
 
-   /**
-   * Get values for a row to display in the list
-   * @since 9.2+2.0
-   *
-   * @param array $row the row data to be displayed
-   * @return array values to be display
-   */
+    /**
+    * Get values for a row to display in the list
+    * @since 9.2+2.0
+    *
+    * @param array $row the row data to be displayed
+    * @return array values to be display
+    */
     public function displayOneRow($row = [])
     {
         return [
-            $row['name']
+            $row['name'],
         ];
     }
 
-   /**
-    * Display registries defined in collect
-    *
-    * @param integer $collects_id id of collect
-    */
+    /**
+     * Display registries defined in collect
+     *
+     * @param integer $collects_id id of collect
+     */
     public function showList($collects_id)
     {
         global $DB;
         $params = [
             'FROM'  => $this->getTable(),
-            'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id]
+            'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id],
         ];
         $iterator = $DB->request($params);
 
@@ -173,17 +173,15 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     }
 
 
-    public function displayNewSpecificities()
-    {
-    }
+    public function displayNewSpecificities() {}
 
-   /**
-    * Display form to add registry
-    *
-    * @param integer $collects_id id of collect
-    * @param array $options
-    * @return true
-    */
+    /**
+     * Display form to add registry
+     *
+     * @param integer $collects_id id of collect
+     * @param array $options
+     * @return true
+     */
     public function showForm($collects_id, array $options = [])
     {
         $this->initForm(0, $options);
@@ -216,7 +214,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
 
         $tab[] = [
             'id'           => 'common',
-            'name'         => __('Characteristics')
+            'name'         => __('Characteristics'),
         ];
 
         $tab[] = [
@@ -224,7 +222,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
             'table'        => $this->getTable(),
             'field'        => 'name',
             'name'         => __('Name'),
-            'datatype'     => 'itemlink'
+            'datatype'     => 'itemlink',
         ];
 
         return $tab;

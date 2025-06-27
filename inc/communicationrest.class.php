@@ -40,12 +40,12 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommunicationRest
 {
-   /**
-    * Manage communication between agent and server
-    *
-    * @param array $params
-    * @return array|false array return jobs ready for the agent
-    */
+    /**
+     * Manage communication between agent and server
+     *
+     * @param array $params
+     * @return array|false array return jobs ready for the agent
+     */
     public static function communicate($params = [])
     {
         $response = [];
@@ -75,12 +75,12 @@ class PluginGlpiinventoryCommunicationRest
     }
 
 
-   /**
-    * Get configuration for an agent and for modules requested
-    *
-    * @param array $params
-    * @return array
-    */
+    /**
+     * Get configuration for an agent and for modules requested
+     *
+     * @param array $params
+     * @return array
+     */
     public static function getConfigByAgent($params = [])
     {
         $schedule = [];
@@ -99,10 +99,10 @@ class PluginGlpiinventoryCommunicationRest
                             $classname = 'PluginGlpiinventoryCredentialIp';
                             break;
                         case 'collect':
-                             $classname = 'PluginGlpiinventoryCollect';
+                            $classname = 'PluginGlpiinventoryCollect';
                             break;
                         default:
-                             $classname = '';
+                            $classname = '';
                     }
 
                     $taskname = $method['method'];
@@ -124,10 +124,10 @@ class PluginGlpiinventoryCommunicationRest
                             ]
                         ) > 0
                     ) {
-                     /*
-                     * Since migration, there is only one plugin in one directory
-                     * It's maybe time to redo this function -- kiniou
-                     */
+                        /*
+                        * Since migration, there is only one plugin in one directory
+                        * It's maybe time to redo this function -- kiniou
+                        */
                         $schedule[]
                         = call_user_func(
                             [$class, self::getMethodForParameters($task)],
@@ -142,65 +142,65 @@ class PluginGlpiinventoryCommunicationRest
     }
 
 
-   /**
-    * Get jobs for an agent
-    * TODO: This methods must be used inplace of other methods in order to mutualize code and
-    * to fully support agent REST API for every task's types
-    *       -- kiniou
-    *
-    * @param array $params
-    * @return false
-    */
+    /**
+     * Get jobs for an agent
+     * TODO: This methods must be used inplace of other methods in order to mutualize code and
+     * to fully support agent REST API for every task's types
+     *       -- kiniou
+     *
+     * @param array $params
+     * @return false
+     */
     public static function getJobsByAgent($params = [])
     {
-       //      $jobs = [];
-       //      $methods = PluginGlpiinventoryStaticmisc::getmethods();
-       //      if (isset($params['task'])) {
-       //         foreach (array_keys($params['task']) as $task) {
-       //
-       //         }
-       //      }
+        //      $jobs = [];
+        //      $methods = PluginGlpiinventoryStaticmisc::getmethods();
+        //      if (isset($params['task'])) {
+        //         foreach (array_keys($params['task']) as $task) {
+        //
+        //         }
+        //      }
         return false;
     }
 
 
-   /**
-    * Send to the agent an OK code
-    */
+    /**
+     * Send to the agent an OK code
+     */
     public static function sendOk()
     {
         header("HTTP/1.1 200", true, 200);
     }
 
 
-   /**
-    * Send to the agent an error code
-    * when the request sent by the agent is invalid
-    */
+    /**
+     * Send to the agent an error code
+     * when the request sent by the agent is invalid
+     */
     public static function sendError()
     {
         header("HTTP/1.1 400", true, 400);
     }
 
 
-   /**
-    * Generate the function name related to the module to get parameters
-    *
-    * @param string $task
-    * @return string
-    */
+    /**
+     * Generate the function name related to the module to get parameters
+     *
+     * @param string $task
+     * @return string
+     */
     public static function getMethodForParameters($task)
     {
         return "task_" . strtolower($task) . "_getParameters";
     }
 
 
-   /**
-    * Update agent status for a taskjob
-    *
-    * @global object $DB
-    * @param array $params
-    */
+    /**
+     * Update agent status for a taskjob
+     *
+     * @global object $DB
+     * @param array $params
+     */
     public static function updateLog($params = [])
     {
         global $DB;
@@ -216,10 +216,10 @@ class PluginGlpiinventoryCommunicationRest
             $p[$key] = $value;
         }
 
-       //Get the agent ID by its deviceid
+        //Get the agent ID by its deviceid
         $agent = new Agent();
 
-       //No need to continue since the requested agent doesn't exist in database
+        //No need to continue since the requested agent doesn't exist in database
         if ($agent->getFromDBByCrit(['deviceid' => $p['machineid']]) === false) {
             if ($p['sendheaders']) {
                 self::sendError();
@@ -229,15 +229,15 @@ class PluginGlpiinventoryCommunicationRest
 
         $taskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-       //Get task job status : identifier is the uuid given by the agent
+        //Get task job status : identifier is the uuid given by the agent
         $params = ['FROM' => getTableForItemType("PluginGlpiinventoryTaskjobstate"),
             'FIELDS' => 'id',
-            'WHERE' => ['uniqid' => $p['uuid']]
+            'WHERE' => ['uniqid' => $p['uuid']],
         ];
         foreach ($DB->request($params) as $jobstate) {
             $taskjobstate->getFromDB($jobstate['id']);
 
-           //Get taskjoblog associated
+            //Get taskjoblog associated
             $taskjoblog = new PluginGlpiinventoryTaskjoblog();
             switch ($p['code']) {
                 case 'running':
@@ -245,7 +245,7 @@ class PluginGlpiinventoryCommunicationRest
                         $taskjobstate->fields['id'],
                         $taskjobstate->fields['items_id'],
                         $taskjobstate->fields['itemtype'],
-                        (string)PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
+                        (string) PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
                         $p['msg']
                     );
                     break;
@@ -268,16 +268,16 @@ class PluginGlpiinventoryCommunicationRest
     }
 
 
-   /**
-    * Test a given url
-    *
-    * @param string $url
-    * @return boolean
-    */
+    /**
+     * Test a given url
+     *
+     * @param string $url
+     * @return boolean
+     */
     public static function testRestURL($url)
     {
 
-       //If fopen is not allowed, we cannot check and then return true...
+        //If fopen is not allowed, we cannot check and then return true...
         if (!ini_get('allow_url_fopen')) {
             return true;
         }
@@ -292,9 +292,9 @@ class PluginGlpiinventoryCommunicationRest
     }
 
 
-   /**
-    * Manage REST parameters
-    **/
+    /**
+     * Manage REST parameters
+     **/
     public static function handleFusionCommunication()
     {
         $response = PluginGlpiinventoryCommunicationRest::communicate($_GET);

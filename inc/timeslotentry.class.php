@@ -40,38 +40,38 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
 {
-   /**
-    * We activate the history.
-    *
-    * @var boolean
-    */
+    /**
+     * We activate the history.
+     *
+     * @var boolean
+     */
     public $dohistory = true;
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_task';
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return __('Time slot entry', 'glpiinventory');
     }
 
 
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
+    /**
+     * Get search function for the class
+     *
+     * @return array
+     */
     public function rawSearchOptions()
     {
 
@@ -79,7 +79,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
 
         $tab[] = [
             'id' => 'common',
-            'name' => __('Time slot', 'glpiinventory')
+            'name' => __('Time slot', 'glpiinventory'),
         ];
 
         $tab[] = [
@@ -118,11 +118,11 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     }
 
 
-   /**
-    * Display form to add a new time entry in timeslot
-    *
-    * @param integer $timeslots_id
-    */
+    /**
+     * Display form to add a new time entry in timeslot
+     *
+     * @param integer $timeslots_id
+     */
     public function formEntry($timeslots_id)
     {
         $ID = 0;
@@ -142,7 +142,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
             '4' => __('Thursday'),
             '5' => __('Friday'),
             '6' => __('Saturday'),
-            '7' => __('Sunday')
+            '7' => __('Sunday'),
         ];
         echo '<div id="beginday">';
         Dropdown::showFromArray('beginday', $days);
@@ -176,14 +176,14 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     }
 
 
-   /**
-    * Display delete form
-    *
-    * @todo rename this method in showTimeslots() since it's not only used to delete but also to
-    *       show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
-    *
-    * @param integer $timeslots_id
-    */
+    /**
+     * Display delete form
+     *
+     * @todo rename this method in showTimeslots() since it's not only used to delete but also to
+     *       show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
+     *
+     * @param integer $timeslots_id
+     */
     public function formDeleteEntry($timeslots_id)
     {
 
@@ -191,7 +191,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
             'glpi_plugin_glpiinventory_timeslotentries',
             [
                 'WHERE'  => ['plugin_glpiinventory_timeslots_id' => $timeslots_id],
-                'ORDER'  => ['day', 'begin ASC']
+                'ORDER'  => ['day', 'begin ASC'],
             ]
         );
 
@@ -225,15 +225,15 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     }
 
 
-   /**
-    * Display timeslot graph
-    *
-    * @todo This must be moved in Timeslot class since a Task class is linked to a Timeslot and not
-    * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.
-    * -- Kevin 'kiniou' Roy
-    *
-    * @param integer $timeslots_id
-    */
+    /**
+     * Display timeslot graph
+     *
+     * @todo This must be moved in Timeslot class since a Task class is linked to a Timeslot and not
+     * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.
+     * -- Kevin 'kiniou' Roy
+     *
+     * @param integer $timeslots_id
+     */
     public function showTimeSlot($timeslots_id)
     {
         echo "<div id='chart'></div>";
@@ -261,13 +261,13 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
                         'plugin_glpiinventory_timeslots_id' => $timeslots_id,
                         'day'                                 => $day,
                     ],
-                    'ORDER'  => 'begin ASC'
+                    'ORDER'  => 'begin ASC',
                 ]
             );
             foreach ($dbentries as $entries) {
                 $dates[$daysofweek[$day]][] = [
                     'start' => $entries['begin'],
-                    'end'   => $entries['end']
+                    'end'   => $entries['end'],
                 ];
             }
         }
@@ -275,11 +275,11 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     }
 
 
-   /**
-    * Add a new entry
-    *
-    * @param array $data
-    */
+    /**
+     * Add a new entry
+     *
+     * @param array $data
+     */
     public function addEntry($data)
     {
         if ($data['lastday'] < $data['beginday']) {
@@ -290,7 +290,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
         ) {
             return;
         }
-       // else ok, we can update DB
+        // else ok, we can update DB
         for ($day = $data['beginday']; $day <= $data['lastday']; $day++) {
             $range = [];
 
@@ -303,7 +303,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
                 $range['lasthours'] = (24 * 3600);
             }
 
-           // now get from DB
+            // now get from DB
             $dbentries = getAllDataFromTable(
                 'glpi_plugin_glpiinventory_timeslotentries',
                 [
@@ -311,7 +311,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
                         'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                         'day'                                 => $day,
                     ],
-                    'ORDER'  => 'begin ASC'
+                    'ORDER'  => 'begin ASC',
                 ]
             );
 
@@ -327,13 +327,13 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
                 }
 
                 if ($inThePeriod) {
-                 // So we need manage the end
+                    // So we need manage the end
                     if ($range['lasthours'] < $entries['begin']) {
                         $addEntries[] = [
                             'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                             'day'   => $day,
                             'begin' => $range['beginhours'],
-                            'end'   => $range['lasthours']
+                            'end'   => $range['lasthours'],
                         ];
                         $inThePeriod = false;
                         $afterPeriod = true;
@@ -349,16 +349,16 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
                         continue;
                     }
                 } elseif (($range['lasthours'] < $entries['begin'])) {
-                  // We add
+                    // We add
                     $this->add([
                         'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                         'day'   => $day,
                         'begin' => $range['beginhours'],
-                        'end'   => $range['lasthours']
+                        'end'   => $range['lasthours'],
                     ]);
                     continue 2;
                 } elseif ($range['beginhours'] > $entries['end']) {
-                   // Not manage, hop to next entry
+                    // Not manage, hop to next entry
                     continue;
                 }
 
@@ -392,14 +392,14 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
                     'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                     'day'   => $day,
                     'begin' => $range['beginhours'],
-                    'end'   => $range['lasthours']
+                    'end'   => $range['lasthours'],
                 ];
             } elseif ($inThePeriod || (count($updateEntries) == 0 && count($deleteEntries) == 0 & count($addEntries) == 0)) {
                 $addEntries[] = [
                     'plugin_glpiinventory_timeslots_id' => $data['timeslots_id'],
                     'day'   => $day,
                     'begin' => $range['beginhours'],
-                    'end'   => $range['lasthours']
+                    'end'   => $range['lasthours'],
                 ];
             }
 

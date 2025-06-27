@@ -37,7 +37,7 @@ class TimeslotTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // Delete all timeslots
+        // Delete all timeslots
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
         $items = $pfTimeslot->find();
         foreach ($items as $item) {
@@ -46,16 +46,16 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addTimeslot()
     {
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
         $input = [
             'entities_id'  => 0,
             'is_recursive' => 0,
-            'name'         => 'unitdefault'
+            'name'         => 'unitdefault',
         ];
         $pfTimeslot->add($input);
         $cnt = countElementsInTable('glpi_plugin_glpiinventory_timeslots');
@@ -63,9 +63,9 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addSimpleEntrieslot()
     {
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
@@ -79,7 +79,7 @@ class TimeslotTest extends TestCase
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 7215,
-            'end'          => 43200
+            'end'          => 43200,
         ];
         $pfTimeslotEntry->add($input);
 
@@ -89,7 +89,7 @@ class TimeslotTest extends TestCase
             'is_recursive' => 0,
             'day'          => 1,
             'begin'        => 72000,
-            'end'          => 79200
+            'end'          => 79200,
         ];
         $pfTimeslotEntry->add($input);
 
@@ -99,7 +99,7 @@ class TimeslotTest extends TestCase
             'is_recursive' => 0,
             'day'          => 3,
             'begin'        => 39600,
-            'end'          => 79200
+            'end'          => 79200,
         ];
         $pfTimeslotEntry->add($input);
 
@@ -110,7 +110,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 7215,
-                'end'          => 43200
+                'end'          => 43200,
             ],
             [
                 'entities_id'  => 0,
@@ -118,7 +118,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 72000,
-                'end'          => 79200
+                'end'          => 79200,
             ],
             [
                 'entities_id'  => 0,
@@ -126,8 +126,8 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 3,
                 'begin'        => 39600,
-                'end'          => 79200
-            ]
+                'end'          => 79200,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
         $items = [];
@@ -140,9 +140,9 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntriesTimeslotYetAdded()
     {
 
@@ -156,7 +156,7 @@ class TimeslotTest extends TestCase
             'beginday'     => 1,
             'lastday'      => 1,
             'beginhours'   => 7230,
-            'lasthours'    => 43140
+            'lasthours'    => 43140,
         ];
         $pfTimeslotEntry->addEntry($input);
 
@@ -165,7 +165,7 @@ class TimeslotTest extends TestCase
             'beginday'     => 1,
             'lastday'      => 1,
             'beginhours'   => 72000,
-            'lasthours'    => 79140
+            'lasthours'    => 79140,
         ];
         $pfTimeslotEntry->addEntry($input);
 
@@ -176,7 +176,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 7215,
-                'end'          => 43200
+                'end'          => 43200,
             ],
             [
                 'entities_id'  => 0,
@@ -184,7 +184,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 72000,
-                'end'          => 79200
+                'end'          => 79200,
             ],
             [
                 'entities_id'  => 0,
@@ -192,8 +192,8 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 3,
                 'begin'        => 39600,
-                'end'          => 79200
-            ]
+                'end'          => 79200,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries', ['ORDER' => 'id']);
         $items = [];
@@ -205,9 +205,9 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntriesTimeslotNotInRanges()
     {
 
@@ -221,7 +221,7 @@ class TimeslotTest extends TestCase
             'beginday'     => 1,
             'lastday'      => 1,
             'beginhours'   => 15,
-            'lasthours'    => 30
+            'lasthours'    => 30,
         ];
         $pfTimeslotEntry->addEntry($input);
 
@@ -232,7 +232,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 7215,
-                'end'          => 43200
+                'end'          => 43200,
             ],
             [
                 'entities_id'  => 0,
@@ -240,7 +240,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 72000,
-                'end'          => 79200
+                'end'          => 79200,
             ],
             [
                 'entities_id'  => 0,
@@ -248,7 +248,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 3,
                 'begin'        => 39600,
-                'end'          => 79200
+                'end'          => 79200,
             ],
             [
                 'entities_id'  => 0,
@@ -256,8 +256,8 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 15,
-                'end'          => 30
-            ]
+                'end'          => 30,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
         $items = [];
@@ -269,9 +269,9 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntryIn3Ranges()
     {
 
@@ -285,7 +285,7 @@ class TimeslotTest extends TestCase
             'beginday'     => 1,
             'lastday'      => 1,
             'beginhours'   => 0,
-            'lasthours'    => 79215
+            'lasthours'    => 79215,
         ];
         $pfTimeslotEntry->addEntry($input);
 
@@ -296,7 +296,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 3,
                 'begin'        => 39600,
-                'end'          => 79200
+                'end'          => 79200,
             ],
             [
                 'entities_id'  => 0,
@@ -304,8 +304,8 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 0,
-                'end'          => 79215
-            ]
+                'end'          => 79215,
+            ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
         $items = [];
@@ -317,9 +317,9 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntryForTwoDays()
     {
 
@@ -333,7 +333,7 @@ class TimeslotTest extends TestCase
             'beginday'     => 1,
             'lastday'      => 4,
             'beginhours'   => 79230,
-            'lasthours'    => 36000
+            'lasthours'    => 36000,
         ];
         $pfTimeslotEntry->addEntry($input);
 
@@ -344,7 +344,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 0,
-                'end'          => 79215
+                'end'          => 79215,
             ],
             [
                 'entities_id'  => 0,
@@ -352,7 +352,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 79230,
-                'end'          => 86400
+                'end'          => 86400,
             ],
             [
                 'entities_id'  => 0,
@@ -360,7 +360,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 2,
                 'begin'        => 0,
-                'end'          => 86400
+                'end'          => 86400,
             ],
             [
                 'entities_id'  => 0,
@@ -368,7 +368,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 3,
                 'begin'        => 0,
-                'end'          => 86400
+                'end'          => 86400,
             ],
             [
                 'entities_id'  => 0,
@@ -376,7 +376,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 4,
                 'begin'        => 0,
-                'end'          => 36000
+                'end'          => 36000,
             ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');
@@ -389,9 +389,9 @@ class TimeslotTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function addEntryForTwoDaysYetAdded()
     {
 
@@ -405,7 +405,7 @@ class TimeslotTest extends TestCase
             'beginday'     => 2,
             'lastday'      => 3,
             'beginhours'   => 60,
-            'lasthours'    => 36015
+            'lasthours'    => 36015,
         ];
         $pfTimeslotEntry->addEntry($input);
 
@@ -416,7 +416,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 0,
-                'end'          => 79215
+                'end'          => 79215,
             ],
             [
                 'entities_id'  => 0,
@@ -424,7 +424,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 1,
                 'begin'        => 79230,
-                'end'          => 86400
+                'end'          => 86400,
             ],
             [
                 'entities_id'  => 0,
@@ -432,7 +432,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 2,
                 'begin'        => 0,
-                'end'          => 86400
+                'end'          => 86400,
             ],
             [
                 'entities_id'  => 0,
@@ -440,7 +440,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 3,
                 'begin'        => 0,
-                'end'          => 86400
+                'end'          => 86400,
             ],
             [
                 'entities_id'  => 0,
@@ -448,7 +448,7 @@ class TimeslotTest extends TestCase
                 'is_recursive' => 0,
                 'day'          => 4,
                 'begin'        => 0,
-                'end'          => 36000
+                'end'          => 36000,
             ],
         ];
         $a_data = getAllDataFromTable('glpi_plugin_glpiinventory_timeslotentries');

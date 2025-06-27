@@ -37,7 +37,7 @@ class RestURLTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // Delete all entities except root entity
+        // Delete all entities except root entity
         $entity = new Entity();
         $items = $entity->find();
         foreach ($items as $item) {
@@ -46,7 +46,7 @@ class RestURLTest extends TestCase
             }
         }
 
-       // Delete all agents
+        // Delete all agents
         $agent = new Agent();
         $items = $agent->find();
         foreach ($items as $item) {
@@ -55,9 +55,9 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function prepareDb()
     {
         global $DB;
@@ -73,7 +73,7 @@ class RestURLTest extends TestCase
             'name'        => 'ent1',
             'entities_id' => 0,
             'comment'     => '',
-            'agent_base_url' => 'http://10.0.2.2/glpi085'
+            'agent_base_url' => 'http://10.0.2.2/glpi085',
         ]);
         $this->assertNotFalse($entityId);
 
@@ -87,7 +87,7 @@ class RestURLTest extends TestCase
             'items_id' => 0,
             'use_module_collect_data' => 1,
             'use_module_package_deployment' => 1,
-            'use_module_esx_remote_inventory' => 1
+            'use_module_esx_remote_inventory' => 1,
         ];
         $agents_id = $agent->add($input);
         $this->assertNotFalse($agents_id);
@@ -97,7 +97,7 @@ class RestURLTest extends TestCase
         $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
         $input = [
             'id'             => $entity->fields['id'],
-            'agent_base_url' => 'http://127.0.0.1/glpi085'
+            'agent_base_url' => 'http://127.0.0.1/glpi085',
         ];
         $ret = $entity->update($input);
         $this->assertTrue($ret);
@@ -111,11 +111,11 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
+    /**
+     * @test
+     *
+     * @depends prepareDb
+     */
     public function getCollectUrlEnt1Entity()
     {
 
@@ -128,16 +128,16 @@ class RestURLTest extends TestCase
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
             'itemtype' => 'PluginGlpiinventoryCollect',
-            'agents_id' => $agent->fields['id']
+            'agents_id' => $agent->fields['id'],
         ];
         $ret = $pfTaskjobstate->add($input);
         $this->assertNotFalse($ret);
 
-       // Get answer
+        // Get answer
         $input = [
             'action'    => 'getConfig',
             'task'      => ['COLLECT' => '1.0.0'],
-            'machineid' => 'toto-device'
+            'machineid' => 'toto-device',
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);
@@ -150,11 +150,11 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
+    /**
+     * @test
+     *
+     * @depends prepareDb
+     */
     public function getDeployUrlRootEntity()
     {
 
@@ -167,15 +167,15 @@ class RestURLTest extends TestCase
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
             'itemtype' => 'PluginGlpiinventoryDeployPackage',
-            'agents_id' => $agent->fields['id']
+            'agents_id' => $agent->fields['id'],
         ];
         $pfTaskjobstate->add($input);
 
-       // Get answer
+        // Get answer
         $input = [
             'action'    => 'getConfig',
             'task'      => ['Deploy' => '1.0.0'],
-            'machineid' => 'toto-device'
+            'machineid' => 'toto-device',
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);
@@ -188,11 +188,11 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
+    /**
+     * @test
+     *
+     * @depends prepareDb
+     */
     public function getEsxUrlRootEntity()
     {
 
@@ -205,15 +205,15 @@ class RestURLTest extends TestCase
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
             'itemtype' => 'PluginGlpiinventoryCredentialIp',
-            'agents_id' => $agent->fields['id']
+            'agents_id' => $agent->fields['id'],
         ];
         $pfTaskjobstate->add($input);
 
-       // Get answer
+        // Get answer
         $input = [
             'action'    => 'getConfig',
             'task'      => ['ESX' => '1.0.0'],
-            'machineid' => 'toto-device'
+            'machineid' => 'toto-device',
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);
@@ -226,11 +226,11 @@ class RestURLTest extends TestCase
     }
 
 
-   /**
-    * @test
-    *
-    * @depends prepareDb
-    */
+    /**
+     * @test
+     *
+     * @depends prepareDb
+     */
     public function getCollectUrlRootEntity()
     {
 
@@ -246,11 +246,11 @@ class RestURLTest extends TestCase
 
         $this->assertTrue($entity->update(['id' => $entity->fields['id'], 'agent_base_url' => '']));
 
-       // Get answer
+        // Get answer
         $input = [
             'action'    => 'getConfig',
             'task'      => ['COLLECT' => '1.0.0'],
-            'machineid' => 'toto-device'
+            'machineid' => 'toto-device',
         ];
 
         $response = PluginGlpiinventoryCommunicationRest::communicate($input);

@@ -40,56 +40,56 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
 {
-   /**
-    * Itemtype for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the first part of relation
+     *
+     * @var string
+     */
     public static $itemtype_1    = 'PluginGlpiinventoryIPRange';
 
-   /**
-    * id field name for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the first part of relation
+     *
+     * @var string
+     */
     public static $items_id_1    = 'plugin_glpiinventory_ipranges_id';
 
-   /**
-    * Restrict the first item to the current entity
-    *
-    * @var bool
-    */
+    /**
+     * Restrict the first item to the current entity
+     *
+     * @var bool
+     */
     public static $take_entity_1 = true;
 
-   /**
-    * Itemtype for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the second part of relation
+     *
+     * @var string
+     */
     public static $itemtype_2    = 'SNMPCredential';
 
-   /**
-    * id field name for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the second part of relation
+     *
+     * @var string
+     */
     public static $items_id_2    = 'snmpcredentials_id';
 
-   /**
-    * Not restrict the second item to the current entity
-    *
-    * @var bool
-    */
+    /**
+     * Not restrict the second item to the current entity
+     *
+     * @var bool
+     */
     public static $take_entity_2 = false;
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
@@ -99,7 +99,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
                 $nb = countElementsInTable(
                     PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
                     [
-                        'plugin_glpiinventory_ipranges_id' => $item->getID()
+                        'plugin_glpiinventory_ipranges_id' => $item->getID(),
                     ]
                 );
             }
@@ -109,14 +109,14 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     }
 
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return true
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return true
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pfIPRange_credentials = new self();
@@ -126,11 +126,11 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     }
 
 
-   /**
-    * Get standard massive action forbidden (hide in massive action list)
-    *
-    * @return array
-    */
+    /**
+     * Get standard massive action forbidden (hide in massive action list)
+     *
+     * @return array
+     */
     public function getForbiddenStandardMassiveAction()
     {
         $forbidden = parent::getForbiddenStandardMassiveAction();
@@ -139,13 +139,13 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     }
 
 
-   /**
-    * Display form
-    *
-    * @param CommonDBTM $item
-    * @param array $options
-    * @return boolean
-    */
+    /**
+     * Display form
+     *
+     * @param CommonDBTM $item
+     * @param array $options
+     * @return boolean
+     */
     public function showItemForm(CommonDBTM $item, array $options = [])
     {
 
@@ -164,9 +164,9 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
             self::getTable(),
             [
                 'WHERE' => [
-                    'plugin_glpiinventory_ipranges_id' => $item->getID()
+                    'plugin_glpiinventory_ipranges_id' => $item->getID(),
                 ],
-                'ORDER' => 'rank'
+                'ORDER' => 'rank',
             ]
         );
         $a_used = [];
@@ -199,7 +199,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
         Html::closeForm();
         echo "</div>";
 
-       // Display list of auth associated with IP range
+        // Display list of auth associated with IP range
         $rand = mt_rand();
 
         echo "<div class='spaced'>";

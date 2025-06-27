@@ -37,19 +37,19 @@ class RuleImportTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // Reinit rules
+        // Reinit rules
         \RuleImportAsset::initRules();
     }
 
     public static function tearDownAfterClass(): void
     {
-       // Reinit rules
+        // Reinit rules
         \RuleImportAsset::initRules();
     }
 
     public function setUp(): void
     {
-       // Delete all printers
+        // Delete all printers
         $printer = new Printer();
         $items = $printer->find();
         foreach ($items as $item) {
@@ -58,14 +58,14 @@ class RuleImportTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function changeRulesForPrinterRules()
     {
 
         $rule = new Rule();
-       // Add a rule test check model
+        // Add a rule test check model
         $input = [
             'is_active' => 1,
             'name'      => 'Printer model',
@@ -76,29 +76,29 @@ class RuleImportTest extends TestCase
         $rule_id = $rule->add($input);
         $this->assertNotFalse($rule_id);
 
-       // Add criteria
+        // Add criteria
         $rulecriteria = new RuleCriteria();
         $input = [
             'rules_id'  => $rule_id,
             'criteria'  => 'serial',
             'pattern'   => '1',
-            'condition' => \RuleImportAsset::PATTERN_FIND
+            'condition' => \RuleImportAsset::PATTERN_FIND,
         ];
         $ret = $rulecriteria->add($input);
         $this->assertNotFalse($ret);
 
-       // Add action
+        // Add action
         $ruleaction = new RuleAction();
         $input = [
             'rules_id'    => $rule_id,
             'action_type' => 'assign',
             'field'       => '_inventory',
-            'value'       => \RuleImportAsset::RULE_ACTION_LINK_OR_IMPORT
+            'value'       => \RuleImportAsset::RULE_ACTION_LINK_OR_IMPORT,
         ];
         $ret = $ruleaction->add($input);
         $this->assertNotFalse($ret);
 
-       // Denied import
+        // Denied import
         $input = [
             'is_active' => 1,
             'name'      => 'Deny printer import',
@@ -109,31 +109,31 @@ class RuleImportTest extends TestCase
         $rule_id = $rule->add($input);
         $this->assertNotFalse($rule_id);
 
-       // Add criteria
+        // Add criteria
         $input = [
             'rules_id'  => $rule_id,
             'criteria'  => 'name',
             'pattern'   => '0',
-            'condition' => \RuleImportAsset::PATTERN_EXISTS
+            'condition' => \RuleImportAsset::PATTERN_EXISTS,
         ];
         $ret = $rulecriteria->add($input);
         $this->assertNotFalse($ret);
 
-       // Add action
+        // Add action
         $input = [
             'rules_id'    => $rule_id,
             'action_type' => 'assign',
             'field'       => '_inventory',
-            'value'       => \RuleImportAsset::RULE_ACTION_DENIED
+            'value'       => \RuleImportAsset::RULE_ACTION_DENIED,
         ];
         $ret = $ruleaction->add($input);
         $this->assertNotFalse($ret);
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterDiscoveryImport()
     {
         $this->changeRulesForPrinterRules();
@@ -165,7 +165,7 @@ class RuleImportTest extends TestCase
         $this->assertNotFalse(
             $printer->add([
                 'entities_id' => '0',
-                'serial'      => 'E8J596100'
+                'serial'      => 'E8J596100',
             ])
         );
 
@@ -181,7 +181,7 @@ class RuleImportTest extends TestCase
         $_SESSION['plugin_glpiinventory_taskjoblog']['state']       = 0;
         $_SESSION['plugin_glpiinventory_taskjoblog']['comment']     = '';
 
-       /*$pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);*/
+        /*$pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);*/
 
         $a_printers = $printer->find();
         $this->assertEquals(1, count($a_printers), 'May have only one Printer');
@@ -191,9 +191,9 @@ class RuleImportTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterDiscoveryImportDenied()
     {
         $this->changeRulesForPrinterRules();
@@ -238,13 +238,13 @@ class RuleImportTest extends TestCase
         $a_printers = $printer->find();
         $this->assertEquals(0, count($a_printers), 'May have no Printer');
 
-       /* task is squeezed :/
-       $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-       $a_logs = $pfTaskjoblog->find(['comment' => ['LIKE', '%importdenied%']], ['id DESC'], 1);
-       $a_log = current($a_logs);
-       $this->assertEquals('==importdenied== [serial]:E8J596100A, '.
-              '[mac]:00:80:77:d9:51:c3, [ip]:10.36.4.29, [model]:Printer0442, '.
-              '[name]:UH4DLPT01, [entities_id]:0, [itemtype]:Printer',
-              $a_log['comment'], 'Import denied message');*/
+        /* task is squeezed :/
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $a_logs = $pfTaskjoblog->find(['comment' => ['LIKE', '%importdenied%']], ['id DESC'], 1);
+        $a_log = current($a_logs);
+        $this->assertEquals('==importdenied== [serial]:E8J596100A, '.
+               '[mac]:00:80:77:d9:51:c3, [ip]:10.36.4.29, [model]:Printer0442, '.
+               '[name]:UH4DLPT01, [entities_id]:0, [itemtype]:Printer',
+               $a_log['comment'], 'Import denied message');*/
     }
 }

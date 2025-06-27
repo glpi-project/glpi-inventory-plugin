@@ -42,14 +42,14 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommunicationNetworkDiscovery
 {
-   /**
-    * Import data, so get data from agent to put in GLPI
-    *
-    * @param string $p_DEVICEID device_id of agent
-    * @param object $a_CONTENT
-    * @param Inventory $inventory
-    * @return array
-    */
+    /**
+     * Import data, so get data from agent to put in GLPI
+     *
+     * @param string $p_DEVICEID device_id of agent
+     * @param object $a_CONTENT
+     * @param Inventory $inventory
+     * @return array
+     */
     public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array
     {
         $response = [];
@@ -103,20 +103,20 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             'comment' => ['LIKE', '%==updatetheitem==%'],
                         ]
                     );
-                     $created = countElementsInTable(
-                         'glpi_plugin_glpiinventory_taskjoblogs',
-                         [
-                             'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                             'comment' => ['LIKE', '%==addtheitem==%'],
-                         ]
-                     );
+                    $created = countElementsInTable(
+                        'glpi_plugin_glpiinventory_taskjoblogs',
+                        [
+                            'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                            'comment' => ['LIKE', '%==addtheitem==%'],
+                        ]
+                    );
 
-                     $message = sprintf(
-                         __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory'),
-                         $updated + $created,
-                         $created,
-                         $updated
-                     );
+                    $message = sprintf(
+                        __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory'),
+                        $updated + $created,
+                        $created,
+                        $updated
+                    );
                     $pfTaskjobstate->changeStatusFinish(
                         $a_CONTENT->jobid,
                         $agent->fields['id'],
@@ -176,9 +176,9 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
         return $response;
     }
 
-   /**
-    * Used to add log in the taskjob
-    */
+    /**
+     * Used to add log in the taskjob
+     */
     public function addtaskjoblog()
     {
 
@@ -193,11 +193,11 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
     }
 
 
-   /**
-    * Get method name linked to this class
-    *
-    * @return string
-    */
+    /**
+     * Get method name linked to this class
+     *
+     * @return string
+     */
     public static function getMethod()
     {
         return 'networkdiscovery';

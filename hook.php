@@ -94,9 +94,9 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype)
         $sopt[5171]['joinparams']    = ['beforejoin'
                                        => ['table'      => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
                                            'joinparams' => ['jointype'          => 'itemtype_item',
-                                               'specific_itemtype' => 'Computer'
-                                           ]
-                                       ]
+                                               'specific_itemtype' => 'Computer',
+                                           ],
+                                       ],
         ];
     }
 
@@ -134,7 +134,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
                 'field'         => 42,
                 'searchtype'    => 'contains',
                 'value'         => 'GLPI Native Inventory',
-            ]
+            ],
         ],
         'printer'         => [
             'itemtype' => Printer::getType(),
@@ -144,7 +144,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
                 'field'         => 72,
                 'searchtype'    => 'contains',
                 'value'         => 'GLPI Native Inventory',
-            ]
+            ],
         ],
         'networkequipement'         => [
             'itemtype' => NetworkEquipment::getType(),
@@ -154,7 +154,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
                 'field'         => 72,
                 'searchtype'    => 'contains',
                 'value'         => 'GLPI Native Inventory',
-            ]
+            ],
         ],
         'phone'         => [
             'itemtype' => Phone::getType(),
@@ -164,8 +164,8 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
                 'field'         => 72,
                 'searchtype'    => 'contains',
                 'value'         => 'GLPI Native Inventory',
-            ]
-        ]
+            ],
+        ],
     ];
 
 
@@ -182,11 +182,11 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
                     'label'          => $item['label'],
                     'icon'           => $item['itemtype']::getIcon(),
                     'itemtype'       => $item['itemtype'],
-                    'apply_filters'  => isset($item['apply_filters']) ? $item['apply_filters'] : [],
-                ]
+                    'apply_filters'  => $item['apply_filters'] ?? [],
+                ],
             ],
             'cache'      => false,
-            'filters'    => []
+            'filters'    => [],
         ];
     }
 
@@ -269,7 +269,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
                 if ($table . "." . $field == "glpi_plugin_glpiinventory_agentmodules." . $data2['modulename']) {
                     if (strstr($data['raw']["ITEM_" . $num . "_0"], '"' . $data['raw']['id'] . '"')) {
                         if ($data['raw']['ITEM_' . $num] == 0) {
-                             return Dropdown::getYesNo('1');
+                            return Dropdown::getYesNo('1');
                         } else {
                             return Dropdown::getYesNo('0');
                         }
@@ -281,7 +281,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
     }
 
     switch ($type) {
-       // * range IP list (plugins/fusinvsnmp/front/iprange.php)
+        // * range IP list (plugins/fusinvsnmp/front/iprange.php)
         case 'PluginGlpiinventoryIPRange':
             switch ($table . '.' . $field) {
                 // ** Display entity name
@@ -326,7 +326,7 @@ function plugin_glpiinventory_searchOptionsValues($item)
         $iterator = $DB->request([
             'FROM'      => $item['searchoption']['table'],
             'GROUPBY'   => 'uniqid',
-            'ORDER'     => 'uniqid'
+            'ORDER'     => 'uniqid',
         ]);
         foreach ($iterator as $data) {
             $elements[$data['uniqid']] = $data['uniqid'];
@@ -359,14 +359,14 @@ function plugin_glpiinventory_install()
         &&
         isset($version_detected)
         && (
-         defined('FORCE_UPGRADE')
+            defined('FORCE_UPGRADE')
          || (
-            $version_detected != '0'
+             $version_detected != '0'
          )
         )
     ) {
-       // note: if version detected = version found can have problem, so need
-       //       pass in upgrade to be sure all OK
+        // note: if version detected = version found can have problem, so need
+        //       pass in upgrade to be sure all OK
         pluginGlpiinventoryUpdate($version_detected, $migrationname);
         require_once PLUGIN_GLPI_INVENTORY_DIR . '/install/update.native.php';
         $version_detected = pluginGlpiinventoryGetCurrentVersion();
@@ -442,7 +442,7 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
                 Dropdown::show(
                     "Entities",
                     ['name' => "entities_id",
-                        'value' => $_SESSION["glpiactive_entity"]
+                        'value' => $_SESSION["glpiactive_entity"],
                     ]
                 );
             }
@@ -515,7 +515,7 @@ function plugin_glpiinventory_addLeftJoin(
 
     switch ($itemtype) {
         case 'PluginGlpiinventoryTaskjoblog':
-           //         echo $new_table.".".$linkfield."<br/>";
+            //         echo $new_table.".".$linkfield."<br/>";
             $taskjob = 0;
             $already_link_tables_tmp = $already_link_tables;
             array_pop($already_link_tables_tmp);
@@ -546,7 +546,7 @@ function plugin_glpiinventory_addLeftJoin(
 
                 case 'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_taskjobs_id':
                 case 'glpi_plugin_glpiinventory_taskjobstates.' .
-                    'plugin_glpiinventory_taskjobstates_id':
+                'plugin_glpiinventory_taskjobstates_id':
                     if ($taskjob == '0') {
                         return ' LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` ON
                      (`plugin_glpiinventory_taskjobstates_id` = ' .
@@ -651,16 +651,16 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
 
     switch ($type) {
         case 'PluginGlpiinventoryTaskjob':
-           /*
-            * WARNING: The following is some minor hack in order to select a range of ids.
-            *
-            * More precisely, when using the ID filter, you can now put IDs separated by commas.
-            * This is used by the DeployPackage class when it comes to check running tasks on some
-            * packages.
-            */
+            /*
+             * WARNING: The following is some minor hack in order to select a range of ids.
+             *
+             * More precisely, when using the ID filter, you can now put IDs separated by commas.
+             * This is used by the DeployPackage class when it comes to check running tasks on some
+             * packages.
+             */
             if ($table == 'glpi_plugin_glpiinventory_tasks') {
                 if ($field == 'id') {
-                   //check if this range is numeric
+                    //check if this range is numeric
                     $ids = explode(',', $val);
                     foreach ($ids as $k => $i) {
                         if (!is_numeric($i)) {
@@ -675,7 +675,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                     }
                 } elseif ($field == 'name') {
                     $val = stripslashes($val);
-                   //decode a json query to match task names in taskjobs list
+                    //decode a json query to match task names in taskjobs list
                     $names = json_decode($val);
                     if ($names !== null && is_array($names)) {
                         $names = array_map(
@@ -698,7 +698,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
             }
             break;
 
-       // * Computer List (front/computer.php)
+            // * Computer List (front/computer.php)
         case 'Computer':
             $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
             foreach ($a_agent_modules as $module) {
@@ -711,7 +711,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                         $current_id = current($a_exceptions);
                         $in = "(";
                         foreach ($a_exceptions as $agent_id) {
-                             $in .= $agent_id . ", ";
+                            $in .= $agent_id . ", ";
                         }
                         $in .= ")";
                         $in = str_replace(", )", ")", $in);
@@ -736,14 +736,14 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
             }
             break;
 
-       // * range IP list (plugins/fusinvsnmp/front/iprange.php)
+            // * range IP list (plugins/fusinvsnmp/front/iprange.php)
         case 'PluginGlpiinventoryIPRange':
             switch ($table . "." . $field) {
-               // ** Name of range IP and link to form
+                // ** Name of range IP and link to form
                 case "glpi_plugin_glpiinventory_ipranges.name":
                     break;
 
-               // ** Agent name associed to IP range and link to agent form
+                    // ** Agent name associed to IP range and link to agent form
                 case "glpi_plugin_fusinvsnmp_agents.id":
                     $ADD = "";
                     if ($nott == "0" && $val == "NULL") {
@@ -819,7 +819,7 @@ function plugin_pre_item_purge_glpiinventory($parm)
             $clean = [
                 'PluginGlpiinventoryCollect_File_Content',
                 'PluginGlpiinventoryCollect_Registry_Content',
-                'PluginGlpiinventoryCollect_Wmi_Content'
+                'PluginGlpiinventoryCollect_Wmi_Content',
             ];
             foreach ($clean as $obj) {
                 $obj::cleanComputer($items_id);
@@ -846,7 +846,7 @@ function plugin_item_purge_glpiinventory($parm)
 
     switch (get_class($parm)) {
         case 'NetworkPort_NetworkPort':
-           // If remove connection of a hub port (unknown device), we must delete this port too
+            // If remove connection of a hub port (unknown device), we must delete this port too
             $NetworkPort = new NetworkPort();
             $NetworkPort_Vlan = new NetworkPort_Vlan();
             $unmanaged = new Unmanaged();
@@ -896,15 +896,15 @@ function plugin_item_purge_glpiinventory($parm)
                 }
             }
 
-           // If hub have no port, delete it
+            // If hub have no port, delete it
             foreach (array_keys($a_hubs) as $unknowndevice_id) {
                 $a_networkports = $NetworkPort->find(
                     ['itemtype' => 'Unmanaged',
-                        'items_id' => $unknowndevice_id
+                        'items_id' => $unknowndevice_id,
                     ]
                 );
                 if (count($a_networkports) < 2) {
-                     $unmanaged->delete(['id' => $unknowndevice_id], 1);
+                    $unmanaged->delete(['id' => $unknowndevice_id], 1);
                 } elseif (count($a_networkports) == '2') {
                     $switchPorts_id = 0;
                     $otherPorts_id  = 0;
@@ -922,7 +922,7 @@ function plugin_item_purge_glpiinventory($parm)
                     $networkPort_NetworkPort->disconnectFrom($otherPorts_id);
 
                     $networkPort_NetworkPort->add(['networkports_id_1' => $switchPorts_id,
-                        'networkports_id_2' => $otherPorts_id
+                        'networkports_id_2' => $otherPorts_id,
                     ]);
                 }
             }
@@ -934,8 +934,8 @@ function plugin_item_purge_glpiinventory($parm)
                 'glpi_plugin_glpiinventory_timeslotentries',
                 [
                     'WHERE'  => [
-                        'plugin_glpiinventory_timeslots_id' => $parm->fields['id']
-                    ]
+                        'plugin_glpiinventory_timeslots_id' => $parm->fields['id'],
+                    ],
                 ]
             );
             foreach ($dbentries as $data) {
@@ -944,29 +944,29 @@ function plugin_item_purge_glpiinventory($parm)
             break;
 
         case 'PluginGlpiinventoryDeployPackage':
-           // Delete all linked items
+            // Delete all linked items
             $DB->delete(
                 'glpi_plugin_glpiinventory_deploypackages_entities',
                 [
-                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
+                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id'],
                 ]
             );
             $DB->delete(
                 'glpi_plugin_glpiinventory_deploypackages_groups',
                 [
-                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
+                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id'],
                 ]
             );
             $DB->delete(
                 'glpi_plugin_glpiinventory_deploypackages_profiles',
                 [
-                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
+                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id'],
                 ]
             );
             $DB->delete(
                 'glpi_plugin_glpiinventory_deploypackages_users',
                 [
-                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id']
+                    'plugin_glpiinventory_deploypackages_id' => $parm->fields['id'],
                 ]
             );
             break;
@@ -1012,7 +1012,7 @@ function plugin_glpiinventory_getDatabaseRelations()
                                     => "entities_id",
                             "glpi_plugin_glpiinventory_deployuserinteractiontemplates"
                                     => "entities_id",
-                        ]
+                        ],
         ];
     }
     return [];
@@ -1071,7 +1071,7 @@ function plugin_glpiinventory_handle_common_handle_task($task, array $params)
     $a_plugin = plugin_version_glpiinventory();
     $params['options']['response'][$task] = [
         'version' => PLUGIN_GLPIINVENTORY_VERSION,
-        'server' => $a_plugin['shortname']
+        'server' => $a_plugin['shortname'],
     ];
 
     return $params;

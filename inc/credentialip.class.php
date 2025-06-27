@@ -41,72 +41,72 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCredentialIp extends CommonDropdown
 {
-   /**
-    * Define first level menu name
-    *
-    * @var string
-    */
+    /**
+     * Define first level menu name
+     *
+     * @var string
+     */
     public $first_level_menu  = "admin";
 
-   /**
-    * Define second level menu name
-    *
-    * @var string
-    */
+    /**
+     * Define second level menu name
+     *
+     * @var string
+     */
     public $second_level_menu = "pluginglpiinventorymenu";
 
-   /**
-    * Define third level menu name
-    *
-    * @var string
-    */
+    /**
+     * Define third level menu name
+     *
+     * @var string
+     */
     public $third_level_menu  = "credentialip";
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_credentialip';
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return __('Remote device inventory', 'glpiinventory');
     }
 
 
-   /**
-    * Add more fields
-    *
-    * @return array
-    */
+    /**
+     * Add more fields
+     *
+     * @return array
+     */
     public function getAdditionalFields()
     {
         return [['name'  => 'itemtype',
             'label' => __('Type'),
-            'type'  => 'credentials'
+            'type'  => 'credentials',
         ],
             ['name'  => 'ip',
                 'label' => __('IP'),
-                'type'  => 'text'
-            ]
+                'type'  => 'text',
+            ],
         ];
     }
 
 
-   /**
-    * Display specific fields
-    *
-    * @param integer $ID
-    * @param array $field
-    */
+    /**
+     * Display specific fields
+     *
+     * @param integer $ID
+     * @param array $field
+     */
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
     {
 
@@ -119,11 +119,11 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     }
 
 
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
+    /**
+     * Get search function for the class
+     *
+     * @return array
+     */
     public function rawSearchOptions()
     {
 
@@ -171,12 +171,12 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     }
 
 
-   /**
-    * Display a specific header
-    */
+    /**
+     * Display a specific header
+     */
     public function displayHeader()
     {
-       //Common dropdown header
+        //Common dropdown header
         parent::displayHeader();
         PluginGlpiinventoryMenu::displayMenu("mini");
     }

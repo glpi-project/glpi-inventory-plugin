@@ -46,7 +46,7 @@ $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 $params = [
     "id" => filter_input(INPUT_GET, "id"),
-    "task_id" => filter_input(INPUT_GET, "task_id")
+    "task_id" => filter_input(INPUT_GET, "task_id"),
 ];
 
 $pfTaskjob->ajaxGetForm($params);

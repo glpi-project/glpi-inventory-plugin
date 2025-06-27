@@ -76,17 +76,17 @@ if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
            . " ORDER BY `glpi_networkports`.`items_id`";
     $result = $DB->doQuery($query);
     echo "<table width='950' class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th>";
-      echo 'Port name';
-      echo "</th>";
-      echo "<th>";
-      echo 'Switch';
-      echo "</th>";
-      echo "<th>";
-      echo 'Last connection';
-      echo "</th>";
-      echo "</tr>";
+    echo "<tr class='tab_bg_1'>";
+    echo "<th>";
+    echo 'Port name';
+    echo "</th>";
+    echo "<th>";
+    echo 'Switch';
+    echo "</th>";
+    echo "<th>";
+    echo 'Last connection';
+    echo "</th>";
+    echo "</tr>";
 
     while ($data = $DB->fetchArray($result)) {
         echo "<tr class='tab_bg_1'>";
@@ -163,14 +163,13 @@ function displaySearchForm()
     Dropdown::showFromArray(
         "dropdown_sup_inf",
         $values,
-        ['value' => (isset($_GET["dropdown_sup_inf"]) ? $_GET["dropdown_sup_inf"] : "sup")]
+        ['value' => ($_GET["dropdown_sup_inf"] ?? "sup")]
     );
     echo "</td>
       <td width='120'>";
     Html::showDateField(
         "dropdown_calendar",
-        ['value' => (isset($_GET["dropdown_calendar"])
-        ? $_GET["dropdown_calendar"] : 0)
+        ['value' => ($_GET["dropdown_calendar"] ?? 0),
         ]
     );
     echo "</td>";
@@ -180,18 +179,18 @@ function displaySearchForm()
     Dropdown::show(
         "Location",
         ['name' => "location",
-            'value' => (isset($_GET["location"]) ? $_GET["location"] : "")
+            'value' => ($_GET["location"] ?? ""),
         ]
     );
     echo "</td>";
 
-   // Display Reset search
+    // Display Reset search
     echo "<td>";
     echo "<a href='" . Plugin::getWebDir('glpiinventory') . "/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"" . __('Blank') . "\" alt=\"" . __('Blank') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/reset.png' class='calendrier'></a>";
     echo "</td>";
 
     echo "<td>";
-   //Add parameters to uri to be saved as SavedSearch
+    //Add parameters to uri to be saved as SavedSearch
     $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
     SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginGlpiinventoryNetworkport2');
     echo "</td>";
@@ -262,9 +261,9 @@ function getValues($get, $post)
                         $get["dropdown_sup_inf"] = "equal";
                     } else {
                         if (strpos($get["contains"][$index], "<") == 1) {
-                              $get["dropdown_sup_inf"] = "inf";
+                            $get["dropdown_sup_inf"] = "inf";
                         } else {
-                              $get["dropdown_sup_inf"] = "sup";
+                            $get["dropdown_sup_inf"] = "sup";
                         }
                     }
                     break;

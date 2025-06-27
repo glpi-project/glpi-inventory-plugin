@@ -41,7 +41,7 @@ class ComputerEntityTest extends TestCase
     public static function setUpBeforeClass(): void
     {
 
-       // Delete all entities except root entity
+        // Delete all entities except root entity
         $entity = new Entity();
         $items = $entity->find();
         foreach ($items as $item) {
@@ -50,14 +50,14 @@ class ComputerEntityTest extends TestCase
             }
         }
 
-       // Delete all computers
+        // Delete all computers
         $computer = new Computer();
         $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         foreach ($items as $item) {
             $computer->delete(['id' => $item['id']], true);
         }
 
-       // Delete all entity rules
+        // Delete all entity rules
         $rule = new Rule();
         $items = $rule->find(['sub_type' => RuleImportEntity::class]);
         foreach ($items as $item) {
@@ -71,11 +71,11 @@ class ComputerEntityTest extends TestCase
         }
     }
 
-   /**
-    * Add computer in entity `ent1` (with rules)
-    *
-    * @test
-    */
+    /**
+     * Add computer in entity `ent1` (with rules)
+     *
+     * @test
+     */
     public function AddComputer()
     {
         $entity = new Entity();
@@ -90,13 +90,13 @@ class ComputerEntityTest extends TestCase
         self::$entities_id_2 = $entity->add([
             'name'        => 'ent2',
             'entities_id' => 0,
-            'comment'     => ''
+            'comment'     => '',
         ]);
         $this->assertNotFalse(self::$entities_id_2);
 
         $computer = new Computer();
 
-       // * Add rule ignore
+        // * Add rule ignore
         $rule = new Rule();
         $ruleCriteria = new RuleCriteria();
         $ruleAction = new RuleAction();
@@ -105,7 +105,7 @@ class ComputerEntityTest extends TestCase
             'sub_type'   => RuleImportEntity::class,
             'name'       => 'pc1',
             'match'      => 'AND',
-            'is_active'  => 1
+            'is_active'  => 1,
         ];
         $rules_id = $rule->add($input);
         $this->assertNotFalse($rules_id);
@@ -114,7 +114,7 @@ class ComputerEntityTest extends TestCase
             'rules_id'   => $rules_id,
             'criteria'   => 'name',
             'condition'  => 0,
-            'pattern'    => 'pc1'
+            'pattern'    => 'pc1',
         ];
         $this->assertNotFalse($ruleCriteria->add($input));
 
@@ -122,11 +122,11 @@ class ComputerEntityTest extends TestCase
             'rules_id'      => $rules_id,
             'action_type'   => 'assign',
             'field'         => 'entities_id',
-            'value'         => self::$entities_id_1
+            'value'         => self::$entities_id_1,
         ];
         $this->assertNotFalse($ruleAction->add($input));
 
-       // ** Add
+        // ** Add
         $this->inventoryPc1();
 
         $nbComputers = countElementsInTable("glpi_computers", ['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
@@ -137,7 +137,7 @@ class ComputerEntityTest extends TestCase
 
         $this->agentEntity($computer->fields['id'], self::$entities_id_1, 'Add computer on entity 1');
 
-       // ** Update
+        // ** Update
         $this->inventoryPc1();
 
         $computers = getAllDataFromTable("glpi_computers", ['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
@@ -150,11 +150,11 @@ class ComputerEntityTest extends TestCase
     }
 
 
-   /**
-    * Update computer to change entity (transfer allowed)
-    *
-    * @test
-    */
+    /**
+     * Update computer to change entity (transfer allowed)
+     *
+     * @test
+     */
     public function updateComputerTransfer()
     {
         global $CFG_GLPI;
@@ -163,7 +163,7 @@ class ComputerEntityTest extends TestCase
         $computer       = new Computer();
         $entity = new Entity();
 
-       // Manual transfer computer to entity 2
+        // Manual transfer computer to entity 2
         $transfer->getFromDB(1);
         $this->assertTrue($computer->getFromDBByCrit(['serial' => 'xxyyzz']));
         $item_to_transfer = ["Computer" => [1 => $computer->fields['id']]];
@@ -180,7 +180,7 @@ class ComputerEntityTest extends TestCase
             $entity->update([
                 'id' => self::$entities_id_2,
                 'transfers_id' => 1,
-                'transfers_strategy' => 0
+                'transfers_strategy' => 0,
             ])
         );
 
@@ -197,11 +197,11 @@ class ComputerEntityTest extends TestCase
     }
 
 
-   /**
-    * Update computer to not change entity (transfer not allowed)
-    *
-    * @test
-    */
+    /**
+     * Update computer to not change entity (transfer not allowed)
+     *
+     * @test
+     */
     public function updateComputerNoTransfer()
     {
 
@@ -209,7 +209,7 @@ class ComputerEntityTest extends TestCase
         $computer = new Computer();
         $entity = new Entity();
 
-       // Manual transfer computer to entity 2
+        // Manual transfer computer to entity 2
         $transfer->getFromDB(1);
         $computer->getFromDBByCrit(['serial' => 'xxyyzz']);
         $item_to_transfer = ["Computer" => [1 => $computer->fields['id']]];
@@ -220,17 +220,17 @@ class ComputerEntityTest extends TestCase
 
         $this->agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
 
-       // Define entity 2 to disallowed transfer
+        // Define entity 2 to disallowed transfer
         $this->assertTrue($entity->getFromDB(self::$entities_id_2));
         $this->assertTrue(
             $entity->update([
                 'id' => self::$entities_id_2,
                 'transfers_id' => 0,
-                'transfers_strategy' => 0
+                'transfers_strategy' => 0,
             ])
         );
 
-       // Update computer and computer must not be transferred (keep in entity 2)
+        // Update computer and computer must not be transferred (keep in entity 2)
         $this->inventoryPc1();
 
         $this->assertEquals(1, countElementsInTable('glpi_computers', ['NOT' => ['name' => ['LIKE', '_test_pc%']]]), 'Must have only 1 computer');
@@ -244,41 +244,41 @@ class ComputerEntityTest extends TestCase
     }
 
 
-   /**
-    * Update computer with restrict entity (in this case computer added)
-    *
-    * @test
-    */
+    /**
+     * Update computer with restrict entity (in this case computer added)
+     *
+     * @test
+     */
     public function updateaddComputerRestrictEntity()
     {
         global $DB;
 
         $computer = new Computer();
 
-       // Disable all rules
+        // Disable all rules
         $DB->update(
             Rule::getTable(),
             [
-                'is_active' => 0
+                'is_active' => 0,
             ],
             [
-                'sub_type' => RuleImportAsset::class
+                'sub_type' => RuleImportAsset::class,
             ]
         );
 
-       // Add rule name + restrict entity search
+        // Add rule name + restrict entity search
         $rulecollection = new RuleImportAssetCollection();
         $input = [
             'is_active' => 1,
             'name'      => 'Computer name + restrict',
             'match'     => 'AND',
             'sub_type'  => RuleImportAsset::class,
-            'ranking'   => 1
+            'ranking'   => 1,
         ];
         $rule_id = $rulecollection->add($input);
         $this->assertNotFalse($rule_id);
 
-       // Add criteria
+        // Add criteria
         $rule = $rulecollection->getRuleClass();
         $rulecriteria = new RuleCriteria(get_class($rule));
         $input = [
@@ -313,7 +313,7 @@ class ComputerEntityTest extends TestCase
         ];
         $this->assertNotFalse($rulecriteria->add($input));
 
-       // Add action
+        // Add action
         $ruleaction = new RuleAction(get_class($rule));
         $input = [
             'rules_id'    => $rule_id,

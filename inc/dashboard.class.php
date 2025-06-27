@@ -52,7 +52,7 @@ class PluginGlpiinventoryDashboard
         $params = array_merge($default_params, $params);
 
         $searchCriteria =  ['criteria' => [$params['apply_filters']],
-            'reset'    => 'reset'
+            'reset'    => 'reset',
         ];
 
         $searchWaiting = Search::getDatas(

@@ -40,19 +40,19 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryStateInventory extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_task';
 
 
-   /**
-    * __contruct function where add variable in $CFG_GLPI
-    *
-    * @global array $CFG_GLPI
-    */
+    /**
+     * __contruct function where add variable in $CFG_GLPI
+     *
+     * @global array $CFG_GLPI
+     */
     public function __construct()
     {
         global $CFG_GLPI;
@@ -62,13 +62,13 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     }
 
 
-   /**
-    * Display network inventory state
-    *
-    * @global object $DB
-    * @global array $CFG_GLPI
-    * @param array $options
-    */
+    /**
+     * Display network inventory state
+     *
+     * @global object $DB
+     * @global array $CFG_GLPI
+     * @param array $options
+     */
     public function display($options = [])
     {
         global $DB, $CFG_GLPI;
@@ -92,20 +92,20 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'ON' => [
                         'glpi_plugin_glpiinventory_taskjobs' => 'id',
-                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                    ],
+                ],
             ],
             'WHERE'  => [
-                'method' => 'networkinventory'
+                'method' => 'networkinventory',
             ],
             'GROUPBY' => 'uniqid',
-            'ORDERBY' => 'uniqid DESC'
+            'ORDERBY' => 'uniqid DESC',
         ]);
 
         $number = count($iterator);
 
-       // Display the pager
+        // Display the pager
         Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/stateinventory.php", '');
 
         echo "<div class='card'>";
@@ -129,24 +129,24 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
         $iterator = $DB->request([
             'SELECT' => [
-                'glpi_plugin_glpiinventory_taskjobstates.*'
+                'glpi_plugin_glpiinventory_taskjobstates.*',
             ],
             'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
             'LEFT JOIN' => [
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'ON' => [
                         'glpi_plugin_glpiinventory_taskjobs' => 'id',
-                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                    ],
+                ],
             ],
             'WHERE'  => [
-                'method' => 'networkinventory'
+                'method' => 'networkinventory',
             ],
             'GROUPBY' => 'uniqid',
             'ORDERBY' => 'uniqid DESC',
-            'LIMIT'  => (int)$_SESSION['glpilist_limit'],
-            'START'  => (int)$start
+            'LIMIT'  => (int) $_SESSION['glpilist_limit'],
+            'START'  => (int) $start,
         ]);
 
         foreach ($iterator as $data) {
@@ -191,7 +191,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                     }
                 }
             }
-           // State
+            // State
             echo "<td>";
             switch ($data['state']) {
                 case 0:
@@ -248,12 +248,12 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     }
 
 
-   /**
-    * Display diff between 2 dates, so the time elapsed of execution
-    *
-    * @param string $date1
-    * @param string $date2
-    */
+    /**
+     * Display diff between 2 dates, so the time elapsed of execution
+     *
+     * @param string $date1
+     * @param string $date2
+     */
     public function dateDiff($date1, $date2)
     {
         $timestamp1 = strtotime($date1);
