@@ -31,8 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
@@ -382,7 +380,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
         if (isset($order_job['actions'])) {
             foreach ($order_job['actions'] as $key => $value) {
                 if (isset($value['cmd']) && isset($value['cmd']['exec'])) {
-                    $order_job['actions'][$key]['cmd']['exec'] = Sanitizer::unsanitize($value['cmd']['exec']);
+                    $order_job['actions'][$key]['cmd']['exec'] = $value['cmd']['exec'];
                 }
             }
         }
