@@ -449,22 +449,23 @@ class NetworkInventoryTest extends TestCase
         $communication = new PluginGlpiinventoryCommunication();
         $iPAddress     = new IPAddress();
 
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
             $pfTask->delete(['id' => $item['id']], true);
         }
 
-       // Delete ipaddress of the printer
-        $iPAddress->getFromDBByCrit(['name' => '192.168.200.124']);
-        $iPAddress->delete(['id' => $iPAddress->fields['id']]);
+        // Delete ipaddress of the printer
+        if ($iPAddress->getFromDBByCrit(['name' => '192.168.200.124'])) {
+            $iPAddress->delete(['id' => $iPAddress->fields['id']]);
+        }
 
         $printer->getFromDBByCrit(['name' => 'printer 001']);
         $agent->getFromDBByCrit(['name' => 'computer1']);
 
-       // Add task
-       // create task
+        // Add task
+        // create task
         $input = [
             'entities_id' => 0,
             'name'        => 'network inventory',
@@ -473,7 +474,7 @@ class NetworkInventoryTest extends TestCase
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
-       // create taskjob
+        // create taskjob
         $input = [
             'plugin_glpiinventory_tasks_id' => $tasks_id,
             'entities_id'                     => 0,
@@ -486,8 +487,8 @@ class NetworkInventoryTest extends TestCase
 
         PluginGlpiinventoryTask::cronTaskscheduler();
 
-       // Task is prepared
-       // Agent will get data
+        // Task is prepared
+        // Agent will get data
 
         $communication->getTaskAgent($agent->fields['id']);
         $message = $communication->getMessage();
