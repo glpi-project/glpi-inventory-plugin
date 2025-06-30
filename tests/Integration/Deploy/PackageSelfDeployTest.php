@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class PackageSelfDeployTest extends TestCase
@@ -321,7 +322,7 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages, 'May have 1 package');
     }
 
-
+    #[Depends('testPackageNoTarget')]
     public function testReportMyPackage()
     {
         global $DB;
@@ -417,7 +418,7 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages_deploy);
     }
 
-
+    #[Depends('testPackageNoTarget')]
     public function testReportComputerPackages()
     {
         global $DB;
@@ -482,16 +483,16 @@ class PackageSelfDeployTest extends TestCase
         $names    = [];
 
         foreach ($packages as $data) {
-            foreach ($data as $packages_id => $package_info) {
+            foreach ($data as $package_info) {
                 $names[] = $package_info['name'];
             }
         }
 
         $expected = ['test1', 'test2'];
-        $this->assertEquals($names, $expected);
+        $this->assertEquals($expected, $names);
     }
 
-
+    #[Depends('testReportComputerPackages')]
     public function testReportComputerPackagesDeployDisabled()
     {
 
