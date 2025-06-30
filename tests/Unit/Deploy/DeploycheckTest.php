@@ -47,7 +47,7 @@ class DeploycheckTest extends TestCase
     }
 
 
-    public function getGetLabelForAType()
+    public function testGetGetLabelForAType()
     {
         $check = new PluginGlpiinventoryDeployCheck();
 

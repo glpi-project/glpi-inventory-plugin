@@ -36,7 +36,7 @@ use PHPUnit\Framework\TestCase;
 
 class PackageJsonTest extends TestCase
 {
-    public function JsonCreateNewPackage()
+    public function testJsonCreateNewPackage()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
