@@ -37,7 +37,7 @@ define("PLUGIN_GLPIINVENTORY_VERSION", "1.5.3");
 // Minimal GLPI version, inclusive
 define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '10.0.11');
 // Maximum GLPI version, exclusive
-define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '10.0.99');
+define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '11.0.99');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
@@ -239,7 +239,7 @@ function plugin_init_glpiinventory()
         $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'] = [];
         $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'] = [];
         if (
-            str_contains($current_url, Plugin::getWebDir('glpiinventory', false))
+            str_contains($current_url, '/plugins/glpiinventory/')
             || str_ends_with($current_url, "front/printer.form.php")
             || str_ends_with($current_url, "front/computer.form.php")
         ) {

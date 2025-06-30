@@ -38,49 +38,49 @@ class NetworkInventoryTest extends TestCase
     public static function setUpBeforeClass(): void
     {
 
-       // Delete all computers
+        // Delete all computers
         $computer = new Computer();
         $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         foreach ($items as $item) {
             $computer->delete(['id' => $item['id']], true);
         }
 
-       // Delete all agents
+        // Delete all agents
         $agent = new Agent();
         $items = $agent->find();
         foreach ($items as $item) {
             $agent->delete(['id' => $item['id']], true);
         }
 
-       // Delete all ipranges
+        // Delete all ipranges
         $pfIPRange = new PluginGlpiinventoryIPRange();
         $items = $pfIPRange->find();
         foreach ($items as $item) {
             $pfIPRange->delete(['id' => $item['id']], true);
         }
 
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
             $pfTask->delete(['id' => $item['id']], true);
         }
 
-       // Delete all network equipments
+        // Delete all network equipments
         $networkEquipment = new NetworkEquipment();
         $items = $networkEquipment->find();
         foreach ($items as $item) {
             $networkEquipment->delete(['id' => $item['id']], true);
         }
 
-       // Delete all printers
+        // Delete all printers
         $printer = new Printer();
         $items = $printer->find();
         foreach ($items as $item) {
             $printer->delete(['id' => $item['id']], true);
         }
 
-       // Delete all entities exept root entity
+        // Delete all entities except root entity
         $entity = new Entity();
         $items = $entity->find();
         foreach ($items as $item) {
@@ -91,10 +91,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function prepareDb()
+    public function testPrepareDb()
     {
         global $DB;
 
@@ -113,7 +110,7 @@ class NetworkInventoryTest extends TestCase
         $iPAddress       = new IPAddress();
         $printer         = new Printer();
 
-       // Create entities
+        // Create entities
         $entity1Id = $entity->add([
             'name'        => 'ent1',
             'entities_id' => 0,
@@ -135,7 +132,7 @@ class NetworkInventoryTest extends TestCase
         ]);
         $this->assertNotFalse($entity11Id);
 
-       // Create computers + agents
+        // Create computers + agents
         $input = [
             'entities_id' => 0,
             'name'        => 'computer1'
@@ -157,7 +154,7 @@ class NetworkInventoryTest extends TestCase
         $agent1Id = $agent->add($input);
         $this->assertNotFalse($agent1Id);
 
-       // Create Network Equipments
+        // Create Network Equipments
         $input = [
             'name'        => 'sw0',
             'entities_id' => 0,
@@ -246,7 +243,7 @@ class NetworkInventoryTest extends TestCase
 
         $networkPort->updateDependencies(true);
 
-       // Create Printers
+        // Create Printers
 
         $input = [
             'name'        => 'printer 001',
@@ -279,7 +276,7 @@ class NetworkInventoryTest extends TestCase
         ]);
         $this->assertNotFalse($ipId);
 
-       // Add IPRange
+        // Add IPRange
         $input = [
             'entities_id' => 1,
             'name'        => 'Office',
@@ -289,7 +286,7 @@ class NetworkInventoryTest extends TestCase
         $ipranges_id = $pfIPRange->add($input);
         $this->assertNotFalse($ipranges_id);
 
-       // Allow all agents to do network inventory
+        // Allow all agents to do network inventory
         $module = new PluginGlpiinventoryAgentmodule();
         $module->getFromDBByCrit(['modulename' => 'NETWORKINVENTORY']);
         $module->update([
@@ -297,7 +294,7 @@ class NetworkInventoryTest extends TestCase
             'is_active' => 1
         ]);
 
-       // create task
+        // create task
         $input = [
             'entities_id' => 0,
             'name'        => 'network inventory',
@@ -306,7 +303,7 @@ class NetworkInventoryTest extends TestCase
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
-       // create taskjob
+        // create taskjob
         $input = [
             'plugin_glpiinventory_tasks_id' => $tasks_id,
             'entities_id'                     => 0,
@@ -322,10 +319,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function prepareTask()
+    public function testPrepareTask()
     {
 
         $pfTask  = new PluginGlpiinventoryTask();
@@ -350,10 +344,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function getDevicesToInventory()
+    public function testGetDevicesToInventory()
     {
 
         $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
@@ -371,10 +362,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PrinterToInventoryWithIp()
+    public function testPrinterToInventoryWithIp()
     {
 
         $printer       = new Printer();
@@ -451,10 +439,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
-    public function PrinterToInventoryWithoutIp()
+    public function testPrinterToInventoryWithoutIp()
     {
 
         $printer       = new Printer();
@@ -464,22 +449,23 @@ class NetworkInventoryTest extends TestCase
         $communication = new PluginGlpiinventoryCommunication();
         $iPAddress     = new IPAddress();
 
-       // Delete all tasks
+        // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
             $pfTask->delete(['id' => $item['id']], true);
         }
 
-       // Delete ipaddress of the printer
-        $iPAddress->getFromDBByCrit(['name' => '192.168.200.124']);
-        $iPAddress->delete(['id' => $iPAddress->fields['id']]);
+        // Delete ipaddress of the printer
+        if ($iPAddress->getFromDBByCrit(['name' => '192.168.200.124'])) {
+            $iPAddress->delete(['id' => $iPAddress->fields['id']]);
+        }
 
         $printer->getFromDBByCrit(['name' => 'printer 001']);
         $agent->getFromDBByCrit(['name' => 'computer1']);
 
-       // Add task
-       // create task
+        // Add task
+        // create task
         $input = [
             'entities_id' => 0,
             'name'        => 'network inventory',
@@ -488,7 +474,7 @@ class NetworkInventoryTest extends TestCase
         $tasks_id = $pfTask->add($input);
         $this->assertNotFalse($tasks_id);
 
-       // create taskjob
+        // create taskjob
         $input = [
             'plugin_glpiinventory_tasks_id' => $tasks_id,
             'entities_id'                     => 0,
@@ -501,8 +487,8 @@ class NetworkInventoryTest extends TestCase
 
         PluginGlpiinventoryTask::cronTaskscheduler();
 
-       // Task is prepared
-       // Agent will get data
+        // Task is prepared
+        // Agent will get data
 
         $communication->getTaskAgent($agent->fields['id']);
         $message = $communication->getMessage();

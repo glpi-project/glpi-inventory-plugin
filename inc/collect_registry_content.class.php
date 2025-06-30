@@ -108,8 +108,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
-            $data1 = Toolbox::addslashes_deep($data);
-            $db_registries[$idtmp] = $data1;
+            $db_registries[$idtmp] = $data;
         }
 
         unset($registry_data['_sid']);
