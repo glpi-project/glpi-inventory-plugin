@@ -69,7 +69,7 @@ foreach (get_defined_constants() as $constant_name => $constant_value) {
         preg_match('/^GLPI_[\w]+_DIR$/', $constant_name)
         && preg_match('/^' . preg_quote(GLPI_VAR_DIR, '/') . '\//', $constant_value)
     ) {
-        is_dir($constant_value) or mkdir($constant_value, 0o755, true);
+        is_dir($constant_value) or mkdir($constant_value, 0755, true);
     }
 }
 

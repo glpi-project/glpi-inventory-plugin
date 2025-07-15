@@ -791,7 +791,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $dir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($sha512);
 
             if (!file_exists($dir)) {
-                mkdir($dir, 0o777, true);
+                mkdir($dir, 0777, true);
             }
             copy($filePath, $dir . '/' . $sha512);
         }
