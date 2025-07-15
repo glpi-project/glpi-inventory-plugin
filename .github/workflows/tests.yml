@@ -59,7 +59,7 @@ jobs:
       run: composer install
     - name: Check for coding standards violations
       run: |
-        vendor/bin/phpcs
+        PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer check  --show-progress=dots --verbose --diff
 
   phpunit:
     runs-on: ubuntu-latest
