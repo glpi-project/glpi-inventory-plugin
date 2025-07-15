@@ -39,7 +39,7 @@ class NetworkEquipmentUpdateTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-       // Delete all network equipments
+        // Delete all network equipments
         $networkEquipment = new NetworkEquipment();
         $items = $networkEquipment->find();
         foreach ($items as $item) {
@@ -54,19 +54,19 @@ class NetworkEquipmentUpdateTest extends TestCase
             NetworkPortType::getTable(),
             [
                 'is_importable' => 0,
-                'instantiation_type' => null
+                'instantiation_type' => null,
             ],
             [
-                'value_decimal' => [53, 54]
+                'value_decimal' => [53, 54],
             ]
         );
 
         $GLPI_CACHE->set('glpi_inventory_ports_types', null);
     }
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function AddNetworkEquipment()
     {
         global $DB, $GLPI_CACHE;
@@ -76,10 +76,10 @@ class NetworkEquipmentUpdateTest extends TestCase
                 NetworkPortType::getTable(),
                 [
                     'is_importable' => 1,
-                    'instantiation_type' => 'NetworkPortEthernet'
+                    'instantiation_type' => 'NetworkPortEthernet',
                 ],
                 [
-                    'value_decimal' => [53, 54]
+                    'value_decimal' => [53, 54],
                 ]
             )
         );
@@ -198,7 +198,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
 
         $this->items_id = $networkEquipment->add([
             'serial'      => 'FOC147UJEU4',
-            'entities_id' => 0
+            'entities_id' => 0,
         ]);
 
         $this->assertGreaterThan(0, $this->items_id);
@@ -212,10 +212,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
         $this->assertEquals(1, count($networkEquipment->find()));
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function NetworkEquipmentGeneral()
     {
 
@@ -266,16 +266,16 @@ Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
             'cpu'                   => 0,
             'uptime'                => '157 days, 02:14:44.00',
-            'snmpcredentials_id'    => 0
+            'snmpcredentials_id'    => 0,
         ];
 
         $this->assertEquals($a_reference, $networkEquipment->fields);
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function NetworkEquipmentInternalPorts()
     {
         $networkPort = new NetworkPort();
@@ -289,7 +289,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
             ['instantiation_type' => 'NetworkPortAggregate',
                 'itemtype'           => 'NetworkEquipment',
                 'items_id'           => $networkEquipment->fields['id'],
-                'logical_number'     => 0
+                'logical_number'     => 0,
             ]
         );
 
@@ -298,17 +298,17 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $a_networkport = current($a_networkports);
         $this->assertEquals('6c:50:4d:39:59:80', $a_networkport['mac']);
 
-       // May have 3 IP
+        // May have 3 IP
         $a_networkname = current($networkName->find(
             ['items_id' => $a_networkport['id'],
-                'itemtype' => 'NetworkPort'
+                'itemtype' => 'NetworkPort',
             ],
             [],
             1
         ));
         $a_ips_fromDB = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-                'items_id' => $a_networkname['id']
+                'items_id' => $a_networkname['id'],
             ],
             ['name']
         );
@@ -319,17 +319,17 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals(['192.168.30.67', '192.168.40.67', '192.168.50.67'], $a_ips);
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function UnmanagedNetworkPort()
     {
         $networkPort = new NetworkPort();
 
         $a_networkports = $networkPort->find(
             ['mac'      => 'cc:f9:54:a1:03:35',
-                'itemtype' => 'Unmanaged'
+                'itemtype' => 'Unmanaged',
             ]
         );
 
@@ -341,10 +341,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function NetworkPortConnection()
     {
         $networkPort = new NetworkPort();
@@ -365,17 +365,17 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
         $a_networkports = $networkPort->find(
             ['items_id' => $unmanaged->fields['id'],
-                'itemtype' => 'Unmanaged'
+                'itemtype' => 'Unmanaged',
             ]
         );
 
         $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function NetworkPortAggregation()
     {
         $networkPort = new NetworkPort();
@@ -401,10 +401,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function VlansPort10002()
     {
         $networkPort = new NetworkPort();
@@ -415,7 +415,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
             ['instantiation_type' => 'NetworkPortEthernet',
                 'itemtype'           => 'NetworkEquipment',
                 'items_id'           => $networkEquipment->fields['id'],
-                'name'               => 'Fa0/2'
+                'name'               => 'Fa0/2',
             ]
         );
 
@@ -432,10 +432,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function NetworkPortCreated()
     {
 
@@ -446,10 +446,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals($expected, count($a_networkports), 'Number of network ports must be ' . $expected);
     }
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function getDeviceIPOfTaskjobID()
     {
         $pfTask    = new PluginGlpiinventoryTask();
@@ -460,7 +460,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
         $input = ['name' => 'MyTask', 'entities_id' => 0,
             'reprepare_if_successful' => 1, 'comment' => 'MyComments',
-            'is_active' => 1
+            'is_active' => 1,
         ];
         $tasks_id = $pfTask->add($input);
         $this->assertGreaterThan(0, $tasks_id);
@@ -470,7 +470,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $this->assertEquals(1, $pfTask->fields['is_active']);
 
         $input = ['ip_start' => '192.168.40.1',
-            'ip_end' => '192.168.40.254'
+            'ip_end' => '192.168.40.254',
         ];
         $iprange_id = $pfIpRange->add($input);
         $this->assertTrue($pfIpRange->getFromDB($iprange_id));
@@ -480,7 +480,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
         $input = ['plugin_glpiinventory_tasks_id' => $tasks_id,
             'name'        => 'networkinventory',
             'method'      => 'networkinventory',
-            'targets'     => '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]'
+            'targets'     => '[{"PluginGlpiinventoryIPRange":"' . $iprange_id . '"}]',
         ];
         $taskjobs_id = $pfTaskJob->add($input);
         $this->assertGreaterThan(0, $taskjobs_id);

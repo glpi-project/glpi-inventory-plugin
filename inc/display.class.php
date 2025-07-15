@@ -40,15 +40,15 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDisplay extends CommonDBTM
 {
-   /**
-    * Display static progress bar (used for SNMP cartridge state)
-    *
-    * @param integer $percentage
-    * @param string $message
-    * @param string $order
-    * @param integer $width
-    * @param integer $height
-    */
+    /**
+     * Display static progress bar (used for SNMP cartridge state)
+     *
+     * @param integer $percentage
+     * @param string $message
+     * @param string $order
+     * @param integer $width
+     * @param integer $height
+     */
     public static function bar($percentage, $message = '', $order = '', $width = 400, $height = 20)
     {
         if ((!empty($percentage)) and ($percentage < 0)) {
@@ -112,9 +112,9 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     }
 
 
-   /**
-    * Disable debug mode to not see php errors
-    */
+    /**
+     * Disable debug mode to not see php errors
+     */
     public static function disableDebug()
     {
         error_reporting(0);
@@ -122,37 +122,35 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     }
 
 
-   /**
-   * Enable debug mode if user is in debug mode
-   **/
+    /**
+    * Enable debug mode if user is in debug mode
+    **/
     public static function reenableusemode()
     {
         Toolbox::setDebugMode();
     }
 
 
-   /**
-    * When debug is disabled, we transfer every errors in this emtpy function.
-    *
-    * @param integer $errno
-    * @param string $errstr
-    * @param string $errfile
-    * @param integer $errline
-    */
-    public static function error_handler($errno, $errstr, $errfile, $errline)
-    {
-    }
+    /**
+     * When debug is disabled, we transfer every errors in this emtpy function.
+     *
+     * @param integer $errno
+     * @param string $errstr
+     * @param string $errfile
+     * @param integer $errline
+     */
+    public static function error_handler($errno, $errstr, $errfile, $errline) {}
 
 
-   /**
-    * Display progress bar
-    *
-    * @global array $CFG_GLPI
-    * @param integer $width
-    * @param integer|float $percent
-    * @param array $options
-    * @return string
-    */
+    /**
+     * Display progress bar
+     *
+     * @global array $CFG_GLPI
+     * @param integer $width
+     * @param integer|float $percent
+     * @param array $options
+     * @return string
+     */
     public static function getProgressBar($width, $percent, array $options = [])
     {
         global $CFG_GLPI;

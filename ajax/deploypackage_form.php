@@ -44,7 +44,7 @@ if (!empty($fi_move_item)) { //ajax request
         $params = [
             'old_index' => filter_input(INPUT_POST, "old_index"),
             'new_index' => filter_input(INPUT_POST, "new_index"),
-            'id'        => filter_input(INPUT_POST, "id")
+            'id'        => filter_input(INPUT_POST, "id"),
         ];
         $itemtype = filter_input(INPUT_POST, "itemtype");
         if (class_exists($itemtype)) {
@@ -60,7 +60,6 @@ if (!empty($fi_move_item)) { //ajax request
     }
 
     echo json_encode($json_response);
-   //exit;
 } else {
     $packages_id = filter_input(INPUT_POST, "packages_id");
     $rand       = filter_input(INPUT_POST, "rand");
@@ -82,8 +81,8 @@ if (!empty($fi_move_item)) { //ajax request
     $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
     $pfDeployPackage->getFromDB($packages_id);
 
-   //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
-   // I think we could use only $order -- Kevin 'kiniou' Roy
+    //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
+    // I think we could use only $order -- Kevin 'kiniou' Roy
     $input = [
         'index'       => filter_input(INPUT_POST, "index"),
         'value'       => filter_input(INPUT_POST, "value"),

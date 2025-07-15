@@ -52,7 +52,7 @@ if (
         ['PluginGlpiinventoryDeployCheck',
             'PluginGlpiinventoryDeployFile',
             'PluginGlpiinventoryDeployAction',
-            'PluginGlpiinventoryDeployUserinteraction'
+            'PluginGlpiinventoryDeployUserinteraction',
         ]
     )
 ) {
@@ -62,6 +62,6 @@ $class        = new $classname();
 $request_data = [
     'packages_id' => filter_input(INPUT_POST, "packages_id"),
     'orders_id'   => filter_input(INPUT_POST, "orders_id"),
-    'value'       => filter_input(INPUT_POST, "value")
+    'value'       => filter_input(INPUT_POST, "value"),
 ];
 $class->displayAjaxValues(null, $request_data, $rand, $mode);

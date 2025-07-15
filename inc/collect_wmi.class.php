@@ -42,12 +42,12 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
 {
     public $collect_type = 'wmi';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Found WMI', 'Found WMIs', $nb, 'glpiinventory');
@@ -60,7 +60,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
             "Moniker",
             __("Class", "glpiinventory"),
             __("Properties", "glpiinventory"),
-            __("Action")
+            __("Action"),
         ];
     }
 
@@ -70,7 +70,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
             $row['name'],
             $row['moniker'],
             $row['class'],
-            $row['properties']
+            $row['properties'],
         ];
     }
 

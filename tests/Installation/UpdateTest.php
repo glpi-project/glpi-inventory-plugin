@@ -39,7 +39,7 @@ class UpdateTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // clean log files
+        // clean log files
         file_put_contents("../../files/_log/php-errors.log", '');
         file_put_contents("../../files/_log/sql-errors.log", '');
     }
@@ -47,7 +47,7 @@ class UpdateTest extends TestCase
 
     public static function tearDownAfterClass(): void
     {
-       // Creation of folders if not created in tests
+        // Creation of folders if not created in tests
         if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory')) {
             mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
         }
@@ -77,16 +77,16 @@ class UpdateTest extends TestCase
 
 
 
-   /**
-    * @dataProvider provider
-    * @preserveGlobalState disabled
-    * @test
-    */
+    /**
+     * @dataProvider provider
+     * @preserveGlobalState disabled
+     * @test
+     */
     public function update($version = '', $verify = false, $nbrules = 0)
     {
         global $DB;
 
-       // uninstall the plugin
+        // uninstall the plugin
         $plugin = new Plugin();
         $plugin->getFromDBByCrit(['directory' => 'glpiinventory']);
         $plugin->uninstall($plugin->fields['id']);
@@ -107,8 +107,8 @@ class UpdateTest extends TestCase
             [
                 'OR' => [
                     ['itemtype' => ['LIKE', 'PluginFus%']],
-                    ['itemtype' => ['LIKE', 'PluginGlpiinventory%']]
-                ]
+                    ['itemtype' => ['LIKE', 'PluginGlpiinventory%']],
+                ],
             ]
         );
 
@@ -133,7 +133,7 @@ class UpdateTest extends TestCase
 
         if ($version != '') {
             $sqlfile = "tests/Installation/mysql/i-" . $version . ".sql";
-           // Load specific plugin version in database
+            // Load specific plugin version in database
             $result = $this->load_mysql_file(
                 $DB->dbuser,
                 $DB->dbhost,
@@ -198,7 +198,7 @@ class UpdateTest extends TestCase
         if (!file_exists($file)) {
             return [
                 'returncode' => 1,
-                'output' => ["ERROR: File '{$file}' does not exist !"]
+                'output' => ["ERROR: File '{$file}' does not exist !"],
             ];
         }
 
@@ -220,7 +220,7 @@ class UpdateTest extends TestCase
         array_unshift($output, "Output of '{$cmd}'");
         return [
             'returncode' => $returncode,
-            'output' => $output
+            'output' => $output,
         ];
     }
 
@@ -232,7 +232,7 @@ class UpdateTest extends TestCase
         if (empty($dbuser) || empty($dbhost)) {
             return [
                 'returncode' => 2,
-                'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"]
+                'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"],
             ];
         }
         $cmd = [$cmd_base];
@@ -245,7 +245,7 @@ class UpdateTest extends TestCase
             if (is_numeric($dbhost[1])) {
                 $cmd[] = "--port " . $dbhost[1];
             } else {
-               // The dbhost's second part is assumed to be a socket file if it is not numeric.
+                // The dbhost's second part is assumed to be a socket file if it is not numeric.
                 $cmd[] = "--socket " . $dbhost[1];
             }
         } else {
@@ -263,10 +263,10 @@ class UpdateTest extends TestCase
 
     public function provider()
     {
-       // version, verifyConfig, nb entity rules
+        // version, verifyConfig, nb entity rules
         return [
             '0.83+2.1'     => ["0.83+2.1", true, 1],
-         /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
+            /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
             'empty tables' => ["", false, 0],
         ];
     }
@@ -319,7 +319,7 @@ class UpdateTest extends TestCase
     {
         global $DB;
 
-       //check is the field is_active has correctly been added to mirror servers
+        //check is the field is_active has correctly been added to mirror servers
         $this->assertTrue($DB->fieldExists(
             'glpi_plugin_glpiinventory_deploymirrors',
             'is_active'

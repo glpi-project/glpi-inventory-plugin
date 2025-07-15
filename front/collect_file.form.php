@@ -36,7 +36,7 @@ include("../../../inc/includes.php");
 $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
 if (isset($_POST["add"])) {
-   // conversions
+    // conversions
     if (
         $_POST['sizetype'] != 'none'
            && $_POST['size'] != ''

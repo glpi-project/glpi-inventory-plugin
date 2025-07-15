@@ -40,26 +40,26 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryStateDiscovery extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_task';
 
 
-   /**
-    * Update state of discovery
-    *
-    * @param integer $p_number
-    * @param array $a_input
-    * @param integer $agent_id
-    */
+    /**
+     * Update state of discovery
+     *
+     * @param integer $p_number
+     * @param array $a_input
+     * @param integer $agent_id
+     */
     public function updateState($p_number, $a_input, $agent_id)
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
-                'agents_id'  => $agent_id
+                'agents_id'  => $agent_id,
             ]
         );
         if (count($data) == "0") {
@@ -88,7 +88,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             }
             $this->update($input);
         }
-       // If discovery and query are finished, we will end Process
+        // If discovery and query are finished, we will end Process
         $this->getFromDB($process_id);
         $doEnd = 1;
         if (
@@ -104,18 +104,18 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     }
 
 
-   /**
-    * End the state process
-    *
-    * @param integer $p_number
-    * @param string $date_end
-    * @param integer $agent_id
-    */
+    /**
+     * End the state process
+     *
+     * @param integer $p_number
+     * @param string $date_end
+     * @param integer $agent_id
+     */
     public function endState($p_number, $date_end, $agent_id)
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
-                'agents_id'  => $agent_id
+                'agents_id'  => $agent_id,
             ]
         );
         foreach ($data as $input) {
@@ -125,13 +125,13 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     }
 
 
-   /**
-    * Display the discovery state
-    *
-    * @global object $DB
-    * @global array $CFG_GLPI
-    * @param array $options
-    */
+    /**
+     * Display the discovery state
+     *
+     * @global object $DB
+     * @global array $CFG_GLPI
+     * @param array $options
+     */
     public function display($options = [])
     {
         global $DB, $CFG_GLPI;
@@ -156,15 +156,15 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'FKEY' => [
                         'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
-                        'glpi_plugin_glpiinventory_taskjobs' => 'id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobs' => 'id',
+                    ],
+                ],
             ],
             'WHERE' => [
-                'method' => 'networkdiscovery'
+                'method' => 'networkdiscovery',
             ],
             'GROUP' => 'uniqid',
-            'ORDER' => 'uniqid DESC'
+            'ORDER' => 'uniqid DESC',
         ]);
         $number = count($iterator);
 
@@ -198,17 +198,17 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'ON' => [
                         'glpi_plugin_glpiinventory_taskjobs' => 'id',
-                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                    ],
+                ],
             ],
             'WHERE'  => [
-                'method' => 'networkdiscovery'
+                'method' => 'networkdiscovery',
             ],
             'GROUPBY' => 'uniqid',
             'ORDER'  => 'uniqid DESC',
-            'START'  => (int)$start,
-            'LIMIT'  => (int)$_SESSION['glpilist_limit']
+            'START'  => (int) $start,
+            'LIMIT'  => (int) $_SESSION['glpilist_limit'],
         ]);
 
         foreach ($iterator as $data) {
@@ -260,7 +260,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
                     }
                 }
             }
-           // State
+            // State
             echo "<td>";
             switch ($data['state']) {
                 case 0:

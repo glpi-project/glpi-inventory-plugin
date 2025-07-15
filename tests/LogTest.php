@@ -40,7 +40,7 @@ class GLPIlogs extends TestCase
         $filecontent = file_get_contents("../../files/_log/sql-errors.log");
 
         $this->assertEmpty($filecontent, 'sql-errors.log not empty: ' . $filecontent);
-       // Reinitialize file
+        // Reinitialize file
         file_put_contents("../../files/_log/sql-errors.log", '');
     }
 
@@ -59,7 +59,7 @@ class GLPIlogs extends TestCase
             }
         }
         $this->assertEmpty(implode("", $lines), 'php-errors.log not empty: ' . implode("", $lines));
-       // Reinitialize file
+        // Reinitialize file
         file_put_contents("../../files/_log/php-errors.log", '');
     }
 }

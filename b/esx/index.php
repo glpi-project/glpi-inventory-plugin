@@ -66,12 +66,12 @@ if (!empty($fi_machineid)) {
 
                 $module = new PluginGlpiinventoryInventoryComputerESX();
                 foreach ($taskjobstates as $taskjobstate) {
-                     $order->jobs[] = $module->run($taskjobstate);
+                    $order->jobs[] = $module->run($taskjobstate);
 
-                     $taskjobstate->changeStatus(
-                         $taskjobstate->fields['id'],
-                         $taskjobstate::SERVER_HAS_SENT_DATA
-                     );
+                    $taskjobstate->changeStatus(
+                        $taskjobstate->fields['id'],
+                        $taskjobstate::SERVER_HAS_SENT_DATA
+                    );
                 }
 
                 // return an empty dictionnary if there are no jobs.
@@ -85,7 +85,7 @@ if (!empty($fi_machineid)) {
             break;
 
         case 'setLog':
-           //Generic method to update logs
+            //Generic method to update logs
             PluginGlpiinventoryCommunicationRest::updateLog($_GET);
             break;
     }
@@ -93,6 +93,6 @@ if (!empty($fi_machineid)) {
     if ($response !== false) {
         echo $response;
     } else {
-        echo json_encode((object)[]);
+        echo json_encode((object) []);
     }
 }

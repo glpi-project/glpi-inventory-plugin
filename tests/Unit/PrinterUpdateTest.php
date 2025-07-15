@@ -42,7 +42,7 @@ class PrinterUpdateTest extends TestCase
     {
         global $DB;
 
-       // Delete all printers
+        // Delete all printers
         $printer = new Printer();
         $items = $printer->find();
         foreach ($items as $item) {
@@ -56,9 +56,9 @@ class PrinterUpdateTest extends TestCase
         $_SESSION["glpiID"] = 2;
     }
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function AddPrinter()
     {
         $this->update_time = date('Y-m-d H:i:s');
@@ -93,7 +93,7 @@ class PrinterUpdateTest extends TestCase
 
         $this->items_id = $printer->add([
             'serial'      => 'VRG5XUT5',
-            'entities_id' => 0
+            'entities_id' => 0,
         ]);
 
         $this->assertGreaterThan(0, $this->items_id);
@@ -113,9 +113,9 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterGeneral()
     {
         $printer = new Printer();
@@ -174,31 +174,31 @@ class PrinterUpdateTest extends TestCase
             'sysdescr'             => 'HP ETHERNET MULTI-ENVIRONMENT',
             'last_inventory_update' => $_SESSION['glpi_currenttime'],
             'snmpcredentials_id' => 0,
-            'autoupdatesystems_id' => $autoupdate->fields['id']
+            'autoupdatesystems_id' => $autoupdate->fields['id'],
         ];
 
         $this->assertEquals($a_reference, $printer->fields);
 
-       //Check if no log has been added for the counter's update
-       /*$nb = countElementsInTable('glpi_logs',
-                                 ['itemtype'         => 'Printer',
-                                  'items_id'         => $printerId,
-                                  'linked_action'    => 0,
-                                  'id_search_option' => 12
-                                  ]);
-       $logs = new Log();
-       var_dump($logs->find(['itemtype'         => 'Printer',
-         'items_id'         => $printerId,
-         'linked_action'    => 0,
-         'id_search_option' => 12
-       ]));
-       $this->assertEquals($nb, 0);*/
+        //Check if no log has been added for the counter's update
+        /*$nb = countElementsInTable('glpi_logs',
+                                  ['itemtype'         => 'Printer',
+                                   'items_id'         => $printerId,
+                                   'linked_action'    => 0,
+                                   'id_search_option' => 12
+                                   ]);
+        $logs = new Log();
+        var_dump($logs->find(['itemtype'         => 'Printer',
+          'items_id'         => $printerId,
+          'linked_action'    => 0,
+          'id_search_option' => 12
+        ]));
+        $this->assertEquals($nb, 0);*/
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterSnmpExtension()
     {
 
@@ -208,9 +208,9 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterPageCounter()
     {
 
@@ -223,9 +223,9 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterCartridgeBlack()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -235,15 +235,15 @@ class PrinterUpdateTest extends TestCase
         $a_cartridge = $cartridge_info->find([
             'printers_id' => $printer->fields['id'],
             'property' => 'tonerblack',
-            'value' => 60
+            'value' => 60,
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterCartridgeCyan()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -253,15 +253,15 @@ class PrinterUpdateTest extends TestCase
         $a_cartridge = $cartridge_info->find([
             'printers_id' => $printer->fields['id'],
             'property' => 'tonercyan',
-            'value' => 40
+            'value' => 40,
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterCartridgeYellow()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -271,15 +271,15 @@ class PrinterUpdateTest extends TestCase
         $a_cartridge = $cartridge_info->find([
             'printers_id' => $printer->fields['id'],
             'property' => 'toneryellow',
-            'value' => 80
+            'value' => 80,
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterCartridgeMagenta()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -288,15 +288,15 @@ class PrinterUpdateTest extends TestCase
         $a_cartridge = $cartridge_info->find([
             'printers_id' => $printer->fields['id'],
             'property' => 'tonermagenta',
-            'value' => 100
+            'value' => 100,
         ]);
         $this->assertEquals(1, count($a_cartridge));
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function PrinterAllCartridges()
     {
         $cartridge_info = new Printer_CartridgeInfo();
@@ -305,9 +305,9 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function NewPrinterFromNetdiscovery()
     {
 
@@ -341,7 +341,7 @@ class PrinterUpdateTest extends TestCase
         $printer = new Printer();
         $printers_id = $printer->add([
             'serial' => 'MY89AQG0V9050N',
-            'entities_id' => 0
+            'entities_id' => 0,
         ]);
         $this->assertNotFalse($printers_id);
         $this->assertTrue($printer->getFromDB($printers_id));
@@ -366,7 +366,7 @@ class PrinterUpdateTest extends TestCase
             'Sysdescr not updated correctly'
         );
 
-       // Check mac
+        // Check mac
         $networkPort = new NetworkPort();
         $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
         $this->assertEquals(
@@ -381,10 +381,10 @@ class PrinterUpdateTest extends TestCase
             'Mac address'
         );
 
-       // check ip
+        // check ip
         $a_networknames = $networkName->find(
             ['itemtype' => 'NetworkPort',
-                'items_id' => $a_port['id']
+                'items_id' => $a_port['id'],
             ]
         );
         $this->assertEquals(
@@ -395,7 +395,7 @@ class PrinterUpdateTest extends TestCase
         $a_networkname = current($a_networknames);
         $a_ipaddresses = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-                'items_id' => $a_networkname['id']
+                'items_id' => $a_networkname['id'],
             ]
         );
         $this->assertEquals(
@@ -412,10 +412,10 @@ class PrinterUpdateTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends NewPrinterFromNetdiscovery
-    */
+    /**
+     * @test
+     * @depends NewPrinterFromNetdiscovery
+     */
     public function updatePrinterFromNetdiscovery()
     {
         global $DB;
@@ -476,7 +476,7 @@ class PrinterUpdateTest extends TestCase
             'Sysdescr not updated correctly'
         );
 
-       // Check mac
+        // Check mac
         $networkPort = new NetworkPort();
         $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printer->fields['id']]);
         $this->assertEquals(
@@ -491,10 +491,10 @@ class PrinterUpdateTest extends TestCase
             'Mac address'
         );
 
-       // check ip
+        // check ip
         $a_networknames = $networkName->find(
             ['itemtype' => 'NetworkPort',
-                'items_id' => $a_port['id']
+                'items_id' => $a_port['id'],
             ]
         );
         $this->assertEquals(
@@ -505,7 +505,7 @@ class PrinterUpdateTest extends TestCase
         $a_networkname = current($a_networknames);
         $a_ipaddresses = $iPAddress->find(
             ['itemtype' => 'NetworkName',
-                'items_id' => $a_networkname['id']
+                'items_id' => $a_networkname['id'],
             ]
         );
         $this->assertEquals(
@@ -521,10 +521,10 @@ class PrinterUpdateTest extends TestCase
         );
     }
 
-   /**
-    * @test
-    * @depends NewPrinterFromNetdiscovery
-    */
+    /**
+     * @test
+     * @depends NewPrinterFromNetdiscovery
+     */
     public function updatePrinterFromNetdiscoveryToInventory()
     {
         $_SESSION["plugin_glpiinventory_entity"] = 0;
@@ -552,11 +552,11 @@ class PrinterUpdateTest extends TestCase
 </REQUEST>
 ";
 
-       //First: discover the device
+        //First: discover the device
         $printer     = new Printer();
         $printers_id = $printer->add([
             'serial'      => '8512418234',
-            'entities_id' => 0
+            'entities_id' => 0,
         ]);
         $printer->getFromDB($printers_id);
 
@@ -569,7 +569,7 @@ class PrinterUpdateTest extends TestCase
         $this->assertGreaterThan(0, $printer->getFromDBByCrit(['serial' => '8512418234']));
         $this->assertEquals('SHARP MX-5140N', $printer->fields['name'], 'Name must be updated');
 
-       // Check mac
+        // Check mac
         $networkPort = new NetworkPort();
         $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
         $this->assertEquals(
@@ -580,7 +580,7 @@ class PrinterUpdateTest extends TestCase
         $a_port = current($a_ports);
         $this->assertEquals('24:26:42:1e:5a:90', $a_port['mac'], 'Mac address');
 
-       //Logical number should be 0
+        //Logical number should be 0
         $this->assertEquals(0, $a_port['logical_number'], 'Logical number equals 0');
 
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>

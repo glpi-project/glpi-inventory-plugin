@@ -43,7 +43,7 @@ $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 $params = [
     "moduletype" => filter_input(INPUT_GET, "moduletype"),
-    "method"     => filter_input(INPUT_GET, "method")
+    "method"     => filter_input(INPUT_GET, "method"),
 ];
 
 $pfTaskjob->ajaxModuleTypesDropdown($params);

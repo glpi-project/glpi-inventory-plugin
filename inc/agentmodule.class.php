@@ -40,22 +40,22 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryAgentmodule extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    * Uses the same right as Agents in native GLPI Inventory
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     * Uses the same right as Agents in native GLPI Inventory
+     *
+     * @var string
+     */
     public static $rightname = 'agent';
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
@@ -68,14 +68,14 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
@@ -92,11 +92,11 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Display form to configure modules in agents
-    *
-    * @return boolean true if no problem
-    */
+    /**
+     * Display form to configure modules in agents
+     *
+     * @return boolean true if no problem
+     */
     public function showModuleForm()
     {
 
@@ -129,11 +129,11 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
                     break;
                 }
             }
-           // Hack for snmpquery
+            // Hack for snmpquery
             if ($data["modulename"] == 'SNMPQUERY') {
                 $modulename = __('Network inventory (SNMP)', 'glpiinventory');
             }
-           // Hack for deploy
+            // Hack for deploy
             if ($data["modulename"] == 'DEPLOY') {
                 $modulename = __('Package deployment', 'glpiinventory');
             }
@@ -144,35 +144,35 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
             Html::showCheckbox(['name'    => 'activation',
                 'value'   => '1',
-                'checked' => $checked
+                'checked' => $checked,
             ]);
             echo "</td>";
             echo "<td>";
-             echo "<table>";
-             echo "<tr>";
-             echo "<td width='45%'>";
-             $a_agentList = importArrayFromDB($data['exceptions']);
-             $a_used = [];
+            echo "<table>";
+            echo "<tr>";
+            echo "<td width='45%'>";
+            $a_agentList = importArrayFromDB($data['exceptions']);
+            $a_used = [];
             foreach ($a_agentList as $agent_id) {
-                 $a_used[] = $agent_id;
+                $a_used[] = $agent_id;
             }
             Dropdown::show("Agent", ["name" => "agent_to_add[]",
-                "used" => $a_used
+                "used" => $a_used,
             ]);
-             echo "</td>";
-             echo "<td align='center'>";
-             echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='" .
-               __s('Add') . " >>'>";
-             echo "<br><br>";
-             echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< " .
-               __s('Delete') . "'>";
-             echo "</td>";
-             echo "<td width='45%'>";
+            echo "</td>";
+            echo "<td align='center'>";
+            echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='" .
+              __s('Add') . " >>'>";
+            echo "<br><br>";
+            echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< " .
+              __s('Delete') . "'>";
+            echo "</td>";
+            echo "<td width='45%'>";
 
-             echo "<select class='form-select' size='6' name='agent_to_delete[]'>";
+            echo "<select class='form-select' size='6' name='agent_to_delete[]'>";
             foreach ($a_agentList as $agent_id) {
-                 $agent->getFromDB($agent_id);
-                 echo "<option value='" . $agent_id . "'>" . $agent->getName() . "</option>";
+                $agent->getFromDB($agent_id);
+                echo "<option value='" . $agent_id . "'>" . $agent->getName() . "</option>";
             }
             echo "</select>";
             echo "</td>";
@@ -194,12 +194,12 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Display form to configure activation of modules in agent form (in tab)
-    *
-    * @global array $CFG_GLPI
-    * @param integer $agents_id id of the agent
-    */
+    /**
+     * Display form to configure activation of modules in agent form (in tab)
+     *
+     * @global array $CFG_GLPI
+     * @param integer $agents_id id of the agent
+     */
     public function showFormAgentException($agents_id)
     {
         $agent = new Agent();
@@ -239,11 +239,11 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
                     break;
                 }
             }
-           // Hack for snmpquery
+            // Hack for snmpquery
             if ($data["modulename"] == 'SNMPQUERY') {
                 $modulename = __('Network inventory (SNMP)', 'glpiinventory');
             }
-           // Hack for deploy
+            // Hack for deploy
             if ($data["modulename"] == 'DEPLOY') {
                 $modulename = __('Package deployment', 'glpiinventory');
             }
@@ -262,7 +262,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             }
             Html::showCheckbox(['name'    => "activation-" . $data["modulename"],
                 'value'   => '1',
-                'checked' => $checked
+                'checked' => $checked,
             ]);
             echo "</td>";
             if ($i == 1) {
@@ -292,12 +292,12 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Get global activation status of a module
-    *
-    * @param string $module_name name of module
-    * @return array information of module activation
-    */
+    /**
+     * Get global activation status of a module
+     *
+     * @param string $module_name name of module
+     * @return array information of module activation
+     */
     public function getActivationExceptions($module_name)
     {
         $a_modules = $this->find(['modulename' => $module_name], [], 1);
@@ -305,12 +305,12 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Get list of agents have this module activated
-    *
-    * @param string $module_name name of the module
-    * @return array id list of agents
-    */
+    /**
+     * Get list of agents have this module activated
+     *
+     * @param string $module_name name of the module
+     * @return array id list of agents
+     */
     public function getAgentsCanDo($module_name)
     {
 
@@ -366,13 +366,13 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Get if agent has this module enabled
-    *
-    * @param string $module_name module name
-    * @param integer $agents_id id of the agent
-    * @return boolean true if enabled, otherwise false
-    */
+    /**
+     * Get if agent has this module enabled
+     *
+     * @param string $module_name module name
+     * @param integer $agents_id id of the agent
+     * @return boolean true if enabled, otherwise false
+     */
     public function isAgentCanDo($module_name, $agents_id)
     {
 
@@ -425,13 +425,13 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Generate the server module URL to send to agent
-    *
-    * @param string $modulename name of the module
-    * @param integer $entities_id id of the entity
-    * @return string the URL generated
-    */
+    /**
+     * Generate the server module URL to send to agent
+     *
+     * @param string $modulename name of the module
+     * @param integer $entities_id id of the entity
+     * @return string the URL generated
+     */
     public static function getUrlForModule($modulename, $entities_id = -1)
     {
         $plugin_dir = '/' . Plugin::getWebDir('glpiinventory', false);
@@ -469,11 +469,11 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     }
 
 
-   /**
-    * Get list of all modules
-    *
-    * @return array list of name of modules
-    */
+    /**
+     * Get list of all modules
+     *
+     * @return array list of name of modules
+     */
     public static function getModules()
     {
         $a_modules = [];

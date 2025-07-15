@@ -40,49 +40,49 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = "plugin_glpiinventory_group";
 
-   /**
-    * Itemtype for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the first part of relation
+     *
+     * @var string
+     */
     public static $itemtype_1 = 'PluginGlpiinventoryDeployGroup';
 
-   /**
-    * id field name for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the first part of relation
+     *
+     * @var string
+     */
     public static $items_id_1 = 'plugin_glpiinventory_deploygroups_id';
 
-   /**
-    * Itemtype for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the second part of relation
+     *
+     * @var string
+     */
     public static $itemtype_2 = 'itemtype';
 
-   /**
-    * id field name for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the second part of relation
+     *
+     * @var string
+     */
     public static $items_id_2 = 'items_id';
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string|array name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string|array name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
@@ -111,14 +111,14 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     }
 
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         /** @var PluginGlpiinventoryDeployGroup $item */
@@ -139,11 +139,11 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     }
 
 
-   /**
-    * Display criteria form + list of computers
-    *
-    * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
-    */
+    /**
+     * Display criteria form + list of computers
+     *
+     * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
+     */
     public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
     {
 
@@ -195,9 +195,9 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     }
 
 
-   /**
-    * Display result, so list of computers
-    */
+    /**
+     * Display result, so list of computers
+     */
     public static function showResults(PluginGlpiinventoryDeployGroup $item)
     {
         global $DB;
@@ -290,12 +290,12 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     }
 
 
-   /**
-   * Duplicate entries from one group to another
-   * @param integer $source_deploygroups_id the source group ID
-   * @param integer $target_deploygroups_id the target group ID
-   * @return boolean the duplication status
-   */
+    /**
+    * Duplicate entries from one group to another
+    * @param integer $source_deploygroups_id the source group ID
+    * @param integer $target_deploygroups_id the target group ID
+    * @return boolean the duplication status
+    */
     public static function duplicate($source_deploygroups_id, $target_deploygroups_id)
     {
         $result        = true;
@@ -314,15 +314,15 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     }
 
 
-   /**
-    * Form to import computers ID in CSV file
-    *
-    * @since 9.2+2.0
-    *
-    * @param PluginGlpiinventoryDeployGroup $item it's an instance of PluginGlpiinventoryDeployGroup class
-    *
-    * @return boolean
-    */
+    /**
+     * Form to import computers ID in CSV file
+     *
+     * @since 9.2+2.0
+     *
+     * @param PluginGlpiinventoryDeployGroup $item it's an instance of PluginGlpiinventoryDeployGroup class
+     *
+     * @return boolean
+     */
     public static function csvImportForm(PluginGlpiinventoryDeployGroup $item)
     {
 
@@ -352,28 +352,28 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     }
 
 
-   /**
-    * Import into DB the computers ID
-    *
-    * @since 9.2+2.0
-    *
-    * @param array $post_data
-    * @param array $files_data array with information of $_FILE
-    *
-    * @return boolean
-    */
+    /**
+     * Import into DB the computers ID
+     *
+     * @since 9.2+2.0
+     *
+     * @param array $post_data
+     * @param array $files_data array with information of $_FILE
+     *
+     * @return boolean
+     */
     public static function csvImport($post_data, $files_data)
     {
         $pfDeployGroup_static = new self();
         $computer = new Computer();
         $input = [
             'plugin_glpiinventory_deploygroups_id' => $post_data['groups_id'],
-            'itemtype' => 'Computer'
+            'itemtype' => 'Computer',
         ];
         if (isset($files_data['importcsvfile']['tmp_name'])) {
             if (($handle = fopen($files_data['importcsvfile']['tmp_name'], "r")) !== false) {
                 while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"], '"', '')) !== false) {
-                    $input['items_id'] = (int)str_replace(' ', '', $data[0]);
+                    $input['items_id'] = (int) str_replace(' ', '', $data[0]);
                     if ($computer->getFromDB($input['items_id'])) {
                         $pfDeployGroup_static->add($input);
                     }

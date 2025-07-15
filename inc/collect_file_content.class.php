@@ -44,15 +44,15 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
     public $collect_type     = 'file';
 
-   /**
-    * Update computer files (add and update files) related to this
-    * collect file id
-    *
-    * @global object $DB
-    * @param integer $computers_id id of the computer
-    * @param array $file_data
-    * @param integer $collects_files_id id of collect_file
-    */
+    /**
+     * Update computer files (add and update files) related to this
+     * collect file id
+     *
+     * @global object $DB
+     * @param integer $computers_id id of the computer
+     * @param array $file_data
+     * @param integer $collects_files_id id of collect_file
+     */
     public function updateComputer($computers_id, $file_data, $collects_files_id)
     {
         foreach ($file_data as $key => $value) {
@@ -60,18 +60,18 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
                 'computers_id' => $computers_id,
                 'plugin_glpiinventory_collects_files_id' => $collects_files_id,
                 'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
-                'size'         => $value['size']
+                'size'         => $value['size'],
             ];
             $this->add($input);
         }
     }
 
 
-   /**
-    * Display files found on the computer
-    *
-    * @param integer $computers_id id of the computer
-    */
+    /**
+     * Display files found on the computer
+     *
+     * @param integer $computers_id id of the computer
+     */
     public function showForComputer($computers_id)
     {
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
@@ -113,11 +113,11 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     }
 
 
-   /**
-    * Display all files found on all computers related to the collect file
-    *
-    * @param integer $collects_files_id id of collect_file
-    */
+    /**
+     * Display all files found on all computers related to the collect file
+     *
+     * @param integer $collects_files_id id of collect_file
+     */
     public function showContent($collects_files_id)
     {
         $pfCollect_File = new PluginGlpiinventoryCollect_File();

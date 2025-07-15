@@ -42,38 +42,38 @@ use Glpi\Application\View\TemplateRenderer;
  */
 class PluginGlpiinventoryIPRange extends CommonDBTM
 {
-   /**
-    * We activate the history.
-    *
-    * @var boolean
-    */
+    /**
+     * We activate the history.
+     *
+     * @var boolean
+     */
     public $dohistory = true;
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_iprange';
 
 
-   /**
-    * Check if can create an IP range
-    *
-    * @return true
-    */
+    /**
+     * Check if can create an IP range
+     *
+     * @return true
+     */
     public static function canCreate()
     {
         return true;
     }
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
 
@@ -82,7 +82,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
                 // Permanent task discovery
                 return __('Communication mode', 'glpiinventory');
             } elseif ((isset($_POST['glpi_tab'])) and ($_POST['glpi_tab'] == 2)) {
-               // Permanent task inventory
+                // Permanent task inventory
                 return __('See all informations of task', 'glpiinventory');
             } else {
                 return __('IP Ranges', 'glpiinventory');
@@ -92,11 +92,11 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * Get comments of the object
-    *
-    * @return string comments in HTML format
-    */
+    /**
+     * Get comments of the object
+     *
+     * @return string comments in HTML format
+     */
     public function getComments()
     {
         $comment = $this->fields['ip_start'] . " -> " . $this->fields['ip_end'];
@@ -104,18 +104,18 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
+    /**
+     * Get search function for the class
+     *
+     * @return array
+     */
     public function rawSearchOptions()
     {
         $tab = [];
 
         $tab[] = [
             'id' => 'common',
-            'name' => __('IP range configuration', 'glpiinventory')
+            'name' => __('IP range configuration', 'glpiinventory'),
         ];
 
         $tab[] = [
@@ -123,7 +123,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
             'table'        => $this->getTable(),
             'field'        => 'name',
             'name'         => __('Name'),
-            'datatype'     => 'itemlink'
+            'datatype'     => 'itemlink',
         ];
 
         $tab[] = [
@@ -172,12 +172,12 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * Define tabs to display on form page
-    *
-    * @param array $options
-    * @return array containing the tabs name
-    */
+    /**
+     * Define tabs to display on form page
+     *
+     * @param array $options
+     * @return array containing the tabs name
+     */
     public function defineTabs($options = [])
     {
 
@@ -188,13 +188,13 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * Display form
-    *
-    * @param integer $id
-    * @param array $options
-    * @return true
-    */
+    /**
+     * Display form
+     *
+     * @param integer $id
+     * @param array $options
+     * @return true
+     */
     public function showForm($id, array $options = [])
     {
         $this->initForm($id, $options);
@@ -207,12 +207,12 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * Check if IP is valid
-    *
-    * @param array $a_input array of IPs
-    * @return boolean
-    */
+    /**
+     * Check if IP is valid
+     *
+     * @param array $a_input array of IPs
+     * @return boolean
+     */
     public function checkip($a_input)
     {
 
@@ -242,12 +242,12 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * Get ip in long format
-    *
-    * @param string $ip IP in format IPv4
-    * @return integer $int
-    */
+    /**
+     * Get ip in long format
+     *
+     * @param string $ip IP in format IPv4
+     * @return integer $int
+     */
     public function getIp2long($ip)
     {
         $int = ip2long($ip);
@@ -258,9 +258,9 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * After purge item, delete SNMP credentials linked to this ip range
-    */
+    /**
+     * After purge item, delete SNMP credentials linked to this ip range
+     */
     public function post_purgeItem()
     {
         $pfIPRange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
@@ -275,12 +275,12 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     }
 
 
-   /**
-    * Get the massive actions for this object
-    *
-    * @param object|null $checkitem
-    * @return array list of actions
-    */
+    /**
+     * Get the massive actions for this object
+     *
+     * @param object|null $checkitem
+     * @return array list of actions
+     */
     public function getSpecificMassiveActions($checkitem = null)
     {
 
