@@ -40,40 +40,40 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommonView extends CommonDBTM
 {
-   /**
-    * Define the number for the message information constant
-    *
-    * @var integer
-    */
-    const MSG_INFO = 0;
+    /**
+     * Define the number for the message information constant
+     *
+     * @var integer
+     */
+    public const MSG_INFO = 0;
 
-   /**
-    * Define the number for the message warning constant
-    *
-    * @var integer
-    */
-    const MSG_WARNING = 1;
+    /**
+     * Define the number for the message warning constant
+     *
+     * @var integer
+     */
+    public const MSG_WARNING = 1;
 
-   /**
-    * Define the number for the message error constant
-    *
-    * @var integer
-    */
-    const MSG_ERROR = 2;
+    /**
+     * Define the number for the message error constant
+     *
+     * @var integer
+     */
+    public const MSG_ERROR = 2;
 
-   /**
-    * Define default value for the base URLs
-    *
-    * @var array
-    */
+    /**
+     * Define default value for the base URLs
+     *
+     * @var array
+     */
     public $base_urls = [];
 
 
-   /**
-    * __contruct function and the different base URLs
-    *
-    * @global array $CFG_GLPI
-    */
+    /**
+     * __contruct function and the different base URLs
+     *
+     * @global array $CFG_GLPI
+     */
     public function __construct()
     {
         global $CFG_GLPI;
@@ -91,13 +91,13 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Get a specific url root by type name
-    *
-    * @param string $name the type of url requested (can be used for ajax call
-    *                     or pictures location)
-    * @return string the requested url if found otherwise empty string
-    */
+    /**
+     * Get a specific url root by type name
+     *
+     * @param string $name the type of url requested (can be used for ajax call
+     *                     or pictures location)
+     * @return string the requested url if found otherwise empty string
+     */
     public function getBaseUrlFor($name)
     {
         if (array_key_exists($name, $this->base_urls)) {
@@ -111,21 +111,21 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Show Search list for this itemtype
-    */
+    /**
+     * Show Search list for this itemtype
+     */
     public function showList()
     {
         Search::show(get_class($this));
     }
 
 
-   /**
-    * Display input form element
-    *
-    * @param string $title
-    * @param string $varname
-    */
+    /**
+     * Display input form element
+     *
+     * @param string $title
+     * @param string $varname
+     */
     public function showTextField($title, $varname)
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
@@ -137,13 +137,13 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Display input form element only with numbers
-    *
-    * @param string $title
-    * @param string $varname
-    * @param array $options
-    */
+    /**
+     * Display input form element only with numbers
+     *
+     * @param string $title
+     * @param string $varname
+     * @param array $options
+     */
     public function showIntegerField($title, $varname, $options = [])
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
@@ -155,13 +155,13 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Display checkbox form element
-    *
-    * @param string $title
-    * @param string $varname
-    * @param array $options
-    */
+    /**
+     * Display checkbox form element
+     *
+     * @param string $title
+     * @param string $varname
+     * @param array $options
+     */
     public function showCheckboxField($title, $varname, $options = [])
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
@@ -177,14 +177,14 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Display dropdown form element for itemtype
-    *
-    * @param string $title
-    * @param string $itemtype a glpi/plugin itemtype
-    * @param array $options
-    * @return string the rand number can be used with ajax to update something
-    */
+    /**
+     * Display dropdown form element for itemtype
+     *
+     * @param string $title
+     * @param string $itemtype a glpi/plugin itemtype
+     * @param array $options
+     * @return string the rand number can be used with ajax to update something
+     */
     public function showDropdownForItemtype($title, $itemtype, $options = [])
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
@@ -204,15 +204,15 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Display dropdown form element with array data
-    *
-    * @param string $title
-    * @param ?string $varname
-    * @param array $values
-    * @param array $options
-    * @return string the rand number can be used with ajax to update something
-    */
+    /**
+     * Display dropdown form element with array data
+     *
+     * @param string $title
+     * @param ?string $varname
+     * @param array $values
+     * @param array $options
+     * @return string the rand number can be used with ajax to update something
+     */
     public function showDropdownFromArray($title, $varname, $values = [], $options = [])
     {
         echo "<div class='col-lg-4'>";
@@ -234,21 +234,21 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Display date time select form element
-    *
-    * @param string $title
-    * @param string $varname
-    * @param array $options
-    */
+    /**
+     * Display date time select form element
+     *
+     * @param string $title
+     * @param string $varname
+     * @param array $options
+     */
     public function showDateTimeField($title, $varname, $options = [])
     {
 
-       // Get datetime value if the object is defined
+        // Get datetime value if the object is defined
         if ($this->fields['id'] > 0) {
             $value = $this->fields[$varname];
         } else {
-           // Else set default value to current date and time
+            // Else set default value to current date and time
             if (
                 array_key_exists('maybeempty', $options)
                  and $options['maybeempty']
@@ -272,12 +272,12 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Display a text area form element
-    *
-    * @param string $title
-    * @param string $varname
-    */
+    /**
+     * Display a text area form element
+     *
+     * @param string $title
+     * @param string $varname
+     */
     public function showTextArea($title, $varname)
     {
         echo "<div class='mb-2 row col-12 col-sm-6'>";
@@ -292,13 +292,13 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     }
 
 
-   /**
-    * Get a HTML message
-    *
-    * @param string $msg
-    * @param integer $type
-    * @return string
-    */
+    /**
+     * Get a HTML message
+     *
+     * @param string $msg
+     * @param integer $type
+     * @return string
+     */
     public function getMessage($msg, $type = self::MSG_INFO)
     {
         switch ($type) {

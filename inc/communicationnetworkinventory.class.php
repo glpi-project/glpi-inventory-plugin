@@ -42,20 +42,20 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryCommunicationNetworkInventory
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_networkequipment';
 
-   /**
-    * Import data, so get data from agent to put in GLPI
-    *
-    * @param string $p_DEVICEID device_id of the agent
-    * @param object $a_CONTENT
-    * @param Inventory $inventory
-    */
+    /**
+     * Import data, so get data from agent to put in GLPI
+     *
+     * @param string $p_DEVICEID device_id of the agent
+     * @param object $a_CONTENT
+     * @param Inventory $inventory
+     */
     public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory)
     {
         $response = [];
@@ -186,9 +186,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
 
 
 
-   /**
-    * Add log in the taskjob
-    */
+    /**
+     * Add log in the taskjob
+     */
     public function addtaskjoblog()
     {
 
@@ -207,11 +207,11 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     }
 
 
-   /**
-    * Get method name linked to this class
-    *
-    * @return string
-    */
+    /**
+     * Get method name linked to this class
+     *
+     * @return string
+     */
     public static function getMethod()
     {
         return 'networkinventory';

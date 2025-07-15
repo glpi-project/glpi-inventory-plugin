@@ -42,22 +42,22 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
 {
     public $collect_type = 'registry';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Found entry', 'Found entries', $nb, 'glpiinventory');
     }
 
-   /**
-    * Get Hives of the registry
-    *
-    * @return array list of hives
-    */
+    /**
+     * Get Hives of the registry
+     *
+     * @return array list of hives
+     */
     public static function getHives()
     {
         return [
@@ -72,7 +72,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             __('Hive', 'glpiinventory'),
             __("Path", "glpiinventory"),
             __("Key", "glpiinventory"),
-            __("Action")
+            __("Action"),
         ];
     }
 
@@ -82,7 +82,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             $row['name'],
             $row['hive'],
             $row['path'],
-            $row['key']
+            $row['key'],
         ];
     }
 

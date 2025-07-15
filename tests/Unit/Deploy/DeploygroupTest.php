@@ -39,14 +39,14 @@ class DeploygroupTest extends TestCase
     {
         global $DB;
 
-       // Delete all groups
+        // Delete all groups
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $items = $pfDeploygroup->find();
         foreach ($items as $item) {
             $pfDeploygroup->delete(['id' => $item['id']], true);
         }
 
-       // Delete all computers
+        // Delete all computers
         $computer = new Computer();
         $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         foreach ($items as $item) {
@@ -57,15 +57,15 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function AddGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $input = ['name'    => 'MyGroup',
             'type'    => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
-            'comment' => 'MyComment'
+            'comment' => 'MyComment',
         ];
         $groups_id = $pfDeploygroup->add($input);
         $this->assertGreaterThan(0, $groups_id);
@@ -73,17 +73,17 @@ class DeploygroupTest extends TestCase
         $result = ['id'      => $groups_id,
             'name'    => 'MyGroup',
             'type'    => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
-            'comment' => 'MyComment'
+            'comment' => 'MyComment',
         ];
         $pfDeploygroup->getFromDB($groups_id);
         $this->assertEquals($pfDeploygroup->fields, $result);
     }
 
 
-   /**
-    * @test
-    * @depends AddGroup
-    */
+    /**
+     * @test
+     * @depends AddGroup
+     */
     public function cloneStaticGroup()
     {
         $computer      = new Computer();
@@ -100,10 +100,10 @@ class DeploygroupTest extends TestCase
         $computers_id_2 = $computer->add(['name' => 'MyComputer2', 'entities_id' => 1]);
 
         $pfStaticgroup->add(['plugin_glpiinventory_deploygroups_id' => $groups_id,
-            'itemtype' => 'Computer', 'items_id' => $computers_id_1
+            'itemtype' => 'Computer', 'items_id' => $computers_id_1,
         ]);
         $pfStaticgroup->add(['plugin_glpiinventory_deploygroups_id' => $groups_id,
-            'itemtype' => 'Computer', 'items_id' => $computers_id_2
+            'itemtype' => 'Computer', 'items_id' => $computers_id_2,
         ]);
 
         $this->assertTrue($pfDeploygroup->duplicate($groups_id));
@@ -113,7 +113,7 @@ class DeploygroupTest extends TestCase
         $this->assertEquals(1, count($data));
         $tmp = current($data);
 
-       //Store the group's id
+        //Store the group's id
         $new_groups_id = $tmp['id'];
 
         $data = $pfStaticgroup->find(
@@ -131,16 +131,16 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends cloneStaticGroup
-    */
+    /**
+     * @test
+     * @depends cloneStaticGroup
+     */
     public function cloneDynamicGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $input = ['name'    => 'Dynamic group',
             'type'    => PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP,
-            'comment' => 'My dynamic group'
+            'comment' => 'My dynamic group',
         ];
         $groups_id = $pfDeploygroup->add($input);
         $this->assertGreaterThan(0, $groups_id);
@@ -149,7 +149,7 @@ class DeploygroupTest extends TestCase
         $pfDynamicGroup = new PluginGlpiinventoryDeployGroup_Dynamicdata();
         $input = ['plugin_glpiinventory_deploygroups_id' => $groups_id,
             'fields_array'     => $json,
-            'can_update_group' => 0
+            'can_update_group' => 0,
         ];
         $dynamicgroups_id = $pfDynamicGroup->add($input);
         $this->assertGreaterThan(0, $dynamicgroups_id);
@@ -169,18 +169,18 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends cloneDynamicGroup
-    */
+    /**
+     * @test
+     * @depends cloneDynamicGroup
+     */
     public function updateGroup()
     {
-       //Get the group have the name "Windows computers"
+        //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $data = $pfDeploygroup->find(['name' => 'Copy of Dynamic group']);
         $this->assertEquals(1, count($data));
         $tmp = current($data);
-       //Store the group's id
+        //Store the group's id
         $groups_id = $tmp['id'];
 
         $input = ['name' => 'Second Dynamic group', 'id' => $groups_id];
@@ -194,22 +194,22 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends updateGroup
-    */
+    /**
+     * @test
+     * @depends updateGroup
+     */
     public function switchDynamicToStaticGroup()
     {
-       //Get the group have the name "Windows computers"
+        //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $data = $pfDeploygroup->find(['name' => 'Dynamic group']);
         $this->assertEquals(1, count($data));
         $tmp = current($data);
-       //Store the group's id
+        //Store the group's id
         $groups_id = $tmp['id'];
 
         $input = ['id'   => $groups_id,
-            'type' => PluginGlpiinventoryDeployGroup::STATIC_GROUP
+            'type' => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
         ];
         $this->assertTrue($pfDeploygroup->update($input));
 
@@ -225,10 +225,10 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends cloneDynamicGroup
-    */
+    /**
+     * @test
+     * @depends cloneDynamicGroup
+     */
     public function deleteDynamicGroup()
     {
 
@@ -238,44 +238,44 @@ class DeploygroupTest extends TestCase
         $data = $pfDeploygroup->find(['name' => 'Second Dynamic group']);
         $this->assertEquals(1, count($data));
         $tmp = current($data);
-       //Store the group's id
+        //Store the group's id
         $groups_id = $tmp['id'];
 
-       //Get group datas
+        //Get group datas
         $data = $pfDynamicgroup->find(['plugin_glpiinventory_deploygroups_id' => $groups_id]);
         $this->assertEquals(1, count($data));
-       //Store group data id
+        //Store group data id
         $tmp = current($data);
         $dynamicgroups_id = $tmp['id'];
 
-       //Delete the group
+        //Delete the group
         $this->assertTrue($pfDeploygroup->delete(['id' => $groups_id]));
         $this->assertFalse($pfDeploygroup->getFromDB($groups_id));
         $this->assertFalse($pfDynamicgroup->getFromDB($dynamicgroups_id));
     }
 
 
-   /**
-    * @test
-    * @depends cloneStaticGroup
-    */
+    /**
+     * @test
+     * @depends cloneStaticGroup
+     */
     public function deleteStaticGroup()
     {
 
-       //Get the group have the name "Windows computers"
+        //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $data = $pfDeploygroup->find(['name' => 'MyGroup']);
         $this->assertEquals(1, count($data));
         $tmp = current($data);
-       //Store the group's id
+        //Store the group's id
         $groups_id = $tmp['id'];
 
-       //Get group datas
+        //Get group datas
         $pfStaticGroup = new PluginGlpiinventoryDeployGroup_Staticdata();
         $data = $pfStaticGroup->find(['plugin_glpiinventory_deploygroups_id' => $groups_id]);
         $this->assertEquals(2, count($data));
 
-       //Delete the group
+        //Delete the group
         $this->assertTrue($pfDeploygroup->delete(['id' => $groups_id]));
         $this->assertFalse($pfDeploygroup->getFromDB($groups_id));
         foreach ($data as $staticgroup) {
@@ -284,28 +284,28 @@ class DeploygroupTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function ImportCsvStaticGroup()
     {
         global $DB;
 
-       // Add some computers, with the ID
+        // Add some computers, with the ID
         $computer = new Computer();
 
         $DB->doQuery("ALTER TABLE glpi_computers AUTO_INCREMENT = 12345;");
 
         $input = [
             'entities_id' => 0,
-            'name' => 'computer1'
+            'name' => 'computer1',
         ];
         $ret = $computer->add($input);
         $this->assertEquals(12345, $ret);
 
         $input = [
             'entities_id' => 0,
-            'name' => 'computer2'
+            'name' => 'computer2',
         ];
         $ret = $computer->add($input);
         $this->assertEquals(12346, $ret);
@@ -315,18 +315,18 @@ class DeploygroupTest extends TestCase
 
         $input = ['name'    => 'MyGroup',
             'type'    => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
-            'comment' => 'MyComment'
+            'comment' => 'MyComment',
         ];
         $groups_id = $pfDeploygroup->add($input);
         $this->assertGreaterThan(0, $groups_id);
 
         $input_post = [
-            'groups_id' => $groups_id
+            'groups_id' => $groups_id,
         ];
         $input_files = [
             'importcsvfile' => [
-                'tmp_name' => realpath(dirname(__FILE__)) . '/computers.csv'
-            ]
+                'tmp_name' => realpath(dirname(__FILE__)) . '/computers.csv',
+            ],
         ];
         $ret = $pfDeploygroup_static->csvImport($input_post, $input_files);
         $this->assertTrue($ret);

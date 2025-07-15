@@ -46,14 +46,14 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
 
     public $collect_type = 'wmi';
 
-   /**
-    * update wmi data to compute (add and update) with data sent by the agent
-    *
-    * @global object $DB
-    * @param integer $computers_id id of the computer
-    * @param array $wmi_data
-    * @param integer $collects_wmis_id
-    */
+    /**
+     * update wmi data to compute (add and update) with data sent by the agent
+     *
+     * @global object $DB
+     * @param integer $computers_id id of the computer
+     * @param array $wmi_data
+     * @param integer $collects_wmis_id
+     */
     public function updateComputer($computers_id, $wmi_data, $collects_wmis_id)
     {
         global $DB;
@@ -65,8 +65,8 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             'FROM'   => 'glpi_plugin_glpiinventory_collects_wmis_contents',
             'WHERE'  => [
                 'computers_id' => $computers_id,
-                'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id
-            ]
+                'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
+            ],
         ]);
 
         foreach ($iterator as $data) {
@@ -82,7 +82,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
                 if ($arraydb['property'] == $key) {
                     $input = ['property' => $arraydb['property'],
                         'id'       => $keydb,
-                        'value'    => $value
+                        'value'    => $value,
                     ];
                     $this->update($input);
                     unset($wmi_data[$key]);
@@ -100,17 +100,17 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
                 'computers_id' => $computers_id,
                 'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
                 'property'     => $key,
-                'value'        => $value
+                'value'        => $value,
             ];
             $this->add($input);
         }
     }
 
-   /**
-    * Display wmi information of computer
-    *
-    * @param integer $computers_id id of computer
-    */
+    /**
+     * Display wmi information of computer
+     *
+     * @param integer $computers_id id of computer
+     */
     public function showForComputer($computers_id)
     {
 
@@ -149,11 +149,11 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     }
 
 
-   /**
-    * Display wmi information of collect_wmi_id
-    *
-    * @param integer $collects_wmis_id
-    */
+    /**
+     * Display wmi information of collect_wmi_id
+     *
+     * @param integer $collects_wmis_id
+     */
     public function showContent($collects_wmis_id)
     {
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();

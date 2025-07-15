@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,37 +32,26 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
-Session::checkCentralAccess();
+$finder = (new PhpCsFixer\Finder())
+    ->in(__DIR__)
+    ->exclude([
+        '.git/',
+        'tests/config/',
+        'tests/files/',
+        'vendor/',
+    ])
+;
 
-$rand      = filter_input(INPUT_POST, "rand");
-$mode      = filter_input(INPUT_POST, "mode");
-$type      = filter_input(INPUT_POST, "type");
-$classname = filter_input(INPUT_POST, "class");
+return (new PhpCsFixer\Config())
+    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
+    ->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.glpi-inventory-plugin.cache')
+    ->setRules([
+        '@PER-CS2.0' => true,
+        '@PHP84Migration' => true,
+        'no_unused_imports' => true,
+        'heredoc_indentation' => false, // This rule is mandatory due to a bug in `xgettext`, see https://savannah.gnu.org/bugs/?func=detailitem&item_id=62158
+        'octal_notation' => false, //not supported in php 7.4
+    ])
+    ->setFinder($finder)
+;
 
-if (empty($rand) && (empty($type))) {
-    exit();
-}
-//Only process class that are related to software deployment
-if (
-    !class_exists($classname)
-    || !in_array(
-        $classname,
-        ['PluginGlpiinventoryDeployCheck',
-            'PluginGlpiinventoryDeployFile',
-            'PluginGlpiinventoryDeployAction',
-            'PluginGlpiinventoryDeployUserinteraction',
-        ]
-    )
-) {
-    exit();
-}
-$class        = new $classname();
-$request_data = [
-    'packages_id' => filter_input(INPUT_POST, "packages_id"),
-    'orders_id'   => filter_input(INPUT_POST, "orders_id"),
-    'value'       => filter_input(INPUT_POST, "value"),
-];
-$class->displayAjaxValues(null, $request_data, $rand, $mode);

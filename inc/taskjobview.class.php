@@ -40,9 +40,9 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 {
-   /**
-    * __contruct function where initialize base URLs
-    */
+    /**
+     * __contruct function where initialize base URLs
+     */
     public function __construct()
     {
         parent::__construct();
@@ -55,13 +55,13 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
@@ -72,14 +72,14 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
@@ -107,19 +107,19 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Ajax load item
-    *
-    * @param array $options
-    * @return integer
-    */
+    /**
+     * Ajax load item
+     *
+     * @param array $options
+     * @return integer
+     */
     public function ajaxLoadItem($options)
     {
-       /*
-        * The following has been borrowed from Html::display() and CommonGLPI::showTabsContent().
-        *
-        * TODO: maybe this can be shared through CommonView. -- Kevin Roy <kiniou@gmail.com>
-        */
+        /*
+         * The following has been borrowed from Html::display() and CommonGLPI::showTabsContent().
+         *
+         * TODO: maybe this can be shared through CommonView. -- Kevin Roy <kiniou@gmail.com>
+         */
 
         if (
             isset($options['id'])
@@ -130,7 +130,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             }
         }
 
-       // for objects not in table like central
+        // for objects not in table like central
         $ID = 0;
 
         if (isset($this->fields['id'])) {
@@ -138,12 +138,12 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         } else {
             if (isset($options['id'])) {
                 $option_id = $options['id'];
-               //Check for correct type of ID received from outside.
+                //Check for correct type of ID received from outside.
                 if (
                     is_string($option_id)
                     and ctype_digit($option_id)
                 ) {
-                    $ID = (int)($options['id']);
+                    $ID = (int) ($options['id']);
                 } elseif (is_int($option_id)) {
                     $ID = $option_id;
                 } else {
@@ -158,28 +158,28 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Get form in ajax
-    *
-    * @param array $options
-    */
+    /**
+     * Get form in ajax
+     *
+     * @param array $options
+     */
     public function ajaxGetForm($options)
     {
         $ID = $this->ajaxLoadItem($options);
         $this->showForm($ID, $options);
-       // hide taskjobs_list after a job has been selected from the taskjobs_list
+        // hide taskjobs_list after a job has been selected from the taskjobs_list
         echo Html::scriptBlock("$(document).ready(function() {
             $(\"#taskjobs_list\").hide();
          });");
     }
 
 
-   /**
-    * Get items list
-    *
-    * @param string $module_type
-    * @return string
-    */
+    /**
+     * Get items list
+     *
+     * @param string $module_type
+     * @return string
+     */
     public function getItemsList($module_type)
     {
         $items = importArrayFromDB($this->fields[$module_type]);
@@ -193,14 +193,14 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Get the html code for item to display
-    *
-    * @param string $module_type
-    * @param string $itemtype
-    * @param integer $items_id
-    * @return string
-    */
+    /**
+     * Get the html code for item to display
+     *
+     * @param string $module_type
+     * @param string $itemtype
+     * @param integer $items_id
+     * @return string
+     */
     public function getItemDisplay($module_type, $itemtype, $items_id)
     {
         $item = getItemForItemtype($itemtype);
@@ -221,26 +221,26 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Show jobs list for task
-    *
-    * @global array $CFG_GLPI
-    * @param integer $task_id
-    */
+    /**
+     * Show jobs list for task
+     *
+     * @global array $CFG_GLPI
+     * @param integer $task_id
+     */
     public function showListForTask($task_id)
     {
         global $CFG_GLPI;
 
         $taskjobs = $this->getTaskjobs($task_id);
 
-       // Check if cron GLPI running
+        // Check if cron GLPI running
         if (count($taskjobs) > 1) {
             $message = __('Several jobs in the same task is not anymore supported because of unexpected side-effects.
          Please consider modifying this task to avoid unexpected results.', 'glpiinventory');
             Html::displayTitle($CFG_GLPI['root_doc'] . "/pics/warning.png", $message, $message);
         }
 
-       //Activate massive deletion if there are some.
+        //Activate massive deletion if there are some.
         $addition_enabled = (count($taskjobs) == 0);
 
         echo "<form id='taskjobs_form' method='post' action='" . $this->getFormURL() . "'>";
@@ -255,11 +255,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         } else {
             echo "<table class='tab_cadrehov package_item_list search-results table  card-table table-hover table-striped ' id='taskjobs_list'>\n";
 
-           //Show list header only if a legacy task with more than one job was imported or not in editing mode
+            //Show list header only if a legacy task with more than one job was imported or not in editing mode
             $show_list = (count($taskjobs) > 1 || !isset($_REQUEST['edit_job']));
             if ($show_list) {
                 echo "<thead><tr>";
-                echo "<td>" .  Html::getCheckAllAsCheckbox("taskjobs_list", mt_rand()) . "</td>";
+                echo "<td>" . Html::getCheckAllAsCheckbox("taskjobs_list", mt_rand()) . "</td>";
                 echo "<td class='text-wrap'>" . __('Name') . "</td>";
                 echo "<td class='text-wrap'>" . __('Comment') . "</td>";
                 echo "<td></td>";
@@ -267,7 +267,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             }
 
             foreach ($taskjobs as $taskjob_data) {
-               //Keep row hidden when showing row is not required
+                //Keep row hidden when showing row is not required
                 echo "<tr class='tab_bg_2'" . ($show_list ? "" : " hidden='true'") . ">\n";
                 $this->showTaskjobSummary($taskjob_data);
                 echo "</tr>\n";
@@ -275,7 +275,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
             echo "</table>\n";
 
-           //Show the delete button for selected object when showing row is required
+            //Show the delete button for selected object when showing row is required
             if ($show_list) {
                 echo "<div class='center' style='padding:5px'>";
                 echo "<input type='submit' name='delete_taskjobs' value=\"" .
@@ -287,18 +287,18 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Get task jobs
-    *
-    * @param integer $task_id
-    * @return array
-    */
+    /**
+     * Get task jobs
+     *
+     * @param integer $task_id
+     * @return array
+     */
     public function getTaskjobs($task_id)
     {
-       // Find taskjobs tied to the selected task
+        // Find taskjobs tied to the selected task
         $taskjobs = $this->find(
             ['plugin_glpiinventory_tasks_id' => $task_id,
-                'rescheduled_taskjob_id'          => 0
+                'rescheduled_taskjob_id'          => 0,
             ],
             ['id']
         );
@@ -306,11 +306,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Show task job summary
-    *
-    * @param array $taskjob_data
-    */
+    /**
+     * Show task job summary
+     *
+     * @param array $taskjob_data
+     */
     public function showTaskjobSummary($taskjob_data)
     {
         $id = $taskjob_data['id'];
@@ -348,11 +348,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Display dropdown module types called in ajax
-    *
-    * @param array $options
-    */
+    /**
+     * Display dropdown module types called in ajax
+     *
+     * @param array $options
+     */
     public function ajaxModuleTypesDropdown($options)
     {
         $title = '';
@@ -365,9 +365,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $title = __('Target Type', 'glpiinventory');
                 break;
         }
-       /**
-        * get Itemtype choices dropdown
-        */
+        /**
+         * get Itemtype choices dropdown
+         */
         $module_types = array_merge(
             ['' => Dropdown::EMPTY_VALUE],
             $this->getTypesForModule($options['method'], $options['moduletype'])
@@ -387,11 +387,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Display dropdown module items called in ajax
-    *
-    * @param array $options
-    */
+    /**
+     * Display dropdown module items called in ajax
+     *
+     * @param array $options
+     */
     public function ajaxModuleItemsDropdown($options)
     {
         global $DB;
@@ -417,20 +417,20 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $method = '';
         }
 
-       // filter actor list with active agent and with current module active
+        // filter actor list with active agent and with current module active
         $condition = [];
         if (
             $moduletype == "actors"
             && in_array($itemtype, ["Computer", "Agent"])
         ) {
-           // remove install suffix from deploy
+            // remove install suffix from deploy
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
             // prepare a query to retrieve agent's & computer's id
             $iterator = $DB->request([
                 'SELECT' => [
                     'agents.id AS agents_id',
-                    'agents.items_id'
+                    'agents.items_id',
                 ],
                 'FROM' => 'glpi_agents AS agents',
                 'LEFT JOIN' => [
@@ -439,29 +439,29 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                             'computers' => 'id',
                             'agents' => 'items_id', [
                                 'AND' => [
-                                    'agents.itemtype' => 'Computer'
-                                ]
-                            ]
-                        ]
+                                    'agents.itemtype' => 'Computer',
+                                ],
+                            ],
+                        ],
                     ],
                     'glpi_plugin_glpiinventory_agentmodules AS modules' => [
                         'OR' => [
                             'exceptions' => ['LIKE', new QueryExpression("CONCAT('%\"', agents.`id`, '\"%')")],
-                            'modules.is_active' => 1
-                        ]
-                    ]
+                            'modules.is_active' => 1,
+                        ],
+                    ],
                 ],
                 'WHERE' => [
                     'RAW' => [
                         'UPPER(modules.modulename)' => $modulename,
                     ],
                     'computers.is_deleted' => 0,
-                    'computers.is_template' => 0
+                    'computers.is_template' => 0,
                 ],
                 'GROUP' => [
                     'agents.id',
-                    'agents.items_id'
-                ]
+                    'agents.items_id',
+                ],
             ]);
             $filter_id = [];
             foreach ($iterator as $data_filter) {
@@ -472,8 +472,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 }
             }
 
-           // if we found prepare condition for dropdown
-           // else prepare a false condition for dropdown
+            // if we found prepare condition for dropdown
+            // else prepare a false condition for dropdown
             if (count($filter_id)) {
                 $condition = ['id' => $filter_id];
             }
@@ -482,15 +482,15 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $condition['is_active'] = 1;
         }
 
-       /**
-        * get Itemtype choices dropdown
-        */
+        /**
+         * get Itemtype choices dropdown
+         */
         $dropdown_rand = $this->showDropdownForItemtype(
             $title,
             $itemtype,
             [
                 'width'     => "95%",
-                'condition' => $condition
+                'condition' => $condition,
             ]
         );
         $item = getItemForItemtype($itemtype);
@@ -508,14 +508,14 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Get html code for itemtype plus button
-    *
-    * @param string $title
-    * @param string $itemtype
-    * @param string $method
-    * @return string
-    */
+    /**
+     * Get html code for itemtype plus button
+     *
+     * @param string $title
+     * @param string $itemtype
+     * @param string $method
+     * @return string
+     */
     public function getAddItemtypeButton($title, $itemtype, $method)
     {
         return"<a class='addbutton show_moduletypes'
@@ -528,13 +528,13 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Display form for taskjob
-    *
-    * @param integer $id id of the taskjob
-    * @param array $options
-    * @return bool
-    */
+    /**
+     * Display form for taskjob
+     *
+     * @param integer $id id of the taskjob
+     * @param array $options
+     * @return bool
+     */
     public function showForm($id, $options = [])
     {
         $new_item = false;
@@ -573,7 +573,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
          "value='" . $pfTask->fields['id'] . "' />";
         echo "<table class='tab_cadre_fixe'>";
 
-       // Optional line
+        // Optional line
         $ismultientities = Session::isMultiEntitiesMode();
         echo '<tr>';
         echo '<th colspan="4">';
@@ -677,9 +677,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         echo "</div>"; // end of first inputs column wrapper
 
-       // Display Definition choices
+        // Display Definition choices
         if (!$new_item) {
-           //Start second column of the form
+            //Start second column of the form
             echo "<div class='fusinv_form'>";
 
             echo "<div class='input_wrap split_column tab_bg_4'>";
@@ -688,7 +688,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 'targets',
                 $this->fields['method']
             );
-           //echo "<br/><span class='description' style='font-size:50%;font-style:italic'>";
+            //echo "<br/><span class='description' style='font-size:50%;font-style:italic'>";
             echo "<br/><span class='description'>";
             echo __('The items that should be applied for this job.', 'glpiinventory');
             echo "</span>";
@@ -713,7 +713,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         if (!$new_item) {
             $targets_display_list = $this->getItemsList('targets');
-           // Display targets and actors lists
+            // Display targets and actors lists
             echo "<hr/>
                <div>
                   <div class='taskjob_list_header'>
@@ -800,11 +800,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Manage actions when submit a form (add, update, purge...)
-    *
-    * @param array $postvars
-    */
+    /**
+     * Manage actions when submit a form (add, update, purge...)
+     *
+     * @param array $postvars
+     */
     public function submitForm($postvars)
     {
         global $CFG_GLPI;
@@ -813,7 +813,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         $mytaskjob = new PluginGlpiinventoryTaskjob();
         if (isset($postvars['definition_add'])) {
-           // * Add a definition
+            // * Add a definition
             $mytaskjob->getFromDB($postvars['id']);
             $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
             $add = 1;
@@ -840,7 +840,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $mytaskjob->update($input);
             Html::back();
         } elseif (isset($postvars['action_add'])) {
-           // * Add an action
+            // * Add an action
             $mytaskjob->getFromDB($postvars['id']);
             $a_listact = importArrayFromDB($mytaskjob->fields['action']);
             $add = 1;
@@ -867,7 +867,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $mytaskjob->update($input);
             Html::back();
         } elseif (isset($postvars['definition_delete'])) {
-           // * Delete definition
+            // * Delete definition
             $mytaskjob->getFromDB($postvars['id']);
             $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
 
@@ -885,7 +885,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $mytaskjob->update($input);
             Html::back();
         } elseif (isset($postvars['action_delete'])) {
-           // * Delete action
+            // * Delete action
             $mytaskjob->getFromDB($postvars['id']);
             $a_listact = importArrayFromDB($mytaskjob->fields['action']);
 
@@ -903,7 +903,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $mytaskjob->update($input);
             Html::back();
         } elseif (isset($postvars['taskjobstoforcerun'])) {
-           // * Force running many tasks (wizard)
+            // * Force running many tasks (wizard)
             Session::checkRight('plugin_glpiinventory_task', UPDATE);
             $pfTask = new PluginGlpiinventoryTask();
             $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -913,13 +913,13 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $pfTask->forceRunning();
             }
         } elseif (isset($postvars['add']) || isset($postvars['update'])) {
-           // * Add and update taskjob
+            // * Add and update taskjob
             Session::checkRight('plugin_glpiinventory_task', CREATE);
             if (isset($postvars['add'])) {
                 if (!isset($postvars['entities_id'])) {
                     $postvars['entities_id'] = $_SESSION['glpidefault_entity'] ?? 0;
                 }
-               // Get entity of task
+                // Get entity of task
                 $pfTask = new PluginGlpiinventoryTask();
                 $pfTask->getFromDB($postvars['plugin_glpiinventory_tasks_id']);
                 $entities_list = getSonsOf('glpi_entities', $pfTask->fields['entities_id']);
@@ -939,7 +939,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     and count($postvars['targets']) > 0
                 ) {
                     foreach ($postvars['targets'] as $target) {
-                        list($itemtype, $itemid) = explode('-', $target);
+                        [$itemtype, $itemid] = explode('-', $target);
                         $targets[] = [$itemtype => $itemid];
                     }
                 }
@@ -953,14 +953,14 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     and count($postvars['actors']) > 0
                 ) {
                     foreach ($postvars['actors'] as $actor) {
-                        list($itemtype, $itemid) = explode('-', $actor);
+                        [$itemtype, $itemid] = explode('-', $actor);
                         $actors[] = [$itemtype => $itemid];
                     }
                 }
 
                 $postvars['actors'] = exportArrayToDB($actors);
 
-               //TODO: get rid of plugins_id and just use method
+                //TODO: get rid of plugins_id and just use method
                 $this->update($postvars);
             }
 
@@ -972,7 +972,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/task.form.php?id=" .
                                  $postvars['plugin_glpiinventory_tasks_id'] . $add_redirect);
         } elseif (isset($postvars["delete"])) {
-           // * delete taskjob
+            // * delete taskjob
             Session::checkRight('plugin_glpiinventory_task', PURGE);
 
             $this->delete($postvars);
@@ -980,14 +980,14 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $array                     = explode("||", $postvars['methodaction']);
             $module                    = $array[0];
             $method                    = $array[1];
-           // Add task
+            // Add task
             $mytask = new PluginGlpiinventoryTask();
             $input                     = [];
             $input['name']             = $method;
 
             $task_id = $mytask->add($input);
 
-           // Add job with this device
+            // Add job with this device
             $input = [];
             $input['plugin_glpiinventory_tasks_id'] = $task_id;
             $input['name']                            = $method;
@@ -1004,11 +1004,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $input['selection_type'] = call_user_func($taskname, $postvars['itemtype']);
             }
             $mytaskjob->add($input);
-           // Upsate task to activate it
+            // Upsate task to activate it
             $mytask->getFromDB($task_id);
             $mytask->fields['is_active'] = "1";
             $mytask->update($mytask->fields);
-           // force running this job (?)
+            // force running this job (?)
         } elseif (isset($postvars['forceend'])) {
             $mytaskjobstate = new PluginGlpiinventoryTaskjobstate();
             $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -1045,7 +1045,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         $tab[] = [
             'id'           => 'common',
-            'name'         => __('Characteristics')
+            'name'         => __('Characteristics'),
         ];
 
         $tab[] = [
@@ -1053,7 +1053,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             'table'        => $this->getTable(),
             'field'        => 'name',
             'name'         => __('Name'),
-            'datatype'     => 'itemlink'
+            'datatype'     => 'itemlink',
         ];
 
         return $tab;

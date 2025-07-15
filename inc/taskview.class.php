@@ -40,9 +40,9 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 {
-   /**
-    * __contruct function where initialize base URLs
-    */
+    /**
+     * __contruct function where initialize base URLs
+     */
     public function __construct()
     {
         parent::__construct();
@@ -52,16 +52,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Show job logs
-    */
+    /**
+     * Show job logs
+     */
     public function showJobLogs()
     {
         $task_id = $this->fields['id'] ?? null;
         echo "<div class='card fusinv_panel'>";
         echo "<div class='row'>";
 
-       // add a list limit for include old jobs
+        // add a list limit for include old jobs
         $include_oldjobs_id = $this->showDropdownFromArray(
             __("Include old jobs", 'glpiinventory'),
             null,
@@ -74,12 +74,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 50  => 50,
                 100 => 100,
                 250 => 250,
-                -1  => __('All')
+                -1  => __('All'),
             ],
             ['value' => $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs']]
         );
 
-       // add an auto-refresh control
+        // add an auto-refresh control
         $refresh_randid = $this->showDropdownFromArray(
             __("refresh interval", "glpiinventory"),
             null,
@@ -96,12 +96,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             ['value' => $_SESSION['glpi_plugin_glpiinventory']['refresh']]
         );
 
-       // display export button
+        // display export button
         echo "<div class='col d-flex align-items-center'>";
 
         echo '<a class="openExportDialog pointer btn btn-icon btn-sm btn-secondary me-1 pe-2">';
         echo '<i class="ti ti-device-floppy"></i>';
-        echo'<span class="d-none d-xxl-block">' .  __('Export task result', 'glpiinventory') . '</span>';
+        echo'<span class="d-none d-xxl-block">' . __('Export task result', 'glpiinventory') . '</span>';
         echo '</a>';
 
         // Add a manual refresh button
@@ -113,71 +113,71 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "</div>"; // .fusinv_form
         echo "</div>"; // .fusinv_panel
 
-         // Display Export modal
-         echo "<div class='fusinv_panel' id='fiTaskExport_modalWindow'>";
-         echo "<form method='GET' class='task_export_form center'
+        // Display Export modal
+        echo "<div class='fusinv_panel' id='fiTaskExport_modalWindow'>";
+        echo "<form method='GET' class='task_export_form center'
                      action='" . self::getFormURLWithID($task_id) . "'>";
 
-         // states checkboxes
-         echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
-             "</label>";
-         echo "<div class='state_checkboxes'>";
-         // set options checked by default
-         $agent_state_types = [
-             'agents_prepared'  => false,
-             'agents_running'   => true,
-             'agents_cancelled' => false,
-             'agents_success'   => true,
-             'agents_error'     => true,
-         ];
-         foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
-             $locale  = PluginGlpiinventoryDeployPackage::getPackageDeploymentStates()[$agent_state_type];
-             $agent_state_type = str_replace("agents_", "", $agent_state_type);
-             $checked = "";
-             if ($agent_state_checked) {
-                 $checked = "checked='checked'";
-             }
-             echo "<div class='agent_state_type_checkbox'>";
-             echo "<input type='checkbox' $checked name='agent_state_types[]' " .
-                 "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
-             echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
-             echo "</div>";
-         }
-         echo "</div>"; // .state_checkboxes
+        // states checkboxes
+        echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
+            "</label>";
+        echo "<div class='state_checkboxes'>";
+        // set options checked by default
+        $agent_state_types = [
+            'agents_prepared'  => false,
+            'agents_running'   => true,
+            'agents_cancelled' => false,
+            'agents_success'   => true,
+            'agents_error'     => true,
+        ];
+        foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
+            $locale  = PluginGlpiinventoryDeployPackage::getPackageDeploymentStates()[$agent_state_type];
+            $agent_state_type = str_replace("agents_", "", $agent_state_type);
+            $checked = "";
+            if ($agent_state_checked) {
+                $checked = "checked='checked'";
+            }
+            echo "<div class='agent_state_type_checkbox'>";
+            echo "<input type='checkbox' $checked name='agent_state_types[]' " .
+                "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+            echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
+            echo "</div>";
+        }
+        echo "</div>"; // .state_checkboxes
 
-         echo "<div class='clear_states'></div>";
+        echo "<div class='clear_states'></div>";
 
-         echo Html::hidden('task_id', ['value' => $task_id]);
-         echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-icon btn-sm btn-secondary me-1 pe-2']);
-         Html::closeForm();
-         echo "</div>"; // #fiTaskExport_modalWindow
+        echo Html::hidden('task_id', ['value' => $task_id]);
+        echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs', 'class' => 'btn btn-icon btn-sm btn-secondary me-1 pe-2']);
+        Html::closeForm();
+        echo "</div>"; // #fiTaskExport_modalWindow
 
 
-         // Template structure for tasks' blocks
-         echo "<script id='template_task' type='x-tmpl-mustache'>
+        // Template structure for tasks' blocks
+        echo "<script id='template_task' type='x-tmpl-mustache'>
              <div id='{{task_id}}' class='task_block {{expanded}}'>";
-         if (!$task_id != null) {
-             echo"<h3>" .  _n('Task', 'Tasks', 1, 'glpiinventory') . "
+        if (!$task_id != null) {
+            echo"<h3>" . _n('Task', 'Tasks', 1, 'glpiinventory') . "
             <span class='task_name'>{{task_name}}</span></h3>
             <a href='" . PluginGlpiinventoryTask::getFormURL() . "?id={{task_id}}'  class='task_block_link'>
                 <i class='fa fa-link pointer'></i>
             </a>";
-         }
+        }
 
-         echo "<div class='jobs_block'></div>
+        echo "<div class='jobs_block'></div>
                </div>
             </script>";
 
-       // Template structure for jobs' blocks
-         echo "<script id='template_job' type='x-tmpl-mustache'>
+        // Template structure for jobs' blocks
+        echo "<script id='template_job' type='x-tmpl-mustache'>
                <div id='{{job_id}}' class='card job_block'>
                      <h3 class='job_name'>{{job_name}}</h3>
                   <div class='card targets_block'></div>
                </div>
             </script>";
 
-       // Template structure for targets' blocks
-         echo "<script id='template_target' type='x-tmpl-mustache'>
+        // Template structure for targets' blocks
+        echo "<script id='template_target' type='x-tmpl-mustache'>
                <div id='{{target_id}}' class='card target_block'>
                   <div class='target_details'>
                   <div class='target_infos'>
@@ -194,13 +194,13 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                <div class='show_more'></div>
             </script>";
 
-       // Template structure for targets' statistics
-         echo "<script id='template_target_stats' type='x-tmp-mustache'>
+        // Template structure for targets' statistics
+        echo "<script id='template_target_stats' type='x-tmp-mustache'>
                <div class='{{stats_type}} stats_block'></div>
             </script>";
 
-       // Template for counters' blocks
-         echo "<script id='template_counter_block' type='x-tmpl-mustache'>
+        // Template for counters' blocks
+        echo "<script id='template_counter_block' type='x-tmpl-mustache'>
                <div class='counter_block {{counter_type}} {{#counter_empty}}empty{{/counter_empty}}'>
                   <a class='toggle_details_type'
                      data-counter_type='{{counter_type}}'
@@ -213,8 +213,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                </div>
             </script>";
 
-       // List of counter names
-         echo Html::scriptBlock("$(document).ready(function() {
+        // List of counter names
+        echo Html::scriptBlock("$(document).ready(function() {
          taskjobs.statuses_order = {
             last_executions: [
                'agents_prepared',
@@ -236,10 +236,10 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          };
 
          taskjobs.logstatuses_names = " .
-            json_encode(PluginGlpiinventoryTaskjoblog::dropdownStateValues()) . ";
+           json_encode(PluginGlpiinventoryTaskjoblog::dropdownStateValues()) . ";
       });");
 
-       // Template for agents' blocks
+        // Template for agents' blocks
         echo "<script id='template_agent' type='x-tmpl-mustache'>
                <div class='agent_block' id='{{agent_id}}'>
                   <div class='status {{status.last_exec}}'></span>
@@ -247,8 +247,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                </div>
             </script>";
 
-       // Display empty block for each jobs display
-       // which will be rendered later by mustache.js
+        // Display empty block for each jobs display
+        // which will be rendered later by mustache.js
         echo "<div class='tasks_block'></div>";
 
         $agent = new Agent();
@@ -281,14 +281,14 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Display form for task configuration
-    *
-    * @param integer $id ID of the task
-    * @param $options array
-    * @return boolean TRUE if form is ok
-    *
-    **/
+    /**
+     * Display form for task configuration
+     *
+     * @param integer $id ID of the task
+     * @param $options array
+     * @return boolean TRUE if form is ok
+     *
+     **/
     public function showForm($id, $options = [])
     {
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -346,7 +346,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 __('Preparation timeslot', 'glpiinventory'),
                 "PluginGlpiinventoryTimeslot",
                 ['name'  => 'plugin_glpiinventory_timeslots_prep_id',
-                    'value' => $this->fields['plugin_glpiinventory_timeslots_prep_id']
+                    'value' => $this->fields['plugin_glpiinventory_timeslots_prep_id'],
                 ]
             );
 
@@ -354,7 +354,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 __('Execution timeslot', 'glpiinventory'),
                 "PluginGlpiinventoryTimeslot",
                 ['name'  => 'plugin_glpiinventory_timeslots_exec_id',
-                    'value' => $this->fields['plugin_glpiinventory_timeslots_exec_id']
+                    'value' => $this->fields['plugin_glpiinventory_timeslots_exec_id'],
                 ]
             );
 
@@ -364,7 +364,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 ['value' => $this->fields['wakeup_agent_time'],
                     'toadd' => ['0' => __('Never')],
                     'min'   => 1,
-                    'step'  => 1
+                    'step'  => 1,
                 ]
             );
 
@@ -374,7 +374,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 ['value' => $this->fields['wakeup_agent_counter'],
                     'toadd' => ['0' => __('None')],
                     'min'   => 0,
-                    'step'  => 1
+                    'step'  => 1,
                 ]
             );
         }
@@ -415,29 +415,29 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         if ($this->isNewID($ID)) {
             echo Html::submit(_x('button', 'Add'), [
                 'name' => 'add',
-                'class' => 'btn btn-primary'
+                'class' => 'btn btn-primary',
             ]);
         } else {
             echo Html::hidden('id', ['value' => $ID]);
             echo Html::submit("<i class='far fa-save me-1'></i>" . _x('button', 'Save'), [
                 'name'  => 'update',
-                'class' => 'btn btn-primary me-2'
+                'class' => 'btn btn-primary me-2',
             ]);
         }
         echo "</td>";
         echo "</tr>";
 
-       // Close for Form
+        // Close for Form
         echo "</table></div>";
         Html::closeForm();
     }
 
 
-   /**
-    * Manage the different actions in when submit form (add, update,purge...)
-    *
-    * @param array $postvars
-    */
+    /**
+     * Manage the different actions in when submit form (add, update,purge...)
+     *
+     * @param array $postvars
+     */
     public function submitForm($postvars)
     {
 
@@ -464,7 +464,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         } elseif (isset($_POST["update"])) {
             Session::checkRight('plugin_glpiinventory_task', UPDATE);
             $this->getFromDB($postvars['id']);
-           //Ensure empty value are set to NULL for datetime fields
+            //Ensure empty value are set to NULL for datetime fields
             if (isset($postvars['datetime_start']) && $postvars['datetime_start'] === '') {
                 $postvars['datetime_start'] = 'NULL';
             }
@@ -480,11 +480,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
 
-   /**
-    * Define reprepare_if_successful field when get empty item
-    *
-    * @return bool
-    */
+    /**
+     * Define reprepare_if_successful field when get empty item
+     *
+     * @return bool
+     */
     public function getEmpty()
     {
         parent::getEmpty();
@@ -502,7 +502,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         $tab[] = [
             'id'           => 'common',
-            'name'         => __('Characteristics')
+            'name'         => __('Characteristics'),
         ];
 
         $tab[] = [
@@ -510,7 +510,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             'table'        => $this->getTable(),
             'field'        => 'name',
             'name'         => __('Name'),
-            'datatype'     => 'itemlink'
+            'datatype'     => 'itemlink',
         ];
 
         return $tab;
@@ -535,7 +535,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         $default_params = [
             'agent_state_types' => [],
-            'debug_csv'         => 0
+            'debug_csv'         => 0,
         ];
         $params = array_merge($default_params, $params);
 
@@ -734,8 +734,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                     ],
                     [
                         'plugin_glpiinventory_timeslots_prep_id' => $timeslots,
-                    ]
-                ]
+                    ],
+                ],
             ];
         }
 
@@ -755,16 +755,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 'job.method',
                 'job.targets',
                 'job.actors',
-                'job.restrict_to_task_entity'
+                'job.restrict_to_task_entity',
             ],
             'FROM' => 'glpi_plugin_glpiinventory_taskjobs AS job',
             'LEFT JOIN' => [
                 'glpi_plugin_glpiinventory_tasks AS task' => [
                     'FKEY' => [
                         'task' => 'id',
-                        'job' => 'plugin_glpiinventory_tasks_id'
-                    ]
-                ]
+                        'job' => 'plugin_glpiinventory_tasks_id',
+                    ],
+                ],
             ],
             'WHERE' => array_merge([
                 'task.is_active' => 1,
@@ -774,7 +774,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             [
                                 'NOT' => [
                                     'task.datetime_start' => null,
-                                ]
+                                ],
                             ],
                             'task.datetime_end' => null,
                             'task.datetime_start' => ['<', $now->format("Y-m-d H:i:s")],
@@ -790,15 +790,15 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                         ],
                         [
                             'task.datetime_start' => null,
-                            'task.datetime_end' => null
-                        ]
-                    ]
+                            'task.datetime_end' => null,
+                        ],
+                    ],
                 ],
                 'job.method' => $methods,
             ], $it_timeslot, $it_task_id),
             'ORDER' => [
-                'job.id'
-            ]
+                'job.id',
+            ],
         ]);
         $results = PluginGlpiinventoryToolbox::fetchAssocByTableIterator($iterator);
 
@@ -813,7 +813,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         $log_base = [
             'date'    => $_SESSION['glpi_currenttime'],
             'state'   => PluginGlpiinventoryTaskjoblog::TASK_PREPARED,
-            'comment' => ''
+            'comment' => '',
         ];
 
         $jobstate = new PluginGlpiinventoryTaskjobstate();
@@ -867,10 +867,10 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             PluginGlpiinventoryTaskjobstate::FINISHED,
                             PluginGlpiinventoryTaskjobstate::IN_ERROR,
                             PluginGlpiinventoryTaskjobstate::POSTPONED,
-                            PluginGlpiinventoryTaskjobstate::CANCELLED
-                        ]
+                            PluginGlpiinventoryTaskjobstate::CANCELLED,
                         ],
-                        'agents_id' => array_keys($agent_ids)
+                        ],
+                        'agents_id' => array_keys($agent_ids),
                     ]
                 );
                 foreach ($jobstates_running as $jobstate_running) {
@@ -888,7 +888,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             'items_id' => $item_id,
                             'plugin_glpiinventory_taskjobs_id' => $job_id,
                             'state'    => PluginGlpiinventoryTaskjobstate::FINISHED,
-                            'agents_id'   => array_keys($agent_ids)
+                            'agents_id'   => array_keys($agent_ids),
                         ]
                     );
 
@@ -913,9 +913,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                 PluginGlpiinventoryTaskjobstate::IN_ERROR,
                                 PluginGlpiinventoryTaskjobstate::CANCELLED,
                             ],
-                            'agents_id' => array_keys($agent_ids)
-                        ]
-                    ]
+                            'agents_id' => array_keys($agent_ids),
+                        ],
+                    ],
                 ]);
 
                 foreach ($jobstates_tocancel as $jobstate_tocancel) {
@@ -954,7 +954,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             $log = array_merge(
                                 $log_base,
                                 [
-                                    'plugin_glpiinventory_taskjobstates_id' => $run_id
+                                    'plugin_glpiinventory_taskjobstates_id' => $run_id,
                                 ]
                             );
                             $joblog->add($log);
@@ -1038,9 +1038,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                     }
                     break;
 
-                /**
-                 * TODO: The following should be replaced with Dynamic groups
-                 */
+                    /**
+                     * TODO: The following should be replaced with Dynamic groups
+                     */
                 case Agent::class:
                     $agents[$itemid] = 1;
                     break;
@@ -1051,12 +1051,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             $taskjob = new PluginGlpiinventoryTaskjob();
             if (
                 $taskjob->getFromDBByCrit([
-                    'plugin_glpiinventory_tasks_id' => $this->getID()
+                    'plugin_glpiinventory_tasks_id' => $this->getID(),
                 ])
             ) {
                 $taskjob->update([
                     'id' => $taskjob->getID(),
-                    'actors' => exportArrayToDB($actors_ok)
+                    'actors' => exportArrayToDB($actors_ok),
                 ]);
             }
         }

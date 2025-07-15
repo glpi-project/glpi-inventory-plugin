@@ -64,8 +64,8 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
             'ifalias' => null,
             'portduplex' => null,
             'trunk' => 0,
-            'lastup' => null
-        ]
+            'lastup' => null,
+        ],
     ];
 
     public $ipaddresses_reference = [
@@ -82,9 +82,9 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
             'is_deleted'    => 0,
             'is_dynamic'    => 1,
             'mainitems_id'  => 1,
-            'mainitemtype'  => 'NetworkEquipment'
+            'mainitemtype'  => 'NetworkEquipment',
 
-        ]
+        ],
     ];
 
     protected $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
@@ -110,35 +110,35 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-       // Delete all network equipments
+        // Delete all network equipments
         $networkEquipment = new NetworkEquipment();
         $items = $networkEquipment->find();
         foreach ($items as $item) {
             $networkEquipment->delete(['id' => $item['id']], true);
         }
 
-       // Delete all printers
+        // Delete all printers
         $printer = new Printer();
         $items = $printer->find();
         foreach ($items as $item) {
             $printer->delete(['id' => $item['id']], true);
         }
 
-       // Delete all computer
+        // Delete all computer
         $computer = new Computer();
         $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
         foreach ($items as $item) {
             $computer->delete(['id' => $item['id']], true);
         }
 
-       // Delete all ipaddresses
+        // Delete all ipaddresses
         $ipAddress = new IPAddress();
         $items = $ipAddress->find();
         foreach ($items as $item) {
             $ipAddress->delete(['id' => $item['id']], true);
         }
 
-       // Delete all networknames
+        // Delete all networknames
         $networkName = new NetworkName();
         $items = $networkName->find();
         foreach ($items as $item) {
@@ -149,12 +149,12 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function AddNetworkEquipment()
     {
-       // Load session rights
+        // Load session rights
         $_SESSION['glpidefault_entity'] = 0;
         Session::initEntityProfiles(2);
         Session::changeProfile(4);
@@ -165,7 +165,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $input = [
             'name' => 'switch H3C',
             'serial' => '042ff',
-            'entities_id' => '0'
+            'entities_id' => '0',
         ];
         $this->item_id = $networkEquipment->add($input);
         $this->assertNotFalse($this->item_id, "Add network equipment failed");
@@ -184,10 +184,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function NewNetworkEquipmentHasPorts()
     {
         $networkports = getAllDataFromTable('glpi_networkports');
@@ -212,10 +212,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function NewNetworkEquipmentHasIpAdresses()
     {
         $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
@@ -246,20 +246,20 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends AddNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends AddNetworkEquipment
+     */
     public function UpdateNetworkEquipment()
     {
 
-       // Load session rights
+        // Load session rights
         $_SESSION['glpidefault_entity'] = 0;
         Session::initEntityProfiles(2);
         Session::changeProfile(4);
         plugin_init_glpiinventory();
 
-       // Update 2nd time
+        // Update 2nd time
         $networkEquipment = new NetworkEquipment();
         $item = current($networkEquipment->find([], [], 1));
 
@@ -274,10 +274,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $this->assertEquals(1, count($networkEquipment->find()));
     }
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends UpdateNetworkEquipment
+     */
     public function UpdateNetworkEquipmentOnlyOneNetworkName()
     {
         $networkNames = getAllDataFromTable('glpi_networknames');
@@ -285,10 +285,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends UpdateNetworkEquipment
+     */
     public function UpdateNetworkEquipmentOnlyOneIpaddress()
     {
         $Ips = getAllDataFromTable('glpi_ipaddresses');
@@ -296,10 +296,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends UpdateNetworkEquipment
+     */
     public function UpdatedNetworkEquipmentHasPorts()
     {
         $networkports = getAllDataFromTable('glpi_networkports');
@@ -326,10 +326,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends UpdateNetworkEquipment
-    */
+    /**
+     * @test
+     * @depends UpdateNetworkEquipment
+     */
     public function UpdateNetworkEquipmentHasIpAdresses()
     {
         $ipaddresses = getAllDataFromTable('glpi_ipaddresses');

@@ -40,7 +40,7 @@ class ToolboxTest extends TestCase
         'test_number' => 1234,
         'test_float' => 1234.5678,
         'test_array' => [ 1,2,3,4, 'lorem_ipsum' ],
-        'test_hash' => ['lorem' => 'ipsum', 'ipsum' => 'lorem']
+        'test_hash' => ['lorem' => 'ipsum', 'ipsum' => 'lorem'],
     ];
 
     public $formatJson_expected = <<<JSON
@@ -63,9 +63,9 @@ class ToolboxTest extends TestCase
 JSON;
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function formatJson()
     {
 
@@ -76,9 +76,9 @@ JSON;
     }
 
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function isAnInventoryDevice()
     {
         $computer = new Computer();
@@ -88,7 +88,7 @@ JSON;
         $values = ['name'         => 'comp',
             'is_dynamic'   => 1,
             'entities_id'  => 0,
-            'is_recursive' => 0
+            'is_recursive' => 0,
         ];
         $computers_id = $computer->add($values);
         $computer->getFromDB($computers_id);
@@ -99,7 +99,7 @@ JSON;
         $values  = ['name'         => 'printer',
             'is_dynamic'   => 1,
             'entities_id'  => 0,
-            'is_recursive' => 0
+            'is_recursive' => 0,
         ];
         $printers_id = $printer->add($values);
         $printer->getFromDB($printers_id);
@@ -108,7 +108,7 @@ JSON;
         $values  = ['name'         => 'printer2',
             'is_dynamic'   => 0,
             'entities_id'  => 0,
-            'is_recursive' => 0
+            'is_recursive' => 0,
         ];
         $printers_id_2 = $printer->add($values);
         $printer->getFromDB($printers_id_2);

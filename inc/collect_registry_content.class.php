@@ -45,13 +45,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
     public $collect_type = 'registry';
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
@@ -63,7 +63,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                         ['plugin_glpiinventory_collects_id' => $item->fields['id']]
                     );
                     if (count($a_colregs) == 0) {
-                          return '';
+                        return '';
                     }
                     $in = array_keys($a_colregs);
                     if (
@@ -81,15 +81,15 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
 
-   /**
-    * Update computer registry values (add and update) related to this
-    * collect registry id
-    *
-    * @global object $DB
-    * @param integer $computers_id id of the computer
-    * @param array $registry_data registry info sent by agent
-    * @param integer $collects_registries_id id of collect_registry
-    */
+    /**
+     * Update computer registry values (add and update) related to this
+     * collect registry id
+     *
+     * @global object $DB
+     * @param integer $computers_id id of the computer
+     * @param array $registry_data registry info sent by agent
+     * @param integer $collects_registries_id id of collect_registry
+     */
     public function updateComputer($computers_id, $registry_data, $collects_registries_id)
     {
         global $DB;
@@ -101,8 +101,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             'FROM'   => 'glpi_plugin_glpiinventory_collects_registries_contents',
             'WHERE'  => [
                 'computers_id' => $computers_id,
-                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id
-            ]
+                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
+            ],
         ]);
 
         foreach ($iterator as $data) {
@@ -118,7 +118,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 if ($arraydb['key'] == $key) {
                     $input = ['key'   => $arraydb['key'],
                         'id'    => $keydb,
-                        'value' => $value
+                        'value' => $value,
                     ];
                     $this->update($input);
                     unset($registry_data[$key]);
@@ -139,17 +139,17 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 'computers_id' => $computers_id,
                 'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
                 'key'          => $key,
-                'value'        => $value
+                'value'        => $value,
             ];
             $this->add($input);
         }
     }
 
-   /**
-    * Show registries keys of the computer
-    *
-    * @param integer $computers_id id of the computer
-    */
+    /**
+     * Show registries keys of the computer
+     *
+     * @param integer $computers_id id of the computer
+     */
     public function showForComputer($computers_id)
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
@@ -194,11 +194,11 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
 
-   /**
-    * Display registry keys / values of collect_registry id
-    *
-    * @param integer $collects_registries_id
-    */
+    /**
+     * Display registry keys / values of collect_registry id
+     *
+     * @param integer $collects_registries_id
+     */
     public function showContent($collects_registries_id)
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();

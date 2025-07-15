@@ -75,11 +75,11 @@ foreach (get_defined_constants() as $constant_name => $constant_value) {
 
 //init cache
 if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FILENAME)) {
-   // Use configured cache for cache tests
+    // Use configured cache for cache tests
     $cache_manager = new CacheManager();
     $GLPI_CACHE = $cache_manager->getCoreCacheInstance();
 } else {
-   // Use "in-memory" cache for other tests
+    // Use "in-memory" cache for other tests
     $GLPI_CACHE = new SimpleCache(new ArrayAdapter());
 }
 
@@ -136,18 +136,10 @@ if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export')) {
 }
 
 // @codingStandardsIgnoreStart
-class GlpitestPHPerror extends \Exception
-{
-}
-class GlpitestPHPwarning extends \Exception
-{
-}
-class GlpitestPHPnotice extends \Exception
-{
-}
-class GlpitestSQLError extends \Exception
-{
-}
+class GlpitestPHPerror extends \Exception {}
+class GlpitestPHPwarning extends \Exception {}
+class GlpitestPHPnotice extends \Exception {}
+class GlpitestSQLError extends \Exception {}
 // @codingStandardsIgnoreEnd
 
 set_error_handler(static function (int $errno, string $errstr): never {

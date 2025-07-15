@@ -44,7 +44,7 @@ $docDir = GLPI_PLUGIN_DOC_DIR . '/glpiinventory';
 if (isset($_GET['file'])) {
     $filename = $_GET['file'];
 
-   // Security test : document in $docDir
+    // Security test : document in $docDir
     if (strstr($filename, "../") || strstr($filename, "..\\")) {
         echo "Security attack !!!";
         Event::log(
@@ -62,20 +62,20 @@ if (isset($_GET['file'])) {
         echo "Error file $filename does not exist";
         return;
     } else {
-       // Now send the file with header() magic
+        // Now send the file with header() magic
         header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
         header('Pragma: private'); /// IE BUG + SSL
-       //header('Pragma: no-cache');
+        //header('Pragma: no-cache');
         header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
         header("Content-disposition: filename=\"$filename\"");
-       //      header("Content-type: ".$mime);
+        //      header("Content-type: ".$mime);
 
         $f = fopen($file, "r");
 
         if (!$f) {
             echo "Error opening file $filename";
         } else {
-           // Pour que les \x00 ne devienne pas \0
+            // Pour que les \x00 ne devienne pas \0
             $fsize = filesize($file);
 
             if ($fsize) {

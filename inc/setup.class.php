@@ -40,12 +40,12 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventorySetup
 {
-   /**
-    * Uninstall process when uninstall the plugin
-    *
-    * @global object $DB
-    * @return true
-    */
+    /**
+     * Uninstall process when uninstall the plugin
+     *
+     * @global object $DB
+     * @return true
+     */
     public static function uninstall()
     {
         global $DB;
@@ -83,7 +83,7 @@ class PluginGlpiinventorySetup
         $DB->deleteOrDie(
             'glpi_displaypreferences',
             [
-                'itemtype' => ['LIKE', 'PluginGlpiinventory%']
+                'itemtype' => ['LIKE', 'PluginGlpiinventory%'],
             ]
         );
 
@@ -93,11 +93,11 @@ class PluginGlpiinventorySetup
     }
 
 
-   /**
-    * Remove a directory and subdirectory
-    *
-    * @param string $dir name of the directory
-    */
+    /**
+     * Remove a directory and subdirectory
+     *
+     * @param string $dir name of the directory
+     */
     public function rrmdir($dir)
     {
         $pfSetup = new PluginGlpiinventorySetup();
@@ -119,11 +119,11 @@ class PluginGlpiinventorySetup
     }
 
 
-   /**
-    * Creation of user
-    *
-    * @return integer id of the user "Plugin GLPI Inventory"
-    */
+    /**
+     * Creation of user
+     *
+     * @return integer id of the user "Plugin GLPI Inventory"
+     */
     public function createGlpiInventoryUser()
     {
         $user = new User();

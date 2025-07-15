@@ -42,23 +42,23 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryMenu extends CommonGLPI
 {
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return __('GLPI Inventory', 'glpiinventory');
     }
 
 
-   /**
-    * Check if can view item
-    *
-    * @return boolean
-    */
+    /**
+     * Check if can view item
+     *
+     * @return boolean
+     */
     public static function canView()
     {
         $can_display = false;
@@ -74,34 +74,34 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     }
 
 
-   /**
-    * Check if can create an item
-    *
-    * @return boolean
-    */
+    /**
+     * Check if can create an item
+     *
+     * @return boolean
+     */
     public static function canCreate()
     {
         return false;
     }
 
 
-   /**
-    * Get the menu name
-    *
-    * @return string
-    */
+    /**
+     * Get the menu name
+     *
+     * @return string
+     */
     public static function getMenuName()
     {
         return self::getTypeName();
     }
 
 
-   /**
-    * Get additional menu options and breadcrumb
-    *
-    * @global array $CFG_GLPI
-    * @return array
-    */
+    /**
+     * Get additional menu options and breadcrumb
+     *
+     * @global array $CFG_GLPI
+     * @return array
+     */
     public static function getAdditionalMenuOptions()
     {
         $fi_full_path = Plugin::getWebDir('glpiinventory');
@@ -121,7 +121,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             'deploymirror'               => 'PluginGlpiinventoryDeployMirror',
             'deploygroup'                => 'PluginGlpiinventoryDeployGroup',
             'deployuserinteractiontemplate' => 'PluginGlpiinventoryDeployUserinteractionTemplate',
-            'ignoredimportdevice'        => 'RefusedEquipment'
+            'ignoredimportdevice'        => 'RefusedEquipment',
         ];
         $options = [];
 
@@ -133,7 +133,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         foreach ($elements as $type => $itemtype) {
             $options[$type] = [
                 'title' => $itemtype::getTypeName(),
-                'page'  => $itemtype::getSearchURL(false)
+                'page'  => $itemtype::getSearchURL(false),
             ];
             $options[$type]['links']['search'] = $itemtype::getSearchURL(false);
             if ($itemtype::canCreate()) {
@@ -145,16 +145,16 @@ class PluginGlpiinventoryMenu extends CommonGLPI
                 $options[$type]['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
             }
         }
-       // hack for config
+        // hack for config
         $options['config']['page'] = PluginGlpiinventoryConfig::getFormURL(false);
 
-       // Add icon for import package
+        // Add icon for import package
         $label = __('Import', 'glpiinventory');
         $link = "<i class=\"ti ti-download\" title=\"$label\"" .
             "></i><span class='d-none d-xxl-block'>$label</span>";
         $options['deploypackage']['links'][$link] = '/' . $fi_rel_path . '/front/deploypackage.import.php';
 
-       // Add icon for clean unused deploy files
+        // Add icon for clean unused deploy files
         $label = __('Clean unused files', 'glpiinventory');
         $link = "<i class=\"ti ti-box-off\" title=\"$label\"" .
             "></i><span class='d-none d-xxl-block'>$label</span>";
@@ -164,8 +164,8 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             'title' => Agent::getTypeName(),
             'page'  => Agent::getSearchURL(false),
             'links' => [
-                'search' => Agent::getSearchURL(false)
-            ]
+                'search' => Agent::getSearchURL(false),
+            ],
         ];
         if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
             $options['agent']['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
@@ -174,12 +174,12 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     }
 
 
-   /**
-    * Display the menu of plugin
-    *
-    * @global array $CFG_GLPI
-    * @param string $type
-    */
+    /**
+     * Display the menu of plugin
+     *
+     * @global array $CFG_GLPI
+     * @param string $type
+     */
     public static function displayMenu($type = "big")
     {
         global $CFG_GLPI;
@@ -188,9 +188,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         $menu = [];
 
-       /*
-        * Dashboard
-        */
+        /*
+         * Dashboard
+         */
         if (Session::haveRight('dashboard', READ)) {
             $dashboard_menu = [];
             $dashboard_menu[0]['name'] = __('Inventory');
@@ -200,13 +200,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $menu['dashboard'] = [
                 'name'     => __('Dashboard'),
                 'pic'      => "ti ti-dashboard",
-                'children' => $dashboard_menu
+                'children' => $dashboard_menu,
             ];
         }
 
-       /*
-        * General
-        */
+        /*
+         * General
+         */
         $general_menu = [];
         if (Session::haveRight('agent', READ)) {
             $general_menu[0]['name'] = __('Agents management', 'glpiinventory');
@@ -234,9 +234,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-       /*
-       * Tasks
-       */
+        /*
+        * Tasks
+        */
         $tasks_menu = [];
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $tasks_menu[2]['name'] = __('Task management', 'glpiinventory');
@@ -274,9 +274,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-       /*
-       * Rules
-       */
+        /*
+        * Rules
+        */
         $rules_menu = [];
         if (Session::haveRight('plugin_glpiinventory_ruleimport', READ)) {
             $rules_menu[1]['name'] = __('Equipment import and link rules', 'glpiinventory');
@@ -296,7 +296,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
             $rules_menu[3]['pic']  = "ti ti-book";
             $rules_menu[3]['link'] = RuleImportEntity::getSearchURL();
-           //$rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
+            //$rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
         }
 
         if (Session::haveRight('config', READ)) {
@@ -313,16 +313,16 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-       /*
-       * Network
-       */
+        /*
+        * Network
+        */
         $network_menu = [];
 
         if (Session::haveRight('plugin_glpiinventory_iprange', READ)) {
             $network_menu[] = [
                 'name' => __('IP Ranges', 'glpiinventory'),
                 'pic'  => "ti ti-viewfinder",
-                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange')
+                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange'),
             ];
         }
 
@@ -330,7 +330,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
                 'pic'  => "ti ti-devices-pc",
-                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredentialip')
+                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredentialip'),
             ];
         }
 
@@ -338,7 +338,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('SNMP credentials', 'glpiinventory'),
                 'pic'  => "ti ti-lock",
-                'link' => SNMPCredential::getSearchURL()
+                'link' => SNMPCredential::getSearchURL(),
             ];
         }
 
@@ -346,7 +346,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
                 'pic'  => "ti ti-lock",
-                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredential')
+                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredential'),
             ];
         }
 
@@ -354,7 +354,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('Discovery status', 'glpiinventory'),
                 'pic'  =>   "ti ti-activity",
-                'link' =>   $fi_path . "/front/statediscovery.php"
+                'link' =>   $fi_path . "/front/statediscovery.php",
             ];
 
             $network_menu[] = [
@@ -368,7 +368,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('SNMP models creation', 'glpiinventory'),
                 'pic'  => "ti ti-model",
-                'link' => $fi_path . "/front/constructmodel.php"
+                'link' => $fi_path . "/front/constructmodel.php",
             ];
         }
 
@@ -380,16 +380,16 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-       /*
-       * Deploy
-       */
+        /*
+        * Deploy
+        */
         $deploy_menu = [];
 
         if (Session::haveRight('plugin_glpiinventory_package', READ)) {
             $deploy_menu[] = [
                 'name' => __('Package management', 'glpiinventory'),
                 'pic'  => "ti ti-package",
-                'link' => $fi_path . "/front/deploypackage.php"
+                'link' => $fi_path . "/front/deploypackage.php",
             ];
         }
 
@@ -418,15 +418,15 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-       /*
-       * Guide
-       */
+        /*
+        * Guide
+        */
         $guide_menu = [];
 
         $guide_menu[] = [
             'name' => __('SNMP inventory', 'glpiinventory'),
             'pic'  => "ti ti-book",
-            'link' => $fi_path . "/front/menu_snmpinventory.php"
+            'link' => $fi_path . "/front/menu_snmpinventory.php",
         ];
 
         $menu['guide'] = [
@@ -441,11 +441,11 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     }
 
 
-   /**
-    * Menu for SNMP inventory
-    *
-    * @global array $CFG_GLPI
-    */
+    /**
+     * Menu for SNMP inventory
+     *
+     * @global array $CFG_GLPI
+     */
     public static function displayMenuSNMPInventory()
     {
         $fi_path = Plugin::getWebDir('glpiinventory');
@@ -470,36 +470,36 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             [
                 'text' => __('`Network Discovery`, used to discover the devices on the network', 'glpiinventory'),
                 'url'  => "",
-                'title' => true
+                'title' => true,
             ],
             [
                 'text' => __('Define IP Ranges of your network + related SNMP credentials', 'glpiinventory'),
-                'url'  => $fi_path . "/front/iprange.php"
+                'url'  => $fi_path . "/front/iprange.php",
             ],
             [
                 'text' => __('Define an agent allowed to discover the network', 'glpiinventory'),
-                'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
+                'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1",
             ],
             [
                 'text' => __('Create a new Task with discovery module and the agent defined previously', 'glpiinventory'),
-                'url'  => $fi_path . "/front/task.php"
+                'url'  => $fi_path . "/front/task.php",
             ],
             [
                 'text' => __('If you have devices not typed, import them from unmanaged devices', 'glpiinventory'),
-                'url'  => Unmanaged::getSearchURL()
+                'url'  => Unmanaged::getSearchURL(),
             ],
             [
                 'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'glpiinventory'),
                 'url'  => "",
-                'title' => true
+                'title' => true,
             ],
             [
                 'text' => __('Define an agent allowed to inventory the network by SNMP', 'glpiinventory'),
-                'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1"
+                'url'  => $fi_path . "/front/config.form.php?forcetab=PluginGlpiinventoryAgentmodule$1",
             ],
             [
                 'text' => __('Create a new Task with network inventory module and the agent defined previously', 'glpiinventory'),
-                'url'  => $fi_path . "/front/task.php"
+                'url'  => $fi_path . "/front/task.php",
             ],
         ];
 
@@ -529,13 +529,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     }
 
 
-   /**
-    * Display chart
-    *
-    * @param string $name
-    * @param array $data list of data for the chart
-    * @param string $title
-    */
+    /**
+     * Display chart
+     *
+     * @param string $name
+     * @param array $data list of data for the chart
+     * @param string $title
+     */
     public static function showChart($name, $data, $title = '&nbsp;')
     {
         echo "<div class='fi_chart donut'>";
@@ -548,14 +548,14 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     }
 
 
-   /**
-    * Display chart bar
-    *
-    * @param string $name
-    * @param array $data list of data for the chart
-    * @param string $title
-    * @param integer $width
-    */
+    /**
+     * Display chart bar
+     *
+     * @param string $name
+     * @param array $data list of data for the chart
+     * @param string $title
+     * @param integer $width
+     */
     public static function showChartBar($name, $data, $title = '', $width = 370)
     {
         echo "<div class='fi_chart bar'>";

@@ -38,14 +38,14 @@ class DeploymirrorTest extends TestCase
     public static function setUpBeforeClass(): void
     {
 
-       // Delete all mirrors
+        // Delete all mirrors
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $items = $pfDeploymirror->find();
         foreach ($items as $item) {
             $pfDeploymirror->delete(['id' => $item['id']], true);
         }
 
-       // Delete all locations
+        // Delete all locations
         $location = new Location();
         $items = $location->find();
         foreach ($items as $item) {
@@ -53,9 +53,9 @@ class DeploymirrorTest extends TestCase
         }
     }
 
-   /**
-    * @test
-    */
+    /**
+     * @test
+     */
     public function testAddMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
@@ -64,7 +64,7 @@ class DeploymirrorTest extends TestCase
             'comment' => 'MyComment',
             'url'     => 'http://localhost:8080/mirror',
             'entities_id' => 0,
-            'locations_id' => 0
+            'locations_id' => 0,
         ];
         $mirrors_id = $pfDeploymirror->add($input);
         $this->assertGreaterThan(0, $mirrors_id);
@@ -72,10 +72,10 @@ class DeploymirrorTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testAddMirror
-    */
+    /**
+     * @test
+     * @depends testAddMirror
+     */
     public function testUpdateMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
@@ -93,38 +93,38 @@ class DeploymirrorTest extends TestCase
     }
 
 
-   /**
-    * @test
-    * @depends testUpdateMirror
-    */
+    /**
+     * @test
+     * @depends testUpdateMirror
+     */
     public function testDeleteLocationFromMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $location       = new Location();
         $locations_id = $location->add(['name'         => 'MyLocation',
             'entities_id'  => 0,
-            'is_recursive' => 1
+            'is_recursive' => 1,
         ]);
-       //Add the location to the mirror
+        //Add the location to the mirror
         $pfDeploymirror->getFromDBByCrit(['name' => 'Mirror 1']);
         $this->assertNotNull($pfDeploymirror->fields['id']);
         $input          = ['id'           => $pfDeploymirror->fields['id'],
-            'locations_id' => $locations_id
+            'locations_id' => $locations_id,
         ];
         $this->assertTrue($pfDeploymirror->update($input));
 
-       //Purge location
+        //Purge location
         $location->delete(['id' => $locations_id], true);
         $this->assertTrue($pfDeploymirror->getFromDB($input['id']));
-       //Check that location has been deleted from the mirror
+        //Check that location has been deleted from the mirror
         $this->assertEquals(0, $pfDeploymirror->fields['locations_id']);
     }
 
 
-   /**
-    * @test
-    * @depends testDeleteLocationFromMirror
-    */
+    /**
+     * @test
+     * @depends testDeleteLocationFromMirror
+     */
     public function testDeleteMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();

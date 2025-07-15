@@ -68,7 +68,7 @@ echo "<td>";
 Dropdown::showNumber("nbdays", [
     'value' => $nbdays,
     'min'   => 1,
-    'max'   => 365
+    'max'   => 365,
 ]);
 echo "</td>";
 echo "</tr>";
@@ -101,26 +101,26 @@ if (($state != "") and ($state != "0")) {
 $iterator = $DB->request([
     'SELECT' => [
         'last_inventory_update',
-        'computers_id'
+        'computers_id',
     ],
     'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers',
     'LEFT JOIN' => [
         'glpi_computers' => [
             'FKEY' => [
                 'glpi_plugin_glpiinventory_inventorycomputercomputers' => 'computers_id',
-                'glpi_computers' => 'id'
-            ]
-        ]
+                'glpi_computers' => 'id',
+            ],
+        ],
     ],
     'WHERE' => [
         'OR' => [
             new \QueryExpression("NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY"),
-            ['last_inventory_update' => null]
-        ]
+            ['last_inventory_update' => null],
+        ],
     ] + $state_where + getEntitiesRestrictCriteria('glpi_computers'),
     'ORDER' => [
-        'last_inventory_update' => 'DESC'
-    ]
+        'last_inventory_update' => 'DESC',
+    ],
 ]);
 
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";

@@ -40,11 +40,11 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginGlpiinventoryDeployFilepart
 {
-   /**
-    * Send file to agent
-    *
-    * @param string $file
-    */
+    /**
+     * Send file to agent
+     *
+     * @param string $file
+     */
     public static function httpSendFile($file)
     {
         if (empty($file)) {
@@ -55,7 +55,7 @@ class PluginGlpiinventoryDeployFilepart
         preg_match('/.\/..\/([^\/]+)/', $file, $matches);
 
         $sha512 = $matches[1];
-       //      $short_sha512 = substr($sha512, 0, 6);
+        //      $short_sha512 = substr($sha512, 0, 6);
 
         $repoPath = GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository/";
 
