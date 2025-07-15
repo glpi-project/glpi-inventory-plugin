@@ -62,11 +62,11 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-   /**
-    * Check if can create an item
-    *
-    * @return boolean
-    */
+    /**
+     * Check if can create an item
+     *
+     * @return boolean
+     */
     public static function canCreate(): bool
     {
         return true;
@@ -656,21 +656,21 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     {
         global $DB;
 
-       // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
+        // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
         $sub_query = new QuerySubQuery([
             'COUNT' => 'cpt',
             'FROM' => 'glpi_plugin_glpiinventory_taskjobstates',
             'WHERE' => [
                 new QueryExpression('plugin_glpiinventory_taskjobs_id = glpi_plugin_glpiinventory_taskjobs.id'),
-                'state' => ['<', 3]
-            ]
+                'state' => ['<', 3],
+            ],
         ]);
         $iterator = $DB->request([
             'FROM' => 'glpi_plugin_glpiinventory_taskjobs',
             'WHERE' => [
                 'status' => 1,
-                new QueryExpression($sub_query->getQuery() . ' = 0')
-            ]
+                new QueryExpression($sub_query->getQuery() . ' = 0'),
+            ],
         ]);
 
         foreach ($iterator as $data) {
@@ -1026,12 +1026,12 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-   /**
-    * Get the massive actions for this object
-    *
-    * @param object|null $checkitem
-    * @return array list of actions
-    */
+    /**
+     * Get the massive actions for this object
+     *
+     * @param object|null $checkitem
+     * @return array list of actions
+     */
     public function getSpecificMassiveActions($checkitem = null)
     {
 

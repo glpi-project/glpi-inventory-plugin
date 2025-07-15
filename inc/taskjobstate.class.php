@@ -477,7 +477,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             'itemtype' => $this->fields['itemtype'],
             'date'     => $_SESSION['glpi_currenttime'],
             'state'    => $joblog_state,
-            'comment'  => $reason
+            'comment'  => $reason,
         ];
 
         $log->add($log_input);
@@ -523,7 +523,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        'comment'  => $reason
+                        'comment'  => $reason,
                     ];
                     $log->add($log_input);
 
@@ -538,7 +538,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
-                        'comment'  => $reason
+                        'comment'  => $reason,
                     ];
                     $log->add($log_input);
 
@@ -553,7 +553,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        'comment'  => $reason
+                        'comment'  => $reason,
                     ];
                     $log->add($log_input);
                 }
@@ -591,7 +591,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $iterator = $DB->request([
             'FROM'   => 'glpi_plugin_glpiinventory_taskjoblogs',
             'WHERE'  => [
-                'date'  => ['<', new QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')]
+                'date'  => ['<', new QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')],
             ],
             'GROUPBY' => 'plugin_glpiinventory_taskjobstates_id',
         ]);
@@ -600,7 +600,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             $delete = $DB->buildDelete(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
-                    'plugin_glpiinventory_taskjobstates_id' => new QueryParam()
+                    'plugin_glpiinventory_taskjobstates_id' => new QueryParam(),
                 ]
             );
             $stmt = $DB->prepare($delete);

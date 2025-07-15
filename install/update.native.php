@@ -646,7 +646,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     'itemtype' => getItemTypeForTable($row['tablename']),
                     'items_id' => $row['items_id'],
                     'field'    => $field,
-                    'is_global' => ($row['items_id'] == 0) ? 1 : 0
+                    'is_global' => ($row['items_id'] == 0) ? 1 : 0,
                 ];
 
                 if (countElementsInTable($lock_table, $input) > 0) {

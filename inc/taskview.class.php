@@ -434,7 +434,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 [
                     'icon' => 'far fa-save me-1',
                     'name'  => 'update',
-                    'class' => 'btn btn-primary me-2'
+                    'class' => 'btn btn-primary me-2',
                 ]
             );
         }
