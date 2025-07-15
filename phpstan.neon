@@ -3,6 +3,8 @@ parameters:
         maximumNumberOfProcesses: 2
     level: 5
     bootstrapFiles:
+       - ../../stubs/glpi_constants.php
+       - ../../vendor/autoload.php
         - setup.php
     paths:
         - inc
