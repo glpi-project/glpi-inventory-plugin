@@ -52,7 +52,7 @@ class DeployUserinteractionTemplateTest extends TestCase
         $expected = [
             'PluginGlpiinventoryDeployUserinteractionTemplate$1',
             'PluginGlpiinventoryDeployUserinteractionTemplate$2',
-            'Log$1'
+            'Log$1',
         ];
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
         $this->assertEquals($expected, array_keys($template->defineTabs()));

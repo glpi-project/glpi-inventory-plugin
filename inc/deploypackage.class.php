@@ -116,13 +116,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     }
 
 
-   /**
-    * Have I the right to "update" the object content (package actions)
-    *
-    * Also call canUpdateItem()
-    *
-    * @return boolean
-   **/
+    /**
+     * Have I the right to "update" the object content (package actions)
+     *
+     * Also call canUpdateItem()
+     *
+     * @return boolean
+    **/
     public function canUpdateContent(): bool
     {
         // check if a task is currently running with this package
@@ -605,7 +605,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 echo Html::hidden('remove_item');
                 echo Html::hidden('itemtype', ['value' => $classname]);
                 echo Html::hidden('packages_id', ['value' => $this->getID()]);
-                $class->displayDeployList($this, $datas, (string)$rand);
+                $class->displayDeployList($this, $datas, (string) $rand);
                 Html::closeForm();
                 echo "</div>";
             }
@@ -1007,7 +1007,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $error = $pfDeployPackage->update(
                 [
                     'id'   => $packages_id,
-                    'json' => $json
+                    'json' => $json,
                 ]
             );
         }
@@ -1418,7 +1418,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         // retrieve state name
         $joblogs_labels = PluginGlpiinventoryTaskjoblog::dropdownStateValues();
 
-       // Display for each computer, list of packages you can deploy
+        // Display for each computer, list of packages you can deploy
         $url = '/plugins/glpiinventory';
         echo "<form name='onetimedeploy_form' id='onetimedeploy_form'
              method='POST'
