@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Http\Firewall;
 use Glpi\Plugin\Hooks;
 
 define("PLUGIN_GLPIINVENTORY_VERSION", "1.5.3");
@@ -102,6 +103,11 @@ function plugin_init_glpiinventory()
     }
 
     if ($Plugin->isActivated('glpiinventory')) { // check if plugin is active
+        // Disable firewall checks for machine to machine endpoints
+        Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/index\.php#', Firewall::STRATEGY_NO_CHECK);
+        Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/b/#', Firewall::STRATEGY_NO_CHECK);
+        Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/front/communication.php#', Firewall::STRATEGY_NO_CHECK);
+
         //for dashboard
         $CFG_GLPI['javascript']['admin']['pluginglpiinventorymenu'] = [
             'dashboard', 'gridstack',
