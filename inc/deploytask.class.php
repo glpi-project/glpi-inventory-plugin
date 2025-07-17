@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskjobview.class.php");
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskview.class.php");
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/task.class.php");

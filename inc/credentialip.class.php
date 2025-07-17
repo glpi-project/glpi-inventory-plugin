@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the IP of VMWARE ESX and link to credentials to be able to inventory
  * these specific systems througth the webservice.
