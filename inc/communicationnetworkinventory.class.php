@@ -33,10 +33,6 @@
 
 use Glpi\Inventory\Inventory;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
-
 /**
  * Manage the communication of network inventory feature with the agents.
  */
