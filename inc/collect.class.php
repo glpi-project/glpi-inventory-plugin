@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_encode;
+
 /**
  * Manage the collect information by the agent.
  */
@@ -322,11 +324,11 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * Prepare run, so it prepare the taskjob with module 'collect'.
      * It prepare collect information and computer list for task run
      *
-     * @global object $DB
      * @param integer $taskjobs_id id of taskjob
      */
     public function prepareRun($taskjobs_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $task       = new PluginGlpiinventoryTask();
@@ -571,6 +573,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      */
     public function run($taskjobstate, $agent)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $output = [];

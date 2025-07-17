@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\preg_match;
+
 /**
  * Manage (enable or not) the modules in the agent.
  */
@@ -193,7 +195,6 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     /**
      * Display form to configure activation of modules in agent form (in tab)
      *
-     * @global array $CFG_GLPI
      * @param integer $agents_id id of the agent
      */
     public function showFormAgentException($agents_id)
@@ -445,6 +446,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             );
         } else {
             // ... else use global GLPI configuration parameter.
+            /** @var array $CFG_GLPI */
             global $CFG_GLPI;
             $base_url = $CFG_GLPI['url_base'];
 

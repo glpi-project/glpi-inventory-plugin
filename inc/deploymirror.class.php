@@ -90,12 +90,15 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
      * Get and filter mirrors list by computer agent and location.
      * Location is retrieved from the computer data.
      *
-     * @global array $PF_CONFIG
      * @param ?integer $agents_id
      * @return array
      */
     public static function getList($agents_id)
     {
+        /**
+         * @var array $PF_CONFIG
+         * @var DBmysql $DB
+         */
         global $PF_CONFIG, $DB;
 
         if (is_null($agents_id)) {
@@ -212,7 +215,6 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     /**
      * Display form
      *
-     * @global array $CFG_GLPI
      * @param integer $id
      * @param array $options
      * @return true

@@ -423,7 +423,7 @@ function plugin_version_glpiinventory()
 /**
  * Manage / check the prerequisites of the plugin
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @return boolean
  */
 function plugin_glpiinventory_check_prerequisites()

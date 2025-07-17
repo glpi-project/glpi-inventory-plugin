@@ -170,10 +170,12 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     /**
      * Display a specific header
      */
-    public function displayHeader()
+    public static function displayCentralHeader(?string $title = null, ?array $menus = null): void
     {
         //Common dropdown header
-        parent::displayHeader();
+        parent::displayCentralHeader($title, $menus);
+
         PluginGlpiinventoryMenu::displayMenu("mini");
     }
+
 }

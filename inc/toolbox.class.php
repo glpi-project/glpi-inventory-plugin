@@ -31,6 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_decode;
+use function Safe\json_encode;
+use function Safe\preg_match;
+
 /**
  * Manage the functions used in many classes.
  **/

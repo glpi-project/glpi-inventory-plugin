@@ -179,12 +179,12 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of definition type 'PluginGlpiinventoryCredentialIp'
      * defined in task_definitiontype_InventoryComputerESX
      *
-     * @global object $DB
      * @param string $title (not used)
      * @return string unique html element id
      */
     public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX($title)
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $iterator = $DB->request([
@@ -238,11 +238,11 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of action type 'PluginGlpiinventoryCredentialIp'
      * defined in task_actiontype_InventoryComputerESX
      *
-     * @global object $DB
      * @return string unique html element id
      */
     public static function task_actionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $options = [];

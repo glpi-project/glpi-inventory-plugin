@@ -33,6 +33,11 @@
 
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
+use Safe\DateTime;
+
+use function Safe\ini_set;
+use function Safe\json_encode;
+use function Safe\session_write_close;
 
 /**
  * Manage the task system.
@@ -246,11 +251,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Purge elements linked to task when delete it
      *
-     * @global object $DB
      * @param object $param
      */
     public static function purgeTask($param)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $tasks_id = $param->fields['id'];
@@ -342,7 +347,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get the list of taskjobstate for the agent
      *
-     * @global object $DB
      * @param integer $agent_id
      * @param array $methods
      * @param array $options
@@ -350,6 +354,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public function getTaskjobstatesForAgent($agent_id, $methods = [], $options = [])
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
@@ -664,6 +669,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     */
     public function cleanTasksAndJobs($interval)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -792,7 +798,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      * - tasks: is a map containing the objects of a task
      * - agents: is a list of the agents involved in the tasks jobs
      *
-     * @global object $DB
      * @param array $task_ids list of tasks id
      * @param bool $with_logs default to true to get jobs execution logs with the jobs states
      * @param bool $only_active, set to true to include only active tasks
@@ -800,6 +805,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public function getJoblogs(array $task_ids = [], $with_logs = true, $only_active = false)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         // Results grouped by tasks > jobs > jobstates
@@ -967,7 +973,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
                 $target_id = $item_type . "_" . $item_id;
                 if ($item_name == "") {
-                    $item = new $item_type();
+                    $item = getItemForItemtype($item_type);
                     if ($item->getFromDB($item_id)) {
                         $item_name = $item->fields['name'];
                     }
@@ -1366,7 +1372,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get tasks planned
      *
-     * @global object $DB
      * @param integer $tasks_id if 0, no restriction so get all
      * @param bool $only_active, set to true to include only active tasks
      * @return object
@@ -1374,6 +1379,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     public function getTasksPlanned($tasks_id = 0, $only_active = true)
     {
         //FIXME: seems unused
+        /** @var DBmysql $DB */
         global $DB;
 
         $sub_query = new QuerySubQuery([
@@ -1416,12 +1422,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get tasks filtered by relevant criteria
      *
-     * @global object $DB
      * @param array $filter criteria to filter in the request
      * @return array
      */
     public static function getItemsFromDB($filter)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $criteria = [
@@ -1574,11 +1580,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Do actions after updated the item
      *
-     * @global object $DB
      * @param bool $history
      */
     public function post_updateItem($history = true)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         if (
@@ -1660,14 +1666,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Display form related to the massive action selected
      *
-     * @global array $CFG_GLPI
      * @param MassiveAction $ma MassiveAction instance
+     *
      * @return boolean
      */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
-        global $CFG_GLPI;
-
         switch ($ma->getAction()) {
             case "transfert":
                 Dropdown::show('Entity');

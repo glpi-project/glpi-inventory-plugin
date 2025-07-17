@@ -62,7 +62,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
         $agent_actionslist = [];
         foreach ($agent_actions as $targets) {
             foreach ($targets as $itemtype => $items_id) {
-                $item = new $itemtype();
+                $item = getItemForItemtype($itemtype);
                 // Detect if agent exists
                 if ($item->getFromDB($items_id)) {
                     $agent_actionslist[$items_id] = 1;

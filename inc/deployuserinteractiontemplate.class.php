@@ -33,6 +33,9 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
+use function Safe\json_decode;
+use function Safe\json_encode;
+
 /**
  * Manage user interactions templates.
  * @since 9.2

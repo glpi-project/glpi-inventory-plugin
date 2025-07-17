@@ -31,6 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_decode;
+use function Safe\json_encode;
+
 /**
 * Abstract class to manage display, add, update, remove and move of items
 * in a package
@@ -80,7 +83,6 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     /**
      * Display the dropdown to select type of element
      *
-     * @global array $CFG_GLPI
      * @param PluginGlpiinventoryDeployPackage $package the package
      * @param array $config order item configuration
      * @param string $rand unique element id used to identify/update an element
@@ -92,8 +94,6 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         $rand,
         $mode
     ) {
-        global $CFG_GLPI;
-
         //In case of a file item, there's no type, so don't display dropdown
         //in edition mode
         if (!isset($config['type']) && $mode == self::EDIT) {

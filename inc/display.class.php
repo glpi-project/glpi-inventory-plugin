@@ -141,7 +141,6 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     /**
      * Display progress bar
      *
-     * @global array $CFG_GLPI
      * @param integer $width
      * @param integer|float $percent
      * @param array $options
@@ -149,6 +148,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
      */
     public static function getProgressBar($width, $percent, array $options = [])
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $param = [];

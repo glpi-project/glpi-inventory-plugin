@@ -32,6 +32,9 @@
  */
 
 use Glpi\DBAL\QueryExpression;
+use Safe\DateTime;
+
+use function Safe\date_create;
 
 /**
  * Manage the timeslot for tasks. It's the time in the week the task run.
@@ -196,11 +199,11 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
      *
      * @since 0.85+1.0
      *
-     * @global object $DB
      * @return array
      */
     public function getCurrentActiveTimeslots()
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $timeslots   = [];
@@ -241,11 +244,11 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
      *
      * @since 0.85+1.0
      *
-     * @param ?DateTime $datetime The date and time we want to transform into
+     * @param ?\DateTime $datetime The date and time we want to transform into
      *                              cursor. If null the default value is now()
      * @return integer
      */
-    public function getTimeslotCursor(?DateTime $datetime = null)
+    public function getTimeslotCursor(?\DateTime $datetime = null)
     {
         if (is_null($datetime)) {
             $datetime = new DateTime();

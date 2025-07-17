@@ -32,6 +32,10 @@
  */
 
 use Glpi\DBAL\QueryExpression;
+use Safe\DateTime;
+
+use function Safe\json_decode;
+use function Safe\json_encode;
 
 /**
  * Manage the display part of tasks.
@@ -541,6 +545,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      */
     public function csvExport($params = [])
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $default_params = [
@@ -591,12 +596,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         // clean old temporary variables
         unset($task, $job, $target, $agent);
 
-        if (!$params['debug_csv']) {
-            define('SEP', $CFG_GLPI['csv_delimiter']);
-            define('NL', "\r\n");
-        } else {
-            define('SEP', '</td><td>');
-            define('NL', '</tr><tr><td>');
+        define('SEP', $params['debug_csv'] ? $CFG_GLPI['csv_delimiter'] : '</td><td>'); // @phpstan-ignore theCodingMachineSafe.function
+        define('NL', $params["debug_csv"] ? "\r\n" : '</tr><tr><td>'); // @phpstan-ignore theCodingMachineSafe.function
+        if ($params['debug_csv']) {
             echo "<table border=1><tr><td>";
         }
 
@@ -695,7 +697,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         }
 
         // force exit to prevent further display
-        exit;
+        exit; //@phpstan-ignore-line (whole method needs to be refactored)
     }
 
 

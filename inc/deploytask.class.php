@@ -145,13 +145,9 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
 
     /**
      * Display the title of the page
-     *
-     * @global array $CFG_GLPI
      */
     public function title()
     {
-        global  $CFG_GLPI;
-
         $buttons = [];
         $title = _n('Task', 'Tasks', 1, 'glpiinventory');
 
@@ -203,11 +199,11 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     /**
      * Do this before delete a deploy task
      *
-     * @global array $CFG_GLPI
      * @return boolean
      */
     public function pre_deleteItem()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         //if task active, delete denied
@@ -216,9 +212,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
                 __('This task is active. delete denied', 'glpiinventory')
             );
 
-            Html::redirect($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/front/task.form.php?id=" .
-             $this->getField('id'));
-            return false;
+            Html::redirect($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/front/task.form.php?id=" . $this->getField('id'));
         }
 
         $task_id = $this->getField('id');

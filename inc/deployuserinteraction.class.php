@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_decode;
+
 /**
  * Manage user interactions.
  * @since 9.2

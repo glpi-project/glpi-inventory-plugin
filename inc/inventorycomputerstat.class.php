@@ -61,11 +61,10 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
 
     /**
      * Init stats
-     *
-     * @global object $DB
      */
     public static function init()
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $insert = $DB->buildInsert(
