@@ -251,12 +251,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Get configuration value with name
      *
-     * @global array $PF_CONFIG
      * @param string $name name in configuration
      * @return null|string|integer
      */
     public function getValue($name)
     {
+        /** @var array $PF_CONFIG */
         global $PF_CONFIG;
 
         if (isset($PF_CONFIG[$name])) {
@@ -388,8 +388,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      */
     public static function showFormNetworkInventory($options = [])
     {
-        global $CFG_GLPI;
-
         $pfConfig     = new PluginGlpiinventoryConfig();
         $pfsnmpConfig = new self();
 
@@ -538,6 +536,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      */
     public function updateValue($name, $value)
     {
+        /** @var array $PF_CONFIG */
         global $PF_CONFIG;
 
         // retrieve current config
@@ -594,12 +593,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Test if table exists before loading cache
      * The only case where table doesn't exist is when you click on
      * uninstall the plugin and it's already uninstalled
-     *
-     * @global object $DB
-     * @global array $PF_CONFIG
      */
     public static function loadCache()
     {
+        /** @var DBmysql $DB */
+        /** @var array $PF_CONFIG */
         global $DB, $PF_CONFIG;
 
         if ($DB->tableExists('glpi_plugin_glpiinventory_configs')) {

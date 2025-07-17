@@ -34,7 +34,7 @@
 /**
  * Manage update the task system
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @param integer $plugin_id
  */

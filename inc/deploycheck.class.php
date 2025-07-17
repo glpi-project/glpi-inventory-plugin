@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_decode;
+
 /**
  * Manage the checks before deploy a package.
  */
@@ -184,16 +186,15 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     /**
      * Display list of checks
      *
-     * @global array $CFG_GLPI
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
      * @param array $data array converted of 'json' field in DB where stored checks
      * @param string $rand unique element id used to identify/update an element
      */
     public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $checks_types = $this->getTypes();
         $package_id   = $package->getID();
         $canedit      = $package->canUpdateContent();
         echo "<table class='tab_cadrehov package_item_list' id='table_checks_$rand'>";
@@ -429,6 +430,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
      */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();

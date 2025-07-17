@@ -147,6 +147,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     */
     public static function getTaskfromIPRange(PluginGlpiinventoryIPRange $item)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $ID = $item->getField('id');
@@ -180,7 +181,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Display definitions type dropdown
      *
-     * @global array $CFG_GLPI
      * @param string $myname
      * @param string $method
      * @param integer $value
@@ -190,8 +190,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '')
     {
-        global $CFG_GLPI;
-
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
         $a_type = [];
         $a_type[''] = Dropdown::EMPTY_VALUE;
@@ -234,7 +232,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Display definitions value with preselection of definition type
      *
-     * @global array $CFG_GLPI
      * @param string $myname name of dropdown
      * @param string $definitiontype name of the definition type selected
      * @param string $method name of the method selected
@@ -255,8 +252,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $entity_restrict = '',
         $title = 0
     ) {
-        global $CFG_GLPI;
-
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
         $module = '';
         foreach ($a_methods as $datas) {
@@ -317,7 +312,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Display actions type (itemtypes)
      *
-     * @global array $CFG_GLPI
      * @param string $myname name of dropdown
      * @param string $method name of the method selected
      * @param integer $value name of the definition type (used for edit taskjob)
@@ -326,8 +320,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '')
     {
-        global $CFG_GLPI;
-
         $a_methods               = PluginGlpiinventoryStaticmisc::getmethods();
         $a_actioninitiontype     = [];
         $a_actioninitiontype[''] = Dropdown::EMPTY_VALUE;
@@ -369,7 +361,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Display actions value with preselection of action type
      *
-     * @global array $CFG_GLPI
      * @param string $myname name of dropdown
      * @param string $actiontype name of the action type selected
      * @param string $method name of the method selected
@@ -386,8 +377,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $value = 0,
         $entity_restrict = ''
     ) {
-        global $CFG_GLPI;
-
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
         $module = '';
         foreach ($a_methods as $datas) {
@@ -458,13 +447,13 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * re initialize all taskjob of a taskjob
      *
-     * @global object $DB
      * @param integer $tasks_id id of the task
      * @param integer $disableTimeVerification
      * @return boolean true if all taskjob are ready (so finished from old runnning job)
      */
     public function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTask         = new PluginGlpiinventoryTask();
@@ -645,11 +634,10 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
 
     /**
      * Cron task: finish task if have some problem or started for so long time
-     *
-     * @global object $DB
      */
     public function CronCheckRunnningJobs()
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
@@ -790,7 +778,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             echo "<td>";
             foreach ($a_defs as $datadef) {
                 foreach ($datadef as $itemtype => $items_id) {
-                    $class = new $itemtype();
+                    $class = getItemForItemtype($itemtype);
                     $class->getFromDB($items_id);
                     echo $class->getLink(1) . " (" . $class->getTypeName() . ")<br/>";
                 }
@@ -800,7 +788,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             $a_acts = importArrayFromDB($data['action']);
             foreach ($a_acts as $dataact) {
                 foreach ($dataact as $itemtype => $items_id) {
-                    $class = new $itemtype();
+                    $class = getItemForItemtype($itemtype);
                     $itemname = $class->getTypeName();
                     $class->getFromDB($items_id);
                     if ($items_id == '.1') {
@@ -825,7 +813,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *    and hide add form
      *    and refresh type list
      *
-     * @global array $CFG_GLPI
      * @param string $type
      * @param string $itemtype
      * @param integer $items_id
@@ -833,8 +820,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id)
     {
-        global $CFG_GLPI;
-
         $this->getFromDB($taskjobs_id);
         $a_type = importArrayFromDB($this->fields[$type]);
         $add = 1;
@@ -878,15 +863,12 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *    and hide add form
      *    and refresh type list
      *
-     * @global array $CFG_GLPI
      * @param string $type
      * @param string $a_items_id
      * @param integer $taskjobs_id
      */
     public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
     {
-        global $CFG_GLPI;
-
         $this->getFromDB($taskjobs_id);
         $a_type = importArrayFromDB($this->fields[$type]);
         $split = explode("-", $a_items_id);
@@ -915,11 +897,11 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Display + button to add definition or action
      *
-     * @global array $CFG_GLPI
      * @param string $name name of the action (here definition or action)
      */
     public function plusButton($name)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         if ($this->canUpdate()) {
@@ -941,7 +923,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     {
 
         $itemtype = "PluginGlpiinventory" . ucfirst($a_taskjob['method']);
-        $item = new $itemtype();
+        $item = getItemForItemtype($itemtype);
 
         if (
             $a_taskjob['method'] == 'deployinstall'

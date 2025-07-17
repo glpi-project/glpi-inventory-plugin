@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\preg_match_all;
+
 /**
  * Manage the logs of task job.
  */
@@ -120,12 +122,12 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Get itemtype of task job state
      *
-     * @global object $DB
      * @param integer $taskjoblogs_id
      * @return string
      */
     public static function getStateItemtype($taskjoblogs_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $params = ['FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
@@ -244,7 +246,6 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Add a new line of log for a taskjob status
      *
-     * @global object $DB
      * @param integer $taskjobstates_id id of the taskjobstate
      * @param integer $items_id id of the item associated with taskjob status
      * @param string $itemtype type name of the item associated with taskjob status
@@ -253,6 +254,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      */
     public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment)
     {
+        /** @var DBmysql $DB */
         global $DB;
         $this->getEmpty();
         unset($this->fields['id']);
@@ -330,12 +332,13 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         foreach ($matches[0] as $num => $commentvalue) {
             $classname = $matches[1][$num];
             if ($classname != '' && class_exists($classname)) {
-                $Class = new $classname();
-                $Class->getFromDB($matches[2][$num]);
+                /** @var CommonDBTM $Class */
+                $Class = getItemForItemtype($classname);
+                $Class->getFromDB((int) $matches[2][$num]);
                 $comment = str_replace($commentvalue, $Class->getLink(), $comment);
             }
         }
-        if (strstr($comment, "==")) {
+        if (str_contains($comment, "==")) {
             preg_match_all("/==([\w\d]+)==/", $comment, $matches);
             $a_text = [
                 'devicesqueried'  => __('devices queried', 'glpiinventory'),

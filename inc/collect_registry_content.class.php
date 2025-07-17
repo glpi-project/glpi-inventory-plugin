@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\preg_match;
+
 /**
  * Manage the registry keys found by the collect module of agent.
  */
@@ -81,13 +83,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      * Update computer registry values (add and update) related to this
      * collect registry id
      *
-     * @global object $DB
      * @param integer $computers_id id of the computer
      * @param array $registry_data registry info sent by agent
      * @param integer $collects_registries_id id of collect_registry
      */
     public function updateComputer($computers_id, $registry_data, $collects_registries_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $db_registries = [];

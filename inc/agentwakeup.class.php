@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\strtotime;
+
 /**
  * Manage the wake up the agents remotely.
  */
@@ -89,12 +91,13 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     /**
      * Cron task: wake up agents. Configuration is in each tasks
      *
-     * @global object $DB
-     * @param object $crontask
-     * @return boolean true if successfully, otherwise false
+     * @param CronTask $crontask
+     *
+     * @return boolean
      */
     public static function cronWakeupAgents($crontask)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $wakeupArray       = [];

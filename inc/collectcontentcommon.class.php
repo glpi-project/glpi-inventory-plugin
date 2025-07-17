@@ -151,6 +151,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
      */
     public function showForCollect($collects_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
         $class  = $this->collect_itemtype;
         $params = [

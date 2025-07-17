@@ -33,6 +33,9 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
+use function Safe\json_decode;
+use function Safe\json_encode;
+
 /**
  * Manage plugin menu
  */
@@ -95,7 +98,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     /**
      * Get additional menu options and breadcrumb
      *
-     * @global array $CFG_GLPI
      * @return array
      */
     public static function getAdditionalMenuOptions()
@@ -172,11 +174,11 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     /**
      * Display the menu of plugin
      *
-     * @global array $CFG_GLPI
      * @param string $type
      */
     public static function displayMenu($type = "big")
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $fi_path = '/plugins/glpiinventory';
@@ -438,8 +440,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
     /**
      * Menu for SNMP inventory
-     *
-     * @global array $CFG_GLPI
      */
     public static function displayMenuSNMPInventory()
     {

@@ -300,7 +300,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
 /**
  * Manage search options values
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $item
  * @return boolean
  */

@@ -31,6 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
+use Safe\DateTime;
+
+use function Safe\strtotime;
+
 /**
  * Manage the network inventory state.
  */
@@ -46,11 +50,10 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
     /**
      * __contruct function where add variable in $CFG_GLPI
-     *
-     * @global array $CFG_GLPI
      */
     public function __construct()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $CFG_GLPI['glpitablesitemtype']['PluginGlpiinventoryStateInventory'] =
@@ -61,13 +64,12 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     /**
      * Display network inventory state
      *
-     * @global object $DB
-     * @global array $CFG_GLPI
      * @param array $options
      */
     public function display($options = [])
     {
-        global $DB, $CFG_GLPI;
+        /** @var \DBmysql $DB */
+        global $DB;
 
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();

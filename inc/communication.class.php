@@ -31,6 +31,12 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\simplexml_load_string;
+use function Safe\file_put_contents;
+use function Safe\gzcompress;
+use function Safe\gzdeflate;
+use function Safe\gzencode;
+
 /**
  * Manage communication with agents using XML
  */
@@ -184,11 +190,11 @@ class PluginGlpiinventoryCommunication
                  * Also, this get_methods function need to be reviewed
                  */
                 if (
-                    $className != "PluginGlpiinventoryInventoryComputerESX"
-                    && $className != "PluginGlpiinventoryDeployCommon"
-                    && $className != "PluginGlpiinventoryCollect"
+                    !is_a($className, PluginGlpiinventoryInventoryComputerESX::class, true)
+                    && !is_a($className, PluginGlpiinventoryDeployCommon::class, true)
+                    && !is_a($className, PluginGlpiinventoryCollect::class, true)
                 ) {
-                    $class = new $className();
+                    $class = new $className(); // @phpstan-ignore glpi.forbidDynamicInstantiation (not a GLPI framework object, see no way to check properly what is expected)
                     $run_response = $class->run($jobstate);
                     $response[] = $run_response;
                 }

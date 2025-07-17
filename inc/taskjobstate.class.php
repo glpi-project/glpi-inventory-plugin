@@ -33,6 +33,10 @@
 
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QueryParam;
+use Safe\DateTime;
+
+use function Safe\json_encode;
+use function Safe\preg_match;
 
 /**
  * Manage the state of task jobs.
@@ -190,6 +194,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     **/
     public function stateTaskjob($taskjobs_id, $width = 930, $return = 'html', $style = '')
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
@@ -214,11 +219,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                 $globalState = $first + $second + $third + $fourth;
             }
             if ($return == 'html') {
-                if ($style == 'simple') {
-                    Html::displayProgressBar($width, ceil($globalState), ['simple' => 1]);
-                } else {
-                    Html::displayProgressBar($width, ceil($globalState));
-                }
+                Html::getProgressBar(ceil($globalState));
             } elseif ($return == 'htmlvar') {
                 if ($style == 'simple') {
                     return PluginGlpiinventoryDisplay::getProgressBar(
@@ -262,6 +263,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function getTaskjobsAgent($agent_id)
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -318,13 +320,13 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Get logs associated to a jobstate.
      *
-     * @global object $DB
      * @param integer $id
      * @param string $last_date
      * @return array
      */
     public function getLogs($id, $last_date)
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $iterator = $DB->request([
@@ -500,7 +502,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                     //Get the template values
                     $template_values = $template->getValues();
                     //Compute the next run date for the job. Retry_after value is in seconds
-                    $date = new \DateTime('+' . $template_values['retry_after'] . ' seconds');
+                    $date = new DateTime('+' . $template_values['retry_after'] . ' seconds');
                     $params['date_start'] = $date->format('Y-m-d H:i');
                     //Set the max number or retry
                     //(we set it each time a job is postponed because the value
@@ -573,11 +575,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Cron task: clean taskjob (retention time)
-     *
-     * @global object $DB
      */
     public static function cronCleantaskjob()
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $config         = new PluginGlpiinventoryConfig();
@@ -633,6 +634,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function showStatesForComputer($computers_id)
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $agent      = new Agent();

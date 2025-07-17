@@ -31,6 +31,17 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\BadRequestHttpException;
+
+use function Safe\glob;
+use function Safe\file_get_contents;
+use function Safe\json_decode;
+use function Safe\json_encode;
+use function Safe\rename;
+use function Safe\preg_replace;
+use function Safe\mkdir;
+use function Safe\unlink;
+
 /**
  * Manage the deploy packages.
  */
@@ -390,6 +401,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public function getAllDatas()
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $iterator = $DB->request([
@@ -509,13 +521,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
     /**
      * Display order type form
-     *
-     * @global array $CFG_GLPI
      */
     public function displayOrderTypeForm()
     {
-        global $CFG_GLPI;
-
         $subtypes = [
             'check'           => __("Audits", 'glpiinventory'),
             'file'            => __("Files", 'glpiinventory'),
@@ -623,13 +631,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Manage + button (audits, files, actions)
      *
-     * @global array $CFG_GLPI
      * @param integer $id id of the package
      * @param string $subtype name of subtype (audits, files, actions)
      * @param string $rand random string for js to prevent collisions
      */
     public function plusButtonSubtype($id, $subtype, $rand)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         if ($this->can($id, UPDATE)) {
@@ -647,12 +655,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Plus button used to add an element
      *
-     * @global array $CFG_GLPI
      * @param string $dom_id
      * @param false|string $clone
      */
     public static function plusButton($dom_id, $clone = false)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         echo  "&nbsp;";
@@ -670,13 +678,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
     /**
      * When user is in DEBUG mode, we display the json
-     *
-     * @global array $CFG_GLPI
      */
     public function showDebug()
     {
-        global $CFG_GLPI;
-
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr><th>" . __('JSON package representation', 'glpiinventory') . "</th></tr>";
         echo "<tr><td>";
@@ -700,13 +704,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         if (
             in_array($item_type, [
-                'PluginGlpiinventoryDeployCheck',
-                'PluginGlpiinventoryDeployFile',
-                'PluginGlpiinventoryDeployAction',
-                'PluginGlpiinventoryDeployUserinteraction',
+                PluginGlpiinventoryDeployCheck::class,
+                PluginGlpiinventoryDeployFile::class,
+                PluginGlpiinventoryDeployAction::class,
+                PluginGlpiinventoryDeployUserinteraction::class,
             ])
         ) {
-            $class = new $item_type();
+            $class = new $item_type(); // @phpstan-ignore glpi.forbidDynamicInstantiation (not a GLPI framework object, see no way to check properly what is expected)
             switch ($action_type) {
                 case "add_item":
                     return $class->add_item($params);
@@ -722,7 +726,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             }
         } else {
             Toolbox::logDebug("package subtype not found : " . $params['itemtype']);
-            Html::displayErrorAndDie("package subtype not found");
+            throw new BadRequestHttpException('Package subtype not found');
         }
     }
 
@@ -1107,11 +1111,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Display the visibility, so who can read. write...
      *
-     * @global array $CFG_GLPI
      * @return true
      */
     public function showVisibility()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $ID      = $this->fields['id'];
@@ -1393,8 +1397,6 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public function showPackageForMe($users_id, $item = false)
     {
-        global $CFG_GLPI;
-
         $computer     = new Computer();
         $self_service = !($_SESSION['glpiactiveprofile']['interface'] == 'central');
         if (!$self_service) {
@@ -1820,13 +1822,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * Add the package in task or use existant task and add the computer in
      * taskjob
      *
-     * @global object $DB
      * @param integer $computers_id id of the computer where depoy package
      * @param integer $packages_id id of the package to install in computer
      * @param integer $users_id id of the user have requested the installation
      */
     public function deployToComputer($computers_id, $packages_id, $users_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTask    = new PluginGlpiinventoryTask();
@@ -2062,11 +2064,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Check I have rights to deploy packages
      *
-     * @global object $DB
      * @return false|array
      */
     public function canUserDeploySelf()
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         if (Session::getCurrentInterface() !== 'helpdesk') {

@@ -32,6 +32,9 @@
  */
 
 use Glpi\DBAL\QueryExpression;
+use Glpi\Exception\Http\NotFoundHttpException;
+
+use function Safe\preg_match;
 
 /**
  * Manage the display of task jobs.
@@ -124,7 +127,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
               and !$this->isNewID($options['id'])
         ) {
             if (!$this->getFromDB($options['id'])) {
-                Html::displayNotFoundError();
+                throw new NotFoundHttpException();
             }
         }
 
@@ -222,11 +225,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Show jobs list for task
      *
-     * @global array $CFG_GLPI
      * @param integer $task_id
      */
     public function showListForTask($task_id)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $taskjobs = $this->getTaskjobs($task_id);
@@ -392,6 +395,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      */
     public function ajaxModuleItemsDropdown($options)
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $moduletype = $options['moduletype'];
@@ -805,8 +809,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      */
     public function submitForm($postvars)
     {
-        global $CFG_GLPI;
-
         $jobs_id = 0;
 
         $mytaskjob = new PluginGlpiinventoryTaskjob();
@@ -1089,7 +1091,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             if ($classname == '') {
                 unset($targets[$num]);
             } else {
-                $Class = new $classname();
+                $Class = getItemForItemtype($classname);
                 if (!$Class->getFromDB(current($data))) {
                     unset($targets[$num]);
                 }
@@ -1104,7 +1106,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $actors = importArrayFromDB($this->fields['actors']);
         foreach ($actors as $num => $data) {
             $classname = key($data);
-            $Class = new $classname();
+            $Class = getItemForItemtype($classname);
             if (
                 !$Class->getFromDB(current($data))
                 and (current($data) != ".1")

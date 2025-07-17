@@ -31,6 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\filetype;
+use function Safe\rmdir;
+use function Safe\scandir;
+use function Safe\unlink;
+
 /**
  * Manage the installation and uninstallation of the plugin.
  */
@@ -39,11 +44,11 @@ class PluginGlpiinventorySetup
     /**
      * Uninstall process when uninstall the plugin
      *
-     * @global object $DB
      * @return true
      */
     public static function uninstall()
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         CronTask::Unregister('glpiinventory');
@@ -72,11 +77,11 @@ class PluginGlpiinventorySetup
                 or (strstr($data[0], "glpi_plugin_tracker"))
                 or (strstr($data[0], "glpi_dropdown_plugin_tracker"))
             ) {
-                $DB->dropTable($data[0]) or die($DB->error());
+                $DB->dropTable($data[0]);
             }
         }
 
-        $DB->deleteOrDie(
+        $DB->delete(
             'glpi_displaypreferences',
             [
                 'itemtype' => ['LIKE', 'PluginGlpiinventory%'],

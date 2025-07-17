@@ -42,12 +42,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
      * Get all devices and put in taskjobstate each task for each device for
      * each agent
      *
-     * @global object $DB
      * @param integer $taskjobs_id
      * @return string
      */
     public function prepareRun($taskjobs_id)
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $pfTask = new PluginGlpiinventoryTask();
@@ -451,12 +451,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     /**
      * Get the devices have an IP in the IP range
      *
-     * @global object $DB
      * @param integer $ipranges_id
      * @return array
      */
     public function getDevicesOfIPRange($ipranges_id, bool $restrict_entity = true)
     {
+        /** @var \DBmysql $DB */
         global $DB;
 
         $devicesList = [];
@@ -543,7 +543,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     /**
     * Get the device IP in the IP range
     *
-    * @global object $DB
     * @param string $job_itemtype
     * @param integer $job_items_id
     * @param integer $tasks_id

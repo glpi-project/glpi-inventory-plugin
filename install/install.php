@@ -34,7 +34,7 @@
 /**
  * This function manage the installation of the plugin.
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param string $version
  * @param string $migrationname class name related to Migration class of GLPI
  */

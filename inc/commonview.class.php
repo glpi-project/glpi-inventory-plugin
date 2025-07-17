@@ -66,12 +66,11 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
 
 
     /**
-     * __contruct function and the different base URLs
-     *
-     * @global array $CFG_GLPI
+     * __construct function and the different base URLs
      */
     public function __construct()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
         parent::__construct();
 

@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_encode;
+
 /**
  * Manage the hours in the timeslot.
  */

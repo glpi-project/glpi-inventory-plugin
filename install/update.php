@@ -43,7 +43,7 @@ use Glpi\DBAL\QueryParam;
 /**
  * Get the current version of the plugin
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @return string
  */
 function pluginGlpiinventoryGetCurrentVersion()
@@ -156,7 +156,7 @@ function pluginGlpiinventoryGetCurrentVersion()
 /**
  * The main function to update the plugin
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param string $current_version
  * @param string $migrationname
  */
@@ -1156,7 +1156,7 @@ function installDashboard()
 /**
  * Manage the agent part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @return array
  */
@@ -1576,7 +1576,7 @@ function do_agent_migration($migration)
 /**
  * Manage the configuration part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @return array
  */
@@ -1687,7 +1687,7 @@ function do_config_migration($migration)
 /**
  * Manage the entities part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_entities_migration($migration)
@@ -1791,7 +1791,7 @@ function do_entities_migration($migration)
 /**
  * Manage the IP range part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @return array
  */
@@ -1976,7 +1976,7 @@ function do_locks_migration($migration)
 /**
  * Manage the SNMP communities linked to IP range part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_iprangeconfigsecurity_migration($migration)
@@ -2050,7 +2050,7 @@ function do_iprangeconfigsecurity_migration($migration)
 /**
  * Manage the profile part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_profile_migration($migration)
@@ -2240,7 +2240,7 @@ function do_timeslot_migration($migration)
 /**
  * Manage the unmanaged devices part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_unmanaged_migration($migration)
@@ -2517,7 +2517,7 @@ function do_ignoredimport_migration($migration)
 /**
  * Manage the computer blacklist part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_blacklist_migration($migration)
@@ -2861,7 +2861,7 @@ function do_blacklist_migration($migration)
 /**
  * Manage the rules matched log part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_rulematchedlog_migration($migration)
@@ -2940,7 +2940,7 @@ function do_rulematchedlog_migration($migration)
 /**
  * Manage the antivirus part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_antivirus_migration($migration)
@@ -2956,7 +2956,7 @@ function do_antivirus_migration($migration)
 /**
  * Manage the computer extended part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_computercomputer_migration($migration)
@@ -3229,7 +3229,7 @@ function do_computerstat_migration($migration)
  * Manage the configuration log fields (for network equipment and printer)
  * part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_configlogfield_migration($migration)
@@ -3321,7 +3321,7 @@ function do_configlogfield_migration($migration)
 /**
  * Manage the network port part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_networkport_migration($migration)
@@ -4135,7 +4135,7 @@ function do_networkport_migration($migration)
 /**
  * Manage the printer part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_printer_migration($migration)
@@ -4774,7 +4774,7 @@ function do_printer_migration($migration)
 /**
  * Manage the network equipment part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_networkequipment_migration($migration)
@@ -5198,7 +5198,7 @@ function do_networkequipment_migration($migration)
 /**
  * Manage the Config security (SNMP anthentication) part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_configsecurity_migration($migration)
@@ -5398,7 +5398,7 @@ function do_configsecurity_migration($migration)
 /**
  * Manage the discovery state part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_statediscovery_migration($migration)
@@ -5562,7 +5562,7 @@ function do_statediscovery_migration($migration)
 /**
  * Manage the computer license part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_computerlicense_migration($migration)
@@ -6012,7 +6012,7 @@ function do_computeroperatingsystem_migration($migration)
  * Manage the deploy user interaction migration process
  *
  * @since 9.2
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_deployuserinteraction_migration($migration)
@@ -6042,7 +6042,7 @@ function do_deployuserinteraction_migration($migration)
 /**
  * Manage the deploy files part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_deployfile_migration($migration)
@@ -6217,7 +6217,7 @@ function do_deployfile_migration($migration)
 /**
  * Manage the deploy package part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_deploypackage_migration($migration)
@@ -6895,7 +6895,7 @@ function do_dblocks_migration($migration)
 /**
  * Manage the ESX credentials part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_credentialESX_migration($migration)
@@ -7298,7 +7298,7 @@ function do_collect_migration($migration)
 /**
  * Manage the SNMP models part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_snmpmodel_migration($migration)
@@ -7323,7 +7323,7 @@ function do_snmpmodel_migration($migration)
 /**
  * Manage the rules part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_rule_migration($migration)
@@ -7446,7 +7446,7 @@ function do_rule_migration($migration)
 /**
  * Manage the task part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_task_migration($migration)
@@ -7519,7 +7519,7 @@ function do_task_migration($migration)
  *
  * @since 0.85+1.0
  *
- * @global object $DB
+ * @global DBMysql $DB
  */
 function doDynamicDataSearchParamsMigration()
 {
@@ -7627,7 +7627,7 @@ function migrationDynamicGroupFields($fields)
 /**
  * Manage the display preference part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param string $olditemtype
  * @param string $newitemtype
  */
@@ -7669,7 +7669,7 @@ function changeDisplayPreference($olditemtype, $newitemtype)
 /**
  * Manage the update from 2.13 to 2.20 version (very old) part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function update213to220_ConvertField($migration)
@@ -8445,7 +8445,7 @@ function update213to220_ConvertField($migration)
 /**
  * Manage the migration of MySQL tables / fields
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @param array $a_table
  */
@@ -8541,7 +8541,7 @@ function migratePluginTables($migration, $a_table)
  * Migrate tables from plugin fusinvdeploy
  *    all datas in exploded tables are merged and stored in json in order table
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param  object $migration
  */
 function migrateTablesFromFusinvDeploy($migration)

@@ -141,12 +141,13 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
+     * @param integer|string $tabnum number of the tab to display
      * @param integer $withtemplate 1 if is a template form
      * @return boolean
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         if ($tabnum == 'task') {
@@ -367,13 +368,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
     /**
      * Display title of the page
-     *
-     * @global array $CFG_GLPI
      */
     public function title()
     {
-        global $CFG_GLPI;
-
         $buttons = [];
         $title   = self::getTypeName();
 
@@ -651,7 +648,6 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Get search parameters as an array
      *
-     * @global object $DB
      * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
      * @param boolean $check_post_values
      * @param boolean $getAll
@@ -659,6 +655,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      */
     public static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
@@ -742,6 +739,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      */
     public function showForComputer($computers_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $canedit = PluginGlpiinventoryDeployGroup_Staticdata::canUpdate();

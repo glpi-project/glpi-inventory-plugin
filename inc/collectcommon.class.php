@@ -130,6 +130,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public function showList($collects_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
         $params = [
             'FROM'  => $this->getTable(),

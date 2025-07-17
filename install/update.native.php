@@ -36,7 +36,7 @@ use Glpi\DBAL\QueryExpression;
 /**
  * The main function to update the plugin
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param string $current_version
  * @param string $migrationname
  */
