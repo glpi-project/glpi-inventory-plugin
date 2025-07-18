@@ -452,3 +452,8 @@ function plugin_glpiinventory_options()
         'autoinstall_disabled' => true,
     ];
 }
+
+
+function plugin_glpiinventory_boot() {
+      \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/#');
+}
