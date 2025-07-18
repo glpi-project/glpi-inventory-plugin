@@ -113,7 +113,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                    [
                        'is_active'   => true,
                        'is_running'  => true,
-                       'targets'     => [__CLASS__ => $this->fields['id']],
+                       'targets'     => [self::class => $this->fields['id']],
                        'by_entities' => false,
                    ]
                );
@@ -152,11 +152,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         $actions = [];
         if (strstr($_SERVER["HTTP_REFERER"] ?? '', 'deploypackage.import.php')) {
-            $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'import'] = __('Import', 'glpiinventory');
+            $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'import'] = __('Import', 'glpiinventory');
         } else {
-            $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfert'] = __('Transfer');
-            $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'export'] = __('Export', 'glpiinventory');
-            $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'duplicate'] = _sx('button', 'Duplicate');
+            $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfert'] = __('Transfer');
+            $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'export'] = __('Export', 'glpiinventory');
+            $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'duplicate'] = _sx('button', 'Duplicate');
         }
 
         return $actions;
@@ -472,7 +472,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         $ong = [];
         $this->addDefaultFormTab($ong);
-        $this->addStandardTab(__CLASS__, $ong, $options);
+        $this->addStandardTab(self::class, $ong, $options);
         $ong['no_all_tab'] = true;
         return $ong;
     }
@@ -864,9 +864,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $rand = mt_rand();
 
         echo "<div class='spaced'>";
-        Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
+        Html::openMassiveActionsForm('mass' . self::class . $rand);
 
-        $massiveactionparams = ['container' => 'mass' . __CLASS__ . $rand];
+        $massiveactionparams = ['container' => 'mass' . self::class . $rand];
         Html::showMassiveActions($massiveactionparams);
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr class='tab_bg_1'>";
@@ -876,7 +876,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
+        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . self::class . $rand) . "</th>";
         echo "<th>";
         echo __('Name');
         echo "</th>";
@@ -893,7 +893,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $file = str_replace(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/import/", "", $file);
             $split = explode('.', $file);
             echo "<td>";
-            Html::showMassiveActionCheckBox(__CLASS__, $file);
+            Html::showMassiveActionCheckBox(self::class, $file);
             echo "</td>";
             echo "<td>";
             echo $split[2];
@@ -1160,12 +1160,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         echo "<div class='spaced'>";
         if ($canedit && $nb) {
-            Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
+            Html::openMassiveActionsForm('mass' . self::class . $rand);
             $massiveactionparams
             = ['num_displayed'
                         => $nb,
                 'container'
-                        => 'mass' . __CLASS__ . $rand,
+                        => 'mass' . self::class . $rand,
                 'specific_actions'
                          => ['delete' => _x('button', 'Delete permanently')],
             ];
@@ -1178,8 +1178,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $header_end    = '';
         if ($canedit && $nb) {
             $header_begin  .= "<th width='10'>";
-            $header_top    .= Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand);
-            $header_bottom .= Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand);
+            $header_top    .= Html::getCheckAllAsCheckbox('mass' . self::class . $rand);
+            $header_bottom .= Html::getCheckAllAsCheckbox('mass' . self::class . $rand);
             $header_end    .= "</th>";
         }
         $header_end .= "<th>" . __('Type') . "</th>";
@@ -1398,7 +1398,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public function showPackageForMe($users_id, $item = false)
     {
         $computer     = new Computer();
-        $self_service = !($_SESSION['glpiactiveprofile']['interface'] == 'central');
+        $self_service = $_SESSION['glpiactiveprofile']['interface'] != 'central';
         if (!$self_service) {
             $computers_id = false;
             if ($item && $item instanceof Computer) {

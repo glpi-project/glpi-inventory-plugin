@@ -66,7 +66,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
-        if ($item->fields['id'] > 0 and Session::haveRight('plugin_glpiinventory_task', READ)) {
+        if ($item->fields['id'] > 0 && Session::haveRight('plugin_glpiinventory_task', READ)) {
             return __('Job configuration', 'glpiinventory');
         }
         return '';
@@ -123,8 +123,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
          */
 
         if (
-            isset($options['id'])
-              and !$this->isNewID($options['id'])
+            isset($options['id']) && !$this->isNewID($options['id'])
         ) {
             if (!$this->getFromDB($options['id'])) {
                 throw new NotFoundHttpException();
@@ -141,8 +140,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $option_id = $options['id'];
                 //Check for correct type of ID received from outside.
                 if (
-                    is_string($option_id)
-                    and ctype_digit($option_id)
+                    is_string($option_id) && ctype_digit($option_id)
                 ) {
                     $ID = (int) ($options['id']);
                 } elseif (is_int($option_id)) {
@@ -395,7 +393,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      */
     public function ajaxModuleItemsDropdown($options)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $moduletype = $options['moduletype'];
@@ -619,8 +617,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
         if (
-            !Session::haveRight('plugin_glpiinventory_networkequipment', CREATE)
-              and !Session::haveRight('plugin_glpiinventory_printer', CREATE)
+            !Session::haveRight('plugin_glpiinventory_networkequipment', CREATE) && !Session::haveRight('plugin_glpiinventory_printer', CREATE)
         ) {
             if (isset($modules_methods['networkdiscovery'])) {
                 unset($modules_methods['networkdiscovery']);
@@ -819,8 +816,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $add = 1;
             foreach ($a_listdef as $dataDB) {
                 if (
-                    isset($dataDB[$postvars['DefinitionType']])
-                    and $dataDB[$postvars['DefinitionType']] == $postvars['definitionselectiontoadd']
+                    isset($dataDB[$postvars['DefinitionType']]) && $dataDB[$postvars['DefinitionType']] == $postvars['definitionselectiontoadd']
                 ) {
                     $add = 0;
                     break;
@@ -828,8 +824,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             }
             if ($add == '1') {
                 if (
-                    isset($postvars['DefinitionType'])
-                    and $postvars['DefinitionType'] != ''
+                    isset($postvars['DefinitionType']) && $postvars['DefinitionType'] != ''
                 ) {
                     $a_listdef[] = [$postvars['DefinitionType'] => $postvars['definitionselectiontoadd']];
                 }
@@ -846,8 +841,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $add = 1;
             foreach ($a_listact as $dataDB) {
                 if (
-                    isset($dataDB[$postvars['ActionType']])
-                    and $dataDB[$postvars['ActionType']] == $postvars['actionselectiontoadd']
+                    isset($dataDB[$postvars['ActionType']]) && $dataDB[$postvars['ActionType']] == $postvars['actionselectiontoadd']
                 ) {
                     $add = 0;
                     break;
@@ -855,8 +849,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             }
             if ($add == '1') {
                 if (
-                    isset($postvars['ActionType'])
-                    and $postvars['ActionType'] != ''
+                    isset($postvars['ActionType']) && $postvars['ActionType'] != ''
                 ) {
                     $a_listact[] = [$postvars['ActionType'] => $postvars['actionselectiontoadd']];
                 }
@@ -874,7 +867,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             foreach ($postvars['definition_to_delete'] as $itemdelete) {
                 $datadel = explode('-', $itemdelete);
                 foreach ($a_listdef as $num => $dataDB) {
-                    if (isset($dataDB[$datadel[0]]) and $dataDB[$datadel[0]] == $datadel[1]) {
+                    if (isset($dataDB[$datadel[0]]) && $dataDB[$datadel[0]] == $datadel[1]) {
                         unset($a_listdef[$num]);
                     }
                 }
@@ -892,7 +885,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             foreach ($postvars['action_to_delete'] as $itemdelete) {
                 $datadel = explode('-', $itemdelete);
                 foreach ($a_listact as $num => $dataDB) {
-                    if (isset($dataDB[$datadel[0]]) and $dataDB[$datadel[0]] == $datadel[1]) {
+                    if (isset($dataDB[$datadel[0]]) && $dataDB[$datadel[0]] == $datadel[1]) {
                         unset($a_listact[$num]);
                     }
                 }
@@ -934,9 +927,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
                 $targets = [];
                 if (
-                    array_key_exists('targets', $postvars)
-                    and is_array($postvars['targets'])
-                    and count($postvars['targets']) > 0
+                    array_key_exists('targets', $postvars) && is_array($postvars['targets']) && count($postvars['targets']) > 0
                 ) {
                     foreach ($postvars['targets'] as $target) {
                         [$itemtype, $itemid] = explode('-', $target);
@@ -948,9 +939,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
                 $actors = [];
                 if (
-                    array_key_exists('actors', $postvars)
-                    and is_array($postvars['actors'])
-                    and count($postvars['actors']) > 0
+                    array_key_exists('actors', $postvars) && is_array($postvars['actors']) && count($postvars['actors']) > 0
                 ) {
                     foreach ($postvars['actors'] as $actor) {
                         [$itemtype, $itemid] = explode('-', $actor);
@@ -1108,9 +1097,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $classname = key($data);
             $Class = getItemForItemtype($classname);
             if (
-                !$Class->getFromDB(current($data))
-                and (current($data) != ".1")
-                and (current($data) != ".2")
+                !$Class->getFromDB(current($data)) && current($data) != ".1" && current($data) != ".2"
             ) {
                 unset($actors[$num]);
             }

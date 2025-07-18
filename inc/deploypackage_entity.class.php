@@ -87,7 +87,7 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
     **/
     public static function getEntities($deploypackages_id)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $ent   = [];

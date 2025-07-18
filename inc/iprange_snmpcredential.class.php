@@ -199,13 +199,13 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
         $rand = mt_rand();
 
         echo "<div class='spaced'>";
-        Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
-        $massiveactionparams = ['container' => 'mass' . __CLASS__ . $rand];
+        Html::openMassiveActionsForm('mass' . self::class . $rand);
+        $massiveactionparams = ['container' => 'mass' . self::class . $rand];
         Html::showMassiveActions($massiveactionparams);
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr class='tab_bg_2'>";
-        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
+        echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . self::class . $rand) . "</th>";
         echo "<th>";
         echo __('SNMP credentials', 'glpiinventory');
         echo "</th>";
@@ -222,7 +222,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
             if ($credentials->getFromDB($data['snmpcredentials_id'])) {
                 echo "<tr class='tab_bg_2'>";
                 echo "<td>";
-                Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
+                Html::showMassiveActionCheckBox(self::class, $data["id"]);
                 echo "</td>";
                 echo "<td>";
                 echo $credentials->getLink();

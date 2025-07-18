@@ -47,7 +47,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
      */
     public function prepareRun($taskjobs_id)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTask = new PluginGlpiinventoryTask();
@@ -284,7 +284,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                         $itemtype = 'NetworkEquipment';
                     }
                     if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                        foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id => $num) {
+                        foreach (array_keys($a_devicesubnet[$subnet][$itemtype]) as $items_id) {
                             $a_input['itemtype'] = $itemtype;
                             $a_input['items_id'] = $items_id;
                             $a_input['specificity'] = exportArrayToDB(
@@ -456,7 +456,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
      */
     public function getDevicesOfIPRange($ipranges_id, bool $restrict_entity = true)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $devicesList = [];

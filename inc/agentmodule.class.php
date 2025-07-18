@@ -103,7 +103,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         $a_modules = $this->find();
         foreach ($a_modules as $data) {
             echo "<form name='form_ic' method='post' action='" .
-                 Toolbox::getItemTypeFormURL(__CLASS__) . "'>";
+                 Toolbox::getItemTypeFormURL(self::class) . "'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
             echo "<th width='130'>" . __('Module', 'glpiinventory') . "</th>";

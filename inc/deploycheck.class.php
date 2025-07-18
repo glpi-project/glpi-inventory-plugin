@@ -499,13 +499,13 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                     $options['value'] = 'KB';
                     if ($mode === 'edit') {
                         if ($value >= $this->getUnitSize('GB')) {
-                            $value = $value / ($this->getUnitSize('GB'));
+                            $value /= $this->getUnitSize('GB');
                             $options['value'] = 'GB';
                         } elseif ($value >= ($this->getUnitSize('MB'))) {
-                            $value = $value / ($this->getUnitSize('MB'));
+                            $value /= $this->getUnitSize('MB');
                             $options['value'] = 'MB';
                         } elseif ($value >= ($this->getUnitSize('KB'))) {
-                            $value = $value / ($this->getUnitSize('KB'));
+                            $value /= $this->getUnitSize('KB');
                             $options['value'] = 'KB';
                         } else {
                             $options['value'] = 'B';
@@ -614,9 +614,9 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             if (!empty($params['value']) && is_numeric($params['value'])) {
                 //Make an exception for freespaceGreater check which is saved as MiB
                 if ($params['checkstype'] == "freespaceGreater") {
-                    $params['value'] = $params['value'] / (1024 * 1024);
+                    $params['value'] /= 1024 * 1024;
                 } else {
-                    $params['value'] = $params['value'] * $this->getUnitSize($params['unit']);
+                    $params['value'] *= $this->getUnitSize($params['unit']);
                 }
             }
         }

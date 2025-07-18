@@ -233,9 +233,9 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
 
     // ********* Rename fileparts without .gz extension (cf #1999) *********** //
     if (is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')) {
-        $gzfiles = new \RegexIterator(
-            new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')
+        $gzfiles = new RegexIterator(
+            new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')
             ),
             '/\.gz$/'
         );
@@ -844,8 +844,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         );
     }
     if (
-        $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstate', 'cleantaskjob')
-           and $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstatus', 'cleantaskjob')
+        $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstate', 'cleantaskjob') && $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstatus', 'cleantaskjob')
     ) {
         $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstatus', 'cleantaskjob');
         $crontask->delete($crontask->fields);
@@ -1148,7 +1147,7 @@ function installDashboard()
             'card_options' => array_merge($commonOptions, $options),
         ],
         ]);
-        $x =  $x + $w;
+        $x += $w;
     }
 }
 
@@ -1192,11 +1191,10 @@ function do_agent_migration($migration)
             ];
         }
     } elseif (
-        $DB->tableExists("glpi_plugin_tracker_agents")
-                  and $DB->fieldExists(
-                      "glpi_plugin_tracker_agents",
-                      "core_discovery"
-                  )
+        $DB->tableExists("glpi_plugin_tracker_agents") && $DB->fieldExists(
+            "glpi_plugin_tracker_agents",
+            "core_discovery"
+        )
     ) {
         $iterator = $DB->request(['FROM' => 'glpi_plugin_tracker_agents']);
         foreach ($iterator as $data) {
@@ -3785,7 +3783,7 @@ function do_networkport_migration($migration)
 
         //echo "Move Connections history to another table...";
 
-        for ($i = 0; $i < $nb; $i = $i + 500) {
+        for ($i = 0; $i < $nb; $i += 500) {
             $migration->displayMessage("$i / $nb");
             $iterator = $DB->request([
                 'FROM'   => 'glpi_plugin_tracker_snmp_history',
@@ -3798,8 +3796,7 @@ function do_networkport_migration($migration)
                 $input['process_number'] = $thread_connection['FK_process'];
                 $input['date'] = $thread_connection['date_mod'];
                 if (
-                    ($thread_connection["old_device_ID"] != "0")
-                    or ($thread_connection["new_device_ID"] != "0")
+                    $thread_connection["old_device_ID"] != "0" || $thread_connection["new_device_ID"] != "0"
                 ) {
                     if ($thread_connection["old_device_ID"] != "0") {
                         // disconnection
@@ -6302,8 +6299,7 @@ function do_deploypackage_migration($migration)
     $migration->renameTable('glpi_plugin_fusinvdeploy_orders', $order_table);
 
     if (
-        $DB->tableExists($order_table)
-           and $DB->fieldExists($order_table, 'type', false)
+        $DB->tableExists($order_table) && $DB->fieldExists($order_table, 'type', false)
     ) {
         require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/deploypackage.class.php");
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -7615,7 +7611,7 @@ function migrationDynamicGroupFields($fields)
                 $new_value['value']       = $data[$name];
                 $new_value['searchtype']  = 'equals';
             }
-            if (!empty($new_value)) {
+            if ($new_value !== []) {
                 $new_fields['criteria'][] = $new_value;
             }
         }
@@ -8750,7 +8746,7 @@ function migrateTablesFromFusinvDeploy($migration)
             unset($of_line);
         }
         $options = 0;
-        $options = $options | JSON_UNESCAPED_SLASHES;
+        $options |= JSON_UNESCAPED_SLASHES;
 
         //store json in order table
         if (count($final_datas)) {

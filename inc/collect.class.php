@@ -670,7 +670,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
     public function communication($action, $machineId, $uuid)
     {
-        $response = new \stdClass();
+        $response = new stdClass();
 
         if (empty($action)) {
             return $response;
@@ -695,7 +695,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         $agent['id'],
                         ['collect']
                     );
-                    $order = new \stdClass();
+                    $order = new stdClass();
                     $order->jobs = [];
 
                     foreach ($taskjobstates as $taskjobstate) {

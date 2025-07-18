@@ -194,7 +194,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     **/
     public function stateTaskjob($taskjobs_id, $width = 930, $return = 'html', $style = '')
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
@@ -263,7 +263,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function getTaskjobsAgent($agent_id)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -302,7 +302,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $id        = null;
         $last_date = null;
 
-        if (isset($params['id']) and $params['id'] > 0) {
+        if (isset($params['id']) && $params['id'] > 0) {
             $id = $params['id'];
         }
         if (isset($params['last_date'])) {
@@ -326,7 +326,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function getLogs($id, $last_date)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $iterator = $DB->request([
@@ -508,7 +508,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                     //(we set it each time a job is postponed because the value
                     //can change in the template)
                     $params['max_retry'] = $template_values['nb_max_retry'];
-                    $params['nb_retry']  = $params['nb_retry'] + 1;
+                    $params['nb_retry'] += 1;
                     $params['state']     = self::PREPARED;
                     $states_id           = $params['id'];
                     $this->update($params);
@@ -543,7 +543,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                     if ($params['nb_retry'] <= $params['max_retry']) {
                         $reason = ' ' . sprintf(__('Retry #%d', 'glpiinventory'), $params['nb_retry']);
                     } else {
-                        $reason = ' ' . sprintf(__('Maximum number of retry reached: force deployment', 'glpiinventory'));
+                        $reason = ' ' . __('Maximum number of retry reached: force deployment', 'glpiinventory');
                     }
                     $log_input = [
                         'plugin_glpiinventory_taskjobstates_id' => $states_id,
@@ -578,7 +578,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public static function cronCleantaskjob()
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $config         = new PluginGlpiinventoryConfig();
@@ -634,7 +634,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function showStatesForComputer($computers_id)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $agent      = new Agent();

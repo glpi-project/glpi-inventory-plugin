@@ -89,7 +89,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
         $ong = [];
 
         if ($this->fields['id'] > 0) {
-            $this->addStandardTab(__CLASS__, $ong, $options);
+            $this->addStandardTab(self::class, $ong, $options);
         }
         return $ong;
     }
@@ -106,7 +106,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     {
 
         switch (get_class($item)) {
-            case __CLASS__:
+            case self::class:
                 return __('Order list', 'glpiinventory');
         }
         return '';
@@ -124,7 +124,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         switch (get_class($item)) {
-            case __CLASS__:
+            case self::class:
                 $obj = new self();
                 $obj->showActions($_POST["id"]);
                 return true;
@@ -151,7 +151,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
         $buttons = [];
         $title = _n('Task', 'Tasks', 1, 'glpiinventory');
 
-        if ($this->canCreate()) {
+        if (static::canCreate()) {
             $buttons["task.form.php?new=1"] = __('Add task', 'glpiinventory');
             $title = "";
         }

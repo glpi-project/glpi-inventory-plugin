@@ -33,7 +33,6 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
-use function Safe\json_decode;
 use function Safe\json_encode;
 
 /**
@@ -223,7 +222,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $general_menu[3]['link'] = $fi_path . "/front/config.form.php";
         }
 
-        if (!empty($general_menu)) {
+        if ($general_menu !== []) {
             $menu['general'] = [
                 'name'     => __('General', 'glpiinventory'),
                 'pic'     => "ti ti-settings",
@@ -263,7 +262,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTimeslot');
         }
 
-        if (!empty($tasks_menu)) {
+        if ($tasks_menu !== []) {
             $menu['tasks'] = [
                 'name'     => __('Tasks', 'glpiinventory'),
                 'pic'     => "ti ti-list-check",
@@ -302,7 +301,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $rules_menu[6]['link'] = Blacklist::getSearchURL();
         }
 
-        if (!empty($rules_menu)) {
+        if ($rules_menu !== []) {
             $menu['rules'] = [
                 'name'     => __('Rules', 'glpiinventory'),
                 'pic'     => "ti ti-book",
@@ -369,7 +368,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-        if (!empty($network_menu)) {
+        if ($network_menu !== []) {
             $menu['network'] = [
                 'name'     => __('Networking', 'glpiinventory'),
                 'pic'     => "ti ti-network",
@@ -407,7 +406,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $deploy_menu[2]['link'] = $fi_path . "/front/deployuserinteractiontemplate.php";
         }
 
-        if (!empty($deploy_menu)) {
+        if ($deploy_menu !== []) {
             $menu['deploy'] = [
                 'name'     => __('Deploy', 'glpiinventory'),
                 'pic'     => "ti ti-share",

@@ -87,7 +87,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        $class     = get_called_class();
+        $class     = static::class;
         $pfCollect = new $class();
         /** @var CommonDBTM $item */
         $pfCollect->showForm($item->fields['id']);
@@ -138,7 +138,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         ];
         $iterator = $DB->request($params);
 
-        $class = get_called_class();
+        $class = static::class;
 
         $headers = $this->getListHeaders();
 

@@ -30,7 +30,7 @@
  * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
-
+use Safe\Exceptions\DirException;
 use Safe\Exceptions\FileinfoException;
 use Safe\Exceptions\FilesystemException;
 
@@ -509,7 +509,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 $nodes[] = self::getJSTreeNode($filepath, $entry, 'file');
             }
             closedir($handle);
-        } catch (\Safe\Exceptions\DirException $e) {
+        } catch (DirException $e) {
             //empty catch
         }
 

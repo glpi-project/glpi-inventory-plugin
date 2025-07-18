@@ -71,7 +71,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
         }
 
         // *** Add jobstate
-        if (empty($agent_actionslist)) {
+        if ($agent_actionslist === []) {
             $a_input = [];
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state']                              = 0;

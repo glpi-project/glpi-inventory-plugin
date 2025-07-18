@@ -87,7 +87,7 @@ class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation
     **/
     public static function getProfiles($deploypackages_id)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $prof  = [];

@@ -125,7 +125,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             }
         }
 
-        foreach ($db_registries as $id => $data) {
+        foreach (array_keys($db_registries) as $id) {
             $this->delete(['id' => $id], true);
         }
         foreach ($registry_data as $key => $value) {

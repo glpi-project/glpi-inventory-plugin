@@ -117,9 +117,9 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
             'plugin_glpiinventory_timeslots_exec_id'   => 0,
         ];
         if (!empty($timeslots)) {
-            array_push($query_timeslots, [
+            $query_timeslots[] = [
                 'plugin_glpiinventory_timeslots_exec_id' => $timeslots,
-            ]);
+            ];
         }
         //Get all active task requiring an agent wakeup
         //Check all tasks without timeslot or task with a current active timeslot
@@ -207,7 +207,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
 
         //Number of agents successfully woken up
         $wokeup = 0;
-        if (!empty($tasks)) {
+        if ($tasks !== []) {
             //Update last wake up time each task
             $DB->update(
                 'glpi_plugin_glpiinventory_tasks',

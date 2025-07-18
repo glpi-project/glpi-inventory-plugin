@@ -68,7 +68,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
      */
     public function display($options = [])
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $agent = new Agent();
@@ -178,10 +178,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                     }
 
                     if (
-                        ($taskjoblog['state'] == "2")
-                        or ($taskjoblog['state'] == "3")
-                        or ($taskjoblog['state'] == "4")
-                        or ($taskjoblog['state'] == "5")
+                        $taskjoblog['state'] == "2" || $taskjoblog['state'] == "3" || $taskjoblog['state'] == "4" || $taskjoblog['state'] == "5"
                     ) {
                         if (!strstr($taskjoblog['comment'], 'Merged with ')) {
                             $end_date = $taskjoblog['date'];

@@ -87,7 +87,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             }
         }
 
-        foreach ($db_wmis as $id => $data) {
+        foreach (array_keys($db_wmis) as $id) {
             $this->delete(['id' => $id], true);
         }
         foreach ($wmi_data as $key => $value) {

@@ -252,38 +252,26 @@ function plugin_init_glpiinventory()
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = "css/views.css";
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = "css/deploy.css";
 
-            array_push(
-                $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'],
-                "lib/d3/d3" . ($debug_mode ? "" : ".min") . ".js"
-            );
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/d3/d3" . ($debug_mode ? "" : ".min") . ".js";
         }
         if (plugin_glpiinventory_script_endswith("timeslot.form.php")) {
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/timeslot" . ($debug_mode ? "" : ".min") . ".js";
         }
         if (plugin_glpiinventory_script_endswith("deploypackage.form.php")) {
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = "lib/extjs/resources/css/ext-all.css";
-
-            array_push(
-                $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'],
-                "lib/extjs/adapter/ext/ext-base" . ($debug_mode ? "-debug" : "") . ".js",
-                "lib/extjs/ext-all" . ($debug_mode ? "-debug" : "") . ".js",
-                "lib/REDIPS_drag/redips-drag" . ($debug_mode ? "-source" : "-min") . ".js",
-                "lib/REDIPS_drag/drag_table_rows.js",
-                "lib/plusbutton" . ($debug_mode ? "" : ".min") . ".js",
-                "lib/deploy_editsubtype" . ($debug_mode ? "" : ".min") . ".js"
-            );
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/extjs/adapter/ext/ext-base" . ($debug_mode ? "-debug" : "") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/extjs/ext-all" . ($debug_mode ? "-debug" : "") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/REDIPS_drag/redips-drag" . ($debug_mode ? "-source" : "-min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/REDIPS_drag/drag_table_rows.js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/plusbutton" . ($debug_mode ? "" : ".min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/deploy_editsubtype" . ($debug_mode ? "" : ".min") . ".js";
         }
-        if (
-            plugin_glpiinventory_script_endswith("task.form.php")
-            || plugin_glpiinventory_script_endswith("taskjob.php")
-            || plugin_glpiinventory_script_endswith("iprange.form.php")
-        ) {
-            array_push(
-                $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'],
-                "lib/lazy.js-0.5.1/lazy" . ($debug_mode ? "" : ".min") . ".js",
-                "lib/mustache.js-2.3.0/mustache" . ($debug_mode ? "" : ".min") . ".js",
-                "js/taskjobs" . ($debug_mode || !file_exists('js/taskjobs.min.js') ? "" : ".min") . ".js"
-            );
+        if (plugin_glpiinventory_script_endswith("task.form.php")
+        || plugin_glpiinventory_script_endswith("taskjob.php")
+        || plugin_glpiinventory_script_endswith("iprange.form.php")) {
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/lazy.js-0.5.1/lazy" . ($debug_mode ? "" : ".min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/mustache.js-2.3.0/mustache" . ($debug_mode ? "" : ".min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "js/taskjobs" . ($debug_mode || !file_exists('js/taskjobs.min.js') ? "" : ".min") . ".js";
         }
         if (plugin_glpiinventory_script_endswith("menu.php")) {
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "js/stats" . ($debug_mode || !file_exists('js/stats.min.js') ? "" : ".min") . ".js";
@@ -370,8 +358,9 @@ function plugin_init_glpiinventory()
     }
 
     // exclude some pages from splitted layout
-    if (isset($CFG_GLPI['layout_excluded_pages'])) { // to be compatible with glpi 0.85
-        array_push($CFG_GLPI['layout_excluded_pages'], "timeslot.form.php");
+    if (isset($CFG_GLPI['layout_excluded_pages'])) {
+        // to be compatible with glpi 0.85
+        $CFG_GLPI['layout_excluded_pages'][] = "timeslot.form.php";
     }
 
     $PLUGIN_HOOKS[Hooks::PROLOG_RESPONSE]['glpiinventory'] = 'plugin_glpiinventory_prolog_response';

@@ -30,7 +30,7 @@
  * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
-
+use Safe\Exceptions\FilesystemException;
 
 use function Safe\ini_get;
 use function Safe\fopen;
@@ -288,7 +288,7 @@ class PluginGlpiinventoryCommunicationRest
             $handle = fopen($url, 'rb');
             fclose($handle);
             return true;
-        } catch (\Safe\Exceptions\FilesystemException $e) {
+        } catch (FilesystemException $e) {
             return false;
         }
     }

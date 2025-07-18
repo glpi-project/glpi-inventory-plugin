@@ -75,7 +75,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
      */
     public function prepareRun($taskjob_id, $definitions_filter = null)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $task       = new PluginGlpiinventoryTask();
