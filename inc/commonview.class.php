@@ -245,8 +245,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         } else {
             // Else set default value to current date and time
             if (
-                array_key_exists('maybeempty', $options)
-                 and $options['maybeempty']
+                array_key_exists('maybeempty', $options) && $options['maybeempty']
             ) {
                 $value = "";
             } else {

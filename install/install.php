@@ -298,7 +298,7 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
         $https = filter_input(INPUT_SERVER, "HTTPS");
         $http_host = filter_input(INPUT_SERVER, "HTTP_HOST");
 
-        if ($full_url && (strpos($full_url, '/ajax/marketplace.php') !== false || strpos($full_url, '/front/plugin.form.php') !== false)) {
+        if ($full_url && (str_contains($full_url, '/ajax/marketplace.php') || str_contains($full_url, '/front/plugin.form.php'))) {
             $agent_base_url = str_replace(
                 ['/ajax/marketplace.php', '/front/plugin.form.php'],
                 '',

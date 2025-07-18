@@ -414,7 +414,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
             } elseif ($filesize >= 1024) {
                 $filesize = round($filesize / 1024, 1) . "KB";
             } else {
-                $filesize = $filesize . "B";
+                $filesize .= "B";
             }
             return $filesize;
         } else {

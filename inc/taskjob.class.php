@@ -524,8 +524,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                 }
             }
             if (
-                (count($a_taskjobstate) == $taskjobstatefinished)
-                 and (count($a_taskjobstate) > 0)
+                count($a_taskjobstate) == $taskjobstatefinished && count($a_taskjobstate) > 0
             ) {
                 if ($finished == '2') {
                     $finished = 1;
@@ -825,7 +824,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $add = 1;
         foreach ($a_type as $data) {
             foreach ($data as $key => $val) {
-                if ($itemtype == $key and $items_id == $val) {
+                if ($itemtype == $key && $items_id == $val) {
                     $add = 0;
                 }
             }
@@ -1014,7 +1013,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     {
 
         $actions = [];
-        $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'task_forceend'] = __('Force the end', 'glpiinventory');
+        $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'task_forceend'] = __('Force the end', 'glpiinventory');
         return $actions;
     }
 

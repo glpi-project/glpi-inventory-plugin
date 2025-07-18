@@ -32,7 +32,7 @@
  */
 
 ob_start();
-include("../../../../inc/includes.php");
+include(__DIR__ . "/../../../../inc/includes.php");
 ob_end_clean();
 
 //Store deploy task version

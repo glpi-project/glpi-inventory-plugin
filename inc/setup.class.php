@@ -48,7 +48,7 @@ class PluginGlpiinventorySetup
      */
     public static function uninstall()
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         CronTask::Unregister('glpiinventory');
@@ -70,12 +70,7 @@ class PluginGlpiinventorySetup
         $result = $DB->doQuery("SHOW TABLES;");
         while ($data = $DB->fetchArray($result)) {
             if (
-                (strstr($data[0], "glpi_plugin_glpiinventory_"))
-                 or (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
-                 or (strstr($data[0], "glpi_plugin_fusinvinventory_"))
-                or (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
-                or (strstr($data[0], "glpi_plugin_tracker"))
-                or (strstr($data[0], "glpi_dropdown_plugin_tracker"))
+                strstr($data[0], "glpi_plugin_glpiinventory_") || strstr($data[0], "glpi_plugin_fusinvsnmp_") || strstr($data[0], "glpi_plugin_fusinvinventory_") || strstr($data[0], "glpi_dropdown_plugin_fusioninventory") || strstr($data[0], "glpi_plugin_tracker") || strstr($data[0], "glpi_dropdown_plugin_tracker")
             ) {
                 $DB->dropTable($data[0]);
             }

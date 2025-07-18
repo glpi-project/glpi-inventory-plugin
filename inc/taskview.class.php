@@ -618,10 +618,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         // prepare an anonymous (and temporory) function
         // for test if an element is the last of an array
-        $last = function (&$array, $key) {
-            end($array);
-            return $key === key($array);
-        };
+        $last = (fn(&$array, $key) => $key === array_key_last($array));
 
         // display lines
         $csv_array = [];
@@ -683,7 +680,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
                     $log_cpt++;
 
-                    if ($includeoldjobs != -1 and $log_cpt >= $includeoldjobs) {
+                    if ($includeoldjobs != -1 && $log_cpt >= $includeoldjobs) {
                         break;
                     }
                 }

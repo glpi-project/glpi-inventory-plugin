@@ -109,7 +109,7 @@ class PluginGlpiinventoryStaticmisc
         $modules_methods = [];
         $modules_methods[''] = "------";
         foreach ($methods as $method) {
-            if (!((isset($method['hidetask']) and $method['hidetask'] == '1'))) {
+            if (!((isset($method['hidetask']) && $method['hidetask'] == '1'))) {
                 if (isset($method['name'])) {
                     $modules_methods[$method['method']] = $method['name'];
                 } else {
@@ -184,7 +184,7 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX($title)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $iterator = $DB->request([
@@ -209,7 +209,7 @@ class PluginGlpiinventoryStaticmisc
         foreach ($iterator as $data) {
             $agents[$data['id']] = $data['name'];
         }
-        if (!empty($agents)) {
+        if ($agents !== []) {
             return Dropdown::showFromArray('definitionselectiontoadd', $agents);
         }
 
@@ -242,7 +242,7 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function task_actionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $options = [];

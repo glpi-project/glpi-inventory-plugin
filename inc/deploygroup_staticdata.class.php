@@ -95,7 +95,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         ) {
             $tabs[1] = _n('Criterion', 'Criteria', 2);
             $count = countElementsInTable(
-                getTableForItemType(__CLASS__),
+                getTableForItemType(self::class),
                 [
                     'itemtype'                               => 'Computer',
                     'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
@@ -204,7 +204,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     {
         /** @var DBmysql $DB */
         global $DB;
-        $rand = rand();
+        $rand = random_int(0, mt_getrandmax());
 
         $params = [
             'SELECT' => '*',

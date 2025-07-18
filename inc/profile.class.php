@@ -466,7 +466,7 @@ class PluginGlpiinventoryProfile extends Profile
     public static function migrateProfiles()
     {
         //Get all rights from the old table
-        $profiles = getAllDataFromTable(getTableForItemType(__CLASS__));
+        $profiles = getAllDataFromTable(getTableForItemType(self::class));
 
         //Load mapping of old rights to their new equivalent
         $oldrights = self::getOldRightsMappings();

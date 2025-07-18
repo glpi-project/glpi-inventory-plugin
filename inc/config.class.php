@@ -209,7 +209,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        if ($item->getType() == __CLASS__) {
+        if ($item->getType() == self::class) {
             return [
                 __('General setup'),
                 __('Network Inventory', 'glpiinventory'),
@@ -264,10 +264,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         }
 
         $config = current($this->find(['type' => $name]));
-        if (isset($config['value'])) {
-            return $config['value'];
-        }
-        return null;
+        return $config['value'] ?? null;
     }
 
 

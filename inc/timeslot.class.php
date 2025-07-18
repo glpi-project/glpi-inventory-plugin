@@ -203,7 +203,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
      */
     public function getCurrentActiveTimeslots()
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $timeslots   = [];

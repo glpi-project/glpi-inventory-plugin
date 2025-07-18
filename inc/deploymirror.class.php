@@ -323,7 +323,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
      */
     public function getSpecificMassiveActions($checkitem = null)
     {
-        return [__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfer'
+        return [self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfer'
                => __('Transfer'),
         ];
     }

@@ -1,6 +1,10 @@
 <?php
 
 
+use PhpCsFixer\Finder;
+use PhpCsFixer\Config;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,7 +36,7 @@
  * ---------------------------------------------------------------------
  */
 
-$finder = (new PhpCsFixer\Finder())
+$finder = (new Finder())
     ->in(__DIR__)
     ->exclude([
         '.git/',
@@ -42,8 +46,8 @@ $finder = (new PhpCsFixer\Finder())
     ])
 ;
 
-return (new PhpCsFixer\Config())
-    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
+return (new Config())
+    ->setParallelConfig(ParallelConfigFactory::detect())
     ->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.glpi-inventory-plugin.cache')
     ->setRules([
         '@PER-CS2.0' => true,

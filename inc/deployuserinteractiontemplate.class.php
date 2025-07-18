@@ -87,7 +87,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     {
 
         $ong = [];
-        $this->addStandardTab(__CLASS__, $ong, $options)
+        $this->addStandardTab(self::class, $ong, $options)
          ->addStandardTab(Log::class, $ong, $options);
 
         return $ong;

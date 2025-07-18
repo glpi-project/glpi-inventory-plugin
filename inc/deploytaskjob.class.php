@@ -73,7 +73,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
      */
     public function getAllDatas($params)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $tasks_id = $params['tasks_id'];
@@ -129,7 +129,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
      */
     public function saveDatas($params)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $tasks_id = $params['tasks_id'];
@@ -238,7 +238,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
      */
     public static function getActions($params)
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $res = '';

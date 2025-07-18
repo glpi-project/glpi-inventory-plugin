@@ -85,10 +85,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     public function getLabelForAType($type)
     {
         $a_types = $this->getTypes();
-        if (isset($a_types[$type])) {
-            return $a_types[$type];
-        }
-        return $type;
+        return $a_types[$type] ?? $type;
     }
 
 
@@ -115,8 +112,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
 
             $element = $package->getSubElement($this->shortname, $request_data['index']);
             if (is_array($element) && count($element) == 1) {
-                reset($element);
-                $type   = key($element);
+                $type   = array_key_first($element);
                 $config = ['type' => $type, 'data' => $element[$type]];
             }
         }
@@ -302,7 +298,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         $value_2      = "";
         $name_label_2 = "";
         $retChecks    = null;
-        $name_value   = (isset($config_data['name'])) ? $config_data['name'] : "";
+        $name_value   = $config_data['name'] ?? "";
 
         /*
         * set values from element's config in 'edit' mode
@@ -445,7 +441,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                 'max'   => 5000,
                 'step'  => 10,
                 'toadd' => [0 => __('None'), -1 => __('All')],
-                'value' => (isset($config_data['logLineLimit'])) ? $config_data['logLineLimit'] : 10,
+                'value' => $config_data['logLineLimit'] ?? 10,
             ];
             Dropdown::showNumber('logLineLimit', $options);
             echo "&nbsp;<span class='red'><i>";

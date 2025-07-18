@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include(__DIR__ . "/../../../inc/includes.php");
 
 Html::header(
     __('Collect management', 'glpiinventory'),
