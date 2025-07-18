@@ -43,7 +43,7 @@ use function Safe\json_encode;
 class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 {
     /**
-     * __contruct function where initialize base URLs
+     * __construct function where initialize base URLs
      */
     public function __construct()
     {
