@@ -30,10 +30,12 @@
  * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
+use Safe\Exceptions\FilesystemException;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\ini_get;
+use function Safe\fopen;
+use function Safe\fclose;
+use function Safe\json_encode;
 
 /**
  * Manage the communication in REST with the agents.
@@ -198,11 +200,11 @@ class PluginGlpiinventoryCommunicationRest
     /**
      * Update agent status for a taskjob
      *
-     * @global object $DB
      * @param array $params
      */
     public static function updateLog($params = [])
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $p              = [];
@@ -282,12 +284,12 @@ class PluginGlpiinventoryCommunicationRest
             return true;
         }
 
-        $handle = fopen($url, 'rb');
-        if (!$handle) {
-            return false;
-        } else {
+        try {
+            $handle = fopen($url, 'rb');
             fclose($handle);
             return true;
+        } catch (FilesystemException $e) {
+            return false;
         }
     }
 

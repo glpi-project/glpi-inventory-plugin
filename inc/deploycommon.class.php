@@ -31,11 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
+use Safe\Exceptions\FilesystemException;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\fclose;
+use function Safe\fopen;
+use function Safe\json_decode;
 
 /**
  * Manage the prepare task job and give the data to the agent when request what
@@ -70,12 +70,12 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
      * Prepare a takjob, get all devices and put in taskjobstate each task
      * for each device for each agent
      *
-     * @global object $DB
      * @param integer $taskjob_id id of the taskjob
      * @param null|array $definitions_filter
      */
     public function prepareRun($taskjob_id, $definitions_filter = null)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $task       = new PluginGlpiinventoryTask();
@@ -364,12 +364,14 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
             $manifest = PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $hash;
             $order_files[$hash]['multiparts'] = [];
             if (file_exists($manifest)) {
-                $handle = fopen($manifest, "r");
-                if ($handle) {
+                try {
+                    $handle = fopen($manifest, "r");
                     while (($buffer = fgets($handle)) !== false) {
                         $order_files[$hash]['multiparts'][] = trim($buffer);
                     }
                     fclose($handle);
+                } catch (FilesystemException $e) {
+                    //empty catch
                 }
             }
         }
@@ -382,7 +384,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
         if (isset($order_job['actions'])) {
             foreach ($order_job['actions'] as $key => $value) {
                 if (isset($value['cmd']) && isset($value['cmd']['exec'])) {
-                    $order_job['actions'][$key]['cmd']['exec'] = Sanitizer::unsanitize($value['cmd']['exec']);
+                    $order_job['actions'][$key]['cmd']['exec'] = $value['cmd']['exec'];
                 }
             }
         }

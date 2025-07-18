@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the visibility of package by profile.
  */
@@ -86,12 +82,12 @@ class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation
     /**
      * Get profiles for a deploypackage
      *
-     * @global object $DB
      * @param integer $deploypackages_id ID of the deploypackage
      * @return array list of profiles linked to a deploypackage
     **/
     public static function getProfiles($deploypackages_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $prof  = [];

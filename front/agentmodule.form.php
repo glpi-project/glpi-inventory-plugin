@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include(__DIR__ . "/../../../inc/includes.php");
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),
@@ -83,9 +83,9 @@ if (isset($_POST["agent_add"])) {
             $agentModuleBase = 1;
         }
         if ($data['is_active'] == 0) {
-            if (($agentModule == 1) and ($agentModuleBase == 0)) {
+            if ($agentModule == 1 && $agentModuleBase == 0) {
                 $a_agentList[] = $_POST['id'];
-            } elseif (($agentModule == 0) and ($agentModuleBase == 1)) {
+            } elseif ($agentModule == 0 && $agentModuleBase == 1) {
                 foreach ($a_agentList as $key => $value) {
                     if ($value == $_POST['id']) {
                         unset($a_agentList[$key]);
@@ -93,13 +93,13 @@ if (isset($_POST["agent_add"])) {
                 }
             }
         } elseif ($data['is_active'] == 1) {
-            if (($agentModule == 1) and ($agentModuleBase == 1)) {
+            if ($agentModule == 1 && $agentModuleBase == 1) {
                 foreach ($a_agentList as $key => $value) {
                     if ($value == $_POST['id']) {
                         unset($a_agentList[$key]);
                     }
                 }
-            } elseif (($agentModule == 0) and ($agentModuleBase == 0)) {
+            } elseif ($agentModule == 0 && $agentModuleBase == 0) {
                 $a_agentList[]  = $_POST['id'];
             }
         }

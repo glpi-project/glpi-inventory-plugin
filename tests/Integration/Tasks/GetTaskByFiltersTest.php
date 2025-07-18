@@ -35,10 +35,7 @@ use PHPUnit\Framework\TestCase;
 
 class GetTaskByFiltersTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function GetTaskWithoutJobs()
+    public function testGetTaskWithoutJobs()
     {
 
         $pfTask = new PluginGlpiinventoryTask();

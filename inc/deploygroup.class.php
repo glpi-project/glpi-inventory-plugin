@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the deploy groups.
  */
@@ -79,7 +75,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
 
     /**
-     * __contruct function used to define the 2 types of groups
+     * __construct function used to define the 2 types of groups
      */
     public function __construct()
     {
@@ -145,12 +141,13 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
+     * @param integer|string $tabnum number of the tab to display
      * @param integer $withtemplate 1 if is a template form
      * @return boolean
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         if ($tabnum == 'task') {
@@ -222,8 +219,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     public function getSpecificMassiveActions($checkitem = null)
     {
         $actions = [];
-        $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'targettask'] = __('Target a task', 'glpiinventory');
-        $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'duplicate']  = _sx('button', 'Duplicate');
+        $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'targettask'] = __('Target a task', 'glpiinventory');
+        $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'duplicate']  = _sx('button', 'Duplicate');
         return $actions;
     }
 
@@ -371,13 +368,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
     /**
      * Display title of the page
-     *
-     * @global array $CFG_GLPI
      */
     public function title()
     {
-        global $CFG_GLPI;
-
         $buttons = [];
         $title   = self::getTypeName();
 
@@ -615,10 +608,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         }
         $p['showbookmark'] = false;
 
-        $save_fold_status = $_SESSION['glpifold_search'];
-        $_SESSION['glpifold_search'] = 0;
         Search::showGenericSearch($itemtype, $p);
-        $_SESSION['glpifold_search'] = $save_fold_status;
     }
 
 
@@ -658,7 +648,6 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Get search parameters as an array
      *
-     * @global object $DB
      * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
      * @param boolean $check_post_values
      * @param boolean $getAll
@@ -666,6 +655,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      */
     public static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
@@ -749,6 +739,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      */
     public function showForComputer($computers_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $canedit = PluginGlpiinventoryDeployGroup_Staticdata::canUpdate();

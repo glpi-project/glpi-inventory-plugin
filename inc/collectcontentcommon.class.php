@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the files found by the collect module of agent.
  */
@@ -58,7 +54,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
      */
     public static function getTypeName($nb = 0)
     {
-        $class = get_called_class();
+        $class = static::class;
         return $class::getTypeName();
     }
 
@@ -70,7 +66,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
      */
     public function getCollectClass()
     {
-        $class = get_called_class();
+        $class = static::class;
         $item  = new $class();
         return $item->collect_itemtype;
     }
@@ -85,7 +81,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        $class            = get_called_class();
+        $class            = static::class;
         $pfCollectContent = new $class();
         switch (get_class($item)) {
             case 'PluginGlpiinventoryCollect':
@@ -143,7 +139,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
      */
     public static function cleanComputer($computers_id)
     {
-        $classname = get_called_class();
+        $classname = static::class;
         $content   = new $classname();
         $content->deleteByCriteria(['computers_id' => $computers_id]);
     }
@@ -155,6 +151,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
      */
     public function showForCollect($collects_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
         $class  = $this->collect_itemtype;
         $params = [

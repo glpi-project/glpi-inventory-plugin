@@ -31,6 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+include(__DIR__ . "/../../../inc/includes.php");
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/front/communication.php");

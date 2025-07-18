@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../inc/includes.php");
+include(__DIR__ . "/../../../inc/includes.php");
 
 //Agent posting an inventory or asking for orders using REST
 $rawdata = file_get_contents("php://input");
@@ -42,7 +42,7 @@ if (
     && !empty($machineid))
       || !empty($rawdata)
 ) {
-    include_once("front/communication.php");
+    include_once(__DIR__ . "/../front/communication.php");
 } else {
     Html::header(
         __('GLPI Inventory', 'glpiinventory'),
@@ -51,6 +51,6 @@ if (
         "glpiinventory"
     );
 
-    Html::redirect(Plugin::getWebDir('glpiinventory') . "/front/menu.php");
+    Html::redirect("/plugins/glpiinventory/front/menu.php");
     Html::footer();
 }

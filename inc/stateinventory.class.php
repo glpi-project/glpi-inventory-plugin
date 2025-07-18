@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
+use Safe\DateTime;
+
+use function Safe\strtotime;
 
 /**
  * Manage the network inventory state.
@@ -49,12 +49,11 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
 
     /**
-     * __contruct function where add variable in $CFG_GLPI
-     *
-     * @global array $CFG_GLPI
+     * __construct function where add variable in $CFG_GLPI
      */
     public function __construct()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $CFG_GLPI['glpitablesitemtype']['PluginGlpiinventoryStateInventory'] =
@@ -65,13 +64,12 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     /**
      * Display network inventory state
      *
-     * @global object $DB
-     * @global array $CFG_GLPI
      * @param array $options
      */
     public function display($options = [])
     {
-        global $DB, $CFG_GLPI;
+        /** @var DBmysql $DB */
+        global $DB;
 
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -106,7 +104,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
         $number = count($iterator);
 
         // Display the pager
-        Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/stateinventory.php", '');
+        Html::printPager($start, $number, "/plugins/glpiinventory/front/stateinventory.php", '');
 
         echo "<div class='card'>";
         echo "<table class='table table-hover card-table'>";
@@ -180,10 +178,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                     }
 
                     if (
-                        ($taskjoblog['state'] == "2")
-                        or ($taskjoblog['state'] == "3")
-                        or ($taskjoblog['state'] == "4")
-                        or ($taskjoblog['state'] == "5")
+                        $taskjoblog['state'] == "2" || $taskjoblog['state'] == "3" || $taskjoblog['state'] == "4" || $taskjoblog['state'] == "5"
                     ) {
                         if (!strstr($taskjoblog['comment'], 'Merged with ')) {
                             $end_date = $taskjoblog['date'];
