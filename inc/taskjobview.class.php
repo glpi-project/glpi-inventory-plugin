@@ -42,7 +42,7 @@ use function Safe\preg_match;
 class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 {
     /**
-     * __contruct function where initialize base URLs
+     * __construct function where initialize base URLs
      */
     public function __construct()
     {

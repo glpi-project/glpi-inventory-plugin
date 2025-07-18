@@ -49,7 +49,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
 
     /**
-     * __contruct function where add variable in $CFG_GLPI
+     * __construct function where add variable in $CFG_GLPI
      */
     public function __construct()
     {

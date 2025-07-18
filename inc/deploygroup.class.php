@@ -75,7 +75,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
 
     /**
-     * __contruct function used to define the 2 types of groups
+     * __construct function used to define the 2 types of groups
      */
     public function __construct()
     {

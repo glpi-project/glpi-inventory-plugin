@@ -51,7 +51,7 @@ class PluginGlpiinventoryCommunication
 
 
     /**
-     * __contruct function used to initialize protected message variable
+     * __construct function used to initialize protected message variable
      */
     public function __construct()
     {
