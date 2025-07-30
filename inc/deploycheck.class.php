@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_decode;
 
 /**
  * Manage the checks before deploy a package.
@@ -188,16 +186,15 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     /**
      * Display list of checks
      *
-     * @global array $CFG_GLPI
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
      * @param array $data array converted of 'json' field in DB where stored checks
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $checks_types = $this->getTypes();
         $package_id   = $package->getID();
         $canedit      = $package->canUpdateContent();
         echo "<table class='tab_cadrehov package_item_list' id='table_checks_$rand'>";
@@ -433,6 +430,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
      */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -501,13 +499,13 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                     $options['value'] = 'KB';
                     if ($mode === 'edit') {
                         if ($value >= $this->getUnitSize('GB')) {
-                            $value = $value / ($this->getUnitSize('GB'));
+                            $value /= $this->getUnitSize('GB');
                             $options['value'] = 'GB';
                         } elseif ($value >= ($this->getUnitSize('MB'))) {
-                            $value = $value / ($this->getUnitSize('MB'));
+                            $value /= $this->getUnitSize('MB');
                             $options['value'] = 'MB';
                         } elseif ($value >= ($this->getUnitSize('KB'))) {
-                            $value = $value / ($this->getUnitSize('KB'));
+                            $value /= $this->getUnitSize('KB');
                             $options['value'] = 'KB';
                         } else {
                             $options['value'] = 'B';
@@ -616,9 +614,9 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             if (!empty($params['value']) && is_numeric($params['value'])) {
                 //Make an exception for freespaceGreater check which is saved as MiB
                 if ($params['checkstype'] == "freespaceGreater") {
-                    $params['value'] = $params['value'] / (1024 * 1024);
+                    $params['value'] /= 1024 * 1024;
                 } else {
-                    $params['value'] = $params['value'] * $this->getUnitSize($params['unit']);
+                    $params['value'] *= $this->getUnitSize($params['unit']);
                 }
             }
         }

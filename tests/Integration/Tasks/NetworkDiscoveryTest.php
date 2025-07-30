@@ -67,10 +67,7 @@ class NetworkDiscoveryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function prepareDb()
+    public function testPrepareDb()
     {
         global $DB;
 
@@ -215,10 +212,7 @@ class NetworkDiscoveryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTask()
+    public function testPrepareTask()
     {
         $pfTask  = new PluginGlpiinventoryTask();
         $agent = new Agent();
@@ -236,10 +230,7 @@ class NetworkDiscoveryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTask2()
+    public function testPrepareTask2()
     {
         $pfTask = new PluginGlpiinventoryTask();
         $agent = new Agent();

@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
+use Glpi\DBAL\QueryExpression;
 
 /**
  * Manage network inventory task jobs.
@@ -44,12 +42,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
      * Get all devices and put in taskjobstate each task for each device for
      * each agent
      *
-     * @global object $DB
      * @param integer $taskjobs_id
      * @return string
      */
     public function prepareRun($taskjobs_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTask = new PluginGlpiinventoryTask();
@@ -208,7 +206,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     'WHERE' => [
                         $cur_itemtype::getTable() . '.is_deleted' => 0,
                         'snmpcredentials_id' => ['!=', 0],
-                        new \QueryExpression('inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' . $DB->quote($pfIPRange->fields['ip_end']) . ')'),
+                        new QueryExpression('inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' . $DB->quote($pfIPRange->fields['ip_end']) . ')'),
                     ],
                     'GROUPBY' => $cur_itemtype::getTable() . '.id',
                 ];
@@ -286,7 +284,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                         $itemtype = 'NetworkEquipment';
                     }
                     if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                        foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id => $num) {
+                        foreach (array_keys($a_devicesubnet[$subnet][$itemtype]) as $items_id) {
                             $a_input['itemtype'] = $itemtype;
                             $a_input['items_id'] = $items_id;
                             $a_input['specificity'] = exportArrayToDB(
@@ -453,12 +451,12 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     /**
      * Get the devices have an IP in the IP range
      *
-     * @global object $DB
      * @param integer $ipranges_id
      * @return array
      */
     public function getDevicesOfIPRange($ipranges_id, bool $restrict_entity = true)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $devicesList = [];
@@ -513,7 +511,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 'WHERE' => [
                     $itemtype::getTable() . '.is_deleted' => 0,
                     'snmpcredentials_id' => ['!=', '0'],
-                    new \QueryExpression(
+                    new QueryExpression(
                         'inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN ' .
                         'inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' .
                         $DB->quote($pfIPRange->fields['ip_end']) . ')'
@@ -545,7 +543,6 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     /**
     * Get the device IP in the IP range
     *
-    * @global object $DB
     * @param string $job_itemtype
     * @param integer $job_items_id
     * @param integer $tasks_id

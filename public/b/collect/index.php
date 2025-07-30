@@ -31,16 +31,14 @@
  * ---------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
 ob_start();
-include("../../../../inc/includes.php");
+include(__DIR__ . "/../../../../inc/includes.php");
 ob_end_clean();
 
 //Agent communication using REST protocol
 
 $pfCollect = new PluginGlpiinventoryCollect();
 
-$response = $pfCollect->communication(Sanitizer::sanitize(filter_input(INPUT_GET, "action")), filter_input(INPUT_GET, "machineid"), Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")));
+$response = $pfCollect->communication(filter_input(INPUT_GET, "action"), filter_input(INPUT_GET, "machineid"), filter_input(INPUT_GET, "uuid"));
 
 echo json_encode($response);

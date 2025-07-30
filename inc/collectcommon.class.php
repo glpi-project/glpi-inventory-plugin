@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the windows registry to get in collect module.
  */
@@ -91,7 +87,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        $class     = get_called_class();
+        $class     = static::class;
         $pfCollect = new $class();
         /** @var CommonDBTM $item */
         $pfCollect->showForm($item->fields['id']);
@@ -134,6 +130,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public function showList($collects_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
         $params = [
             'FROM'  => $this->getTable(),
@@ -141,7 +138,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         ];
         $iterator = $DB->request($params);
 
-        $class = get_called_class();
+        $class = static::class;
 
         $headers = $this->getListHeaders();
 
@@ -163,7 +160,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
             echo "<form name='form_bundle_item' action='" . $class::getFormURL() .
                    "' method='post'>";
             echo Html::hidden('id', ['value' => $data['id']]);
-            echo "<input type='image' name='delete' src='" . Plugin::getWebDir('glpiinventory') . "/pics/drop.png'>";
+            echo "<input type='image' name='delete' src='plugins/glpiinventory/pics/drop.png'>";
             Html::closeForm();
             echo "</td>";
             echo "</tr>";

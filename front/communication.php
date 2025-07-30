@@ -32,7 +32,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-    include_once("../../../inc/includes.php");
+    include_once(__DIR__ . "/../../../inc/includes.php");
 }
 
 if (!class_exists("PluginGlpiinventoryConfig")) {
@@ -71,5 +71,3 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 } else {
     include_once  GLPI_ROOT . '/front/inventory.php';
 }
-
-session_destroy();

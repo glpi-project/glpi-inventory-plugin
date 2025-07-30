@@ -31,11 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 use Glpi\Application\View\TemplateRenderer;
+
+use function Safe\json_decode;
+use function Safe\json_encode;
 
 /**
  * Manage user interactions templates.
@@ -88,7 +87,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     {
 
         $ong = [];
-        $this->addStandardTab(__CLASS__, $ong, $options)
+        $this->addStandardTab(self::class, $ong, $options)
          ->addStandardTab(Log::class, $ong, $options);
 
         return $ong;

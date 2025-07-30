@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * It's a common code for display information in GLPI.
  */
@@ -70,16 +66,15 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
 
 
     /**
-     * __contruct function and the different base URLs
-     *
-     * @global array $CFG_GLPI
+     * __construct function and the different base URLs
      */
     public function __construct()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
         parent::__construct();
 
-        $fi_path = Plugin::getWebDir('glpiinventory');
+        $fi_path = '/plugins/glpiinventory';
 
         $this->base_urls = [
             'fi.base'   => $fi_path,
@@ -250,8 +245,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         } else {
             // Else set default value to current date and time
             if (
-                array_key_exists('maybeempty', $options)
-                 and $options['maybeempty']
+                array_key_exists('maybeempty', $options) && $options['maybeempty']
             ) {
                 $value = "";
             } else {

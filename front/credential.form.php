@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
+include(__DIR__ . '/../../../inc/includes.php');
 $dropdown = new PluginGlpiinventoryCredential();
 
 if (!empty($_POST) || isset($_GET['_in_modal'])) {

@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
+
 //Options for GLPI 0.71 and newer : need slave db to access the report
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
@@ -114,7 +116,7 @@ $iterator = $DB->request([
     ],
     'WHERE' => [
         'OR' => [
-            new \QueryExpression("NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY"),
+            new QueryExpression("NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY"),
             ['last_inventory_update' => null],
         ],
     ] + $state_where + getEntitiesRestrictCriteria('glpi_computers'),

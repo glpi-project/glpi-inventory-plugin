@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_decode;
+use function Safe\json_encode;
+use function Safe\preg_match;
 
 /**
  * Manage the functions used in many classes.
@@ -79,7 +79,7 @@ class PluginGlpiinventoryToolbox
                 $indent = 0;
                 // 2. closing tag - outdent now
             } elseif (preg_match('/^<\/\w/', $token, $matches)) {
-                $pad = $pad - 3;
+                $pad -= 3;
                 // 3. opening tag - don't pad this one, only subsequent tags
             } elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
                 $indent = 3;
@@ -293,7 +293,7 @@ class PluginGlpiinventoryToolbox
 
         $values   = [];
 
-        $p['step'] = $p['step'] * 60; // to have in seconds
+        $p['step'] *= 60; // to have in seconds
         for ($s = $p['begin']; $s <= $p['end']; $s += $p['step']) {
             $values[$s] = PluginGlpiinventoryToolbox::getHourMinute($s);
         }

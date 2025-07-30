@@ -73,10 +73,8 @@ class ComputerEntityTest extends TestCase
 
     /**
      * Add computer in entity `ent1` (with rules)
-     *
-     * @test
      */
-    public function AddComputer()
+    public function testAddComputer()
     {
         $entity = new Entity();
 
@@ -152,13 +150,9 @@ class ComputerEntityTest extends TestCase
 
     /**
      * Update computer to change entity (transfer allowed)
-     *
-     * @test
      */
-    public function updateComputerTransfer()
+    public function testUpdateComputerTransfer()
     {
-        global $CFG_GLPI;
-
         $transfer       = new Transfer();
         $computer       = new Computer();
         $entity = new Entity();
@@ -199,10 +193,8 @@ class ComputerEntityTest extends TestCase
 
     /**
      * Update computer to not change entity (transfer not allowed)
-     *
-     * @test
      */
-    public function updateComputerNoTransfer()
+    public function testUpdateComputerNoTransfer()
     {
 
         $transfer = new Transfer();
@@ -246,10 +238,8 @@ class ComputerEntityTest extends TestCase
 
     /**
      * Update computer with restrict entity (in this case computer added)
-     *
-     * @test
      */
-    public function updateaddComputerRestrictEntity()
+    public function testUpdateaddComputerRestrictEntity()
     {
         global $DB;
 
@@ -348,6 +338,7 @@ class ComputerEntityTest extends TestCase
 
     protected function inventoryPc1()
     {
+        global $CFG_GLPI;
         $xml_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <REQUEST>
   <CONTENT>

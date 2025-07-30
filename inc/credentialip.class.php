@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the IP of VMWARE ESX and link to credentials to be able to inventory
  * these specific systems througth the webservice.
@@ -174,10 +170,12 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     /**
      * Display a specific header
      */
-    public function displayHeader()
+    public static function displayCentralHeader(?string $title = null, ?array $menus = null): void
     {
         //Common dropdown header
-        parent::displayHeader();
+        parent::displayCentralHeader($title, $menus);
+
         PluginGlpiinventoryMenu::displayMenu("mini");
     }
+
 }

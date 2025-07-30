@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\preg_match;
 
 /**
  * Manage (enable or not) the modules in the agent.
@@ -105,7 +103,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         $a_modules = $this->find();
         foreach ($a_modules as $data) {
             echo "<form name='form_ic' method='post' action='" .
-                 Toolbox::getItemTypeFormURL(__CLASS__) . "'>";
+                 Toolbox::getItemTypeFormURL(self::class) . "'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
             echo "<th width='130'>" . __('Module', 'glpiinventory') . "</th>";
@@ -197,7 +195,6 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     /**
      * Display form to configure activation of modules in agent form (in tab)
      *
-     * @global array $CFG_GLPI
      * @param integer $agents_id id of the agent
      */
     public function showFormAgentException($agents_id)
@@ -208,8 +205,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
         echo "<br/>";
         if ($canedit) {
-            echo "<form name='form_ic' method='post' action='" . Plugin::getWebDir('glpiinventory') .
-               "/front/agentmodule.form.php'>";
+            echo "<form name='form_ic' method='post' action='" .
+               "/plugins/glpiinventory/front/agentmodule.form.php'>";
         }
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
@@ -434,7 +431,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      */
     public static function getUrlForModule($modulename, $entities_id = -1)
     {
-        $plugin_dir = '/' . Plugin::getWebDir('glpiinventory', false);
+        $plugin_dir = '/plugins/glpiinventory';
 
         $entity = new Entity();
         $base_url = $entity->getUsedConfig('agent_base_url', $entities_id, 'agent_base_url', '');
@@ -449,6 +446,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             );
         } else {
             // ... else use global GLPI configuration parameter.
+            /** @var array $CFG_GLPI */
             global $CFG_GLPI;
             $base_url = $CFG_GLPI['url_base'];
 
