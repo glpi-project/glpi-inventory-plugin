@@ -66,7 +66,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
      *
      * @param array $options
      */
-    public function display($options = [])
+    public function display($options = []) // @phpstan-ignore method.parentMethodFinalByPhpDoc
     {
         /** @var DBmysql $DB */
         global $DB;

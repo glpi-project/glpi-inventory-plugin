@@ -779,7 +779,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                 foreach ($datadef as $itemtype => $items_id) {
                     $class = getItemForItemtype($itemtype);
                     $class->getFromDB($items_id);
-                    echo $class->getLink(1) . " (" . $class->getTypeName() . ")<br/>";
+                    echo $class->getLink() . " (" . $class->getTypeName() . ")<br/>";
                 }
             }
             echo "</td>";
@@ -795,7 +795,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                     } elseif ($items_id == '.2') {
                         $name =  __('Auto management dynamic of agents (same subnet)', 'glpiinventory');
                     } else {
-                        $name = $class->getLink(1);
+                        $name = $class->getLink();
                     }
                     echo $name . ' (' . $itemname . ')<br/>';
                 }
@@ -928,8 +928,10 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             $a_taskjob['method'] == 'deployinstall'
               && isset($a_taskjob['definitions_filter'])
         ) {
+            /** @var PluginGlpiinventoryDeployCommon $item */
             $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
         } else {
+            /** @var PluginGlpiinventoryCollect|PluginGlpiinventoryInventoryComputerESX|PluginGlpiinventoryNetworkdiscovery|PluginGlpiinventoryNetworkinventory $item */
             $uniqid = $item->prepareRun($a_taskjob['id']);
         }
         return $uniqid;
