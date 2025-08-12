@@ -32,7 +32,6 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-    include_once(__DIR__ . "/../../../inc/includes.php");
 }
 
 if (!class_exists("PluginGlpiinventoryConfig")) {

@@ -32,7 +32,6 @@
  */
 
 if (strpos($_SERVER['PHP_SELF'], "jobstates_logs.php")) {
-    include(__DIR__ . "/../../../inc/includes.php");
     Session::checkCentralAccess();
 }
 //unlock session since access checks have been done

@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include(__DIR__ . "/../../../inc/includes.php");
 Session::checkLoginUser();
 
 $package = new PluginGlpiinventoryDeployPackage();

@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include(__DIR__ . "/../../../inc/includes.php");
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),

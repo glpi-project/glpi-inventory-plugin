@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include(__DIR__ . "/../../../inc/includes.php");
 
 $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_SNMPCredential();
 

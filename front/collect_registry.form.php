@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include(__DIR__ . "/../../../inc/includes.php");
 
 $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
 

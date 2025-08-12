@@ -32,7 +32,6 @@
  */
 
 if (strpos($_SERVER['PHP_SELF'], "taskjob_logs.php")) {
-    include(__DIR__ . "/../../../inc/includes.php");
     Session::checkCentralAccess();
 }
 

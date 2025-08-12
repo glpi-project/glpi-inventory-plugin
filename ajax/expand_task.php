@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include(__DIR__ . "/../../../inc/includes.php");
 Session::checkCentralAccess();
 
 header("Content-Type: text/json; charset=UTF-8");

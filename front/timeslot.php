@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include(__DIR__ . "/../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
