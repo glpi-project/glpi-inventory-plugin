@@ -454,6 +454,7 @@ function plugin_glpiinventory_options()
 }
 
 
-function plugin_glpiinventory_boot() {
-      \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/#');
+function plugin_glpiinventory_boot()
+{
+    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/#');
 }
