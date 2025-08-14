@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
 
@@ -40,7 +39,7 @@ if (isset($_POST["add"])) {
         $_POST['path'] = "/" . $_POST['path'];
     }
     if (!preg_match('/\/$/', $_POST['path'])) {
-        $_POST['path'] = $_POST['path'] . "/";
+        $_POST['path'] .= "/";
     }
 
     $pfCollect_Registry->add($_POST);

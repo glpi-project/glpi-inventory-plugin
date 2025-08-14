@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 $group = new PluginGlpiinventoryDeployGroup();
@@ -102,7 +101,7 @@ if (isset($_GET['save'])) {
         $id = '';
     } else {
         $id = $_GET['id'];
-        if (isset($_GET['sort']) and isset($_GET['order'])) {
+        if (isset($_GET['sort']) && isset($_GET['order'])) {
             $group->getFromDB($id);
             PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($group, true);
         }

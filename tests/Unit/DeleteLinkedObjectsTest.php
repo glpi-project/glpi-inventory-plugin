@@ -35,10 +35,7 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteLinkedObjectsTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function IpRangeDeleteConfigSecurity()
+    public function testIpRangeDeleteConfigSecurity()
     {
 
         $iprange = new PluginGlpiinventoryIPRange();

@@ -31,12 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
-ob_start();
-include("../../../../inc/includes.php");
-ob_end_clean();
-
 //Store deploy task version
 //If task is lower than 2.2, there's no version sent by the agent
 //we set it to 0
@@ -47,9 +41,9 @@ if (isset($_GET['version'])) {
 
 $response = false;
 //Agent communication using REST protocol
-switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
+switch (filter_input(INPUT_GET, "action")) {
     case 'getJobs':
-        $machineid = Sanitizer::sanitize(filter_input(INPUT_GET, "machineid"));
+        $machineid = filter_input(INPUT_GET, "machineid");
         if (isset($machineid)) {
             $agent          = new Agent();
             $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
@@ -129,7 +123,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
         break;
 
     case 'getFilePart':
-        PluginGlpiinventoryDeployFilepart::httpSendFile(Sanitizer::sanitize(filter_input(INPUT_GET, "file")));
+        PluginGlpiinventoryDeployFilepart::httpSendFile(filter_input(INPUT_GET, "file"));
         $DB->close();
         exit;
         break;
@@ -145,15 +139,15 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
         $error = false;
 
         $params = [
-            'machineid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid")),
-            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")),
+            'machineid' => filter_input(INPUT_GET, "machineid"),
+            'uuid'      => filter_input(INPUT_GET, "uuid"),
         ];
 
         if (filter_input(INPUT_GET, "status") == 'ko') {
             $params['code'] = 'ko';
-            $fi_currentStep = Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"));
+            $fi_currentStep = filter_input(INPUT_GET, "currentStep");
             if (!empty($fi_currentStep)) {
-                $params['msg'] = $partjob_mapping[Sanitizer::sanitize(filter_input(INPUT_GET, "currentStep"))]
+                $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
                 . ":" . filter_input(INPUT_GET, "msg");
             } else {
                 $params['msg'] = filter_input(INPUT_GET, "msg");
@@ -185,18 +179,7 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
 
             $tmp_msg = implode("\n", $params['msg']);
             $flags   = null;
-            $tmp_msg =
-            stripcslashes(
-                htmlspecialchars(
-                    $tmp_msg,
-                    $htmlspecialchars_flags,
-                    'UTF-8',
-                    false
-                )
-            );
             $params['msg'] = nl2br($tmp_msg);
-        } else {
-            $params['msg'] = Sanitizer::sanitize($params['msg']);
         }
 
         //Generic method to update logs
@@ -205,24 +188,24 @@ switch (Sanitizer::sanitize(filter_input(INPUT_GET, "action"))) {
 
     case 'setUserEvent':
         $params = [
-            'machineid' => Sanitizer::sanitize(filter_input(INPUT_GET, "machineid")),
-            'uuid'      => Sanitizer::sanitize(filter_input(INPUT_GET, "uuid")),
+            'machineid' => filter_input(INPUT_GET, "machineid"),
+            'uuid'      => filter_input(INPUT_GET, "uuid"),
         ];
 
         //Action : postpone, cancel, continue
-        $behavior = Sanitizer::sanitize(filter_input(INPUT_GET, "behavior"));
+        $behavior = filter_input(INPUT_GET, "behavior");
 
         //before, after_download, after_download_failure,
         //after_failure, after
-        $type    = Sanitizer::sanitize(filter_input(INPUT_GET, "type"));
+        $type    = filter_input(INPUT_GET, "type");
 
         //on_nouser, on_ok, on_cancel, on_abort, on_retry, on_ignore,
         //on_yes, on_no, on_tryagain, on_continue, on_timeout, on_async,
         //on_multiusers
-        $event   = Sanitizer::sanitize(filter_input(INPUT_GET, "event"));
+        $event   = filter_input(INPUT_GET, "event");
 
         //The user who did the interaction
-        $user    = Sanitizer::sanitize(filter_input(INPUT_GET, "user"));
+        $user    = filter_input(INPUT_GET, "user");
 
         //Process response if an agent provides a behavior, a type and an event
         //the user parameter is not mandatory

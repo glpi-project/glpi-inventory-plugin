@@ -31,9 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use Safe\Exceptions\FilesystemException;
+
+use function Safe\fopen;
+use function Safe\fgetcsv;
+use function Safe\fclose;
 
 /**
  * Manage the static groups (add manually computers in the group).
@@ -93,7 +95,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         ) {
             $tabs[1] = _n('Criterion', 'Criteria', 2);
             $count = countElementsInTable(
-                getTableForItemType(__CLASS__),
+                getTableForItemType(self::class),
                 [
                     'itemtype'                               => 'Computer',
                     'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
@@ -200,8 +202,9 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      */
     public static function showResults(PluginGlpiinventoryDeployGroup $item)
     {
+        /** @var DBmysql $DB */
         global $DB;
-        $rand = rand();
+        $rand = random_int(0, mt_getrandmax());
 
         $params = [
             'SELECT' => '*',
@@ -371,7 +374,8 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
             'itemtype' => 'Computer',
         ];
         if (isset($files_data['importcsvfile']['tmp_name'])) {
-            if (($handle = fopen($files_data['importcsvfile']['tmp_name'], "r")) !== false) {
+            try {
+                $handle = fopen($files_data['importcsvfile']['tmp_name'], "r");
                 while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"], '"', '')) !== false) {
                     $input['items_id'] = (int) str_replace(' ', '', $data[0]);
                     if ($computer->getFromDB($input['items_id'])) {
@@ -380,7 +384,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
                 }
                 Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'glpiinventory'), false, INFO);
                 fclose($handle);
-            } else {
+            } catch (FilesystemException $e) {
                 Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'glpiinventory'), false, ERROR);
                 return false;
             }

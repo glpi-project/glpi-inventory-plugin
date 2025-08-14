@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 $pfTask = new PluginGlpiinventoryTask();
 

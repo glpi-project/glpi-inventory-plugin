@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the files found by the collect module of agent.
  */
@@ -48,7 +44,6 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
      * Update computer files (add and update files) related to this
      * collect file id
      *
-     * @global object $DB
      * @param integer $computers_id id of the computer
      * @param array $file_data
      * @param integer $collects_files_id id of collect_file

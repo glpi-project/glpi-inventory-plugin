@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the profiles in plugin.
  */
@@ -470,7 +466,7 @@ class PluginGlpiinventoryProfile extends Profile
     public static function migrateProfiles()
     {
         //Get all rights from the old table
-        $profiles = getAllDataFromTable(getTableForItemType(__CLASS__));
+        $profiles = getAllDataFromTable(getTableForItemType(self::class));
 
         //Load mapping of old rights to their new equivalent
         $oldrights = self::getOldRightsMappings();

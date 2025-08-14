@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
@@ -40,7 +39,7 @@ if (!isset($_GET["id"])) {
 }
 
 $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
-foreach ($_POST as $key => $value) {
+foreach (array_keys($_POST) as $key) {
     if (strstr($key, 'purge-')) {
         $split = explode('-', $key);
         $_POST['id'] = $split[1];

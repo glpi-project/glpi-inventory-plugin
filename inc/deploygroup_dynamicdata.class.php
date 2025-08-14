@@ -31,9 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_decode;
+use function Safe\json_encode;
 
 /**
  * Manage the dynamic groups (based on search engine of GLPI).
@@ -294,6 +293,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      */
     public static function storeCache(PluginGlpiinventoryDeployGroup $group, $ids = [])
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $result = $DB->update(
@@ -316,8 +316,6 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      */
     public static function retrieveCache(PluginGlpiinventoryDeployGroup $group)
     {
-        global $DB;
-
         $ids  = false;
         $data = getAllDataFromTable(
             self::getTable(),

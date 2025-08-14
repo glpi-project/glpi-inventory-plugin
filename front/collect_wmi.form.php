@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
 

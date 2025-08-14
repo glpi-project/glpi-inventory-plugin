@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_encode;
 
 /**
  * Manage the collect information by the agent.
@@ -326,11 +324,11 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * Prepare run, so it prepare the taskjob with module 'collect'.
      * It prepare collect information and computer list for task run
      *
-     * @global object $DB
      * @param integer $taskjobs_id id of taskjob
      */
     public function prepareRun($taskjobs_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $task       = new PluginGlpiinventoryTask();
@@ -575,6 +573,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      */
     public function run($taskjobstate, $agent)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $output = [];
@@ -671,7 +670,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
     public function communication($action, $machineId, $uuid)
     {
-        $response = new \stdClass();
+        $response = new stdClass();
 
         if (empty($action)) {
             return $response;
@@ -689,14 +688,14 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
                 $pfTask         = new PluginGlpiinventoryTask();
 
-                $pfAgent->getFromDBByCrit(['deviceid' => addslashes($machineId)]);
+                $pfAgent->getFromDBByCrit(['deviceid' => $machineId]);
                 $agent = $pfAgent->fields;
                 if (isset($agent['id'])) {
                     $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                         $agent['id'],
                         ['collect']
                     );
-                    $order = new \stdClass();
+                    $order = new stdClass();
                     $order->jobs = [];
 
                     foreach ($taskjobstates as $taskjobstate) {
@@ -795,7 +794,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             if (!empty($a_values['path']) && isset($a_values['size'])) {
                                 // update files content
                                 $params = [
-                                    'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
+                                    'machineid' => $pfAgent->fields['deviceid'],
                                     'uuid'      => $uuid,
                                     'code'      => 'running',
                                     'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size'],
