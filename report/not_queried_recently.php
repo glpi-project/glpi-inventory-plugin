@@ -37,7 +37,6 @@ $DBCONNECTION_REQUIRED = 0;
 
 $NEEDED_ITEMS = ["search", "computer", "infocom", "setup", "networking", "printer"];
 
-include("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 

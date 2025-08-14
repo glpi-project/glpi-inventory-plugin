@@ -37,7 +37,6 @@ use Glpi\DBAL\QueryExpression;
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
 
-include("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 

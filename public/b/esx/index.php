@@ -32,7 +32,6 @@
  */
 
 ob_start();
-include(__DIR__ . "/../../../../inc/includes.php");
 ob_end_clean();
 
 //This call is to check that the ESX inventory service is up and running
