@@ -31,9 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-ob_start();
-ob_end_clean();
-
 //Store deploy task version
 //If task is lower than 2.2, there's no version sent by the agent
 //we set it to 0

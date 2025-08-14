@@ -40,7 +40,6 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 define('GLPI_STRICT_DEPRECATED', true); //enable strict depreciations
-//define('GLPI_ROOT', __DIR__ . '/../../../');
 define('GLPI_CONFIG_DIR', __DIR__ . '/../../../tests/config');
 define('GLPI_VAR_DIR', __DIR__ . '/files');
 define('GLPI_URI', (getenv('GLPI_URI') ?: 'http://localhost:8088'));
@@ -61,8 +60,6 @@ $kernel = new Kernel('testing');
 $kernel->boot();
 
 global $CFG_GLPI, $GLPI_CACHE;
-
-//include(GLPI_ROOT . "/inc/based_config.php");
 
 if (!file_exists(GLPI_CONFIG_DIR . '/config_db.php')) {
     die("\nConfiguration file for tests not found\n\nrun: bin/console glpi:database:install --config-dir=tests/config ...\n\n");
@@ -94,8 +91,6 @@ include_once GLPI_ROOT . '/inc/includes.php';
 include_once GLPI_ROOT . '/plugins/glpiinventory/vendor/autoload.php';
 include_once __DIR__ . '/LogTest.php';
 
-// $_SESSION['glpiprofiles'][4]['entities'] = [0 => ['id' => 0, 'is_recursive' => true]];
-// $_SESSION['glpidefault_entity'] = 0;
 $auth = new Auth();
 $user = new User();
 $auth->auth_succeded = true;

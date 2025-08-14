@@ -31,9 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-ob_start();
-ob_end_clean();
-
 //Agent communication using REST protocol
 
 $pfCollect = new PluginGlpiinventoryCollect();

@@ -35,8 +35,6 @@
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
 
-define('GLPI_ROOT', '../../..');
-
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);

@@ -35,9 +35,6 @@ if (strpos($_SERVER['PHP_SELF'], "dropdown_taskjob.php")) {
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }
-if (!defined('GLPI_ROOT')) {
-    die("Can not access directly to this file");
-}
 
 Session::checkCentralAccess();
 $id = filter_input(INPUT_POST, "id");

@@ -31,12 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    define('GLPI_ROOT', realpath('../../..'));
-}
-if (!defined("GLPI_PLUGIN_DOC_DIR")) {
-    define("GLPI_PLUGIN_DOC_DIR", GLPI_ROOT . "/files/_plugins");
-}
+
 Session::checkLoginUser();
 
 $docDir = GLPI_PLUGIN_DOC_DIR . '/glpiinventory';
