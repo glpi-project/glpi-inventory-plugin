@@ -456,5 +456,7 @@ function plugin_glpiinventory_options()
 
 function plugin_glpiinventory_boot()
 {
-    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/#');
+    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/$#');
+    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/Communication$#');
+    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/front/communication.php$#');
 }

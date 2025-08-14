@@ -35,7 +35,6 @@ use Safe\Exceptions\FilesystemException;
 use function Safe\ini_get;
 use function Safe\fopen;
 use function Safe\fclose;
-use function Safe\json_encode;
 
 /**
  * Manage the communication in REST with the agents.
@@ -290,20 +289,6 @@ class PluginGlpiinventoryCommunicationRest
             return true;
         } catch (FilesystemException $e) {
             return false;
-        }
-    }
-
-
-    /**
-     * Manage REST parameters
-     **/
-    public static function handleFusionCommunication()
-    {
-        $response = PluginGlpiinventoryCommunicationRest::communicate($_GET);
-        if ($response) {
-            echo json_encode($response);
-        } else {
-            PluginGlpiinventoryCommunicationRest::sendError();
         }
     }
 }
