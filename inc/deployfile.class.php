@@ -202,7 +202,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 . __("retention", 'glpiinventory') . " : " .
                 $file_p2p_retention_duration . " " .
                 __("Minute(s)", 'glpiinventory') . "' class='more'>";
-                echo "<i class='ti ti-share'></i>";
+                echo "<img src='" . $pics_path . "p2p.png' />";
                 echo "<sup>" . $file_p2p_retention_duration . "</sup>";
                 echo "</a>";
             }
@@ -364,7 +364,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         echo "<tr>";
         echo "<th>" . __("P2P", 'glpiinventory') .
-              "<i class='ti ti-share'></i></th>";
+            "<img style='float:right' src='" . $fi_path .
+            "/pics/p2p.png' /></th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
         echo "</td>";
