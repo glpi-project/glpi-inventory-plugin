@@ -11,5 +11,3 @@ parameters:
     scanDirectories:
         - ../../inc
         - ../../src
-    stubFiles:
-        - ../../stubs/glpi_constants.php
