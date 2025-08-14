@@ -355,17 +355,14 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo "</tr>";
 
         echo "<tr>";
-        echo "<th>" . __("Uncompress", 'glpiinventory') . "<img style='float:right' " .
-         "src='" . $fi_path . "/pics/uncompress.png' /></th>";
+        echo "<th>" . __("Uncompress", 'glpiinventory') . "</th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'uncompress', 'checked' => $uncompress]);
         echo "</td>";
         echo "</tr>";
 
         echo "<tr>";
-        echo "<th>" . __("P2P", 'glpiinventory') .
-              "<img style='float:right' src='" . $fi_path .
-              "/pics/p2p.png' /></th>";
+        echo "<th>" . __("P2P", 'glpiinventory') . "</th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
         echo "</td>";
