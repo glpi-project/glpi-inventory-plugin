@@ -130,8 +130,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
      */
     public function display($options = []) // @phpstan-ignore method.parentMethodFinalByPhpDoc
     {
-        /** @var DBmysql $DB */
-        global $DB;
+        global $DB, $CFG_GLPI;
 
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -166,7 +165,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         $number = count($iterator);
 
         // Display the pager
-        Html::printPager($start, $number, "/plugins/glpiinventory/front/statediscovery.php", '');
+        Html::printPager($start, $number, $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/statediscovery.php", '');
 
         echo "<div class='card'>";
         echo "<table class='table table-hover card-table'>";

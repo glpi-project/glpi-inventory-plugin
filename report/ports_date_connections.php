@@ -185,7 +185,7 @@ function displaySearchForm()
 
     // Display Reset search
     echo "<td>";
-    echo "<a href='" . "/plugins/glpiinventory/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"" . __('Blank') . "\" alt=\"" . __('Blank') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/reset.png' class='calendrier'></a>";
+    echo "<a href='" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"" . __('Blank') . "\" alt=\"" . __('Blank') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/reset.png' class='calendrier'></a>";
     echo "</td>";
 
     echo "<td>";

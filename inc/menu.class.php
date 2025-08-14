@@ -101,7 +101,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      */
     public static function getAdditionalMenuOptions()
     {
-        $fi_path  = '/plugins/glpiinventory';
+        global $CFG_GLPI;
+
+        $fi_path  = $CFG_GLPI['root_doc'] . '/plugins/glpiinventory';
 
         $elements = [
             'iprange'                    => 'PluginGlpiinventoryIPRange',
@@ -180,7 +182,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $fi_path = '/plugins/glpiinventory';
+        $fi_path = $CFG_GLPI['root_doc'] . '/plugins/glpiinventory';
 
         $menu = [];
 
@@ -442,7 +444,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      */
     public static function displayMenuSNMPInventory()
     {
-        $fi_path = '/plugins/glpiinventory';
+        global $CFG_GLPI;
+
+        $fi_path = $CFG_GLPI['root_doc'] . '/plugins/glpiinventory';
 
         echo "<table class='tab_cadre_fixe'>";
 

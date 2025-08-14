@@ -190,6 +190,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '')
     {
+        global $CFG_GLPI;
+
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
         $a_type = [];
         $a_type[''] = Dropdown::EMPTY_VALUE;
@@ -221,7 +223,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         Ajax::updateItemOnEvent(
             'dropdown_' . ucfirst($myname) . 'Type' . $rand,
             "show_" . ucfirst($myname) . "List" . $taskjobs_id,
-            "/plugins/glpiinventory/ajax/dropdowntypelist.php",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdowntypelist.php",
             $params
         );
 
@@ -252,6 +254,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $entity_restrict = '',
         $title = 0
     ) {
+        global $CFG_GLPI;
+
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
         $module = '';
         foreach ($a_methods as $datas) {
@@ -297,7 +301,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         Ajax::updateItemOnEvent(
             [$iddropdown . $rand, "add_button_" . $_POST['name'] . $taskjobs_id],
             "Additem_$rand",
-            "/plugins/glpiinventory/ajax/taskjobaddtype.php",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/taskjobaddtype.php",
             $params,
             ["click"],
             -1,
@@ -320,6 +324,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '')
     {
+        global $CFG_GLPI;
+
         $a_methods               = PluginGlpiinventoryStaticmisc::getmethods();
         $a_actioninitiontype     = [];
         $a_actioninitiontype[''] = Dropdown::EMPTY_VALUE;
@@ -350,7 +356,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         Ajax::updateItemOnSelectEvent(
             'dropdown_ActionType' . $rand,
             "show_ActionList",
-            "/plugins/glpiinventory/ajax/dropdownactionlist.php",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownactionlist.php",
             $params
         );
 
@@ -377,6 +383,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $value = 0,
         $entity_restrict = ''
     ) {
+        global $CFG_GLPI;
+
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
         $module = '';
         foreach ($a_methods as $datas) {
@@ -414,7 +422,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         return Ajax::updateItemOnEvent(
             'addAObject',
             'show_ActionListEmpty',
-            "/plugins/glpiinventory/ajax/dropdownactionselection.php",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownactionselection.php",
             $params,
             ["click"]
         );
@@ -819,6 +827,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id)
     {
+        global $CFG_GLPI;
+
         $this->getFromDB($taskjobs_id);
         $a_type = importArrayFromDB($this->fields[$type]);
         $add = 1;
@@ -850,7 +860,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         echo "<script type='text/javascript'>";
         Ajax::updateItemJsCode(
             "show" . $type . "list" . $taskjobs_id . "_",
-            "/plugins/glpiinventory/ajax/dropdownlist.php",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownlist.php",
             $params
         );
         echo "</script>";
@@ -868,6 +878,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
     {
+        global $CFG_GLPI;
+
         $this->getFromDB($taskjobs_id);
         $a_type = importArrayFromDB($this->fields[$type]);
         $split = explode("-", $a_items_id);
@@ -886,7 +898,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         echo "<script type='text/javascript'>";
         Ajax::updateItemJsCode(
             "show" . $type . "list" . $taskjobs_id . "_",
-            "/plugins/glpiinventory/ajax/dropdownlist.php",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownlist.php",
             $params
         );
         echo "</script>";

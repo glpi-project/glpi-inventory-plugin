@@ -148,6 +148,8 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
      */
     public function title()
     {
+        global $CFG_GLPI;
+
         $buttons = [];
         $title = _n('Task', 'Tasks', 1, 'glpiinventory');
 
@@ -156,7 +158,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
             $title = "";
         }
         Html::displayTitle(
-            "/plugins/glpiinventory/pics/task.png",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/pics/task.png",
             $title,
             $title,
             $buttons

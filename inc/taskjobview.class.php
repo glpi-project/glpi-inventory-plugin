@@ -537,6 +537,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      */
     public function showForm($id, $options = [])
     {
+        global $CFG_GLPI;
+
         $new_item = false;
         if ($id > 0) {
             if ($this->getFromDB($id)) {
@@ -563,7 +565,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $pfTask = $this->getTask();
 
         echo "<form method='post' id='taskjobs_form' name='form_taskjob' action='" .
-            "/plugins/glpiinventory/front/taskjob.form.php''>";
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/taskjob.form.php''>";
 
         if (!$new_item) {
             echo "<input type='hidden' name='id' value='" . $id . "' />";
@@ -806,6 +808,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      */
     public function submitForm($postvars)
     {
+        global $CFG_GLPI;
+
         $jobs_id = 0;
 
         $mytaskjob = new PluginGlpiinventoryTaskjob();
@@ -958,7 +962,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $add_redirect = "&edit_job=$jobs_id#taskjobs_form";
             }
 
-            Html::redirect("/plugins/glpiinventory/front/task.form.php?id=" .
+            Html::redirect($CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/task.form.php?id=" .
                                  $postvars['plugin_glpiinventory_tasks_id'] . $add_redirect);
         } elseif (isset($postvars["delete"])) {
             // * delete taskjob

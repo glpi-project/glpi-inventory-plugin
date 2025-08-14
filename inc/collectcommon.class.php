@@ -130,8 +130,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public function showList($collects_id)
     {
-        /** @var DBmysql $DB */
-        global $DB;
+        global $DB, $CFG_GLPI;
         $params = [
             'FROM'  => $this->getTable(),
             'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id],
@@ -160,7 +159,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
             echo "<form name='form_bundle_item' action='" . $class::getFormURL() .
                    "' method='post'>";
             echo Html::hidden('id', ['value' => $data['id']]);
-            echo "<input type='image' name='delete' src='plugins/glpiinventory/pics/drop.png'>";
+            echo "<input type='image' name='delete' src='" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/pics/drop.png'>";
             Html::closeForm();
             echo "</td>";
             echo "</tr>";

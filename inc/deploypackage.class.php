@@ -1396,6 +1396,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public function showPackageForMe($users_id, $item = false)
     {
+        global $CFG_GLPI;
+
         $computer     = new Computer();
         $self_service = $_SESSION['glpiactiveprofile']['interface'] != 'central';
         if (!$self_service) {
@@ -1416,7 +1418,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $joblogs_labels = PluginGlpiinventoryTaskjoblog::dropdownStateValues();
 
         // Display for each computer, list of packages you can deploy
-        $url = '/plugins/glpiinventory';
+        $url = $CFG_GLPI['root_doc'] . '/plugins/glpiinventory';
         echo "<form name='onetimedeploy_form' id='onetimedeploy_form'
              method='POST'
              action='$url/front/deploypackage.public.php'

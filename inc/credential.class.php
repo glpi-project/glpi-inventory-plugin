@@ -344,6 +344,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      */
     public static function dropdownCredentials($params = [])
     {
+        global $CFG_GLPI;
+
         $p = [
             'value'    => '',
             'itemtype' => '',
@@ -365,7 +367,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         $ajparams = ['itemtype' => '__VALUE__',
             'id'       => $p['id'],
         ];
-        $url       = "/plugins/glpiinventory/ajax/dropdownCredentials.php";
+        $url       = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownCredentials.php";
         Ajax::updateItemOnSelectEvent(
             "dropdown_plugin_glpiinventory_credentials_id$rand",
             "span_credentials",

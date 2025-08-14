@@ -1662,6 +1662,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
+        global $CFG_GLPI;
+
         switch ($ma->getAction()) {
             case "transfert":
                 Dropdown::show('Entity');
@@ -1686,7 +1688,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
-                        'url'             => "/plugins/glpiinventory/ajax/dropdown_taskjob.php",
+                        'url'             => $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdown_taskjob.php",
                     ],
                 ]);
                 echo "</td>";
@@ -1725,7 +1727,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "taskjob$rand",
-                        'url'             => "/plugins/glpiinventory/ajax/dropdown_taskjob.php",
+                        'url'             => $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdown_taskjob.php",
                     ],
                 ]);
                 echo "</td>";
