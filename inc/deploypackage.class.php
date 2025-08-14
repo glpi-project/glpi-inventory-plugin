@@ -562,7 +562,6 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             echo "<tr>";
             echo "<th id='th_title_{$subtype}_$rand'>";
             echo "<span><i class='ti ti-{$subtypes_icon[$subtype]}'></i></span>";
-            echo "<img src='" . "/plugins/glpiinventory/pics/$subtype.png' />";
             echo "&nbsp;" . __($label, 'glpiinventory');
             if ($canedit) {
                 $this->plusButtonSubtype($this->getID(), $subtype, (string) $rand);
