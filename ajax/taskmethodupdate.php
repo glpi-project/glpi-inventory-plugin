@@ -42,6 +42,6 @@ if (filter_input(INPUT_POST, "method") != '') {
     $pfTaskjob = new PluginGlpiinventoryTaskjob();
     $pfTaskjob->updateMethod(
         filter_input(INPUT_POST, "method"),
-        filter_input(INPUT_POST, "taskjobs_id")
+        (int)filter_input(INPUT_POST, "taskjobs_id")
     );
 }

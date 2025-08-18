@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\BadRequestHttpException;
+
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
@@ -41,21 +43,22 @@ $type      = filter_input(INPUT_POST, "type");
 $classname = filter_input(INPUT_POST, "class");
 
 if (empty($rand) && (empty($type))) {
-    exit();
+    throw new BadRequestHttpException();
 }
 //Only process class that are related to software deployment
 if (
     !class_exists($classname)
     || !in_array(
         $classname,
-        ['PluginGlpiinventoryDeployCheck',
-            'PluginGlpiinventoryDeployFile',
-            'PluginGlpiinventoryDeployAction',
-            'PluginGlpiinventoryDeployUserinteraction',
+        [
+            PluginGlpiinventoryDeployCheck::class,
+            PluginGlpiinventoryDeployFile::class,
+            PluginGlpiinventoryDeployAction::class,
+            PluginGlpiinventoryDeployUserinteraction::class,
         ]
     )
 ) {
-    exit();
+    throw new BadRequestHttpException();
 }
 $class        = new $classname();
 $request_data = [

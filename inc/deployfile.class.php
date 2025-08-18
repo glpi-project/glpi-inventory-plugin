@@ -279,8 +279,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     /**
      * Display different fields relative the file selected
      *
-     * @param array $config
-     * @param array $request_data
+     * @param ?array $config
+     * @param array  $request_data
      * @param string $rand unique element id used to identify/update an element
      * @param string $mode mode in use (create, edit...)
      * @return void
@@ -288,6 +288,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
         global $CFG_GLPI;
+
+        if ($mode !== self::CREATE && !is_array($config)) {
+            throw new RuntimeException('Config is missing');
+        }
 
         $fi_path = $CFG_GLPI['root_doc'] . '/plugins/glpiinventory';
 

@@ -51,8 +51,7 @@ if (
     $pfTaskjob->dropdownType(
         $typename,
         $method,
-        filter_input(INPUT_POST, "value"),
-        $taskjobs_id,
-        ""
+        0,
+        (int)$taskjobs_id,
     );
 }

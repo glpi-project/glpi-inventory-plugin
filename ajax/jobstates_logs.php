@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\session_write_close;
+
 if (strpos($_SERVER['PHP_SELF'], "jobstates_logs.php")) {
     Session::checkCentralAccess();
 }

@@ -36,6 +36,8 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
+global $CFG_GLPI;
+
 // Make a select box
 $type = filter_input(INPUT_POST, "type");
 $actortype = filter_input(INPUT_POST, "actortype");
@@ -51,9 +53,9 @@ if (!empty($type) && !empty($actortype)) {
             // Only steal or own ticket whit empty assign
             if ($actortype == 'assign') {
                 $right = "own_ticket";
-                if (!$item->canAssign()) {
+                /*if (!$item->canAssign()) { //$item has never been defined https://github.com/glpi-project/glpi-inventory-plugin/commit/8d39c1bf415a9493b105c4cf80e9d0f2c0c046e6
                     $right = 'id';
-                }
+                }*/
             }
 
             $options = ['name'        => '_itil_' . $actortype . '[users_id]',
