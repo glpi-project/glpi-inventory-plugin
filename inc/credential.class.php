@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the credentials for inventory VMWARE ESX.
  */
@@ -344,7 +340,6 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Display dropdown with credentials
      *
-     * @global array $CFG_GLPI
      * @param array $params
      */
     public static function dropdownCredentials($params = [])
@@ -372,7 +367,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         $ajparams = ['itemtype' => '__VALUE__',
             'id'       => $p['id'],
         ];
-        $url       = Plugin::getWebDir('glpiinventory') . "/ajax/dropdownCredentials.php";
+        $url       = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownCredentials.php";
         Ajax::updateItemOnSelectEvent(
             "dropdown_plugin_glpiinventory_credentials_id$rand",
             "span_credentials",
@@ -430,10 +425,10 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Display a specific header
      */
-    public function displayHeader()
+    public static function displayCentralHeader(?string $title = null, ?array $menus = null): void
     {
         //Common dropdown header
-        parent::displayHeader();
+        parent::displayCentralHeader($title, $menus);
 
         PluginGlpiinventoryMenu::displayMenu("mini");
     }

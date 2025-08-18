@@ -31,9 +31,12 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QueryParam;
+use Safe\DateTime;
+
+use function Safe\json_encode;
+use function Safe\preg_match;
 
 /**
  * Manage the state of task jobs.
@@ -191,6 +194,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     **/
     public function stateTaskjob($taskjobs_id, $width = 930, $return = 'html', $style = '')
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
@@ -215,11 +219,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                 $globalState = $first + $second + $third + $fourth;
             }
             if ($return == 'html') {
-                if ($style == 'simple') {
-                    Html::displayProgressBar($width, ceil($globalState), ['simple' => 1]);
-                } else {
-                    Html::displayProgressBar($width, ceil($globalState));
-                }
+                Html::getProgressBar(ceil($globalState));
             } elseif ($return == 'htmlvar') {
                 if ($style == 'simple') {
                     return PluginGlpiinventoryDisplay::getProgressBar(
@@ -263,6 +263,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function getTaskjobsAgent($agent_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -301,7 +302,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $id        = null;
         $last_date = null;
 
-        if (isset($params['id']) and $params['id'] > 0) {
+        if (isset($params['id']) && $params['id'] > 0) {
             $id = $params['id'];
         }
         if (isset($params['last_date'])) {
@@ -319,13 +320,13 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Get logs associated to a jobstate.
      *
-     * @global object $DB
      * @param integer $id
      * @param string $last_date
      * @return array
      */
     public function getLogs($id, $last_date)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $iterator = $DB->request([
@@ -404,7 +405,6 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $log_input['itemtype'] = $itemtype;
         $log_input['date']     = $_SESSION['glpi_currenttime'];
         $log_input['comment']  = $message;
-        $log_input             = Toolbox::addslashes_deep($log_input);
         $pfTaskjoblog->add($log_input);
 
         $pfTaskjob->getFromDB($this->fields['plugin_glpiinventory_taskjobs_id']);
@@ -475,7 +475,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             'itemtype' => $this->fields['itemtype'],
             'date'     => $_SESSION['glpi_currenttime'],
             'state'    => $joblog_state,
-            'comment'  => Toolbox::addslashes_deep($reason),
+            'comment'  => $reason,
         ];
 
         $log->add($log_input);
@@ -502,13 +502,13 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                     //Get the template values
                     $template_values = $template->getValues();
                     //Compute the next run date for the job. Retry_after value is in seconds
-                    $date = new \DateTime('+' . $template_values['retry_after'] . ' seconds');
+                    $date = new DateTime('+' . $template_values['retry_after'] . ' seconds');
                     $params['date_start'] = $date->format('Y-m-d H:i');
                     //Set the max number or retry
                     //(we set it each time a job is postponed because the value
                     //can change in the template)
                     $params['max_retry'] = $template_values['nb_max_retry'];
-                    $params['nb_retry']  = $params['nb_retry'] + 1;
+                    $params['nb_retry'] += 1;
                     $params['state']     = self::PREPARED;
                     $states_id           = $params['id'];
                     $this->update($params);
@@ -521,7 +521,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        'comment'  => Toolbox::addslashes_deep($reason),
+                        'comment'  => $reason,
                     ];
                     $log->add($log_input);
 
@@ -536,14 +536,14 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
-                        'comment'  => Toolbox::addslashes_deep($reason),
+                        'comment'  => $reason,
                     ];
                     $log->add($log_input);
 
                     if ($params['nb_retry'] <= $params['max_retry']) {
                         $reason = ' ' . sprintf(__('Retry #%d', 'glpiinventory'), $params['nb_retry']);
                     } else {
-                        $reason = ' ' . sprintf(__('Maximum number of retry reached: force deployment', 'glpiinventory'));
+                        $reason = ' ' . __('Maximum number of retry reached: force deployment', 'glpiinventory');
                     }
                     $log_input = [
                         'plugin_glpiinventory_taskjobstates_id' => $states_id,
@@ -551,7 +551,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'itemtype' => $this->fields['itemtype'],
                         'date'     => $_SESSION['glpi_currenttime'],
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        'comment'  => Toolbox::addslashes_deep($reason),
+                        'comment'  => $reason,
                     ];
                     $log->add($log_input);
                 }
@@ -575,11 +575,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Cron task: clean taskjob (retention time)
-     *
-     * @global object $DB
      */
     public static function cronCleantaskjob()
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $config         = new PluginGlpiinventoryConfig();
@@ -589,7 +588,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $iterator = $DB->request([
             'FROM'   => 'glpi_plugin_glpiinventory_taskjoblogs',
             'WHERE'  => [
-                'date'  => ['<', new \QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')],
+                'date'  => ['<', new QueryExpression('DATE_ADD(NOW(), INTERVAL -' . $retentiontime . ' DAY)')],
             ],
             'GROUPBY' => 'plugin_glpiinventory_taskjobstates_id',
         ]);
@@ -598,7 +597,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             $delete = $DB->buildDelete(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
-                    'plugin_glpiinventory_taskjobstates_id' => new \QueryParam(),
+                    'plugin_glpiinventory_taskjobstates_id' => new QueryParam(),
                 ]
             );
             $stmt = $DB->prepare($delete);
@@ -635,6 +634,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function showStatesForComputer($computers_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $agent      = new Agent();

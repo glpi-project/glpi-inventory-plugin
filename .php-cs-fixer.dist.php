@@ -1,6 +1,10 @@
 <?php
 
 
+use PhpCsFixer\Finder;
+use PhpCsFixer\Config;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -32,7 +36,7 @@
  * ---------------------------------------------------------------------
  */
 
-$finder = (new PhpCsFixer\Finder())
+$finder = (new Finder())
     ->in(__DIR__)
     ->exclude([
         '.git/',
@@ -42,15 +46,14 @@ $finder = (new PhpCsFixer\Finder())
     ])
 ;
 
-return (new PhpCsFixer\Config())
-    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
+return (new Config())
+    ->setParallelConfig(ParallelConfigFactory::detect())
     ->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.glpi-inventory-plugin.cache')
     ->setRules([
         '@PER-CS2.0' => true,
         '@PHP84Migration' => true,
         'no_unused_imports' => true,
         'heredoc_indentation' => false, // This rule is mandatory due to a bug in `xgettext`, see https://savannah.gnu.org/bugs/?func=detailitem&item_id=62158
-        'octal_notation' => false, //not supported in php 7.4
     ])
     ->setFinder($finder)
 ;

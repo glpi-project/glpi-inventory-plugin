@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
+use Safe\DateTime;
 
 /**
  * Manage the network discovery state.
@@ -128,11 +126,9 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     /**
      * Display the discovery state
      *
-     * @global object $DB
-     * @global array $CFG_GLPI
      * @param array $options
      */
-    public function display($options = [])
+    public function display($options = []) // @phpstan-ignore method.parentMethodFinalByPhpDoc
     {
         global $DB, $CFG_GLPI;
 
@@ -169,7 +165,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         $number = count($iterator);
 
         // Display the pager
-        Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/statediscovery.php", '');
+        Html::printPager($start, $number, $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/statediscovery.php", '');
 
         echo "<div class='card'>";
         echo "<table class='table table-hover card-table'>";
@@ -249,10 +245,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
                     }
 
                     if (
-                        ($taskjoblog['state'] == "2")
-                        or ($taskjoblog['state'] == "3")
-                        or ($taskjoblog['state'] == "4")
-                        or ($taskjoblog['state'] == "5")
+                        $taskjoblog['state'] == "2" || $taskjoblog['state'] == "3" || $taskjoblog['state'] == "4" || $taskjoblog['state'] == "5"
                     ) {
                         if (!strstr($taskjoblog['comment'], 'Merged with ')) {
                             $end_date = $taskjoblog['date'];
@@ -287,21 +280,16 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             if ($start_date == '') {
                 echo "<td>-</td>";
             } else {
-                $interval = '';
-                if (phpversion() >= 5.3) {
-                    $date1 = new DateTime($start_date);
-                    $date2 = new DateTime($end_date);
-                    $interval = $date1->diff($date2);
-                    $display_date = '';
-                    if ($interval->h > 0) {
-                        $display_date .= $interval->h . "h ";
-                    } elseif ($interval->i > 0) {
-                        $display_date .= $interval->i . "min ";
-                    }
-                    echo "<td>" . $display_date . $interval->s . "s</td>";
-                } else {
-                    $interval = $pfStateInventory->dateDiff($start_date, $end_date);
+                $date1 = new DateTime($start_date);
+                $date2 = new DateTime($end_date);
+                $interval = $date1->diff($date2);
+                $display_date = '';
+                if ($interval->h > 0) {
+                    $display_date .= $interval->h . "h ";
+                } elseif ($interval->i > 0) {
+                    $display_date .= $interval->i . "min ";
                 }
+                echo "<td>" . $display_date . $interval->s . "s</td>";
             }
             echo "<td>" . $nb_threads . "</td>";
             echo "<td>" . $nb_found . "</td>";

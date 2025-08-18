@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 if (Session::getCurrentInterface() !== 'helpdesk') {

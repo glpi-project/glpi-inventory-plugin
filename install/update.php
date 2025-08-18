@@ -37,10 +37,13 @@ use Ramsey\Uuid\Uuid;
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QueryParam;
+
 /**
  * Get the current version of the plugin
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @return string
  */
 function pluginGlpiinventoryGetCurrentVersion()
@@ -153,7 +156,7 @@ function pluginGlpiinventoryGetCurrentVersion()
 /**
  * The main function to update the plugin
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param string $current_version
  * @param string $migrationname
  */
@@ -230,9 +233,9 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
 
     // ********* Rename fileparts without .gz extension (cf #1999) *********** //
     if (is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')) {
-        $gzfiles = new \RegexIterator(
-            new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')
+        $gzfiles = new RegexIterator(
+            new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files')
             ),
             '/\.gz$/'
         );
@@ -594,8 +597,8 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
             'glpi_displaypreferences',
             [
                 'itemtype'  => 'PluginGlpiinventoryTaskjoblog',
-                'num'       => new \QueryParam(),
-                'rank'      => new \QueryParam(),
+                'num'       => new QueryParam(),
+                'rank'      => new QueryParam(),
                 'users_id'  => 0,
             ]
         );
@@ -632,10 +635,10 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $update = $DB->buildUpdate(
             'glpi_plugin_glpiinventory_taskjobs',
             [
-                'targets'   => new \QueryParam(),
+                'targets'   => new QueryParam(),
             ],
             [
-                'id'        => new \QueryParam(),
+                'id'        => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -698,10 +701,10 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $update = $DB->buildUpdate(
             'glpi_plugin_glpiinventory_taskjobs',
             [
-                'actors' => new \QueryParam(),
+                'actors' => new QueryParam(),
             ],
             [
-                'id'     => new \QueryParam(),
+                'id'     => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -841,8 +844,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         );
     }
     if (
-        $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstate', 'cleantaskjob')
-           and $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstatus', 'cleantaskjob')
+        $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstate', 'cleantaskjob') && $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstatus', 'cleantaskjob')
     ) {
         $crontask->getFromDBbyName('PluginGlpiinventoryTaskjobstatus', 'cleantaskjob');
         $crontask->delete($crontask->fields);
@@ -910,11 +912,11 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         $update = $DB->buildUpdate(
             'glpi_items_softwareversions',
             [
-                'entities_id'  => new \QueryParam(),
+                'entities_id'  => new QueryParam(),
             ],
             [
                 'itemtype'     => 'Computer',
-                'items_id'     => new \QueryParam(),
+                'items_id'     => new QueryParam(),
                 'is_dynamic'   => 1,
                 'entities_id'  => 0,
             ]
@@ -1145,7 +1147,7 @@ function installDashboard()
             'card_options' => array_merge($commonOptions, $options),
         ],
         ]);
-        $x =  $x + $w;
+        $x += $w;
     }
 }
 
@@ -1153,7 +1155,7 @@ function installDashboard()
 /**
  * Manage the agent part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @return array
  */
@@ -1189,11 +1191,10 @@ function do_agent_migration($migration)
             ];
         }
     } elseif (
-        $DB->tableExists("glpi_plugin_tracker_agents")
-                  and $DB->fieldExists(
-                      "glpi_plugin_tracker_agents",
-                      "core_discovery"
-                  )
+        $DB->tableExists("glpi_plugin_tracker_agents") && $DB->fieldExists(
+            "glpi_plugin_tracker_agents",
+            "core_discovery"
+        )
     ) {
         $iterator = $DB->request(['FROM' => 'glpi_plugin_tracker_agents']);
         foreach ($iterator as $data) {
@@ -1512,12 +1513,12 @@ function do_agent_migration($migration)
             $update = $DB->buildUpdate(
                 'glpi_plugin_glpiinventory_agents',
                 [
-                    'threads_networkdiscovery' => new \QueryParam(),
-                    'threads_networkinventory' => new \QueryParam(),
-                    'senddico'                 => new \QueryParam(),
+                    'threads_networkdiscovery' => new QueryParam(),
+                    'threads_networkinventory' => new QueryParam(),
+                    'senddico'                 => new QueryParam(),
                 ],
                 [
-                    'id'                       => new \QueryParam(),
+                    'id'                       => new QueryParam(),
                 ]
             );
             $stmt = $DB->prepare($update);
@@ -1562,7 +1563,7 @@ function do_agent_migration($migration)
         [
             'itemtype'           => 'PluginGlpiinventoryAgent',
             'id_search_option'   => 8,
-            'old_value'          => new \QueryExpression($DB->quoteName('new_value')),
+            'old_value'          => new QueryExpression($DB->quoteName('new_value')),
         ]
     );
 
@@ -1573,7 +1574,7 @@ function do_agent_migration($migration)
 /**
  * Manage the configuration part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @return array
  */
@@ -1613,7 +1614,7 @@ function do_config_migration($migration)
             $delete = $DB->buildDelete(
                 'glpi_plugin_glpiinventory_configs',
                 [
-                    $id => new \QueryParam(),
+                    $id => new QueryParam(),
                 ]
             );
             $stmt = $DB->prepare($delete);
@@ -1684,7 +1685,7 @@ function do_config_migration($migration)
 /**
  * Manage the entities part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_entities_migration($migration)
@@ -1788,7 +1789,7 @@ function do_entities_migration($migration)
 /**
  * Manage the IP range part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @return array
  */
@@ -1973,7 +1974,7 @@ function do_locks_migration($migration)
 /**
  * Manage the SNMP communities linked to IP range part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_iprangeconfigsecurity_migration($migration)
@@ -2031,7 +2032,7 @@ function do_iprangeconfigsecurity_migration($migration)
         $delete = $DB->buildDelete(
             'glpi_plugin_glpiinventory_ipranges_configsecurities',
             [
-                'id' => new \QueryParam(),
+                'id' => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($delete);
@@ -2047,7 +2048,7 @@ function do_iprangeconfigsecurity_migration($migration)
 /**
  * Manage the profile part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_profile_migration($migration)
@@ -2237,7 +2238,7 @@ function do_timeslot_migration($migration)
 /**
  * Manage the unmanaged devices part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_unmanaged_migration($migration)
@@ -2366,11 +2367,11 @@ function do_unmanaged_migration($migration)
             $update = $DB->buildUpdate(
                 'glpi_plugin_glpiinventory_unmanageds',
                 [
-                    'sysdescr'                                   => new \QueryParam(),
-                    'plugin_glpiinventory_configsecurities_id' => new \QueryParam(),
+                    'sysdescr'                                 => new QueryParam(),
+                    'plugin_glpiinventory_configsecurities_id' => new QueryParam(),
                 ],
                 [
-                    'id'                                         => new \QueryParam(),
+                    'id'                                       => new QueryParam(),
                 ]
             );
             $stmt = $DB->prepare($update);
@@ -2514,7 +2515,7 @@ function do_ignoredimport_migration($migration)
 /**
  * Manage the computer blacklist part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_blacklist_migration($migration)
@@ -2858,7 +2859,7 @@ function do_blacklist_migration($migration)
 /**
  * Manage the rules matched log part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_rulematchedlog_migration($migration)
@@ -2937,7 +2938,7 @@ function do_rulematchedlog_migration($migration)
 /**
  * Manage the antivirus part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_antivirus_migration($migration)
@@ -2953,7 +2954,7 @@ function do_antivirus_migration($migration)
 /**
  * Manage the computer extended part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_computercomputer_migration($migration)
@@ -3055,7 +3056,7 @@ function do_computercomputer_migration($migration)
                 'is_dynamic'   => 1,
             ],
             [
-                'id'           => new \QueryParam(),
+                'id'           => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -3226,7 +3227,7 @@ function do_computerstat_migration($migration)
  * Manage the configuration log fields (for network equipment and printer)
  * part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_configlogfield_migration($migration)
@@ -3318,7 +3319,7 @@ function do_configlogfield_migration($migration)
 /**
  * Manage the network port part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_networkport_migration($migration)
@@ -3782,7 +3783,7 @@ function do_networkport_migration($migration)
 
         //echo "Move Connections history to another table...";
 
-        for ($i = 0; $i < $nb; $i = $i + 500) {
+        for ($i = 0; $i < $nb; $i += 500) {
             $migration->displayMessage("$i / $nb");
             $iterator = $DB->request([
                 'FROM'   => 'glpi_plugin_tracker_snmp_history',
@@ -3795,8 +3796,7 @@ function do_networkport_migration($migration)
                 $input['process_number'] = $thread_connection['FK_process'];
                 $input['date'] = $thread_connection['date_mod'];
                 if (
-                    ($thread_connection["old_device_ID"] != "0")
-                    or ($thread_connection["new_device_ID"] != "0")
+                    $thread_connection["old_device_ID"] != "0" || $thread_connection["new_device_ID"] != "0"
                 ) {
                     if ($thread_connection["old_device_ID"] != "0") {
                         // disconnection
@@ -4132,7 +4132,7 @@ function do_networkport_migration($migration)
 /**
  * Manage the printer part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_printer_migration($migration)
@@ -4667,7 +4667,7 @@ function do_printer_migration($migration)
         $delete = $DB->buildDelete(
             'glpi_plugin_glpiinventory_printers',
             [
-                'id' => new \QueryParam(),
+                'id' => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($delete);
@@ -4730,7 +4730,7 @@ function do_printer_migration($migration)
                 'is_dynamic'   => 1,
             ],
             [
-                'id'           => new \QueryParam(),
+                'id'           => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -4771,7 +4771,7 @@ function do_printer_migration($migration)
 /**
  * Manage the network equipment part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_networkequipment_migration($migration)
@@ -5152,7 +5152,7 @@ function do_networkequipment_migration($migration)
         $delete = $DB->buildDelete(
             'glpi_plugin_glpiinventory_networkequipments',
             [
-                'id'  => new \QueryParam(),
+                'id'  => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($delete);
@@ -5179,7 +5179,7 @@ function do_networkequipment_migration($migration)
                 'is_dynamic'   => 1,
             ],
             [
-                'id'           => new \QueryParam(),
+                'id'           => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -5195,7 +5195,7 @@ function do_networkequipment_migration($migration)
 /**
  * Manage the Config security (SNMP anthentication) part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_configsecurity_migration($migration)
@@ -5395,7 +5395,7 @@ function do_configsecurity_migration($migration)
 /**
  * Manage the discovery state part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_statediscovery_migration($migration)
@@ -5559,7 +5559,7 @@ function do_statediscovery_migration($migration)
 /**
  * Manage the computer license part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_computerlicense_migration($migration)
@@ -6009,7 +6009,7 @@ function do_computeroperatingsystem_migration($migration)
  * Manage the deploy user interaction migration process
  *
  * @since 9.2
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_deployuserinteraction_migration($migration)
@@ -6039,7 +6039,7 @@ function do_deployuserinteraction_migration($migration)
 /**
  * Manage the deploy files part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_deployfile_migration($migration)
@@ -6186,11 +6186,11 @@ function do_deployfile_migration($migration)
                     $update = $DB->buildUpdate(
                         'glpi_plugin_fusinvdeploy_files',
                         [
-                            'entities_id'  => new \QueryParam(),
-                            'is_recursive' => new \QueryParam(),
+                            'entities_id'  => new QueryParam(),
+                            'is_recursive' => new QueryParam(),
                         ],
                         [
-                            'id'           => new \QueryParam(),
+                            'id'           => new QueryParam(),
                         ]
                     );
                     $stmt = $DB->prepare($update);
@@ -6214,7 +6214,7 @@ function do_deployfile_migration($migration)
 /**
  * Manage the deploy package part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_deploypackage_migration($migration)
@@ -6299,8 +6299,7 @@ function do_deploypackage_migration($migration)
     $migration->renameTable('glpi_plugin_fusinvdeploy_orders', $order_table);
 
     if (
-        $DB->tableExists($order_table)
-           and $DB->fieldExists($order_table, 'type', false)
+        $DB->tableExists($order_table) && $DB->fieldExists($order_table, 'type', false)
     ) {
         require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/deploypackage.class.php");
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -6310,7 +6309,7 @@ function do_deploypackage_migration($migration)
             $pfDeployPackage->getFromDB($install['plugin_glpiinventory_deploypackages_id']);
             $input = [
                 'id'   => $pfDeployPackage->fields['id'],
-                'json' => addslashes($install['json']),
+                'json' => $install['json'],
             ];
             $pfDeployPackage->update($input);
         }
@@ -6892,7 +6891,7 @@ function do_dblocks_migration($migration)
 /**
  * Manage the ESX credentials part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_credentialESX_migration($migration)
@@ -7295,7 +7294,7 @@ function do_collect_migration($migration)
 /**
  * Manage the SNMP models part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_snmpmodel_migration($migration)
@@ -7320,7 +7319,7 @@ function do_snmpmodel_migration($migration)
 /**
  * Manage the rules part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_rule_migration($migration)
@@ -7351,7 +7350,7 @@ function do_rule_migration($migration)
                 'value'  => 1,
             ],
             [
-                'rules_id'  => new \QueryParam(),
+                'rules_id'  => new QueryParam(),
                 'value'     => 0,
                 'field'     => '_fusion',
             ]
@@ -7393,16 +7392,14 @@ function do_rule_migration($migration)
 
     //Deploy configuration options
     $a_input['server_upload_path'] =
-         Toolbox::addslashes_deep(
-             implode(
-                 DIRECTORY_SEPARATOR,
-                 [
-                     GLPI_PLUGIN_DOC_DIR,
-                     'glpiinventory',
-                     'upload',
-                 ]
-             )
-         );
+        implode(
+            DIRECTORY_SEPARATOR,
+            [
+                GLPI_PLUGIN_DOC_DIR,
+                'glpiinventory',
+                'upload',
+            ]
+        );
     $a_input['alert_winpath']    = 1;
     $a_input['server_as_mirror'] = 1;
     $a_input['mirror_match']     = 0;
@@ -7445,7 +7442,7 @@ function do_rule_migration($migration)
 /**
  * Manage the task part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function do_task_migration($migration)
@@ -7518,7 +7515,7 @@ function do_task_migration($migration)
  *
  * @since 0.85+1.0
  *
- * @global object $DB
+ * @global DBMysql $DB
  */
 function doDynamicDataSearchParamsMigration()
 {
@@ -7533,10 +7530,10 @@ function doDynamicDataSearchParamsMigration()
         $update = $DB->buildUpdate(
             'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
             [
-                'fields_array' => new \QueryParam(),
+                'fields_array' => new QueryParam(),
             ],
             [
-                'id'           => new \QueryParam(),
+                'id'           => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -7614,7 +7611,7 @@ function migrationDynamicGroupFields($fields)
                 $new_value['value']       = $data[$name];
                 $new_value['searchtype']  = 'equals';
             }
-            if (!empty($new_value)) {
+            if ($new_value !== []) {
                 $new_fields['criteria'][] = $new_value;
             }
         }
@@ -7626,7 +7623,7 @@ function migrationDynamicGroupFields($fields)
 /**
  * Manage the display preference part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param string $olditemtype
  * @param string $newitemtype
  */
@@ -7668,7 +7665,7 @@ function changeDisplayPreference($olditemtype, $newitemtype)
 /**
  * Manage the update from 2.13 to 2.20 version (very old) part migration
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  */
 function update213to220_ConvertField($migration)
@@ -8247,10 +8244,10 @@ function update213to220_ConvertField($migration)
         $update = $DB->buildUpdate(
             'glpi_plugin_tracker_snmp_history',
             [
-                'Field'  => new \QueryParam(),
+                'Field'  => new QueryParam(),
             ],
             [
-                'Field'  => new \QueryParam(),
+                'Field'  => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);
@@ -8310,10 +8307,10 @@ function update213to220_ConvertField($migration)
                             $insert = $DB->buildInsert(
                                 'glpi_plugin_fusinvsnmp_networkportconnectionlogs',
                                 [
-                                    'date_mod'                    => new \QueryParam(),
-                                    'creation'                    => new \QueryParam(),
-                                    'networkports_id_source'      => new \QueryParam(),
-                                    'networkports_id_destination' => new \QueryParam(),
+                                    'date_mod'                    => new QueryParam(),
+                                    'creation'                    => new QueryParam(),
+                                    'networkports_id_source'      => new QueryParam(),
+                                    'networkports_id_destination' => new QueryParam(),
                                 ]
                             );
                             $stmt = $DB->prepare($insert);
@@ -8401,10 +8398,10 @@ function update213to220_ConvertField($migration)
                                 $insert = $DB->buildInsert(
                                     'glpi_plugin_fusinvsnmp_networkportconnectionlogs',
                                     [
-                                        'date_mod'                    => new \QueryParam(),
-                                        'creation'                    => new \QueryParam(),
-                                        'networkports_id_source'      => new \QueryParam(),
-                                        'networkports_id_destination' => new \QueryParam(),
+                                        'date_mod'                    => new QueryParam(),
+                                        'creation'                    => new QueryParam(),
+                                        'networkports_id_source'      => new QueryParam(),
+                                        'networkports_id_destination' => new QueryParam(),
                                     ]
                                 );
                                 $stmt = $DB->prepare($insert);
@@ -8444,7 +8441,7 @@ function update213to220_ConvertField($migration)
 /**
  * Manage the migration of MySQL tables / fields
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @param array $a_table
  */
@@ -8540,7 +8537,7 @@ function migratePluginTables($migration, $a_table)
  * Migrate tables from plugin fusinvdeploy
  *    all datas in exploded tables are merged and stored in json in order table
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param  object $migration
  */
 function migrateTablesFromFusinvDeploy($migration)
@@ -8749,17 +8746,17 @@ function migrateTablesFromFusinvDeploy($migration)
             unset($of_line);
         }
         $options = 0;
-        $options = $options | JSON_UNESCAPED_SLASHES;
+        $options |= JSON_UNESCAPED_SLASHES;
 
         //store json in order table
         if (count($final_datas)) {
             $update = $DB->buildUpdate(
                 'glpi_plugin_glpiinventory_deployorders',
                 [
-                    'json'   => new \QueryParam(),
+                    'json'   => new QueryParam(),
                 ],
                 [
-                    'id'     => new \QueryParam(),
+                    'id'     => new QueryParam(),
                 ]
             );
             $stmt = $DB->prepare($update);
@@ -8922,7 +8919,7 @@ function migrateTablesFromFusinvDeploy($migration)
         $DB->update(
             PluginGlpiinventoryDeployPackage::getTable(),
             [
-                'json' => Toolbox::addslashes_deep(json_encode($json_order, JSON_UNESCAPED_SLASHES)),
+                'json' => json_encode($json_order, JSON_UNESCAPED_SLASHES),
             ],
             [
                 'id' => $order_config['id'],
@@ -9018,7 +9015,7 @@ function renamePlugin(Migration $migration)
         $DB->update(
             $table_name,
             [
-                $itemtype_col => new \QueryExpression(
+                $itemtype_col => new QueryExpression(
                     'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
                 ),
             ],

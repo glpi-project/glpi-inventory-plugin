@@ -79,10 +79,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function cleanFiles()
+    public function testCleanFiles()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployFile    = new PluginGlpiinventoryDeployFile();
@@ -159,10 +156,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function cleanPackage()
+    public function testCleanPackage()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployFile    = new PluginGlpiinventoryDeployFile();

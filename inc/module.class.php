@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the agent modules.
  */
@@ -94,8 +90,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
     {
         if (isset($_SESSION['glpi_plugins'][$p_id])) {
             if (
-                (substr($_SESSION['glpi_plugins'][$p_id], 0, 6) == 'fusinv')
-                or ($_SESSION['glpi_plugins'][$p_id] == 'glpiinventory')
+                str_starts_with($_SESSION['glpi_plugins'][$p_id], 'fusinv') || $_SESSION['glpi_plugins'][$p_id] == 'glpiinventory'
             ) {
                 return $_SESSION['glpi_plugins'][$p_id];
             } else {

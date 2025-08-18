@@ -1,5 +1,7 @@
 <?php
 
+use Glpi\Dashboard\Grid;
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -31,7 +33,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 if (PluginGlpiinventoryMenu::canView()) {
     Html::header(
@@ -46,7 +47,7 @@ if (PluginGlpiinventoryMenu::canView()) {
 
     PluginGlpiinventoryMenu::displayMenu();
 
-    $dashboard = new Glpi\Dashboard\Grid('plugin_glpiinventory_dashboard');
+    $dashboard = new Grid('plugin_glpiinventory_dashboard');
     echo "<div class='dashboard card p-3'>";
     $dashboard->show();
     echo "</div>";

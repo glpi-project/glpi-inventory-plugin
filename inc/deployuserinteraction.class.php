@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_decode;
 
 /**
  * Manage user interactions.
@@ -70,10 +68,6 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
     //The agent received a malformed or non existing event
     public const RESPONSE_BAD_EVENT       = 'error_bad_event';
-
-    //String to replace a \r\n, to avoid stripcslashes issue
-    public const RN_TRANSFORMATION        = "$#r$#n";
-
 
     /**
      * Get name of this type by language of the user connected
@@ -222,12 +216,6 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             $values['template_value']    = $data['template'] ?? "";
         }
 
-        //Trick to add \r\n in the description text area
-        $values['description_value'] = str_replace(
-            self::RN_TRANSFORMATION,
-            "\r\n",
-            $values['description_value']
-        );
         return $values;
     }
 
@@ -239,7 +227,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
      * @param array $data array converted of 'json' field in DB where stored checks
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;

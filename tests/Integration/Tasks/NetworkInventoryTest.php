@@ -80,7 +80,7 @@ class NetworkInventoryTest extends TestCase
             $printer->delete(['id' => $item['id']], true);
         }
 
-        // Delete all entities exept root entity
+        // Delete all entities except root entity
         $entity = new Entity();
         $items = $entity->find();
         foreach ($items as $item) {
@@ -91,10 +91,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareDb()
+    public function testPrepareDb()
     {
         global $DB;
 
@@ -322,10 +319,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareTask()
+    public function testPrepareTask()
     {
 
         $pfTask  = new PluginGlpiinventoryTask();
@@ -350,10 +344,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function getDevicesToInventory()
+    public function testGetDevicesToInventory()
     {
 
         $pfNetworkinventory = new PluginGlpiinventoryNetworkinventory();
@@ -371,10 +362,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PrinterToInventoryWithIp()
+    public function testPrinterToInventoryWithIp()
     {
 
         $printer       = new Printer();
@@ -451,10 +439,7 @@ class NetworkInventoryTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PrinterToInventoryWithoutIp()
+    public function testPrinterToInventoryWithoutIp()
     {
 
         $printer       = new Printer();
@@ -472,8 +457,9 @@ class NetworkInventoryTest extends TestCase
         }
 
         // Delete ipaddress of the printer
-        $iPAddress->getFromDBByCrit(['name' => '192.168.200.124']);
-        $iPAddress->delete(['id' => $iPAddress->fields['id']]);
+        if ($iPAddress->getFromDBByCrit(['name' => '192.168.200.124'])) {
+            $iPAddress->delete(['id' => $iPAddress->fields['id']]);
+        }
 
         $printer->getFromDBByCrit(['name' => 'printer 001']);
         $agent->getFromDBByCrit(['name' => 'computer1']);

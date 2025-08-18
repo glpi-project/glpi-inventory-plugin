@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the specifications of each module and for the task configuration.
  */
@@ -113,7 +109,7 @@ class PluginGlpiinventoryStaticmisc
         $modules_methods = [];
         $modules_methods[''] = "------";
         foreach ($methods as $method) {
-            if (!((isset($method['hidetask']) and $method['hidetask'] == '1'))) {
+            if (!((isset($method['hidetask']) && $method['hidetask'] == '1'))) {
                 if (isset($method['name'])) {
                     $modules_methods[$method['method']] = $method['name'];
                 } else {
@@ -183,12 +179,12 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of definition type 'PluginGlpiinventoryCredentialIp'
      * defined in task_definitiontype_InventoryComputerESX
      *
-     * @global object $DB
      * @param string $title (not used)
      * @return string unique html element id
      */
     public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX($title)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $iterator = $DB->request([
@@ -213,7 +209,7 @@ class PluginGlpiinventoryStaticmisc
         foreach ($iterator as $data) {
             $agents[$data['id']] = $data['name'];
         }
-        if (!empty($agents)) {
+        if ($agents !== []) {
             return Dropdown::showFromArray('definitionselectiontoadd', $agents);
         }
 
@@ -242,11 +238,11 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of action type 'PluginGlpiinventoryCredentialIp'
      * defined in task_actiontype_InventoryComputerESX
      *
-     * @global object $DB
      * @return string unique html element id
      */
     public static function task_actionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $options = [];

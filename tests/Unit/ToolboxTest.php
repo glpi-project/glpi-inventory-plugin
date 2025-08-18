@@ -63,10 +63,7 @@ class ToolboxTest extends TestCase
 JSON;
 
 
-    /**
-     * @test
-     */
-    public function formatJson()
+    public function testFormatJson()
     {
 
         $this->assertEquals(
@@ -76,10 +73,7 @@ JSON;
     }
 
 
-    /**
-     * @test
-     */
-    public function isAnInventoryDevice()
+    public function testIsAnInventoryDevice()
     {
         $computer = new Computer();
 
@@ -113,12 +107,5 @@ JSON;
         $printers_id_2 = $printer->add($values);
         $printer->getFromDB($printers_id_2);
         $this->assertFalse(PluginGlpiinventoryToolbox::isAnInventoryDevice($printer));
-    }
-
-    public function testDirectSQL()
-    {
-        global $DB;
-        $this->expectExceptionMessage('Direct query usage is strongly discouraged! Use DB::request() instead.');
-        $DB->query("SELECT * FROM glpi_users");
     }
 }

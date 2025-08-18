@@ -205,9 +205,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
  */
 function plugin_glpiinventory_giveItem($type, $id, $data, $num)
 {
-    global $CFG_GLPI, $DB;
-
-    $searchopt = &Search::getOptions($type);
+    $searchopt = Search::getOptions($type);
     $table = $searchopt[$id]["table"];
     $field = $searchopt[$id]["field"];
 
@@ -302,7 +300,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
 /**
  * Manage search options values
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $item
  * @return boolean
  */
@@ -311,16 +309,14 @@ function plugin_glpiinventory_searchOptionsValues($item)
     global $DB;
 
     if (
-        $item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjoblogs'
-           and $item['searchoption']['field'] == 'state'
+        $item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjoblogs' && $item['searchoption']['field'] == 'state'
     ) {
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
         $elements = $pfTaskjoblog->dropdownStateValues();
         Dropdown::showFromArray($item['name'], $elements, ['value' => $item['value']]);
         return true;
     } elseif (
-        $item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjobstates'
-           and $item['searchoption']['field'] == 'uniqid'
+        $item['searchoption']['table'] == 'glpi_plugin_glpiinventory_taskjobstates' && $item['searchoption']['field'] == 'uniqid'
     ) {
         $elements = [];
         $iterator = $DB->request([
@@ -463,7 +459,7 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
 function plugin_glpiinventory_addSelect($type, $id, $num)
 {
 
-    $searchopt = &Search::getOptions($type);
+    $searchopt = Search::getOptions($type);
     $table = $searchopt[$id]["table"];
     $field = $searchopt[$id]["field"];
 
@@ -521,9 +517,7 @@ function plugin_glpiinventory_addLeftJoin(
             array_pop($already_link_tables_tmp);
             foreach ($already_link_tables_tmp as $tmp_table) {
                 if (
-                    $tmp_table == "glpi_plugin_glpiinventory_tasks"
-                    or $tmp_table == "glpi_plugin_glpiinventory_taskjobs"
-                    or $tmp_table == "glpi_plugin_glpiinventory_taskjobstates"
+                    $tmp_table == "glpi_plugin_glpiinventory_tasks" || $tmp_table == "glpi_plugin_glpiinventory_taskjobs" || $tmp_table == "glpi_plugin_glpiinventory_taskjobstates"
                 ) {
                     $taskjob = 1;
                 }
@@ -674,14 +668,11 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                         return "";
                     }
                 } elseif ($field == 'name') {
-                    $val = stripslashes($val);
                     //decode a json query to match task names in taskjobs list
                     $names = json_decode($val);
-                    if ($names !== null && is_array($names)) {
+                    if (is_array($names)) {
                         $names = array_map(
-                            function ($a) {
-                                return "\"" . $a . "\"";
-                            },
+                            fn($a) => "\"" . $a . "\"",
                             $names
                         );
                         return $link . " `$table`.`name` IN (" . implode(',', $names) . ")";
@@ -706,7 +697,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                     $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
                     $a_modules = $pfAgentmodule->find(['modulename' => $module]);
                     $data = current($a_modules);
-                    if (($data['exceptions'] != "[]") and ($data['exceptions'] != "")) {
+                    if ($data['exceptions'] != "[]" && $data['exceptions'] != "") {
                         $a_exceptions = importArrayFromDB($data['exceptions']);
                         $current_id = current($a_exceptions);
                         $in = "(";

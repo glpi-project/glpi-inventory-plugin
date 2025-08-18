@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the wmi information found by the collect module of agent.
  */
@@ -49,13 +45,13 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     /**
      * update wmi data to compute (add and update) with data sent by the agent
      *
-     * @global object $DB
      * @param integer $computers_id id of the computer
      * @param array $wmi_data
      * @param integer $collects_wmis_id
      */
     public function updateComputer($computers_id, $wmi_data, $collects_wmis_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $db_wmis = [];
@@ -72,8 +68,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         foreach ($iterator as $data) {
             $wmi_id = $data['id'];
             unset($data['id']);
-            $data1 = Toolbox::addslashes_deep($data);
-            $db_wmis[$wmi_id] = $data1;
+            $db_wmis[$wmi_id] = $data;
         }
 
         unset($wmi_data['_sid']);
@@ -92,7 +87,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             }
         }
 
-        foreach ($db_wmis as $id => $data) {
+        foreach (array_keys($db_wmis) as $id) {
             $this->delete(['id' => $id], true);
         }
         foreach ($wmi_data as $key => $value) {

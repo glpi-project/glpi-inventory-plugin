@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
-
 /**
  * Manage network discovery prepare the task and give the configuration to the
  * agent.
@@ -94,7 +90,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
 
         if ($dynagent == '2') {
             // Dynamic with subnet
-            foreach ($a_subnet_nbip as $iprange_id => $nbips) {
+            foreach (array_keys($a_subnet_nbip) as $iprange_id) {
                 //$maxagentpossible = $nbips/10;
                 $pfIPRange->getFromDB($iprange_id);
 

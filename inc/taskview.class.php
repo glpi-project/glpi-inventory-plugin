@@ -31,9 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
+use Glpi\DBAL\QueryExpression;
+use Safe\DateTime;
+
+use function Safe\json_decode;
+use function Safe\json_encode;
 
 /**
  * Manage the display part of tasks.
@@ -41,7 +43,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 {
     /**
-     * __contruct function where initialize base URLs
+     * __construct function where initialize base URLs
      */
     public function __construct()
     {
@@ -398,18 +400,26 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "<tr class='border-top'>";
         echo "<td class='right pt-3' colspan='4'>";
         if (!$this->isNewID($ID) && $this->can($ID, PURGE)) {
-            echo Html::submit("<i class='fas fa-trash me-1'></i>" . _x('button', 'Delete permanently'), [
-                'name'    => 'purge',
-                'confirm' => __('Confirm the final deletion?'),
-                'class '  => 'btn btn-outline-danger me-2',
-            ]);
+            echo Html::submit(
+                _x('button', 'Delete permanently'),
+                [
+                    'icon' => 'fas fa-trash me-1',
+                    'name'    => 'purge',
+                    'confirm' => __('Confirm the final deletion?'),
+                    'class '  => 'btn btn-outline-danger me-2',
+                ]
+            );
         }
 
         if ($this->fields['is_active']) {
-            echo Html::submit("<i class='fas fa-bolt me-1'></i>" . __('Force start', 'glpiinventory'), [
-                'name' => 'forcestart',
-                'class' => 'btn btn-outline-warning me-2',
-            ]);
+            echo Html::submit(
+                __('Force start', 'glpiinventory'),
+                [
+                    'icon' => 'fas fa-bolt me-1',
+                    'name' => 'forcestart',
+                    'class' => 'btn btn-outline-warning me-2',
+                ]
+            );
         }
 
         if ($this->isNewID($ID)) {
@@ -419,10 +429,14 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             ]);
         } else {
             echo Html::hidden('id', ['value' => $ID]);
-            echo Html::submit("<i class='far fa-save me-1'></i>" . _x('button', 'Save'), [
-                'name'  => 'update',
-                'class' => 'btn btn-primary me-2',
-            ]);
+            echo Html::submit(
+                _x('button', 'Save'),
+                [
+                    'icon' => 'far fa-save me-1',
+                    'name'  => 'update',
+                    'class' => 'btn btn-primary me-2',
+                ]
+            );
         }
         echo "</td>";
         echo "</tr>";
@@ -531,6 +545,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      */
     public function csvExport($params = [])
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $default_params = [
@@ -581,12 +596,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         // clean old temporary variables
         unset($task, $job, $target, $agent);
 
-        if (!$params['debug_csv']) {
-            define('SEP', $CFG_GLPI['csv_delimiter']);
-            define('NL', "\r\n");
-        } else {
-            define('SEP', '</td><td>');
-            define('NL', '</tr><tr><td>');
+        define('SEP', $params['debug_csv'] ? $CFG_GLPI['csv_delimiter'] : '</td><td>'); // @phpstan-ignore theCodingMachineSafe.function
+        define('NL', $params["debug_csv"] ? "\r\n" : '</tr><tr><td>'); // @phpstan-ignore theCodingMachineSafe.function
+        if ($params['debug_csv']) {
             echo "<table border=1><tr><td>";
         }
 
@@ -606,10 +618,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         // prepare an anonymous (and temporory) function
         // for test if an element is the last of an array
-        $last = function (&$array, $key) {
-            end($array);
-            return $key === key($array);
-        };
+        $last = (fn(&$array, $key) => $key === array_key_last($array));
 
         // display lines
         $csv_array = [];
@@ -671,7 +680,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
                     $log_cpt++;
 
-                    if ($includeoldjobs != -1 and $log_cpt >= $includeoldjobs) {
+                    if ($includeoldjobs != -1 && $log_cpt >= $includeoldjobs) {
                         break;
                     }
                 }
@@ -685,7 +694,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         }
 
         // force exit to prevent further display
-        exit;
+        exit; //@phpstan-ignore-line (whole method needs to be refactored)
     }
 
 

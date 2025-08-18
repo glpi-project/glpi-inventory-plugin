@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class PackageSelfDeployTest extends TestCase
@@ -170,10 +171,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PackageNoTarget()
+    public function testPackageNoTarget()
     {
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -189,10 +187,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PackageTargetEntity()
+    public function testPackageTargetEntity()
     {
 
         $pfDeployPackage        = new PluginGlpiinventoryDeployPackage();
@@ -220,10 +215,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PackageTargetgroup()
+    public function testPackageTargetgroup()
     {
 
         $pfDeployPackage       = new PluginGlpiinventoryDeployPackage();
@@ -263,10 +255,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PackageTargetUser()
+    public function testPackageTargetUser()
     {
         $pfDeployPackage      = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_User = new PluginGlpiinventoryDeployPackage_User();
@@ -300,10 +289,7 @@ class PackageSelfDeployTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function PackageTargetProfile()
+    public function testPackageTargetProfile()
     {
         $pfDeployPackage         = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_Profile = new PluginGlpiinventoryDeployPackage_Profile();
@@ -336,11 +322,8 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages, 'May have 1 package');
     }
 
-
-    /**
-     * @test
-     */
-    public function ReportMyPackage()
+    #[Depends('testPackageNoTarget')]
+    public function testReportMyPackage()
     {
         global $DB;
 
@@ -435,11 +418,8 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages_deploy);
     }
 
-
-    /**
-     * @test
-     */
-    public function ReportComputerPackages()
+    #[Depends('testPackageNoTarget')]
+    public function testReportComputerPackages()
     {
         global $DB;
 
@@ -503,20 +483,17 @@ class PackageSelfDeployTest extends TestCase
         $names    = [];
 
         foreach ($packages as $data) {
-            foreach ($data as $packages_id => $package_info) {
+            foreach ($data as $package_info) {
                 $names[] = $package_info['name'];
             }
         }
 
         $expected = ['test1', 'test2'];
-        $this->assertEquals($names, $expected);
+        $this->assertEquals($expected, $names);
     }
 
-
-    /**
-     * @test
-     */
-    public function ReportComputerPackagesDeployDisabled()
+    #[Depends('testReportComputerPackages')]
+    public function testReportComputerPackagesDeployDisabled()
     {
 
         // Disable deploy feature for all agents

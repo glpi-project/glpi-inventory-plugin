@@ -34,7 +34,7 @@
 /**
  * Manage update the task system
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @param object $migration
  * @param integer $plugin_id
  */
@@ -311,10 +311,10 @@ function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
         $update = $DB->buildUpdate(
             $table['name'],
             [
-                'comment'   => new \QueryParam(),
+                'comment'   => new QueryParam(),
             ],
             [
-                'id'        => new \QueryParam(),
+                'id'        => new QueryParam(),
             ]
         );
         $stmt = $DB->prepare($update);

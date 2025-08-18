@@ -31,9 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\filesize;
+use function Safe\ob_clean;
+use function Safe\readfile;
+use function Safe\realpath;
+use function Safe\preg_match;
 
 /**
  * Used to get the deploy file in many parts.
@@ -49,7 +51,7 @@ class PluginGlpiinventoryDeployFilepart
     {
         if (empty($file)) {
             header("HTTP/1.1 500");
-            exit;
+            exit; //@phpstan-ignore-line (whole method probably needs refactoring)
         }
         $matches = [];
         preg_match('/.\/..\/([^\/]+)/', $file, $matches);
@@ -64,10 +66,10 @@ class PluginGlpiinventoryDeployFilepart
 
         if (!is_file($filePath)) {
             header("HTTP/1.1 404");
-            exit;
+            exit; //@phpstan-ignore-line (whole method probably needs refactoring)
         } elseif (!is_readable($filePath) || !str_starts_with(realpath($filePath), realpath($repoPath))) {
             header("HTTP/1.1 403");
-            exit;
+            exit; //@phpstan-ignore-line (whole method probably needs refactoring)
         }
 
         error_reporting(0);
@@ -85,6 +87,6 @@ class PluginGlpiinventoryDeployFilepart
         }
         flush();
         readfile($filePath);
-        exit;
+        exit; //@phpstan-ignore-line (whole method probably needs refactoring)
     }
 }

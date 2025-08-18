@@ -35,9 +35,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeploypackageTest extends TestCase
 {
-    /**
-     * @test
-     */
     public function testGetTypeName()
     {
         $this->assertEquals('Package', PluginGlpiinventoryDeployPackage::getTypeName());
@@ -46,9 +43,6 @@ class DeploypackageTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testIsDeployEnabled()
     {
         global $DB;

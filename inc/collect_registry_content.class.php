@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\preg_match;
 
 /**
  * Manage the registry keys found by the collect module of agent.
@@ -85,13 +83,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      * Update computer registry values (add and update) related to this
      * collect registry id
      *
-     * @global object $DB
      * @param integer $computers_id id of the computer
      * @param array $registry_data registry info sent by agent
      * @param integer $collects_registries_id id of collect_registry
      */
     public function updateComputer($computers_id, $registry_data, $collects_registries_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $db_registries = [];
@@ -108,8 +106,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         foreach ($iterator as $data) {
             $idtmp = $data['id'];
             unset($data['id']);
-            $data1 = Toolbox::addslashes_deep($data);
-            $db_registries[$idtmp] = $data1;
+            $db_registries[$idtmp] = $data;
         }
 
         unset($registry_data['_sid']);
@@ -128,7 +125,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             }
         }
 
-        foreach ($db_registries as $id => $data) {
+        foreach (array_keys($db_registries) as $id) {
             $this->delete(['id' => $id], true);
         }
         foreach ($registry_data as $key => $value) {

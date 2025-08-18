@@ -31,9 +31,13 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QuerySubQuery;
+use Safe\DateTime;
+
+use function Safe\ini_set;
+use function Safe\json_encode;
+use function Safe\session_write_close;
 
 /**
  * Manage the task system.
@@ -65,7 +69,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      *
      * @return boolean
      */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }
@@ -247,11 +251,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Purge elements linked to task when delete it
      *
-     * @global object $DB
      * @param object $param
      */
     public static function purgeTask($param)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $tasks_id = $param->fields['id'];
@@ -260,7 +264,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $DB->delete(
             'glpi_plugin_glpiinventory_taskjoblogs',
             [
-                'plugin_glpiinventory_taskjobstates_id' => new \QuerySubQuery([
+                'plugin_glpiinventory_taskjobstates_id' => new QuerySubQuery([
                     'SELECT' => 'states.id',
                     'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates AS states',
                     'INNER JOIN' => [
@@ -282,7 +286,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $DB->delete(
             'glpi_plugin_glpiinventory_taskjobstates',
             [
-                'plugin_glpiinventory_taskjobs_id' => new \QuerySubQuery([
+                'plugin_glpiinventory_taskjobs_id' => new QuerySubQuery([
                     'SELECT' => 'jobs.id',
                     'FROM'   => 'glpi_plugin_glpiinventory_taskjobs AS jobs',
                     'WHERE'  => [
@@ -318,8 +322,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         foreach ($a_taskjobs as $a_taskjob) {
             $pfTaskjob->delete($a_taskjob, true);
             if (
-                ($task_id != $a_taskjob['plugin_glpiinventory_tasks_id'])
-                and ($task_id != '0')
+                $task_id != $a_taskjob['plugin_glpiinventory_tasks_id'] && $task_id != '0'
             ) {
                 // Search if this task have other taskjobs, if not, we will delete it
                 $findtaskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $task_id]);
@@ -343,7 +346,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get the list of taskjobstate for the agent
      *
-     * @global object $DB
      * @param integer $agent_id
      * @param array $methods
      * @param array $options
@@ -351,6 +353,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public function getTaskjobstatesForAgent($agent_id, $methods = [], $options = [])
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
@@ -427,7 +430,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         // Merge agents into one list
         $agents = [];
         foreach ($actors as $agents_list) {
-            foreach ($agents_list as $id => $val) {
+            foreach (array_keys($agents_list) as $id) {
                 if (!isset($agents[$id])) {
                     $agents[$id] = true;
                 }
@@ -461,8 +464,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
             // Cancel the job if has already been sent to the agent but the agent did not replied
             if (
-                $result['run']['state'] == PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
-                 or $result['run']['state'] == PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA
+                $result['run']['state'] == PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA || $result['run']['state'] == PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA
             ) {
                 $msg = "The agent is requesting a configuration that has already been sent to him by the server. It is more likely that the agent is subject to a critical error.";
                 $translatable_msg = __("The agent is requesting a configuration that has already been sent to him by the server. It is more likely that the agent is subject to a critical error.", 'glpiinventory');
@@ -497,7 +499,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     $schedule_end = $now;
                 }
 
-                if (!($schedule_start <= $now and $now <= $schedule_end)) {
+                if (!($schedule_start <= $now && $now <= $schedule_end)) {
                     $msg = "This job can not be executed anymore due to the task's schedule.";
                     $translatable_msg = __("This job can not be executed anymore due to the task's schedule.", 'glpiinventory');
 
@@ -528,8 +530,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
                         // The timeslot cursor (ie. time of request) matched a timeslot entry
                         if (
-                            $timeslot_entry['begin'] <= $timeslot_cursor
-                            and $timeslot_cursor <= $timeslot_entry['end']
+                            $timeslot_entry['begin'] <= $timeslot_cursor && $timeslot_cursor <= $timeslot_entry['end']
                         ) {
                             $too_early = false;
                             $timeslot_matched = true;
@@ -665,6 +666,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     */
     public function cleanTasksAndJobs($interval)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -793,7 +795,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      * - tasks: is a map containing the objects of a task
      * - agents: is a list of the agents involved in the tasks jobs
      *
-     * @global object $DB
      * @param array $task_ids list of tasks id
      * @param bool $with_logs default to true to get jobs execution logs with the jobs states
      * @param bool $only_active, set to true to include only active tasks
@@ -801,6 +802,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public function getJoblogs(array $task_ids = [], $with_logs = true, $only_active = false)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         // Results grouped by tasks > jobs > jobstates
@@ -962,13 +964,13 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 $item_type = key($target);
                 $item_id   = current($target);
                 $item_name = "";
-                if (strpos($item_id, '$#$') !== false) {
+                if (str_contains($item_id, '$#$')) {
                     [$item_id, $item_name] = explode('$#$', $item_id);
                 }
 
                 $target_id = $item_type . "_" . $item_id;
                 if ($item_name == "") {
-                    $item = new $item_type();
+                    $item = getItemForItemtype($item_type);
                     if ($item->getFromDB($item_id)) {
                         $item_name = $item->fields['name'];
                     }
@@ -1232,7 +1234,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         'log.date AS log_last_date',
                         'log.comment AS log_last_comment',
                         'log.plugin_glpiinventory_taskjobstates_id AS run_id',
-                        new \QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp')),
+                        new QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp')),
                     ],
                     'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs AS log',
                     'WHERE' => [
@@ -1352,8 +1354,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         }
         $out = json_encode($logs);
         if (
-            isset($options['display'])
-            and !$options['display']
+            isset($options['display']) && !$options['display']
         ) {
             return $out;
         } else {
@@ -1367,7 +1368,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get tasks planned
      *
-     * @global object $DB
      * @param integer $tasks_id if 0, no restriction so get all
      * @param bool $only_active, set to true to include only active tasks
      * @return object
@@ -1375,6 +1375,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     public function getTasksPlanned($tasks_id = 0, $only_active = true)
     {
         //FIXME: seems unused
+        /** @var DBmysql $DB */
         global $DB;
 
         $sub_query = new QuerySubQuery([
@@ -1417,12 +1418,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get tasks filtered by relevant criteria
      *
-     * @global object $DB
      * @param array $filter criteria to filter in the request
      * @return array
      */
     public static function getItemsFromDB($filter)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $criteria = [
@@ -1433,16 +1434,14 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         // Filter active tasks
         if (
-            isset($filter['is_active'])
-              and is_bool($filter['is_active'])
+            isset($filter['is_active']) && is_bool($filter['is_active'])
         ) {
             $criteria['WHERE'][] = ['task.is_active' => $filter['is_active']];
         }
 
         //Filter by running taskjobs
         if (
-            isset($filter['is_running'])
-              and is_bool($filter['is_running'])
+            isset($filter['is_running']) && is_bool($filter['is_running'])
         ) {
             // add taskjobs table JOIN statement
             $criteria['SELECT'] = array_merge(
@@ -1469,8 +1468,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         //Filter by targets classes
         if (
-            isset($filter['targets'])
-              and is_array($filter['targets'])
+            isset($filter['targets']) && is_array($filter['targets'])
         ) {
             $it_where = [];
             //check classes existence AND append them to the query filter
@@ -1514,8 +1512,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         // Filter by actors classes
         if (
-            isset($filter['actors'])
-            and is_array($filter['actors'])
+            isset($filter['actors']) && is_array($filter['actors'])
         ) {
             $it_where = [];
             //check classes existence AND append them to the query filter
@@ -1559,8 +1556,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         // Filter by entity
         if (
-            isset($filter['by_entities'])
-            and (bool) $filter['by_entities']
+            isset($filter['by_entities']) && (bool) $filter['by_entities']
         ) {
             $criteria['WHERE'][] = getEntitiesRestrictCriteria('task');
         }
@@ -1575,16 +1571,15 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Do actions after updated the item
      *
-     * @global object $DB
      * @param bool $history
      */
     public function post_updateItem($history = true)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         if (
-            isset($this->oldvalues['is_active'])
-              and $this->oldvalues['is_active'] == 1
+            isset($this->oldvalues['is_active']) && $this->oldvalues['is_active'] == 1
         ) {
             // If disable task, must end all taskjobstates prepared
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -1651,8 +1646,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     public function getSpecificMassiveActions($checkitem = null)
     {
         $actions = [];
-        $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfert'] = __('Transfer');
-        $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'duplicate'] = _sx('button', 'Duplicate');
+        $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfert'] = __('Transfer');
+        $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'duplicate'] = _sx('button', 'Duplicate');
         return $actions;
     }
 
@@ -1661,8 +1656,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Display form related to the massive action selected
      *
-     * @global array $CFG_GLPI
      * @param MassiveAction $ma MassiveAction instance
+     *
      * @return boolean
      */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
@@ -1693,7 +1688,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
-                        'url'             => Plugin::getWebDir('glpiinventory') . "/ajax/dropdown_taskjob.php",
+                        'url'             => $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdown_taskjob.php",
                     ],
                 ]);
                 echo "</td>";
@@ -1732,7 +1727,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "taskjob$rand",
-                        'url'             => Plugin::getWebDir('glpiinventory') . "/ajax/dropdown_taskjob.php",
+                        'url'             => $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdown_taskjob.php",
                     ],
                 ]);
                 echo "</td>";
@@ -1824,7 +1819,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 // Get the task and the package
                 $got_task = $pfTask->getFromDB($ma->POST['tasks_id']);
                 $got_package = $pfDeployPackage->getFromDB($ma->POST['packages_id']);
-                if (! $got_package or ! $got_task) {
+                if (! $got_package || ! $got_task) {
                     // No task or package provided
                     foreach ($ids as $computer_id) {
                         $computer->getFromDB($computer_id);
@@ -1958,7 +1953,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             );
             $input['is_active'] = 0;
             unset($input['id']);
-            $input              = Toolbox::addslashes_deep($input);
             if ($target_task_id = $this->add($input)) {
                 //Clone taskjobs
                 $result

@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskjobview.class.php");
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/taskview.class.php");
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/task.class.php");
@@ -64,7 +60,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
      *
      * @return boolean
      */
-    public static function canCreate()
+    public static function canCreate(): bool
     {
         return true;
     }
@@ -75,7 +71,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
      *
      * @return boolean
      */
-    public static function canView()
+    public static function canView(): bool
     {
         return true;
     }
@@ -93,7 +89,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
         $ong = [];
 
         if ($this->fields['id'] > 0) {
-            $this->addStandardTab(__CLASS__, $ong, $options);
+            $this->addStandardTab(self::class, $ong, $options);
         }
         return $ong;
     }
@@ -110,7 +106,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     {
 
         switch (get_class($item)) {
-            case __CLASS__:
+            case self::class:
                 return __('Order list', 'glpiinventory');
         }
         return '';
@@ -128,7 +124,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         switch (get_class($item)) {
-            case __CLASS__:
+            case self::class:
                 $obj = new self();
                 $obj->showActions($_POST["id"]);
                 return true;
@@ -149,22 +145,20 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
 
     /**
      * Display the title of the page
-     *
-     * @global array $CFG_GLPI
      */
     public function title()
     {
-        global  $CFG_GLPI;
+        global $CFG_GLPI;
 
         $buttons = [];
         $title = _n('Task', 'Tasks', 1, 'glpiinventory');
 
-        if ($this->canCreate()) {
+        if (static::canCreate()) {
             $buttons["task.form.php?new=1"] = __('Add task', 'glpiinventory');
             $title = "";
         }
         Html::displayTitle(
-            Plugin::getWebDir('glpiinventory') . "/pics/task.png",
+            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/pics/task.png",
             $title,
             $title,
             $buttons
@@ -207,11 +201,11 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     /**
      * Do this before delete a deploy task
      *
-     * @global array $CFG_GLPI
      * @return boolean
      */
     public function pre_deleteItem()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         //if task active, delete denied
@@ -220,9 +214,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
                 __('This task is active. delete denied', 'glpiinventory')
             );
 
-            Html::redirect($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/front/task.form.php?id=" .
-             $this->getField('id'));
-            return false;
+            Html::redirect($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/front/task.form.php?id=" . $this->getField('id'));
         }
 
         $task_id = $this->getField('id');

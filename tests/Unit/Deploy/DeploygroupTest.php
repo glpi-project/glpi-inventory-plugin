@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class DeploygroupTest extends TestCase
@@ -57,10 +58,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function AddGroup()
+    public function testAddGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $input = ['name'    => 'MyGroup',
@@ -80,11 +78,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends AddGroup
-     */
-    public function cloneStaticGroup()
+    #[Depends('testAddGroup')]
+    public function testCloneStaticGroup()
     {
         $computer      = new Computer();
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -131,11 +126,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends cloneStaticGroup
-     */
-    public function cloneDynamicGroup()
+    #[Depends('testCloneStaticGroup')]
+    public function testCloneDynamicGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $input = ['name'    => 'Dynamic group',
@@ -169,11 +161,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends cloneDynamicGroup
-     */
-    public function updateGroup()
+    #[Depends('testCloneDynamicGroup')]
+    public function testUpdateGroup()
     {
         //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -194,11 +183,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends updateGroup
-     */
-    public function switchDynamicToStaticGroup()
+    #[Depends('testUpdateGroup')]
+    public function testSwitchDynamicToStaticGroup()
     {
         //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -225,11 +211,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends cloneDynamicGroup
-     */
-    public function deleteDynamicGroup()
+    #[Depends('testCloneDynamicGroup')]
+    public function testDeleteDynamicGroup()
     {
 
         $pfDeploygroup  = new PluginGlpiinventoryDeployGroup();
@@ -255,11 +238,8 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @depends cloneStaticGroup
-     */
-    public function deleteStaticGroup()
+    #[Depends('testCloneStaticGroup')]
+    public function testDeleteStaticGroup()
     {
 
         //Get the group have the name "Windows computers"
@@ -284,10 +264,7 @@ class DeploygroupTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function ImportCsvStaticGroup()
+    public function testImportCsvStaticGroup()
     {
         global $DB;
 

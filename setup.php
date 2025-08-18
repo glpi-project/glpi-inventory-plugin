@@ -31,13 +31,14 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Http\Firewall;
 use Glpi\Plugin\Hooks;
 
 define("PLUGIN_GLPIINVENTORY_VERSION", "1.5.3");
 // Minimal GLPI version, inclusive
 define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '10.0.11');
 // Maximum GLPI version, exclusive
-define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '10.0.99');
+define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '11.0.99');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
@@ -102,6 +103,11 @@ function plugin_init_glpiinventory()
     }
 
     if ($Plugin->isActivated('glpiinventory')) { // check if plugin is active
+        // Disable firewall checks for machine to machine endpoints
+        Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/index\.php#', Firewall::STRATEGY_NO_CHECK);
+        Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/b/#', Firewall::STRATEGY_NO_CHECK);
+        Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/front/communication.php#', Firewall::STRATEGY_NO_CHECK);
+
         //for dashboard
         $CFG_GLPI['javascript']['admin']['pluginglpiinventorymenu'] = [
             'dashboard', 'gridstack',
@@ -239,45 +245,33 @@ function plugin_init_glpiinventory()
         $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'] = [];
         $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'] = [];
         if (
-            str_contains($current_url, Plugin::getWebDir('glpiinventory', false))
+            str_contains($current_url, $CFG_GLPI['root_doc'] . '/plugins/glpiinventory/')
             || str_ends_with($current_url, "front/printer.form.php")
             || str_ends_with($current_url, "front/computer.form.php")
         ) {
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = "css/views.css";
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = "css/deploy.css";
 
-            array_push(
-                $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'],
-                "lib/d3/d3" . ($debug_mode ? "" : ".min") . ".js"
-            );
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/d3/d3" . ($debug_mode ? "" : ".min") . ".js";
         }
         if (plugin_glpiinventory_script_endswith("timeslot.form.php")) {
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/timeslot" . ($debug_mode ? "" : ".min") . ".js";
         }
         if (plugin_glpiinventory_script_endswith("deploypackage.form.php")) {
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = "lib/extjs/resources/css/ext-all.css";
-
-            array_push(
-                $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'],
-                "lib/extjs/adapter/ext/ext-base" . ($debug_mode ? "-debug" : "") . ".js",
-                "lib/extjs/ext-all" . ($debug_mode ? "-debug" : "") . ".js",
-                "lib/REDIPS_drag/redips-drag" . ($debug_mode ? "-source" : "-min") . ".js",
-                "lib/REDIPS_drag/drag_table_rows.js",
-                "lib/plusbutton" . ($debug_mode ? "" : ".min") . ".js",
-                "lib/deploy_editsubtype" . ($debug_mode ? "" : ".min") . ".js"
-            );
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/extjs/adapter/ext/ext-base" . ($debug_mode ? "-debug" : "") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/extjs/ext-all" . ($debug_mode ? "-debug" : "") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/REDIPS_drag/redips-drag" . ($debug_mode ? "-source" : "-min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/REDIPS_drag/drag_table_rows.js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/plusbutton" . ($debug_mode ? "" : ".min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/deploy_editsubtype" . ($debug_mode ? "" : ".min") . ".js";
         }
-        if (
-            plugin_glpiinventory_script_endswith("task.form.php")
-            || plugin_glpiinventory_script_endswith("taskjob.php")
-            || plugin_glpiinventory_script_endswith("iprange.form.php")
-        ) {
-            array_push(
-                $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'],
-                "lib/lazy.js-0.5.1/lazy" . ($debug_mode ? "" : ".min") . ".js",
-                "lib/mustache.js-2.3.0/mustache" . ($debug_mode ? "" : ".min") . ".js",
-                "js/taskjobs" . ($debug_mode || !file_exists('js/taskjobs.min.js') ? "" : ".min") . ".js"
-            );
+        if (plugin_glpiinventory_script_endswith("task.form.php")
+        || plugin_glpiinventory_script_endswith("taskjob.php")
+        || plugin_glpiinventory_script_endswith("iprange.form.php")) {
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/lazy.js-0.5.1/lazy" . ($debug_mode ? "" : ".min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "lib/mustache.js-2.3.0/mustache" . ($debug_mode ? "" : ".min") . ".js";
+            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "js/taskjobs" . ($debug_mode || !file_exists('js/taskjobs.min.js') ? "" : ".min") . ".js";
         }
         if (plugin_glpiinventory_script_endswith("menu.php")) {
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = "js/stats" . ($debug_mode || !file_exists('js/stats.min.js') ? "" : ".min") . ".js";
@@ -364,8 +358,9 @@ function plugin_init_glpiinventory()
     }
 
     // exclude some pages from splitted layout
-    if (isset($CFG_GLPI['layout_excluded_pages'])) { // to be compatible with glpi 0.85
-        array_push($CFG_GLPI['layout_excluded_pages'], "timeslot.form.php");
+    if (isset($CFG_GLPI['layout_excluded_pages'])) {
+        // to be compatible with glpi 0.85
+        $CFG_GLPI['layout_excluded_pages'][] = "timeslot.form.php";
     }
 
     $PLUGIN_HOOKS[Hooks::PROLOG_RESPONSE]['glpiinventory'] = 'plugin_glpiinventory_prolog_response';
@@ -417,7 +412,7 @@ function plugin_version_glpiinventory()
 /**
  * Manage / check the prerequisites of the plugin
  *
- * @global object $DB
+ * @global DBMysql $DB
  * @return boolean
  */
 function plugin_glpiinventory_check_prerequisites()
@@ -456,4 +451,12 @@ function plugin_glpiinventory_options()
     return [
         'autoinstall_disabled' => true,
     ];
+}
+
+
+function plugin_glpiinventory_boot()
+{
+    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/$#');
+    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/Communication$#');
+    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/front/communication.php$#');
 }

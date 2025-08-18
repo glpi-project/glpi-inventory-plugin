@@ -124,10 +124,7 @@ class DeleteTaskTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function deleteTask()
+    public function testDeleteTask()
     {
 
         $pfTask         = new PluginGlpiinventoryTask();
