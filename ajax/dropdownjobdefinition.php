@@ -36,6 +36,8 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
+global $CFG_GLPI;
+
 // Make a select box
 $type = filter_input(INPUT_POST, "type");
 $actortype = filter_input(INPUT_POST, "actortype");
@@ -51,9 +53,6 @@ if (!empty($type) && !empty($actortype)) {
             // Only steal or own ticket whit empty assign
             if ($actortype == 'assign') {
                 $right = "own_ticket";
-                if (!$item->canAssign()) {
-                    $right = 'id';
-                }
             }
 
             $options = ['name'        => '_itil_' . $actortype . '[users_id]',

@@ -36,6 +36,8 @@ if (strpos($_SERVER['PHP_SELF'], "dropdownactionselection.php")) {
     Html::header_nocache();
 }
 
+global $CFG_GLPI;
+
 Session::checkCentralAccess();
 
 echo "<script type='text/javascript'>

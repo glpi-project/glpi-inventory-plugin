@@ -42,6 +42,4 @@ $pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->dropdownActionType(
     "ActionType",
     filter_input(INPUT_POST, "method"),
-    filter_input(INPUT_POST, "value"),
-    ""
 );

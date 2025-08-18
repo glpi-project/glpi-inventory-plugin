@@ -46,6 +46,6 @@ if ($myamemore != '') {
         $myamemore,
         filter_input(INPUT_POST, "method"),
         filter_input(INPUT_POST, filter_input(INPUT_POST, "name") . 'typeid'),
-        filter_input(INPUT_POST, "taskjobs_id")
+        (int) filter_input(INPUT_POST, "taskjobs_id")
     );
 }
