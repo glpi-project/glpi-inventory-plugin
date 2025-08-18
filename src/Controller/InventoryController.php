@@ -76,6 +76,7 @@ class InventoryController extends AbstractController
 
     #[Route("/Communication", name: "glpiinventory_communication", methods: ['GET', 'POST'])]
     #[Route("/front/communication.php", name: "glpiinventory_communication_legacy", methods: ['GET', 'POST'])]
+    #[Route("/front/plugin_fusioninventory.communication.php", name: "glpiinventory_communication_fusion_legacy", methods: ['GET', 'POST'])]
     public function communication(Request $request, ?string $action = null, ?string $machine_id = null): Response
     {
         ini_set("memory_limit", "-1");
