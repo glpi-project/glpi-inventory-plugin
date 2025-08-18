@@ -1,6 +1,7 @@
 <?php
 
 use Glpi\Dashboard\Grid;
+use Glpi\Exception\Http\AccessDeniedHttpException;
 
 /**
  * ---------------------------------------------------------------------
@@ -52,7 +53,7 @@ if (PluginGlpiinventoryMenu::canView()) {
     $dashboard->show();
     echo "</div>";
 } else {
-    Html::displayRightError();
+    throw new AccessDeniedHttpException();
 }
 
 Html::footer();

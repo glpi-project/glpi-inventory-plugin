@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\preg_match;
 
 $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
 

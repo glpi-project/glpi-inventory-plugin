@@ -8,6 +8,7 @@ parameters:
         - setup.php
     paths:
         - ajax
+        - front
         - inc
     scanDirectories:
         - ../../inc

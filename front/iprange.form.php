@@ -104,7 +104,7 @@ if (isset($_POST["add"])) {
 } elseif (isset($_POST["purge"])) {
     if (isset($_POST['communication'])) {
         $task = new PluginGlpiinventoryTask();
-        $task->delete(['id' => $_POST['task_id']], 1);
+        $task->delete(['id' => $_POST['task_id']], true);
         $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
         Html::back();
     } else {

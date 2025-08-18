@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-$dropdown = new PluginGlpiinventoryCredentialIP();
+$dropdown = new PluginGlpiinventoryCredentialIp();
 
 if (!empty($_POST) || isset($_GET['_in_modal'])) {
     if (empty($_POST['plugin_glpiinventory_credentials_id'])) {

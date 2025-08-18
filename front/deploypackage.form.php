@@ -31,15 +31,15 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_decode;
+
 Session::checkLoginUser();
 
 $package = new PluginGlpiinventoryDeployPackage();
 if (isset($_POST['update_json'])) {
     $json = json_decode($_POST['json'], true);
-
     $ret = PluginGlpiinventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
     Html::back();
-    exit;
 } elseif (isset($_POST['add_item'])) {
     PluginGlpiinventoryDeployPackage::alterJSON('add_item', $_POST);
     Html::back();
@@ -64,7 +64,7 @@ if (isset($data["add"])) {
     Html::back();
 } elseif (isset($data["purge"])) {
     Session::checkRight('plugin_glpiinventory_package', PURGE);
-    $package->delete($data, 1);
+    $package->delete($data, true);
     $package->redirectToList();
 } elseif (isset($_POST["addvisibility"])) {
     if (

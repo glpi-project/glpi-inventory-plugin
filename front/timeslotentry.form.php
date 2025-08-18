@@ -42,9 +42,9 @@ $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
 foreach (array_keys($_POST) as $key) {
     if (strstr($key, 'purge-')) {
         $split = explode('-', $key);
-        $_POST['id'] = $split[1];
+        $_POST['id'] = (int)$split[1];
         $pfTimeslotEntry->check($_POST['id'], PURGE);
-        $pfTimeslotEntry->delete($_POST, 1);
+        $pfTimeslotEntry->delete($_POST, true);
         Html::back();
     }
 }

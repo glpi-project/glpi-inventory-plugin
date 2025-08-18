@@ -56,7 +56,7 @@ if (isset($_POST["add"])) {
     $pfTimeslot->redirectToList();
 } elseif (isset($_POST["purge"])) {
     $pfTimeslot->check($_POST['id'], PURGE);
-    $pfTimeslot->delete($_POST, 1);
+    $pfTimeslot->delete($_POST, true);
     $pfTimeslot->redirectToList();
 
     //update a timeslot
