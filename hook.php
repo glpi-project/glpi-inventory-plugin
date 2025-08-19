@@ -255,9 +255,8 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
         case "glpi_plugin_glpiinventory_credentials.itemtype":
             if ($label = PluginGlpiinventoryCredential::getLabelByItemtype($data['raw']['ITEM_' . $num])) {
                 return $label;
-            } else {
-                return '';
             }
+            return '';
 
         case 'glpi_plugin_glpiinventory_taskjoblogs.state':
             $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();

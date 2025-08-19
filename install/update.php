@@ -2133,7 +2133,7 @@ function do_profile_migration($migration)
                   AND `plugins_id`='" . $data['plugins_id'] . "'
                   AND `profiles_id`='" . $data['profiles_id'] . "'
                ORDER BY `id` DESC
-               LIMIT " . ((int)$data['cnt'] - 1) . " ";
+               LIMIT " . ((int) $data['cnt'] - 1) . " ";
             $DB->doQuery($queryd);
         }
 
