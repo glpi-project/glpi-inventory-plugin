@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+global $DB;
+
 //Options for GLPI 0.71 and newer : need slave db to access the report
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
@@ -73,6 +75,7 @@ $iterator = $DB->request([
 ]);
 
 $selected = '';
+$ports = [];
 foreach ($iterator as $data) {
     if (($data['id'] == $FK_port)) {
         $selected = $data['id'];

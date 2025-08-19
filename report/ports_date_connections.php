@@ -32,6 +32,10 @@
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
+use Glpi\Application\View\TemplateRenderer;
+
+global $DB;
+
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
 
@@ -116,7 +120,7 @@ Html::footer();
  */
 function displaySearchForm()
 {
-    global $_SERVER, $_GET, $CFG_GLPI;
+    global $CFG_GLPI;
 
     echo "<form action='" . $_SERVER["PHP_SELF"] . "' method='post'>";
     echo "<table class='tab_cadre' cellpadding='5'>";
@@ -191,7 +195,10 @@ function displaySearchForm()
     echo "<td>";
     //Add parameters to uri to be saved as SavedSearch
     $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
-    SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginGlpiinventoryNetworkport2');
+    TemplateRenderer::getInstance()->render('pages/tools/savedsearch/save_button.html.twig', [
+        'type' => SavedSearch::SEARCH,
+        'itemtype' => 'PluginGlpiinventoryNetworkport2',
+    ]);
     echo "</td>";
 
     echo "<td>";
@@ -224,6 +231,7 @@ function getContainsArray($get)
                 return "<'" . $get["dropdown_calendar"] . " 00:00:00'";
         }
     }
+    return '';
 }
 
 

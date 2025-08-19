@@ -34,6 +34,9 @@
 use Glpi\Http\Firewall;
 use Glpi\Plugin\Hooks;
 
+use function Safe\parse_url;
+use function Safe\define;
+
 define("PLUGIN_GLPIINVENTORY_VERSION", "1.5.3");
 // Minimal GLPI version, inclusive
 define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '10.0.11');
@@ -89,9 +92,8 @@ function plugin_glpiinventory_script_endswith($scriptname)
  */
 function plugin_init_glpiinventory()
 {
+    /** @var array $PF_CONFIG */
     global $PLUGIN_HOOKS, $CFG_GLPI, $PF_CONFIG;
-
-    $PLUGIN_HOOKS[Hooks::CSRF_COMPLIANT]['glpiinventory'] = true;
 
     $current_url = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'];
 
@@ -396,7 +398,7 @@ function plugin_version_glpiinventory()
             'glpi' => [
                 'min' => PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION,
                 'max' => PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION,
-                'dev' => PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE == 0,
+                'dev' => PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE == 0, //@phpstan-ignore equal.alwaysTrue
             ],
             'php' => [
                 'exts'   => [
@@ -419,19 +421,6 @@ function plugin_version_glpiinventory()
  */
 function plugin_glpiinventory_check_prerequisites()
 {
-    if (version_compare(GLPI_VERSION, '10.0.5', '<=')) {
-        $a_plugins = ['fusinvinventory', 'fusinvsnmp', 'fusinvdeploy', 'fusioninventory'];
-        foreach ($a_plugins as $pluginname) {
-            foreach (PLUGINS_DIRECTORIES as $basedir) {
-                $plugindir = $basedir . '/' . $pluginname;
-                if (file_exists($plugindir)) {
-                    printf(__('Please remove %s directory.', 'glpiinventory'), $plugindir);
-                    return false;
-                }
-            }
-        }
-    }
-
     return true;
 }
 

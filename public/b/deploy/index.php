@@ -31,6 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_encode;
+
+global $DB;
+
 //Store deploy task version
 //If task is lower than 2.2, there's no version sent by the agent
 //we set it to 0
@@ -125,8 +129,7 @@ switch (filter_input(INPUT_GET, "action")) {
     case 'getFilePart':
         PluginGlpiinventoryDeployFilepart::httpSendFile(filter_input(INPUT_GET, "file"));
         $DB->close();
-        exit;
-        break;
+        return;
 
     case 'setStatus':
         $partjob_mapping = [
@@ -174,13 +177,6 @@ switch (filter_input(INPUT_GET, "action")) {
                 }
             }
         }
-        if (is_array($params['msg'])) {
-            $htmlspecialchars_flags = ENT_SUBSTITUTE | ENT_DISALLOWED;
-
-            $tmp_msg = implode("\n", $params['msg']);
-            $flags   = null;
-            $params['msg'] = nl2br($tmp_msg);
-        }
 
         //Generic method to update logs
         PluginGlpiinventoryCommunicationRest::updateLog($params);
@@ -220,7 +216,7 @@ switch (filter_input(INPUT_GET, "action")) {
                 $behavior,
                 $type,
                 $event,
-                $user
+                (int) $user
             );
             switch ($behavior) {
                 case PluginGlpiinventoryDeployUserinteraction::RESPONSE_STOP:

@@ -33,14 +33,14 @@
 
 use Glpi\DBAL\QueryExpression;
 
+use function Safe\ini_set;
+
 /**
  * The main function to update the plugin
  *
- * @global DBMysql $DB
  * @param string $current_version
- * @param string $migrationname
  */
-function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Migration')
+function pluginGlpiinventoryUpdateNative($current_version)
 {
     global $DB;
 
@@ -50,9 +50,8 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     ini_set("memory_limit", "-1");
 
     /** @var Migration */
-    $migration = new $migrationname($current_version);
+    $migration = new Migration($current_version);
 
-    $migration->displayMessage("Migration Classname : " . $migrationname);
     $migration->displayMessage("Use core capabilities");
 
     //mappings

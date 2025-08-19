@@ -15,6 +15,11 @@ parameters:
         - ajax
         - front
         - inc
+        - install
+        - public
+        - report
+        - hook.php
+        - setup.php
     scanDirectories:
         - ../../inc
         - ../../src

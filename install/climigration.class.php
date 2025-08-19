@@ -37,6 +37,8 @@
  */
 class CliMigration extends Migration
 {
+    private int $deb;
+
     /**
      * __contruct function where initialize variables
      *
@@ -66,7 +68,7 @@ class CliMigration extends Migration
      *
      * @param string $title
      */
-    public function displayTitle($title)
+    public function displayTitle($title): void
     {
         echo "\n" . str_pad(" $title ", 100, '=', STR_PAD_BOTH) . "\n";
     }
@@ -78,7 +80,7 @@ class CliMigration extends Migration
      * @param string $msg
      * @param boolean $red
      */
-    public function displayWarning($msg, $red = false)
+    public function displayWarning($msg, $red = false): void
     {
         if ($red) {
             $msg = "** $msg";
