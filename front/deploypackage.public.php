@@ -76,7 +76,7 @@ if (isset($_POST['prepareinstall'])) {
                     window.location='{$_SERVER['HTTP_REFERER']}';
                 }, 500);
             ");
-            break;
+            return;
         case 'remote':
             if ($computers_id) {
                 //Remote call to wakeup the agent, from the server
