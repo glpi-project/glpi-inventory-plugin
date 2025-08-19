@@ -32,6 +32,14 @@
  */
 
 
+use Glpi\Exception\Http\BadRequestHttpException;
+
+use function Safe\readgzfile;
+use function Safe\ob_clean;
+use function Safe\ini_get;
+use function Safe\session_write_close;
+use function Safe\ob_end_clean;
+
 Session::checkRight('plugin_glpiinventory_package', READ);
 
 session_write_close(); // unlock session to ensure GLPI is still usable while huge file downloads is done in background
@@ -51,10 +59,15 @@ if ($deployfile_id > 0 && $deploy->getFromDB($deployfile_id)) {
             // Make sure there is nothing in the output buffer (In case stuff was added by core or misbehaving plugin).
             // If there is any extra data, the sent file will be corrupted.
             // 1. Turn off any extra buffering level. Keep one buffering level if PHP output_buffering directive is not "off".
-            $ob_config = ini_get('output_buffering');
-            $max_buffering_level = $ob_config !== false && (strtolower($ob_config) === 'on' || (is_numeric($ob_config) && (int) $ob_config > 0))
-                ? 1
-                : 0;
+            $max_buffering_level = 0;
+            try {
+                $ob_config = ini_get('output_buffering');
+                $max_buffering_level = (strtolower($ob_config) === 'on' || (is_numeric($ob_config) && (int) $ob_config > 0))
+                    ? 1
+                    : 0;
+            } catch (\Safe\Exceptions\InfoException $e) {
+                //emtpy catch
+            }
             while (ob_get_level() > $max_buffering_level) {
                 ob_end_clean();
             }
@@ -75,11 +88,11 @@ if ($deployfile_id > 0 && $deploy->getFromDB($deployfile_id)) {
                 readgzfile($path);
             }
         } else {
-            Html::displayErrorAndDie(__('An error occurs', 'glpiinventory'), true);
+            throw new BadRequestHttpException(__('An error occurs', 'glpiinventory'));
         }
     } else {
-        Html::displayErrorAndDie(__('File not found', 'glpiinventory'), true); // Not found
+        throw new BadRequestHttpException(__('File not found', 'glpiinventory'));
     }
 } else {
-    Html::displayErrorAndDie(__('File not found', 'glpiinventory'), true); // Not found
+    throw new BadRequestHttpException(__('File not found', 'glpiinventory'));
 }

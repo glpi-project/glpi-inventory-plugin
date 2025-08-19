@@ -78,7 +78,7 @@ if (isset($_GET['save'])) {
     $group->redirectToList();
 } elseif (isset($_POST["purge"])) {
     //   $group->check($_POST['id'], DELETE);
-    $ok = $group->delete($_REQUEST, 1);
+    $ok = $group->delete($_REQUEST, true);
 
     $group->redirectToList();
 } elseif (isset($_POST["update"])) {
