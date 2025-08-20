@@ -141,6 +141,8 @@ jobs:
         path: glpi
         fetch-depth: 1
         ref: 11.0/bugfixes
+    - name: Patch Core on PHP 8.5
+      run: sed -e 's/8\.4/8\.5/' -i glpi/public/index.php glpi/src/autoload/constants.php
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install dependencies
