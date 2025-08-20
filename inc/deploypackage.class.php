@@ -429,8 +429,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         $pfDeployFile = new PluginGlpiinventoryDeployFile();
         // remove file in repo
-        $json = json_decode($this->fields['json'], true);
-        if (is_null($json)) {
+        try {
+            $json = json_decode($this->fields['json'], true);
+            if (is_null($json)) {
+                return;
+            }
+        } catch (\Safe\Exceptions\JsonException $e) {
             return;
         }
         foreach ($json['associatedFiles'] as $sha512 => $file) {
