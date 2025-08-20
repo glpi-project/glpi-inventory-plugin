@@ -154,11 +154,11 @@ jobs:
       run: |
         mysql -e 'create database IF NOT EXISTS glpi;' -u root --password=glpi1iventory -h 127.0.0.1 -P 3306
     - name: Install GLPI
-      run: cd glpi && php bin/console glpi:database:install -n --ansi --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306 --strict-configuration
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:database:install -n --ansi --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306 --strict-configuration
     - name: Install plugin
-      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --ansi --username=glpi glpiinventory
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:install -vvv -n --ansi --username=glpi glpiinventory
     - name: Activate plugin
-      run: cd glpi && php bin/console glpi:plugin:activate -n --ansi glpiinventory
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:activate -n --ansi glpiinventory
     - name: run Unit tests
       run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/Unit/
     - name: run Integration tests
