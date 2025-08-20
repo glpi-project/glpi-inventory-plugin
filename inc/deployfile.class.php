@@ -43,7 +43,6 @@ use function Safe\fread;
 use function Safe\file;
 use function Safe\filesize;
 use function Safe\finfo_open;
-use function Safe\finfo_close;
 use function Safe\fopen;
 use function Safe\fwrite;
 use function Safe\gzopen;
@@ -732,7 +731,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             try {
                 $finfo = finfo_open(FILEINFO_MIME);
                 $mime_type = finfo_file($finfo, $file_path);
-                finfo_close($finfo);
             } catch (FileinfoException $e) {
                 $mime_type = mime_content_type($file_path);
             }
