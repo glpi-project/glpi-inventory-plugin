@@ -323,7 +323,11 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         );
         if (count($data)) {
             $first = array_shift($data);
-            $ids   = json_decode($first['computers_id_cache'], true);
+            try {
+                $ids = json_decode($first['computers_id_cache'], true);
+            } catch (\Safe\Exceptions\JsonException $e) {
+                //empty catch
+            }
         }
 
         return $ids;
