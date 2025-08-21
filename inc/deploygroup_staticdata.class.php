@@ -93,20 +93,20 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
             && ($item instanceof PluginGlpiinventoryDeployGroup)
              && $item->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
         ) {
-            $tabs[1] = _n('Criterion', 'Criteria', 2);
-            $count = countElementsInTable(
-                getTableForItemType(self::class),
-                [
-                    'itemtype'                               => 'Computer',
-                    'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
-                ]
-            );
+            $tabs[1] = self::createTabEntry(_n('Criterion', 'Criteria', 2), 0, icon: 'ti ti-file-search');
             if ($_SESSION['glpishow_count_on_tabs']) {
-                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
+                $count = countElementsInTable(
+                    getTableForItemType(self::class),
+                    [
+                        'itemtype'                               => 'Computer',
+                        'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
+                    ]
+                );
+                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count, icon: 'ti ti-list');
             } else {
-                $tabs[2] = _n('Associated item', 'Associated items', $count);
+                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', 0), 0, icon: 'ti ti-list');
             }
-            $tabs[3] = __('CSV import', 'glpiinventory');
+            $tabs[3] = self::createTabEntry(__('CSV import', 'glpiinventory'), 0, icon: 'ti ti-csv');
             return $tabs;
         }
         return '';

@@ -125,12 +125,12 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                     method_exists($item, 'getInventoryAgent')
                     && $item->getInventoryAgent() != null
                 ) {
-                    return __("Tasks / Groups", "glpiinventory");
+                    return self::createTabEntry(__("Tasks / Groups", "glpiinventory"), 0, icon: 'ti ti-checklist');
                 }
                 break;
 
             case 'PluginGlpiinventoryTask':
-                return __("Job executions", "glpiinventory");
+                return self::createTabEntry(__("Job executions", "glpiinventory"), 0, icon: 'ti ti-activity');
         }
 
         return '';

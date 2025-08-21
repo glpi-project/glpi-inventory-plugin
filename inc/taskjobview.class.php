@@ -67,7 +67,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     {
         /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0 && Session::haveRight('plugin_glpiinventory_task', READ)) {
-            return __('Job configuration', 'glpiinventory');
+            return  self::createTabEntry(__('Job configuration', 'glpiinventory'), 0, icon: 'ti ti-settings');
         }
         return '';
     }

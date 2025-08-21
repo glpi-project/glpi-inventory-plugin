@@ -242,4 +242,9 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
         echo "</div>";
         return true;
     }
+
+    public static function getIcon()
+    {
+        return SNMPCredential::getIcon();
+    }
 }

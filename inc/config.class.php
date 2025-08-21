@@ -211,9 +211,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         if ($item->getType() == self::class) {
             return [
-                __('General setup'),
-                __('Network Inventory', 'glpiinventory'),
-                __('Package management', 'glpiinventory'),
+                self::createTabEntry(__('General setup'), 0, icon: 'ti ti-settings'),
+                self::createTabEntry(__('Network Inventory', 'glpiinventory'), 0, icon: 'ti ti-network'),
+                self::createTabEntry(__('Package management', 'glpiinventory'), 0, icon: 'ti ti-package'),
             ];
         }
         return '';
@@ -604,5 +604,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
                 $PF_CONFIG[$data['type']] = $data['value'];
             }
         }
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-settings";
     }
 }

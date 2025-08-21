@@ -96,8 +96,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        $tabs[1] = __('General');
-        $tabs[2] = _n('Behavior', 'Behaviors', 2, 'glpiinventory');
+        $tabs[1] =  self::createTabEntry(__('General'), 0, icon: 'ti ti-hand-click');
+        $tabs[2] = self::createTabEntry(_n('Behavior', 'Behaviors', 2, 'glpiinventory'), 0, icon: 'ti ti-settings');
         return $tabs;
     }
 
@@ -342,7 +342,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     {
         $this->initForm($id, $options);
 
-        $json_data = json_decode($this->fields['json'], true);
+        $json_data = !empty($this->fields['json']) ? json_decode($this->fields['json'], true) : [];
         $json_data = $this->initializeJsonFields($json_data);
 
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/deployuserinteractiontemplate.html.twig', [
@@ -618,4 +618,5 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     {
         return json_decode($this->fields['json'], true);
     }
+
 }

@@ -1027,7 +1027,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     if ($item->canUpdateItem()) {
                         $tabs = [];
                         if ($item->fields['id'] > 0) {
-                            $tabs[1] = __('Package actions', 'glpiinventory');
+                            $tabs[1] = self::createTabEntry(__('Package actions', 'glpiinventory'), 0, icon: 'ti ti-checklist');
                         }
                         if ($item->fields['plugin_glpiinventory_deploygroups_id'] > 0) {
                             if ($_SESSION['glpishow_count_on_tabs']) {
@@ -1039,14 +1039,19 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                                         Session::getPluralNumber(),
                                         'glpiinventory'
                                     ),
-                                    $nb
+                                    $nb,
+                                    icon: 'ti ti-target-arrow'
                                 );
                             } else {
-                                $tabs[2] = _n(
-                                    'Target for deploy on demand',
-                                    'Targets for deploy on demand',
-                                    Session::getPluralNumber(),
-                                    'glpiinventory'
+                                $tabs[2] = self::createTabEntry(
+                                    _n(
+                                        'Target for deploy on demand',
+                                        'Targets for deploy on demand',
+                                        Session::getPluralNumber(),
+                                        'glpiinventory'
+                                    ),
+                                    0,
+                                    icon: 'ti ti-target-arrow'
                                 );
                             }
                         }
@@ -1060,7 +1065,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                         && PluginGlpiinventoryToolbox::isAnInventoryDevice($item)
                         && self::isDeployEnabled($item->fields['id'])
                     ) {
-                        return __('Package deploy', 'glpiinventory');
+                        return self::createTabEntry(__('Package deploy', 'glpiinventory'), 0, icon: 'ti ti-package');
                     }
                     break;
             }
@@ -2235,5 +2240,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             }
         }
         return $job;
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-package";
     }
 }

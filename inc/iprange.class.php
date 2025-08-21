@@ -286,4 +286,9 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
         }
         return $actions;
     }
+
+    public static function getIcon()
+    {
+        return "ti ti-network";
+    }
 }
