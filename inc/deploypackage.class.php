@@ -33,14 +33,14 @@
 
 use Glpi\Exception\Http\BadRequestHttpException;
 
-use function Safe\glob;
+/*use function Safe\glob;
 use function Safe\file_get_contents;
 use function Safe\json_decode;
 use function Safe\json_encode;
 use function Safe\rename;
 use function Safe\preg_replace;
 use function Safe\mkdir;
-use function Safe\unlink;
+use function Safe\unlink;*/
 
 /**
  * Manage the deploy packages.
