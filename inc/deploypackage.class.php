@@ -33,14 +33,14 @@
 
 use Glpi\Exception\Http\BadRequestHttpException;
 
-use function Safe\glob;
+/*use function Safe\glob;
 use function Safe\file_get_contents;
 use function Safe\json_decode;
 use function Safe\json_encode;
 use function Safe\rename;
 use function Safe\preg_replace;
 use function Safe\mkdir;
-use function Safe\unlink;
+use function Safe\unlink;*/
 
 /**
  * Manage the deploy packages.
@@ -429,8 +429,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         $pfDeployFile = new PluginGlpiinventoryDeployFile();
         // remove file in repo
-        $json = json_decode($this->fields['json'], true);
-        if (is_null($json)) {
+        try {
+            $json = json_decode($this->fields['json'], true);
+            if (is_null($json)) {
+                return;
+            }
+        } catch (\Safe\Exceptions\JsonException $e) {
             return;
         }
         foreach ($json['associatedFiles'] as $sha512 => $file) {
@@ -977,7 +981,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $pfDeployPackage = new self();
         $options = JSON_UNESCAPED_SLASHES;
 
-        $json = json_encode($datas, $options);
+        $json = \json_encode($datas, $options);
 
         $json_error_consts = [
             JSON_ERROR_NONE           => "JSON_ERROR_NONE",

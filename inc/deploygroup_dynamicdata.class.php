@@ -69,7 +69,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             !$withtemplate
             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP
         ) {
-            $tabs[1] = _n('Criterion', 'Criteria', 2);
+            $tabs[1] = _n('Criterion', 'Criteria', Session::getPluralNumber());
             if ($_SESSION['glpishow_count_on_tabs']) {
                 // Get the count of matching items
                 $count = self::getMatchingItemsCount($item);
@@ -221,7 +221,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         Search::constructSQL($data);
         Search::constructData($data);
 
+        echo "<div class='search_page row'>";
+        echo "<div class='search-container w-100 disable-overflow-y' counter='" . (int) $data['data']['count'] . "'>";
         Search::displayData($data);
+        echo "</div></div>";
     }
 
 
@@ -257,6 +260,8 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         $ids = [];
 
         if (!$use_cache || !$ids = self::retrieveCache($group)) {
+            $ids = [];
+
             $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($group, false, true);
             if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
                 unset($search_params['metacriteria']);
@@ -323,7 +328,11 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         );
         if (count($data)) {
             $first = array_shift($data);
-            $ids   = json_decode($first['computers_id_cache'], true);
+            try {
+                $ids = json_decode($first['computers_id_cache'], true);
+            } catch (\Safe\Exceptions\JsonException $e) {
+                //empty catch
+            }
         }
 
         return $ids;

@@ -588,7 +588,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
 
         $is_dynamic = $item->isDynamicGroup();
-        $itemtype   = "Computer";
+        $itemtype   = Computer::class;
         $can_update = $item->canEdit($item->getID());
 
         $p['target'] = self::getSearchEngineTargetURL($item->getID(), $is_dynamic);
@@ -666,13 +666,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             $backup_criteria = $_SESSION['glpisearch']['Computer'];
         }
 
-
         $is_dynamic = $group->isDynamicGroup();
         $computers_params = [];
 
         //Check criteria from DB
         if (!$check_post_values) {
-            if (isset($group->fields['type']) && $group->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP) {
+            if (isset($group->fields['type']) && $is_dynamic) {
                 unset($_SESSION['glpisearch']['Computer']);
                 $iterator = $DB->request([
                     'SELECT' => 'fields_array',
