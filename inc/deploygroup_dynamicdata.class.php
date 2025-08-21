@@ -257,6 +257,8 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         $ids = [];
 
         if (!$use_cache || !$ids = self::retrieveCache($group)) {
+            $ids = [];
+
             $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($group, false, true);
             if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
                 unset($search_params['metacriteria']);
