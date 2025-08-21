@@ -329,11 +329,13 @@ class PackageSelfDeployTest extends TestCase
 
         // Enable deploy feature for all agents
         $module = new PluginGlpiinventoryAgentmodule();
-        $module->getFromDBByCrit(['modulename' => 'DEPLOY']);
-        $module->update([
-            'id'        => $module->fields['id'],
-            'is_active' => 1,
-        ]);
+        $this->assertTrue($module->getFromDBByCrit(['modulename' => 'DEPLOY']));
+        $this->assertTrue(
+            $module->update([
+                'id'        => $module->fields['id'],
+                'is_active' => 1,
+            ])
+        );
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $computer        = new Computer();
@@ -342,12 +344,12 @@ class PackageSelfDeployTest extends TestCase
         $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
         $user = new User();
 
-        $pfDeployGroup->getFromDBByCrit(['name' => 'all']);
+        $this->assertTrue($pfDeployGroup->getFromDBByCrit(['name' => 'all']));
 
-        $computer->getFromDBByCrit(['name' => 'pc01']);
+        $this->assertTrue($computer->getFromDBByCrit(['name' => 'pc01']));
         $computerId1 = $computer->fields['id'];
 
-        $user->getFromDBByCrit(['name' => 'David']);
+        $this->assertTrue($user->getFromDBByCrit(['name' => 'David']));
 
         $computerId2 = $computer->add([
             'name'        => 'pc02',
@@ -367,11 +369,13 @@ class PackageSelfDeployTest extends TestCase
         ]);
         $this->assertNotFalse($agentId);
 
-        $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
-        $pfDeployPackage->update([
-            'id' => $pfDeployPackage->fields['id'],
-            'plugin_glpiinventory_deploygroups_id' => $pfDeployGroup->fields['id'],
-        ]);
+        $this->assertTrue($pfDeployPackage->getFromDBByCrit(['name' => 'test1']));
+        $this->assertTrue(
+            $pfDeployPackage->update([
+                'id' => $pfDeployPackage->fields['id'],
+                'plugin_glpiinventory_deploygroups_id' => $pfDeployGroup->fields['id'],
+            ])
+        );
         $packages_id_1 = $pfDeployPackage->fields['id'];
         $packageEntityId = $pfDeployPackage_Entity->add([
             'plugin_glpiinventory_deploypackages_id' => $packages_id_1,
@@ -389,10 +393,12 @@ class PackageSelfDeployTest extends TestCase
         ];
         $packages_id_2 = $pfDeployPackage->add($input);
         $this->assertNotFalse($packages_id_2);
-        $pfDeployPackage_Entity->add([
-            'plugin_glpiinventory_deploypackages_id' => $packages_id_2,
-            'entities_id' => 1,
-        ]);
+        $this->assertNotFalse(
+            $pfDeployPackage_Entity->add([
+                'plugin_glpiinventory_deploypackages_id' => $packages_id_2,
+                'entities_id' => 1,
+            ])
+        );
 
         // Create task
         $pfDeployPackage->deployToComputer($computerId1, $packages_id_1, $_SESSION['glpiID']);
