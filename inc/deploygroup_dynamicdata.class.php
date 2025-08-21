@@ -221,7 +221,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
         Search::constructSQL($data);
         Search::constructData($data);
 
+        echo "<div class='search_page row'>";
+        echo "<div class='search-container w-100 disable-overflow-y' counter='" . (int) $data['data']['count'] . "'>";
         Search::displayData($data);
+        echo "</div></div>";
     }
 
 
