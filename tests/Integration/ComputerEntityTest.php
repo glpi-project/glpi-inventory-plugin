@@ -166,7 +166,7 @@ class ComputerEntityTest extends TestCase
         $computer->getFromDBByCrit(['serial' => 'xxyyzz']);
         $this->assertEquals(2, $computer->fields['entities_id'], 'Transfer move computer');
 
-        $this->agentEntity($computer->fields['id'], 1, 'Transfer computer on entity 2');
+        $this->agentEntity($computer->fields['id'], 2, 'Transfer computer on entity 2');
 
         // Define entity 2 to allow to transfer
         $this->assertTrue($entity->getFromDB(self::$entities_id_2));
