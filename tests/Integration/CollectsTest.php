@@ -68,10 +68,7 @@ class CollectsTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function prepareDb()
+    public function testPrepareDb()
     {
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;

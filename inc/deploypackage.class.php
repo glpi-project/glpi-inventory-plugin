@@ -33,14 +33,14 @@
 
 use Glpi\Exception\Http\BadRequestHttpException;
 
-/*use function Safe\glob;
+use function Safe\glob;
 use function Safe\file_get_contents;
 use function Safe\json_decode;
 use function Safe\json_encode;
 use function Safe\rename;
 use function Safe\preg_replace;
 use function Safe\mkdir;
-use function Safe\unlink;*/
+use function Safe\unlink;
 
 /**
  * Manage the deploy packages.
@@ -981,7 +981,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $pfDeployPackage = new self();
         $options = JSON_UNESCAPED_SLASHES;
 
-        $json = \json_encode($datas, $options);
+        $json = \json_encode($datas, $options); // @phpstan-ignore theCodingMachineSafe.function (error are properly checked here)
 
         $json_error_consts = [
             JSON_ERROR_NONE           => "JSON_ERROR_NONE",

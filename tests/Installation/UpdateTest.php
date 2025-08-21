@@ -101,7 +101,7 @@ class UpdateTest extends TestCase
                 $DB->dropTable($data[0]);
             }
         }
-        $DB->deleteOrDie(
+        $DB->delete(
             'glpi_displaypreferences',
             [
                 'OR' => [
@@ -112,7 +112,7 @@ class UpdateTest extends TestCase
         );
 
         // Delete all plugin rules
-        $DB->deleteOrDie(
+        $DB->delete(
             Rule::getTable(),
             ['sub_type' => ['LIKE', 'Plugin%']]
         );
@@ -147,7 +147,7 @@ class UpdateTest extends TestCase
                 implode("\n", $result['output'])
             );
 
-            $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --config-dir=tests/config";
+            $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --env=testing";
             $outputMy = [];
             $returncodeMy = 0;
             exec($commandMy, $outputMy, $returncodeMy);
@@ -159,7 +159,7 @@ class UpdateTest extends TestCase
         }
         $outputInstall = [];
         $returncodeInstall = 0;
-        $commandInstall = "cd ../../ && php bin/console glpi:plugin:install -n -q --config-dir=tests/config --username=glpi glpiinventory";
+        $commandInstall = "cd ../../ && php bin/console glpi:plugin:install -n -q --env=testing --username=glpi glpiinventory";
         exec($commandInstall, $outputInstall, $returncodeInstall);
         $this->assertEquals(
             0,
@@ -169,7 +169,7 @@ class UpdateTest extends TestCase
 
         $outputActivate     = [];
         $returncodeActivate = 0;
-        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n -q --config-dir=tests/config glpiinventory";
+        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n -q --env=testing glpiinventory";
         exec($commandActivate, $outputActivate, $returncodeActivate);
         $this->assertEquals(
             0,
@@ -177,7 +177,7 @@ class UpdateTest extends TestCase
             sprintf("Result code from glpi:plugin:activate was '%s'.\n%s", $returncodeActivate, implode("\n", $outputActivate))
         );
 
-        $GLPIlog = new GLPIlogs();
+        $GLPIlog = new GLPIlogs('glpiinventory');
         $GLPIlog->testSQLlogs();
         $GLPIlog->testPHPlogs();
 

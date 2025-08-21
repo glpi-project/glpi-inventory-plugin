@@ -79,14 +79,14 @@ class InstallationTest extends TestCase
         $returncode = 0;
         $outputActivate     = [];
         $returncodeActivate = 0;
-        $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory";
+        $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --env=testing --username=glpi glpiinventory";
         exec($command, $output, $returncode);
 
-        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory";
+        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --env=testing glpiinventory";
         exec($commandActivate, $outputActivate, $returncodeActivate);
 
         // Check if errors in logs
-        $GLPIlog = new GLPIlogs();
+        $GLPIlog = new GLPIlogs("glpiinventory");
         $GLPIlog->testSQLlogs();
         $GLPIlog->testPHPlogs();
 

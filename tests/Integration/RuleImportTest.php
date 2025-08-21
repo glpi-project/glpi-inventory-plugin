@@ -187,9 +187,6 @@ class RuleImportTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
     public function testPrinterDiscoveryImportDenied()
     {
         $this->testChangeRulesForPrinterRules();
