@@ -379,4 +379,9 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
                 break;
         }
     }
+
+    public static function getIcon()
+    {
+        return "ti ti-copy";
+    }
 }

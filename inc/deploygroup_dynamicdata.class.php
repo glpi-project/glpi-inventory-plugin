@@ -69,13 +69,13 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             !$withtemplate
             && $item->fields['type'] == PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP
         ) {
-            $tabs[1] = _n('Criterion', 'Criteria', Session::getPluralNumber());
+            $tabs[1] = self::createTabEntry(_n('Criterion', 'Criteria', 2), 0, icon: 'ti ti-file-search');
             if ($_SESSION['glpishow_count_on_tabs']) {
                 // Get the count of matching items
                 $count = self::getMatchingItemsCount($item);
-                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', Session::getPluralNumber()), $count);
+                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count, icon: 'ti ti-list');
             } else {
-                $tabs[2] = _n('Associated item', 'Associated items', Session::getPluralNumber());
+                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', 0), 0, icon: 'ti ti-list');
             }
             return $tabs;
         }

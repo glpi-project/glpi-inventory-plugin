@@ -58,9 +58,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     {
 
         if ($item->getType() == 'PluginGlpiinventoryConfig') {
-            return __('Agents modules', 'glpiinventory');
+            return self::createTabEntry(__('Agents modules', 'glpiinventory'), 0, icon: Agent::getIcon());
         } elseif ($item->getType() == 'Agent') {
-            return __('Agents modules', 'glpiinventory');
+            return self::createTabEntry(__('Agents modules', 'glpiinventory'), 0, icon: Agent::getIcon());
         }
         return '';
     }

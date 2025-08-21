@@ -480,4 +480,9 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
                 return __('Multiple users connected', 'glpiinventory');
         }
     }
+
+    public static function getIcon()
+    {
+        return "ti ti-hand-finger";
+    }
 }
