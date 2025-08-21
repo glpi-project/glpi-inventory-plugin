@@ -981,7 +981,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $pfDeployPackage = new self();
         $options = JSON_UNESCAPED_SLASHES;
 
-        $json = json_encode($datas, $options);
+        $json = \json_encode($datas, $options);
 
         $json_error_consts = [
             JSON_ERROR_NONE           => "JSON_ERROR_NONE",
