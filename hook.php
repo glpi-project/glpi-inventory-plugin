@@ -35,11 +35,11 @@ function plugin_glpiinventory_add_default_where($in)
 {
     [$itemtype, $condition] = $in;
 
-    if ($itemtype === 'Computer') {
-        //$requestUri = $_SERVER['REQUEST_URI'] ?? '';
-        //if (str_contains($requestUri, 'deploypackage.public.php')) {
-        $condition = [];
-        //}
+    if ($itemtype === Computer::class) {
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        if (str_contains($requestUri, 'deploypackage.public.php')) {
+            $condition = [];
+        }
     }
 
     return [$itemtype, $condition];

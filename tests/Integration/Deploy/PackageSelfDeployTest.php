@@ -409,6 +409,19 @@ class PackageSelfDeployTest extends TestCase
         // Prepare task
         PluginGlpiinventoryTask::cronTaskscheduler();
 
+        $_SERVER['REQUEST_URI'] = 'front/deploypackage.php'; // URL is used to fix addDefaultWhere
+        $packages = $pfDeployPackage->getPackageForMe($userId);
+        $packages_deploy = [];
+        foreach ($packages as $data) {
+            foreach ($data as $package_info) {
+                if (isset($package_info['taskjobs_id'])) {
+                    $packages_deploy[] = $package_info['last_taskjobstate']['state'];
+                }
+            }
+        }
+        $this->assertEquals([], $packages_deploy);
+
+        $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php'; // URL is used to fix addDefaultWhere
         $packages = $pfDeployPackage->getPackageForMe($userId);
         $packages_deploy = [];
         foreach ($packages as $data) {
