@@ -178,4 +178,8 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
         PluginGlpiinventoryMenu::displayMenu("mini");
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-devices-pc";
+    }
 }

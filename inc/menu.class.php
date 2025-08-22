@@ -132,6 +132,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $options[$type] = [
                 'title' => $itemtype::getTypeName(),
                 'page'  => $itemtype::getSearchURL(false),
+                'icon'  => $itemtype::getIcon(),
             ];
             $options[$type]['links']['search'] = $itemtype::getSearchURL(false);
             if ($itemtype::canCreate()) {

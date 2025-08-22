@@ -70,7 +70,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0) {
             if ($item->fields['type'] == $this->collect_type) {
-                return __('Collect configuration');
+                return  self::createTabEntry(__('Collect configuration'), 0, icon: 'ti ti-settings');
             }
         }
         return '';
