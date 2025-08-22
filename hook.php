@@ -66,6 +66,9 @@ function removeEmptyCondition(array &$conditions): void
     }
 }
 
+use function Safe\json_decode;
+use function Safe\ini_set;
+
 /**
  * Add search options for GLPI objects
  *
@@ -247,15 +250,13 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
     switch ($table . '.' . $field) {
         case "glpi_plugin_glpiinventory_taskjobs.status":
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-            return $pfTaskjobstate->stateTaskjob($data['raw']['id'], '200', 'htmlvar', 'simple');
+            return $pfTaskjobstate->stateTaskjob($data['raw']['id'], 200, 'htmlvar', 'simple');
 
         case "glpi_plugin_glpiinventory_credentials.itemtype":
             if ($label = PluginGlpiinventoryCredential::getLabelByItemtype($data['raw']['ITEM_' . $num])) {
                 return $label;
-            } else {
-                return '';
             }
-            break;
+            return '';
 
         case 'glpi_plugin_glpiinventory_taskjoblogs.state':
             $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
@@ -275,9 +276,9 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
             if ($itemtype == 'PluginGlpiinventoryDeployPackage') {
                 $computer = new Computer();
                 $computer->getFromDB($agent->fields['items_id']);
-                return $computer->getLink(1);
+                return $computer->getLink();
             }
-            return $agent->getLink(1);
+            return $agent->getLink();
     }
 
     if ($table == "glpi_plugin_glpiinventory_agentmodules") {
@@ -365,6 +366,7 @@ function plugin_glpiinventory_searchOptionsValues($item)
         Dropdown::showFromArray($item['name'], $elements, ['value' => $item['value']]);
         return true;
     }
+    return false;
 }
 
 
@@ -380,15 +382,12 @@ function plugin_glpiinventory_install()
     if (!isCommandLine()) {
         Html::header(__('Setup', 'glpiinventory'), $_SERVER['PHP_SELF'], "config", "plugins");
     }
-    $migrationname = 'Migration';
 
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.php");
     $version_detected = pluginGlpiinventoryGetCurrentVersion();
 
     if (
         !defined('FORCE_INSTALL')
-        &&
-        isset($version_detected)
         && (
             defined('FORCE_UPGRADE')
          || (
@@ -398,13 +397,13 @@ function plugin_glpiinventory_install()
     ) {
         // note: if version detected = version found can have problem, so need
         //       pass in upgrade to be sure all OK
-        pluginGlpiinventoryUpdate($version_detected, $migrationname);
+        pluginGlpiinventoryUpdate($version_detected);
         require_once PLUGIN_GLPI_INVENTORY_DIR . '/install/update.native.php';
         $version_detected = pluginGlpiinventoryGetCurrentVersion();
-        pluginGlpiinventoryUpdateNative($version_detected, $migrationname);
+        pluginGlpiinventoryUpdateNative($version_detected);
     } else {
         require_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/install.php");
-        pluginGlpiinventoryInstall(PLUGIN_GLPIINVENTORY_VERSION, $migrationname);
+        pluginGlpiinventoryInstall(PLUGIN_GLPIINVENTORY_VERSION);
     }
     return true;
 }
@@ -529,11 +528,11 @@ function plugin_glpiinventory_forceGroupBy($type)
 /**
  * Manage left join in search query
  *
- * @param string $itemtype
- * @param string $ref_table
- * @param string $new_table
- * @param string $linkfield
- * @param string $already_link_tables
+ * @param string   $itemtype
+ * @param string   $ref_table
+ * @param string   $new_table
+ * @param string   $linkfield
+ * @param string[] $already_link_tables
  * @return string
  */
 function plugin_glpiinventory_addLeftJoin(
@@ -546,7 +545,6 @@ function plugin_glpiinventory_addLeftJoin(
 
     switch ($itemtype) {
         case 'PluginGlpiinventoryTaskjoblog':
-            //         echo $new_table.".".$linkfield."<br/>";
             $taskjob = 0;
             $already_link_tables_tmp = $already_link_tables;
             array_pop($already_link_tables_tmp);
@@ -658,6 +656,7 @@ function plugin_glpiinventory_addDefaultWhere($type)
          WHERE plugin_glpiinventory_taskjobs_id= `glpi_plugin_glpiinventory_taskjobs`.`id`
          AND `state`!='3' )";
     }
+    return '';
 }
 
 
@@ -833,11 +832,11 @@ function plugin_pre_item_purge_glpiinventory($parm)
             if ($agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $items_id])) {
                 $agent_id = $agent->fields['id'];
                 // purge associated task job state
-                $pfTaskjobstate->deleteByCriteria(['agents_id' => $agent_id], 1);
+                $pfTaskjobstate->deleteByCriteria(['agents_id' => $agent_id], true);
                 // purge associated task job log
-                $pfTaskjoblog->deleteByCriteria(['items_id' => $agent_id, 'itemtype' => "Agent"], 1);
+                $pfTaskjoblog->deleteByCriteria(['items_id' => $agent_id, 'itemtype' => "Agent"], true);
                 // purge related sate discovery
-                $pfStatediscovery->deleteByCriteria(['agents_id' => $agent_id], 1);
+                $pfStatediscovery->deleteByCriteria(['agents_id' => $agent_id], true);
                 //remove agent
                 $agent->delete(['id' => $agent_id], true);
             }
@@ -930,7 +929,7 @@ function plugin_item_purge_glpiinventory($parm)
                     ]
                 );
                 if (count($a_networkports) < 2) {
-                    $unmanaged->delete(['id' => $unknowndevice_id], 1);
+                    $unmanaged->delete(['id' => $unknowndevice_id], true);
                 } elseif (count($a_networkports) == '2') {
                     $switchPorts_id = 0;
                     $otherPorts_id  = 0;

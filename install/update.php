@@ -40,6 +40,18 @@ include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QueryParam;
 
+use function Safe\ini_set;
+use function Safe\mkdir;
+use function Safe\rename;
+use function Safe\copy;
+use function Safe\preg_replace;
+use function Safe\preg_match;
+use function Safe\json_decode;
+use function Safe\json_encode;
+use function Safe\fwrite;
+use function Safe\fclose;
+use function Safe\fopen;
+
 /**
  * Get the current version of the plugin
  *
@@ -156,11 +168,9 @@ function pluginGlpiinventoryGetCurrentVersion()
 /**
  * The main function to update the plugin
  *
- * @global DBMysql $DB
  * @param string $current_version
- * @param string $migrationname
  */
-function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration')
+function pluginGlpiinventoryUpdate($current_version)
 {
     global $DB;
 
@@ -169,7 +179,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     ini_set("max_execution_time", "0");
     ini_set("memory_limit", "-1");
 
-    $migration = new $migrationname($current_version);
+    $migration = new Migration($current_version);
     $prepare_task = [];
     $prepare_rangeip = [];
     $prepare_Config = [];
@@ -177,7 +187,6 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     $a_plugin = plugin_version_glpiinventory();
     $plugins_id = PluginGlpiinventoryModule::getModuleId($a_plugin['shortname']);
 
-    $migration->displayMessage("Migration Classname : " . $migrationname);
     $migration->displayMessage("Update of plugin GLPI Inventory");
 
     $plugin_doc_dir = GLPI_PLUGIN_DOC_DIR . '/glpiinventory';
@@ -303,7 +312,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     do_computerarch_migration($migration);
     do_computeroperatingsystem_migration($migration);
     do_dblocks_migration($migration);
-    do_rule_migration($migration);
+    do_rule_migration($migration, $prepare_Config);
     do_task_migration($migration);
 
     // ********* Migration SNMP discovery and inventory ********************** //
@@ -839,7 +848,7 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
         CronTask::Register(
             'PluginGlpiinventoryTask',
             'taskscheduler',
-            '60',
+            60,
             ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
         );
     }
@@ -943,9 +952,10 @@ function pluginGlpiinventoryUpdate($current_version, $migrationname = 'Migration
     //Antivirus stuff has been integrated in GLPI's core
     if ($DB->tableExists('glpi_plugin_glpiinventory_inventorycomputerantiviruses')) {
         //Antivirus migration from FI table to GLPi core table
-        $antivirus = new ComputerAntivirus();
+        $antivirus = new ItemAntivirus();
         foreach (getAllDataFromTable('glpi_plugin_glpiinventory_inventorycomputerantiviruses') as $ant) {
             unset($ant['id']);
+            $ant['itemtype'] = Computer::class;
             $ant['is_dynamic'] = 1;
             if (isset($ant['uptodate'])) {
                 $ant['is_uptodate'] = $ant['uptodate'];
@@ -2123,7 +2133,7 @@ function do_profile_migration($migration)
                   AND `plugins_id`='" . $data['plugins_id'] . "'
                   AND `profiles_id`='" . $data['profiles_id'] . "'
                ORDER BY `id` DESC
-               LIMIT " . ($data['cnt'] - 1) . " ";
+               LIMIT " . ((int) $data['cnt'] - 1) . " ";
             $DB->doQuery($queryd);
         }
 
@@ -3933,29 +3943,6 @@ function do_networkport_migration($migration)
     );
     $migration->migrationOneTable($newTable);
 
-    // Update with mapping
-    if ($DB->fieldExists($newTable, "Field")) {
-        $pfMapping = new PluginGlpiinventoryMapping();
-        $iterator = $DB->request([
-            'FROM'      => $newTable,
-            'GROUPBY'   => 'Field',
-        ]);
-        foreach ($iterator as $data) {
-            $mapping = 0;
-            if ($mapping = $pfMapping->get("NetworkEquipment", $data['Field'])) {
-                $DB->update(
-                    $newTable,
-                    [
-                        'plugin_glpiinventory_mappings_id'   => $mapping['id'],
-                    ],
-                    [
-                        'Field'                                => $data['Field'],
-                        'plugin_glpiinventory_mappings_id'   => ['!=', $mapping['id']],
-                    ]
-                );
-            }
-        }
-    }
     $migration->dropField(
         $newTable,
         "Field"
@@ -4089,7 +4076,7 @@ function do_networkport_migration($migration)
         foreach ($a_vlans as $a_vlan) {
             $NetworkPort_Vlan->delete($a_vlan);
         }
-        $NetworkPort->delete($data, 1);
+        $NetworkPort->delete($data, true);
     }
 
     /*
@@ -4579,28 +4566,6 @@ function do_printer_migration($migration)
     );
     $migration->migrationOneTable($newTable);
 
-    // Update with mapping
-    if ($DB->fieldExists($newTable, "object_name")) {
-        $iterator = $DB->request([
-            'FROM'   => $newTable,
-            'GROUP'  => 'object_name',
-        ]);
-        foreach ($iterator as $data) {
-            $pfMapping = new PluginGlpiinventoryMapping();
-            $mapping = 0;
-            if (($mapping = $pfMapping->get("Printer", $data['object_name']))) {
-                $DB->update(
-                    $newTable,
-                    [
-                        'plugin_glpiinventory_mappings_id'   => $mapping['id'],
-                    ],
-                    [
-                        'object_name'                          => $data['object_name'],
-                    ]
-                );
-            }
-        }
-    }
     $migration->dropField(
         $newTable,
         "object_name"
@@ -5110,7 +5075,7 @@ function do_networkequipment_migration($migration)
                             if (isset($oldtableip[$a_ipaddress['name']])) {
                                 unset($oldtableip[$a_ipaddress['name']]);
                             } else {
-                                $ipAddress->delete($a_ipaddress, 1);
+                                $ipAddress->delete($a_ipaddress, true);
                             }
                         }
                     }
@@ -5796,25 +5761,38 @@ function do_operatingsystemkernel_migration($migration)
 {
     global $DB;
 
+    $kmapping = []; // [orig_osid|orig_osversionid => newid]
+    $mapping  = []; // [orig_computerosid => new_osversionid]
+
     if ($DB->tableExists('glpi_plugin_glpiinventory_computeroskernelnames')) {
         //Find wich version on which kernel
-        $kmapping = []; // [orig_osid|orig_osversionid => newid]
-        $mapping  = []; // [orig_computerosid => new_osversionid]
-
         $kernels = new OperatingSystemKernel();
         $kversions = new OperatingSystemKernelVersion();
 
-        //DB::update() does not handle joins for now
-        $query = "SELECT fi_cos.id,
-            fi_kname.id AS kid, fi_kname.name AS kname,
-            fi_kversion.id AS kvid, fi_kversion.name AS kversion
-         FROM glpi_plugin_glpiinventory_computeroperatingsystems AS fi_cos
-         INNER JOIN glpi_plugin_glpiinventory_computeroskernelnames AS fi_kname
-            ON fi_kname.id = fi_cos.plugin_glpiinventory_computeroskernelnames_id
-         INNER JOIN glpi_plugin_glpiinventory_computeroskernelversions AS fi_kversion
-            ON fi_kversion.id = fi_cos.plugin_glpiinventory_computeroskernelversions_id
-      ";
-        $iterator = $DB->request($query);
+        $iterator = $DB->request([
+            'SELECT' => [
+                'fi_cos.id',
+                'fi_kname.id AS kid',
+                'fi_kname.name AS kname',
+                'fi_kversion.id AS kvid',
+                'fi_kversion.name AS kversion',
+            ],
+            'FROM'   => 'glpi_plugin_glpiinventory_computeroperatingsystems AS fi_cos',
+            'INNER JOIN' => [
+                'glpi_plugin_glpiinventory_computeroskernelnames AS fi_kname' => [
+                    'ON' => [
+                        'fi_kname' => 'id',
+                        'fi_cos'   => 'plugin_glpiinventory_computeroskernelnames_id',
+                    ],
+                ],
+                'glpi_plugin_glpiinventory_computeroskernelversions AS fi_kversion' => [
+                    'ON' => [
+                        'fi_kversion' => 'id',
+                        'fi_cos'      => 'plugin_glpiinventory_computeroskernelversions_id',
+                    ],
+                ],
+            ],
+        ]);
 
         foreach ($iterator as $row) {
             $key = "{$row['kid']}|{$row['kvid']}";
@@ -5837,8 +5815,8 @@ function do_operatingsystemkernel_migration($migration)
         $migration->dropTable('glpi_plugin_glpiinventory_computeroskernelnames');
         $migration->dropTable('glpi_plugin_glpiinventory_computeroskernelversions');
 
-        return $mapping;
     }
+    return $mapping;
 }
 
 
@@ -5856,12 +5834,18 @@ function do_computeroperatingsystem_migration($migration)
 
     if ($DB->tableExists("glpi_plugin_glpiinventory_computeroperatingsystems")) {
         $ios = new Item_OperatingSystem();
-        $query = "SELECT DISTINCT(fi_computer.computers_id) AS cid, fi_computer.computers_id, fi_cos.*
-         FROM glpi_plugin_glpiinventory_inventorycomputercomputers AS fi_computer
-         INNER JOIN glpi_plugin_glpiinventory_computeroperatingsystems AS fi_cos
-            ON fi_computer.plugin_glpiinventory_computeroperatingsystems_id = fi_cos.id
-         ";
-        $iterator = $DB->request($query);
+        $iterator = $DB->request([
+            'DISTINCT' => true,
+            'FROM'   => 'glpi_plugin_glpiinventory_inventorycomputercomputers AS fi_computer',
+            'INNER JOIN' => [
+                'glpi_plugin_glpiinventory_computeroperatingsystems AS fi_cos' => [
+                    'ON' => [
+                        'fi_computer' => 'plugin_glpiinventory_computeroperatingsystems_id',
+                        'fi_cos'      => 'id',
+                    ],
+                ],
+            ],
+        ]);
 
         foreach ($iterator as $row) {
             $search = [
@@ -5911,13 +5895,16 @@ function do_computeroperatingsystem_migration($migration)
             5150 => 9,   //Last Update
         ];
         foreach ($sopts as $oldid => $newid) {
-            $iterator = $DB->request(
-                "SELECT * FROM `glpi_displaypreferences`
-               WHERE
-                  `itemtype`='Computer' AND (
-                     `num`='$oldid' OR `num`='$newid'
-                  )"
-            );
+            $iterator = $DB->request([
+                'FROM'   => 'glpi_displaypreferences',
+                'WHERE'  => [
+                    'itemtype' => 'Computer',
+                    'OR' => [
+                        ['num'      => $newid],
+                        ['num'      => $oldid],
+                    ],
+                ],
+            ]);
             $users = [];
             foreach ($iterator as $row) {
                 if (!in_array($row['users_id'], $users)) {
@@ -7321,8 +7308,9 @@ function do_snmpmodel_migration($migration)
  *
  * @global DBMysql $DB
  * @param object $migration
+ * @param array $prepare_Config
  */
-function do_rule_migration($migration)
+function do_rule_migration($migration, array $prepare_Config)
 {
     global $DB;
 
@@ -7539,11 +7527,13 @@ function doDynamicDataSearchParamsMigration()
         $stmt = $DB->prepare($update);
         foreach ($iterator as $dynamic_data) {
             $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
-            $stmt->bind_param(
-                'ss',
-                $new_values,
-                $dynamic_data['id']
-            );
+            if ($new_values !== null) {
+                $stmt->bind_param(
+                    'ss',
+                    $new_values,
+                    $dynamic_data['id']
+                );
+            }
         }
         mysqli_stmt_close($stmt);
     }
@@ -7555,8 +7545,8 @@ function doDynamicDataSearchParamsMigration()
  *
  * @since 0.85+1.0
  *
- * @param array $fields search paramas in old format (serialized)
- * @return string search paramas in new format (serialized)
+ * @param array|string $fields search paramas in old format (serialized)
+ * @return ?string search paramas in new format (serialized)
  */
 function migrationDynamicGroupFields($fields)
 {
@@ -7569,7 +7559,7 @@ function migrationDynamicGroupFields($fields)
     //We're still in 0.85 or higher,
     //no need for migration !
     if (isset($data['criteria'])) {
-        return $fields;
+        return null;
     }
 
     //Upgrade from 0.84
@@ -8339,7 +8329,7 @@ function update213to220_ConvertField($migration)
                         'id'  => $data['ID'],
                     ]
                 );
-                if (preg_match("/000$/", $i)) {
+                if (preg_match("/000$/", (string) $i)) {
                     $migration->displayMessage("$i / $nb");
                 }
             }
@@ -8425,7 +8415,7 @@ function update213to220_ConvertField($migration)
                         'ID' => $data['ID'],
                     ]
                 );
-                if (preg_match("/000$/", $i)) {
+                if (preg_match("/000$/", (string) $i)) {
                     $migration->displayMessage("$i / $nb");
                 }
             }
@@ -8574,7 +8564,7 @@ function migrateTablesFromFusinvDeploy($migration)
 
             //=== Checks ===
 
-            if ($DB->tableExists("glpi_plugin_fusinvdeploy_checks")) {
+            if ($DB->tableExists("glpi_plugin_fusinvdeploy_checks")) { //@phpstan-ignore if.alwaysTrue
                 $iterator = $DB->request([
                     'SELECT' => [
                         'type',
@@ -8612,7 +8602,7 @@ function migrateTablesFromFusinvDeploy($migration)
 
             $files_list = [];
             //=== Files ===
-            if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
+            if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) { //@phpstan-ignore if.alwaysTrue
                 $f_iterator = $DB->request([
                     'SELECT' => [
                         'id',
@@ -8666,7 +8656,7 @@ function migrateTablesFromFusinvDeploy($migration)
             $cmdStatus['REGEX_OK'] = 'okPattern';
             $cmdStatus['REGEX_KO'] = 'errorPattern';
 
-            if ($DB->tableExists("glpi_plugin_fusinvdeploy_actions")) {
+            if ($DB->tableExists("glpi_plugin_fusinvdeploy_actions")) { //@phpstan-ignore if.alwaysTrue
                 $a_iterator = $DB->request([
                     'FROM' => 'glpi_plugin_fusinvdeploy_actions',
                     'WHERE' => [

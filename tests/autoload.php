@@ -46,7 +46,7 @@ define('GLPI_URI', (getenv('GLPI_URI') ?: 'http://localhost:8088'));
 define('GLPI_LOG_DIR', GLPI_VAR_DIR . '/_log');
 include(__DIR__ . "/../../../vendor/autoload.php");
 define(
-    'PLUGINS_DIRECTORIES',
+    'GLPI_PLUGINS_DIRECTORIES',
     [
         GLPI_ROOT . '/plugins',
         GLPI_ROOT . '/tests/fixtures/plugins',

@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+global $DB;
+
 //Options for GLPI 0.71 and newer : need slave db to access the report
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
@@ -144,16 +146,19 @@ echo "</tr>";
 
 if ($result = $DB->doQuery($query)) {
     while ($data = $DB->fetchArray($result)) {
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
         if ($data['network_id'] > 0) {
             $class = new NetworkEquipment();
             $class->getFromDB($data['network_id']);
         } elseif ($data['printer_id'] > 0) {
             $class = new Printer();
             $class->getFromDB($data['printer_id']);
+        } else {
+            continue;
         }
-        echo $class->getLink(1);
+
+        echo "<tr class='tab_bg_1'>";
+        echo "<td>";
+        echo $class->getLink();
         echo "</td>";
         echo "<td>" . Html::convDateTime($data['last_inventory_update']) . "</td>";
         echo "<td>";
@@ -167,15 +172,15 @@ if ($result = $DB->doQuery($query)) {
         echo "<td>" . $data['serial'] . "</td>";
         echo "<td>" . $data['otherserial'] . "</td>";
         if ($data['network_id'] > 0) {
-            echo "<td>" . Dropdown::getDropdownName("glpi_networkequipmentmodels", $data['networkequipmentmodels_id']) . "</td>";
+            echo "<td>" . Dropdown::getDropdownName("glpi_networkequipmentmodels", (int) $data['networkequipmentmodels_id']) . "</td>";
         } elseif ($data['printer_id'] > 0) {
-            echo "<td>" . Dropdown::getDropdownName("glpi_printermodels", $data['printermodels_id']) . "</td>";
+            echo "<td>" . Dropdown::getDropdownName("glpi_printermodels", (int) $data['printermodels_id']) . "</td>";
         }
         echo "<td>";
-        echo Dropdown::getDropdownName('glpi_plugin_glpiinventory_configsecurities', $data['plugin_glpiinventory_configsecurities_id']);
+        echo Dropdown::getDropdownName('glpi_plugin_glpiinventory_configsecurities', (int) $data['plugin_glpiinventory_configsecurities_id']);
         echo "</td>";
         echo "<td>";
-        echo Dropdown::getDropdownName(getTableForItemType("State"), $data['states_id']);
+        echo Dropdown::getDropdownName(getTableForItemType("State"), (int) $data['states_id']);
         echo "</td>";
         echo "</tr>";
     }

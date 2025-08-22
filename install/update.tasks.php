@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryParam;
+
 /**
  * Manage update the task system
  *

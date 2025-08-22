@@ -31,21 +31,23 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\mkdir;
+use function Safe\ini_set;
+use function Safe\glob;
+
 /**
  * This function manage the installation of the plugin.
  *
- * @global DBMysql $DB
  * @param string $version
- * @param string $migrationname class name related to Migration class of GLPI
  */
-function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
+function pluginGlpiinventoryInstall($version)
 {
     global $CFG_GLPI, $DB;
 
     ini_set("memory_limit", "-1");
     ini_set("max_execution_time", "0");
 
-    $migration = new $migrationname($version);
+    $migration = new Migration($version);
 
     /*
      * Load classes
@@ -122,7 +124,7 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
         'WHERE'  => ['itemtype' => '5153'],
     ]);
     foreach ($iterator as $data) {
-        $networkPort->delete(['id' => $data['id']], 1);
+        $networkPort->delete(['id' => $data['id']], true);
     }
 
     /*
@@ -248,7 +250,7 @@ function pluginGlpiinventoryInstall($version, $migrationname = 'Migration')
     CronTask::Register(
         'PluginGlpiinventoryTask',
         'taskscheduler',
-        '60',
+        60,
         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]
     );
     CronTask::Register(

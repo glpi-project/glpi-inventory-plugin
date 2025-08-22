@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_encode;
+
 //This call is to check that the ESX inventory service is up and running
 $fi_status = filter_input(INPUT_GET, "status");
 if (!empty($fi_status)) {

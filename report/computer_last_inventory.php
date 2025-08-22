@@ -33,6 +33,8 @@
 
 use Glpi\DBAL\QueryExpression;
 
+global $DB;
+
 //Options for GLPI 0.71 and newer : need slave db to access the report
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
@@ -95,7 +97,7 @@ Html::closeForm();
 $computer = new Computer();
 
 $state_where = [];
-if (($state != "") and ($state != "0")) {
+if ($state != 0) {
     $state_where = ['states_id' => $state];
 }
 
@@ -142,7 +144,7 @@ foreach ($iterator as $data) {
     echo "<tr class='tab_bg_1'>";
     echo "<td>";
     $computer->getFromDB($data['computers_id']);
-    echo $computer->getLink(1);
+    echo $computer->getLink();
     echo "</td>";
     echo "<td>" . Html::convDateTime($data['last_inventory_update']) . "</td>";
     echo "<td>" . $computer->fields['serial'] . "</td>";
