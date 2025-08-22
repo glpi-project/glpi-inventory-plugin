@@ -917,4 +917,10 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
         parent::post_deleteItem();
     }
+
+    public static function getIcon()
+    {
+        return "ti ti-device-desktop-down";
+    }
+
 }

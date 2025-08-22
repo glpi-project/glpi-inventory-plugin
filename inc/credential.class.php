@@ -36,6 +36,8 @@
  */
 class PluginGlpiinventoryCredential extends CommonDropdown
 {
+    public $can_be_translated = false;
+
     /**
      * Define first level menu name
      *
@@ -460,5 +462,10 @@ class PluginGlpiinventoryCredential extends CommonDropdown
 
         $key = new GLPIKey();
         $this->fields['password'] = $key->decrypt($password);
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-lock";
     }
 }
