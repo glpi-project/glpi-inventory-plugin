@@ -734,14 +734,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         if (isset($params["id"])) {
             $file_path = $params['filename'];
             $filename = basename($file_path);
-            $mime_type = '';
-            try {
-                $finfo = finfo_open(FILEINFO_MIME);
-                $mime_type = finfo_file($finfo, $file_path);
-                finfo_close($finfo);
-            } catch (FileinfoException $e) {
-                $mime_type = mime_content_type($file_path);
-            }
             try {
                 $finfo = finfo_open(FILEINFO_MIME);
                 $mime_type = finfo_file($finfo, $file_path);

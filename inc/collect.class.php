@@ -103,9 +103,10 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             && $computer->fields['is_dynamic'] == 1
         ) {
             foreach (
-                ['PluginGlpiinventoryCollect_File_Content',
-                    'PluginGlpiinventoryCollect_Wmi_Content',
-                    'PluginGlpiinventoryCollect_Registry_Content',
+                [
+                    PluginGlpiinventoryCollect_File_Content::class,
+                    PluginGlpiinventoryCollect_Wmi_Content::class,
+                    PluginGlpiinventoryCollect_Registry_Content::class,
                 ] as $itemtype
             ) {
                 $collect_item = new $itemtype();
@@ -350,11 +351,11 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             $items_id = current($action);
 
             switch ($itemtype) {
-                case 'Computer':
+                case Computer::class:
                     $computers[] = $items_id;
                     break;
 
-                case 'Group':
+                case Group::class:
                     $computer_object = new Computer();
 
                     //find computers by user associated with this group
@@ -384,7 +385,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
                     break;
 
-                case 'PluginGlpiinventoryDeployGroup':
+                case PluginGlpiinventoryDeployGroup::class:
                     $group = new PluginGlpiinventoryDeployGroup();
                     $group->getFromDB($items_id);
 
@@ -482,7 +483,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             foreach ($a_registries as $data_r) {
                                 $uniqid = uniqid();
                                 $c_input['state'] = 0;
-                                $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Registry';
+                                $c_input['itemtype'] = PluginGlpiinventoryCollect_Registry::class;
                                 $c_input['items_id'] = $data_r['id'];
                                 $c_input['date'] = date("Y-m-d H:i:s");
                                 $c_input['uniqid'] = $uniqid;
@@ -508,7 +509,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             foreach ($a_wmies as $data_r) {
                                 $uniqid = uniqid();
                                 $c_input['state'] = 0;
-                                $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Wmi';
+                                $c_input['itemtype'] = PluginGlpiinventoryCollect_Wmi::class;
                                 $c_input['items_id'] = $data_r['id'];
                                 $c_input['date'] = date("Y-m-d H:i:s");
                                 $c_input['uniqid'] = $uniqid;
@@ -534,7 +535,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             foreach ($a_files as $data_r) {
                                 $uniqid = uniqid();
                                 $c_input['state'] = 0;
-                                $c_input['itemtype'] = 'PluginGlpiinventoryCollect_File';
+                                $c_input['itemtype'] = PluginGlpiinventoryCollect_File::class;
                                 $c_input['items_id'] = $data_r['id'];
                                 $c_input['date'] = date("Y-m-d H:i:s");
                                 $c_input['uniqid'] = $uniqid;

@@ -178,8 +178,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         $ong        = [];
         $moduleTabs = [];
-        $this->addStandardTab("PluginGlpiinventoryConfig", $ong, $options);
-        $this->addStandardTab("PluginGlpiinventoryAgentmodule", $ong, $options);
+        $this->addStandardTab(PluginGlpiinventoryConfig::class, $ong, $options);
+        $this->addStandardTab(PluginGlpiinventoryAgentmodule::class, $ong, $options);
 
         if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
             $plugin_tabs = $ong;

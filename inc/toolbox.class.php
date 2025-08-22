@@ -375,17 +375,17 @@ class PluginGlpiinventoryToolbox
     */
     public static function isAnInventoryDevice($item)
     {
-        switch ($item->getType()) {
-            case 'Computer':
-            case 'NetworkEquipment':
-            case 'Printer':
+        switch ($item::class) {
+            case Computer::class:
+            case NetworkEquipment::class:
+            case Printer::class:
                 return $item->isDynamic();
         }
 
         return $item->isDynamic()
          && countElementsInTable(
              RuleMatchedLog::getTable(),
-             ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]
+             ['itemtype' => $item::class, 'items_id' => $item->fields['id']]
          );
     }
 }

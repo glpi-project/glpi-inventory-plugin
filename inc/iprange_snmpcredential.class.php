@@ -41,7 +41,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      *
      * @var string
      */
-    public static $itemtype_1    = 'PluginGlpiinventoryIPRange';
+    public static $itemtype_1    = PluginGlpiinventoryIPRange::class;
 
     /**
      * id field name for the first part of relation
@@ -62,7 +62,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      *
      * @var string
      */
-    public static $itemtype_2    = 'SNMPCredential';
+    public static $itemtype_2    = SNMPCredential::class;
 
     /**
      * id field name for the second part of relation

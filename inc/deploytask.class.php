@@ -139,7 +139,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     public function showList()
     {
         self::title();
-        Search::show('PluginGlpiinventoryDeployTask');
+        Search::show(PluginGlpiinventoryDeployTask::class);
     }
 
 

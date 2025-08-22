@@ -138,7 +138,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype)
         ];
     }
 
-    if ($itemtype == 'Computer') {
+    if ($itemtype == Computer::class) {
         $sopt += PluginGlpiinventoryCollect::getSearchOptionsToAdd();
     }
 
@@ -153,19 +153,19 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
 
     $counters = [
         'agent'        => [
-            'itemtype' => Agent::getType(),
+            'itemtype' => Agent::class,
             'label' => sprintf(__("Number of %s"), Agent::getTypeName(2)),
         ],
         'task'         => [
-            'itemtype' => PluginGlpiinventoryTask::getType(),
+            'itemtype' => PluginGlpiinventoryTask::class,
             'label' => sprintf(__("Number of %s"), __('Tasks', 'glpiinventory')),
         ],
         'unmanaged'         => [
-            'itemtype' => Unmanaged::getType(),
+            'itemtype' => Unmanaged::class,
             'label' => sprintf(__("Number of %s"), Unmanaged::getTypeName(2)),
         ],
         'computer'         => [
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Computer::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
@@ -175,7 +175,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         ],
         'printer'         => [
-            'itemtype' => Printer::getType(),
+            'itemtype' => Printer::class,
             'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Printer::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
@@ -185,7 +185,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         ],
         'networkequipement'         => [
-            'itemtype' => NetworkEquipment::getType(),
+            'itemtype' => NetworkEquipment::class,
             'label' =>  sprintf(__("%s inventoried", "glpiinventory"), NetworkEquipment::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
@@ -195,7 +195,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
             ],
         ],
         'phone'         => [
-            'itemtype' => Phone::getType(),
+            'itemtype' => Phone::class,
             'label' =>  sprintf(__("%s inventoried", "glpiinventory"), Phone::getTypeName(2)),
             'apply_filters' =>  [
                 'link'          => 'AND',
@@ -282,7 +282,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
     }
 
     if ($table == "glpi_plugin_glpiinventory_agentmodules") {
-        if ($type == 'Computer') {
+        if ($type == Computer::class) {
             $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
             $a_modules = $pfAgentmodule->find(['modulename' => $field]);
             $data2 = current($a_modules);
@@ -316,7 +316,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
 
     switch ($type) {
         // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-        case 'PluginGlpiinventoryIPRange':
+        case PluginGlpiinventoryIPRange::class:
             switch ($table . '.' . $field) {
                 // ** Display entity name
                 case "glpi_entities.name":
@@ -435,7 +435,7 @@ function plugin_glpiinventory_MassiveActions($type)
     $ma = [];
 
     switch ($type) {
-        case "Computer":
+        case Computer::class:
             if (Session::haveRight('plugin_glpiinventory_task', UPDATE)) {
                 $ma["PluginGlpiinventoryTask" . $sep . "target_task"]
                  = "<i class='ti ti-list-check'></i>" . __('Target a task', 'glpiinventory');
@@ -498,7 +498,7 @@ function plugin_glpiinventory_addSelect($type, $id, $num)
     $field = $searchopt[$id]["field"];
 
     switch ($type) {
-        case 'Computer':
+        case Computer::class:
             $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
             foreach ($a_agent_modules as $module) {
                 if ($table . "." . $field == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
@@ -544,7 +544,7 @@ function plugin_glpiinventory_addLeftJoin(
 ) {
 
     switch ($itemtype) {
-        case 'PluginGlpiinventoryTask':
+        case PluginGlpiinventoryTask::class:
             if (
                 $new_table . "." . $linkfield == 'glpi_plugin_glpiinventory_taskjoblogs.' .
                  'plugin_glpiinventory_taskjoblogs_id'
@@ -569,7 +569,7 @@ function plugin_glpiinventory_addLeftJoin(
             }
             break;
 
-        case 'Computer':
+        case Computer::class:
             $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
             foreach ($a_agent_modules as $module) {
                 if ($new_table . "." . $linkfield == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
@@ -614,12 +614,12 @@ function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0)
 function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
 {
 
-    $searchopt = &Search::getOptions($type);
+    $searchopt = Search::getOptions($type);
     $table = $searchopt[$id]["table"];
     $field = $searchopt[$id]["field"];
 
     switch ($type) {
-        case 'PluginGlpiinventoryTaskjob':
+        case PluginGlpiinventoryTaskjob::class:
             /*
              * WARNING: The following is some minor hack in order to select a range of ids.
              *
@@ -658,14 +658,14 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
             }
             break;
 
-        case 'PluginGlpiinventoryTaskjoblog':
+        case PluginGlpiinventoryTaskjoblog::class:
             if ($field == 'uniqid') {
                 return $link . " (`" . $table . "`.`uniqid`='" . $val . "') ";
             }
             break;
 
             // * Computer List (front/computer.php)
-        case 'Computer':
+        case Computer::class:
             $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
             foreach ($a_agent_modules as $module) {
                 if ($table . "." . $field == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
@@ -703,7 +703,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
             break;
 
             // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-        case 'PluginGlpiinventoryIPRange':
+        case PluginGlpiinventoryIPRange::class:
             switch ($table . "." . $field) {
                 // ** Name of range IP and link to form
                 case "glpi_plugin_glpiinventory_ipranges.name":
@@ -765,8 +765,8 @@ function plugin_pre_item_purge_glpiinventory($parm)
     $items_id = $parm->getID();
 
     switch ($itemtype) {
-        case 'Computer':
-            $agent        = new Agent();
+        case Computer::class:
+            $agent = new Agent();
             $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
             $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
             $pfStatediscovery = new PluginGlpiinventoryStateDiscovery();
@@ -782,14 +782,9 @@ function plugin_pre_item_purge_glpiinventory($parm)
                 $agent->delete(['id' => $agent_id], true);
             }
 
-            $clean = [
-                'PluginGlpiinventoryCollect_File_Content',
-                'PluginGlpiinventoryCollect_Registry_Content',
-                'PluginGlpiinventoryCollect_Wmi_Content',
-            ];
-            foreach ($clean as $obj) {
-                $obj::cleanComputer($items_id);
-            }
+            PluginGlpiinventoryCollect_File_Content::cleanComputer($items_id);
+            PluginGlpiinventoryCollect_Registry_Content::cleanComputer($items_id);
+            PluginGlpiinventoryCollect_Wmi_Content::cleanComputer($items_id);
             break;
     }
 
@@ -811,7 +806,7 @@ function plugin_item_purge_glpiinventory($parm)
     global $DB;
 
     switch (get_class($parm)) {
-        case 'NetworkPort_NetworkPort':
+        case NetworkPort_NetworkPort::class:
             // If remove connection of a hub port (unknown device), we must delete this port too
             $NetworkPort = new NetworkPort();
             $NetworkPort_Vlan = new NetworkPort_Vlan();
@@ -894,7 +889,7 @@ function plugin_item_purge_glpiinventory($parm)
             }
             break;
 
-        case 'PluginGlpiinventoryTimeslot':
+        case PluginGlpiinventoryTimeslot::class:
             $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
             $dbentries = getAllDataFromTable(
                 'glpi_plugin_glpiinventory_timeslotentries',
@@ -909,7 +904,7 @@ function plugin_item_purge_glpiinventory($parm)
             }
             break;
 
-        case 'PluginGlpiinventoryDeployPackage':
+        case PluginGlpiinventoryDeployPackage::class:
             // Delete all linked items
             $DB->delete(
                 'glpi_plugin_glpiinventory_deploypackages_entities',

@@ -94,13 +94,13 @@ class PluginGlpiinventoryCommunicationRest
                 foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
                     switch (strtolower($task)) {
                         case 'deploy':
-                            $classname = 'PluginGlpiinventoryDeployPackage';
+                            $classname = PluginGlpiinventoryDeployPackage::class;
                             break;
                         case 'esx':
-                            $classname = 'PluginGlpiinventoryCredentialIp';
+                            $classname = PluginGlpiinventoryCredentialIp::class;
                             break;
                         case 'collect':
-                            $classname = 'PluginGlpiinventoryCollect';
+                            $classname = PluginGlpiinventoryCollect::class;
                             break;
                         default:
                             $classname = '';
@@ -129,8 +129,7 @@ class PluginGlpiinventoryCommunicationRest
                         * Since migration, there is only one plugin in one directory
                         * It's maybe time to redo this function -- kiniou
                         */
-                        $schedule[]
-                        = call_user_func(
+                        $schedule[] = call_user_func(
                             [$class, self::getMethodForParameters($task)],
                             $a_agent['entities_id']
                         );
@@ -231,7 +230,8 @@ class PluginGlpiinventoryCommunicationRest
         $taskjobstate = new PluginGlpiinventoryTaskjobstate();
 
         //Get task job status : identifier is the uuid given by the agent
-        $params = ['FROM' => getTableForItemType("PluginGlpiinventoryTaskjobstate"),
+        $params = [
+            'FROM' => getTableForItemType("PluginGlpiinventoryTaskjobstate"),
             'FIELDS' => 'id',
             'WHERE' => ['uniqid' => $p['uuid']],
         ];

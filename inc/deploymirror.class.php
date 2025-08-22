@@ -338,7 +338,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         if ($ma->getAction() == 'transfer') {
-            Dropdown::show('Entity');
+            Dropdown::show(Entity::class);
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
         }

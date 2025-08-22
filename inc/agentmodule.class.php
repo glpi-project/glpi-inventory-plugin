@@ -57,7 +57,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        if ($item->getType() == 'PluginGlpiinventoryConfig') {
+        if ($item instanceof PluginGlpiinventoryConfig) {
             return self::createTabEntry(__('Agents modules', 'glpiinventory'), 0, icon: Agent::getIcon());
         } elseif ($item->getType() == 'Agent') {
             return self::createTabEntry(__('Agents modules', 'glpiinventory'), 0, icon: Agent::getIcon());

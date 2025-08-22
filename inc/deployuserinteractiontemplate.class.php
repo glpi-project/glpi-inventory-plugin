@@ -436,7 +436,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     */
     public function getEvents()
     {
-        return ['on_ok'       => __('Button ok', 'glpiinventory'),
+        return [
+            'on_ok'       => __('Button ok', 'glpiinventory'),
             'on_yes'      => __('Button yes', 'glpiinventory'),
             'on_continue' => __('Button continue', 'glpiinventory'),
             'on_retry'    => __('Button retry', 'glpiinventory'),

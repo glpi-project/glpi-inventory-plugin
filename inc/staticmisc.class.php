@@ -131,7 +131,7 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function getmethods()
     {
-        $a_methods = call_user_func(['PluginGlpiinventoryStaticmisc', 'task_methods']);
+        $a_methods = call_user_func([PluginGlpiinventoryStaticmisc::class, 'task_methods']);
         $a_modules = PluginGlpiinventoryModule::getAll();
         foreach ($a_modules as $data) {
             $class = $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($data['directory']);
@@ -169,7 +169,7 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function task_definitiontype_InventoryComputerESX($a_itemtype)
     {
-        $a_itemtype['PluginGlpiinventoryCredentialIp'] =
+        $a_itemtype[PluginGlpiinventoryCredentialIp::class] =
                        PluginGlpiinventoryCredentialIp::getTypeName();
         return $a_itemtype;
     }
@@ -199,7 +199,7 @@ class PluginGlpiinventoryStaticmisc
                 ],
             ],
             'WHERE'  => [
-                'glpi_plugin_glpiinventory_credentials.itemtype' => 'PluginGlpiinventoryInventoryComputerESX',
+                'glpi_plugin_glpiinventory_credentials.itemtype' => PluginGlpiinventoryInventoryComputerESX::class,
             ] + getEntitiesRestrictCriteria('glpi_plugin_glpiinventory_credentialips'),
         ]);
 
@@ -260,7 +260,7 @@ class PluginGlpiinventoryStaticmisc
                 ],
             ],
             'WHERE'  => [
-                'glpi_plugin_glpiinventory_credentials.itemtype' => 'PluginGlpiinventoryInventoryComputerESX',
+                'glpi_plugin_glpiinventory_credentials.itemtype' => PluginGlpiinventoryInventoryComputerESX::class,
             ] + getEntitiesRestrictCriteria('glpi_plugin_glpiinventory_credentialips'),
         ]);
 
@@ -359,10 +359,10 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function task_definitiontype_networkinventory($a_itemtype)
     {
-        $a_itemtype['PluginGlpiinventoryIPRange'] = __('IP Ranges', 'glpiinventory');
+        $a_itemtype[PluginGlpiinventoryIPRange::class] = __('IP Ranges', 'glpiinventory');
 
-        $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
-        $a_itemtype['Printer'] = Printer::getTypeName();
+        $a_itemtype[NetworkEquipment::class] = NetworkEquipment::getTypeName();
+        $a_itemtype[Printer::class] = Printer::getTypeName();
 
         return $a_itemtype;
     }
@@ -395,7 +395,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity'] = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name'] = 'definitionselectiontoadd';
-        $rand = Dropdown::show("NetworkEquipment", $options);
+        $rand = Dropdown::show(NetworkEquipment::class, $options);
         return $rand;
     }
 
@@ -414,7 +414,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity'] = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name'] = 'definitionselectiontoadd';
-        $rand = Dropdown::show("Printer", $options);
+        $rand = Dropdown::show(Printer::class, $options);
         return $rand;
     }
 
@@ -448,9 +448,9 @@ class PluginGlpiinventoryStaticmisc
     public static function task_action_networkinventory()
     {
         $a_itemtype = [];
-        $a_itemtype[] = "Printer";
-        $a_itemtype[] = "NetworkEquipment";
-        $a_itemtype[] = 'PluginGlpiinventoryIPRange';
+        $a_itemtype[] = Printer::class;
+        $a_itemtype[] = NetworkEquipment::class;
+        $a_itemtype[] = PluginGlpiinventoryIPRange::class;
 
         return $a_itemtype;
     }
@@ -466,12 +466,12 @@ class PluginGlpiinventoryStaticmisc
     {
         $selection_type = '';
         switch ($itemtype) {
-            case 'PluginGlpiinventoryIPRange':
+            case PluginGlpiinventoryIPRange::class:
                 $selection_type = 'iprange';
                 break;
 
-            case "Printer":
-            case "NetworkEquipment":
+            case Printer::class:
+            case NetworkEquipment::class:
                 $selection_type = 'devices';
                 break;
         }
@@ -489,7 +489,7 @@ class PluginGlpiinventoryStaticmisc
     {
         $selection_type = '';
         switch ($itemtype) {
-            case 'PluginGlpiinventoryIPRange':
+            case PluginGlpiinventoryIPRange::class:
                 $selection_type = 'iprange';
                 break;
         }
@@ -509,7 +509,7 @@ class PluginGlpiinventoryStaticmisc
     public static function task_definitiontype_deployinstall($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-            'PluginGlpiinventoryDeployPackage' => __('Package'),
+            PluginGlpiinventoryDeployPackage::class => __('Package'),
         ];
     }
 
@@ -525,7 +525,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'definitionselectiontoadd';
-        return Dropdown::show("PluginGlpiinventoryDeployPackage", $options);
+        return Dropdown::show(PluginGlpiinventoryDeployPackage::class, $options);
     }
 
 
@@ -541,9 +541,9 @@ class PluginGlpiinventoryStaticmisc
     public static function task_actiontype_deployinstall($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-            'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
-            'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
-            'Group'                            => __('Group'),
+            Computer::class  => Computer::getTypeName(),
+            PluginGlpiinventoryDeployGroup::class => PluginGlpiinventoryDeployGroup::getTypeName(),
+            Group::class => Group::getTypeName(),
         ];
     }
 
@@ -580,7 +580,7 @@ class PluginGlpiinventoryStaticmisc
                  ')',
              ]
          );
-        return Dropdown::show("Computer", $options);
+        return Dropdown::show(Computer::class, $options);
     }
 
 
@@ -596,7 +596,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'actionselectiontoadd';
-        return Dropdown::show("Group", $options);
+        return Dropdown::show(Group::class, $options);
     }
 
 
@@ -612,7 +612,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'actionselectiontoadd';
-        return Dropdown::show("PluginGlpiinventoryDeployGroup", $options);
+        return Dropdown::show(PluginGlpiinventoryDeployGroup::class, $options);
     }
 
 
@@ -643,7 +643,7 @@ class PluginGlpiinventoryStaticmisc
     public static function task_definitiontype_collect($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-            'PluginGlpiinventoryCollect' => __('Collect information', 'glpiinventory'),
+            PluginGlpiinventoryCollect::class => PluginGlpiinventoryCollect::getTypeName(),
         ];
     }
 
@@ -659,7 +659,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'definitionselectiontoadd';
-        return Dropdown::show("PluginGlpiinventoryCollect", $options);
+        return Dropdown::show(PluginGlpiinventoryCollect::class, $options);
     }
 
 
@@ -672,9 +672,9 @@ class PluginGlpiinventoryStaticmisc
     public static function task_actiontype_collect($a_itemtype)
     {
         return ['' => Dropdown::EMPTY_VALUE,
-            'Computer'                         => _n('Computer', 'Computers', Session::getPluralNumber()),
-            'PluginGlpiinventoryDeployGroup' => PluginGlpiinventoryDeployGroup::getTypeName(),
-            'Group'                            => __('Group'),
+            Computer::class => Computer::getTypeName(),
+            PluginGlpiinventoryDeployGroup::class => PluginGlpiinventoryDeployGroup::getTypeName(),
+            Group::class => Group::getTypeName(),
         ];
     }
 
@@ -727,7 +727,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'actionselectiontoadd';
-        return Dropdown::show("Group", $options);
+        return Dropdown::show(Group::class, $options);
     }
 
 
@@ -743,7 +743,7 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'actionselectiontoadd';
-        return Dropdown::show("PluginGlpiinventoryDeployGroup", $options);
+        return Dropdown::show(PluginGlpiinventoryDeployGroup::class, $options);
     }
 
 
