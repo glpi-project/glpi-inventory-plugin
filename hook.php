@@ -647,16 +647,23 @@ function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0)
  * Add where in search query
  *
  * @param string $type
- * @return string
+ * @return array
  */
 function plugin_glpiinventory_addDefaultWhere($type)
 {
-    if ($type == 'PluginGlpiinventoryTaskjob' && !isAPI()) {
-        return " ( select count(*) FROM `glpi_plugin_glpiinventory_taskjobstates`
-         WHERE plugin_glpiinventory_taskjobs_id= `glpi_plugin_glpiinventory_taskjobs`.`id`
-         AND `state`!='3' )";
+    if ($type == PluginGlpiinventoryTaskjob::class && !isAPI()) {
+        return [
+            new QuerySubQuery([
+                'COUNT' => 'cnt',
+                'FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
+                'WHERE' => [
+                    'plugin_glpiinventory_taskjobs_id' => new QueryExpression('`glpi_plugin_glpiinventory_taskjobs`.`id`'),
+                    'state' => ['!=', 3],
+                ]
+            ])
+        ];
     }
-    return '';
+    return [];
 }
 
 
