@@ -37,7 +37,7 @@ function plugin_glpiinventory_add_default_where($in)
 {
     [$itemtype, $condition] = $in;
 
-    if ($itemtype === Computer::class && str_contains($requestUri, 'deploypackage.public.php')) {
+    if ($itemtype === Computer::class && str_contains($_SERVER['REQUEST_URI'] ?? '', 'deploypackage.public.php')) {
         // Specific case related to Self-Service profile rights:
         // - As Computer object has no read permission for Self-Service profile,
         //   Computer::getAssignableVisiblityCriteria() returns a QueryExpression("0").
@@ -52,7 +52,7 @@ function plugin_glpiinventory_add_default_where($in)
     return [$itemtype, $condition];
 }
 
-function removeEmptyCondition(array &$conditions)
+function removeEmptyCondition(array &$conditions): void
 {
     foreach ($conditions as $key => $condition) {
         if (is_array($condition)) {
