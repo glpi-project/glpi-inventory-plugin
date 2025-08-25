@@ -653,7 +653,7 @@ function plugin_glpiinventory_addDefaultWhere($type)
 {
     if ($type == PluginGlpiinventoryTaskjob::class && !isAPI()) {
         return [
-            new QuerySubQuery([
+            new \Glpi\DBAL\QuerySubQuery([
                 'COUNT' => 'cnt',
                 'FROM'  => 'glpi_plugin_glpiinventory_taskjobstates',
                 'WHERE' => [
