@@ -142,8 +142,7 @@ jobs:
         fetch-depth: 1
         ref: 11.0/bugfixes
     - name: Patch Core on PHP 8.5
-      run: |
-        sed -e 's/8\.4/8\.5/' -i glpi/public/index.php glpi/src/autoload/constants.php
+      run: sed -e 's/8\.4/8\.5/' -i glpi/public/index.php glpi/src/autoload/constants.php
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install dependencies
@@ -153,7 +152,6 @@ jobs:
         php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
         mkdir --parents public/lib
         php bin/console locales:compile
-        patch -f -p3 -d vendor/apereo/phpcas/ < plugins/glpiinventory/patches/phpcas-php8.5.patch
 
     - name: Init database
       run: |
