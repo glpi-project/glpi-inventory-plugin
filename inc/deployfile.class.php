@@ -705,7 +705,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                  && ($finfo = finfo_open(FILEINFO_MIME))
             ) {
                 $mime_type = finfo_file($finfo, $file_path);
-                finfo_close($finfo);
+                if (PHP_VERSION_ID < 80100) {
+                    finfo_close($finfo);
+                }
             } elseif (function_exists('mime_content_type')) {
                 $mime_type = mime_content_type($file_path);
             }
