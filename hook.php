@@ -644,23 +644,6 @@ function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0)
 
 
 /**
- * Add where in search query
- *
- * @param string $type
- * @return string
- */
-function plugin_glpiinventory_addDefaultWhere($type)
-{
-    if ($type == 'PluginGlpiinventoryTaskjob' && !isAPI()) {
-        return " ( select count(*) FROM `glpi_plugin_glpiinventory_taskjobstates`
-         WHERE plugin_glpiinventory_taskjobs_id= `glpi_plugin_glpiinventory_taskjobs`.`id`
-         AND `state`!='3' )";
-    }
-    return '';
-}
-
-
-/**
  * Manage where in search query
  *
  * @param string $link
