@@ -40,7 +40,7 @@ class PluginGlpiinventoryDashboard
     {
         $default_params = [
             'label'                 => "",
-            'itemtype'              => Agent::getType(),
+            'itemtype'              => Agent::class,
             'icon'                  => Agent::getIcon(),
             'apply_filters'         => [],
         ];

@@ -178,8 +178,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         $ong        = [];
         $moduleTabs = [];
-        $this->addStandardTab("PluginGlpiinventoryConfig", $ong, $options);
-        $this->addStandardTab("PluginGlpiinventoryAgentmodule", $ong, $options);
+        $this->addStandardTab(PluginGlpiinventoryConfig::class, $ong, $options);
+        $this->addStandardTab(PluginGlpiinventoryAgentmodule::class, $ong, $options);
 
         if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
             $plugin_tabs = $ong;
@@ -209,7 +209,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        if ($item->getType() == self::class) {
+        if ($item instanceof self) {
             return [
                 self::createTabEntry(__('General setup'), 0, icon: 'ti ti-settings'),
                 self::createTabEntry(__('Network Inventory', 'glpiinventory'), 0, icon: 'ti ti-network'),

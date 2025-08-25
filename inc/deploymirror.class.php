@@ -252,7 +252,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
             'field'         => 'name',
             'name'          => __('Name'),
             'datatype'      => 'itemlink',
-            'itemlink_type' => $this->getType(),
+            'itemlink_type' => $this::class,
         ];
 
         $tab[] = [
@@ -338,7 +338,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         if ($ma->getAction() == 'transfer') {
-            Dropdown::show('Entity');
+            Dropdown::show(Entity::class);
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
         }
@@ -369,10 +369,10 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
                         $input['entities_id'] = $_POST['entities_id'];
                         if ($pfDeployMirror->update($input)) {
                             //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
                             // KO
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     }
                 }

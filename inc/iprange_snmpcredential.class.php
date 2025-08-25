@@ -41,7 +41,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      *
      * @var string
      */
-    public static $itemtype_1    = 'PluginGlpiinventoryIPRange';
+    public static $itemtype_1    = PluginGlpiinventoryIPRange::class;
 
     /**
      * id field name for the first part of relation
@@ -62,7 +62,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      *
      * @var string
      */
-    public static $itemtype_2    = 'SNMPCredential';
+    public static $itemtype_2    = SNMPCredential::class;
 
     /**
      * id field name for the second part of relation
@@ -179,7 +179,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
         echo "</tr>";
         echo "<tr class='tab_bg_2'>";
         echo "<td>";
-        Dropdown::show(SNMPCredential::getType(), ['used' => $a_used]);
+        Dropdown::show(SNMPCredential::class, ['used' => $a_used]);
         echo "</td>";
         echo "<td>";
         echo Html::hidden(

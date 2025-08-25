@@ -147,7 +147,7 @@ class NetworkInventoryTest extends TestCase
             'version'     => '{"INVENTORY":"v2.3.11"}',
             'deviceid'    => 'computer1',
             'useragent'   => 'FusionInventory-Agent_v2.3.11',
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'items_id' => $computers_id,
             'agenttypes_id' => $agenttype['id'],
         ];

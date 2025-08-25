@@ -87,15 +87,19 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     public function getAdditionalFields()
     {
 
-        return [['name'  => 'itemtype',
-            'label' => __('Type'),
-            'type'  => 'credential_itemtype',
-        ],
-            ['name'  => 'username',
+        return [
+            [
+                'name'  => 'itemtype',
+                'label' => __('Type'),
+                'type'  => 'credential_itemtype',
+            ],
+            [
+                'name'  => 'username',
                 'label' => __('Login'),
                 'type'  => 'text',
             ],
-            ['name'  => 'password',
+            [
+                'name'  => 'password',
                 'label' => __('Password'),
                 'type'  => 'password',
             ],
@@ -112,10 +116,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
     {
 
-        switch ($field['type']) {
-            case 'credential_itemtype':
-                $this->showItemtype($ID);
-                break;
+        if ($field['type'] == 'credential_itemtype') {
+            $this->showItemtype($ID);
         }
     }
 
@@ -310,8 +312,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      */
     public static function getCredentialsItemTypes()
     {
-        return ['PluginGlpiinventoryInventoryComputerESX' =>
-                           __('VMware host', 'glpiinventory'),
+        return [
+            PluginGlpiinventoryInventoryComputerESX::class => __('VMware host', 'glpiinventory'),
         ];
     }
 
@@ -399,8 +401,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
 
         // params
         // Array([itemtype] => PluginGlpiinventoryInventoryComputerESX [id] => 0)
-        if ($params['itemtype'] == 'PluginGlpiinventoryInventoryComputerESX') {
-            $params['itemtype'] = 'PluginGlpiinventoryCredential';
+        if ($params['itemtype'] == PluginGlpiinventoryInventoryComputerESX::class) {
+            $params['itemtype'] = PluginGlpiinventoryCredential::class;
         }
         $value = 0;
         if (isset($params['id'])) {

@@ -85,11 +85,14 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
      */
     public function getAdditionalFields()
     {
-        return [['name'  => 'itemtype',
-            'label' => __('Type'),
-            'type'  => 'credentials',
-        ],
-            ['name'  => 'ip',
+        return [
+            [
+                'name'  => 'itemtype',
+                'label' => __('Type'),
+                'type'  => 'credentials',
+            ],
+            [
+                'name'  => 'ip',
                 'label' => __('IP'),
                 'type'  => 'text',
             ],
@@ -106,11 +109,9 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
     {
 
-        switch ($field['type']) {
-            case 'credentials':
-                $field['id'] = $this->fields['plugin_glpiinventory_credentials_id'];
-                PluginGlpiinventoryCredential::dropdownCredentials($field);
-                break;
+        if ($field['type'] == 'credentials') {
+            $field['id'] = $this->fields['plugin_glpiinventory_credentials_id'];
+            PluginGlpiinventoryCredential::dropdownCredentials($field);
         }
     }
 

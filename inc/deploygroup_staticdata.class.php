@@ -54,7 +54,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      *
      * @var string
      */
-    public static $itemtype_1 = 'PluginGlpiinventoryDeployGroup';
+    public static $itemtype_1 = PluginGlpiinventoryDeployGroup::class;
 
     /**
      * id field name for the first part of relation
@@ -94,18 +94,17 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
              && $item->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
         ) {
             $tabs[1] = self::createTabEntry(_n('Criterion', 'Criteria', 2), 0, icon: 'ti ti-file-search');
+            $count = 0;
             if ($_SESSION['glpishow_count_on_tabs']) {
                 $count = countElementsInTable(
                     getTableForItemType(self::class),
                     [
-                        'itemtype'                               => 'Computer',
+                        'itemtype'                               => Computer::class,
                         'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
                     ]
                 );
-                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count, icon: 'ti ti-list');
-            } else {
-                $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', 0), 0, icon: 'ti ti-list');
             }
+            $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count, icon: 'ti ti-list');
             $tabs[3] = self::createTabEntry(__('CSV import', 'glpiinventory'), 0, icon: 'ti ti-csv');
             return $tabs;
         }
@@ -173,7 +172,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         $search_params['massiveactionparams']['extraparams']['specific_actions']['PluginGlpiinventoryComputer' . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
-        $data = Search::prepareDatasForSearch('Computer', $search_params);
+        $data = Search::prepareDatasForSearch(Computer::class, $search_params);
         Search::constructSQL($data);
         Search::constructData($data);
         $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
@@ -255,7 +254,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
             $computer = new Computer();
             $computer->getFromDB($data["items_id"]);
             $linkname = $computer->fields["name"];
-            $itemtype = Computer::getType();
+            $itemtype = Computer::class;
             if ($_SESSION["glpiis_ids_visible"] || empty($computer->fields["name"])) {
                 $linkname = sprintf(__('%1$s (%2$s)'), $linkname, $computer->fields["id"]);
             }
@@ -371,7 +370,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         $computer = new Computer();
         $input = [
             'plugin_glpiinventory_deploygroups_id' => $post_data['groups_id'],
-            'itemtype' => 'Computer',
+            'itemtype' => Computer::class,
         ];
         if (isset($files_data['importcsvfile']['tmp_name'])) {
             try {

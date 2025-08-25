@@ -155,7 +155,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             $what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
                             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
                                 '[==detail==] ' . $what . ' ' . $item->getTypeName() .
-                                ' [[' . $item::getType() . '::' . $item->fields['id'] . ']]';
+                                ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
                             $this->addtaskjoblog();
                         }
                         $response = ['response' => ['RESPONSE' => 'SEND']];

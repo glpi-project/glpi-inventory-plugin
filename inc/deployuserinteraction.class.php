@@ -169,7 +169,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
         echo "<th>{$values['template_label']}</th>";
         echo "<td>";
         Dropdown::show(
-            'PluginGlpiinventoryDeployUserinteractionTemplate',
+            PluginGlpiinventoryDeployUserinteractionTemplate::class,
             ['value' => $values['template_value'], 'name' => 'template']
         );
         echo "</td>";
@@ -229,10 +229,6 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
      */
     public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
-        $interaction_types = $this->getTypes();
         $package_id        = $package->getID();
         $canedit           = $package->canUpdateContent();
         $i                 = 0;

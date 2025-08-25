@@ -120,93 +120,92 @@ function plugin_init_glpiinventory()
 
         // Register classes into GLPI plugin factory
         $Plugin->registerClass(
-            'PluginGlpiinventoryAgentmodule',
+            PluginGlpiinventoryAgentmodule::class,
             [
                 'addtabon' => [
                     'Agent',
                 ],
             ]
         );
-        $Plugin->registerClass('PluginGlpiinventoryConfig');
-        $Plugin->registerClass('PluginGlpiinventoryTask', ['addtabon' => 'PluginGlpiinventoryIPRange']);
+        $Plugin->registerClass(PluginGlpiinventoryConfig::class);
+        $Plugin->registerClass(PluginGlpiinventoryTask::class, ['addtabon' => PluginGlpiinventoryIPRange::class]);
 
         $Plugin->registerClass(
-            'PluginGlpiinventoryTaskjob',
+            PluginGlpiinventoryTaskjob::class,
             [
                 'addtabon' => [
-                    'PluginGlpiinventoryTask',
+                    PluginGlpiinventoryTask::class,
                 ],
             ]
         );
 
         $Plugin->registerClass(
-            'PluginGlpiinventoryTaskjobstate',
+            PluginGlpiinventoryTaskjobstate::class,
             [
                 'addtabon' => [
-                    'PluginGlpiinventoryTask',
-                    'Computer',
+                    PluginGlpiinventoryTask::class,
+                    Computer::class,
                 ],
             ]
         );
 
-        $Plugin->registerClass('PluginGlpiinventoryModule');
+        $Plugin->registerClass(PluginGlpiinventoryModule::class);
         $Plugin->registerClass(
-            'PluginGlpiinventoryProfile',
-            ['addtabon' => ['Profile']]
+            PluginGlpiinventoryProfile::class,
+            ['addtabon' => [Profile::class]]
         );
-        $Plugin->registerClass('PluginGlpiinventorySetup');
-        $Plugin->registerClass('PluginGlpiinventoryIPRange');
+        $Plugin->registerClass(PluginGlpiinventorySetup::class);
+        $Plugin->registerClass(PluginGlpiinventoryIPRange::class);
         $Plugin->registerClass(
-            'PluginGlpiinventoryIPRange_SNMPCredential',
-            ['addtabon' => 'PluginGlpiinventoryIPRange']
+            PluginGlpiinventoryIPRange_SNMPCredential::class,
+            ['addtabon' => PluginGlpiinventoryIPRange::class]
         );
-        $Plugin->registerClass('PluginGlpiinventoryCredential');
-        $Plugin->registerClass('PluginGlpiinventoryTimeslot');
+        $Plugin->registerClass(PluginGlpiinventoryCredential::class);
+        $Plugin->registerClass(PluginGlpiinventoryTimeslot::class);
 
         $Plugin->registerClass(
-            'PluginGlpiinventoryCollect',
-            ['addtabon' => ['Computer']]
+            PluginGlpiinventoryCollect::class,
+            ['addtabon' => [Computer::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryCollect_Registry',
-            ['addtabon' => ['PluginGlpiinventoryCollect']]
+            PluginGlpiinventoryCollect_Registry::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryCollect_Registry_Content',
-            ['addtabon' => ['PluginGlpiinventoryCollect']]
+            PluginGlpiinventoryCollect_Registry_Content::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryCollect_Wmi',
-            ['addtabon' => ['PluginGlpiinventoryCollect']]
+            PluginGlpiinventoryCollect_Wmi::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryCollect_Wmi_Content',
-            ['addtabon' => ['PluginGlpiinventoryCollect']]
+            PluginGlpiinventoryCollect_Wmi_Content::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryCollect_File',
-            ['addtabon' => ['PluginGlpiinventoryCollect']]
+            PluginGlpiinventoryCollect_File::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryCollect_File_Content',
-            ['addtabon' => ['PluginGlpiinventoryCollect']]
+            PluginGlpiinventoryCollect_File_Content::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );
 
         // Networkinventory and networkdiscovery
-        $Plugin->registerClass('PluginFusinvsnmpAgentconfig');
-        $Plugin->registerClass('PluginGlpiinventoryStateDiscovery');
-        $Plugin->registerClass('PluginGlpiinventoryDeployGroup');
+        $Plugin->registerClass(PluginGlpiinventoryStateDiscovery::class);
+        $Plugin->registerClass(PluginGlpiinventoryDeployGroup::class);
         $Plugin->registerClass(
-            'PluginGlpiinventoryDeployGroup_Staticdata',
-            ['addtabon' => ['PluginGlpiinventoryDeployGroup']]
+            PluginGlpiinventoryDeployGroup_Staticdata::class,
+            ['addtabon' => [PluginGlpiinventoryDeployGroup::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryDeployGroup_Dynamicdata',
-            ['addtabon' => ['PluginGlpiinventoryDeployGroup']]
+            PluginGlpiinventoryDeployGroup_Dynamicdata::class,
+            ['addtabon' => [PluginGlpiinventoryDeployGroup::class]]
         );
         $Plugin->registerClass(
-            'PluginGlpiinventoryDeployPackage',
-            ['addtabon' => ['Computer']]
+            PluginGlpiinventoryDeployPackage::class,
+            ['addtabon' => [Computer::class]]
         );
 
         // ##### 3. get informations of the plugin #####
@@ -218,9 +217,9 @@ function plugin_init_glpiinventory()
 
         // ##### 5. Set in session XMLtags of methods #####
         $_SESSION['glpi_plugin_glpiinventory']['xmltags']['NETWORKDISCOVERY']
-                                             = 'PluginGlpiinventoryCommunicationNetworkDiscovery';
+                                             = PluginGlpiinventoryCommunicationNetworkDiscovery::class;
         $_SESSION['glpi_plugin_glpiinventory']['xmltags']['NETWORKINVENTORY']
-                                             = 'PluginGlpiinventoryCommunicationNetworkInventory';
+                                             = PluginGlpiinventoryCommunicationNetworkInventory::class;
 
         // set default values for task view
         if (!isset($_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'])) {
@@ -294,21 +293,21 @@ function plugin_init_glpiinventory()
         ];
 
         $PLUGIN_HOOKS[Hooks::PRE_ITEM_PURGE]['glpiinventory'] = [
-            'Computer'                 => 'plugin_pre_item_purge_glpiinventory',
-            'NetworkPort_NetworkPort'  => 'plugin_pre_item_purge_glpiinventory',
+            Computer::class => 'plugin_pre_item_purge_glpiinventory',
+            NetworkPort_NetworkPort::class => 'plugin_pre_item_purge_glpiinventory',
         ];
         $p = [
-            'NetworkPort_NetworkPort'            => 'plugin_item_purge_glpiinventory',
-            'PluginGlpiinventoryTask'          => ['PluginGlpiinventoryTask', 'purgeTask'],
-            'PluginGlpiinventoryTaskjob'       => ['PluginGlpiinventoryTaskjob', 'purgeTaskjob'],
-            'PluginGlpiinventoryTimeslot'      => 'plugin_item_purge_glpiinventory',
-            'Entity'                             => 'plugin_item_purge_glpiinventory',
-            'PluginGlpiinventoryDeployPackage' => 'plugin_item_purge_glpiinventory',
+            NetworkPort_NetworkPort::class => 'plugin_item_purge_glpiinventory',
+            PluginGlpiinventoryTask::class => ['PluginGlpiinventoryTask', 'purgeTask'],
+            PluginGlpiinventoryTaskjob::class => ['PluginGlpiinventoryTaskjob', 'purgeTaskjob'],
+            PluginGlpiinventoryTimeslot::class => 'plugin_item_purge_glpiinventory',
+            Entity::class => 'plugin_item_purge_glpiinventory',
+            PluginGlpiinventoryDeployPackage::class => 'plugin_item_purge_glpiinventory',
         ];
         $PLUGIN_HOOKS[Hooks::ITEM_PURGE]['glpiinventory'] = $p;
 
         if (Session::haveRight('plugin_glpiinventory_menu', READ)) {
-            $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['admin'] = 'PluginGlpiinventoryMenu';
+            $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['admin'] = PluginGlpiinventoryMenu::class;
         }
 
         // For end users
@@ -387,7 +386,8 @@ function plugin_init_glpiinventory()
  */
 function plugin_version_glpiinventory()
 {
-    return ['name'           => 'GLPI Inventory',
+    return [
+        'name'           => 'GLPI Inventory',
         'shortname'      => 'glpiinventory',
         'version'        => PLUGIN_GLPIINVENTORY_VERSION,
         'license'        => 'AGPLv3+',

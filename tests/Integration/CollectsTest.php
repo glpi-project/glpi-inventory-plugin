@@ -265,7 +265,7 @@ class CollectsTest extends TestCase
         $input = [
             'name'         => 'pc01',
             'entities_id'  => 0,
-            'itemtype'     => Computer::getType(),
+            'itemtype'     => Computer::class,
             'items_id'     => $computers_id,
             'deviceid'     => 'pc01',
             'agenttypes_id' => $agenttype['id'],

@@ -114,7 +114,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     public static function disableDebug()
     {
         error_reporting(0);
-        set_error_handler(['PluginGlpiinventoryDisplay', 'error_handler']);
+        set_error_handler([PluginGlpiinventoryDisplay::class, 'error_handler']);
     }
 
 
@@ -154,7 +154,6 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
         $param = [];
         $param['title'] = __('Progress', 'glpiinventory');
         $param['simple'] = false;
-        $param['forcepadding'] = false;
 
         if (count($options)) {
             foreach ($options as $key => $val) {

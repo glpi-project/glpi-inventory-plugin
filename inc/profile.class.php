@@ -272,19 +272,23 @@ class PluginGlpiinventoryProfile extends Profile
     public function getRightsDeploy()
     {
         $rights = [
-            ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
+            [
+                'itemtype'  => PluginGlpiinventoryDeployPackage::class,
                 'label'     => __('Manage packages', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_package',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
+            [
+                'itemtype'  => PluginGlpiinventoryDeployPackage::class,
                 'label'     => _n('User interaction template', 'User interaction templates', 1, 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_userinteractiontemplate',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryDeployMirror',
+            [
+                'itemtype'  => PluginGlpiinventoryDeployMirror::class,
                 'label'     => __('Mirror servers', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_deploymirror',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryDeployPackage',
+            [
+                'itemtype'  => PluginGlpiinventoryDeployPackage::class,
                 'label'     => __('Deploy packages on demand', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_selfpackage',
                 'rights'    => [READ => __('Read')],
@@ -302,43 +306,54 @@ class PluginGlpiinventoryProfile extends Profile
     public function getRightsInventory()
     {
         $rights = [
-            ['itemtype'  => 'PluginGlpiinventoryIprange',
+            [
+                'itemtype'  => PluginGlpiinventoryIPRange::class,
                 'label'     => __('IP range configuration', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_iprange',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryCredential',
+            [
+                'itemtype'  => PluginGlpiinventoryCredential::class,
                 'label'     => __('Authentication for remote devices (VMware)', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_credential',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryCredentialip',
+            [
+                'itemtype'  => PluginGlpiinventoryCredentialIp::class,
                 'label'     => __('Remote devices to inventory (VMware)', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_credentialip',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryCredential',
+            [
+                'itemtype'  => PluginGlpiinventoryCredential::class,
                 'label'     => __('VMware host', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_esx',
             ],
-            /*['itemtype'  => 'PluginGlpiinventoryConfigSecurity',
+            /*[
+                'itemtype'  => PluginGlpiinventoryConfigSecurity::class,
                 'label'     => __('SNMP credentials', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_configsecurity'],*/
-            ['rights'    => [CREATE => __('Create')],
+            [
+                'rights'    => [CREATE => __('Create')],
                 'label'     => __('Network equipment SNMP', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_networkequipment',
             ],
-            ['rights'    => [CREATE => __('Create')],
+            [
+                'rights'    => [CREATE => __('Create')],
                 'label'     => __('Printer SNMP', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_printer',
             ],
-            /*['itemtype'  => 'PluginGlpiinventoryUnmanaged',
+            /*[
+                'itemtype'  => Unmanaged::class,
                 'label'     => __('Unmanaged devices', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_unmanaged'],*/
-            /*['itemtype'  => 'PluginGlpiinventoryInventoryComputerImportXML',
+            /*[
+                'itemtype'  => PluginGlpiinventoryInventoryComputerImportXML::class,
                 'label'     => __('computer XML manual import', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_importxml'],*/
-            /*['rights'    => [READ => __('Read')],
+            /*[
+                'rights'    => [READ => __('Read')],
                 'label'     => __('Printers report', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_reportprinter'],*/
-            /*['rights'    => [READ => __('Read')],
+            /*[
+                'rights'    => [READ => __('Read')],
                 'label'     => __('Network report'),
                 'field'     => 'plugin_glpiinventory_reportnetworkequipment']*/
         ];
@@ -354,30 +369,37 @@ class PluginGlpiinventoryProfile extends Profile
     public function getRightsGeneral()
     {
         $rights = [
-            ['rights'    => [READ => __('Read')],
+            [
+                'rights'    => [READ => __('Read')],
                 'label'     => __('Menu', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_menu',
             ],
-            /*['itemtype'  => 'Agent',
+            /*[
+                'itemtype'  => Agent::class,
                 'label'     => __('Agents', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_agent'],*/
-            /*['rights'    => [READ => __('Read')],
+            /*[
+                'rights'    => [READ => __('Read')],
                 'label'     => __('Agent remote control', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_remotecontrol'],*/
-            ['rights'    => [READ => __('Read'), UPDATE => __('Update')],
-                'itemtype'  => 'PluginGlpiinventoryConfig',
+            [
+                'rights'    => [READ => __('Read'), UPDATE => __('Update')],
+                'itemtype'  => PluginGlpiinventoryConfig::class,
                 'label'     => __('Configuration', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_configuration',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryTask',
+            [
+                'itemtype'  => PluginGlpiinventoryTask::class,
                 'label'     => _n('Task', 'Tasks', 2, 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_task',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryDeployGroup',
+            [
+                'itemtype'  => PluginGlpiinventoryDeployGroup::class,
                 'label'     => __('Groups of computers', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_group',
             ],
-            ['itemtype'  => 'PluginGlpiinventoryCollect',
+            [
+                'itemtype'  => PluginGlpiinventoryCollect::class,
                 'label'     => __('Computer information', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_collect',
             ],
@@ -445,8 +467,8 @@ class PluginGlpiinventoryProfile extends Profile
             }
         }
 
-        if (isset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu'])) {
-            unset($_SESSION['glpimenu']['plugins']['types']['PluginGlpiinventoryMenu']);
+        if (isset($_SESSION['glpimenu']['plugins']['types'][PluginGlpiinventoryMenu::class])) {
+            unset($_SESSION['glpimenu']['plugins']['types'][PluginGlpiinventoryMenu::class]);
         }
         if (isset($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu'])) {
             unset($_SESSION['glpimenu']['plugins']['content']['pluginglpiinventorymenu']);

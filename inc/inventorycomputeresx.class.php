@@ -93,7 +93,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
                     $jobstate->changeStatusFinish(
                         $jobstates_id,
                         0,
-                        'PluginGlpiinventoryInventoryComputerESX',
+                        PluginGlpiinventoryInventoryComputerESX::class,
                         1,
                         "Unable to find agent to run this job"
                     );

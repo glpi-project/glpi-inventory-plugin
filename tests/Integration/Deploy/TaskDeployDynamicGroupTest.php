@@ -74,58 +74,58 @@ class TaskDeployDynamicGroupTest extends TestCase
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $computerId = $computer->add(['name' => 'pc01', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc02', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc03', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc04', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc05', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc06', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc07', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc08', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc09', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc10', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc11', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc12', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'pc13', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'srv01', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'srv02', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'srv03', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'srv04', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
         $computerId = $computer->add(['name' => 'srv05', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
-        $this->assertNotFalse($agent->add(['itemtype' => Computer::getType(), 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::getType() . $computerId, 'agenttypes_id' => $agenttype['id']]));
+        $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));
     }
 
 
@@ -192,7 +192,7 @@ class TaskDeployDynamicGroupTest extends TestCase
             unset($data['id']);
             $items[] = $data;
         }
-        $agentsId = array_keys($agent->find(['itemtype' => Computer::getType(), 'items_id' => $this->computers_ids]));
+        $agentsId = array_keys($agent->find(['itemtype' => Computer::class, 'items_id' => $this->computers_ids]));
 
         $a_reference = [
             [

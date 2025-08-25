@@ -83,10 +83,8 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     {
         $class            = static::class;
         $pfCollectContent = new $class();
-        switch (get_class($item)) {
-            case 'PluginGlpiinventoryCollect':
-                $pfCollectContent->showForCollect($item->fields['id']);
-                break;
+        if ($item instanceof PluginGlpiinventoryCollect) {
+            $pfCollectContent->showForCollect($item->fields['id']);
         }
         return true;
     }

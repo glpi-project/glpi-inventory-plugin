@@ -215,16 +215,16 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
 
         return [
             [
-                'name' => _n('Computer', 'Computers', Session::getPluralNumber()),
-                'value' => 'Computer',
+                'name' => Computer::getTypeName(),
+                'value' => Computer::class,
             ],
             [
-                'name' => __('Group'),
+                'name' => Group::getTypeName(),
                 'value' => 'Group',
             ],
             [
                 'name' => __('Groups of computers', 'glpiinventory'),
-                'value' => 'PluginGlpiinventoryDeployGroup',
+                'value' => PluginGlpiinventoryDeployGroup::class,
             ],
         ];
     }
@@ -253,7 +253,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                 break;
             case "selection":
                 switch ($params['type']) {
-                    case 'Computer':
+                    case Computer::class:
                         $where = [];
                         if (isset($params['query'])) {
                             $where['name'] = ['LIKE', '%' . $params['query']];
@@ -276,7 +276,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                         $res = json_encode($res);
                         break;
 
-                    case 'Group':
+                    case Group::class:
                         $like = [];
                         if (isset($params['query'])) {
                             //FIXME: not sure escape is mandatory here

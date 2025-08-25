@@ -191,7 +191,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     {
         switch ($ma->getAction()) {
             case 'transfert':
-                Dropdown::show('Entity');
+                Dropdown::show(Entity::class);
                 echo "<br><br>" . Html::submit(
                     __('Post'),
                     ['name' => 'massiveaction']
@@ -221,7 +221,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 foreach ($ids as $key) {
                     if ($item->can($key, UPDATE)) {
                         $item->exportPackage($key);
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                     }
                 }
                 break;
@@ -241,7 +241,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             case 'import':
                 foreach ($ids as $key) {
                     $item->importPackage($key);
-                    $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                    $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                 }
                 break;
 
@@ -251,10 +251,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     if ($pfPackage->getFromDB($key)) {
                         if ($pfPackage->duplicate($pfPackage->getID())) {
                             //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
                             // KO
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     }
                 }
@@ -340,7 +340,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             'field'         => 'name',
             'name'          => __('Name'),
             'datatype'      => 'itemlink',
-            'itemlink_link' => $this->getType(),
+            'itemlink_link' => $this::class,
         ];
 
         $tab[] = [
@@ -462,7 +462,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public function showList()
     {
-        Search::show('PluginGlpiinventoryDeployPackage');
+        Search::show(PluginGlpiinventoryDeployPackage::class);
     }
 
 
@@ -687,7 +687,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr><th>" . __('JSON package representation', 'glpiinventory') . "</th></tr>";
         echo "<tr><td>";
-        echo "<textarea cols='132' rows='50' style='border:1' name='json'>";
+        echo "<textarea cols='132' rows='50' name='json'>";
         echo PluginGlpiinventoryToolbox::formatJson($this->fields['json']);
         echo "</textarea></td></tr>";
         echo "</table>";
@@ -1030,30 +1030,20 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                             $tabs[1] = self::createTabEntry(__('Package actions', 'glpiinventory'), 0, icon: 'ti ti-checklist');
                         }
                         if ($item->fields['plugin_glpiinventory_deploygroups_id'] > 0) {
+                            $nb = 0;
                             if ($_SESSION['glpishow_count_on_tabs']) {
                                 $nb = $item->countVisibilities();
-                                $tabs[2] = self::createTabEntry(
-                                    _n(
-                                        'Target for deploy on demand',
-                                        'Targets for deploy on demand',
-                                        Session::getPluralNumber(),
-                                        'glpiinventory'
-                                    ),
-                                    $nb,
-                                    icon: 'ti ti-target-arrow'
-                                );
-                            } else {
-                                $tabs[2] = self::createTabEntry(
-                                    _n(
-                                        'Target for deploy on demand',
-                                        'Targets for deploy on demand',
-                                        Session::getPluralNumber(),
-                                        'glpiinventory'
-                                    ),
-                                    0,
-                                    icon: 'ti ti-target-arrow'
-                                );
                             }
+                            $tabs[2] = self::createTabEntry(
+                                _n(
+                                    'Target for deploy on demand',
+                                    'Targets for deploy on demand',
+                                    Session::getPluralNumber(),
+                                    'glpiinventory'
+                                ),
+                                $nb,
+                                icon: 'ti ti-target-arrow'
+                            );
                         }
                         return $tabs;
                     }
@@ -1261,7 +1251,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     echo "<tr class='tab_bg_1'>";
                     if ($canedit) {
                         echo "<td>";
-                        Html::showMassiveActionCheckBox('PluginGlpiinventoryDeployPackage_Entity', $data["id"]);
+                        Html::showMassiveActionCheckBox(PluginGlpiinventoryDeployPackage_Entity::class, $data["id"]);
                         echo "</td>";
                     }
                     echo "<td>" . Entity::getTypeName(1) . "</td>";
@@ -1293,7 +1283,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     echo "<tr class='tab_bg_1'>";
                     if ($canedit) {
                         echo "<td>";
-                        Html::showMassiveActionCheckBox('PluginGlpiinventoryDeployPackage_Profile', $data["id"]);
+                        Html::showMassiveActionCheckBox(PluginGlpiinventoryDeployPackage_Profile::class, $data["id"]);
                         echo "</td>";
                     }
                     echo "<td>" . _n('Profile', 'Profiles', 1) . "</td>";
@@ -1708,7 +1698,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $agent = new Agent();
         //If the agent associated with the computer has not the
         //deploy feature enabled, do not propose to deploy packages on
-        if (!$agent->getFromDBByCrit(['itemtype' => 'Computer',  'items_id' => $computers_id])) {
+        if (!$agent->getFromDBByCrit(['itemtype' => Computer::class,  'items_id' => $computers_id])) {
             return false;
         }
         $pfAgentModule = new PluginGlpiinventoryAgentmodule();
@@ -2022,7 +2012,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $agent        = new Agent();
 
         // Get a taskjobstate by giving a  taskjobID and a computer ID
-        $agent->getFromDBByCrit(['itemtype' => Computer::getType(), 'items_id' => $computers_id]);
+        $agent->getFromDBByCrit(['itemtype' => Computer::class, 'items_id' => $computers_id]);
         $agents_id = $agent->fields['id'];
 
         $last_job_state = [];

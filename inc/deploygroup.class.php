@@ -126,7 +126,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         $count = 0;
         if (
-            $itemtype == 'PluginGlpiinventoryTaskjob'
+            $itemtype == PluginGlpiinventoryTaskjob::class
             && is_numeric($_GET['id'])
         ) {
             $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -166,7 +166,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             echo "</tr>";
 
             $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
-            $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryTask");
+            $link = Toolbox::getItemTypeFormURL(PluginGlpiinventoryTask::class);
 
             $iterator = $DB->request([
                 'SELECT' => [
@@ -237,7 +237,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             case 'add_to_static_group':
             case 'exclude_from_static_group':
                 Dropdown::show(
-                    'PluginGlpiinventoryDeployGroup',
+                    PluginGlpiinventoryDeployGroup::class,
                     ['condition' => ['type' => PluginGlpiinventoryDeployGroup::STATIC_GROUP]]
                 );
                 echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
@@ -264,7 +264,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     ) {
         switch ($ma->getAction()) {
             case 'add_to_static_group':
-                if ($item->getType() == 'Computer') {
+                if ($item instanceof Computer) {
                     $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
                     foreach ($ids as $id) {
                         if (
@@ -283,15 +283,15 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                                 'items_id' => $id,
                             ];
                             $group_item->add($values);
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $id, MassiveAction::ACTION_OK);
                         } else {
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $id, MassiveAction::ACTION_KO);
                         }
                     }
                 }
                 break;
             case 'exclude_from_static_group':
-                if ($item->getType() == 'Computer') {
+                if ($item instanceof Computer) {
                     $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
                     foreach ($ids as $id) {
                         if (
@@ -311,10 +311,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                             ];
                             if ($group_item->getFromDBByCrit($values)) {
                                 $group_item->deleteByCriteria($values);
-                                $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                                $ma->itemDone($item::class, $id, MassiveAction::ACTION_OK);
                             }
                         } else {
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $id, MassiveAction::ACTION_KO);
                         }
                     }
                 }
@@ -325,10 +325,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                     if ($pfGroup->getFromDB($key)) {
                         if ($pfGroup->duplicate($pfGroup->getID())) {
                             //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
                             // KO
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     }
                 }

@@ -94,7 +94,7 @@ class PackageSelfDeployTest extends TestCase
         ]);
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $agent->add([
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'items_id' => $computerId,
             'entities_id' => 0,
             'agenttypes_id' => $agenttype['id'],
@@ -360,7 +360,7 @@ class PackageSelfDeployTest extends TestCase
 
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $agentId = $agent->add([
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'items_id' => $computerId2,
             'entities_id' => 0,
             'agenttypes_id' => $agenttype['id'],
@@ -460,7 +460,7 @@ class PackageSelfDeployTest extends TestCase
         $this->assertNotFalse($computerId3);
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $agent->add([
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'items_id' => $computerId3,
             'entities_id' => 0,
             'agenttypes_id' => $agenttype['id'],

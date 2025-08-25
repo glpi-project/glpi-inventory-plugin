@@ -98,7 +98,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
                 $a_input['agents_id'] = 0;
                 $a_input['state']        = 1;
-                $a_input['itemtype']     = 'PluginGlpiinventoryIPRange';
+                $a_input['itemtype']     = PluginGlpiinventoryIPRange::class;
                 $a_input['items_id']     = $iprange_id;
                 $a_input['uniqid']       = $uniqid;
                 $a_input['execution_id'] = $pfTask->fields['execution_id'];
@@ -113,7 +113,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
                 $pfTaskjobstate->changeStatusFinish(
                     $Taskjobstates_id,
                     0,
-                    'PluginGlpiinventoryIPRange',
+                    PluginGlpiinventoryIPRange::class,
                     1,
                     "Unable to find agent to run this job"
                 );
@@ -129,7 +129,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             $a_input['plugin_glpiinventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
             $a_input['agents_id'] = 0;
-            $a_input['itemtype'] = 'PluginGlpiinventoryIPRange';
+            $a_input['itemtype'] = PluginGlpiinventoryIPRange::class;
             $a_input['items_id'] = 0;
             $a_input['uniqid'] = $uniqid;
             $a_input['execution_id'] = $pfTask->fields['execution_id'];
@@ -144,7 +144,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             $pfTaskjobstate->changeStatusFinish(
                 $Taskjobstates_id,
                 0,
-                'PluginGlpiinventoryIPRange',
+                PluginGlpiinventoryIPRange::class,
                 1,
                 "Unable to find agent to run this job"
             );
@@ -179,13 +179,13 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
 
         // Use general config when threads number is set to 0 on the agent
         $param_attrs['THREADS_DISCOVERY'] = $agent->fields["threads_networkdiscovery"] == 0 ?
-         $pfConfig->getValue('threads_networkdiscovery') :
-         $agent->fields["threads_networkdiscovery"];
+        $pfConfig->getValue('threads_networkdiscovery') :
+        $agent->fields["threads_networkdiscovery"];
 
         // Use general config when timeout is set to 0 on the agent
         $param_attrs['TIMEOUT'] = $agent->fields["timeout_networkdiscovery"] == 0 ?
-         $pfConfig->getValue('timeout_networkdiscovery') :
-         $agent->fields["timeout_networkdiscovery"];
+        $pfConfig->getValue('timeout_networkdiscovery') :
+        $agent->fields["timeout_networkdiscovery"];
 
         $param_attrs['PID'] = $jobstate->fields['id'];
 

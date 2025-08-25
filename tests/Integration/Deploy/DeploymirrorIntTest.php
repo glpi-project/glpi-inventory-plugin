@@ -165,7 +165,7 @@ class DeploymirrorIntTest extends TestCase
         $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $agentRootId = $agent->add([
             'name'         => 'computer-root',
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'items_id' => $computerRootId,
             'entities_id'  => 0,
             'agenttypes_id' => $agenttype['id'],
@@ -183,7 +183,7 @@ class DeploymirrorIntTest extends TestCase
         $this->assertNotFalse($computerEntAId);
         $agentEntAId = $agent->add([
             'name'         => 'computer-EntityA',
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'items_id' => $computerEntAId,
             'entities_id'  => $entityAId,
             'agenttypes_id' => $agenttype['id'],
@@ -201,7 +201,7 @@ class DeploymirrorIntTest extends TestCase
         $this->assertNotFalse($computerEntBId);
         $agentEntBId = $agent->add([
             'name'         => 'computer-EntityB',
-            'itemtype' => Computer::getType(),
+            'itemtype' => Computer::class,
             'items_id' => $computerEntBId,
             'entities_id'  => $entityBId,
             'agenttypes_id' => $agenttype['id'],
