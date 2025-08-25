@@ -659,8 +659,8 @@ function plugin_glpiinventory_addDefaultWhere($type)
                 'WHERE' => [
                     'plugin_glpiinventory_taskjobs_id' => new QueryExpression('`glpi_plugin_glpiinventory_taskjobs`.`id`'),
                     'state' => ['!=', 3],
-                ]
-            ])
+                ],
+            ]),
         ];
     }
     return [];
