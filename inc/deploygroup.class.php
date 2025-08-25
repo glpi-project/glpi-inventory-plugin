@@ -283,9 +283,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                                 'items_id' => $id,
                             ];
                             $group_item->add($values);
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $id, MassiveAction::ACTION_OK);
                         } else {
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $id, MassiveAction::ACTION_KO);
                         }
                     }
                 }
@@ -311,10 +311,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                             ];
                             if ($group_item->getFromDBByCrit($values)) {
                                 $group_item->deleteByCriteria($values);
-                                $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                                $ma->itemDone($item::class, $id, MassiveAction::ACTION_OK);
                             }
                         } else {
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $id, MassiveAction::ACTION_KO);
                         }
                     }
                 }
@@ -325,10 +325,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                     if ($pfGroup->getFromDB($key)) {
                         if ($pfGroup->duplicate($pfGroup->getID())) {
                             //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
                             // KO
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     }
                 }

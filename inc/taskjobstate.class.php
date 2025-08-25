@@ -119,7 +119,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        switch ($item->getType()) {
+        switch ($item::class) {
             case 'Computer':
                 if (
                     method_exists($item, 'getInventoryAgent')

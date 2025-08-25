@@ -209,7 +209,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        if ($item->getType() == self::class) {
+        if ($item instanceof self) {
             return [
                 self::createTabEntry(__('General setup'), 0, icon: 'ti ti-settings'),
                 self::createTabEntry(__('Network Inventory', 'glpiinventory'), 0, icon: 'ti ti-network'),

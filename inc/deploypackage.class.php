@@ -221,7 +221,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 foreach ($ids as $key) {
                     if ($item->can($key, UPDATE)) {
                         $item->exportPackage($key);
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                     }
                 }
                 break;
@@ -241,7 +241,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             case 'import':
                 foreach ($ids as $key) {
                     $item->importPackage($key);
-                    $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                    $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                 }
                 break;
 
@@ -251,10 +251,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     if ($pfPackage->getFromDB($key)) {
                         if ($pfPackage->duplicate($pfPackage->getID())) {
                             //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
                             // KO
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     }
                 }
@@ -340,7 +340,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             'field'         => 'name',
             'name'          => __('Name'),
             'datatype'      => 'itemlink',
-            'itemlink_link' => $this->getType(),
+            'itemlink_link' => $this::class,
         ];
 
         $tab[] = [
@@ -2012,7 +2012,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $agent        = new Agent();
 
         // Get a taskjobstate by giving a  taskjobID and a computer ID
-        $agent->getFromDBByCrit(['itemtype' => Computer::getType(), 'items_id' => $computers_id]);
+        $agent->getFromDBByCrit(['itemtype' => Computer::class, 'items_id' => $computers_id]);
         $agents_id = $agent->fields['id'];
 
         $last_job_state = [];

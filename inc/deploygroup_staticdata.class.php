@@ -254,7 +254,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
             $computer = new Computer();
             $computer->getFromDB($data["items_id"]);
             $linkname = $computer->fields["name"];
-            $itemtype = Computer::getType();
+            $itemtype = Computer::class;
             if ($_SESSION["glpiis_ids_visible"] || empty($computer->fields["name"])) {
                 $linkname = sprintf(__('%1$s (%2$s)'), $linkname, $computer->fields["id"]);
             }

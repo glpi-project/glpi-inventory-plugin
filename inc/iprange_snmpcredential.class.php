@@ -179,7 +179,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
         echo "</tr>";
         echo "<tr class='tab_bg_2'>";
         echo "<td>";
-        Dropdown::show(SNMPCredential::getType(), ['used' => $a_used]);
+        Dropdown::show(SNMPCredential::class, ['used' => $a_used]);
         echo "</td>";
         echo "<td>";
         echo Html::hidden(

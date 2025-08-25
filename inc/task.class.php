@@ -1777,10 +1777,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     if ($pfTask->getFromDB($key)) {
                         if ($pfTask->duplicate($pfTask->getID())) {
                             //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
                             // KO
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     }
                 }
@@ -1803,10 +1803,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
                         if ($pfTask->update($input)) {
                             //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $computer_id, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $computer_id, MassiveAction::ACTION_OK);
                         } else {
                             // KO
-                            $ma->itemDone($item->getType(), $computer_id, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $computer_id, MassiveAction::ACTION_KO);
                         }
                     }
                 }
@@ -1823,7 +1823,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     // No task or package provided
                     foreach ($ids as $computer_id) {
                         $computer->getFromDB($computer_id);
-                        $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
+                        $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_KO);
                     }
                     Session::addMessageAfterRedirect(sprintf(
                         __('%1$s: %2$s'),
@@ -1870,7 +1870,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         $computer->getFromDB($computer_id);
                         $message .= $computer->getName() . ",";
                         $input['actors'][] = ['Computer' => $computer_id];
-                        $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_OK);
+                        $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_OK);
                     }
                     //               $ma->addMessage($message);
                     Session::addMessageAfterRedirect($message, false, INFO);
@@ -1886,7 +1886,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         // The task already has a job - do not replace!
                         foreach ($ids as $computer_id) {
                             $computer->getFromDB($computer_id);
-                            $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
+                            $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_KO);
                         }
                         Session::addMessageAfterRedirect(
                             sprintf(
@@ -1913,7 +1913,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                             $computer->getFromDB($computer_id);
                             $message .= $computer->getName() . ",";
                             $input['actors'][] = ['Computer' => $computer_id];
-                            $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_OK);
+                            $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_OK);
                         }
                         $input['actors'] = json_encode($input['actors']);
                         //                  $ma->addMessage($message);
@@ -1930,8 +1930,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             case 'addtojob_target':
                 $taskjob = new PluginGlpiinventoryTaskjob();
                 foreach ($ids as $items_id) {
-                    $taskjob->additemtodefatc('targets', $item->getType(), $items_id, $ma->POST['taskjobs_id']);
-                    $ma->itemDone($item->getType(), $items_id, MassiveAction::ACTION_OK);
+                    $taskjob->additemtodefatc('targets', $item::class, $items_id, $ma->POST['taskjobs_id']);
+                    $ma->itemDone($item::class, $items_id, MassiveAction::ACTION_OK);
                 }
                 break;
         }

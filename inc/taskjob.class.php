@@ -1054,7 +1054,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                     $pfTaskjob->forceEnd();
 
                     //set action massive ok for this item
-                    $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                    $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                 }
                 break;
         }

@@ -130,12 +130,12 @@ class PluginGlpiinventoryComputer extends Computer
                                 'itemtype' => 'Computer',
                                 'items_id' => $key,
                             ]);
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     } else {
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_NORIGHT);
                         $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
                     }
                 }
@@ -150,9 +150,9 @@ class PluginGlpiinventoryComputer extends Computer
                                                           => $_POST['item_items_id'],
                         ])
                     ) {
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                     } else {
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                     }
                 }
         }
