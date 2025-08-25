@@ -307,7 +307,7 @@ class PluginGlpiinventoryProfile extends Profile
     {
         $rights = [
             [
-                'itemtype'  => PluginGlpiinventoryIprange::class,
+                'itemtype'  => PluginGlpiinventoryIPRange::class,
                 'label'     => __('IP range configuration', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_iprange',
             ],
@@ -317,7 +317,7 @@ class PluginGlpiinventoryProfile extends Profile
                 'field'     => 'plugin_glpiinventory_credential',
             ],
             [
-                'itemtype'  => PluginGlpiinventoryCredentialip::class,
+                'itemtype'  => PluginGlpiinventoryCredentialIp::class,
                 'label'     => __('Remote devices to inventory (VMware)', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_credentialip',
             ],

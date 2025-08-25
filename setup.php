@@ -193,7 +193,6 @@ function plugin_init_glpiinventory()
         );
 
         // Networkinventory and networkdiscovery
-        $Plugin->registerClass(PluginFusinvsnmpAgentconfig::class);
         $Plugin->registerClass(PluginGlpiinventoryStateDiscovery::class);
         $Plugin->registerClass(PluginGlpiinventoryDeployGroup::class);
         $Plugin->registerClass(

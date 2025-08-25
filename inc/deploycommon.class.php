@@ -154,7 +154,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
 
                     switch ($group->getField('type')) {
                         case 'STATIC':
-                            if ($this->definitionFiltered(PluginGlpiinventoryDeployGroupStatic::class, $definitions_filter)) {
+                            if ($this->definitionFiltered(PluginGlpiinventoryDeployGroup_Staticdata::class, $definitions_filter)) {
                                 break;
                             }
                             $iterator = $DB->request([
@@ -170,7 +170,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
                             }
                             break;
                         case 'DYNAMIC':
-                            if ($this->definitionFiltered(PluginGlpiinventoryDeployGroupDynamic::class, $definitions_filter)) {
+                            if ($this->definitionFiltered(PluginGlpiinventoryDeployGroup_Dynamicdata::class, $definitions_filter)) {
                                 break;
                             }
 
