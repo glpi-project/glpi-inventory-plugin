@@ -544,48 +544,6 @@ function plugin_glpiinventory_addLeftJoin(
 ) {
 
     switch ($itemtype) {
-        case 'PluginGlpiinventoryTaskjoblog':
-            $taskjob = 0;
-            $already_link_tables_tmp = $already_link_tables;
-            array_pop($already_link_tables_tmp);
-            foreach ($already_link_tables_tmp as $tmp_table) {
-                if (
-                    $tmp_table == "glpi_plugin_glpiinventory_tasks" || $tmp_table == "glpi_plugin_glpiinventory_taskjobs" || $tmp_table == "glpi_plugin_glpiinventory_taskjobstates"
-                ) {
-                    $taskjob = 1;
-                }
-            }
-
-            switch ($new_table . "." . $linkfield) {
-                case 'glpi_plugin_glpiinventory_tasks.plugin_glpiinventory_tasks_id':
-                    $ret = '';
-                    if ($taskjob == '0') {
-                        $ret = ' LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` ON
-                     (`plugin_glpiinventory_taskjobstates_id` = ' .
-                          '`glpi_plugin_glpiinventory_taskjobstates`.`id` )
-                  LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` ON
-                     (`plugin_glpiinventory_taskjobs_id` = ' .
-                          '`glpi_plugin_glpiinventory_taskjobs`.`id` ) ';
-                    }
-                    $ret .= ' LEFT JOIN `glpi_plugin_glpiinventory_tasks` ON
-                  (`plugin_glpiinventory_tasks_id` = `glpi_plugin_glpiinventory_tasks`.`id`) ';
-                    return $ret;
-
-                case 'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_taskjobs_id':
-                case 'glpi_plugin_glpiinventory_taskjobstates.' .
-                'plugin_glpiinventory_taskjobstates_id':
-                    if ($taskjob == '0') {
-                        return ' LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` ON
-                     (`plugin_glpiinventory_taskjobstates_id` = ' .
-                          '`glpi_plugin_glpiinventory_taskjobstates`.`id` )
-                  LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` ON
-                     (`plugin_glpiinventory_taskjobs_id` = ' .
-                          '`glpi_plugin_glpiinventory_taskjobs`.`id` ) ';
-                    }
-                    return ' ';
-            }
-            break;
-
         case 'PluginGlpiinventoryTask':
             if (
                 $new_table . "." . $linkfield == 'glpi_plugin_glpiinventory_taskjoblogs.' .
