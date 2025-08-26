@@ -159,7 +159,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
             echo "<form name='form_bundle_item' action='" . $class::getFormURL() .
                    "' method='post'>";
             echo Html::hidden('id', ['value' => $data['id']]);
-            echo "<input type='image' name='delete' src='" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/pics/drop.png'>";
+            echo '<i style="color: red;" class="ti ti-trash"></i>';
             Html::closeForm();
             echo "</td>";
             echo "</tr>";

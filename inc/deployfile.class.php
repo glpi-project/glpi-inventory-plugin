@@ -202,7 +202,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 . __("retention", 'glpiinventory') . " : " .
                 $file_p2p_retention_duration . " " .
                 __("Minute(s)", 'glpiinventory') . "' class='more'>";
-                echo "<img src='" . $pics_path . "p2p.png' />";
+                echo "<i style='color:gray;' class='ti ti-vector-triangle'></i>";
                 echo "<sup>" . $file_p2p_retention_duration . "</sup>";
                 echo "</a>";
             }
@@ -214,9 +214,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             ) {
                 echo "<a title='" .
                      __('uncompress', 'glpiinventory') .
-                     "' class='more'><img src='" .
-                     $pics_path .
-                     "uncompress.png' /></a>";
+                     "' class='more'><i style='color:gray;' class='ti ti-file-zip'></i></a>";
             }
 
             //download file
@@ -269,7 +267,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         }
         echo "</table>";
         if ($canedit) {
-            echo "&nbsp;&nbsp;<img src='" . $CFG_GLPI["root_doc"] . "/pics/arrow-left.png' alt=''>";
             echo "<input type='submit' name='delete' value=\"" .
             __('Delete', 'glpiinventory') . "\" class='submit'>";
         }
@@ -332,7 +329,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             switch ($request_data['value']) {
                 case "Computer":
                     echo "<input type='file' name='file' value='" .
-                    __("filename", 'glpiinventory') . "' />";
+                    __("filename", 'glpiinventory') . "' class='form-control' />";
                     echo " <i>" . $this->getMaxUploadSize() . "</i>";
                     break;
 
@@ -361,8 +358,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo "</tr>";
 
         echo "<tr>";
-        echo "<th>" . __("Uncompress", 'glpiinventory') . "<img style='float:right' " .
-         "src='" . $fi_path . "/pics/uncompress.png' /></th>";
+        echo "<th>" . __("Uncompress", 'glpiinventory') . "<i style='float:right; color:gray;' class='ti ti-file-zip'></i></th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'uncompress', 'checked' => $uncompress]);
         echo "</td>";
@@ -370,8 +366,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         echo "<tr>";
         echo "<th>" . __("P2P", 'glpiinventory') .
-            "<img style='float:right' src='" . $fi_path .
-            "/pics/p2p.png' /></th>";
+              "<i style='float:right; color:gray;' class='ti ti-vector-triangle'></i></th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
         echo "</td>";

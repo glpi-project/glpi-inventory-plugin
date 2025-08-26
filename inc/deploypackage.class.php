@@ -645,12 +645,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         if ($this->can($id, UPDATE)) {
             echo "&nbsp;";
-            echo "<img id='plus_{$subtype}s_block{$rand}'";
+            echo "<i id='plus_{$subtype}s_block{$rand}'";
             echo " onclick=\"new_subtype('{$subtype}', {$id}, {$rand})\" ";
             echo  " title='" . __('Add') . "' alt='" . __('Add') . "' ";
-            echo  " class='pointer' src='" .
-               $CFG_GLPI["root_doc"] .
-               "/pics/add_dropdown.png' /> ";
+            echo  " class='pointer ti ti-circle-plus' style='font-size: 11px;' ";
         }
     }
 

@@ -29,6 +29,10 @@
  * ---------------------------------------------------------------------
  */
 
+.select2-container--default .select2-results__group {
+   font-weight: 600;
+}
+
 table.package_item {
    width: 100%;
 }
@@ -50,6 +54,11 @@ table.package_item textarea {
 table.package_item input[type=text] {
    padding: 0 3px;
    margin-right: 3px;
+}
+
+table.package_item i.ti-exclamation-circle {
+   color: #FFA500;
+   vertical-align: middle;
 }
 
 table.package_item .table_retchecks {
@@ -101,6 +110,11 @@ a.edit {
    cursor: pointer;
 }
 
+i.package_action {
+   font-size: 32px;
+   vertical-align: middle;
+}
+
 .filename .size {
    font-size: 8px;
 }
@@ -138,12 +152,12 @@ a.edit {
 }
 /* drag and drop element */
 .drag {
-   background-image: url("../pics/drag.png");
    background-repeat: repeat-x;
    cursor: move;
    width: 16px;
    height: 16px;
    border:0 !important;
+   margin-right: 0.1em;
 }
 /* self-service */
 #onetimedeploy_form table i.ti-devices-pc {

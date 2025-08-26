@@ -238,7 +238,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo "</td>";
             if ($canedit) {
                 echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory') .
-                "'><div class='drag row'></div></td>";
+                "'><div class='drag row ti ti-menu-2'></div></td>";
             }
             echo "</tr>";
             $i++;
@@ -444,7 +444,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                 'value' => $config_data['logLineLimit'] ?? 10,
             ];
             Dropdown::showNumber('logLineLimit', $options);
-            echo "&nbsp;<span class='red'><i>";
+            echo "&nbsp;<i class='ti ti-exclamation-circle'></i><span class='red'><i>";
             echo sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.3.20');
             echo "</i></span></td>";
             echo "</tr>";
