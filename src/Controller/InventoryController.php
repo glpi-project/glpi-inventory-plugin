@@ -104,8 +104,6 @@ class InventoryController extends AbstractController
             $_SESSION['glpilanguage'] = 'en_GB';
         }
         $_SESSION['glpi_glpiinventory_nolock'] = true;
-        ini_set('display_errors', 'On'); //really not sure...
-        error_reporting(E_ALL | E_STRICT); //probably not required?
         $_SESSION['glpi_use_mode'] = 0;
         $_SESSION['glpiparententities'] = '';
         $_SESSION['glpishowallentities'] = true;
