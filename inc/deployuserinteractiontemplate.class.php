@@ -584,7 +584,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
                 echo "</td>";
                 echo "</tr>";
             } else {
-                echo Html::hidden($event, $json_data[$event]);
+                echo Html::hidden($event, ['value' => $json_data[$event]]);
             }
         }
 
