@@ -238,7 +238,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
-                Html::showCheckbox(['name' => 'userinteractions_entries[' . $i . ']']);
+                Html::showCheckbox(['name' => 'userinteractions_entries[' . $i . ']', 'class' => 'massive_action_checkbox']);
                 echo "</td>";
             }
 

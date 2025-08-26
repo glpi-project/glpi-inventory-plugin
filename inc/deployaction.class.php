@@ -173,7 +173,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
-                Html::showCheckbox(['name' => 'actions_entries[' . $i . ']']);
+                Html::showCheckbox(['name' => 'actions_entries[' . $i . ']', 'class' => 'massive_action_checkbox']);
                 echo "</td>";
             }
             $keys = array_keys($action);
