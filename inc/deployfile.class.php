@@ -202,7 +202,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 . __("retention", 'glpiinventory') . " : " .
                 $file_p2p_retention_duration . " " .
                 __("Minute(s)", 'glpiinventory') . "' class='more'>";
-                echo "<img src='" . $pics_path . "p2p.png' />";
+                echo "<i style='color:gray;' class='ti ti-vector-triangle'></i>";
                 echo "<sup>" . $file_p2p_retention_duration . "</sup>";
                 echo "</a>";
             }
@@ -214,9 +214,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             ) {
                 echo "<a title='" .
                      __('uncompress', 'glpiinventory') .
-                     "' class='more'><img src='" .
-                     $pics_path .
-                     "uncompress.png' /></a>";
+                     "' class='more'><i style='color:gray;' class='ti ti-file-zip'></i></a>";
             }
 
             //download file
