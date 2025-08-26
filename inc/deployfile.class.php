@@ -264,7 +264,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         }
         if ($canedit) {
             echo "<tr><th>";
-            echo Html::getCheckAllAsCheckbox("table_files_$rand", mt_rand());
+            echo Html::getCheckAllAsCheckbox("filesList$rand", mt_rand());
             echo "</th><th colspan='3' class='mark'></th></tr>";
         }
         echo "</table>";
