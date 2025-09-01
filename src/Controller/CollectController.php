@@ -7,9 +7,6 @@
  *
  * http://glpi-project.org
  *
- * based on FusionInventory for GLPI
- * Copyright (C) 2010-2021 by the FusionInventory Development Team.
- *
  * ---------------------------------------------------------------------
  *
  * LICENSE
@@ -31,34 +28,20 @@
  * ---------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Glpiinventory\Controller;
 
-Html::header(
-    __('Collect management', 'glpiinventory'),
-    $_SERVER["PHP_SELF"],
-    "admin",
-    "pluginglpiinventorymenu",
-    "collect"
-);
+use Glpi\Controller\GenericFormController;
+use Glpi\Routing\Attribute\ItemtypeFormRoute;
+use PluginGlpiinventoryCollect;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-$pfCollect = new PluginGlpiinventoryCollect();
-
-if (isset($_POST["add"])) {
-    $collects_id = $pfCollect->add($_POST);
-    Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryCollect')
-           . "?id=" . $collects_id);
-} elseif (isset($_POST["update"])) {
-    $pfCollect->update($_POST);
-    Html::back();
-} elseif (isset($_REQUEST["purge"])) {
-    $pfCollect->delete($_POST);
-    $pfCollect->redirectToList();
+class CollectController extends GenericFormController
+{
+    #[ItemtypeFormRoute(PluginGlpiinventoryCollect::class)]
+    public function __invoke(Request $request): Response
+    {
+        $request->attributes->set('class', PluginGlpiinventoryCollect::class);
+        return parent::__invoke($request);
+    }
 }
-
-PluginGlpiinventoryMenu::displayMenu("mini");
-
-if (!isset($_GET["id"])) {
-    $_GET['id'] = '';
-}
-$pfCollect->display($_GET);
-
-Html::footer();
