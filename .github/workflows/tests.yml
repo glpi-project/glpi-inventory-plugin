@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.4']
+        php-versions: ['7.4', '8.4', '8.5']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
