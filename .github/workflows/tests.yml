@@ -7,6 +7,10 @@ on:
   push:
     branches:
       - main
+      - '*/bugfixes'
+      - 'feature/*'
+      - 'fix/*'
+      - 'security/*'
     tags:
        - '*'
   pull_request:
