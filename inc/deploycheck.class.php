@@ -581,13 +581,13 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
     /**
     * Get the label for a return value
-    * @param string $value the check return value
+    * @param ?string $value the check return value
     * @return string the label for the return value
     */
     public function getValueForReturn($value)
     {
         $values = $this->getAllReturnValues();
-        if (isset($values[$value])) {
+        if ($value !== null && isset($values[$value])) {
             return $values[$value];
         } else {
             return '';
