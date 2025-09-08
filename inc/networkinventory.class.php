@@ -511,6 +511,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 'WHERE' => [
                     $itemtype::getTable() . '.is_deleted' => 0,
                     'snmpcredentials_id' => ['!=', '0'],
+                    'glpi_ipaddresses.version' => 4,
                     new QueryExpression(
                         'inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN ' .
                         'inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' .
