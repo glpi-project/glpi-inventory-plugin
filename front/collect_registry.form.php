@@ -45,7 +45,7 @@ if (isset($_POST["add"])) {
 
     $pfCollect_Registry->add($_POST);
     Html::back();
-} elseif (isset($_POST["delete_x"])) {
+} elseif (isset($_POST["delete"])) {
     $pfCollect_Registry->delete($_POST);
     Html::back();
 }
