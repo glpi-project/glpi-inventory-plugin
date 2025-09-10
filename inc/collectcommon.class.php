@@ -156,10 +156,9 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
                 echo "<td align='center'>$value</td>";
             }
             echo "<td align='center'>";
-            echo "<form name='form_bundle_item' action='" . $class::getFormURL() .
-                   "' method='post'>";
+            echo "<form name='form_bundle_item' action='" . $class::getFormURL() . "' method='post'>";
             echo Html::hidden('id', ['value' => $data['id']]);
-            echo '<i style="color: red;" class="ti ti-trash"></i>';
+            echo '<button type="submit" name="delete" class="btn btn-icon btn-ghost-danger"><i class="ti ti-trash"></i></button>';
             Html::closeForm();
             echo "</td>";
             echo "</tr>";
