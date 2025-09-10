@@ -69,7 +69,7 @@ if (isset($_POST["add"])) {
 
     $pfCollect_File->add($_POST);
     Html::back();
-} elseif (isset($_POST["delete_x"])) {
+} elseif (isset($_POST["delete"])) {
     $pfCollect_File->delete($_POST);
     Html::back();
 }
