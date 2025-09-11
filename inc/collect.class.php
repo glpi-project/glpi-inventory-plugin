@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use GlpiPlugin\Glpiinventory\FrontTrait;
+
 use function Safe\json_encode;
 
 /**
@@ -38,6 +40,8 @@ use function Safe\json_encode;
  */
 class PluginGlpiinventoryCollect extends CommonDBTM
 {
+    use FrontTrait;
+
     /**
      * The right name for this class
      *
@@ -924,4 +928,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         return "ti ti-device-desktop-down";
     }
 
+    public static function getSectorizedDetails(): array
+    {
+        return static::getPluginSectorizedDetails('collect');
+    }
 }
