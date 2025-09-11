@@ -205,4 +205,35 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         }
         parent::post_deleteItem();
     }
+
+    public function prepareInputForAdd($input)
+    {
+        // conversions
+        if (!empty($input['sizetype']) && $input['sizetype'] != 'none') {
+            $input['filter_size' . $input['sizetype']] = $input['size'];
+        }
+        if (!empty($input['filter_name']) && $input['filter_nametype'] != 'none') {
+            $input['filter_' . $input['filter_nametype']] = $input['filter_name'];
+
+            //set null if needed
+            if ($input['filter_nametype'] == 'iname') {
+                $input['filter_name'] = null;
+            } else {
+                $input['filter_iname'] = null;
+            }
+        } else {
+            //if 'none' , name and iname need to be null
+            $input['filter_iname'] = null;
+            $input['filter_name'] = null;
+        }
+        if (!empty($input['type']) && $input['type'] == 'file') {
+            $input['filter_is_file'] = 1;
+            $input['filter_is_dir'] = 0;
+        } elseif (!empty($input['type'])) {
+            $input['filter_is_file'] = 0;
+            $input['filter_is_dir'] = 1;
+        }
+
+        return parent::prepareInputForAdd($input);
+    }
 }
