@@ -35,6 +35,7 @@ use Glpi\Routing\Attribute\ItemtypeFormRoute;
 use PluginGlpiinventoryCollect;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CollectController extends GenericFormController
 {
@@ -44,4 +45,36 @@ class CollectController extends GenericFormController
         $request->attributes->set('class', PluginGlpiinventoryCollect::class);
         return parent::__invoke($request);
     }
+
+    #[Route("/front/collect_file.form.php", name: "glpiinventory_collect_file_legacy", methods: ['POST'])]
+    #[ItemtypeFormRoute(\PluginGlpiinventoryCollect_File::class)]
+    public function collectFile(Request $request): Response
+    {
+        $request->attributes->set('class', \PluginGlpiinventoryCollect_File::class);
+        return parent::__invoke($request);
+        //return $this->collectObject($request, 'file');
+    }
+
+    #[Route("/front/collect_registry.form.php", name: "glpiinventory_collect_file_legacy", methods: ['POST'])]
+    public function collectRegistry(Request $request): Response
+    {
+        $request->attributes->set('class', \PluginGlpiinventoryCollect_Registry::class);
+        return parent::__invoke($request);
+        //return $this->collectObject($request, 'registry');
+    }
+
+    #[Route("/front/collect_wmi.form.php", name: "glpiinventory_collect_file_legacy", methods: ['POST'])]
+    public function collectWMI(Request $request): Response
+    {
+        $request->attributes->set('class', \PluginGlpiinventoryCollect_Wmi::class);
+        return parent::__invoke($request);
+        //return $this->collectObject($request, 'wmi');
+    }
+
+    /*#[Route("/Collect/{collect_object}", name: "glpiinventory_collect_object", methods: ['POST'])]
+    public function collectObject(Request $request, string $collect_object): Response
+    {
+        $request->attributes->set('class', $collect_object);
+        return parent::__invoke($request);
+    }*/
 }
