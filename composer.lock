@@ -512,16 +512,16 @@
         },
         {
             "name": "glpi-project/tools",
-            "version": "0.8.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/glpi-project/tools.git",
-                "reference": "7c2dcec105ed3427183bdfd382d785363aade436"
+                "reference": "cf182b1a6bd1a73c5c6469dbbd0edabf7cb5857e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glpi-project/tools/zipball/7c2dcec105ed3427183bdfd382d785363aade436",
-                "reference": "7c2dcec105ed3427183bdfd382d785363aade436",
+                "url": "https://api.github.com/repos/glpi-project/tools/zipball/cf182b1a6bd1a73c5c6469dbbd0edabf7cb5857e",
+                "reference": "cf182b1a6bd1a73c5c6469dbbd0edabf7cb5857e",
                 "shasum": ""
             },
             "require": {
@@ -564,7 +564,7 @@
                 "issues": "https://github.com/glpi-project/tools/issues",
                 "source": "https://github.com/glpi-project/tools"
             },
-            "time": "2025-08-26T10:18:38+00:00"
+            "time": "2025-09-08T09:45:41+00:00"
         },
         {
             "name": "myclabs/deep-copy",
