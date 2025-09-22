@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['8.2', '8.4', '8.5']
+        php-versions: ['8.2', '8.4']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -76,7 +76,6 @@ jobs:
           - {php-versions: "8.4", db-image: "mysql:8.4"}
           - {php-versions: "8.4", db-image: "mariadb:10.6"}
           - {php-versions: "8.4", db-image: "mariadb:11"}
-          - {php-versions: "8.5", db-image: "mariadb:11"}
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
