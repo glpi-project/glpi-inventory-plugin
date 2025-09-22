@@ -37,6 +37,7 @@ use Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use function Safe\json_encode;
 use function Safe\session_id;
@@ -45,6 +46,11 @@ use function Safe\file_get_contents;
 
 class InventoryController extends AbstractController
 {
+    public function __construct(private readonly UrlGeneratorInterface $router)
+    {
+        //empty constructor
+    }
+
     #[Route("/", name: "glpiinventory_main", methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
@@ -61,7 +67,7 @@ class InventoryController extends AbstractController
         //Agent posting an inventory
         $rawdata = file_get_contents("php://input");
         if (!empty($rawdata)) {
-            return (new \Glpi\Controller\InventoryController())->index($request);
+            return (new \Glpi\Controller\InventoryController($this->router))->index($request);
         }
 
         //For any other request, display the menu
