@@ -5,20 +5,20 @@
 # 
 # Translators:
 # Cédric Anne, 2021
-# Diego Nobre <diego@koruma.com.br>, 2021
 # Rafael Santos <rafacss@gmail.com>, 2022
 # Matheus Rafael, 2023
 # Eduardo Scott <edu.scott01@gmail.com>, 2024
 # Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>, 2025
+# Diego Nobre <diego@koruma.com.br>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-23 00:49+0000\n"
+"POT-Creation-Date: 2025-09-24 00:51+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>, 2025\n"
+"Last-Translator: Diego Nobre <diego@koruma.com.br>, 2025\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/teclib/teams/28042/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1171,16 +1171,16 @@ msgstr "Grupo dinâmico"
 #: inc/deploygroup.class.php:97
 msgid "Inventory group"
 msgid_plural "Inventory groups"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Grupo de inventário"
+msgstr[1] "Grupos de inventário"
+msgstr[2] "Grupos de inventário"
 
 #: inc/deploygroup.class.php:114
 msgid "Associated task"
 msgid_plural "Associated tasks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Tarefa associada"
+msgstr[1] "Tarefas associadas"
+msgstr[2] "Tarefas associadas"
 
 #: inc/deploygroup.class.php:164 inc/taskjobview.class.php:633
 msgid "Module method"
