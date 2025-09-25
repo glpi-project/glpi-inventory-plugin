@@ -7550,10 +7550,13 @@ function doDynamicDataSearchParamsMigration()
  */
 function migrationDynamicGroupFields($fields)
 {
-    $data       = json_decode($fields, true);
     $new_fields = [];
-    if (!is_array($data)) {
-        $data   = unserialize($fields);
+
+    try {
+        $data = json_decode($fields, true);
+    } catch (\Safe\Exceptions\JsonException $e) {
+        //when coming from databasse, data is serialized, not json_encoded
+        $data = unserialize($fields);
     }
 
     //We're still in 0.85 or higher,
