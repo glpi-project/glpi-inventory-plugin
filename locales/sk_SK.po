@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-23 00:49+0000\n"
+"POT-Creation-Date: 2025-09-26 00:51+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2025\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -20,16 +20,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk_SK\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
-
-#: templates/forms/iprange.html.twig inc/iprange.class.php:138
-#: inc/iprange.class.php:230
-msgid "Start of IP range"
-msgstr "Začiatok IP rozsahu"
-
-#: templates/forms/iprange.html.twig inc/iprange.class.php:145
-#: inc/iprange.class.php:233
-msgid "End of IP range"
-msgstr "Koniec IP rozsahu"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Interaction format"
@@ -55,133 +45,135 @@ msgstr "Povolený maximálny počet pokusov na opakovanie"
 msgid "Alert display timeout"
 msgstr "Časový limit zobrazenia upozornenia"
 
+#: templates/forms/iprange.html.twig inc/iprange.class.php:138
+#: inc/iprange.class.php:230
+msgid "Start of IP range"
+msgstr "Začiatok IP rozsahu"
+
+#: templates/forms/iprange.html.twig inc/iprange.class.php:145
+#: inc/iprange.class.php:233
+msgid "End of IP range"
+msgstr "Koniec IP rozsahu"
+
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "Adresa servera zrkadla"
 
-#: src/Controller/InventoryController.php:75 front/taskjob.php:36
-#: front/menu_snmpinventory.php:39 front/statediscovery.php:36
-#: front/stateinventory.php:36 front/agentmodule.form.php:36 front/task.php:37
-#: front/taskjob.form.php:38 front/credentialip.form.php:43
-#: front/task.form.php:41 front/menu.php:40 front/iprange.php:36
-#: front/credential.form.php:40 front/credential.php:36
-#: front/credentialip.php:36 front/iprange.form.php:38 front/collect.php:36
-#: front/timeslot.php:39 report/switch_ports.history.php:40
-#: report/computer_last_inventory.php:43 report/ports_date_connections.php:43
-#: report/not_queried_recently.php:43 inc/profile.class.php:117
-#: inc/menu.class.php:51
-msgid "GLPI Inventory"
-msgstr "GLPI inventár"
+#: inc/deploymirror.class.php:68 inc/profile.class.php:287
+#: inc/menu.class.php:396
+msgid "Mirror servers"
+msgstr "Zrkadlové servery"
 
-#: public/b/deploy/index.php:66
-msgid "Deploy module has been disabled for this agent"
-msgstr "Modul nasadenia bol pre tohto agenta vypnutý"
+#: inc/iprange.class.php:79
+msgid "Communication mode"
+msgstr "Režim komunikácie"
 
-#: public/b/deploy/index.php:136
-msgid "Checks"
-msgstr "Kontroly"
+#: inc/iprange.class.php:82
+msgid "See all informations of task"
+msgstr "Zobraziť všetky informácie o úlohe"
 
-#: public/b/deploy/index.php:137
-msgid "Files download"
-msgstr "Stiahnutie súborov"
+#: inc/iprange.class.php:84 inc/iprange.class.php:87
+#: inc/staticmisc.class.php:328 inc/staticmisc.class.php:362
+#: inc/menu.class.php:322
+msgid "IP Ranges"
+msgstr "Rozsahy IP"
 
-#: public/b/deploy/index.php:138
-msgid "Files preparation"
-msgstr "Príprava súborov"
+#: inc/iprange.class.php:114 inc/profile.class.php:311
+msgid "IP range configuration"
+msgstr "Konfigurácia IP rozsahu"
 
-#: public/b/deploy/index.php:139 inc/deploypackage.class.php:534
-msgid "Actions"
-msgstr "Akcie"
+#: inc/iprange.class.php:228
+msgid "Bad IP"
+msgstr "Chybná IP"
 
-#: public/b/deploy/index.php:249
-msgid "User canceled the job"
-msgstr "Používateľ zrušil úlohu"
-
-#: public/b/deploy/index.php:251
-msgid "User postponed the job"
-msgstr "Používateľ odložil úlohu"
-
-#: hook.php:86 hook.php:93 hook.php:100 hook.php:107 hook.php:114 hook.php:121
-#: inc/agentmodule.class.php:107 inc/agentmodule.class.php:211
-#: inc/agentmodule.class.php:213
-msgid "Module"
-msgstr "Modul"
-
-#: hook.php:86 inc/menu.class.php:414
-msgid "Deploy"
-msgstr "Nasadiť"
-
-#: hook.php:93
-msgid "Local inventory"
-msgstr "Lokálna inventarizácia"
-
-#: hook.php:100
-msgid "ESX/VMWare"
-msgstr "ESX/VMWare"
-
-#: hook.php:107
-msgid "Network inventory"
-msgstr "Inventár siete"
-
-#: hook.php:114 inc/config.class.php:402 inc/config.class.php:424
-#: inc/staticmisc.class.php:70
-msgid "Network discovery"
-msgstr "Zisťovanie siete"
-
-#: hook.php:121
-msgid "Collect"
-msgstr "Zber"
-
-#: hook.php:125 inc/deploygroup.class.php:83 inc/deploygroup.class.php:796
-msgid "Static group"
-msgstr "Statická skupina"
-
-#: hook.php:161 inc/menu.class.php:270 inc/task.class.php:231
-msgid "Tasks"
-msgstr "Úlohy"
-
-#: hook.php:169 hook.php:179 hook.php:189 hook.php:199
-#, php-format
-msgid "%s inventoried"
-msgstr "%s zinventarizované"
-
-#: hook.php:383
-msgid "Setup"
-msgstr "Nastavenia"
-
-#: hook.php:441 inc/deploygroup.class.php:222 inc/iprange.class.php:285
+#: inc/iprange.class.php:285 inc/deploygroup.class.php:222 hook.php:441
 msgid "Target a task"
 msgstr "Zacieliť úlohu"
 
-#: hook.php:445 inc/deploygroup_staticdata.class.php:156
-#: inc/deploygroup_staticdata.class.php:172
-msgid "Add to static group"
-msgstr "Pridať do statickej skupiny"
+#: inc/taskjob.class.php:57 inc/taskjoblog.class.php:190
+#: inc/task.class.php:1738 inc/agentwakeup.class.php:70
+msgid "Job"
+msgstr "Úloha"
 
-#: hook.php:447 inc/deploygroup_staticdata.class.php:228
-msgid "Remove from static group"
-msgstr "Odstrániť zo statickej skupiny"
+#: inc/taskjob.class.php:745
+msgid "Scheduled date"
+msgstr "Naplánovaný dátum"
 
-#: front/deployfile_download.php:91
-msgid "An error occurs"
-msgstr "Vyskytla sa chyba"
+#: inc/taskjob.class.php:746
+msgid "Periodicity"
+msgstr "Periodicita"
 
-#: front/deployfile_download.php:94 front/deployfile_download.php:97
-msgid "File not found"
-msgstr " Súbor sa nenašiel"
+#: inc/taskjob.class.php:747
+msgid "Definition"
+msgstr "Definícia"
 
-#: front/deploygroup.php:37 inc/deploytaskjob.class.php:226
-#: inc/profile.class.php:398 inc/menu.class.php:217
-msgid "Groups of computers"
-msgstr "Skupiny počítačov"
+#: inc/taskjob.class.php:748
+msgid "Action"
+msgstr "Akcia"
 
-#: front/collect.form.php:36
-msgid "Collect management"
-msgstr "Správa zberu údajov"
+#: inc/taskjob.class.php:765 inc/deployfile.class.php:203
+#: inc/deployfile.class.php:376
+msgid "Minute(s)"
+msgstr "minúty"
 
+#: inc/taskjob.class.php:770
+msgid "hour(s)"
+msgstr "hodín"
+
+#: inc/taskjob.class.php:775
+msgid "day(s)"
+msgstr "dní"
+
+#: inc/taskjob.class.php:802 inc/staticmisc.class.php:431
+#: inc/staticmisc.class.php:437
+msgid "Auto management dynamic of agents"
+msgstr "Automatická dynamika správy agentov"
+
+#: inc/taskjob.class.php:804
+msgid "Auto management dynamic of agents (same subnet)"
+msgstr "Automatická dynamika správy agentov (rovnaká podsieť)"
+
+#: inc/taskjob.class.php:1030
+msgid "Force the end"
+msgstr "Vynútiť koniec"
+
+#: inc/profile.class.php:117 inc/menu.class.php:51 front/collect.php:36
+#: front/iprange.php:36 front/statediscovery.php:36 front/task.php:37
+#: front/timeslot.php:39 front/credential.form.php:40
+#: front/stateinventory.php:36 front/taskjob.form.php:38 front/taskjob.php:36
+#: front/credential.php:36 front/menu.php:40 front/menu_snmpinventory.php:39
+#: front/iprange.form.php:38 front/credentialip.form.php:43
+#: front/agentmodule.form.php:36 front/credentialip.php:36
+#: front/task.form.php:41 report/ports_date_connections.php:43
+#: report/not_queried_recently.php:43 report/switch_ports.history.php:40
+#: report/computer_last_inventory.php:43
+#: src/Controller/InventoryController.php:75
+msgid "GLPI Inventory"
+msgstr "GLPI inventár"
+
+#: inc/profile.class.php:163 inc/menu.class.php:230
+msgid "General"
+msgstr "Všeobecné"
+
+#: inc/profile.class.php:169
+msgid "Inventory"
+msgstr "Inventár"
+
+#: inc/profile.class.php:175 inc/profile.class.php:221
+msgid "Software deployment"
+msgstr "Nasadenie softvéru"
+
+#: inc/profile.class.php:215 inc/profile.class.php:292
+msgid "Deploy packages on demand"
+msgstr "Nasadiť balíčky na vyžiadanie"
+
+#: inc/profile.class.php:277
+msgid "Manage packages"
+msgstr "Spravovať balíčky"
+
+#: inc/profile.class.php:282 inc/menu.class.php:403
+#: inc/deployuserinteractiontemplate.class.php:136
 #: front/deployuserinteractiontemplate.php:37
-#: inc/deployuserinteractiontemplate.class.php:136 inc/profile.class.php:282
-#: inc/menu.class.php:403
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "Šablóna interakcie používateľa"
@@ -189,108 +181,639 @@ msgstr[1] "Šablóny interakcie používateľa"
 msgstr[2] "Šablóny interakcie používateľa"
 msgstr[3] "Šablóny interakcie používateľa"
 
-#: front/config.form.php:38
-msgid "Features"
-msgstr "Funkcie"
+#: inc/profile.class.php:316 inc/menu.class.php:346
+#: inc/credentialip.class.php:131 inc/credentialip.class.php:154
+#: inc/credential.class.php:78 inc/credential.class.php:182
+msgid "Authentication for remote devices (VMware)"
+msgstr "Autentifikácia pre vzdialené zariadenia (VMware)"
 
-#: report/computer_last_inventory.php:62
-msgid "Computers not inventoried since xx days"
-msgstr "Počítače neinventarizované už xx dní"
+#: inc/profile.class.php:321 inc/menu.class.php:330
+msgid "Remote devices to inventory (VMware)"
+msgstr "Vzdialené zariadenia na inventarizáciu (VMware)"
 
-#: report/computer_last_inventory.php:68
-msgid "Number of days (minimum) since last inventory"
-msgstr "Počet dní (minimum) od poslednej inventarizácie"
+#: inc/profile.class.php:326 inc/credential.class.php:298
+#: inc/credential.class.php:316
+msgid "VMware host"
+msgstr "VMware server"
 
-#: report/computer_last_inventory.php:137 report/not_queried_recently.php:137
-msgid "Last inventory"
-msgstr "Posledná inventarizácia"
+#: inc/profile.class.php:335
+msgid "Network equipment SNMP"
+msgstr "Sieťové zariadenie SNMP"
 
-#: report/not_queried_recently.php:58
-msgid "Number of days since last inventory"
-msgstr "Počet dní od poslednej inventarizácie"
+#: inc/profile.class.php:340
+msgid "Printer SNMP"
+msgstr "Tlačiareň SNMP"
 
-#: inc/config.class.php:215
-msgid "Network Inventory"
-msgstr "Inventár siete"
+#: inc/profile.class.php:374
+msgid "Menu"
+msgstr "Menu"
 
-#: inc/config.class.php:216 inc/menu.class.php:389
-msgid "Package management"
-msgstr "Správa balíčkov"
+#: inc/profile.class.php:388
+msgid "Configuration"
+msgstr "Konfigurácia"
 
-#: inc/config.class.php:299
-msgid "SSL-only for agent"
-msgstr "Použiť pre agentov iba SSL"
+#: inc/profile.class.php:393 inc/stateinventory.class.php:114
+#: inc/taskview.class.php:162 inc/statediscovery.class.php:176
+#: inc/task.class.php:1681 inc/task.class.php:1721 inc/deploytask.class.php:54
+#: inc/deploytask.class.php:154
+msgid "Task"
+msgid_plural "Tasks"
+msgstr[0] "Úloha"
+msgstr[1] "Úlohy"
+msgstr[2] "Úlohy"
+msgstr[3] "Úlohy"
 
-#: inc/config.class.php:306
-msgid "Delete tasks logs after"
-msgstr "Vymazať logy úloh po"
+#: inc/profile.class.php:398 inc/menu.class.php:217
+#: inc/deploytaskjob.class.php:226 front/deploygroup.php:37
+msgid "Groups of computers"
+msgstr "Skupiny počítačov"
 
-#: inc/config.class.php:319
-msgid "Agent port"
-msgstr "Port agenta"
+#: inc/profile.class.php:403 inc/menu.class.php:257
+msgid "Computer information"
+msgstr "Informácie o počítači"
 
-#: inc/config.class.php:326
-msgid "Extra-debug"
-msgstr "Podrobnejšie ladenie"
+#: inc/collect_file_content.class.php:91
+msgid "Path/file"
+msgstr "Cesta/súbor"
 
-#: inc/config.class.php:331
-msgid "Re-prepare successful jobs"
-msgstr "Znova pripraviť úspešné úlohy"
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
+#: inc/collect.class.php:259 inc/collect_file.class.php:61
+#: inc/collect_file.class.php:143
+msgid "Size"
+msgstr "Veľkosť"
 
-#: inc/config.class.php:339
-msgid "Maximum number of agents to wake up in a task"
-msgstr "Maximálny počet agentov, ktorých prebudiť v úlohe"
+#: inc/collect_file_content.class.php:133 inc/collect.class.php:244
+msgid "pathfile"
+msgstr "cesta k súboru"
 
-#: inc/config.class.php:370
-msgid "Change the status"
-msgstr "Zmeniť stav"
+#: inc/deploygroup.class.php:83 inc/deploygroup.class.php:796 hook.php:125
+msgid "Static group"
+msgstr "Statická skupina"
 
-#: inc/config.class.php:373
-msgid "Clean agents"
-msgstr "Vyčistiť agentov"
+#: inc/deploygroup.class.php:84 inc/deploygroup.class.php:817
+msgid "Dynamic group"
+msgstr "Dynamická skupina"
 
-#: inc/config.class.php:396
-msgid "Network options"
-msgstr "Možnosti siete"
+#: inc/deploygroup.class.php:97
+msgid "Inventory group"
+msgid_plural "Inventory groups"
+msgstr[0] "Skupina inventára"
+msgstr[1] "Skupiny inventára"
+msgstr[2] "Skupiny inventára"
+msgstr[3] "Skupiny inventára"
 
-#: inc/config.class.php:401 inc/config.class.php:411
-#: inc/statediscovery.class.php:182
-msgid "Threads number"
-msgstr "Počet vlákien"
+#: inc/deploygroup.class.php:114
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] "Priradená úloha"
+msgstr[1] "Priradené úlohy"
+msgstr[2] "Priradené úlohy"
+msgstr[3] "Priradené úlohy"
 
-#: inc/config.class.php:412 inc/config.class.php:433
-#: inc/agentmodule.class.php:130 inc/agentmodule.class.php:239
-#: inc/staticmisc.class.php:76
+#: inc/deploygroup.class.php:164 inc/taskjobview.class.php:633
+msgid "Module method"
+msgstr "Metóda modulu"
+
+#: inc/deploygroup.class.php:378
+msgid "Add group"
+msgstr "Pridať skupinu"
+
+#: inc/taskjoblog.class.php:94 inc/taskjoblog.class.php:286
+#: inc/stateinventory.class.php:192 inc/deploypackage.class.php:1365
+#: inc/taskview.class.php:236 inc/statediscovery.class.php:260
+#: inc/taskjobstate.class.php:148
+msgid "Prepared"
+msgstr "Pripravené"
+
+#: inc/taskjoblog.class.php:95 inc/taskjoblog.class.php:290
+#: inc/stateinventory.class.php:197 inc/statediscovery.class.php:265
+msgid "Started"
+msgstr "Spustené"
+
+#: inc/taskjoblog.class.php:97
+msgid "Ok"
+msgstr "Ok"
+
+#: inc/taskjoblog.class.php:99
+msgid "Info"
+msgstr "Info"
+
+#: inc/taskjoblog.class.php:216 inc/stateinventory.class.php:113
+#: inc/statediscovery.class.php:175
+msgid "Unique id"
+msgstr "Jedinečný identifikátor"
+
+#: inc/taskjoblog.class.php:232 inc/stateinventory.class.php:115
+#: inc/statediscovery.class.php:177
+msgid "Agent"
+msgstr "Agent"
+
+#: inc/taskjoblog.class.php:308
+msgid "unknown"
+msgstr "neznáme"
+
+#: inc/taskjoblog.class.php:344
+msgid "devices queried"
+msgstr "dotazovaných zariadení"
+
+#: inc/taskjoblog.class.php:345
+msgid "devices found"
+msgstr "nájdených zariadení"
+
+#: inc/taskjoblog.class.php:346
+msgid "Add the item"
+msgstr "Pridať položku"
+
+#: inc/taskjoblog.class.php:347
+msgid "Update the item"
+msgstr "Aktualizovať položku"
+
+#: inc/taskjoblog.class.php:348
+msgid "Inventory started"
+msgstr "Inventarizácia spustená"
+
+#: inc/taskjoblog.class.php:349
+msgid "Detail"
+msgstr "Detaily"
+
+#: inc/taskjoblog.class.php:350
+msgid "Agent communication error, impossible to start agent"
+msgstr "Chyba komunikácie s agentom, nie je možné spustiť agenta"
+
+#: inc/taskjoblog.class.php:351
+msgid "Agent stopped/crashed"
+msgstr "Agent zastavený/havaroval"
+
+#: inc/taskjoblog.class.php:352
+msgid "Import denied"
+msgstr "Import bol odmietnutý"
+
+#: inc/commonview.class.php:300
+msgid "Warning:"
+msgstr "Varovanie:"
+
+#: inc/commonview.class.php:305
+msgid "Error:"
+msgstr "Chyba:"
+
+#: inc/collect_wmi.class.php:49
+msgid "Found WMI"
+msgid_plural "Found WMIs"
+msgstr[0] "Nájdené WMI"
+msgstr[1] "Nájdené WMI"
+msgstr[2] "Nájdené WMI"
+msgstr[3] "Nájdené WMI"
+
+#: inc/collect_wmi.class.php:57 inc/collect_wmi.class.php:83
+#: inc/collect_wmi_content.class.php:117
+msgid "Class"
+msgstr "Trieda"
+
+#: inc/collect_wmi.class.php:58 inc/collect_wmi.class.php:89
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#: inc/staticmisc.class.php:54
+msgid "Computer Inventory"
+msgstr "Inventár počítačov"
+
+#: inc/staticmisc.class.php:62
+msgid "VMware host remote inventory"
+msgstr "Vzdialený inventár VMware servera"
+
+#: inc/staticmisc.class.php:70 inc/config.class.php:402
+#: inc/config.class.php:424 hook.php:114
+msgid "Network discovery"
+msgstr "Zisťovanie siete"
+
+#: inc/staticmisc.class.php:76 inc/config.class.php:412
+#: inc/config.class.php:433 inc/agentmodule.class.php:130
+#: inc/agentmodule.class.php:239
 msgid "Network inventory (SNMP)"
 msgstr "Inventár siete (SNMP)"
 
-#: inc/config.class.php:423 inc/config.class.php:432
-msgid "SNMP timeout"
-msgstr "Časový limit SNMP"
+#: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1056
+msgid "Package deploy"
+msgstr "Nasadenie balíčku"
 
-#: inc/config.class.php:465
-msgid "Use this GLPI server as a mirror server"
-msgstr "Použiť tento GLPI server ako zrkadlo"
+#: inc/staticmisc.class.php:90
+msgid "Collect data"
+msgstr "Zber údajov"
 
-#: inc/config.class.php:472
-msgid "Match mirrors to agents"
-msgstr "Priradiť zrkadlá k agentom"
+#: inc/stateinventory.class.php:117 inc/statediscovery.class.php:179
+msgid "Starting date"
+msgstr "Počiatočný dátum"
 
-#: inc/config.class.php:475
-msgid "with location"
-msgstr "s umiestnením"
+#: inc/stateinventory.class.php:118 inc/statediscovery.class.php:180
+msgid "Ending date"
+msgstr "Koncový dátum"
 
-#: inc/config.class.php:476
-msgid "with entity"
-msgstr "s entitou"
+#: inc/stateinventory.class.php:120
+msgid "Number per second"
+msgstr "Počet za sekundu"
 
-#: inc/config.class.php:477
-msgid "with both"
-msgstr "s oboma"
+#: inc/stateinventory.class.php:121
+msgid "Threads / Timeout configuration"
+msgstr "Konfigurácia vlákien / časového limitu"
 
-#: inc/config.class.php:488
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "Zmazať úspešné úlohy na vyžiadanie po (v dňoch)"
+#: inc/stateinventory.class.php:122
+msgid "To inventory"
+msgstr "Do inventára"
+
+#: inc/stateinventory.class.php:123
+msgid "Error(s)"
+msgstr "Chyby"
+
+#: inc/stateinventory.class.php:201 inc/statediscovery.class.php:269
+msgid "Finished tasks"
+msgstr "Dokončené úlohy"
+
+#: inc/menu.class.php:151 inc/deploypackage.class.php:155
+msgid "Import"
+msgstr "Import"
+
+#: inc/menu.class.php:157
+msgid "Clean unused files"
+msgstr "Vyčistiť nepoužívané súbory"
+
+#: inc/menu.class.php:211
+msgid "Agents management"
+msgstr "Správa agentov"
+
+#: inc/menu.class.php:223
+msgid "General configuration"
+msgstr "Všeobecná konfigurácia"
+
+#: inc/menu.class.php:241 inc/task.class.php:62
+msgid "Task management"
+msgstr "Správa úloh"
+
+#: inc/menu.class.php:245
+msgid "Monitoring / Logs"
+msgstr "Monitoring / logy"
+
+#: inc/menu.class.php:251
+msgid "Import agent XML file"
+msgstr "Import XML súboru agenta"
+
+#: inc/menu.class.php:263 inc/timeslotentry.class.php:80
+#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
+msgid "Time slot"
+msgstr "Časové okno"
+
+#: inc/menu.class.php:270 inc/task.class.php:231 hook.php:161
+msgid "Tasks"
+msgstr "Úlohy"
+
+#: inc/menu.class.php:281
+msgid "Equipment import and link rules"
+msgstr "Pravidlá importu zariadení a spojení"
+
+#: inc/menu.class.php:289
+msgid "Asset skipped during import"
+msgstr "Inventár vynechaný pri importe"
+
+#: inc/menu.class.php:295
+msgid "Computer entity rules"
+msgstr "Pravidlá pre entity počítača"
+
+#: inc/menu.class.php:309
+msgid "Rules"
+msgstr "Pravidlá"
+
+#: inc/menu.class.php:338 inc/iprange_snmpcredential.class.php:210
+msgid "SNMP credentials"
+msgstr "Prihlasovacie údaje SNMP"
+
+#: inc/menu.class.php:354
+msgid "Discovery status"
+msgstr "Stav zisťovania"
+
+#: inc/menu.class.php:360
+msgid "Network inventory status"
+msgstr "Stav inventára siete"
+
+#: inc/menu.class.php:368
+msgid "SNMP models creation"
+msgstr "Vytváranie SNMP modelov"
+
+#: inc/menu.class.php:376
+msgid "Networking"
+msgstr "Siete"
+
+#: inc/menu.class.php:389 inc/config.class.php:216
+msgid "Package management"
+msgstr "Správa balíčkov"
+
+#: inc/menu.class.php:414 hook.php:86
+msgid "Deploy"
+msgstr "Nasadiť"
+
+#: inc/menu.class.php:426
+msgid "SNMP inventory"
+msgstr "SNMP inventarizácia"
+
+#: inc/menu.class.php:432
+msgid "Guide"
+msgstr "Príručka"
+
+#: inc/menu.class.php:456
+msgid ""
+"This is the steps to configure plugin for SNMP inventory (swicth, router, "
+"network printer)"
+msgstr ""
+"Toto sú kroky na konfiguráciu pluginu pre SNMP inventár (switch, router, "
+"sieťová tlačiareň)"
+
+#: inc/menu.class.php:462
+msgid "Configure SNMP credentials"
+msgstr "Nakonfigurujte prihlasovacie údaje SNMP"
+
+#: inc/menu.class.php:466
+msgid ""
+"Define rules for import : merge and create new devices (CAUTION: same rules "
+"for computer inventory)"
+msgstr ""
+"Definujte pravidlá pre import: zlúčiť a vytvoriť nové zariadenia (Varovanie:"
+" rovnaké pravidlá pre inventár počítačov)"
+
+#: inc/menu.class.php:470
+msgid "`Network Discovery`, used to discover the devices on the network"
+msgstr "\"Zisťovanie siete\" určené na zisťovanie zariadení na sieti"
+
+#: inc/menu.class.php:475
+msgid "Define IP Ranges of your network + related SNMP credentials"
+msgstr ""
+"Definujte IP rozsahy pre svoju sieť + súvisiace prihlasovacie údaje SNMP"
+
+#: inc/menu.class.php:479
+msgid "Define an agent allowed to discover the network"
+msgstr "Definujte agenta, ktorý môže zisťovať sieť"
+
+#: inc/menu.class.php:483
+msgid ""
+"Create a new Task with discovery module and the agent defined previously"
+msgstr ""
+"Vytvorte novú úlohu s modulom zisťovania a predtým definovaným agentom"
+
+#: inc/menu.class.php:487
+msgid "If you have devices not typed, import them from unmanaged devices"
+msgstr ""
+"Ak máte zariadenia bez typu, naimportujte ich z nespravovaných zariadení"
+
+#: inc/menu.class.php:491
+msgid "`Network Inventory`, used to complete inventory the discovered devices"
+msgstr ""
+"\"Inventár siete\" určený na dokončenie inventarizácie zistených zariadení"
+
+#: inc/menu.class.php:496
+msgid "Define an agent allowed to inventory the network by SNMP"
+msgstr "Definujte agenta, ktorý môže inventarizovať sieť pomocou SNMP"
+
+#: inc/menu.class.php:500
+msgid ""
+"Create a new Task with network inventory module and the agent defined "
+"previously"
+msgstr ""
+"Vytvorte novú úlohu s modulom sieťového inventára a predtým definovaným "
+"agentom"
+
+#: inc/taskjobview.class.php:70
+msgid "Job configuration"
+msgstr "Konfigurácia úlohy"
+
+#: inc/taskjobview.class.php:237
+msgid ""
+"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
+"         Please consider modifying this task to avoid unexpected results."
+msgstr ""
+"Niekoľko úloh v rovnakej úlohe už nie je podporované z dôvodu neočakávaných vedľajších účinkov.\n"
+"Zvážte úpravu tejto úlohy, aby ste sa vyhli neočakávaným výsledkom."
+
+#: inc/taskjobview.class.php:252
+msgid "Add a job"
+msgstr "Pridať úlohu"
+
+#: inc/taskjobview.class.php:281 inc/deploycheck.class.php:286
+#: inc/deployuserinteraction.class.php:274 inc/deployaction.class.php:254
+#: inc/deployfile.class.php:270
+msgid "Delete"
+msgstr "Zmazať"
+
+#: inc/taskjobview.class.php:360
+msgid "Actor Type"
+msgstr "Typ účastníka"
+
+#: inc/taskjobview.class.php:364
+msgid "Target Type"
+msgstr "Cieľový typ"
+
+#: inc/taskjobview.class.php:408
+msgid "Actor Item"
+msgstr "Položka účastníka"
+
+#: inc/taskjobview.class.php:412
+msgid "Target Item"
+msgstr "Cieľová položka"
+
+#: inc/taskjobview.class.php:590 inc/taskjobview.class.php:593
+msgid "New action"
+msgstr "Nová akcia"
+
+#: inc/taskjobview.class.php:670
+msgid "Restrict scope to task entity"
+msgstr "Obmedziť rozsah na entitu úlohy"
+
+#: inc/taskjobview.class.php:688 inc/taskjobview.class.php:721
+msgid "Targets"
+msgstr "Ciele"
+
+#: inc/taskjobview.class.php:694
+msgid "The items that should be applied for this job."
+msgstr "Položky, ktoré sa majú aplikovať pre túto úlohu."
+
+#: inc/taskjobview.class.php:700 inc/taskjobview.class.php:743
+msgid "Actors"
+msgstr "Účastníci"
+
+#: inc/taskjobview.class.php:705
+msgid "The items that should carry out those targets."
+msgstr "Položky, ktoré majú vykonať tieto ciele."
+
+#: inc/taskjobview.class.php:729 inc/taskjobview.class.php:751
+msgid "Clear list"
+msgstr "Vymazať zoznam"
+
+#: inc/taskjobview.class.php:734 inc/taskjobview.class.php:756
+msgid "Delete selected items"
+msgstr "Zmazať označené položky"
+
+#: inc/taskjobview.class.php:774
+msgid "Cancel modifications"
+msgstr "Zrušiť úpravy"
+
+#: inc/taskjobview.class.php:779
+msgid "Purge"
+msgstr "Vyčistiť"
+
+#: inc/taskjobview.class.php:782
+msgid "Confirm the final deletion ?"
+msgstr "Potvrdiť nenávratné zmazanie?"
+
+#: inc/iprange_snmpcredential.class.php:102
+msgid "Associated SNMP credentials"
+msgstr "Priradené prihlasovacie údaje SNMP"
+
+#: inc/iprange_snmpcredential.class.php:213
+msgid "Version"
+msgstr "Verzia"
+
+#: inc/iprange_snmpcredential.class.php:216
+msgid "By order of priority"
+msgstr "Podľa poradia priority"
+
+#: inc/timeslotentry.class.php:64
+msgid "Time slot entry"
+msgstr "Položka časového okna"
+
+#: inc/timeslotentry.class.php:133
+msgid "Start time"
+msgstr "Čas začiatku"
+
+#: inc/timeslotentry.class.php:159
+msgid "End time"
+msgstr "Čas ukončenia"
+
+#: inc/deploypackage.class.php:101 inc/task.class.php:1699
+msgid "Package"
+msgstr "Balíček"
+
+#: inc/deploypackage.class.php:158
+msgid "Export"
+msgstr "Export"
+
+#: inc/deploypackage.class.php:279
+msgid "Modification Denied"
+msgstr "Zmeny boli odmietnuté"
+
+#: inc/deploypackage.class.php:282
+msgid "The following task is running with this package"
+msgid_plural "The following tasks are running with this package"
+msgstr[0] "S týmto balíčkom je spustená nasledujúca úloha"
+msgstr[1] "S týmto balíčkom sú spustené nasledujúce úlohy"
+msgstr[2] "S týmto balíčkom sú spustené nasledujúce úlohy"
+msgstr[3] "S týmto balíčkom sú spustené nasledujúce úlohy"
+
+#: inc/deploypackage.class.php:389 inc/deploypackage.class.php:513
+msgid "Enable deploy on demand for the following group"
+msgstr "Povoliť nasadenie na vyžiadania pre nasledujúcu skupinu"
+
+#: inc/deploypackage.class.php:532
+msgid "Audits"
+msgstr "Audity"
+
+#: inc/deploypackage.class.php:533
+msgid "Files"
+msgstr "Súbory"
+
+#: inc/deploypackage.class.php:534 public/b/deploy/index.php:139
+msgid "Actions"
+msgstr "Akcie"
+
+#: inc/deploypackage.class.php:535
+msgid "User interactions"
+msgstr "Interakcie používateľa"
+
+#: inc/deploypackage.class.php:686
+msgid "JSON package representation"
+msgstr "Reprezentácia JSON balíčku"
+
+#: inc/deploypackage.class.php:802
+msgid "Package exported in"
+msgstr "Balíček exportovaný do"
+
+#: inc/deploypackage.class.php:875
+msgid "Packages to import"
+msgstr "Balíčky na import"
+
+#: inc/deploypackage.class.php:1000 inc/deploypackageitem.class.php:329
+msgid "The modified JSON contained a syntax error :"
+msgstr "Upravený JSON obsahoval syntaktickú chybu:"
+
+#: inc/deploypackage.class.php:1028
+msgid "Package actions"
+msgstr "Akcie balíčka"
+
+#: inc/deploypackage.class.php:1037
+msgid "Target for deploy on demand"
+msgid_plural "Targets for deploy on demand"
+msgstr[0] "Cieľ pre nasadenie na vyžiadanie"
+msgstr[1] "Ciele pre nasadenie na vyžiadanie"
+msgstr[2] "Ciele pre nasadenie na vyžiadanie"
+msgstr[3] "Ciele pre nasadenie na vyžiadanie"
+
+#: inc/deploypackage.class.php:1132
+msgid "Add a target for self-service"
+msgstr "Pridať cieľ pre samoobsluhu"
+
+#: inc/deploypackage.class.php:1362 inc/taskview.class.php:233
+msgid "In error"
+msgstr "S chybou"
+
+#: inc/deploypackage.class.php:1363 inc/taskview.class.php:234
+msgid "Successful"
+msgstr "Úspešné"
+
+#: inc/deploypackage.class.php:1364 inc/taskview.class.php:235
+msgid "Running"
+msgstr "Spustené"
+
+#: inc/deploypackage.class.php:1366 inc/taskview.class.php:237
+#: inc/taskjobstate.class.php:153
+msgid "Cancelled"
+msgstr "Zrušené"
+
+#: inc/deploypackage.class.php:1487
+msgid "Restart job"
+msgstr "Reštartovať úlohu"
+
+#: inc/deploypackage.class.php:1496
+#: inc/deployuserinteractiontemplate.class.php:206
+msgid "Cancel job"
+msgstr "Zrušiť úlohu"
+
+#: inc/deploypackage.class.php:1503
+msgid "refresh job"
+msgstr "obnoviť úlohu"
+
+#: inc/deploypackage.class.php:1645
+msgid "Select packages you want install"
+msgstr "Vyberte balíčky, ktoré chcete nainštalovať"
+
+#: inc/deploypackage.class.php:1654
+msgid "Prepare for install"
+msgstr "Pripraviť na inštaláciu"
+
+#: inc/deploypackage.class.php:1659
+msgid "I'm on this computer: local wakeup"
+msgstr "Som na tomto počítači: lokálne prebudenie"
+
+#: inc/deploypackage.class.php:1660
+msgid "I'm not on this computer: wakeup from the server"
+msgstr "Nie som na tomto počítači: prebudenie zo servera"
+
+#: inc/deploypackage.class.php:1661
+msgid "Don't wakeup"
+msgstr "Neprebúdzať"
+
+#: inc/deploypackage.class.php:1677
+msgid "No packages available to install"
+msgstr "Na inštaláciu nie sú k dispozícii žiadne balíčky"
+
+#: inc/display.class.php:155
+msgid "Progress"
+msgstr "Postup"
 
 #: inc/taskview.class.php:68
 msgid "Include old jobs"
@@ -312,44 +835,9 @@ msgstr "Export výsledku úlohy"
 msgid "Task execution states"
 msgstr "Stavy vykonávania úloh"
 
-#: inc/taskview.class.php:162 inc/profile.class.php:393
-#: inc/statediscovery.class.php:176 inc/deploytask.class.php:54
-#: inc/deploytask.class.php:154 inc/task.class.php:1681
-#: inc/task.class.php:1721 inc/stateinventory.class.php:114
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "Úloha"
-msgstr[1] "Úlohy"
-msgstr[2] "Úlohy"
-msgstr[3] "Úlohy"
-
 #: inc/taskview.class.php:210
 msgid "Show/Hide details"
 msgstr "Zobraziť/skryť detaily"
-
-#: inc/taskview.class.php:233 inc/deploypackage.class.php:1362
-msgid "In error"
-msgstr "S chybou"
-
-#: inc/taskview.class.php:234 inc/deploypackage.class.php:1363
-msgid "Successful"
-msgstr "Úspešné"
-
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1364
-msgid "Running"
-msgstr "Spustené"
-
-#: inc/taskview.class.php:236 inc/statediscovery.class.php:260
-#: inc/deploypackage.class.php:1365 inc/taskjoblog.class.php:94
-#: inc/taskjoblog.class.php:286 inc/stateinventory.class.php:192
-#: inc/taskjobstate.class.php:148
-msgid "Prepared"
-msgstr "Pripravené"
-
-#: inc/taskview.class.php:237 inc/deploypackage.class.php:1366
-#: inc/taskjobstate.class.php:153
-msgid "Cancelled"
-msgstr "Zrušené"
 
 #: inc/taskview.class.php:320 inc/task.class.php:147
 msgid "Permit to re-prepare task after run"
@@ -391,625 +879,10 @@ msgstr "Vynútiť spustenie"
 msgid "Device no longer defined in definition of job"
 msgstr "Zariadenie už nie je definované v definícii úlohy"
 
-#: inc/collect_registry.class.php:49
-msgid "Found entry"
-msgid_plural "Found entries"
-msgstr[0] "Nájdená položka"
-msgstr[1] "Nájdené položky"
-msgstr[2] "Nájdené položky"
-msgstr[3] "Nájdené položky"
-
-#: inc/collect_registry.class.php:68 inc/collect_registry.class.php:87
-msgid "Hive"
-msgstr "Súbor registra (hive)"
-
-#: inc/collect_registry.class.php:69 inc/collect_registry.class.php:98
-#: inc/collect_registry_content.class.php:169
-msgid "Path"
-msgstr "Cesta"
-
-#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:104
-msgid "Key"
-msgstr "Kľúč"
-
-#: inc/deployuserinteractiontemplate.class.php:100
-msgid "Behavior"
-msgid_plural "Behaviors"
-msgstr[0] "Správanie"
-msgstr[1] "Správanie"
-msgstr[2] "Správanie"
-msgstr[3] "Správanie"
-
-#: inc/deployuserinteractiontemplate.class.php:153
-msgid "Windows system alert (WTS)"
-msgstr "Výstražný systéme Windows (WTS)"
-
-#: inc/deployuserinteractiontemplate.class.php:166
-msgid "OK"
-msgstr "OK"
-
-#: inc/deployuserinteractiontemplate.class.php:167
-msgid "OK (asynchronous)"
-msgstr "OK (asynchrónne)"
-
-#: inc/deployuserinteractiontemplate.class.php:168
-msgid "OK - Cancel"
-msgstr "OK - Zrušiť"
-
-#: inc/deployuserinteractiontemplate.class.php:169
-msgid "Yes - No"
-msgstr "Áno - Nie"
-
-#: inc/deployuserinteractiontemplate.class.php:170
-msgid "Retry - Cancel"
-msgstr "Skúsiť znova - Zrušiť"
-
-#: inc/deployuserinteractiontemplate.class.php:171
-msgid "Abort - Retry - Ignore"
-msgstr "Prerušiť - Skúsiť znova - Ignorovať"
-
-#: inc/deployuserinteractiontemplate.class.php:172
-msgid "Cancel - Try - Continue"
-msgstr "Zrušiť - Skúsiť - Pokračovať"
-
-#: inc/deployuserinteractiontemplate.class.php:173
-msgid "Yes - No - Cancel"
-msgstr "Áno - Nie - Zrušiť"
-
-#: inc/deployuserinteractiontemplate.class.php:191
-msgid "Question"
-msgstr "Otázka"
-
-#: inc/deployuserinteractiontemplate.class.php:204
-msgid "Continue job with no user interaction"
-msgstr "Pokračovať v úlohe bez interakcie s používateľom"
-
-#: inc/deployuserinteractiontemplate.class.php:205
-msgid "Retry job later"
-msgstr "Skúsiť úlohu znova neskôr"
-
-#: inc/deployuserinteractiontemplate.class.php:206
-#: inc/deploypackage.class.php:1496
-msgid "Cancel job"
-msgstr "Zrušiť úlohu"
-
-#: inc/deployuserinteractiontemplate.class.php:440
-msgid "Button ok"
-msgstr "Tlačidlo OK"
-
-#: inc/deployuserinteractiontemplate.class.php:441
-msgid "Button yes"
-msgstr "Tlačidlo Áno"
-
-#: inc/deployuserinteractiontemplate.class.php:442
-msgid "Button continue"
-msgstr "Tlačidlo Pokračovať"
-
-#: inc/deployuserinteractiontemplate.class.php:443
-msgid "Button retry"
-msgstr "Tlačidlo Skúsiť znova"
-
-#: inc/deployuserinteractiontemplate.class.php:444
-msgid "Button try"
-msgstr "Tlačidlo Skúsiť"
-
-#: inc/deployuserinteractiontemplate.class.php:445
-msgid "Button no"
-msgstr "Tlačidlo Nie"
-
-#: inc/deployuserinteractiontemplate.class.php:446
-msgid "Button cancel"
-msgstr "Tlačidlo Zrušiť"
-
-#: inc/deployuserinteractiontemplate.class.php:447
-msgid "Button abort"
-msgstr "Tlačidlo Prerušiť"
-
-#: inc/deployuserinteractiontemplate.class.php:448
-msgid "Button ignore"
-msgstr "Tlačidlo Ignorovať"
-
-#: inc/deployuserinteractiontemplate.class.php:449
-msgid "No active session"
-msgstr "Žiadne aktívne sedenie"
-
-#: inc/deployuserinteractiontemplate.class.php:450
-msgid "Alert timeout exceeded"
-msgstr "Prekročený časový limit upozornenia"
-
-#: inc/deployuserinteractiontemplate.class.php:451
-msgid "Several active sessions"
-msgstr "Niekoľko aktívnych sedení"
-
-#: inc/deployuserinteractiontemplate.class.php:560
-msgid "Behaviors"
-msgstr "Správanie"
-
-#: inc/collect_file.class.php:49
-msgid "Found file"
-msgid_plural "Found files"
-msgstr[0] "Nájdený súbor"
-msgstr[1] "Nájdené súbory"
-msgstr[2] "Nájdené súbory"
-msgstr[3] "Nájdené súbory"
-
-#: inc/collect_file.class.php:57 inc/collect_file.class.php:104
-msgid "Limit"
-msgstr "Limit"
-
-#: inc/collect_file.class.php:58 inc/collect_file.class.php:84
-#: inc/collect_file.class.php:189
-msgid "Folder"
-msgstr "Adresár"
-
-#: inc/collect_file.class.php:59
-msgid "Recursive"
-msgstr "Rekurzívne"
-
-#: inc/collect_file.class.php:60 inc/collect_file.class.php:137
-msgid "Regex"
-msgstr "Regulárny výraz"
-
-#: inc/collect_file.class.php:61 inc/collect_file.class.php:143
-#: inc/deployfile.class.php:1118 inc/collect.class.php:259
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134
-msgid "Size"
-msgstr "Veľkosť"
-
-#: inc/collect_file.class.php:62 inc/collect_file.class.php:158
-msgid "Checksum SHA512"
-msgstr "Kontrolný súčet SHA512"
-
-#: inc/collect_file.class.php:63 inc/collect_file.class.php:164
-msgid "Checksum SHA2"
-msgstr "Kontrolný súčet SHA2"
-
-#: inc/collect_file.class.php:64
-msgid "Name"
-msgstr "Názov"
-
-#: inc/collect_file.class.php:65
-msgid "Iname"
-msgstr "Inázov"
-
-#: inc/collect_file.class.php:66 inc/collect_file.class.php:184
-msgid "Type"
-msgstr "Typ"
-
-#: inc/collect_file.class.php:82 inc/collect_file.class.php:188
-#: inc/deployfile.class.php:325 inc/deploycheck.class.php:384
-#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
-msgid "File"
-msgstr "Súbor"
-
-#: inc/collect_file.class.php:116
-msgid "Filter"
-msgid_plural "Filters"
-msgstr[0] "Filter"
-msgstr[1] "Filtre"
-msgstr[2] "Filtre"
-msgstr[3] "Filtre"
-
-#: inc/collect_file.class.php:122
-msgid "Base folder"
-msgstr "Základný adresár"
-
-#: inc/collect_file.class.php:128
-msgid "Folder recursive"
-msgstr "Adresár rekurzívne"
-
-#: inc/collect_file.class.php:147 inc/collect_file.class.php:177
-msgid "Disabled"
-msgstr "Vypnuté"
-
-#: inc/collect_file.class.php:173
-msgid "Filename"
-msgstr "Názov súboru"
-
-#: inc/collect_file.class.php:178
-msgid "Non sentitive case"
-msgstr "Nerozlišovať veľké a malé písmená"
-
-#: inc/collect_file.class.php:179
-msgid "Sentitive case"
-msgstr "Rozlišovať veľké a malé písmená"
-
-#: inc/commonview.class.php:300
-msgid "Warning:"
-msgstr "Varovanie:"
-
-#: inc/commonview.class.php:305
-msgid "Error:"
-msgstr "Chyba:"
-
-#: inc/agentmodule.class.php:61
-msgid "Agents modules"
-msgstr "Moduly agentov"
-
-#: inc/agentmodule.class.php:108
-msgid "Activation (by default)"
-msgstr "Aktivácia (predvolené)"
-
-#: inc/agentmodule.class.php:109
-msgid "Exceptions"
-msgstr "Výnimky"
-
-#: inc/agentmodule.class.php:134 inc/agentmodule.class.php:243
-msgid "Package deployment"
-msgstr "Nasadenie balíčkov"
-
-#: inc/agentmodule.class.php:212 inc/agentmodule.class.php:214
-msgid "Activation"
-msgstr "Aktivácia"
-
-#: inc/deploymirror.class.php:68 inc/profile.class.php:287
-#: inc/menu.class.php:396
-msgid "Mirror servers"
-msgstr "Zrkadlové servery"
-
-#: inc/collect_registry_content.class.php:73
-msgid "Windows registry content"
-msgstr "Obsah registra Windows"
-
-#: inc/collect_registry_content.class.php:170
-#: inc/collect_registry_content.class.php:217
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
-#: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
-#: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
-msgid "Value"
-msgstr "Hodnota"
-
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:218
-msgid "Data"
-msgstr "Dáta"
-
-#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
-#: inc/timeslotentry.class.php:80 inc/menu.class.php:263
-msgid "Time slot"
-msgstr "Časové okno"
-
-#: inc/deployfile.class.php:87
-msgid "Upload from computer"
-msgstr "Nahrať z počítača"
-
-#: inc/deployfile.class.php:91
-msgid "Upload from server"
-msgstr "Nahrať zo servera"
-
-#: inc/deployfile.class.php:200
-msgid "p2p"
-msgstr "p2p"
-
-#: inc/deployfile.class.php:201 inc/deployfile.class.php:375
-msgid "retention"
-msgstr "uchovávanie"
-
-#: inc/deployfile.class.php:203 inc/deployfile.class.php:376
-#: inc/taskjob.class.php:765
-msgid "Minute(s)"
-msgstr "minúty"
-
-#: inc/deployfile.class.php:215
-msgid "uncompress"
-msgstr "rozbaliť"
-
-#: inc/deployfile.class.php:222
-msgid "Download"
-msgstr "Stiahnuť"
-
-#: inc/deployfile.class.php:257 inc/deployuserinteraction.class.php:260
-#: inc/deploycheck.class.php:272 inc/deployaction.class.php:240
-msgid "drag"
-msgstr "pretiahnuť"
-
-#: inc/deployfile.class.php:270 inc/deployuserinteraction.class.php:274
-#: inc/deploycheck.class.php:286 inc/deployaction.class.php:254
-#: inc/taskjobview.class.php:281
-msgid "Delete"
-msgstr "Zmazať"
-
-#: inc/deployfile.class.php:331
-msgid "filename"
-msgstr "názov súboru"
-
-#: inc/deployfile.class.php:338
-msgid "Choose"
-msgstr "Zvoliť"
-
-#: inc/deployfile.class.php:344
-msgid "Select the file on server"
-msgstr "Vyberte súbor na serveri"
-
-#: inc/deployfile.class.php:360
-msgid "Uncompress"
-msgstr "Rozbaliť"
-
-#: inc/deployfile.class.php:367
-msgid "P2P"
-msgstr "P2P"
-
-#: inc/deployfile.class.php:448
-#, php-format
-msgid "Files need to be uploaded to %s folder to be displayed here"
-msgstr "Súbory je potrebné nahrať do adresára %s, aby sa tu zobrazili"
-
-#: inc/deployfile.class.php:651
-msgid "Upload error"
-msgstr "Chyba nahrávania"
-
-#: inc/deployfile.class.php:655
-msgid "Transfer error: the file size is too big"
-msgstr "Chyba prenosu: súbor je príliš veľký"
-
-#: inc/deployfile.class.php:659
-msgid "The uploaded file was only partially uploaded"
-msgstr "Nahratý súbor bol nahratý iba čiastočne"
-
-#: inc/deployfile.class.php:663
-msgid "No file was uploaded"
-msgstr "Nebol nahratý žiadny súbor"
-
-#: inc/deployfile.class.php:667
-msgid "Missing a temporary folder"
-msgstr "Chýbajúci dočasný adresár"
-
-#: inc/deployfile.class.php:671
-msgid "Failed to write file to disk"
-msgstr "Nepodarilo sa zapísať súbor na disk"
-
-#: inc/deployfile.class.php:675
-msgid "PHP extension stopped the file upload"
-msgstr "PHP rozšírenie zastavilo nahrávanie súboru"
-
-#: inc/deployfile.class.php:703 inc/deployfile.class.php:758
-msgid "File saved!"
-msgstr "Súbor sa uložil!"
-
-#: inc/deployfile.class.php:706 inc/deployfile.class.php:761
-msgid "Failed to copy file"
-msgstr "Nepodarilo sa skopírovať súbor"
-
-#: inc/deployfile.class.php:710 inc/deployfile.class.php:765
-msgid "File missing"
-msgstr "Súbor chýba"
-
-#: inc/deployfile.class.php:1101
-msgid "Max file size"
-msgstr "Maximálna veľkosť súboru"
-
-#: inc/deployfile.class.php:1102
-msgid "Mio"
-msgstr "MiB"
-
-#: inc/deployfile.class.php:1115
-msgid "Unused file"
-msgstr "Nepoužitý súbor"
-
-#: inc/profile.class.php:163 inc/menu.class.php:230
-msgid "General"
-msgstr "Všeobecné"
-
-#: inc/profile.class.php:169
-msgid "Inventory"
-msgstr "Inventár"
-
-#: inc/profile.class.php:175 inc/profile.class.php:221
-msgid "Software deployment"
-msgstr "Nasadenie softvéru"
-
-#: inc/profile.class.php:215 inc/profile.class.php:292
-msgid "Deploy packages on demand"
-msgstr "Nasadiť balíčky na vyžiadanie"
-
-#: inc/profile.class.php:277
-msgid "Manage packages"
-msgstr "Spravovať balíčky"
-
-#: inc/profile.class.php:311 inc/iprange.class.php:114
-msgid "IP range configuration"
-msgstr "Konfigurácia IP rozsahu"
-
-#: inc/profile.class.php:316 inc/credentialip.class.php:131
-#: inc/credentialip.class.php:154 inc/menu.class.php:346
-#: inc/credential.class.php:78 inc/credential.class.php:182
-msgid "Authentication for remote devices (VMware)"
-msgstr "Autentifikácia pre vzdialené zariadenia (VMware)"
-
-#: inc/profile.class.php:321 inc/menu.class.php:330
-msgid "Remote devices to inventory (VMware)"
-msgstr "Vzdialené zariadenia na inventarizáciu (VMware)"
-
-#: inc/profile.class.php:326 inc/credential.class.php:298
-#: inc/credential.class.php:316
-msgid "VMware host"
-msgstr "VMware server"
-
-#: inc/profile.class.php:335
-msgid "Network equipment SNMP"
-msgstr "Sieťové zariadenie SNMP"
-
-#: inc/profile.class.php:340
-msgid "Printer SNMP"
-msgstr "Tlačiareň SNMP"
-
-#: inc/profile.class.php:374
-msgid "Menu"
-msgstr "Menu"
-
-#: inc/profile.class.php:388
-msgid "Configuration"
-msgstr "Konfigurácia"
-
-#: inc/profile.class.php:403 inc/menu.class.php:257
-msgid "Computer information"
-msgstr "Informácie o počítači"
-
-#: inc/deployuserinteraction.class.php:81
-msgid "User interaction"
-msgid_plural "User interactions"
-msgstr[0] "Interakcia používateľa"
-msgstr[1] "Interakcie používateľa"
-msgstr[2] "Interakcie používateľa"
-msgstr[3] "Interakcie používateľa"
-
-#: inc/deployuserinteraction.class.php:96
-msgid "Before download"
-msgstr "Pred stiahnutím"
-
-#: inc/deployuserinteraction.class.php:97
-msgid "After download"
-msgstr "Po stiahnutí"
-
-#: inc/deployuserinteraction.class.php:98
-msgid "After actions"
-msgstr "Po akciách"
-
-#: inc/deployuserinteraction.class.php:99
-msgid "On download failure"
-msgstr "Pri zlyhaní sťahovania"
-
-#: inc/deployuserinteraction.class.php:100
-msgid "On actions failure"
-msgstr "Pri zlyhaní akcií"
-
-#: inc/deployuserinteraction.class.php:197
-msgid "Interaction label"
-msgstr "Popisok interakcie"
-
-#: inc/deployuserinteraction.class.php:410
-#, php-format
-msgid "Job cancelled by the user %1$s"
-msgstr "Úloha bola zrušená používateľom %1$s"
-
-#: inc/deployuserinteraction.class.php:417
-#, php-format
-msgid "User %1$s agreed to continue the job"
-msgstr "Používateľ %1$s súhlasil s pokračovaním úlohy"
-
-#: inc/deployuserinteraction.class.php:424
-#, php-format
-msgid "Job postponed by the user %1$s"
-msgstr "Úloha bola odložená používateľom %1$s"
-
-#: inc/deployuserinteraction.class.php:430
-msgid "Bad event sent to the agent"
-msgstr "Odoslaná chybný udalosť agentovi"
-
-#: inc/deployuserinteraction.class.php:449
-msgid "Alert displayed, no input required"
-msgstr "Zobrazené upozornenie, nie je požadovaný žiadny vstup"
-
-#: inc/deployuserinteraction.class.php:455
-msgid "Retry"
-msgstr "Skúsiť znova"
-
-#: inc/deployuserinteraction.class.php:461
-msgid "Abort"
-msgstr "Prerušiť"
-
-#: inc/deployuserinteraction.class.php:464
-msgid "Ignore"
-msgstr "Ignorovať"
-
-#: inc/deployuserinteraction.class.php:470
-msgid "Alert duration exceeded"
-msgstr "Prekročené trvanie upozornenia"
-
-#: inc/deployuserinteraction.class.php:473
-msgid "No user connected"
-msgstr "Nepripojený žiadny používateľ"
-
-#: inc/deployuserinteraction.class.php:476
-msgid "Multiple users connected"
-msgstr "Pripojených viacero používateľov"
-
-#: inc/credentialip.class.php:77
-msgid "Remote device inventory"
-msgstr "Inventár vzdialených zariadení"
-
-#: inc/statediscovery.class.php:175 inc/taskjoblog.class.php:216
-#: inc/stateinventory.class.php:113
-msgid "Unique id"
-msgstr "Jedinečný identifikátor"
-
-#: inc/statediscovery.class.php:177 inc/taskjoblog.class.php:232
-#: inc/stateinventory.class.php:115
-msgid "Agent"
-msgstr "Agent"
-
-#: inc/statediscovery.class.php:179 inc/stateinventory.class.php:117
-msgid "Starting date"
-msgstr "Počiatočný dátum"
-
-#: inc/statediscovery.class.php:180 inc/stateinventory.class.php:118
-msgid "Ending date"
-msgstr "Koncový dátum"
-
-#: inc/statediscovery.class.php:183
-msgid "Total discovery devices"
-msgstr "Celkovo zistených zariadení"
-
-#: inc/statediscovery.class.php:184
-msgid "Devices not imported"
-msgstr "Nenaimportované zariadenia"
-
-#: inc/statediscovery.class.php:185
-msgid "Devices linked"
-msgstr "Prepojené zariadenia"
-
-#: inc/statediscovery.class.php:186
-msgid "Devices imported"
-msgstr "Importované zariadenia"
-
-#: inc/statediscovery.class.php:265 inc/taskjoblog.class.php:95
-#: inc/taskjoblog.class.php:290 inc/stateinventory.class.php:197
-msgid "Started"
-msgstr "Spustené"
-
-#: inc/statediscovery.class.php:269 inc/stateinventory.class.php:201
-msgid "Finished tasks"
-msgstr "Dokončené úlohy"
-
-#: inc/collect_wmi_content.class.php:117 inc/collect_wmi.class.php:57
-#: inc/collect_wmi.class.php:83
-msgid "Class"
-msgstr "Trieda"
-
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
-msgid "Property"
-msgstr "Vlastnosť"
-
-#: inc/collect.class.php:57
-msgid "Collect information"
-msgstr "Zber informácií"
-
-#: inc/collect.class.php:149 inc/collect.class.php:206
-#: inc/deploycheck.class.php:53
+#: inc/deploycheck.class.php:53 inc/collect.class.php:149
+#: inc/collect.class.php:206
 msgid "Registry"
 msgstr "Register"
-
-#: inc/collect.class.php:150 inc/collect.class.php:224
-msgid "WMI"
-msgstr "WMI"
-
-#: inc/collect.class.php:151 inc/collect.class.php:242
-#: inc/collect.class.php:257
-msgid "Find file"
-msgstr "Nájsť súbor"
-
-#: inc/collect.class.php:244 inc/collect_file_content.class.php:133
-msgid "pathfile"
-msgstr "cesta k súboru"
-
-#: inc/collect.class.php:705
-msgid "Collect module has been disabled for this agent"
-msgstr "Modul na zber údajov bol na tomto agentovi vypnutý"
-
-#: inc/collect.class.php:845
-msgid "Path not found"
-msgstr "Cesta sa nenašla"
 
 #: inc/deploycheck.class.php:54
 msgid "Registry key exists"
@@ -1098,6 +971,11 @@ msgstr "inak"
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgstr "GLPI-Agent alebo Fusioninventory-Agent >= %1s je povinný"
 
+#: inc/deploycheck.class.php:272 inc/deployuserinteraction.class.php:260
+#: inc/deployaction.class.php:240 inc/deployfile.class.php:257
+msgid "drag"
+msgstr "pretiahnuť"
+
 #: inc/deploycheck.class.php:305 inc/deploycheck.class.php:460
 msgid "Audit label"
 msgstr "Popisok auditu"
@@ -1125,9 +1003,23 @@ msgstr "Cesta k hodnote"
 msgid "Example of registry value"
 msgstr "Príklad hodnoty registra"
 
+#: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
+#: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
+#: inc/collect_registry_content.class.php:170
+#: inc/collect_registry_content.class.php:217
+#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
+msgid "Value"
+msgstr "Hodnota"
+
 #: inc/deploycheck.class.php:376
 msgid "Type of value"
 msgstr "Typ hodnoty"
+
+#: inc/deploycheck.class.php:384 inc/deploycheck.class.php:397
+#: inc/deploycheck.class.php:404 inc/deployfile.class.php:325
+#: inc/collect_file.class.php:82 inc/collect_file.class.php:188
+msgid "File"
+msgstr "Súbor"
 
 #: inc/deploycheck.class.php:390
 msgid "Directory"
@@ -1165,45 +1057,110 @@ msgstr "nahlásiť informáciu"
 msgid "report warning"
 msgstr "nahlásiť varovanie"
 
-#: inc/deploygroup.class.php:84 inc/deploygroup.class.php:817
-msgid "Dynamic group"
-msgstr "Dynamická skupina"
+#: inc/collect_registry.class.php:49
+msgid "Found entry"
+msgid_plural "Found entries"
+msgstr[0] "Nájdená položka"
+msgstr[1] "Nájdené položky"
+msgstr[2] "Nájdené položky"
+msgstr[3] "Nájdené položky"
 
-#: inc/deploygroup.class.php:97
-msgid "Inventory group"
-msgid_plural "Inventory groups"
-msgstr[0] "Skupina inventára"
-msgstr[1] "Skupiny inventára"
-msgstr[2] "Skupiny inventára"
-msgstr[3] "Skupiny inventára"
+#: inc/collect_registry.class.php:68 inc/collect_registry.class.php:87
+msgid "Hive"
+msgstr "Súbor registra (hive)"
 
-#: inc/deploygroup.class.php:114
-msgid "Associated task"
-msgid_plural "Associated tasks"
-msgstr[0] "Priradená úloha"
-msgstr[1] "Priradené úlohy"
-msgstr[2] "Priradené úlohy"
-msgstr[3] "Priradené úlohy"
+#: inc/collect_registry.class.php:69 inc/collect_registry.class.php:98
+#: inc/collect_registry_content.class.php:169
+msgid "Path"
+msgstr "Cesta"
 
-#: inc/deploygroup.class.php:164 inc/taskjobview.class.php:633
-msgid "Module method"
-msgstr "Metóda modulu"
+#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:104
+msgid "Key"
+msgstr "Kľúč"
 
-#: inc/deploygroup.class.php:378
-msgid "Add group"
-msgstr "Pridať skupinu"
+#: inc/deployuserinteraction.class.php:81
+msgid "User interaction"
+msgid_plural "User interactions"
+msgstr[0] "Interakcia používateľa"
+msgstr[1] "Interakcie používateľa"
+msgstr[2] "Interakcie používateľa"
+msgstr[3] "Interakcie používateľa"
 
-#: inc/timeslotentry.class.php:64
-msgid "Time slot entry"
-msgstr "Položka časového okna"
+#: inc/deployuserinteraction.class.php:96
+msgid "Before download"
+msgstr "Pred stiahnutím"
 
-#: inc/timeslotentry.class.php:133
-msgid "Start time"
-msgstr "Čas začiatku"
+#: inc/deployuserinteraction.class.php:97
+msgid "After download"
+msgstr "Po stiahnutí"
 
-#: inc/timeslotentry.class.php:159
-msgid "End time"
-msgstr "Čas ukončenia"
+#: inc/deployuserinteraction.class.php:98
+msgid "After actions"
+msgstr "Po akciách"
+
+#: inc/deployuserinteraction.class.php:99
+msgid "On download failure"
+msgstr "Pri zlyhaní sťahovania"
+
+#: inc/deployuserinteraction.class.php:100
+msgid "On actions failure"
+msgstr "Pri zlyhaní akcií"
+
+#: inc/deployuserinteraction.class.php:197
+msgid "Interaction label"
+msgstr "Popisok interakcie"
+
+#: inc/deployuserinteraction.class.php:410
+#, php-format
+msgid "Job cancelled by the user %1$s"
+msgstr "Úloha bola zrušená používateľom %1$s"
+
+#: inc/deployuserinteraction.class.php:417
+#, php-format
+msgid "User %1$s agreed to continue the job"
+msgstr "Používateľ %1$s súhlasil s pokračovaním úlohy"
+
+#: inc/deployuserinteraction.class.php:424
+#, php-format
+msgid "Job postponed by the user %1$s"
+msgstr "Úloha bola odložená používateľom %1$s"
+
+#: inc/deployuserinteraction.class.php:430
+msgid "Bad event sent to the agent"
+msgstr "Odoslaná chybný udalosť agentovi"
+
+#: inc/deployuserinteraction.class.php:449
+msgid "Alert displayed, no input required"
+msgstr "Zobrazené upozornenie, nie je požadovaný žiadny vstup"
+
+#: inc/deployuserinteraction.class.php:455
+msgid "Retry"
+msgstr "Skúsiť znova"
+
+#: inc/deployuserinteraction.class.php:461
+msgid "Abort"
+msgstr "Prerušiť"
+
+#: inc/deployuserinteraction.class.php:464
+msgid "Ignore"
+msgstr "Ignorovať"
+
+#: inc/deployuserinteraction.class.php:470
+msgid "Alert duration exceeded"
+msgstr "Prekročené trvanie upozornenia"
+
+#: inc/deployuserinteraction.class.php:473
+msgid "No user connected"
+msgstr "Nepripojený žiadny používateľ"
+
+#: inc/deployuserinteraction.class.php:476
+msgid "Multiple users connected"
+msgstr "Pripojených viacero používateľov"
+
+#: inc/communicationnetworkdiscovery.class.php:111
+#, php-format
+msgid "Processed: %1$s Created: %2$s Updated: %3$s"
+msgstr "Spracované: %1$s Vytvorené: %2$s Aktualizované: %3$s"
 
 #: inc/deployaction.class.php:54
 msgid "Return code is equal to"
@@ -1277,269 +1234,316 @@ msgstr "cesta"
 msgid "Execution checks"
 msgstr "Kontroly vykonania"
 
-#: inc/menu.class.php:151 inc/deploypackage.class.php:155
-msgid "Import"
-msgstr "Import"
+#: inc/config.class.php:215
+msgid "Network Inventory"
+msgstr "Inventár siete"
 
-#: inc/menu.class.php:157
-msgid "Clean unused files"
-msgstr "Vyčistiť nepoužívané súbory"
+#: inc/config.class.php:299
+msgid "SSL-only for agent"
+msgstr "Použiť pre agentov iba SSL"
 
-#: inc/menu.class.php:211
-msgid "Agents management"
-msgstr "Správa agentov"
+#: inc/config.class.php:306
+msgid "Delete tasks logs after"
+msgstr "Vymazať logy úloh po"
 
-#: inc/menu.class.php:223
-msgid "General configuration"
-msgstr "Všeobecná konfigurácia"
+#: inc/config.class.php:319
+msgid "Agent port"
+msgstr "Port agenta"
 
-#: inc/menu.class.php:241 inc/task.class.php:62
-msgid "Task management"
-msgstr "Správa úloh"
+#: inc/config.class.php:326
+msgid "Extra-debug"
+msgstr "Podrobnejšie ladenie"
 
-#: inc/menu.class.php:245
-msgid "Monitoring / Logs"
-msgstr "Monitoring / logy"
+#: inc/config.class.php:331
+msgid "Re-prepare successful jobs"
+msgstr "Znova pripraviť úspešné úlohy"
 
-#: inc/menu.class.php:251
-msgid "Import agent XML file"
-msgstr "Import XML súboru agenta"
+#: inc/config.class.php:339
+msgid "Maximum number of agents to wake up in a task"
+msgstr "Maximálny počet agentov, ktorých prebudiť v úlohe"
 
-#: inc/menu.class.php:281
-msgid "Equipment import and link rules"
-msgstr "Pravidlá importu zariadení a spojení"
+#: inc/config.class.php:370
+msgid "Change the status"
+msgstr "Zmeniť stav"
 
-#: inc/menu.class.php:289
-msgid "Asset skipped during import"
-msgstr "Inventár vynechaný pri importe"
+#: inc/config.class.php:373
+msgid "Clean agents"
+msgstr "Vyčistiť agentov"
 
-#: inc/menu.class.php:295
-msgid "Computer entity rules"
-msgstr "Pravidlá pre entity počítača"
+#: inc/config.class.php:396
+msgid "Network options"
+msgstr "Možnosti siete"
 
-#: inc/menu.class.php:309
-msgid "Rules"
-msgstr "Pravidlá"
+#: inc/config.class.php:401 inc/config.class.php:411
+#: inc/statediscovery.class.php:182
+msgid "Threads number"
+msgstr "Počet vlákien"
 
-#: inc/menu.class.php:322 inc/staticmisc.class.php:328
-#: inc/staticmisc.class.php:362 inc/iprange.class.php:84
-#: inc/iprange.class.php:87
-msgid "IP Ranges"
-msgstr "Rozsahy IP"
+#: inc/config.class.php:423 inc/config.class.php:432
+msgid "SNMP timeout"
+msgstr "Časový limit SNMP"
 
-#: inc/menu.class.php:338 inc/iprange_snmpcredential.class.php:210
-msgid "SNMP credentials"
-msgstr "Prihlasovacie údaje SNMP"
+#: inc/config.class.php:465
+msgid "Use this GLPI server as a mirror server"
+msgstr "Použiť tento GLPI server ako zrkadlo"
 
-#: inc/menu.class.php:354
-msgid "Discovery status"
-msgstr "Stav zisťovania"
+#: inc/config.class.php:472
+msgid "Match mirrors to agents"
+msgstr "Priradiť zrkadlá k agentom"
 
-#: inc/menu.class.php:360
-msgid "Network inventory status"
-msgstr "Stav inventára siete"
+#: inc/config.class.php:475
+msgid "with location"
+msgstr "s umiestnením"
 
-#: inc/menu.class.php:368
-msgid "SNMP models creation"
-msgstr "Vytváranie SNMP modelov"
+#: inc/config.class.php:476
+msgid "with entity"
+msgstr "s entitou"
 
-#: inc/menu.class.php:376
-msgid "Networking"
-msgstr "Siete"
+#: inc/config.class.php:477
+msgid "with both"
+msgstr "s oboma"
 
-#: inc/menu.class.php:426
-msgid "SNMP inventory"
-msgstr "SNMP inventarizácia"
+#: inc/config.class.php:488
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "Zmazať úspešné úlohy na vyžiadanie po (v dňoch)"
 
-#: inc/menu.class.php:432
-msgid "Guide"
-msgstr "Príručka"
+#: inc/deployuserinteractiontemplate.class.php:100
+msgid "Behavior"
+msgid_plural "Behaviors"
+msgstr[0] "Správanie"
+msgstr[1] "Správanie"
+msgstr[2] "Správanie"
+msgstr[3] "Správanie"
 
-#: inc/menu.class.php:456
-msgid ""
-"This is the steps to configure plugin for SNMP inventory (swicth, router, "
-"network printer)"
-msgstr ""
-"Toto sú kroky na konfiguráciu pluginu pre SNMP inventár (switch, router, "
-"sieťová tlačiareň)"
+#: inc/deployuserinteractiontemplate.class.php:153
+msgid "Windows system alert (WTS)"
+msgstr "Výstražný systéme Windows (WTS)"
 
-#: inc/menu.class.php:462
-msgid "Configure SNMP credentials"
-msgstr "Nakonfigurujte prihlasovacie údaje SNMP"
+#: inc/deployuserinteractiontemplate.class.php:166
+msgid "OK"
+msgstr "OK"
 
-#: inc/menu.class.php:466
-msgid ""
-"Define rules for import : merge and create new devices (CAUTION: same rules "
-"for computer inventory)"
-msgstr ""
-"Definujte pravidlá pre import: zlúčiť a vytvoriť nové zariadenia (Varovanie:"
-" rovnaké pravidlá pre inventár počítačov)"
+#: inc/deployuserinteractiontemplate.class.php:167
+msgid "OK (asynchronous)"
+msgstr "OK (asynchrónne)"
 
-#: inc/menu.class.php:470
-msgid "`Network Discovery`, used to discover the devices on the network"
-msgstr "\"Zisťovanie siete\" určené na zisťovanie zariadení na sieti"
+#: inc/deployuserinteractiontemplate.class.php:168
+msgid "OK - Cancel"
+msgstr "OK - Zrušiť"
 
-#: inc/menu.class.php:475
-msgid "Define IP Ranges of your network + related SNMP credentials"
-msgstr ""
-"Definujte IP rozsahy pre svoju sieť + súvisiace prihlasovacie údaje SNMP"
+#: inc/deployuserinteractiontemplate.class.php:169
+msgid "Yes - No"
+msgstr "Áno - Nie"
 
-#: inc/menu.class.php:479
-msgid "Define an agent allowed to discover the network"
-msgstr "Definujte agenta, ktorý môže zisťovať sieť"
+#: inc/deployuserinteractiontemplate.class.php:170
+msgid "Retry - Cancel"
+msgstr "Skúsiť znova - Zrušiť"
 
-#: inc/menu.class.php:483
-msgid ""
-"Create a new Task with discovery module and the agent defined previously"
-msgstr ""
-"Vytvorte novú úlohu s modulom zisťovania a predtým definovaným agentom"
+#: inc/deployuserinteractiontemplate.class.php:171
+msgid "Abort - Retry - Ignore"
+msgstr "Prerušiť - Skúsiť znova - Ignorovať"
 
-#: inc/menu.class.php:487
-msgid "If you have devices not typed, import them from unmanaged devices"
-msgstr ""
-"Ak máte zariadenia bez typu, naimportujte ich z nespravovaných zariadení"
+#: inc/deployuserinteractiontemplate.class.php:172
+msgid "Cancel - Try - Continue"
+msgstr "Zrušiť - Skúsiť - Pokračovať"
 
-#: inc/menu.class.php:491
-msgid "`Network Inventory`, used to complete inventory the discovered devices"
-msgstr ""
-"\"Inventár siete\" určený na dokončenie inventarizácie zistených zariadení"
+#: inc/deployuserinteractiontemplate.class.php:173
+msgid "Yes - No - Cancel"
+msgstr "Áno - Nie - Zrušiť"
 
-#: inc/menu.class.php:496
-msgid "Define an agent allowed to inventory the network by SNMP"
-msgstr "Definujte agenta, ktorý môže inventarizovať sieť pomocou SNMP"
+#: inc/deployuserinteractiontemplate.class.php:191
+msgid "Question"
+msgstr "Otázka"
 
-#: inc/menu.class.php:500
-msgid ""
-"Create a new Task with network inventory module and the agent defined "
-"previously"
-msgstr ""
-"Vytvorte novú úlohu s modulom sieťového inventára a predtým definovaným "
-"agentom"
+#: inc/deployuserinteractiontemplate.class.php:204
+msgid "Continue job with no user interaction"
+msgstr "Pokračovať v úlohe bez interakcie s používateľom"
 
-#: inc/communicationnetworkdiscovery.class.php:111
+#: inc/deployuserinteractiontemplate.class.php:205
+msgid "Retry job later"
+msgstr "Skúsiť úlohu znova neskôr"
+
+#: inc/deployuserinteractiontemplate.class.php:440
+msgid "Button ok"
+msgstr "Tlačidlo OK"
+
+#: inc/deployuserinteractiontemplate.class.php:441
+msgid "Button yes"
+msgstr "Tlačidlo Áno"
+
+#: inc/deployuserinteractiontemplate.class.php:442
+msgid "Button continue"
+msgstr "Tlačidlo Pokračovať"
+
+#: inc/deployuserinteractiontemplate.class.php:443
+msgid "Button retry"
+msgstr "Tlačidlo Skúsiť znova"
+
+#: inc/deployuserinteractiontemplate.class.php:444
+msgid "Button try"
+msgstr "Tlačidlo Skúsiť"
+
+#: inc/deployuserinteractiontemplate.class.php:445
+msgid "Button no"
+msgstr "Tlačidlo Nie"
+
+#: inc/deployuserinteractiontemplate.class.php:446
+msgid "Button cancel"
+msgstr "Tlačidlo Zrušiť"
+
+#: inc/deployuserinteractiontemplate.class.php:447
+msgid "Button abort"
+msgstr "Tlačidlo Prerušiť"
+
+#: inc/deployuserinteractiontemplate.class.php:448
+msgid "Button ignore"
+msgstr "Tlačidlo Ignorovať"
+
+#: inc/deployuserinteractiontemplate.class.php:449
+msgid "No active session"
+msgstr "Žiadne aktívne sedenie"
+
+#: inc/deployuserinteractiontemplate.class.php:450
+msgid "Alert timeout exceeded"
+msgstr "Prekročený časový limit upozornenia"
+
+#: inc/deployuserinteractiontemplate.class.php:451
+msgid "Several active sessions"
+msgstr "Niekoľko aktívnych sedení"
+
+#: inc/deployuserinteractiontemplate.class.php:560
+msgid "Behaviors"
+msgstr "Správanie"
+
+#: inc/statediscovery.class.php:183
+msgid "Total discovery devices"
+msgstr "Celkovo zistených zariadení"
+
+#: inc/statediscovery.class.php:184
+msgid "Devices not imported"
+msgstr "Nenaimportované zariadenia"
+
+#: inc/statediscovery.class.php:185
+msgid "Devices linked"
+msgstr "Prepojené zariadenia"
+
+#: inc/statediscovery.class.php:186
+msgid "Devices imported"
+msgstr "Importované zariadenia"
+
+#: inc/credentialip.class.php:77
+msgid "Remote device inventory"
+msgstr "Inventár vzdialených zariadení"
+
+#: inc/collect_registry_content.class.php:73
+msgid "Windows registry content"
+msgstr "Obsah registra Windows"
+
+#: inc/collect_registry_content.class.php:171
+#: inc/collect_registry_content.class.php:218
+msgid "Data"
+msgstr "Dáta"
+
+#: inc/deployfile.class.php:87
+msgid "Upload from computer"
+msgstr "Nahrať z počítača"
+
+#: inc/deployfile.class.php:91
+msgid "Upload from server"
+msgstr "Nahrať zo servera"
+
+#: inc/deployfile.class.php:200
+msgid "p2p"
+msgstr "p2p"
+
+#: inc/deployfile.class.php:201 inc/deployfile.class.php:375
+msgid "retention"
+msgstr "uchovávanie"
+
+#: inc/deployfile.class.php:215
+msgid "uncompress"
+msgstr "rozbaliť"
+
+#: inc/deployfile.class.php:222
+msgid "Download"
+msgstr "Stiahnuť"
+
+#: inc/deployfile.class.php:331
+msgid "filename"
+msgstr "názov súboru"
+
+#: inc/deployfile.class.php:338
+msgid "Choose"
+msgstr "Zvoliť"
+
+#: inc/deployfile.class.php:344
+msgid "Select the file on server"
+msgstr "Vyberte súbor na serveri"
+
+#: inc/deployfile.class.php:360
+msgid "Uncompress"
+msgstr "Rozbaliť"
+
+#: inc/deployfile.class.php:367
+msgid "P2P"
+msgstr "P2P"
+
+#: inc/deployfile.class.php:448
 #, php-format
-msgid "Processed: %1$s Created: %2$s Updated: %3$s"
-msgstr "Spracované: %1$s Vytvorené: %2$s Aktualizované: %3$s"
+msgid "Files need to be uploaded to %s folder to be displayed here"
+msgstr "Súbory je potrebné nahrať do adresára %s, aby sa tu zobrazili"
 
-#: inc/deploytask.class.php:110
-msgid "Order list"
-msgstr "Poradie zozamu"
+#: inc/deployfile.class.php:651
+msgid "Upload error"
+msgstr "Chyba nahrávania"
 
-#: inc/deploytask.class.php:157
-msgid "Add task"
-msgstr "Pridať úlohu"
+#: inc/deployfile.class.php:655
+msgid "Transfer error: the file size is too big"
+msgstr "Chyba prenosu: súbor je príliš veľký"
 
-#: inc/deploytask.class.php:182
-msgid "Edit impossible, this task is active"
-msgstr "Úprava nie je možná, táto úloha je aktívna"
+#: inc/deployfile.class.php:659
+msgid "The uploaded file was only partially uploaded"
+msgstr "Nahratý súbor bol nahratý iba čiastočne"
 
-#: inc/deploytask.class.php:214
-msgid "This task is active. delete denied"
-msgstr "Táto úloha je aktívna, zmazanie bolo zamietnuté"
+#: inc/deployfile.class.php:663
+msgid "No file was uploaded"
+msgstr "Nebol nahratý žiadny súbor"
 
-#: inc/deploypackage.class.php:101 inc/task.class.php:1699
-msgid "Package"
-msgstr "Balíček"
+#: inc/deployfile.class.php:667
+msgid "Missing a temporary folder"
+msgstr "Chýbajúci dočasný adresár"
 
-#: inc/deploypackage.class.php:158
-msgid "Export"
-msgstr "Export"
+#: inc/deployfile.class.php:671
+msgid "Failed to write file to disk"
+msgstr "Nepodarilo sa zapísať súbor na disk"
 
-#: inc/deploypackage.class.php:279
-msgid "Modification Denied"
-msgstr "Zmeny boli odmietnuté"
+#: inc/deployfile.class.php:675
+msgid "PHP extension stopped the file upload"
+msgstr "PHP rozšírenie zastavilo nahrávanie súboru"
 
-#: inc/deploypackage.class.php:282
-msgid "The following task is running with this package"
-msgid_plural "The following tasks are running with this package"
-msgstr[0] "S týmto balíčkom je spustená nasledujúca úloha"
-msgstr[1] "S týmto balíčkom sú spustené nasledujúce úlohy"
-msgstr[2] "S týmto balíčkom sú spustené nasledujúce úlohy"
-msgstr[3] "S týmto balíčkom sú spustené nasledujúce úlohy"
+#: inc/deployfile.class.php:703 inc/deployfile.class.php:758
+msgid "File saved!"
+msgstr "Súbor sa uložil!"
 
-#: inc/deploypackage.class.php:389 inc/deploypackage.class.php:513
-msgid "Enable deploy on demand for the following group"
-msgstr "Povoliť nasadenie na vyžiadania pre nasledujúcu skupinu"
+#: inc/deployfile.class.php:706 inc/deployfile.class.php:761
+msgid "Failed to copy file"
+msgstr "Nepodarilo sa skopírovať súbor"
 
-#: inc/deploypackage.class.php:532
-msgid "Audits"
-msgstr "Audity"
+#: inc/deployfile.class.php:710 inc/deployfile.class.php:765
+msgid "File missing"
+msgstr "Súbor chýba"
 
-#: inc/deploypackage.class.php:533
-msgid "Files"
-msgstr "Súbory"
+#: inc/deployfile.class.php:1101
+msgid "Max file size"
+msgstr "Maximálna veľkosť súboru"
 
-#: inc/deploypackage.class.php:535
-msgid "User interactions"
-msgstr "Interakcie používateľa"
+#: inc/deployfile.class.php:1102
+msgid "Mio"
+msgstr "MiB"
 
-#: inc/deploypackage.class.php:686
-msgid "JSON package representation"
-msgstr "Reprezentácia JSON balíčku"
-
-#: inc/deploypackage.class.php:802
-msgid "Package exported in"
-msgstr "Balíček exportovaný do"
-
-#: inc/deploypackage.class.php:875
-msgid "Packages to import"
-msgstr "Balíčky na import"
-
-#: inc/deploypackage.class.php:1000 inc/deploypackageitem.class.php:329
-msgid "The modified JSON contained a syntax error :"
-msgstr "Upravený JSON obsahoval syntaktickú chybu:"
-
-#: inc/deploypackage.class.php:1028
-msgid "Package actions"
-msgstr "Akcie balíčka"
-
-#: inc/deploypackage.class.php:1037
-msgid "Target for deploy on demand"
-msgid_plural "Targets for deploy on demand"
-msgstr[0] "Cieľ pre nasadenie na vyžiadanie"
-msgstr[1] "Ciele pre nasadenie na vyžiadanie"
-msgstr[2] "Ciele pre nasadenie na vyžiadanie"
-msgstr[3] "Ciele pre nasadenie na vyžiadanie"
-
-#: inc/deploypackage.class.php:1056 inc/staticmisc.class.php:82
-msgid "Package deploy"
-msgstr "Nasadenie balíčku"
-
-#: inc/deploypackage.class.php:1132
-msgid "Add a target for self-service"
-msgstr "Pridať cieľ pre samoobsluhu"
-
-#: inc/deploypackage.class.php:1487
-msgid "Restart job"
-msgstr "Reštartovať úlohu"
-
-#: inc/deploypackage.class.php:1503
-msgid "refresh job"
-msgstr "obnoviť úlohu"
-
-#: inc/deploypackage.class.php:1645
-msgid "Select packages you want install"
-msgstr "Vyberte balíčky, ktoré chcete nainštalovať"
-
-#: inc/deploypackage.class.php:1654
-msgid "Prepare for install"
-msgstr "Pripraviť na inštaláciu"
-
-#: inc/deploypackage.class.php:1659
-msgid "I'm on this computer: local wakeup"
-msgstr "Som na tomto počítači: lokálne prebudenie"
-
-#: inc/deploypackage.class.php:1660
-msgid "I'm not on this computer: wakeup from the server"
-msgstr "Nie som na tomto počítači: prebudenie zo servera"
-
-#: inc/deploypackage.class.php:1661
-msgid "Don't wakeup"
-msgstr "Neprebúdzať"
-
-#: inc/deploypackage.class.php:1677
-msgid "No packages available to install"
-msgstr "Na inštaláciu nie sú k dispozícii žiadne balíčky"
+#: inc/deployfile.class.php:1115
+msgid "Unused file"
+msgstr "Nepoužitý súbor"
 
 #: inc/task.class.php:157
 msgid "deploy on demand task"
@@ -1590,11 +1594,6 @@ msgstr "Vyčistiť úlohy nasadenia na vyžiadanie"
 msgid "Task has been disabled"
 msgstr "Úloha bola vypnutá"
 
-#: inc/task.class.php:1738 inc/taskjoblog.class.php:190
-#: inc/taskjob.class.php:57 inc/agentwakeup.class.php:70
-msgid "Job"
-msgstr "Úloha"
-
 #: inc/task.class.php:1832
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
@@ -1622,269 +1621,21 @@ msgstr "Vybraná úloha už má úlohu nasadenia pre iný balíček:"
 msgid "Created a deployment job, package: "
 msgstr "Vytvorená úloha nasadenia, balíček:"
 
-#: inc/taskjoblog.class.php:97
-msgid "Ok"
-msgstr "Ok"
+#: inc/deploytask.class.php:110
+msgid "Order list"
+msgstr "Poradie zozamu"
 
-#: inc/taskjoblog.class.php:99
-msgid "Info"
-msgstr "Info"
-
-#: inc/taskjoblog.class.php:308
-msgid "unknown"
-msgstr "neznáme"
-
-#: inc/taskjoblog.class.php:344
-msgid "devices queried"
-msgstr "dotazovaných zariadení"
-
-#: inc/taskjoblog.class.php:345
-msgid "devices found"
-msgstr "nájdených zariadení"
-
-#: inc/taskjoblog.class.php:346
-msgid "Add the item"
-msgstr "Pridať položku"
-
-#: inc/taskjoblog.class.php:347
-msgid "Update the item"
-msgstr "Aktualizovať položku"
-
-#: inc/taskjoblog.class.php:348
-msgid "Inventory started"
-msgstr "Inventarizácia spustená"
-
-#: inc/taskjoblog.class.php:349
-msgid "Detail"
-msgstr "Detaily"
-
-#: inc/taskjoblog.class.php:350
-msgid "Agent communication error, impossible to start agent"
-msgstr "Chyba komunikácie s agentom, nie je možné spustiť agenta"
-
-#: inc/taskjoblog.class.php:351
-msgid "Agent stopped/crashed"
-msgstr "Agent zastavený/havaroval"
-
-#: inc/taskjoblog.class.php:352
-msgid "Import denied"
-msgstr "Import bol odmietnutý"
-
-#: inc/iprange_snmpcredential.class.php:102
-msgid "Associated SNMP credentials"
-msgstr "Priradené prihlasovacie údaje SNMP"
-
-#: inc/iprange_snmpcredential.class.php:213
-msgid "Version"
-msgstr "Verzia"
-
-#: inc/iprange_snmpcredential.class.php:216
-msgid "By order of priority"
-msgstr "Podľa poradia priority"
-
-#: inc/collect_file_content.class.php:91
-msgid "Path/file"
-msgstr "Cesta/súbor"
-
-#: inc/collect_wmi.class.php:49
-msgid "Found WMI"
-msgid_plural "Found WMIs"
-msgstr[0] "Nájdené WMI"
-msgstr[1] "Nájdené WMI"
-msgstr[2] "Nájdené WMI"
-msgstr[3] "Nájdené WMI"
-
-#: inc/collect_wmi.class.php:58 inc/collect_wmi.class.php:89
-msgid "Properties"
-msgstr "Vlastnosti"
-
-#: inc/staticmisc.class.php:54
-msgid "Computer Inventory"
-msgstr "Inventár počítačov"
-
-#: inc/staticmisc.class.php:62
-msgid "VMware host remote inventory"
-msgstr "Vzdialený inventár VMware servera"
-
-#: inc/staticmisc.class.php:90
-msgid "Collect data"
-msgstr "Zber údajov"
-
-#: inc/staticmisc.class.php:431 inc/staticmisc.class.php:437
-#: inc/taskjob.class.php:802
-msgid "Auto management dynamic of agents"
-msgstr "Automatická dynamika správy agentov"
-
-#: inc/taskjob.class.php:745
-msgid "Scheduled date"
-msgstr "Naplánovaný dátum"
-
-#: inc/taskjob.class.php:746
-msgid "Periodicity"
-msgstr "Periodicita"
-
-#: inc/taskjob.class.php:747
-msgid "Definition"
-msgstr "Definícia"
-
-#: inc/taskjob.class.php:748
-msgid "Action"
-msgstr "Akcia"
-
-#: inc/taskjob.class.php:770
-msgid "hour(s)"
-msgstr "hodín"
-
-#: inc/taskjob.class.php:775
-msgid "day(s)"
-msgstr "dní"
-
-#: inc/taskjob.class.php:804
-msgid "Auto management dynamic of agents (same subnet)"
-msgstr "Automatická dynamika správy agentov (rovnaká podsieť)"
-
-#: inc/taskjob.class.php:1030
-msgid "Force the end"
-msgstr "Vynútiť koniec"
-
-#: inc/deploygroup_staticdata.class.php:108
-msgid "CSV import"
-msgstr "CSV import"
-
-#: inc/deploygroup_staticdata.class.php:155
-#, php-format
-msgid ""
-"Make a search to get desired computer, then use massive actions and use %s"
-msgstr ""
-"Vyhľadajte požadovaný počítač, potom použite hromadné akcie a použite %s"
-
-#: inc/deploygroup_staticdata.class.php:337
-msgid ""
-"Import a list of computers from a CSV file (the first column must contain "
-"the computer ID)"
-msgstr ""
-"Import zoznamu počítačov z CSV súboru (prvý stĺpec musí obsahovať ID "
-"počítača)"
-
-#: inc/deploygroup_staticdata.class.php:384
-msgid "Computers imported successfully from CSV file"
-msgstr "Počítače boli úspešne naimportované z CSV súboru"
-
-#: inc/deploygroup_staticdata.class.php:387
-msgid "Impossible to read the CSV file"
-msgstr "Nie je možné čítať súbor CSV"
-
-#: inc/display.class.php:155
-msgid "Progress"
-msgstr "Postup"
-
-#: inc/stateinventory.class.php:120
-msgid "Number per second"
-msgstr "Počet za sekundu"
-
-#: inc/stateinventory.class.php:121
-msgid "Threads / Timeout configuration"
-msgstr "Konfigurácia vlákien / časového limitu"
-
-#: inc/stateinventory.class.php:122
-msgid "To inventory"
-msgstr "Do inventára"
-
-#: inc/stateinventory.class.php:123
-msgid "Error(s)"
-msgstr "Chyby"
-
-#: inc/agentwakeup.class.php:57
-msgid "Wake agents up"
-msgstr "Zobudiť agentov"
-
-#: inc/iprange.class.php:79
-msgid "Communication mode"
-msgstr "Režim komunikácie"
-
-#: inc/iprange.class.php:82
-msgid "See all informations of task"
-msgstr "Zobraziť všetky informácie o úlohe"
-
-#: inc/iprange.class.php:228
-msgid "Bad IP"
-msgstr "Chybná IP"
-
-#: inc/taskjobview.class.php:70
-msgid "Job configuration"
-msgstr "Konfigurácia úlohy"
-
-#: inc/taskjobview.class.php:237
-msgid ""
-"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
-"         Please consider modifying this task to avoid unexpected results."
-msgstr ""
-"Niekoľko úloh v rovnakej úlohe už nie je podporované z dôvodu neočakávaných vedľajších účinkov.\n"
-"Zvážte úpravu tejto úlohy, aby ste sa vyhli neočakávaným výsledkom."
-
-#: inc/taskjobview.class.php:252
-msgid "Add a job"
+#: inc/deploytask.class.php:157
+msgid "Add task"
 msgstr "Pridať úlohu"
 
-#: inc/taskjobview.class.php:360
-msgid "Actor Type"
-msgstr "Typ účastníka"
+#: inc/deploytask.class.php:182
+msgid "Edit impossible, this task is active"
+msgstr "Úprava nie je možná, táto úloha je aktívna"
 
-#: inc/taskjobview.class.php:364
-msgid "Target Type"
-msgstr "Cieľový typ"
-
-#: inc/taskjobview.class.php:408
-msgid "Actor Item"
-msgstr "Položka účastníka"
-
-#: inc/taskjobview.class.php:412
-msgid "Target Item"
-msgstr "Cieľová položka"
-
-#: inc/taskjobview.class.php:590 inc/taskjobview.class.php:593
-msgid "New action"
-msgstr "Nová akcia"
-
-#: inc/taskjobview.class.php:670
-msgid "Restrict scope to task entity"
-msgstr "Obmedziť rozsah na entitu úlohy"
-
-#: inc/taskjobview.class.php:688 inc/taskjobview.class.php:721
-msgid "Targets"
-msgstr "Ciele"
-
-#: inc/taskjobview.class.php:694
-msgid "The items that should be applied for this job."
-msgstr "Položky, ktoré sa majú aplikovať pre túto úlohu."
-
-#: inc/taskjobview.class.php:700 inc/taskjobview.class.php:743
-msgid "Actors"
-msgstr "Účastníci"
-
-#: inc/taskjobview.class.php:705
-msgid "The items that should carry out those targets."
-msgstr "Položky, ktoré majú vykonať tieto ciele."
-
-#: inc/taskjobview.class.php:729 inc/taskjobview.class.php:751
-msgid "Clear list"
-msgstr "Vymazať zoznam"
-
-#: inc/taskjobview.class.php:734 inc/taskjobview.class.php:756
-msgid "Delete selected items"
-msgstr "Zmazať označené položky"
-
-#: inc/taskjobview.class.php:774
-msgid "Cancel modifications"
-msgstr "Zrušiť úpravy"
-
-#: inc/taskjobview.class.php:779
-msgid "Purge"
-msgstr "Vyčistiť"
-
-#: inc/taskjobview.class.php:782
-msgid "Confirm the final deletion ?"
-msgstr "Potvrdiť nenávratné zmazanie?"
+#: inc/deploytask.class.php:214
+msgid "This task is active. delete denied"
+msgstr "Táto úloha je aktívna, zmazanie bolo zamietnuté"
 
 #: inc/taskjobstate.class.php:128
 msgid "Tasks / Groups"
@@ -1931,6 +1682,255 @@ msgstr "Dosiahnutý maximálny počet pokusov na opakovanie: vynútiť nasadenie
 #: inc/taskjobstate.class.php:571
 msgid "Clean taskjob (retention time)"
 msgstr "Vyčistiť úlohy (doba uchovávania)"
+
+#: inc/agentwakeup.class.php:57
+msgid "Wake agents up"
+msgstr "Zobudiť agentov"
+
+#: inc/collect.class.php:57
+msgid "Collect information"
+msgstr "Zber informácií"
+
+#: inc/collect.class.php:150 inc/collect.class.php:224
+msgid "WMI"
+msgstr "WMI"
+
+#: inc/collect.class.php:151 inc/collect.class.php:242
+#: inc/collect.class.php:257
+msgid "Find file"
+msgstr "Nájsť súbor"
+
+#: inc/collect.class.php:705
+msgid "Collect module has been disabled for this agent"
+msgstr "Modul na zber údajov bol na tomto agentovi vypnutý"
+
+#: inc/collect.class.php:845
+msgid "Path not found"
+msgstr "Cesta sa nenašla"
+
+#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
+msgid "Property"
+msgstr "Vlastnosť"
+
+#: inc/agentmodule.class.php:61
+msgid "Agents modules"
+msgstr "Moduly agentov"
+
+#: inc/agentmodule.class.php:107 inc/agentmodule.class.php:211
+#: inc/agentmodule.class.php:213 hook.php:86 hook.php:93 hook.php:100
+#: hook.php:107 hook.php:114 hook.php:121
+msgid "Module"
+msgstr "Modul"
+
+#: inc/agentmodule.class.php:108
+msgid "Activation (by default)"
+msgstr "Aktivácia (predvolené)"
+
+#: inc/agentmodule.class.php:109
+msgid "Exceptions"
+msgstr "Výnimky"
+
+#: inc/agentmodule.class.php:134 inc/agentmodule.class.php:243
+msgid "Package deployment"
+msgstr "Nasadenie balíčkov"
+
+#: inc/agentmodule.class.php:212 inc/agentmodule.class.php:214
+msgid "Activation"
+msgstr "Aktivácia"
+
+#: inc/collect_file.class.php:49
+msgid "Found file"
+msgid_plural "Found files"
+msgstr[0] "Nájdený súbor"
+msgstr[1] "Nájdené súbory"
+msgstr[2] "Nájdené súbory"
+msgstr[3] "Nájdené súbory"
+
+#: inc/collect_file.class.php:57 inc/collect_file.class.php:104
+msgid "Limit"
+msgstr "Limit"
+
+#: inc/collect_file.class.php:58 inc/collect_file.class.php:84
+#: inc/collect_file.class.php:189
+msgid "Folder"
+msgstr "Adresár"
+
+#: inc/collect_file.class.php:59
+msgid "Recursive"
+msgstr "Rekurzívne"
+
+#: inc/collect_file.class.php:60 inc/collect_file.class.php:137
+msgid "Regex"
+msgstr "Regulárny výraz"
+
+#: inc/collect_file.class.php:62 inc/collect_file.class.php:158
+msgid "Checksum SHA512"
+msgstr "Kontrolný súčet SHA512"
+
+#: inc/collect_file.class.php:63 inc/collect_file.class.php:164
+msgid "Checksum SHA2"
+msgstr "Kontrolný súčet SHA2"
+
+#: inc/collect_file.class.php:64
+msgid "Name"
+msgstr "Názov"
+
+#: inc/collect_file.class.php:65
+msgid "Iname"
+msgstr "Inázov"
+
+#: inc/collect_file.class.php:66 inc/collect_file.class.php:184
+msgid "Type"
+msgstr "Typ"
+
+#: inc/collect_file.class.php:116
+msgid "Filter"
+msgid_plural "Filters"
+msgstr[0] "Filter"
+msgstr[1] "Filtre"
+msgstr[2] "Filtre"
+msgstr[3] "Filtre"
+
+#: inc/collect_file.class.php:122
+msgid "Base folder"
+msgstr "Základný adresár"
+
+#: inc/collect_file.class.php:128
+msgid "Folder recursive"
+msgstr "Adresár rekurzívne"
+
+#: inc/collect_file.class.php:147 inc/collect_file.class.php:177
+msgid "Disabled"
+msgstr "Vypnuté"
+
+#: inc/collect_file.class.php:173
+msgid "Filename"
+msgstr "Názov súboru"
+
+#: inc/collect_file.class.php:178
+msgid "Non sentitive case"
+msgstr "Nerozlišovať veľké a malé písmená"
+
+#: inc/collect_file.class.php:179
+msgid "Sentitive case"
+msgstr "Rozlišovať veľké a malé písmená"
+
+#: inc/deploygroup_staticdata.class.php:108
+msgid "CSV import"
+msgstr "CSV import"
+
+#: inc/deploygroup_staticdata.class.php:155
+#, php-format
+msgid ""
+"Make a search to get desired computer, then use massive actions and use %s"
+msgstr ""
+"Vyhľadajte požadovaný počítač, potom použite hromadné akcie a použite %s"
+
+#: inc/deploygroup_staticdata.class.php:156
+#: inc/deploygroup_staticdata.class.php:172 hook.php:445
+msgid "Add to static group"
+msgstr "Pridať do statickej skupiny"
+
+#: inc/deploygroup_staticdata.class.php:228 hook.php:447
+msgid "Remove from static group"
+msgstr "Odstrániť zo statickej skupiny"
+
+#: inc/deploygroup_staticdata.class.php:337
+msgid ""
+"Import a list of computers from a CSV file (the first column must contain "
+"the computer ID)"
+msgstr ""
+"Import zoznamu počítačov z CSV súboru (prvý stĺpec musí obsahovať ID "
+"počítača)"
+
+#: inc/deploygroup_staticdata.class.php:384
+msgid "Computers imported successfully from CSV file"
+msgstr "Počítače boli úspešne naimportované z CSV súboru"
+
+#: inc/deploygroup_staticdata.class.php:387
+msgid "Impossible to read the CSV file"
+msgstr "Nie je možné čítať súbor CSV"
+
+#: front/deployfile_download.php:91
+msgid "An error occurs"
+msgstr "Vyskytla sa chyba"
+
+#: front/deployfile_download.php:94 front/deployfile_download.php:97
+msgid "File not found"
+msgstr " Súbor sa nenašiel"
+
+#: front/config.form.php:38
+msgid "Features"
+msgstr "Funkcie"
+
+#: front/collect.form.php:36
+msgid "Collect management"
+msgstr "Správa zberu údajov"
+
+#: hook.php:93
+msgid "Local inventory"
+msgstr "Lokálna inventarizácia"
+
+#: hook.php:100
+msgid "ESX/VMWare"
+msgstr "ESX/VMWare"
+
+#: hook.php:107
+msgid "Network inventory"
+msgstr "Inventár siete"
+
+#: hook.php:121
+msgid "Collect"
+msgstr "Zber"
+
+#: hook.php:169 hook.php:179 hook.php:189 hook.php:199
+#, php-format
+msgid "%s inventoried"
+msgstr "%s zinventarizované"
+
+#: hook.php:383
+msgid "Setup"
+msgstr "Nastavenia"
+
+#: report/not_queried_recently.php:58
+msgid "Number of days since last inventory"
+msgstr "Počet dní od poslednej inventarizácie"
+
+#: report/not_queried_recently.php:137 report/computer_last_inventory.php:137
+msgid "Last inventory"
+msgstr "Posledná inventarizácia"
+
+#: report/computer_last_inventory.php:62
+msgid "Computers not inventoried since xx days"
+msgstr "Počítače neinventarizované už xx dní"
+
+#: report/computer_last_inventory.php:68
+msgid "Number of days (minimum) since last inventory"
+msgstr "Počet dní (minimum) od poslednej inventarizácie"
+
+#: public/b/deploy/index.php:66
+msgid "Deploy module has been disabled for this agent"
+msgstr "Modul nasadenia bol pre tohto agenta vypnutý"
+
+#: public/b/deploy/index.php:136
+msgid "Checks"
+msgstr "Kontroly"
+
+#: public/b/deploy/index.php:137
+msgid "Files download"
+msgstr "Stiahnutie súborov"
+
+#: public/b/deploy/index.php:138
+msgid "Files preparation"
+msgstr "Príprava súborov"
+
+#: public/b/deploy/index.php:249
+msgid "User canceled the job"
+msgstr "Používateľ zrušil úlohu"
+
+#: public/b/deploy/index.php:251
+msgid "User postponed the job"
+msgstr "Používateľ odložil úlohu"
 
 #: public/js/taskjobs.js:742
 msgid "The preparation of the task did not return any targets"
