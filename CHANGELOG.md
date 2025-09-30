@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.6.0] - 2025-09-30
 
-- GLPI v11 plugin version
+- GLPI v11 compatibility
 
 ## [1.5.4] - 2025-09-19
 
