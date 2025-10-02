@@ -67,7 +67,7 @@ class InventoryController extends AbstractController
         //Agent posting an inventory
         $rawdata = file_get_contents("php://input");
         if (!empty($rawdata)) {
-            return (new \Glpi\Controller\InventoryController($this->router))->index($request);
+            return new \Glpi\Controller\InventoryController($this->router)->index($request);
         }
 
         //For any other request, display the menu
