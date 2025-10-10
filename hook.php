@@ -1,6 +1,8 @@
 <?php
 
 use Glpi\DBAL\QueryExpression;
+use Glpi\Error\ErrorHandler;
+use Safe\Exceptions\InfoException;
 
 /**
  * ---------------------------------------------------------------------
@@ -379,7 +381,7 @@ function plugin_glpiinventory_install()
 {
     try {
         ini_set("max_execution_time", "0");
-    } catch (\Safe\Exceptions $e) {
+    } catch (InfoException $e) {
         //empty catch -- but keep trace of issue
         ErrorHandler::logCaughtException($e);
     }
