@@ -377,7 +377,12 @@ function plugin_glpiinventory_searchOptionsValues($item)
  */
 function plugin_glpiinventory_install()
 {
-    ini_set("max_execution_time", "0");
+    try {
+        ini_set("max_execution_time", "0");
+    } catch (\Safe\Exceptions $e) {
+        //empty catch -- but keep trace of issue
+        ErrorHandler::logCaughtException($e);
+    }
 
     if (!isCommandLine()) {
         Html::header(__('Setup', 'glpiinventory'), $_SERVER['PHP_SELF'], "config", "plugins");
