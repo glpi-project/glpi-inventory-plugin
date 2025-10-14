@@ -133,7 +133,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
             Ajax::updateItemOnEvent(
                 "dropdown_" . $type_field . $rand,
                 "show_" . $this->shortname . "_value$rand",
-                "/plugins/glpiinventory/ajax/deploy_displaytypevalue.php",
+                $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/deploy_displaytypevalue.php",
                 $params,
                 ["change", "load"]
             );
