@@ -94,6 +94,9 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         $rand,
         $mode
     ) {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
+
         //In case of a file item, there's no type, so don't display dropdown
         //in edition mode
         if (!isset($config['type']) && $mode == self::EDIT) {
