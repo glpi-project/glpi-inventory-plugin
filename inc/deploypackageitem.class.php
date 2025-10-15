@@ -94,6 +94,9 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         $rand,
         $mode
     ) {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
+
         //In case of a file item, there's no type, so don't display dropdown
         //in edition mode
         if (!isset($config['type']) && $mode == self::EDIT) {
@@ -133,7 +136,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
             Ajax::updateItemOnEvent(
                 "dropdown_" . $type_field . $rand,
                 "show_" . $this->shortname . "_value$rand",
-                "/plugins/glpiinventory/ajax/deploy_displaytypevalue.php",
+                $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/deploy_displaytypevalue.php",
                 $params,
                 ["change", "load"]
             );
