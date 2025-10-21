@@ -33,7 +33,9 @@
 
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
+use Glpi\Error\ErrorHandler;
 use Safe\DateTime;
+use Safe\Exceptions\InfoException;
 
 use function Safe\ini_set;
 use function Safe\json_encode;
@@ -624,8 +626,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public static function cronTaskscheduler($crontask = null)
     {
-
-        ini_set("max_execution_time", "0");
+        try {
+            ini_set("max_execution_time", "0");
+        } catch (InfoException $e) {
+            //empty catch -- but keep trace of issue
+            ErrorHandler::logCaughtException($e);
+        }
 
         $task    = new self();
         $methods = [];

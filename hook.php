@@ -4,6 +4,9 @@ use Glpi\DBAL\QueryExpression;
 use Glpi\Error\ErrorHandler;
 use Safe\Exceptions\InfoException;
 
+use function Safe\json_decode;
+use function Safe\ini_set;
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -67,9 +70,6 @@ function removeEmptyCondition(array &$conditions): void
         }
     }
 }
-
-use function Safe\json_decode;
-use function Safe\ini_set;
 
 /**
  * Add search options for GLPI objects
