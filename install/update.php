@@ -33,12 +33,13 @@
 
 use Glpi\Dashboard\Dashboard;
 use Glpi\Dashboard\Item as Dashboard_Item;
-use Ramsey\Uuid\Uuid;
-
-include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
-
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QueryParam;
+use Glpi\Error\ErrorHandler;
+use Ramsey\Uuid\Uuid;
+use Safe\Exceptions\InfoException;
+
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 
 use function Safe\ini_set;
 use function Safe\mkdir;
@@ -176,8 +177,13 @@ function pluginGlpiinventoryUpdate($current_version)
 
     $DB->disableTableCaching();
 
-    ini_set("max_execution_time", "0");
-    ini_set("memory_limit", "-1");
+    try {
+        ini_set("max_execution_time", "0");
+        ini_set("memory_limit", "-1");
+    } catch (InfoException $e) {
+        //empty catch -- but keep trace of issue
+        ErrorHandler::logCaughtException($e);
+    }
 
     $migration = new Migration($current_version);
     $prepare_task = [];

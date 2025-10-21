@@ -31,6 +31,7 @@
 namespace GlpiPlugin\Glpiinventory\Controller;
 
 use Glpi\Controller\AbstractController;
+use Glpi\Error\ErrorHandler;
 use Html;
 use PluginGlpiinventoryCommunicationRest;
 use Session;
@@ -38,7 +39,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Safe\Exceptions\InfoException;
 
+use function Safe\ini_set;
 use function Safe\json_encode;
 use function Safe\session_id;
 use function Safe\session_start;
@@ -85,9 +88,15 @@ class InventoryController extends AbstractController
     #[Route("/front/plugin_fusioninventory.communication.php", name: "glpiinventory_communication_fusion_legacy", methods: ['GET', 'POST'])]
     public function communication(Request $request, ?string $action = null, ?string $machine_id = null): Response
     {
-        ini_set("memory_limit", "-1");
-        ini_set("max_execution_time", "0");
-        ini_set('display_errors', 1);
+        try {
+            ini_set("memory_limit", "-1");
+            ini_set("max_execution_time", "0");
+            ini_set('display_errors', 1);
+        } catch (InfoException $e) {
+            //empty catch -- but keep trace of issue
+            ErrorHandler::logCaughtException($e);
+        }
+
         $headers = ['server-type' => 'glpi/glpiinventory ' . PLUGIN_GLPIINVENTORY_VERSION];
 
         if ($action === null) {
