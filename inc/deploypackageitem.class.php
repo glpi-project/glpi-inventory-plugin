@@ -329,8 +329,8 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         if ($error_json != JSON_ERROR_NONE) {
             $error_msg = $json_error_consts[$error_json];
             Session::addMessageAfterRedirect(
-                __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>" .
-                $error_msg . "<br/>" . $error_json_message,
+                __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>"
+                . $error_msg . "<br/>" . $error_json_message,
                 false,
                 ERROR,
                 false
@@ -443,11 +443,11 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         echo "<td>";
         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             if ($mode === self::EDIT) {
-                echo "<input type='submit' name='save_item' value=\"" .
-                 _sx('button', 'Save') . "\" class='submit' >";
+                echo "<input type='submit' name='save_item' value=\""
+                 . _sx('button', 'Save') . "\" class='submit' >";
             } else {
-                echo "<input type='submit' name='add_item' value=\"" .
-                _sx('button', 'Add') . "\" class='submit' >";
+                echo "<input type='submit' name='add_item' value=\""
+                . _sx('button', 'Add') . "\" class='submit' >";
             }
         }
         echo "</td>";

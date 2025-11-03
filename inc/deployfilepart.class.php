@@ -33,9 +33,9 @@
 
 use function Safe\filesize;
 use function Safe\ob_clean;
+use function Safe\preg_match;
 use function Safe\readfile;
 use function Safe\realpath;
-use function Safe\preg_match;
 
 /**
  * Used to get the deploy file in many parts.

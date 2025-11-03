@@ -56,8 +56,8 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $CFG_GLPI['glpitablesitemtype']['PluginGlpiinventoryStateInventory'] =
-          'glpi_plugin_glpiinventory_taskjobstates';
+        $CFG_GLPI['glpitablesitemtype']['PluginGlpiinventoryStateInventory']
+          = 'glpi_plugin_glpiinventory_taskjobstates';
     }
 
 
@@ -226,8 +226,8 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
                 $nb_per_second = 0;
                 if (strtotime($end_date) - strtotime($start_date) > 0) {
-                    $nb_per_second = round(($nb_query - $nb_errors) /
-                    (strtotime($end_date) - strtotime($start_date)), 2);
+                    $nb_per_second = round(($nb_query - $nb_errors)
+                    / (strtotime($end_date) - strtotime($start_date)), 2);
                 }
                 echo "<td>" . $nb_per_second . "</td>";
             }

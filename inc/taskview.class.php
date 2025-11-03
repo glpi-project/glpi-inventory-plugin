@@ -121,8 +121,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                      action='" . self::getFormURLWithID($task_id) . "'>";
 
         // states checkboxes
-        echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory') .
-            "</label>";
+        echo "<label for='include_old_jobs'>" . __("Task execution states", 'glpiinventory')
+            . "</label>";
         echo "<div class='state_checkboxes'>";
         // set options checked by default
         $agent_state_types = [
@@ -140,8 +140,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 $checked = "checked='checked'";
             }
             echo "<div class='agent_state_type_checkbox'>";
-            echo "<input type='checkbox' $checked name='agent_state_types[]' " .
-                "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+            echo "<input type='checkbox' $checked name='agent_state_types[]' "
+                . "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
             echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
             echo "</div>";
         }
@@ -237,8 +237,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             'agents_cancelled': '" . __('Cancelled', 'glpiinventory') . "',
          };
 
-         taskjobs.logstatuses_names = " .
-           json_encode(PluginGlpiinventoryTaskjoblog::dropdownStateValues()) . ";
+         taskjobs.logstatuses_names = "
+           . json_encode(PluginGlpiinventoryTaskjoblog::dropdownStateValues()) . ";
       });");
 
         // Template for agents' blocks
@@ -792,9 +792,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             ['NOT' => ['task.datetime_start' => null]],
                             ['NOT' => ['task.datetime_end' => null]],
                             new QueryExpression(
-                                $DB->quoteValue($now->format("Y-m-d H:i:s")) . ' BETWEEN ' .
-                                $DB->quoteName('task.datetime_start') . ' AND ' .
-                                $DB->quoteName('task.datetime_end')
+                                $DB->quoteValue($now->format("Y-m-d H:i:s")) . ' BETWEEN '
+                                . $DB->quoteName('task.datetime_start') . ' AND '
+                                . $DB->quoteName('task.datetime_end')
                             ),
                         ],
                         [

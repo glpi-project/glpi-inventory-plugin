@@ -169,8 +169,8 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function task_definitiontype_InventoryComputerESX($a_itemtype)
     {
-        $a_itemtype[PluginGlpiinventoryCredentialIp::class] =
-                       PluginGlpiinventoryCredentialIp::getTypeName();
+        $a_itemtype[PluginGlpiinventoryCredentialIp::class]
+                       = PluginGlpiinventoryCredentialIp::getTypeName();
         return $a_itemtype;
     }
 
@@ -433,8 +433,8 @@ class PluginGlpiinventoryStaticmisc
         $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
         $array1 = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
         foreach ($array1 as $id => $data) {
-            $array["PluginGlpiinventoryAgent-" . $id] =
-                 __('Auto management dynamic of agents', 'glpiinventory') . " - " . $data['name'];
+            $array["PluginGlpiinventoryAgent-" . $id]
+                 = __('Auto management dynamic of agents', 'glpiinventory') . " - " . $data['name'];
         }
         return $array;
     }
@@ -560,8 +560,8 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'actionselectiontoadd';
-        $options['condition']   =
-         implode(
+        $options['condition']
+         = implode(
              " ",
              [
                  '`id` IN ( ',
@@ -691,8 +691,8 @@ class PluginGlpiinventoryStaticmisc
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'actionselectiontoadd';
-        $options['condition']   =
-         implode(
+        $options['condition']
+         = implode(
              " ",
              [
                  '`id` IN ( ',

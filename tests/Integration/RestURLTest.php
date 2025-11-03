@@ -76,7 +76,7 @@ class RestURLTest extends TestCase
         ]);
         $this->assertNotFalse($entityId);
 
-        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $input = [
             'name'        => 'toto',
             'entities_id' => $entityId,

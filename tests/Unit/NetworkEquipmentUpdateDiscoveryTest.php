@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Inventory\Converter;
+use Glpi\Inventory\Inventory;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
@@ -146,7 +148,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
             $networkName->delete(['id' => $item['id']], true);
         }
 
-        $rules = new \RuleImportAsset();
+        $rules = new RuleImportAsset();
         $rules->initRules();
     }
 
@@ -170,10 +172,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $this->assertNotFalse($this->item_id, "Add network equipment failed");
         $networkEquipment->getFromDB($this->item_id);
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($this->xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $this->assertEquals(1, count($networkEquipment->find()));
@@ -255,10 +257,10 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
 
         $networkEquipment->getFromDB($item['id']);
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($this->xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $this->assertEquals(1, count($networkEquipment->find()));
@@ -332,9 +334,9 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         $this->assertEquals(
             $this->ipaddresses_reference,
             $items,
-            "IP addresses does not match reference on second update:\n" .
-            print_r($this->ipaddresses_reference, true) . "\n" .
-            print_r($ipaddresses, true) . "\n"
+            "IP addresses does not match reference on second update:\n"
+            . print_r($this->ipaddresses_reference, true) . "\n"
+            . print_r($ipaddresses, true) . "\n"
         );
     }
 }

@@ -186,8 +186,8 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
             'plugin_glpiinventory_ipranges_id',
             ['value' => $item->getID()]
         );
-        echo "<input type='submit' name='add' value=\"" .
-          _sx('button', 'Associate') . "\" class='submit'>";
+        echo "<input type='submit' name='add' value=\""
+          . _sx('button', 'Associate') . "\" class='submit'>";
         echo "</td>";
         echo "</tr>";
 

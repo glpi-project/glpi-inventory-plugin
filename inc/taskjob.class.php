@@ -267,14 +267,14 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $rand = '';
         $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
         if (
-            is_callable([$class, "task_" . $_POST['name'] . "selection_" .
-            $definitiontype . "_" . $method,
+            is_callable([$class, "task_" . $_POST['name'] . "selection_"
+            . $definitiontype . "_" . $method,
             ])
         ) {
             $rand = call_user_func(
                 [$class,
-                    "task_" . $_POST['name'] . "selection_" . $definitiontype . "_" .
-                                          $method,
+                    "task_" . $_POST['name'] . "selection_" . $definitiontype . "_"
+                                          . $method,
                 ],
                 $title
             );
@@ -287,9 +287,9 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             $iddropdown = "dropdown_" . $_POST['name'] . "selectiontoadd";
         }
 
-        echo "<br/><center><input type='button' id='add_button_" . $_POST['name'] . $taskjobs_id . "' " .
-              "name='add_button_" . $_POST['name'] . "' value=\"" . __('Add') .
-              "\" class='submit'></center>";
+        echo "<br/><center><input type='button' id='add_button_" . $_POST['name'] . $taskjobs_id . "' "
+              . "name='add_button_" . $_POST['name'] . "' value=\"" . __('Add')
+              . "\" class='submit'></center>";
         $params = ['items_id'  => '__VALUE0__',
             'add_button_' . $_POST['name'] . $taskjobs_id => '__VALUE1__',
             'itemtype'  => $definitiontype,
@@ -704,8 +704,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     {
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
-        $a_taskjobstates =
-         $pfTaskjobstate->find(['plugin_glpiinventory_taskjobs_id' => $this->fields["id"]]);
+        $a_taskjobstates
+         = $pfTaskjobstate->find(['plugin_glpiinventory_taskjobs_id' => $this->fields["id"]]);
 
         //TODO: in order to avoid too many atomic operations on DB, convert the
         //following into a massive prepared operation (ie. ids in one massive action)
@@ -761,23 +761,23 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             $a_time = '';
             switch ($pfTask->fields['periodicity_type']) {
                 case 'minutes':
-                    $a_time = $pfTask->fields['periodicity_count'] . " " .
-                    strtolower(__('Minute(s)', 'glpiinventory'));
+                    $a_time = $pfTask->fields['periodicity_count'] . " "
+                    . strtolower(__('Minute(s)', 'glpiinventory'));
                     break;
 
                 case 'hours':
-                    $a_time = $pfTask->fields['periodicity_count'] . " " .
-                    strtolower(__('hour(s)', 'glpiinventory'));
+                    $a_time = $pfTask->fields['periodicity_count'] . " "
+                    . strtolower(__('hour(s)', 'glpiinventory'));
                     break;
 
                 case 'days':
-                    $a_time = $pfTask->fields['periodicity_count'] . " " .
-                    __('day(s)', 'glpiinventory');
+                    $a_time = $pfTask->fields['periodicity_count'] . " "
+                    . __('day(s)', 'glpiinventory');
                     break;
 
                 case 'months':
-                    $a_time = $pfTask->fields['periodicity_count'] . " " .
-                    __('months');
+                    $a_time = $pfTask->fields['periodicity_count'] . " "
+                    . __('months');
                     break;
             }
             echo "<td>" . $a_time . "</td>";

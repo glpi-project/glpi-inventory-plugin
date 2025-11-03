@@ -99,8 +99,8 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
             return $this->base_urls[$name];
         }
         trigger_error(
-            "The requested url type '$name' doesn't exists. " .
-            "Maybe the developer have forgotten to register it in the 'base_urls' variable."
+            "The requested url type '$name' doesn't exists. "
+            . "Maybe the developer have forgotten to register it in the 'base_urls' variable."
         );
         return "";
     }
@@ -278,9 +278,9 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         echo "<label class='form-label col-sm-4 col-form-label text-sm-end'>" . $title . "</label>";
         echo "<div class='col-sm-6'>";
         echo
-         "<textarea class='autogrow form-control' name='" . $varname . "' >" .
-         $this->fields[$varname] .
-         "</textarea>";
+         "<textarea class='autogrow form-control' name='" . $varname . "' >"
+         . $this->fields[$varname]
+         . "</textarea>";
         echo "</div>";
         echo "</div>";
     }

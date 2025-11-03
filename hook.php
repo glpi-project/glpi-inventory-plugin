@@ -4,8 +4,8 @@ use Glpi\DBAL\QueryExpression;
 use Glpi\Error\ErrorHandler;
 use Safe\Exceptions\InfoException;
 
-use function Safe\json_decode;
 use function Safe\ini_set;
+use function Safe\json_decode;
 
 /**
  * ---------------------------------------------------------------------
@@ -509,9 +509,9 @@ function plugin_glpiinventory_addSelect($type, $id, $num)
             $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
             foreach ($a_agent_modules as $module) {
                 if ($table . "." . $field == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
-                    return " `FUSION_" . $module . "`.`is_active` AS ITEM_$num, " .
-                          "`FUSION_" . $module . "`.`exceptions`  AS ITEM_" . $num . "_0, " .
-                          "`agent" . strtolower($module) . "`.`id`  AS ITEM_" . $num . "_1, ";
+                    return " `FUSION_" . $module . "`.`is_active` AS ITEM_$num, "
+                          . "`FUSION_" . $module . "`.`exceptions`  AS ITEM_" . $num . "_0, "
+                          . "`agent" . strtolower($module) . "`.`id`  AS ITEM_" . $num . "_1, ";
                 }
             }
             break;
@@ -553,8 +553,8 @@ function plugin_glpiinventory_addLeftJoin(
     switch ($itemtype) {
         case PluginGlpiinventoryTask::class:
             if (
-                $new_table . "." . $linkfield == 'glpi_plugin_glpiinventory_taskjoblogs.' .
-                 'plugin_glpiinventory_taskjoblogs_id'
+                $new_table . "." . $linkfield == 'glpi_plugin_glpiinventory_taskjoblogs.'
+                 . 'plugin_glpiinventory_taskjoblogs_id'
             ) {
                 return "LEFT JOIN `glpi_plugin_glpiinventory_taskjobs` AS taskjobs
                      ON `plugin_glpiinventory_tasks_id` = `glpi_plugin_glpiinventory_tasks`.`id`
@@ -690,19 +690,19 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                         $in = str_replace(", )", ")", $in);
 
                         if ($val != $data['is_active']) {
-                            return $link . " (FUSION_" . $module . ".`exceptions` LIKE '%\"" .
-                             $current_id . "\"%' ) AND `agent" . strtolower($module) . "`.`id` IN " .
-                             $in . " ";
+                            return $link . " (FUSION_" . $module . ".`exceptions` LIKE '%\""
+                             . $current_id . "\"%' ) AND `agent" . strtolower($module) . "`.`id` IN "
+                             . $in . " ";
                         } else {
                             return $link . " `agent" . strtolower($module) . "`.`id` NOT IN " . $in . " ";
                         }
                     } else {
                         if ($val != $data['is_active']) {
-                            return $link . " (FUSION_" . $module . ".`is_active`!='" .
-                              $data['is_active'] . "') ";
+                            return $link . " (FUSION_" . $module . ".`is_active`!='"
+                              . $data['is_active'] . "') ";
                         } else {
-                            return $link . " (FUSION_" . $module . ".`is_active`='" .
-                             $data['is_active'] . "') ";
+                            return $link . " (FUSION_" . $module . ".`is_active`='"
+                             . $data['is_active'] . "') ";
                         }
                     }
                 }

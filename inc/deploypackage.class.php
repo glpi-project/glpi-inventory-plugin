@@ -32,14 +32,15 @@
  */
 
 use Glpi\Exception\Http\BadRequestHttpException;
+use Safe\Exceptions\JsonException;
 
-use function Safe\glob;
 use function Safe\file_get_contents;
+use function Safe\glob;
 use function Safe\json_decode;
 use function Safe\json_encode;
-use function Safe\rename;
-use function Safe\preg_replace;
 use function Safe\mkdir;
+use function Safe\preg_replace;
+use function Safe\rename;
 use function Safe\unlink;
 
 /**
@@ -108,8 +109,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         if ($found) {
             // Get all tasks runnning
-            $this->running_tasks =
-               PluginGlpiinventoryTask::getItemsFromDB(
+            $this->running_tasks
+               = PluginGlpiinventoryTask::getItemsFromDB(
                    [
                        'is_active'   => true,
                        'is_running'  => true,
@@ -277,18 +278,18 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $error_message .= "<div class='warning'>";
             $error_message .= "<i class='fa fa-exclamation-triangle fa-3x'></i>";
             $error_message .= "<h3>" . __("Modification Denied", 'glpiinventory') . "</h3>\n";
-            $error_message .= "<h4>" .
-                              _n(
+            $error_message .= "<h4>"
+                              . _n(
                                   "The following task is running with this package",
                                   "The following tasks are running with this package",
                                   count($this->running_tasks),
                                   'glpiinventory'
-                              ) .
-                           "</h4>\n";
+                              )
+                           . "</h4>\n";
 
             foreach ($this->running_tasks as $task) {
-                $taskurl =
-                 PluginGlpiinventoryTask::getFormURLWithID($task['task']['id'], true);
+                $taskurl
+                 = PluginGlpiinventoryTask::getFormURLWithID($task['task']['id'], true);
                 $error_message .= "<a href='$taskurl'>" . $task['task']['name'] . "</a>, ";
             }
             $error_message .= "</div>";
@@ -434,7 +435,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             if (is_null($json)) {
                 return;
             }
-        } catch (\Safe\Exceptions\JsonException $e) {
+        } catch (JsonException $e) {
             return;
         }
         foreach ($json['associatedFiles'] as $sha512 => $file) {
@@ -586,11 +587,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             /**
              * Display subtype form
              **/
-            echo "<form name='addition$subtype' method='post' " . $multipart .
-            " action='deploypackage.form.php'>";
+            echo "<form name='addition$subtype' method='post' " . $multipart
+            . " action='deploypackage.form.php'>";
             echo "<input type='hidden' name='id' value='" . $this->getID() . "' />";
-            echo "<input type='hidden' name='itemtype' value='PluginGlpiinventoryDeploy" .
-            ucfirst($subtype) . "' />";
+            echo "<input type='hidden' name='itemtype' value='PluginGlpiinventoryDeploy"
+            . ucfirst($subtype) . "' />";
 
             $classname = "PluginGlpiinventoryDeploy" . ucfirst($subtype);
             $class     = new $classname();
@@ -606,9 +607,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 && !empty($datas['jobs'][$json_subtype])
             ) {
                 echo  "<div id='drag_deploypackage_" . $subtype . "s'>";
-                echo  "<form name='remove" . $subtype . "s' " .
-                  "method='post' action='deploypackage.form.php' " .
-                  "id='" . $subtype . "sList" . $rand . "'>";
+                echo  "<form name='remove" . $subtype . "s' "
+                  . "method='post' action='deploypackage.form.php' "
+                  . "id='" . $subtype . "sList" . $rand . "'>";
                 echo Html::hidden('remove_item');
                 echo Html::hidden('itemtype', ['value' => $classname]);
                 echo Html::hidden('packages_id', ['value' => $this->getID()]);
@@ -672,8 +673,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             echo " onClick=\"plusbutton('$dom_id')\" ";
         }
         echo " title='" . __('Add') . "' alt='" . __('Add') . "' ";
-        echo " class='pointer' src='" . $CFG_GLPI["root_doc"] .
-              "/pics/add_dropdown.png'> ";
+        echo " class='pointer' src='" . $CFG_GLPI["root_doc"]
+              . "/pics/add_dropdown.png'> ";
     }
 
 
@@ -790,8 +791,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     $sha512 = trim(file_get_contents(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $hash));
                     $zip->addFile(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $hash, "files/manifests/" . $hash);
                     $a_xml['manifests'][] = $hash;
-                    $file = $pfDeployFile->getDirBySha512($sha512) .
-                       "/" . $sha512;
+                    $file = $pfDeployFile->getDirBySha512($sha512)
+                       . "/" . $sha512;
                     $zip->addFile(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository/" . $file, "files/repository/" . $file);
                     $a_xml['repository'][] = $file;
                 }
@@ -997,8 +998,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         if ($error_json != JSON_ERROR_NONE) {
             $error_msg = $json_error_consts[$error_json];
             Session::addMessageAfterRedirect(
-                __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>" .
-                $error_msg . "<br/>" . $error_json_message,
+                __("The modified JSON contained a syntax error :", "glpiinventory") . "<br/>"
+                . $error_msg . "<br/>" . $error_json_message,
                 false,
                 ERROR,
                 false

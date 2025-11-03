@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Inventory\Converter;
+use Glpi\Inventory\Inventory;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
@@ -94,17 +96,17 @@ class PrinterUpdateTest extends TestCase
 
         $this->assertGreaterThan(0, $this->items_id);
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($xml_source));
 
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         // To be sure not have 2 times the same information
         $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
     }
 
@@ -312,10 +314,10 @@ class PrinterUpdateTest extends TestCase
         $this->assertNotFalse($printers_id);
         $this->assertTrue($printer->getFromDB($printers_id));
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $printer->getFromDB($printers_id);
@@ -415,10 +417,10 @@ class PrinterUpdateTest extends TestCase
         $printer->getFromDBByCrit(['serial' => 'MY89AQG0V9050N']);
         $this->assertArrayHasKey('id', $printer->fields);
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $printer = new Printer();

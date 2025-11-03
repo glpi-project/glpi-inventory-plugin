@@ -149,14 +149,14 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         // Add icon for import package
         $label = __('Import', 'glpiinventory');
-        $link = "<i class=\"ti ti-download\" title=\"$label\"" .
-            "></i><span class='d-none d-xxl-block'>$label</span>";
+        $link = "<i class=\"ti ti-download\" title=\"$label\""
+            . "></i><span class='d-none d-xxl-block'>$label</span>";
         $options['deploypackage']['links'][$link] = '/' . $fi_path . '/front/deploypackage.import.php';
 
         // Add icon for clean unused deploy files
         $label = __('Clean unused files', 'glpiinventory');
-        $link = "<i class=\"ti ti-box-off\" title=\"$label\"" .
-            "></i><span class='d-none d-xxl-block'>$label</span>";
+        $link = "<i class=\"ti ti-box-off\" title=\"$label\""
+            . "></i><span class='d-none d-xxl-block'>$label</span>";
         $options['deploypackage']['links'][$link] = '/' . $fi_path . '/front/deployfile.clean.php';
 
         $options['agent'] = [

@@ -183,8 +183,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
             $plugin_tabs = $ong;
-            $moduleTabForms =
-                  $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
+            $moduleTabForms
+                  = $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
             if (count($moduleTabForms)) {
                 foreach ($moduleTabForms as $module => $form) {
                     if ($plugin->isActivated($module)) {
@@ -398,8 +398,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
+        echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;"
+              . "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("threads_networkdiscovery", [
             'value' => $pfConfig->getValue('threads_networkdiscovery'),
@@ -408,8 +408,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         ]);
         echo "</td>";
 
-        echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
+        echo "<td>" . __('Threads number', 'glpiinventory') . "&nbsp;"
+              . "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("threads_networkinventory", [
             'value' => $pfConfig->getValue('threads_networkinventory'),
@@ -420,8 +420,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('SNMP timeout', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
+        echo "<td>" . __('SNMP timeout', 'glpiinventory') . "&nbsp;"
+              . "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("timeout_networkdiscovery", [
             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
@@ -429,8 +429,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             'max'   => 60,
         ]);
         echo "</td>";
-        echo "<td>" . __('SNMP timeout', 'glpiinventory') . "&nbsp;" .
-              "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
+        echo "<td>" . __('SNMP timeout', 'glpiinventory') . "&nbsp;"
+              . "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")</td>";
         echo "<td align='center'>";
         Dropdown::showNumber("timeout_networkinventory", [
             'value' => $pfConfig->getValue('timeout_networkinventory'),

@@ -143,8 +143,8 @@ class UpdateTest extends TestCase
             $this->assertEquals(
                 0,
                 $result['returncode'],
-                "Failed to install plugin " . $sqlfile . ":\n" .
-                implode("\n", $result['output'])
+                "Failed to install plugin " . $sqlfile . ":\n"
+                . implode("\n", $result['output'])
             );
 
             $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --env=testing";

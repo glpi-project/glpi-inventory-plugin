@@ -239,9 +239,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
                 $tab[$i]['field']         = 'pathfile';
                 $tab[$i]['linkfield']     = '';
-                $tab[$i]['name']          = __('Find file', 'glpiinventory') .
-                                    " - " . $file['name'] .
-                                    " - " . __('pathfile', 'glpiinventory');
+                $tab[$i]['name']          = __('Find file', 'glpiinventory')
+                                    . " - " . $file['name']
+                                    . " - " . __('pathfile', 'glpiinventory');
                 $tab[$i]['joinparams']    = ['jointype' => 'child'];
                 $tab[$i]['datatype']      = 'text';
                 $tab[$i]['forcegroupby']  = true;
@@ -254,9 +254,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
                 $tab[$i]['field']         = 'size';
                 $tab[$i]['linkfield']     = '';
-                $tab[$i]['name']          = __('Find file', 'glpiinventory') .
-                                    " - " . $file['name'] .
-                                    " - " . __('Size', 'glpiinventory');
+                $tab[$i]['name']          = __('Find file', 'glpiinventory')
+                                    . " - " . $file['name']
+                                    . " - " . __('Size', 'glpiinventory');
                 $tab[$i]['joinparams']    = ['jointype' => 'child'];
                 $tab[$i]['datatype']      = 'text';
                 $tab[$i]['forcegroupby']  = true;
@@ -306,8 +306,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         echo __('Comments');
         echo "</td>";
         echo "<td class='middle'>";
-        echo "<textarea cols='45' rows='3' name='comment' >" .
-              $this->fields["comment"] . "</textarea>";
+        echo "<textarea cols='45' rows='3' name='comment' >"
+              . $this->fields["comment"] . "</textarea>";
         echo "</td>";
         echo "<td>" . __('Active') . "</td>";
         echo "<td>";

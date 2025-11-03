@@ -147,8 +147,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     $ID = $option_id;
                 } else {
                     trigger_error(
-                        "Using default ID($ID) " .
-                        "since we can't determine correctly the type of ID ('$option_id')"
+                        "Using default ID($ID) "
+                        . "since we can't determine correctly the type of ID ('$option_id')"
                     );
                 }
             }
@@ -245,11 +245,11 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "<form id='taskjobs_form' method='post' action='" . $this->getFormURL() . "'>";
         if ($addition_enabled) {
             echo "<div class='center'>";
-            echo "<input type='button' class='submit taskjobs_create'" .
-                " data-ajaxurl='" . $this->getBaseUrlFor('fi.job.create') . "'" .
-                " data-task_id='$task_id' style='padding:5px;margin:0;right:0' " .
-                " onclick='$(\"#taskjobs_list\").hide()'" .
-                " value=' " . __('Add a job', 'glpiinventory') . " '/>";
+            echo "<input type='button' class='submit taskjobs_create'"
+                . " data-ajaxurl='" . $this->getBaseUrlFor('fi.job.create') . "'"
+                . " data-task_id='$task_id' style='padding:5px;margin:0;right:0' "
+                . " onclick='$(\"#taskjobs_list\").hide()'"
+                . " value=' " . __('Add a job', 'glpiinventory') . " '/>";
             echo "</div>";
         } else {
             echo "<table class='tab_cadrehov package_item_list search-results table  card-table table-hover table-striped ' id='taskjobs_list'>\n";
@@ -277,8 +277,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             //Show the delete button for selected object when showing row is required
             if ($show_list) {
                 echo "<div class='center' style='padding:5px'>";
-                echo "<input type='submit' name='delete_taskjobs' value=\"" .
-                __('Delete', 'glpiinventory') . "\" class='submit'>";
+                echo "<input type='submit' name='delete_taskjobs' value=\""
+                . __('Delete', 'glpiinventory') . "\" class='submit'>";
                 echo "</div>";
             }
         }
@@ -318,8 +318,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         if ($name == '') {
             $name = "($id)";
         }
-        echo "<td class='control'>" .
-               Html::getCheckbox(['name' => 'taskjobs[]', 'value' => $id]) . "
+        echo "<td class='control'>"
+               . Html::getCheckbox(['name' => 'taskjobs[]', 'value' => $id]) . "
             </td>
             <td id='taskjob_" . $id . "' class='taskjob_block'>
                <a href='#taskjobs_form'
@@ -564,15 +564,15 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         }
         $pfTask = $this->getTask();
 
-        echo "<form method='post' id='taskjobs_form' name='form_taskjob' action='" .
-            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/taskjob.form.php''>";
+        echo "<form method='post' id='taskjobs_form' name='form_taskjob' action='"
+            . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/taskjob.form.php''>";
 
         if (!$new_item) {
             echo "<input type='hidden' name='id' value='" . $id . "' />";
         }
         echo
-         "<input type='hidden' name='plugin_glpiinventory_tasks_id' " .
-         "value='" . $pfTask->fields['id'] . "' />";
+         "<input type='hidden' name='plugin_glpiinventory_tasks_id' "
+         . "value='" . $pfTask->fields['id'] . "' />";
         echo "<table class='tab_cadre_fixe'>";
 
         // Optional line
@@ -587,8 +587,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             }
         } else {
             if ($ismultientities) {
-                echo __('New action', 'glpiinventory') . "&nbsp;:&nbsp;" .
-                 Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
+                echo __('New action', 'glpiinventory') . "&nbsp;:&nbsp;"
+                 . Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
             } else {
                 echo __('New action', 'glpiinventory');
             }
@@ -611,9 +611,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "<label class='form-label col-sm-4 col-form-label'>" . __('Comments') . "&nbsp;</label>";
         echo "<div class='col-sm-8'>";
         echo
-         "<textarea class='autogrow form-control' name='comment' >" .
-         $this->fields["comment"] .
-         "</textarea>";
+         "<textarea class='autogrow form-control' name='comment' >"
+         . $this->fields["comment"]
+         . "</textarea>";
         echo "</div>";
         echo "</div>";
 
@@ -725,13 +725,13 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                   </div>
                   <div>
                      <a class='clear_list button'
-                        data-clear-param='targets'>" .
-                        __('Clear list', 'glpiinventory') . "
+                        data-clear-param='targets'>"
+                        . __('Clear list', 'glpiinventory') . "
                      </a>
                       /
                      <a class='delete_items_selected'
-                        data-delete-param='targets'>" .
-                        __('Delete selected items', 'glpiinventory') . "
+                        data-delete-param='targets'>"
+                        . __('Delete selected items', 'glpiinventory') . "
                      </a>
                   </div>
                </div>";
@@ -747,13 +747,13 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                   </div>
                   <div>
                      <a class='clear_list'
-                        data-clear-param='actors'>" .
-                        __('Clear list', 'glpiinventory') . "
+                        data-clear-param='actors'>"
+                        . __('Clear list', 'glpiinventory') . "
                      </a>
                        /
                      <a class='delete_items_selected'
-                        data-delete-param='actors'>" .
-                        __('Delete selected items', 'glpiinventory') . "
+                        data-delete-param='actors'>"
+                        . __('Delete selected items', 'glpiinventory') . "
                      </a>
                   </div>
                </div>";
@@ -770,15 +770,15 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             echo "<td class='right' colspan='4'>";
             echo "<button type='button' id='cancel_job_changes_button' style='display:none'
                              class='btn btn-outline-secondary me-2'
-                             onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>" .
-                             __('Cancel modifications', 'glpiinventory') . "
+                             onclick='taskjobs.edit(\"" . $this->getBaseUrlFor('fi.job.edit') . "\", $id)'>"
+                             . __('Cancel modifications', 'glpiinventory') . "
                    </button>&nbsp;";
 
             echo "<input type='submit'
                       name='delete'
                       value=\"" . __('Purge', 'glpiinventory') . "\"
-                      class='btn btn-outline-danger me-2' " .
-                      Html::addConfirmationOnAction(__(
+                      class='btn btn-outline-danger me-2' "
+                      . Html::addConfirmationOnAction(__(
                           'Confirm the final deletion ?',
                           'glpiinventory'
                       )) . ">&nbsp;";
@@ -962,8 +962,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 $add_redirect = "&edit_job=$jobs_id#taskjobs_form";
             }
 
-            Html::redirect($CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/task.form.php?id=" .
-                                 $postvars['plugin_glpiinventory_tasks_id'] . $add_redirect);
+            Html::redirect($CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/task.form.php?id="
+                                 . $postvars['plugin_glpiinventory_tasks_id'] . $add_redirect);
         } elseif (isset($postvars["delete"])) {
             // * delete taskjob
             Session::checkRight('plugin_glpiinventory_task', PURGE);

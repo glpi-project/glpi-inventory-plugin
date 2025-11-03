@@ -33,9 +33,9 @@
 
 use Safe\Exceptions\FilesystemException;
 
-use function Safe\fopen;
-use function Safe\fgetcsv;
 use function Safe\fclose;
+use function Safe\fgetcsv;
+use function Safe\fopen;
 
 /**
  * Manage the static groups (add manually computers in the group).
@@ -266,19 +266,19 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
             Html::showMassiveActionCheckBox($mass_class, $data["items_id"]);
             echo "</td>";
 
-            echo "<td " .
-                ((isset($computer->fields['is_deleted']) && $computer->fields['is_deleted']) ? "class='tab_bg_2_2'" : "") .
-                ">" . $name . "</td>";
+            echo "<td "
+                . ((isset($computer->fields['is_deleted']) && $computer->fields['is_deleted']) ? "class='tab_bg_2_2'" : "")
+                . ">" . $name . "</td>";
             echo "<td>" . Dropdown::getYesNo($computer->fields['is_dynamic']) . "</td>";
             echo "<td>" . Dropdown::getDropdownName(
                 "glpi_entities",
                 $computer->fields['entities_id']
             );
             echo "</td>";
-            echo "<td>" .
-                    (isset($computer->fields["serial"]) ? "" . $computer->fields["serial"] . "" : "-") . "</td>";
-            echo "<td>" .
-                    (isset($computer->fields["otherserial"]) ? "" . $computer->fields["otherserial"] . "" : "-") . "</td>";
+            echo "<td>"
+                    . (isset($computer->fields["serial"]) ? "" . $computer->fields["serial"] . "" : "-") . "</td>";
+            echo "<td>"
+                    . (isset($computer->fields["otherserial"]) ? "" . $computer->fields["otherserial"] . "" : "-") . "</td>";
             echo "</tr>";
         }
         echo $header_begin . $header_bottom . $header_end;

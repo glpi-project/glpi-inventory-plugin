@@ -162,7 +162,7 @@ class DeploymirrorIntTest extends TestCase
         ]);
         $this->assertNotFalse($computerRootId);
 
-        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $agentRootId = $agent->add([
             'name'         => 'computer-root',
             'itemtype' => Computer::class,
