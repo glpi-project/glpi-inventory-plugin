@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.6.1] - unreleased
 
+- Fix visibility issue on deploy dynamic groups with GLPI v11.0.2
 - Fix deploy ajax action path
 - Prevent fatal errors when ini_set is not allowed
 

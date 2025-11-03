@@ -409,6 +409,10 @@ class PackageSelfDeployTest extends TestCase
         // Prepare task
         PluginGlpiinventoryTask::cronTaskscheduler();
 
+        $reference = [
+            'agents_prepared',
+        ];
+
         $_SERVER['REQUEST_URI'] = 'front/deploypackage.php'; // URL is used to fix addDefaultWhere
         $packages = $pfDeployPackage->getPackageForMe($userId);
         $packages_deploy = [];
@@ -419,7 +423,7 @@ class PackageSelfDeployTest extends TestCase
                 }
             }
         }
-        $this->assertEquals([], $packages_deploy);
+        $this->assertEquals($reference, $packages_deploy);
 
         $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php'; // URL is used to fix addDefaultWhere
         $packages = $pfDeployPackage->getPackageForMe($userId);
@@ -431,9 +435,6 @@ class PackageSelfDeployTest extends TestCase
                 }
             }
         }
-        $reference = [
-            'agents_prepared',
-        ];
         $this->assertEquals($reference, $packages_deploy);
     }
 

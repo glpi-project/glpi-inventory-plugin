@@ -374,8 +374,6 @@ function plugin_init_glpiinventory()
     $PLUGIN_HOOKS[Hooks::HANDLE_ESX_TASK]['glpiinventory'] = 'plugin_glpiinventory_handle_esx_task';
     $PLUGIN_HOOKS[Hooks::HANDLE_COLLECT_TASK]['glpiinventory'] = 'plugin_glpiinventory_handle_collect_task';
     $PLUGIN_HOOKS[Hooks::HANDLE_DEPLOY_TASK]['glpiinventory'] = 'plugin_glpiinventory_handle_deploy_task';
-
-    $PLUGIN_HOOKS[Hooks::ADD_DEFAULT_WHERE]['glpiinventory'] = 'plugin_glpiinventory_add_default_where';
 }
 
 
