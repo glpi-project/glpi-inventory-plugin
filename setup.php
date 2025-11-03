@@ -32,10 +32,11 @@
  */
 
 use Glpi\Http\Firewall;
+use Glpi\Http\SessionManager;
 use Glpi\Plugin\Hooks;
 
-use function Safe\parse_url;
 use function Safe\define;
+use function Safe\parse_url;
 
 define("PLUGIN_GLPIINVENTORY_VERSION", "1.6.0");
 // Minimal GLPI version, inclusive
@@ -282,8 +283,8 @@ function plugin_init_glpiinventory()
             Session::haveRight('plugin_glpiinventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)
         ) {// Config page
-            $PLUGIN_HOOKS['config_page']['glpiinventory'] = 'front/config.form.php' .
-                 '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
+            $PLUGIN_HOOKS['config_page']['glpiinventory'] = 'front/config.form.php'
+                 . '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
         }
 
         $PLUGIN_HOOKS['use_massive_action']['glpiinventory'] = 1;
@@ -447,7 +448,7 @@ function plugin_glpiinventory_options()
 
 function plugin_glpiinventory_boot()
 {
-    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/$#');
-    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/Communication$#');
-    \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/front/communication.php$#');
+    SessionManager::registerPluginStatelessPath('glpiinventory', '#^/$#');
+    SessionManager::registerPluginStatelessPath('glpiinventory', '#^/Communication$#');
+    SessionManager::registerPluginStatelessPath('glpiinventory', '#^/front/communication.php$#');
 }

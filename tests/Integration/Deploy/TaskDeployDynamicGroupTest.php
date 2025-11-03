@@ -71,7 +71,7 @@ class TaskDeployDynamicGroupTest extends TestCase
         $computer = new Computer();
         $agent  = new Agent();
 
-        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $computerId = $computer->add(['name' => 'pc01', 'entities_id' => 0]);
         $this->computers_ids[] = $computerId;
         $this->assertNotFalse($agent->add(['itemtype' => Computer::class, 'items_id' => $computerId, 'entities_id' => 0, 'deviceid' => Computer::class . $computerId, 'agenttypes_id' => $agenttype['id']]));

@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Inventory\Converter;
+use Glpi\Inventory\Inventory;
 use PHPUnit\Framework\TestCase;
 
 class RuleImportTest extends TestCase
@@ -38,14 +40,14 @@ class RuleImportTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         // Reinit rules
-        $rules = new \RuleImportAsset();
+        $rules = new RuleImportAsset();
         $rules->initRules();
     }
 
     public static function tearDownAfterClass(): void
     {
         // Reinit rules
-        $rules = new \RuleImportAsset();
+        $rules = new RuleImportAsset();
         $rules->initRules();
     }
 
@@ -69,7 +71,7 @@ class RuleImportTest extends TestCase
             'is_active' => 1,
             'name'      => 'Printer model',
             'match'     => 'AND',
-            'sub_type'  => \RuleImportAsset::class,
+            'sub_type'  => RuleImportAsset::class,
             'ranking'   => 1,
         ];
         $rule_id = $rule->add($input);
@@ -81,7 +83,7 @@ class RuleImportTest extends TestCase
             'rules_id'  => $rule_id,
             'criteria'  => 'serial',
             'pattern'   => '1',
-            'condition' => \RuleImportAsset::PATTERN_FIND,
+            'condition' => RuleImportAsset::PATTERN_FIND,
         ];
         $ret = $rulecriteria->add($input);
         $this->assertNotFalse($ret);
@@ -92,7 +94,7 @@ class RuleImportTest extends TestCase
             'rules_id'    => $rule_id,
             'action_type' => 'assign',
             'field'       => '_inventory',
-            'value'       => \RuleImportAsset::RULE_ACTION_LINK_OR_IMPORT,
+            'value'       => RuleImportAsset::RULE_ACTION_LINK_OR_IMPORT,
         ];
         $ret = $ruleaction->add($input);
         $this->assertNotFalse($ret);
@@ -102,7 +104,7 @@ class RuleImportTest extends TestCase
             'is_active' => 1,
             'name'      => 'Deny printer import',
             'match'     => 'AND',
-            'sub_type'  => \RuleImportAsset::class,
+            'sub_type'  => RuleImportAsset::class,
             'ranking'   => 3,
         ];
         $rule_id = $rule->add($input);
@@ -113,7 +115,7 @@ class RuleImportTest extends TestCase
             'rules_id'  => $rule_id,
             'criteria'  => 'name',
             'pattern'   => '0',
-            'condition' => \RuleImportAsset::PATTERN_EXISTS,
+            'condition' => RuleImportAsset::PATTERN_EXISTS,
         ];
         $ret = $rulecriteria->add($input);
         $this->assertNotFalse($ret);
@@ -123,7 +125,7 @@ class RuleImportTest extends TestCase
             'rules_id'    => $rule_id,
             'action_type' => 'assign',
             'field'       => '_inventory',
-            'value'       => \RuleImportAsset::RULE_ACTION_DENIED,
+            'value'       => RuleImportAsset::RULE_ACTION_DENIED,
         ];
         $ret = $ruleaction->add($input);
         $this->assertNotFalse($ret);
@@ -165,10 +167,10 @@ class RuleImportTest extends TestCase
             ])
         );
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;
@@ -217,10 +219,10 @@ class RuleImportTest extends TestCase
         $a_printers = $printer->find();
         $this->assertEquals(0, count($a_printers), 'There should be no printer');
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = 1;

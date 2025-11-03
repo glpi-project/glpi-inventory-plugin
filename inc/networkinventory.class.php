@@ -301,8 +301,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                                 0,
                                 '',
                                 1,
-                                "Unable to find agent to inventory " .
-                                "this " . $itemtype
+                                "Unable to find agent to inventory "
+                                . "this " . $itemtype
                             );
                             $a_input['state'] = 1;
                         }
@@ -384,14 +384,14 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             return [];
         } else {
             // Use general config when threads number is set to 0 on the agent
-            $param_attrs['THREADS_QUERY'] = $agent->fields["threads_networkinventory"] == 0 ?
-            $pfConfig->getValue('threads_networkinventory') :
-            $agent->fields["threads_networkinventory"];
+            $param_attrs['THREADS_QUERY'] = $agent->fields["threads_networkinventory"] == 0
+            ? $pfConfig->getValue('threads_networkinventory')
+            : $agent->fields["threads_networkinventory"];
 
             // Use general config when timeout is set to 0 on the agent
-            $param_attrs['TIMEOUT'] = $agent->fields["timeout_networkinventory"] == 0 ?
-            $pfConfig->getValue('timeout_networkinventory') :
-            $agent->fields["timeout_networkinventory"];
+            $param_attrs['TIMEOUT'] = $agent->fields["timeout_networkinventory"] == 0
+            ? $pfConfig->getValue('timeout_networkinventory')
+            : $agent->fields["timeout_networkinventory"];
 
             $param_attrs['PID'] = $current->fields['id'];
 
@@ -418,8 +418,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 0,
                 Agent::class,
                 '1',
-                $param_attrs['THREADS_QUERY'] . ' threads ' .
-                $param_attrs['TIMEOUT'] . ' timeout'
+                $param_attrs['THREADS_QUERY'] . ' threads '
+                . $param_attrs['TIMEOUT'] . ' timeout'
             );
 
             // Only keep required snmp credentials
@@ -513,9 +513,9 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                     'snmpcredentials_id' => ['!=', '0'],
                     'glpi_ipaddresses.version' => 4,
                     new QueryExpression(
-                        'inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN ' .
-                        'inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton(' .
-                        $DB->quote($pfIPRange->fields['ip_end']) . ')'
+                        'inet_aton(' . $DB->quoteName('glpi_ipaddresses.name') . ') BETWEEN '
+                        . 'inet_aton(' . $DB->quote($pfIPRange->fields['ip_start']) . ') AND inet_aton('
+                        . $DB->quote($pfIPRange->fields['ip_end']) . ')'
                     ),
                 ],
                 'GROUPBY' => 'gID',

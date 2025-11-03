@@ -34,9 +34,9 @@
 use Glpi\Error\ErrorHandler;
 use Safe\Exceptions\InfoException;
 
-use function Safe\mkdir;
-use function Safe\ini_set;
 use function Safe\glob;
+use function Safe\ini_set;
+use function Safe\mkdir;
 
 /**
  * This function manage the installation of the plugin.

@@ -100,8 +100,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
         $a_modules = $this->find();
         foreach ($a_modules as $data) {
-            echo "<form name='form_ic' method='post' action='" .
-                 Toolbox::getItemTypeFormURL(self::class) . "'>";
+            echo "<form name='form_ic' method='post' action='"
+                 . Toolbox::getItemTypeFormURL(self::class) . "'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
             echo "<th width='130'>" . __('Module', 'glpiinventory') . "</th>";
@@ -115,9 +115,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
             foreach ($a_methods as $datamod) {
                 if (
-                    (strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
-                    isset($datamod['task']) &&
-                    (strtolower($data["modulename"]) == strtolower($datamod['task']))
+                    (strtolower($data["modulename"]) == strtolower($datamod['method']))
+                    || isset($datamod['task'])
+                    && (strtolower($data["modulename"]) == strtolower($datamod['task']))
                 ) {
                     if (isset($datamod['name'])) {
                         $modulename = $datamod['name'];
@@ -157,11 +157,11 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             ]);
             echo "</td>";
             echo "<td align='center'>";
-            echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='" .
-              __s('Add') . " >>'>";
+            echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='"
+              . __s('Add') . " >>'>";
             echo "<br><br>";
-            echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< " .
-              __s('Delete') . "'>";
+            echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< "
+              . __s('Delete') . "'>";
             echo "</td>";
             echo "<td width='45%'>";
 
@@ -203,8 +203,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
         echo "<br/>";
         if ($canedit) {
-            echo "<form name='form_ic' method='post' action='" .
-               "/plugins/glpiinventory/front/agentmodule.form.php'>";
+            echo "<form name='form_ic' method='post' action='"
+               . "/plugins/glpiinventory/front/agentmodule.form.php'>";
         }
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
@@ -224,9 +224,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             $modulename = $data["modulename"];
             foreach ($a_methods as $datamod) {
                 if (
-                    (strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
-                    isset($datamod['task']) &&
-                    (strtolower($data["modulename"]) == strtolower($datamod['task']))
+                    (strtolower($data["modulename"]) == strtolower($datamod['method']))
+                    || isset($datamod['task'])
+                    && (strtolower($data["modulename"]) == strtolower($datamod['task']))
                 ) {
                     if (isset($datamod['name'])) {
                         $modulename = $datamod['name'];
@@ -275,8 +275,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             echo "<tr>";
             echo "<td class='tab_bg_2 card-body mx-n2 mb-4  border-top' colspan='4'>";
             echo Html::hidden('id', ['value' => $agents_id]);
-            echo "<input type='submit' name='updateexceptions' " .
-                 "value=\"" . __('Update') . "\" class='btn btn-primary'>";
+            echo "<input type='submit' name='updateexceptions' "
+                 . "value=\"" . __('Update') . "\" class='btn btn-primary'>";
             echo "</td>";
             echo "</tr>";
             echo "</table>";

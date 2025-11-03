@@ -32,8 +32,8 @@
  */
 
 use Glpi\Cache\CacheManager;
-use Glpi\Kernel\Kernel;
 use Glpi\Cache\SimpleCache;
+use Glpi\Kernel\Kernel;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 ini_set('display_errors', 'On');
@@ -136,10 +136,10 @@ if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export')) {
 }
 
 // @codingStandardsIgnoreStart
-class GlpitestPHPerror extends \Exception {}
-class GlpitestPHPwarning extends \Exception {}
-class GlpitestPHPnotice extends \Exception {}
-class GlpitestSQLError extends \Exception {}
+class GlpitestPHPerror extends Exception {}
+class GlpitestPHPwarning extends Exception {}
+class GlpitestPHPnotice extends Exception {}
+class GlpitestSQLError extends Exception {}
 // @codingStandardsIgnoreEnd
 
 set_error_handler(static function (int $errno, string $errstr): never {

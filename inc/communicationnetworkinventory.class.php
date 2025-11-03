@@ -76,13 +76,13 @@ class PluginGlpiinventoryCommunicationNetworkInventory
         $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
         if ((!isset($a_CONTENT->content->agent->start)) && (!isset($a_CONTENT->content->agent->end)) && (!isset($a_CONTENT->content->agent->exit))) {
             $nb_devices = 1;
-            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
-              $a_CONTENT->jobid;
+            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id']
+              = $a_CONTENT->jobid;
             $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
             $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
             $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices .
-              ' ==devicesqueried==';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices
+              . ' ==devicesqueried==';
             $this->addtaskjoblog();
         }
 
@@ -124,9 +124,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             } elseif ($a_CONTENT->content->error->type == "PRINTER") {
                 $itemtype = "Printer";
             }
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] ' .
-            $a_CONTENT->content->error->message . ' [[' . $itemtype . '::' .
-            $a_CONTENT->content->error->id . ']]';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
+            . $a_CONTENT->content->error->message . ' [[' . $itemtype . '::'
+            . $a_CONTENT->content->error->id . ']]';
             $this->addtaskjoblog();
 
             $response['response'] = ['RESPONSE' => 'SEND'];
@@ -137,9 +137,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             } elseif ($a_CONTENT->content->device->error->type == "PRINTER") {
                 $itemtype = "Printer";
             }
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] ' .
-            $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::' .
-            $a_CONTENT->content->device->error->id . ']]';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
+            . $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::'
+            . $a_CONTENT->content->device->error->id . ']]';
             $this->addtaskjoblog();
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } else {
@@ -168,9 +168,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                     $this->addtaskjoblog();
                 } else {
                     $item = $inventory->getMainAsset()->getItem();
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
-                        '[==detail==] ==updatetheitem== ' . $item->getTypeName() .
-                        ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
+                        = '[==detail==] ==updatetheitem== ' . $item->getTypeName()
+                        . ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
                     $this->addtaskjoblog();
                 }
                 $response = ['response' => ['RESPONSE' => 'SEND']];

@@ -34,18 +34,18 @@ use Glpi\Controller\AbstractController;
 use Glpi\Error\ErrorHandler;
 use Html;
 use PluginGlpiinventoryCommunicationRest;
+use Safe\Exceptions\InfoException;
 use Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Safe\Exceptions\InfoException;
 
+use function Safe\file_get_contents;
 use function Safe\ini_set;
 use function Safe\json_encode;
 use function Safe\session_id;
 use function Safe\session_start;
-use function Safe\file_get_contents;
 
 class InventoryController extends AbstractController
 {

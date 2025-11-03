@@ -33,12 +33,13 @@
 
 
 use Glpi\Exception\Http\BadRequestHttpException;
+use Safe\Exceptions\InfoException;
 
-use function Safe\readgzfile;
-use function Safe\ob_clean;
 use function Safe\ini_get;
-use function Safe\session_write_close;
+use function Safe\ob_clean;
 use function Safe\ob_end_clean;
+use function Safe\readgzfile;
+use function Safe\session_write_close;
 
 Session::checkRight('plugin_glpiinventory_package', READ);
 
@@ -65,7 +66,7 @@ if ($deployfile_id > 0 && $deploy->getFromDB($deployfile_id)) {
                 $max_buffering_level = (strtolower($ob_config) === 'on' || (is_numeric($ob_config) && (int) $ob_config > 0))
                     ? 1
                     : 0;
-            } catch (\Safe\Exceptions\InfoException $e) {
+            } catch (InfoException $e) {
                 //emtpy catch
             }
             while (ob_get_level() > $max_buffering_level) {

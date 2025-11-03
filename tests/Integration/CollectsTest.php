@@ -176,8 +176,8 @@ class CollectsTest extends TestCase
             'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
             'field'            => 'pathfile',
             'linkfield'        => '',
-            'name'             => __('Find file', 'glpiinventory') . " - PHP files" .
-            " - " . __('pathfile', 'glpiinventory'),
+            'name'             => __('Find file', 'glpiinventory') . " - PHP files"
+            . " - " . __('pathfile', 'glpiinventory'),
             'joinparams'       => ['jointype' => 'child'],
             'datatype'         => 'text',
             'forcegroupby'     => true,
@@ -193,8 +193,8 @@ class CollectsTest extends TestCase
             'table'            => 'glpi_plugin_glpiinventory_collects_files_contents',
             'field'            => 'size',
             'linkfield'        => '',
-            'name'             => __('Find file', 'glpiinventory') . " - PHP files" .
-                                    " - " . __('Size', 'glpiinventory'),
+            'name'             => __('Find file', 'glpiinventory') . " - PHP files"
+                                    . " - " . __('Size', 'glpiinventory'),
             'joinparams'       => ['jointype' => 'child'],
             'datatype'         => 'text',
             'forcegroupby'     => true,
@@ -261,7 +261,7 @@ class CollectsTest extends TestCase
         $computers_id = $computer->add($input);
         $this->assertNotFalse($computers_id);
 
-        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $input = [
             'name'         => 'pc01',
             'entities_id'  => 0,

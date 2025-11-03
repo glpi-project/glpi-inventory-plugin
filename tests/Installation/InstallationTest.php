@@ -93,8 +93,8 @@ class InstallationTest extends TestCase
         $this->assertEquals(
             0,
             $returncode,
-            "Error when installing plugin in CLI mode\n" .
-            implode("\n", $output) . "\n" . $command . "\n"
+            "Error when installing plugin in CLI mode\n"
+            . implode("\n", $output) . "\n" . $command . "\n"
         );
 
         $DatabaseTestsCommonsTest = new DatabaseTestsCommons();
