@@ -281,11 +281,21 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     public function addEntry($data)
     {
         if ($data['lastday'] < $data['beginday']) {
+            Session::addMessageAfterRedirect(
+                __('End day must be after start day', 'glpiinventory'),
+                true,
+                ERROR
+            );
             return;
         } elseif (
             $data['lastday'] == $data['beginday']
               && $data['lasthours'] <= $data['beginhours']
         ) {
+            Session::addMessageAfterRedirect(
+                __('End time must be after start time', 'glpiinventory'),
+                true,
+                ERROR
+            );
             return;
         }
         // else ok, we can update DB
