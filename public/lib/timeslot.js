@@ -46,7 +46,6 @@ function timeslot(jsonstr) {
        data[day_index*(24*4) + i] = {"day":day_index+1, "hour": (i/4)+1, "value":val, "dec":dec};
      }
    };
-   console.log(data);
    var svg = d3.select("#chart").append("svg")
        .attr("width", width + margin.left + margin.right)
        .attr("height", height + margin.top + margin.bottom)
