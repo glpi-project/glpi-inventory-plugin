@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.2] - unreleased
+
+- Fix agent wakeup when no last_agent_wakeup has been set yet
+
 ## [1.6.1] - 2025-11-05
 
 - Fix visibility issue on deploy dynamic groups with GLPI v11.0.2
