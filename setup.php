@@ -38,9 +38,9 @@ use Glpi\Plugin\Hooks;
 use function Safe\define;
 use function Safe\parse_url;
 
-define("PLUGIN_GLPIINVENTORY_VERSION", "1.6.0");
+define("PLUGIN_GLPIINVENTORY_VERSION", "1.6.1");
 // Minimal GLPI version, inclusive
-define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '11.0.0');
+define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '11.0.2');
 // Maximum GLPI version, exclusive
 define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '11.0.99');
 // Used for use config values in 'cache'
