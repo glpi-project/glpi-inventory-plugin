@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-04 10:58+0100\n"
+"POT-Creation-Date: 2025-11-07 00:53+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: DWXXX, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -22,175 +22,108 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: hook.php:137 hook.php:147 hook.php:157 hook.php:167
-#, php-format
-msgid "%s inventoried"
-msgstr "%s 已盘点"
-
-#: inc/task.class.php:1873 inc/task.class.php:1916
-msgid ", actors: "
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:461
-msgid "Abort"
-msgstr "放弃"
-
-#: inc/deployuserinteractiontemplate.class.php:171
-msgid "Abort - Retry - Ignore"
-msgstr "关于 - 重试 - 忽略"
-
-#: inc/taskjob.class.php:748
-msgid "Action"
-msgstr ""
-
-#: inc/deployaction.class.php:207 inc/deployaction.class.php:356
-msgid "Action label"
-msgstr "动作标签"
-
-#: public/b/deploy/index.php:139 inc/deploypackage.class.php:535
-msgid "Actions"
-msgstr "动作"
-
-#: inc/agentmodule.class.php:212 inc/agentmodule.class.php:214
-msgid "Activation"
-msgstr ""
-
-#: inc/agentmodule.class.php:108
-msgid "Activation (by default)"
-msgstr ""
-
-#: inc/taskjobview.class.php:408
-msgid "Actor Item"
-msgstr ""
-
-#: inc/taskjobview.class.php:360
-msgid "Actor Type"
-msgstr ""
-
-#: inc/taskjobview.class.php:700 inc/taskjobview.class.php:743
-msgid "Actors"
-msgstr ""
-
-#: inc/taskjobview.class.php:252
-msgid "Add a job"
-msgstr "添加作业"
-
-#: inc/deploypackage.class.php:1133
-msgid "Add a target for self-service"
-msgstr ""
-
-#: inc/deploygroup.class.php:378
-msgid "Add group"
-msgstr "添加组"
-
-#: inc/deploytask.class.php:157
-msgid "Add task"
-msgstr "添加任务"
-
-#: inc/taskjoblog.class.php:346
-msgid "Add the item"
-msgstr "添加项目"
-
-#: hook.php:418 inc/deploygroup_staticdata.class.php:156
-#: inc/deploygroup_staticdata.class.php:172
-msgid "Add to static group"
-msgstr "添加到静态组"
-
-#: inc/deployuserinteraction.class.php:98
-msgid "After actions"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:97
-msgid "After download"
-msgstr "下载后"
-
-#: inc/stateinventory.class.php:115 inc/statediscovery.class.php:177
-#: inc/taskjoblog.class.php:232
-msgid "Agent"
-msgstr "代理"
-
-#: inc/taskjoblog.class.php:350
-msgid "Agent communication error, impossible to start agent"
-msgstr "代理通信错误，无法启动代理"
-
-#: inc/config.class.php:319
-msgid "Agent port"
-msgstr "代理端口"
-
-#: inc/taskjobstate.class.php:150
-msgid "Agent replied with data to the server"
-msgstr ""
-
-#: inc/taskjoblog.class.php:351
-msgid "Agent stopped/crashed"
-msgstr "代理停止/崩溃"
-
-#: inc/taskview.class.php:364
-msgid "Agent wakeup interval (in minutes)"
-msgstr "智能代理端唤醒间隔 (以分钟计)"
-
-#: inc/menu.class.php:211
-msgid "Agents management"
-msgstr "代理管理"
-
-#: inc/agentmodule.class.php:61
-msgid "Agents modules"
-msgstr "代理模块"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction format"
+msgstr "交互格式"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Alert display timeout"
-msgstr "告警显示超时"
-
-#: inc/deployuserinteraction.class.php:449
-msgid "Alert displayed, no input required"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:470
-msgid "Alert duration exceeded"
-msgstr ""
+msgid "Interaction type"
+msgstr "交互类型"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Alert icon"
 msgstr "告警图标"
 
-#: inc/deployuserinteractiontemplate.class.php:450
-msgid "Alert timeout exceeded"
-msgstr "超出警报超时"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Retry job after"
+msgstr "重试作业在"
 
-#: front/deployfile_download.php:92
-msgid "An error occurs"
-msgstr "发生一个错误"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Maximum number of retry allowed"
+msgstr "允许的重试最大数量"
 
-#: inc/menu.class.php:289
-msgid "Asset skipped during import"
-msgstr "导入期间跳过的资产 "
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert display timeout"
+msgstr "告警显示超时"
 
-#: inc/iprange_snmpcredential.class.php:102
-msgid "Associated SNMP credentials"
-msgstr ""
+#: templates/forms/iprange.html.twig inc/iprange.class.php:138
+#: inc/iprange.class.php:230
+msgid "Start of IP range"
+msgstr "IP段起始位置"
 
-#: inc/deploygroup.class.php:114
-msgid "Associated task"
-msgid_plural "Associated tasks"
-msgstr[0] ""
+#: templates/forms/iprange.html.twig inc/iprange.class.php:145
+#: inc/iprange.class.php:233
+msgid "End of IP range"
+msgstr "IP段结束位置"
 
-#: inc/task.class.php:190
-msgid "Associated tasks"
-msgstr ""
+#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
+msgid "Mirror server address"
+msgstr "镜像服务器地址"
 
-#: inc/deploycheck.class.php:305 inc/deploycheck.class.php:460
-msgid "Audit label"
-msgstr "审核标签"
+#: inc/deploymirror.class.php:68 inc/profile.class.php:287
+#: inc/menu.class.php:396
+msgid "Mirror servers"
+msgstr "镜像服务器"
 
-#: inc/deploypackage.class.php:533
-msgid "Audits"
-msgstr ""
+#: inc/iprange.class.php:79
+msgid "Communication mode"
+msgstr "通信模式"
 
-#: inc/credentialip.class.php:131 inc/credentialip.class.php:154
-#: inc/credential.class.php:78 inc/credential.class.php:182
-#: inc/profile.class.php:316 inc/menu.class.php:346
-msgid "Authentication for remote devices (VMware)"
-msgstr "远程设备认证 (VMware)"
+#: inc/iprange.class.php:82
+msgid "See all informations of task"
+msgstr "查看任务的所有信息"
+
+#: inc/iprange.class.php:84 inc/iprange.class.php:87
+#: inc/staticmisc.class.php:328 inc/staticmisc.class.php:362
+#: inc/menu.class.php:322
+msgid "IP Ranges"
+msgstr "IP段"
+
+#: inc/iprange.class.php:114 inc/profile.class.php:311
+msgid "IP range configuration"
+msgstr "配置IP段"
+
+#: inc/iprange.class.php:228
+msgid "Bad IP"
+msgstr "错误的IP"
+
+#: inc/iprange.class.php:285 inc/deploygroup.class.php:222 hook.php:414
+msgid "Target a task"
+msgstr "选定一项任务作为目标"
+
+#: inc/taskjob.class.php:57 inc/taskjoblog.class.php:190
+#: inc/task.class.php:1744 inc/agentwakeup.class.php:70
+msgid "Job"
+msgstr "作业"
+
+#: inc/taskjob.class.php:745
+msgid "Scheduled date"
+msgstr "预定日期"
+
+#: inc/taskjob.class.php:746
+msgid "Periodicity"
+msgstr "周期"
+
+#: inc/taskjob.class.php:747
+msgid "Definition"
+msgstr "定义"
+
+#: inc/taskjob.class.php:748
+msgid "Action"
+msgstr "动作"
+
+#: inc/taskjob.class.php:765 inc/deployfile.class.php:203
+#: inc/deployfile.class.php:376
+msgid "Minute(s)"
+msgstr "分钟(m)"
+
+#: inc/taskjob.class.php:770
+msgid "hour(s)"
+msgstr "小时(h)"
+
+#: inc/taskjob.class.php:775
+msgid "day(s)"
+msgstr "天(d)"
 
 #: inc/taskjob.class.php:802 inc/staticmisc.class.php:431
 #: inc/staticmisc.class.php:437
@@ -201,221 +134,419 @@ msgstr ""
 msgid "Auto management dynamic of agents (same subnet)"
 msgstr ""
 
-#: inc/iprange.class.php:228
-msgid "Bad IP"
-msgstr "错误的IP"
+#: inc/taskjob.class.php:1030
+msgid "Force the end"
+msgstr "强制结束"
 
-#: inc/deployuserinteraction.class.php:430
-msgid "Bad event sent to the agent"
-msgstr ""
+#: inc/profile.class.php:117 inc/menu.class.php:51 front/collect.php:36
+#: front/iprange.php:36 front/statediscovery.php:36 front/task.php:37
+#: front/timeslot.php:39 front/credential.form.php:40
+#: front/stateinventory.php:36 front/taskjob.form.php:38 front/taskjob.php:36
+#: front/credential.php:36 front/menu.php:40 front/menu_snmpinventory.php:39
+#: front/iprange.form.php:38 front/credentialip.form.php:43
+#: front/agentmodule.form.php:36 front/credentialip.php:36
+#: front/task.form.php:41 report/ports_date_connections.php:43
+#: report/not_queried_recently.php:43 report/switch_ports.history.php:40
+#: report/computer_last_inventory.php:43
+#: src/Controller/InventoryController.php:78
+msgid "GLPI Inventory"
+msgstr "GLPI资产"
 
-#: inc/collect_file.class.php:122
-msgid "Base folder"
-msgstr "基准文件夹"
+#: inc/profile.class.php:163 inc/menu.class.php:230
+msgid "General"
+msgstr "通用"
 
-#: inc/deployuserinteraction.class.php:96
-msgid "Before download"
-msgstr "下载前"
+#: inc/profile.class.php:169
+msgid "Inventory"
+msgstr "资产盘点"
 
-#: inc/deployuserinteractiontemplate.class.php:100
-msgid "Behavior"
-msgid_plural "Behaviors"
-msgstr[0] "行为"
+#: inc/profile.class.php:175 inc/profile.class.php:221
+msgid "Software deployment"
+msgstr "软件部署"
 
-#: inc/deployuserinteractiontemplate.class.php:560
-msgid "Behaviors"
-msgstr "行为"
+#: inc/profile.class.php:215 inc/profile.class.php:292
+msgid "Deploy packages on demand"
+msgstr "按需部署程序包"
 
-#: inc/deployuserinteractiontemplate.class.php:447
-msgid "Button abort"
-msgstr "中止按钮"
+#: inc/profile.class.php:277
+msgid "Manage packages"
+msgstr "管理程序包"
 
-#: inc/deployuserinteractiontemplate.class.php:446
-msgid "Button cancel"
-msgstr "取消按钮"
+#: inc/profile.class.php:282 inc/menu.class.php:403
+#: inc/deployuserinteractiontemplate.class.php:136
+#: front/deployuserinteractiontemplate.php:37
+msgid "User interaction template"
+msgid_plural "User interaction templates"
+msgstr[0] "用户交互模版"
 
-#: inc/deployuserinteractiontemplate.class.php:442
-msgid "Button continue"
-msgstr ""
+#: inc/profile.class.php:316 inc/menu.class.php:346
+#: inc/credentialip.class.php:131 inc/credentialip.class.php:154
+#: inc/credential.class.php:78 inc/credential.class.php:182
+msgid "Authentication for remote devices (VMware)"
+msgstr "远程设备认证 (VMware)"
 
-#: inc/deployuserinteractiontemplate.class.php:448
-msgid "Button ignore"
-msgstr "忽略按钮"
+#: inc/profile.class.php:321 inc/menu.class.php:330
+msgid "Remote devices to inventory (VMware)"
+msgstr "远程设备待资产盘点 (VMware)"
 
-#: inc/deployuserinteractiontemplate.class.php:445
-msgid "Button no"
-msgstr ""
+#: inc/profile.class.php:326 inc/credential.class.php:298
+#: inc/credential.class.php:316
+msgid "VMware host"
+msgstr "VMware主机"
 
-#: inc/deployuserinteractiontemplate.class.php:440
-msgid "Button ok"
-msgstr ""
+#: inc/profile.class.php:335
+msgid "Network equipment SNMP"
+msgstr "网络设备SNMP"
 
-#: inc/deployuserinteractiontemplate.class.php:443
-msgid "Button retry"
-msgstr ""
+#: inc/profile.class.php:340
+msgid "Printer SNMP"
+msgstr "打印机SNMP"
 
-#: inc/deployuserinteractiontemplate.class.php:444
-msgid "Button try"
-msgstr ""
+#: inc/profile.class.php:374
+msgid "Menu"
+msgstr "菜单"
 
-#: inc/deployuserinteractiontemplate.class.php:441
-msgid "Button yes"
-msgstr ""
+#: inc/profile.class.php:388
+msgid "Configuration"
+msgstr "配置"
 
-#: inc/iprange_snmpcredential.class.php:216
-msgid "By order of priority"
-msgstr "按优先级排序"
+#: inc/profile.class.php:393 inc/stateinventory.class.php:114
+#: inc/taskview.class.php:162 inc/statediscovery.class.php:176
+#: inc/task.class.php:1687 inc/task.class.php:1727 inc/deploytask.class.php:54
+#: inc/deploytask.class.php:154
+msgid "Task"
+msgid_plural "Tasks"
+msgstr[0] "任务"
 
-#: inc/deploygroup_staticdata.class.php:108
-msgid "CSV import"
-msgstr "CSV导入"
+#: inc/profile.class.php:398 inc/menu.class.php:217
+#: inc/deploytaskjob.class.php:226 front/deploygroup.php:37
+msgid "Groups of computers"
+msgstr "计算机群组"
 
-#: inc/deployuserinteractiontemplate.class.php:172
-msgid "Cancel - Try - Continue"
-msgstr "取消 - 偿试 - 继续"
+#: inc/profile.class.php:403 inc/menu.class.php:257
+msgid "Computer information"
+msgstr "计算机信息"
 
-#: inc/deployuserinteractiontemplate.class.php:206
-#: inc/deploypackage.class.php:1497
-msgid "Cancel job"
-msgstr "取消作业"
+#: inc/collect_file_content.class.php:91
+msgid "Path/file"
+msgstr "路径/文件"
 
-#: inc/taskjobview.class.php:774
-msgid "Cancel modifications"
-msgstr ""
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
+#: inc/collect.class.php:259 inc/collect_file.class.php:61
+#: inc/collect_file.class.php:143
+msgid "Size"
+msgstr "大小"
 
-#: inc/taskview.class.php:237 inc/taskjobstate.class.php:153
-#: inc/deploypackage.class.php:1367
-msgid "Cancelled"
-msgstr "已取消"
+#: inc/collect_file_content.class.php:133 inc/collect.class.php:244
+msgid "pathfile"
+msgstr "路径文件"
 
-#: inc/config.class.php:370
-msgid "Change the status"
-msgstr "变更状态"
+#: inc/deploygroup.class.php:83 inc/deploygroup.class.php:796 hook.php:93
+msgid "Static group"
+msgstr "静态组"
 
-#: public/b/deploy/index.php:136
-msgid "Checks"
-msgstr "校验"
+#: inc/deploygroup.class.php:84 inc/deploygroup.class.php:817
+msgid "Dynamic group"
+msgstr "动态组"
 
-#: inc/collect_file.class.php:63 inc/collect_file.class.php:164
-msgid "Checksum SHA2"
-msgstr "SHA2校验和"
+#: inc/deploygroup.class.php:97
+msgid "Inventory group"
+msgid_plural "Inventory groups"
+msgstr[0] "资产组"
 
-#: inc/collect_file.class.php:62 inc/collect_file.class.php:158
-msgid "Checksum SHA512"
-msgstr "SHA512校验和"
+#: inc/deploygroup.class.php:114
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] "关联的任务"
 
-#: inc/deployfile.class.php:338
-msgid "Choose"
-msgstr "选择"
+#: inc/deploygroup.class.php:164 inc/taskjobview.class.php:633
+msgid "Module method"
+msgstr "功能块方法"
+
+#: inc/deploygroup.class.php:378
+msgid "Add group"
+msgstr "添加组"
+
+#: inc/taskjoblog.class.php:94 inc/taskjoblog.class.php:286
+#: inc/stateinventory.class.php:192 inc/deploypackage.class.php:1366
+#: inc/taskview.class.php:236 inc/statediscovery.class.php:260
+#: inc/taskjobstate.class.php:148
+msgid "Prepared"
+msgstr "已就绪"
+
+#: inc/taskjoblog.class.php:95 inc/taskjoblog.class.php:290
+#: inc/stateinventory.class.php:197 inc/statediscovery.class.php:265
+msgid "Started"
+msgstr "已开始"
+
+#: inc/taskjoblog.class.php:97
+msgid "Ok"
+msgstr "好"
+
+#: inc/taskjoblog.class.php:99
+msgid "Info"
+msgstr "信息"
+
+#: inc/taskjoblog.class.php:216 inc/stateinventory.class.php:113
+#: inc/statediscovery.class.php:175
+msgid "Unique id"
+msgstr "唯一ID"
+
+#: inc/taskjoblog.class.php:232 inc/stateinventory.class.php:115
+#: inc/statediscovery.class.php:177
+msgid "Agent"
+msgstr "代理"
+
+#: inc/taskjoblog.class.php:308
+msgid "unknown"
+msgstr "未知"
+
+#: inc/taskjoblog.class.php:344
+msgid "devices queried"
+msgstr "设备查询"
+
+#: inc/taskjoblog.class.php:345
+msgid "devices found"
+msgstr "发现设备"
+
+#: inc/taskjoblog.class.php:346
+msgid "Add the item"
+msgstr "添加项目"
+
+#: inc/taskjoblog.class.php:347
+msgid "Update the item"
+msgstr "更新此项"
+
+#: inc/taskjoblog.class.php:348
+msgid "Inventory started"
+msgstr "开始盘点"
+
+#: inc/taskjoblog.class.php:349
+msgid "Detail"
+msgstr "详情"
+
+#: inc/taskjoblog.class.php:350
+msgid "Agent communication error, impossible to start agent"
+msgstr "代理通信错误，无法启动代理"
+
+#: inc/taskjoblog.class.php:351
+msgid "Agent stopped/crashed"
+msgstr "代理停止/崩溃"
+
+#: inc/taskjoblog.class.php:352
+msgid "Import denied"
+msgstr "拒绝导入"
+
+#: inc/commonview.class.php:300
+msgid "Warning:"
+msgstr "警告:"
+
+#: inc/commonview.class.php:305
+msgid "Error:"
+msgstr "错误:"
+
+#: inc/collect_wmi.class.php:49
+msgid "Found WMI"
+msgid_plural "Found WMIs"
+msgstr[0] "发现 WMIs"
 
 #: inc/collect_wmi.class.php:57 inc/collect_wmi.class.php:83
 #: inc/collect_wmi_content.class.php:117
 msgid "Class"
 msgstr "类"
 
-#: inc/config.class.php:373
-msgid "Clean agents"
-msgstr "代理清理"
-
-#: inc/task.class.php:768
-msgid "Clean on demand deployment tasks"
-msgstr ""
-
-#: inc/taskjobstate.class.php:571
-msgid "Clean taskjob (retention time)"
-msgstr ""
-
-#: inc/menu.class.php:157
-msgid "Clean unused files"
-msgstr "清理未用文件"
-
-#: inc/taskjobview.class.php:729 inc/taskjobview.class.php:751
-msgid "Clear list"
-msgstr "清除列表"
-
-#: hook.php:89
-msgid "Collect"
-msgstr "收集"
-
-#: inc/staticmisc.class.php:90
-msgid "Collect data"
-msgstr "收集数据"
-
-#: inc/collect.class.php:57
-msgid "Collect information"
-msgstr "收集信息"
-
-#: front/collect.form.php:36
-msgid "Collect management"
-msgstr "收集管理"
-
-#: inc/collect.class.php:705
-msgid "Collect module has been disabled for this agent"
-msgstr "\"收集\"模块已在该智能代理端上被禁用"
-
-#: inc/deployaction.class.php:70
-msgid "Command"
-msgstr "命令"
-
-#: inc/deployaction.class.php:56
-msgid "Command output contains"
-msgstr "命令输出包含"
-
-#: inc/deployaction.class.php:57
-msgid "Command output does not contains"
-msgstr "命令输出不包含"
-
-#: inc/deployaction.class.php:204
-msgid "Command to execute"
-msgstr "命令会执行"
-
-#: inc/iprange.class.php:79
-msgid "Communication mode"
-msgstr "通信模式"
+#: inc/collect_wmi.class.php:58 inc/collect_wmi.class.php:89
+msgid "Properties"
+msgstr "属性"
 
 #: inc/staticmisc.class.php:54
 msgid "Computer Inventory"
 msgstr "计算机资产盘点"
 
+#: inc/staticmisc.class.php:62
+msgid "VMware host remote inventory"
+msgstr "VMware主机远程资产盘点"
+
+#: inc/staticmisc.class.php:70 inc/config.class.php:402
+#: inc/config.class.php:424 hook.php:82
+msgid "Network discovery"
+msgstr "网络发现"
+
+#: inc/staticmisc.class.php:76 inc/config.class.php:412
+#: inc/config.class.php:433 inc/agentmodule.class.php:130
+#: inc/agentmodule.class.php:239
+msgid "Network inventory (SNMP)"
+msgstr "网络资产盘点 (SNMP)"
+
+#: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1057
+msgid "Package deploy"
+msgstr "程序包部署"
+
+#: inc/staticmisc.class.php:90
+msgid "Collect data"
+msgstr "收集数据"
+
+#: inc/stateinventory.class.php:117 inc/statediscovery.class.php:179
+msgid "Starting date"
+msgstr "起始日期"
+
+#: inc/stateinventory.class.php:118 inc/statediscovery.class.php:180
+msgid "Ending date"
+msgstr "截止日期"
+
+#: inc/stateinventory.class.php:120
+msgid "Number per second"
+msgstr "每秒的数量"
+
+#: inc/stateinventory.class.php:121
+msgid "Threads / Timeout configuration"
+msgstr "线程 / 超时 配置"
+
+#: inc/stateinventory.class.php:122
+msgid "To inventory"
+msgstr "盘点"
+
+#: inc/stateinventory.class.php:123
+msgid "Error(s)"
+msgstr "错误"
+
+#: inc/stateinventory.class.php:201 inc/statediscovery.class.php:269
+msgid "Finished tasks"
+msgstr "完成的任务"
+
+#: inc/menu.class.php:151 inc/deploypackage.class.php:156
+msgid "Import"
+msgstr "导入"
+
+#: inc/menu.class.php:157
+msgid "Clean unused files"
+msgstr "清理未用文件"
+
+#: inc/menu.class.php:211
+msgid "Agents management"
+msgstr "代理管理"
+
+#: inc/menu.class.php:223
+msgid "General configuration"
+msgstr "通用配置"
+
+#: inc/menu.class.php:241 inc/task.class.php:64
+msgid "Task management"
+msgstr "任务管理"
+
+#: inc/menu.class.php:245
+msgid "Monitoring / Logs"
+msgstr "监控 / 日志"
+
+#: inc/menu.class.php:251
+msgid "Import agent XML file"
+msgstr "导入代理XML文件"
+
+#: inc/menu.class.php:263 inc/timeslotentry.class.php:80
+#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
+msgid "Time slot"
+msgstr "时间段"
+
+#: inc/menu.class.php:270 inc/task.class.php:233 hook.php:129
+msgid "Tasks"
+msgstr "任务"
+
+#: inc/menu.class.php:281
+msgid "Equipment import and link rules"
+msgstr ""
+
+#: inc/menu.class.php:289
+msgid "Asset skipped during import"
+msgstr "导入期间跳过的资产 "
+
 #: inc/menu.class.php:295
 msgid "Computer entity rules"
 msgstr "计算机实体规则"
 
-#: inc/profile.class.php:403 inc/menu.class.php:257
-msgid "Computer information"
-msgstr "计算机信息"
+#: inc/menu.class.php:309
+msgid "Rules"
+msgstr "规则"
 
-#: inc/deploygroup_staticdata.class.php:384
-msgid "Computers imported successfully from CSV file"
-msgstr "已成功从CSV文件导入计算机"
+#: inc/menu.class.php:338 inc/iprange_snmpcredential.class.php:210
+msgid "SNMP credentials"
+msgstr "SNMP证书"
 
-#: report/computer_last_inventory.php:62
-msgid "Computers not inventoried since xx days"
-msgstr "已有 xx 天未进行资产盘点的计算机"
+#: inc/menu.class.php:354
+msgid "Discovery status"
+msgstr "发现状态"
 
-#: inc/profile.class.php:388
-msgid "Configuration"
-msgstr "配置"
+#: inc/menu.class.php:360
+msgid "Network inventory status"
+msgstr "网络资产状态"
+
+#: inc/menu.class.php:368
+msgid "SNMP models creation"
+msgstr "SNMP模型创建"
+
+#: inc/menu.class.php:376
+msgid "Networking"
+msgstr "网络"
+
+#: inc/menu.class.php:389 inc/config.class.php:216
+msgid "Package management"
+msgstr "程序包管理"
+
+#: inc/menu.class.php:414 hook.php:54
+msgid "Deploy"
+msgstr "部署"
+
+#: inc/menu.class.php:426
+msgid "SNMP inventory"
+msgstr "SNMP资产"
+
+#: inc/menu.class.php:432
+msgid "Guide"
+msgstr "向导"
+
+#: inc/menu.class.php:456
+msgid ""
+"This is the steps to configure plugin for SNMP inventory (swicth, router, "
+"network printer)"
+msgstr ""
 
 #: inc/menu.class.php:462
 msgid "Configure SNMP credentials"
 msgstr "配置SNMP证书"
 
-#: inc/taskjobview.class.php:782
-msgid "Confirm the final deletion ?"
+#: inc/menu.class.php:466
+msgid ""
+"Define rules for import : merge and create new devices (CAUTION: same rules "
+"for computer inventory)"
+msgstr "定义导入规则：合并和创建新设备（注意：计算机资产盘点规则相同）"
+
+#: inc/menu.class.php:470
+msgid "`Network Discovery`, used to discover the devices on the network"
+msgstr "`网络发现`, 用于发现网络上的设备"
+
+#: inc/menu.class.php:475
+msgid "Define IP Ranges of your network + related SNMP credentials"
 msgstr ""
 
-#: inc/deployuserinteractiontemplate.class.php:204
-msgid "Continue job with no user interaction"
-msgstr ""
-
-#: inc/deployaction.class.php:72
-msgid "Copy"
-msgstr "复制"
+#: inc/menu.class.php:479
+msgid "Define an agent allowed to discover the network"
+msgstr "定义一个代理允许发现网络"
 
 #: inc/menu.class.php:483
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
+msgstr ""
+
+#: inc/menu.class.php:487
+msgid "If you have devices not typed, import them from unmanaged devices"
+msgstr ""
+
+#: inc/menu.class.php:491
+msgid "`Network Inventory`, used to complete inventory the discovered devices"
+msgstr "“网络资源盘点”，用于完成对发现的设备的资源盘点"
+
+#: inc/menu.class.php:496
+msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr ""
 
 #: inc/menu.class.php:500
@@ -424,234 +555,338 @@ msgid ""
 "previously"
 msgstr ""
 
-#: inc/deployaction.class.php:74
-msgid "Create directory"
-msgstr "创建目录"
+#: inc/taskjobview.class.php:70
+msgid "Job configuration"
+msgstr "任务配置"
 
-#: inc/task.class.php:1915
-msgid "Created a deployment job, package: "
-msgstr "新建部署作业、包："
-
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:218
-msgid "Data"
-msgstr "数据"
-
-#: inc/menu.class.php:475
-msgid "Define IP Ranges of your network + related SNMP credentials"
-msgstr ""
-
-#: inc/menu.class.php:479
-msgid "Define an agent allowed to discover the network"
-msgstr ""
-
-#: inc/menu.class.php:496
-msgid "Define an agent allowed to inventory the network by SNMP"
-msgstr ""
-
-#: inc/menu.class.php:466
+#: inc/taskjobview.class.php:237
 msgid ""
-"Define rules for import : merge and create new devices (CAUTION: same rules "
-"for computer inventory)"
-msgstr "定义导入规则：合并和创建新设备（注意：计算机资产盘点规则相同）"
+"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
+"         Please consider modifying this task to avoid unexpected results."
+msgstr ""
 
-#: inc/taskjob.class.php:747
-msgid "Definition"
-msgstr "定义"
+#: inc/taskjobview.class.php:252
+msgid "Add a job"
+msgstr "添加作业"
 
-#: inc/taskjobview.class.php:281 inc/deployuserinteraction.class.php:274
-#: inc/deployfile.class.php:270 inc/deploycheck.class.php:286
-#: inc/deployaction.class.php:254
+#: inc/taskjobview.class.php:281 inc/deploycheck.class.php:286
+#: inc/deployuserinteraction.class.php:274 inc/deployaction.class.php:254
+#: inc/deployfile.class.php:270
 msgid "Delete"
 msgstr "删除"
 
-#: inc/deployaction.class.php:73
-msgid "Delete directory"
-msgstr "删除目录"
+#: inc/taskjobview.class.php:360
+msgid "Actor Type"
+msgstr "参与者类型"
+
+#: inc/taskjobview.class.php:364
+msgid "Target Type"
+msgstr "目标类型"
+
+#: inc/taskjobview.class.php:408
+msgid "Actor Item"
+msgstr "参与者项"
+
+#: inc/taskjobview.class.php:412
+msgid "Target Item"
+msgstr "目标项"
+
+#: inc/taskjobview.class.php:590 inc/taskjobview.class.php:593
+msgid "New action"
+msgstr "新动作"
+
+#: inc/taskjobview.class.php:670
+msgid "Restrict scope to task entity"
+msgstr ""
+
+#: inc/taskjobview.class.php:688 inc/taskjobview.class.php:721
+msgid "Targets"
+msgstr "目标"
+
+#: inc/taskjobview.class.php:694
+msgid "The items that should be applied for this job."
+msgstr ""
+
+#: inc/taskjobview.class.php:700 inc/taskjobview.class.php:743
+msgid "Actors"
+msgstr "参与人员"
+
+#: inc/taskjobview.class.php:705
+msgid "The items that should carry out those targets."
+msgstr "此项应该输出这些目标。"
+
+#: inc/taskjobview.class.php:729 inc/taskjobview.class.php:751
+msgid "Clear list"
+msgstr "清除列表"
 
 #: inc/taskjobview.class.php:734 inc/taskjobview.class.php:756
 msgid "Delete selected items"
-msgstr ""
+msgstr "删除所选项"
 
-#: inc/config.class.php:488
-msgid "Delete successful on demand tasks after (in days)"
-msgstr ""
+#: inc/taskjobview.class.php:774
+msgid "Cancel modifications"
+msgstr "取消修改"
 
-#: inc/config.class.php:306
-msgid "Delete tasks logs after"
-msgstr "之后删除任务日志"
+#: inc/taskjobview.class.php:779
+msgid "Purge"
+msgstr "清理"
 
-#: hook.php:54 inc/menu.class.php:414
-msgid "Deploy"
-msgstr "部署"
+#: inc/taskjobview.class.php:782
+msgid "Confirm the final deletion ?"
+msgstr "确认最后删除？"
 
-#: public/b/deploy/index.php:66
-msgid "Deploy module has been disabled for this agent"
-msgstr "\"部署\"模块已在该智能代理端上被禁用"
+#: inc/iprange_snmpcredential.class.php:102
+msgid "Associated SNMP credentials"
+msgstr "关联的SNMP凭证"
 
-#: inc/profile.class.php:215 inc/profile.class.php:292
-msgid "Deploy packages on demand"
-msgstr "按需部署程序包"
+#: inc/iprange_snmpcredential.class.php:213
+msgid "Version"
+msgstr "版本"
 
-#: inc/task.class.php:1855
-msgid "Deployment job, package: "
-msgstr "部署作业、包："
+#: inc/iprange_snmpcredential.class.php:216
+msgid "By order of priority"
+msgstr "按优先级排序"
 
-#: inc/taskjoblog.class.php:349
-msgid "Detail"
-msgstr "详情"
+#: inc/timeslotentry.class.php:64
+msgid "Time slot entry"
+msgstr "时间段条目"
 
-#: inc/taskview.class.php:932
-msgid "Device no longer defined in definition of job"
-msgstr ""
-
-#: inc/statediscovery.class.php:186
-msgid "Devices imported"
-msgstr ""
-
-#: inc/statediscovery.class.php:185
-msgid "Devices linked"
-msgstr ""
-
-#: inc/statediscovery.class.php:184
-msgid "Devices not imported"
-msgstr ""
-
-#: inc/deploycheck.class.php:390
-msgid "Directory"
-msgstr "目录"
-
-#: inc/deploycheck.class.php:72
-msgid "Directory exists"
-msgstr ""
-
-#: inc/deploycheck.class.php:73
-msgid "Directory is missing"
-msgstr "目录缺失"
-
-#: inc/collect_file.class.php:147 inc/collect_file.class.php:177
-msgid "Disabled"
-msgstr "已禁用"
-
-#: inc/menu.class.php:354
-msgid "Discovery status"
-msgstr "发现状态"
-
-#: inc/deploycheck.class.php:410
-msgid "Disk or directory"
-msgstr "磁盘或目录"
-
-#: inc/deploypackage.class.php:1662
-msgid "Don't wakeup"
-msgstr ""
-
-#: inc/deployfile.class.php:222
-msgid "Download"
-msgstr "下载"
-
-#: inc/deploygroup.class.php:84 inc/deploygroup.class.php:817
-msgid "Dynamic group"
-msgstr "动态组"
-
-#: hook.php:68
-msgid "ESX/VMWare"
-msgstr "ESX/VMWare"
-
-#: inc/deploytask.class.php:182
-msgid "Edit impossible, this task is active"
-msgstr ""
-
-#: inc/deploypackage.class.php:390 inc/deploypackage.class.php:514
-msgid "Enable deploy on demand for the following group"
-msgstr ""
-
-#: inc/timeslotentry.class.php:285
-msgid "End day must be after start day"
-msgstr ""
-
-#: templates/forms/iprange.html.twig inc/iprange.class.php:145
-#: inc/iprange.class.php:233
-msgid "End of IP range"
-msgstr "IP段结束位置"
+#: inc/timeslotentry.class.php:133
+msgid "Start time"
+msgstr "起始时间"
 
 #: inc/timeslotentry.class.php:159
 msgid "End time"
 msgstr "截止时间"
 
+#: inc/timeslotentry.class.php:285
+msgid "End day must be after start day"
+msgstr "结束日期必须在开始日期之后"
+
 #: inc/timeslotentry.class.php:295
 msgid "End time must be after start time"
-msgstr ""
+msgstr "结束时间必须在开始时间之后"
 
-#: inc/stateinventory.class.php:118 inc/statediscovery.class.php:180
-msgid "Ending date"
-msgstr "截止日期"
-
-#: inc/menu.class.php:281
-msgid "Equipment import and link rules"
-msgstr ""
-
-#: inc/taskjobstate.class.php:152
-msgid "Error"
-msgstr "错误"
-
-#: inc/stateinventory.class.php:123
-msgid "Error(s)"
-msgstr ""
-
-#: inc/commonview.class.php:305
-msgid "Error:"
-msgstr "错误:"
-
-#: inc/deploycheck.class.php:350
-msgid "Example of registry key"
-msgstr ""
-
-#: inc/deploycheck.class.php:358 inc/deploycheck.class.php:366
-#: inc/deploycheck.class.php:378
-msgid "Example of registry value"
-msgstr ""
-
-#: inc/agentmodule.class.php:109
-msgid "Exceptions"
-msgstr ""
-
-#: inc/deployaction.class.php:383
-msgid "Execution checks"
-msgstr "执行检查"
-
-#: inc/taskview.class.php:356
-msgid "Execution timeslot"
-msgstr "执行时段"
+#: inc/deploypackage.class.php:102 inc/task.class.php:1705
+msgid "Package"
+msgstr "包"
 
 #: inc/deploypackage.class.php:159
 msgid "Export"
 msgstr "导出"
 
+#: inc/deploypackage.class.php:280
+msgid "Modification Denied"
+msgstr "修改被拒绝"
+
+#: inc/deploypackage.class.php:283
+msgid "The following task is running with this package"
+msgid_plural "The following tasks are running with this package"
+msgstr[0] "下面的任务使用此软件包"
+
+#: inc/deploypackage.class.php:390 inc/deploypackage.class.php:514
+msgid "Enable deploy on demand for the following group"
+msgstr ""
+
+#: inc/deploypackage.class.php:533
+msgid "Audits"
+msgstr "审计"
+
+#: inc/deploypackage.class.php:534
+msgid "Files"
+msgstr "文件"
+
+#: inc/deploypackage.class.php:535 public/b/deploy/index.php:139
+msgid "Actions"
+msgstr "动作"
+
+#: inc/deploypackage.class.php:536
+msgid "User interactions"
+msgstr "用户交互"
+
+#: inc/deploypackage.class.php:687
+msgid "JSON package representation"
+msgstr ""
+
+#: inc/deploypackage.class.php:803
+msgid "Package exported in"
+msgstr ""
+
+#: inc/deploypackage.class.php:876
+msgid "Packages to import"
+msgstr "导入程序包"
+
+#: inc/deploypackage.class.php:1001 inc/deploypackageitem.class.php:332
+msgid "The modified JSON contained a syntax error :"
+msgstr "改动后的JSON含有一个语法错误："
+
+#: inc/deploypackage.class.php:1029
+msgid "Package actions"
+msgstr "程序包动作"
+
+#: inc/deploypackage.class.php:1038
+msgid "Target for deploy on demand"
+msgid_plural "Targets for deploy on demand"
+msgstr[0] ""
+
+#: inc/deploypackage.class.php:1133
+msgid "Add a target for self-service"
+msgstr "为自助服务增加一个目标"
+
+#: inc/deploypackage.class.php:1363 inc/taskview.class.php:233
+msgid "In error"
+msgstr "发生错误"
+
+#: inc/deploypackage.class.php:1364 inc/taskview.class.php:234
+msgid "Successful"
+msgstr "成功"
+
+#: inc/deploypackage.class.php:1365 inc/taskview.class.php:235
+msgid "Running"
+msgstr "正在运行"
+
+#: inc/deploypackage.class.php:1367 inc/taskview.class.php:237
+#: inc/taskjobstate.class.php:153
+msgid "Cancelled"
+msgstr "已取消"
+
+#: inc/deploypackage.class.php:1488
+msgid "Restart job"
+msgstr "重启作业"
+
+#: inc/deploypackage.class.php:1497
+#: inc/deployuserinteractiontemplate.class.php:206
+msgid "Cancel job"
+msgstr "取消作业"
+
+#: inc/deploypackage.class.php:1504
+msgid "refresh job"
+msgstr "刷新作业"
+
+#: inc/deploypackage.class.php:1646
+msgid "Select packages you want install"
+msgstr "选择你想安装的程序包"
+
+#: inc/deploypackage.class.php:1655
+msgid "Prepare for install"
+msgstr "准备安装"
+
+#: inc/deploypackage.class.php:1660
+msgid "I'm on this computer: local wakeup"
+msgstr ""
+
+#: inc/deploypackage.class.php:1661
+msgid "I'm not on this computer: wakeup from the server"
+msgstr ""
+
+#: inc/deploypackage.class.php:1662
+msgid "Don't wakeup"
+msgstr "不唤醒"
+
+#: inc/deploypackage.class.php:1678
+msgid "No packages available to install"
+msgstr "没有可用程序包安装"
+
+#: inc/display.class.php:155
+msgid "Progress"
+msgstr "进程"
+
+#: inc/taskview.class.php:68
+msgid "Include old jobs"
+msgstr "包含旧有作业"
+
+#: inc/taskview.class.php:86
+msgid "refresh interval"
+msgstr "刷新间隔"
+
+#: inc/taskview.class.php:89
+msgid "Off"
+msgstr "关闭"
+
 #: inc/taskview.class.php:106
 msgid "Export task result"
 msgstr "导出任务结果"
 
-#: inc/config.class.php:326
-msgid "Extra-debug"
+#: inc/taskview.class.php:124
+msgid "Task execution states"
+msgstr "任务执行状态"
+
+#: inc/taskview.class.php:210
+msgid "Show/Hide details"
+msgstr "展示/隐藏 详细信息"
+
+#: inc/taskview.class.php:320 inc/task.class.php:149
+msgid "Permit to re-prepare task after run"
+msgstr "允许运行后重新准备任务"
+
+#: inc/taskview.class.php:325
+msgid "This is an on demand deployment task"
+msgstr "这是一个随选部署任务"
+
+#: inc/taskview.class.php:336 inc/task.class.php:108
+msgid "Schedule start"
+msgstr "方案开始"
+
+#: inc/taskview.class.php:342 inc/task.class.php:116
+msgid "Schedule end"
+msgstr "方案结束"
+
+#: inc/taskview.class.php:348
+msgid "Preparation timeslot"
+msgstr "准备时段"
+
+#: inc/taskview.class.php:356
+msgid "Execution timeslot"
+msgstr "执行时段"
+
+#: inc/taskview.class.php:364
+msgid "Agent wakeup interval (in minutes)"
+msgstr "智能代理端唤醒间隔 (以分钟计)"
+
+#: inc/taskview.class.php:374
+msgid "Number of agents to wake up"
+msgstr "将唤醒智能代理端数量"
+
+#: inc/taskview.class.php:416
+msgid "Force start"
+msgstr "强制开始"
+
+#: inc/taskview.class.php:932
+msgid "Device no longer defined in definition of job"
 msgstr ""
 
-#: inc/deployfile.class.php:706 inc/deployfile.class.php:761
-msgid "Failed to copy file"
-msgstr "复制文件失败"
+#: inc/deploycheck.class.php:53 inc/collect.class.php:149
+#: inc/collect.class.php:206
+msgid "Registry"
+msgstr "注册表"
 
-#: inc/deployfile.class.php:671
-msgid "Failed to write file to disk"
-msgstr ""
+#: inc/deploycheck.class.php:54
+msgid "Registry key exists"
+msgstr "注册表项已存在"
 
-#: front/config.form.php:38
-msgid "Features"
-msgstr "特性"
+#: inc/deploycheck.class.php:55
+msgid "Registry value exists"
+msgstr "注册表值已存在"
 
-#: inc/collect_file.class.php:82 inc/collect_file.class.php:188
-#: inc/deployfile.class.php:325 inc/deploycheck.class.php:384
-#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
-msgid "File"
-msgstr "文件"
+#: inc/deploycheck.class.php:56
+msgid "Registry key missing"
+msgstr "注册表键缺失"
+
+#: inc/deploycheck.class.php:57
+msgid "Registry value missing"
+msgstr "注册表值缺失"
+
+#: inc/deploycheck.class.php:58
+msgid "Registry value equals to"
+msgstr "注册表值等于"
+
+#: inc/deploycheck.class.php:59
+msgid "Registry value not equals to"
+msgstr "注册表值不等于"
+
+#: inc/deploycheck.class.php:60
+msgid "Type of registry value equals to"
+msgstr "注册表值类型等于"
 
 #: inc/deploycheck.class.php:63
 msgid "File exists"
@@ -661,464 +896,395 @@ msgstr "文件已存在"
 msgid "File is missing"
 msgstr "文件缺失"
 
-#: inc/deployfile.class.php:710 inc/deployfile.class.php:765
-msgid "File missing"
-msgstr "文件丢失"
-
-#: front/deployfile_download.php:95 front/deployfile_download.php:98
-msgid "File not found"
-msgstr "未发现文件"
-
-#: inc/deployfile.class.php:703 inc/deployfile.class.php:758
-msgid "File saved!"
-msgstr "文件已保存!"
+#: inc/deploycheck.class.php:65
+msgid "File size is greater than"
+msgstr "文件尺寸大于"
 
 #: inc/deploycheck.class.php:66
 msgid "File size is equal to"
 msgstr "文件尺寸等于"
 
-#: inc/deploycheck.class.php:65
-msgid "File size is greater than"
-msgstr "文件尺寸大于"
-
 #: inc/deploycheck.class.php:67
 msgid "File size is lower than"
 msgstr "文件尺寸小于"
 
-#: inc/collect_file.class.php:173
-msgid "Filename"
-msgstr "文件名"
+#: inc/deploycheck.class.php:68
+msgid "SHA-512 hash value matches"
+msgstr "SHA-512 哈希值匹配"
 
-#: inc/deploypackage.class.php:534
-msgid "Files"
-msgstr "文件"
+#: inc/deploycheck.class.php:69
+msgid "SHA-512 hash value mismatch"
+msgstr "SHA-512 哈希值不匹配"
 
-#: public/b/deploy/index.php:137
-msgid "Files download"
-msgstr "文件下载"
+#: inc/deploycheck.class.php:72
+msgid "Directory exists"
+msgstr "目录已存在"
 
-#: inc/deployfile.class.php:448
-#, php-format
-msgid "Files need to be uploaded to %s folder to be displayed here"
-msgstr ""
-
-#: public/b/deploy/index.php:138
-msgid "Files preparation"
-msgstr "文件准备"
-
-#: inc/collect_file.class.php:116
-msgid "Filter"
-msgid_plural "Filters"
-msgstr[0] "过滤器"
-
-#: inc/collect.class.php:151 inc/collect.class.php:242
-#: inc/collect.class.php:257
-msgid "Find file"
-msgstr "查找文件"
-
-#: inc/taskjobstate.class.php:151
-msgid "Finished"
-msgstr "已完成"
-
-#: inc/stateinventory.class.php:201 inc/statediscovery.class.php:269
-msgid "Finished tasks"
-msgstr "完成的任务"
-
-#: inc/collect_file.class.php:58 inc/collect_file.class.php:84
-#: inc/collect_file.class.php:189
-msgid "Folder"
-msgstr "文件夹"
-
-#: inc/collect_file.class.php:128
-msgid "Folder recursive"
-msgstr "文件夹递归"
-
-#: inc/taskview.class.php:416
-msgid "Force start"
-msgstr "强制开始"
-
-#: inc/taskjob.class.php:1030
-msgid "Force the end"
-msgstr ""
-
-#: inc/collect_wmi.class.php:49
-msgid "Found WMI"
-msgid_plural "Found WMIs"
-msgstr[0] "发现 WMIs"
-
-#: inc/collect_registry.class.php:51
-msgid "Found entry"
-msgid_plural "Found entries"
-msgstr[0] "找到实体"
-
-#: inc/collect_file.class.php:49
-msgid "Found file"
-msgid_plural "Found files"
-msgstr[0] "找到文件"
+#: inc/deploycheck.class.php:73
+msgid "Directory is missing"
+msgstr "目录缺失"
 
 #: inc/deploycheck.class.php:76
 msgid "Free space is greater than"
 msgstr "可用空间大于"
 
-#: inc/deployaction.class.php:309
-msgid "From"
-msgstr "从"
+#: inc/deploycheck.class.php:123
+msgid "continue"
+msgstr "继续"
 
-#: front/menu_snmpinventory.php:39 front/agentmodule.form.php:36
-#: front/iprange.form.php:38 front/credential.php:36 front/credentialip.php:36
-#: front/menu.php:40 front/taskjob.form.php:38 front/stateinventory.php:36
-#: front/iprange.php:36 front/timeslot.php:39 front/task.php:37
-#: front/credential.form.php:40 front/credentialip.form.php:43
-#: front/task.form.php:41 front/collect.php:36 front/statediscovery.php:36
-#: front/taskjob.php:36 inc/profile.class.php:117 inc/menu.class.php:51
-#: src/Controller/InventoryController.php:78
-#: report/not_queried_recently.php:43 report/ports_date_connections.php:43
-#: report/computer_last_inventory.php:43 report/switch_ports.history.php:40
-msgid "GLPI Inventory"
-msgstr "GLPI资产"
+#: inc/deploycheck.class.php:125
+msgid "passed"
+msgstr "通过"
+
+#: inc/deploycheck.class.php:127
+msgid "otherwise"
+msgstr "否则"
 
 #: inc/deploycheck.class.php:241 inc/deploycheck.class.php:359
 #: inc/deploycheck.class.php:370 inc/deploycheck.class.php:379
 #: inc/deployaction.class.php:448
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
-msgstr ""
+msgstr "强制GLPI-Agent 或 Fusioninventory-Agent >= %1s "
+
+#: inc/deploycheck.class.php:272 inc/deployuserinteraction.class.php:260
+#: inc/deployaction.class.php:240 inc/deployfile.class.php:257
+msgid "drag"
+msgstr "拖动"
+
+#: inc/deploycheck.class.php:305 inc/deploycheck.class.php:460
+msgid "Audit label"
+msgstr "审核标签"
+
+#: inc/deploycheck.class.php:348
+msgid "Path to the key"
+msgstr "键的路径"
+
+#: inc/deploycheck.class.php:350
+msgid "Example of registry key"
+msgstr "注册表键实例"
 
 #: inc/deploycheck.class.php:351 inc/deploycheck.class.php:368
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
-msgstr ""
+msgstr "建议GLPI-Agent 或 Fusioninventory-Agent >= %1s "
 
-#: inc/profile.class.php:163 inc/menu.class.php:230
-msgid "General"
-msgstr "通用"
+#: inc/deploycheck.class.php:356 inc/deploycheck.class.php:364
+#: inc/deploycheck.class.php:375
+msgid "Path to the value"
+msgstr "值的路径"
 
-#: inc/menu.class.php:223
-msgid "General configuration"
-msgstr "通用配置"
+#: inc/deploycheck.class.php:358 inc/deploycheck.class.php:366
+#: inc/deploycheck.class.php:378
+msgid "Example of registry value"
+msgstr "注册表值实例"
 
-#: front/deploygroup.php:37 inc/deploytaskjob.class.php:226
-#: inc/profile.class.php:398 inc/menu.class.php:217
-msgid "Groups of computers"
-msgstr "计算机群组"
+#: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
+#: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
+#: inc/collect_registry_content.class.php:170
+#: inc/collect_registry_content.class.php:217
+#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
+msgid "Value"
+msgstr "值"
 
-#: inc/menu.class.php:432
-msgid "Guide"
-msgstr "向导"
+#: inc/deploycheck.class.php:376
+msgid "Type of value"
+msgstr "值的类型"
 
-#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:89
-msgid "Hive"
-msgstr "储巢"
+#: inc/deploycheck.class.php:384 inc/deploycheck.class.php:397
+#: inc/deploycheck.class.php:404 inc/deployfile.class.php:325
+#: inc/collect_file.class.php:82 inc/collect_file.class.php:188
+msgid "File"
+msgstr "文件"
 
-#: inc/deploypackage.class.php:1661
-msgid "I'm not on this computer: wakeup from the server"
-msgstr ""
+#: inc/deploycheck.class.php:390
+msgid "Directory"
+msgstr "目录"
 
-#: inc/deploypackage.class.php:1660
-msgid "I'm on this computer: local wakeup"
-msgstr ""
+#: inc/deploycheck.class.php:410
+msgid "Disk or directory"
+msgstr "磁盘或目录"
 
-#: inc/iprange.class.php:84 inc/iprange.class.php:87
-#: inc/staticmisc.class.php:328 inc/staticmisc.class.php:362
-#: inc/menu.class.php:322
-msgid "IP Ranges"
-msgstr "IP段"
-
-#: inc/profile.class.php:311 inc/iprange.class.php:114
-msgid "IP range configuration"
-msgstr "配置IP段"
+#: inc/deploycheck.class.php:519
+msgid "Unit"
+msgstr "单位"
 
 #: inc/deploycheck.class.php:542
 msgid "If not successful"
 msgstr "如果不成功"
 
-#: inc/menu.class.php:487
-msgid "If you have devices not typed, import them from unmanaged devices"
-msgstr ""
+#: inc/deploycheck.class.php:573
+msgid "abort job"
+msgstr "放弃作业"
 
-#: inc/deployuserinteraction.class.php:464
-msgid "Ignore"
-msgstr "忽略"
+#: inc/deploycheck.class.php:574
+msgid "skip job"
+msgstr "跳过作业"
 
-#: inc/menu.class.php:151 inc/deploypackage.class.php:156
-msgid "Import"
-msgstr "导入"
+#: inc/deploycheck.class.php:575
+msgid "start job now"
+msgstr "现在开始任务"
 
-#: inc/deploygroup_staticdata.class.php:337
-msgid ""
-"Import a list of computers from a CSV file (the first column must contain "
-"the computer ID)"
-msgstr "从CSV文件导入计算机列表（第一列必须包含计算机ID）"
+#: inc/deploycheck.class.php:576
+msgid "report info"
+msgstr "报告信息"
 
-#: inc/menu.class.php:251
-msgid "Import agent XML file"
-msgstr "导入代理XML文件"
+#: inc/deploycheck.class.php:577
+msgid "report warning"
+msgstr "报告警告"
 
-#: inc/taskjoblog.class.php:352
-msgid "Import denied"
-msgstr "拒绝导入"
+#: inc/collect_registry.class.php:51
+msgid "Found entry"
+msgid_plural "Found entries"
+msgstr[0] "找到实体"
 
-#: inc/deploygroup_staticdata.class.php:387
-msgid "Impossible to read the CSV file"
-msgstr "无法读取csv文件"
+#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:89
+msgid "Hive"
+msgstr "储巢"
 
-#: inc/taskview.class.php:233 inc/deploypackage.class.php:1363
-msgid "In error"
-msgstr "发生错误"
+#: inc/collect_registry.class.php:71 inc/collect_registry.class.php:100
+#: inc/collect_registry_content.class.php:169
+msgid "Path"
+msgstr "路径"
 
-#: inc/collect_file.class.php:65
-msgid "Iname"
-msgstr "内部名称"
+#: inc/collect_registry.class.php:72 inc/collect_registry.class.php:106
+msgid "Key"
+msgstr "项"
 
-#: inc/taskview.class.php:68
-msgid "Include old jobs"
-msgstr "包含旧有作业"
+#: inc/deployuserinteraction.class.php:81
+msgid "User interaction"
+msgid_plural "User interactions"
+msgstr[0] "用户交互"
 
-#: inc/taskjoblog.class.php:99
-msgid "Info"
-msgstr "信息"
+#: inc/deployuserinteraction.class.php:96
+msgid "Before download"
+msgstr "下载前"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction format"
-msgstr "交互格式"
+#: inc/deployuserinteraction.class.php:97
+msgid "After download"
+msgstr "下载后"
+
+#: inc/deployuserinteraction.class.php:98
+msgid "After actions"
+msgstr "动作之后"
+
+#: inc/deployuserinteraction.class.php:99
+msgid "On download failure"
+msgstr "下载失败"
+
+#: inc/deployuserinteraction.class.php:100
+msgid "On actions failure"
+msgstr "一个动作失败"
 
 #: inc/deployuserinteraction.class.php:197
 msgid "Interaction label"
 msgstr "交互标签"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction type"
-msgstr "交互类型"
-
-#: inc/profile.class.php:169
-msgid "Inventory"
-msgstr "资产盘点"
-
-#: inc/deploygroup.class.php:97
-msgid "Inventory group"
-msgid_plural "Inventory groups"
-msgstr[0] ""
-
-#: inc/taskjoblog.class.php:348
-msgid "Inventory started"
-msgstr "开始盘点"
-
-#: inc/task.class.php:765
-msgid "Inventory task scheduler"
-msgstr ""
-
-#: inc/deploypackage.class.php:687
-msgid "JSON package representation"
-msgstr ""
-
-#: inc/task.class.php:1744 inc/taskjob.class.php:57
-#: inc/agentwakeup.class.php:70 inc/taskjoblog.class.php:190
-msgid "Job"
-msgstr "作业"
-
-#: inc/taskjobstate.class.php:529
-#, php-format
-msgid "Job available for next execution at %s"
-msgstr ""
-
 #: inc/deployuserinteraction.class.php:410
 #, php-format
 msgid "Job cancelled by the user %1$s"
-msgstr ""
+msgstr "任务被用户 %1$s 取消"
 
-#: inc/taskjobview.class.php:70
-msgid "Job configuration"
-msgstr ""
-
-#: inc/taskjobstate.class.php:133
-msgid "Job executions"
-msgstr "作业执行"
+#: inc/deployuserinteraction.class.php:417
+#, php-format
+msgid "User %1$s agreed to continue the job"
+msgstr "用户%1$s同意了该作业"
 
 #: inc/deployuserinteraction.class.php:424
 #, php-format
 msgid "Job postponed by the user %1$s"
 msgstr "作业被用户%1$s推迟"
 
-#: inc/collect_registry.class.php:72 inc/collect_registry.class.php:106
-msgid "Key"
-msgstr "项"
-
-#: report/not_queried_recently.php:137 report/computer_last_inventory.php:137
-msgid "Last inventory"
-msgstr "上次资产盘点"
-
-#: inc/collect_file.class.php:57 inc/collect_file.class.php:104
-msgid "Limit"
-msgstr "限制"
-
-#: hook.php:61
-msgid "Local inventory"
-msgstr "本地资产盘点"
-
-#: inc/deploygroup_staticdata.class.php:155
-#, php-format
-msgid ""
-"Make a search to get desired computer, then use massive actions and use %s"
+#: inc/deployuserinteraction.class.php:430
+msgid "Bad event sent to the agent"
 msgstr ""
 
-#: inc/profile.class.php:277
-msgid "Manage packages"
-msgstr "管理程序包"
-
-#: inc/config.class.php:472
-msgid "Match mirrors to agents"
+#: inc/deployuserinteraction.class.php:449
+msgid "Alert displayed, no input required"
 msgstr ""
 
-#: inc/deployfile.class.php:1101
-msgid "Max file size"
-msgstr "最大文件尺寸"
+#: inc/deployuserinteraction.class.php:455
+msgid "Retry"
+msgstr "重试"
 
-#: inc/config.class.php:339
-msgid "Maximum number of agents to wake up in a task"
-msgstr "任务中要唤醒的代理的最大数目"
+#: inc/deployuserinteraction.class.php:461
+msgid "Abort"
+msgstr "放弃"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Maximum number of retry allowed"
-msgstr ""
+#: inc/deployuserinteraction.class.php:464
+msgid "Ignore"
+msgstr "忽略"
 
-#: inc/taskjobstate.class.php:546
-msgid "Maximum number of retry reached: force deployment"
-msgstr ""
-
-#: inc/profile.class.php:374
-msgid "Menu"
-msgstr "菜单"
-
-#: inc/deployfile.class.php:203 inc/deployfile.class.php:376
-#: inc/taskjob.class.php:765
-msgid "Minute(s)"
-msgstr "分钟(m)"
-
-#: inc/deployfile.class.php:1102
-msgid "Mio"
-msgstr ""
-
-#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
-msgid "Mirror server address"
-msgstr "镜像服务器地址"
-
-#: inc/profile.class.php:287 inc/menu.class.php:396
-#: inc/deploymirror.class.php:68
-msgid "Mirror servers"
-msgstr "镜像服务器"
-
-#: inc/deployfile.class.php:667
-msgid "Missing a temporary folder"
-msgstr "临时文件夹缺失"
-
-#: inc/deploypackage.class.php:280
-msgid "Modification Denied"
-msgstr "修改被拒绝"
-
-#: hook.php:54 hook.php:61 hook.php:68 hook.php:75 hook.php:82 hook.php:89
-#: inc/agentmodule.class.php:107 inc/agentmodule.class.php:211
-#: inc/agentmodule.class.php:213
-msgid "Module"
-msgstr "模块"
-
-#: inc/taskjobview.class.php:633 inc/deploygroup.class.php:164
-msgid "Module method"
-msgstr ""
-
-#: inc/menu.class.php:245
-msgid "Monitoring / Logs"
-msgstr "监控 / 日志"
-
-#: inc/deployaction.class.php:71
-msgid "Move"
-msgstr "移动"
-
-#: inc/deployuserinteraction.class.php:476
-msgid "Multiple users connected"
-msgstr "多个用户已连接"
-
-#: inc/collect_file.class.php:64
-msgid "Name"
-msgstr "名称"
-
-#: inc/config.class.php:215
-msgid "Network Inventory"
-msgstr "网络资产盘点"
-
-#: hook.php:82 inc/config.class.php:402 inc/config.class.php:424
-#: inc/staticmisc.class.php:70
-msgid "Network discovery"
-msgstr "网络发现"
-
-#: inc/profile.class.php:335
-msgid "Network equipment SNMP"
-msgstr ""
-
-#: hook.php:75
-msgid "Network inventory"
-msgstr "网络资产盘点"
-
-#: inc/agentmodule.class.php:130 inc/agentmodule.class.php:239
-#: inc/config.class.php:412 inc/config.class.php:433
-#: inc/staticmisc.class.php:76
-msgid "Network inventory (SNMP)"
-msgstr "网络资产盘点 (SNMP)"
-
-#: inc/menu.class.php:360
-msgid "Network inventory status"
-msgstr "网络资产状态"
-
-#: inc/config.class.php:396
-msgid "Network options"
-msgstr "网络选项"
-
-#: inc/menu.class.php:376
-msgid "Networking"
-msgstr "网络"
-
-#: inc/taskjobview.class.php:590 inc/taskjobview.class.php:593
-msgid "New action"
-msgstr ""
-
-#: inc/deployuserinteractiontemplate.class.php:449
-msgid "No active session"
-msgstr "没有活动的会话"
-
-#: inc/deployfile.class.php:663
-msgid "No file was uploaded"
-msgstr "没有文件被上传"
-
-#: inc/deploypackage.class.php:1678
-msgid "No packages available to install"
+#: inc/deployuserinteraction.class.php:470
+msgid "Alert duration exceeded"
 msgstr ""
 
 #: inc/deployuserinteraction.class.php:473
 msgid "No user connected"
 msgstr "无已连接用户"
 
-#: inc/collect_file.class.php:178
-msgid "Non sentitive case"
-msgstr "大小写不敏感"
+#: inc/deployuserinteraction.class.php:476
+msgid "Multiple users connected"
+msgstr "多个用户已连接"
 
-#: inc/taskview.class.php:374
-msgid "Number of agents to wake up"
-msgstr "将唤醒智能代理端数量"
+#: inc/communicationnetworkdiscovery.class.php:111
+#, php-format
+msgid "Processed: %1$s Created: %2$s Updated: %3$s"
+msgstr ""
 
-#: report/computer_last_inventory.php:68
-msgid "Number of days (minimum) since last inventory"
-msgstr "距上次资产盘点已过去天数(最小值)"
+#: inc/deployaction.class.php:54
+msgid "Return code is equal to"
+msgstr "返回码等于"
 
-#: report/not_queried_recently.php:58
-msgid "Number of days since last inventory"
-msgstr "距上次资产盘点已过去天数"
+#: inc/deployaction.class.php:55
+msgid "Return code is not equal to"
+msgstr "返回码不等于"
+
+#: inc/deployaction.class.php:56
+msgid "Command output contains"
+msgstr "命令输出包含"
+
+#: inc/deployaction.class.php:57
+msgid "Command output does not contains"
+msgstr "命令输出不包含"
+
+#: inc/deployaction.class.php:70
+msgid "Command"
+msgstr "命令"
+
+#: inc/deployaction.class.php:71
+msgid "Move"
+msgstr "移动"
+
+#: inc/deployaction.class.php:72
+msgid "Copy"
+msgstr "复制"
+
+#: inc/deployaction.class.php:73
+msgid "Delete directory"
+msgstr "删除目录"
+
+#: inc/deployaction.class.php:74
+msgid "Create directory"
+msgstr "创建目录"
+
+#: inc/deployaction.class.php:204
+msgid "Command to execute"
+msgstr "命令会执行"
+
+#: inc/deployaction.class.php:207 inc/deployaction.class.php:356
+msgid "Action label"
+msgstr "动作标签"
 
 #: inc/deployaction.class.php:210 inc/deployaction.class.php:438
 msgid "Number of output lines to retrieve"
+msgstr "检索输出的行数"
+
+#: inc/deployaction.class.php:227
+msgid "return codes saved for this command"
+msgstr "该命令已保存的返回码"
+
+#: inc/deployaction.class.php:309
+msgid "From"
+msgstr "从"
+
+#: inc/deployaction.class.php:311
+msgid "To"
+msgstr "到"
+
+#: inc/deployaction.class.php:322
+msgid "exec"
+msgstr "执行"
+
+#: inc/deployaction.class.php:337
+msgid "path"
+msgstr "路径"
+
+#: inc/deployaction.class.php:383
+msgid "Execution checks"
+msgstr "执行检查"
+
+#: inc/config.class.php:215
+msgid "Network Inventory"
+msgstr "网络资产盘点"
+
+#: inc/config.class.php:299
+msgid "SSL-only for agent"
+msgstr "仅SSL适用于代理"
+
+#: inc/config.class.php:306
+msgid "Delete tasks logs after"
+msgstr "之后删除任务日志"
+
+#: inc/config.class.php:319
+msgid "Agent port"
+msgstr "代理端口"
+
+#: inc/config.class.php:326
+msgid "Extra-debug"
+msgstr "额外调试"
+
+#: inc/config.class.php:331
+msgid "Re-prepare successful jobs"
+msgstr "重新准备成功的工作"
+
+#: inc/config.class.php:339
+msgid "Maximum number of agents to wake up in a task"
+msgstr "任务中要唤醒的代理的最大数目"
+
+#: inc/config.class.php:370
+msgid "Change the status"
+msgstr "变更状态"
+
+#: inc/config.class.php:373
+msgid "Clean agents"
+msgstr "代理清理"
+
+#: inc/config.class.php:396
+msgid "Network options"
+msgstr "网络选项"
+
+#: inc/config.class.php:401 inc/config.class.php:411
+#: inc/statediscovery.class.php:182
+msgid "Threads number"
+msgstr "线程号"
+
+#: inc/config.class.php:423 inc/config.class.php:432
+msgid "SNMP timeout"
+msgstr "SNMP 超时"
+
+#: inc/config.class.php:465
+msgid "Use this GLPI server as a mirror server"
+msgstr "使用此GLPI服务器为镜像服务器"
+
+#: inc/config.class.php:472
+msgid "Match mirrors to agents"
 msgstr ""
 
-#: inc/stateinventory.class.php:120
-msgid "Number per second"
+#: inc/config.class.php:475
+msgid "with location"
+msgstr "使用地点"
+
+#: inc/config.class.php:476
+msgid "with entity"
+msgstr "使用实体"
+
+#: inc/config.class.php:477
+msgid "with both"
+msgstr "都使用"
+
+#: inc/config.class.php:488
+msgid "Delete successful on demand tasks after (in days)"
 msgstr ""
+
+#: inc/deployuserinteractiontemplate.class.php:100
+msgid "Behavior"
+msgid_plural "Behaviors"
+msgstr[0] "行为"
+
+#: inc/deployuserinteractiontemplate.class.php:153
+msgid "Windows system alert (WTS)"
+msgstr "Windows系统警报 (WTS)"
 
 #: inc/deployuserinteractiontemplate.class.php:166
 msgid "OK"
@@ -1132,401 +1298,227 @@ msgstr ""
 msgid "OK - Cancel"
 msgstr "好 - 取消"
 
-#: inc/taskview.class.php:89
-msgid "Off"
-msgstr "关闭"
-
-#: inc/taskjoblog.class.php:97
-msgid "Ok"
-msgstr "好"
-
-#: inc/deployuserinteraction.class.php:100
-msgid "On actions failure"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:99
-msgid "On download failure"
-msgstr "下载失败"
-
-#: inc/deploytask.class.php:110
-msgid "Order list"
-msgstr ""
-
-#: inc/deployfile.class.php:367
-msgid "P2P"
-msgstr "P2P"
-
-#: inc/deployfile.class.php:675
-msgid "PHP extension stopped the file upload"
-msgstr ""
-
-#: inc/task.class.php:1705 inc/deploypackage.class.php:102
-msgid "Package"
-msgstr "包"
-
-#: inc/deploypackage.class.php:1029
-msgid "Package actions"
-msgstr ""
-
-#: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1057
-msgid "Package deploy"
-msgstr "程序包部署"
-
-#: inc/agentmodule.class.php:134 inc/agentmodule.class.php:243
-msgid "Package deployment"
-msgstr ""
-
-#: inc/deploypackage.class.php:803
-msgid "Package exported in"
-msgstr ""
-
-#: inc/config.class.php:216 inc/menu.class.php:389
-msgid "Package management"
-msgstr "程序包管理"
-
-#: inc/deploypackage.class.php:876
-msgid "Packages to import"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:169
-#: inc/collect_registry.class.php:71 inc/collect_registry.class.php:100
-msgid "Path"
-msgstr "路径"
-
-#: inc/collect.class.php:845
-msgid "Path not found"
-msgstr "找不到路径"
-
-#: inc/deploycheck.class.php:348
-msgid "Path to the key"
-msgstr "键的路径"
-
-#: inc/deploycheck.class.php:356 inc/deploycheck.class.php:364
-#: inc/deploycheck.class.php:375
-msgid "Path to the value"
-msgstr "值的路径"
-
-#: inc/collect_file_content.class.php:91
-msgid "Path/file"
-msgstr "路径/文件"
-
-#: inc/taskjob.class.php:746
-msgid "Periodicity"
-msgstr ""
-
-#: inc/task.class.php:149 inc/taskview.class.php:320
-msgid "Permit to re-prepare task after run"
-msgstr ""
-
-#: inc/taskjobstate.class.php:154
-msgid "Postponed"
-msgstr "已推迟"
-
-#: inc/taskview.class.php:348
-msgid "Preparation timeslot"
-msgstr "准备时段"
-
-#: inc/deploypackage.class.php:1655
-msgid "Prepare for install"
-msgstr "准备安装"
-
-#: inc/stateinventory.class.php:192 inc/statediscovery.class.php:260
-#: inc/taskview.class.php:236 inc/taskjobstate.class.php:148
-#: inc/deploypackage.class.php:1366 inc/taskjoblog.class.php:94
-#: inc/taskjoblog.class.php:286
-msgid "Prepared"
-msgstr "已就绪"
-
-#: inc/profile.class.php:340
-msgid "Printer SNMP"
-msgstr ""
-
-#: inc/communicationnetworkdiscovery.class.php:111
-#, php-format
-msgid "Processed: %1$s Created: %2$s Updated: %3$s"
-msgstr ""
-
-#: inc/display.class.php:155
-msgid "Progress"
-msgstr ""
-
-#: inc/collect_wmi.class.php:58 inc/collect_wmi.class.php:89
-msgid "Properties"
-msgstr "属性"
-
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
-msgid "Property"
-msgstr "属性"
-
-#: inc/taskjobview.class.php:779
-msgid "Purge"
-msgstr ""
-
-#: inc/deployuserinteractiontemplate.class.php:191
-msgid "Question"
-msgstr "问题"
-
-#: inc/config.class.php:331
-msgid "Re-prepare successful jobs"
-msgstr "重新准备成功的工作"
-
-#: inc/collect_file.class.php:59
-msgid "Recursive"
-msgstr "递归"
-
-#: inc/collect_file.class.php:60 inc/collect_file.class.php:137
-msgid "Regex"
-msgstr "正则表达式"
-
-#: inc/collect.class.php:149 inc/collect.class.php:206
-#: inc/deploycheck.class.php:53
-msgid "Registry"
-msgstr "注册表"
-
-#: inc/deploycheck.class.php:54
-msgid "Registry key exists"
-msgstr "注册表项已存在"
-
-#: inc/deploycheck.class.php:56
-msgid "Registry key missing"
-msgstr ""
-
-#: inc/deploycheck.class.php:58
-msgid "Registry value equals to"
-msgstr ""
-
-#: inc/deploycheck.class.php:55
-msgid "Registry value exists"
-msgstr ""
-
-#: inc/deploycheck.class.php:57
-msgid "Registry value missing"
-msgstr ""
-
-#: inc/deploycheck.class.php:59
-msgid "Registry value not equals to"
-msgstr ""
-
-#: inc/credentialip.class.php:77
-msgid "Remote device inventory"
-msgstr "远程设备清单"
-
-#: inc/profile.class.php:321 inc/menu.class.php:330
-msgid "Remote devices to inventory (VMware)"
-msgstr "远程设备待资产盘点 (VMware)"
-
-#: hook.php:420 inc/deploygroup_staticdata.class.php:228
-msgid "Remove from static group"
-msgstr "从静态组移除"
-
-#: inc/deploypackage.class.php:1488
-msgid "Restart job"
-msgstr "重启作业"
-
-#: inc/taskjobview.class.php:670
-msgid "Restrict scope to task entity"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:455
-msgid "Retry"
-msgstr "重试"
-
-#: inc/taskjobstate.class.php:544
-#, php-format
-msgid "Retry #%d"
-msgstr ""
+#: inc/deployuserinteractiontemplate.class.php:169
+msgid "Yes - No"
+msgstr "是 - 否"
 
 #: inc/deployuserinteractiontemplate.class.php:170
 msgid "Retry - Cancel"
 msgstr "重试 - 取消"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Retry job after"
-msgstr "重试作业在"
+#: inc/deployuserinteractiontemplate.class.php:171
+msgid "Abort - Retry - Ignore"
+msgstr "关于 - 重试 - 忽略"
+
+#: inc/deployuserinteractiontemplate.class.php:172
+msgid "Cancel - Try - Continue"
+msgstr "取消 - 偿试 - 继续"
+
+#: inc/deployuserinteractiontemplate.class.php:173
+msgid "Yes - No - Cancel"
+msgstr "是 - 否 - 取消"
+
+#: inc/deployuserinteractiontemplate.class.php:191
+msgid "Question"
+msgstr "问题"
+
+#: inc/deployuserinteractiontemplate.class.php:204
+msgid "Continue job with no user interaction"
+msgstr "没有用户交互时继续任务"
 
 #: inc/deployuserinteractiontemplate.class.php:205
 msgid "Retry job later"
 msgstr "稍后重试作业"
 
-#: inc/deployaction.class.php:54
-msgid "Return code is equal to"
-msgstr "返回码等于"
+#: inc/deployuserinteractiontemplate.class.php:440
+msgid "Button ok"
+msgstr "按钮好"
 
-#: inc/deployaction.class.php:55
-msgid "Return code is not equal to"
-msgstr "返回码不等于"
+#: inc/deployuserinteractiontemplate.class.php:441
+msgid "Button yes"
+msgstr "按钮是"
 
-#: inc/menu.class.php:309
-msgid "Rules"
-msgstr "规则"
+#: inc/deployuserinteractiontemplate.class.php:442
+msgid "Button continue"
+msgstr "按钮继续"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1365
-msgid "Running"
-msgstr "正在运行"
+#: inc/deployuserinteractiontemplate.class.php:443
+msgid "Button retry"
+msgstr "按钮重试"
 
-#: inc/deploycheck.class.php:68
-msgid "SHA-512 hash value matches"
-msgstr ""
+#: inc/deployuserinteractiontemplate.class.php:444
+msgid "Button try"
+msgstr "按钮试一下"
 
-#: inc/deploycheck.class.php:69
-msgid "SHA-512 hash value mismatch"
-msgstr ""
+#: inc/deployuserinteractiontemplate.class.php:445
+msgid "Button no"
+msgstr "按钮不"
 
-#: inc/iprange_snmpcredential.class.php:210 inc/menu.class.php:338
-msgid "SNMP credentials"
-msgstr "SNMP证书"
+#: inc/deployuserinteractiontemplate.class.php:446
+msgid "Button cancel"
+msgstr "取消按钮"
 
-#: inc/menu.class.php:426
-msgid "SNMP inventory"
-msgstr "SNMP资产"
+#: inc/deployuserinteractiontemplate.class.php:447
+msgid "Button abort"
+msgstr "中止按钮"
 
-#: inc/menu.class.php:368
-msgid "SNMP models creation"
-msgstr "SNMP模型创建"
+#: inc/deployuserinteractiontemplate.class.php:448
+msgid "Button ignore"
+msgstr "忽略按钮"
 
-#: inc/config.class.php:423 inc/config.class.php:432
-msgid "SNMP timeout"
-msgstr "SNMP 超时"
+#: inc/deployuserinteractiontemplate.class.php:449
+msgid "No active session"
+msgstr "没有活动的会话"
 
-#: inc/config.class.php:299
-msgid "SSL-only for agent"
-msgstr "仅SSL适用于代理"
-
-#: inc/task.class.php:116 inc/taskview.class.php:342
-msgid "Schedule end"
-msgstr "方案结束"
-
-#: inc/task.class.php:108 inc/taskview.class.php:336
-msgid "Schedule start"
-msgstr "方案开始"
-
-#: inc/taskjob.class.php:745
-msgid "Scheduled date"
-msgstr ""
-
-#: inc/iprange.class.php:82
-msgid "See all informations of task"
-msgstr "查看任务的所有信息"
-
-#: inc/deploypackage.class.php:1646
-msgid "Select packages you want install"
-msgstr ""
-
-#: inc/deployfile.class.php:344
-msgid "Select the file on server"
-msgstr "选择服务器上的文件"
-
-#: inc/collect_file.class.php:179
-msgid "Sentitive case"
-msgstr "大小写敏感"
-
-#: inc/taskjobstate.class.php:149
-msgid "Server has sent data to the agent"
-msgstr ""
-
-#: hook.php:356
-msgid "Setup"
-msgstr "设置"
+#: inc/deployuserinteractiontemplate.class.php:450
+msgid "Alert timeout exceeded"
+msgstr "超出警报超时"
 
 #: inc/deployuserinteractiontemplate.class.php:451
 msgid "Several active sessions"
 msgstr "几个活跃的会话"
 
-#: inc/taskjobview.class.php:237
-msgid ""
-"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
-"         Please consider modifying this task to avoid unexpected results."
+#: inc/deployuserinteractiontemplate.class.php:560
+msgid "Behaviors"
+msgstr "行为"
+
+#: inc/statediscovery.class.php:183
+msgid "Total discovery devices"
+msgstr "发现的全部设备"
+
+#: inc/statediscovery.class.php:184
+msgid "Devices not imported"
+msgstr "设备未导入"
+
+#: inc/statediscovery.class.php:185
+msgid "Devices linked"
+msgstr "设备已连接"
+
+#: inc/statediscovery.class.php:186
+msgid "Devices imported"
+msgstr "设备已导入"
+
+#: inc/credentialip.class.php:77
+msgid "Remote device inventory"
+msgstr "远程设备清单"
+
+#: inc/collect_registry_content.class.php:73
+msgid "Windows registry content"
+msgstr "Windows注册表内容"
+
+#: inc/collect_registry_content.class.php:171
+#: inc/collect_registry_content.class.php:218
+msgid "Data"
+msgstr "数据"
+
+#: inc/deployfile.class.php:87
+msgid "Upload from computer"
+msgstr "从计算机上传"
+
+#: inc/deployfile.class.php:91
+msgid "Upload from server"
+msgstr "从服务器上传"
+
+#: inc/deployfile.class.php:200
+msgid "p2p"
+msgstr "点对点P2P"
+
+#: inc/deployfile.class.php:201 inc/deployfile.class.php:375
+msgid "retention"
+msgstr "保留"
+
+#: inc/deployfile.class.php:215
+msgid "uncompress"
+msgstr "未压缩"
+
+#: inc/deployfile.class.php:222
+msgid "Download"
+msgstr "下载"
+
+#: inc/deployfile.class.php:331
+msgid "filename"
+msgstr "文件名"
+
+#: inc/deployfile.class.php:338
+msgid "Choose"
+msgstr "选择"
+
+#: inc/deployfile.class.php:344
+msgid "Select the file on server"
+msgstr "选择服务器上的文件"
+
+#: inc/deployfile.class.php:360
+msgid "Uncompress"
+msgstr "未压缩"
+
+#: inc/deployfile.class.php:367
+msgid "P2P"
+msgstr "P2P"
+
+#: inc/deployfile.class.php:448
+#, php-format
+msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
 
-#: inc/taskview.class.php:210
-msgid "Show/Hide details"
-msgstr "展示/隐藏 详细信息"
+#: inc/deployfile.class.php:651
+msgid "Upload error"
+msgstr "上传错误"
 
-#: inc/collect_file.class.php:61 inc/collect_file.class.php:143
-#: inc/collect.class.php:259 inc/deployfile.class.php:1118
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134
-msgid "Size"
-msgstr "大小"
+#: inc/deployfile.class.php:655
+msgid "Transfer error: the file size is too big"
+msgstr "传输错误：文件尺寸太大"
 
-#: inc/profile.class.php:175 inc/profile.class.php:221
-msgid "Software deployment"
-msgstr "软件部署"
+#: inc/deployfile.class.php:659
+msgid "The uploaded file was only partially uploaded"
+msgstr "上传的文件只上传了部分"
 
-#: templates/forms/iprange.html.twig inc/iprange.class.php:138
-#: inc/iprange.class.php:230
-msgid "Start of IP range"
-msgstr "IP段起始位置"
+#: inc/deployfile.class.php:663
+msgid "No file was uploaded"
+msgstr "没有文件被上传"
 
-#: inc/timeslotentry.class.php:133
-msgid "Start time"
-msgstr "起始时间"
+#: inc/deployfile.class.php:667
+msgid "Missing a temporary folder"
+msgstr "临时文件夹缺失"
 
-#: inc/stateinventory.class.php:197 inc/statediscovery.class.php:265
-#: inc/taskjoblog.class.php:95 inc/taskjoblog.class.php:290
-msgid "Started"
-msgstr "已开始"
+#: inc/deployfile.class.php:671
+msgid "Failed to write file to disk"
+msgstr "写入到磁盘失败"
 
-#: inc/stateinventory.class.php:117 inc/statediscovery.class.php:179
-msgid "Starting date"
-msgstr "起始日期"
+#: inc/deployfile.class.php:675
+msgid "PHP extension stopped the file upload"
+msgstr "PHP扩展停止文件上传"
 
-#: hook.php:93 inc/deploygroup.class.php:83 inc/deploygroup.class.php:796
-msgid "Static group"
-msgstr "静态组"
+#: inc/deployfile.class.php:703 inc/deployfile.class.php:758
+msgid "File saved!"
+msgstr "文件已保存!"
 
-#: inc/taskview.class.php:234 inc/deploypackage.class.php:1364
-msgid "Successful"
-msgstr "成功"
+#: inc/deployfile.class.php:706 inc/deployfile.class.php:761
+msgid "Failed to copy file"
+msgstr "复制文件失败"
 
-#: inc/taskjobview.class.php:412
-msgid "Target Item"
-msgstr "目标项"
+#: inc/deployfile.class.php:710 inc/deployfile.class.php:765
+msgid "File missing"
+msgstr "文件丢失"
 
-#: inc/taskjobview.class.php:364
-msgid "Target Type"
+#: inc/deployfile.class.php:1101
+msgid "Max file size"
+msgstr "最大文件尺寸"
+
+#: inc/deployfile.class.php:1102
+msgid "Mio"
+msgstr "Mio"
+
+#: inc/deployfile.class.php:1115
+msgid "Unused file"
+msgstr "未使用文件"
+
+#: inc/task.class.php:159
+msgid "deploy on demand task"
 msgstr ""
 
-#: hook.php:414 inc/deploygroup.class.php:222 inc/iprange.class.php:285
-msgid "Target a task"
-msgstr "选定一项任务作为目标"
-
-#: inc/deploypackage.class.php:1038
-msgid "Target for deploy on demand"
-msgid_plural "Targets for deploy on demand"
-msgstr[0] ""
-
-#: inc/taskjobview.class.php:688 inc/taskjobview.class.php:721
-msgid "Targets"
-msgstr "目标"
-
-#: inc/task.class.php:1687 inc/task.class.php:1727
-#: inc/stateinventory.class.php:114 inc/statediscovery.class.php:176
-#: inc/taskview.class.php:162 inc/profile.class.php:393
-#: inc/deploytask.class.php:54 inc/deploytask.class.php:154
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "任务"
-
-#: inc/taskview.class.php:124
-msgid "Task execution states"
-msgstr "任务执行状态"
-
-#: inc/task.class.php:1639
-msgid "Task has been disabled"
-msgstr ""
-
-#: inc/task.class.php:64 inc/menu.class.php:241
-msgid "Task management"
-msgstr "任务管理"
-
-#: hook.php:129 inc/task.class.php:233 inc/menu.class.php:270
-msgid "Tasks"
-msgstr "任务"
-
-#: inc/taskjobstate.class.php:128
-msgid "Tasks / Groups"
-msgstr ""
+#: inc/task.class.php:190
+msgid "Associated tasks"
+msgstr "关联的任务"
 
 #: inc/task.class.php:472
 msgid ""
@@ -1535,55 +1527,8 @@ msgid ""
 "error."
 msgstr ""
 
-#: inc/deploypackage.class.php:283
-msgid "The following task is running with this package"
-msgid_plural "The following tasks are running with this package"
-msgstr[0] ""
-
-#: inc/taskjobview.class.php:694
-msgid "The items that should be applied for this job."
-msgstr ""
-
-#: inc/taskjobview.class.php:705
-msgid "The items that should carry out those targets."
-msgstr ""
-
-#: inc/deploypackageitem.class.php:332 inc/deploypackage.class.php:1001
-msgid "The modified JSON contained a syntax error :"
-msgstr "改动后的JSON含有一个语法错误："
-
-#: public/js/taskjobs.js:742
-msgid "The preparation of the task did not return any targets"
-msgstr ""
-
-#: inc/task.class.php:1901
-msgid "The selected task already has a deployment job for another package: "
-msgstr "所选任务已有另一个包的部署作业："
-
-#: inc/task.class.php:616
-msgid "The task cannot be updated if it is active"
-msgstr ""
-
 #: inc/task.class.php:485
 msgid "The task has been deactivated after preparation of this job."
-msgstr ""
-
-#: inc/deployfile.class.php:659
-msgid "The uploaded file was only partially uploaded"
-msgstr ""
-
-#: inc/task.class.php:571
-msgid "This agent does not belong anymore in the actors defined in the job."
-msgstr ""
-
-#: inc/taskview.class.php:325
-msgid "This is an on demand deployment task"
-msgstr "这是一个随选部署任务"
-
-#: inc/menu.class.php:456
-msgid ""
-"This is the steps to configure plugin for SNMP inventory (swicth, router, "
-"network printer)"
 msgstr ""
 
 #: inc/task.class.php:506
@@ -1594,174 +1539,25 @@ msgstr "由于任务日程安排，无法执行此作业。"
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr ""
 
-#: inc/deploytask.class.php:214
-msgid "This task is active. delete denied"
-msgstr "此任务处于活动状态。拒绝删除。"
-
-#: inc/stateinventory.class.php:121
-msgid "Threads / Timeout configuration"
+#: inc/task.class.php:571
+msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr ""
 
-#: inc/statediscovery.class.php:182 inc/config.class.php:401
-#: inc/config.class.php:411
-msgid "Threads number"
-msgstr "线程号"
+#: inc/task.class.php:616
+msgid "The task cannot be updated if it is active"
+msgstr "如果任务是活动的，则无法被更新"
 
-#: inc/timeslotentry.class.php:80 inc/timeslot.class.php:67
-#: inc/timeslot.class.php:83 inc/menu.class.php:263
-msgid "Time slot"
-msgstr "时间段"
+#: inc/task.class.php:765
+msgid "Inventory task scheduler"
+msgstr "盘点任务日程表"
 
-#: inc/timeslotentry.class.php:64
-msgid "Time slot entry"
-msgstr "时间段条目"
-
-#: inc/deployaction.class.php:311
-msgid "To"
-msgstr "到"
-
-#: inc/stateinventory.class.php:122
-msgid "To inventory"
+#: inc/task.class.php:768
+msgid "Clean on demand deployment tasks"
 msgstr ""
 
-#: inc/statediscovery.class.php:183
-msgid "Total discovery devices"
-msgstr ""
-
-#: inc/deployfile.class.php:655
-msgid "Transfer error: the file size is too big"
-msgstr ""
-
-#: inc/collect_file.class.php:66 inc/collect_file.class.php:184
-msgid "Type"
-msgstr "类型"
-
-#: inc/deploycheck.class.php:60
-msgid "Type of registry value equals to"
-msgstr ""
-
-#: inc/deploycheck.class.php:376
-msgid "Type of value"
-msgstr "值的类型"
-
-#: inc/deployfile.class.php:360
-msgid "Uncompress"
-msgstr "未压缩"
-
-#: inc/stateinventory.class.php:113 inc/statediscovery.class.php:175
-#: inc/taskjoblog.class.php:216
-msgid "Unique id"
-msgstr "唯一ID"
-
-#: inc/deploycheck.class.php:519
-msgid "Unit"
-msgstr "单位"
-
-#: inc/deployfile.class.php:1115
-msgid "Unused file"
-msgstr "未使用文件"
-
-#: inc/taskjoblog.class.php:347
-msgid "Update the item"
-msgstr "更新此项"
-
-#: inc/task.class.php:1872
-msgid "Updated a deployment job, package: "
-msgstr "更新了部署作业、包:"
-
-#: inc/deployfile.class.php:651
-msgid "Upload error"
-msgstr "上传错误"
-
-#: inc/deployfile.class.php:87
-msgid "Upload from computer"
-msgstr "从计算机上传"
-
-#: inc/deployfile.class.php:91
-msgid "Upload from server"
-msgstr "从服务器上传"
-
-#: inc/config.class.php:465
-msgid "Use this GLPI server as a mirror server"
-msgstr "使用此GLPI服务器为镜像服务器"
-
-#: inc/deployuserinteraction.class.php:417
-#, php-format
-msgid "User %1$s agreed to continue the job"
-msgstr "用户%1$s同意了该作业"
-
-#: public/b/deploy/index.php:249
-msgid "User canceled the job"
-msgstr "用户取消了该作业"
-
-#: inc/deployuserinteraction.class.php:81
-msgid "User interaction"
-msgid_plural "User interactions"
-msgstr[0] ""
-
-#: front/deployuserinteractiontemplate.php:37
-#: inc/deployuserinteractiontemplate.class.php:136 inc/profile.class.php:282
-#: inc/menu.class.php:403
-msgid "User interaction template"
-msgid_plural "User interaction templates"
-msgstr[0] "用户交互模版"
-
-#: inc/deploypackage.class.php:536
-msgid "User interactions"
-msgstr "用户交互"
-
-#: public/b/deploy/index.php:251
-msgid "User postponed the job"
-msgstr "用户推迟了该作业"
-
-#: inc/credential.class.php:298 inc/credential.class.php:316
-#: inc/profile.class.php:326
-msgid "VMware host"
-msgstr "VMware主机"
-
-#: inc/staticmisc.class.php:62
-msgid "VMware host remote inventory"
-msgstr "VMware主机远程资产盘点"
-
-#: inc/collect_registry_content.class.php:170
-#: inc/collect_registry_content.class.php:217 inc/deploycheck.class.php:365
-#: inc/deploycheck.class.php:398 inc/deploycheck.class.php:405
-#: inc/deploycheck.class.php:411 inc/collect_wmi_content.class.php:119
-#: inc/collect_wmi_content.class.php:170
-msgid "Value"
-msgstr "值"
-
-#: inc/iprange_snmpcredential.class.php:213
-msgid "Version"
-msgstr "版本"
-
-#: inc/collect.class.php:150 inc/collect.class.php:224
-msgid "WMI"
-msgstr "WMI"
-
-#: inc/agentwakeup.class.php:57
-msgid "Wake agents up"
-msgstr "唤醒代理"
-
-#: inc/commonview.class.php:300
-msgid "Warning:"
-msgstr "警告:"
-
-#: inc/collect_registry_content.class.php:73
-msgid "Windows registry content"
-msgstr ""
-
-#: inc/deployuserinteractiontemplate.class.php:153
-msgid "Windows system alert (WTS)"
-msgstr "Windows系统警报 (WTS)"
-
-#: inc/deployuserinteractiontemplate.class.php:169
-msgid "Yes - No"
-msgstr "是 - 否"
-
-#: inc/deployuserinteractiontemplate.class.php:173
-msgid "Yes - No - Cancel"
-msgstr "是 - 否 - 取消"
+#: inc/task.class.php:1639
+msgid "Task has been disabled"
+msgstr "任务已经被禁用"
 
 #: inc/task.class.php:1838
 msgid ""
@@ -1769,123 +1565,328 @@ msgid ""
 "package."
 msgstr ""
 
-#: inc/menu.class.php:470
-msgid "`Network Discovery`, used to discover the devices on the network"
+#: inc/task.class.php:1855
+msgid "Deployment job, package: "
+msgstr "部署作业、包："
+
+#: inc/task.class.php:1872
+msgid "Updated a deployment job, package: "
+msgstr "更新了部署作业、包:"
+
+#: inc/task.class.php:1873 inc/task.class.php:1916
+msgid ", actors: "
+msgstr ", 参与人员: "
+
+#: inc/task.class.php:1901
+msgid "The selected task already has a deployment job for another package: "
+msgstr "所选任务已有另一个包的部署作业："
+
+#: inc/task.class.php:1915
+msgid "Created a deployment job, package: "
+msgstr "新建部署作业、包："
+
+#: inc/deploytask.class.php:110
+msgid "Order list"
+msgstr "订单列表"
+
+#: inc/deploytask.class.php:157
+msgid "Add task"
+msgstr "添加任务"
+
+#: inc/deploytask.class.php:182
+msgid "Edit impossible, this task is active"
+msgstr "无法编辑，此任务是活动的"
+
+#: inc/deploytask.class.php:214
+msgid "This task is active. delete denied"
+msgstr "此任务处于活动状态。拒绝删除。"
+
+#: inc/taskjobstate.class.php:128
+msgid "Tasks / Groups"
+msgstr "任务/群组"
+
+#: inc/taskjobstate.class.php:133
+msgid "Job executions"
+msgstr "作业执行"
+
+#: inc/taskjobstate.class.php:149
+msgid "Server has sent data to the agent"
+msgstr "服务器已发送数据到代理"
+
+#: inc/taskjobstate.class.php:150
+msgid "Agent replied with data to the server"
+msgstr "代理回复数据到服务器"
+
+#: inc/taskjobstate.class.php:151
+msgid "Finished"
+msgstr "已完成"
+
+#: inc/taskjobstate.class.php:152
+msgid "Error"
+msgstr "错误"
+
+#: inc/taskjobstate.class.php:154
+msgid "Postponed"
+msgstr "已推迟"
+
+#: inc/taskjobstate.class.php:529
+#, php-format
+msgid "Job available for next execution at %s"
 msgstr ""
 
-#: inc/menu.class.php:491
-msgid "`Network Inventory`, used to complete inventory the discovered devices"
-msgstr "“网络资源盘点”，用于完成对发现的设备的资源盘点"
+#: inc/taskjobstate.class.php:544
+#, php-format
+msgid "Retry #%d"
+msgstr "重试 #%d"
 
-#: inc/deploycheck.class.php:573
-msgid "abort job"
-msgstr "放弃作业"
-
-#: inc/deploycheck.class.php:123
-msgid "continue"
-msgstr "继续"
-
-#: inc/taskjob.class.php:775
-msgid "day(s)"
-msgstr "天(d)"
-
-#: inc/task.class.php:159
-msgid "deploy on demand task"
+#: inc/taskjobstate.class.php:546
+msgid "Maximum number of retry reached: force deployment"
 msgstr ""
 
-#: inc/taskjoblog.class.php:345
-msgid "devices found"
-msgstr "发现设备"
-
-#: inc/taskjoblog.class.php:344
-msgid "devices queried"
+#: inc/taskjobstate.class.php:571
+msgid "Clean taskjob (retention time)"
 msgstr ""
 
-#: inc/deployuserinteraction.class.php:260 inc/deployfile.class.php:257
-#: inc/deploycheck.class.php:272 inc/deployaction.class.php:240
-msgid "drag"
-msgstr "拖动"
+#: inc/agentwakeup.class.php:57
+msgid "Wake agents up"
+msgstr "唤醒代理"
 
-#: inc/deployaction.class.php:322
-msgid "exec"
-msgstr "执行"
+#: inc/collect.class.php:57
+msgid "Collect information"
+msgstr "收集信息"
 
-#: inc/deployfile.class.php:331
-msgid "filename"
+#: inc/collect.class.php:150 inc/collect.class.php:224
+msgid "WMI"
+msgstr "WMI"
+
+#: inc/collect.class.php:151 inc/collect.class.php:242
+#: inc/collect.class.php:257
+msgid "Find file"
+msgstr "查找文件"
+
+#: inc/collect.class.php:705
+msgid "Collect module has been disabled for this agent"
+msgstr "\"收集\"模块已在该智能代理端上被禁用"
+
+#: inc/collect.class.php:845
+msgid "Path not found"
+msgstr "找不到路径"
+
+#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
+msgid "Property"
+msgstr "属性"
+
+#: inc/agentmodule.class.php:61
+msgid "Agents modules"
+msgstr "代理模块"
+
+#: inc/agentmodule.class.php:107 inc/agentmodule.class.php:211
+#: inc/agentmodule.class.php:213 hook.php:54 hook.php:61 hook.php:68
+#: hook.php:75 hook.php:82 hook.php:89
+msgid "Module"
+msgstr "模块"
+
+#: inc/agentmodule.class.php:108
+msgid "Activation (by default)"
+msgstr "激活(默认)"
+
+#: inc/agentmodule.class.php:109
+msgid "Exceptions"
+msgstr "例外"
+
+#: inc/agentmodule.class.php:134 inc/agentmodule.class.php:243
+msgid "Package deployment"
+msgstr "程序表布署"
+
+#: inc/agentmodule.class.php:212 inc/agentmodule.class.php:214
+msgid "Activation"
+msgstr "激活"
+
+#: inc/collect_file.class.php:49
+msgid "Found file"
+msgid_plural "Found files"
+msgstr[0] "找到文件"
+
+#: inc/collect_file.class.php:57 inc/collect_file.class.php:104
+msgid "Limit"
+msgstr "限制"
+
+#: inc/collect_file.class.php:58 inc/collect_file.class.php:84
+#: inc/collect_file.class.php:189
+msgid "Folder"
+msgstr "文件夹"
+
+#: inc/collect_file.class.php:59
+msgid "Recursive"
+msgstr "递归"
+
+#: inc/collect_file.class.php:60 inc/collect_file.class.php:137
+msgid "Regex"
+msgstr "正则表达式"
+
+#: inc/collect_file.class.php:62 inc/collect_file.class.php:158
+msgid "Checksum SHA512"
+msgstr "SHA512校验和"
+
+#: inc/collect_file.class.php:63 inc/collect_file.class.php:164
+msgid "Checksum SHA2"
+msgstr "SHA2校验和"
+
+#: inc/collect_file.class.php:64
+msgid "Name"
+msgstr "名称"
+
+#: inc/collect_file.class.php:65
+msgid "Iname"
+msgstr "内部名称"
+
+#: inc/collect_file.class.php:66 inc/collect_file.class.php:184
+msgid "Type"
+msgstr "类型"
+
+#: inc/collect_file.class.php:116
+msgid "Filter"
+msgid_plural "Filters"
+msgstr[0] "过滤器"
+
+#: inc/collect_file.class.php:122
+msgid "Base folder"
+msgstr "基准文件夹"
+
+#: inc/collect_file.class.php:128
+msgid "Folder recursive"
+msgstr "文件夹递归"
+
+#: inc/collect_file.class.php:147 inc/collect_file.class.php:177
+msgid "Disabled"
+msgstr "已禁用"
+
+#: inc/collect_file.class.php:173
+msgid "Filename"
 msgstr "文件名"
 
-#: inc/taskjob.class.php:770
-msgid "hour(s)"
-msgstr "小时(h)"
+#: inc/collect_file.class.php:178
+msgid "Non sentitive case"
+msgstr "大小写不敏感"
 
-#: inc/deploycheck.class.php:127
-msgid "otherwise"
-msgstr "否则"
+#: inc/collect_file.class.php:179
+msgid "Sentitive case"
+msgstr "大小写敏感"
 
-#: inc/deployfile.class.php:200
-msgid "p2p"
-msgstr "点对点P2P"
+#: inc/deploygroup_staticdata.class.php:108
+msgid "CSV import"
+msgstr "CSV导入"
 
-#: inc/deploycheck.class.php:125
-msgid "passed"
-msgstr "通过"
-
-#: inc/deployaction.class.php:337
-msgid "path"
-msgstr "路径"
-
-#: inc/collect.class.php:244 inc/collect_file_content.class.php:133
-msgid "pathfile"
-msgstr "路径文件"
-
-#: inc/taskview.class.php:86
-msgid "refresh interval"
-msgstr "刷新间隔"
-
-#: inc/deploypackage.class.php:1504
-msgid "refresh job"
-msgstr "刷新作业"
-
-#: inc/deploycheck.class.php:576
-msgid "report info"
-msgstr "报告信息"
-
-#: inc/deploycheck.class.php:577
-msgid "report warning"
-msgstr "报告警告"
-
-#: inc/deployfile.class.php:201 inc/deployfile.class.php:375
-msgid "retention"
-msgstr "保留"
-
-#: inc/deployaction.class.php:227
-msgid "return codes saved for this command"
-msgstr "该命令已保存的返回码"
-
-#: inc/deploycheck.class.php:574
-msgid "skip job"
-msgstr "跳过作业"
-
-#: inc/deploycheck.class.php:575
-msgid "start job now"
+#: inc/deploygroup_staticdata.class.php:155
+#, php-format
+msgid ""
+"Make a search to get desired computer, then use massive actions and use %s"
 msgstr ""
 
-#: inc/deployfile.class.php:215
-msgid "uncompress"
-msgstr "未压缩"
+#: inc/deploygroup_staticdata.class.php:156
+#: inc/deploygroup_staticdata.class.php:172 hook.php:418
+msgid "Add to static group"
+msgstr "添加到静态组"
 
-#: inc/taskjoblog.class.php:308
-msgid "unknown"
-msgstr "未知"
+#: inc/deploygroup_staticdata.class.php:228 hook.php:420
+msgid "Remove from static group"
+msgstr "从静态组移除"
 
-#: inc/config.class.php:477
-msgid "with both"
-msgstr "都使用"
+#: inc/deploygroup_staticdata.class.php:337
+msgid ""
+"Import a list of computers from a CSV file (the first column must contain "
+"the computer ID)"
+msgstr "从CSV文件导入计算机列表（第一列必须包含计算机ID）"
 
-#: inc/config.class.php:476
-msgid "with entity"
-msgstr "使用实体"
+#: inc/deploygroup_staticdata.class.php:384
+msgid "Computers imported successfully from CSV file"
+msgstr "已成功从CSV文件导入计算机"
 
-#: inc/config.class.php:475
-msgid "with location"
-msgstr "使用地点"
+#: inc/deploygroup_staticdata.class.php:387
+msgid "Impossible to read the CSV file"
+msgstr "无法读取csv文件"
+
+#: front/deployfile_download.php:92
+msgid "An error occurs"
+msgstr "发生一个错误"
+
+#: front/deployfile_download.php:95 front/deployfile_download.php:98
+msgid "File not found"
+msgstr "未发现文件"
+
+#: front/config.form.php:38
+msgid "Features"
+msgstr "特性"
+
+#: front/collect.form.php:36
+msgid "Collect management"
+msgstr "收集管理"
+
+#: hook.php:61
+msgid "Local inventory"
+msgstr "本地资产盘点"
+
+#: hook.php:68
+msgid "ESX/VMWare"
+msgstr "ESX/VMWare"
+
+#: hook.php:75
+msgid "Network inventory"
+msgstr "网络资产盘点"
+
+#: hook.php:89
+msgid "Collect"
+msgstr "收集"
+
+#: hook.php:137 hook.php:147 hook.php:157 hook.php:167
+#, php-format
+msgid "%s inventoried"
+msgstr "%s 已盘点"
+
+#: hook.php:356
+msgid "Setup"
+msgstr "设置"
+
+#: report/not_queried_recently.php:58
+msgid "Number of days since last inventory"
+msgstr "距上次资产盘点已过去天数"
+
+#: report/not_queried_recently.php:137 report/computer_last_inventory.php:137
+msgid "Last inventory"
+msgstr "上次资产盘点"
+
+#: report/computer_last_inventory.php:62
+msgid "Computers not inventoried since xx days"
+msgstr "已有 xx 天未进行资产盘点的计算机"
+
+#: report/computer_last_inventory.php:68
+msgid "Number of days (minimum) since last inventory"
+msgstr "距上次资产盘点已过去天数(最小值)"
+
+#: public/b/deploy/index.php:66
+msgid "Deploy module has been disabled for this agent"
+msgstr "\"部署\"模块已在该智能代理端上被禁用"
+
+#: public/b/deploy/index.php:136
+msgid "Checks"
+msgstr "校验"
+
+#: public/b/deploy/index.php:137
+msgid "Files download"
+msgstr "文件下载"
+
+#: public/b/deploy/index.php:138
+msgid "Files preparation"
+msgstr "文件准备"
+
+#: public/b/deploy/index.php:249
+msgid "User canceled the job"
+msgstr "用户取消了该作业"
+
+#: public/b/deploy/index.php:251
+msgid "User postponed the job"
+msgstr "用户推迟了该作业"
+
+#: public/js/taskjobs.js:742
+msgid "The preparation of the task did not return any targets"
+msgstr ""
