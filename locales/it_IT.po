@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Cédric Anne, 2021
-# Davide <spam@habilitas.it>, 2024
+# Davide <spam@habilitas.it>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-05 00:54+0000\n"
+"POT-Creation-Date: 2025-11-07 00:53+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Davide <spam@habilitas.it>, 2024\n"
+"Last-Translator: Davide <spam@habilitas.it>, 2025\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/teclib/teams/28042/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -257,16 +257,16 @@ msgstr "Gruppo dinamico"
 #: inc/deploygroup.class.php:97
 msgid "Inventory group"
 msgid_plural "Inventory groups"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Gruppo di inventario"
+msgstr[1] "Gruppi di inventario"
+msgstr[2] "Gruppi di inventario"
 
 #: inc/deploygroup.class.php:114
 msgid "Associated task"
 msgid_plural "Associated tasks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Attività associata"
+msgstr[1] "Attività associate"
+msgstr[2] "Attività associate"
 
 #: inc/deploygroup.class.php:164 inc/taskjobview.class.php:633
 msgid "Module method"
@@ -344,7 +344,7 @@ msgstr "Agente arrestato/crashato"
 
 #: inc/taskjoblog.class.php:352
 msgid "Import denied"
-msgstr "Importo rifiutato"
+msgstr "Importazione rifiutata"
 
 #: inc/commonview.class.php:300
 msgid "Warning:"
@@ -687,11 +687,11 @@ msgstr "Ora di fine"
 
 #: inc/timeslotentry.class.php:285
 msgid "End day must be after start day"
-msgstr ""
+msgstr "Il giorno finale deve essere successivo a quello di inizio"
 
 #: inc/timeslotentry.class.php:295
 msgid "End time must be after start time"
-msgstr ""
+msgstr "L'orario di termine deve essere successivo a quello di inizio"
 
 #: inc/deploypackage.class.php:102 inc/task.class.php:1705
 msgid "Package"
@@ -1593,11 +1593,11 @@ msgstr ""
 
 #: inc/task.class.php:765
 msgid "Inventory task scheduler"
-msgstr ""
+msgstr "Scheduler delle attività"
 
 #: inc/task.class.php:768
 msgid "Clean on demand deployment tasks"
-msgstr ""
+msgstr "Rimuoci le attività di distribuzione su richiesta"
 
 #: inc/task.class.php:1639
 msgid "Task has been disabled"
@@ -1694,11 +1694,11 @@ msgstr ""
 
 #: inc/taskjobstate.class.php:571
 msgid "Clean taskjob (retention time)"
-msgstr ""
+msgstr "Pulizia taskjob (tempo di retention)"
 
 #: inc/agentwakeup.class.php:57
 msgid "Wake agents up"
-msgstr ""
+msgstr "Risveglia agenti"
 
 #: inc/collect.class.php:57
 msgid "Collect information"
@@ -1749,7 +1749,7 @@ msgstr "Distribuzione del pacchetto"
 
 #: inc/agentmodule.class.php:212 inc/agentmodule.class.php:214
 msgid "Activation"
-msgstr ""
+msgstr "Attivazione"
 
 #: inc/collect_file.class.php:49
 msgid "Found file"
