@@ -352,6 +352,8 @@ class PluginGlpiinventoryToolbox
          = "'" . implode("', '", $_SESSION['glpiactiveentities']) . "'";
         $_SESSION['glpiparententities'] = [];
 
+        $_SESSION['glpiactiveprofile']['interface'] = 'central';
+
         // Execute function with impersonated SESSION
         $result = call_user_func_array($function, $args);
 
