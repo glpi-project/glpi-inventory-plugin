@@ -46,12 +46,16 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      */
     public function __construct()
     {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
+        $base_url = $CFG_GLPI['url_base'];
+
         parent::__construct();
         $this->base_urls = array_merge($this->base_urls, [
-            'fi.job.create' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
-            'fi.job.edit' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
-            'fi.job.moduletypes' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduletypes.php",
-            'fi.job.moduleitems' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduleitems.php",
+            'fi.job.create' => plugin_glpiinventory_geturl() . "ajax/taskjob_form.php",
+            'fi.job.edit' => plugin_glpiinventory_geturl() . "ajax/taskjob_form.php",
+            'fi.job.moduletypes' => plugin_glpiinventory_geturl() . "ajax/taskjob_moduletypes.php",
+            'fi.job.moduleitems' => plugin_glpiinventory_geturl() . "ajax/taskjob_moduleitems.php",
         ]);
     }
 

@@ -451,3 +451,10 @@ function plugin_glpiinventory_boot()
     \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/Communication$#');
     \Glpi\Http\SessionManager::registerPluginStatelessPath('glpiinventory', '#^/front/communication.php$#');
 }
+
+function plugin_glpiinventory_geturl(): string
+{
+    /** @var array $CFG_GLPI */
+    global $CFG_GLPI;
+    return sprintf('%s/plugins/glpiinventory/', $CFG_GLPI['url_base']);
+}
