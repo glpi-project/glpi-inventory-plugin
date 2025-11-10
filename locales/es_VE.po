@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-05 00:54+0000\n"
+"POT-Creation-Date: 2025-11-10 00:56+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Francisco Bolivar, 2025\n"
 "Language-Team: Spanish (Venezuela) (https://app.transifex.com/teclib/teams/28042/es_VE/)\n"
@@ -685,11 +685,11 @@ msgstr "Hora de finalización"
 
 #: inc/timeslotentry.class.php:285
 msgid "End day must be after start day"
-msgstr ""
+msgstr "El día de finalización debe ser posterior al día de inicio"
 
 #: inc/timeslotentry.class.php:295
 msgid "End time must be after start time"
-msgstr ""
+msgstr "La hora de finalización debe ser posterior a la hora de inicio"
 
 #: inc/deploypackage.class.php:102 inc/task.class.php:1705
 msgid "Package"
