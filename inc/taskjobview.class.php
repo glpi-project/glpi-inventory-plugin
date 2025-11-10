@@ -46,10 +46,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      */
     public function __construct()
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-        $base_url = $CFG_GLPI['url_base'];
-
         parent::__construct();
         $this->base_urls = array_merge($this->base_urls, [
             'fi.job.create' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
