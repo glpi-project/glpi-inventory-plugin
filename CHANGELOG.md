@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [unreleased]
+
+### Fixed
+
+- Fix for adding `targets` and `actors` to a task
+
 ## [1.6.0] - 2025-09-30
 
 - GLPI v11 compatibility
