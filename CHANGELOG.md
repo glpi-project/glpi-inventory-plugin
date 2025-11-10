@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.6.2] - unreleased
 
 - Fix agent wakeup when no last_agent_wakeup has been set yet
+- Prevent fatal error when a task references an item that no longer exist
 
 ## [1.6.1] - 2025-11-05
 
