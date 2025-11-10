@@ -353,7 +353,7 @@ class PluginGlpiinventoryToolbox
         $_SESSION['glpiparententities'] = [];
 
         // Execute function with impersonated SESSION
-        $result =  Session::callAsSystem(fn () => call_user_func_array($function, $args));
+        $result =  Session::callAsSystem(fn() => call_user_func_array($function, $args));
 
         // Restore SESSION
         foreach ($OLD_SESSION as $key => $value) {
