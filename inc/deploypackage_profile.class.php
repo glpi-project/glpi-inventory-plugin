@@ -67,7 +67,7 @@ class PluginGlpiinventoryDeployPackage_Profile extends CommonDBRelation
     /**
      * Set we don't check parent right of the second item
      *
-     * @var integer
+     * @var 1|2|3
      */
     public static $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
 
