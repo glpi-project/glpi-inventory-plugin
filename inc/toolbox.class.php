@@ -348,8 +348,8 @@ class PluginGlpiinventoryToolbox
         $_SESSION['glpiID']   = $users_id;
         $_SESSION['glpiname'] = $user->getField('name');
         $_SESSION['glpiactiveentities'] = getSonsOf('glpi_entities', 0);
-        $_SESSION['glpiactiveentities_string'] =
-         "'" . implode("', '", $_SESSION['glpiactiveentities']) . "'";
+        $_SESSION['glpiactiveentities_string']
+         = "'" . implode("', '", $_SESSION['glpiactiveentities']) . "'";
         $_SESSION['glpiparententities'] = [];
 
         // Execute function with impersonated SESSION

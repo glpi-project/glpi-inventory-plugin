@@ -153,9 +153,9 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                         } else {
                             $item = $inventory->getMainAsset()->getItem();
                             $what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
-                            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
-                                '[==detail==] ' . $what . ' ' . $item->getTypeName() .
-                                ' [[' . $item::class . '::' . $item->getID() . ']]';
+                            $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
+                                = '[==detail==] ' . $what . ' ' . $item->getTypeName()
+                                . ' [[' . $item::class . '::' . $item->getID() . ']]';
                             $this->addtaskjoblog();
                         }
                         $response = ['response' => ['RESPONSE' => 'SEND']];

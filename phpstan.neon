@@ -15,6 +15,7 @@ parameters:
         - ajax
         - front
         - inc
+        - src
         - install
         - public
         - report

@@ -33,7 +33,9 @@
 
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
+use Glpi\Error\ErrorHandler;
 use Safe\DateTime;
+use Safe\Exceptions\InfoException;
 
 use function Safe\ini_set;
 use function Safe\json_encode;
@@ -361,7 +363,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $jobstates = [];
 
         //Get the datetime of agent request
-        $now = new Datetime();
+        $now = new DateTime();
 
         // list of jobstates not allowed to run (ie. filtered by schedule AND timeslots)
         $jobstates_to_cancel = [];
@@ -624,8 +626,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public static function cronTaskscheduler($crontask = null)
     {
-
-        ini_set("max_execution_time", "0");
+        try {
+            ini_set("max_execution_time", "0");
+        } catch (InfoException $e) {
+            //empty catch -- but keep trace of issue
+            ErrorHandler::logCaughtException($e);
+        }
 
         $task    = new self();
         $methods = [];
@@ -1842,8 +1848,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
                 PluginGlpiinventoryToolbox::logIfExtradebug(
                     "pluginGlpiinventory-tasks",
-                    "Target a task: " . $pfTask->getName() .
-                    ", id: " . $pfTask->getId()
+                    "Target a task: " . $pfTask->getName()
+                    . ", id: " . $pfTask->getId()
                 );
 
                 $job_name = __('Deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName();
@@ -1863,8 +1869,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     $message = sprintf(
                         __('%1$s: %2$s'),
                         $pfTask->getLink(),
-                        __('Updated a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName() .
-                        __(', actors: ', 'glpiinventory')
+                        __('Updated a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName()
+                        . __(', actors: ', 'glpiinventory')
                     );
                     foreach ($ids as $computer_id) {
                         $computer->getFromDB($computer_id);
@@ -1906,8 +1912,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         $message = sprintf(
                             __('%1$s: %2$s'),
                             $pfTask->getLink(),
-                            __('Created a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName() .
-                            __(', actors: ', 'glpiinventory')
+                            __('Created a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName()
+                            . __(', actors: ', 'glpiinventory')
                         );
                         foreach ($ids as $computer_id) {
                             $computer->getFromDB($computer_id);

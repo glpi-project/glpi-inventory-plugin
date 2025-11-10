@@ -137,7 +137,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
         ]);
 
         foreach ($iterator as $task) {
-            if (!is_null($task['wakeup_agent_time'])) {
+            if (!is_null($task['wakeup_agent_time']) && !is_null($task['last_agent_wakeup'])) {
                 //Do not wake up is last wake up in inferior to the minimum wake up interval
                 $interval   = time() - strtotime($task['last_agent_wakeup']);
                 if ($interval < ($task['wakeup_agent_time'] * MINUTE_TIMESTAMP)) {

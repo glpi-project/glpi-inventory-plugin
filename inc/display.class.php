@@ -96,8 +96,8 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
         if ($percentage == 0) {
             echo "                           <td height='" . $height . "' width='1'></td>";
         } else {
-            echo "                           <td height='" . $height . "' width='" .
-                 ($width - (($width * $percentage) / 100)) . "'></td>";
+            echo "                           <td height='" . $height . "' width='"
+                 . ($width - (($width * $percentage) / 100)) . "'></td>";
         }
         echo "                        </tr>
                            </table>
@@ -167,8 +167,8 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
             $output .= "<tr><th class='center'>" . $param['title'] . "&nbsp;" . $percent . "%</th></tr>";
         }
         $output .= "<tr><td>
-                <table><tr><td class='center' style='background:url(" . $CFG_GLPI["root_doc"] .
-                "/pics/loader.png) repeat-x;' width='.$percentwidth' height='12'>";
+                <table><tr><td class='center' style='background:url(" . $CFG_GLPI["root_doc"]
+                . "/pics/loader.png) repeat-x;' width='.$percentwidth' height='12'>";
         if ($param['simple']) {
             $output .= $percent . "%";
         } else {

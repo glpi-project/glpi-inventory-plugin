@@ -225,14 +225,14 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
         if ($count == '0') {
             return true;
         } else {
-            Session::addMessageAfterRedirect("<font color='#ff0000'>" . __('Bad IP', 'glpiinventory') .
-            "</font><br/>" .
-            __('Start of IP range', 'glpiinventory') . " : " .
-            $a_input['ip_start0'] . "." . $a_input['ip_start1'] . "." .
-            $a_input['ip_start2'] . "." . $a_input['ip_start3'] . "<br/>" .
-            __('End of IP range', 'glpiinventory') . " : " .
-            $a_input['ip_end0'] . "." . $a_input['ip_end1'] . "." .
-            $a_input['ip_end2'] . "." . $a_input['ip_end3']);
+            Session::addMessageAfterRedirect("<font color='#ff0000'>" . __('Bad IP', 'glpiinventory')
+            . "</font><br/>"
+            . __('Start of IP range', 'glpiinventory') . " : "
+            . $a_input['ip_start0'] . "." . $a_input['ip_start1'] . "."
+            . $a_input['ip_start2'] . "." . $a_input['ip_start3'] . "<br/>"
+            . __('End of IP range', 'glpiinventory') . " : "
+            . $a_input['ip_end0'] . "." . $a_input['ip_end1'] . "."
+            . $a_input['ip_end2'] . "." . $a_input['ip_end3']);
             return false;
         }
     }

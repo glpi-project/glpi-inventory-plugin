@@ -282,36 +282,36 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
 
         switch ($state) {
             case self::TASK_PREPARED:
-                return "<" . $type . " align='center' width='" . $width . "'>" .
-                      __('Prepared', 'glpiinventory') . "</" . $type . ">";
+                return "<" . $type . " align='center' width='" . $width . "'>"
+                      . __('Prepared', 'glpiinventory') . "</" . $type . ">";
 
             case self::TASK_STARTED:
-                return "<" . $type . " align='center' width='" . $width . "'>" .
-                       __('Started', 'glpiinventory') . "</" . $type . ">";
+                return "<" . $type . " align='center' width='" . $width . "'>"
+                       . __('Started', 'glpiinventory') . "</" . $type . ">";
 
             case self::TASK_OK:
-                return "<" . $type . " style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;" .
-                     "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' " .
-                     "align='center' width='" . $width . "'>" .
-                     "<strong>" . __('OK') . "</strong></" . $type . ">";
+                return "<" . $type . " style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;"
+                     . "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' "
+                     . "align='center' width='" . $width . "'>"
+                     . "<strong>" . __('OK') . "</strong></" . $type . ">";
 
             case self::TASK_ERROR:
-                return "<" . $type . " style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;" .
-                 "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' " .
-                 "width='" . $width . "'>" .
-                 "<strong>" . __('Error') . "</strong></" . $type . ">";
+                return "<" . $type . " style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;"
+                 . "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' "
+                 . "width='" . $width . "'>"
+                 . "<strong>" . __('Error') . "</strong></" . $type . ">";
 
             case self::TASK_INFO:
-                return "<" . $type . " style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;" .
-                     "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' " .
-                     "align='center' width='" . $width . "'>" .
-                     "<strong>" . __('unknown', 'glpiinventory') . "</strong></" . $type . ">";
+                return "<" . $type . " style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;"
+                     . "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' "
+                     . "align='center' width='" . $width . "'>"
+                     . "<strong>" . __('unknown', 'glpiinventory') . "</strong></" . $type . ">";
 
             case self::TASK_RUNNING:
-                return "<" . $type . " style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;" .
-                     "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' " .
-                     "align='center' width='" . $width . "'>" .
-                     "<strong>" . __('Running') . "</strong></" . $type . ">";
+                return "<" . $type . " style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;"
+                     . "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' "
+                     . "align='center' width='" . $width . "'>"
+                     . "<strong>" . __('Running') . "</strong></" . $type . ">";
         }
 
         return '';

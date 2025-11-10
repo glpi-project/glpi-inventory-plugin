@@ -37,9 +37,9 @@ use Glpi\Exception\Http\AccessDeniedHttpException;
 use Glpi\Exception\Http\NotFoundHttpException;
 use Safe\Exceptions\FilesystemException;
 
-use function Safe\fread;
 use function Safe\filesize;
 use function Safe\fopen;
+use function Safe\fread;
 use function Safe\realpath;
 
 Session::checkLoginUser();

@@ -1,5 +1,7 @@
 <?php
 
+use Safe\Exceptions\JsonException;
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -330,7 +332,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
             $first = array_shift($data);
             try {
                 $ids = json_decode($first['computers_id_cache'], true);
-            } catch (\Safe\Exceptions\JsonException $e) {
+            } catch (JsonException $e) {
                 //empty catch
             }
         }

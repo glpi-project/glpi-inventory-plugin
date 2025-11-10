@@ -32,9 +32,9 @@
  */
 use Safe\Exceptions\FilesystemException;
 
-use function Safe\ini_get;
-use function Safe\fopen;
 use function Safe\fclose;
+use function Safe\fopen;
+use function Safe\ini_get;
 
 /**
  * Manage the communication in REST with the agents.

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 00:51+0000\n"
+"POT-Creation-Date: 2025-11-06 00:53+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -87,12 +87,12 @@ msgstr "IP aralığı ayarları"
 msgid "Bad IP"
 msgstr "Kötü IP"
 
-#: inc/iprange.class.php:285 inc/deploygroup.class.php:222 hook.php:441
+#: inc/iprange.class.php:285 inc/deploygroup.class.php:222 hook.php:414
 msgid "Target a task"
 msgstr "Bir görevi hedefle"
 
 #: inc/taskjob.class.php:57 inc/taskjoblog.class.php:190
-#: inc/task.class.php:1738 inc/agentwakeup.class.php:70
+#: inc/task.class.php:1744 inc/agentwakeup.class.php:70
 msgid "Job"
 msgstr "İş"
 
@@ -148,7 +148,7 @@ msgstr "Durmaya zorla"
 #: front/task.form.php:41 report/ports_date_connections.php:43
 #: report/not_queried_recently.php:43 report/switch_ports.history.php:40
 #: report/computer_last_inventory.php:43
-#: src/Controller/InventoryController.php:75
+#: src/Controller/InventoryController.php:78
 msgid "GLPI Inventory"
 msgstr "GLPI envanter"
 
@@ -213,7 +213,7 @@ msgstr "Yapılandırma"
 
 #: inc/profile.class.php:393 inc/stateinventory.class.php:114
 #: inc/taskview.class.php:162 inc/statediscovery.class.php:176
-#: inc/task.class.php:1681 inc/task.class.php:1721 inc/deploytask.class.php:54
+#: inc/task.class.php:1687 inc/task.class.php:1727 inc/deploytask.class.php:54
 #: inc/deploytask.class.php:154
 msgid "Task"
 msgid_plural "Tasks"
@@ -244,7 +244,7 @@ msgstr "Boyut"
 msgid "pathfile"
 msgstr "yoldosya"
 
-#: inc/deploygroup.class.php:83 inc/deploygroup.class.php:796 hook.php:125
+#: inc/deploygroup.class.php:83 inc/deploygroup.class.php:796 hook.php:93
 msgid "Static group"
 msgstr "Durağan grup"
 
@@ -273,7 +273,7 @@ msgid "Add group"
 msgstr "Grup ekle"
 
 #: inc/taskjoblog.class.php:94 inc/taskjoblog.class.php:286
-#: inc/stateinventory.class.php:192 inc/deploypackage.class.php:1365
+#: inc/stateinventory.class.php:192 inc/deploypackage.class.php:1366
 #: inc/taskview.class.php:236 inc/statediscovery.class.php:260
 #: inc/taskjobstate.class.php:148
 msgid "Prepared"
@@ -374,7 +374,7 @@ msgid "VMware host remote inventory"
 msgstr "VMware uzak sunucu envanteri"
 
 #: inc/staticmisc.class.php:70 inc/config.class.php:402
-#: inc/config.class.php:424 hook.php:114
+#: inc/config.class.php:424 hook.php:82
 msgid "Network discovery"
 msgstr "Ağ keşfi"
 
@@ -384,7 +384,7 @@ msgstr "Ağ keşfi"
 msgid "Network inventory (SNMP)"
 msgstr "Ağ envanteri (SNMP)"
 
-#: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1056
+#: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1057
 msgid "Package deploy"
 msgstr "Paket dağıtımı"
 
@@ -420,7 +420,7 @@ msgstr "Hata"
 msgid "Finished tasks"
 msgstr "Bitirilmiş görevler"
 
-#: inc/menu.class.php:151 inc/deploypackage.class.php:155
+#: inc/menu.class.php:151 inc/deploypackage.class.php:156
 msgid "Import"
 msgstr "İçe aktar"
 
@@ -436,7 +436,7 @@ msgstr "Aracı yönetimi"
 msgid "General configuration"
 msgstr "Genel ayarlar"
 
-#: inc/menu.class.php:241 inc/task.class.php:62
+#: inc/menu.class.php:241 inc/task.class.php:64
 msgid "Task management"
 msgstr "Görev yönetimi"
 
@@ -453,7 +453,7 @@ msgstr "Aracı XML dosyasını içe aktar"
 msgid "Time slot"
 msgstr "Zaman aralığı"
 
-#: inc/menu.class.php:270 inc/task.class.php:231 hook.php:161
+#: inc/menu.class.php:270 inc/task.class.php:233 hook.php:129
 msgid "Tasks"
 msgstr "Görevler"
 
@@ -497,7 +497,7 @@ msgstr "Ağ"
 msgid "Package management"
 msgstr "Paket yönetimi"
 
-#: inc/menu.class.php:414 hook.php:86
+#: inc/menu.class.php:414 hook.php:54
 msgid "Deploy"
 msgstr "Dağıtım"
 
@@ -675,125 +675,133 @@ msgstr "Başlangıç zamanı"
 msgid "End time"
 msgstr "Bitiş zamanı"
 
-#: inc/deploypackage.class.php:101 inc/task.class.php:1699
+#: inc/timeslotentry.class.php:285
+msgid "End day must be after start day"
+msgstr "Bitiş günü başlangıç gününden sonra olmalıdır"
+
+#: inc/timeslotentry.class.php:295
+msgid "End time must be after start time"
+msgstr "Bitiş saati başlangıç saatinden sonra olmalıdır"
+
+#: inc/deploypackage.class.php:102 inc/task.class.php:1705
 msgid "Package"
 msgstr "Paket"
 
-#: inc/deploypackage.class.php:158
+#: inc/deploypackage.class.php:159
 msgid "Export"
 msgstr "Dışa aktar"
 
-#: inc/deploypackage.class.php:279
+#: inc/deploypackage.class.php:280
 msgid "Modification Denied"
 msgstr "Değişiklik reddedildi"
 
-#: inc/deploypackage.class.php:282
+#: inc/deploypackage.class.php:283
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "Bu paketle birlikte şu görev yürütülüyor"
 msgstr[1] "Bu paketle birlikte şu görevler yürütülüyor"
 
-#: inc/deploypackage.class.php:389 inc/deploypackage.class.php:513
+#: inc/deploypackage.class.php:390 inc/deploypackage.class.php:514
 msgid "Enable deploy on demand for the following group"
 msgstr "Şu grup için isteğe göre dağıtım kullanılsın"
 
-#: inc/deploypackage.class.php:532
+#: inc/deploypackage.class.php:533
 msgid "Audits"
 msgstr "Denetimler"
 
-#: inc/deploypackage.class.php:533
+#: inc/deploypackage.class.php:534
 msgid "Files"
 msgstr "Dosyalar"
 
-#: inc/deploypackage.class.php:534 public/b/deploy/index.php:139
+#: inc/deploypackage.class.php:535 public/b/deploy/index.php:139
 msgid "Actions"
 msgstr "İşlemler"
 
-#: inc/deploypackage.class.php:535
+#: inc/deploypackage.class.php:536
 msgid "User interactions"
 msgstr "Kullanıcı etkileşimleri"
 
-#: inc/deploypackage.class.php:686
+#: inc/deploypackage.class.php:687
 msgid "JSON package representation"
 msgstr "JSON paketi gösterimi"
 
-#: inc/deploypackage.class.php:802
+#: inc/deploypackage.class.php:803
 msgid "Package exported in"
 msgstr "Paket şuraya dışa aktarıldı"
 
-#: inc/deploypackage.class.php:875
+#: inc/deploypackage.class.php:876
 msgid "Packages to import"
 msgstr "İçe aktarılacak paketler"
 
-#: inc/deploypackage.class.php:1000 inc/deploypackageitem.class.php:329
+#: inc/deploypackage.class.php:1001 inc/deploypackageitem.class.php:332
 msgid "The modified JSON contained a syntax error :"
 msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
 
-#: inc/deploypackage.class.php:1028
+#: inc/deploypackage.class.php:1029
 msgid "Package actions"
 msgstr "Paket işlemleri"
 
-#: inc/deploypackage.class.php:1037
+#: inc/deploypackage.class.php:1038
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "İsteğe bağlı dağıtım hedefi"
 msgstr[1] "İsteğe bağlı dağıtım hedefleri"
 
-#: inc/deploypackage.class.php:1132
+#: inc/deploypackage.class.php:1133
 msgid "Add a target for self-service"
 msgstr "Kendi kendine hizmet için bir hedef ekleyin"
 
-#: inc/deploypackage.class.php:1362 inc/taskview.class.php:233
+#: inc/deploypackage.class.php:1363 inc/taskview.class.php:233
 msgid "In error"
 msgstr "Hata"
 
-#: inc/deploypackage.class.php:1363 inc/taskview.class.php:234
+#: inc/deploypackage.class.php:1364 inc/taskview.class.php:234
 msgid "Successful"
 msgstr "Başarılı"
 
-#: inc/deploypackage.class.php:1364 inc/taskview.class.php:235
+#: inc/deploypackage.class.php:1365 inc/taskview.class.php:235
 msgid "Running"
 msgstr "Çalışıyor"
 
-#: inc/deploypackage.class.php:1366 inc/taskview.class.php:237
+#: inc/deploypackage.class.php:1367 inc/taskview.class.php:237
 #: inc/taskjobstate.class.php:153
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: inc/deploypackage.class.php:1487
+#: inc/deploypackage.class.php:1488
 msgid "Restart job"
 msgstr "İşi yeniden başlat"
 
-#: inc/deploypackage.class.php:1496
+#: inc/deploypackage.class.php:1497
 #: inc/deployuserinteractiontemplate.class.php:206
 msgid "Cancel job"
 msgstr "İş iptal edilsin"
 
-#: inc/deploypackage.class.php:1503
+#: inc/deploypackage.class.php:1504
 msgid "refresh job"
 msgstr "işi yenile"
 
-#: inc/deploypackage.class.php:1645
+#: inc/deploypackage.class.php:1646
 msgid "Select packages you want install"
 msgstr "Kurmak istediğiniz paketleri seçin"
 
-#: inc/deploypackage.class.php:1654
+#: inc/deploypackage.class.php:1655
 msgid "Prepare for install"
 msgstr "Kurulum için hazırla"
 
-#: inc/deploypackage.class.php:1659
+#: inc/deploypackage.class.php:1660
 msgid "I'm on this computer: local wakeup"
 msgstr "Bu bilgisayardayım: Yerel olarak uyandır"
 
-#: inc/deploypackage.class.php:1660
+#: inc/deploypackage.class.php:1661
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "Bu bilgisayarda değilim: Sunucudan uyandır"
 
-#: inc/deploypackage.class.php:1661
+#: inc/deploypackage.class.php:1662
 msgid "Don't wakeup"
 msgstr "Uyandırma"
 
-#: inc/deploypackage.class.php:1677
+#: inc/deploypackage.class.php:1678
 msgid "No packages available to install"
 msgstr "Kurulabilecek bir paket yok"
 
@@ -825,7 +833,7 @@ msgstr "Görev yürütme durumları"
 msgid "Show/Hide details"
 msgstr "Ayrıntıları görüntüle./ gizle"
 
-#: inc/taskview.class.php:320 inc/task.class.php:147
+#: inc/taskview.class.php:320 inc/task.class.php:149
 msgid "Permit to re-prepare task after run"
 msgstr "Çalıştırıldıktan sonra görev yeniden hazırlanabilsin"
 
@@ -833,11 +841,11 @@ msgstr "Çalıştırıldıktan sonra görev yeniden hazırlanabilsin"
 msgid "This is an on demand deployment task"
 msgstr "Bu isteğe bağlı bir dağıtım görevidir"
 
-#: inc/taskview.class.php:336 inc/task.class.php:106
+#: inc/taskview.class.php:336 inc/task.class.php:108
 msgid "Schedule start"
 msgstr "Zamanlama başlangıcı"
 
-#: inc/taskview.class.php:342 inc/task.class.php:114
+#: inc/taskview.class.php:342 inc/task.class.php:116
 msgid "Schedule end"
 msgstr "Zamanlama bitişi"
 
@@ -1047,22 +1055,22 @@ msgstr "bilgileri raporla"
 msgid "report warning"
 msgstr "uyarıları raporla"
 
-#: inc/collect_registry.class.php:49
+#: inc/collect_registry.class.php:51
 msgid "Found entry"
 msgid_plural "Found entries"
 msgstr[0] "Bulunan kayıt"
 msgstr[1] "Bulunan kayıtlar"
 
-#: inc/collect_registry.class.php:68 inc/collect_registry.class.php:87
+#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:89
 msgid "Hive"
 msgstr "Kovan"
 
-#: inc/collect_registry.class.php:69 inc/collect_registry.class.php:98
+#: inc/collect_registry.class.php:71 inc/collect_registry.class.php:100
 #: inc/collect_registry_content.class.php:169
 msgid "Path"
 msgstr "Yol"
 
-#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:104
+#: inc/collect_registry.class.php:72 inc/collect_registry.class.php:106
 msgid "Key"
 msgstr "Anahtar"
 
@@ -1529,15 +1537,15 @@ msgstr "MB"
 msgid "Unused file"
 msgstr "Kullanılmayan dosya"
 
-#: inc/task.class.php:157
+#: inc/task.class.php:159
 msgid "deploy on demand task"
 msgstr "isteğe bağlı görevi dağıt"
 
-#: inc/task.class.php:188
+#: inc/task.class.php:190
 msgid "Associated tasks"
 msgstr "İlgili görevler"
 
-#: inc/task.class.php:470
+#: inc/task.class.php:472
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
@@ -1546,61 +1554,61 @@ msgstr ""
 "Aracı zaten sunucu tarafından kendisine gönderilmiş ayarları istiyor. "
 "Aracıda kritik bir sorun çıkmış olma olasılığı daha yüksek. "
 
-#: inc/task.class.php:483
+#: inc/task.class.php:485
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
 
-#: inc/task.class.php:504
+#: inc/task.class.php:506
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "Görev zamanlaması nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:550
+#: inc/task.class.php:552
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:569
+#: inc/task.class.php:571
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "Bu aracı artık işin içinde tanımlanmış aktörlere bağlı değil."
 
-#: inc/task.class.php:614
+#: inc/task.class.php:616
 msgid "The task cannot be updated if it is active"
 msgstr "Görev etkinse güncellenemez"
 
-#: inc/task.class.php:759
+#: inc/task.class.php:765
 msgid "Inventory task scheduler"
 msgstr "Envanter görevi zamanlayıcısı"
 
-#: inc/task.class.php:762
+#: inc/task.class.php:768
 msgid "Clean on demand deployment tasks"
 msgstr "Dağıtım görevlerini temizleme isteği"
 
-#: inc/task.class.php:1633
+#: inc/task.class.php:1639
 msgid "Task has been disabled"
 msgstr "Görev devre dışı bırakılmış"
 
-#: inc/task.class.php:1832
+#: inc/task.class.php:1838
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
 msgstr "Bir hedefe dağıtmak için bir görev ve bir paket seçmelisiniz."
 
-#: inc/task.class.php:1849
+#: inc/task.class.php:1855
 msgid "Deployment job, package: "
 msgstr "Dağıtım işi, paket:"
 
-#: inc/task.class.php:1866
+#: inc/task.class.php:1872
 msgid "Updated a deployment job, package: "
 msgstr "Bir dağıtım işi, paket güncellendi: "
 
-#: inc/task.class.php:1867 inc/task.class.php:1910
+#: inc/task.class.php:1873 inc/task.class.php:1916
 msgid ", actors: "
 msgstr ", aktörler: "
 
-#: inc/task.class.php:1895
+#: inc/task.class.php:1901
 msgid "The selected task already has a deployment job for another package: "
 msgstr "Seçilmiş görevin zaten başka bir paket için dağıtım işi var: "
 
-#: inc/task.class.php:1909
+#: inc/task.class.php:1915
 msgid "Created a deployment job, package: "
 msgstr "Bir dağıtım işi, paket oluşturuldu:"
 
@@ -1700,8 +1708,8 @@ msgid "Agents modules"
 msgstr "Aracı modülleri"
 
 #: inc/agentmodule.class.php:107 inc/agentmodule.class.php:211
-#: inc/agentmodule.class.php:213 hook.php:86 hook.php:93 hook.php:100
-#: hook.php:107 hook.php:114 hook.php:121
+#: inc/agentmodule.class.php:213 hook.php:54 hook.php:61 hook.php:68
+#: hook.php:75 hook.php:82 hook.php:89
 msgid "Module"
 msgstr "Modül"
 
@@ -1807,11 +1815,11 @@ msgstr ""
 "ve %s kullanın"
 
 #: inc/deploygroup_staticdata.class.php:156
-#: inc/deploygroup_staticdata.class.php:172 hook.php:445
+#: inc/deploygroup_staticdata.class.php:172 hook.php:418
 msgid "Add to static group"
 msgstr "Durağan gruba ekle"
 
-#: inc/deploygroup_staticdata.class.php:228 hook.php:447
+#: inc/deploygroup_staticdata.class.php:228 hook.php:420
 msgid "Remove from static group"
 msgstr "Durağan gruptan çıkar"
 
@@ -1831,11 +1839,11 @@ msgstr "CSV dosyasından bilgisayarlar içe aktarıldı"
 msgid "Impossible to read the CSV file"
 msgstr "CSV dosyası okunamadı"
 
-#: front/deployfile_download.php:91
+#: front/deployfile_download.php:92
 msgid "An error occurs"
 msgstr "Bir sorun çıktı"
 
-#: front/deployfile_download.php:94 front/deployfile_download.php:97
+#: front/deployfile_download.php:95 front/deployfile_download.php:98
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
@@ -1847,28 +1855,28 @@ msgstr "Özellikler"
 msgid "Collect management"
 msgstr "Derleme yönetimi"
 
-#: hook.php:93
+#: hook.php:61
 msgid "Local inventory"
 msgstr "Yerel envanter"
 
-#: hook.php:100
+#: hook.php:68
 msgid "ESX/VMWare"
 msgstr "ESX/VMWare"
 
-#: hook.php:107
+#: hook.php:75
 msgid "Network inventory"
 msgstr "Ağ envanteri"
 
-#: hook.php:121
+#: hook.php:89
 msgid "Collect"
 msgstr "Derle"
 
-#: hook.php:169 hook.php:179 hook.php:189 hook.php:199
+#: hook.php:137 hook.php:147 hook.php:157 hook.php:167
 #, php-format
 msgid "%s inventoried"
 msgstr "%s envantere alındı"
 
-#: hook.php:383
+#: hook.php:356
 msgid "Setup"
 msgstr "Kur"
 

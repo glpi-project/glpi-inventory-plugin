@@ -296,7 +296,7 @@ class DeployactionTest extends TestCase
         $computers_id = $computer->add($input);
         $this->assertNotFalse($computers_id);
 
-        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $input = [
             'entities_id' => 0,
             'name'        => 'portdavid',

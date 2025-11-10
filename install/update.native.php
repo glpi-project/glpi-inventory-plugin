@@ -32,6 +32,8 @@
  */
 
 use Glpi\DBAL\QueryExpression;
+use Glpi\Error\ErrorHandler;
+use Safe\Exceptions\InfoException;
 
 use function Safe\ini_set;
 
@@ -46,8 +48,13 @@ function pluginGlpiinventoryUpdateNative($current_version)
 
     $DB->disableTableCaching();
 
-    ini_set("max_execution_time", "0");
-    ini_set("memory_limit", "-1");
+    try {
+        ini_set("max_execution_time", "0");
+        ini_set("memory_limit", "-1");
+    } catch (InfoException $e) {
+        //empty catch -- but keep trace of issue
+        ErrorHandler::logCaughtException($e);
+    }
 
     /** @var Migration */
     $migration = new Migration($current_version);

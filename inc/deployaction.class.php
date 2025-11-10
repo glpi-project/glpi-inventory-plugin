@@ -215,8 +215,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                     }
                     echo "</b>";
                     if ($key === "exec") {
-                        echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;" .
-                          "padding-left:2px;white-space: pre-wrap;'>$value</pre>";
+                        echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;"
+                          . "padding-left:2px;white-space: pre-wrap;'>$value</pre>";
                     } else {
                         echo " $value ";
                         echo "<br>";
@@ -224,8 +224,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                 }
             }
             if (isset($action[$action_type]['retChecks'])) {
-                echo "<br><b>" . __("return codes saved for this command", 'glpiinventory') .
-                "</b> : <ul class='retChecks'>";
+                echo "<br><b>" . __("return codes saved for this command", 'glpiinventory')
+                . "</b> : <ul class='retChecks'>";
                 foreach ($action[$action_type]['retChecks'] as $retCheck) {
                     echo "<li>";
                     $getReturnActionNames = $this->getReturnActionNames();
@@ -237,8 +237,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo "</td>";
             echo "</td>";
             if ($canedit) {
-                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory') .
-                "'><div class='drag row ti ti-menu-2'></div></td>";
+                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory')
+                . "'><div class='drag row ti ti-menu-2'></div></td>";
             }
             echo "</tr>";
             $i++;
@@ -250,8 +250,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         }
         echo "</table>";
         if ($canedit) {
-            echo "<input type='submit' name='delete' value=\"" .
-            __('Delete', 'glpiinventory') . "\" class='submit'>";
+            echo "<input type='submit' name='delete' value=\""
+            . __('Delete', 'glpiinventory') . "\" class='submit'>";
         }
     }
 
@@ -403,11 +403,11 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                     );
                     echo "</td>";
                     echo "<td>";
-                    echo "<input type='text' name='retchecks_value[]' value='" .
-                     $retcheck['values'][0] . "' />";
+                    echo "<input type='text' name='retchecks_value[]' value='"
+                     . $retcheck['values'][0] . "' />";
                     echo "</td>";
-                    echo "<td><a class='edit' onclick='removeLine(this)'><img src='" .
-                     $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
+                    echo "<td><a class='edit' onclick='removeLine(this)'><img src='"
+                     . $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
                     echo "</tr>";
 
                     echo "</table>";
@@ -423,8 +423,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             );
             echo "</td>";
             echo "<td><input type='text' name='retchecks_value[]' /></td>";
-            echo "<td><a class='edit' onclick='removeLine(this)'><img src='" .
-               $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
+            echo "<td><a class='edit' onclick='removeLine(this)'><img src='"
+               . $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
             echo "</tr>";
 
             echo "</span>";

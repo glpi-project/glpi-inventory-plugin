@@ -97,11 +97,11 @@ sed \
    -i '' setup.php
 
 echo "Minify stylesheets and javascripts"
-find /tmp/glpiinventory/css /tmp/glpiinventory/lib \( -iname "*.css" ! -iname "*.min.css" \) \
+find /tmp/glpiinventory/public/css /tmp/glpiinventory/public/lib \( -iname "*.css" ! -iname "*.min.css" \) \
     -exec sh -c 'echo "> {}" && "'$INIT_PWD'"/../../node_modules/.bin/csso {} --output $(dirname {})/$(basename {} ".css").min.css' \;
 
 echo "Minify javascripts"
-find /tmp/glpiinventory/js /tmp/glpiinventory/lib \( -iname "*.js" ! -iname "*.min.js" \) \
+find /tmp/glpiinventory/public/js /tmp/glpiinventory/public/lib \( -iname "*.js" ! -iname "*.min.js" \) \
     -exec sh -c 'echo "> {}" && "'$INIT_PWD'"/../../node_modules/.bin/terser {} --mangle --output $(dirname {})/$(basename {} ".js").min.js' \;
 
 echo "Compile locale files"
@@ -111,21 +111,17 @@ echo "Delete various scripts and directories"
 \rm -rf .github;
 \rm -rf vendor;
 \rm -rf tools;
-\rm -rf phpunit;
 \rm -rf tests;
 \rm -rf .gitignore;
-\rm -rf .travis.yml;
-\rm -rf .coveralls.yml;
-\rm -rf phpunit.xml.dist;
+\rm -rf .php-cs-fixer.dist.php;
+\rm -rf phpstan\*;
+\rm -rf phpunit\*;
 \rm -rf composer.json;
 \rm -rf composer.lock;
 \rm -rf .composer.hash;
-\rm -rf ISSUE_TEMPLATE.md;
-\rm -rf PULL_REQUEST_TEMPLATE.md;
 \rm -rf .tx;
 \rm -rf glpiinventory.xml;
-\rm -rf screenshots;
-\find pics/ -type f -name "*.eps" -exec rm -rf {} \;
+\find public/pics/ -type f -name "*.eps" -exec rm -rf {} \;
 
 echo "Creating tarball";
 cd ..;

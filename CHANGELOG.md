@@ -5,11 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [1.6.2] - unreleased
 
-### Fixed
-
+- Fix agent wakeup when no last_agent_wakeup has been set yet
+- Prevent fatal error when a task references an item that no longer exist
 - Fix for adding `targets` and `actors` to a task
+
+## [1.6.1] - 2025-11-05
+
+- Fix visibility issue on deploy dynamic groups with GLPI v11.0.2
+- Fix deploy ajax action path
+- Prevent fatal errors when ini_set is not allowed
 
 ## [1.6.0] - 2025-09-30
 

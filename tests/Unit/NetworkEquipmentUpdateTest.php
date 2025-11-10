@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Inventory\Converter;
+use Glpi\Inventory\Inventory;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
@@ -201,10 +203,10 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
 
         $this->assertGreaterThan(0, $this->items_id);
 
-        $converter = new \Glpi\Inventory\Converter();
+        $converter = new Converter();
         $data = json_decode($converter->convert($xml_source));
         $CFG_GLPI["is_contact_autoupdate"] = 0;
-        new \Glpi\Inventory\Inventory($data);
+        new Inventory($data);
         $CFG_GLPI["is_contact_autoupdate"] = 1; //reset to default
 
         $this->assertEquals(1, count($networkEquipment->find()));

@@ -33,24 +33,26 @@
 
 use Glpi\Dashboard\Dashboard;
 use Glpi\Dashboard\Item as Dashboard_Item;
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QueryParam;
+use Glpi\Error\ErrorHandler;
 use Ramsey\Uuid\Uuid;
+use Safe\Exceptions\InfoException;
+use Safe\Exceptions\JsonException;
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 
-use Glpi\DBAL\QueryExpression;
-use Glpi\DBAL\QueryParam;
-
-use function Safe\ini_set;
-use function Safe\mkdir;
-use function Safe\rename;
 use function Safe\copy;
-use function Safe\preg_replace;
-use function Safe\preg_match;
-use function Safe\json_decode;
-use function Safe\json_encode;
-use function Safe\fwrite;
 use function Safe\fclose;
 use function Safe\fopen;
+use function Safe\fwrite;
+use function Safe\ini_set;
+use function Safe\json_decode;
+use function Safe\json_encode;
+use function Safe\mkdir;
+use function Safe\preg_match;
+use function Safe\preg_replace;
+use function Safe\rename;
 
 /**
  * Get the current version of the plugin
@@ -65,15 +67,15 @@ function pluginGlpiinventoryGetCurrentVersion()
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/module.class.php");
 
     if (
-        (!$DB->tableExists("glpi_plugin_tracker_config")) &&
-        (!$DB->tableExists("glpi_plugin_fusioninventory_config")) &&
-        (!$DB->tableExists("glpi_plugin_fusioninventory_configs")) &&
-        (!$DB->tableExists("glpi_plugin_glpiinventory_configs"))
+        (!$DB->tableExists("glpi_plugin_tracker_config"))
+        && (!$DB->tableExists("glpi_plugin_fusioninventory_config"))
+        && (!$DB->tableExists("glpi_plugin_fusioninventory_configs"))
+        && (!$DB->tableExists("glpi_plugin_glpiinventory_configs"))
     ) {
         return '0';
     } elseif (
-        ($DB->tableExists("glpi_plugin_tracker_config")) ||
-         ($DB->tableExists("glpi_plugin_glpiinventory_config"))
+        ($DB->tableExists("glpi_plugin_tracker_config"))
+         || ($DB->tableExists("glpi_plugin_glpiinventory_config"))
     ) {
         if ($DB->tableExists("glpi_plugin_glpiinventory_configs")) {
             $iterator = $DB->request([
@@ -90,28 +92,28 @@ function pluginGlpiinventoryGetCurrentVersion()
         }
 
         if (
-            (!$DB->tableExists("glpi_plugin_tracker_agents")) &&
-            (!$DB->tableExists("glpi_plugin_fusioninventory_agents"))
+            (!$DB->tableExists("glpi_plugin_tracker_agents"))
+            && (!$DB->tableExists("glpi_plugin_fusioninventory_agents"))
         ) {
             return "1.1.0";
         }
         if (
-            (!$DB->tableExists("glpi_plugin_tracker_config_discovery")) &&
-            (!$DB->tableExists("glpi_plugin_fusioninventory_config"))
+            (!$DB->tableExists("glpi_plugin_tracker_config_discovery"))
+            && (!$DB->tableExists("glpi_plugin_fusioninventory_config"))
         ) {
             return "2.0.0";
         }
         if (
-            (($DB->tableExists("glpi_plugin_tracker_agents")) &&
-            (!$DB->fieldExists("glpi_plugin_tracker_config", "version"))) &&
-            (!$DB->tableExists("glpi_plugin_fusioninventory_config"))
+            (($DB->tableExists("glpi_plugin_tracker_agents"))
+            && (!$DB->fieldExists("glpi_plugin_tracker_config", "version")))
+            && (!$DB->tableExists("glpi_plugin_fusioninventory_config"))
         ) {
             return "2.0.1";
         }
         if (
-            (($DB->tableExists("glpi_plugin_tracker_agents")) &&
-            ($DB->fieldExists("glpi_plugin_tracker_config", "version"))) ||
-            ($DB->tableExists("glpi_plugin_fusioninventory_config"))
+            (($DB->tableExists("glpi_plugin_tracker_agents"))
+            && ($DB->fieldExists("glpi_plugin_tracker_config", "version")))
+            || ($DB->tableExists("glpi_plugin_fusioninventory_config"))
         ) {
             $querytable = 'glpi_plugin_fusioninventory_config';
             if ($DB->tableExists("glpi_plugin_tracker_agents")) {
@@ -176,8 +178,13 @@ function pluginGlpiinventoryUpdate($current_version)
 
     $DB->disableTableCaching();
 
-    ini_set("max_execution_time", "0");
-    ini_set("memory_limit", "-1");
+    try {
+        ini_set("max_execution_time", "0");
+        ini_set("memory_limit", "-1");
+    } catch (InfoException $e) {
+        //empty catch -- but keep trace of issue
+        ErrorHandler::logCaughtException($e);
+    }
 
     $migration = new Migration($current_version);
     $prepare_task = [];
@@ -442,8 +449,8 @@ function pluginGlpiinventoryUpdate($current_version)
         'glpi_plugin_glpiinventory_snmpmodelmibobjects',
         'glpi_plugin_glpiinventory_snmpmodelmiboids',
         'glpi_plugin_glpiinventory_snmpmodelconstructdevices',
-        'glpi_plugin_glpiinventory_snmpmodelconstructdevicewalks' .
-                        'glpi_plugin_glpiinventory_snmpmodelconstructdevices_users',
+        'glpi_plugin_glpiinventory_snmpmodelconstructdevicewalks'
+                        . 'glpi_plugin_glpiinventory_snmpmodelconstructdevices_users',
         'glpi_plugin_glpiinventory_snmpmodelconstructdevice_miboids',
         'glpi_plugin_glpiinventory_snmpmodelmibs',
         'glpi_plugin_glpiinventory_snmpmodels',
@@ -3090,10 +3097,10 @@ function do_biosascomponentmigration()
 
     //BIOS as a component
     if (
-        $DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers') &&
-        ($DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'bios_date') ||
-        $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'bios_version') ||
-        $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'bios_manufacturers_id'))
+        $DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers')
+        && ($DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'bios_date')
+        || $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'bios_version')
+        || $DB->fieldExists('glpi_plugin_glpiinventory_inventorycomputercomputers', 'bios_manufacturers_id'))
     ) {
         $bioses = [];
         //retrieve exiting
@@ -6524,8 +6531,8 @@ function do_deploymirror_migration($migration)
             'value' => null,
         ],
         'url' =>  [
-            'type' => "varchar(255)" .
-                   " NOT NULL DEFAULT ''",
+            'type' => "varchar(255)"
+                   . " NOT NULL DEFAULT ''",
             'value' => null,
         ],
         'locations_id' => [
@@ -7379,8 +7386,8 @@ function do_rule_migration($migration, array $prepare_Config)
     $a_input['users_id'] = 0;
 
     //Deploy configuration options
-    $a_input['server_upload_path'] =
-        implode(
+    $a_input['server_upload_path']
+        = implode(
             DIRECTORY_SEPARATOR,
             [
                 GLPI_PLUGIN_DOC_DIR,
@@ -7554,7 +7561,7 @@ function migrationDynamicGroupFields($fields)
 
     try {
         $data = json_decode($fields, true);
-    } catch (\Safe\Exceptions\JsonException $e) {
+    } catch (JsonException $e) {
         //when coming from databasse, data is serialized, not json_encoded
         $data = unserialize($fields);
     }
@@ -7772,21 +7779,21 @@ function update213to220_ConvertField($migration)
     $constantsfield['networking > MAC address filters (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
     $constantsfield['Netzwerk > MAC Adressen Filter (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
 
-    $constantsfield['réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)'] =
-                  'ipNetToMediaPhysAddress';
-    $constantsfield['networking > Physical addresses in memory (ipNetToMediaPhysAddress)'] =
-                  'ipNetToMediaPhysAddress';
-    $constantsfield['Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)'] =
-                  'ipNetToMediaPhysAddress';
+    $constantsfield['réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)']
+                  = 'ipNetToMediaPhysAddress';
+    $constantsfield['networking > Physical addresses in memory (ipNetToMediaPhysAddress)']
+                  = 'ipNetToMediaPhysAddress';
+    $constantsfield['Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)']
+                  = 'ipNetToMediaPhysAddress';
 
     $constantsfield['réseaux > instances de ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
     $constantsfield['networking > Port instances (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
     $constantsfield['Netzwerk > Instanzen des Ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
 
-    $constantsfield['réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)'] =
-                  'dot1dBasePortIfIndex';
-    $constantsfield['networking > Port number associated with port ID (dot1dBasePortIfIndex)'] =
-                  'dot1dBasePortIfIndex';
+    $constantsfield['réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)']
+                  = 'dot1dBasePortIfIndex';
+    $constantsfield['networking > Port number associated with port ID (dot1dBasePortIfIndex)']
+                  = 'dot1dBasePortIfIndex';
     $constantsfield['Netzwerk > Verkn&uuml;pfung der Portnummerierung mit der ID des Ports (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
 
     $constantsfield['réseaux > addresses IP'] = 'ipAdEntAddr';
@@ -8111,88 +8118,88 @@ function update213to220_ConvertField($migration)
     $constantsfield['Tambour Jaune Restant'] = 'drumyellowremaining';
     $constantsfield['Yellow drum Restant'] = 'drumyellowremaining';
 
-    $constantsfield['imprimante > compteur > nombre total de pages imprimées'] =
-                  'pagecountertotalpages';
+    $constantsfield['imprimante > compteur > nombre total de pages imprimées']
+                  = 'pagecountertotalpages';
     $constantsfield['printer > meter > total number of printed pages'] = 'pagecountertotalpages';
     $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten'] = 'pagecountertotalpages';
 
-    $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées'] =
-                  'pagecounterblackpages';
-    $constantsfield['printer > meter > number of printed black and white pages'] =
-                  'pagecounterblackpages';
-    $constantsfield['Drucker > Messung > Gesamtanzahl gedrucker Schwarz/Wei&szlig; Seiten'] =
-                  'pagecounterblackpages';
+    $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées']
+                  = 'pagecounterblackpages';
+    $constantsfield['printer > meter > number of printed black and white pages']
+                  = 'pagecounterblackpages';
+    $constantsfield['Drucker > Messung > Gesamtanzahl gedrucker Schwarz/Wei&szlig; Seiten']
+                  = 'pagecounterblackpages';
 
-    $constantsfield['imprimante > compteur > nombre de pages couleur imprimées'] =
-                  'pagecountercolorpages';
+    $constantsfield['imprimante > compteur > nombre de pages couleur imprimées']
+                  = 'pagecountercolorpages';
     $constantsfield['printer > meter > number of printed color pages'] = 'pagecountercolorpages';
-    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Farbseiten'] =
-                  'pagecountercolorpages';
+    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Farbseiten']
+                  = 'pagecountercolorpages';
 
-    $constantsfield['imprimante > compteur > nombre de pages recto/verso imprimées'] =
-                  'pagecounterrectoversopages';
-    $constantsfield['printer > meter > number of printed duplex pages'] =
-                  'pagecounterrectoversopages';
-    $constantsfield['Drucker > Messung > Anzahl der gedruckten Duplex Seiten'] =
-                  'pagecounterrectoversopages';
+    $constantsfield['imprimante > compteur > nombre de pages recto/verso imprimées']
+                  = 'pagecounterrectoversopages';
+    $constantsfield['printer > meter > number of printed duplex pages']
+                  = 'pagecounterrectoversopages';
+    $constantsfield['Drucker > Messung > Anzahl der gedruckten Duplex Seiten']
+                  = 'pagecounterrectoversopages';
 
     $constantsfield['imprimante > compteur > nombre de pages scannées'] = 'pagecounterscannedpages';
     $constantsfield['printer > meter > nomber of scanned pages'] = 'pagecounterscannedpages';
     $constantsfield['Drucker > Messung > Anzahl der gescannten Seiten'] = 'pagecounterscannedpages';
 
-    $constantsfield['imprimante > compteur > nombre total de pages imprimées (impression)'] =
-                  'pagecountertotalpages_print';
-    $constantsfield['printer > meter > total number of printed pages (print mode)'] =
-                  'pagecountertotalpages_print';
-    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Druck)'] =
-                  'pagecountertotalpages_print';
+    $constantsfield['imprimante > compteur > nombre total de pages imprimées (impression)']
+                  = 'pagecountertotalpages_print';
+    $constantsfield['printer > meter > total number of printed pages (print mode)']
+                  = 'pagecountertotalpages_print';
+    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Druck)']
+                  = 'pagecountertotalpages_print';
 
-    $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (impression)'] =
-                  'pagecounterblackpages_print';
-    $constantsfield['printer > meter > number of printed black and white pages (print mode)'] =
-                  'pagecounterblackpages_print';
-    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)'] =
-                  'pagecounterblackpages_print';
+    $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (impression)']
+                  = 'pagecounterblackpages_print';
+    $constantsfield['printer > meter > number of printed black and white pages (print mode)']
+                  = 'pagecounterblackpages_print';
+    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)']
+                  = 'pagecounterblackpages_print';
 
-    $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (impression)'] =
-                  'pagecountercolorpages_print';
-    $constantsfield['printer > meter > number of printed color pages (print mode)'] =
-                  'pagecountercolorpages_print';
-    $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Druck)'] =
-                  'pagecountercolorpages_print';
+    $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (impression)']
+                  = 'pagecountercolorpages_print';
+    $constantsfield['printer > meter > number of printed color pages (print mode)']
+                  = 'pagecountercolorpages_print';
+    $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Druck)']
+                  = 'pagecountercolorpages_print';
 
-    $constantsfield['imprimante > compteur > nombre total de pages imprimées (copie)'] =
-                  'pagecountertotalpages_copy';
-    $constantsfield['printer > meter > total number of printed pages (copy mode)'] =
-                  'pagecountertotalpages_copy';
-    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Kopie)'] =
-                  'pagecountertotalpages_copy';
+    $constantsfield['imprimante > compteur > nombre total de pages imprimées (copie)']
+                  = 'pagecountertotalpages_copy';
+    $constantsfield['printer > meter > total number of printed pages (copy mode)']
+                  = 'pagecountertotalpages_copy';
+    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Kopie)']
+                  = 'pagecountertotalpages_copy';
 
-    $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (copie)'] =
-                  'pagecounterblackpages_copy';
-    $constantsfield['printer > meter > number of printed black and white pages (copy mode)'] =
-                  'pagecounterblackpages_copy';
-    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seite (Kopie)'] =
-                  'pagecounterblackpages_copy';
+    $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (copie)']
+                  = 'pagecounterblackpages_copy';
+    $constantsfield['printer > meter > number of printed black and white pages (copy mode)']
+                  = 'pagecounterblackpages_copy';
+    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seite (Kopie)']
+                  = 'pagecounterblackpages_copy';
 
-    $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (copie)'] =
-                  'pagecountercolorpages_copy';
-    $constantsfield['printer > meter > number of printed color pages (copy mode)'] =
-                  'pagecountercolorpages_copy';
-    $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Kopie)'] =
-                  'pagecountercolorpages_copy';
+    $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (copie)']
+                  = 'pagecountercolorpages_copy';
+    $constantsfield['printer > meter > number of printed color pages (copy mode)']
+                  = 'pagecountercolorpages_copy';
+    $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Kopie)']
+                  = 'pagecountercolorpages_copy';
 
-    $constantsfield['imprimante > compteur > nombre total de pages imprimées (fax)'] =
-                  'pagecountertotalpages_fax';
-    $constantsfield['printer > meter > total number of printed pages (fax mode)'] =
-                  'pagecountertotalpages_fax';
-    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Fax)'] =
-                  'pagecountertotalpages_fax';
+    $constantsfield['imprimante > compteur > nombre total de pages imprimées (fax)']
+                  = 'pagecountertotalpages_fax';
+    $constantsfield['printer > meter > total number of printed pages (fax mode)']
+                  = 'pagecountertotalpages_fax';
+    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Fax)']
+                  = 'pagecountertotalpages_fax';
 
-    $constantsfield['imprimante > compteur > nombre total de pages larges imprimées'] =
-                  'pagecounterlargepages';
-    $constantsfield['printer > meter > total number of large printed pages'] =
-                  'pagecounterlargepages';
+    $constantsfield['imprimante > compteur > nombre total de pages larges imprimées']
+                  = 'pagecounterlargepages';
+    $constantsfield['printer > meter > total number of large printed pages']
+                  = 'pagecounterlargepages';
 
     $constantsfield['imprimante > port > adresse MAC'] = 'ifPhysAddress';
     $constantsfield['printer > port > MAC address'] = 'ifPhysAddress';
@@ -8852,14 +8859,14 @@ function migrateTablesFromFusinvDeploy($migration)
                 // Check if file exists
                 $i_DeployFile = new PluginGlpiinventoryDeployFile();
                 $migration->displayMessage(
-                    "migrating file " . $entry['name'] .
-                    " sha:" . $entry['sha512'] .
-                    "\n"
+                    "migrating file " . $entry['name']
+                    . " sha:" . $entry['sha512']
+                    . "\n"
                 );
                 if ($i_DeployFile->checkPresenceManifest($entry['sha512'])) {
                     $migration->displayMessage(
-                        "manifest exists" .
-                         "\n"
+                        "manifest exists"
+                         . "\n"
                     );
                     $migration->insertInTable(
                         "glpi_plugin_glpiinventory_deployfiles",

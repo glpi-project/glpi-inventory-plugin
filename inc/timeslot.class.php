@@ -278,8 +278,8 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
             __('%1$s%2$s'),
             __('Name'),
             (isset($options['withtemplate']) && $options['withtemplate'] ? "*" : "")
-        ) .
-           "</td>";
+        )
+           . "</td>";
         echo "<td>";
         echo Html::input('name', ['value' => $this->fields["name"]]);
         echo "</td>";

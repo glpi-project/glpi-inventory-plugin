@@ -269,8 +269,8 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
             echo "</td>";
             if ($canedit) {
-                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory') .
-                "'><div class='drag row'></div></td>";
+                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory')
+                . "'><div class='drag row'></div></td>";
             }
             echo "</tr>";
             $i++;
@@ -282,8 +282,8 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
         }
         echo "</table>";
         if ($canedit) {
-            echo "<input type='submit' name='delete' value=\"" .
-            __('Delete', 'glpiinventory') . "\" class='submit' />";
+            echo "<input type='submit' name='delete' value=\""
+            . __('Delete', 'glpiinventory') . "\" class='submit' />";
         }
     }
 
@@ -474,13 +474,13 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
             switch ($values['value_type']) {
                 case "textarea":
-                    echo "<td><textarea name='value' id='check_value{$rand}' rows='5'>" .
-                    $values['value'] . "</textarea></td>";
+                    echo "<td><textarea name='value' id='check_value{$rand}' rows='5'>"
+                    . $values['value'] . "</textarea></td>";
                     break;
 
                 case "input":
-                    echo "<td><input type='text' name='value' id='check_value{$rand}' value='" .
-                    $values['value'] . "' /></td>";
+                    echo "<td><input type='text' name='value' id='check_value{$rand}' value='"
+                    . $values['value'] . "' /></td>";
                     break;
 
                 case 'registry_type':

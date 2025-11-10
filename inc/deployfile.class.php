@@ -35,19 +35,19 @@ use Safe\Exceptions\FileinfoException;
 use Safe\Exceptions\FilesystemException;
 
 use function Safe\copy;
-use function Safe\ini_get;
-use function Safe\json_decode;
-use function Safe\json_encode;
 use function Safe\fclose;
-use function Safe\fread;
 use function Safe\file;
 use function Safe\filesize;
 use function Safe\finfo_open;
 use function Safe\fopen;
+use function Safe\fread;
 use function Safe\fwrite;
-use function Safe\gzopen;
 use function Safe\gzclose;
+use function Safe\gzopen;
 use function Safe\gzwrite;
+use function Safe\ini_get;
+use function Safe\json_decode;
+use function Safe\json_encode;
 use function Safe\mime_content_type;
 use function Safe\mkdir;
 use function Safe\opendir;
@@ -147,8 +147,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
                 //mimetype icon
                 if (isset($files[$file_id]['mimetype'])) {
-                    $file_mimetype =
-                    str_replace('/', '__', $files[$file_id]['mimetype']);
+                    $file_mimetype
+                    = str_replace('/', '__', $files[$file_id]['mimetype']);
                 } else {
                     $file_mimetype = null;
                 }
@@ -160,8 +160,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
             $file_uncompress = $data['associatedFiles'][$sha512]['uncompress'];
             $file_p2p        = $data['associatedFiles'][$sha512]['p2p'];
-            $file_p2p_retention_duration =
-            $data['associatedFiles'][$sha512]['p2p-retention-duration'];
+            $file_p2p_retention_duration
+            = $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
             // start new line
             $pics_path = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/pics/";
@@ -198,9 +198,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 && $file_p2p != 0
             ) {
                 echo "<a title='" . __('p2p', 'glpiinventory') . ", "
-                . __("retention", 'glpiinventory') . " : " .
-                $file_p2p_retention_duration . " " .
-                __("Minute(s)", 'glpiinventory') . "' class='more'>";
+                . __("retention", 'glpiinventory') . " : "
+                . $file_p2p_retention_duration . " "
+                . __("Minute(s)", 'glpiinventory') . "' class='more'>";
                 echo "<i style='color:gray;' class='ti ti-vector-triangle'></i>";
                 echo "<sup>" . $file_p2p_retention_duration . "</sup>";
                 echo "</a>";
@@ -211,16 +211,16 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 isset($file_uncompress)
                  && $file_uncompress != 0
             ) {
-                echo "<a title='" .
-                     __('uncompress', 'glpiinventory') .
-                     "' class='more'><i style='color:gray;' class='ti ti-file-zip'></i></a>";
+                echo "<a title='"
+                     . __('uncompress', 'glpiinventory')
+                     . "' class='more'><i style='color:gray;' class='ti ti-file-zip'></i></a>";
             }
 
             //download file
             if (!$fileregistry_error) {
                 $path = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/deployfile_download.php?deployfile_id=" . $file_id;
-                echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory') .
-                    "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></i></a>";
+                echo "<a href='" . $path . "' title='" . __('Download', 'glpiinventory')
+                    . "' class='download' data-bs-toggle='tooltip' target='_blank' ><i class='ti ti-download'></i></a>";
             }
 
             //sha fingerprint
@@ -231,15 +231,15 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             echo "<div class='fingerprint'>";
             echo "<div class='fingerprint_" . $sha_status . "'>" . $sha512;
             if ($fileregistry_error & self::REGISTRY_NO_DB_ENTRY) {
-                echo "<div class='fingerprint_badmsg'>" .
-                  __("This file is not correctly registered in database.") . "<br/>" .
-                  __("You can fix it by uploading or selecting the good one.");
+                echo "<div class='fingerprint_badmsg'>"
+                  . __("This file is not correctly registered in database.") . "<br/>"
+                  . __("You can fix it by uploading or selecting the good one.");
                 echo "</div>";
             }
             if ($fileregistry_error & self::REGISTRY_NO_MANIFEST) {
-                echo "<div class='fingerprint_badmsg'>" .
-                  __("This file doesn't have any manifest file associated.") . "<br/>" .
-                  __("You must upload the file.");
+                echo "<div class='fingerprint_badmsg'>"
+                  . __("This file doesn't have any manifest file associated.") . "<br/>"
+                  . __("You must upload the file.");
                 echo "</div>";
             }
             echo "</div>";
@@ -253,9 +253,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             }
             echo "</td>";
             if ($canedit) {
-                echo "<td class='rowhandler control' title='" .
-                    __('drag', 'glpiinventory') .
-                    "'><div class='drag row'></div></td>";
+                echo "<td class='rowhandler control' title='"
+                    . __('drag', 'glpiinventory')
+                    . "'><div class='drag row'></div></td>";
             }
             $i++;
         }
@@ -266,8 +266,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         }
         echo "</table>";
         if ($canedit) {
-            echo "<input type='submit' name='delete' value=\"" .
-            __('Delete', 'glpiinventory') . "\" class='submit'>";
+            echo "<input type='submit' name='delete' value=\""
+            . __('Delete', 'glpiinventory') . "\" class='submit'>";
         }
     }
 
@@ -327,16 +327,16 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         if ($mode === self::CREATE) {
             switch ($request_data['value']) {
                 case "Computer":
-                    echo "<input type='file' name='file' value='" .
-                    __("filename", 'glpiinventory') . "' class='form-control' />";
+                    echo "<input type='file' name='file' value='"
+                    . __("filename", 'glpiinventory') . "' class='form-control' />";
                     echo " <i>" . $this->getMaxUploadSize() . "</i>";
                     break;
 
                 case "Server":
-                    echo "<input type='text' name='filename' id='server_filename$rand'" .
-                    " style='width:500px;float:left' />";
-                    echo "<input type='button' class='submit' value='" . __("Choose", 'glpiinventory') .
-                    "' onclick='fileModal$rand.show();' />";
+                    echo "<input type='text' name='filename' id='server_filename$rand'"
+                    . " style='width:500px;float:left' />";
+                    echo "<input type='button' class='submit' value='" . __("Choose", 'glpiinventory')
+                    . "' onclick='fileModal$rand.show();' />";
                     Ajax::createModalWindow(
                         "fileModal$rand",
                         $fi_path . "/ajax/deployfilemodal.php",
@@ -364,16 +364,16 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo "</tr>";
 
         echo "<tr>";
-        echo "<th>" . __("P2P", 'glpiinventory') .
-              "<i style='float:right; color:gray;' class='ti ti-vector-triangle'></i></th>";
+        echo "<th>" . __("P2P", 'glpiinventory')
+              . "<i style='float:right; color:gray;' class='ti ti-vector-triangle'></i></th>";
         echo "<td>";
         Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
         echo "</td>";
         echo "</tr>";
 
         echo "<tr>";
-        echo "<th>" . __("retention", 'glpiinventory') .
-                  " - " . __("Minute(s)", 'glpiinventory') . "</th>";
+        echo "<th>" . __("retention", 'glpiinventory')
+                  . " - " . __("Minute(s)", 'glpiinventory') . "</th>";
         echo "<td>";
         echo "<input type='number' name='p2p-retention-duration' value='$p2p_retention_duration' />";
         echo "</td>";
@@ -844,8 +844,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             $file_present_in_repo = true;
         }
 
-        $file_present_in_db =
-         (!empty($this->find(['shortsha512' => $short_sha512])));
+        $file_present_in_db
+         = (!empty($this->find(['shortsha512' => $short_sha512])));
 
         $new_entry = [
             'name'                   => $filename,

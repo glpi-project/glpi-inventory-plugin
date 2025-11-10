@@ -63,7 +63,7 @@ class DeploypackageTest extends TestCase
         ];
         $computers_id = $computer->add($input);
 
-        $agenttype = $DB->request(['FROM' => \AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
         $input = [
             'entities_id' => 0,
             'name'        => 'computer',

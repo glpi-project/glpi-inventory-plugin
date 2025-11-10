@@ -31,9 +31,12 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\mkdir;
-use function Safe\ini_set;
+use Glpi\Error\ErrorHandler;
+use Safe\Exceptions\InfoException;
+
 use function Safe\glob;
+use function Safe\ini_set;
+use function Safe\mkdir;
 
 /**
  * This function manage the installation of the plugin.
@@ -44,8 +47,13 @@ function pluginGlpiinventoryInstall($version)
 {
     global $CFG_GLPI, $DB;
 
-    ini_set("memory_limit", "-1");
-    ini_set("max_execution_time", "0");
+    try {
+        ini_set("memory_limit", "-1");
+        ini_set("max_execution_time", "0");
+    } catch (InfoException $e) {
+        //empty catch -- but keep trace of issue
+        ErrorHandler::logCaughtException($e);
+    }
 
     $migration = new Migration($version);
 

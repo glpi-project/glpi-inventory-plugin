@@ -31,11 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\simplexml_load_string;
 use function Safe\file_put_contents;
 use function Safe\gzcompress;
 use function Safe\gzdeflate;
 use function Safe\gzencode;
+use function Safe\simplexml_load_string;
 
 /**
  * Manage communication with agents using XML
