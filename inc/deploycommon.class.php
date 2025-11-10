@@ -329,7 +329,19 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
 
         //get order by type and package id
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $pfDeployPackage->getFromDB($taskjobstate->fields['items_id']);
+        if (!$pfDeployPackage->getFromDB($taskjobstate->fields['items_id'])) {
+            //entry no longer exists
+            trigger_error(
+                sprintf(
+                    'Item "%1$s" #%2$s does not exists in %3$s table.',
+                    $taskjobstate->fields['itemtype'],
+                    $taskjobstate->fields['items_id'],
+                    $pfDeployPackage->getTable()
+                ),
+                E_USER_WARNING
+            );
+            return false;
+        }
         //decode order data
         $order_data = json_decode($pfDeployPackage->fields['json'], true);
 
