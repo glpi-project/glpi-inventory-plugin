@@ -67,7 +67,7 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
     /**
      * Set we don't check parent right of the second item
      *
-     * @var 1|2|3
+     * @var self::DONT_CHECK_ITEM_RIGHTS|self::HAVE_VIEW_RIGHT_ON_ITEM|self::HAVE_SAME_RIGHT_ON_ITEM
      */
     public static $checkItem_2_Rights = self::DONT_CHECK_ITEM_RIGHTS;
 
