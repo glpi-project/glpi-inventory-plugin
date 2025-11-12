@@ -74,7 +74,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
         global $CFG_GLPI;
         parent::__construct();
 
-        $fi_path = '/plugins/glpiinventory';
+        $fi_path = sprintf('%s/plugins/glpiinventory', $CFG_GLPI['url_base']);
 
         $this->base_urls = [
             'fi.base'   => $fi_path,
