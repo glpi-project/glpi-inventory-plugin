@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.6.2] - unreleased
+## [1.6.2] - 2025-11-13
 
 - Fix agent wakeup when no last_agent_wakeup has been set yet
 - Prevent fatal error when a task references an item that no longer exist
