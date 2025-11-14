@@ -197,6 +197,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      */
     public function showFormAgentException($agents_id)
     {
+        global $CFG_GLPI;
         $agent = new Agent();
         $agent->getFromDB($agents_id);
         $canedit = $agent->can($agents_id, UPDATE);
@@ -204,7 +205,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         echo "<br/>";
         if ($canedit) {
             echo "<form name='form_ic' method='post' action='"
-               . "/plugins/glpiinventory/front/agentmodule.form.php'>";
+               . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/agentmodule.form.php'>";
         }
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";

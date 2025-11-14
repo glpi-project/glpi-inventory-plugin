@@ -57,6 +57,7 @@ class InventoryController extends AbstractController
     #[Route("/", name: "glpiinventory_main", methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
+        global $CFG_GLPI;
         //Agent asking for orders using REST
         $action = $request->query->get('action');
         $machineid = $request->query->get('machineid');
@@ -80,7 +81,7 @@ class InventoryController extends AbstractController
             "plugins",
             "glpiinventory"
         );
-        Html::redirect("/plugins/glpiinventory/front/menu.php");
+        Html::redirect($CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/menu.php");
     }
 
     #[Route("/Communication", name: "glpiinventory_communication", methods: ['GET', 'POST'])]
