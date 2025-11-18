@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+
+### Fixed
+
+- Migrate dynamic group search from serialized to JSON format
+
 ## [1.5.4] - 2025-09-19
 
 - PHP 8.5 compatibility

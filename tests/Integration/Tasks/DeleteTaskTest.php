@@ -75,7 +75,7 @@ class DeleteTaskTest extends TestCase
 
         $input = [
             'plugin_glpiinventory_deploygroups_id' => $groupId,
-            'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:8:"computer";}}s:12:"metacriteria";s:0:"";}',
+            'fields_array' => '{"criteria":[{"field":"1","searchtype":"contains","value":"computer"}],"metacriteria":""}',
         ];
         $pfDeployGrDyndata->add($input);
 

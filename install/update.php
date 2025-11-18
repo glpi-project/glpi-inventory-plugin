@@ -5971,11 +5971,40 @@ function do_computeroperatingsystem_migration($migration)
 
         //handle dynamic groups
         $iterator = $DB->request([
-            'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
+            'FROM' => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
         ]);
+
         foreach ($iterator as $row) {
-            $fields = unserialize($row['fields_array']);
+            $id = $row['id'];
+            $fields_array = $row['fields_array'];
+            $fields = [];
+            $from_serialize = false;
+
+            // check if json format is already used
+            $decoded = json_decode($fields_array, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $fields = $decoded;
+            } else {
+                // else try unserialize
+                $from_serialize = true;
+                try {
+                    $unserialized = @unserialize($fields_array, ['allowed_classes' => false]);
+
+                    if ($unserialized !== false) {
+                        $fields = $unserialized;
+                    }
+                } catch (Throwable $e) {
+                    $migration->displayMessage(
+                        "GlpiInventory - Invalid data for DynamicGroup ID {$id}, data will be reset."
+                    );
+                }
+            }
+
             $changed = false;
+            if (empty($fields)) {
+                $changed = true; // we need to reset invalid data
+            }
+
             foreach ($fields as &$type) {
                 foreach ($type as &$criterion) {
                     if (isset($sopts[$criterion['field']])) {
@@ -5985,11 +6014,11 @@ function do_computeroperatingsystem_migration($migration)
                 }
             }
 
-            if ($changed === true) {
+            if ($changed === true || $from_serialize === true) {
                 $dyndata = new PluginGlpiinventoryDeployGroup_Dynamicdata();
                 $dyndata->update([
-                    'id'  => $row['id'],
-                    'fields_array' => serialize($fields),
+                    'id'           => $id,
+                    'fields_array' => json_encode($fields, JSON_THROW_ON_ERROR),
                 ]);
             }
         }
@@ -7547,6 +7576,7 @@ function doDynamicDataSearchParamsMigration()
                 $new_values,
                 $dynamic_data['id']
             );
+            $DB->executeStatement($stmt);
         }
         mysqli_stmt_close($stmt);
     }
@@ -7563,16 +7593,27 @@ function doDynamicDataSearchParamsMigration()
  */
 function migrationDynamicGroupFields($fields)
 {
-    $data       = json_decode($fields, true);
     $new_fields = [];
-    if (!is_array($data)) {
-        $data   = unserialize($fields);
+    $data = [];
+    $from_serialized = false;
+
+    // if json format is used
+    if (str_starts_with($fields, '{')) {
+        $decoded = json_decode($fields, true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $data = $decoded;
+        }
+    } else {
+        $unserialized = @unserialize($fields, ['allowed_classes' => false]);
+        $from_serialized = true;
+        if ($unserialized !== false) {
+            $data = $unserialized;
+        }
     }
 
-    //We're still in 0.85 or higher,
-    //no need for migration !
-    if (isset($data['criteria'])) {
-        return $fields;
+    //We're still in 0.85 or higher ->return as json format
+    if (isset($data['criteria']) || $from_serialized) {
+        return json_encode($data, JSON_THROW_ON_ERROR);
     }
 
     //Upgrade from 0.84
@@ -7614,12 +7655,12 @@ function migrationDynamicGroupFields($fields)
                 $new_value['value']       = $data[$name];
                 $new_value['searchtype']  = 'equals';
             }
-            if (!empty($new_value)) {
+            if ($new_value !== []) {
                 $new_fields['criteria'][] = $new_value;
             }
         }
     }
-    return serialize($new_fields);
+    return json_encode($new_fields, JSON_THROW_ON_ERROR);
 }
 
 

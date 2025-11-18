@@ -152,7 +152,7 @@ class TaskDeployDynamicGroupTest extends TestCase
 
         $input = [
             'plugin_glpiinventory_deploygroups_id' => $groupId,
-            'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:4:{s:4:"link";s:3:"AND";s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:3:"^pc";}}s:12:"metacriteria";N;}',
+            'fields_array' => '{"criteria":[{"link":"AND","field":"1","searchtype":"contains","value":"^pc"}],"metacriteria":null}',
         ];
         $groupDynamicId = $pfDeployGroup_Dynamicdata->add($input);
         $this->assertNotFalse($groupDynamicId);
