@@ -7579,7 +7579,7 @@ function doDynamicDataSearchParamsMigration()
  * @since 0.85+1.0
  *
  * @param array|string $fields search paramas in old format (serialized)
- * @return ?string search paramas in new format (serialized)
+ * @return string search paramas in new format (serialized)
  */
 function migrationDynamicGroupFields($fields)
 {
