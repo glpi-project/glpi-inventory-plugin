@@ -7561,14 +7561,12 @@ function doDynamicDataSearchParamsMigration()
         $stmt = $DB->prepare($update);
         foreach ($iterator as $dynamic_data) {
             $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
-            if ($new_values !== null) {
-                $stmt->bind_param(
-                    'ss',
-                    $new_values,
-                    $dynamic_data['id']
-                );
-                $DB->executeStatement($stmt);
-            }
+            $stmt->bind_param(
+                'ss',
+                $new_values,
+                $dynamic_data['id']
+            );
+            $DB->executeStatement($stmt);
         }
         mysqli_stmt_close($stmt);
     }
@@ -7586,6 +7584,7 @@ function doDynamicDataSearchParamsMigration()
 function migrationDynamicGroupFields($fields)
 {
     $new_fields = [];
+    $data = [];
     $from_serialized = false;
 
     // if json format is used
