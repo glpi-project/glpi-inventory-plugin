@@ -686,7 +686,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                 if (count($iterator) > 0) {
                     $result = $iterator->current();
                     $fields_array = $result['fields_array'];
-                    $computers_params = unserialize($fields_array);
+                    $computers_params = json_decode($fields_array, true, 512, JSON_THROW_ON_ERROR);
                 }
             }
         } else {
