@@ -38,7 +38,6 @@ use Glpi\DBAL\QueryParam;
 use Glpi\Error\ErrorHandler;
 use Ramsey\Uuid\Uuid;
 use Safe\Exceptions\InfoException;
-use Safe\Exceptions\JsonException;
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 
