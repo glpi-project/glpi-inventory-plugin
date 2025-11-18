@@ -137,7 +137,7 @@ class DeploygroupTest extends TestCase
         $groups_id = $pfDeploygroup->add($input);
         $this->assertGreaterThan(0, $groups_id);
 
-        $json = "a:2:{s:8:\"criteria\";a:1:{i:0;a:3:{s:5:\"field\";s:2:\"45\";s:10:\"searchtype\";s:8:\"contains\";s:5:\"value\";s:7:\"windows\";}}s:12:\"metacriteria\";N;}";
+        $json = '{"criteria":[{"field":"45","searchtype":"contains","value":"windows"}],"metacriteria":null}';
         $pfDynamicGroup = new PluginGlpiinventoryDeployGroup_Dynamicdata();
         $input = ['plugin_glpiinventory_deploygroups_id' => $groups_id,
             'fields_array'     => $json,
