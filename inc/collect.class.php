@@ -67,8 +67,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        /** @var CommonDBTM $item */
-        if ($item->fields['id'] > 0) {
+        if ($item instanceof CommonDBTM && $item->fields['id'] > 0) {
             $index = self::getNumberOfCollectsForAComputer($item->fields['id']);
             $nb    = 0;
             if ($index > 0) {
