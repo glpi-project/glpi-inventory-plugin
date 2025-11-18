@@ -50,7 +50,7 @@ if (isset($_GET['save'])) {
             ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
         )
     ) {
-        $values['fields_array'] = serialize($criteria);
+        $values['fields_array'] = json_encode($criteria, JSON_THROW_ON_ERROR);
         $values['plugin_glpiinventory_deploygroups_id'] = $_GET['id'];
         $group_item->add($values);
     } else {
@@ -59,7 +59,7 @@ if (isset($_GET['save'])) {
             ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
         );
         $values                 = array_pop($item);
-        $values['fields_array'] = serialize($criteria);
+        $values['fields_array'] = json_encode($criteria, JSON_THROW_ON_ERROR);
         $group_item->update($values);
     }
 

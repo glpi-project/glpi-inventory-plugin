@@ -1,5 +1,9 @@
 <?php
 
+use function Safe\ob_get_clean;
+use function Safe\ob_start;
+use function Safe\preg_replace;
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,7 +34,6 @@
  * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
-
 /**
  * Manage the deploy groups.
  */
@@ -609,10 +612,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $p['showbookmark'] = false;
 
         //hack because submit button is not a submit... See https://github.com/glpi-project/glpi/pull/20731
-        Safe\ob_start();
+        ob_start();
         Search::showGenericSearch($itemtype, $p);
-        $generic_search = Safe\ob_get_clean();
-        echo Safe\preg_replace('/type="button" name="save"/', 'type="submit" name="save"', $generic_search);
+        $generic_search = ob_get_clean();
+        echo preg_replace('/type="button" name="save"/', 'type="submit" name="save"', $generic_search);
     }
 
 
@@ -686,7 +689,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                 if (count($iterator) > 0) {
                     $result = $iterator->current();
                     $fields_array = $result['fields_array'];
-                    $computers_params = unserialize($fields_array);
+                    $computers_params = json_decode($fields_array, true, 512, JSON_THROW_ON_ERROR);
                 }
             }
         } else {
