@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix retrieval of agents from a dynamic group
 - Migrate dynamic group search from serialized to JSON format
 
 ## [1.6.2] - 2025-11-14
