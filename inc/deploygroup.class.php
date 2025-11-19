@@ -275,7 +275,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                                 $group_item->getTable(),
                                 [
                                     'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
-                                    'itemtype'                               => 'Computer',
+                                    'itemtype'                               => Computer::class,
                                     'items_id'                               => $id,
                                 ]
                             )
@@ -302,7 +302,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                                 $group_item->getTable(),
                                 [
                                     'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
-                                    'itemtype'                               => 'Computer',
+                                    'itemtype'                               => Computer::class,
                                     'items_id'                               => $id,
                                 ]
                             )

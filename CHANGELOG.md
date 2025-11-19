@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [1.6.3] - UNRELEASED
 
 ### Fixed
 
 - Migrate dynamic group search from serialized to JSON format
+- Fix static groups search limit to 20 entries
 
 ## [1.6.2] - 2025-11-14
 
