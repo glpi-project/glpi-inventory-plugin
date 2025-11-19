@@ -354,6 +354,8 @@ class PluginGlpiinventoryToolbox
 
         $_SESSION['glpiactiveprofile']['interface'] = 'central';
 
+        $_SESSION["glpiactiveprofile"]["computer"] = 1;
+
         // Execute function with impersonated SESSION
         $result = call_user_func_array($function, $args);
 
