@@ -4,6 +4,7 @@
    <name>GLPI Inventory</name>
    <key>glpiinventory</key>
    <state>stable</state>
+   <logo>https://raw.githubusercontent.com/glpi-project/glpi-inventory-plugin/main/glpiinventory.png</logo>
    <description>
       <short>
          <cs><![CDATA[GLPI Inventory je svobodný a opensource projekt, poskytující inventarizaci hardware a software, nasazování software a prozkoumávání sítě a to jako doplněk do software pro správu IT vybavení a technické podpory, zvaný GLPI. „GLPI Inventory pro GLPI“ je sadou zásuvných modulů komunikující s agenty (GLPI Inventory-Agent), nasazenými na počítačích]]></cs>
