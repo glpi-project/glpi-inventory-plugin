@@ -31,11 +31,14 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
+
+global $DB;
+
 //Options for GLPI 0.71 and newer : need slave db to access the report
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
 
-include("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
@@ -66,9 +69,10 @@ echo __('Number of days (minimum) since last inventory', 'glpiinventory') . " :&
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", [
-                'value' => $nbdays,
-                'min'   => 1,
-                'max'   => 365]);
+    'value' => $nbdays,
+    'min'   => 1,
+    'max'   => 365,
+]);
 echo "</td>";
 echo "</tr>";
 
@@ -93,33 +97,33 @@ Html::closeForm();
 $computer = new Computer();
 
 $state_where = [];
-if (($state != "") and ($state != "0")) {
+if ($state != 0) {
     $state_where = ['states_id' => $state];
 }
 
 $iterator = $DB->request([
     'SELECT' => [
         'last_inventory_update',
-        'computers_id'
+        'computers_id',
     ],
     'FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers',
     'LEFT JOIN' => [
         'glpi_computers' => [
             'FKEY' => [
                 'glpi_plugin_glpiinventory_inventorycomputercomputers' => 'computers_id',
-                'glpi_computers' => 'id'
-            ]
-        ]
+                'glpi_computers' => 'id',
+            ],
+        ],
     ],
     'WHERE' => [
         'OR' => [
-            new \QueryExpression("NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY"),
-            ['last_inventory_update' => null]
-        ]
+            new QueryExpression("NOW() > ADDDATE(last_inventory_update, INTERVAL " . $nbdays . " DAY"),
+            ['last_inventory_update' => null],
+        ],
     ] + $state_where + getEntitiesRestrictCriteria('glpi_computers'),
     'ORDER' => [
-        'last_inventory_update' => 'DESC'
-    ]
+        'last_inventory_update' => 'DESC',
+    ],
 ]);
 
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
@@ -140,7 +144,7 @@ foreach ($iterator as $data) {
     echo "<tr class='tab_bg_1'>";
     echo "<td>";
     $computer->getFromDB($data['computers_id']);
-    echo $computer->getLink(1);
+    echo $computer->getLink();
     echo "</td>";
     echo "<td>" . Html::convDateTime($data['last_inventory_update']) . "</td>";
     echo "<td>" . $computer->fields['serial'] . "</td>";

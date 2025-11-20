@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
 * Manage the checks before deploy a package.
 */
@@ -43,16 +39,17 @@ class PluginGlpiinventoryDashboard
     public static function nbItems(array $params): array
     {
         $default_params = [
-         'label'                 => "",
-         'itemtype'              => Agent::getType(),
-         'icon'                  => Agent::getIcon(),
-         'apply_filters'         => [],
+            'label'                 => "",
+            'itemtype'              => Agent::class,
+            'icon'                  => Agent::getIcon(),
+            'apply_filters'         => [],
         ];
 
         $params = array_merge($default_params, $params);
 
         $searchCriteria =  ['criteria' => [$params['apply_filters']],
-         'reset'    => 'reset'];
+            'reset'    => 'reset',
+        ];
 
         $searchWaiting = Search::getDatas(
             $params['itemtype'],
@@ -67,12 +64,12 @@ class PluginGlpiinventoryDashboard
         $url =  $params['itemtype']::getSearchURL();
         $url .= '?' . Toolbox::append_params($searchCriteria);
         return [
-         'number'     => $count,
-         'url'        => $url,
-         'label'      => $params['label'],
-         'icon'       => $params['icon'],
-         's_criteria' => $searchCriteria,
-         'itemtype'   => $params['itemtype'],
+            'number'     => $count,
+            'url'        => $url,
+            'label'      => $params['label'],
+            'icon'       => $params['icon'],
+            's_criteria' => $searchCriteria,
+            'itemtype'   => $params['itemtype'],
         ];
     }
 }

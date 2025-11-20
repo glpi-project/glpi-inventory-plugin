@@ -32,12 +32,8 @@
  */
 
 if (strpos($_SERVER['PHP_SELF'], "dropdowntypelist.php")) {
-    include("../../../inc/includes.php");
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
-}
-if (!defined('GLPI_ROOT')) {
-    die("Can not acces directly to this file");
 }
 
 Session::checkCentralAccess();
@@ -50,6 +46,6 @@ if ($myamemore != '') {
         $myamemore,
         filter_input(INPUT_POST, "method"),
         filter_input(INPUT_POST, filter_input(INPUT_POST, "name") . 'typeid'),
-        filter_input(INPUT_POST, "taskjobs_id")
+        (int) filter_input(INPUT_POST, "taskjobs_id")
     );
 }

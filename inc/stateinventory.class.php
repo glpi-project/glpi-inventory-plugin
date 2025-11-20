@@ -31,45 +31,42 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
+use Safe\DateTime;
+
+use function Safe\strtotime;
 
 /**
  * Manage the network inventory state.
  */
 class PluginGlpiinventoryStateInventory extends CommonDBTM
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_task';
 
 
-   /**
-    * __contruct function where add variable in $CFG_GLPI
-    *
-    * @global array $CFG_GLPI
-    */
+    /**
+     * __construct function where add variable in $CFG_GLPI
+     */
     public function __construct()
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $CFG_GLPI['glpitablesitemtype']['PluginGlpiinventoryStateInventory'] =
-          'glpi_plugin_glpiinventory_taskjobstates';
+        $CFG_GLPI['glpitablesitemtype']['PluginGlpiinventoryStateInventory']
+          = 'glpi_plugin_glpiinventory_taskjobstates';
     }
 
 
-   /**
-    * Display network inventory state
-    *
-    * @global object $DB
-    * @global array $CFG_GLPI
-    * @param array $options
-    */
-    public function display($options = [])
+    /**
+     * Display network inventory state
+     *
+     * @param array $options
+     */
+    public function display($options = []) // @phpstan-ignore method.parentMethodFinalByPhpDoc
     {
         global $DB, $CFG_GLPI;
 
@@ -92,21 +89,21 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'ON' => [
                         'glpi_plugin_glpiinventory_taskjobs' => 'id',
-                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                    ],
+                ],
             ],
             'WHERE'  => [
-                'method' => 'networkinventory'
+                'method' => 'networkinventory',
             ],
             'GROUPBY' => 'uniqid',
-            'ORDERBY' => 'uniqid DESC'
+            'ORDERBY' => 'uniqid DESC',
         ]);
 
         $number = count($iterator);
 
-       // Display the pager
-        Html::printPager($start, $number, Plugin::getWebDir('glpiinventory') . "/front/stateinventory.php", '');
+        // Display the pager
+        Html::printPager($start, $number, $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/stateinventory.php", '');
 
         echo "<div class='card'>";
         echo "<table class='table table-hover card-table'>";
@@ -129,24 +126,24 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
         $iterator = $DB->request([
             'SELECT' => [
-                'glpi_plugin_glpiinventory_taskjobstates.*'
+                'glpi_plugin_glpiinventory_taskjobstates.*',
             ],
             'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
             'LEFT JOIN' => [
                 'glpi_plugin_glpiinventory_taskjobs' => [
                     'ON' => [
                         'glpi_plugin_glpiinventory_taskjobs' => 'id',
-                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id'
-                    ]
-                ]
+                        'glpi_plugin_glpiinventory_taskjobstates' => 'plugin_glpiinventory_taskjobs_id',
+                    ],
+                ],
             ],
             'WHERE'  => [
-                'method' => 'networkinventory'
+                'method' => 'networkinventory',
             ],
             'GROUPBY' => 'uniqid',
             'ORDERBY' => 'uniqid DESC',
-            'LIMIT'  => (int)$_SESSION['glpilist_limit'],
-            'START'  => (int)$start
+            'LIMIT'  => (int) $_SESSION['glpilist_limit'],
+            'START'  => (int) $start,
         ]);
 
         foreach ($iterator as $data) {
@@ -160,7 +157,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
             echo "<a href='$link'>$label</a>";
             echo "</td>";
             $agent->getFromDB($data['agents_id']);
-            echo "<td>" . $agent->getLink(1) . "</td>";
+            echo "<td>" . $agent->getLink() . "</td>";
             $nb_query = 0;
             $nb_threads = 0;
             $start_date = "";
@@ -180,10 +177,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                     }
 
                     if (
-                        ($taskjoblog['state'] == "2")
-                        or ($taskjoblog['state'] == "3")
-                        or ($taskjoblog['state'] == "4")
-                        or ($taskjoblog['state'] == "5")
+                        $taskjoblog['state'] == "2" || $taskjoblog['state'] == "3" || $taskjoblog['state'] == "4" || $taskjoblog['state'] == "5"
                     ) {
                         if (!strstr($taskjoblog['comment'], 'Merged with ')) {
                             $end_date = $taskjoblog['date'];
@@ -191,7 +185,7 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                     }
                 }
             }
-           // State
+            // State
             echo "<td>";
             switch ($data['state']) {
                 case 0:
@@ -232,8 +226,8 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
 
                 $nb_per_second = 0;
                 if (strtotime($end_date) - strtotime($start_date) > 0) {
-                    $nb_per_second = round(($nb_query - $nb_errors) /
-                    (strtotime($end_date) - strtotime($start_date)), 2);
+                    $nb_per_second = round(($nb_query - $nb_errors)
+                    / (strtotime($end_date) - strtotime($start_date)), 2);
                 }
                 echo "<td>" . $nb_per_second . "</td>";
             }
@@ -248,12 +242,12 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
     }
 
 
-   /**
-    * Display diff between 2 dates, so the time elapsed of execution
-    *
-    * @param string $date1
-    * @param string $date2
-    */
+    /**
+     * Display diff between 2 dates, so the time elapsed of execution
+     *
+     * @param string $date1
+     * @param string $date2
+     */
     public function dateDiff($date1, $date2)
     {
         $timestamp1 = strtotime($date1);

@@ -32,7 +32,6 @@
  */
 
 if (strpos($_SERVER['PHP_SELF'], "dropdownactiontype.php")) {
-    include("../../../inc/includes.php");
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }
@@ -43,6 +42,4 @@ $pfTaskjob = new PluginGlpiinventoryTaskjob();
 $pfTaskjob->dropdownActionType(
     "ActionType",
     filter_input(INPUT_POST, "method"),
-    filter_input(INPUT_POST, "value"),
-    ""
 );

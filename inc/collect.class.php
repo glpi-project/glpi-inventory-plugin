@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_encode;
 
 /**
  * Manage the collect information by the agent.
@@ -69,8 +67,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        /** @var CommonDBTM $item */
-        if ($item->fields['id'] > 0) {
+        if ($item instanceof CommonDBTM && $item->fields['id'] > 0) {
             $index = self::getNumberOfCollectsForAComputer($item->fields['id']);
             $nb    = 0;
             if ($index > 0) {
@@ -105,9 +102,11 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             && $computer->fields['is_dynamic'] == 1
         ) {
             foreach (
-                ['PluginGlpiinventoryCollect_File_Content',
-                   'PluginGlpiinventoryCollect_Wmi_Content',
-                   'PluginGlpiinventoryCollect_Registry_Content'] as $itemtype
+                [
+                    PluginGlpiinventoryCollect_File_Content::class,
+                    PluginGlpiinventoryCollect_Wmi_Content::class,
+                    PluginGlpiinventoryCollect_Registry_Content::class,
+                ] as $itemtype
             ) {
                 $collect_item = new $itemtype();
                 $collect_item->showForComputer($id);
@@ -127,9 +126,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     public static function getNumberOfCollectsForAComputer($computers_id)
     {
         $tables = ['glpi_plugin_glpiinventory_collects_registries_contents',
-                 'glpi_plugin_glpiinventory_collects_wmis_contents',
-                 'glpi_plugin_glpiinventory_collects_files_contents',
-                ];
+            'glpi_plugin_glpiinventory_collects_wmis_contents',
+            'glpi_plugin_glpiinventory_collects_files_contents',
+        ];
         $total = 0;
         foreach ($tables as $table) {
             $total += countElementsInTable($table, ['computers_id' => $computers_id]);
@@ -146,9 +145,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     public static function getTypes()
     {
         return [
-         'registry' => __('Registry', 'glpiinventory'),
-         'wmi'      => __('WMI', 'glpiinventory'),
-         'file'     => __('Find file', 'glpiinventory')
+            'registry' => __('Registry', 'glpiinventory'),
+            'wmi'      => __('WMI', 'glpiinventory'),
+            'file'     => __('Find file', 'glpiinventory'),
         ];
     }
 
@@ -158,16 +157,16 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $tab = [];
 
         $tab[] = [
-         'id'           => 'common',
-         'name'         => __('Characteristics')
+            'id'           => 'common',
+            'name'         => __('Characteristics'),
         ];
 
         $tab[] = [
-         'id'           => '1',
-         'table'        => $this->getTable(),
-         'field'        => 'name',
-         'name'         => __('Name'),
-         'datatype'     => 'itemlink'
+            'id'           => '1',
+            'table'        => $this->getTable(),
+            'field'        => 'name',
+            'name'         => __('Name'),
+            'datatype'     => 'itemlink',
         ];
 
         return $tab;
@@ -209,7 +208,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = " . $registry['id'],
-                                          'jointype' => 'child'];
+                    'jointype' => 'child',
+                ];
                 $i++;
             }
 
@@ -226,7 +226,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = " . $wmi['id'],
-                                          'jointype' => 'child'];
+                    'jointype' => 'child',
+                ];
                 $i++;
             }
 
@@ -237,29 +238,31 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
                 $tab[$i]['field']         = 'pathfile';
                 $tab[$i]['linkfield']     = '';
-                $tab[$i]['name']          = __('Find file', 'glpiinventory') .
-                                    " - " . $file['name'] .
-                                    " - " . __('pathfile', 'glpiinventory');
+                $tab[$i]['name']          = __('Find file', 'glpiinventory')
+                                    . " - " . $file['name']
+                                    . " - " . __('pathfile', 'glpiinventory');
                 $tab[$i]['joinparams']    = ['jointype' => 'child'];
                 $tab[$i]['datatype']      = 'text';
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $file['id'],
-                                          'jointype' => 'child'];
+                    'jointype' => 'child',
+                ];
                 $i++;
 
                 $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
                 $tab[$i]['field']         = 'size';
                 $tab[$i]['linkfield']     = '';
-                $tab[$i]['name']          = __('Find file', 'glpiinventory') .
-                                    " - " . $file['name'] .
-                                    " - " . __('Size', 'glpiinventory');
+                $tab[$i]['name']          = __('Find file', 'glpiinventory')
+                                    . " - " . $file['name']
+                                    . " - " . __('Size', 'glpiinventory');
                 $tab[$i]['joinparams']    = ['jointype' => 'child'];
                 $tab[$i]['datatype']      = 'text';
                 $tab[$i]['forcegroupby']  = true;
                 $tab[$i]['massiveaction'] = false;
                 $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $file['id'],
-                                          'jointype' => 'child'];
+                    'jointype' => 'child',
+                ];
                 $i++;
             }
         }
@@ -302,8 +305,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         echo __('Comments');
         echo "</td>";
         echo "<td class='middle'>";
-        echo "<textarea cols='45' rows='3' name='comment' >" .
-              $this->fields["comment"] . "</textarea>";
+        echo "<textarea cols='45' rows='3' name='comment' >"
+              . $this->fields["comment"] . "</textarea>";
         echo "</td>";
         echo "<td>" . __('Active') . "</td>";
         echo "<td>";
@@ -321,11 +324,11 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * Prepare run, so it prepare the taskjob with module 'collect'.
      * It prepare collect information and computer list for task run
      *
-     * @global object $DB
      * @param integer $taskjobs_id id of taskjob
      */
     public function prepareRun($taskjobs_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $task       = new PluginGlpiinventoryTask();
@@ -347,11 +350,11 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             $items_id = current($action);
 
             switch ($itemtype) {
-                case 'Computer':
+                case Computer::class:
                     $computers[] = $items_id;
                     break;
 
-                case 'Group':
+                case Group::class:
                     $computer_object = new Computer();
 
                     //find computers by user associated with this group
@@ -381,7 +384,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
                     break;
 
-                case 'PluginGlpiinventoryDeployGroup':
+                case PluginGlpiinventoryDeployGroup::class:
                     $group = new PluginGlpiinventoryDeployGroup();
                     $group->getFromDB($items_id);
 
@@ -392,8 +395,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_staticdatas',
                                 'WHERE'  => [
                                     'groups_id' => $items_id,
-                                    'itemtype'  => 'Computer'
-                                ]
+                                    'itemtype'  => 'Computer',
+                                ],
                             ]);
 
                             foreach ($iterator as $row) {
@@ -406,9 +409,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 'SELECT' => 'fields_array',
                                 'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
                                 'WHERE'  => [
-                                    'groups_id' => $items_id
+                                    'groups_id' => $items_id,
                                 ],
-                                'LIMIT' => 1
+                                'LIMIT' => 1,
                             ]);
                             $row = $iterator->current();
 
@@ -479,7 +482,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             foreach ($a_registries as $data_r) {
                                 $uniqid = uniqid();
                                 $c_input['state'] = 0;
-                                $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Registry';
+                                $c_input['itemtype'] = PluginGlpiinventoryCollect_Registry::class;
                                 $c_input['items_id'] = $data_r['id'];
                                 $c_input['date'] = date("Y-m-d H:i:s");
                                 $c_input['uniqid'] = $uniqid;
@@ -505,7 +508,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             foreach ($a_wmies as $data_r) {
                                 $uniqid = uniqid();
                                 $c_input['state'] = 0;
-                                $c_input['itemtype'] = 'PluginGlpiinventoryCollect_Wmi';
+                                $c_input['itemtype'] = PluginGlpiinventoryCollect_Wmi::class;
                                 $c_input['items_id'] = $data_r['id'];
                                 $c_input['date'] = date("Y-m-d H:i:s");
                                 $c_input['uniqid'] = $uniqid;
@@ -531,7 +534,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             foreach ($a_files as $data_r) {
                                 $uniqid = uniqid();
                                 $c_input['state'] = 0;
-                                $c_input['itemtype'] = 'PluginGlpiinventoryCollect_File';
+                                $c_input['itemtype'] = PluginGlpiinventoryCollect_File::class;
                                 $c_input['items_id'] = $data_r['id'];
                                 $c_input['date'] = date("Y-m-d H:i:s");
                                 $c_input['uniqid'] = $uniqid;
@@ -570,6 +573,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      */
     public function run($taskjobstate, $agent)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $output = [];
@@ -583,10 +587,10 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $reg_db = $pfCollect_Registry->find($sql_where);
                 foreach ($reg_db as $reg) {
                     $output[] = [
-                     'function' => 'getFromRegistry',
-                     'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
-                     'uuid'     => $taskjobstate->fields['uniqid'],
-                     '_sid'     => $reg['id']
+                        'function' => 'getFromRegistry',
+                        'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
+                        'uuid'     => $taskjobstate->fields['uniqid'],
+                        '_sid'     => $reg['id'],
                     ];
                 }
                 break;
@@ -596,11 +600,12 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $wmi_db = $pfCollect_Wmi->find($sql_where);
                 foreach ($wmi_db as $wmi) {
                     $datawmi = [
-                    'function'   => 'getFromWMI',
-                    'class'      => $wmi['class'],
-                    'properties' => [$wmi['properties']],
-                    'uuid'       => $taskjobstate->fields['uniqid'],
-                    '_sid'       => $wmi['id']];
+                        'function'   => 'getFromWMI',
+                        'class'      => $wmi['class'],
+                        'properties' => [$wmi['properties']],
+                        'uuid'       => $taskjobstate->fields['uniqid'],
+                        '_sid'       => $wmi['id'],
+                    ];
                     if ($wmi['moniker'] != '') {
                         $datawmi['moniker'] = $wmi['moniker'];
                     }
@@ -614,16 +619,16 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $files_db = $pfCollect_File->find($sql_where);
                 foreach ($files_db as $files) {
                     $datafile = [
-                    'function'  => 'findFile',
-                    'dir'       => $files['dir'],
-                    'limit'     => $files['limit'],
-                    'recursive' => $files['is_recursive'],
-                    'filter'    => [
-                     'is_file' => $files['filter_is_file'],
-                     'is_dir'  => $files['filter_is_dir']
-                    ],
-                    'uuid'      => $taskjobstate->fields['uniqid'],
-                    '_sid'       => $files['id']
+                        'function'  => 'findFile',
+                        'dir'       => $files['dir'],
+                        'limit'     => $files['limit'],
+                        'recursive' => $files['is_recursive'],
+                        'filter'    => [
+                            'is_file' => $files['filter_is_file'],
+                            'is_dir'  => $files['filter_is_dir'],
+                        ],
+                        'uuid'      => $taskjobstate->fields['uniqid'],
+                        '_sid'       => $files['id'],
                     ];
                     if ($files['filter_regex'] != '') {
                         $datafile['filter']['regex'] = $files['filter_regex'];
@@ -652,8 +657,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     $DB->delete(
                         'glpi_plugin_glpiinventory_collects_files_contents',
                         [
-                        'plugin_glpiinventory_collects_files_id'   => $files['id'],
-                        'computers_id'                               => $agent['items_id']
+                            'plugin_glpiinventory_collects_files_id'   => $files['id'],
+                            'computers_id'                               => $agent['items_id'],
                         ]
                     );
                 }
@@ -665,7 +670,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
     public function communication($action, $machineId, $uuid)
     {
-        $response = new \stdClass();
+        $response = new stdClass();
 
         if (empty($action)) {
             return $response;
@@ -683,14 +688,14 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $pfAgentModule  = new PluginGlpiinventoryAgentmodule();
                 $pfTask         = new PluginGlpiinventoryTask();
 
-                $pfAgent->getFromDBByCrit(['deviceid' => addslashes($machineId)]);
+                $pfAgent->getFromDBByCrit(['deviceid' => $machineId]);
                 $agent = $pfAgent->fields;
                 if (isset($agent['id'])) {
                     $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                         $agent['id'],
                         ['collect']
                     );
-                    $order = new \stdClass();
+                    $order = new stdClass();
                     $order->jobs = [];
 
                     foreach ($taskjobstates as $taskjobstate) {
@@ -711,12 +716,12 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             );
 
                             $a_input = [
-                            'plugin_glpiinventory_taskjobstates_id'    => $taskjobstate->fields['id'],
-                            'items_id'                                   => $agent['id'],
-                            'itemtype'                                   => 'Agent',
-                            'date'                                       => date("Y-m-d H:i:s"),
-                            'comment'                                    => '',
-                            'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED
+                                'plugin_glpiinventory_taskjobstates_id'    => $taskjobstate->fields['id'],
+                                'items_id'                                   => $agent['id'],
+                                'itemtype'                                   => 'Agent',
+                                'date'                                       => date("Y-m-d H:i:s"),
+                                'comment'                                    => '',
+                                'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
                             ];
                             $pfTaskjoblog->add($a_input);
 
@@ -740,8 +745,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 }
                 $jobstate = current($pfTaskjobstate->find(
                     [
-                    'uniqid' => $uuid,
-                    'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
+                        'uniqid' => $uuid,
+                        'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED],
                     ],
                     [],
                     1
@@ -760,8 +765,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         $response->token = Session::getNewCSRFToken();
                         unset($a_values['_glpi_csrf_token']);
                     }
-                    $sid = isset($a_values['_sid']) ? $a_values['_sid'] : 0;
-                    $cpt = isset($a_values['_cpt']) ? $a_values['_cpt'] : 0;
+                    $sid = $a_values['_sid'] ?? 0;
+                    $cpt = $a_values['_cpt'] ?? 0;
                     unset($a_values['action']);
                     unset($a_values['uuid']);
                     unset($a_values['_cpt']);
@@ -789,10 +794,10 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             if (!empty($a_values['path']) && isset($a_values['size'])) {
                                 // update files content
                                 $params = [
-                                  'machineid' => Toolbox::addslashes_deep($pfAgent->fields['deviceid']),
-                                  'uuid'      => $uuid,
-                                  'code'      => 'running',
-                                  'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size']
+                                    'machineid' => $pfAgent->fields['deviceid'],
+                                    'uuid'      => $uuid,
+                                    'code'      => 'running',
+                                    'msg'       => (isset($name) ? "$name: file " : "file ") . $a_values['path'] . " | size " . $a_values['size'],
                                 ];
                                 if (isset($a_values['sendheaders'])) {
                                     $params['sendheaders'] = $a_values['sendheaders'];
@@ -831,7 +836,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             $jobstate['id'],
                             $jobstate['items_id'],
                             $jobstate['itemtype'],
-                            $flag,
+                            (string) $flag,
                             isset($name) ? "$name: $message" : $message
                         );
                     } else {
@@ -846,8 +851,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             case 'jobsDone':
                 $jobstate = current($pfTaskjobstate->find(
                     [
-                    'uniqid' => $uuid,
-                    'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED]
+                        'uniqid' => $uuid,
+                        'state'  => ['!=', PluginGlpiinventoryTaskjobstate::FINISHED],
                     ],
                     [],
                     1
@@ -856,7 +861,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     $jobstate['id'],
                     $jobstate['items_id'],
                     $jobstate['itemtype'],
-                    $jobstate['state'] == PluginGlpiinventoryTaskjobstate::IN_ERROR ? "1" : ""
+                    $jobstate['state'] == PluginGlpiinventoryTaskjobstate::IN_ERROR ? 1 : 0
                 );
 
                 break;
@@ -876,6 +881,12 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $items = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
         foreach ($items as $item) {
             $pfCollect_Registry->delete(['id' => $item['id']], true);
+            // Delete all registry content
+            $pfCollect_Registry_Content = new PluginGlpiinventoryCollect_Registry_Content();
+            $subitems = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $item['id']]);
+            foreach ($subitems as $subitem) {
+                $pfCollect_Registry_Content->delete(['id' => $subitem['id']], true);
+            }
         }
 
         // Delete all WMI
@@ -883,6 +894,12 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $items = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
         foreach ($items as $item) {
             $pfCollect_Wmi->delete(['id' => $item['id']], true);
+            // Delete all WMI content
+            $pfCollect_Wmi_Content = new PluginGlpiinventoryCollect_Wmi_Content();
+            $subitems = $pfCollect_Wmi_Content->find(['plugin_glpiinventory_collects_wmis_id' => $item['id']]);
+            foreach ($subitems as $subitem) {
+                $pfCollect_Wmi_Content->delete(['id' => $subitem['id']], true);
+            }
         }
 
         // Delete all File
@@ -890,7 +907,20 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $items = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
         foreach ($items as $item) {
             $pfCollect_File->delete(['id' => $item['id']], true);
+            // Delete all File content
+            $pfCollect_File_Content = new PluginGlpiinventoryCollect_File_Content();
+            $subitems = $pfCollect_File_Content->find(['plugin_glpiinventory_collects_files_id' => $item['id']]);
+            foreach ($subitems as $subitem) {
+                $pfCollect_File_Content->delete(['id' => $subitem['id']], true);
+            }
         }
+
         parent::post_deleteItem();
     }
+
+    public static function getIcon()
+    {
+        return "ti ti-device-desktop-down";
+    }
+
 }

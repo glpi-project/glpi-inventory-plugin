@@ -32,7 +32,6 @@
  */
 
 if (strpos($_SERVER['PHP_SELF'], "dropdownCredentials.php")) {
-    include("../../../inc/includes.php");
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }
@@ -40,6 +39,6 @@ if (strpos($_SERVER['PHP_SELF'], "dropdownCredentials.php")) {
 Session::checkRight('plugin_glpiinventory_credential', READ);
 $params = [
     'itemtype' => filter_input(INPUT_POST, "itemtype"),
-    'id'       => filter_input(INPUT_POST, "id")
+    'id'       => filter_input(INPUT_POST, "id"),
 ];
 PluginGlpiinventoryCredential::dropdownCredentialsForItemtype($params);

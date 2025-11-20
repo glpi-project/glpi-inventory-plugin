@@ -31,31 +31,33 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\filesize;
+use function Safe\ob_clean;
+use function Safe\preg_match;
+use function Safe\readfile;
+use function Safe\realpath;
 
 /**
  * Used to get the deploy file in many parts.
  */
 class PluginGlpiinventoryDeployFilepart
 {
-   /**
-    * Send file to agent
-    *
-    * @param string $file
-    */
+    /**
+     * Send file to agent
+     *
+     * @param string $file
+     */
     public static function httpSendFile($file)
     {
         if (empty($file)) {
             header("HTTP/1.1 500");
-            exit;
+            exit; //@phpstan-ignore-line (whole method probably needs refactoring)
         }
         $matches = [];
         preg_match('/.\/..\/([^\/]+)/', $file, $matches);
 
         $sha512 = $matches[1];
-       //      $short_sha512 = substr($sha512, 0, 6);
+        //      $short_sha512 = substr($sha512, 0, 6);
 
         $repoPath = GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository/";
 
@@ -64,11 +66,10 @@ class PluginGlpiinventoryDeployFilepart
 
         if (!is_file($filePath)) {
             header("HTTP/1.1 404");
-            print "\n" . $filePath . "\n\n";
-            exit;
+            exit; //@phpstan-ignore-line (whole method probably needs refactoring)
         } elseif (!is_readable($filePath) || !str_starts_with(realpath($filePath), realpath($repoPath))) {
             header("HTTP/1.1 403");
-            exit;
+            exit; //@phpstan-ignore-line (whole method probably needs refactoring)
         }
 
         error_reporting(0);
@@ -86,6 +87,6 @@ class PluginGlpiinventoryDeployFilepart
         }
         flush();
         readfile($filePath);
-        exit;
+        exit; //@phpstan-ignore-line (whole method probably needs refactoring)
     }
 }

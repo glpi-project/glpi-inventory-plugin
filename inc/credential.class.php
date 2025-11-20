@@ -31,102 +31,106 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the credentials for inventory VMWARE ESX.
  */
 class PluginGlpiinventoryCredential extends CommonDropdown
 {
-   /**
-    * Define first level menu name
-    *
-    * @var string
-    */
+    public $can_be_translated = false;
+
+    /**
+     * Define first level menu name
+     *
+     * @var string
+     */
     public $first_level_menu  = "admin";
 
-   /**
-    * Define second level menu name
-    *
-    * @var string
-    */
+    /**
+     * Define second level menu name
+     *
+     * @var string
+     */
     public $second_level_menu = "pluginglpiinventorymenu";
 
-   /**
-    * Define third level menu name
-    *
-    * @var string
-    */
+    /**
+     * Define third level menu name
+     *
+     * @var string
+     */
     public $third_level_menu  = "credential";
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_credential';
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return __('Authentication for remote devices (VMware)', 'glpiinventory');
     }
 
 
-   /**
-    * Fields added to this class
-    *
-    * @return array
-    */
+    /**
+     * Fields added to this class
+     *
+     * @return array
+     */
     public function getAdditionalFields()
     {
 
-        return [['name'  => 'itemtype',
-                         'label' => __('Type'),
-                         'type'  => 'credential_itemtype'],
-                   ['name'  => 'username',
-                         'label' => __('Login'),
-                         'type'  => 'text'],
-                   ['name'  => 'password',
-                         'label' => __('Password'),
-                         'type'  => 'password']];
+        return [
+            [
+                'name'  => 'itemtype',
+                'label' => __('Type'),
+                'type'  => 'credential_itemtype',
+            ],
+            [
+                'name'  => 'username',
+                'label' => __('Login'),
+                'type'  => 'text',
+            ],
+            [
+                'name'  => 'password',
+                'label' => __('Password'),
+                'type'  => 'password',
+            ],
+        ];
     }
 
 
-   /**
-    * Display specific fields
-    *
-    * @param integer $ID
-    * @param array $field
-    */
+    /**
+     * Display specific fields
+     *
+     * @param integer $ID
+     * @param array $field
+     */
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
     {
 
-        switch ($field['type']) {
-            case 'credential_itemtype':
-                $this->showItemtype($ID);
-                break;
+        if ($field['type'] == 'credential_itemtype') {
+            $this->showItemtype($ID);
         }
     }
 
 
-   /**
-    * DIsplay the credential itemtype
-    *
-    * @param integer $ID
-    */
+    /**
+     * DIsplay the credential itemtype
+     *
+     * @param integer $ID
+     */
     public function showItemtype($ID)
     {
 
-       //Criteria already added : only display the selected itemtype
+        //Criteria already added : only display the selected itemtype
         if ($ID > 0) {
             $label = self::getLabelByItemtype($this->fields['itemtype']);
             if ($label) {
@@ -134,7 +138,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
                 echo "<input type='hidden' name='itemtype' value='" . $this->fields['itemtype'] . "'";
             }
         } else {
-           //Add criteria : display dropdown
+            //Add criteria : display dropdown
             $options = self::getCredentialsItemTypes();
             $options[''] = Dropdown::EMPTY_VALUE;
             asort($options);
@@ -143,85 +147,83 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Define more tabs to display
-    *
-    * @param array $options
-    * @return array
-    */
+    /**
+     * Define more tabs to display
+     *
+     * @param array $options
+     * @return array
+     */
     public function defineMoreTabs($options = [])
     {
         return [];
     }
 
 
-   /**
-    * Display more tabs
-    *
-    * @param array $tab
-    */
-    public function displayMoreTabs($tab)
-    {
-    }
+    /**
+     * Display more tabs
+     *
+     * @param array $tab
+     */
+    public function displayMoreTabs($tab) {}
 
 
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
+    /**
+     * Get search function for the class
+     *
+     * @return array
+     */
     public function rawSearchOptions()
     {
 
         $tab = [];
 
         $tab[] = [
-         'id'   => 'common',
-         'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
+            'id'   => 'common',
+            'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
         ];
 
         $tab[] = [
-         'id'       => '1',
-         'table'    => $this->getTable(),
-         'field'    => 'name',
-         'name'     => __('Name'),
-         'datatype' => 'itemlink',
+            'id'       => '1',
+            'table'    => $this->getTable(),
+            'field'    => 'name',
+            'name'     => __('Name'),
+            'datatype' => 'itemlink',
         ];
 
         $tab[] = [
-         'id'       => '2',
-         'table'    => 'glpi_entities',
-         'field'    => 'completename',
-         'name'     => Entity::getTypeName(1),
-         'datatype' => 'dropdown',
+            'id'       => '2',
+            'table'    => 'glpi_entities',
+            'field'    => 'completename',
+            'name'     => Entity::getTypeName(1),
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
-         'id'            => '3',
-         'table'         => $this->getTable(),
-         'field'         => 'itemtype',
-         'name'          => __('Type'),
-         'massiveaction' => false,
+            'id'            => '3',
+            'table'         => $this->getTable(),
+            'field'         => 'itemtype',
+            'name'          => __('Type'),
+            'massiveaction' => false,
         ];
 
         $tab[] = [
-         'id'    => '4',
-         'table' => $this->getTable(),
-         'field' => 'username',
-         'name'  => __('Login'),
+            'id'    => '4',
+            'table' => $this->getTable(),
+            'field' => 'username',
+            'name'  => __('Login'),
         ];
 
         return $tab;
     }
 
 
-   /**
-    * Perform checks to be sure that an itemtype and at least a field are
-    * selected
-    *
-    * @param array $input the values to insert in DB
-    * @return array
-    */
+    /**
+     * Perform checks to be sure that an itemtype and at least a field are
+     * selected
+     *
+     * @param array $input the values to insert in DB
+     * @return array
+     */
     public static function checkBeforeInsert($input)
     {
 
@@ -241,12 +243,12 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Prepare data before add to database
-    *
-    * @param array $input
-    * @return array
-    */
+    /**
+     * Prepare data before add to database
+     *
+     * @param array $input
+     * @return array
+     */
     public function prepareInputForAdd($input)
     {
         $input = self::encodePasswordInInput($input);
@@ -254,12 +256,12 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Prepare data before update in database
-    *
-    * @param array $input
-    * @return array
-    */
+    /**
+     * Prepare data before update in database
+     *
+     * @param array $input
+     * @return array
+     */
     public function prepareInputForUpdate($input)
     {
         $input = self::encodePasswordInInput($input);
@@ -267,12 +269,12 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Get an itemtype label by the credential itemtype
-    *
-    * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
-    * @return string|false
-    */
+    /**
+     * Get an itemtype label by the credential itemtype
+     *
+     * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
+     * @return string|false
+     */
     public static function getLabelByItemtype($credential_itemtype)
     {
         $credentialtypes = self::findItemtypeType($credential_itemtype);
@@ -283,18 +285,19 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Find a credential by his itemtype
-    *
-    * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
-    * @return array
-    */
+    /**
+     * Find a credential by his itemtype
+     *
+     * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
+     * @return array
+     */
     public static function findItemtypeType($credential_itemtype)
     {
 
         $credential = ['itemtype' => 'PluginGlpiinventoryInventoryComputerESX', //Credential itemtype
-                           'name'    => __('VMware host', 'glpiinventory'), //Label
-                           'targets' => ['Computer']];
+            'name'    => __('VMware host', 'glpiinventory'), //Label
+            'targets' => ['Computer'],
+        ];
         if ($credential['itemtype'] == $credential_itemtype) {
             return $credential;
         }
@@ -302,24 +305,25 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Get all credentials itemtypes
-    *
-    * @return array
-    */
+    /**
+     * Get all credentials itemtypes
+     *
+     * @return array
+     */
     public static function getCredentialsItemTypes()
     {
-        return ['PluginGlpiinventoryInventoryComputerESX' =>
-                           __('VMware host', 'glpiinventory')];
+        return [
+            PluginGlpiinventoryInventoryComputerESX::class => __('VMware host', 'glpiinventory'),
+        ];
     }
 
 
-   /**
-    * Get credential types
-    *
-    * @param string $itemtype
-    * @return array
-    */
+    /**
+     * Get credential types
+     *
+     * @param string $itemtype
+     * @return array
+     */
     public static function getForItemtype($itemtype)
     {
         $itemtypes = [];
@@ -337,12 +341,11 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Display dropdown with credentials
-    *
-    * @global array $CFG_GLPI
-    * @param array $params
-    */
+    /**
+     * Display dropdown with credentials
+     *
+     * @param array $params
+     */
     public static function dropdownCredentials($params = [])
     {
         global $CFG_GLPI;
@@ -350,7 +353,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         $p = [
             'value'    => '',
             'itemtype' => '',
-            'id'       => 0
+            'id'       => 0,
         ];
 
         $credential = new PluginGlpiinventoryCredential();
@@ -366,8 +369,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
             ['value' => $p['itemtype']]
         );
         $ajparams = ['itemtype' => '__VALUE__',
-                        'id'       => $p['id']];
-        $url       = Plugin::getWebDir('glpiinventory') . "/ajax/dropdownCredentials.php";
+            'id'       => $p['id'],
+        ];
+        $url       = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownCredentials.php";
         Ajax::updateItemOnSelectEvent(
             "dropdown_plugin_glpiinventory_credentials_id$rand",
             "span_credentials",
@@ -383,11 +387,11 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Display dropdown of credentials for itemtype
-    *
-    * @param array $params
-    */
+    /**
+     * Display dropdown of credentials for itemtype
+     *
+     * @param array $params
+     */
     public static function dropdownCredentialsForItemtype($params = [])
     {
 
@@ -395,25 +399,26 @@ class PluginGlpiinventoryCredential extends CommonDropdown
             return;
         }
 
-       // params
-       // Array([itemtype] => PluginGlpiinventoryInventoryComputerESX [id] => 0)
-        if ($params['itemtype'] == 'PluginGlpiinventoryInventoryComputerESX') {
-            $params['itemtype'] = 'PluginGlpiinventoryCredential';
+        // params
+        // Array([itemtype] => PluginGlpiinventoryInventoryComputerESX [id] => 0)
+        if ($params['itemtype'] == PluginGlpiinventoryInventoryComputerESX::class) {
+            $params['itemtype'] = PluginGlpiinventoryCredential::class;
         }
         $value = 0;
         if (isset($params['id'])) {
             $value = $params['id'];
         }
         Dropdown::show($params['itemtype'], ['entity_sons' => true,
-                                                'value'       => $value]);
+            'value'       => $value,
+        ]);
     }
 
 
-   /**
-    * Check if there's at least one credential itemetype
-    *
-    * @return boolean
-    */
+    /**
+     * Check if there's at least one credential itemetype
+     *
+     * @return boolean
+     */
     public static function hasAlLeastOneType()
     {
         $types = self::getCredentialsItemTypes();
@@ -421,13 +426,13 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     }
 
 
-   /**
-    * Display a specific header
-    */
-    public function displayHeader()
+    /**
+     * Display a specific header
+     */
+    public static function displayCentralHeader(?string $title = null, ?array $menus = null): void
     {
-       //Common dropdown header
-        parent::displayHeader();
+        //Common dropdown header
+        parent::displayCentralHeader($title, $menus);
 
         PluginGlpiinventoryMenu::displayMenu("mini");
     }
@@ -459,5 +464,10 @@ class PluginGlpiinventoryCredential extends CommonDropdown
 
         $key = new GLPIKey();
         $this->fields['password'] = $key->decrypt($password);
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-lock";
     }
 }

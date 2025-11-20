@@ -37,11 +37,13 @@
  */
 class CliMigration extends Migration
 {
-   /**
-    * __contruct function where initialize variables
-    *
-    * @param string $ver
-    */
+    private int $deb;
+
+    /**
+     * __contruct function where initialize variables
+     *
+     * @param string $ver
+     */
     public function __construct($ver)
     {
         $this->deb     = time();
@@ -49,11 +51,11 @@ class CliMigration extends Migration
     }
 
 
-   /**
-    * Display a message
-    *
-    * @param string $msg
-    */
+    /**
+     * Display a message
+     *
+     * @param string $msg
+     */
     public function displayMessage($msg)
     {
         $msg .= " (" . Html::timestampToString(time() - $this->deb) . ")";
@@ -61,24 +63,24 @@ class CliMigration extends Migration
     }
 
 
-   /**
-    * Display a title
-    *
-    * @param string $title
-    */
-    public function displayTitle($title)
+    /**
+     * Display a title
+     *
+     * @param string $title
+     */
+    public function displayTitle($title): void
     {
         echo "\n" . str_pad(" $title ", 100, '=', STR_PAD_BOTH) . "\n";
     }
 
 
-   /**
-    * Display a warning message
-    *
-    * @param string $msg
-    * @param boolean $red
-    */
-    public function displayWarning($msg, $red = false)
+    /**
+     * Display a warning message
+     *
+     * @param string $msg
+     * @param boolean $red
+     */
+    public function displayWarning($msg, $red = false): void
     {
         if ($red) {
             $msg = "** $msg";

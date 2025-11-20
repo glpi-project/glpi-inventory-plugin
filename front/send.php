@@ -31,12 +31,17 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    define('GLPI_ROOT', realpath('../../..'));
-}
-if (!defined("GLPI_PLUGIN_DOC_DIR")) {
-    define("GLPI_PLUGIN_DOC_DIR", GLPI_ROOT . "/files/_plugins");
-}
+
+use Glpi\Event;
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Exception\Http\NotFoundHttpException;
+use Safe\Exceptions\FilesystemException;
+
+use function Safe\filesize;
+use function Safe\fopen;
+use function Safe\fread;
+use function Safe\realpath;
+
 Session::checkLoginUser();
 
 $docDir = GLPI_PLUGIN_DOC_DIR . '/glpiinventory';
@@ -44,9 +49,10 @@ $docDir = GLPI_PLUGIN_DOC_DIR . '/glpiinventory';
 if (isset($_GET['file'])) {
     $filename = $_GET['file'];
 
-   // Security test : document in $docDir
-    if (strstr($filename, "../") || strstr($filename, "..\\")) {
-        echo "Security attack !!!";
+    // Security test : document in $docDir
+    if (
+        !str_starts_with(realpath($filename), realpath(GLPI_PLUGIN_DOC_DIR))
+    ) {
         Event::log(
             $filename,
             "sendFile",
@@ -54,33 +60,39 @@ if (isset($_GET['file'])) {
             "security",
             $_SESSION["glpiname"] . " tries to get a non standard file."
         );
-        return;
+        throw new AccessDeniedHttpException();
     }
 
     $file = $docDir . '/' . $filename;
     if (!file_exists($file)) {
-        echo "Error file $filename does not exist";
-        return;
+        throw new NotFoundHttpException(
+            sprintf(
+                'File %1$s does not exist',
+                $filename
+            )
+        );
     } else {
-       // Now send the file with header() magic
+        // Now send the file with header() magic
         header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
         header('Pragma: private'); /// IE BUG + SSL
-       //header('Pragma: no-cache');
         header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
         header("Content-disposition: filename=\"$filename\"");
-       //      header("Content-type: ".$mime);
 
-        $f = fopen($file, "r");
-
-        if (!$f) {
-            echo "Error opening file $filename";
-        } else {
-           // Pour que les \x00 ne devienne pas \0
+        try {
+            $f = fopen($file, "r");
+            // for \x00 not to become \0
             $fsize = filesize($file);
-
             if ($fsize) {
                 echo fread($f, filesize($file));
             }
+        } catch (FilesystemException $e) {
+            throw new NotFoundHttpException(
+                sprintf(
+                    'Error opening %1$s',
+                    $filename
+                ),
+                $e
+            );
         }
     }
 }

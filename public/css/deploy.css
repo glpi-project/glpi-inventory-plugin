@@ -1,0 +1,166 @@
+/*!
+ * ---------------------------------------------------------------------
+ * GLPI Inventory Plugin
+ * Copyright (C) 2021 Teclib' and contributors.
+ *
+ * http://glpi-project.org
+ *
+ * based on FusionInventory for GLPI
+ * Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI Inventory Plugin.
+ *
+ * GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GLPI Inventory Plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ * ---------------------------------------------------------------------
+ */
+
+.select2-container--default .select2-results__group {
+   font-weight: 600;
+}
+
+table.package_item {
+   width: 100%;
+}
+table.package_item th {
+   width: 150px;
+   vertical-align: top;
+}
+
+table.package_item input[type=text],
+table.package_item input[type=file],
+table.package_item textarea {
+   width: 400px;
+}
+
+table.package_item textarea {
+   resize: both;
+}
+
+table.package_item input[type=text] {
+   padding: 0 3px;
+   margin-right: 3px;
+}
+
+table.package_item i.ti-exclamation-circle {
+   color: #FFA500;
+   vertical-align: middle;
+}
+
+table.package_item .table_retchecks {
+   border-spacing: 0;
+}
+table.package_item .table_retchecks input {
+   width: 65px;
+}
+
+table.package_item_list {
+   width: 100%;
+}
+table.package_item_list td {
+   max-width: 70px;
+   vertical-align: top;
+   overflow: auto;
+   word-wrap: break-word;
+   white-space: normal;
+}
+table.package_item_list td.control {
+   width: 14px;
+}
+table.package_item_list .more {
+   float: right;
+   cursor: help;
+}
+
+table.package_item_list .download {
+   padding-left: 5px;
+   color: green;
+   cursor: pointer;
+}
+
+table.package_item_list .filename {
+   white-space: normal;
+}
+table.package_item_list ul.retChecks {
+   list-style-type: disc;
+   padding-left:20px;
+}
+
+table.package_item_list ul.retChecks li {
+   margin-left:3px;
+}
+table.package_item_list tr.selected {
+   background-color: #DFC8C8;
+}
+a.edit {
+   cursor: pointer;
+}
+
+i.package_action {
+   font-size: 32px;
+   vertical-align: middle;
+}
+
+.filename .size {
+   font-size: 8px;
+}
+
+.fingerprint {
+   font-size: 8px;
+   margin-top: 2px;
+   margin-bottom:2px;
+}
+
+.fingerprint_good {
+   min-height: 16px;
+   line-height: 16px;
+   background-image: url("../pics/fingerprint-good.png");
+   background-repeat: no-repeat;
+   color:#003000;
+   padding-left : 18px;
+   vertical-align:middle;
+}
+
+.fingerprint_bad {
+   min-height: 16px;
+   line-height: 16px;
+   background-image: url("../pics/fingerprint-bad.png");
+   background-repeat: no-repeat;
+   color:#FF0000;
+   padding-left : 18px;
+   vertical-align:middle;
+}
+
+.fingerprint_badmsg {
+   background-color: #FFEEEE;
+   color:#550000;
+   line-height: 1.5em;
+}
+/* drag and drop element */
+.drag {
+   background-repeat: repeat-x;
+   cursor: move;
+   width: 16px;
+   height: 16px;
+   border:0 !important;
+   margin-right: 0.1em;
+}
+/* self-service */
+#onetimedeploy_form table i.ti-devices-pc {
+   color: var(--tblr-primary);
+   font-size: 26px;
+}

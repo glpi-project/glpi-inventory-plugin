@@ -44,9 +44,7 @@
    {{ fields.dropdownArrayField(
       'buttons',
       json_data['buttons'],
-      call("PluginGlpiinventoryDeployUserinteractionTemplate::getButtons", [
-         constant("PluginGlpiinventoryDeployUserinteractionTemplate::ALERT_WTS")
-      ]),
+      call("PluginGlpiinventoryDeployUserinteractionTemplate::getButtons"),
       __('Interaction type', 'glpiinventory'),
    ) }}
 

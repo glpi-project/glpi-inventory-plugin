@@ -31,23 +31,19 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the wmi to get in collect module.
  */
 class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
 {
-    public $type = 'wmi';
+    public $collect_type = 'wmi';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Found WMI', 'Found WMIs', $nb, 'glpiinventory');
@@ -56,21 +52,21 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
     public function getListHeaders()
     {
         return [
-         __("Name"),
-         "Moniker",
-         __("Class", "glpiinventory"),
-         __("Properties", "glpiinventory"),
-         __("Action")
+            __("Name"),
+            "Moniker",
+            __("Class", "glpiinventory"),
+            __("Properties", "glpiinventory"),
+            __("Action"),
         ];
     }
 
     public function displayOneRow($row = [])
     {
         return [
-         $row['name'],
-         $row['moniker'],
-         $row['class'],
-         $row['properties']
+            $row['name'],
+            $row['moniker'],
+            $row['class'],
+            $row['properties'],
         ];
     }
 

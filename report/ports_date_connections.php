@@ -32,10 +32,13 @@
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
+use Glpi\Application\View\TemplateRenderer;
+
+global $DB;
+
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
 
-include("../../../inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
@@ -76,17 +79,17 @@ if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
            . " ORDER BY `glpi_networkports`.`items_id`";
     $result = $DB->doQuery($query);
     echo "<table width='950' class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th>";
-      echo 'Port name';
-      echo "</th>";
-      echo "<th>";
-      echo 'Switch';
-      echo "</th>";
-      echo "<th>";
-      echo 'Last connection';
-      echo "</th>";
-      echo "</tr>";
+    echo "<tr class='tab_bg_1'>";
+    echo "<th>";
+    echo 'Port name';
+    echo "</th>";
+    echo "<th>";
+    echo 'Switch';
+    echo "</th>";
+    echo "<th>";
+    echo 'Last connection';
+    echo "</th>";
+    echo "</tr>";
 
     while ($data = $DB->fetchArray($result)) {
         echo "<tr class='tab_bg_1'>";
@@ -117,7 +120,7 @@ Html::footer();
  */
 function displaySearchForm()
 {
-    global $_SERVER, $_GET, $CFG_GLPI;
+    global $CFG_GLPI;
 
     echo "<form action='" . $_SERVER["PHP_SELF"] . "' method='post'>";
     echo "<table class='tab_cadre' cellpadding='5'>";
@@ -163,14 +166,14 @@ function displaySearchForm()
     Dropdown::showFromArray(
         "dropdown_sup_inf",
         $values,
-        ['value' => (isset($_GET["dropdown_sup_inf"]) ? $_GET["dropdown_sup_inf"] : "sup")]
+        ['value' => ($_GET["dropdown_sup_inf"] ?? "sup")]
     );
     echo "</td>
       <td width='120'>";
     Html::showDateField(
         "dropdown_calendar",
-        ['value' => (isset($_GET["dropdown_calendar"])
-        ? $_GET["dropdown_calendar"] : 0)]
+        ['value' => ($_GET["dropdown_calendar"] ?? 0),
+        ]
     );
     echo "</td>";
 
@@ -179,19 +182,23 @@ function displaySearchForm()
     Dropdown::show(
         "Location",
         ['name' => "location",
-        'value' => (isset($_GET["location"]) ? $_GET["location"] : "")]
+            'value' => ($_GET["location"] ?? ""),
+        ]
     );
     echo "</td>";
 
-   // Display Reset search
+    // Display Reset search
     echo "<td>";
-    echo "<a href='" . Plugin::getWebDir('glpiinventory') . "/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"" . __('Blank') . "\" alt=\"" . __('Blank') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/reset.png' class='calendrier'></a>";
+    echo "<a href='" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"" . __('Blank') . "\" alt=\"" . __('Blank') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/reset.png' class='calendrier'></a>";
     echo "</td>";
 
     echo "<td>";
-   //Add parameters to uri to be saved as SavedSearch
+    //Add parameters to uri to be saved as SavedSearch
     $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
-    SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginGlpiinventoryNetworkport2');
+    TemplateRenderer::getInstance()->render('pages/tools/savedsearch/save_button.html.twig', [
+        'type' => SavedSearch::SEARCH,
+        'itemtype' => 'PluginGlpiinventoryNetworkport2',
+    ]);
     echo "</td>";
 
     echo "<td>";
@@ -224,6 +231,7 @@ function getContainsArray($get)
                 return "<'" . $get["dropdown_calendar"] . " 00:00:00'";
         }
     }
+    return '';
 }
 
 
@@ -252,17 +260,15 @@ function getValues($get, $post)
     $get = array_merge($get, $post);
     if (isset($get["field"])) {
         foreach ($get["field"] as $index => $value) {
-            $get["contains"][$index] = stripslashes($get["contains"][$index]);
-            $get["contains"][$index] = htmlspecialchars_decode($get["contains"][$index]);
             switch ($value) {
                 case 14:
                     if (strpos($get["contains"][$index], "=") == 1) {
                         $get["dropdown_sup_inf"] = "equal";
                     } else {
                         if (strpos($get["contains"][$index], "<") == 1) {
-                              $get["dropdown_sup_inf"] = "inf";
+                            $get["dropdown_sup_inf"] = "inf";
                         } else {
-                              $get["dropdown_sup_inf"] = "sup";
+                            $get["dropdown_sup_inf"] = "sup";
                         }
                     }
                     break;

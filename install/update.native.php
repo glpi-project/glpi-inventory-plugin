@@ -31,27 +31,34 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
+use Glpi\Error\ErrorHandler;
+use Safe\Exceptions\InfoException;
+
+use function Safe\ini_set;
 
 /**
  * The main function to update the plugin
  *
- * @global object $DB
  * @param string $current_version
- * @param string $migrationname
  */
-function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Migration')
+function pluginGlpiinventoryUpdateNative($current_version)
 {
     global $DB;
 
     $DB->disableTableCaching();
 
-    ini_set("max_execution_time", "0");
-    ini_set("memory_limit", "-1");
+    try {
+        ini_set("max_execution_time", "0");
+        ini_set("memory_limit", "-1");
+    } catch (InfoException $e) {
+        //empty catch -- but keep trace of issue
+        ErrorHandler::logCaughtException($e);
+    }
 
-   /** @var Migration */
-    $migration = new $migrationname($current_version);
+    /** @var Migration */
+    $migration = new Migration($current_version);
 
-    $migration->displayMessage("Migration Classname : " . $migrationname);
     $migration->displayMessage("Use core capabilities");
 
     //mappings
@@ -68,7 +75,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             'glpi_plugin_glpiinventory_unmanageds',
         ];
         $iterator = $DB->request([
-          'FROM' => 'glpi_plugin_glpiinventory_agents'
+            'FROM' => 'glpi_plugin_glpiinventory_agents',
         ]);
         $agent = new Agent();
 
@@ -80,7 +87,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         foreach ($iterator as $data_agent) {
             $old_id = $data_agent['id'];
 
-           //mappings
+            //mappings
             $data_agent['deviceid'] = $data_agent['device_id'];
             $data_agent['itemtype'] = 'Computer';
             $data_agent['items_id'] = $data_agent['computers_id'];
@@ -95,7 +102,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 $data_agent['agent_port']
             );
 
-            $new_id = $agent->add(Toolbox::addslashes_deep($data_agent));
+            $new_id = $agent->add($data_agent);
             $agents_mapping[$old_id] = $new_id;
         }
 
@@ -109,14 +116,14 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     if ($old_agent_id == $new_agent_id) {
                         continue;
                     }
-                    $DB->doQueryOrDie(
+                    $DB->doQuery(
                         $DB->buildUpdate(
                             $agent_table,
                             [
-                                'agents_id' => $new_agent_id
+                                'agents_id' => $new_agent_id,
                             ],
                             [
-                                'agents_id' => $old_agent_id
+                                'agents_id' => $old_agent_id,
                             ]
                         )
                     );
@@ -138,14 +145,14 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 }
                 $new_agent_ids[] = $agents_mapping[$old_agent_id];
             }
-            $DB->doQueryOrDie(
+            $DB->doQuery(
                 $DB->buildUpdate(
                     'glpi_plugin_glpiinventory_agentmodules',
                     [
-                        'exceptions' => exportArrayToDB($new_agent_ids)
+                        'exceptions' => exportArrayToDB($new_agent_ids),
                     ],
                     [
-                        'id' => $agentmodule['id']
+                        'id' => $agentmodule['id'],
                     ]
                 )
             );
@@ -156,19 +163,19 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     if ($DB->tableExists('glpi_plugin_glpiinventory_configsecurities')) {
         $cs_mapping = [];
         $cs_tables = [
-          'glpi_plugin_glpiinventory_unmanageds',
-          'glpi_plugin_glpiinventory_ipranges_configsecurities',
-          'glpi_plugin_glpiinventory_networkequipments',
-          'glpi_plugin_glpiinventory_printers'
+            'glpi_plugin_glpiinventory_unmanageds',
+            'glpi_plugin_glpiinventory_ipranges_configsecurities',
+            'glpi_plugin_glpiinventory_networkequipments',
+            'glpi_plugin_glpiinventory_printers',
         ];
         $iterator = $DB->request([
-          'FROM' => 'glpi_plugin_glpiinventory_configsecurities'
+            'FROM' => 'glpi_plugin_glpiinventory_configsecurities',
         ]);
         $snmpcred = new SNMPCredential();
         foreach ($iterator as $cs) {
             $old_id = $cs['id'];
             unset($cs['id']);
-           //crypt passwords
+            //crypt passwords
             if (!empty($cs['auth_passphrase'])) {
                 $cs['auth_passphrase'] = (new GLPIKey())->encrypt($cs['auth_passphrase']);
             }
@@ -203,14 +210,14 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                     continue;
                 }
                 foreach ($cs_mapping as $old_cs_id => $new_cs_id) {
-                    $DB->doQueryOrDie(
+                    $DB->doQuery(
                         $DB->buildUpdate(
                             $cs_table,
                             [
-                                'plugin_glpiinventory_configsecurities_id' => $new_cs_id
+                                'plugin_glpiinventory_configsecurities_id' => $new_cs_id,
                             ],
                             [
-                                'plugin_glpiinventory_configsecurities_id' => $old_cs_id
+                                'plugin_glpiinventory_configsecurities_id' => $old_cs_id,
                             ]
                         )
                     );
@@ -244,7 +251,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core network ports");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkports')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_networkports` AS `ports`
             INNER JOIN (
               SELECT
@@ -291,7 +298,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core computers");
     if ($DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercomputers')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_computers` AS `computers`
             INNER JOIN (
               SELECT
@@ -304,7 +311,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
           WHERE `computers`.`last_inventory_update` IS NULL;"
         );
 
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_computers` AS `computers`
             INNER JOIN (
               SELECT
@@ -318,7 +325,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
           ;"
         );
 
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_agents` AS `agents`
             INNER JOIN (
               SELECT
@@ -337,7 +344,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core network equipments");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkequipments')) {
         // agents and snmp credentials must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_networkequipments` AS `neteq`
             INNER JOIN (
               SELECT
@@ -363,7 +370,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core printers");
     if ($DB->tableExists('glpi_plugin_glpiinventory_printers')) {
         // agents and snmp credentials must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_printers` AS `printers`
             INNER JOIN (
               SELECT
@@ -385,9 +392,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core printer logs");
     if ($DB->tableExists('glpi_plugin_glpiinventory_printerlogs')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_printerlogs` (
-                `printers_id`,
+                `itemtype`,
+                `items_id`,
                 `date`,
                 `total_pages`,
                 `bw_pages`,
@@ -405,6 +413,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 `date_mod`
               )
               SELECT
+                'Printer',
                 `printers_id`,
                 DATE(`date`) as `log_date`,
                 `pages_total`,
@@ -430,7 +439,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core networkports logs");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkportconnectionlogs')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_networkportconnectionlogs` (
                 `date`,
                 `connected`,
@@ -449,7 +458,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core network ports types");
     if ($DB->tableExists('glpi_plugin_glpiinventory_networkporttypes')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_networkporttypes` AS `types`
             INNER JOIN (
               SELECT
@@ -469,7 +478,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     if ($DB->tableExists('glpi_plugin_glpiinventory_unmanageds')) {
         // agents and snmp credentials must be migrated before that one
         $iterator = $DB->request([
-            'FROM' => 'glpi_plugin_glpiinventory_unmanageds'
+            'FROM' => 'glpi_plugin_glpiinventory_unmanageds',
         ]);
         $unmanaged = new Unmanaged();
 
@@ -488,7 +497,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 $data_unmanaged['plugin_glpiinventory_configsecurities_id']
             );
 
-            $new_id = $unmanaged->add(Toolbox::addslashes_deep($data_unmanaged));
+            $new_id = $unmanaged->add($data_unmanaged);
             $unmanageds_mapping[$old_id] = $new_id;
         }
         $migration->dropTable('glpi_plugin_glpiinventory_unmanageds');
@@ -508,7 +517,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $iterator = $DB->request([
         'SELECT' => ['MAX' => 'ranking AS max_ranking'],
         'FROM'   => 'glpi_rules',
-        'WHERE'  => ['sub_type' => 'RuleImportAsset']
+        'WHERE'  => ['sub_type' => 'RuleImportAsset'],
     ]);
     if (count($iterator)) {
         $rank_ria = $iterator->current()['max_ranking'];
@@ -516,7 +525,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $iterator = $DB->request([
         'SELECT' => ['MAX' => 'ranking AS max_ranking'],
         'FROM'   => 'glpi_rules',
-        'WHERE'  => ['sub_type' => 'RuleImportEntity']
+        'WHERE'  => ['sub_type' => 'RuleImportEntity'],
     ]);
     if (count($iterator)) {
         $rank_rie = $iterator->current()['max_ranking'];
@@ -524,7 +533,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $iterator = $DB->request([
         'SELECT' => ['MAX' => 'ranking AS max_ranking'],
         'FROM'   => 'glpi_rules',
-        'WHERE'  => ['sub_type' => 'RuleLocation']
+        'WHERE'  => ['sub_type' => 'RuleLocation'],
     ]);
     if (count($iterator)) {
         $rank_ril = $iterator->current()['max_ranking'];
@@ -533,30 +542,30 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $DB->update(
         'glpi_rules',
         [
-         'sub_type'  => 'RuleImportAsset',
-         'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
-         'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ria ?? 0))
+            'sub_type'  => 'RuleImportAsset',
+            'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
+            'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ria ?? 0)),
         ],
         [
             'OR' => [
                 ['sub_type'  => 'PluginFusioninventoryInventoryRuleImport'],
                 ['sub_type'  => 'PluginGlpiinventoryInventoryRuleImport'],
-                ['sub_type'  => 'PluginFusioninventoryInventoryRuleRemotework']
-            ]
+                ['sub_type'  => 'PluginFusioninventoryInventoryRuleRemotework'],
+            ],
         ]
     );
     $DB->update(
         'glpi_rules',
         [
-         'sub_type'  => 'RuleImportEntity',
-         'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
-         'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_rie ?? 0))
+            'sub_type'  => 'RuleImportEntity',
+            'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
+            'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_rie ?? 0)),
         ],
         [
             'OR' => [
                 ['sub_type'  => 'PluginFusinvinventoryRuleEntity'],
-                ['sub_type'  => 'PluginFusioninventoryInventoryRuleEntity']
-            ]
+                ['sub_type'  => 'PluginFusioninventoryInventoryRuleEntity'],
+            ],
         ]
     );
     $DB->update(
@@ -564,10 +573,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         [
             'sub_type'  => 'RuleLocation',
             'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
-            'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ril ?? 0))
+            'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ril ?? 0)),
         ],
         [
-            'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation'
+            'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
         ]
     );
 
@@ -584,7 +593,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     if ($DB->tableExists('glpi_plugin_glpiinventory_rulematchedlogs')) {
         // agents must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_rulematchedlogs` (
                `date`,
                `items_id`,
@@ -608,7 +617,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     $migration->displayMessage("Use core remote management");
     if ($DB->tableExists('glpi_plugin_glpiinventory_computerremotemanagements')) {
         // agents must be migrated before that one
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "INSERT IGNORE INTO `glpi_items_remotemanagements` (
                 `itemtype`,
                 `items_id`,
@@ -634,19 +643,17 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         $lock = new Lockedfield();
         $lock_table = $lock->getTable();
         $iterator = $DB->request([
-         'FROM' => 'glpi_plugin_glpiinventory_locks'
+            'FROM' => 'glpi_plugin_glpiinventory_locks',
         ]);
         foreach ($iterator as $row) {
             $fields = importArrayFromDB($row['tablefields']);
             foreach ($fields as $field) {
-                $input = Toolbox::addslashes_deep(
-                    [
-                        'itemtype' => getItemTypeForTable($row['tablename']),
-                        'items_id' => $row['items_id'],
-                        'field'    => $field,
-                        'is_global' => ($row['items_id'] == 0) ? 1 : 0
-                    ]
-                );
+                $input = [
+                    'itemtype' => getItemTypeForTable($row['tablename']),
+                    'items_id' => $row['items_id'],
+                    'field'    => $field,
+                    'is_global' => ($row['items_id'] == 0) ? 1 : 0,
+                ];
 
                 if (countElementsInTable($lock_table, $input) > 0) {
                     continue; // Field is already locked
@@ -666,7 +673,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
 
     $migration->displayMessage("Use core entities");
     if ($DB->tableExists('glpi_plugin_glpiinventory_entities')) {
-        $DB->doQueryOrDie(
+        $DB->doQuery(
             "UPDATE `glpi_entities` AS `entities`
             INNER JOIN (
               SELECT
@@ -707,7 +714,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
     //Fix old types
     $types = [
         'PluginGlpiinventoryAgent' => 'Agent',
-        'PluginGlpiinventoryUnmanaged' => 'Unmanaged'
+        'PluginGlpiinventoryUnmanaged' => 'Unmanaged',
     ];
 
     $mappings = [
@@ -751,11 +758,11 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                             $table_name,
                             [
                                 $itemtype_col => $new_type,
-                                $items_id_col => $new_id
+                                $items_id_col => $new_id,
                             ],
                             [
                                 $itemtype_col => $orig_type,
-                                $items_id_col => $orig_id
+                                $items_id_col => $orig_id,
                             ]
                         )
                     );
@@ -788,7 +795,7 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             $DB->buildDelete(
                 $table_name,
                 [
-                    $itemtype_col => 'PluginGlpiinventoryIgnoredimportdevice'
+                    $itemtype_col => 'PluginGlpiinventoryIgnoredimportdevice',
                 ]
             )
         );
@@ -818,15 +825,15 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
                 }
             }
 
-            $DB->doQueryOrDie(
+            $DB->doQuery(
                 $DB->buildUpdate(
                     'glpi_plugin_glpiinventory_taskjobs',
                     [
                         'actors'  => exportArrayToDB($updated_values['actors']),
-                        'targets' => exportArrayToDB($updated_values['targets'])
+                        'targets' => exportArrayToDB($updated_values['targets']),
                     ],
                     [
-                        'id' => $taskjob['id']
+                        'id' => $taskjob['id'],
                     ]
                 )
             );
@@ -863,23 +870,28 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
         }
     }
 
-    $DB->doQueryOrDie(
+    $DB->doQuery(
         $DB->buildDelete(
             'glpi_plugin_glpiinventory_agentmodules',
             [
-                'modulename' => 'WAKEONLAN'
+                'modulename' => 'WAKEONLAN',
             ]
         )
     );
 
-    $DB->doQueryOrDie(
+    $DB->doQuery(
         $DB->buildDelete(
             'glpi_displaypreferences',
             [
                 'itemtype' => 'Computer',
-                'num' => 5165
+                'num' => 5165,
             ]
         )
+    );
+
+    //server_upload_path is no longer configurable from UI, see PLUGIN_GLPI_INVENTORY_UPLOAD_DIR
+    $migration->addPostQuery(
+        $DB->buildDelete('glpi_plugin_glpiinventory_configs', ['type' => 'server_upload_path'])
     );
 
     // /!\ Keep it at the end

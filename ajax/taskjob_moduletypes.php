@@ -32,7 +32,6 @@
  */
 
 if (strpos($_SERVER['PHP_SELF'], "taskjob_moduletypes.php")) {
-    include("../../../inc/includes.php");
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }
@@ -43,7 +42,7 @@ $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 $params = [
     "moduletype" => filter_input(INPUT_GET, "moduletype"),
-    "method"     => filter_input(INPUT_GET, "method")
+    "method"     => filter_input(INPUT_GET, "method"),
 ];
 
 $pfTaskjob->ajaxModuleTypesDropdown($params);

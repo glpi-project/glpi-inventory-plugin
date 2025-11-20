@@ -31,21 +31,17 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the agent modules.
  */
 class PluginGlpiinventoryModule extends CommonDBTM
 {
-   /**
-    * Get all installed modules
-    *
-    * @param boolean $p_inactive Show inactive modules
-    * @return array
-    */
+    /**
+     * Get all installed modules
+     *
+     * @param boolean $p_inactive Show inactive modules
+     * @return array
+     */
     public static function getAll($p_inactive = false)
     {
         $plugin = new Plugin();
@@ -57,12 +53,12 @@ class PluginGlpiinventoryModule extends CommonDBTM
     }
 
 
-   /**
-    * Get module id or plugin id
-    *
-    * @param string $p_name the module name
-    * @return integer|false plugin id or FALSE if module is not active or not a module
-    */
+    /**
+     * Get module id or plugin id
+     *
+     * @param string $p_name the module name
+     * @return integer|false plugin id or FALSE if module is not active or not a module
+     */
     public static function getModuleId($p_name)
     {
         $index = false;
@@ -84,18 +80,17 @@ class PluginGlpiinventoryModule extends CommonDBTM
     }
 
 
-   /**
-    * Get module name
-    *
-    * @param integer $p_id the module id
-    * @return string|false false if module is not active or not a module
-    */
+    /**
+     * Get module name
+     *
+     * @param integer $p_id the module id
+     * @return string|false false if module is not active or not a module
+     */
     public static function getModuleName($p_id)
     {
         if (isset($_SESSION['glpi_plugins'][$p_id])) {
             if (
-                (substr($_SESSION['glpi_plugins'][$p_id], 0, 6) == 'fusinv')
-                or ($_SESSION['glpi_plugins'][$p_id] == 'glpiinventory')
+                str_starts_with($_SESSION['glpi_plugins'][$p_id], 'fusinv') || $_SESSION['glpi_plugins'][$p_id] == 'glpiinventory'
             ) {
                 return $_SESSION['glpi_plugins'][$p_id];
             } else {

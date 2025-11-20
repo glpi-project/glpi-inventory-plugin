@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_SNMPCredential();
 
@@ -40,10 +39,10 @@ if (isset($_POST["add"])) {
         getAllDataFromTable(
             PluginGlpiinventoryIPRange_SNMPCredential::getTable(),
             [
-            'WHERE' => [
-               'plugin_glpiinventory_ipranges_id' => $_POST['plugin_glpiinventory_ipranges_id']
-            ],
-            'ORDER' => 'rank DESC'
+                'WHERE' => [
+                    'plugin_glpiinventory_ipranges_id' => $_POST['plugin_glpiinventory_ipranges_id'],
+                ],
+                'ORDER' => 'rank DESC',
             ]
         )
     );

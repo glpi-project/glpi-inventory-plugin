@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 if (Session::getCurrentInterface() !== 'helpdesk') {
@@ -42,7 +41,6 @@ Html::helpHeader(
     __('GLPI Inventory'),
     $_SERVER["PHP_SELF"],
     "plugins",
-    "pluginglpiinventorymenu",
     "deploypackage"
 );
 $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -51,23 +49,23 @@ if (isset($_POST['prepareinstall'])) {
     $computers_id = false;
 
     foreach ($_POST as $key => $data) {
-        if (strstr($key, 'deploypackages_')) {
-            $computers_id = str_replace('deploypackages_', '', $key);
+        if (str_contains($key, 'deploypackages_')) {
+            $computers_id = (int) str_replace('deploypackages_', '', $key);
             foreach ($data as $packages_id) {
                 $pfDeployPackage->deployToComputer($computers_id, $packages_id, $_SESSION['glpiID']);
             }
         }
     }
 
-   //Try to wakeup the agent to perform the deployment task
-   //If it's a local wakeup, local call to the agent RPC service
+    //Try to wakeup the agent to perform the deployment task
+    //If it's a local wakeup, local call to the agent RPC service
     switch ($_POST['wakeup_type']) {
         case 'local':
             $port = Agent::DEFAULT_PORT;
             if ($computers_id) {
                 $agent = new Agent();
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
-                $port = (int)$agent->fields['port'];
+                $port = (int) $agent->fields['port'];
             }
             if ($port == 0) {
                 $port = Agent::DEFAULT_PORT;
@@ -78,11 +76,10 @@ if (isset($_POST['prepareinstall'])) {
                     window.location='{$_SERVER['HTTP_REFERER']}';
                 }, 500);
             ");
-            exit;
-         break;
+            return;
         case 'remote':
             if ($computers_id) {
-               //Remote call to wakeup the agent, from the server
+                //Remote call to wakeup the agent, from the server
                 $agent = new Agent();
                 $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
                 PluginGlpiinventoryAgentWakeup::wakeUp($agent);

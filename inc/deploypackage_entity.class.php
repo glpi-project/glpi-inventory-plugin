@@ -31,67 +31,63 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the visibility of package by entity.
  */
 class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
 {
-   /**
-    * Itemtype for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the first part of relation
+     *
+     * @var string
+     */
     public static $itemtype_1 = 'PluginGlpiinventoryDeployPackage';
 
-   /**
-    * id field name for the first part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the first part of relation
+     *
+     * @var string
+     */
     public static $items_id_1 = 'plugin_glpiinventory_deploypackages_id';
 
-   /**
-    * Itemtype for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * Itemtype for the second part of relation
+     *
+     * @var string
+     */
     public static $itemtype_2 = 'Entity';
 
-   /**
-    * id field name for the second part of relation
-    *
-    * @var string
-    */
+    /**
+     * id field name for the second part of relation
+     *
+     * @var string
+     */
     public static $items_id_2 = 'entities_id';
 
-   /**
-    * Set we don't check parent right of the second item
-    *
-    * @var integer
-    */
+    /**
+     * Set we don't check parent right of the second item
+     *
+     * @var self::DONT_CHECK_ITEM_RIGHTS|self::HAVE_VIEW_RIGHT_ON_ITEM|self::HAVE_SAME_RIGHT_ON_ITEM
+     */
     public static $checkItem_2_Rights = self::DONT_CHECK_ITEM_RIGHTS;
 
-   /**
-    * Logs for the second item are disabled
-    *
-    * @var boolean
-    */
+    /**
+     * Logs for the second item are disabled
+     *
+     * @var boolean
+     */
     public static $logs_for_item_2 = false;
 
 
-   /**
-    * Get entities for a deploypackage
-    *
-    * @global object $DB
-    * @param integer $deploypackages_id ID of the deploypackage
-    * @return array list of of entities linked to a deploypackage
-   **/
+    /**
+     * Get entities for a deploypackage
+     *
+     * @param integer $deploypackages_id ID of the deploypackage
+     * @return array list of of entities linked to a deploypackage
+    **/
     public static function getEntities($deploypackages_id)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $ent   = [];
@@ -99,8 +95,8 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
         $iterator = $DB->request([
             'FROM'   => self::getTable(),
             'WHERE'  => [
-                'plugin_glpiinventory_deploypackages_id' => $deploypackages_id
-            ]
+                'plugin_glpiinventory_deploypackages_id' => $deploypackages_id,
+            ],
         ]);
 
         foreach ($iterator as $data) {
