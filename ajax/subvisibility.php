@@ -40,7 +40,7 @@ if (!empty($_POST['type']) && isset($_POST['items_id']) && ($_POST['items_id'] >
     }
 
     switch ($_POST['type']) {
-        case 'Group':
+        case Group::class:
         case 'Profile':
             $params = ['value' => $_SESSION['glpiactive_entity'],
                 'name'  => $prefix . 'entities_id' . $suffix,
