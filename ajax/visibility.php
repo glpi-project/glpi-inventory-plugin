@@ -91,7 +91,7 @@ if (
             $display = true;
             break;
 
-        case 'Entity':
+        case Entity::class:
             echo "<td>";
             Entity::dropdown(['entity' => $_SESSION['glpiactiveentities'],
                 'value'  => $_SESSION['glpiactive_entity'],
