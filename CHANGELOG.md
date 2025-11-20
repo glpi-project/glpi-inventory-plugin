@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix SQL error when deploy target option used is 'No restriction' defined with `-1`
 - Migrate dynamic group search from serialized to JSON format
 
 ## [1.5.4] - 2025-09-19
