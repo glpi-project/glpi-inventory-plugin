@@ -80,7 +80,7 @@ if (
             $display = true;
             break;
 
-        case 'Entity':
+        case Entity::class:
             Entity::dropdown([
                 'value'       => $_SESSION['glpiactive_entity'],
                 'name'        => $prefix . 'entities_id' . $suffix,
