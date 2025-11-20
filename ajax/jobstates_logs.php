@@ -31,8 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\session_write_close;
+
 if (strpos($_SERVER['PHP_SELF'], "jobstates_logs.php")) {
-    include("../../../inc/includes.php");
     Session::checkCentralAccess();
 }
 //unlock session since access checks have been done
@@ -43,6 +44,6 @@ $pfJobstate = new PluginGlpiinventoryTaskjobstate();
 
 $params = [
     "id"        => filter_input(INPUT_GET, "id"),
-    "last_date" => filter_input(INPUT_GET, "last_date")
+    "last_date" => filter_input(INPUT_GET, "last_date"),
 ];
 $pfJobstate->ajaxGetLogs($params);

@@ -31,58 +31,56 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\preg_match;
 
 /**
  * Manage the windows registry to get in collect module.
  */
 class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectCommon
 {
-    public $type = 'registry';
+    public $collect_type = 'registry';
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return _n('Found entry', 'Found entries', $nb, 'glpiinventory');
     }
 
-   /**
-    * Get Hives of the registry
-    *
-    * @return array list of hives
-    */
+    /**
+     * Get Hives of the registry
+     *
+     * @return array list of hives
+     */
     public static function getHives()
     {
         return [
-         "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",
+            "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",
         ];
     }
 
     public function getListHeaders()
     {
         return [
-         __('Name'),
-         __('Hive', 'glpiinventory'),
-         __("Path", "glpiinventory"),
-         __("Key", "glpiinventory"),
-         __("Action")
+            __('Name'),
+            __('Hive', 'glpiinventory'),
+            __("Path", "glpiinventory"),
+            __("Key", "glpiinventory"),
+            __("Action"),
         ];
     }
 
     public function displayOneRow($row = [])
     {
         return [
-         $row['name'],
-         $row['hive'],
-         $row['path'],
-         $row['key']
+            $row['name'],
+            $row['hive'],
+            $row['path'],
+            $row['key'],
         ];
     }
 
@@ -110,5 +108,17 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         echo "<td>";
         echo "<input type='text' name='key' value='' />";
         echo "</td>";
+    }
+
+    public function prepareInputForAdd($input)
+    {
+        if (!preg_match('/^\/()/', $input['path'])) {
+            $input['path'] = "/" . $input['path'];
+        }
+        if (!preg_match('/\/$/', $input['path'])) {
+            $input['path'] .= "/";
+        }
+
+        return parent::prepareInputForAdd($input);
     }
 }

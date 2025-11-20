@@ -31,7 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+
+use Glpi\Exception\Http\AccessDeniedHttpException;
 
 if (PluginGlpiinventoryMenu::canView()) {
     Html::header(
@@ -45,7 +46,7 @@ if (PluginGlpiinventoryMenu::canView()) {
     PluginGlpiinventoryMenu::displayMenu();
     PluginGlpiinventoryMenu::displayMenuSNMPInventory();
 } else {
-    Html::displayRightError();
+    throw new AccessDeniedHttpException();
 }
 
 Html::footer();

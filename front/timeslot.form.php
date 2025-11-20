@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
@@ -50,17 +49,17 @@ if (isset($_POST["add"])) {
     }
     Html::back();
 
-   // delete a timeslot
+    // delete a timeslot
 } elseif (isset($_POST["delete"])) {
     $pfTimeslot->check($_POST['id'], DELETE);
     $ok = $pfTimeslot->delete($_POST);
     $pfTimeslot->redirectToList();
 } elseif (isset($_POST["purge"])) {
     $pfTimeslot->check($_POST['id'], PURGE);
-    $pfTimeslot->delete($_POST, 1);
+    $pfTimeslot->delete($_POST, true);
     $pfTimeslot->redirectToList();
 
-   //update a timeslot
+    //update a timeslot
 } elseif (isset($_POST["update"])) {
     $pfTimeslot->check($_POST['id'], UPDATE);
     $pfTimeslot->update($_POST);

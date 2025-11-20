@@ -31,26 +31,28 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\file_put_contents;
+use function Safe\gzcompress;
+use function Safe\gzdeflate;
+use function Safe\gzencode;
+use function Safe\simplexml_load_string;
 
 /**
  * Manage communication with agents using XML
  */
 class PluginGlpiinventoryCommunication
 {
-   /**
-    * Define message variable
-    *
-    * @var SimpleXMLElement
-    */
+    /**
+     * Define message variable
+     *
+     * @var SimpleXMLElement
+     */
     protected $message;
 
 
-   /**
-    * __contruct function used to initialize protected message variable
-    */
+    /**
+     * __construct function used to initialize protected message variable
+     */
     public function __construct()
     {
         $this->message = new SimpleXMLElement(
@@ -63,25 +65,25 @@ class PluginGlpiinventoryCommunication
     }
 
 
-   /**
-    * Get readable XML message (add carriage returns)
-    *
-    * @return object SimpleXMLElement
-    */
+    /**
+     * Get readable XML message (add carriage returns)
+     *
+     * @return object SimpleXMLElement
+     */
     public function getMessage()
     {
         return $this->message;
     }
 
 
-   /**
-    * Set XML message
-    *
-    * @param string $message XML in string format
-    */
+    /**
+     * Set XML message
+     *
+     * @param string $message XML in string format
+     */
     public function setMessage($message)
     {
-       // avoid xml warnings
+        // avoid xml warnings
         $this->message = @simplexml_load_string(
             $message,
             'SimpleXMLElement',
@@ -90,11 +92,11 @@ class PluginGlpiinventoryCommunication
     }
 
 
-   /**
-    * Send response to agent, using given compression algorithm
-    *
-    * @param string $compressmode compressed mode: none|zlib|deflate|gzip
-    */
+    /**
+     * Send response to agent, using given compression algorithm
+     *
+     * @param string $compressmode compressed mode: none|zlib|deflate|gzip
+     */
     public function sendMessage($compressmode = 'none')
     {
 
@@ -109,7 +111,7 @@ class PluginGlpiinventoryCommunication
                 break;
 
             case 'zlib':
-               // rfc 1950
+                // rfc 1950
                 header("Content-Type: application/x-compress-zlib");
                 echo gzcompress(
                     PluginGlpiinventoryToolbox::formatXML($this->message)
@@ -117,7 +119,7 @@ class PluginGlpiinventoryCommunication
                 break;
 
             case 'deflate':
-               // rfc 1951
+                // rfc 1951
                 header("Content-Type: application/x-compress-deflate");
                 echo gzdeflate(
                     PluginGlpiinventoryToolbox::formatXML($this->message)
@@ -125,7 +127,7 @@ class PluginGlpiinventoryCommunication
                 break;
 
             case 'gzip':
-               // rfc 1952
+                // rfc 1952
                 header("Content-Type: application/x-compress-gzip");
                 echo gzencode(
                     PluginGlpiinventoryToolbox::formatXML($this->message)
@@ -135,11 +137,11 @@ class PluginGlpiinventoryCommunication
     }
 
 
-   /**
-    * If extra-debug is active, write log
-    *
-    * @param string $p_logs log message to write
-    */
+    /**
+     * If extra-debug is active, write log
+     *
+     * @param string $p_logs log message to write
+     */
     public static function addLog($p_logs)
     {
 
@@ -156,20 +158,20 @@ class PluginGlpiinventoryCommunication
 
 
 
-   /**
-    * Get all tasks prepared for the agent
-    *
-    * @param integer $agent_id id of the agent
-    */
+    /**
+     * Get all tasks prepared for the agent
+     *
+     * @param integer $agent_id id of the agent
+     */
     public function getTaskAgent($agent_id)
     {
         $response = [];
         $pfTask = new PluginGlpiinventoryTask();
 
-       /**
-        * TODO: the following must be definitely done differently !
-        * (... but i'm kind in a hurry right now ;-) )
-        */
+        /**
+         * TODO: the following must be definitely done differently !
+         * (... but i'm kind in a hurry right now ;-) )
+         */
         $methods = [];
         $classnames = [];
         foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
@@ -183,16 +185,16 @@ class PluginGlpiinventoryCommunication
         foreach ($jobstates as $jobstate) {
             $className = $classnames[$jobstate->method];
             if (class_exists($className)) {
-               /*
-                * TODO: check if use_rest is enabled in Staticmisc::get_methods.
-                * Also, this get_methods function need to be reviewed
-                */
+                /*
+                 * TODO: check if use_rest is enabled in Staticmisc::get_methods.
+                 * Also, this get_methods function need to be reviewed
+                 */
                 if (
-                    $className != "PluginGlpiinventoryInventoryComputerESX"
-                    && $className != "PluginGlpiinventoryDeployCommon"
-                    && $className != "PluginGlpiinventoryCollect"
+                    !is_a($className, PluginGlpiinventoryInventoryComputerESX::class, true)
+                    && !is_a($className, PluginGlpiinventoryDeployCommon::class, true)
+                    && !is_a($className, PluginGlpiinventoryCollect::class, true)
                 ) {
-                    $class = new $className();
+                    $class = new $className(); // @phpstan-ignore glpi.forbidDynamicInstantiation (not a GLPI framework object, see no way to check properly what is expected)
                     $run_response = $class->run($jobstate);
                     $response[] = $run_response;
                 }

@@ -31,40 +31,33 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the general display in plugin.
  */
 class PluginGlpiinventoryDisplay extends CommonDBTM
 {
-   /**
-    * Display static progress bar (used for SNMP cartridge state)
-    *
-    * @param integer $percentage
-    * @param string $message
-    * @param string $order
-    * @param integer $width
-    * @param integer $height
-    */
+    /**
+     * Display static progress bar (used for SNMP cartridge state)
+     *
+     * @param integer $percentage
+     * @param string $message
+     * @param string $order
+     * @param integer $width
+     * @param integer $height
+     */
     public static function bar($percentage, $message = '', $order = '', $width = 400, $height = 20)
     {
-        if ((!empty($percentage)) and ($percentage < 0)) {
-            $percentage = "";
-        } elseif ((!empty($percentage)) and ($percentage > 100)) {
-            $percentage = "";
+        if (!empty($percentage) && $percentage < 0) {
+            $percentage = 0;
+        } elseif (!empty($percentage) && $percentage > 100) {
+            $percentage = 100;
         }
         echo "<div>
                <table class='tab_cadre' width='" . $width . "'>
                      <tr>
                         <td align='center' width='" . $width . "'>";
 
-        if (
-            (!empty($percentage))
-              || ($percentage == "0")
-        ) {
+        if (!empty($percentage)) {
             echo $percentage . "% " . $message;
         }
 
@@ -98,17 +91,13 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
                     echo "green";
                 }
             }
-            if ($percentage == 0) {
-                echo "' height='" . $height . "' width='1'>&nbsp;</td>";
-            } else {
-                echo "' height='" . $height . "' width='" . (($width * $percentage) / 100) . "'>&nbsp;</td>";
-            }
+            echo "' height='" . $height . "' width='" . (($width * $percentage) / 100) . "'>&nbsp;</td>";
         }
         if ($percentage == 0) {
             echo "                           <td height='" . $height . "' width='1'></td>";
         } else {
-            echo "                           <td height='" . $height . "' width='" .
-                 ($width - (($width * $percentage) / 100)) . "'></td>";
+            echo "                           <td height='" . $height . "' width='"
+                 . ($width - (($width * $percentage) / 100)) . "'></td>";
         }
         echo "                        </tr>
                            </table>
@@ -119,57 +108,54 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     }
 
 
-   /**
-    * Disable debug mode to not see php errors
-    */
+    /**
+     * Disable debug mode to not see php errors
+     */
     public static function disableDebug()
     {
         error_reporting(0);
-        set_error_handler(['PluginGlpiinventoryDisplay', 'error_handler']);
+        set_error_handler([PluginGlpiinventoryDisplay::class, 'error_handler']);
     }
 
 
-   /**
-   * Enable debug mode if user is in debug mode
-   **/
+    /**
+    * Enable debug mode if user is in debug mode
+    **/
     public static function reenableusemode()
     {
         Toolbox::setDebugMode();
     }
 
 
-   /**
-    * When debug is disabled, we transfer every errors in this emtpy function.
-    *
-    * @param integer $errno
-    * @param string $errstr
-    * @param string $errfile
-    * @param integer $errline
-    */
-    public static function error_handler($errno, $errstr, $errfile, $errline)
-    {
-    }
+    /**
+     * When debug is disabled, we transfer every errors in this emtpy function.
+     *
+     * @param integer $errno
+     * @param string $errstr
+     * @param string $errfile
+     * @param integer $errline
+     */
+    public static function error_handler($errno, $errstr, $errfile, $errline) {}
 
 
-   /**
-    * Display progress bar
-    *
-    * @global array $CFG_GLPI
-    * @param integer $width
-    * @param integer $percent
-    * @param array $options
-    * @return string
-    */
-    public static function getProgressBar($width, $percent, $options = [])
+    /**
+     * Display progress bar
+     *
+     * @param integer $width
+     * @param integer|float $percent
+     * @param array $options
+     * @return string
+     */
+    public static function getProgressBar($width, $percent, array $options = [])
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $param = [];
         $param['title'] = __('Progress', 'glpiinventory');
         $param['simple'] = false;
-        $param['forcepadding'] = false;
 
-        if (is_array($options) && count($options)) {
+        if (count($options)) {
             foreach ($options as $key => $val) {
                 $param[$key] = $val;
             }
@@ -181,8 +167,8 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
             $output .= "<tr><th class='center'>" . $param['title'] . "&nbsp;" . $percent . "%</th></tr>";
         }
         $output .= "<tr><td>
-                <table><tr><td class='center' style='background:url(" . $CFG_GLPI["root_doc"] .
-                "/pics/loader.png) repeat-x;' width='.$percentwidth' height='12'>";
+                <table><tr><td class='center' style='background:url(" . $CFG_GLPI["root_doc"]
+                . "/pics/loader.png) repeat-x;' width='.$percentwidth' height='12'>";
         if ($param['simple']) {
             $output .= $percent . "%";
         } else {

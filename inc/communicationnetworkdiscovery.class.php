@@ -33,23 +33,19 @@
 
 use Glpi\Inventory\Inventory;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
-
 /**
  * Manage the communication of network discovery feature with the agents.
  */
 class PluginGlpiinventoryCommunicationNetworkDiscovery
 {
-   /**
-    * Import data, so get data from agent to put in GLPI
-    *
-    * @param string $p_DEVICEID device_id of agent
-    * @param object $a_CONTENT
-    * @param Inventory $inventory
-    * @return array
-    */
+    /**
+     * Import data, so get data from agent to put in GLPI
+     *
+     * @param string $p_DEVICEID device_id of agent
+     * @param object $a_CONTENT
+     * @param Inventory $inventory
+     * @return array
+     */
     public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array
     {
         $response = [];
@@ -99,29 +95,29 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     $updated = countElementsInTable(
                         'glpi_plugin_glpiinventory_taskjoblogs',
                         [
-                        'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                        'comment' => ['LIKE', '%==updatetheitem==%'],
+                            'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                            'comment' => ['LIKE', '%==updatetheitem==%'],
                         ]
                     );
-                     $created = countElementsInTable(
-                         'glpi_plugin_glpiinventory_taskjoblogs',
-                         [
-                         'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                         'comment' => ['LIKE', '%==addtheitem==%'],
-                         ]
-                     );
+                    $created = countElementsInTable(
+                        'glpi_plugin_glpiinventory_taskjoblogs',
+                        [
+                            'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                            'comment' => ['LIKE', '%==addtheitem==%'],
+                        ]
+                    );
 
-                     $message = sprintf(
-                         __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory'),
-                         $updated + $created,
-                         $created,
-                         $updated
-                     );
+                    $message = sprintf(
+                        __('Processed: %1$s Created: %2$s Updated: %3$s', 'glpiinventory'),
+                        $updated + $created,
+                        $created,
+                        $updated
+                    );
                     $pfTaskjobstate->changeStatusFinish(
                         $a_CONTENT->jobid,
                         $agent->fields['id'],
                         'Agent',
-                        '0',
+                        0,
                         $message
                     );
                     $response['response'] = ['RESPONSE' => 'SEND'];
@@ -157,9 +153,9 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                         } else {
                             $item = $inventory->getMainAsset()->getItem();
                             $what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
-                            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
-                                '[==detail==] ' . $what . ' ' . $item->getTypeName() .
-                                ' [[' . $item::getType() . '::' . $item->fields['id'] . ']]';
+                            $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
+                                = '[==detail==] ' . $what . ' ' . $item->getTypeName()
+                                . ' [[' . $item::class . '::' . $item->getID() . ']]';
                             $this->addtaskjoblog();
                         }
                         $response = ['response' => ['RESPONSE' => 'SEND']];
@@ -176,9 +172,9 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
         return $response;
     }
 
-   /**
-    * Used to add log in the taskjob
-    */
+    /**
+     * Used to add log in the taskjob
+     */
     public function addtaskjoblog()
     {
 
@@ -193,11 +189,11 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
     }
 
 
-   /**
-    * Get method name linked to this class
-    *
-    * @return string
-    */
+    /**
+     * Get method name linked to this class
+     *
+     * @return string
+     */
     public static function getMethod()
     {
         return 'networkdiscovery';

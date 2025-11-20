@@ -1,14 +1,26 @@
+includes:
+    - ../../vendor/glpi-project/phpstan-glpi/extension.neon
+    - ../../vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - ../../vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+
 parameters:
     parallel:
         maximumNumberOfProcesses: 2
-    level: 2
+    level: 5
     bootstrapFiles:
-        - ../../inc/based_config.php
+        - ../../stubs/glpi_constants.php
+        - ../../vendor/autoload.php
         - setup.php
     paths:
+        - ajax
+        - front
         - inc
+        - src
+        - install
+        - public
+        - report
+        - hook.php
+        - setup.php
     scanDirectories:
         - ../../inc
         - ../../src
-    stubFiles:
-        - ../../stubs/glpi_constants.php

@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 $group = new PluginGlpiinventoryDeployGroup();
@@ -42,15 +41,16 @@ if (isset($_GET['plugin_glpiinventory_deploygroups_id'])) {
 
 if (isset($_GET['save'])) {
     $group_item = new PluginGlpiinventoryDeployGroup_Dynamicdata();
-    $criteria = ['criteria'     =>  isset($_GET['criteria']) ? $_GET['criteria'] : [],
-                 'metacriteria' => isset($_GET['metacriteria']) ? $_GET['metacriteria'] : []];
+    $criteria = ['criteria'     =>  $_GET['criteria'] ?? [],
+        'metacriteria' => $_GET['metacriteria'] ?? [],
+    ];
     if (
         !countElementsInTable(
             $group_item->getTable(),
             ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
         )
     ) {
-        $values['fields_array'] = serialize($criteria);
+        $values['fields_array'] = json_encode($criteria, JSON_THROW_ON_ERROR);
         $values['plugin_glpiinventory_deploygroups_id'] = $_GET['id'];
         $group_item->add($values);
     } else {
@@ -59,7 +59,7 @@ if (isset($_GET['save'])) {
             ['plugin_glpiinventory_deploygroups_id' => $_GET['id']]
         );
         $values                 = array_pop($item);
-        $values['fields_array'] = serialize($criteria);
+        $values['fields_array'] = json_encode($criteria, JSON_THROW_ON_ERROR);
         $group_item->update($values);
     }
 
@@ -72,13 +72,13 @@ if (isset($_GET['save'])) {
     $newID = $group->add($_POST);
     Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup") . "?id=" . $newID);
 } elseif (isset($_POST["delete"])) {
-   //   $group->check($_POST['id'], DELETE);
+    //   $group->check($_POST['id'], DELETE);
     $ok = $group->delete($_POST);
 
     $group->redirectToList();
 } elseif (isset($_POST["purge"])) {
-   //   $group->check($_POST['id'], DELETE);
-    $ok = $group->delete($_REQUEST, 1);
+    //   $group->check($_POST['id'], DELETE);
+    $ok = $group->delete($_REQUEST, true);
 
     $group->redirectToList();
 } elseif (isset($_POST["update"])) {
@@ -101,7 +101,7 @@ if (isset($_GET['save'])) {
         $id = '';
     } else {
         $id = $_GET['id'];
-        if (isset($_GET['sort']) and isset($_GET['order'])) {
+        if (isset($_GET['sort']) && isset($_GET['order'])) {
             $group->getFromDB($id);
             PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($group, true);
         }

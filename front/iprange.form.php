@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 
 $iprange = new PluginGlpiinventoryIPRange();
 
@@ -50,10 +49,10 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 if (isset($_POST["add"])) {
     Session::checkRight('plugin_glpiinventory_iprange', CREATE);
     if ($iprange->checkip($_POST)) {
-        $_POST['ip_start']  = (int)$_POST['ip_start0'] . "." . (int)$_POST['ip_start1'] . ".";
-        $_POST['ip_start'] .= (int)$_POST['ip_start2'] . "." . (int)$_POST['ip_start3'];
-        $_POST['ip_end']    = (int)$_POST['ip_end0'] . "." . (int)$_POST['ip_end1'] . ".";
-        $_POST['ip_end']   .= (int)$_POST['ip_end2'] . "." . (int)$_POST['ip_end3'];
+        $_POST['ip_start']  = (int) $_POST['ip_start0'] . "." . (int) $_POST['ip_start1'] . ".";
+        $_POST['ip_start'] .= (int) $_POST['ip_start2'] . "." . (int) $_POST['ip_start3'];
+        $_POST['ip_end']    = (int) $_POST['ip_end0'] . "." . (int) $_POST['ip_end1'] . ".";
+        $_POST['ip_end']   .= (int) $_POST['ip_end2'] . "." . (int) $_POST['ip_end3'];
         $iprange->add($_POST);
         if ($_SESSION['glpibackcreated']) {
             Html::redirect($iprange->getLinkURL());
@@ -65,7 +64,7 @@ if (isset($_POST["add"])) {
     }
 } elseif (isset($_POST["update"])) {
     if (isset($_POST['communication'])) {
-       //task permanent update
+        //task permanent update
         $task = new PluginGlpiinventoryTask();
         $taskjob = new PluginGlpiinventoryTaskjob();
         $task->getFromDB($_POST['task_id']);
@@ -94,10 +93,10 @@ if (isset($_POST["add"])) {
     } else {
         Session::checkRight('plugin_glpiinventory_iprange', UPDATE);
         if ($iprange->checkip($_POST)) {
-            $_POST['ip_start']  = (int)$_POST['ip_start0'] . "." . (int)$_POST['ip_start1'] . ".";
-            $_POST['ip_start'] .= (int)$_POST['ip_start2'] . "." . (int)$_POST['ip_start3'];
-            $_POST['ip_end']    = (int)$_POST['ip_end0'] . "." . (int)$_POST['ip_end1'] . ".";
-            $_POST['ip_end']   .= (int)$_POST['ip_end2'] . "." . (int)$_POST['ip_end3'];
+            $_POST['ip_start']  = (int) $_POST['ip_start0'] . "." . (int) $_POST['ip_start1'] . ".";
+            $_POST['ip_start'] .= (int) $_POST['ip_start2'] . "." . (int) $_POST['ip_start3'];
+            $_POST['ip_end']    = (int) $_POST['ip_end0'] . "." . (int) $_POST['ip_end1'] . ".";
+            $_POST['ip_end']   .= (int) $_POST['ip_end2'] . "." . (int) $_POST['ip_end3'];
             $iprange->update($_POST);
         }
     }
@@ -105,7 +104,7 @@ if (isset($_POST["add"])) {
 } elseif (isset($_POST["purge"])) {
     if (isset($_POST['communication'])) {
         $task = new PluginGlpiinventoryTask();
-        $task->delete(['id' => $_POST['task_id']], 1);
+        $task->delete(['id' => $_POST['task_id']], true);
         $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
         Html::back();
     } else {

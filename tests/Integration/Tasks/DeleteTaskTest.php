@@ -52,82 +52,79 @@ class DeleteTaskTest extends TestCase
         $pfTaskjoblog    = new PluginGlpiinventoryTaskjoblog();
         $pfDeployGrDyndata = new PluginGlpiinventoryDeployGroup_Dynamicdata();
 
-       // Delete all task
+        // Delete all task
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
         foreach ($items as $item) {
             $pfTask->delete(['id' => $item['id']], true);
         }
 
-       // Create package
+        // Create package
         $input = [
-          'entities_id' => 0,
-          'name'        => 'package'
+            'entities_id' => 0,
+            'name'        => 'package',
         ];
         $packageId = $pfDeployPackage->add($input);
 
-       // Create dynamic group
+        // Create dynamic group
         $input = [
-          'name' => 'all computers have name computer',
-          'type' => 'DYNAMIC'
+            'name' => 'all computers have name computer',
+            'type' => 'DYNAMIC',
         ];
         $groupId = $pfDeployGroup->add($input);
 
         $input = [
-          'plugin_glpiinventory_deploygroups_id' => $groupId,
-          'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:8:"computer";}}s:12:"metacriteria";s:0:"";}'
+            'plugin_glpiinventory_deploygroups_id' => $groupId,
+            'fields_array' => '{"criteria":[{"field":"1","searchtype":"contains","value":"computer"}],"metacriteria":""}',
         ];
         $pfDeployGrDyndata->add($input);
 
-       // create task
+        // create task
         $input = [
-          'entities_id' => 0,
-          'name'        => 'deploy',
-          'is_active'   => 1
+            'entities_id' => 0,
+            'name'        => 'deploy',
+            'is_active'   => 1,
         ];
         self::$taskId = $pfTask->add($input);
 
-       // create taskjob
+        // create taskjob
         $input = [
-          'plugin_glpiinventory_tasks_id' => self::$taskId,
-          'entities_id'                     => 0,
-          'name'                            => 'deploy',
-          'method'                          => 'deployinstall',
-          'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"' . $packageId . '"}]',
-          'actors'                          => '[{"PluginGlpiinventoryDeployGroup":"' . self::$taskId . '"}]'
+            'plugin_glpiinventory_tasks_id' => self::$taskId,
+            'entities_id'                     => 0,
+            'name'                            => 'deploy',
+            'method'                          => 'deployinstall',
+            'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"' . $packageId . '"}]',
+            'actors'                          => '[{"PluginGlpiinventoryDeployGroup":"' . self::$taskId . '"}]',
         ];
         self::$taskjobId = $pfTaskjob->add($input);
 
-       //create taskjobstate
+        //create taskjobstate
         $input = [
-          'plugin_glpiinventory_taskjobs_id' => self::$taskjobId,
-          'items_id'                           => 0,
-          'itemtype'                           => 'Computer',
-          'state'                              => PluginGlpiinventoryTaskjobstate::FINISHED,
-          'agents_id'   => 0,
-          'specificity'                        => 0,
-          'uniqid'                             => 0,
+            'plugin_glpiinventory_taskjobs_id' => self::$taskjobId,
+            'items_id'                           => 0,
+            'itemtype'                           => 'Computer',
+            'state'                              => PluginGlpiinventoryTaskjobstate::FINISHED,
+            'agents_id'   => 0,
+            'specificity'                        => 0,
+            'uniqid'                             => 0,
 
         ];
         self::$taskjobstateId = $pfTaskjobState->add($input);
 
-       //crfeate taskjoblogR
+        //crfeate taskjoblogR
         $input = [
-         'plugin_glpiinventory_taskjobstates_id' => self::$taskjobstateId,
-         'date '                                   => date('Y-m-d H:i:s'),
-         'items_id'                                => 0,
-         'itemtype'                                => 'Computer',
-         'state'                                   => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-         'comment'                                 => "1 ==devicesfound=="
+            'plugin_glpiinventory_taskjobstates_id' => self::$taskjobstateId,
+            'date '                                   => date('Y-m-d H:i:s'),
+            'items_id'                                => 0,
+            'itemtype'                                => 'Computer',
+            'state'                                   => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
+            'comment'                                 => "1 ==devicesfound==",
         ];
         self::$taskjoblogId = $pfTaskjoblog->add($input);
     }
 
 
-   /**
-    * @test
-    */
-    public function deleteTask()
+    public function testDeleteTask()
     {
 
         $pfTask         = new PluginGlpiinventoryTask();
@@ -135,19 +132,19 @@ class DeleteTaskTest extends TestCase
         $pfTaskjobState = new PluginGlpiinventoryTaskjobstate();
         $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
 
-       //delete task
+        //delete task
         $return = $pfTask->delete(['id' => self::$taskId]);
         $this->assertEquals(true, $return);
 
-       //check deletion of job
+        //check deletion of job
         $jobsFound = $pfTaskjob->find(['id' => self::$taskjobId]);
         $this->assertEquals([], $jobsFound);
 
-       //check deletion of state
+        //check deletion of state
         $statesFound = $pfTaskjobState->find(['id' => self::$taskjobstateId]);
         $this->assertEquals([], $statesFound);
 
-       //check deletion of log
+        //check deletion of log
         $logsFound = $pfTaskjoblog->find(['id' => self::$taskjoblogId]);
         $this->assertEquals([], $logsFound);
     }

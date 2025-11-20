@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_decode;
 
 /**
  * Manage the checks before deploy a package.
@@ -44,48 +42,48 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     public $json_name = 'checks';
 
 
-   /**
-    * Get types of checks with name => description
-    *
-    * @return array
-    */
+    /**
+     * Get types of checks with name => description
+     *
+     * @return array
+     */
     public function getTypes()
     {
         return [
-         __('Registry', 'glpiinventory') => [
-                  'winkeyExists'       => __("Registry key exists", 'glpiinventory'),
-                  'winvalueExists'     => __("Registry value exists", 'glpiinventory'),
-                  'winkeyMissing'      => __("Registry key missing", 'glpiinventory'),
-                  'winvalueMissing'    => __("Registry value missing", 'glpiinventory'),
-                  'winkeyEquals'       => __("Registry value equals to", 'glpiinventory'),
-                  'winkeyNotEquals'    => __("Registry value not equals to", 'glpiinventory'),
-                  'winvalueType'       => __("Type of registry value equals to", 'glpiinventory')
-               ],
-               __('File') => [
-                  'fileExists'         => __("File exists", 'glpiinventory'),
-                  'fileMissing'        => __("File is missing", 'glpiinventory'),
-                  'fileSizeGreater'    => __("File size is greater than", 'glpiinventory'),
-                  'fileSizeEquals'     => __("File size is equal to", 'glpiinventory'),
-                  'fileSizeLower'      => __("File size is lower than", 'glpiinventory'),
-                  'fileSHA512'         => __("SHA-512 hash value matches", 'glpiinventory'),
-                  'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'glpiinventory'),
-               ],
-               __('Directory') => [
-                  'directoryExists'    => __("Directory exists", 'glpiinventory'),
-                  'directoryMissing'   => __("Directory is missing", 'glpiinventory'),
-               ],
-             __('Other') => [
-            'freespaceGreater'   => __("Free space is greater than", 'glpiinventory')
-             ]
+            __('Registry', 'glpiinventory') => [
+                'winkeyExists'       => __("Registry key exists", 'glpiinventory'),
+                'winvalueExists'     => __("Registry value exists", 'glpiinventory'),
+                'winkeyMissing'      => __("Registry key missing", 'glpiinventory'),
+                'winvalueMissing'    => __("Registry value missing", 'glpiinventory'),
+                'winkeyEquals'       => __("Registry value equals to", 'glpiinventory'),
+                'winkeyNotEquals'    => __("Registry value not equals to", 'glpiinventory'),
+                'winvalueType'       => __("Type of registry value equals to", 'glpiinventory'),
+            ],
+            __('File') => [
+                'fileExists'         => __("File exists", 'glpiinventory'),
+                'fileMissing'        => __("File is missing", 'glpiinventory'),
+                'fileSizeGreater'    => __("File size is greater than", 'glpiinventory'),
+                'fileSizeEquals'     => __("File size is equal to", 'glpiinventory'),
+                'fileSizeLower'      => __("File size is lower than", 'glpiinventory'),
+                'fileSHA512'         => __("SHA-512 hash value matches", 'glpiinventory'),
+                'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'glpiinventory'),
+            ],
+            __('Directory') => [
+                'directoryExists'    => __("Directory exists", 'glpiinventory'),
+                'directoryMissing'   => __("Directory is missing", 'glpiinventory'),
+            ],
+            __('Other') => [
+                'freespaceGreater'   => __("Free space is greater than", 'glpiinventory'),
+            ],
         ];
     }
 
 
-   /**
-    * Get label for a type
-    * @param string $type the type value
-    * @return string the type label
-    */
+    /**
+     * Get label for a type
+     * @param string $type the type value
+     * @return string the type label
+     */
     public function getLabelForAType($type)
     {
         $alltypes = [];
@@ -100,27 +98,27 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-    * Get Unit name
-    *
-    * @return array
-    */
+    /**
+     * Get Unit name
+     *
+     * @return array
+     */
     public function getUnitLabel()
     {
         return [
-               "B"  => __('o'),
-               "KB" => __('Kio'),
-               "MB" => __('Mio'),
-               "GB" => __('Gio')
-             ];
+            "B"  => __('o'),
+            "KB" => __('Kio'),
+            "MB" => __('Mio'),
+            "GB" => __('Gio'),
+        ];
     }
 
 
     public function getAuditDescription($type, $return)
     {
         $return_string = $this->getLabelForAType($type);
-       //The skip case is a litte bit different. So we notice to the user
-       //that if audit is successful, the audit check process continue
+        //The skip case is a litte bit different. So we notice to the user
+        //that if audit is successful, the audit check process continue
         if ($return == 'skip') {
             $return_string .= ' : ' . __('continue', 'glpiinventory');
         } else {
@@ -133,19 +131,19 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-    * Get the number to multiply to have in B relative to the unit
-    *
-    * @param string $unit the unit of number
-    * @return integer the number to multiply
-    */
+    /**
+     * Get the number to multiply to have in B relative to the unit
+     *
+     * @param string $unit the unit of number
+     * @return integer the number to multiply
+     */
     public function getUnitSize($unit)
     {
         $units = [ "B"  => 1,
-                 "KB" => 1024,
-                 "MB" => 1024 * 1024,
-                 "GB" => 1024 * 1024 * 1024
-               ];
+            "KB" => 1024,
+            "MB" => 1024 * 1024,
+            "GB" => 1024 * 1024 * 1024,
+        ];
         if (array_key_exists($unit, $units)) {
             return $units[$unit];
         } else {
@@ -154,23 +152,23 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-   * Get all registry value types handled by the agent
-   *
-   * @since 9.2
-   * @return array of registry values types
-   */
+    /**
+    * Get all registry value types handled by the agent
+    *
+    * @since 9.2
+    * @return array of registry values types
+    */
     public function getRegistryTypes()
     {
         return [
-         'REG_SZ'                  => 'REG_SZ',
-         'REG_DWORD'               => 'REG_DWORD',
-         'REG_BINARY'              => 'REG_BINARY',
-         'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
-         'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
-         'REG_LINK'                => 'REG_LINK',
-         'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
-         'REG_NONE'                => 'REG_NONE'
+            'REG_SZ'                  => 'REG_SZ',
+            'REG_DWORD'               => 'REG_DWORD',
+            'REG_BINARY'              => 'REG_BINARY',
+            'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
+            'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
+            'REG_LINK'                => 'REG_LINK',
+            'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
+            'REG_NONE'                => 'REG_NONE',
         ];
     }
 
@@ -185,19 +183,18 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-    * Display list of checks
-    *
-    * @global array $CFG_GLPI
-    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-    * @param array $data array converted of 'json' field in DB where stored checks
-    * @param string $rand unique element id used to identify/update an element
-    */
-    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    /**
+     * Display list of checks
+     *
+     * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
+     * @param array $data array converted of 'json' field in DB where stored checks
+     * @param string $rand unique element id used to identify/update an element
+     */
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $checks_types = $this->getTypes();
         $package_id   = $package->getID();
         $canedit      = $package->canUpdateContent();
         echo "<table class='tab_cadrehov package_item_list' id='table_checks_$rand'>";
@@ -214,15 +211,15 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                     break;
             }
 
-            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
-                Html::showCheckbox(['name' => 'checks_entries[' . $i . ']']);
+                Html::showCheckbox(['name' => 'checks_entries[' . $i . ']', 'class' => 'massive_action_checkbox']);
                 echo "</td>";
             }
 
-           //Get the audit full description (with type and return value)
-           //to be displayed in the UI
+            //Get the audit full description (with type and return value)
+            //to be displayed in the UI
             $text = $this->getAuditDescription($check['type'], $check['return']);
             if (isset($check['name']) && !empty($check['name'])) {
                 $check_label = $check['name'] . ' (' . $text . ')';
@@ -242,7 +239,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             if ($check['return'] === 'startnow') {
                 echo "<br />";
                 $warning = sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.4.2');
-                echo "<img src='" . $CFG_GLPI['root_doc'] . "/pics/warning_min.png'>";
+                echo "<i class='ti ti-exclamation-circle'></i>";
                 echo "<span class='red'><i>" . $warning . "</i></span>";
             }
 
@@ -272,8 +269,8 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
             echo "</td>";
             if ($canedit) {
-                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory') .
-                "'><div class='drag row'></div></td>";
+                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory')
+                . "'><div class='drag row'></div></td>";
             }
             echo "</tr>";
             $i++;
@@ -285,42 +282,42 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
         }
         echo "</table>";
         if ($canedit) {
-            echo "<input type='submit' name='delete' value=\"" .
-            __('Delete', 'glpiinventory') . "\" class='submit' />";
+            echo "<input type='submit' name='delete' value=\""
+            . __('Delete', 'glpiinventory') . "\" class='submit' />";
         }
     }
 
 
-   /**
-    * Get fields for the check type requested
-    *
-    * @param string $type the type of check
-    * @param array $data fields yet defined in edit mode
-    * @param string $mode mode in use (create, edit...)
-    *
-    * @return string|false
-    */
+    /**
+     * Get fields for the check type requested
+     *
+     * @param string $type the type of check
+     * @param array $data fields yet defined in edit mode
+     * @param string $mode mode in use (create, edit...)
+     *
+     * @return array
+     */
     public function getValues($type, $data, $mode)
     {
         $values = [
-         'warning_message' => false,
-         'name_value'  => "",
-         'name_label'  => __('Audit label', 'glpiinventory'),
-         'name_type'   => "input",
-         'path_label'  => "",
-         'path_value'  => "",
-         'path_comment' => "",
-         'value_type'  => "input",
-         'value_label' => "",
-         'value'       => "",
-         'return'      => "error"
+            'warning_message' => false,
+            'name_value'  => "",
+            'name_label'  => __('Audit label', 'glpiinventory'),
+            'name_type'   => "input",
+            'path_label'  => "",
+            'path_value'  => "",
+            'path_comment' => "",
+            'value_type'  => "input",
+            'value_label' => "",
+            'value'       => "",
+            'return'      => "error",
         ];
 
         if ($mode === self::EDIT) {
-            $values['name_value'] = isset($data['name']) ? $data['name'] : "";
-            $values['path_value'] = isset($data['path']) ? $data['path'] : "";
-            $values['value']      = isset($data['value']) ? $data['value'] : "";
-            $values['return']     = isset($data['return']) ? $data['return'] : "error";
+            $values['name_value'] = $data['name'] ?? "";
+            $values['path_value'] = $data['path'] ?? "";
+            $values['value']      = $data['value'] ?? "";
+            $values['return']     = $data['return'] ?? "error";
         }
 
         $type_values = $this->getLabelsAndTypes($type, true);
@@ -334,12 +331,12 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-   *  Get labels and type for a check
-   * @param string $check_type the type of check
-   * @param boolean $mandatory indicates if mandatory mark must be added to the label
-   * @return array the labels and type for a check
-   */
+    /**
+    *  Get labels and type for a check
+    * @param string $check_type the type of check
+    * @param boolean $mandatory indicates if mandatory mark must be added to the label
+    * @return array the labels and type for a check
+    */
     public function getLabelsAndTypes($check_type, $mandatory = false)
     {
         $values = [];
@@ -422,17 +419,18 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-    * Display different fields relative the check selected
-    *
-    * @param array $config
-    * @param array $request_data
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode mode in use (create, edit...)
-    * @return void
-    */
+    /**
+     * Display different fields relative the check selected
+     *
+     * @param array $config
+     * @param array $request_data
+     * @param string $rand unique element id used to identify/update an element
+     * @param string $mode mode in use (create, edit...)
+     * @return void
+     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -443,9 +441,9 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             $pfDeployPackage->getEmpty();
         }
 
-       /*
-       * Get type from request params
-       */
+        /*
+        * Get type from request params
+        */
         $type = null;
         if ($mode === self::CREATE) {
             $type = $request_data['value'];
@@ -456,9 +454,6 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
         }
 
         $values = $this->getValues($type, $config_data, $mode);
-        if ($values === false) {
-            return false;
-        }
 
         echo "<table class='package_item'>";
         echo "<tr>";
@@ -479,13 +474,13 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
             switch ($values['value_type']) {
                 case "textarea":
-                    echo "<td><textarea name='value' id='check_value{$rand}' rows='5'>" .
-                    $values['value'] . "</textarea></td>";
+                    echo "<td><textarea name='value' id='check_value{$rand}' rows='5'>"
+                    . $values['value'] . "</textarea></td>";
                     break;
 
                 case "input":
-                    echo "<td><input type='text' name='value' id='check_value{$rand}' value='" .
-                    $values['value'] . "' /></td>";
+                    echo "<td><input type='text' name='value' id='check_value{$rand}' value='"
+                    . $values['value'] . "' /></td>";
                     break;
 
                 case 'registry_type':
@@ -496,7 +491,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
                 case "input+unit":
                     $value = $values['value'];
-                   // freespaceGreater check is saved as MiB
+                    // freespaceGreater check is saved as MiB
                     if ($type == 'freespaceGreater') {
                         $value = $value * 1024 * 1024;
                     }
@@ -504,13 +499,13 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                     $options['value'] = 'KB';
                     if ($mode === 'edit') {
                         if ($value >= $this->getUnitSize('GB')) {
-                            $value = $value / ($this->getUnitSize('GB'));
+                            $value /= $this->getUnitSize('GB');
                             $options['value'] = 'GB';
                         } elseif ($value >= ($this->getUnitSize('MB'))) {
-                            $value = $value / ($this->getUnitSize('MB'));
+                            $value /= $this->getUnitSize('MB');
                             $options['value'] = 'MB';
                         } elseif ($value >= ($this->getUnitSize('KB'))) {
-                            $value = $value / ($this->getUnitSize('KB'));
+                            $value /= $this->getUnitSize('KB');
                             $options['value'] = 'KB';
                         } else {
                             $options['value'] = 'B';
@@ -525,11 +520,11 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
                     echo "<td>";
                     $unit_labels = $this->getUnitLabel();
 
-                   /*
-                   * The freespaceGreater check does not need to propose KiB or B
-                   * because its value is based on MiB according to REST API.
-                   *                               -- Kevin 'kiniou' Roy
-                   */
+                    /*
+                    * The freespaceGreater check does not need to propose KiB or B
+                    * because its value is based on MiB according to REST API.
+                    *                               -- Kevin 'kiniou' Roy
+                    */
 
                     if ($type == 'freespaceGreater') {
                         unset($unit_labels['KB']);
@@ -558,7 +553,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             echo "<tr>";
             echo "<td></td>";
             echo "<td>";
-            echo "<img src='" . $CFG_GLPI['root_doc'] . "/pics/warning_min.png'>";
+            echo "<i class='ti ti-exclamation-circle'></i>";
             echo "<span class='red'><i>" . $values['warning_message'] . "</i></span></td>";
             echo "</tr>";
         }
@@ -569,30 +564,30 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-   * Get all possible return values for a check
-   * @return array of return values and their labels
-   */
+    /**
+    * Get all possible return values for a check
+    * @return array of return values and their labels
+    */
     public function getAllReturnValues()
     {
         return  ["error"   => __('abort job', 'glpiinventory'),
-               "skip"    => __("skip job", 'glpiinventory'),
-               "startnow" => __("start job now", 'glpiinventory'),
-               "info"    => __("report info", 'glpiinventory'),
-               "warning" => __("report warning", 'glpiinventory')
-              ];
+            "skip"    => __("skip job", 'glpiinventory'),
+            "startnow" => __("start job now", 'glpiinventory'),
+            "info"    => __("report info", 'glpiinventory'),
+            "warning" => __("report warning", 'glpiinventory'),
+        ];
     }
 
 
-   /**
-   * Get the label for a return value
-   * @param string $value the check return value
-   * @return string the label for the return value
-   */
+    /**
+    * Get the label for a return value
+    * @param ?string $value the check return value
+    * @return string the label for the return value
+    */
     public function getValueForReturn($value)
     {
         $values = $this->getAllReturnValues();
-        if (isset($values[$value])) {
+        if ($value !== null && isset($values[$value])) {
             return $values[$value];
         } else {
             return '';
@@ -600,11 +595,11 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-   /**
-   * Return an array corresponding to a check, ready to be serialized
-   * @param $params the check's parameters
-   * @return array the array to be encoded in json and serialized
-   */
+    /**
+    * Return an array corresponding to a check, ready to be serialized
+    * @param $params the check's parameters
+    * @return array the array to be encoded in json and serialized
+    */
     public function formatCheckForJson($params)
     {
         if (!isset($params['value'])) {
@@ -617,70 +612,70 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
         if (!empty($params['unit'])) {
             $params['value'] = str_replace(",", ".", $params['value']);
             if (!empty($params['value']) && is_numeric($params['value'])) {
-               //Make an exception for freespaceGreater check which is saved as MiB
+                //Make an exception for freespaceGreater check which is saved as MiB
                 if ($params['checkstype'] == "freespaceGreater") {
-                    $params['value'] = $params['value'] / (1024 * 1024);
+                    $params['value'] /= 1024 * 1024;
                 } else {
-                    $params['value'] = $params['value'] * $this->getUnitSize($params['unit']);
+                    $params['value'] *= $this->getUnitSize($params['unit']);
                 }
             }
         }
 
-       //prepare updated check entry to insert in json
+        //prepare updated check entry to insert in json
         $entry = [
-         'name'   => $params['name'],
-         'type'   => $params['checkstype'],
-         'path'   => $params['path'],
-         'value'  => strval($params['value']),
-         'return' => $params['return']
+            'name'   => $params['name'],
+            'type'   => $params['checkstype'],
+            'path'   => $params['path'],
+            'value'  => strval($params['value']),
+            'return' => $params['return'],
         ];
 
         return $entry;
     }
 
 
-   /**
-    * Add a new item in checks of the package
-    *
-    * @param array $params list of fields with value of the check
-    */
+    /**
+     * Add a new item in checks of the package
+     *
+     * @param array $params list of fields with value of the check
+     */
     public function add_item($params)
     {
         $entry = $this->formatCheckForJson($params);
 
-       //get current order json
+        //get current order json
         $datas = json_decode(
             $this->getJson($params['id']),
             true
         );
 
-       //add new entry
+        //add new entry
         $datas['jobs']['checks'][] = $entry;
 
-       //Add to package defintion
+        //Add to package defintion
         $this->addToPackage($params['id'], $entry, 'checks');
     }
 
 
-   /**
-    * Save the item in checks
-    *
-    * @param array $params list of fields with value of the check
-    */
+    /**
+     * Save the item in checks
+     *
+     * @param array $params list of fields with value of the check
+     */
     public function save_item($params)
     {
         $entry = $this->formatCheckForJson($params);
-       //get current order json
+        //get current order json
         $datas = json_decode($this->getJson($params['id']), true);
 
-       //unset index
+        //unset index
         unset($datas['jobs']['checks'][$params['index']]);
 
-       //add new datas at index position
-       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
+        //add new datas at index position
+        //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
         array_splice($datas['jobs']['checks'], $params['index'], 0, [$entry]);
 
-       //update order
+        //update order
         $this->updateOrderJson($params['id'], $datas);
     }
 }

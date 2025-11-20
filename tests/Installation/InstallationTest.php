@@ -39,19 +39,16 @@ class InstallationTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // clean log files
+        // clean log files
         file_put_contents("../../files/_log/php-errors.log", '');
         file_put_contents("../../files/_log/sql-errors.log", '');
     }
 
-   /**
-    * @test
-    */
     public function testInstall()
     {
         global $DB;
 
-       // Delete if Table of FusionInventory or Tracker yet in DB
+        // Delete if Table of FusionInventory or Tracker yet in DB
         $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
         $result = $DB->doQuery($query);
         while ($data = $DB->fetchArray($result)) {
@@ -82,22 +79,22 @@ class InstallationTest extends TestCase
         $returncode = 0;
         $outputActivate     = [];
         $returncodeActivate = 0;
-        $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --config-dir=tests/config --username=glpi glpiinventory";
+        $command = "cd ../../ && php bin/console glpi:plugin:install -vvv -n --env=testing --username=glpi glpiinventory";
         exec($command, $output, $returncode);
 
-        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests/config glpiinventory";
+        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --env=testing glpiinventory";
         exec($commandActivate, $outputActivate, $returncodeActivate);
 
-       // Check if errors in logs
-        $GLPIlog = new GLPIlogs();
+        // Check if errors in logs
+        $GLPIlog = new GLPIlogs("glpiinventory");
         $GLPIlog->testSQLlogs();
         $GLPIlog->testPHPlogs();
 
         $this->assertEquals(
             0,
             $returncode,
-            "Error when installing plugin in CLI mode\n" .
-            implode("\n", $output) . "\n" . $command . "\n"
+            "Error when installing plugin in CLI mode\n"
+            . implode("\n", $output) . "\n" . $command . "\n"
         );
 
         $DatabaseTestsCommonsTest = new DatabaseTestsCommons();

@@ -31,12 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
+global $DB;
+
 //Options for GLPI 0.71 and newer : need slave db to access the report
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
-
-define('GLPI_ROOT', '../../..');
-include(GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
@@ -55,27 +54,28 @@ $iterator = $DB->request([
     'SELECT' => [
         'glpi_networkequipments.name AS name',
         'glpi_networkports.name AS pname',
-        'glpi_networkports.id AS id'
+        'glpi_networkports.id AS id',
     ],
     'FROM'   => 'glpi_networkequipments',
     'LEFT JOIN'   => [
         'glpi_networkports' => [
             'FKEY' => [
                 'glpi_networkequipments' => 'id',
-                'glpi_networkports'      => 'items_id'
-            ]
-        ]
+                'glpi_networkports'      => 'items_id',
+            ],
+        ],
     ],
     'WHERE' => [
-        'itemtype' => 'NetworkEquipment'
+        'itemtype' => 'NetworkEquipment',
     ],
     'ORDER' => [
         'glpi_networkequipments.name',
-        'glpi_networkports.logical_number'
-    ]
+        'glpi_networkports.logical_number',
+    ],
 ]);
 
 $selected = '';
+$ports = [];
 foreach ($iterator as $data) {
     if (($data['id'] == $FK_port)) {
         $selected = $data['id'];
@@ -93,7 +93,7 @@ echo "</tr>";
 
 echo "<tr>";
 echo "<td align='center'>";
-echo "<input type='submit' value='" . __('Validate')  . "' class='submit' />";
+echo "<input type='submit' value='" . __('Validate') . "' class='submit' />";
 echo "</td>";
 echo "</tr>";
 

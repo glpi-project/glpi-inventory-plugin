@@ -32,7 +32,6 @@
  */
 
 if (strpos($_SERVER['PHP_SELF'], "taskjob_form.php")) {
-    include("../../../inc/includes.php");
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }
@@ -46,7 +45,7 @@ $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 $params = [
     "id" => filter_input(INPUT_GET, "id"),
-    "task_id" => filter_input(INPUT_GET, "task_id")
+    "task_id" => filter_input(INPUT_GET, "task_id"),
 ];
 
 $pfTaskjob->ajaxGetForm($params);

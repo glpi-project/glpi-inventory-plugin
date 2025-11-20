@@ -33,48 +33,25 @@
 
 use Glpi\Inventory\Inventory;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access this file directly");
-}
-
 /**
  * Manage the communication of network inventory feature with the agents.
  */
 class PluginGlpiinventoryCommunicationNetworkInventory
 {
-   /**
-    * Define protected variables
-    *
-    * @var null
-    */
-    private $logFile;
-
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_networkequipment';
 
-
-   /**
-    * __contruct function where fill logFile if extradebug enabled
-    */
-    public function __construct()
-    {
-        if (PluginGlpiinventoryConfig::isExtradebugActive()) {
-            $this->logFile = GLPI_LOG_DIR . '/glpiinventorycommunication.log';
-        }
-    }
-
-
-   /**
-    * Import data, so get data from agent to put in GLPI
-    *
-    * @param string $p_DEVICEID device_id of the agent
-    * @param object $a_CONTENT
-    * @param Inventory $inventory
-    */
+    /**
+     * Import data, so get data from agent to put in GLPI
+     *
+     * @param string $p_DEVICEID device_id of the agent
+     * @param object $a_CONTENT
+     * @param Inventory $inventory
+     */
     public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory)
     {
         $response = [];
@@ -99,13 +76,13 @@ class PluginGlpiinventoryCommunicationNetworkInventory
         $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
         if ((!isset($a_CONTENT->content->agent->start)) && (!isset($a_CONTENT->content->agent->end)) && (!isset($a_CONTENT->content->agent->exit))) {
             $nb_devices = 1;
-            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] =
-              $a_CONTENT->jobid;
+            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id']
+              = $a_CONTENT->jobid;
             $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
             $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
             $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices .
-              ' ==devicesqueried==';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices
+              . ' ==devicesqueried==';
             $this->addtaskjoblog();
         }
 
@@ -119,8 +96,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $cnt = countElementsInTable(
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
-                'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                'comment'                                 => ["LIKE", '%[==detail==] ==updatetheitem== %'],
+                    'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
+                    'comment'                                 => ["LIKE", '%[==detail==] ==updatetheitem== %'],
                 ]
             );
 
@@ -128,7 +105,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 $a_CONTENT->jobid,
                 $agent->fields['id'],
                 'Agent',
-                '0',
+                0,
                 'Total updated:' . $cnt
             );
             $response = ['response' => ['RESPONSE' => 'SEND']];
@@ -147,9 +124,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             } elseif ($a_CONTENT->content->error->type == "PRINTER") {
                 $itemtype = "Printer";
             }
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] ' .
-            $a_CONTENT->content->error->message . ' [[' . $itemtype . '::' .
-            $a_CONTENT->content->error->id . ']]';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
+            . $a_CONTENT->content->error->message . ' [[' . $itemtype . '::'
+            . $a_CONTENT->content->error->id . ']]';
             $this->addtaskjoblog();
 
             $response['response'] = ['RESPONSE' => 'SEND'];
@@ -160,9 +137,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             } elseif ($a_CONTENT->content->device->error->type == "PRINTER") {
                 $itemtype = "Printer";
             }
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] ' .
-            $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::' .
-            $a_CONTENT->content->device->error->id . ']]';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
+            . $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::'
+            . $a_CONTENT->content->device->error->id . ']]';
             $this->addtaskjoblog();
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } else {
@@ -191,9 +168,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                     $this->addtaskjoblog();
                 } else {
                     $item = $inventory->getMainAsset()->getItem();
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] =
-                        '[==detail==] ==updatetheitem== ' . $item->getTypeName() .
-                        ' [[' . $item::getType() . '::' . $item->fields['id'] . ']]';
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
+                        = '[==detail==] ==updatetheitem== ' . $item->getTypeName()
+                        . ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
                     $this->addtaskjoblog();
                 }
                 $response = ['response' => ['RESPONSE' => 'SEND']];
@@ -205,9 +182,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
 
 
 
-   /**
-    * Add log in the taskjob
-    */
+    /**
+     * Add log in the taskjob
+     */
     public function addtaskjoblog()
     {
 
@@ -226,11 +203,11 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     }
 
 
-   /**
-    * Get method name linked to this class
-    *
-    * @return string
-    */
+    /**
+     * Get method name linked to this class
+     *
+     * @return string
+     */
     public static function getMethod()
     {
         return 'networkinventory';

@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
 $dropdown = new PluginGlpiinventoryCredential();
 
 if (!empty($_POST) || isset($_GET['_in_modal'])) {
@@ -48,8 +47,4 @@ if (!empty($_POST) || isset($_GET['_in_modal'])) {
     //If there is no form to submit, display the form
     $dropdown->display($_GET);
     Html::footer();
-}
-
-if (isset($_GET['popup'])) {
-    Ajax::refreshDropdownPopupInMainWindow();
 }

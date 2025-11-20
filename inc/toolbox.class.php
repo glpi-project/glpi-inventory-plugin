@@ -31,21 +31,21 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_decode;
+use function Safe\json_encode;
+use function Safe\preg_match;
 
 /**
  * Manage the functions used in many classes.
  **/
 class PluginGlpiinventoryToolbox
 {
-   /**
-    * Log if extra debug enabled
-    *
-    * @param string $file
-    * @param string $message
-    */
+    /**
+     * Log if extra debug enabled
+     *
+     * @param string $file
+     * @param string|array $message
+     */
     public static function logIfExtradebug($file, $message)
     {
         $config = new PluginGlpiinventoryConfig();
@@ -58,12 +58,12 @@ class PluginGlpiinventoryToolbox
     }
 
 
-   /**
-    * Format XML, ie indent it for pretty printing
-    *
-    * @param object $xml simplexml instance
-    * @return string
-    */
+    /**
+     * Format XML, ie indent it for pretty printing
+     *
+     * @param object $xml simplexml instance
+     * @return string
+     */
     public static function formatXML($xml)
     {
         $string     = str_replace("><", ">\n<", $xml->asXML());
@@ -74,13 +74,13 @@ class PluginGlpiinventoryToolbox
         $indent     = 0;
 
         while ($token !== false) {
-           // 1. open and closing tags on same line - no change
+            // 1. open and closing tags on same line - no change
             if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
                 $indent = 0;
                 // 2. closing tag - outdent now
             } elseif (preg_match('/^<\/\w/', $token, $matches)) {
-                $pad = $pad - 3;
-               // 3. opening tag - don't pad this one, only subsequent tags
+                $pad -= 3;
+                // 3. opening tag - don't pad this one, only subsequent tags
             } elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
                 $indent = 3;
             } else {
@@ -98,21 +98,21 @@ class PluginGlpiinventoryToolbox
     }
 
 
-   /**
-    * Add AUTHENTICATION string to XML node
-    *
-    * @param integer $p_id Authenticate id
-    **/
+    /**
+     * Add AUTHENTICATION string to XML node
+     *
+     * @param integer $p_id Authenticate id
+     **/
     public function addAuth($p_id)
     {
         $node = [];
         $credentials = new SNMPCredential();
         if ($credentials->getFromDB($p_id)) {
             $node = [
-            'AUTHENTICATION' => [
-               'ID' => $p_id,
-               'VERSION' => $credentials->getRealVersion()
-            ]
+                'AUTHENTICATION' => [
+                    'ID' => $p_id,
+                    'VERSION' => $credentials->getRealVersion(),
+                ],
             ];
 
             if ($credentials->fields['snmpversion'] == '3') {
@@ -134,13 +134,13 @@ class PluginGlpiinventoryToolbox
     }
 
 
-   /**
-    * Get IP for device
-    *
-    * @param string $itemtype
-    * @param integer $items_id
-    * @return array
-    */
+    /**
+     * Get IP for device
+     *
+     * @param string $itemtype
+     * @param integer $items_id
+     * @return array
+     */
     public static function getIPforDevice($itemtype, $items_id)
     {
         $NetworkPort = new NetworkPort();
@@ -150,20 +150,24 @@ class PluginGlpiinventoryToolbox
         $a_ips = [];
         $a_ports = $NetworkPort->find(
             ['itemtype'           => $itemtype,
-             'items_id'           => $items_id,
-            'instantiation_type' => ['!=',
-            'NetworkPortLocal']]
+                'items_id'           => $items_id,
+                'instantiation_type' => ['!=',
+                    'NetworkPortLocal',
+                ],
+            ]
         );
         foreach ($a_ports as $a_port) {
             $a_networknames = $networkName->find(
                 ['itemtype' => 'NetworkPort',
-                'items_id' => $a_port['id']]
+                    'items_id' => $a_port['id'],
+                ]
             );
             foreach ($a_networknames as $a_networkname) {
-                 $a_ipaddresses = $iPAddress->find(
-                     ['itemtype' => 'NetworkName',
-                     'items_id' => $a_networkname['id']]
-                 );
+                $a_ipaddresses = $iPAddress->find(
+                    ['itemtype' => 'NetworkName',
+                        'items_id' => $a_networkname['id'],
+                    ]
+                );
                 foreach ($a_ipaddresses as $data) {
                     if (
                         $data['name'] != '127.0.0.1'
@@ -178,63 +182,7 @@ class PluginGlpiinventoryToolbox
     }
 
 
-   // *********************** Functions used for inventory *********************** //
-
-   /**
-    *  This function fetch rows from a MySQL result in an array with each table as a key
-    *
-    *  example:
-    *  $query =
-    *     "SELECT table_a.*,table_b.* ".
-    *     "FROM table_b ".
-    *     "LEFT JOIN table_a ON table_a.id = table_b.linked_id";
-    *  $result = mysqli_query( $query );
-    *  print_r( fetchTableAssoc( $result ) )
-    *
-    *  output:
-    *  $results = Array
-    *     (
-    *        [0] => Array
-    *           (
-    *              [table_a] => Array
-    *                 (
-    *                    [id] => 1
-    *                 )
-    *              [table_b] => Array
-    *                 (
-    *                    [id] => 2
-    *                    [linked_id] => 1
-    *                 )
-    *           )
-    *           ...
-    *     )
-    *
-    * @param object $mysql_result
-    * @return array
-    */
-    public static function fetchAssocByTable($mysql_result)
-    {
-        $results = [];
-       //get fields header infos
-        $fields = mysqli_fetch_fields($mysql_result);
-       //associate row data as array[table][field]
-        while ($row = mysqli_fetch_row($mysql_result)) {
-            $result = [];
-            for ($i = 0; $i < count($row); $i++) {
-                $tname = $fields[$i]->table;
-                $fname = $fields[$i]->name;
-                if (!isset($result[$tname])) {
-                    $result[$tname] = [];
-                }
-                $result[$tname][$fname] = $row[$i];
-            }
-            if (count($result) > 0) {
-                $results[] = $result;
-            }
-        }
-        return $results;
-    }
-
+    // *********************** Functions used for inventory *********************** //
     /**
      *  This function fetch rows from a DBMysqlIterator result in an array with each table as a key
      *
@@ -317,14 +265,14 @@ class PluginGlpiinventoryToolbox
     }
 
 
-   /**
-    * Dropdown for display hours
-    *
-    * @param string $name
-    * @param array $options
-    * @return string unique html element id
-    */
-    public static function showHours($name, $options = [])
+    /**
+     * Dropdown for display hours
+     *
+     * @param string $name
+     * @param array $options
+     * @return string unique html element id
+     */
+    public static function showHours(string $name, array $options = [])
     {
 
         $p['value']          = '';
@@ -334,7 +282,7 @@ class PluginGlpiinventoryToolbox
         $p['begin']          = 0;
         $p['end']            = (24 * 3600);
 
-        if (is_array($options) && count($options)) {
+        if (count($options)) {
             foreach ($options as $key => $val) {
                 $p[$key] = $val;
             }
@@ -345,7 +293,7 @@ class PluginGlpiinventoryToolbox
 
         $values   = [];
 
-        $p['step'] = $p['step'] * 60; // to have in seconds
+        $p['step'] *= 60; // to have in seconds
         for ($s = $p['begin']; $s <= $p['end']; $s += $p['step']) {
             $values[$s] = PluginGlpiinventoryToolbox::getHourMinute($s);
         }
@@ -353,12 +301,12 @@ class PluginGlpiinventoryToolbox
     }
 
 
-   /**
-    * Get hour:minute from number of seconds
-    *
-    * @param integer $seconds
-    * @return string
-    */
+    /**
+     * Get hour:minute from number of seconds
+     *
+     * @param integer $seconds
+     * @return string
+     */
     public static function getHourMinute($seconds)
     {
         $hour = floor($seconds / 3600);
@@ -367,76 +315,81 @@ class PluginGlpiinventoryToolbox
     }
 
 
-   /**
-    * Execute a function as as pllugin user
-    *
-    * @param string|array $function
-    * @param array $args
-    * @return array the normaly returned value from executed callable
-    */
+    /**
+     * Execute a function as plugin user
+     *
+     * @param string|array $function
+     * @param array $args
+     * @return array the normally returned value from executed callable
+     */
     public function executeAsGlpiinventoryUser($function, array $args = [])
     {
 
         $config = new PluginGlpiinventoryConfig();
         $user = new User();
 
-       // Backup _SESSION environment
+        // Backup _SESSION environment
         $OLD_SESSION = [];
 
         foreach (
             ['glpiID', 'glpiname','glpiactiveentities_string',
-            'glpiactiveentities', 'glpiparententities'] as $session_key
+                'glpiactiveentities', 'glpiparententities',
+            ] as $session_key
         ) {
             if (isset($_SESSION[$session_key])) {
                 $OLD_SESSION[$session_key] = $_SESSION[$session_key];
             }
         }
 
-       // Configure impersonation
+        // Configure impersonation
         $users_id  = $config->getValue('users_id');
         $user->getFromDB($users_id);
 
         $_SESSION['glpiID']   = $users_id;
         $_SESSION['glpiname'] = $user->getField('name');
         $_SESSION['glpiactiveentities'] = getSonsOf('glpi_entities', 0);
-        $_SESSION['glpiactiveentities_string'] =
-         "'" . implode("', '", $_SESSION['glpiactiveentities']) . "'";
+        $_SESSION['glpiactiveentities_string']
+         = "'" . implode("', '", $_SESSION['glpiactiveentities']) . "'";
         $_SESSION['glpiparententities'] = [];
 
-       // Execute function with impersonated SESSION
+        $_SESSION['glpiactiveprofile']['interface'] = 'central';
+
+        $_SESSION["glpiactiveprofile"]["computer"] = 1;
+
+        // Execute function with impersonated SESSION
         $result = call_user_func_array($function, $args);
 
-       // Restore SESSION
+        // Restore SESSION
         foreach ($OLD_SESSION as $key => $value) {
             $_SESSION[$key] = $value;
         }
-       // Return function results
+        // Return function results
         return $result;
     }
 
 
-   /**
-   * Check if an item is inventoried by plugin
-   *
-   * @since 9.2
-   *
-   * @param CommonDBTM $item the item to check
-   *
-   * @return boolean
-   */
+    /**
+    * Check if an item is inventoried by plugin
+    *
+    * @since 9.2
+    *
+    * @param CommonDBTM $item the item to check
+    *
+    * @return boolean
+    */
     public static function isAnInventoryDevice($item)
     {
-        switch ($item->getType()) {
-            case 'Computer':
-            case 'NetworkEquipment':
-            case 'Printer':
+        switch ($item::class) {
+            case Computer::class:
+            case NetworkEquipment::class:
+            case Printer::class:
                 return $item->isDynamic();
         }
 
         return $item->isDynamic()
          && countElementsInTable(
              RuleMatchedLog::getTable(),
-             ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]
+             ['itemtype' => $item::class, 'items_id' => $item->fields['id']]
          );
     }
 }

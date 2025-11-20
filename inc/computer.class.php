@@ -31,20 +31,16 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the search in groups (static and dynamic).
  */
 class PluginGlpiinventoryComputer extends Computer
 {
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = "plugin_glpiinventory_group";
 
 
@@ -59,8 +55,8 @@ class PluginGlpiinventoryComputer extends Computer
                 // Include Fields hook from correct installation folder (marketplace or plugins)
                 include_once(Plugin::GetPhpDir("fields") . "/hook.php");
                 $options['fields_plugin'] = [
-                 'id'   => 'fields_plugin',
-                 'name' => __('Plugin fields')
+                    'id'   => 'fields_plugin',
+                    'name' => __('Plugin fields'),
                 ];
                 /** @phpstan-ignore-next-line */
                 $fieldsoptions =  plugin_fields_getAddSearchOptions('Computer');
@@ -87,11 +83,11 @@ class PluginGlpiinventoryComputer extends Computer
     }
 
 
-   /**
-    * Define the standard massive actions to hide for this class
-    *
-    * @return array list of massive actions to hide
-    */
+    /**
+     * Define the standard massive actions to hide for this class
+     *
+     * @return array list of massive actions to hide
+     */
     public function getForbiddenStandardMassiveAction()
     {
 
@@ -103,13 +99,13 @@ class PluginGlpiinventoryComputer extends Computer
     }
 
 
-   /**
-    * Execution code for massive action
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @param CommonDBTM $item item on which execute the code
-    * @param array $ids list of ID on which execute the code
-    */
+    /**
+     * Execution code for massive action
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @param CommonDBTM $item item on which execute the code
+     * @param array $ids list of ID on which execute the code
+     */
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
 
@@ -122,23 +118,24 @@ class PluginGlpiinventoryComputer extends Computer
                             !countElementsInTable(
                                 $group_item->getTable(),
                                 [
-                                'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
-                                'itemtype'                               => 'Computer',
-                                'items_id'                               => $key,
+                                    'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
+                                    'itemtype'                               => 'Computer',
+                                    'items_id'                               => $key,
                                 ]
                             )
                         ) {
                             $group_item->add([
-                            'plugin_glpiinventory_deploygroups_id'
+                                'plugin_glpiinventory_deploygroups_id'
                             => $_POST['id'],
-                            'itemtype' => 'Computer',
-                            'items_id' => $key]);
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                                'itemtype' => 'Computer',
+                                'items_id' => $key,
+                            ]);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     } else {
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_NORIGHT);
                         $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
                     }
                 }
@@ -148,25 +145,26 @@ class PluginGlpiinventoryComputer extends Computer
                 foreach ($ids as $key) {
                     if (
                         $group_item->deleteByCriteria(['items_id' => $key,
-                                                       'itemtype' => 'Computer',
-                                                       'plugin_glpiinventory_deploygroups_id'
-                                                          => $_POST['item_items_id']])
+                            'itemtype' => 'Computer',
+                            'plugin_glpiinventory_deploygroups_id'
+                                                          => $_POST['item_items_id'],
+                        ])
                     ) {
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                     } else {
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                     }
                 }
         }
     }
 
 
-   /**
-    * Display form related to the massive action selected
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @return boolean
-    */
+    /**
+     * Display form related to the massive action selected
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @return boolean
+     */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         if ($ma->getAction() == 'add') {

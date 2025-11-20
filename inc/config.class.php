@@ -31,50 +31,46 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Manage the configuration of the plugin.
  */
 class PluginGlpiinventoryConfig extends CommonDBTM
 {
-   /**
-    * Initialize the displaylist public variable
-    *
-    * @var boolean
-    */
+    /**
+     * Initialize the displaylist public variable
+     *
+     * @var boolean
+     */
     public $displaylist = false;
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_configuration';
 
-   /**
-    * Define number to the action 'clean' of agents
-    *
-    * @var integer
-    */
-    const ACTION_CLEAN = 0;
+    /**
+     * Define number to the action 'clean' of agents
+     *
+     * @var integer
+     */
+    public const ACTION_CLEAN = 0;
 
-   /**
-    * Define number to the action 'change status' of agents
-    *
-    * @var integer
-    */
-    const ACTION_STATUS = 1;
+    /**
+     * Define number to the action 'change status' of agents
+     *
+     * @var integer
+     */
+    public const ACTION_STATUS = 1;
 
 
-   /**
-    * Initialize config values of  plugin
-    *
-    * @param boolean $getOnly
-    * @return array
-    */
+    /**
+     * Initialize config values of  plugin
+     *
+     * @param boolean $getOnly
+     * @return array
+     */
     public function initConfigModule($getOnly = false)
     {
 
@@ -122,18 +118,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $input['timeout_networkdiscovery'] = 1;
         $input['timeout_networkinventory'] = 15;
 
-       //deploy config variables
-        $input['server_upload_path'] =
-              Toolbox::addslashes_deep(
-                  implode(
-                      DIRECTORY_SEPARATOR,
-                      [
-                        GLPI_PLUGIN_DOC_DIR,
-                        'glpiinventory',
-                        'upload'
-                      ]
-                  )
-              );
+        //deploy config variables
         $input['alert_winpath']         = 1;
         $input['server_as_mirror']      = 1;
         $input['manage_osname']         = 1;
@@ -148,12 +133,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
 
@@ -161,12 +146,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Add multiple configuration values
-    *
-    * @param array $values configuration values, indexed by name
-    * @param boolean $update say if add or update in database
-    */
+    /**
+     * Add multiple configuration values
+     *
+     * @param array $values configuration values, indexed by name
+     * @param boolean $update say if add or update in database
+     */
     public function addValues($values, $update = true)
     {
 
@@ -180,12 +165,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Define tabs to display on form page
-    *
-    * @param array $options
-    * @return array containing the tabs name
-    */
+    /**
+     * Define tabs to display on form page
+     *
+     * @param array $options
+     * @return array containing the tabs name
+     */
     public function defineTabs($options = [])
     {
 
@@ -193,13 +178,13 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
         $ong        = [];
         $moduleTabs = [];
-        $this->addStandardTab("PluginGlpiinventoryConfig", $ong, $options);
-        $this->addStandardTab("PluginGlpiinventoryAgentmodule", $ong, $options);
+        $this->addStandardTab(PluginGlpiinventoryConfig::class, $ong, $options);
+        $this->addStandardTab(PluginGlpiinventoryAgentmodule::class, $ong, $options);
 
         if (isset($_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'])) {
             $plugin_tabs = $ong;
-            $moduleTabForms =
-                  $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
+            $moduleTabForms
+                  = $_SESSION['glpi_plugin_glpiinventory']['configuration']['moduletabforms'];
             if (count($moduleTabForms)) {
                 foreach ($moduleTabForms as $module => $form) {
                     if ($plugin->isActivated($module)) {
@@ -214,35 +199,35 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string|array name of the tab
-    */
+    /**
+     * Get the tab name used for item
+     *
+     * @param CommonGLPI $item the item object
+     * @param integer $withtemplate 1 if is a template form
+     * @return string|array name of the tab
+     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        if ($item->getType() == __CLASS__) {
+        if ($item instanceof self) {
             return [
-             __('General setup'),
-             __('Network Inventory', 'glpiinventory'),
-             __('Package management', 'glpiinventory')
+                self::createTabEntry(__('General setup'), 0, icon: 'ti ti-settings'),
+                self::createTabEntry(__('Network Inventory', 'glpiinventory'), 0, icon: 'ti ti-network'),
+                self::createTabEntry(__('Package management', 'glpiinventory'), 0, icon: 'ti ti-package'),
             ];
         }
         return '';
     }
 
 
-   /**
-    * Display the content of the tab
-    *
-    * @param CommonGLPI $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
+    /**
+     * Display the content of the tab
+     *
+     * @param CommonGLPI $item
+     * @param integer $tabnum number of the tab to display
+     * @param integer $withtemplate 1 if is a template form
+     * @return boolean
+     */
     public static function displayTabContentForItem($item, $tabnum = 1, $withtemplate = 0)
     {
         /** @var PluginGlpiinventoryConfig $item */
@@ -263,15 +248,15 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Get configuration value with name
-    *
-    * @global array $PF_CONFIG
-    * @param string $name name in configuration
-    * @return null|string|integer
-    */
+    /**
+     * Get configuration value with name
+     *
+     * @param string $name name in configuration
+     * @return null|string|integer
+     */
     public function getValue($name)
     {
+        /** @var array $PF_CONFIG */
         global $PF_CONFIG;
 
         if (isset($PF_CONFIG[$name])) {
@@ -279,19 +264,16 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         }
 
         $config = current($this->find(['type' => $name]));
-        if (isset($config['value'])) {
-            return $config['value'];
-        }
-        return null;
+        return $config['value'] ?? null;
     }
 
 
-   /**
-    * Give state of a config field for plugin
-    *
-    * @param string $name name in configuration
-    * @return boolean
-    */
+    /**
+     * Give state of a config field for plugin
+     *
+     * @param string $name name in configuration
+     * @return boolean
+     */
     public function isFieldActive($name)
     {
         if (!($this->getValue($name))) {
@@ -302,12 +284,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Display form
-    *
-    * @param array $options
-    * @return true
-    */
+    /**
+     * Display form
+     *
+     * @param array $options
+     * @return true
+     */
     public function showConfigForm($options = [])
     {
 
@@ -330,11 +312,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber(
             "delete_task",
             [
-                            'value' => $this->getValue('delete_task'),
-                            'min'   => 1,
-                            'max'   => 240,
-                            'unit'  => 'day'
-                           ]
+                'value' => $this->getValue('delete_task'),
+                'min'   => 1,
+                'max'   => 240,
+                'unit'  => 'day',
+            ]
         );
         echo "</div>";
         echo "</div>";
@@ -366,10 +348,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber(
             "wakeup_agent_max",
             [
-                            'value' => $this->getValue('wakeup_agent_max'),
-                            'min' => 1,
-                            'max' => 100
-                           ]
+                'value' => $this->getValue('wakeup_agent_max'),
+                'min' => 1,
+                'max' => 100,
+            ]
         );
         echo "</div>";
         echo "</div>";
@@ -385,12 +367,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Get the action for agent action
-    *
-    * @param integer $action
-    * @return string
-    */
+    /**
+     * Get the action for agent action
+     *
+     * @param integer $action
+     * @return string
+     */
     public static function getActions($action)
     {
         switch ($action) {
@@ -405,16 +387,14 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Display form for tab 'Network inventory'
-    *
-    * @param array $options
-    * @return true
-    */
+    /**
+     * Display form for tab 'Network inventory'
+     *
+     * @param array $options
+     * @return true
+     */
     public static function showFormNetworkInventory($options = [])
     {
-        global $CFG_GLPI;
-
         $pfConfig     = new PluginGlpiinventoryConfig();
         $pfsnmpConfig = new self();
 
@@ -494,12 +474,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Display form for tab 'Deploy'
-    *
-    * @param array $options
-    * @return true
-    */
+    /**
+     * Display form for tab 'Deploy'
+     *
+     * @param array $options
+     * @return true
+     */
     public static function showFormDeploy($options = [])
     {
 
@@ -519,9 +499,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "<td class='right form-label'>" . __('Match mirrors to agents', 'glpiinventory') . "</td>";
         echo "<td>";
         $mirror_options = [
-         PluginGlpiinventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
-         PluginGlpiinventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'glpiinventory'),
-         PluginGlpiinventoryDeployMirror::MATCH_BOTH     => __('with both', 'glpiinventory')
+            PluginGlpiinventoryDeployMirror::MATCH_LOCATION => __('with location', 'glpiinventory'),
+            PluginGlpiinventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'glpiinventory'),
+            PluginGlpiinventoryDeployMirror::MATCH_BOTH     => __('with both', 'glpiinventory'),
         ];
         Dropdown::showFromArray(
             'mirror_match',
@@ -536,10 +516,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         echo "<td width='20%'>";
         $toadd = [-1 => __('Never')];
         Dropdown::showNumber("clean_on_demand_tasks", [
-         'value' => $pfConfig->getValue('clean_on_demand_tasks'),
-         'min'   => 1,
-         'max'   => 1000,
-         'toadd' => $toadd]);
+            'value' => $pfConfig->getValue('clean_on_demand_tasks'),
+            'min'   => 1,
+            'max'   => 1000,
+            'toadd' => $toadd,
+        ]);
         echo "</td>";
         echo "</tr>";
 
@@ -550,13 +531,13 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Add name + value in configuration if not exist
-    *
-    * @param string $name
-    * @param string $value
-    * @return integer|false integer is the id of this configuration name
-    */
+    /**
+     * Add name + value in configuration if not exist
+     *
+     * @param string $name
+     * @param string $value
+     * @return integer|false integer is the id of this configuration name
+     */
     public function addValue($name, $value)
     {
         $existing_value = $this->getValue($name);
@@ -564,33 +545,35 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             return $existing_value;
         } else {
             return $this->add(['type'  => $name,
-                                 'value' => $value]);
+                'value' => $value,
+            ]);
         }
     }
 
 
-   /**
-    * Update configuration value
-    *
-    * @param string $name name of configuration
-    * @param string $value
-    * @return boolean
-    */
+    /**
+     * Update configuration value
+     *
+     * @param string $name name of configuration
+     * @param string $value
+     * @return boolean
+     */
     public function updateValue($name, $value)
     {
+        /** @var array $PF_CONFIG */
         global $PF_CONFIG;
 
-       // retrieve current config
+        // retrieve current config
         $config = current($this->find(['type' => $name]));
 
-       // set in db
+        // set in db
         if (isset($config['id'])) {
             $result = $this->update(['id' => $config['id'], 'value' => $value]);
         } else {
             $result = $this->add(['type' => $name, 'value' => $value]);
         }
 
-       // set cache
+        // set cache
         if ($result) {
             $PF_CONFIG[$name] = $value;
         }
@@ -599,11 +582,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Check if extradebug mode is active
-    *
-    * @return null|integer the integer is 1 or 0 (it's like boolean)
-    */
+    /**
+     * Check if extradebug mode is active
+     *
+     * @return null|integer the integer is 1 or 0 (it's like boolean)
+     */
     public static function isExtradebugActive()
     {
         $fConfig = new self();
@@ -611,12 +594,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Log when extra-debug is activated
-    *
-    * @param string $file name of log file to update
-    * @param string $message the message to put in log file
-    */
+    /**
+     * Log when extra-debug is activated
+     *
+     * @param string $file name of log file to update
+     * @param string|string[] $message the message to put in log file
+     */
     public static function logIfExtradebug($file, $message)
     {
         if (self::isExtradebugActive()) {
@@ -628,18 +611,17 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     }
 
 
-   /**
-    * Load all configuration in global variable $PF_CONFIG
-    *
-    * Test if table exists before loading cache
-    * The only case where table doesn't exists is when you click on
-    * uninstall the plugin and it's already uninstalled
-    *
-    * @global object $DB
-    * @global array $PF_CONFIG
-    */
+    /**
+     * Load all configuration in global variable $PF_CONFIG
+     *
+     * Test if table exists before loading cache
+     * The only case where table doesn't exist is when you click on
+     * uninstall the plugin and it's already uninstalled
+     */
     public static function loadCache()
     {
+        /** @var DBmysql $DB */
+        /** @var array $PF_CONFIG */
         global $DB, $PF_CONFIG;
 
         if ($DB->tableExists('glpi_plugin_glpiinventory_configs')) {
@@ -649,5 +631,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
                 $PF_CONFIG[$data['type']] = $data['value'];
             }
         }
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-settings";
     }
 }

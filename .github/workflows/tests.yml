@@ -7,10 +7,18 @@ on:
   push:
     branches:
       - main
+      - '*/bugfixes'
+      - 'feature/*'
+      - 'fix/*'
+      - 'security/*'
     tags:
        - '*'
   pull_request:
   workflow_dispatch:
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
 
@@ -18,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.3']
+        php-versions: ['8.2', '8.4']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -26,7 +34,7 @@ jobs:
     steps:
     - name: Change dir owner to working user
       run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Setup cache environment
       id: extcache
       uses: shivammathur/cache-extensions@v1
@@ -58,20 +66,20 @@ jobs:
     - name: Install dependencies
       run: composer install
     - name: Check for coding standards violations
+      if: matrix.php-versions == '8.4'
       run: |
-        vendor/bin/phpcs
+        vendor/bin/php-cs-fixer check  --show-progress=dots --verbose --diff
 
   phpunit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
-          - {php-versions: "7.4", db-image: "mysql:5.7"}
-          - {php-versions: "8.3", db-image: "mysql:5.7"}
-          - {php-versions: "8.3", db-image: "mysql:8.0"}
-          - {php-versions: "8.3", db-image: "mysql:8.1"}
-          - {php-versions: "8.3", db-image: "mariadb:10.6"}
-          - {php-versions: "8.3", db-image: "mariadb:11"}
+          - {php-versions: "8.2", db-image: "mysql:8.0"}
+          - {php-versions: "8.4", db-image: "mysql:8.0"}
+          - {php-versions: "8.4", db-image: "mysql:8.4"}
+          - {php-versions: "8.4", db-image: "mariadb:10.6"}
+          - {php-versions: "8.4", db-image: "mariadb:11"}
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
@@ -103,7 +111,7 @@ jobs:
       run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext
     - name: Change dir owner to working user
       run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Setup cache environment
       id: extcache
       uses: shivammathur/cache-extensions@v1
@@ -134,12 +142,12 @@ jobs:
     - name: Install dependencies
       run: composer install
     - name: Checkout GLPI
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: glpi-project/glpi
         path: glpi
         fetch-depth: 1
-        ref: 10.0/bugfixes
+        ref: 11.0/bugfixes
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install dependencies
@@ -154,11 +162,11 @@ jobs:
       run: |
         mysql -e 'create database IF NOT EXISTS glpi;' -u root --password=glpi1iventory -h 127.0.0.1 -P 3306
     - name: Install GLPI
-      run: cd glpi && php bin/console glpi:database:install -n --ansi --config-dir=tests/config --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306 --strict-configuration
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:database:install -n --ansi --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306 --strict-configuration
     - name: Install plugin
-      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --ansi --config-dir=tests/config --username=glpi glpiinventory
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:install -vvv -n --ansi --username=glpi glpiinventory
     - name: Activate plugin
-      run: cd glpi && php bin/console glpi:plugin:activate -n --ansi --config-dir=tests/config glpiinventory
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:activate -n --ansi glpiinventory
     - name: run Unit tests
       run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/Unit/
     - name: run Integration tests
@@ -166,4 +174,4 @@ jobs:
     - name: run Install tests
       run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/Installation/
     - name: PHPStan checks
-      run: cd glpi/plugins/glpiinventory && php vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress
+      run: cd glpi/plugins/glpiinventory && php ../../vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress

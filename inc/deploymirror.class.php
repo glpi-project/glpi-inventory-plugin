@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 use Glpi\Application\View\TemplateRenderer;
 
 /**
@@ -42,64 +38,67 @@ use Glpi\Application\View\TemplateRenderer;
  */
 class PluginGlpiinventoryDeployMirror extends CommonDBTM
 {
-    const MATCH_LOCATION = 0;
-    const MATCH_ENTITY   = 1;
-    const MATCH_BOTH     = 2;
+    public const MATCH_LOCATION = 0;
+    public const MATCH_ENTITY   = 1;
+    public const MATCH_BOTH     = 2;
 
-   /**
-    * We activate the history.
-    *
-    * @var boolean
-    */
+    /**
+     * We activate the history.
+     *
+     * @var boolean
+     */
     public $dohistory = true;
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
+    /**
+     * The right name for this class
+     *
+     * @var string
+     */
     public static $rightname = 'plugin_glpiinventory_deploymirror';
 
 
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
+    /**
+     * Get name of this type by language of the user connected
+     *
+     * @param integer $nb number of elements
+     * @return string name of this type
+     */
     public static function getTypeName($nb = 0)
     {
         return __('Mirror servers', 'glpiinventory');
     }
 
 
-   /**
-    * Define tabs to display on form page
-    *
-    * @param array $options
-    * @return array containing the tabs name
-    */
+    /**
+     * Define tabs to display on form page
+     *
+     * @param array $options
+     * @return array containing the tabs name
+     */
     public function defineTabs($options = [])
     {
 
         $ong = [];
         $this->addDefaultFormTab($ong)
-         ->addStandardTab('Log', $ong, $options);
+         ->addStandardTab(Log::class, $ong, $options);
 
         return $ong;
     }
 
 
-   /**
-    * Get and filter mirrors list by computer agent and location.
-    * Location is retrieved from the computer data.
-    *
-    * @global array $PF_CONFIG
-    * @param integer $agents_id
-    * @return array
-    */
+    /**
+     * Get and filter mirrors list by computer agent and location.
+     * Location is retrieved from the computer data.
+     *
+     * @param ?integer $agents_id
+     * @return array
+     */
     public static function getList($agents_id)
     {
+        /**
+         * @var array $PF_CONFIG
+         * @var DBmysql $DB
+         */
         global $PF_CONFIG, $DB;
 
         if (is_null($agents_id)) {
@@ -109,42 +108,42 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
         $agent = new Agent();
         $agent->getFromDB($agents_id);
         $agent = $agent->fields;
-        if (!(int)$agent['items_id'] > 0) {
+        if (!(int) $agent['items_id'] > 0) {
             return [];
         }
 
         $computer = new Computer();
         $computer->getFromDB($agent['items_id']);
 
-       //If no configuration has been done in the plugin's configuration
-       //then use location for mirrors as default
-       //!!this should not happen!!
+        //If no configuration has been done in the plugin's configuration
+        //then use location for mirrors as default
+        //!!this should not happen!!
         if (!isset($PF_CONFIG['mirror_match'])) {
             $mirror_match = self::MATCH_LOCATION;
         } else {
-           //Get mirror matching from plugin's general configuration
+            //Get mirror matching from plugin's general configuration
             $mirror_match = $PF_CONFIG['mirror_match'];
         }
 
-       //Get all mirrors for the agent's entity, or for entities above
-       //sorted by entity level in a descending way (going to the closest,
-       //deepest entity, to the highest)
+        //Get all mirrors for the agent's entity, or for entities above
+        //sorted by entity level in a descending way (going to the closest,
+        //deepest entity, to the highest)
         $iterator = $DB->request([
             'SELECT' => [
                 'mirror.*',
-                'glpi_entities.level'
+                'glpi_entities.level',
             ],
             'FROM'   => 'glpi_plugin_glpiinventory_deploymirrors AS mirror',
             'LEFT JOIN' => [
                 'glpi_entities' => [
                     'ON' => [
                         'mirror' => 'entities_id',
-                        'glpi_entities' => 'id'
-                    ]
-                ]
+                        'glpi_entities' => 'id',
+                    ],
+                ],
             ],
             'WHERE'  => [
-                'mirror.is_active' => 1
+                'mirror.is_active' => 1,
             ] + getEntitiesRestrictCriteria(
                 'mirror',
                 'entities_id',
@@ -152,15 +151,15 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
                 true
             ),
             'ORDER'  => [
-                'glpi_entities.level DESC'
-            ]
+                'glpi_entities.level DESC',
+            ],
         ]);
 
         //The list of mirrors to return
         $mirrors  = [];
 
         foreach ($iterator as $result) {
-           //First, check mirror by location
+            //First, check mirror by location
             if (
                 in_array($mirror_match, [self::MATCH_LOCATION, self::MATCH_BOTH])
                 && $computer->fields['locations_id'] > 0
@@ -169,12 +168,12 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
                 $mirrors[] = $result['url'];
             }
 
-           //Second, check by entity
+            //Second, check by entity
             if (in_array($mirror_match, [self::MATCH_ENTITY, self::MATCH_BOTH])) {
                 $entities = $result['entities_id'];
 
-               //If the mirror is visible in child entities then get all child entities
-               //and check it the agent's entity is one of it
+                //If the mirror is visible in child entities then get all child entities
+                //and check it the agent's entity is one of it
                 if ($result['is_recursive']) {
                     $entities = getSonsOf('glpi_entities', $result['entities_id']);
                 }
@@ -194,14 +193,14 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
             }
         }
 
-       //add default mirror (this server) if enabled in config
+        //add default mirror (this server) if enabled in config
         $entities_id = 0;
         if (isset($agent['entities_id'])) {
             $entities_id = $agent['entities_id'];
         }
 
-       //If option is set to yes in general plugin configuration
-       //Add the server's url as the last url in the list
+        //If option is set to yes in general plugin configuration
+        //Add the server's url as the last url in the list
         if (
             isset($PF_CONFIG['server_as_mirror'])
             && $PF_CONFIG['server_as_mirror'] == true
@@ -213,102 +212,101 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     }
 
 
-   /**
-    * Display form
-    *
-    * @global array $CFG_GLPI
-    * @param integer $id
-    * @param array $options
-    * @return true
-    */
+    /**
+     * Display form
+     *
+     * @param integer $id
+     * @param array $options
+     * @return true
+     */
     public function showForm($id, array $options = [])
     {
         $this->initForm($id, $options);
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/deploymirror.html.twig', [
-         'item'   => $this,
-         'params' => $options,
+            'item'   => $this,
+            'params' => $options,
         ]);
 
         return true;
     }
 
 
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
+    /**
+     * Get search function for the class
+     *
+     * @return array
+     */
     public function rawSearchOptions()
     {
 
         $tab = [];
 
         $tab[] = [
-         'id'   => 'common',
-         'name' => self::getTypeName(),
+            'id'   => 'common',
+            'name' => self::getTypeName(),
         ];
 
         $tab[] = [
-         'id'            => '1',
-         'table'         => $this->getTable(),
-         'field'         => 'name',
-         'name'          => __('Name'),
-         'datatype'      => 'itemlink',
-         'itemlink_type' => $this->getType()
+            'id'            => '1',
+            'table'         => $this->getTable(),
+            'field'         => 'name',
+            'name'          => __('Name'),
+            'datatype'      => 'itemlink',
+            'itemlink_type' => $this::class,
         ];
 
         $tab[] = [
-         'id'        => '19',
-         'table'     => $this->getTable(),
-         'field'     => 'date_mod',
-         'name'      => __('Last update'),
-         'datatype'  => 'datetime',
+            'id'        => '19',
+            'table'     => $this->getTable(),
+            'field'     => 'date_mod',
+            'name'      => __('Last update'),
+            'datatype'  => 'datetime',
         ];
 
         $tab[] = [
-         'id'           => '2',
-         'table'        => $this->getTable(),
-         'field'        => 'url',
-         'name'         => __('Mirror server address', 'glpiinventory'),
-         'datatype'     => 'string'
+            'id'           => '2',
+            'table'        => $this->getTable(),
+            'field'        => 'url',
+            'name'         => __('Mirror server address', 'glpiinventory'),
+            'datatype'     => 'string',
         ];
 
         $tab[] = [
-         'id'        => '6',
-         'table'     => $this->getTable(),
-         'field'     => 'is_active',
-         'name'      => __('Active'),
-         'datatype'  => 'bool',
+            'id'        => '6',
+            'table'     => $this->getTable(),
+            'field'     => 'is_active',
+            'name'      => __('Active'),
+            'datatype'  => 'bool',
         ];
 
         $tab[] = [
-         'id'        => '16',
-         'table'     => $this->getTable(),
-         'field'     => 'comment',
-         'name'      => __('Comments'),
-         'datatype'  => 'text',
+            'id'        => '16',
+            'table'     => $this->getTable(),
+            'field'     => 'comment',
+            'name'      => __('Comments'),
+            'datatype'  => 'text',
         ];
 
         $tab[] = [
-         'id'       => '80',
-         'table'    => 'glpi_entities',
-         'field'    => 'completename',
-         'name'     => Entity::getTypeName(1),
-         'datatype' => 'dropdown',
+            'id'       => '80',
+            'table'    => 'glpi_entities',
+            'field'    => 'completename',
+            'name'     => Entity::getTypeName(1),
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
-         'id'        => '86',
-         'table'     => $this->getTable(),
-         'field'     => 'is_recursive',
-         'name'      => __('Child entities'),
-         'datatype'  => 'bool',
+            'id'        => '86',
+            'table'     => $this->getTable(),
+            'field'     => 'is_recursive',
+            'name'      => __('Child entities'),
+            'datatype'  => 'bool',
         ];
 
         $name = _n('Volume', 'Volumes', Session::getPluralNumber());
         $tab[] = [
-          'id'                 => 'disk',
-          'name'               => $name
+            'id'                 => 'disk',
+            'name'               => $name,
         ];
 
         $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
@@ -317,29 +315,30 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     }
 
 
-   /**
-    * Get the massive actions for this object
-    *
-    * @param object|null $checkitem
-    * @return array list of actions
-    */
+    /**
+     * Get the massive actions for this object
+     *
+     * @param object|null $checkitem
+     * @return array list of actions
+     */
     public function getSpecificMassiveActions($checkitem = null)
     {
-        return [__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfer'
-               => __('Transfer')];
+        return [self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfer'
+               => __('Transfer'),
+        ];
     }
 
 
-   /**
-    * Display form related to the massive action selected
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @return boolean
-    */
+    /**
+     * Display form related to the massive action selected
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @return boolean
+     */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         if ($ma->getAction() == 'transfer') {
-            Dropdown::show('Entity');
+            Dropdown::show(Entity::class);
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
         }
@@ -347,13 +346,13 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     }
 
 
-   /**
-    * Execution code for massive action
-    *
-    * @param MassiveAction $ma MassiveAction instance
-    * @param CommonDBTM $item item on which execute the code
-    * @param array $ids list of ID on which execute the code
-    */
+    /**
+     * Execution code for massive action
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @param CommonDBTM $item item on which execute the code
+     * @param array $ids list of ID on which execute the code
+     */
     public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
@@ -369,15 +368,20 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
                         $input['id'] = $key;
                         $input['entities_id'] = $_POST['entities_id'];
                         if ($pfDeployMirror->update($input)) {
-                          //set action massive ok for this item
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                            //set action massive ok for this item
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
                         } else {
-                         // KO
-                            $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                            // KO
+                            $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
                         }
                     }
                 }
                 break;
         }
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-copy";
     }
 }

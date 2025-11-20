@@ -35,26 +35,23 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteLinkedObjectsTest extends TestCase
 {
-   /**
-    * @test
-    */
-    public function IpRangeDeleteConfigSecurity()
+    public function testIpRangeDeleteConfigSecurity()
     {
 
         $iprange = new PluginGlpiinventoryIPRange();
         $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
 
-       // Delete all IPRanges
+        // Delete all IPRanges
         $items = $iprange->find();
         foreach ($items as $item) {
             $iprange->delete(['id' => $item['id']], true);
         }
 
         $input = [
-          'name'        => 'Office',
-          'ip_start'    => '192.168.0.1',
-          'ip_end'      => '192.168.0.254',
-          'entities_id' => 0
+            'name'        => 'Office',
+            'ip_start'    => '192.168.0.1',
+            'ip_end'      => '192.168.0.254',
+            'entities_id' => 0,
         ];
         $ipranges_id = $iprange->add($input);
 
@@ -62,9 +59,9 @@ class DeleteLinkedObjectsTest extends TestCase
         $this->assertEquals(1, count($list_iprange), "IP Range not right added");
 
         $input = [
-          'plugin_glpiinventory_ipranges_id' => $ipranges_id,
-          'snmpcredentials_id' => 1,
-          'rank' => 1
+            'plugin_glpiinventory_ipranges_id' => $ipranges_id,
+            'snmpcredentials_id' => 1,
+            'rank' => 1,
         ];
         $iprange_credentials->add($input);
 

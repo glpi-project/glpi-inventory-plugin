@@ -33,13 +33,15 @@
 
 require_once("DatabaseTestsCommons.php");
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\TestCase;
 
 class UpdateTest extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-       // clean log files
+        // clean log files
         file_put_contents("../../files/_log/php-errors.log", '');
         file_put_contents("../../files/_log/sql-errors.log", '');
     }
@@ -47,7 +49,7 @@ class UpdateTest extends TestCase
 
     public static function tearDownAfterClass(): void
     {
-       // Creation of folders if not created in tests
+        // Creation of folders if not created in tests
         if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory')) {
             mkdir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory');
         }
@@ -77,16 +79,13 @@ class UpdateTest extends TestCase
 
 
 
-   /**
-    * @dataProvider provider
-    * @preserveGlobalState disabled
-    * @test
-    */
-    public function update($version = '', $verify = false, $nbrules = 0)
+    #[DataProvider('provider')]
+    #[PreserveGlobalState(false)]
+    public function testUpdate($version = '', $verify = false, $nbrules = 0)
     {
         global $DB;
 
-       // uninstall the plugin
+        // uninstall the plugin
         $plugin = new Plugin();
         $plugin->getFromDBByCrit(['directory' => 'glpiinventory']);
         $plugin->uninstall($plugin->fields['id']);
@@ -102,18 +101,18 @@ class UpdateTest extends TestCase
                 $DB->dropTable($data[0]);
             }
         }
-        $DB->deleteOrDie(
+        $DB->delete(
             'glpi_displaypreferences',
             [
                 'OR' => [
                     ['itemtype' => ['LIKE', 'PluginFus%']],
-                    ['itemtype' => ['LIKE', 'PluginGlpiinventory%']]
-                ]
+                    ['itemtype' => ['LIKE', 'PluginGlpiinventory%']],
+                ],
             ]
         );
 
         // Delete all plugin rules
-        $DB->deleteOrDie(
+        $DB->delete(
             Rule::getTable(),
             ['sub_type' => ['LIKE', 'Plugin%']]
         );
@@ -133,7 +132,7 @@ class UpdateTest extends TestCase
 
         if ($version != '') {
             $sqlfile = "tests/Installation/mysql/i-" . $version . ".sql";
-           // Load specific plugin version in database
+            // Load specific plugin version in database
             $result = $this->load_mysql_file(
                 $DB->dbuser,
                 $DB->dbhost,
@@ -144,11 +143,11 @@ class UpdateTest extends TestCase
             $this->assertEquals(
                 0,
                 $result['returncode'],
-                "Failed to install plugin " . $sqlfile . ":\n" .
-                implode("\n", $result['output'])
+                "Failed to install plugin " . $sqlfile . ":\n"
+                . implode("\n", $result['output'])
             );
 
-            $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --config-dir=tests/config";
+            $commandMy = "cd ../../ && php bin/console glpi:migration:myisam_to_innodb -n -q --env=testing";
             $outputMy = [];
             $returncodeMy = 0;
             exec($commandMy, $outputMy, $returncodeMy);
@@ -160,7 +159,7 @@ class UpdateTest extends TestCase
         }
         $outputInstall = [];
         $returncodeInstall = 0;
-        $commandInstall = "cd ../../ && php bin/console glpi:plugin:install -n -q --config-dir=tests/config --username=glpi glpiinventory";
+        $commandInstall = "cd ../../ && php bin/console glpi:plugin:install -n -q --env=testing --username=glpi glpiinventory";
         exec($commandInstall, $outputInstall, $returncodeInstall);
         $this->assertEquals(
             0,
@@ -170,7 +169,7 @@ class UpdateTest extends TestCase
 
         $outputActivate     = [];
         $returncodeActivate = 0;
-        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n -q --config-dir=tests/config glpiinventory";
+        $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n -q --env=testing glpiinventory";
         exec($commandActivate, $outputActivate, $returncodeActivate);
         $this->assertEquals(
             0,
@@ -178,7 +177,7 @@ class UpdateTest extends TestCase
             sprintf("Result code from glpi:plugin:activate was '%s'.\n%s", $returncodeActivate, implode("\n", $outputActivate))
         );
 
-        $GLPIlog = new GLPIlogs();
+        $GLPIlog = new GLPIlogs('glpiinventory');
         $GLPIlog->testSQLlogs();
         $GLPIlog->testPHPlogs();
 
@@ -197,8 +196,8 @@ class UpdateTest extends TestCase
     {
         if (!file_exists($file)) {
             return [
-            'returncode' => 1,
-            'output' => ["ERROR: File '{$file}' does not exist !"]
+                'returncode' => 1,
+                'output' => ["ERROR: File '{$file}' does not exist !"],
             ];
         }
 
@@ -219,8 +218,8 @@ class UpdateTest extends TestCase
         );
         array_unshift($output, "Output of '{$cmd}'");
         return [
-         'returncode' => $returncode,
-         'output' => $output
+            'returncode' => $returncode,
+            'output' => $output,
         ];
     }
 
@@ -231,8 +230,8 @@ class UpdateTest extends TestCase
 
         if (empty($dbuser) || empty($dbhost)) {
             return [
-            'returncode' => 2,
-            'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"]
+                'returncode' => 2,
+                'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"],
             ];
         }
         $cmd = [$cmd_base];
@@ -245,7 +244,7 @@ class UpdateTest extends TestCase
             if (is_numeric($dbhost[1])) {
                 $cmd[] = "--port " . $dbhost[1];
             } else {
-               // The dbhost's second part is assumed to be a socket file if it is not numeric.
+                // The dbhost's second part is assumed to be a socket file if it is not numeric.
                 $cmd[] = "--socket " . $dbhost[1];
             }
         } else {
@@ -261,13 +260,13 @@ class UpdateTest extends TestCase
     }
 
 
-    public function provider()
+    public static function provider(): array
     {
-       // version, verifyConfig, nb entity rules
+        // version, verifyConfig, nb entity rules
         return [
-         '0.83+2.1'     => ["0.83+2.1", true, 1],
-         /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
-         'empty tables' => ["", false, 0],
+            '0.83+2.1'     => ["0.83+2.1", true, 1],
+            /*'9.5+3.0'     => ["9.5+3.0", true, 1],*/
+            'empty tables' => ["", false, 0],
         ];
     }
 
@@ -319,7 +318,7 @@ class UpdateTest extends TestCase
     {
         global $DB;
 
-       //check is the field is_active has correctly been added to mirror servers
+        //check is the field is_active has correctly been added to mirror servers
         $this->assertTrue($DB->fieldExists(
             'glpi_plugin_glpiinventory_deploymirrors',
             'is_active'

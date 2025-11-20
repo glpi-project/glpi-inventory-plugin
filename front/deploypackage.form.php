@@ -31,42 +31,26 @@
  * ---------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+use function Safe\json_decode;
+
 Session::checkLoginUser();
 
 $package = new PluginGlpiinventoryDeployPackage();
 if (isset($_POST['update_json'])) {
-    $json_clean = stripcslashes($_POST['json']);
-
-    $json = json_decode($json_clean, true);
-
+    $json = json_decode($_POST['json'], true);
     $ret = PluginGlpiinventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
     Html::back();
-    exit;
 } elseif (isset($_POST['add_item'])) {
-    $data = array_map(
-        ['Toolbox', 'stripslashes_deep'],
-        $package->escapeText($_POST)
-    );
-    PluginGlpiinventoryDeployPackage::alterJSON('add_item', $data);
+    PluginGlpiinventoryDeployPackage::alterJSON('add_item', $_POST);
     Html::back();
 } elseif (isset($_POST['save_item'])) {
-    $data = array_map(
-        ['Toolbox', 'stripslashes_deep'],
-        $package->escapeText($_POST)
-    );
-    PluginGlpiinventoryDeployPackage::alterJSON('save_item', $data);
+    PluginGlpiinventoryDeployPackage::alterJSON('save_item', $_POST);
     Html::back();
 } elseif (isset($_POST['remove_item'])) {
-    $data = array_map(
-        ['Toolbox', 'stripslashes_deep'],
-        $package->escapeText($_POST)
-    );
-    PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data);
+    PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $_POST);
     Html::back();
 }
 
-//$data = Toolbox::stripslashes_deep($_POST);
 $data = $_POST;
 
 //general form
@@ -80,7 +64,7 @@ if (isset($data["add"])) {
     Html::back();
 } elseif (isset($data["purge"])) {
     Session::checkRight('plugin_glpiinventory_package', PURGE);
-    $package->delete($data, 1);
+    $package->delete($data, true);
     $package->redirectToList();
 } elseif (isset($_POST["addvisibility"])) {
     if (
@@ -114,9 +98,6 @@ if (isset($data["add"])) {
         }
         if (!is_null($item)) {
             $item->add($_POST);
-           //         Event::log($_POST["plugin_glpiinventory_deploypackages_id"], "sla", 4, "tools",
-           //                    //TRANS: %s is the user login
-           //                    sprintf(__('%s adds a target'), $_SESSION["glpiname"]));
         }
     }
     Html::back();

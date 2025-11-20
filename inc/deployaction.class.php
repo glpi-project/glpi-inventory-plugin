@@ -31,9 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use function Safe\json_decode;
 
 /**
  * Manage the actions in package for deploy system.
@@ -44,104 +42,100 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     public $json_name = 'actions';
 
 
-   /**
-    * Get list of return actions available
-    *
-    * @return array
-    */
+    /**
+     * Get list of return actions available
+     *
+     * @return array
+     */
     public function getReturnActionNames()
     {
         return [
-         0              => Dropdown::EMPTY_VALUE,
-         'okCode'       => __("Return code is equal to", 'glpiinventory'),
-         'errorCode'    => __("Return code is not equal to", 'glpiinventory'),
-         'okPattern'    => __("Command output contains", 'glpiinventory'),
-         'errorPattern' => __("Command output does not contains", 'glpiinventory')
+            0              => Dropdown::EMPTY_VALUE,
+            'okCode'       => __("Return code is equal to", 'glpiinventory'),
+            'errorCode'    => __("Return code is not equal to", 'glpiinventory'),
+            'okPattern'    => __("Command output contains", 'glpiinventory'),
+            'errorPattern' => __("Command output does not contains", 'glpiinventory'),
         ];
     }
 
 
-   /**
-    * Get types of actions with name => description
-    *
-    * @return array
-    */
+    /**
+     * Get types of actions with name => description
+     *
+     * @return array
+     */
     public function getTypes()
     {
         return [
-         'cmd'     => __('Command', 'glpiinventory'),
-         'move'    => __('Move', 'glpiinventory'),
-         'copy'    => __('Copy', 'glpiinventory'),
-         'delete'  => __('Delete directory', 'glpiinventory'),
-         'mkdir'   => __('Create directory', 'glpiinventory')
+            'cmd'     => __('Command', 'glpiinventory'),
+            'move'    => __('Move', 'glpiinventory'),
+            'copy'    => __('Copy', 'glpiinventory'),
+            'delete'  => __('Delete directory', 'glpiinventory'),
+            'mkdir'   => __('Create directory', 'glpiinventory'),
         ];
     }
 
 
-   /**
-    * Get description of the type name
-    *
-    * @param string $type name of the type
-    * @return string mapped with the type
-    */
+    /**
+     * Get description of the type name
+     *
+     * @param string $type name of the type
+     * @return string mapped with the type
+     */
     public function getLabelForAType($type)
     {
         $a_types = $this->getTypes();
-        if (isset($a_types[$type])) {
-            return $a_types[$type];
-        }
-        return $type;
+        return $a_types[$type] ?? $type;
     }
 
 
-   /**
-    * Display form
-    *
-    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-    * @param array $request_data
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode possible values: init|edit|create
-    */
+    /**
+     * Display form
+     *
+     * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
+     * @param array $request_data
+     * @param string $rand unique element id used to identify/update an element
+     * @param string $mode possible values: init|edit|create
+     */
     public function displayForm(PluginGlpiinventoryDeployPackage $package, $request_data, $rand, $mode)
     {
 
-       /*
-        * Get element config in 'edit' mode
-        */
+        /*
+         * Get element config in 'edit' mode
+         */
         $config = null;
         if ($mode === self::EDIT && isset($request_data['index'])) {
-           /*
-            * Add an hidden input about element's index to be updated
-            */
+            /*
+             * Add an hidden input about element's index to be updated
+             */
             echo "<input type='hidden' name='index' value='" . $request_data['index'] . "' />";
 
             $element = $package->getSubElement($this->shortname, $request_data['index']);
             if (is_array($element) && count($element) == 1) {
-                reset($element);
-                $type   = key($element);
+                $type   = array_key_first($element);
                 $config = ['type' => $type, 'data' => $element[$type]];
             }
         }
 
-       /*
-       * Display start of div form
-       */
+        /*
+        * Display start of div form
+        */
         if (in_array($mode, [self::INIT], true)) {
             echo "<div id='actions_block$rand' style='display:none'>";
         }
 
-       /*
-       * Display element's dropdownType in 'create' or 'edit' mode
-       */
+        /*
+        * Display element's dropdownType in 'create' or 'edit' mode
+        */
         if (in_array($mode, [self::CREATE, self::EDIT], true)) {
             $this->displayDropdownType($package, $config, $rand, $mode);
         }
 
-       /*
-       * Display element's values in 'edit' mode only.
-       * In 'create' mode, those values are refreshed with dropdownType 'change'
-       * javascript event.
-       */
+        /*
+        * Display element's values in 'edit' mode only.
+        * In 'create' mode, those values are refreshed with dropdownType 'change'
+        * javascript event.
+        */
         if (in_array($mode, [self::CREATE, self::EDIT], true)) {
             echo "<span id='show_actions_value{$rand}'>";
             if ($mode === self::EDIT) {
@@ -150,23 +144,23 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo "</span>";
         }
 
-       /*
-       * Close form div
-       */
+        /*
+        * Close form div
+        */
         if (in_array($mode, [self::INIT], true)) {
             echo "</div>";
         }
     }
 
 
-   /**
-    * Display list of actions
-    *
-    * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-    * @param array $data array converted of 'json' field in DB where stored actions
-    * @param string $rand unique element id used to identify/update an element
-    */
-    public function displayList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    /**
+     * Display list of actions
+     *
+     * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
+     * @param array $data array converted of 'json' field in DB where stored actions
+     * @param string $rand unique element id used to identify/update an element
+     */
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
     {
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
@@ -176,10 +170,10 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
         $i = 0;
         foreach ($data['jobs'][$this->json_name] as $action) {
-            echo Search::showNewLine(Search::HTML_OUTPUT, ($i % 2));
+            echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
-                Html::showCheckbox(['name' => 'actions_entries[' . $i . ']']);
+                Html::showCheckbox(['name' => 'actions_entries[' . $i . ']', 'class' => 'massive_action_checkbox']);
                 echo "</td>";
             }
             $keys = array_keys($action);
@@ -221,8 +215,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                     }
                     echo "</b>";
                     if ($key === "exec") {
-                        echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;" .
-                          "padding-left:2px;white-space: pre-wrap;'>$value</pre>";
+                        echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;"
+                          . "padding-left:2px;white-space: pre-wrap;'>$value</pre>";
                     } else {
                         echo " $value ";
                         echo "<br>";
@@ -230,8 +224,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                 }
             }
             if (isset($action[$action_type]['retChecks'])) {
-                echo "<br><b>" . __("return codes saved for this command", 'glpiinventory') .
-                "</b> : <ul class='retChecks'>";
+                echo "<br><b>" . __("return codes saved for this command", 'glpiinventory')
+                . "</b> : <ul class='retChecks'>";
                 foreach ($action[$action_type]['retChecks'] as $retCheck) {
                     echo "<li>";
                     $getReturnActionNames = $this->getReturnActionNames();
@@ -243,8 +237,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo "</td>";
             echo "</td>";
             if ($canedit) {
-                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory') .
-                "'><div class='drag row'></div></td>";
+                echo "<td class='rowhandler control' title='" . __('drag', 'glpiinventory')
+                . "'><div class='drag row ti ti-menu-2'></div></td>";
             }
             echo "</tr>";
             $i++;
@@ -256,22 +250,23 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         }
         echo "</table>";
         if ($canedit) {
-            echo "<input type='submit' name='delete' value=\"" .
-            __('Delete', 'glpiinventory') . "\" class='submit'>";
+            echo "<input type='submit' name='delete' value=\""
+            . __('Delete', 'glpiinventory') . "\" class='submit'>";
         }
     }
 
 
-   /**
-    * Display different fields relative the action selected (cmd, move...)
-    *
-    * @param array $config
-    * @param array $request_data
-    * @param string $mode mode in use (create, edit...)
-    * @return void
-    */
+    /**
+     * Display different fields relative the action selected (cmd, move...)
+     *
+     * @param array $config
+     * @param array $request_data
+     * @param string $mode mode in use (create, edit...)
+     * @return void
+     */
     public function displayAjaxValues($config, $request_data, $rand, $mode)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $mandatory_mark  = $this->getMandatoryMark();
@@ -283,9 +278,9 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             $pfDeployPackage->getEmpty();
         }
 
-       /*
-       * Get type from request params
-       */
+        /*
+        * Get type from request params
+        */
         $type = null;
 
         if ($mode === self::CREATE) {
@@ -295,19 +290,19 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             $config_data = $config['data'];
         }
 
-       /*
-       * Set default values
-       */
+        /*
+        * Set default values
+        */
         $value_type_1 = "input";
         $value_1      = "";
         $value_2      = "";
         $name_label_2 = "";
         $retChecks    = null;
-        $name_value   = (isset($config_data['name'])) ? $config_data['name'] : "";
+        $name_value   = $config_data['name'] ?? "";
 
-       /*
-       * set values from element's config in 'edit' mode
-       */
+        /*
+        * set values from element's config in 'edit' mode
+        */
         switch ($type) {
             case 'move':
             case 'copy':
@@ -343,17 +338,17 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                 $name_label_1  = "list[]";
                 $value_label_2 = false;
                 if ($mode === self::EDIT) {
-                   /*
-                    * TODO : Add list input like `retChecks` on `mkdir` and `delete`
-                    * because those methods are defined as list in specification
-                    */
+                    /*
+                     * TODO : Add list input like `retChecks` on `mkdir` and `delete`
+                     * because those methods are defined as list in specification
+                     */
                     /** @phpstan-ignore-next-line  */
                     $value_1 = array_shift($config_data['list']);
                 }
                 break;
 
             default:
-                return false;
+                return;
         }
 
         echo "<table class='package_item'>";
@@ -382,7 +377,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo "</tr>";
         }
 
-       //specific case for cmd : add retcheck form
+        //specific case for cmd : add retcheck form
         if ($type == "cmd") {
             echo "<tr>";
             echo "<th>" . __("Execution checks", 'glpiinventory');
@@ -403,16 +398,16 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                         'retchecks_type[]',
                         self::getReturnActionNames(),
                         [ 'value' => $retcheck['type'],
-                                         'width' => '200px'
-                                       ]
+                            'width' => '200px',
+                        ]
                     );
                     echo "</td>";
                     echo "<td>";
-                    echo "<input type='text' name='retchecks_value[]' value='" .
-                     $retcheck['values'][0] . "' />";
+                    echo "<input type='text' name='retchecks_value[]' value='"
+                     . $retcheck['values'][0] . "' />";
                     echo "</td>";
-                    echo "<td><a class='edit' onclick='removeLine(this)'><img src='" .
-                     $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
+                    echo "<td><a class='edit' onclick='removeLine(this)'><img src='"
+                     . $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
                     echo "</tr>";
 
                     echo "</table>";
@@ -428,8 +423,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             );
             echo "</td>";
             echo "<td><input type='text' name='retchecks_value[]' /></td>";
-            echo "<td><a class='edit' onclick='removeLine(this)'><img src='" .
-               $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
+            echo "<td><a class='edit' onclick='removeLine(this)'><img src='"
+               . $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
             echo "</tr>";
 
             echo "</span>";
@@ -443,13 +438,13 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo "<th>" . __('Number of output lines to retrieve', 'glpiinventory') . "</th>";
             echo "<td>";
             $options = ['min'   => 0,
-                     'max'   => 5000,
-                     'step'  => 10,
-                     'toadd' => [0 => __('None'), -1 => __('All')],
-                     'value' => (isset($config_data['logLineLimit'])) ? $config_data['logLineLimit'] : 10
-                    ];
+                'max'   => 5000,
+                'step'  => 10,
+                'toadd' => [0 => __('None'), -1 => __('All')],
+                'value' => $config_data['logLineLimit'] ?? 10,
+            ];
             Dropdown::showNumber('logLineLimit', $options);
-            echo "&nbsp;<span class='red'><i>";
+            echo "&nbsp;<i class='ti ti-exclamation-circle'></i><span class='red'><i>";
             echo sprintf(__('GLPI-Agent or Fusioninventory-Agent >= %1s mandatory', 'glpiinventory'), '2.3.20');
             echo "</i></span></td>";
             echo "</tr>";
@@ -467,11 +462,11 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     }
 
 
-   /**
-    * Add a new item in actions of the package
-    *
-    * @param array $params list of fields with value of the action
-    */
+    /**
+     * Add a new item in actions of the package
+     *
+     * @param array $params list of fields with value of the action
+     */
     public function add_item($params)
     {
         //prepare new action entry to insert in json
@@ -483,7 +478,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             }
         }
 
-       //process ret checks
+        //process ret checks
         if (
             isset($params['retchecks_type'])
               && !empty($params['retchecks_type'])
@@ -491,32 +486,32 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             foreach ($params['retchecks_type'] as $index => $type) {
                 if ($type !== '0') {
                     $tmp['retChecks'][] = [
-                    'type'  => $type,
-                    'values' => [$params['retchecks_value'][$index]]
+                        'type'  => $type,
+                        'values' => [$params['retchecks_value'][$index]],
                     ];
                 }
             }
         }
 
-       //append prepared data to new entry
+        //append prepared data to new entry
         $new_entry[$params['actionstype']] = $tmp;
 
-       //get current order json
+        //get current order json
         $data = json_decode($this->getJson($params['id']), true);
 
-       //add new entry
+        //add new entry
         $data['jobs'][$this->json_name][] = $new_entry;
 
-       //update order
+        //update order
         $this->updateOrderJson($params['id'], $data);
     }
 
 
-   /**
-    * Save the item in actions
-    *
-    * @param array $params list of fields with value of the action
-    */
+    /**
+     * Save the item in actions
+     *
+     * @param array $params list of fields with value of the action
+     */
     public function save_item($params)
     {
         $tmp    = [];
@@ -527,23 +522,23 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             }
         }
 
-       //process ret checks
+        //process ret checks
         if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
             foreach ($params['retchecks_type'] as $index => $type) {
-               //if type == '0', this means nothing is selected
+                //if type == '0', this means nothing is selected
                 if ($type !== '0') {
                     $tmp['retChecks'][] = [
-                    'type'  => $type,
-                    'values' => [$params['retchecks_value'][$index]]
+                        'type'  => $type,
+                        'values' => [$params['retchecks_value'][$index]],
                     ];
                 }
             }
         }
 
-       //append prepared data to new entry
+        //append prepared data to new entry
         $entry[$params['actionstype']] = $tmp;
 
-       //update order
+        //update order
         $this->updateOrderJson(
             $params['id'],
             $this->prepareDataToSave($params, $entry)

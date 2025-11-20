@@ -33,34 +33,36 @@
 
 use Glpi\Cache\CacheManager;
 use Glpi\Cache\SimpleCache;
+use Glpi\Kernel\Kernel;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 define('GLPI_STRICT_DEPRECATED', true); //enable strict depreciations
-define('GLPI_ROOT', __DIR__ . '/../../../');
 define('GLPI_CONFIG_DIR', __DIR__ . '/../../../tests/config');
 define('GLPI_VAR_DIR', __DIR__ . '/files');
 define('GLPI_URI', (getenv('GLPI_URI') ?: 'http://localhost:8088'));
 define('GLPI_LOG_DIR', GLPI_VAR_DIR . '/_log');
+include(__DIR__ . "/../../../vendor/autoload.php");
 define(
-    'PLUGINS_DIRECTORIES',
+    'GLPI_PLUGINS_DIRECTORIES',
     [
-      GLPI_ROOT . '/plugins',
-      GLPI_ROOT . '/tests/fixtures/plugins',
+        GLPI_ROOT . '/plugins',
+        GLPI_ROOT . '/tests/fixtures/plugins',
     ]
 );
 
 define('TU_USER', '_test_user');
 define('TU_PASS', 'PhpUnit_4');
 
+$kernel = new Kernel('testing');
+$kernel->boot();
+
 global $CFG_GLPI, $GLPI_CACHE;
 
-include(GLPI_ROOT . "/inc/based_config.php");
-
 if (!file_exists(GLPI_CONFIG_DIR . '/config_db.php')) {
-    die("\nConfiguration file for tests not found\n\nrun: bin/console glpi:database:install --config-dir=tests/config ...\n\n");
+    throw new RuntimeException("Configuration file for tests not found; run: GLPI_ENVIRONMENT_TYPE=\"testing\" bin/console glpi:database:install ...");
 }
 
 // Create subdirectories of GLPI_VAR_DIR based on defined constants
@@ -69,28 +71,26 @@ foreach (get_defined_constants() as $constant_name => $constant_value) {
         preg_match('/^GLPI_[\w]+_DIR$/', $constant_name)
         && preg_match('/^' . preg_quote(GLPI_VAR_DIR, '/') . '\//', $constant_value)
     ) {
-        is_dir($constant_value) or mkdir($constant_value, 0755, true);
+        is_dir($constant_value) or mkdir($constant_value, 0o755, true);
     }
 }
 
 //init cache
 if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FILENAME)) {
-   // Use configured cache for cache tests
+    // Use configured cache for cache tests
     $cache_manager = new CacheManager();
     $GLPI_CACHE = $cache_manager->getCoreCacheInstance();
 } else {
-   // Use "in-memory" cache for other tests
+    // Use "in-memory" cache for other tests
     $GLPI_CACHE = new SimpleCache(new ArrayAdapter());
 }
 
 global $PLUGIN_HOOKS;
 
-include_once GLPI_ROOT . 'inc/includes.php';
+include_once GLPI_ROOT . '/inc/includes.php';
 include_once GLPI_ROOT . '/plugins/glpiinventory/vendor/autoload.php';
 include_once __DIR__ . '/LogTest.php';
 
-// $_SESSION['glpiprofiles'][4]['entities'] = [0 => ['id' => 0, 'is_recursive' => true]];
-// $_SESSION['glpidefault_entity'] = 0;
 $auth = new Auth();
 $user = new User();
 $auth->auth_succeded = true;
@@ -136,18 +136,10 @@ if (!is_dir(GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export')) {
 }
 
 // @codingStandardsIgnoreStart
-class GlpitestPHPerror extends \Exception
-{
-}
-class GlpitestPHPwarning extends \Exception
-{
-}
-class GlpitestPHPnotice extends \Exception
-{
-}
-class GlpitestSQLError extends \Exception
-{
-}
+class GlpitestPHPerror extends Exception {}
+class GlpitestPHPwarning extends Exception {}
+class GlpitestPHPnotice extends Exception {}
+class GlpitestSQLError extends Exception {}
 // @codingStandardsIgnoreEnd
 
 set_error_handler(static function (int $errno, string $errstr): never {
