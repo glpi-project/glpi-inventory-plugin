@@ -49,7 +49,7 @@ if (
     }
 
     switch ($_POST['type']) {
-        case 'Group':
+        case Group::class:
         case 'Profile':
             $params = ['value' => $_SESSION['glpiactive_entity'],
                 'name'  => $prefix . 'entities_id' . $suffix,
