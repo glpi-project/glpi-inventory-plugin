@@ -92,7 +92,7 @@ if (
             $display = true;
             break;
 
-        case 'Profile':
+        case Profile::class:
             $checkright   = (READ | CREATE | UPDATE | PURGE);
             $righttocheck = $_POST['right'];
             if ($_POST['right'] == 'faq') {
