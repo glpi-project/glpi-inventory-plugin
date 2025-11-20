@@ -69,7 +69,7 @@ if (
             $display = true;
             break;
 
-        case 'Group':
+        case Group::class:
             echo "<td>";
             $params             = ['rand' => $rand,
                 'name' => $prefix . 'groups_id' . $suffix,
