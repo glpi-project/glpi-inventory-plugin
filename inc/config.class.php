@@ -437,9 +437,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")" . "</label>";
         echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("threads_networkdiscovery", [
-             'value' => $pfConfig->getValue('threads_networkdiscovery'),
-             'min'   => 1,
-             'max'   => 400,
+            'value' => $pfConfig->getValue('threads_networkdiscovery'),
+            'min'   => 1,
+            'max'   => 400,
         ]);
         echo "</div>";
         echo "</div>";
@@ -450,9 +450,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")" . "</label>";
         echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("threads_networkinventory", [
-             'value' => $pfConfig->getValue('threads_networkinventory'),
-             'min'   => 1,
-             'max'   => 400,
+            'value' => $pfConfig->getValue('threads_networkinventory'),
+            'min'   => 1,
+            'max'   => 400,
         ]);
         echo "</div>";
         echo "</div>";
@@ -463,9 +463,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             "(" . strtolower(__('Network discovery', 'glpiinventory')) . ")" . "</label>";
         echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("timeout_networkdiscovery", [
-             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
-             'min'   => 1,
-             'max'   => 60,
+            'value' => $pfConfig->getValue('timeout_networkdiscovery'),
+            'min'   => 1,
+            'max'   => 60,
         ]);
         echo "</div>";
         echo "</div>";
@@ -476,9 +476,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
             "(" . strtolower(__('Network inventory (SNMP)', 'glpiinventory')) . ")" . "</label>";
         echo "<div class='col-sm-1 d-flex align-items-center'>";
         Dropdown::showNumber("timeout_networkinventory", [
-             'value' => $pfConfig->getValue('timeout_networkinventory'),
-             'min'   => 1,
-             'max'   => 60,
+            'value' => $pfConfig->getValue('timeout_networkinventory'),
+            'min'   => 1,
+            'max'   => 60,
         ]);
         echo "</div>";
         echo "</div>";
