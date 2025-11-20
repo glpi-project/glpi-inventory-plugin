@@ -105,7 +105,7 @@ if (
             $display = true;
             break;
 
-        case 'Profile':
+        case Profile::class:
             echo "<td>";
             $checkright   = (READ | CREATE | UPDATE | PURGE);
             $righttocheck = $_POST['right'];
