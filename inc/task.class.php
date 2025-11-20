@@ -711,7 +711,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 'state.state' => [
                     PluginGlpiinventoryTaskjobstate::FINISHED,
                     PluginGlpiinventoryTaskjobstate::IN_ERROR,
-                    PluginGlpiinventoryTaskjobstate::CANCELLED
+                    PluginGlpiinventoryTaskjobstate::CANCELLED,
                 ],
             ],
         ]);
