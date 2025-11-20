@@ -49,7 +49,7 @@ use function Safe\unlink;
 class PluginGlpiinventoryDeployPackage extends CommonDBTM
 {
     /**
-     * Initialize the tasks running with this package (updated with overrided getFromDB method)
+     * Initialize the tasks running with this package (updated with overridden getFromDB method)
      *
      * @var array
      */

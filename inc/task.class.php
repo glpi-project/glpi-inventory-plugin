@@ -708,7 +708,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             'WHERE' => [
                 'task.is_deploy_on_demand' => 1,
                 new QueryExpression('DATEDIFF(ADDDATE(log.date, INTERVAL ' . (int) $interval . ' DAY), CURDATE()) < 0'),
-                'state.state' => [3, 4, 5],
+                'state.state' => [
+                    PluginGlpiinventoryTaskjobstate::FINISHED,
+                    PluginGlpiinventoryTaskjobstate::IN_ERROR,
+                    PluginGlpiinventoryTaskjobstate::CANCELLED
+                ],
             ],
         ]);
 
