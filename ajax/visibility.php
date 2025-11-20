@@ -7,9 +7,6 @@
  *
  * http://glpi-project.org
  *
- * based on FusionInventory for GLPI
- * Copyright (C) 2010-2021 by the FusionInventory Development Team.
- *
  * ---------------------------------------------------------------------
  *
  * LICENSE
