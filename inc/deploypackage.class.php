@@ -1143,7 +1143,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             Ajax::updateItemOnSelectEvent(
                 "dropdown__type" . $addrand,
                 "visibility$rand",
-                $CFG_GLPI["root_doc"] . "/ajax/visibility.php",
+                $CFG_GLPI["root_doc"] . "/plugins/glpiinventory/ajax/visibility.php",
                 $params
             );
 
