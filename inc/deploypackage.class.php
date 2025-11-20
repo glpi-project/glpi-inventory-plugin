@@ -1213,11 +1213,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     echo "<td>" . __('Group') . "</td>";
                     echo "<td>";
-                    $names     = Dropdown::getDropdownName('glpi_groups', $data['groups_id'], true);
+
+                    $names      = Dropdown::getDropdownName('glpi_groups', $data['groups_id']);
+                    $comment      = Dropdown::getDropdownComments('glpi_groups', $data['groups_id'], true);
                     $groupname = sprintf(
                         __('%1$s %2$s'),
-                        $names["name"],
-                        Html::showToolTip($names["comment"], ['display' => false])
+                        $names,
+                        Html::showToolTip($comment, ['display' => false])
                     );
                     if ($data['entities_id'] >= 0) {
                         $groupname = sprintf(
@@ -1255,11 +1257,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     echo "<td>" . Entity::getTypeName(1) . "</td>";
                     echo "<td>";
-                    $names      = Dropdown::getDropdownName('glpi_entities', $data['entities_id'], true);
+
+                    $names      = Dropdown::getDropdownName('glpi_entities', $data['entities_id']);
+                    $comment      = Dropdown::getDropdownComments('glpi_entities', $data['entities_id'], true);
                     $entityname = sprintf(
                         __('%1$s %2$s'),
-                        $names["name"],
-                        Html::showToolTip($names["comment"], ['display' => false])
+                        $names,
+                        Html::showToolTip($comment, ['display' => false])
                     );
                     if ($data['is_recursive']) {
                         $entityname = sprintf(
@@ -1287,11 +1291,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     echo "<td>" . _n('Profile', 'Profiles', 1) . "</td>";
                     echo "<td>";
-                    $names       = Dropdown::getDropdownName('glpi_profiles', $data['profiles_id'], true);
+                    $names      = Dropdown::getDropdownName('glpi_profiles', $data['profiles_id']);
+                    $comment      = Dropdown::getDropdownComments('glpi_profiles', $data['profiles_id'], true);
                     $profilename = sprintf(
                         __('%1$s %2$s'),
-                        $names["name"],
-                        Html::showToolTip($names["comment"], ['display' => false])
+                        $names,
+                        Html::showToolTip($comment, ['display' => false])
                     );
                     if ($data['entities_id'] >= 0) {
                         $profilename = sprintf(
