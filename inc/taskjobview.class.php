@@ -472,11 +472,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 }
             }
 
-            // if we found prepare condition for dropdown
-            // else prepare a false condition for dropdown
-            if (count($filter_id)) {
-                $condition = ['id' => $filter_id];
-            }
+            $condition = ['id' => $filter_id];
         }
         if ($DB->fieldExists($itemtype::getTable(), 'is_active')) {
             $condition['is_active'] = 1;
