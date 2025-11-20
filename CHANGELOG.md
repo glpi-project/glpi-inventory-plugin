@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix SQL error when deploy target option used is 'No restriction' defined with `-1`
 - Fix PHP warning about "Usage of the `$withcomment` parameter is deprecated"
 - Fix retrieval of agents from a dynamic group
 - Migrate dynamic group search from serialized to JSON format
