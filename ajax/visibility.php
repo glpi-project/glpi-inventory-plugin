@@ -58,7 +58,7 @@ if (
 
     echo "<table class='tab_format'><tr>";
     switch ($_POST['type']) {
-        case 'User':
+        case User::class:
             echo "<td>";
             $params = [
                 'right' => isset($_POST['allusers']) ? 'all' : $_POST['right'],
