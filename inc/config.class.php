@@ -439,7 +439,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber("threads_networkdiscovery", [
              'value' => $pfConfig->getValue('threads_networkdiscovery'),
              'min'   => 1,
-             'max'   => 400]);
+             'max'   => 400,
+        ]);
         echo "</div>";
         echo "</div>";
 
@@ -451,7 +452,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber("threads_networkinventory", [
              'value' => $pfConfig->getValue('threads_networkinventory'),
              'min'   => 1,
-             'max'   => 400]);
+             'max'   => 400,
+        ]);
         echo "</div>";
         echo "</div>";
 
@@ -463,7 +465,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber("timeout_networkdiscovery", [
              'value' => $pfConfig->getValue('timeout_networkdiscovery'),
              'min'   => 1,
-             'max'   => 60]);
+             'max'   => 60,
+        ]);
         echo "</div>";
         echo "</div>";
 
@@ -475,7 +478,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         Dropdown::showNumber("timeout_networkinventory", [
              'value' => $pfConfig->getValue('timeout_networkinventory'),
              'min'   => 1,
-             'max'   => 60]);
+             'max'   => 60,
+        ]);
         echo "</div>";
         echo "</div>";
 
@@ -503,16 +507,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $pfConfig->fields['id'] = 1;
         $options['colspan'] = 1;
         $pfConfig->showFormHeader($options);
-
-        if (GLPI_INSTALL_MODE !== 'CLOUD') {
-            echo "<tr class='tab_bg_1'>";
-            echo "<td class='right form-label'>" . __('Root folder for sending files from server', 'glpiinventory') . "</td>";
-            echo "<td>";
-            echo "<input type='text' class='form-control' name='server_upload_path' value='" .
-            $pfConfig->getValue('server_upload_path') . "' size='60' />";
-            echo "</td>";
-            echo "</tr>";
-        }
 
         echo "<tr>";
         echo "<td class='right form-label'>" . __('Use this GLPI server as a mirror server', 'glpiinventory') . "</td>";
