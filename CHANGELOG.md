@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix `cleanTasksAndJobs` method to care car of successful task.
 - Fix retrieval of agents from a dynamic group
 - Migrate dynamic group search from serialized to JSON format
 - Fix static groups search limit to 20 entries
