@@ -52,7 +52,7 @@ if (
 
     echo "<div class='d-flex'>";
     switch ($_POST['type']) {
-        case 'User':
+        case User::class:
             $params = [
                 'right' => isset($_POST['allusers']) ? 'all' : $_POST['right'],
                 'name' => $prefix . 'users_id' . $suffix,
