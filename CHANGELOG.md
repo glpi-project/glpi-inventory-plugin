@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+## [1.5.5] - 2025-11-25
+
 ### Fixed
 
 - Fix SQL error when deploy target option used is 'No restriction' defined with `-1`
