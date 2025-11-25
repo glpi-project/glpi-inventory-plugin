@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.6.3] - UNRELEASED
+## [UNRELEASED]
+
+## [1.6.3] - 2025-11-25
 
 ### Fixed
 
@@ -14,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix retrieval of agents from a dynamic group
 - Migrate dynamic group search from serialized to JSON format
 - Fix static groups search limit to 20 entries
+
+## [1.5.5] - 2025-11-25
+
+### Fixed
+
+- Fix SQL error when deploy target option used is 'No restriction' defined with `-1`
+- Migrate dynamic group search from serialized to JSON format
 
 ## [1.6.2] - 2025-11-14
 
