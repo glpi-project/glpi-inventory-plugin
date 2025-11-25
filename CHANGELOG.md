@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Migrate dynamic group search from serialized to JSON format
 - Fix static groups search limit to 20 entries
 
+## [1.5.5] - 2025-11-25
+
+### Fixed
+
+- Fix SQL error when deploy target option used is 'No restriction' defined with `-1`
+- Migrate dynamic group search from serialized to JSON format
+
 ## [1.6.2] - 2025-11-14
 
 - Fix agent wakeup when no last_agent_wakeup has been set yet
