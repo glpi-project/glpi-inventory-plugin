@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+- Fix URL for ressource (ajax/ front/ pics/ etc .. )
+
 ## [1.6.3] - 2025-11-25
 
 ### Fixed
