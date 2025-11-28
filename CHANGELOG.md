@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [1.5.6] - UNRELEASED
+
+- Fix ajax scripts inclusion paths
 
 ## [1.5.5] - 2025-11-25
 
