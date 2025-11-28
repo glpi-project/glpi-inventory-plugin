@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdownCredentials.php")) {
+if (plugin_glpiinventory_script_endswith("dropdownCredentials.php")) {
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }

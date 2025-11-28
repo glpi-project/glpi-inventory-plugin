@@ -33,7 +33,7 @@
 
 use function Safe\session_write_close;
 
-if (strpos($_SERVER['PHP_SELF'], "jobstates_logs.php")) {
+if (plugin_glpiinventory_script_endswith("jobstates_logs.php")) {
     Session::checkCentralAccess();
 }
 //unlock session since access checks have been done
