@@ -45,7 +45,7 @@ define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '11.0.2');
 define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '11.0.99');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
-// used to know if computer inventory is in reallity a ESX task
+// used to know if computer inventory is in reality a ESX task
 $PF_ESXINVENTORY = false;
 
 define('PLUGIN_GLPI_INVENTORY_DIR', __DIR__);
