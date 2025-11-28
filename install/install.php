@@ -295,36 +295,4 @@ function pluginGlpiinventoryInstall($version)
     PluginGlpiinventoryInventoryComputerStat::init();
 
     installDashboard();
-
-    /*
-     * Define when install agent_base_url in entity, unless:
-     *  - it is already defined,
-     *  - it matches the GLPI base URL.
-     */
-    $agent_base_url = Entity::getUsedConfig('agent_base_url', 0, 'agent_base_url', '');
-
-    if (empty($agent_base_url)) {
-        $full_url = $_SERVER['PHP_SELF'] ?? null;
-        $https = filter_input(INPUT_SERVER, "HTTPS");
-        $http_host = filter_input(INPUT_SERVER, "HTTP_HOST");
-
-        if ($full_url && (str_contains($full_url, '/ajax/marketplace.php') || str_contains($full_url, '/front/plugin.form.php'))) {
-            $agent_base_url = str_replace(
-                ['/ajax/marketplace.php', '/front/plugin.form.php'],
-                '',
-                (!empty($https) ? 'https://' : 'http://') . $http_host . $full_url
-            );
-            if ($agent_base_url !== $CFG_GLPI['url_base']) {
-                $DB->update(
-                    'glpi_entities',
-                    [
-                        'agent_base_url' => $agent_base_url,
-                    ],
-                    [
-                        'id'             => 0,
-                    ]
-                );
-            }
-        }
-    }
 }
