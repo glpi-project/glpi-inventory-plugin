@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+global $CFG_GLPI;
 
 Session::checkLoginUser();
 
@@ -56,7 +57,7 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 $pfDeployfile->numberUnusedFiles();
 
 echo "<center>";
-echo "<a href='" . $_SERVER['PHP_SELF'] . "?delete=1' class='vsubmit'>Delete unused files</a>";
+echo "<a href='" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/deployfile.clean.php?delete=1' class='vsubmit'>" . __('Delete unused files', 'glpiinventory') . "</a>";
 echo "</center>";
 
 Html::footer();
