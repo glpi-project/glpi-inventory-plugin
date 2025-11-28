@@ -5,9 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [1.6.4] - UNRELEASED
 
 - Fix URL for ressource (ajax/ front/ pics/ etc .. )
+- Fix several wrong URLs (still using PHP_SELF)
 
 ## [1.6.3] - 2025-11-25
 
