@@ -122,7 +122,7 @@ function displaySearchForm()
 {
     global $CFG_GLPI;
 
-    echo "<form action='" . $_SERVER["PHP_SELF"] . "' method='post'>";
+    echo "<form action='' method='post'>";
     echo "<table class='tab_cadre' cellpadding='5'>";
     echo "<tr class='tab_bg_1' align='center'>";
     echo "<td>";

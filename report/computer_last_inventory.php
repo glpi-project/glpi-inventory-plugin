@@ -54,7 +54,7 @@ if (!is_numeric($state)) {
     $state = 0;
 }
 
-echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='get'>";
+echo "<form action='' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";
