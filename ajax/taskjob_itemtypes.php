@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskjob_itemtypes.php")) {
+if (plugin_glpiinventory_script_endswith("taskjob_itemtypes.php")) {
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }

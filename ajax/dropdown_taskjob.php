@@ -31,7 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdown_taskjob.php")) {
+if (plugin_glpiinventory_script_endswith("dropdown_taskjob.php")) {
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }
