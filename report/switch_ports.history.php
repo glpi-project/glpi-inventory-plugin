@@ -37,7 +37,7 @@ global $DB;
 $USEDBREPLICATE = 1;
 $DBCONNECTION_REQUIRED = 0;
 
-Html::header(__('GLPI Inventory', 'glpiinventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('GLPI Inventory', 'glpiinventory'), '', "utils", "report");
 
 Session::checkRight('plugin_glpiinventory_reportnetworkequipment', READ);
 

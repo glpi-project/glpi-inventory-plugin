@@ -89,7 +89,7 @@ if (isset($_GET['save'])) {
 } else {
     Html::header(
         __('GLPI Inventory DEPLOY'),
-        $_SERVER["PHP_SELF"],
+        '',
         "admin",
         "pluginglpiinventorymenu",
         "deploygroup"

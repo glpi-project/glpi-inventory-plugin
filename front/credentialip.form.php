@@ -41,7 +41,7 @@ if (!empty($_POST) || isset($_GET['_in_modal'])) {
 } else {
     Html::header(
         __('GLPI Inventory', 'glpiinventory'),
-        $_SERVER["PHP_SELF"],
+        '',
         "admin",
         "pluginglpiinventorymenu",
         "credentialip"

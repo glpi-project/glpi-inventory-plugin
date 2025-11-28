@@ -37,7 +37,7 @@ use Glpi\Exception\Http\AccessDeniedHttpException;
 if (PluginGlpiinventoryMenu::canView()) {
     Html::header(
         __('GLPI Inventory', 'glpiinventory'),
-        $_SERVER["PHP_SELF"],
+        '',
         "admin",
         "glpiinventory",
         "menu"

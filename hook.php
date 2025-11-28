@@ -384,7 +384,7 @@ function plugin_glpiinventory_install()
     }
 
     if (!isCommandLine()) {
-        Html::header(__('Setup', 'glpiinventory'), $_SERVER['PHP_SELF'], "config", "plugins");
+        Html::header(__('Setup', 'glpiinventory'), '', "config", "plugins");
     }
 
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.php");

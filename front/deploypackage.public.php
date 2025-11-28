@@ -39,7 +39,7 @@ if (Session::getCurrentInterface() !== 'helpdesk') {
 
 Html::helpHeader(
     __('GLPI Inventory'),
-    $_SERVER["PHP_SELF"],
+    '',
     "plugins",
     "deploypackage"
 );
@@ -93,7 +93,7 @@ if (isset($_POST['prepareinstall'])) {
 } else {
     Html::header(
         __('GLPI Inventory'),
-        $_SERVER["PHP_SELF"],
+        '',
         "plugins",
         "pluginglpiinventorymenu",
         "deploypackage"
