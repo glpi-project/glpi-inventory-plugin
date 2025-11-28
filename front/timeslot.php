@@ -37,7 +37,7 @@ Session::checkRight('plugin_glpiinventory_task', READ);
 
 Html::header(
     __('GLPI Inventory', 'glpiinventory'),
-    $_SERVER["PHP_SELF"],
+    '',
     "admin",
     "pluginglpiinventorymenu",
     "timeslot"

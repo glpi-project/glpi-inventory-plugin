@@ -77,7 +77,7 @@ class InventoryController extends AbstractController
         //For any other request, display the menu
         Html::header(
             __('GLPI Inventory', 'glpiinventory'),
-            $_SERVER['PHP_SELF'],
+            '',
             "plugins",
             "glpiinventory"
         );

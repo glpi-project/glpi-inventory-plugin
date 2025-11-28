@@ -54,11 +54,11 @@ if (isset($_POST["add"])) {
 }
 
 if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
-    Html::nullHeader(__('GLPI Inventory DEPLOY'), $_SERVER["PHP_SELF"]);
+    Html::nullHeader(__('GLPI Inventory DEPLOY'));
 } else {
     Html::header(
         __('GLPI Inventory DEPLOY'),
-        $_SERVER["PHP_SELF"],
+        '',
         "admin",
         "pluginglpiinventorymenu",
         "deployuserinteractiontemplate"

@@ -105,7 +105,7 @@ if (isset($data["add"])) {
 
 Html::header(
     __('GLPI Inventory DEPLOY'),
-    $_SERVER["PHP_SELF"],
+    '',
     "admin",
     "pluginglpiinventorymenu",
     "deploypackage"

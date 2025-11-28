@@ -67,7 +67,7 @@ if (isset($_POST["add"])) {
 } else {//print timeslot information
     Html::header(
         PluginGlpiinventoryTimeslot::getTypeName(2),
-        $_SERVER['PHP_SELF'],
+        '',
         "admin",
         "pluginglpiinventorymenu",
         "timeslot"

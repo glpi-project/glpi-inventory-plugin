@@ -34,7 +34,7 @@
 
 Html::header(
     __('Collect management', 'glpiinventory'),
-    $_SERVER["PHP_SELF"],
+    '',
     "admin",
     "pluginglpiinventorymenu",
     "collect"
