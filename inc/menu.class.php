@@ -254,8 +254,8 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         }
 
         if (Session::haveRight("plugin_glpiinventory_collect", READ)) {
-            $tasks_menu[11]['name'] = __('Computer information', 'glpiinventory');
-            $tasks_menu[11]['pic']  = "ti ti-devices-pc";
+            $tasks_menu[11]['name'] = __('Collect information', 'glpiinventory');
+            $tasks_menu[11]['pic']  = "ti ti-device-desktop-down";
             $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCollect');
         }
 
