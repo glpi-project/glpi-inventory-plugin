@@ -76,7 +76,8 @@ class AgentModuleTest extends DbTestCase
     {
         //an agent to add exception
         $agent = $this->createItem(
-            Agent::class, [
+            Agent::class,
+            [
                 'name' => 'test agent',
                 'deviceid' => 'foobar',
                 'agenttypes_id' => 0,
@@ -109,7 +110,8 @@ class AgentModuleTest extends DbTestCase
     {
         //an agent to rule them all
         $agent = $this->createItem(
-            Agent::class, [
+            Agent::class,
+            [
                 'name' => 'test agent',
                 'deviceid' => 'foobar',
                 'agenttypes_id' => 0,

@@ -46,7 +46,7 @@ $agentmodule = new PluginGlpiinventoryAgentmodule();
 if (isset($_POST["update"])) {
     $agentmodule->updateModules($_POST);
     Html::back();
-} else if (isset($_POST["update_exceptions"])) {
+} elseif (isset($_POST["update_exceptions"])) {
     $agentmodule->updateForAgent($_POST);
     Html::back();
 }

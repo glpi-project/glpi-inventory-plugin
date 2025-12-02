@@ -89,7 +89,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         return false;
     }
 
-    public final function getModulesList(?int $agents_id = null): array
+    final public function getModulesList(?int $agents_id = null): array
     {
         $modules = $this->find();
         foreach ($modules as &$module) {
