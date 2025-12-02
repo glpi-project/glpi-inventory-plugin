@@ -374,14 +374,6 @@ class PluginGlpiinventoryProfile extends Profile
                 'label'     => __('Menu', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_menu',
             ],
-            /*[
-                'itemtype'  => Agent::class,
-                'label'     => __('Agents', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_agent'],*/
-            /*[
-                'rights'    => [READ => __('Read')],
-                'label'     => __('Agent remote control', 'glpiinventory'),
-                'field'     => 'plugin_glpiinventory_remotecontrol'],*/
             [
                 'rights'    => [READ => __('Read'), UPDATE => __('Update')],
                 'itemtype'  => PluginGlpiinventoryConfig::class,
@@ -400,7 +392,7 @@ class PluginGlpiinventoryProfile extends Profile
             ],
             [
                 'itemtype'  => PluginGlpiinventoryCollect::class,
-                'label'     => __('Computer information', 'glpiinventory'),
+                'label'     => __('Collect information', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_collect',
             ],
         ];
