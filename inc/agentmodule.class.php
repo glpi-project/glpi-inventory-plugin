@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
 use function Safe\preg_match;
 
 /**
@@ -98,94 +99,41 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
 
         $agent = new Agent();
 
-        $a_modules = $this->find();
-        foreach ($a_modules as $data) {
-            echo "<form name='form_ic' method='post' action='"
-                 . Toolbox::getItemTypeFormURL(self::class) . "'>";
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tr>";
-            echo "<th width='130'>" . __('Module', 'glpiinventory') . "</th>";
-            echo "<th width='180'>" . __('Activation (by default)', 'glpiinventory') . "</th>";
-            echo "<th>" . __('Exceptions', 'glpiinventory') . "</th>";
-            echo "</tr>";
+        $modules = $this->find();
+        foreach ($modules as &$module) {
+            $module['id'] = strtolower($module['modulename']);
+            $module['exceptions'] = importArrayFromDB($module['exceptions']);
 
-            echo "<tr class='tab_bg_1'>";
-            $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
-            $modulename = $data["modulename"];
+            $methods = PluginGlpiinventoryStaticmisc::getmethods();
+            $module["displayname"] = $module["modulename"];
 
-            foreach ($a_methods as $datamod) {
+            foreach ($methods as $method) {
                 if (
-                    (strtolower($data["modulename"]) == strtolower($datamod['method']))
-                    || isset($datamod['task'])
-                    && (strtolower($data["modulename"]) == strtolower($datamod['task']))
+                    (strtolower($module["modulename"]) == strtolower($method['method']))
+                    || isset($method['task'])
+                    && (strtolower($module["modulename"]) == strtolower($method['task']))
                 ) {
-                    if (isset($datamod['name'])) {
-                        $modulename = $datamod['name'];
+                    if (isset($method['name'])) {
+                        $module["displayname"] = $method['name'];
                     }
                     break;
                 }
             }
             // Hack for snmpquery
-            if ($data["modulename"] == 'SNMPQUERY') {
-                $modulename = __('Network inventory (SNMP)', 'glpiinventory');
+            if ($module["modulename"] == 'SNMPQUERY') {
+                $module["displayname"] = __('Network inventory (SNMP)', 'glpiinventory');
             }
             // Hack for deploy
-            if ($data["modulename"] == 'DEPLOY') {
-                $modulename = __('Package deployment', 'glpiinventory');
+            if ($module["modulename"] == 'DEPLOY') {
+                $module["displayname"] = __('Package deployment', 'glpiinventory');
             }
-
-            echo "<td align='center'><strong>" . $modulename . "</strong></td>";
-            echo "<td align='center'>";
-            $checked = $data['is_active'];
-
-            Html::showCheckbox(['name'    => 'activation',
-                'value'   => '1',
-                'checked' => $checked,
-            ]);
-            echo "</td>";
-            echo "<td>";
-            echo "<table>";
-            echo "<tr>";
-            echo "<td width='45%'>";
-            $a_agentList = importArrayFromDB($data['exceptions']);
-            $a_used = [];
-            foreach ($a_agentList as $agent_id) {
-                $a_used[] = $agent_id;
-            }
-            Dropdown::show("Agent", ["name" => "agent_to_add[]",
-                "used" => $a_used,
-            ]);
-            echo "</td>";
-            echo "<td align='center'>";
-            echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='"
-              . __s('Add') . " >>'>";
-            echo "<br><br>";
-            echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< "
-              . __s('Delete') . "'>";
-            echo "</td>";
-            echo "<td width='45%'>";
-
-            echo "<select class='form-select' size='6' name='agent_to_delete[]'>";
-            foreach ($a_agentList as $agent_id) {
-                $agent->getFromDB($agent_id);
-                echo "<option value='" . $agent_id . "'>" . $agent->getName() . "</option>";
-            }
-            echo "</select>";
-            echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-            echo "</td>";
-
-            echo "<tr>";
-            echo "<td class='tab_bg_2 center' colspan='3'>";
-            echo "<input type='submit' name='update' value=\"" . __s('Update') . "\" class='btn btn-primary'>";
-            echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-            echo Html::hidden('id', ['value' => $data['id']]);
-            Html::closeForm();
-            echo "<br/>";
         }
+
+        TemplateRenderer::getInstance()->display('@glpiinventory/forms/agentmodule.html.twig', [
+            'modules' => $modules,
+            'form_url' => PluginGlpiinventoryAgentmodule::getFormURL(),
+        ]);
+
         return true;
     }
 
@@ -479,5 +427,27 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             $a_modules[] = $data['modulename'];
         }
         return $a_modules;
+    }
+
+    public function updateModules(array $data): void
+    {
+        $modules = $this->find();
+        foreach ($modules as $module_data) {
+            $moduleid = strtolower($module_data['modulename']);
+
+            $exceptions = $data[$moduleid . '_exceptions'];
+            if (empty($exceptions)) {
+                $exceptions = [];
+            }
+            $input = [
+                'id' => $module_data['id'],
+                'is_active' => $data[$moduleid . '_is_active'],
+                'exceptions' => exportArrayToDB($exceptions),
+            ];
+
+            $module = new PluginGlpiinventoryAgentmodule();
+            $module->getFromDB($module_data['id']);
+            $module->update($input);
+        }
     }
 }
