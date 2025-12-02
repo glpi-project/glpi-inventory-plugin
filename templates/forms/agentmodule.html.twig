@@ -31,23 +31,37 @@
 
 {% import "components/form/fields_macros.html.twig" as fields %}
 
+{% if canedit %}
 <form method="POST" action="{{ form_url }}">
+{% endif %}
     <table class='tab_cadre_fixe'>
         <tr>
             <th>{{ __('Module', 'glpiinventory') }}</th>
-            <th>{{ __('Activation (by default)', 'glpiinventory') }}</th>
+            <th>
+    {% if agents_id is defined %}
+                {{ __('Activation', 'glpiinventory') }}
+    {% else %}
+                {{ __('Activation (by default)', 'glpiinventory') }}
+    {% endif %}
+            </th>
+    {% if agents_id is not defined %}
             <th>{{ __('Exceptions', 'glpiinventory') }}</th>
+    {% endif %}
         </tr>
+{%  set rand = random() %}
 {% for module in modules %}
         <tr>
-            <td>{{ module.displayname }}</td>
+            <td><label for="{{ module.id ~ '_is_active_' ~ rand }}">{{ module.displayname }}</label></td>
             <td>
                 {{ fields.checkboxField(
                     module.id ~ '_is_active',
                     module.is_active,
-                    ''
+                    '', {
+                        rand: rand
+                    }
                 ) }}
             </td>
+    {% if agents_id is not defined %}
             <td>
                 {{ fields.dropdownField(
                     'Agent',
@@ -60,14 +74,20 @@
                     }
                 ) }}
             </td>
+    {% endif %}
         </tr>
 {% endfor %}
     </table>
+{% if canedit %}
     <div class="card-footer mx-n2 d-flex">
-        <button type="submit" name="update" value="1" class="ms-auto btn btn-primary">
+        <button type="submit" name="update{{ agents_id is defined ? '_exceptions' : '' }}" value="1" class="ms-auto btn btn-primary">
             <i class="ti ti-device-floppy"></i>
             <span>{{ _x('button', 'Update') }}</span>
         </button>
+    {% if agents_id is defined %}
+        {{ fields.hiddenField('agents_id', agents_id) }}
+    {% endif %}
         {{ fields.hiddenField('_glpi_csrf_token', csrf_token()) }}
     </div>
 </form>
+{% endif %}
