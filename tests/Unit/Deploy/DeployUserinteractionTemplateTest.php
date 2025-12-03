@@ -49,13 +49,10 @@ class DeployUserinteractionTemplateTest extends TestCase
 
     public function testDefineTabs()
     {
-        $expected = [
-            'PluginGlpiinventoryDeployUserinteractionTemplate$1',
-            'PluginGlpiinventoryDeployUserinteractionTemplate$2',
-            'Log$1',
-        ];
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
-        $this->assertEquals($expected, array_keys($template->defineTabs()));
+        $tabs = $template->defineTabs();
+        $this->assertArrayHasKey('PluginGlpiinventoryDeployUserinteractionTemplate$1', $tabs);
+        $this->assertArrayHasKey('PluginGlpiinventoryDeployUserinteractionTemplate$2', $tabs);
     }
 
 

@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 use function Safe\preg_match;
 
 /**
@@ -87,106 +89,55 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         return false;
     }
 
-
-    /**
-     * Display form to configure modules in agents
-     *
-     * @return boolean true if no problem
-     */
-    public function showModuleForm()
+    final public function getModulesList(?int $agents_id = null): array
     {
+        $modules = $this->find();
+        foreach ($modules as &$module) {
+            $module['id'] = strtolower($module['modulename']);
+            $module['exceptions'] = importArrayFromDB($module['exceptions']);
 
-        $agent = new Agent();
+            if (in_array($agents_id, $module['exceptions'])) {
+                $module ['is_active'] = !$module ['is_active'];
+            }
 
-        $a_modules = $this->find();
-        foreach ($a_modules as $data) {
-            echo "<form name='form_ic' method='post' action='"
-                 . Toolbox::getItemTypeFormURL(self::class) . "'>";
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tr>";
-            echo "<th width='130'>" . __('Module', 'glpiinventory') . "</th>";
-            echo "<th width='180'>" . __('Activation (by default)', 'glpiinventory') . "</th>";
-            echo "<th>" . __('Exceptions', 'glpiinventory') . "</th>";
-            echo "</tr>";
+            $methods = PluginGlpiinventoryStaticmisc::getmethods();
+            $module["displayname"] = $module["modulename"];
 
-            echo "<tr class='tab_bg_1'>";
-            $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
-            $modulename = $data["modulename"];
-
-            foreach ($a_methods as $datamod) {
+            foreach ($methods as $method) {
                 if (
-                    (strtolower($data["modulename"]) == strtolower($datamod['method']))
-                    || isset($datamod['task'])
-                    && (strtolower($data["modulename"]) == strtolower($datamod['task']))
+                    (strtolower($module["modulename"]) == strtolower($method['method']))
+                    || isset($method['task'])
+                    && (strtolower($module["modulename"]) == strtolower($method['task']))
                 ) {
-                    if (isset($datamod['name'])) {
-                        $modulename = $datamod['name'];
+                    if (isset($method['name'])) {
+                        $module["displayname"] = $method['name'];
                     }
                     break;
                 }
             }
             // Hack for snmpquery
-            if ($data["modulename"] == 'SNMPQUERY') {
-                $modulename = __('Network inventory (SNMP)', 'glpiinventory');
+            if ($module["modulename"] == 'SNMPQUERY') {
+                $module["displayname"] = __('Network inventory (SNMP)', 'glpiinventory');
             }
             // Hack for deploy
-            if ($data["modulename"] == 'DEPLOY') {
-                $modulename = __('Package deployment', 'glpiinventory');
+            if ($module["modulename"] == 'DEPLOY') {
+                $module["displayname"] = __('Package deployment', 'glpiinventory');
             }
-
-            echo "<td align='center'><strong>" . $modulename . "</strong></td>";
-            echo "<td align='center'>";
-            $checked = $data['is_active'];
-
-            Html::showCheckbox(['name'    => 'activation',
-                'value'   => '1',
-                'checked' => $checked,
-            ]);
-            echo "</td>";
-            echo "<td>";
-            echo "<table>";
-            echo "<tr>";
-            echo "<td width='45%'>";
-            $a_agentList = importArrayFromDB($data['exceptions']);
-            $a_used = [];
-            foreach ($a_agentList as $agent_id) {
-                $a_used[] = $agent_id;
-            }
-            Dropdown::show("Agent", ["name" => "agent_to_add[]",
-                "used" => $a_used,
-            ]);
-            echo "</td>";
-            echo "<td align='center'>";
-            echo "<input type='submit' class='btn btn-secondary' name='agent_add' value='"
-              . __s('Add') . " >>'>";
-            echo "<br><br>";
-            echo "<input type='submit' class='btn btn-secondary' name='agent_delete' value='<< "
-              . __s('Delete') . "'>";
-            echo "</td>";
-            echo "<td width='45%'>";
-
-            echo "<select class='form-select' size='6' name='agent_to_delete[]'>";
-            foreach ($a_agentList as $agent_id) {
-                $agent->getFromDB($agent_id);
-                echo "<option value='" . $agent_id . "'>" . $agent->getName() . "</option>";
-            }
-            echo "</select>";
-            echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-            echo "</td>";
-
-            echo "<tr>";
-            echo "<td class='tab_bg_2 center' colspan='3'>";
-            echo "<input type='submit' name='update' value=\"" . __s('Update') . "\" class='btn btn-primary'>";
-            echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-            echo Html::hidden('id', ['value' => $data['id']]);
-            Html::closeForm();
-            echo "<br/>";
         }
-        return true;
+
+        return $modules;
+    }
+
+    /**
+     * Display form to configure modules in agents
+     */
+    public function showModuleForm(): void
+    {
+        TemplateRenderer::getInstance()->display('@glpiinventory/forms/agentmodule.html.twig', [
+            'canedit' => true,
+            'modules' => $this->getModulesList(),
+            'form_url' => PluginGlpiinventoryAgentmodule::getFormURL(),
+        ]);
     }
 
 
@@ -195,96 +146,18 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      *
      * @param integer $agents_id id of the agent
      */
-    public function showFormAgentException($agents_id)
+    public function showFormAgentException(int $agents_id): void
     {
-        global $CFG_GLPI;
         $agent = new Agent();
         $agent->getFromDB($agents_id);
         $canedit = $agent->can($agents_id, UPDATE);
 
-        echo "<br/>";
-        if ($canedit) {
-            echo "<form name='form_ic' method='post' action='"
-               . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/front/agentmodule.form.php'>";
-        }
-        echo "<table class='tab_cadre_fixe'>";
-        echo "<tr>";
-        echo "<th>" . __('Module', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Activation', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Module', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Activation', 'glpiinventory') . "</th>";
-        echo "</tr>";
-
-        $a_modules = $this->find();
-        $i = 0;
-        $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
-        foreach ($a_modules as $data) {
-            if ($i == 0) {
-                echo "<tr class='tab_bg_1'>";
-            }
-            $modulename = $data["modulename"];
-            foreach ($a_methods as $datamod) {
-                if (
-                    (strtolower($data["modulename"]) == strtolower($datamod['method']))
-                    || isset($datamod['task'])
-                    && (strtolower($data["modulename"]) == strtolower($datamod['task']))
-                ) {
-                    if (isset($datamod['name'])) {
-                        $modulename = $datamod['name'];
-                    }
-                    break;
-                }
-            }
-            // Hack for snmpquery
-            if ($data["modulename"] == 'SNMPQUERY') {
-                $modulename = __('Network inventory (SNMP)', 'glpiinventory');
-            }
-            // Hack for deploy
-            if ($data["modulename"] == 'DEPLOY') {
-                $modulename = __('Package deployment', 'glpiinventory');
-            }
-
-            echo "<td width='50%'>" . $modulename . " :</td>";
-            echo "<td align='center'>";
-
-            $checked = $data['is_active'];
-            $a_agentList = importArrayFromDB($data['exceptions']);
-            if (in_array($agents_id, $a_agentList)) {
-                if ($checked == 1) {
-                    $checked = 0;
-                } else {
-                    $checked = 1;
-                }
-            }
-            Html::showCheckbox(['name'    => "activation-" . $data["modulename"],
-                'value'   => '1',
-                'checked' => $checked,
-            ]);
-            echo "</td>";
-            if ($i == 1) {
-                echo "</tr>";
-                $i = -1;
-            }
-            $i++;
-        }
-        if ($i == 1) {
-            echo "<td></td>";
-            echo "<td></td>";
-            echo "</tr>";
-        }
-        if ($canedit) {
-            echo "<tr>";
-            echo "<td class='tab_bg_2 card-body mx-n2 mb-4  border-top' colspan='4'>";
-            echo Html::hidden('id', ['value' => $agents_id]);
-            echo "<input type='submit' name='updateexceptions' "
-                 . "value=\"" . __('Update') . "\" class='btn btn-primary'>";
-            echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-            Html::closeForm();
-        } else {
-            echo "</table>";
-        }
+        TemplateRenderer::getInstance()->display('@glpiinventory/forms/agentmodule.html.twig', [
+            'canedit' => $canedit,
+            'modules' => $this->getModulesList($agents_id),
+            'form_url' => PluginGlpiinventoryAgentmodule::getFormURL(),
+            'agents_id' => $agents_id,
+        ]);
     }
 
 
@@ -479,5 +352,55 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             $a_modules[] = $data['modulename'];
         }
         return $a_modules;
+    }
+
+    public function updateModules(array $data): void
+    {
+        $modules = $this->find();
+        foreach ($modules as $module_data) {
+            $moduleid = strtolower($module_data['modulename']);
+
+            $exceptions = $data[$moduleid . '_exceptions'] ?? [];
+            if (empty($exceptions)) {
+                $exceptions = [];
+            }
+            $input = [
+                'id' => $module_data['id'],
+                'is_active' => $data[$moduleid . '_is_active'],
+                'exceptions' => exportArrayToDB($exceptions),
+            ];
+
+            $module = new PluginGlpiinventoryAgentmodule();
+            $module->update($input);
+        }
+    }
+
+    public function updateForAgent(array $data): void
+    {
+        $agents_id = $data['agents_id'];
+        $modules = $this->find();
+        foreach ($modules as $module_data) {
+            $moduleid = strtolower($module_data['modulename']);
+            $exceptions = importArrayFromDB($module_data['exceptions']);
+
+            $is_exception = in_array($agents_id, $exceptions);
+
+            $is_active = $module_data['is_active'];
+            $post_activation = $data[$moduleid . '_is_active'];
+
+            if ($is_active != $post_activation && !$is_exception) {
+                $exceptions[] = $agents_id;
+            } else {
+                unset($exceptions[array_search($agents_id, $exceptions)]);
+            }
+
+            $input = [
+                'id' => $module_data['id'],
+                'exceptions' => exportArrayToDB($exceptions),
+            ];
+
+            $module = new PluginGlpiinventoryAgentmodule();
+            $module->update($input);
+        }
     }
 }

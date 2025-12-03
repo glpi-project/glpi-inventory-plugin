@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.6.4] - UNRELEASED
 
+- Rework the whole agents module configuration page
 - Fix URL for ressource (ajax/ front/ pics/ etc .. )
 - Fix several wrong URLs (still using PHP_SELF)
 

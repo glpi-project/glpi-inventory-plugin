@@ -1,0 +1,94 @@
+{#
+ # ---------------------------------------------------------------------
+ # GLPI Inventory Plugin
+ # Copyright (C) 2021 Teclib' and contributors.
+ #
+ # http://glpi-project.org
+ #
+ # based on FusionInventory for GLPI
+ # Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ #
+ # ---------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of GLPI Inventory Plugin.
+ #
+ # GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU Affero General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # GLPI Inventory Plugin is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ # GNU Affero General Public License for more details.
+ #
+ # You should have received a copy of the GNU Affero General Public License
+ # along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ # ---------------------------------------------------------------------
+ #}
+
+{% import "components/form/fields_macros.html.twig" as fields %}
+
+{% if canedit %}
+<form method="POST" action="{{ form_url }}">
+{% endif %}
+    <table class='tab_cadre_fixe'>
+        <tr>
+            <th style="width: 20%;">{{ __('Module', 'glpiinventory') }}</th>
+            <th style="width: 10%;">
+    {% if agents_id is defined %}
+                {{ __('Activation', 'glpiinventory') }}
+    {% else %}
+                {{ __('Activation (by default)', 'glpiinventory') }}
+    {% endif %}
+            </th>
+    {% if agents_id is not defined %}
+            <th>{{ __('Exceptions', 'glpiinventory') }}</th>
+    {% endif %}
+        </tr>
+{%  set rand = random() %}
+{% for module in modules %}
+        <tr>
+            <td><label for="{{ module.id ~ '_is_active_' ~ rand }}">{{ module.displayname }}</label></td>
+            <td>
+                {{ fields.checkboxField(
+                    module.id ~ '_is_active',
+                    module.is_active,
+                    '', {
+                        rand: rand
+                    }
+                ) }}
+            </td>
+    {% if agents_id is not defined %}
+            <td>
+                {{ fields.dropdownField(
+                    'Agent',
+                    module.id ~ '_exceptions',
+                    module.exceptions,
+                    '',
+                    {
+                        'multiple': true,
+                        'no_label': true,
+                        'full_width': true,
+                    }
+                ) }}
+            </td>
+    {% endif %}
+        </tr>
+{% endfor %}
+    </table>
+{% if canedit %}
+    <div class="card-footer mx-n2 d-flex">
+        <button type="submit" name="update{{ agents_id is defined ? '_exceptions' : '' }}" value="1" class="ms-auto btn btn-primary">
+            <i class="ti ti-device-floppy"></i>
+            <span>{{ _x('button', 'Update') }}</span>
+        </button>
+    {% if agents_id is defined %}
+        {{ fields.hiddenField('agents_id', agents_id) }}
+    {% endif %}
+        {{ fields.hiddenField('_glpi_csrf_token', csrf_token()) }}
+    </div>
+</form>
+{% endif %}
