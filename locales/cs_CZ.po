@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-24 00:57+0000\n"
+"POT-Creation-Date: 2025-12-03 00:55+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2025\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -210,11 +210,11 @@ msgstr "Tiskárna SNMP"
 msgid "Menu"
 msgstr "Nabídka"
 
-#: inc/profile.class.php:388
+#: inc/profile.class.php:380
 msgid "Configuration"
 msgstr "Nastavení"
 
-#: inc/profile.class.php:393 inc/stateinventory.class.php:114
+#: inc/profile.class.php:385 inc/stateinventory.class.php:114
 #: inc/taskview.class.php:162 inc/statediscovery.class.php:176
 #: inc/task.class.php:1691 inc/task.class.php:1731 inc/deploytask.class.php:54
 #: inc/deploytask.class.php:154
@@ -225,14 +225,14 @@ msgstr[1] "Úlohy"
 msgstr[2] "Úloh"
 msgstr[3] "Úlohy"
 
-#: inc/profile.class.php:398 inc/menu.class.php:217
+#: inc/profile.class.php:390 inc/menu.class.php:217
 #: inc/deploytaskjob.class.php:226 front/deploygroup.php:37
 msgid "Groups of computers"
 msgstr "Skupiny počítačů"
 
-#: inc/profile.class.php:403 inc/menu.class.php:257
-msgid "Computer information"
-msgstr "Informace o počítači"
+#: inc/profile.class.php:395 inc/menu.class.php:257 inc/collect.class.php:57
+msgid "Collect information"
+msgstr "Sběr informací"
 
 #: inc/collect_file_content.class.php:91
 msgid "Path/file"
@@ -1699,10 +1699,6 @@ msgstr "Čištění úloh (retenční doba)"
 msgid "Wake agents up"
 msgstr "Probuzení agentů"
 
-#: inc/collect.class.php:57
-msgid "Collect information"
-msgstr "Sběr informací"
-
 #: inc/collect.class.php:149 inc/collect.class.php:223
 msgid "WMI"
 msgstr "WMI"
@@ -1879,6 +1875,10 @@ msgstr "Funkce"
 #: front/collect.form.php:36
 msgid "Collect management"
 msgstr "Správa sběru dat"
+
+#: front/deployfile.clean.php:60
+msgid "Delete unused files"
+msgstr ""
 
 #: hook.php:92
 msgid "Local inventory"

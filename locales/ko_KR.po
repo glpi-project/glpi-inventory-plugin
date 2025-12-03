@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022
+# SeongHyeon Cho <jaymz9634@gmail.com>, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-24 00:57+0000\n"
+"POT-Creation-Date: 2025-12-03 00:55+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2022\n"
+"Last-Translator: SeongHyeon Cho <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -205,11 +205,11 @@ msgstr "프린터 SNMP"
 msgid "Menu"
 msgstr "메뉴"
 
-#: inc/profile.class.php:388
+#: inc/profile.class.php:380
 msgid "Configuration"
 msgstr "구성"
 
-#: inc/profile.class.php:393 inc/stateinventory.class.php:114
+#: inc/profile.class.php:385 inc/stateinventory.class.php:114
 #: inc/taskview.class.php:162 inc/statediscovery.class.php:176
 #: inc/task.class.php:1691 inc/task.class.php:1731 inc/deploytask.class.php:54
 #: inc/deploytask.class.php:154
@@ -217,14 +217,14 @@ msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "업무"
 
-#: inc/profile.class.php:398 inc/menu.class.php:217
+#: inc/profile.class.php:390 inc/menu.class.php:217
 #: inc/deploytaskjob.class.php:226 front/deploygroup.php:37
 msgid "Groups of computers"
 msgstr "컴퓨터 그룹"
 
-#: inc/profile.class.php:403 inc/menu.class.php:257
-msgid "Computer information"
-msgstr "컴퓨터 정보"
+#: inc/profile.class.php:395 inc/menu.class.php:257 inc/collect.class.php:57
+msgid "Collect information"
+msgstr "정보 수집"
 
 #: inc/collect_file_content.class.php:91
 msgid "Path/file"
@@ -1650,10 +1650,6 @@ msgstr ""
 msgid "Wake agents up"
 msgstr ""
 
-#: inc/collect.class.php:57
-msgid "Collect information"
-msgstr "정보 수집"
-
 #: inc/collect.class.php:149 inc/collect.class.php:223
 msgid "WMI"
 msgstr "WMI"
@@ -1820,6 +1816,10 @@ msgstr "기능"
 #: front/collect.form.php:36
 msgid "Collect management"
 msgstr "관리 수립"
+
+#: front/deployfile.clean.php:60
+msgid "Delete unused files"
+msgstr ""
 
 #: hook.php:92
 msgid "Local inventory"

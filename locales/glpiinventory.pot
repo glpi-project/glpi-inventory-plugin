@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-27 00:53+0000\n"
+"POT-Creation-Date: 2025-12-03 00:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,11 +203,11 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: inc/profile.class.php:388
+#: inc/profile.class.php:380
 msgid "Configuration"
 msgstr ""
 
-#: inc/profile.class.php:393 inc/stateinventory.class.php:114
+#: inc/profile.class.php:385 inc/stateinventory.class.php:114
 #: inc/taskview.class.php:162 inc/statediscovery.class.php:176
 #: inc/task.class.php:1691 inc/task.class.php:1731 inc/deploytask.class.php:54
 #: inc/deploytask.class.php:154
@@ -216,13 +216,13 @@ msgid_plural "Tasks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/profile.class.php:398 inc/menu.class.php:217
+#: inc/profile.class.php:390 inc/menu.class.php:217
 #: inc/deploytaskjob.class.php:226 front/deploygroup.php:37
 msgid "Groups of computers"
 msgstr ""
 
-#: inc/profile.class.php:403 inc/menu.class.php:257
-msgid "Computer information"
+#: inc/profile.class.php:395 inc/menu.class.php:257 inc/collect.class.php:57
+msgid "Collect information"
 msgstr ""
 
 #: inc/collect_file_content.class.php:91
@@ -1656,10 +1656,6 @@ msgstr ""
 msgid "Wake agents up"
 msgstr ""
 
-#: inc/collect.class.php:57
-msgid "Collect information"
-msgstr ""
-
 #: inc/collect.class.php:149 inc/collect.class.php:223
 msgid "WMI"
 msgstr ""
@@ -1827,6 +1823,10 @@ msgstr ""
 
 #: front/collect.form.php:36
 msgid "Collect management"
+msgstr ""
+
+#: front/deployfile.clean.php:60
+msgid "Delete unused files"
 msgstr ""
 
 #: hook.php:92
