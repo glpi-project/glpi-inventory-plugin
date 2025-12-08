@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 00:55+0000\n"
+"POT-Creation-Date: 2025-12-08 00:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,6 +50,23 @@ msgstr ""
 #: templates/forms/iprange.html.twig inc/iprange.class.php:145
 #: inc/iprange.class.php:233
 msgid "End of IP range"
+msgstr ""
+
+#: templates/forms/agentmodule.html.twig hook.php:85 hook.php:92 hook.php:99
+#: hook.php:106 hook.php:113 hook.php:120
+msgid "Module"
+msgstr ""
+
+#: templates/forms/agentmodule.html.twig
+msgid "Activation"
+msgstr ""
+
+#: templates/forms/agentmodule.html.twig
+msgid "Activation (by default)"
+msgstr ""
+
+#: templates/forms/agentmodule.html.twig
+msgid "Exceptions"
 msgstr ""
 
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
@@ -140,7 +157,7 @@ msgstr ""
 #: front/stateinventory.php:36 front/taskjob.form.php:38 front/taskjob.php:36
 #: front/credential.php:36 front/menu.php:71 front/menu_snmpinventory.php:39
 #: front/iprange.form.php:38 front/credentialip.form.php:43
-#: front/agentmodule.form.php:36 front/credentialip.php:36
+#: front/agentmodule.form.php:35 front/credentialip.php:36
 #: front/task.form.php:41 report/ports_date_connections.php:43
 #: report/not_queried_recently.php:43 report/switch_ports.history.php:40
 #: report/computer_last_inventory.php:43
@@ -374,8 +391,7 @@ msgid "Network discovery"
 msgstr ""
 
 #: inc/staticmisc.class.php:76 inc/config.class.php:412
-#: inc/config.class.php:433 inc/agentmodule.class.php:130
-#: inc/agentmodule.class.php:240
+#: inc/config.class.php:433 inc/agentmodule.class.php:120
 msgid "Network inventory (SNMP)"
 msgstr ""
 
@@ -1677,30 +1693,12 @@ msgstr ""
 msgid "Property"
 msgstr ""
 
-#: inc/agentmodule.class.php:61
+#: inc/agentmodule.class.php:63
 msgid "Agents modules"
 msgstr ""
 
-#: inc/agentmodule.class.php:107 inc/agentmodule.class.php:212
-#: inc/agentmodule.class.php:214 hook.php:85 hook.php:92 hook.php:99
-#: hook.php:106 hook.php:113 hook.php:120
-msgid "Module"
-msgstr ""
-
-#: inc/agentmodule.class.php:108
-msgid "Activation (by default)"
-msgstr ""
-
-#: inc/agentmodule.class.php:109
-msgid "Exceptions"
-msgstr ""
-
-#: inc/agentmodule.class.php:134 inc/agentmodule.class.php:244
+#: inc/agentmodule.class.php:124
 msgid "Package deployment"
-msgstr ""
-
-#: inc/agentmodule.class.php:213 inc/agentmodule.class.php:215
-msgid "Activation"
 msgstr ""
 
 #: inc/collect_file.class.php:49
