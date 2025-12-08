@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+- Switch configuration forms to Twig templates
+
 ## [1.6.4] - 2025-12-03
 
 - Rework the whole agents module configuration page
