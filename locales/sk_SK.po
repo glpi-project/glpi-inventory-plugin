@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-04 00:55+0000\n"
+"POT-Creation-Date: 2025-12-09 00:55+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2025\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -75,6 +75,60 @@ msgstr "Výnimky"
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "Adresa servera zrkadla"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Use this GLPI server as a mirror server"
+msgstr "Použiť tento GLPI server ako zrkadlo"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Match mirrors to agents"
+msgstr "Priradiť zrkadlá k agentom"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "Zmazať úspešné úlohy na vyžiadanie po (v dňoch)"
+
+#: templates/forms/config/main.html.twig
+msgid "SSL-only for agent"
+msgstr "Použiť pre agentov iba SSL"
+
+#: templates/forms/config/main.html.twig
+msgid "Agent port"
+msgstr "Port agenta"
+
+#: templates/forms/config/main.html.twig
+msgid "Delete tasks logs after"
+msgstr "Vymazať logy úloh po"
+
+#: templates/forms/config/main.html.twig
+msgid "Re-prepare successful jobs"
+msgstr "Znova pripraviť úspešné úlohy"
+
+#: templates/forms/config/main.html.twig
+msgid "Maximum number of agents to wake up in a task"
+msgstr "Maximálny počet agentov, ktorých prebudiť v úlohe"
+
+#: templates/forms/config/main.html.twig
+msgid "Extra-debug"
+msgstr "Podrobnejšie ladenie"
+
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:182
+msgid "Threads number"
+msgstr "Počet vlákien"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:70
+#: hook.php:113
+msgid "Network discovery"
+msgstr "Zisťovanie siete"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:76
+#: inc/agentmodule.class.php:120
+msgid "Network inventory (SNMP)"
+msgstr "Inventár siete (SNMP)"
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
+msgstr "Časový limit SNMP"
 
 #: inc/deploymirror.class.php:68 inc/profile.class.php:287
 #: inc/menu.class.php:396
@@ -399,16 +453,6 @@ msgstr "Inventár počítačov"
 msgid "VMware host remote inventory"
 msgstr "Vzdialený inventár VMware servera"
 
-#: inc/staticmisc.class.php:70 inc/config.class.php:402
-#: inc/config.class.php:424 hook.php:113
-msgid "Network discovery"
-msgstr "Zisťovanie siete"
-
-#: inc/staticmisc.class.php:76 inc/config.class.php:412
-#: inc/config.class.php:433 inc/agentmodule.class.php:120
-msgid "Network inventory (SNMP)"
-msgstr "Inventár siete (SNMP)"
-
 #: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1057
 msgid "Package deploy"
 msgstr "Nasadenie balíčku"
@@ -518,7 +562,7 @@ msgstr "Vytváranie SNMP modelov"
 msgid "Networking"
 msgstr "Siete"
 
-#: inc/menu.class.php:389 inc/config.class.php:216
+#: inc/menu.class.php:389 inc/config.class.php:218
 msgid "Package management"
 msgstr "Správa balíčkov"
 
@@ -1258,78 +1302,29 @@ msgstr "cesta"
 msgid "Execution checks"
 msgstr "Kontroly vykonania"
 
-#: inc/config.class.php:215
+#: inc/config.class.php:217
 msgid "Network Inventory"
 msgstr "Inventár siete"
 
-#: inc/config.class.php:299
-msgid "SSL-only for agent"
-msgstr "Použiť pre agentov iba SSL"
-
-#: inc/config.class.php:306
-msgid "Delete tasks logs after"
-msgstr "Vymazať logy úloh po"
-
-#: inc/config.class.php:319
-msgid "Agent port"
-msgstr "Port agenta"
-
-#: inc/config.class.php:326
-msgid "Extra-debug"
-msgstr "Podrobnejšie ladenie"
-
-#: inc/config.class.php:331
-msgid "Re-prepare successful jobs"
-msgstr "Znova pripraviť úspešné úlohy"
-
-#: inc/config.class.php:339
-msgid "Maximum number of agents to wake up in a task"
-msgstr "Maximálny počet agentov, ktorých prebudiť v úlohe"
-
-#: inc/config.class.php:370
+#: inc/config.class.php:313
 msgid "Change the status"
 msgstr "Zmeniť stav"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:316
 msgid "Clean agents"
 msgstr "Vyčistiť agentov"
 
-#: inc/config.class.php:396
-msgid "Network options"
-msgstr "Možnosti siete"
-
-#: inc/config.class.php:401 inc/config.class.php:411
-#: inc/statediscovery.class.php:182
-msgid "Threads number"
-msgstr "Počet vlákien"
-
-#: inc/config.class.php:423 inc/config.class.php:432
-msgid "SNMP timeout"
-msgstr "Časový limit SNMP"
-
-#: inc/config.class.php:465
-msgid "Use this GLPI server as a mirror server"
-msgstr "Použiť tento GLPI server ako zrkadlo"
-
-#: inc/config.class.php:472
-msgid "Match mirrors to agents"
-msgstr "Priradiť zrkadlá k agentom"
-
-#: inc/config.class.php:475
+#: inc/config.class.php:348
 msgid "with location"
 msgstr "s umiestnením"
 
-#: inc/config.class.php:476
+#: inc/config.class.php:349
 msgid "with entity"
 msgstr "s entitou"
 
-#: inc/config.class.php:477
+#: inc/config.class.php:350
 msgid "with both"
 msgstr "s oboma"
-
-#: inc/config.class.php:488
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "Zmazať úspešné úlohy na vyžiadanie po (v dňoch)"
 
 #: inc/deployuserinteractiontemplate.class.php:100
 msgid "Behavior"

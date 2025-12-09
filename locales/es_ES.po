@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-04 00:55+0000\n"
+"POT-Creation-Date: 2025-12-09 00:55+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Juan Fortuna <juan.fortuna@gmail.com>, 2022\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/teclib/teams/28042/es_ES/)\n"
@@ -76,6 +76,60 @@ msgstr "Excepciones"
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "Direcciones de servidores en espejo"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Use this GLPI server as a mirror server"
+msgstr "Usar este servidor GLPI como servidor espejo"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Match mirrors to agents"
+msgstr "Emparejar espejos a agentes"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "Eliminar tareas exitosas en demanda después de (en días)"
+
+#: templates/forms/config/main.html.twig
+msgid "SSL-only for agent"
+msgstr "Emplear únicamente SSL para comunicar con el agente"
+
+#: templates/forms/config/main.html.twig
+msgid "Agent port"
+msgstr "Puerto del agente"
+
+#: templates/forms/config/main.html.twig
+msgid "Delete tasks logs after"
+msgstr "Eliminar registros de tareas después"
+
+#: templates/forms/config/main.html.twig
+msgid "Re-prepare successful jobs"
+msgstr "Trabajos preparados con suceso"
+
+#: templates/forms/config/main.html.twig
+msgid "Maximum number of agents to wake up in a task"
+msgstr "Número máximo de agentes a activar en una tarea"
+
+#: templates/forms/config/main.html.twig
+msgid "Extra-debug"
+msgstr "Depuración extra"
+
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:182
+msgid "Threads number"
+msgstr "Número de hilos"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:70
+#: hook.php:113
+msgid "Network discovery"
+msgstr "Descubrimiento de red"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:76
+#: inc/agentmodule.class.php:120
+msgid "Network inventory (SNMP)"
+msgstr "Inventario de red (SNMP)"
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
+msgstr "tiempo de espera SNMP agotado"
 
 #: inc/deploymirror.class.php:68 inc/profile.class.php:287
 #: inc/menu.class.php:396
@@ -395,16 +449,6 @@ msgstr "Inventario de ordenador"
 msgid "VMware host remote inventory"
 msgstr "Inventario de servidores VMware ESX"
 
-#: inc/staticmisc.class.php:70 inc/config.class.php:402
-#: inc/config.class.php:424 hook.php:113
-msgid "Network discovery"
-msgstr "Descubrimiento de red"
-
-#: inc/staticmisc.class.php:76 inc/config.class.php:412
-#: inc/config.class.php:433 inc/agentmodule.class.php:120
-msgid "Network inventory (SNMP)"
-msgstr "Inventario de red (SNMP)"
-
 #: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1057
 msgid "Package deploy"
 msgstr "Despliegue del paquete"
@@ -514,7 +558,7 @@ msgstr "Creación de modelos SNMP"
 msgid "Networking"
 msgstr "Red"
 
-#: inc/menu.class.php:389 inc/config.class.php:216
+#: inc/menu.class.php:389 inc/config.class.php:218
 msgid "Package management"
 msgstr "Gestión de paquetes"
 
@@ -1253,78 +1297,29 @@ msgstr "Ruta del fichero o directorio"
 msgid "Execution checks"
 msgstr "Comprobaciones de ejecución"
 
-#: inc/config.class.php:215
+#: inc/config.class.php:217
 msgid "Network Inventory"
 msgstr "Inventario de red"
 
-#: inc/config.class.php:299
-msgid "SSL-only for agent"
-msgstr "Emplear únicamente SSL para comunicar con el agente"
-
-#: inc/config.class.php:306
-msgid "Delete tasks logs after"
-msgstr "Eliminar registros de tareas después"
-
-#: inc/config.class.php:319
-msgid "Agent port"
-msgstr "Puerto del agente"
-
-#: inc/config.class.php:326
-msgid "Extra-debug"
-msgstr "Depuración extra"
-
-#: inc/config.class.php:331
-msgid "Re-prepare successful jobs"
-msgstr "Trabajos preparados con suceso"
-
-#: inc/config.class.php:339
-msgid "Maximum number of agents to wake up in a task"
-msgstr "Número máximo de agentes a activar en una tarea"
-
-#: inc/config.class.php:370
+#: inc/config.class.php:313
 msgid "Change the status"
 msgstr "Cambiar el estado"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:316
 msgid "Clean agents"
 msgstr "Agentes limpios"
 
-#: inc/config.class.php:396
-msgid "Network options"
-msgstr "Opciones de red"
-
-#: inc/config.class.php:401 inc/config.class.php:411
-#: inc/statediscovery.class.php:182
-msgid "Threads number"
-msgstr "Número de hilos"
-
-#: inc/config.class.php:423 inc/config.class.php:432
-msgid "SNMP timeout"
-msgstr "tiempo de espera SNMP agotado"
-
-#: inc/config.class.php:465
-msgid "Use this GLPI server as a mirror server"
-msgstr "Usar este servidor GLPI como servidor espejo"
-
-#: inc/config.class.php:472
-msgid "Match mirrors to agents"
-msgstr "Emparejar espejos a agentes"
-
-#: inc/config.class.php:475
+#: inc/config.class.php:348
 msgid "with location"
 msgstr "con ubicación"
 
-#: inc/config.class.php:476
+#: inc/config.class.php:349
 msgid "with entity"
 msgstr "con entidad"
 
-#: inc/config.class.php:477
+#: inc/config.class.php:350
 msgid "with both"
 msgstr "con ambos"
-
-#: inc/config.class.php:488
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "Eliminar tareas exitosas en demanda después de (en días)"
 
 #: inc/deployuserinteractiontemplate.class.php:100
 msgid "Behavior"

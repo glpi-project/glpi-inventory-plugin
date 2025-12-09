@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-08 00:55+0000\n"
+"POT-Creation-Date: 2025-12-09 00:55+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -76,6 +76,60 @@ msgstr "Katılmayacaklar"
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "Yansı sunucu adresi"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Use this GLPI server as a mirror server"
+msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Match mirrors to agents"
+msgstr "Yansıları aracılarla eşleştirme"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
+
+#: templates/forms/config/main.html.twig
+msgid "SSL-only for agent"
+msgstr "Aracı yalnızca SSL kullansın"
+
+#: templates/forms/config/main.html.twig
+msgid "Agent port"
+msgstr "Aracı bağlantı noktası"
+
+#: templates/forms/config/main.html.twig
+msgid "Delete tasks logs after"
+msgstr "Şundan sonra görev günlükleri silinsin"
+
+#: templates/forms/config/main.html.twig
+msgid "Re-prepare successful jobs"
+msgstr "Başarılı işler yeniden hazırlansın"
+
+#: templates/forms/config/main.html.twig
+msgid "Maximum number of agents to wake up in a task"
+msgstr "Bir görevin uyandıracağı en fazla aracı sayısı"
+
+#: templates/forms/config/main.html.twig
+msgid "Extra-debug"
+msgstr "Ek hata ayıklama"
+
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:182
+msgid "Threads number"
+msgstr "İşlem sayısı"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:70
+#: hook.php:113
+msgid "Network discovery"
+msgstr "Ağ keşfi"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:76
+#: inc/agentmodule.class.php:120
+msgid "Network inventory (SNMP)"
+msgstr "Ağ envanteri (SNMP)"
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
+msgstr "SNMP zaman aşımı"
 
 #: inc/deploymirror.class.php:68 inc/profile.class.php:287
 #: inc/menu.class.php:396
@@ -390,16 +444,6 @@ msgstr "Bilgisayar envanteri"
 msgid "VMware host remote inventory"
 msgstr "VMware uzak sunucu envanteri"
 
-#: inc/staticmisc.class.php:70 inc/config.class.php:402
-#: inc/config.class.php:424 hook.php:113
-msgid "Network discovery"
-msgstr "Ağ keşfi"
-
-#: inc/staticmisc.class.php:76 inc/config.class.php:412
-#: inc/config.class.php:433 inc/agentmodule.class.php:120
-msgid "Network inventory (SNMP)"
-msgstr "Ağ envanteri (SNMP)"
-
 #: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1057
 msgid "Package deploy"
 msgstr "Paket dağıtımı"
@@ -509,7 +553,7 @@ msgstr "SNMP modeli oluşturma"
 msgid "Networking"
 msgstr "Ağ"
 
-#: inc/menu.class.php:389 inc/config.class.php:216
+#: inc/menu.class.php:389 inc/config.class.php:218
 msgid "Package management"
 msgstr "Paket yönetimi"
 
@@ -1244,78 +1288,29 @@ msgstr "yol"
 msgid "Execution checks"
 msgstr "Yürütme denetimleri"
 
-#: inc/config.class.php:215
+#: inc/config.class.php:217
 msgid "Network Inventory"
 msgstr "Ağ envanteri"
 
-#: inc/config.class.php:299
-msgid "SSL-only for agent"
-msgstr "Aracı yalnızca SSL kullansın"
-
-#: inc/config.class.php:306
-msgid "Delete tasks logs after"
-msgstr "Şundan sonra görev günlükleri silinsin"
-
-#: inc/config.class.php:319
-msgid "Agent port"
-msgstr "Aracı bağlantı noktası"
-
-#: inc/config.class.php:326
-msgid "Extra-debug"
-msgstr "Ek hata ayıklama"
-
-#: inc/config.class.php:331
-msgid "Re-prepare successful jobs"
-msgstr "Başarılı işler yeniden hazırlansın"
-
-#: inc/config.class.php:339
-msgid "Maximum number of agents to wake up in a task"
-msgstr "Bir görevin uyandıracağı en fazla aracı sayısı"
-
-#: inc/config.class.php:370
+#: inc/config.class.php:313
 msgid "Change the status"
 msgstr "Durumu değiştir"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:316
 msgid "Clean agents"
 msgstr "Aracıları temizle"
 
-#: inc/config.class.php:396
-msgid "Network options"
-msgstr "Ağ ayarları"
-
-#: inc/config.class.php:401 inc/config.class.php:411
-#: inc/statediscovery.class.php:182
-msgid "Threads number"
-msgstr "İşlem sayısı"
-
-#: inc/config.class.php:423 inc/config.class.php:432
-msgid "SNMP timeout"
-msgstr "SNMP zaman aşımı"
-
-#: inc/config.class.php:465
-msgid "Use this GLPI server as a mirror server"
-msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
-
-#: inc/config.class.php:472
-msgid "Match mirrors to agents"
-msgstr "Yansıları aracılarla eşleştirme"
-
-#: inc/config.class.php:475
+#: inc/config.class.php:348
 msgid "with location"
 msgstr "konuma göre"
 
-#: inc/config.class.php:476
+#: inc/config.class.php:349
 msgid "with entity"
 msgstr "varlığa göre"
 
-#: inc/config.class.php:477
+#: inc/config.class.php:350
 msgid "with both"
 msgstr "ikisine de göre"
-
-#: inc/config.class.php:488
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
 
 #: inc/deployuserinteractiontemplate.class.php:100
 msgid "Behavior"
