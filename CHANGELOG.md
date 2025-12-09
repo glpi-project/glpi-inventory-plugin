@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## UNRELEASED
 
 - Switch configuration forms to Twig templates
+- Use a modal to add collect configurations
+- Switch collect configuration UI to Twig
 
 ## [1.6.4] - 2025-12-03
 
