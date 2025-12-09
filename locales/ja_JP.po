@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-04 00:55+0000\n"
+"POT-Creation-Date: 2025-12-09 00:55+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: INOUE Daisuke, 2025\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -75,6 +75,60 @@ msgstr "例外"
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "ミラーサーバー アドレス"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Use this GLPI server as a mirror server"
+msgstr "この GLPI サーバーをミラーサーバーとして扱う"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Match mirrors to agents"
+msgstr "エージェントをミラーに結びつける"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "成功したオンデマンドタスクを削除するまでの日数"
+
+#: templates/forms/config/main.html.twig
+msgid "SSL-only for agent"
+msgstr "エージェントに SSL のみ"
+
+#: templates/forms/config/main.html.twig
+msgid "Agent port"
+msgstr "エージェント ポート"
+
+#: templates/forms/config/main.html.twig
+msgid "Delete tasks logs after"
+msgstr "タスクのログを削除するまでの期間"
+
+#: templates/forms/config/main.html.twig
+msgid "Re-prepare successful jobs"
+msgstr "成功ジョブを再準備"
+
+#: templates/forms/config/main.html.twig
+msgid "Maximum number of agents to wake up in a task"
+msgstr "タスクで起動指示するエージェントの最大数"
+
+#: templates/forms/config/main.html.twig
+msgid "Extra-debug"
+msgstr "拡張デバッグ"
+
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:182
+msgid "Threads number"
+msgstr "スレッド数"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:70
+#: hook.php:113
+msgid "Network discovery"
+msgstr "ネットワーク探索"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:76
+#: inc/agentmodule.class.php:120
+msgid "Network inventory (SNMP)"
+msgstr "ネットワーク インベントリー（SNMP）"
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
+msgstr "SNMP タイムアウト"
 
 #: inc/deploymirror.class.php:68 inc/profile.class.php:287
 #: inc/menu.class.php:396
@@ -384,16 +438,6 @@ msgstr "コンピューター インベントリー"
 msgid "VMware host remote inventory"
 msgstr "VMware ホスト リモート インベントリー"
 
-#: inc/staticmisc.class.php:70 inc/config.class.php:402
-#: inc/config.class.php:424 hook.php:113
-msgid "Network discovery"
-msgstr "ネットワーク探索"
-
-#: inc/staticmisc.class.php:76 inc/config.class.php:412
-#: inc/config.class.php:433 inc/agentmodule.class.php:120
-msgid "Network inventory (SNMP)"
-msgstr "ネットワーク インベントリー（SNMP）"
-
 #: inc/staticmisc.class.php:82 inc/deploypackage.class.php:1057
 msgid "Package deploy"
 msgstr "パッケージ配置"
@@ -503,7 +547,7 @@ msgstr "SNMP モデル作成"
 msgid "Networking"
 msgstr "ネットワーク"
 
-#: inc/menu.class.php:389 inc/config.class.php:216
+#: inc/menu.class.php:389 inc/config.class.php:218
 msgid "Package management"
 msgstr "パッケージ管理"
 
@@ -1221,78 +1265,29 @@ msgstr "パス"
 msgid "Execution checks"
 msgstr "実行チェック"
 
-#: inc/config.class.php:215
+#: inc/config.class.php:217
 msgid "Network Inventory"
 msgstr "ネットワーク インベントリー"
 
-#: inc/config.class.php:299
-msgid "SSL-only for agent"
-msgstr "エージェントに SSL のみ"
-
-#: inc/config.class.php:306
-msgid "Delete tasks logs after"
-msgstr "タスクのログを削除するまでの期間"
-
-#: inc/config.class.php:319
-msgid "Agent port"
-msgstr "エージェント ポート"
-
-#: inc/config.class.php:326
-msgid "Extra-debug"
-msgstr "拡張デバッグ"
-
-#: inc/config.class.php:331
-msgid "Re-prepare successful jobs"
-msgstr "成功ジョブを再準備"
-
-#: inc/config.class.php:339
-msgid "Maximum number of agents to wake up in a task"
-msgstr "タスクで起動指示するエージェントの最大数"
-
-#: inc/config.class.php:370
+#: inc/config.class.php:313
 msgid "Change the status"
 msgstr "状態の変更"
 
-#: inc/config.class.php:373
+#: inc/config.class.php:316
 msgid "Clean agents"
 msgstr "エージェントの初期化"
 
-#: inc/config.class.php:396
-msgid "Network options"
-msgstr "ネットワーク設定"
-
-#: inc/config.class.php:401 inc/config.class.php:411
-#: inc/statediscovery.class.php:182
-msgid "Threads number"
-msgstr "スレッド数"
-
-#: inc/config.class.php:423 inc/config.class.php:432
-msgid "SNMP timeout"
-msgstr "SNMP タイムアウト"
-
-#: inc/config.class.php:465
-msgid "Use this GLPI server as a mirror server"
-msgstr "この GLPI サーバーをミラーサーバーとして扱う"
-
-#: inc/config.class.php:472
-msgid "Match mirrors to agents"
-msgstr "エージェントをミラーに結びつける"
-
-#: inc/config.class.php:475
+#: inc/config.class.php:348
 msgid "with location"
 msgstr "場所"
 
-#: inc/config.class.php:476
+#: inc/config.class.php:349
 msgid "with entity"
 msgstr "エンティティー"
 
-#: inc/config.class.php:477
+#: inc/config.class.php:350
 msgid "with both"
 msgstr "両方"
-
-#: inc/config.class.php:488
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "成功したオンデマンドタスクを削除するまでの日数"
 
 #: inc/deployuserinteractiontemplate.class.php:100
 msgid "Behavior"
