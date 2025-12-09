@@ -1,0 +1,163 @@
+{#
+# ---------------------------------------------------------------------
+# GLPI Inventory Plugin
+# Copyright (C) 2021 Teclib' and contributors.
+#
+# http://glpi-project.org
+#
+# based on FusionInventory for GLPI
+# Copyright (C) 2010-2021 by the FusionInventory Development Team.
+#
+# ---------------------------------------------------------------------
+#
+# LICENSE
+#
+# This file is part of GLPI Inventory Plugin.
+#
+# GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# GLPI Inventory Plugin is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+# ---------------------------------------------------------------------
+#}
+{% import "components/form/fields_macros.html.twig" as fields %}
+
+{% set field_options = field_options|merge({'full_width': true}) %}
+
+{{ fields.textField(
+    'name',
+    '',
+    __('Name'),
+    field_options
+) }}
+
+{{ fields.dropdownNumberField(
+    'limit',
+    5,
+    __('Limit', 'glpiinventory'),
+    field_options|merge({
+        'min': 1,
+        'max': 100
+    })
+) }}
+
+<div class="hr-text">{{ _n('Filter', 'Filters', 2, 'glpiinventory') }}</div>
+
+{{ fields.textField(
+    'dir',
+    '/',
+    __('Base folder', 'glpiinventory'),
+    field_options
+) }}
+
+{{ fields.dropdownYesNo(
+    'is_recursive',
+    1,
+    __('Folder recursive', 'glpiinventory'),
+    field_options
+) }}
+
+{{ fields.textField(
+    'filter_regex',
+    '',
+    __('Regex', 'glpiinventory'),
+    field_options
+) }}
+
+{{ fields.textField(
+    'filter_checksumsha512',
+    '',
+    __('Checksum SHA512', 'glpiinventory'),
+    field_options
+) }}
+
+{{ fields.textField(
+    'filter_checksumsha2',
+    '',
+    __('Checksum SHA2', 'glpiinventory'),
+    field_options
+) }}
+
+<div class="accordion">
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <button class="accordion-button collapsed d-flex align-self-center" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#accordion_size"
+                    aria-expanded="false" aria-controls="accordion_size">
+                <i class="ti ti-text-size"></i>
+                <span>{{ __('Size', 'glpiinventory') }}</span>
+            </button>
+        </div>
+        <div id="accordion_size" class="accordion-collapse collapse">
+            {{ fields.dropdownArrayField(
+                'sizetype',
+                '',
+                {
+                    'none': __('Disabled', 'glpiinventory'),
+                    'equals': '=',
+                    'greater': '>',
+                    'lower': '<',
+                },
+                __('Operator', 'glpiinventory'),
+                field_options
+            ) }}
+
+            {{ fields.textField(
+                'size',
+                '',
+                __('Size', 'glpiinventory'),
+                field_options
+            ) }}
+        </div>
+    </div>
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <button class="accordion-button collapsed d-flex align-self-center" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#accordion_filename"
+                    aria-expanded="false" aria-controls="accordion_filename">
+                <i class="ti ti-file"></i>
+                <span>{{ __('Filename', 'glpiinventory') }}</span>
+            </button>
+        </div>
+        <div id="accordion_filename" class="accordion-collapse collapse">
+            {{ fields.dropdownArrayField(
+                'filter_nametype',
+                '',
+                {
+                    'none': __('Disabled', 'glpiinventory'),
+                    'iname': __('Non sentitive case', 'glpiinventory'),
+                    'name': __('Sentitive case', 'glpiinventory')
+                },
+                __('Comparison type', 'glpiinventory'),
+                field_options
+            ) }}
+
+            {{ fields.textField(
+                'filter_name',
+                '',
+                __('Filter name', 'glpiinventory'),
+                field_options
+            ) }}
+
+            {{ fields.dropdownArrayField(
+                'filter_nametype',
+                '',
+                {
+                    'file': __('File', 'glpiinventory'),
+                    'dir': __('Folder', 'glpiinventory')
+                },
+                __('Comparison type', 'glpiinventory'),
+                field_options
+            ) }}
+
+        </div>
+    </div>
+</div>

@@ -49,7 +49,6 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         return _n('Found file', 'Found files', $nb, 'glpiinventory');
     }
 
-
     public function getListHeaders()
     {
         return [
@@ -98,99 +97,6 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
             $type,
         ];
     }
-
-    public function displayNewSpecificities()
-    {
-        echo "<td>" . __('Limit', 'glpiinventory') . "</td>";
-        echo "<td>";
-        Dropdown::showNumber('limit', [
-            'min'   => 1,
-            'max'   => 100,
-            'value' => 5,
-        ]);
-        echo "</td>";
-        echo "</tr>\n";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<th colspan='4'>";
-        echo _n('Filter', 'Filters', 2, 'glpiinventory');
-        echo "</th>";
-        echo "</tr>\n";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Base folder', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='dir' value='/' size='50' />";
-        echo "</td>";
-        echo "<td>";
-        echo __('Folder recursive', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showYesNo('is_recursive', 1);
-        echo "</td>";
-        echo "</tr>\n";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Regex', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='filter_regex' value='' size='50' />";
-        echo "</td>";
-        echo "<td>";
-        echo __('Size', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showFromArray('sizetype', [
-            'none'    => __('Disabled', 'glpiinventory'),
-            'equals'  => '=',
-            'greater' => '>',
-            'lower'   => '<',
-        ]);
-        echo "<input type='text' name='size' value='' />";
-        echo "</td>";
-        echo "</tr>\n";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Checksum SHA512', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='filter_checksumsha512' value='' />";
-        echo "</td>";
-        echo "<td>";
-        echo __('Checksum SHA2', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='filter_checksumsha2' value='' />";
-        echo "</td>";
-        echo "</tr>\n";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Filename', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showFromArray('filter_nametype', [
-            'none'  => __('Disabled', 'glpiinventory'),
-            'iname'  => __('Non sentitive case', 'glpiinventory'),
-            'name' => __('Sentitive case', 'glpiinventory'),
-        ]);
-        echo "<input type='text' name='filter_name' value='' />";
-        echo "</td>";
-        echo "<td>";
-        echo __('Type', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showFromArray('type', [
-            'file' => __('File', 'glpiinventory'),
-            'dir'  => __('Folder', 'glpiinventory'),
-        ]);
-        echo "</td>";
-    }
-
 
     /**
      * After purge item, delete collect files
