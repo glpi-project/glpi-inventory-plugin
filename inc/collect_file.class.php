@@ -52,18 +52,16 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
     public function getListHeaders()
     {
         return [
-            __("Name"),
-            __("Limit", "glpiinventory"),
-            __("Folder", "glpiinventory"),
-            __("Recursive", "glpiinventory"),
-            __("Regex", "glpiinventory"),
-            __("Size", "glpiinventory"),
-            __("Checksum SHA512", "glpiinventory"),
-            __("Checksum SHA2", "glpiinventory"),
-            __("Name", "glpiinventory"),
-            __("Iname", "glpiinventory"),
-            __("Type", "glpiinventory"),
-            __("Action"),
+            'limit' => __("Limit", "glpiinventory"),
+            'dir' => __("Folder", "glpiinventory"),
+            'is_recursive' => __("Recursive", "glpiinventory"),
+            'filter_regex' => __("Regex", "glpiinventory"),
+            'filter_size' => __("Size", "glpiinventory"),
+            'filter_checksumsha512' => __("Checksum SHA512", "glpiinventory"),
+            'filter_checksumsha2' => __("Checksum SHA2", "glpiinventory"),
+            'filter_name' => __("Name", "glpiinventory"),
+            'filter_iname' => __("Iname", "glpiinventory"),
+            'filter_type' => __("Type", "glpiinventory"),
         ];
     }
 
@@ -73,7 +71,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         if (!empty($row['filter_sizeequals'])) {
             $filter = '= ' . $row['filter_sizeequals'];
         } elseif (!empty($row['filter_sizegreater'])) {
-            $filer = '> ' . $row['filter_sizegreater'];
+            $filter = '> ' . $row['filter_sizegreater'];
         } elseif (!empty($row['filter_sizelower'])) {
             $filter = '< ' . $row['filter_sizelower'];
         }
@@ -84,17 +82,16 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         }
 
         return [
-            $row['name'],
-            $row['limit'],
-            $row['dir'],
-            $row['is_recursive'],
-            $row['filter_regex'],
-            $filter,
-            $row['filter_checksumsha512'],
-            $row['filter_checksumsha2'],
-            $row['filter_name'],
-            $row['filter_iname'],
-            $type,
+            'limit' => $row['limit'],
+            'dir' => $row['dir'],
+            'is_recursive' => $row['is_recursive'],
+            'filter_regex' => $row['filter_regex'],
+            'filter_size' => $filter,
+            'filter_checksumsha512' => $row['filter_checksumsha512'],
+            'filter_checksumsha2' => $row['filter_checksumsha2'],
+            'filter_name' => $row['filter_name'],
+            'filter_iname' => $row['filter_iname'],
+            'filter_type' => $type,
         ];
     }
 

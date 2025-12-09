@@ -66,21 +66,18 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
     public function getListHeaders()
     {
         return [
-            __('Name'),
-            __('Hive', 'glpiinventory'),
-            __("Path", "glpiinventory"),
-            __("Key", "glpiinventory"),
-            __("Action"),
+            'hive' => __('Hive', 'glpiinventory'),
+            'path' => __("Path", "glpiinventory"),
+            'key' => __("Key", "glpiinventory"),
         ];
     }
 
     public function displayOneRow($row = [])
     {
         return [
-            $row['name'],
-            $row['hive'],
-            $row['path'],
-            $row['key'],
+            'hive' => $row['hive'],
+            'path' => $row['path'],
+            'key' => $row['key'],
         ];
     }
 
