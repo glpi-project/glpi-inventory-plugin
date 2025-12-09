@@ -132,44 +132,38 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      * Display registries defined in collect
      *
      * @param integer $collects_id id of collect
+     *
+     * @return void
      */
     public function showList($collects_id)
     {
-        global $DB, $CFG_GLPI;
+        global $DB;
         $params = [
             'FROM'  => $this->getTable(),
             'WHERE' => ['plugin_glpiinventory_collects_id' => $collects_id],
         ];
         $iterator = $DB->request($params);
 
-        $class = static::class;
-
-        $headers = $this->getListHeaders();
-
-        echo "<div class='spaced'>";
-        echo "<table class='tab_cadre_fixe'>";
-        echo "<tr>";
-        echo "<tr>";
-        foreach ($headers as $label) {
-            echo "<th>" . $label . "</th>";
+        $entries = [];
+        foreach ($iterator as $row) {
+            $entry = ['name' => $row['name']] + $this->displayOneRow($row);
+            $entry['action'] = "<form action='" . static::getFormURL() . "' method='post'>"
+                . Html::hidden('id', ['value' => $row['id']])
+                . '<button type="submit" name="delete" class="btn btn-icon btn-ghost-danger"><i class="ti ti-trash"></i></button>'
+                . Html::closeForm(false);
+            $entries[] = $entry;
         }
-        echo "</tr>";
-        foreach ($iterator as $data) {
-            echo "<tr>";
-            $row_data = $this->displayOneRow($data);
-            foreach ($row_data as $value) {
-                echo "<td align='center'>$value</td>";
-            }
-            echo "<td align='center'>";
-            echo "<form name='form_bundle_item' action='" . $class::getFormURL() . "' method='post'>";
-            echo Html::hidden('id', ['value' => $data['id']]);
-            echo '<button type="submit" name="delete" class="btn btn-icon btn-ghost-danger"><i class="ti ti-trash"></i></button>';
-            Html::closeForm();
-            echo "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('components/datatable.html.twig', [
+            'is_tab' => true,
+            'nofilter' => true,
+            'columns' => ['name' => __('Name')] + $this->getListHeaders() + ['action' => __("Action")],
+            'formatters' => [
+                'action' => 'raw_html',
+            ],
+            'entries' => $entries,
+            'total_number' => count($entries),
+            'filtered_number' => count($entries),
+        ]);
     }
 
 
