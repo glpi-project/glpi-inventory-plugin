@@ -69,27 +69,4 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
             $row['properties'],
         ];
     }
-
-    public function displayNewSpecificities()
-    {
-        echo "<td>moniker</td>";
-        echo "<td>";
-        echo "<input type='text' name='moniker' value='' size='50' />";
-        echo "</td>";
-        echo "</tr>\n";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Class', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='class' value='' />";
-        echo "</td>";
-        echo "<td>";
-        echo __('Properties', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='properties' value='' size='50' />";
-        echo "</td>";
-    }
 }

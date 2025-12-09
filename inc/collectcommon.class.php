@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage the windows registry to get in collect module.
  */
@@ -87,10 +89,13 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
+        if (!$item instanceof PluginGlpiinventoryCollect) {
+            return false;
+        }
+
         $class     = static::class;
         $pfCollect = new $class();
-        /** @var CommonDBTM $item */
-        $pfCollect->showForm($item->fields['id']);
+        $pfCollect->showAddForm($item);
         $pfCollect->showList($item->fields['id']);
 
         return true;
@@ -171,35 +176,21 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     public function displayNewSpecificities() {}
 
     /**
-     * Display form to add registry
+     * Display add form
      *
-     * @param integer $collects_id id of collect
-     * @param array $options
-     * @return true
+     * @param PluginGlpiinventoryCollect $collect
+     *
+     * @return void
      */
-    public function showForm($collects_id, array $options = [])
+    public function showAddForm(PluginGlpiinventoryCollect $collect)
     {
-        $this->initForm(0, $options);
-        $this->showFormHeader($options);
+        $options['no_header'] = true;
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Name');
-        echo "</td>";
-        echo "<td>";
-        echo Html::hidden(
-            'plugin_glpiinventory_collects_id',
-            ['value' => $collects_id]
-        );
-        echo Html::input('name', ['value' => $this->fields['name']]);
-        echo "</td>";
-        $this->displayNewSpecificities();
-
-        echo "</tr>\n";
-
-        $this->showFormButtons($options);
-
-        return true;
+        TemplateRenderer::getInstance()->display('@glpiinventory/forms/collect/add.html.twig', [
+            'item' => $this,
+            'collect' => $collect,
+            'collects_id' => $collect->getID(),
+        ]);
     }
 
     public function rawSearchOptions()

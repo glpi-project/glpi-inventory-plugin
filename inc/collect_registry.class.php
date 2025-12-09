@@ -84,32 +84,6 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         ];
     }
 
-    public function displayNewSpecificities()
-    {
-        echo "<td>" . __('Hive', 'glpiinventory') . "</td>";
-        echo "<td>";
-        Dropdown::showFromArray(
-            'hive',
-            PluginGlpiinventoryCollect_Registry::getHives()
-        );
-        echo "</td>";
-        echo "</tr>\n";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Path', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='path' value='' size='80' />";
-        echo "</td>";
-        echo "<td>";
-        echo __('Key', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo "<input type='text' name='key' value='' />";
-        echo "</td>";
-    }
-
     public function prepareInputForAdd($input)
     {
         if (!preg_match('/^\/()/', $input['path'])) {
