@@ -32,6 +32,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+
 use function Safe\preg_match;
 
 /**
