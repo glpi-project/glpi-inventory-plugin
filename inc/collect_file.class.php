@@ -49,6 +49,11 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         return _n('Found file', 'Found files', $nb, 'glpiinventory');
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-file-search";
+    }
+
     public function getListHeaders()
     {
         return [

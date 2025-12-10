@@ -120,7 +120,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
                                 [$fk => $in]
                             )) > 0
                         ) {
-                            return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb);
+                            return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb, null, $class::getIcon());
                         }
                     }
                     break;

@@ -51,6 +51,11 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         return _n('Found entry', 'Found entries', $nb, 'glpiinventory');
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-settings-search";
+    }
+
     /**
      * Get Hives of the registry
      *

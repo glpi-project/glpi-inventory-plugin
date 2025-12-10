@@ -178,8 +178,6 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public function showAddForm(PluginGlpiinventoryCollect $collect)
     {
-        $options['no_header'] = true;
-
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/collect/add.html.twig', [
             'item' => $this,
             'collect' => $collect,
