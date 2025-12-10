@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 00:55+0000\n"
+"POT-Creation-Date: 2025-12-10 00:56+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Finnish (Finland) (https://app.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -75,6 +75,107 @@ msgstr "Poikkeukset"
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "Peilipalvelimen osoite"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+msgid "Limit"
+msgstr "Raja"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filter"
+msgid_plural "Filters"
+msgstr[0] "Suodatin"
+msgstr[1] "Suodattimet"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Base folder"
+msgstr "Juurikansio"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Folder recursive"
+msgstr "Rekursiivinen kansio"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+msgid "Regex"
+msgstr "Säännöllinen lauseke"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+msgid "Checksum SHA512"
+msgstr "Tarkistussumma SHA512"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+msgid "Checksum SHA2"
+msgstr "Tarkistussumma SHA2"
+
+#: templates/forms/collect/add_file.html.twig
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
+#: inc/collect.class.php:258 inc/collect_file.class.php:59
+msgid "Size"
+msgstr "Koko"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Disabled"
+msgstr "Poistettu käytöstä"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Operator"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filename"
+msgstr "Tiedoston nimi"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Non sentitive case"
+msgstr "Kirjainkoolla ei merkitystä"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Sentitive case"
+msgstr "Merkkikokoriippuvainen"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Comparison type"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filter name"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
+#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+msgid "File"
+msgstr "Tiedosto"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
+#: inc/collect_file.class.php:81
+msgid "Folder"
+msgstr "Hakemisto"
+
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
+#: inc/collect_wmi_content.class.php:117
+msgid "Class"
+msgstr "Luokka"
+
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+msgid "Properties"
+msgstr "Ominaisuudet"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:69
+msgid "Hive"
+msgstr "Avain"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:70
+#: inc/collect_registry_content.class.php:169
+msgid "Path"
+msgstr "Polku"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:71
+msgid "Key"
+msgstr "Avain"
 
 #: templates/forms/config/deploy.html.twig
 msgid "Use this GLPI server as a mirror server"
@@ -305,13 +406,6 @@ msgstr "Keräystiedot"
 msgid "Path/file"
 msgstr "Polku/tiedosto"
 
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
-#: inc/collect.class.php:258 inc/collect_file.class.php:61
-#: inc/collect_file.class.php:143
-msgid "Size"
-msgstr "Koko"
-
 #: inc/collect_file_content.class.php:133 inc/collect.class.php:243
 msgid "pathfile"
 msgstr "tiedostopolku"
@@ -427,15 +521,6 @@ msgid "Found WMI"
 msgid_plural "Found WMIs"
 msgstr[0] "WMI löytyi"
 msgstr[1] "WMI:t löytyivät"
-
-#: inc/collect_wmi.class.php:57 inc/collect_wmi.class.php:83
-#: inc/collect_wmi_content.class.php:117
-msgid "Class"
-msgstr "Luokka"
-
-#: inc/collect_wmi.class.php:58 inc/collect_wmi.class.php:89
-msgid "Properties"
-msgstr "Ominaisuudet"
 
 #: inc/staticmisc.class.php:54
 msgid "Computer Inventory"
@@ -1068,12 +1153,6 @@ msgstr "Arvo"
 msgid "Type of value"
 msgstr "Arvon tyyppi"
 
-#: inc/deploycheck.class.php:384 inc/deploycheck.class.php:397
-#: inc/deploycheck.class.php:404 inc/deployfile.class.php:325
-#: inc/collect_file.class.php:82 inc/collect_file.class.php:188
-msgid "File"
-msgstr "Tiedosto"
-
 #: inc/deploycheck.class.php:390
 msgid "Directory"
 msgstr "Hakemisto"
@@ -1115,19 +1194,6 @@ msgid "Found entry"
 msgid_plural "Found entries"
 msgstr[0] "Löydetty merkintä"
 msgstr[1] "Löydetyt merkinnät"
-
-#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:89
-msgid "Hive"
-msgstr "Avain"
-
-#: inc/collect_registry.class.php:71 inc/collect_registry.class.php:100
-#: inc/collect_registry_content.class.php:169
-msgid "Path"
-msgstr "Polku"
-
-#: inc/collect_registry.class.php:72 inc/collect_registry.class.php:106
-msgid "Key"
-msgstr "Avain"
 
 #: inc/deployuserinteraction.class.php:81
 msgid "User interaction"
@@ -1719,72 +1785,21 @@ msgid_plural "Found files"
 msgstr[0] "Tiedosto löytyi"
 msgstr[1] "Tiedostot löytyivät"
 
-#: inc/collect_file.class.php:57 inc/collect_file.class.php:104
-msgid "Limit"
-msgstr "Raja"
-
-#: inc/collect_file.class.php:58 inc/collect_file.class.php:84
-#: inc/collect_file.class.php:189
-msgid "Folder"
-msgstr "Hakemisto"
-
-#: inc/collect_file.class.php:59
+#: inc/collect_file.class.php:57
 msgid "Recursive"
 msgstr "Rekursiivinen"
 
-#: inc/collect_file.class.php:60 inc/collect_file.class.php:137
-msgid "Regex"
-msgstr "Säännöllinen lauseke"
-
-#: inc/collect_file.class.php:62 inc/collect_file.class.php:158
-msgid "Checksum SHA512"
-msgstr "Tarkistussumma SHA512"
-
-#: inc/collect_file.class.php:63 inc/collect_file.class.php:164
-msgid "Checksum SHA2"
-msgstr "Tarkistussumma SHA2"
-
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:62
 msgid "Name"
 msgstr "Nimi"
 
-#: inc/collect_file.class.php:65
+#: inc/collect_file.class.php:63
 msgid "Iname"
 msgstr "Iname"
 
-#: inc/collect_file.class.php:66 inc/collect_file.class.php:184
+#: inc/collect_file.class.php:64
 msgid "Type"
 msgstr "Tyyppi"
-
-#: inc/collect_file.class.php:116
-msgid "Filter"
-msgid_plural "Filters"
-msgstr[0] "Suodatin"
-msgstr[1] "Suodattimet"
-
-#: inc/collect_file.class.php:122
-msgid "Base folder"
-msgstr "Juurikansio"
-
-#: inc/collect_file.class.php:128
-msgid "Folder recursive"
-msgstr "Rekursiivinen kansio"
-
-#: inc/collect_file.class.php:147 inc/collect_file.class.php:177
-msgid "Disabled"
-msgstr "Poistettu käytöstä"
-
-#: inc/collect_file.class.php:173
-msgid "Filename"
-msgstr "Tiedoston nimi"
-
-#: inc/collect_file.class.php:178
-msgid "Non sentitive case"
-msgstr "Kirjainkoolla ei merkitystä"
-
-#: inc/collect_file.class.php:179
-msgid "Sentitive case"
-msgstr "Merkkikokoriippuvainen"
 
 #: inc/deploygroup_staticdata.class.php:108
 msgid "CSV import"
