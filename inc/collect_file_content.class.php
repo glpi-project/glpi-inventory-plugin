@@ -31,12 +31,14 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage the files found by the collect module of agent.
  */
 class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollectContentCommon
 {
-    public $collect_itemtype = 'PluginGlpiinventoryCollect_File';
+    public $collect_itemtype = PluginGlpiinventoryCollect_File::class;
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
     public $collect_type     = 'file';
 
@@ -107,51 +109,53 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
         echo '</table>';
     }
 
-
     /**
      * Display all files found on all computers related to the collect file
      *
-     * @param integer $collects_files_id id of collect_file
+     * @param int $collects_files_id id of collect_file
+     *
+     * @return void
      */
-    public function showContent($collects_files_id)
+    public function showContent($collects_files_id): void
     {
-        $pfCollect_File = new PluginGlpiinventoryCollect_File();
+        $collect_file = new PluginGlpiinventoryCollect_File();
         $computer = new Computer();
+        $collect_file->getFromDB($collects_files_id);
 
-        $pfCollect_File->getFromDB($collects_files_id);
-
-        echo "<table class='tab_cadre_fixe'>";
-
-        echo "<tr>";
-        echo "<th colspan='3'>";
-        echo $pfCollect_File->fields['name'];
-        echo "</th>";
-        echo "</tr>";
-
-        echo "<tr>";
-        echo "<th>" . __('Computer') . "</th>";
-        echo "<th>" . __('pathfile', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Size', 'glpiinventory') . "</th>";
-        echo "</tr>";
-
-        $a_data = $this->find(
+        $data = $this->find(
             ['plugin_glpiinventory_collects_files_id' => $collects_files_id],
             ['pathfile']
         );
-        foreach ($a_data as $data) {
-            echo "<tr class='tab_bg_1'>";
-            echo '<td>';
-            $computer->getFromDB($data['computers_id']);
-            echo $computer->getLink();
-            echo '</td>';
-            echo '<td>';
-            echo $data['pathfile'];
-            echo '</td>';
-            echo '<td>';
-            echo Toolbox::getSize($data['size']);
-            echo '</td>';
-            echo "</tr>";
+        $entries = [];
+        foreach ($data as $row) {
+            $computer->getFromDB($row['computers_id']);
+            $entry = [
+                'computer' => $computer->getLink(),
+                'pathfile' => $row['pathfile'],
+                'size'     => $row['size'],
+            ];
+            $entries[] = $entry;
         }
-        echo '</table>';
+
+        echo '<div class="card">
+            <div class="card-body">
+                <h3 class="card-title">' . $collect_file->fields['name'] . '</h3>';
+        TemplateRenderer::getInstance()->display('components/datatable.html.twig', [
+            'is_tab' => true,
+            'nofilter' => true,
+            'columns' => [
+                'computer' => __('Computer'),
+                'pathfile' => __('Path/file', 'glpiinventory'),
+                'size' => __('Size', 'glpiinventory'),
+            ],
+            'formatters' => [
+                'computer' => 'raw_html',
+                'size' => 'bytesize',
+            ],
+            'entries' => $entries,
+            'total_number' => count($entries),
+            'filtered_number' => count($entries),
+        ]);
+        echo '</div></div>';
     }
 }
