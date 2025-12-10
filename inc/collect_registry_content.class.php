@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 use function Safe\preg_match;
 
 /**
@@ -38,7 +40,7 @@ use function Safe\preg_match;
  */
 class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCollectContentCommon
 {
-    public $collect_itemtype = 'PluginGlpiinventoryCollect_Registry';
+    public $collect_itemtype = PluginGlpiinventoryCollect_Registry::class;
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_registries';
 
     public $collect_type = 'registry';
@@ -195,47 +197,49 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      * Display registry keys / values of collect_registry id
      *
      * @param integer $collects_registries_id
+     *
+     * @return void
      */
-    public function showContent($collects_registries_id)
+    public function showContent($collects_registries_id): void
     {
-        $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
+        $collect_registry = new PluginGlpiinventoryCollect_Registry();
+        $collect_registry->getFromDB($collects_registries_id);
         $computer = new Computer();
 
-        $pfCollect_Registry->getFromDB($collects_registries_id);
-
-        echo "<table class='tab_cadre_fixe'>";
-
-        echo "<tr>";
-        echo "<th colspan='3'>";
-        echo $pfCollect_Registry->fields['hive']
-           . $pfCollect_Registry->fields['path'];
-        echo "</th>";
-        echo "</tr>";
-
-        echo "<tr>";
-        echo "<th>" . __('Computer') . "</th>";
-        echo "<th>" . __('Value', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Data', 'glpiinventory') . "</th>";
-        echo "</tr>";
-
-        $a_data = $this->find(
+        $data = $this->find(
             ['plugin_glpiinventory_collects_registries_id' => $collects_registries_id],
             ['key']
         );
-        foreach ($a_data as $data) {
-            echo "<tr class='tab_bg_1'>";
-            echo '<td>';
-            $computer->getFromDB($data['computers_id']);
-            echo $computer->getLink();
-            echo '</td>';
-            echo '<td>';
-            echo $data['key'];
-            echo '</td>';
-            echo '<td>';
-            echo $data['value'];
-            echo '</td>';
-            echo "</tr>";
+        $entries = [];
+        foreach ($data as $row) {
+            $computer->getFromDB($row['computers_id']);
+            $entry = [
+                'computer' => $computer->getLink(),
+                'value' => $row['key'],
+                'data'     => $row['value'],
+            ];
+            $entries[] = $entry;
         }
-        echo '</table>';
+
+        echo '<div class="card">
+            <div class="card-body">
+                <h3 class="card-title">' . $collect_registry->fields['name'] . ' - ' . $collect_registry->fields['hive']
+            . $collect_registry->fields['path'] . '</h3>';
+        TemplateRenderer::getInstance()->display('components/datatable.html.twig', [
+            'is_tab' => true,
+            'nofilter' => true,
+            'columns' => [
+                'computer' => __('Computer'),
+                'value' => __('Value', 'glpiinventory'),
+                'data' => __('Data', 'glpiinventory'),
+            ],
+            'formatters' => [
+                'computer' => 'raw_html',
+            ],
+            'entries' => $entries,
+            'total_number' => count($entries),
+            'filtered_number' => count($entries),
+        ]);
+        echo '</div></div>';
     }
 }

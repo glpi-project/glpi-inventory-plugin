@@ -31,13 +31,15 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Manage the wmi information found by the collect module of agent.
  */
 
 class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectContentCommon
 {
-    public $collect_itemtype = 'PluginGlpiinventoryCollect_Wmi';
+    public $collect_itemtype = PluginGlpiinventoryCollect_Wmi::class;
     public $collect_table    = 'glpi_plugin_glpiinventory_collects_wmis';
 
     public $collect_type = 'wmi';
@@ -147,47 +149,49 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     /**
      * Display wmi information of collect_wmi_id
      *
-     * @param integer $collects_wmis_id
+     * @param int $collects_wmis_id
+     *
+     * @return void
      */
-    public function showContent($collects_wmis_id)
+    public function showContent($collects_wmis_id): void
     {
-        $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
+        $collect_wmi = new PluginGlpiinventoryCollect_Wmi();
         $computer = new Computer();
+        $collect_wmi->getFromDB($collects_wmis_id);
 
-        $pfCollect_Wmi->getFromDB($collects_wmis_id);
-
-        echo "<table class='tab_cadre_fixe'>";
-
-        echo "<tr>";
-        echo "<th colspan='3'>";
-        echo $pfCollect_Wmi->fields['class'];
-        echo "</th>";
-        echo "</tr>";
-
-        echo "<tr>";
-        echo "<th>" . __('Computer') . "</th>";
-        echo "<th>" . __('Property', 'glpiinventory') . "</th>";
-        echo "<th>" . __('Value', 'glpiinventory') . "</th>";
-        echo "</tr>";
-
-        $a_data = $this->find(
+        $data = $this->find(
             ['plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id],
             ['property']
         );
-        foreach ($a_data as $data) {
-            echo "<tr class='tab_bg_1'>";
-            echo '<td>';
-            $computer->getFromDB($data['computers_id']);
-            echo $computer->getLink();
-            echo '</td>';
-            echo '<td>';
-            echo $data['property'];
-            echo '</td>';
-            echo '<td>';
-            echo $data['value'];
-            echo '</td>';
-            echo "</tr>";
+        $entries = [];
+        foreach ($data as $row) {
+            $computer->getFromDB($row['computers_id']);
+            $entry = [
+                'computer' => $computer->getLink(),
+                'property' => $row['property'],
+                'value'     => $row['value'],
+            ];
+            $entries[] = $entry;
         }
-        echo '</table>';
+
+        echo '<div class="card">
+            <div class="card-body">
+                <h3 class="card-title">' . $collect_wmi->fields['name'] . ' - ' . $collect_wmi->fields['class'] . '</h3>';
+        TemplateRenderer::getInstance()->display('components/datatable.html.twig', [
+            'is_tab' => true,
+            'nofilter' => true,
+            'columns' => [
+                'computer' => __('Computer'),
+                'property' => __('Property', 'glpiinventory'),
+                'value' => __('Value', 'glpiinventory'),
+            ],
+            'formatters' => [
+                'computer' => 'raw_html',
+            ],
+            'entries' => $entries,
+            'total_number' => count($entries),
+            'filtered_number' => count($entries),
+        ]);
+        echo '</div></div>';
     }
 }
