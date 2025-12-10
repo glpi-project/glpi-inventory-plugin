@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 00:55+0000\n"
+"POT-Creation-Date: 2025-12-10 00:56+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Ukrainian (Ukraine) (https://app.transifex.com/teclib/teams/28042/uk_UA/)\n"
@@ -75,6 +75,109 @@ msgstr "Винятки"
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "Адреси дзеркальних серверів"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+msgid "Limit"
+msgstr "Ліміт"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filter"
+msgid_plural "Filters"
+msgstr[0] "Фільтр"
+msgstr[1] "Фільтри"
+msgstr[2] "Фільтрів"
+msgstr[3] "Фільтрів"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Base folder"
+msgstr "Базовий каталог"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Folder recursive"
+msgstr "Каталог рекурсивно"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+msgid "Regex"
+msgstr "Regex"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+msgid "Checksum SHA512"
+msgstr "Сума SHA512"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+msgid "Checksum SHA2"
+msgstr "Сума SHA2"
+
+#: templates/forms/collect/add_file.html.twig
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
+#: inc/collect.class.php:258 inc/collect_file.class.php:59
+msgid "Size"
+msgstr "Розмір"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Disabled"
+msgstr "Вимкнено"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Operator"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filename"
+msgstr "Назва файлу"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Non sentitive case"
+msgstr "Ігнорувати регістр символів"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Sentitive case"
+msgstr "Не ігнорувати регістр символів"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Comparison type"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filter name"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
+#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+msgid "File"
+msgstr "Файл"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
+#: inc/collect_file.class.php:81
+msgid "Folder"
+msgstr "Каталог"
+
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
+#: inc/collect_wmi_content.class.php:117
+msgid "Class"
+msgstr "Клас"
+
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+msgid "Properties"
+msgstr "Властивості"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:69
+msgid "Hive"
+msgstr "Hive"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:70
+#: inc/collect_registry_content.class.php:169
+msgid "Path"
+msgstr "Шлях"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:71
+msgid "Key"
+msgstr "Ключ"
 
 #: templates/forms/config/deploy.html.twig
 msgid "Use this GLPI server as a mirror server"
@@ -307,13 +410,6 @@ msgstr "Збір інформації"
 msgid "Path/file"
 msgstr "Шлях/файл"
 
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
-#: inc/collect.class.php:258 inc/collect_file.class.php:61
-#: inc/collect_file.class.php:143
-msgid "Size"
-msgstr "Розмір"
-
 #: inc/collect_file_content.class.php:133 inc/collect.class.php:243
 msgid "pathfile"
 msgstr "pathfile"
@@ -435,15 +531,6 @@ msgstr[0] "Знайдено WMI"
 msgstr[1] "Знайдено WMI"
 msgstr[2] "Знайдено WMI"
 msgstr[3] "Знайдено WMI"
-
-#: inc/collect_wmi.class.php:57 inc/collect_wmi.class.php:83
-#: inc/collect_wmi_content.class.php:117
-msgid "Class"
-msgstr "Клас"
-
-#: inc/collect_wmi.class.php:58 inc/collect_wmi.class.php:89
-msgid "Properties"
-msgstr "Властивості"
 
 #: inc/staticmisc.class.php:54
 msgid "Computer Inventory"
@@ -1080,12 +1167,6 @@ msgstr "Значення"
 msgid "Type of value"
 msgstr "Тип значення"
 
-#: inc/deploycheck.class.php:384 inc/deploycheck.class.php:397
-#: inc/deploycheck.class.php:404 inc/deployfile.class.php:325
-#: inc/collect_file.class.php:82 inc/collect_file.class.php:188
-msgid "File"
-msgstr "Файл"
-
 #: inc/deploycheck.class.php:390
 msgid "Directory"
 msgstr "Каталог"
@@ -1129,19 +1210,6 @@ msgstr[0] "Знайдено елемент"
 msgstr[1] "Знайдено елементи"
 msgstr[2] "Знайдено елементи"
 msgstr[3] "Знайдено елементи"
-
-#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:89
-msgid "Hive"
-msgstr "Hive"
-
-#: inc/collect_registry.class.php:71 inc/collect_registry.class.php:100
-#: inc/collect_registry_content.class.php:169
-msgid "Path"
-msgstr "Шлях"
-
-#: inc/collect_registry.class.php:72 inc/collect_registry.class.php:106
-msgid "Key"
-msgstr "Ключ"
 
 #: inc/deployuserinteraction.class.php:81
 msgid "User interaction"
@@ -1743,74 +1811,21 @@ msgstr[1] "Знайдено файли"
 msgstr[2] "Знайдено файли"
 msgstr[3] "Знайдено файли"
 
-#: inc/collect_file.class.php:57 inc/collect_file.class.php:104
-msgid "Limit"
-msgstr "Ліміт"
-
-#: inc/collect_file.class.php:58 inc/collect_file.class.php:84
-#: inc/collect_file.class.php:189
-msgid "Folder"
-msgstr "Каталог"
-
-#: inc/collect_file.class.php:59
+#: inc/collect_file.class.php:57
 msgid "Recursive"
 msgstr "Рекурсивно"
 
-#: inc/collect_file.class.php:60 inc/collect_file.class.php:137
-msgid "Regex"
-msgstr "Regex"
-
-#: inc/collect_file.class.php:62 inc/collect_file.class.php:158
-msgid "Checksum SHA512"
-msgstr "Сума SHA512"
-
-#: inc/collect_file.class.php:63 inc/collect_file.class.php:164
-msgid "Checksum SHA2"
-msgstr "Сума SHA2"
-
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:62
 msgid "Name"
 msgstr "Ім’я"
 
-#: inc/collect_file.class.php:65
+#: inc/collect_file.class.php:63
 msgid "Iname"
 msgstr "Iname"
 
-#: inc/collect_file.class.php:66 inc/collect_file.class.php:184
+#: inc/collect_file.class.php:64
 msgid "Type"
 msgstr "Тип"
-
-#: inc/collect_file.class.php:116
-msgid "Filter"
-msgid_plural "Filters"
-msgstr[0] "Фільтр"
-msgstr[1] "Фільтри"
-msgstr[2] "Фільтрів"
-msgstr[3] "Фільтрів"
-
-#: inc/collect_file.class.php:122
-msgid "Base folder"
-msgstr "Базовий каталог"
-
-#: inc/collect_file.class.php:128
-msgid "Folder recursive"
-msgstr "Каталог рекурсивно"
-
-#: inc/collect_file.class.php:147 inc/collect_file.class.php:177
-msgid "Disabled"
-msgstr "Вимкнено"
-
-#: inc/collect_file.class.php:173
-msgid "Filename"
-msgstr "Назва файлу"
-
-#: inc/collect_file.class.php:178
-msgid "Non sentitive case"
-msgstr "Ігнорувати регістр символів"
-
-#: inc/collect_file.class.php:179
-msgid "Sentitive case"
-msgstr "Не ігнорувати регістр символів"
 
 #: inc/deploygroup_staticdata.class.php:108
 msgid "CSV import"

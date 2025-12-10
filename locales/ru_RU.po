@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 00:55+0000\n"
+"POT-Creation-Date: 2025-12-10 00:56+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Alexander Sokolov <a.sokolov@outlook.com>, 2022\n"
 "Language-Team: Russian (Russia) (https://app.transifex.com/teclib/teams/28042/ru_RU/)\n"
@@ -76,6 +76,109 @@ msgstr "Исключения"
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
 msgid "Mirror server address"
 msgstr "Адрес сервера-зеркала"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+msgid "Limit"
+msgstr "Лимит"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filter"
+msgid_plural "Filters"
+msgstr[0] "Фильтр"
+msgstr[1] "Фильтр"
+msgstr[2] "Фильтры"
+msgstr[3] "Фильтры"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Base folder"
+msgstr "Базовая папка"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Folder recursive"
+msgstr "Папки рекурсивно"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+msgid "Regex"
+msgstr "Регулярное выражение"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+msgid "Checksum SHA512"
+msgstr "Контрольная сумма SHA512"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+msgid "Checksum SHA2"
+msgstr "Контрольная сумма SHA2"
+
+#: templates/forms/collect/add_file.html.twig
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
+#: inc/collect.class.php:258 inc/collect_file.class.php:59
+msgid "Size"
+msgstr "Размер"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Disabled"
+msgstr "Отключено"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Operator"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filename"
+msgstr "Имя файла"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Non sentitive case"
+msgstr "Без учета регистра"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Sentitive case"
+msgstr "С учетом регистра"
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Comparison type"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig
+msgid "Filter name"
+msgstr ""
+
+#: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
+#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+msgid "File"
+msgstr "Файл"
+
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
+#: inc/collect_file.class.php:81
+msgid "Folder"
+msgstr "Папка"
+
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
+#: inc/collect_wmi_content.class.php:117
+msgid "Class"
+msgstr "Класс"
+
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+msgid "Properties"
+msgstr "Свойства"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:69
+msgid "Hive"
+msgstr "Куст"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:70
+#: inc/collect_registry_content.class.php:169
+msgid "Path"
+msgstr "Путь"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:71
+msgid "Key"
+msgstr "Ключ"
 
 #: templates/forms/config/deploy.html.twig
 msgid "Use this GLPI server as a mirror server"
@@ -308,13 +411,6 @@ msgstr "Сбор сведений"
 msgid "Path/file"
 msgstr "Путь/файл"
 
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
-#: inc/collect.class.php:258 inc/collect_file.class.php:61
-#: inc/collect_file.class.php:143
-msgid "Size"
-msgstr "Размер"
-
 #: inc/collect_file_content.class.php:133 inc/collect.class.php:243
 msgid "pathfile"
 msgstr "путь до файла"
@@ -436,15 +532,6 @@ msgstr[0] "Найден фильтр WMI"
 msgstr[1] "Найдено фильтров WMI"
 msgstr[2] "Найдено фильтров WMI"
 msgstr[3] "Найдено фильтров WMI"
-
-#: inc/collect_wmi.class.php:57 inc/collect_wmi.class.php:83
-#: inc/collect_wmi_content.class.php:117
-msgid "Class"
-msgstr "Класс"
-
-#: inc/collect_wmi.class.php:58 inc/collect_wmi.class.php:89
-msgid "Properties"
-msgstr "Свойства"
 
 #: inc/staticmisc.class.php:54
 msgid "Computer Inventory"
@@ -1085,12 +1172,6 @@ msgstr "Значение"
 msgid "Type of value"
 msgstr "Тип значения"
 
-#: inc/deploycheck.class.php:384 inc/deploycheck.class.php:397
-#: inc/deploycheck.class.php:404 inc/deployfile.class.php:325
-#: inc/collect_file.class.php:82 inc/collect_file.class.php:188
-msgid "File"
-msgstr "Файл"
-
 #: inc/deploycheck.class.php:390
 msgid "Directory"
 msgstr "Директория"
@@ -1134,19 +1215,6 @@ msgstr[0] "Найдена организация"
 msgstr[1] "Найдено организаций"
 msgstr[2] "Найдено организаций"
 msgstr[3] "Найдено организаций"
-
-#: inc/collect_registry.class.php:70 inc/collect_registry.class.php:89
-msgid "Hive"
-msgstr "Куст"
-
-#: inc/collect_registry.class.php:71 inc/collect_registry.class.php:100
-#: inc/collect_registry_content.class.php:169
-msgid "Path"
-msgstr "Путь"
-
-#: inc/collect_registry.class.php:72 inc/collect_registry.class.php:106
-msgid "Key"
-msgstr "Ключ"
 
 #: inc/deployuserinteraction.class.php:81
 msgid "User interaction"
@@ -1749,74 +1817,21 @@ msgstr[1] "Найдено файлов"
 msgstr[2] "Найдено файлов"
 msgstr[3] "Найдено файлов"
 
-#: inc/collect_file.class.php:57 inc/collect_file.class.php:104
-msgid "Limit"
-msgstr "Лимит"
-
-#: inc/collect_file.class.php:58 inc/collect_file.class.php:84
-#: inc/collect_file.class.php:189
-msgid "Folder"
-msgstr "Папка"
-
-#: inc/collect_file.class.php:59
+#: inc/collect_file.class.php:57
 msgid "Recursive"
 msgstr "Рекурсивный"
 
-#: inc/collect_file.class.php:60 inc/collect_file.class.php:137
-msgid "Regex"
-msgstr "Регулярное выражение"
-
-#: inc/collect_file.class.php:62 inc/collect_file.class.php:158
-msgid "Checksum SHA512"
-msgstr "Контрольная сумма SHA512"
-
-#: inc/collect_file.class.php:63 inc/collect_file.class.php:164
-msgid "Checksum SHA2"
-msgstr "Контрольная сумма SHA2"
-
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:62
 msgid "Name"
 msgstr "Имя"
 
-#: inc/collect_file.class.php:65
+#: inc/collect_file.class.php:63
 msgid "Iname"
 msgstr "Деликатное имя"
 
-#: inc/collect_file.class.php:66 inc/collect_file.class.php:184
+#: inc/collect_file.class.php:64
 msgid "Type"
 msgstr "Тип"
-
-#: inc/collect_file.class.php:116
-msgid "Filter"
-msgid_plural "Filters"
-msgstr[0] "Фильтр"
-msgstr[1] "Фильтр"
-msgstr[2] "Фильтры"
-msgstr[3] "Фильтры"
-
-#: inc/collect_file.class.php:122
-msgid "Base folder"
-msgstr "Базовая папка"
-
-#: inc/collect_file.class.php:128
-msgid "Folder recursive"
-msgstr "Папки рекурсивно"
-
-#: inc/collect_file.class.php:147 inc/collect_file.class.php:177
-msgid "Disabled"
-msgstr "Отключено"
-
-#: inc/collect_file.class.php:173
-msgid "Filename"
-msgstr "Имя файла"
-
-#: inc/collect_file.class.php:178
-msgid "Non sentitive case"
-msgstr "Без учета регистра"
-
-#: inc/collect_file.class.php:179
-msgid "Sentitive case"
-msgstr "С учетом регистра"
 
 #: inc/deploygroup_staticdata.class.php:108
 msgid "CSV import"
