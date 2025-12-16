@@ -49,6 +49,11 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
         return _n('Found WMI', 'Found WMIs', $nb, 'glpiinventory');
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-settings-search";
+    }
+
     public function getListHeaders()
     {
         return [

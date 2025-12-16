@@ -120,7 +120,7 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
                                 [$fk => $in]
                             )) > 0
                         ) {
-                            return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb);
+                            return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb, null, $class::getIcon());
                         }
                     }
                     break;
@@ -145,9 +145,11 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     /**
      * Show all files defined
      *
-     * @param integer $collects_id id of collect
+     * @param int $collects_id id of collect
+     *
+     * @return void
      */
-    public function showForCollect($collects_id)
+    public function showForCollect(int $collects_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -162,9 +164,12 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
             ],
         ];
         $iterator = $DB->request($params);
+
+        echo '<div class="d-flex gap-3 flex-column">';
         foreach ($iterator as $data) {
             $this->showContent($data['id']);
         }
+        echo "</div>";
     }
 
     public function showContent($id) {}
