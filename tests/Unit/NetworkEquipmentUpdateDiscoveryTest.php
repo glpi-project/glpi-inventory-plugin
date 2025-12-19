@@ -43,12 +43,12 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
     public $networkports_reference = [
         [
             'items_id'            => 1,
-            'itemtype'            => 'NetworkEquipment',
+            'itemtype'            => NetworkEquipment::class,
             'entities_id'         => 0,
             'is_recursive'        => 0,
             'logical_number'      => 0,
             'name'                => 'Management',
-            'instantiation_type'  => 'NetworkPortAggregate',
+            'instantiation_type'  => NetworkPortAggregate::class,
             'mac'                 => '38:22:d6:3c:da:e7',
             'comment'             => null,
             'is_deleted'          => 0,
@@ -75,7 +75,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
         [
             'entities_id'   => 0,
             'items_id'      => 1,
-            'itemtype'      => 'NetworkName',
+            'itemtype'      => NetworkName::class,
             'version'       => 4,
             'name'          => '99.99.10.10',
             'binary_0'      => 0,
@@ -85,7 +85,7 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase
             'is_deleted'    => 0,
             'is_dynamic'    => 1,
             'mainitems_id'  => 1,
-            'mainitemtype'  => 'NetworkEquipment',
+            'mainitemtype'  => NetworkEquipment::class,
 
         ],
     ];
