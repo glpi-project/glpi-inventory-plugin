@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Use a modal to add collect configurations
 - Switch collect configuration UI to Twig
 - Fix missing "burger" icon to reoder on package management
+- Fix import of missing minified files
 
 ## [1.6.4] - 2025-12-03
 
