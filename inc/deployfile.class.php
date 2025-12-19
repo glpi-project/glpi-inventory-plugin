@@ -255,7 +255,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             if ($canedit) {
                 echo "<td class='rowhandler control' title='"
                     . __('drag', 'glpiinventory')
-                    . "'><div class='drag row'></div></td>";
+                    . "'><div class='drag row ti ti-menu-2'></div></td>";
             }
             $i++;
         }
