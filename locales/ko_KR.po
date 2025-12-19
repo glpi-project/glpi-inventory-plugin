@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-10 00:56+0000\n"
+"POT-Creation-Date: 2025-12-17 00:53+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: SeongHyeon Cho <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -76,7 +76,7 @@ msgstr "예외"
 msgid "Mirror server address"
 msgstr "미러 서버 주소"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
 msgid "Limit"
 msgstr "제한"
 
@@ -93,22 +93,22 @@ msgstr "기본 폴더"
 msgid "Folder recursive"
 msgstr "폴더 재귀"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:63
 msgid "Regex"
 msgstr "정규식"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:65
 msgid "Checksum SHA512"
 msgstr "체크섬 SHA512"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:66
 msgid "Checksum SHA2"
 msgstr "체크섬 SHA2"
 
 #: templates/forms/collect/add_file.html.twig
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
-#: inc/collect.class.php:258 inc/collect_file.class.php:59
+#: inc/collect_file_content.class.php:94
+#: inc/collect_file_content.class.php:149 inc/deployfile.class.php:1118
+#: inc/collect.class.php:258 inc/collect_file.class.php:64
 msgid "Size"
 msgstr "크기"
 
@@ -142,37 +142,37 @@ msgstr ""
 
 #: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
 #: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
-#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:84
 msgid "File"
 msgstr "파일"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
-#: inc/collect_file.class.php:81
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: inc/collect_file.class.php:86
 msgid "Folder"
 msgstr "폴더"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
-#: inc/collect_wmi_content.class.php:117
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+#: inc/collect_wmi_content.class.php:119
 msgid "Class"
 msgstr "클래스"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:62
 msgid "Properties"
 msgstr "속성"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:69
+#: inc/collect_registry.class.php:74
 msgid "Hive"
 msgstr ""
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:70
-#: inc/collect_registry_content.class.php:169
+#: inc/collect_registry.class.php:75
+#: inc/collect_registry_content.class.php:171
 msgid "Path"
 msgstr "경로"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:71
+#: inc/collect_registry.class.php:76
 msgid "Key"
 msgstr "키"
 
@@ -397,13 +397,10 @@ msgstr "컴퓨터 그룹"
 msgid "Collect information"
 msgstr "정보 수집"
 
-#: inc/collect_file_content.class.php:91
+#: inc/collect_file_content.class.php:93
+#: inc/collect_file_content.class.php:148
 msgid "Path/file"
 msgstr "경로/파일"
-
-#: inc/collect_file_content.class.php:133 inc/collect.class.php:243
-msgid "pathfile"
-msgstr ""
 
 #: inc/deploygroup.class.php:117 inc/deploygroup.class.php:830 hook.php:124
 msgid "Static group"
@@ -1124,9 +1121,9 @@ msgstr ""
 
 #: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
 #: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
-#: inc/collect_registry_content.class.php:170
-#: inc/collect_registry_content.class.php:217
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
+#: inc/collect_registry_content.class.php:172
+#: inc/collect_registry_content.class.php:233
+#: inc/collect_wmi_content.class.php:121 inc/collect_wmi_content.class.php:186
 msgid "Value"
 msgstr "값"
 
@@ -1477,12 +1474,12 @@ msgstr "장치 가져옴"
 msgid "Remote device inventory"
 msgstr "원격 장치 재고"
 
-#: inc/collect_registry_content.class.php:73
+#: inc/collect_registry_content.class.php:75
 msgid "Windows registry content"
 msgstr "윈도우즈 레지스트리 컨텐츠"
 
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:218
+#: inc/collect_registry_content.class.php:173
+#: inc/collect_registry_content.class.php:234
 msgid "Data"
 msgstr "데이터"
 
@@ -1735,6 +1732,10 @@ msgstr "WMI"
 msgid "Find file"
 msgstr "파일 찾기"
 
+#: inc/collect.class.php:243
+msgid "pathfile"
+msgstr ""
+
 #: inc/collect.class.php:704
 msgid "Collect module has been disabled for this agent"
 msgstr "이 에이전트에 대해 수집 모듈이 비활성화 됨"
@@ -1743,7 +1744,7 @@ msgstr "이 에이전트에 대해 수집 모듈이 비활성화 됨"
 msgid "Path not found"
 msgstr "경로 찾을 수 없음"
 
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
 msgid "Property"
 msgstr "속성"
 
@@ -1760,19 +1761,19 @@ msgid "Found file"
 msgid_plural "Found files"
 msgstr[0] "검색된 파일"
 
-#: inc/collect_file.class.php:57
+#: inc/collect_file.class.php:62
 msgid "Recursive"
 msgstr "재귀"
 
-#: inc/collect_file.class.php:62
+#: inc/collect_file.class.php:67
 msgid "Name"
 msgstr "이름"
 
-#: inc/collect_file.class.php:63
+#: inc/collect_file.class.php:68
 msgid "Iname"
 msgstr "Iname"
 
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:69
 msgid "Type"
 msgstr "유형"
 

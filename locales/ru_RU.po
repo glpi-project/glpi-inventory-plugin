@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-10 00:56+0000\n"
+"POT-Creation-Date: 2025-12-17 00:53+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Alexander Sokolov <a.sokolov@outlook.com>, 2022\n"
 "Language-Team: Russian (Russia) (https://app.transifex.com/teclib/teams/28042/ru_RU/)\n"
@@ -77,7 +77,7 @@ msgstr "Исключения"
 msgid "Mirror server address"
 msgstr "Адрес сервера-зеркала"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
 msgid "Limit"
 msgstr "Лимит"
 
@@ -97,22 +97,22 @@ msgstr "Базовая папка"
 msgid "Folder recursive"
 msgstr "Папки рекурсивно"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:63
 msgid "Regex"
 msgstr "Регулярное выражение"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:65
 msgid "Checksum SHA512"
 msgstr "Контрольная сумма SHA512"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:66
 msgid "Checksum SHA2"
 msgstr "Контрольная сумма SHA2"
 
 #: templates/forms/collect/add_file.html.twig
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
-#: inc/collect.class.php:258 inc/collect_file.class.php:59
+#: inc/collect_file_content.class.php:94
+#: inc/collect_file_content.class.php:149 inc/deployfile.class.php:1118
+#: inc/collect.class.php:258 inc/collect_file.class.php:64
 msgid "Size"
 msgstr "Размер"
 
@@ -146,37 +146,37 @@ msgstr ""
 
 #: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
 #: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
-#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:84
 msgid "File"
 msgstr "Файл"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
-#: inc/collect_file.class.php:81
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: inc/collect_file.class.php:86
 msgid "Folder"
 msgstr "Папка"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
-#: inc/collect_wmi_content.class.php:117
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+#: inc/collect_wmi_content.class.php:119
 msgid "Class"
 msgstr "Класс"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:62
 msgid "Properties"
 msgstr "Свойства"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:69
+#: inc/collect_registry.class.php:74
 msgid "Hive"
 msgstr "Куст"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:70
-#: inc/collect_registry_content.class.php:169
+#: inc/collect_registry.class.php:75
+#: inc/collect_registry_content.class.php:171
 msgid "Path"
 msgstr "Путь"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:71
+#: inc/collect_registry.class.php:76
 msgid "Key"
 msgstr "Ключ"
 
@@ -407,13 +407,10 @@ msgstr "Группы компьютеров"
 msgid "Collect information"
 msgstr "Сбор сведений"
 
-#: inc/collect_file_content.class.php:91
+#: inc/collect_file_content.class.php:93
+#: inc/collect_file_content.class.php:148
 msgid "Path/file"
 msgstr "Путь/файл"
-
-#: inc/collect_file_content.class.php:133 inc/collect.class.php:243
-msgid "pathfile"
-msgstr "путь до файла"
 
 #: inc/deploygroup.class.php:117 inc/deploygroup.class.php:830 hook.php:124
 msgid "Static group"
@@ -1162,9 +1159,9 @@ msgstr ""
 
 #: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
 #: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
-#: inc/collect_registry_content.class.php:170
-#: inc/collect_registry_content.class.php:217
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
+#: inc/collect_registry_content.class.php:172
+#: inc/collect_registry_content.class.php:233
+#: inc/collect_wmi_content.class.php:121 inc/collect_wmi_content.class.php:186
 msgid "Value"
 msgstr "Значение"
 
@@ -1524,12 +1521,12 @@ msgstr "Импортированных устройств"
 msgid "Remote device inventory"
 msgstr "Инвентаризация удаленного устройства"
 
-#: inc/collect_registry_content.class.php:73
+#: inc/collect_registry_content.class.php:75
 msgid "Windows registry content"
 msgstr "Содержимое реестра Windows"
 
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:218
+#: inc/collect_registry_content.class.php:173
+#: inc/collect_registry_content.class.php:234
 msgid "Data"
 msgstr "Данные"
 
@@ -1789,6 +1786,10 @@ msgstr "WMI"
 msgid "Find file"
 msgstr "Поиск файла"
 
+#: inc/collect.class.php:243
+msgid "pathfile"
+msgstr "путь до файла"
+
 #: inc/collect.class.php:704
 msgid "Collect module has been disabled for this agent"
 msgstr "Модуль сбора данных был выключен у этого агента"
@@ -1797,7 +1798,7 @@ msgstr "Модуль сбора данных был выключен у этог
 msgid "Path not found"
 msgstr "Путь не найден"
 
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
 msgid "Property"
 msgstr "Свойство"
 
@@ -1817,19 +1818,19 @@ msgstr[1] "Найдено файлов"
 msgstr[2] "Найдено файлов"
 msgstr[3] "Найдено файлов"
 
-#: inc/collect_file.class.php:57
+#: inc/collect_file.class.php:62
 msgid "Recursive"
 msgstr "Рекурсивный"
 
-#: inc/collect_file.class.php:62
+#: inc/collect_file.class.php:67
 msgid "Name"
 msgstr "Имя"
 
-#: inc/collect_file.class.php:63
+#: inc/collect_file.class.php:68
 msgid "Iname"
 msgstr "Деликатное имя"
 
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:69
 msgid "Type"
 msgstr "Тип"
 

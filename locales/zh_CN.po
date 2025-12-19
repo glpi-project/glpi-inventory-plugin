@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-10 00:56+0000\n"
+"POT-Creation-Date: 2025-12-17 00:53+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: DWXXX, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -77,7 +77,7 @@ msgstr "例外"
 msgid "Mirror server address"
 msgstr "镜像服务器地址"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
 msgid "Limit"
 msgstr "限制"
 
@@ -94,22 +94,22 @@ msgstr "基准文件夹"
 msgid "Folder recursive"
 msgstr "文件夹递归"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:63
 msgid "Regex"
 msgstr "正则表达式"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:65
 msgid "Checksum SHA512"
 msgstr "SHA512校验和"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:66
 msgid "Checksum SHA2"
 msgstr "SHA2校验和"
 
 #: templates/forms/collect/add_file.html.twig
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
-#: inc/collect.class.php:258 inc/collect_file.class.php:59
+#: inc/collect_file_content.class.php:94
+#: inc/collect_file_content.class.php:149 inc/deployfile.class.php:1118
+#: inc/collect.class.php:258 inc/collect_file.class.php:64
 msgid "Size"
 msgstr "大小"
 
@@ -143,37 +143,37 @@ msgstr ""
 
 #: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
 #: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
-#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:84
 msgid "File"
 msgstr "文件"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
-#: inc/collect_file.class.php:81
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: inc/collect_file.class.php:86
 msgid "Folder"
 msgstr "文件夹"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
-#: inc/collect_wmi_content.class.php:117
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+#: inc/collect_wmi_content.class.php:119
 msgid "Class"
 msgstr "类"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:62
 msgid "Properties"
 msgstr "属性"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:69
+#: inc/collect_registry.class.php:74
 msgid "Hive"
 msgstr "储巢"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:70
-#: inc/collect_registry_content.class.php:169
+#: inc/collect_registry.class.php:75
+#: inc/collect_registry_content.class.php:171
 msgid "Path"
 msgstr "路径"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:71
+#: inc/collect_registry.class.php:76
 msgid "Key"
 msgstr "项"
 
@@ -398,13 +398,10 @@ msgstr "计算机群组"
 msgid "Collect information"
 msgstr "收集信息"
 
-#: inc/collect_file_content.class.php:91
+#: inc/collect_file_content.class.php:93
+#: inc/collect_file_content.class.php:148
 msgid "Path/file"
 msgstr "路径/文件"
-
-#: inc/collect_file_content.class.php:133 inc/collect.class.php:243
-msgid "pathfile"
-msgstr "路径文件"
 
 #: inc/deploygroup.class.php:117 inc/deploygroup.class.php:830 hook.php:124
 msgid "Static group"
@@ -1125,9 +1122,9 @@ msgstr "注册表值实例"
 
 #: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
 #: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
-#: inc/collect_registry_content.class.php:170
-#: inc/collect_registry_content.class.php:217
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
+#: inc/collect_registry_content.class.php:172
+#: inc/collect_registry_content.class.php:233
+#: inc/collect_wmi_content.class.php:121 inc/collect_wmi_content.class.php:186
 msgid "Value"
 msgstr "值"
 
@@ -1478,12 +1475,12 @@ msgstr "设备已导入"
 msgid "Remote device inventory"
 msgstr "远程设备清单"
 
-#: inc/collect_registry_content.class.php:73
+#: inc/collect_registry_content.class.php:75
 msgid "Windows registry content"
 msgstr "Windows注册表内容"
 
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:218
+#: inc/collect_registry_content.class.php:173
+#: inc/collect_registry_content.class.php:234
 msgid "Data"
 msgstr "数据"
 
@@ -1736,6 +1733,10 @@ msgstr "WMI"
 msgid "Find file"
 msgstr "查找文件"
 
+#: inc/collect.class.php:243
+msgid "pathfile"
+msgstr "路径文件"
+
 #: inc/collect.class.php:704
 msgid "Collect module has been disabled for this agent"
 msgstr "\"收集\"模块已在该智能代理端上被禁用"
@@ -1744,7 +1745,7 @@ msgstr "\"收集\"模块已在该智能代理端上被禁用"
 msgid "Path not found"
 msgstr "找不到路径"
 
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
 msgid "Property"
 msgstr "属性"
 
@@ -1761,19 +1762,19 @@ msgid "Found file"
 msgid_plural "Found files"
 msgstr[0] "找到文件"
 
-#: inc/collect_file.class.php:57
+#: inc/collect_file.class.php:62
 msgid "Recursive"
 msgstr "递归"
 
-#: inc/collect_file.class.php:62
+#: inc/collect_file.class.php:67
 msgid "Name"
 msgstr "名称"
 
-#: inc/collect_file.class.php:63
+#: inc/collect_file.class.php:68
 msgid "Iname"
 msgstr "内部名称"
 
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:69
 msgid "Type"
 msgstr "类型"
 

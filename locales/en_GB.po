@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-10 00:56+0000\n"
-"PO-Revision-Date: 2025-12-10 00:56+0000\n"
+"POT-Creation-Date: 2025-12-19 00:57+0000\n"
+"PO-Revision-Date: 2025-12-19 00:57+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -72,7 +72,7 @@ msgstr "Exceptions"
 msgid "Mirror server address"
 msgstr "Mirror server address"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
 msgid "Limit"
 msgstr "Limit"
 
@@ -90,22 +90,22 @@ msgstr "Base folder"
 msgid "Folder recursive"
 msgstr "Folder recursive"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:63
 msgid "Regex"
 msgstr "Regex"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:65
 msgid "Checksum SHA512"
 msgstr "Checksum SHA512"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:66
 msgid "Checksum SHA2"
 msgstr "Checksum SHA2"
 
 #: templates/forms/collect/add_file.html.twig
-#: inc/collect_file_content.class.php:92 inc/collect_file_content.class.php:134
+#: inc/collect_file_content.class.php:94 inc/collect_file_content.class.php:149
 #: inc/deployfile.class.php:1118 inc/collect.class.php:258
-#: inc/collect_file.class.php:59
+#: inc/collect_file.class.php:64
 msgid "Size"
 msgstr "Size"
 
@@ -139,36 +139,36 @@ msgstr "Filter name"
 
 #: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
 #: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
-#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:84
 msgid "File"
 msgstr "File"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
-#: inc/collect_file.class.php:81
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: inc/collect_file.class.php:86
 msgid "Folder"
 msgstr "Folder"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
-#: inc/collect_wmi_content.class.php:117
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+#: inc/collect_wmi_content.class.php:119
 msgid "Class"
 msgstr "Class"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:62
 msgid "Properties"
 msgstr "Properties"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:69
+#: inc/collect_registry.class.php:74
 msgid "Hive"
 msgstr "Hive"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:70 inc/collect_registry_content.class.php:169
+#: inc/collect_registry.class.php:75 inc/collect_registry_content.class.php:171
 msgid "Path"
 msgstr "Path"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:71
+#: inc/collect_registry.class.php:76
 msgid "Key"
 msgstr "Key"
 
@@ -395,13 +395,9 @@ msgstr "Groups of computers"
 msgid "Collect information"
 msgstr "Collect information"
 
-#: inc/collect_file_content.class.php:91
+#: inc/collect_file_content.class.php:93 inc/collect_file_content.class.php:148
 msgid "Path/file"
 msgstr "Path/file"
-
-#: inc/collect_file_content.class.php:133 inc/collect.class.php:243
-msgid "pathfile"
-msgstr "pathfile"
 
 #: inc/deploygroup.class.php:117 inc/deploygroup.class.php:830 hook.php:124
 msgid "Static group"
@@ -1138,9 +1134,9 @@ msgstr "Example of registry value"
 
 #: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
 #: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
-#: inc/collect_registry_content.class.php:170
-#: inc/collect_registry_content.class.php:217
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
+#: inc/collect_registry_content.class.php:172
+#: inc/collect_registry_content.class.php:233
+#: inc/collect_wmi_content.class.php:121 inc/collect_wmi_content.class.php:186
 msgid "Value"
 msgstr "Value"
 
@@ -1494,12 +1490,12 @@ msgstr "Devices imported"
 msgid "Remote device inventory"
 msgstr "Remote device inventory"
 
-#: inc/collect_registry_content.class.php:73
+#: inc/collect_registry_content.class.php:75
 msgid "Windows registry content"
 msgstr "Windows registry content"
 
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:218
+#: inc/collect_registry_content.class.php:173
+#: inc/collect_registry_content.class.php:234
 msgid "Data"
 msgstr "Data"
 
@@ -1755,6 +1751,10 @@ msgstr "WMI"
 msgid "Find file"
 msgstr "Find file"
 
+#: inc/collect.class.php:243
+msgid "pathfile"
+msgstr "pathfile"
+
 #: inc/collect.class.php:704
 msgid "Collect module has been disabled for this agent"
 msgstr "Collect module has been disabled for this agent"
@@ -1763,7 +1763,7 @@ msgstr "Collect module has been disabled for this agent"
 msgid "Path not found"
 msgstr "Path not found"
 
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
 msgid "Property"
 msgstr "Property"
 
@@ -1781,19 +1781,19 @@ msgid_plural "Found files"
 msgstr[0] "Found file"
 msgstr[1] "Found files"
 
-#: inc/collect_file.class.php:57
+#: inc/collect_file.class.php:62
 msgid "Recursive"
 msgstr "Recursive"
 
-#: inc/collect_file.class.php:62
+#: inc/collect_file.class.php:67
 msgid "Name"
 msgstr "Name"
 
-#: inc/collect_file.class.php:63
+#: inc/collect_file.class.php:68
 msgid "Iname"
 msgstr "Iname"
 
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:69
 msgid "Type"
 msgstr "Type"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-10 00:56+0000\n"
+"POT-Creation-Date: 2025-12-17 00:53+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2025\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -76,7 +76,7 @@ msgstr "Výnimky"
 msgid "Mirror server address"
 msgstr "Adresa servera zrkadla"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:55
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
 msgid "Limit"
 msgstr "Limit"
 
@@ -96,22 +96,22 @@ msgstr "Základný adresár"
 msgid "Folder recursive"
 msgstr "Adresár rekurzívne"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:58
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:63
 msgid "Regex"
 msgstr "Regulárny výraz"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:60
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:65
 msgid "Checksum SHA512"
 msgstr "Kontrolný súčet SHA512"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:66
 msgid "Checksum SHA2"
 msgstr "Kontrolný súčet SHA2"
 
 #: templates/forms/collect/add_file.html.twig
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:134 inc/deployfile.class.php:1118
-#: inc/collect.class.php:258 inc/collect_file.class.php:59
+#: inc/collect_file_content.class.php:94
+#: inc/collect_file_content.class.php:149 inc/deployfile.class.php:1118
+#: inc/collect.class.php:258 inc/collect_file.class.php:64
 msgid "Size"
 msgstr "Veľkosť"
 
@@ -145,37 +145,37 @@ msgstr ""
 
 #: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
 #: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
-#: inc/deployfile.class.php:325 inc/collect_file.class.php:79
+#: inc/deployfile.class.php:325 inc/collect_file.class.php:84
 msgid "File"
 msgstr "Súbor"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:56
-#: inc/collect_file.class.php:81
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:61
+#: inc/collect_file.class.php:86
 msgid "Folder"
 msgstr "Adresár"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:56
-#: inc/collect_wmi_content.class.php:117
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+#: inc/collect_wmi_content.class.php:119
 msgid "Class"
 msgstr "Trieda"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:57
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:62
 msgid "Properties"
 msgstr "Vlastnosti"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:69
+#: inc/collect_registry.class.php:74
 msgid "Hive"
 msgstr "Súbor registra (hive)"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:70
-#: inc/collect_registry_content.class.php:169
+#: inc/collect_registry.class.php:75
+#: inc/collect_registry_content.class.php:171
 msgid "Path"
 msgstr "Cesta"
 
 #: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:71
+#: inc/collect_registry.class.php:76
 msgid "Key"
 msgstr "Kľúč"
 
@@ -406,13 +406,10 @@ msgstr "Skupiny počítačov"
 msgid "Collect information"
 msgstr "Zber informácií"
 
-#: inc/collect_file_content.class.php:91
+#: inc/collect_file_content.class.php:93
+#: inc/collect_file_content.class.php:148
 msgid "Path/file"
 msgstr "Cesta/súbor"
-
-#: inc/collect_file_content.class.php:133 inc/collect.class.php:243
-msgid "pathfile"
-msgstr "cesta k súboru"
 
 #: inc/deploygroup.class.php:117 inc/deploygroup.class.php:830 hook.php:124
 msgid "Static group"
@@ -1160,9 +1157,9 @@ msgstr "Príklad hodnoty registra"
 
 #: inc/deploycheck.class.php:365 inc/deploycheck.class.php:398
 #: inc/deploycheck.class.php:405 inc/deploycheck.class.php:411
-#: inc/collect_registry_content.class.php:170
-#: inc/collect_registry_content.class.php:217
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:170
+#: inc/collect_registry_content.class.php:172
+#: inc/collect_registry_content.class.php:233
+#: inc/collect_wmi_content.class.php:121 inc/collect_wmi_content.class.php:186
 msgid "Value"
 msgstr "Hodnota"
 
@@ -1522,12 +1519,12 @@ msgstr "Importované zariadenia"
 msgid "Remote device inventory"
 msgstr "Inventár vzdialených zariadení"
 
-#: inc/collect_registry_content.class.php:73
+#: inc/collect_registry_content.class.php:75
 msgid "Windows registry content"
 msgstr "Obsah registra Windows"
 
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:218
+#: inc/collect_registry_content.class.php:173
+#: inc/collect_registry_content.class.php:234
 msgid "Data"
 msgstr "Dáta"
 
@@ -1783,6 +1780,10 @@ msgstr "WMI"
 msgid "Find file"
 msgstr "Nájsť súbor"
 
+#: inc/collect.class.php:243
+msgid "pathfile"
+msgstr "cesta k súboru"
+
 #: inc/collect.class.php:704
 msgid "Collect module has been disabled for this agent"
 msgstr "Modul na zber údajov bol na tomto agentovi vypnutý"
@@ -1791,7 +1792,7 @@ msgstr "Modul na zber údajov bol na tomto agentovi vypnutý"
 msgid "Path not found"
 msgstr "Cesta sa nenašla"
 
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi_content.class.php:169
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
 msgid "Property"
 msgstr "Vlastnosť"
 
@@ -1811,19 +1812,19 @@ msgstr[1] "Nájdené súbory"
 msgstr[2] "Nájdené súbory"
 msgstr[3] "Nájdené súbory"
 
-#: inc/collect_file.class.php:57
+#: inc/collect_file.class.php:62
 msgid "Recursive"
 msgstr "Rekurzívne"
 
-#: inc/collect_file.class.php:62
+#: inc/collect_file.class.php:67
 msgid "Name"
 msgstr "Názov"
 
-#: inc/collect_file.class.php:63
+#: inc/collect_file.class.php:68
 msgid "Iname"
 msgstr "Inázov"
 
-#: inc/collect_file.class.php:64
+#: inc/collect_file.class.php:69
 msgid "Type"
 msgstr "Typ"
 
