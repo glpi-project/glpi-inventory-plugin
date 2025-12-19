@@ -120,9 +120,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
         } elseif (isset($a_CONTENT->content->error)) {
             $itemtype = "";
             if ($a_CONTENT->content->error->type == "NETWORKING" || $a_CONTENT->content->error->type == "STORAGE") {
-                $itemtype = "NetworkEquipment";
+                $itemtype = NetworkEquipment::class;
             } elseif ($a_CONTENT->content->error->type == "PRINTER") {
-                $itemtype = "Printer";
+                $itemtype = Printer::class;
             }
             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
             . $a_CONTENT->content->error->message . ' [[' . $itemtype . '::'
@@ -133,9 +133,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
         } elseif (isset($a_CONTENT->content->device->error)) {
             $itemtype = "";
             if ($a_CONTENT->content->device->error->type == "NETWORKING" || $a_CONTENT->content->device->error->type == "STORAGE") {
-                $itemtype = "NetworkEquipment";
+                $itemtype = NetworkEquipment::class;
             } elseif ($a_CONTENT->content->device->error->type == "PRINTER") {
-                $itemtype = "Printer";
+                $itemtype = Printer::class;
             }
             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
             . $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::'

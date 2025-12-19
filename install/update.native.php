@@ -814,7 +814,7 @@ function pluginGlpiinventoryUpdateNative($current_version)
                     $itemtype = key($item_specs);
                     $items_id = current($item_specs);
                     if ($itemtype === 'PluginGlpiinventoryAgent' || $itemtype === 'PluginFusioninventoryAgent') {
-                        $itemtype = 'Agent';
+                        $itemtype = Agent::class;
                         if (array_key_exists($items_id, $agents_mapping)) {
                             $items_id = $agents_mapping[$items_id];
                         }
