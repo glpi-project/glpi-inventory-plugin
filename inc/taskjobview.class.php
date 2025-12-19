@@ -330,7 +330,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                </a>
             </td>
             <td>" . $comment . "</td>
-            <td class='rowhandler control'><div class='drag'/></td>";
+            <td class='rowhandler control'><div class='drag row ti ti-menu-2'/></td>";
 
         PluginGlpiinventoryToolbox::logIfExtradebug(
             "pluginGlpiinventory-tasks",
