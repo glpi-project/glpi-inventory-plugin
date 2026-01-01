@@ -34,7 +34,7 @@ jobs:
     steps:
     - name: Change dir owner to working user
       run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Setup cache environment
       id: extcache
       uses: shivammathur/cache-extensions@v1
@@ -111,7 +111,7 @@ jobs:
       run: sudo apt-get install --assume-yes --no-install-recommends --quiet gettext
     - name: Change dir owner to working user
       run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Setup cache environment
       id: extcache
       uses: shivammathur/cache-extensions@v1
@@ -142,7 +142,7 @@ jobs:
     - name: Install dependencies
       run: composer install
     - name: Checkout GLPI
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: glpi-project/glpi
         path: glpi
