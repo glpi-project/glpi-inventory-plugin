@@ -6,17 +6,17 @@
 # Translators:
 # Stanislas <skita@teclib.com>, 2022
 # Cédric Anne, 2023
-# EpicIT33, 2025
 # Johan Cwiklinski, 2025
+# EpicIT33, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 00:53+0000\n"
+"POT-Creation-Date: 2026-01-01 01:04+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Johan Cwiklinski, 2025\n"
+"Last-Translator: EpicIT33, 2025\n"
 "Language-Team: French (France) (https://app.transifex.com/teclib/teams/28042/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -123,7 +123,7 @@ msgstr "Désactivé"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Operator"
-msgstr ""
+msgstr "Opérateur"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filename"
@@ -139,11 +139,11 @@ msgstr "Sensible à la casse"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Comparison type"
-msgstr ""
+msgstr "Type de comparaison"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filter name"
-msgstr ""
+msgstr "Nom du filtre"
 
 #: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:384
 #: inc/deploycheck.class.php:397 inc/deploycheck.class.php:404
@@ -1769,7 +1769,7 @@ msgstr "Nombre maximum d'essai atteint : forcer le déploiement"
 
 #: inc/taskjobstate.class.php:571
 msgid "Clean taskjob (retention time)"
-msgstr ""
+msgstr "Nettoyer la tâche (temps de rétention)"
 
 #: inc/agentwakeup.class.php:57
 msgid "Wake agents up"
@@ -1886,7 +1886,7 @@ msgstr "Gestion des collectes"
 
 #: front/deployfile.clean.php:60
 msgid "Delete unused files"
-msgstr ""
+msgstr "Supprimer les fichers inutilisés"
 
 #: hook.php:92
 msgid "Local inventory"
