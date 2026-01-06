@@ -52,7 +52,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-        $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
+        new PluginGlpiinventoryAgentmodule();
         $pfIPRange = new PluginGlpiinventoryIPRange();
         $agent = new Agent();
 

@@ -619,10 +619,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         // prepare an anonymous (and temporory) function
         // for test if an element is the last of an array
         $last = (fn(&$array, $key) => $key === array_key_last($array));
-
-        // display lines
-        $csv_array = [];
-        $tab = 0;
         foreach ($data['tasks'] as $task_id => $task) {
             echo $task['task_name'] . SEP;
 

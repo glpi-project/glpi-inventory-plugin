@@ -468,7 +468,6 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
 
     $table = $options['options']['table'];
     $field = $options['options']['field'];
-    $linkfield = $options['options']['linkfield'];
 
     switch ($table . "." . $field) {
         case 'glpi_entities.name':

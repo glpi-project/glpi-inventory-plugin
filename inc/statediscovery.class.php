@@ -135,7 +135,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-        $pfStateInventory = new PluginGlpiinventoryStateInventory();
+        new PluginGlpiinventoryStateInventory();
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTask = new PluginGlpiinventoryTask();
 
