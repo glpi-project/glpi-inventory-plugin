@@ -286,9 +286,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     /**
      * Display form for task configuration
      *
-     * @param integer $id ID of the task
+     * @param int $id ID of the task
      * @param $options array
-     * @return boolean TRUE if form is ok
+     * @return bool TRUE if form is ok
      *
      **/
     public function showForm($id, $options = [])
@@ -715,7 +715,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      * Prepare task jobs
      *
      * @param array $methods
-     * @param false|integer $tasks_id the concerned task
+     * @param false|int $tasks_id the concerned task
      * @return true
      */
     public function prepareTaskjobs($methods = [], $tasks_id = false, $crontask = null)

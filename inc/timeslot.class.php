@@ -44,7 +44,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     /**
      * We activate the history.
      *
-     * @var boolean
+     * @var bool
      */
     public $dohistory = true;
 
@@ -59,7 +59,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -246,7 +246,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
      *
      * @param ?\DateTime $datetime The date and time we want to transform into
      *                              cursor. If null the default value is now()
-     * @return integer
+     * @return int
      */
     public function getTimeslotCursor(?\DateTime $datetime = null)
     {
@@ -262,7 +262,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     /**
     *  Display form for agent configuration
      *
-     * @param integer $ID ID of the agent
+     * @param int $ID ID of the agent
      * @param array $options
      * @return true
      *

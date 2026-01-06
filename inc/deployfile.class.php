@@ -549,7 +549,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Remove an item
      *
      * @param array $params
-     * @return boolean
+     * @return bool
      */
     public function remove_item($params)
     {
@@ -626,7 +626,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Upload file from user computer
      *
      * @param array $params
-     * @return boolean
+     * @return bool
      */
     public function uploadFileFromComputer($params)
     {
@@ -716,7 +716,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Upload file from temp folder in server
      *
      * @param array $params
-     * @return boolean
+     * @return bool
      */
     public function uploadFileFromServer($params)
     {
@@ -805,7 +805,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Move uploaded file part in right/final directory
      *
      * @param string $filePath path of the file + filename
-     * @param boolean $skip_creation
+     * @param bool $skip_creation
      * @return string
      */
     public function registerFilepart($filePath, $skip_creation = false)
@@ -828,7 +828,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Add file in the repository
      *
      * @param array $params
-     * @return boolean
+     * @return bool
      */
     public function addFileInRepo($params)
     {
@@ -937,7 +937,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Remove file from the repository
      *
      * @param string $sha512 sha512 of the file
-     * @return boolean
+     * @return bool
      */
     public function removeFileInRepo($sha512)
     {
@@ -1029,7 +1029,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Check if the manifest relative to the sha512 exist
      *
      * @param string $sha512 sha512 of the file
-     * @return boolean
+     * @return bool
      */
     public function checkPresenceManifest($sha512)
     {
@@ -1044,7 +1044,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Check if the file relative to the sha512 exist
      *
      * @param string $sha512 sha512 of the file
-     * @return boolean
+     * @return bool
      */
     public function checkPresenceFile($sha512)
     {

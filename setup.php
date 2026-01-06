@@ -73,7 +73,7 @@ define(
  * Check if the script name finish by
  *
  * @param string $scriptname
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_script_endswith($scriptname)
 {
@@ -415,7 +415,7 @@ function plugin_version_glpiinventory()
  * Manage / check the prerequisites of the plugin
  *
  * @global DBMysql $DB
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_check_prerequisites()
 {
@@ -428,7 +428,7 @@ function plugin_glpiinventory_check_prerequisites()
  *
  * @param string $type
  * @param string $right
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_haveTypeRight($type, $right)
 {

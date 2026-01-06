@@ -49,7 +49,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -61,7 +61,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Check if can create an item
      *
-     * @return boolean
+     * @return bool
      */
     public static function canCreate(): bool
     {
@@ -183,8 +183,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @param string $myname
      * @param string $method
-     * @param integer $value
-     * @param integer $taskjobs_id
+     * @param int $value
+     * @param int $taskjobs_id
      * @param string $entity_restrict
      * @return string unique id of html element
      */
@@ -238,10 +238,10 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * @param string $definitiontype name of the definition type selected
      * @param string $method name of the method selected
      * @param string $deftypeid dropdown name of definition type
-     * @param integer $taskjobs_id
-     * @param integer $value name of the definition (used for edit taskjob)
+     * @param int $taskjobs_id
+     * @param int $value name of the definition (used for edit taskjob)
      * @param string $entity_restrict restriction of entity if required
-     * @param integer $title
+     * @param int $title
      * @return void
      */
     public function dropdownvalue(
@@ -318,7 +318,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @param string $myname name of dropdown
      * @param string $method name of the method selected
-     * @param integer $value name of the definition type (used for edit taskjob)
+     * @param int $value name of the definition type (used for edit taskjob)
      * @param string $entity_restrict restriction of entity if required
      * @return string unique id of html element
      */
@@ -371,7 +371,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * @param string $actiontype name of the action type selected
      * @param string $method name of the method selected
      * @param string $actiontypeid dropdown name of action type
-     * @param integer $value name of the definition (used for edit taskjob)
+     * @param int $value name of the definition (used for edit taskjob)
      * @param string $entity_restrict restriction of entity if required
      * @return string unique id of html element
      */
@@ -455,9 +455,9 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * re initialize all taskjob of a taskjob
      *
-     * @param integer $tasks_id id of the task
-     * @param integer $disableTimeVerification
-     * @return boolean true if all taskjob are ready (so finished from old runnning job)
+     * @param int $tasks_id id of the task
+     * @param int $disableTimeVerification
+     * @return bool true if all taskjob are ready (so finished from old runnning job)
      */
     public function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0)
     {
@@ -613,8 +613,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * Get period in secondes by type and count time
      *
      * @param string $periodicity_type type of time (minutes, hours...)
-     * @param integer $periodicity_count number of type time
-     * @return integer in seconds
+     * @param int $periodicity_count number of type time
+     * @return int in seconds
      */
     public function periodicityToTimestamp($periodicity_type, $periodicity_count)
     {
@@ -822,8 +822,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @param string $type
      * @param string $itemtype
-     * @param integer $items_id
-     * @param integer $taskjobs_id
+     * @param int $items_id
+     * @param int $taskjobs_id
      */
     public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id)
     {
@@ -874,7 +874,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @param string $type
      * @param string $a_items_id
-     * @param integer $taskjobs_id
+     * @param int $taskjobs_id
      */
     public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
     {
@@ -999,7 +999,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * Update method
      *
      * @param string $method
-     * @param integer $taskjobs_id
+     * @param int $taskjobs_id
      */
     public function updateMethod($method, $taskjobs_id)
     {
@@ -1065,7 +1065,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     * Duplicate all taskjobs for a task to another one
     * @param $source_tasks_id the ID of the task to clone
     * @param $target_task_id the ID of the cloned task
-    * @return boolean
+    * @return bool
     */
     public static function duplicate($source_tasks_id, $target_tasks_id)
     {

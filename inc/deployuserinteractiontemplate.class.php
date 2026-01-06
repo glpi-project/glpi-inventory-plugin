@@ -127,7 +127,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -215,7 +215,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
      * @param string $name the name of the dropdown
      * @param string $behavior the default behavior
      *
-     * @return integer
+     * @return int
      */
     public function dropdownBehaviors($name, $behavior = self::BEHAVIOR_CONTINUE_DEPLOY)
     {
@@ -335,7 +335,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
     * Display an interaction template form
     * @since 9.2
-    * @param integer $id      id of a template to edit
+    * @param int $id      id of a template to edit
     * @param array   $options POST form options
     */
     public function showForm($id, $options = [])
@@ -545,7 +545,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     *
     * @since 9.2
      *
-    * @param integer $ID the template's ID
+    * @param int $ID the template's ID
     */
     public function showBehaviors($ID)
     {

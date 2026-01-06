@@ -109,7 +109,7 @@ class PluginGlpiinventoryProfile extends Profile
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -122,9 +122,9 @@ class PluginGlpiinventoryProfile extends Profile
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -142,9 +142,9 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Display form
      *
-     * @param integer $profiles_id
+     * @param int $profiles_id
      * @param array $options
-     * @return boolean
+     * @return bool
      */
     public function showForm($profiles_id, $options = [])
     {
@@ -191,9 +191,9 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Display profile form for helpdesk interface
      *
-     * @param integer $profiles_id
-     * @param boolean $openform
-     * @param boolean $closeform
+     * @param int $profiles_id
+     * @param bool $openform
+     * @param bool $closeform
      */
     public function showFormSelf($profiles_id = 0, $openform = true, $closeform = true)
     {
@@ -404,7 +404,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Add the default profile
      *
-     * @param integer $profiles_id
+     * @param int $profiles_id
      * @param array $rights
      */
     public static function addDefaultProfileInfos($profiles_id, $rights)
@@ -432,7 +432,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Create first access (so default profile)
      *
-     * @param integer $profiles_id id of profile
+     * @param int $profiles_id id of profile
      */
     public static function createFirstAccess($profiles_id)
     {

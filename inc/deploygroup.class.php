@@ -101,7 +101,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * We activate the history.
      *
-     * @var boolean
+     * @var bool
      */
     public $dohistory = true;
 
@@ -123,7 +123,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -175,9 +175,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer|string $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int|string $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -263,7 +263,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Display form related to the massive action selected
      *
      * @param MassiveAction $ma MassiveAction instance
-     * @return boolean
+     * @return bool
      */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
@@ -424,7 +424,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Display form
      *
-     * @param integer $ID
+     * @param int $ID
      * @param array $options
      * @return true
      */
@@ -499,7 +499,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Check if this group is a dynamic group or not
      *
-     * @return boolean
+     * @return bool
      */
     public function isDynamicGroup()
     {
@@ -510,7 +510,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Check if this group is a static group or not
      *
-     * @return boolean
+     * @return bool
      */
     public function isStaticGroup()
     {
@@ -593,8 +593,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     * Get the URL to pass to the search engine
     * @since 9.2
     *
-    * @param integer $deploygroup_id the ID of the group
-    * @param boolean $is_dynamic is the group dynamic or static
+    * @param int $deploygroup_id the ID of the group
+    * @param bool $is_dynamic is the group dynamic or static
     * @return string the target
     */
     public static function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false)
@@ -653,7 +653,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Get targets for the group
      *
-     * @param integer $groups_id id of the group
+     * @param int $groups_id id of the group
      * @param bool    $use_cache retrieve agents from cache or not (only for dynamic groups)
      * @return array list of computers
      */
@@ -687,8 +687,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Get search parameters as an array
      *
      * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
-     * @param boolean $check_post_values
-     * @param boolean $getAll
+     * @param bool $check_post_values
+     * @param bool $getAll
      * @return array
      */
     public static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false)
@@ -772,7 +772,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Display for a computer the groups where it is
      *
-     * @param integer $computers_id
+     * @param int $computers_id
      */
     public function showForComputer($computers_id)
     {

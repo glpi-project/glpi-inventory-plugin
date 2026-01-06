@@ -235,9 +235,9 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
  *
  * @global array $CFG_GLPI
  * @param string $type
- * @param integer $id
+ * @param int $id
  * @param array $data
- * @param integer $num
+ * @param int $num
  * @return string
  */
 function plugin_glpiinventory_giveItem($type, $id, $data, $num)
@@ -337,7 +337,7 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
  *
  * @global DBMysql $DB
  * @param object $item
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_searchOptionsValues($item)
 {
@@ -372,7 +372,7 @@ function plugin_glpiinventory_searchOptionsValues($item)
 /**
  * Manage the installation process
  *
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_install()
 {
@@ -416,7 +416,7 @@ function plugin_glpiinventory_install()
 /**
  * Manage the uninstallation of the plugin
  *
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_uninstall()
 {
@@ -461,7 +461,7 @@ function plugin_glpiinventory_MassiveActions($type)
  * Manage massive actions fields display
  *
  * @param array $options
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
 {
@@ -490,8 +490,8 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
  * Manage Add select to search query
  *
  * @param string $type
- * @param integer $id
- * @param integer $num
+ * @param int $id
+ * @param int $num
  * @return string
  */
 function plugin_glpiinventory_addSelect($type, $id, $num)
@@ -521,7 +521,7 @@ function plugin_glpiinventory_addSelect($type, $id, $num)
  * Manage group by in search query
  *
  * @param string $type
- * @return boolean
+ * @return bool
  */
 function plugin_glpiinventory_forceGroupBy($type)
 {
@@ -594,9 +594,9 @@ function plugin_glpiinventory_addLeftJoin(
  * Manage order in search query
  *
  * @param string $type
- * @param integer $id
+ * @param int $id
  * @param string $order
- * @param integer $key
+ * @param int $key
  * @return string
  */
 function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0)
@@ -611,7 +611,7 @@ function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0)
  * @param string $link
  * @param string $nott
  * @param string $type
- * @param integer $id
+ * @param int $id
  * @param string $val
  * @return string
  */

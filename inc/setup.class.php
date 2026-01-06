@@ -118,7 +118,7 @@ class PluginGlpiinventorySetup
     /**
      * Creation of user
      *
-     * @return integer id of the user "Plugin GLPI Inventory"
+     * @return int id of the user "Plugin GLPI Inventory"
      */
     public function createGlpiInventoryUser()
     {

@@ -39,21 +39,21 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     /**
      * Define the number for the message information constant
      *
-     * @var integer
+     * @var int
      */
     public const MSG_INFO = 0;
 
     /**
      * Define the number for the message warning constant
      *
-     * @var integer
+     * @var int
      */
     public const MSG_WARNING = 1;
 
     /**
      * Define the number for the message error constant
      *
-     * @var integer
+     * @var int
      */
     public const MSG_ERROR = 2;
 
@@ -290,7 +290,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
      * Get a HTML message
      *
      * @param string $msg
-     * @param integer $type
+     * @param int $type
      * @return string
      */
     public function getMessage($msg, $type = self::MSG_INFO)

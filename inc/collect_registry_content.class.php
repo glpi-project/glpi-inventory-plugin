@@ -49,7 +49,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -85,9 +85,9 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      * Update computer registry values (add and update) related to this
      * collect registry id
      *
-     * @param integer $computers_id id of the computer
+     * @param int $computers_id id of the computer
      * @param array $registry_data registry info sent by agent
-     * @param integer $collects_registries_id id of collect_registry
+     * @param int $collects_registries_id id of collect_registry
      */
     public function updateComputer($computers_id, $registry_data, $collects_registries_id)
     {
@@ -147,7 +147,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     /**
      * Show registries keys of the computer
      *
-     * @param integer $computers_id id of the computer
+     * @param int $computers_id id of the computer
      */
     public function showForComputer($computers_id)
     {
@@ -196,7 +196,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     /**
      * Display registry keys / values of collect_registry id
      *
-     * @param integer $collects_registries_id
+     * @param int $collects_registries_id
      *
      * @return void
      */

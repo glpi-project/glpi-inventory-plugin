@@ -273,7 +273,7 @@ class PluginGlpiinventoryCommunicationRest
      * Test a given url
      *
      * @param string $url
-     * @return boolean
+     * @return bool
      */
     public static function testRestURL($url)
     {

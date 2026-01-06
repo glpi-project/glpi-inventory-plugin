@@ -56,7 +56,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -69,7 +69,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Check if user can create a task
      *
-     * @return boolean
+     * @return bool
      */
     public static function canCreate(): bool
     {
@@ -176,7 +176,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * Get the tab name used for item
     *
     * @param CommonGLPI $item the item object
-    * @param integer $withtemplate 1 if is a template form
+    * @param int $withtemplate 1 if is a template form
     * @return string name of the tab
     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -197,8 +197,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
      * @return true
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
@@ -215,7 +215,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     *
     * @param PluginGlpiinventoryIPRange $item
     * @param array $options
-    * @return boolean
+    * @return bool
     */
     public function showItemForm(PluginGlpiinventoryIPRange $item, array $options = [])
     {
@@ -348,7 +348,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get the list of taskjobstate for the agent
      *
-     * @param integer $agent_id
+     * @param int $agent_id
      * @param array $methods
      * @param array $options
      * @return array
@@ -667,7 +667,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
     /**
     * Get all on demand tasks to clean
-    * @param integer $interval number of days to look for successful tasks
+    * @param int $interval number of days to look for successful tasks
     * @return int
     */
     public function cleanTasksAndJobs($interval)
@@ -1378,7 +1378,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get tasks planned
      *
-     * @param integer $tasks_id if 0, no restriction so get all
+     * @param int $tasks_id if 0, no restriction so get all
      * @param bool $only_active, set to true to include only active tasks
      * @return object
      */
@@ -1668,7 +1668,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      *
      * @param MassiveAction $ma MassiveAction instance
      *
-     * @return boolean
+     * @return bool
      */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
@@ -1949,8 +1949,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
     /**
     * Duplicate a task
-    * @param integer $source_tasks_id the ID of the task to duplicate
-    * @return boolean
+    * @param int $source_tasks_id the ID of the task to duplicate
+    * @return bool
     */
     public function duplicate($source_tasks_id)
     {

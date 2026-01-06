@@ -78,7 +78,7 @@ class CliMigration extends Migration
      * Display a warning message
      *
      * @param string $msg
-     * @param boolean $red
+     * @param bool $red
      */
     public function displayWarning($msg, $red = false): void
     {

@@ -41,7 +41,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     /**
      * We activate the history.
      *
-     * @var boolean
+     * @var bool
      */
     public $dohistory = true;
 
@@ -56,7 +56,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -119,7 +119,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     /**
      * Display form to add a new time entry in timeslot
      *
-     * @param integer $timeslots_id
+     * @param int $timeslots_id
      */
     public function formEntry($timeslots_id)
     {
@@ -180,7 +180,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
      * @todo rename this method in showTimeslots() since it's not only used to delete but also to
      *       show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
      *
-     * @param integer $timeslots_id
+     * @param int $timeslots_id
      */
     public function formDeleteEntry($timeslots_id)
     {
@@ -230,7 +230,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
      * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.
      * -- Kevin 'kiniou' Roy
      *
-     * @param integer $timeslots_id
+     * @param int $timeslots_id
      */
     public function showTimeSlot($timeslots_id)
     {

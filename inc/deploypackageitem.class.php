@@ -245,7 +245,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      * Common method to add an item to the package JSON definition
      *
      * @since 9.2
-     * @param integer $id the package ID
+     * @param int $id the package ID
      * @param array $item the item to add to the package definition
      * @param string $order the order of the item
      *
@@ -267,8 +267,8 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     /**
      * Get the json
      *
-     * @param integer $packages_id id of the order
-     * @return boolean|string the string is in json format
+     * @param int $packages_id id of the order
+     * @return bool|string the string is in json format
      */
     public function getJson($packages_id)
     {
@@ -306,9 +306,9 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     /**
      * Update the order json
      *
-     * @param integer $packages_id
+     * @param int $packages_id
      * @param array $data
-     * @return integer error number
+     * @return int error number
      */
     public function updateOrderJson($packages_id, $data)
     {
@@ -350,7 +350,7 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      * Remove an item
      *
      * @param array $params
-     * @return boolean
+     * @return bool
      */
     public function remove_item($params)
     {

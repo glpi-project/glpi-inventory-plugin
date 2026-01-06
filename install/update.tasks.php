@@ -38,7 +38,7 @@ use Glpi\DBAL\QueryParam;
  *
  * @global DBMysql $DB
  * @param object $migration
- * @param integer $plugin_id
+ * @param int $plugin_id
  */
 function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
 {

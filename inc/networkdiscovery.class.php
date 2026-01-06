@@ -42,7 +42,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
      * Get all devices and put in taskjobstat each task for each device for each
      * agent
      *
-     * @param integer $taskjobs_id
+     * @param int $taskjobs_id
      * @return string
      */
     public function prepareRun($taskjobs_id)

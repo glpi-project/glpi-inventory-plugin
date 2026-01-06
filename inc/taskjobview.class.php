@@ -60,7 +60,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -77,9 +77,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -112,7 +112,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      * Ajax load item
      *
      * @param array $options
-     * @return integer
+     * @return int
      */
     public function ajaxLoadItem($options)
     {
@@ -197,7 +197,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      *
      * @param string $module_type
      * @param string $itemtype
-     * @param integer $items_id
+     * @param int $items_id
      * @return string
      */
     public function getItemDisplay($module_type, $itemtype, $items_id)
@@ -223,7 +223,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Show jobs list for task
      *
-     * @param integer $task_id
+     * @param int $task_id
      */
     public function showListForTask($task_id)
     {
@@ -289,7 +289,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Get task jobs
      *
-     * @param integer $task_id
+     * @param int $task_id
      * @return array
      */
     public function getTaskjobs($task_id)
@@ -527,7 +527,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Display form for taskjob
      *
-     * @param integer $id id of the taskjob
+     * @param int $id id of the taskjob
      * @param array $options
      * @return bool
      */
@@ -1066,7 +1066,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      * Check for configuration consistency.
      * Remove items targets or actors that have been deleted.
      *
-     * @return boolean ( What does this return value mean ? -- Kevin Roy <kiniou@gmail.com> )
+     * @return bool ( What does this return value mean ? -- Kevin Roy <kiniou@gmail.com> )
      */
     public function checkConfiguration()
     {

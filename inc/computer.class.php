@@ -163,7 +163,7 @@ class PluginGlpiinventoryComputer extends Computer
      * Display form related to the massive action selected
      *
      * @param MassiveAction $ma MassiveAction instance
-     * @return boolean
+     * @return bool
      */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {

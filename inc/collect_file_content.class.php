@@ -46,9 +46,9 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
      * Update computer files (add and update files) related to this
      * collect file id
      *
-     * @param integer $computers_id id of the computer
+     * @param int $computers_id id of the computer
      * @param array $file_data
-     * @param integer $collects_files_id id of collect_file
+     * @param int $collects_files_id id of collect_file
      */
     public function updateComputer($computers_id, $file_data, $collects_files_id)
     {
@@ -67,7 +67,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     /**
      * Display files found on the computer
      *
-     * @param integer $computers_id id of the computer
+     * @param int $computers_id id of the computer
      */
     public function showForComputer($computers_id)
     {

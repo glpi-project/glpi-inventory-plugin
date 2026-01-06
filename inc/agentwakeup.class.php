@@ -62,7 +62,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -93,7 +93,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
      *
      * @param CronTask $crontask
      *
-     * @return boolean
+     * @return bool
      */
     public static function cronWakeupAgents($crontask)
     {
@@ -235,7 +235,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     /**
      * Send a request to the remote agent to run now
      *
-     * @return boolean true if send successfully, otherwise false
+     * @return bool true if send successfully, otherwise false
      */
     public static function wakeUp(Agent $agent)
     {

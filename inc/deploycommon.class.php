@@ -51,7 +51,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
      *
      * @param string $definition_type
      * @param null|array $definitions_filter
-     * @return boolean
+     * @return bool
      */
     public function definitionFiltered($definition_type, $definitions_filter)
     {
@@ -70,7 +70,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
      * Prepare a takjob, get all devices and put in taskjobstate each task
      * for each device for each agent
      *
-     * @param integer $taskjob_id id of the taskjob
+     * @param int $taskjob_id id of the taskjob
      * @param null|array $definitions_filter
      */
     public function prepareRun($taskjob_id, $definitions_filter = null)

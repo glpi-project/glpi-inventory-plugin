@@ -53,7 +53,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -70,9 +70,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -144,7 +144,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     /**
      * Display form to configure activation of modules in agent form (in tab)
      *
-     * @param integer $agents_id id of the agent
+     * @param int $agents_id id of the agent
      */
     public function showFormAgentException(int $agents_id): void
     {
@@ -239,8 +239,8 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * Get if agent has this module enabled
      *
      * @param string $module_name module name
-     * @param integer $agents_id id of the agent
-     * @return boolean true if enabled, otherwise false
+     * @param int $agents_id id of the agent
+     * @return bool true if enabled, otherwise false
      */
     public function isAgentCanDo($module_name, $agents_id)
     {
@@ -298,7 +298,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * Generate the server module URL to send to agent
      *
      * @param string $modulename name of the module
-     * @param integer $entities_id id of the entity
+     * @param int $entities_id id of the entity
      * @return string the URL generated
      */
     public static function getUrlForModule($modulename, $entities_id = -1)

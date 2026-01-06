@@ -39,7 +39,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
     /**
      * Get all installed modules
      *
-     * @param boolean $p_inactive Show inactive modules
+     * @param bool $p_inactive Show inactive modules
      * @return array
      */
     public static function getAll($p_inactive = false)
@@ -57,7 +57,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
      * Get module id or plugin id
      *
      * @param string $p_name the module name
-     * @return integer|false plugin id or FALSE if module is not active or not a module
+     * @return int|false plugin id or FALSE if module is not active or not a module
      */
     public static function getModuleId($p_name)
     {
@@ -83,7 +83,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
     /**
      * Get module name
      *
-     * @param integer $p_id the module id
+     * @param int $p_id the module id
      * @return string|false false if module is not active or not a module
      */
     public static function getModuleName($p_id)
