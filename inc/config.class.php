@@ -234,7 +234,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      */
     public function getValue(string $name): string|int|null
     {
-        /** @var array $PF_CONFIG */
+        /** @var array<string,string|int> $PF_CONFIG */
         global $PF_CONFIG;
 
         if (isset($PF_CONFIG[$name])) {
@@ -341,7 +341,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      */
     public function updateValue(string $name, string|int $value): bool
     {
-        /** @var array $PF_CONFIG */
+        /** @var array<string,string|int> $PF_CONFIG */
         global $PF_CONFIG;
 
         // retrieve current config
@@ -402,7 +402,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     public static function loadCache()
     {
         /** @var DBmysql $DB */
-        /** @var array $PF_CONFIG */
+        /** @var array<string,string|int> $PF_CONFIG */
         global $DB, $PF_CONFIG;
 
         if ($DB->tableExists('glpi_plugin_glpiinventory_configs')) {

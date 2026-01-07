@@ -55,9 +55,15 @@ foreach ($constants as $name => $default_value) {
         define($name, $default_value);
     }
 }
-// Used for use config values in 'cache'
+/**
+ * Used for use config values in 'cache'
+ * @var array<string,string|int> $PF_CONFIG
+ */
 $PF_CONFIG = [];
-// used to know if computer inventory is in reality a ESX task
+/**
+ * Used to know if computer inventory is in reality a ESX task
+ * @var bool $PF_EXSINVENTORY
+ */
 $PF_ESXINVENTORY = false;
 
 /**
@@ -81,7 +87,7 @@ function plugin_glpiinventory_script_endswith(string $scriptname): bool
  */
 function plugin_init_glpiinventory(): void
 {
-    /** @var array $PF_CONFIG */
+    /** @var array<string,string|int> $PF_CONFIG */
     global $PLUGIN_HOOKS, $CFG_GLPI, $PF_CONFIG;
 
     $current_url = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'];
