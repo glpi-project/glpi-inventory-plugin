@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 use Glpi\Http\Firewall;
 use Glpi\Http\SessionManager;
 use Glpi\Plugin\Hooks;

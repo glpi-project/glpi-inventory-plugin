@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 use Glpi\Error\ErrorHandler;
 use Safe\Exceptions\InfoException;
 

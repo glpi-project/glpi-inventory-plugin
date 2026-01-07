@@ -28,6 +28,8 @@
  * ---------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 namespace GlpiPlugin\Glpiinventory\Controller;
 
 use Glpi\Controller\AbstractController;
