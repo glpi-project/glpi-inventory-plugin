@@ -69,7 +69,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -103,7 +103,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     /**
      * Display specific fields
      *
-     * @param integer $ID
+     * @param int $ID
      * @param array $field
      */
     public function displaySpecificTypeField($ID, $field = [], array $options = [])

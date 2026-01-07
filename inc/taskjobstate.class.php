@@ -47,7 +47,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Define constant state prepared.
      * The job is just prepared and waiting for agent request
      *
-     * @var integer
+     * @var int
      */
     public const PREPARED = 0;
 
@@ -55,7 +55,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Define constant state has sent data to agent and not have the answer.
      * The job is running and the server sent the job config
      *
-     * @var integer
+     * @var int
      */
     public const SERVER_HAS_SENT_DATA = 1;
 
@@ -63,7 +63,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Define constant state agent has sent data.
      * The job is running and the agent sent reply to the server
      *
-     * @var integer
+     * @var int
      */
     public const AGENT_HAS_SENT_DATA = 2;
 
@@ -71,7 +71,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Define constant state finished.
      * The agent completed successfully the job
      *
-     * @var integer
+     * @var int
      */
     public const FINISHED = 3;
 
@@ -79,7 +79,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Define constant state in error.
      * The agent failed to complete the job
      *
-     * @var integer
+     * @var int
      */
     public const IN_ERROR = 4;
 
@@ -88,7 +88,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * The job has been cancelled either by a user or the agent himself (eg. if
      * it has been forbidden to run this taskjob)
      *
-     * @var integer
+     * @var int
      */
     public const CANCELLED = 5;
 
@@ -96,7 +96,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Define constant state in error.
      * The agent failed to complete the job
      *
-     * @var integer
+     * @var int
      */
     public const POSTPONED = 6;
 
@@ -114,7 +114,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -160,9 +160,9 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -183,8 +183,8 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
     * Display state of taskjob
     *
-    * @param integer $taskjobs_id id of the taskjob
-    * @param integer $width how large in pixel display array
+    * @param int $taskjobs_id id of the taskjob
+    * @param int $width how large in pixel display array
     * @param string $return display or return in var (html or htmlvar or other value
     *        to have state number in %)
     * @param string $style '' = normal or 'simple' for very simple display
@@ -247,8 +247,8 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * @todo There is no need to pass $id since we should use this method with
      *       an instantiated object
      *
-     * @param integer $id id of the taskjobstate
-     * @param integer $state state to set
+     * @param int $id id of the taskjobstate
+     * @param int $state state to set
      */
     public function changeStatus($id, $state)
     {
@@ -259,7 +259,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Get taskjobs of an agent
      *
-     * @param integer $agent_id id of the agent
+     * @param int $agent_id id of the agent
      */
     public function getTaskjobsAgent($agent_id)
     {
@@ -320,7 +320,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Get logs associated to a jobstate.
      *
-     * @param integer $id
+     * @param int $id
      * @param string $last_date
      * @return array
      */
@@ -373,10 +373,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Change the status to finish
      *
-     * @param integer $taskjobstates_id id of the taskjobstates
-     * @param integer $items_id id of the item
+     * @param int $taskjobstates_id id of the taskjobstates
+     * @param int $items_id id of the item
      * @param string $itemtype type of the item
-     * @param integer $error error
+     * @param int $error error
      * @param string $message message for the status
      */
     public function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = '')
@@ -630,7 +630,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Display the tasks where the computer is associated
      *
-     * @param integer $computers_id
+     * @param int $computers_id
      */
     public function showStatesForComputer($computers_id)
     {

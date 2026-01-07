@@ -45,7 +45,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     /**
      * We activate the history.
      *
-     * @var boolean
+     * @var bool
      */
     public $dohistory = true;
 
@@ -60,7 +60,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -90,7 +90,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
      * Get and filter mirrors list by computer agent and location.
      * Location is retrieved from the computer data.
      *
-     * @param ?integer $agents_id
+     * @param ?int $agents_id
      * @return array
      */
     public static function getList($agents_id)
@@ -215,7 +215,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     /**
      * Display form
      *
-     * @param integer $id
+     * @param int $id
      * @param array $options
      * @return true
      */
@@ -333,7 +333,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
      * Display form related to the massive action selected
      *
      * @param MassiveAction $ma MassiveAction instance
-     * @return boolean
+     * @return bool
      */
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {

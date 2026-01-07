@@ -41,7 +41,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * We activate the history.
      *
-     * @var boolean
+     * @var bool
      */
     public $dohistory = true;
 
@@ -67,7 +67,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -187,7 +187,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * Display form
      *
-     * @param integer $id
+     * @param int $id
      * @param array $options
      * @return true
      */
@@ -207,7 +207,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
      * Check if IP is valid
      *
      * @param array $a_input array of IPs
-     * @return boolean
+     * @return bool
      */
     public function checkip($a_input)
     {
@@ -242,7 +242,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
      * Get ip in long format
      *
      * @param string $ip IP in format IPv4
-     * @return integer $int
+     * @return int $int
      */
     public function getIp2long($ip)
     {

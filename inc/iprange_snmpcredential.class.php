@@ -83,7 +83,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -109,8 +109,8 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
      * @return true
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
@@ -140,7 +140,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      *
      * @param CommonDBTM $item
      * @param array $options
-     * @return boolean
+     * @return bool
      */
     public function showItemForm(CommonDBTM $item, array $options = [])
     {

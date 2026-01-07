@@ -41,35 +41,35 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Define state task started
      *
-     * @var integer
+     * @var int
      */
     public const TASK_STARTED = 1;
 
     /**
      * Define state task OK / successful
      *
-     * @var integer
+     * @var int
      */
     public const TASK_OK = 2;
 
     /**
      * Define state task in error
      *
-     * @var integer
+     * @var int
      */
     public const TASK_ERROR = 4;
 
     /**
      * Define state task information
      *
-     * @var integer
+     * @var int
      */
     public const TASK_INFO = 5;
 
     /**
      * Define state task running
      *
-     * @var integer
+     * @var int
      */
     public const TASK_RUNNING = 6;
 
@@ -77,7 +77,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      * Define state task prepared, so wait agent contact the server to get
      * this task
      *
-     * @var integer
+     * @var int
      */
     public const TASK_PREPARED = 7;
 
@@ -106,7 +106,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Get state name
      *
-     * @param integer $state
+     * @param int $state
      * @return string
      */
     public static function getStateName($state = -1)
@@ -122,7 +122,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Get itemtype of task job state
      *
-     * @param integer $taskjoblogs_id
+     * @param int $taskjoblogs_id
      * @return string
      */
     public static function getStateItemtype($taskjoblogs_id)
@@ -246,8 +246,8 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Add a new line of log for a taskjob status
      *
-     * @param integer $taskjobstates_id id of the taskjobstate
-     * @param integer $items_id id of the item associated with taskjob status
+     * @param int $taskjobstates_id id of the taskjobstate
+     * @param int $items_id id of the item associated with taskjob status
      * @param string $itemtype type name of the item associated with taskjob status
      * @param string $state state of this taskjobstate
      * @param string $comment the comment of this insertion
@@ -271,7 +271,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Get div with text/color depend on state
      *
-     * @param integer $state state number
+     * @param int $state state number
      * @param string $type div / td
      * @return string complete node (opened and closed)
      */

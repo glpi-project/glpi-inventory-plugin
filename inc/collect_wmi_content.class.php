@@ -47,9 +47,9 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     /**
      * update wmi data to compute (add and update) with data sent by the agent
      *
-     * @param integer $computers_id id of the computer
+     * @param int $computers_id id of the computer
      * @param array $wmi_data
-     * @param integer $collects_wmis_id
+     * @param int $collects_wmis_id
      */
     public function updateComputer($computers_id, $wmi_data, $collects_wmis_id)
     {
@@ -106,7 +106,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     /**
      * Display wmi information of computer
      *
-     * @param integer $computers_id id of computer
+     * @param int $computers_id id of computer
      */
     public function showForComputer($computers_id)
     {

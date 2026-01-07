@@ -39,11 +39,11 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     /**
      * Display static progress bar (used for SNMP cartridge state)
      *
-     * @param integer $percentage
+     * @param int $percentage
      * @param string $message
      * @param string $order
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      */
     public static function bar($percentage, $message = '', $order = '', $width = 400, $height = 20)
     {
@@ -130,10 +130,10 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     /**
      * When debug is disabled, we transfer every errors in this emtpy function.
      *
-     * @param integer $errno
+     * @param int $errno
      * @param string $errstr
      * @param string $errfile
-     * @param integer $errline
+     * @param int $errline
      */
     public static function error_handler($errno, $errstr, $errfile, $errline) {}
 
@@ -141,8 +141,8 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     /**
      * Display progress bar
      *
-     * @param integer $width
-     * @param integer|float $percent
+     * @param int $width
+     * @param int|float $percent
      * @param array $options
      * @return string
      */

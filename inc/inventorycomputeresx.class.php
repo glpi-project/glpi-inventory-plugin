@@ -40,7 +40,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
      * Get all devices and put in taskjobstate each task for
      * each device for each agent
      *
-     * @param integer $taskjobs_id id of taskjob esx
+     * @param int $taskjobs_id id of taskjob esx
      * @return string uniqid value
      */
     public function prepareRun($taskjobs_id)

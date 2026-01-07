@@ -74,7 +74,7 @@ class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation
     /**
      * Logs for the second item are disabled
      *
-     * @var boolean
+     * @var bool
      */
     public static $logs_for_item_2     = false;
 
@@ -82,7 +82,7 @@ class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation
     /**
      * Get groups for a deploypackage
      *
-     * @param integer $deploypackages_id ID of the deploypackage
+     * @param int $deploypackages_id ID of the deploypackage
      * @return array list of groups linked to a deploypackage
     **/
     public static function getGroups($deploypackages_id)

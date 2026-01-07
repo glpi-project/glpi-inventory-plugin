@@ -135,7 +135,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
      * Get the number to multiply to have in B relative to the unit
      *
      * @param string $unit the unit of number
-     * @return integer the number to multiply
+     * @return int the number to multiply
      */
     public function getUnitSize($unit)
     {
@@ -334,7 +334,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     /**
     *  Get labels and type for a check
     * @param string $check_type the type of check
-    * @param boolean $mandatory indicates if mandatory mark must be added to the label
+    * @param bool $mandatory indicates if mandatory mark must be added to the label
     * @return array the labels and type for a check
     */
     public function getLabelsAndTypes($check_type, $mandatory = false)

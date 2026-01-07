@@ -43,7 +43,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -55,7 +55,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     /**
      * Check if can view item
      *
-     * @return boolean
+     * @return bool
      */
     public static function canView(): bool
     {
@@ -75,7 +75,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     /**
      * Check if can create an item
      *
-     * @return boolean
+     * @return bool
      */
     public static function canCreate(): bool
     {
@@ -553,7 +553,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      * @param string $name
      * @param array $data list of data for the chart
      * @param string $title
-     * @param integer $width
+     * @param int $width
      */
     public static function showChartBar($name, $data, $title = '', $width = 370)
     {

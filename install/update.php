@@ -295,7 +295,7 @@ function pluginGlpiinventoryUpdate($current_version)
     );
 
     // ********* Migration ************************************************ //
-    $prepare_rangeip = do_agent_migration($migration);
+    do_agent_migration($migration);
     $prepare_Config  = do_config_migration($migration);
     do_entities_migration($migration);
     do_locks_migration($migration);
@@ -382,7 +382,7 @@ function pluginGlpiinventoryUpdate($current_version)
     );
 
     // ********* Migration ************************************************ //
-    $prepare_task = do_iprange_migration($migration);
+    do_iprange_migration($migration);
     do_iprangeconfigsecurity_migration($migration);
     do_configlogfield_migration($migration);
     do_networkport_migration($migration);

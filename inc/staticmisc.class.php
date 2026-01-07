@@ -301,7 +301,7 @@ class PluginGlpiinventoryStaticmisc
      * Get ESX task parameters to send to the agent
      * For the moment it's hardcoded, but in a future release it may be in DB
      *
-     * @param integer $entities_id id of the entity
+     * @param int $entities_id id of the entity
      * @return array
      */
     public static function task_ESX_getParameters($entities_id)
@@ -619,7 +619,7 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get Deploy paramaters: url for communication with server
      *
-     * @param integer $entities_id
+     * @param int $entities_id
      * @return array
      */
     public static function task_deploy_getParameters($entities_id)
@@ -751,7 +751,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * Get collect parameters (URL to dialog with server)
      *
-     * @param integer $entities_id
+     * @param int $entities_id
      * @return array
      */
     public static function task_collect_getParameters($entities_id)

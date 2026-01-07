@@ -157,9 +157,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -285,7 +285,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      * @since 0.85+1.0
      *
      * @param PluginGlpiinventoryDeployGroup $group the group object
-     * @param boolean $use_cache retrieve computers_id from cache (computers_id_cache field)
+     * @param bool $use_cache retrieve computers_id from cache (computers_id_cache field)
      * @return array of computer ids
      */
     public static function getTargetsByGroup(PluginGlpiinventoryDeployGroup $group, $use_cache = false)
@@ -374,9 +374,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
 
     /**
     * Duplicate entries from one group to another
-    * @param integer $source_deploygroups_id the source group ID
-    * @param integer $target_deploygroups_id the target group ID
-    * @return boolean the duplication status
+    * @param int $source_deploygroups_id the source group ID
+    * @param int $target_deploygroups_id the target group ID
+    * @return bool the duplication status
     */
     public static function duplicate($source_deploygroups_id, $target_deploygroups_id)
     {

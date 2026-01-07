@@ -48,7 +48,7 @@ class PluginGlpiinventoryToolbox
      */
     public static function logIfExtradebug($file, $message)
     {
-        $config = new PluginGlpiinventoryConfig();
+        new PluginGlpiinventoryConfig();
         if (PluginGlpiinventoryConfig::isExtradebugActive()) {
             if (is_array($message)) {
                 $message = print_r($message, true);
@@ -101,7 +101,7 @@ class PluginGlpiinventoryToolbox
     /**
      * Add AUTHENTICATION string to XML node
      *
-     * @param integer $p_id Authenticate id
+     * @param int $p_id Authenticate id
      **/
     public function addAuth($p_id)
     {
@@ -138,7 +138,7 @@ class PluginGlpiinventoryToolbox
      * Get IP for device
      *
      * @param string $itemtype
-     * @param integer $items_id
+     * @param int $items_id
      * @return array
      */
     public static function getIPforDevice($itemtype, $items_id)
@@ -304,7 +304,7 @@ class PluginGlpiinventoryToolbox
     /**
      * Get hour:minute from number of seconds
      *
-     * @param integer $seconds
+     * @param int $seconds
      * @return string
      */
     public static function getHourMinute($seconds)
@@ -375,7 +375,7 @@ class PluginGlpiinventoryToolbox
     *
     * @param CommonDBTM $item the item to check
     *
-    * @return boolean
+    * @return bool
     */
     public static function isAnInventoryDevice($item)
     {

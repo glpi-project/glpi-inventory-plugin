@@ -46,7 +46,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     /**
      * Is this use can create a deploy task job
      *
-     * @return boolean
+     * @return bool
      */
     public static function canCreate(): bool
     {
@@ -57,7 +57,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     /**
      * Is this use can view a deploy task job
      *
-     * @return boolean
+     * @return bool
      */
     public static function canView(): bool
     {
@@ -142,9 +142,6 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
         $plug = new Plugin();
         $plug->getFromDBbyDir('fusinvdeploy');
         $plugins_id = $plug->getField('id');
-
-        //insert new rows
-        $sql_tasks = [];
         $i = 0;
 
         $qparam = new QueryParam();

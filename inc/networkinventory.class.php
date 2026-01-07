@@ -42,7 +42,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
      * Get all devices and put in taskjobstate each task for each device for
      * each agent
      *
-     * @param integer $taskjobs_id
+     * @param int $taskjobs_id
      * @return string
      */
     public function prepareRun($taskjobs_id)
@@ -451,7 +451,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     /**
      * Get the devices have an IP in the IP range
      *
-     * @param integer $ipranges_id
+     * @param int $ipranges_id
      * @return array
      */
     public function getDevicesOfIPRange($ipranges_id, bool $restrict_entity = true)
@@ -545,8 +545,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * Get the device IP in the IP range
     *
     * @param string $job_itemtype
-    * @param integer $job_items_id
-    * @param integer $tasks_id
+    * @param int $job_items_id
+    * @param int $tasks_id
     * @return array
     */
     public function getDeviceIPOfTaskID($job_itemtype, $job_items_id, $tasks_id)

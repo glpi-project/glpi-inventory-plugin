@@ -7,9 +7,6 @@
  *
  * http://glpi-project.org
  *
- * based on FusionInventory for GLPI
- * Copyright (C) 2010-2021 by the FusionInventory Development Team.
- *
  * ---------------------------------------------------------------------
  *
  * LICENSE
@@ -31,15 +28,14 @@
  * ---------------------------------------------------------------------
  */
 
+require_once __DIR__ . '/../../src/Plugin.php';
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector as CodeQuality;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector as DeadCode;
 use Rector\ValueObject\PhpVersion;
 
-//FIXME: adding front or install directories cause a fail:
-// [ERROR] Could not process "glpi/plugins/glpiinventory/install/update.php" file, due to:
-// "System error: "Class "Plugin" not found"
 return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/ajax',
@@ -56,7 +52,7 @@ return RectorConfig::configure()
     )
     ->withRootFiles()
     ->withParallel(timeoutSeconds: 300)
-    ->withImportNames()
+    // handled by PHP-CS-Fixer with `fully_qualified_strict_types` rule ->withImportNames()
     ->withRules([
         CodeQuality\Assign\CombinedAssignRector::class,
         CodeQuality\BooleanAnd\RemoveUselessIsObjectCheckRector::class,
@@ -99,6 +95,7 @@ return RectorConfig::configure()
         CodeQuality\LogicalAnd\LogicalToBooleanRector::class,
         CodeQuality\NotEqual\CommonNotEqualRector::class,
         CodeQuality\Ternary\UnnecessaryTernaryExpressionRector::class,
+        DeadCode\Assign\RemoveUnusedVariableAssignRector::class,
     ])
     ->withPhpSets(php74: true) // apply PHP sets up to PHP 7.4
 ;

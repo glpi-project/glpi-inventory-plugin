@@ -49,9 +49,9 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     /**
      * Update state of discovery
      *
-     * @param integer $p_number
+     * @param int $p_number
      * @param array $a_input
-     * @param integer $agent_id
+     * @param int $agent_id
      */
     public function updateState($p_number, $a_input, $agent_id)
     {
@@ -105,9 +105,9 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     /**
      * End the state process
      *
-     * @param integer $p_number
+     * @param int $p_number
      * @param string $date_end
-     * @param integer $agent_id
+     * @param int $agent_id
      */
     public function endState($p_number, $date_end, $agent_id)
     {
@@ -135,7 +135,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         $agent = new Agent();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-        $pfStateInventory = new PluginGlpiinventoryStateInventory();
+        new PluginGlpiinventoryStateInventory();
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTask = new PluginGlpiinventoryTask();
 

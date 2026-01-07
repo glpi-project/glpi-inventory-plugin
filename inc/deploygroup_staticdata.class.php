@@ -82,7 +82,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string|array name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -116,9 +116,9 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -294,9 +294,9 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 
     /**
     * Duplicate entries from one group to another
-    * @param integer $source_deploygroups_id the source group ID
-    * @param integer $target_deploygroups_id the target group ID
-    * @return boolean the duplication status
+    * @param int $source_deploygroups_id the source group ID
+    * @param int $target_deploygroups_id the target group ID
+    * @return bool the duplication status
     */
     public static function duplicate($source_deploygroups_id, $target_deploygroups_id)
     {
@@ -323,7 +323,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      *
      * @param PluginGlpiinventoryDeployGroup $item it's an instance of PluginGlpiinventoryDeployGroup class
      *
-     * @return boolean
+     * @return bool
      */
     public static function csvImportForm(PluginGlpiinventoryDeployGroup $item)
     {
@@ -362,7 +362,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      * @param array $post_data
      * @param array $files_data array with information of $_FILE
      *
-     * @return boolean
+     * @return bool
      */
     public static function csvImport($post_data, $files_data)
     {

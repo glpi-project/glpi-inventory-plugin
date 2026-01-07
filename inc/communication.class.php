@@ -161,7 +161,7 @@ class PluginGlpiinventoryCommunication
     /**
      * Get all tasks prepared for the agent
      *
-     * @param integer $agent_id id of the agent
+     * @param int $agent_id id of the agent
      */
     public function getTaskAgent($agent_id)
     {

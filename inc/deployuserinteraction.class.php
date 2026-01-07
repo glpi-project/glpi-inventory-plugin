@@ -72,7 +72,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -396,7 +396,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * @param string $type the type of event that triggered the user interaction
     * @param string $event the button clicked by the user
     *         (or the what's happened in special cases, as defined in a template)
-    * @param integer $user userid the user who performed the interaction
+    * @param int $user userid the user who performed the interaction
     * @return string the message to be display in a taskjob log
     */
     public function getLogMessage($behavior, $type, $event, $user)

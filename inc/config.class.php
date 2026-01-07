@@ -41,7 +41,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Initialize the displaylist public variable
      *
-     * @var boolean
+     * @var bool
      */
     public $displaylist = false;
 
@@ -55,14 +55,14 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Define number to the action 'clean' of agents
      *
-     * @var integer
+     * @var int
      */
     public const ACTION_CLEAN = 0;
 
     /**
      * Define number to the action 'change status' of agents
      *
-     * @var integer
+     * @var int
      */
     public const ACTION_STATUS = 1;
 
@@ -70,7 +70,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Initialize config values of  plugin
      *
-     * @param boolean $getOnly
+     * @param bool $getOnly
      * @return array
      */
     public function initConfigModule($getOnly = false)
@@ -138,7 +138,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -152,7 +152,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Add multiple configuration values
      *
      * @param array $values configuration values, indexed by name
-     * @param boolean $update say if add or update in database
+     * @param bool $update say if add or update in database
      */
     public function addValues($values, $update = true)
     {
@@ -205,7 +205,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string|array name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -226,9 +226,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem($item, $tabnum = 1, $withtemplate = 0)
     {
@@ -254,7 +254,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Get configuration value with name
      *
      * @param string $name name in configuration
-     * @return null|string|integer
+     * @return null|string|int
      */
     public function getValue($name)
     {
@@ -274,7 +274,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Give state of a config field for plugin
      *
      * @param string $name name in configuration
-     * @return boolean
+     * @return bool
      */
     public function isFieldActive($name)
     {
@@ -303,7 +303,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Get the action for agent action
      *
-     * @param integer $action
+     * @param int $action
      * @return string
      */
     public static function getActions($action)
@@ -358,7 +358,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      *
      * @param string $name
      * @param string $value
-     * @return integer|false integer is the id of this configuration name
+     * @return int|false integer is the id of this configuration name
      */
     public function addValue($name, $value)
     {
@@ -378,7 +378,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      *
      * @param string $name name of configuration
      * @param string $value
-     * @return boolean
+     * @return bool
      */
     public function updateValue($name, $value)
     {
@@ -407,7 +407,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Check if extradebug mode is active
      *
-     * @return null|integer the integer is 1 or 0 (it's like boolean)
+     * @return null|int the integer is 1 or 0 (it's like boolean)
      */
     public static function isExtradebugActive()
     {

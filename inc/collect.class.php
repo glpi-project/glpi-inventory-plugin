@@ -49,7 +49,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     /**
      * Get name of this type by language of the user connected
      *
-     * @param integer $nb number of elements
+     * @param int $nb number of elements
      * @return string name of this type
      */
     public static function getTypeName($nb = 0)
@@ -62,7 +62,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * Get the tab name used for item
      *
      * @param CommonGLPI $item the item object
-     * @param integer $withtemplate 1 if is a template form
+     * @param int $withtemplate 1 if is a template form
      * @return string name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -85,9 +85,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * Display the content of the tab
      *
      * @param CommonGLPI $item
-     * @param integer $tabnum number of the tab to display
-     * @param integer $withtemplate 1 if is a template form
-     * @return boolean
+     * @param int $tabnum number of the tab to display
+     * @param int $withtemplate 1 if is a template form
+     * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
@@ -120,8 +120,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     * Get the number of collects for a computer
     * @since 9.2
     *
-    * @param integer $computers_id the computer ID
-    * @return integer the number of collects for this computer
+    * @param int $computers_id the computer ID
+    * @return int the number of collects for this computer
     */
     public static function getNumberOfCollectsForAComputer($computers_id)
     {
@@ -273,7 +273,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     /**
      * Display form
      *
-     * @param integer $ID
+     * @param int $ID
      * @param array $options
      * @return true
      */
@@ -324,7 +324,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * Prepare run, so it prepare the taskjob with module 'collect'.
      * It prepare collect information and computer list for task run
      *
-     * @param integer $taskjobs_id id of taskjob
+     * @param int $taskjobs_id id of taskjob
      */
     public function prepareRun($taskjobs_id)
     {
