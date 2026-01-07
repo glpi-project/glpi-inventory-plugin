@@ -39,7 +39,7 @@ use function Safe\json_encode;
 * in a package
 * @since 9.2
 */
-class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
+abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 {
     //Display modes
     public const CREATE      = 'create';
@@ -474,4 +474,15 @@ class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     {
         return [];
     }
+
+
+    /**
+     * Display list
+     *
+     * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
+     * @param array $data array converted of 'json' field in DB where stored checks
+     * @param string $rand unique element id used to identify/update an element
+     */
+
+    abstract public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand);
 }

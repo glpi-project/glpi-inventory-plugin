@@ -227,7 +227,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
      * @param array $data array converted of 'json' field in DB where stored checks
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, $data, $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand)
     {
         $package_id        = $package->getID();
         $canedit           = $package->canUpdateContent();
