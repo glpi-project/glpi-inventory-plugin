@@ -71,7 +71,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Initialize config values of  plugin
      *
      * @param bool $getOnly
-     * @return array<string,int>
+     * @return array<string,string|int>
      */
     public function initConfigModule(bool $getOnly = false): array
     {
