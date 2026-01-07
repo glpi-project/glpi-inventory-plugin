@@ -165,9 +165,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * Get global activation status of a module
      *
      * @param string $module_name name of module
-     * @return array information of module activation
+     * @return array<string,mixed> information of module activation
      */
-    public function getActivationExceptions($module_name)
+    public function getActivationExceptions(string $module_name): array
     {
         $a_modules = $this->find(['modulename' => $module_name], [], 1);
         return current($a_modules);
@@ -178,9 +178,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * Get list of agents have this module activated
      *
      * @param string $module_name name of the module
-     * @return array id list of agents
+     * @return array<int, array<string,mixed>> id list of agents
      */
-    public function getAgentsCanDo($module_name)
+    public function getAgentsCanDo(string $module_name): array
     {
 
         $agent = new Agent();
@@ -242,7 +242,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * @param int $agents_id id of the agent
      * @return bool true if enabled, otherwise false
      */
-    public function isAgentCanDo($module_name, $agents_id)
+    public function isAgentCanDo(string $module_name, int $agents_id): bool
     {
 
         switch (strtoupper($module_name)) {
@@ -301,7 +301,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      * @param int $entities_id id of the entity
      * @return string the URL generated
      */
-    public static function getUrlForModule($modulename, $entities_id = -1)
+    public static function getUrlForModule(string $modulename, int $entities_id = -1): string
     {
         $plugin_dir = '/plugins/glpiinventory';
 
@@ -342,9 +342,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     /**
      * Get list of all modules
      *
-     * @return array list of name of modules
+     * @return array<int,string> list of name of modules
      */
-    public static function getModules()
+    public static function getModules(): array
     {
         $a_modules = [];
         $a_data = getAllDataFromTable(PluginGlpiinventoryAgentmodule::getTable());
@@ -354,6 +354,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         return $a_modules;
     }
 
+    /**
+     * @param array<string,mixed> $data
+     */
     public function updateModules(array $data): void
     {
         $modules = $this->find();
@@ -375,6 +378,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         }
     }
 
+    /**
+     * @param array<string,mixed> $data
+     */
     public function updateForAgent(array $data): void
     {
         $agents_id = $data['agents_id'];
