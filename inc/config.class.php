@@ -71,9 +71,9 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Initialize config values of  plugin
      *
      * @param bool $getOnly
-     * @return array
+     * @return array<string,int>
      */
-    public function initConfigModule($getOnly = false)
+    public function initConfigModule(bool $getOnly = false): array
     {
 
         $pfSetup  = new PluginGlpiinventorySetup();
@@ -81,12 +81,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         $input    = [];
 
         $input['version']                = PLUGIN_GLPIINVENTORY_VERSION;
-        $input['ssl_only']               = '0';
-        $input['delete_task']            = '20';
-        $input['agent_port']             = '62354';
-        $input['extradebug']             = '0';
+        $input['ssl_only']               = 0;
+        $input['delete_task']            = 20;
+        $input['agent_port']             = 62354;
+        $input['extradebug']             = 0;
         $input['users_id']               = $users_id;
-        $input['wakeup_agent_max']       = '10';
+        $input['wakeup_agent_max']       = 10;
 
         $input['import_software']        = 1;
         $input['import_volume']          = 1;
@@ -151,10 +151,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Add multiple configuration values
      *
-     * @param array $values configuration values, indexed by name
+     * @param array<string,int> $values configuration values, indexed by name
      * @param bool $update say if add or update in database
      */
-    public function addValues($values, $update = true)
+    public function addValues(array $values, bool $update = true): void
     {
 
         foreach ($values as $type => $value) {
@@ -256,7 +256,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * @param string $name name in configuration
      * @return null|string|int
      */
-    public function getValue($name)
+    public function getValue(string $name): string|int|null
     {
         /** @var array $PF_CONFIG */
         global $PF_CONFIG;
@@ -355,18 +355,11 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
     /**
      * Add name + value in configuration if not exist
-     *
-     * @param string $name
-     * @param string $value
-     * @return int|false integer is the id of this configuration name
      */
-    public function addValue($name, $value)
+    private function addValue(string $name, int $value): void
     {
-        $existing_value = $this->getValue($name);
-        if (!is_null($existing_value)) {
-            return $existing_value;
-        } else {
-            return $this->add(['type'  => $name,
+        if (is_null($this->getValue($name))) {
+            $this->add(['type'  => $name,
                 'value' => $value,
             ]);
         }
@@ -377,10 +370,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Update configuration value
      *
      * @param string $name name of configuration
-     * @param string $value
+     * @param int $value
      * @return bool
      */
-    public function updateValue($name, $value)
+    public function updateValue(string $name, int $value): bool
     {
         /** @var array $PF_CONFIG */
         global $PF_CONFIG;
