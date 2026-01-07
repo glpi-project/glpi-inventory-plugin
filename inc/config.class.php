@@ -151,7 +151,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Add multiple configuration values
      *
-     * @param array<string,int> $values configuration values, indexed by name
+     * @param array<string,int|string> $values configuration values, indexed by name
      * @param bool $update say if add or update in database
      */
     public function addValues(array $values, bool $update = true): void
@@ -356,7 +356,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     /**
      * Add name + value in configuration if not exist
      */
-    private function addValue(string $name, int $value): void
+    private function addValue(string $name, string|int $value): void
     {
         if (is_null($this->getValue($name))) {
             $this->add(['type'  => $name,
@@ -370,10 +370,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * Update configuration value
      *
      * @param string $name name of configuration
-     * @param int $value
+     * @param string|int $value
      * @return bool
      */
-    public function updateValue(string $name, int $value): bool
+    public function updateValue(string $name, string|int $value): bool
     {
         /** @var array $PF_CONFIG */
         global $PF_CONFIG;
