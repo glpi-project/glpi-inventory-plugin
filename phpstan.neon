@@ -10,7 +10,9 @@ parameters:
     bootstrapFiles:
         - ../../stubs/glpi_constants.php
         - ../../vendor/autoload.php
+        - stubs/glpiinventory_constants.php
         - setup.php
+    treatPhpDocTypesAsCertain: false
     paths:
         - ajax
         - front
@@ -24,3 +26,13 @@ parameters:
     scanDirectories:
         - ../../inc
         - ../../src
+    dynamicConstantNames:
+        - PLUGIN_GLPIINVENTORY_VERSION
+        - PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION
+        - PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION
+        - PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE
+        - PLUGIN_GLPI_INVENTORY_DIR
+        - PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR
+        - PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR
+        - PLUGIN_GLPI_INVENTORY_UPLOAD_DIR
+        - GLPI_INSTALL_MODE

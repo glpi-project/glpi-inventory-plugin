@@ -87,7 +87,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             'Computer' => __("Upload from computer", 'glpiinventory'),
         ];
 
-        if (GLPI_INSTALL_MODE !== 'CLOUD') { //@phpstan-ignore-line
+        if (GLPI_INSTALL_MODE !== 'CLOUD') {
             $types['Server'] = __("Upload from server", 'glpiinventory');
         }
 
