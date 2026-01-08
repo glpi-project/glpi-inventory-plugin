@@ -923,33 +923,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         }
     }
 
-
-    /**
-     * Prepare task job
-     *
-     * @param array<string,mixed> $a_taskjob
-     * @return string uniqid
-     */
-    public function prepareRunTaskjob(array $a_taskjob): string
-    {
-
-        $itemtype = "PluginGlpiinventory" . ucfirst($a_taskjob['method']);
-        $item = getItemForItemtype($itemtype);
-
-        if (
-            $a_taskjob['method'] == 'deployinstall'
-              && isset($a_taskjob['definitions_filter'])
-        ) {
-            /** @var PluginGlpiinventoryDeployCommon $item */
-            $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
-        } else {
-            /** @var PluginGlpiinventoryCollect|PluginGlpiinventoryInventoryComputerESX|PluginGlpiinventoryNetworkdiscovery|PluginGlpiinventoryNetworkinventory $item */
-            $uniqid = $item->prepareRun($a_taskjob['id']);
-        }
-        return $uniqid;
-    }
-
-
     /**
      * @param array<string,mixed> $params
      * @return void

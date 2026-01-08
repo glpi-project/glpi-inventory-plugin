@@ -111,33 +111,12 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
 
 
     /**
-     * Disable debug mode to not see php errors
-     */
-    public static function disableDebug()
-    {
-        error_reporting(0);
-        set_error_handler([PluginGlpiinventoryDisplay::class, 'error_handler']);
-    }
-
-
-    /**
     * Enable debug mode if user is in debug mode
     **/
     public static function reenableusemode(): void
     {
         Toolbox::setDebugMode();
     }
-
-
-    /**
-     * When debug is disabled, we transfer every errors in this emtpy function.
-     *
-     * @param int $errno
-     * @param string $errstr
-     * @param string $errfile
-     * @param int $errline
-     */
-    public static function error_handler($errno, $errstr, $errfile, $errline) {}
 
 
     /**
