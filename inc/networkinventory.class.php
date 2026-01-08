@@ -547,7 +547,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @param string $job_itemtype
     * @param int $job_items_id
     * @param int $tasks_id
-    * @return array
+    * @return string
     */
     public function getDeviceIPOfTaskID($job_itemtype, $job_items_id, $tasks_id)
     {
