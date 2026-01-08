@@ -81,7 +81,7 @@ class PluginGlpiinventoryCommunication
      *
      * @param string $message XML in string format
      */
-    public function setMessage($message)
+    public function setMessage($message): void
     {
         // avoid xml warnings
         $this->message = @simplexml_load_string(
@@ -97,7 +97,7 @@ class PluginGlpiinventoryCommunication
      *
      * @param string $compressmode compressed mode: none|zlib|deflate|gzip
      */
-    public function sendMessage($compressmode = 'none')
+    public function sendMessage($compressmode = 'none'): void
     {
 
         if (!$this->message) {
@@ -142,7 +142,7 @@ class PluginGlpiinventoryCommunication
      *
      * @param string $p_logs log message to write
      */
-    public static function addLog($p_logs)
+    public static function addLog($p_logs): void
     {
 
         if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
@@ -162,8 +162,10 @@ class PluginGlpiinventoryCommunication
      * Get all tasks prepared for the agent
      *
      * @param int $agent_id id of the agent
+     *
+     * @return array<int,array<string,mixed>>
      */
-    public function getTaskAgent($agent_id)
+    public function getTaskAgent($agent_id): array
     {
         $response = [];
         $pfTask = new PluginGlpiinventoryTask();

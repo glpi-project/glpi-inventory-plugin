@@ -40,10 +40,10 @@ use function Safe\preg_match;
  */
 class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCollectContentCommon
 {
-    public $collect_itemtype = PluginGlpiinventoryCollect_Registry::class;
-    public $collect_table    = 'glpi_plugin_glpiinventory_collects_registries';
+    public string $collect_itemtype = PluginGlpiinventoryCollect_Registry::class;
+    public string $collect_table    = 'glpi_plugin_glpiinventory_collects_registries';
 
-    public $collect_type = 'registry';
+    public string $collect_type = 'registry';
 
     /**
      * Get the tab name used for item
@@ -86,10 +86,10 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      * collect registry id
      *
      * @param int $computers_id id of the computer
-     * @param array $registry_data registry info sent by agent
+     * @param array<string,mixed> $registry_data registry info sent by agent
      * @param int $collects_registries_id id of collect_registry
      */
-    public function updateComputer($computers_id, $registry_data, $collects_registries_id)
+    public function updateComputer($computers_id, $registry_data, $collects_registries_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -149,7 +149,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      *
      * @param int $computers_id id of the computer
      */
-    public function showForComputer($computers_id)
+    public function showForComputer(int $computers_id): void
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         echo "<table class='tab_cadre_fixe'>";
@@ -196,18 +196,18 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     /**
      * Display registry keys / values of collect_registry id
      *
-     * @param int $collects_registries_id
+     * @param int $id
      *
      * @return void
      */
-    public function showContent($collects_registries_id): void
+    public function showContent(int $id): void
     {
         $collect_registry = new PluginGlpiinventoryCollect_Registry();
-        $collect_registry->getFromDB($collects_registries_id);
+        $collect_registry->getFromDB($id);
         $computer = new Computer();
 
         $data = $this->find(
-            ['plugin_glpiinventory_collects_registries_id' => $collects_registries_id],
+            ['plugin_glpiinventory_collects_registries_id' => $id],
             ['key']
         );
         $entries = [];

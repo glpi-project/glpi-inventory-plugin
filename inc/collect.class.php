@@ -140,9 +140,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     /**
      * Get all collect types
      *
-     * @return array [name] => description
+     * @return array<string,string> [name] => description
      */
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return [
             'registry' => __('Registry', 'glpiinventory'),
@@ -151,6 +151,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         ];
     }
 
+    /**
+     * @return array<array<string,mixed>>
+     */
     public function rawSearchOptions()
     {
 
@@ -176,7 +179,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     /**
      * Add search options
      *
-     * @return array
+     * @param ?class-string<CommonDBTM> $itemtype
+     *
+     * @return array<array<string,mixed>>
      */
     public static function getSearchOptionsToAdd($itemtype = null)
     {
@@ -274,7 +279,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * Display form
      *
      * @param int $ID
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return true
      */
     public function showForm($ID, array $options = [])
@@ -326,7 +331,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      *
      * @param int $taskjobs_id id of taskjob
      */
-    public function prepareRun($taskjobs_id)
+    public function prepareRun($taskjobs_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -568,8 +573,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
      * run function, so return data to send to the agent for collect information
      *
      * @param object $taskjobstate PluginGlpiinventoryTaskjobstate instance
-     * @param array $agent agent information from agent table in database
-     * @return array
+     * @param array<string,mixed> $agent agent information from agent table in database
+     * @return array<int, mixed>
      */
     public function run($taskjobstate, $agent)
     {
@@ -668,6 +673,13 @@ class PluginGlpiinventoryCollect extends CommonDBTM
     }
 
 
+    /**
+     * @param string $action
+     * @param string $machineId
+     * @param string $uuid
+     *
+     * @return stdClass
+     */
     public function communication($action, $machineId, $uuid)
     {
         $response = new stdClass();

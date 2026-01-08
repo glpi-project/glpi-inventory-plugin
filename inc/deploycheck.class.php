@@ -38,16 +38,16 @@ use function Safe\json_decode;
  */
 class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageItem
 {
-    public $shortname = 'checks';
-    public $json_name = 'checks';
+    public string $shortname = 'checks';
+    public string $json_name = 'checks';
 
 
     /**
      * Get types of checks with name => description
      *
-     * @return array
+     * @return array<string,array<string,string>>
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return [
             __('Registry', 'glpiinventory') => [
@@ -84,7 +84,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
      * @param string $type the type value
      * @return string the type label
      */
-    public function getLabelForAType($type)
+    public function getLabelForAType(string $type): string
     {
         $alltypes = [];
         foreach ($this->getTypes() as $label => $types) {
@@ -101,9 +101,9 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     /**
      * Get Unit name
      *
-     * @return array
+     * @return array<string,string>
      */
-    public function getUnitLabel()
+    public function getUnitLabel(): array
     {
         return [
             "B"  => __('o'),
@@ -114,7 +114,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-    public function getAuditDescription($type, $return)
+    public function getAuditDescription(string $type, string $return): string
     {
         $return_string = $this->getLabelForAType($type);
         //The skip case is a litte bit different. So we notice to the user
@@ -133,11 +133,8 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
     /**
      * Get the number to multiply to have in B relative to the unit
-     *
-     * @param string $unit the unit of number
-     * @return int the number to multiply
      */
-    public function getUnitSize($unit)
+    public function getUnitSize(string $unit): int
     {
         $units = [ "B"  => 1,
             "KB" => 1024,
@@ -155,10 +152,9 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     /**
     * Get all registry value types handled by the agent
     *
-    * @since 9.2
-    * @return array of registry values types
+    * @return array<string,string> of registry values types
     */
-    public function getRegistryTypes()
+    public function getRegistryTypes(): array
     {
         return [
             'REG_SZ'                  => 'REG_SZ',
@@ -173,7 +169,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-    public function dropdownRegistryTypes($value = 'REG_SZ')
+    public function dropdownRegistryTypes(string $value = 'REG_SZ'): int|string
     {
         return Dropdown::showFromArray(
             'value',
@@ -187,14 +183,11 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
      * Display list of checks
      *
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-     * @param array $data array converted of 'json' field in DB where stored checks
+     * @param array<string,mixed> $data array converted of 'json' field in DB where stored checks
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand): void
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
         $package_id   = $package->getID();
         $canedit      = $package->canUpdateContent();
         echo "<table class='tab_cadrehov package_item_list' id='table_checks_$rand'>";
@@ -292,10 +285,10 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
      * Get fields for the check type requested
      *
      * @param string $type the type of check
-     * @param array $data fields yet defined in edit mode
+     * @param array<string,mixed> $data fields yet defined in edit mode
      * @param string $mode mode in use (create, edit...)
      *
-     * @return array
+     * @return array<string,mixed>
      */
     public function getValues($type, $data, $mode)
     {
@@ -335,7 +328,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     *  Get labels and type for a check
     * @param string $check_type the type of check
     * @param bool $mandatory indicates if mandatory mark must be added to the label
-    * @return array the labels and type for a check
+    * @return array<string,string> the labels and type for a check
     */
     public function getLabelsAndTypes($check_type, $mandatory = false)
     {
@@ -419,20 +412,8 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-    /**
-     * Display different fields relative the check selected
-     *
-     * @param array $config
-     * @param array $request_data
-     * @param string $rand unique element id used to identify/update an element
-     * @param string $mode mode in use (create, edit...)
-     * @return void
-     */
-    public function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues(?array $config, array $request_data, string $rand, string $mode): void
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
         if (isset($request_data['packages_id'])) {
@@ -566,9 +547,9 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
     /**
     * Get all possible return values for a check
-    * @return array of return values and their labels
+    * @return array<string,string> of return values and their labels
     */
-    public function getAllReturnValues()
+    public function getAllReturnValues(): array
     {
         return  ["error"   => __('abort job', 'glpiinventory'),
             "skip"    => __("skip job", 'glpiinventory'),
@@ -584,7 +565,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     * @param ?string $value the check return value
     * @return string the label for the return value
     */
-    public function getValueForReturn($value)
+    public function getValueForReturn(?string $value): string
     {
         $values = $this->getAllReturnValues();
         if ($value !== null && isset($values[$value])) {
@@ -597,10 +578,10 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
     /**
     * Return an array corresponding to a check, ready to be serialized
-    * @param $params the check's parameters
-    * @return array the array to be encoded in json and serialized
+    * @param array<string,mixed> $params the check's parameters
+    * @return array<string,mixed> the array to be encoded in json and serialized
     */
-    public function formatCheckForJson($params)
+    public function formatCheckForJson(array $params): array
     {
         if (!isset($params['value'])) {
             $params['value'] = "";
@@ -634,12 +615,7 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     }
 
 
-    /**
-     * Add a new item in checks of the package
-     *
-     * @param array $params list of fields with value of the check
-     */
-    public function add_item($params)
+    public function add_item(array $params): bool
     {
         $entry = $this->formatCheckForJson($params);
 
@@ -654,15 +630,11 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
         //Add to package defintion
         $this->addToPackage($params['id'], $entry, 'checks');
+        return true;
     }
 
 
-    /**
-     * Save the item in checks
-     *
-     * @param array $params list of fields with value of the check
-     */
-    public function save_item($params)
+    public function save_item(array $params): bool
     {
         $entry = $this->formatCheckForJson($params);
         //get current order json
@@ -677,5 +649,6 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
 
         //update order
         $this->updateOrderJson($params['id'], $datas);
+        return true;
     }
 }

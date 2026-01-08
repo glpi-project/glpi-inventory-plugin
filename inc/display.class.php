@@ -44,6 +44,8 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
      * @param string $order
      * @param int $width
      * @param int $height
+     *
+     * @return void
      */
     public static function bar($percentage, $message = '', $order = '', $width = 400, $height = 20)
     {
@@ -121,7 +123,7 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
     /**
     * Enable debug mode if user is in debug mode
     **/
-    public static function reenableusemode()
+    public static function reenableusemode(): void
     {
         Toolbox::setDebugMode();
     }
@@ -143,12 +145,11 @@ class PluginGlpiinventoryDisplay extends CommonDBTM
      *
      * @param int $width
      * @param int|float $percent
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return string
      */
     public static function getProgressBar($width, $percent, array $options = [])
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $param = [];

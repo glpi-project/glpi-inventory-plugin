@@ -42,9 +42,9 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
      * @var string
      */
     public static $rightname        = 'plugin_glpiinventory_collect';
-    public $collect_itemtype = '';
-    public $collect_table    = '';
-    public $collect_type     = '';
+    public string $collect_itemtype = '';
+    public string $collect_table    = '';
+    public string $collect_type     = '';
 
     /**
      * Get name of this type by language of the user connected
@@ -132,10 +132,8 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     /**
      * Delete all contents linked to the computer (most cases when delete a
      * computer)
-     *
-     * @param int $computers_id
      */
-    public static function cleanComputer($computers_id)
+    public static function cleanComputer(int $computers_id): void
     {
         $classname = static::class;
         $content   = new $classname();
@@ -167,10 +165,10 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
 
         echo '<div class="d-flex gap-3 flex-column">';
         foreach ($iterator as $data) {
-            $this->showContent($data['id']);
+            $this->showContent((int) $data['id']);
         }
         echo "</div>";
     }
 
-    public function showContent($id) {}
+    public function showContent(int $id): void {}
 }

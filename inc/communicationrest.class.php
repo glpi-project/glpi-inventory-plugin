@@ -44,8 +44,8 @@ class PluginGlpiinventoryCommunicationRest
     /**
      * Manage communication between agent and server
      *
-     * @param array $params
-     * @return array|false array return jobs ready for the agent
+     * @param array<string,mixed> $params
+     * @return array<string,mixed>|false array return jobs ready for the agent
      */
     public static function communicate($params = [])
     {
@@ -79,8 +79,8 @@ class PluginGlpiinventoryCommunicationRest
     /**
      * Get configuration for an agent and for modules requested
      *
-     * @param array $params
-     * @return array
+     * @param array<string,mixed> $params
+     * @return array<string,mixed>
      */
     public static function getConfigByAgent($params = [])
     {
@@ -148,7 +148,7 @@ class PluginGlpiinventoryCommunicationRest
      * to fully support agent REST API for every task's types
      *       -- kiniou
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      * @return false
      */
     public static function getJobsByAgent($params = [])
@@ -167,7 +167,7 @@ class PluginGlpiinventoryCommunicationRest
     /**
      * Send to the agent an OK code
      */
-    public static function sendOk()
+    public static function sendOk(): void
     {
         header("HTTP/1.1 200", true, 200);
     }
@@ -177,7 +177,7 @@ class PluginGlpiinventoryCommunicationRest
      * Send to the agent an error code
      * when the request sent by the agent is invalid
      */
-    public static function sendError()
+    public static function sendError(): void
     {
         header("HTTP/1.1 400", true, 400);
     }
@@ -198,9 +198,9 @@ class PluginGlpiinventoryCommunicationRest
     /**
      * Update agent status for a taskjob
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      */
-    public static function updateLog($params = [])
+    public static function updateLog($params = []): void
     {
         /** @var DBmysql $DB */
         global $DB;

@@ -38,16 +38,16 @@ use function Safe\json_decode;
  */
 class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageItem
 {
-    public $shortname = 'actions';
-    public $json_name = 'actions';
+    public string $shortname = 'actions';
+    public string $json_name = 'actions';
 
 
     /**
      * Get list of return actions available
      *
-     * @return array
+     * @return array<int|string,string>
      */
-    public function getReturnActionNames()
+    public function getReturnActionNames(): array
     {
         return [
             0              => Dropdown::EMPTY_VALUE,
@@ -62,9 +62,9 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     /**
      * Get types of actions with name => description
      *
-     * @return array
+     * @return array<string,string|array<string,string>>
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return [
             'cmd'     => __('Command', 'glpiinventory'),
@@ -82,7 +82,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
      * @param string $type name of the type
      * @return string mapped with the type
      */
-    public function getLabelForAType($type)
+    public function getLabelForAType(string $type): string
     {
         $a_types = $this->getTypes();
         return $a_types[$type] ?? $type;
@@ -93,11 +93,11 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
      * Display form
      *
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-     * @param array $request_data
+     * @param array<string,mixed> $request_data
      * @param string $rand unique element id used to identify/update an element
      * @param string $mode possible values: init|edit|create
      */
-    public function displayForm(PluginGlpiinventoryDeployPackage $package, $request_data, $rand, $mode)
+    public function displayForm(PluginGlpiinventoryDeployPackage $package, $request_data, $rand, $mode): void
     {
 
         /*
@@ -157,14 +157,11 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
      * Display list of actions
      *
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-     * @param array $data array converted of 'json' field in DB where stored actions
+     * @param array<string,mixed> $data array converted of 'json' field in DB where stored actions
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand): void
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
         $canedit    = $package->canUpdateContent();
         $package_id = $package->getID();
         echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
@@ -256,17 +253,8 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     }
 
 
-    /**
-     * Display different fields relative the action selected (cmd, move...)
-     *
-     * @param array $config
-     * @param array $request_data
-     * @param string $mode mode in use (create, edit...)
-     * @return void
-     */
-    public function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues(?array $config, array $request_data, string $rand, string $mode): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $mandatory_mark  = $this->getMandatoryMark();
@@ -465,9 +453,9 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
     /**
      * Add a new item in actions of the package
      *
-     * @param array $params list of fields with value of the action
+     * @param array<string,mixed> $params list of fields with value of the action
      */
-    public function add_item($params)
+    public function add_item(array $params): bool
     {
         //prepare new action entry to insert in json
         $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
@@ -504,15 +492,11 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
 
         //update order
         $this->updateOrderJson($params['id'], $data);
+        return true;
     }
 
 
-    /**
-     * Save the item in actions
-     *
-     * @param array $params list of fields with value of the action
-     */
-    public function save_item($params)
+    public function save_item(array $params): bool
     {
         $tmp    = [];
         $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
@@ -543,5 +527,6 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             $params['id'],
             $this->prepareDataToSave($params, $entry)
         );
+        return true;
     }
 }

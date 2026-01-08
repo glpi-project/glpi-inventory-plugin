@@ -73,7 +73,7 @@ class PluginGlpiinventoryProfile extends Profile
      * Get the mapping old rights => new rights. Require it for upgrade from old
      * version of plugin
      *
-     * @return array
+     * @return array<string,string|array<string>>
      */
     public static function getOldRightsMappings()
     {
@@ -143,7 +143,7 @@ class PluginGlpiinventoryProfile extends Profile
      * Display form
      *
      * @param int $profiles_id
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return bool
      */
     public function showForm($profiles_id, $options = [])
@@ -195,7 +195,7 @@ class PluginGlpiinventoryProfile extends Profile
      * @param bool $openform
      * @param bool $closeform
      */
-    public function showFormSelf($profiles_id = 0, $openform = true, $closeform = true)
+    public function showFormSelf($profiles_id = 0, $openform = true, $closeform = true): void
     {
 
         echo "<div class='firstbloc'>";
@@ -239,7 +239,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Delete profiles
      */
-    public static function uninstallProfile()
+    public static function uninstallProfile(): void
     {
         $pfProfile = new self();
         $a_rights = $pfProfile->getAllRights();
@@ -252,7 +252,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Get all rights
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function getAllRights()
     {
@@ -267,7 +267,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Get rights for deploy part
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function getRightsDeploy()
     {
@@ -301,7 +301,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Get rights for inventory part
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function getRightsInventory()
     {
@@ -364,7 +364,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Get general rights
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function getRightsGeneral()
     {
@@ -405,9 +405,9 @@ class PluginGlpiinventoryProfile extends Profile
      * Add the default profile
      *
      * @param int $profiles_id
-     * @param array $rights
+     * @param array<string,int> $rights
      */
-    public static function addDefaultProfileInfos($profiles_id, $rights)
+    public static function addDefaultProfileInfos($profiles_id, $rights): void
     {
         $profileRight = new ProfileRight();
         foreach ($rights as $right => $value) {
@@ -431,10 +431,8 @@ class PluginGlpiinventoryProfile extends Profile
 
     /**
      * Create first access (so default profile)
-     *
-     * @param int $profiles_id id of profile
      */
-    public static function createFirstAccess($profiles_id)
+    public static function createFirstAccess(int $profiles_id): void
     {
         include_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/profile.class.php");
         $profile = new self();
@@ -450,7 +448,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Delete rights stored in session
      */
-    public static function removeRightsFromSession()
+    public static function removeRightsFromSession(): void
     {
         $profile = new self();
         foreach ($profile->getAllRights() as $right) {
@@ -477,7 +475,7 @@ class PluginGlpiinventoryProfile extends Profile
     /**
      * Migration script for old rights from old version of plugin
      */
-    public static function migrateProfiles()
+    public static function migrateProfiles(): void
     {
         //Get all rights from the old table
         $profiles = getAllDataFromTable(getTableForItemType(self::class));
@@ -526,7 +524,7 @@ class PluginGlpiinventoryProfile extends Profile
      * - add rights in profile table for the current user's profile
      * - current profile has all rights on the plugin
      */
-    public static function initProfile()
+    public static function initProfile(): void
     {
         $pfProfile = new self();
         $profile   = new Profile();

@@ -68,7 +68,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -121,7 +121,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
      *
      * @param int $timeslots_id
      */
-    public function formEntry($timeslots_id)
+    public function formEntry(int $timeslots_id): void
     {
         $ID = 0;
         $options = [];
@@ -182,7 +182,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
      *
      * @param int $timeslots_id
      */
-    public function formDeleteEntry($timeslots_id)
+    public function formDeleteEntry($timeslots_id): void
     {
 
         $dbentries = getAllDataFromTable(
@@ -232,7 +232,7 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
      *
      * @param int $timeslots_id
      */
-    public function showTimeSlot($timeslots_id)
+    public function showTimeSlot(int $timeslots_id): void
     {
         echo "<div id='chart'></div>";
         echo "<div id='startperiod'></div>";
@@ -276,9 +276,9 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
     /**
      * Add a new entry
      *
-     * @param array $data
+     * @param array<string,int> $data
      */
-    public function addEntry($data)
+    public function addEntry(array $data): void
     {
         if ($data['lastday'] < $data['beginday']) {
             Session::addMessageAfterRedirect(

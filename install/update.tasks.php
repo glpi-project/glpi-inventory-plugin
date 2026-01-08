@@ -35,12 +35,8 @@ use Glpi\DBAL\QueryParam;
 
 /**
  * Manage update the task system
- *
- * @global DBMysql $DB
- * @param object $migration
- * @param int $plugin_id
  */
-function pluginGlpiinventoryUpdateTasks($migration, $plugin_id)
+function pluginGlpiinventoryUpdateTasks(Migration $migration, int $plugin_id): void
 {
     global $DB;
 

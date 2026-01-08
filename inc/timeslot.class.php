@@ -71,7 +71,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -122,8 +122,8 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     /**
      * Define tabs to display on form page
      *
-     * @param array $options
-     * @return array containing the tabs name
+     * @param array<string,mixed> $options
+     * @return array<string,string> containing the tabs name
      */
     public function defineTabs($options = [])
     {
@@ -138,11 +138,9 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     /**
      * Get Timeslot entries according to the requested day of week.
      *
-     * @since 0.85+1.0
-     *
-     * @param array $timeslot_ids  A list of timeslot's ids.
-     * @param string $weekdays      The day of week (ISO-8601 numeric representation).
-     * return array the list of timeslots entries organized by timeslots ids :
+     * @param array<int> $timeslot_ids  A list of timeslot's ids.
+     * @param ?string $weekdays      The day of week (ISO-8601 numeric representation).
+     * @return array<int,mixed> the list of timeslots entries organized by timeslots ids:
      *    array(
      *       [timeslot #0] => array(
      *          [timeslot_entry #2] => array(
@@ -197,13 +195,10 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     /**
      * Get all current active timeslots
      *
-     * @since 0.85+1.0
-     *
-     * @return array
+     * @return array<int>
      */
     public function getCurrentActiveTimeslots()
     {
-        /** @var DBmysql $DB */
         global $DB;
 
         $timeslots   = [];
@@ -263,7 +258,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     *  Display form for agent configuration
      *
      * @param int $ID ID of the agent
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return true
      *
      */

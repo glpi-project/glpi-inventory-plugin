@@ -69,7 +69,10 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-    public static function getJoinCriteria()
+    /**
+     * @return array<string, mixed>
+     */
+    public static function getJoinCriteria(): array
     {
         return [
             'glpi_plugin_glpiinventory_taskjobs AS taskjob' => [
@@ -84,7 +87,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function rawSearchOptions()
     {
@@ -143,7 +146,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
     * get task with job using IPRange
     *
-    * @return array
+    * @return array<int, mixed>
     */
     public static function getTaskfromIPRange(PluginGlpiinventoryIPRange $item)
     {
@@ -433,7 +436,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * Get all agents allowed to a module (task method)
      *
      * @param string $module name of dropdown
-     * @return array [id integed agent id] => $name value agent name
+     * @return array<int, string> agent id => agent name
      */
     public function getAgents($module)
     {
@@ -642,7 +645,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Cron task: finish task if have some problem or started for so long time
      */
-    public function CronCheckRunnningJobs()
+    public function CronCheckRunnningJobs(): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -672,10 +675,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
 
     /**
      * Purge taskjoblog/state when delete taskjob
-     *
-     * @param object $parm PluginGlpiinventoryTaskjob instance
      */
-    public static function purgeTaskjob($parm)
+    public static function purgeTaskjob(PluginGlpiinventoryTaskjob $parm): void
     {
         // $parm["id"]
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
@@ -700,7 +701,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Force end task
      */
-    public function forceEnd()
+    public function forceEnd(): void
     {
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
 
@@ -730,7 +731,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @param string $method method name of taskjob to display
      */
-    public static function quickList($method)
+    public static function quickList(string $method): void
     {
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -825,7 +826,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * @param int $items_id
      * @param int $taskjobs_id
      */
-    public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id)
+    public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id): void
     {
         global $CFG_GLPI;
 
@@ -876,7 +877,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * @param string $a_items_id
      * @param int $taskjobs_id
      */
-    public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id)
+    public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id): void
     {
         global $CFG_GLPI;
 
@@ -910,9 +911,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @param string $name name of the action (here definition or action)
      */
-    public function plusButton($name)
+    public function plusButton(string $name): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         if ($this->canUpdate()) {
@@ -927,10 +927,10 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Prepare task job
      *
-     * @param array $a_taskjob
+     * @param array<string,mixed> $a_taskjob
      * @return string uniqid
      */
-    public function prepareRunTaskjob($a_taskjob)
+    public function prepareRunTaskjob(array $a_taskjob): string
     {
 
         $itemtype = "PluginGlpiinventory" . ucfirst($a_taskjob['method']);
@@ -950,7 +950,11 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     }
 
 
-    public static function restartJob($params)
+    /**
+     * @param array<string,mixed> $params
+     * @return void
+     */
+    public static function restartJob(array $params): void
     {
         $task     = new PluginGlpiinventoryTask();
         $job      = new PluginGlpiinventoryTaskjob();
@@ -1001,7 +1005,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * @param string $method
      * @param int $taskjobs_id
      */
-    public function updateMethod($method, $taskjobs_id)
+    public function updateMethod($method, $taskjobs_id): void
     {
 
         $a_methods = PluginGlpiinventoryStaticmisc::getmethods();
@@ -1020,8 +1024,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
     /**
      * Get the massive actions for this object
      *
-     * @param object|null $checkitem
-     * @return array list of actions
+     * @param ?CommonDBTM $checkitem
+     * @return array<string,string> list of actions
      */
     public function getSpecificMassiveActions($checkitem = null)
     {
@@ -1037,48 +1041,45 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @param MassiveAction $ma MassiveAction instance
      * @param CommonDBTM $item item on which execute the code
-     * @param array $ids list of ID on which execute the code
+     * @param array<int> $ids list of ID on which execute the code
      */
     public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
         CommonDBTM $item,
         array $ids
-    ) {
+    ): void {
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
-        switch ($ma->getAction()) {
-            case "plugin_glpiinventory_transfert":
-                foreach ($ids as $key) {
-                    $pfTaskjob->getFromDB($key);
-                    $pfTaskjob->forceEnd();
+        if ($ma->getAction() == "plugin_glpiinventory_transfert") {
+            foreach ($ids as $key) {
+                $pfTaskjob->getFromDB($key);
+                $pfTaskjob->forceEnd();
 
-                    //set action massive ok for this item
-                    $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
-                }
-                break;
+                //set action massive ok for this item
+                $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
+            }
         }
     }
 
 
     /**
     * Duplicate all taskjobs for a task to another one
-    * @param $source_tasks_id the ID of the task to clone
-    * @param $target_task_id the ID of the cloned task
+    * @param int $source_tasks_id the ID of the task to clone
+    * @param int $target_tasks_id the ID of the cloned task
     * @return bool
     */
     public static function duplicate($source_tasks_id, $target_tasks_id)
     {
         $pfTaskJob = new self();
-        $result    = true;
         $taskjobs  = $pfTaskJob->find(['plugin_glpiinventory_tasks_id' => $source_tasks_id]);
         foreach ($taskjobs as $taskjob) {
             $taskjob['plugin_glpiinventory_tasks_id'] = $target_tasks_id;
             unset($taskjob['id']);
             if (!$pfTaskJob->add($taskjob)) {
-                $result = false;
+                return false;
             }
         }
-        return $result;
+        return true;
     }
 }

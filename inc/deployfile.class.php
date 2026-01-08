@@ -63,8 +63,8 @@ use function Safe\unlink;
  */
 class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 {
-    public $shortname = 'files';
-    public $json_name = 'associatedFiles';
+    public string $shortname = 'files';
+    public string $json_name = 'associatedFiles';
 
     /**
      * The right name for this class
@@ -79,9 +79,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     /**
      * Get the 2 types to add files
      *
-     * @return array
+     * @return array<string,string>
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         $types = [
             'Computer' => __("Upload from computer", 'glpiinventory'),
@@ -99,12 +99,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      * Display list of files
      *
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-     * @param array $data array converted of 'json' field in DB where stored actions
+     * @param array<string,mixed> $data array converted of 'json' field in DB where stored actions
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $package_id = $package->getID();
@@ -272,16 +271,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     }
 
 
-    /**
-     * Display different fields relative the file selected
-     *
-     * @param ?array $config
-     * @param array  $request_data
-     * @param string $rand unique element id used to identify/update an element
-     * @param string $mode mode in use (create, edit...)
-     * @return void
-     */
-    public function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues(?array $config, array $request_data, string $rand, string $mode): void
     {
         global $CFG_GLPI;
 
@@ -391,7 +381,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      *
      * @param string $rand unique element id used to identify/update an element
      */
-    public static function showServerFileTree($rand)
+    public static function showServerFileTree(string $rand): void
     {
         global $CFG_GLPI;
 
@@ -458,10 +448,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
     /**
      * Get files / directories on server
-     *
-     * @param string $node
      */
-    public static function getServerFileTree($node)
+    public static function getServerFileTree(string $node): void
     {
 
         $nodes            = [];
@@ -518,6 +506,12 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         print json_encode($nodes);
     }
 
+    /**
+     * @param string $filepath
+     * @param string $entry
+     * @param string $type
+     * @return array<string,string|bool>
+     */
     private static function getJSTreeNode(string $filepath, string $entry, string $type): array
     {
         return [
@@ -529,12 +523,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         ];
     }
 
-    /**
-     * Add a new item in files of the package
-     *
-     * @param array $params list of fields with value of the file
-     */
-    public function add_item($params)
+    public function add_item(array $params): bool
     {
         switch ($params['filestype']) {
             case 'Server':
@@ -545,13 +534,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     }
 
 
-    /**
-     * Remove an item
-     *
-     * @param array $params
-     * @return bool
-     */
-    public function remove_item($params)
+    public function remove_item(array $params): bool
     {
         if (!isset($params['file_entries'])) {
             return false;
@@ -590,12 +573,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     }
 
 
-    /**
-     * Save the item in files
-     *
-     * @param array $params list of fields with value of the file
-     */
-    public function save_item($params)
+    public function save_item(array $params): bool
     {
         //get current order json
         $data = json_decode($this->getJson($params['id']), true);
@@ -619,16 +597,17 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         //update order
         $this->updateOrderJson($params['id'], $data);
+        return true;
     }
 
 
     /**
      * Upload file from user computer
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      * @return bool
      */
-    public function uploadFileFromComputer($params)
+    public function uploadFileFromComputer(array $params): bool
     {
         if (isset($params["id"])) {
             //file uploaded?
@@ -715,10 +694,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     /**
      * Upload file from temp folder in server
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      * @return bool
      */
-    public function uploadFileFromServer($params)
+    public function uploadFileFromServer(array $params): bool
     {
 
         if (preg_match('/\.\./', $params['filename'])) {
@@ -782,12 +761,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     }
 
 
-    /**
-    * Create a configuration request data
-    *
-    * @since 9.2
-    */
-    public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data)
+    public function getItemConfig(PluginGlpiinventoryDeployPackage $package, array $request_data): array
     {
         $element = $package->getSubElement($this->json_name, $request_data['index']);
         $config  = [];
@@ -827,10 +801,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     /**
      * Add file in the repository
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      * @return bool
      */
-    public function addFileInRepo($params)
+    public function addFileInRepo($params): bool
     {
         $filename      = $params['filename'];
         $file_tmp_name = $params['file_tmp_name'];
@@ -995,7 +969,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     * Return all subpart path
     *
     * @param string $sha512 sha512 of the file
-    * @return array|false
+    * @return array<string>|false
     */
     public function getFilePath($sha512)
     {
@@ -1106,7 +1080,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     /**
      * List number of files not used in packages
      */
-    public function numberUnusedFiles()
+    public function numberUnusedFiles(): void
     {
         echo "<table width='950' class='tab_cadre_fixe'>";
 
@@ -1143,7 +1117,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     /**
      * Delete the files not used in packages
      */
-    public function deleteUnusedFiles()
+    public function deleteUnusedFiles(): void
     {
         $a_files = $this->find();
         foreach ($a_files as $data) {

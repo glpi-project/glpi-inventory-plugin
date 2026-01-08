@@ -103,7 +103,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -171,8 +171,8 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * Define tabs to display on form page
      *
-     * @param array $options
-     * @return array containing the tabs name
+     * @param array<string,mixed> $options
+     * @return array<sring,string> containing the tabs name
      */
     public function defineTabs($options = [])
     {
@@ -188,7 +188,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
      * Display form
      *
      * @param int $id
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return true
      */
     public function showForm($id, array $options = [])
@@ -206,7 +206,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * Check if IP is valid
      *
-     * @param array $a_input array of IPs
+     * @param array<string,mixed> $a_input array of IPs
      * @return bool
      */
     public function checkip($a_input)
@@ -274,8 +274,8 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     /**
      * Get the massive actions for this object
      *
-     * @param object|null $checkitem
-     * @return array list of actions
+     * @param ?CommonDBTM $checkitem
+     * @return array<string,string> list of actions
      */
     public function getSpecificMassiveActions($checkitem = null)
     {

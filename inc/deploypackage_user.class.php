@@ -83,7 +83,7 @@ class PluginGlpiinventoryDeployPackage_User extends CommonDBRelation
      * Get users for a deploypackage
      *
      * @param int $deploypackages_id ID of the deploypackage
-     * @return array list of users linked to a deploypackage
+     * @return array<int,mixed> list of users linked to a deploypackage
     **/
     public static function getUsers($deploypackages_id)
     {

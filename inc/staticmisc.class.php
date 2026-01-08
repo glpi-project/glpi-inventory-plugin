@@ -39,9 +39,7 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get task methods of this plugin
      *
-     * @return array an array of the form ('module'=>'value', 'method'=>'value')
-     *   module value name of plugin
-     *   method value name of method
+     * @return array an array of the form ('module'=>'value', 'method'=>'value') //@phpstan-ignore missingType.iterableValue
      */
     public static function task_methods()
     {
@@ -99,7 +97,7 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Display methods availables
      *
-     * @return array
+     * @return array<string,string>
      */
     public static function getModulesMethods()
     {
@@ -124,10 +122,7 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get all methods of this plugin
      *
-     * @return array an array of the form('module'=>'value', 'method'=>'value')
-     *   module value name of plugin
-     *   method value name of method
-     *
+     * @return array an array of the form('module'=>'value', 'method'=>'value') //@phpstan-ignore missingType.iterableValue
      */
     public static function getmethods()
     {
@@ -159,13 +154,11 @@ class PluginGlpiinventoryStaticmisc
 
 
     /**
-     * Get types of datas available to select for taskjob definition for ESX method
+     * Get types of data available to select for taskjob definition for ESX method
      *
-     * @param array $a_itemtype array types yet added for definitions
+     * @param array<string,mixed> $a_itemtype array types yet added for definitions
      *
-     * @return array an array of the form ('itemtype'=>'value', 'itemtype'=>'value'...)
-     *   itemtype itemtype of object
-     *   value name of the itemtype
+     * @return array an array of the form ('itemtype'=>'value', 'itemtype'=>'value'...) //@phpstan-ignore missingType.iterableValue
      */
     public static function task_definitiontype_InventoryComputerESX($a_itemtype)
     {
@@ -223,8 +216,8 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get action types for InventoryComputerESX
      *
-     * @param array $a_itemtype
-     * @return array
+     * @param array<string,mixed> $a_itemtype
+     * @return array<string,string>
      */
     public static function task_actiontype_InventoryComputerESX($a_itemtype)
     {
@@ -302,7 +295,7 @@ class PluginGlpiinventoryStaticmisc
      * For the moment it's hardcoded, but in a future release it may be in DB
      *
      * @param int $entities_id id of the entity
-     * @return array
+     * @return array<string,mixed>
      */
     public static function task_ESX_getParameters($entities_id)
     {
@@ -320,8 +313,8 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Definition types for network discovery
      *
-     * @param array $a_itemtype
-     * @return array
+     * @param array<string,mixed> $a_itemtype
+     * @return array<string,string>
      */
     public static function task_definitiontype_networkdiscovery($a_itemtype)
     {
@@ -354,8 +347,8 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Definition types for network inventory
      *
-     * @param array $a_itemtype
-     * @return array
+     * @param array<string,mixed> $a_itemtype
+     * @return array<string,string>
      */
     public static function task_definitiontype_networkinventory($a_itemtype)
     {
@@ -422,7 +415,7 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get agents allowed to do network discovery
      *
-     * @return array
+     * @return array<string,string>
      */
     public static function task_networkdiscovery_agents()
     {
@@ -443,16 +436,15 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get types of actions for network inventory
      *
-     * @return array
+     * @return array<string>
      */
     public static function task_action_networkinventory()
     {
-        $a_itemtype = [];
-        $a_itemtype[] = Printer::class;
-        $a_itemtype[] = NetworkEquipment::class;
-        $a_itemtype[] = PluginGlpiinventoryIPRange::class;
-
-        return $a_itemtype;
+        return [
+            Printer::class,
+            NetworkEquipment::class,
+            PluginGlpiinventoryIPRange::class,
+        ];
     }
 
 
@@ -488,10 +480,8 @@ class PluginGlpiinventoryStaticmisc
     public static function task_selection_type_networkdiscovery($itemtype)
     {
         $selection_type = '';
-        switch ($itemtype) {
-            case PluginGlpiinventoryIPRange::class:
-                $selection_type = 'iprange';
-                break;
+        if ($itemtype == PluginGlpiinventoryIPRange::class) {
+            $selection_type = 'iprange';
         }
         return $selection_type;
     }
@@ -504,7 +494,7 @@ class PluginGlpiinventoryStaticmisc
      * Get definition types for deploy install
      *
      * @param string $a_itemtype
-     * @return array
+     * @return array<string,string>
      */
     public static function task_definitiontype_deployinstall($a_itemtype)
     {
@@ -535,8 +525,8 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get types of action for deployinstall
      *
-     * @param array $a_itemtype
-     * @return array
+     * @param array<string,mixed> $a_itemtype
+     * @return array<string,string>
      */
     public static function task_actiontype_deployinstall($a_itemtype)
     {
@@ -620,7 +610,7 @@ class PluginGlpiinventoryStaticmisc
      * Get Deploy paramaters: url for communication with server
      *
      * @param int $entities_id
-     * @return array
+     * @return array<string,string>
      */
     public static function task_deploy_getParameters($entities_id)
     {
@@ -637,8 +627,8 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get definition types of collect
      *
-     * @param array $a_itemtype
-     * @return array
+     * @param array<string,mixed> $a_itemtype
+     * @return array<string,string>
      */
     public static function task_definitiontype_collect($a_itemtype)
     {
@@ -666,8 +656,8 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get action types for collect
      *
-     * @param array $a_itemtype
-     * @return array
+     * @param array<string,mixed> $a_itemtype
+     * @return array<string,string>
      */
     public static function task_actiontype_collect($a_itemtype)
     {
@@ -752,9 +742,9 @@ class PluginGlpiinventoryStaticmisc
      * Get collect parameters (URL to dialog with server)
      *
      * @param int $entities_id
-     * @return array
+     * @return array<string,string>
      */
-    public static function task_collect_getParameters($entities_id)
+    public static function task_collect_getParameters(int $entities_id): array
     {
         return [
             "task" => "Collect",

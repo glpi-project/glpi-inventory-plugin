@@ -82,7 +82,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Fields added to this class
      *
-     * @return array
+     * @return array<array<string,string>>
      */
     public function getAdditionalFields()
     {
@@ -111,9 +111,13 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      * Display specific fields
      *
      * @param int $ID
-     * @param array $field
+     * @param array<string,mixed> $field
+     * @param array<string,mixed> $options
+     *
+     * @return void
      */
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
+
     {
 
         if ($field['type'] == 'credential_itemtype') {
@@ -127,7 +131,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      *
      * @param int $ID
      */
-    public function showItemtype($ID)
+    public function showItemtype(int $ID): void
     {
 
         //Criteria already added : only display the selected itemtype
@@ -150,8 +154,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Define more tabs to display
      *
-     * @param array $options
-     * @return array
+     * @param array<string,mixed> $options
+     * @return array<string,mixed>
      */
     public function defineMoreTabs($options = [])
     {
@@ -162,7 +166,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Display more tabs
      *
-     * @param array $tab
+     * @param array<string> $tab
+     *
+     * @return void
      */
     public function displayMoreTabs($tab) {}
 
@@ -170,7 +176,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -221,8 +227,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      * Perform checks to be sure that an itemtype and at least a field are
      * selected
      *
-     * @param array $input the values to insert in DB
-     * @return array
+     * @param array<string,mixed> $input the values to insert in DB
+     * @return array<string,mixed>
      */
     public static function checkBeforeInsert($input)
     {
@@ -246,8 +252,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Prepare data before add to database
      *
-     * @param array $input
-     * @return array
+     * @param array<string,mixed> $input
+     * @return array<string,mixed>
      */
     public function prepareInputForAdd($input)
     {
@@ -259,8 +265,8 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Prepare data before update in database
      *
-     * @param array $input
-     * @return array
+     * @param array<string,mixed> $input
+     * @return array<string,mixed>
      */
     public function prepareInputForUpdate($input)
     {
@@ -289,9 +295,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      * Find a credential by his itemtype
      *
      * @param string $credential_itemtype for example PluginGlpiinventoryInventoryComputerESX
-     * @return array
+     * @return array<string,mixed>
      */
-    public static function findItemtypeType($credential_itemtype)
+    public static function findItemtypeType($credential_itemtype): array
     {
 
         $credential = ['itemtype' => 'PluginGlpiinventoryInventoryComputerESX', //Credential itemtype
@@ -308,9 +314,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Get all credentials itemtypes
      *
-     * @return array
+     * @return array<string,string>
      */
-    public static function getCredentialsItemTypes()
+    public static function getCredentialsItemTypes(): array
     {
         return [
             PluginGlpiinventoryInventoryComputerESX::class => __('VMware host', 'glpiinventory'),
@@ -321,10 +327,10 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Get credential types
      *
-     * @param string $itemtype
-     * @return array
+     * @param class-string<CommonDBTM> $itemtype
+     * @return array<class-string<CommonDBTM>,string>
      */
-    public static function getForItemtype($itemtype)
+    public static function getForItemtype($itemtype): array
     {
         $itemtypes = [];
         foreach (PluginGlpiinventoryModule::getAll() as $data) {
@@ -344,9 +350,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Display dropdown with credentials
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      */
-    public static function dropdownCredentials($params = [])
+    public static function dropdownCredentials($params = []): void
     {
         global $CFG_GLPI;
 
@@ -390,9 +396,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     /**
      * Display dropdown of credentials for itemtype
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      */
-    public static function dropdownCredentialsForItemtype($params = [])
+    public static function dropdownCredentialsForItemtype($params = []): void
     {
 
         if (empty($params['itemtype'])) {
@@ -428,6 +434,9 @@ class PluginGlpiinventoryCredential extends CommonDropdown
 
     /**
      * Display a specific header
+     *
+     * @param ?string $title Title of the page
+     * @param ?array<string> $menus Menus to display
      */
     public static function displayCentralHeader(?string $title = null, ?array $menus = null): void
     {
@@ -443,6 +452,10 @@ class PluginGlpiinventoryCredential extends CommonDropdown
         $this->decodePasswordField();
     }
 
+    /**
+     * @param array<string,mixed> $input
+     * @return array<string,mixed>
+     */
     private function encodePasswordInInput(array $input): array
     {
         $password = $input['password'] ?? "";
