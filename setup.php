@@ -38,36 +38,25 @@ use Glpi\Plugin\Hooks;
 use function Safe\define;
 use function Safe\parse_url;
 
-define('PLUGIN_GLPIINVENTORY_VERSION', '1.6.5');
-// Minimal GLPI version, inclusive
-define('PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION', '11.0.2');
-// Maximum GLPI version, exclusive
-define('PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION', '11.0.99');
+$constants = [
+    'PLUGIN_GLPIINVENTORY_VERSION' => '1.6.5',
+    'PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION' => '11.0.2', // Minimal GLPI version, inclusive
+    'PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION' => '11.0.99', // Maximum GLPI version, exclusive
+    'PLUGIN_GLPI_INVENTORY_DIR' => __DIR__,
+    'PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE' => 0,
+    'PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR' => GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/repository/',
+    'PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR' => GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/manifests/',
+    'PLUGIN_GLPI_INVENTORY_UPLOAD_DIR' => GLPI_PLUGIN_DOC_DIR . '/glpiinventory/upload/',
+];
+foreach ($constants as $name => $default_value) {
+    if (!defined($name)) {
+        define($name, $default_value);
+    }
+}
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reality a ESX task
 $PF_ESXINVENTORY = false;
-
-define('PLUGIN_GLPI_INVENTORY_DIR', __DIR__);
-
-define("PLUGIN_GLPI_INVENTORY_XML", '');
-
-define("PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE", "0");
-define("PLUGIN_GLPI_INVENTORY_REALVERSION", PLUGIN_GLPIINVENTORY_VERSION . " SNAPSHOT");
-
-define(
-    "PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR",
-    GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository/"
-);
-define(
-    "PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR",
-    GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/manifests/"
-);
-
-define(
-    "PLUGIN_GLPI_INVENTORY_UPLOAD_DIR",
-    GLPI_PLUGIN_DOC_DIR . "/glpiinventory/upload/"
-);
 
 /**
  * Check if the script name finish by
@@ -87,9 +76,6 @@ function plugin_glpiinventory_script_endswith($scriptname)
 
 /**
  * Init hook
- *
- * @global array $PLUGIN_HOOKS
- * @global array $CFG_GLPI
  */
 function plugin_init_glpiinventory()
 {
@@ -355,7 +341,7 @@ function plugin_init_glpiinventory()
             }
         }
     } else { // plugin not active, need $moduleId for uninstall check
-        include_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/module.class.php');
+        include_once(__DIR__ . '/inc/module.class.php');
     }
 
     // exclude some pages from splitted layout
@@ -396,7 +382,7 @@ function plugin_version_glpiinventory()
             'glpi' => [
                 'min' => PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION,
                 'max' => PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION,
-                'dev' => PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE == 0, //@phpstan-ignore equal.alwaysTrue
+                'dev' => PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE == 0,
             ],
             'php' => [
                 'exts'   => [

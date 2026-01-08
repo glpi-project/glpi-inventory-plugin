@@ -594,6 +594,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             . ucfirst($subtype) . "' />";
 
             $classname = "PluginGlpiinventoryDeploy" . ucfirst($subtype);
+            if (!is_a($classname, PluginGlpiinventoryDeployPackageItem::class, true)) {
+                return;
+            }
             $class     = new $classname();
             $class->displayForm($this, $datas, (string) $rand, "init");
             Html::closeForm();
