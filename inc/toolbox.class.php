@@ -44,7 +44,7 @@ class PluginGlpiinventoryToolbox
      * Log if extra debug enabled
      *
      * @param string $file
-     * @param string|array<string> $message
+     * @param string|array $message
      */
     public static function logIfExtradebug(string $file, string|array $message): void
     {
@@ -312,8 +312,8 @@ class PluginGlpiinventoryToolbox
      * Execute a function as plugin user
      *
      * @param string|array<string> $function
-     * @param array<string,mixed> $args
-     * @return array the normally returned value from executed callable //@phpstan-ignore missingType.iterableValue
+     * @param array $args
+     * @return array the normally returned value from executed callable
      */
     public function executeAsGlpiinventoryUser(string|array $function, array $args = []): array
     {
