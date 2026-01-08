@@ -489,9 +489,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      *
      * @return void
      */
-    public function displayAjaxValues(?array $config, array $request_data, string $rand, string $mode): void
-    {
-    }
+    public function displayAjaxValues(?array $config, array $request_data, string $rand, string $mode): void {}
 
     /**
      * @return array<string,string|array<string,string>>

@@ -117,7 +117,6 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      * @return void
      */
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
-
     {
 
         if ($field['type'] == 'credential_itemtype') {
