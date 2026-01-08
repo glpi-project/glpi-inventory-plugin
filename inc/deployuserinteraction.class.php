@@ -35,12 +35,11 @@ use function Safe\json_decode;
 
 /**
  * Manage user interactions.
- * @since 9.2
  */
 class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeployPackageItem
 {
-    public $shortname = 'userinteractions';
-    public $json_name = 'userinteractions';
+    public string $shortname = 'userinteractions';
+    public string $json_name = 'userinteractions';
 
     //--------------- Events ---------------------------------------//
 
@@ -88,12 +87,13 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
     /**
      * Get events with name => description
-     * @since 9.2
-     * @return array
+     *
+     * @return array<string,string|array<string,string>>
      */
     public function getTypes()
     {
-        return [self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'glpiinventory'),
+        return [
+            self::EVENT_BEFORE_DOWNLOAD  => __("Before download", 'glpiinventory'),
             self::EVENT_AFTER_DOWNLOAD   => __("After download", 'glpiinventory'),
             self::EVENT_AFTER_ACTIONS    => __("After actions", 'glpiinventory'),
             self::EVENT_DOWNLOAD_FAILURE => __("On download failure", 'glpiinventory'),
@@ -104,26 +104,17 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
     /**
      * Get an event label by its identifier
-     * @since 9.2
+     * @param string $type event identifier
      * @return string
      */
-    public function getLabelForAType($event)
+    public function getLabelForAType(string $type): string
     {
         $events = $this->getTypes();
-        return $events[$event] ?? '';
+        return $events[$type] ?? '';
     }
 
 
-    /**
-     * Display different fields relative the check selected
-     *
-     * @param array $config
-     * @param array $request_data
-     * @param string $rand unique element id used to identify/update an element
-     * @param string $mode mode in use (create, edit...)
-     * @return void
-     */
-    public function displayAjaxValues($config, $request_data, $rand, $mode)
+    public function displayAjaxValues(?array $config, array $request_data, string $rand, string $mode): void
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
@@ -185,10 +176,10 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
      * Get fields for the check type requested
      *
      * @param string $type the type of check
-     * @param array $data fields yet defined in edit mode
+     * @param array<string,mixed> $data fields yet defined in edit mode
      * @param string $mode mode in use (create, edit...)
      *
-     * @return array
+     * @return array<string,mixed>
      */
     public function getValues($type, $data, $mode)
     {
@@ -224,10 +215,10 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
      * Display list of user interactions
      *
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-     * @param array $data array converted of 'json' field in DB where stored checks
+     * @param array<string,mixed> $data array converted of 'json' field in DB where stored checks
      * @param string $rand unique element id used to identify/update an element
      */
-    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand)
+    public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand): void
     {
         $package_id        = $package->getID();
         $canedit           = $package->canUpdateContent();
@@ -280,7 +271,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     * Get of a short description of a user interaction
     *
     * @since 9.2
-    * @param array $interaction an array representing an interaction
+    * @param array<string,mixed> $interaction an array representing an interaction
     * @return string a short description
     */
     public function getInteractionDescription($interaction)
@@ -307,12 +298,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-    /**
-     * Add a new item in checks of the package
-     *
-     * @param array $params list of fields with value of the check
-     */
-    public function add_item($params)
+    public function add_item(array $params): bool
     {
         if (!isset($params['text'])) {
             $params['text'] = "";
@@ -332,15 +318,11 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
         //Add to package defintion
         $this->addToPackage($params['id'], $entry, 'userinteractions');
+        return true;
     }
 
 
-    /**
-     * Save the item in checks
-     *
-     * @param array $params list of fields with value of the check
-     */
-    public function save_item($params)
+    public function save_item(array $params): bool
     {
         if (!isset($params['value'])) {
             $params['value'] = "";
@@ -362,12 +344,13 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             $params['id'],
             $this->prepareDataToSave($params, $entry)
         );
+        return true;
     }
 
 
     /**
      * @param PluginGlpiinventoryDeployPackage $package
-     * @return array
+     * @return array<string>
      */
     public function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
     {
@@ -435,7 +418,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
     }
 
 
-    public function getEventMessage($event = '')
+    public function getEventMessage(string $event = ''): string
     {
         $message = __('%1$s button pressed');
         switch ($event) {
@@ -475,6 +458,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             case 'on_multiusers':
                 return __('Multiple users connected', 'glpiinventory');
         }
+        return '';
     }
 
     public static function getIcon()

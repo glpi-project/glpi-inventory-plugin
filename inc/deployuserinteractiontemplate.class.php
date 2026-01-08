@@ -83,6 +83,10 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     public const WTS_ICON_ERROR               = 'error';
 
 
+    /**
+     * @param array<string,mixed> $options
+     * @return array<int,array<string,mixed>>
+     */
     public function defineTabs($options = [])
     {
 
@@ -145,7 +149,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
      * Get list of supported interaction methods
      *
      * @since 9.2
-     * @return array
+     * @return array<string,string>
      */
     public static function getTypes()
     {
@@ -158,7 +162,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
      * Get available buttons for alerts
      *
-     * @return array
+     * @return array<string,string>
      */
     public static function getButtons()
     {
@@ -179,7 +183,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
      * Get available icons for alerts
      *
      * @since 9.2
-     * @return array
+     * @return array<string,string>
      */
     public static function getIcons()
     {
@@ -197,7 +201,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
      * Get available behaviors in case of user interactions
      *
      * @since 9.2
-     * @return array
+     * @return array<string,string>
      */
     public static function getBehaviors()
     {
@@ -230,7 +234,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
      * Get the fields to be encoded in json
      * @since 9.2
-     * @return array of field names
+     * @return array<string> of field names
      */
     public function getJsonFields()
     {
@@ -244,7 +248,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
      * Get the fields to be encoded in json
      * @since 9.2
-     * @return array of field names
+     * @return array<string> of field names
      */
     public function getMainFormFields()
     {
@@ -257,7 +261,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
      * Get the fields to be encoded in json
      * @since 9.2
-     * @return array of field names
+     * @return array<string> of field names
      */
     public function getBehaviorsFields()
     {
@@ -269,11 +273,10 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
 
     /**
-     * Initialize json fields
-     * @since 9.2
+     * Initialize JSON fields
      *
-     * @param array $json_fields the json fields
-     * @return array of field names
+     * @param array<string,mixed> $json_fields the JSON fields
+     * @return array<string,mixed> of field names
      */
     public function initializeJsonFields($json_fields)
     {
@@ -288,8 +291,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
     /**
     * Save form data as a json encoded array
-    * @since 9.2
-    * @param array $params form parameters
+    *
+    * @param array<string,mixed> $params form parameters
     * @return string json encoded array
     */
     public function saveToJson($params = [])
@@ -308,9 +311,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * Add the json template fields to package
     *
     * @since 9.2
-    * @param array $params the input array
+    * @param array<string,mixed> $params the input array
      *
-    * @return array now containing input data + data from the template
+    * @return array<string,mixed> now containing input data + data from the template
     */
     public function addJsonFieldsToArray($params = [])
     {
@@ -334,9 +337,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
     /**
     * Display an interaction template form
-    * @since 9.2
+    *
     * @param int $id      id of a template to edit
-    * @param array   $options POST form options
+    * @param array<string,mixed>   $options POST form options
     */
     public function showForm($id, $options = [])
     {
@@ -358,7 +361,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
      * Array of Retries values
      *
-     *  @return array
+     *  @return array<int,string>
      **/
     public static function getRetries()
     {
@@ -396,7 +399,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     /**
      * Array of frequency (interval between 2 actions)
      *
-     *  @return array
+     *  @return array<int,string>
      **/
     public static function getTimeouts()
     {
@@ -432,7 +435,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * Get all events leading to an action on a task
     *
     * @since 9.2
-    * @return array an array of event => event label
+    * @return array<string,string> an array of event => event label
     */
     public function getEvents()
     {
@@ -457,8 +460,8 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     * Get the behaviors to define for an agent to correctly handle the interaction
     *
     * @since 9.2
-    * @param $param the button selected in the interaction template form
-    * @return array an array of needed interaction behaviors
+    * @param string $button the button selected in the interaction template form
+    * @return array<string>
     */
     public function getBehaviorsToDisplay($button)
     {
@@ -547,7 +550,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
      *
     * @param int $ID the template's ID
     */
-    public function showBehaviors($ID)
+    public function showBehaviors($ID): void
     {
 
         $json_data = json_decode($this->fields['json'], true);
@@ -589,8 +592,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
         }
 
         $this->showFormButtons();
-
-        return true;
     }
 
 
@@ -611,9 +612,9 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
 
 
     /**
-    * Get temlate values as an array
-    * @since 9.2
-    * @return array the template values as an array
+    * Get template values as an array
+    *
+    * @return array<string,mixed> the template values as an array
     */
     public function getValues()
     {

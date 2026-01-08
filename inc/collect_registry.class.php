@@ -38,7 +38,7 @@ use function Safe\preg_match;
  */
 class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectCommon
 {
-    public $collect_type = 'registry';
+    public string $collect_type = 'registry';
 
     /**
      * Get name of this type by language of the user connected
@@ -59,16 +59,16 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
     /**
      * Get Hives of the registry
      *
-     * @return array list of hives
+     * @return array<string,string> list of hives
      */
-    public static function getHives()
+    public static function getHives(): array
     {
         return [
             "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",
         ];
     }
 
-    public function getListHeaders()
+    public function getListHeaders(): array
     {
         return [
             'hive' => __('Hive', 'glpiinventory'),
@@ -77,7 +77,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         ];
     }
 
-    public function displayOneRow($row = [])
+    public function displayOneRow(array $row = []): array
     {
         return [
             'hive' => $row['hive'],

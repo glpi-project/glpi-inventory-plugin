@@ -89,6 +89,9 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
         return false;
     }
 
+    /**
+     * @return array<int, array<string,mixed>>
+     */
     final public function getModulesList(?int $agents_id = null): array
     {
         $modules = $this->find();
@@ -318,7 +321,6 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
             );
         } else {
             // ... else use global GLPI configuration parameter.
-            /** @var array $CFG_GLPI */
             global $CFG_GLPI;
             $base_url = $CFG_GLPI['url_base'];
 

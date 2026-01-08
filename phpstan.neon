@@ -6,7 +6,7 @@ includes:
 parameters:
     parallel:
         maximumNumberOfProcesses: 2
-    level: 5
+    level: 6
     bootstrapFiles:
         - ../../stubs/glpi_constants.php
         - ../../vendor/autoload.php

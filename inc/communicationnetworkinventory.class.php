@@ -51,6 +51,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory
      * @param string $p_DEVICEID device_id of the agent
      * @param object $a_CONTENT
      * @param Inventory $inventory
+     *
+     * @return array<string,mixed>
      */
     public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory)
     {
@@ -185,7 +187,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
     /**
      * Add log in the taskjob
      */
-    public function addtaskjoblog()
+    public function addtaskjoblog(): void
     {
 
         if (!isset($_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'])) {

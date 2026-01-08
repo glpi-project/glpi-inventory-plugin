@@ -97,7 +97,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     /**
      * Get additional menu options and breadcrumb
      *
-     * @return array
+     * @return array<string,mixed>
      */
     public static function getAdditionalMenuOptions()
     {
@@ -178,9 +178,8 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      *
      * @param string $type
      */
-    public static function displayMenu($type = "big")
+    public static function displayMenu($type = "big"): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $fi_path = $CFG_GLPI['root_doc'] . '/plugins/glpiinventory';
@@ -443,7 +442,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
     /**
      * Menu for SNMP inventory
      */
-    public static function displayMenuSNMPInventory()
+    public static function displayMenuSNMPInventory(): void
     {
         global $CFG_GLPI;
 
@@ -532,10 +531,10 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      * Display chart
      *
      * @param string $name
-     * @param array $data list of data for the chart
+     * @param array<string,mixed> $data list of data for the chart
      * @param string $title
      */
-    public static function showChart($name, $data, $title = '&nbsp;')
+    public static function showChart($name, $data, $title = '&nbsp;'): void
     {
         echo "<div class='fi_chart donut'>";
         echo "<h2 class='fi_chart_title'>$title</h2>";
@@ -551,11 +550,11 @@ class PluginGlpiinventoryMenu extends CommonGLPI
      * Display chart bar
      *
      * @param string $name
-     * @param array $data list of data for the chart
+     * @param array<string,mixed> $data list of data for the chart
      * @param string $title
      * @param int $width
      */
-    public static function showChartBar($name, $data, $title = '', $width = 370)
+    public static function showChartBar($name, $data, $title = '', $width = 370): void
     {
         echo "<div class='fi_chart bar'>";
         echo "<h2 class='fi_chart_title'>$title</h2>";
@@ -566,6 +565,9 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         echo "</div>";
     }
 
+    /**
+     * @return string
+     */
     public static function getIcon()
     {
         return "ti ti-settings";

@@ -81,9 +81,9 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     /**
      * Add more fields
      *
-     * @return array
+     * @return array<array<string,string>>
      */
-    public function getAdditionalFields()
+    public function getAdditionalFields(): array
     {
         return [
             [
@@ -104,7 +104,9 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
      * Display specific fields
      *
      * @param int $ID
-     * @param array $field
+     * @param array<string,mixed> $field
+     * @param array<string,mixed> $options
+     * @return void
      */
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
     {
@@ -119,7 +121,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -170,6 +172,9 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
 
     /**
      * Display a specific header
+     *
+     * @param ?string $title
+     * @param ?array<string> $menus
      */
     public static function displayCentralHeader(?string $title = null, ?array $menus = null): void
     {

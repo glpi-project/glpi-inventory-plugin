@@ -81,7 +81,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -214,7 +214,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     * Display form
     *
     * @param PluginGlpiinventoryIPRange $item
-    * @param array $options
+    * @param array<string,mixed> $options
     * @return bool
     */
     public function showItemForm(PluginGlpiinventoryIPRange $item, array $options = [])
@@ -247,15 +247,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         return true;
     }
 
-
-
-
     /**
      * Purge elements linked to task when delete it
-     *
-     * @param object $param
      */
-    public static function purgeTask($param)
+    public static function purgeTask(CommonDBTM $param): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -314,7 +309,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      *
      * @param string $method
      */
-    public static function cleanTasksbyMethod($method)
+    public static function cleanTasksbyMethod($method): void
     {
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $pfTask = new PluginGlpiinventoryTask();
@@ -349,9 +344,9 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      * Get the list of taskjobstate for the agent
      *
      * @param int $agent_id
-     * @param array $methods
-     * @param array $options
-     * @return array
+     * @param array<string> $methods
+     * @param array<string,mixed> $options
+     * @return array<string,mixed>
      */
     public function getTaskjobstatesForAgent($agent_id, $methods = [], $options = [])
     {
@@ -604,12 +599,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     }
 
 
-    /**
-    * Prepare data before update in database
-    *
-    * @param array $input
-    * @return false|array
-    */
     public function prepareInputForUpdate($input)
     {
         if ($this->fields['is_active'] && ($input['is_active'] ?? '1')) {
@@ -624,7 +613,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      *
      * @return true
      */
-    public static function cronTaskscheduler($crontask = null)
+    public static function cronTaskscheduler(?CronTask $crontask = null)
     {
         try {
             ini_set("max_execution_time", "0");
@@ -645,6 +634,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
     /**
      * Cron task: prepare taskjobs
+     *
+     * @param ?CronTask $task
      *
      * @return true
      */
@@ -759,7 +750,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      *
      * @param string $name task's name
      *
-     * @return array
+     * @return array<string,string>
     **/
     public static function cronInfo($name)
     {
@@ -778,7 +769,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Format chrono (interval) in hours, minutes, seconds, microseconds string
      *
-     * @param array $chrono
+     * @param array<string,mixed> $chrono
      * @return string
      */
     public static function formatChrono($chrono)
@@ -805,10 +796,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      * - tasks: is a map containing the objects of a task
      * - agents: is a list of the agents involved in the tasks jobs
      *
-     * @param array $task_ids list of tasks id
+     * @param array<int> $task_ids list of tasks id
      * @param bool $with_logs default to true to get jobs execution logs with the jobs states
      * @param bool $only_active, set to true to include only active tasks
-     * @return array
+     * @return array<string,mixed>
      */
     public function getJoblogs(array $task_ids = [], $with_logs = true, $only_active = false)
     {
@@ -932,7 +923,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             }
 
             $job_id = (int) $result['job_id'];
-            /** @var array  $jobs_handle */
+            /** @var array<int,mixed>  $jobs_handle */
             $jobs_handle = &$logs[$task_id]['jobs'];
             if (!isset($jobs_handle[$job_id])) {
                 $jobs_handle[$job_id] = [
@@ -1103,7 +1094,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     continue;
                 }
                 $job_id = (int) $taskjob['id'];
-                /** @var array $jobs */
+                /** @var array<int,mixed> $jobs */
                 $jobs   = &$logs[$task_id]['jobs'];
                 if (!isset($jobs[$job_id])) {
                     continue;
@@ -1279,9 +1270,9 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     $run_id = $log_result['run_id'];
                     $run_data = $runs_id[$run_id];
 
-                    /** @var array $jobs */
+                    /** @var array<int,mixed> $jobs */
                     $jobs    = &$logs[$run_data['task_id']]['jobs'];
-                    /** @var array $targets */
+                    /** @var array<int,mixed> $targets */
                     $targets = &$jobs[$run_data['jobs_id']]['targets'];
 
                     $targets[$run_data['target_id']]['agents'][$run_data['agent_id']][] = [
@@ -1315,7 +1306,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Ajax called to get job logs
      *
-     * @param  array  $options these possible entries
+     * @param  array<string,mixed>  $options these possible entries
      *                          - task_id (mandatory), the current task id
      *                          - includeoldjobs: the value of "include old jobs" list
      *                          - refresh: the value of "refresh interval" list
@@ -1428,8 +1419,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get tasks filtered by relevant criteria
      *
-     * @param array $filter criteria to filter in the request
-     * @return array
+     * @param array<string,mixed> $filter criteria to filter in the request
+     * @return array<int,mixed>
      */
     public static function getItemsFromDB($filter)
     {
@@ -1650,8 +1641,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     /**
      * Get the massive actions for this object
      *
-     * @param object|null $checkitem
-     * @return array list of actions
+     * @param ?CommonDBTM $checkitem
+     * @return array<string,string> list of actions
      */
     public function getSpecificMassiveActions($checkitem = null)
     {
@@ -1770,7 +1761,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      *
      * @param MassiveAction $ma MassiveAction instance
      * @param CommonDBTM $item item on which execute the code
-     * @param array $ids list of ID on which execute the code
+     * @param array<int> $ids list of ID on which execute the code
      */
     public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,

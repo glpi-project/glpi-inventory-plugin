@@ -72,8 +72,8 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     /**
      * Define tabs to display on form page
      *
-     * @param array $options
-     * @return array containing the tabs name
+     * @param array<string,mixed> $options
+     * @return array<string,mixed> containing the tabs name
      */
     public function defineTabs($options = [])
     {
@@ -91,7 +91,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
      * Location is retrieved from the computer data.
      *
      * @param ?int $agents_id
-     * @return array
+     * @return array<int,string>
      */
     public static function getList($agents_id)
     {
@@ -216,7 +216,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
      * Display form
      *
      * @param int $id
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return true
      */
     public function showForm($id, array $options = [])
@@ -234,7 +234,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -318,8 +318,9 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     /**
      * Get the massive actions for this object
      *
-     * @param object|null $checkitem
-     * @return array list of actions
+     * @param ?CommonDBTM $checkitem
+     *
+     * @return array<string,string> list of actions
      */
     public function getSpecificMassiveActions($checkitem = null)
     {
@@ -351,7 +352,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
      *
      * @param MassiveAction $ma MassiveAction instance
      * @param CommonDBTM $item item on which execute the code
-     * @param array $ids list of ID on which execute the code
+     * @param array<int> $ids list of ID on which execute the code
      */
     public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,

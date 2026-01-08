@@ -160,8 +160,8 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
     /**
      * When agent contact server, this function send job data to agent
      *
-     * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
-     * @return array
+     * @param PluginGlpiinventoryTaskjobstate $jobstate PluginGlpiinventoryTaskjobstate instance
+     * @return array<string, mixed>
      */
     public function run($jobstate)
     {

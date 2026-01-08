@@ -113,12 +113,8 @@ Html::footer();
 
 /**
  * Display special search form
- *
- * @global array $_SERVER
- * @global array $_GET
- * @global array $CFG_GLPI
  */
-function displaySearchForm()
+function displaySearchForm(): void
 {
     global $CFG_GLPI;
 
@@ -214,10 +210,10 @@ function displaySearchForm()
 /**
  * Get array in GET for search
  *
- * @param array $get
+ * @param array<string,mixed> $get
  * @return string
  */
-function getContainsArray($get)
+function getContainsArray(array $get): string
 {
     if (isset($get["dropdown_sup_inf"])) {
         switch ($get["dropdown_sup_inf"]) {
@@ -239,10 +235,10 @@ function getContainsArray($get)
  * Generate the URL SavedSearch
  *
  * @param string $url
- * @param array $get
+ * @param array<string,mixed> $get
  * @return string
  */
-function buildSavedSearchUrl($url, $get)
+function buildSavedSearchUrl(string $url, array $get): string
 {
     return $url . "?field[0]=3&contains[0]=" . getContainsArray($get);
 }
@@ -251,11 +247,11 @@ function buildSavedSearchUrl($url, $get)
 /**
  * Get values
  *
- * @param array $get
- * @param array $post
- * @return array
+ * @param array<string, mixed> $get
+ * @param array<string, mixed> $post
+ * @return array<string, mixed>
  */
-function getValues($get, $post)
+function getValues(array $get, array $post): array
 {
     $get = array_merge($get, $post);
     if (isset($get["field"])) {
@@ -283,7 +279,7 @@ function getValues($get, $post)
 /**
  * Reset the search engine
  */
-function resetSearch()
+function resetSearch(): void
 {
     $_GET["start"] = 0;
     $_GET["order"] = "ASC";

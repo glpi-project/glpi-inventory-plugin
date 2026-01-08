@@ -111,10 +111,10 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Ajax load item
      *
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return int
      */
-    public function ajaxLoadItem($options)
+    public function ajaxLoadItem(array $options): int
     {
         /*
          * The following has been borrowed from Html::display() and CommonGLPI::showTabsContent().
@@ -160,9 +160,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Get form in ajax
      *
-     * @param array $options
+     * @param array<string,mixed> $options
      */
-    public function ajaxGetForm($options)
+    public function ajaxGetForm(array $options): void
     {
         $ID = $this->ajaxLoadItem($options);
         $this->showForm($ID, $options);
@@ -225,9 +225,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      *
      * @param int $task_id
      */
-    public function showListForTask($task_id)
+    public function showListForTask(int $task_id): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $taskjobs = $this->getTaskjobs($task_id);
@@ -290,7 +289,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      * Get task jobs
      *
      * @param int $task_id
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function getTaskjobs($task_id)
     {
@@ -308,9 +307,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Show task job summary
      *
-     * @param array $taskjob_data
+     * @param array<string,mixed> $taskjob_data
      */
-    public function showTaskjobSummary($taskjob_data)
+    public function showTaskjobSummary(array $taskjob_data): void
     {
         $id = $taskjob_data['id'];
         $name = $taskjob_data['name'];
@@ -350,9 +349,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Display dropdown module types called in ajax
      *
-     * @param array $options
+     * @param array<string,mixed> $options
      */
-    public function ajaxModuleTypesDropdown($options)
+    public function ajaxModuleTypesDropdown(array $options): void
     {
         $title = '';
         switch ($options['moduletype']) {
@@ -389,9 +388,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Display dropdown module items called in ajax
      *
-     * @param array $options
+     * @param array<string,mixed> $options
      */
-    public function ajaxModuleItemsDropdown($options)
+    public function ajaxModuleItemsDropdown(array $options): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -528,7 +527,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      * Display form for taskjob
      *
      * @param int $id id of the taskjob
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return bool
      */
     public function showForm($id, $options = [])
@@ -800,9 +799,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     /**
      * Manage actions when submit a form (add, update, purge...)
      *
-     * @param array $postvars
+     * @param array<string,mixed> $postvars
      */
-    public function submitForm($postvars)
+    public function submitForm(array $postvars): void
     {
         global $CFG_GLPI;
 
@@ -1027,6 +1026,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     }
 
 
+    /**
+     * @return array<array<string, mixed>>
+     */
     public function rawSearchOptions()
     {
 
@@ -1118,7 +1120,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      *
      * @param string $method
      * @param string $moduletype
-     * @return array
+     * @return array //@phpstan-ignore missingType.iterableValue
      */
     public function getTypesForModule($method, $moduletype)
     {

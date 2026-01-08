@@ -83,7 +83,7 @@ class PluginGlpiinventoryDeployPackage_Group extends CommonDBRelation
      * Get groups for a deploypackage
      *
      * @param int $deploypackages_id ID of the deploypackage
-     * @return array list of groups linked to a deploypackage
+     * @return array<int,mixed> list of groups linked to a deploypackage
     **/
     public static function getGroups($deploypackages_id)
     {

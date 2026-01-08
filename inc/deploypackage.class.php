@@ -51,7 +51,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Initialize the tasks running with this package (updated with overridden getFromDB method)
      *
-     * @var array
+     * @var array<array<string,mixed>>
      */
     public $running_tasks = [];
 
@@ -65,28 +65,28 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Initialize the users visibility of package for self-service deploy
      *
-     * @var array
+     * @var array<int, mixed>
      */
     protected $users = [];
 
     /**
      * Initialize the groups visibility of package for self-service deploy
      *
-     * @var array
+     * @var array<int, mixed>
      */
     protected $groups = [];
 
     /**
      * Initialize the profiles visibility of package for self-service deploy
      *
-     * @var array
+     * @var array<int, mixed>
      */
     protected $profiles = [];
 
     /**
      * Initialize the entities visibility of package for self-service deploy
      *
-     * @var array
+     * @var array<int, mixed>
      */
     protected $entities = [];
 
@@ -145,14 +145,14 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Get the massive actions for this object
      *
-     * @param object|null $checkitem
-     * @return array list of actions
+     * @param ?CommonDBTM $checkitem
+     *
+     * @return array<string,string> list of actions
      */
     public function getSpecificMassiveActions($checkitem = null)
     {
-
         $actions = [];
-        if (strstr($_SERVER["HTTP_REFERER"] ?? '', 'deploypackage.import.php')) {
+        if (strstr($_SERVER["HTTP_REFERER"] ?? '', 'deploypackage.import.php')) { //FIXME: won't work with GLPi v11.
             $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'import'] = __('Import', 'glpiinventory');
         } else {
             $actions[self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfert'] = __('Transfer');
@@ -167,7 +167,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Define standard massiveaction actions to deny
      *
-     * @return array list of actions to deny
+     * @return array<string> list of actions to deny
      */
     public function getForbiddenStandardMassiveAction()
     {
@@ -212,7 +212,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      *
      * @param MassiveAction $ma MassiveAction instance
      * @param CommonDBTM $item item on which execute the code
-     * @param array $ids list of ID on which execute the code
+     * @param array<int|string> $ids list of ID on which execute the code
      */
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
@@ -301,8 +301,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Prepare data before add to database
      *
-     * @param array $input
-     * @return array
+     * @param array<string,mixed> $input
+     *
+     * @return false|array<string,mixed>
      */
     public function prepareInputForAdd($input)
     {
@@ -325,7 +326,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -447,9 +448,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Display the menu / list of packages
      *
-     * @param array $options
+     * @param array<string,mixed> $options
      */
-    public function showMenu($options = [])
+    public function showMenu($options = []): void
     {
 
         $this->displaylist  = false;
@@ -461,7 +462,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Display list of packages
      */
-    public function showList()
+    public function showList(): void
     {
         Search::show(PluginGlpiinventoryDeployPackage::class);
     }
@@ -470,8 +471,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Define tabs to display on form page
      *
-     * @param array $options
-     * @return array containing the tabs name
+     * @param array<string, mixed> $options
+     * @return array<string,mixed> containing the tabs name
      */
     public function defineTabs($options = [])
     {
@@ -487,7 +488,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * Display form
      *
      * @param int $ID
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return true
      */
     public function showForm($ID, array $options = [])
@@ -527,7 +528,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Display order type form
      */
-    public function displayOrderTypeForm()
+    public function displayOrderTypeForm(): void
     {
         $subtypes = [
             'check'           => __("Audits", 'glpiinventory'),
@@ -642,9 +643,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * @param string $subtype name of subtype (audits, files, actions)
      * @param string $rand random string for js to prevent collisions
      */
-    public function plusButtonSubtype($id, $subtype, $rand)
+    public function plusButtonSubtype($id, $subtype, $rand): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         if ($this->can($id, UPDATE)) {
@@ -663,9 +663,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * @param string $dom_id
      * @param false|string $clone
      */
-    public static function plusButton($dom_id, $clone = false)
+    public static function plusButton($dom_id, $clone = false): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         echo  "&nbsp;";
@@ -684,7 +683,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * When user is in DEBUG mode, we display the json
      */
-    public function showDebug()
+    public function showDebug(): void
     {
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr><th>" . __('JSON package representation', 'glpiinventory') . "</th></tr>";
@@ -697,12 +696,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
-     * Update the json structure
+     * Update the JSON structure
      *
      * @param string $action_type type of action
-     * @param array $params data used to update the json
+     * @param array<string,mixed> $params data used to update the JSON
      */
-    public static function alterJSON($action_type, $params)
+    public static function alterJSON(string $action_type, array $params): bool
     {
         //route to sub class
         $item_type = $params['itemtype'];
@@ -733,6 +732,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             Toolbox::logDebug("package subtype not found : " . $params['itemtype']);
             throw new BadRequestHttpException('Package subtype not found');
         }
+
+        return false;
     }
 
 
@@ -741,7 +742,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      *
      * @param int $packages_id id of the package to export
      */
-    public function exportPackage($packages_id)
+    public function exportPackage($packages_id): void
     {
         $this->getFromDB($packages_id);
         if (empty($this->fields['uuid'])) {
@@ -813,7 +814,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      *
      * @param string $zipfile the zip file with all data inside
      */
-    public function importPackage($zipfile)
+    public function importPackage($zipfile): void
     {
 
         $zip           = new ZipArchive();
@@ -863,7 +864,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Display list of packages to import
      */
-    public function listPackagesToImport()
+    public function listPackagesToImport(): void
     {
 
         $rand = mt_rand();
@@ -927,7 +928,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      *
      * @param string $subtype
      * @param int $index
-     * @return string|array
+     * @return string|array<string,mixed>
      */
     public function getSubElement($subtype, $index)
     {
@@ -975,7 +976,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * Update the order json
      *
      * @param int $packages_id
-     * @param array $datas
+     * @param array<string,mixed> $datas
      * @return int error number
      */
     public static function updateOrderJson($packages_id, $datas)
@@ -1110,12 +1111,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
     /**
      * Display the visibility, so who can read. write...
-     *
-     * @return true
      */
-    public function showVisibility()
+    public function showVisibility(): void
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $ID      = $this->fields['id'];
@@ -1336,8 +1334,6 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         }
 
         echo "</div>";
-
-        return true;
     }
 
 
@@ -1363,7 +1359,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
     /**
     * Get all available states for a package
-    * @return array of states and their labels
+    * @return array<string,string> of states and their labels
     */
     public static function getPackageDeploymentStates()
     {
@@ -1398,9 +1394,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * has request to install on it's computer
      *
      * @param int $users_id id of the user
-     * @param $item source item (maybe a User or a computer)
+     * @param false|User|Computer$item source item (maybe a User or a computer)
      */
-    public function showPackageForMe($users_id, $item = false)
+    public function showPackageForMe($users_id, $item = false): void
     {
         global $CFG_GLPI;
 
@@ -1722,6 +1718,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * packages requested the state of deploy
      *
      * @param false|int $users_id id of the user
+     * @param false|int $computers_id id of the computer
+     *
+     * @return array<int,mixed>
      */
     public function getPackageForMe($users_id, $computers_id = false)
     {
@@ -1829,11 +1828,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * Add the package in task or use existant task and add the computer in
      * taskjob
      *
-     * @param int $computers_id id of the computer where depoy package
+     * @param int $computers_id id of the computer where deploy package
      * @param int $packages_id id of the package to install in computer
      * @param int $users_id id of the user have requested the installation
      */
-    public function deployToComputer($computers_id, $packages_id, $users_id)
+    public function deployToComputer($computers_id, $packages_id, $users_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -1935,9 +1934,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * Get all packages that a user has requested to install
      * on one of it's computer
      *
-     * @param array $computers_packages
+     * @param array<int,mixed> $computers_packages
      * @param false|int $users_id
-     * @return array
+     * @return array<int,array<int,int>>
      */
     public function getMyDepoyPackages($computers_packages, $users_id = false)
     {
@@ -2012,6 +2011,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      *
      * @param int $computers_id id of the computer
      * @param int $taskjobs_id id of the taskjob (where order defined)
+     *
+     * @return array<string,mixed>
      */
     public function getMyDepoyPackagesState($computers_id, $taskjobs_id)
     {
@@ -2071,7 +2072,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Check I have rights to deploy packages
      *
-     * @return false|array
+     * @return false|array<int,mixed>
      */
     public function canUserDeploySelf()
     {
@@ -2178,11 +2179,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
-    * Append needed informations to the json job for an agent
+    * Append needed information to the JSON job for an agent
     * @since 9.2
-    * @param $agent_task_version the version of the agent's deploy task
-    * @param $job the job as an array
-    * @return array the job plus new needed fields
+    * @param string $agent_task_version the version of the agent's deploy task
+    * @param array<string,mixed> $job the job as an array
+    * @return array<string,mixed> the job plus new needed fields
     */
     public function buildJson($agent_task_version, $job)
     {

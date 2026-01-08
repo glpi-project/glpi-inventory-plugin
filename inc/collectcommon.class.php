@@ -45,7 +45,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
      */
     public static $rightname = 'plugin_glpiinventory_collect';
 
-    public $collect_type = '';
+    public string $collect_type = '';
 
     /**
      * Get name of this type by language of the user connected
@@ -103,11 +103,10 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
 
     /**
     * Get headers to be displayed, as an array
-    * @since 9.2+2.0
-    *
-    * @return array a list of header labels to be displayed
+     *
+    * @return array<int|string,string> a list of header labels to be displayed
     */
-    public function getListHeaders()
+    public function getListHeaders(): array
     {
         return [
             __('Name'),
@@ -116,12 +115,11 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
 
     /**
     * Get values for a row to display in the list
-    * @since 9.2+2.0
     *
-    * @param array $row the row data to be displayed
-    * @return array values to be display
+    * @param array<string,mixed> $row the row data to be displayed
+    * @return array<string> values to be display
     */
-    public function displayOneRow($row = [])
+    public function displayOneRow(array $row = []): array
     {
         return [
             $row['name'],
@@ -167,7 +165,7 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
     }
 
 
-    public function displayNewSpecificities() {}
+    public function displayNewSpecificities(): void {}
 
     /**
      * Display add form
@@ -185,6 +183,9 @@ class PluginGlpiinventoryCollectCommon extends CommonDBTM
         ]);
     }
 
+    /**
+     * @return array<array<string,mixed>>
+     */
     public function rawSearchOptions()
     {
 

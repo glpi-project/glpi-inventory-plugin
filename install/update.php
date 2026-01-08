@@ -55,11 +55,8 @@ use function Safe\rename;
 
 /**
  * Get the current version of the plugin
- *
- * @global DBMysql $DB
- * @return string
  */
-function pluginGlpiinventoryGetCurrentVersion()
+function pluginGlpiinventoryGetCurrentVersion(): string
 {
     global $DB;
 
@@ -171,7 +168,7 @@ function pluginGlpiinventoryGetCurrentVersion()
  *
  * @param string $current_version
  */
-function pluginGlpiinventoryUpdate($current_version)
+function pluginGlpiinventoryUpdate(string $current_version): void
 {
     global $DB;
 
@@ -1086,7 +1083,7 @@ function pluginGlpiinventoryUpdate($current_version)
     $migration->executeMigration();
 }
 
-function addTaskJobLogIndex(Migration $migration)
+function addTaskJobLogIndex(Migration $migration): Migration
 {
     $migration->addKey(
         "glpi_plugin_glpiinventory_taskjoblogs",
@@ -1097,7 +1094,7 @@ function addTaskJobLogIndex(Migration $migration)
     return $migration;
 }
 
-function installDashboard()
+function installDashboard(): void
 {
     $dashboard = new Dashboard();
 
@@ -1171,11 +1168,9 @@ function installDashboard()
 /**
  * Manage the agent part migration
  *
- * @global DBMysql $DB
- * @param object $migration
- * @return array
+ * @return array<int,array<string,mixed>>
  */
-function do_agent_migration($migration)
+function do_agent_migration(Migration $migration): array
 {
     global $DB;
 
@@ -1590,11 +1585,9 @@ function do_agent_migration($migration)
 /**
  * Manage the configuration part migration
  *
- * @global DBMysql $DB
- * @param object $migration
- * @return array
+ * @return array<string,int|string>
  */
-function do_config_migration($migration)
+function do_config_migration(Migration $migration): array
 {
     global $DB;
 
@@ -1700,11 +1693,8 @@ function do_config_migration($migration)
 
 /**
  * Manage the entities part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_entities_migration($migration)
+function do_entities_migration(Migration $migration): void
 {
     global $DB;
 
@@ -1805,11 +1795,9 @@ function do_entities_migration($migration)
 /**
  * Manage the IP range part migration
  *
- * @global DBMysql $DB
- * @param object $migration
- * @return array
+ * @return array<int, array<string,string|int>>
  */
-function do_iprange_migration($migration)
+function do_iprange_migration(Migration $migration): array
 {
     global $DB;
 
@@ -1909,10 +1897,8 @@ function do_iprange_migration($migration)
 
 /**
  * Manage the locks part migration
- *
- * @param object $migration
  */
-function do_locks_migration($migration)
+function do_locks_migration(Migration $migration): void
 {
     global $DB;
 
@@ -1989,11 +1975,8 @@ function do_locks_migration($migration)
 
 /**
  * Manage the SNMP communities linked to IP range part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_iprangeconfigsecurity_migration($migration)
+function do_iprangeconfigsecurity_migration(Migration $migration): void
 {
     global $DB;
 
@@ -2063,11 +2046,8 @@ function do_iprangeconfigsecurity_migration($migration)
 
 /**
  * Manage the profile part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_profile_migration($migration)
+function do_profile_migration(Migration $migration): void
 {
     global $DB;
 
@@ -2167,10 +2147,8 @@ function do_profile_migration($migration)
 
 /**
  * Manage the timeslot (of task) part migration
- *
- * @param object $migration
  */
-function do_timeslot_migration($migration)
+function do_timeslot_migration(Migration $migration): void
 {
     /*
      * Table glpi_plugin_glpiinventory_timeslots
@@ -2253,11 +2231,8 @@ function do_timeslot_migration($migration)
 
 /**
  * Manage the unmanaged devices part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_unmanaged_migration($migration)
+function do_unmanaged_migration(Migration $migration): void
 {
     global $DB;
 
@@ -2456,10 +2431,8 @@ function do_unmanaged_migration($migration)
 
 /**
  * Manage the ignored import rules part migration
- *
- * @param object $migration
  */
-function do_ignoredimport_migration($migration)
+function do_ignoredimport_migration(Migration $migration): void
 {
     /*
      * Table glpi_plugin_glpiinventory_ignoredimportdevices
@@ -2530,11 +2503,8 @@ function do_ignoredimport_migration($migration)
 
 /**
  * Manage the computer blacklist part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_blacklist_migration($migration)
+function do_blacklist_migration(Migration $migration): void
 {
     global $DB;
     /*
@@ -2874,11 +2844,8 @@ function do_blacklist_migration($migration)
 
 /**
  * Manage the rules matched log part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_rulematchedlog_migration($migration)
+function do_rulematchedlog_migration(Migration $migration): void
 {
     global $DB;
 
@@ -2953,11 +2920,8 @@ function do_rulematchedlog_migration($migration)
 
 /**
  * Manage the antivirus part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_antivirus_migration($migration)
+function do_antivirus_migration(Migration $migration): void
 {
     /*
      * Table glpi_plugin_glpiinventory_inventorycomputerantiviruses
@@ -2969,11 +2933,8 @@ function do_antivirus_migration($migration)
 
 /**
  * Manage the computer extended part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_computercomputer_migration($migration)
+function do_computercomputer_migration(Migration $migration): void
 {
     global $DB;
 
@@ -3087,10 +3048,8 @@ function do_computercomputer_migration($migration)
 
 /**
  * A firmware component with a BIOS type has been added in GLPI 9.2
- *
- * @return void
  */
-function do_biosascomponentmigration()
+function do_biosascomponentmigration(): void
 {
     global $DB;
 
@@ -3192,11 +3151,9 @@ function do_biosascomponentmigration()
 
 
 /**
- * Manage the computer inventory staistics part migration
- *
- * @param object $migration
+ * Manage the computer inventory statistics part migration
  */
-function do_computerstat_migration($migration)
+function do_computerstat_migration(Migration $migration): void
 {
     global $DB;
 
@@ -3242,11 +3199,8 @@ function do_computerstat_migration($migration)
 /**
  * Manage the configuration log fields (for network equipment and printer)
  * part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_configlogfield_migration($migration)
+function do_configlogfield_migration(Migration $migration): void
 {
     global $DB;
 
@@ -3334,11 +3288,8 @@ function do_configlogfield_migration($migration)
 
 /**
  * Manage the network port part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_networkport_migration($migration)
+function do_networkport_migration(Migration $migration): void
 {
     global $DB;
 
@@ -4124,11 +4075,8 @@ function do_networkport_migration($migration)
 
 /**
  * Manage the printer part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_printer_migration($migration)
+function do_printer_migration(Migration $migration): void
 {
     global $DB;
 
@@ -4741,11 +4689,8 @@ function do_printer_migration($migration)
 
 /**
  * Manage the network equipment part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_networkequipment_migration($migration)
+function do_networkequipment_migration(Migration $migration): void
 {
     global $DB;
 
@@ -5165,11 +5110,8 @@ function do_networkequipment_migration($migration)
 
 /**
  * Manage the Config security (SNMP anthentication) part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_configsecurity_migration($migration)
+function do_configsecurity_migration(Migration $migration): void
 {
     global $DB;
 
@@ -5365,11 +5307,8 @@ function do_configsecurity_migration($migration)
 
 /**
  * Manage the discovery state part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_statediscovery_migration($migration)
+function do_statediscovery_migration(Migration $migration): void
 {
     global $DB;
 
@@ -5529,11 +5468,8 @@ function do_statediscovery_migration($migration)
 
 /**
  * Manage the computer license part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_computerlicense_migration($migration)
+function do_computerlicense_migration(Migration $migration): void
 {
     global $DB;
 
@@ -5603,10 +5539,8 @@ function do_computerlicense_migration($migration)
 
 /**
  * Manage the computer remote management part migration
- *
- * @param object $migration
  */
-function do_computerremotemgmt_migration($migration)
+function do_computerremotemgmt_migration(Migration $migration): void
 {
 
     /*
@@ -5645,10 +5579,8 @@ function do_computerremotemgmt_migration($migration)
 
 /**
  * Manage the computer architecture part migration
- *
- * @param object $migration
  */
-function do_computerarch_migration($migration)
+function do_computerarch_migration(Migration $migration): void
 {
     global $DB;
 
@@ -5712,10 +5644,8 @@ function do_computerarch_migration($migration)
 
 /**
  * Manage the operating system edition part migration
- *
- * @param object $migration
  */
-function do_operatingsystemedition_migration($migration)
+function do_operatingsystemedition_migration(Migration $migration): void
 {
     global $DB;
 
@@ -5759,11 +5689,9 @@ function do_operatingsystemedition_migration($migration)
 /**
  * Manage the kernel names and kernel versions part migration
  *
- * @param object $migration
- *
- * @return array
+ * @return array<int,mixed>
  */
-function do_operatingsystemkernel_migration($migration)
+function do_operatingsystemkernel_migration(Migration $migration): array
 {
     global $DB;
 
@@ -5828,10 +5756,8 @@ function do_operatingsystemkernel_migration($migration)
 
 /**
  * Manage the computer operating system part migration
- *
- * @param object $migration
  */
-function do_computeroperatingsystem_migration($migration)
+function do_computeroperatingsystem_migration(Migration $migration): void
 {
     global $DB;
 
@@ -6028,12 +5954,8 @@ function do_computeroperatingsystem_migration($migration)
 
 /**
  * Manage the deploy user interaction migration process
- *
- * @since 9.2
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_deployuserinteraction_migration($migration)
+function do_deployuserinteraction_migration(Migration $migration): void
 {
     global $DB;
 
@@ -6059,11 +5981,8 @@ function do_deployuserinteraction_migration($migration)
 
 /**
  * Manage the deploy files part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_deployfile_migration($migration)
+function do_deployfile_migration(Migration $migration): void
 {
     global $DB;
 
@@ -6234,11 +6153,8 @@ function do_deployfile_migration($migration)
 
 /**
  * Manage the deploy package part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_deploypackage_migration($migration)
+function do_deploypackage_migration(Migration $migration): void
 {
     global $DB;
 
@@ -6507,10 +6423,8 @@ function do_deploypackage_migration($migration)
 
 /**
  * Manage the deploy mirror part migration
- *
- * @param object $migration
  */
-function do_deploymirror_migration($migration)
+function do_deploymirror_migration(Migration $migration): void
 {
     global $DB;
 
@@ -6626,10 +6540,8 @@ function do_deploymirror_migration($migration)
 
 /**
  * Manage the deploy group part migration
- *
- * @param object $migration
  */
-function do_deploygroup_migration($migration)
+function do_deploygroup_migration(Migration $migration): void
 {
 
     /*
@@ -6797,10 +6709,8 @@ function do_deploygroup_migration($migration)
 
 /**
  * Manage the database locks part migration
- *
- * @param object $migration
  */
-function do_dblocks_migration($migration)
+function do_dblocks_migration(Migration $migration): void
 {
 
     /*
@@ -6911,11 +6821,8 @@ function do_dblocks_migration($migration)
 
 /**
  * Manage the ESX credentials part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_credentialESX_migration($migration)
+function do_credentialESX_migration(Migration $migration): void
 {
     global $DB;
 
@@ -7020,10 +6927,8 @@ function do_credentialESX_migration($migration)
 
 /**
  * Manage the collect part migration
- *
- * @param object $migration
  */
-function do_collect_migration($migration)
+function do_collect_migration(Migration $migration): void
 {
 
     /*
@@ -7314,11 +7219,8 @@ function do_collect_migration($migration)
 
 /**
  * Manage the SNMP models part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_snmpmodel_migration($migration)
+function do_snmpmodel_migration(Migration $migration): void
 {
     global $DB;
 
@@ -7340,11 +7242,9 @@ function do_snmpmodel_migration($migration)
 /**
  * Manage the rules part migration
  *
- * @global DBMysql $DB
- * @param object $migration
- * @param array $prepare_Config
+ * @param array<string,mixed> $prepare_Config
  */
-function do_rule_migration($migration, array $prepare_Config)
+function do_rule_migration(Migration $migration, array $prepare_Config): void
 {
     global $DB;
 
@@ -7463,11 +7363,8 @@ function do_rule_migration($migration, array $prepare_Config)
 
 /**
  * Manage the task part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function do_task_migration($migration)
+function do_task_migration(Migration $migration): void
 {
     global $DB;
 
@@ -7539,7 +7436,7 @@ function do_task_migration($migration)
  *
  * @global DBMysql $DB
  */
-function doDynamicDataSearchParamsMigration()
+function doDynamicDataSearchParamsMigration(): void
 {
     global $DB;
 
@@ -7576,12 +7473,10 @@ function doDynamicDataSearchParamsMigration()
 /**
  * Migration of one dynamic group
  *
- * @since 0.85+1.0
- *
- * @param array|string $fields search paramas in old format (serialized)
- * @return string search paramas in new format (serialized)
+ * @param string $fields search params in old format (serialized or JSON encoded)
+ * @return string search params in new format (JSON encoded)
  */
-function migrationDynamicGroupFields($fields)
+function migrationDynamicGroupFields(string $fields): string
 {
     $new_fields = [];
     $data = [];
@@ -7603,7 +7498,7 @@ function migrationDynamicGroupFields($fields)
 
     //We're still in 0.85 or higher ->return as json format
     if (isset($data['criteria']) || $from_serialized) {
-        return json_encode($data, JSON_THROW_ON_ERROR);
+        return json_encode($data);
     }
 
     //Upgrade from 0.84
@@ -7650,18 +7545,14 @@ function migrationDynamicGroupFields($fields)
             }
         }
     }
-    return json_encode($new_fields, JSON_THROW_ON_ERROR);
+    return json_encode($new_fields);
 }
 
 
 /**
  * Manage the display preference part migration
- *
- * @global DBMysql $DB
- * @param string $olditemtype
- * @param string $newitemtype
  */
-function changeDisplayPreference($olditemtype, $newitemtype)
+function changeDisplayPreference(string $olditemtype, string $newitemtype): void
 {
     global $DB;
 
@@ -7698,11 +7589,8 @@ function changeDisplayPreference($olditemtype, $newitemtype)
 
 /**
  * Manage the update from 2.13 to 2.20 version (very old) part migration
- *
- * @global DBMysql $DB
- * @param object $migration
  */
-function update213to220_ConvertField($migration)
+function update213to220_ConvertField(Migration $migration): void
 {
     global $DB;
 
@@ -8475,11 +8363,9 @@ function update213to220_ConvertField($migration)
 /**
  * Manage the migration of MySQL tables / fields
  *
- * @global DBMysql $DB
- * @param object $migration
- * @param array $a_table
+ * @param array<string,mixed> $a_table
  */
-function migratePluginTables($migration, $a_table)
+function migratePluginTables(Migration $migration, array $a_table): void
 {
     global $DB;
 
@@ -8570,11 +8456,8 @@ function migratePluginTables($migration, $a_table)
 /**
  * Migrate tables from plugin fusinvdeploy
  *    all datas in exploded tables are merged and stored in json in order table
- *
- * @global DBMysql $DB
- * @param  object $migration
  */
-function migrateTablesFromFusinvDeploy($migration)
+function migrateTablesFromFusinvDeploy(Migration $migration): void
 {
     global $DB;
 
@@ -8987,7 +8870,7 @@ function migrateTablesFromFusinvDeploy($migration)
     }
 }
 
-function renamePlugin(Migration $migration)
+function renamePlugin(Migration $migration): void
 {
     global $DB;
 
@@ -9060,7 +8943,7 @@ function renamePlugin(Migration $migration)
     }
 }
 
-function renamePluginFields(Migration $migration, string $table)
+function renamePluginFields(Migration $migration, string $table): void
 {
     global $DB;
 

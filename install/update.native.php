@@ -39,10 +39,8 @@ use function Safe\ini_set;
 
 /**
  * The main function to update the plugin
- *
- * @param string $current_version
  */
-function pluginGlpiinventoryUpdateNative($current_version)
+function pluginGlpiinventoryUpdateNative(string $current_version): void
 {
     global $DB;
 

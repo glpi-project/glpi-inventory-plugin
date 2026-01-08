@@ -40,10 +40,8 @@ use function Safe\mkdir;
 
 /**
  * This function manage the installation of the plugin.
- *
- * @param string $version
  */
-function pluginGlpiinventoryInstall($version)
+function pluginGlpiinventoryInstall(string $version): void
 {
     global $CFG_GLPI, $DB;
 

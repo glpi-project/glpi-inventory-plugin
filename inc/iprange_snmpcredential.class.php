@@ -125,7 +125,7 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     /**
      * Get standard massive action forbidden (hide in massive action list)
      *
-     * @return array
+     * @return array<string>
      */
     public function getForbiddenStandardMassiveAction()
     {
@@ -139,10 +139,10 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
      * Display form
      *
      * @param CommonDBTM $item
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return bool
      */
-    public function showItemForm(CommonDBTM $item, array $options = [])
+    public function showItemForm(CommonDBTM $item, array $options = []): bool
     {
 
         $ID = $item->getField('id');

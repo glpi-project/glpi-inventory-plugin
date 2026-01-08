@@ -166,6 +166,10 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         }
     }
 
+    /**
+     * @param array<string,mixed> $options
+     * @return array<string,mixed>
+     */
     public function defineTabs($options = [])
     {
 
@@ -381,7 +385,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * @param string $file name of log file to update
      * @param string|string[] $message the message to put in log file
      */
-    public static function logIfExtradebug($file, $message)
+    public static function logIfExtradebug($file, $message): void
     {
         if (self::isExtradebugActive()) {
             if (is_array($message)) {
@@ -399,9 +403,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * The only case where table doesn't exist is when you click on
      * uninstall the plugin and it's already uninstalled
      */
-    public static function loadCache()
+    public static function loadCache(): void
     {
-        /** @var DBmysql $DB */
         /** @var array<string,string|int> $PF_CONFIG */
         global $DB, $PF_CONFIG;
 

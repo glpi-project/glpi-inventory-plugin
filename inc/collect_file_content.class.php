@@ -38,19 +38,19 @@ use Glpi\Application\View\TemplateRenderer;
  */
 class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollectContentCommon
 {
-    public $collect_itemtype = PluginGlpiinventoryCollect_File::class;
-    public $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
-    public $collect_type     = 'file';
+    public string $collect_itemtype = PluginGlpiinventoryCollect_File::class;
+    public string $collect_table    = 'glpi_plugin_glpiinventory_collects_files';
+    public string $collect_type     = 'file';
 
     /**
      * Update computer files (add and update files) related to this
      * collect file id
      *
      * @param int $computers_id id of the computer
-     * @param array $file_data
+     * @param array<string,mixed> $file_data
      * @param int $collects_files_id id of collect_file
      */
-    public function updateComputer($computers_id, $file_data, $collects_files_id)
+    public function updateComputer($computers_id, $file_data, $collects_files_id): void
     {
         foreach ($file_data as $key => $value) {
             $input = [
@@ -69,7 +69,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
      *
      * @param int $computers_id id of the computer
      */
-    public function showForComputer($computers_id)
+    public function showForComputer(int $computers_id): void
     {
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
@@ -112,18 +112,18 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     /**
      * Display all files found on all computers related to the collect file
      *
-     * @param int $collects_files_id id of collect_file
+     * @param int $id id of collect_file
      *
      * @return void
      */
-    public function showContent($collects_files_id): void
+    public function showContent(int $id): void
     {
         $collect_file = new PluginGlpiinventoryCollect_File();
         $computer = new Computer();
-        $collect_file->getFromDB($collects_files_id);
+        $collect_file->getFromDB($id);
 
         $data = $this->find(
-            ['plugin_glpiinventory_collects_files_id' => $collects_files_id],
+            ['plugin_glpiinventory_collects_files_id' => $id],
             ['pathfile']
         );
         $entries = [];

@@ -44,7 +44,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
      * @param string $p_DEVICEID device_id of agent
      * @param object $a_CONTENT
      * @param Inventory $inventory
-     * @return array
+     *
+     * @return array<string,mixed>
      */
     public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array
     {
@@ -175,7 +176,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
     /**
      * Used to add log in the taskjob
      */
-    public function addtaskjoblog()
+    public function addtaskjoblog(): void
     {
 
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();

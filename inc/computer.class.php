@@ -43,7 +43,9 @@ class PluginGlpiinventoryComputer extends Computer
      */
     public static $rightname = "plugin_glpiinventory_group";
 
-
+    /**
+     * @return array<string,mixed>
+     */
     public function rawSearchOptions()
     {
         $computer = new Computer();
@@ -86,7 +88,7 @@ class PluginGlpiinventoryComputer extends Computer
     /**
      * Define the standard massive actions to hide for this class
      *
-     * @return array list of massive actions to hide
+     * @return array<string> list of massive actions to hide
      */
     public function getForbiddenStandardMassiveAction()
     {
@@ -104,7 +106,9 @@ class PluginGlpiinventoryComputer extends Computer
      *
      * @param MassiveAction $ma MassiveAction instance
      * @param CommonDBTM $item item on which execute the code
-     * @param array $ids list of ID on which execute the code
+     * @param array<int> $ids list of ID on which execute the code
+     *
+     * @return void
      */
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {

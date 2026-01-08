@@ -244,9 +244,11 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     /**
      * Display list of computers in the group
      *
-     * @param string $itemtype
-     * @param array $params
-     * @param array $forcedisplay
+     * @param class-string<CommonDBTM> $itemtype
+     * @param array<string,mixed> $params
+     * @param array<string> $forcedisplay
+     *
+     * @return void
      */
     public static function showList($itemtype, $params, $forcedisplay)
     {
@@ -264,10 +266,10 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     /**
      * Get data, so computer list
      *
-     * @param string $itemtype
-     * @param array $params
-     * @param array $forcedisplay
-     * @return array
+     * @param class-string<CommonDBTM> $itemtype
+     * @param array<string,mixed> $params
+     * @param array<string> $forcedisplay
+     * @return array<string,mixed>
      */
     public static function getDatas($itemtype, $params, array $forcedisplay = [])
     {
@@ -286,7 +288,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      *
      * @param PluginGlpiinventoryDeployGroup $group the group object
      * @param bool $use_cache retrieve computers_id from cache (computers_id_cache field)
-     * @return array of computer ids
+     * @return array<int> of computer ids
      */
     public static function getTargetsByGroup(PluginGlpiinventoryDeployGroup $group, $use_cache = false)
     {
@@ -326,7 +328,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     /**
      * Store a set of computers id in db
      * @param  PluginGlpiinventoryDeployGroup $group the instance of fi group
-     * @param  array                            $ids   the list of id to store
+     * @param  array<int>                     $ids   the list of id to store
      * @return bool
      */
     public static function storeCache(PluginGlpiinventoryDeployGroup $group, $ids = [])
@@ -350,7 +352,7 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
     /**
      * Retrieve the id of computer stored in db for a group
      * @param  PluginGlpiinventoryDeployGroup $group the instance of the group
-     * @return array                            the list of compuers id
+     * @return array<int> the list of computers id
      */
     public static function retrieveCache(PluginGlpiinventoryDeployGroup $group)
     {

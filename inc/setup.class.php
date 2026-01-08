@@ -90,11 +90,9 @@ class PluginGlpiinventorySetup
 
 
     /**
-     * Remove a directory and subdirectory
-     *
-     * @param string $dir name of the directory
+     * Remove a directory and subdirectories
      */
-    public function rrmdir($dir)
+    public function rrmdir(string $dir): void
     {
         $pfSetup = new PluginGlpiinventorySetup();
 

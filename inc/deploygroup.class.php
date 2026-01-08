@@ -94,9 +94,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Define the array of itemtype allowed in static groups
      *
-     * @var array
+     * @var array<class-string<CommonDBTM>>
      */
-    protected $static_group_types = ['Computer'];
+    protected array $static_group_types = [Computer::class];
 
     /**
      * We activate the history.
@@ -105,6 +105,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      */
     public $dohistory = true;
 
+    /**
+     * @var array<string,string>
+     */
     public array $grouptypes;
 
 
@@ -135,8 +138,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Define tabs to display on form page
      *
-     * @param array $options
-     * @return array containing the tabs name
+     * @param array<string,mixed> $options
+     * @return array<string> containing the tabs name
      */
     public function defineTabs($options = [])
     {
@@ -155,8 +158,11 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-
-    public function getMatchingItemsCount($itemtype)
+    /**
+     * @param class-string<CommonDBTM> $itemtype
+     * @return int
+     */
+    public function getMatchingItemsCount(string $itemtype): int
     {
         $count = 0;
         if (
@@ -247,8 +253,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Get the massive actions for this object
      *
-     * @param object|null $checkitem
-     * @return array list of actions
+     * @param ?CommonDBTM $checkitem
+     * @return array<string,string> list of actions
      */
     public function getSpecificMassiveActions($checkitem = null)
     {
@@ -289,7 +295,9 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      *
      * @param MassiveAction $ma MassiveAction instance
      * @param CommonDBTM $item item on which execute the code
-     * @param array $ids list of ID on which execute the code
+     * @param array<int> $ids list of ID on which execute the code
+     *
+     * @return void
      */
     public static function processMassiveActionsForOneItemtype(
         MassiveAction $ma,
@@ -374,7 +382,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     }
 
 
-    public function duplicate($deploygroups_id)
+    public function duplicate(int $deploygroups_id): bool
     {
         $result = true;
         if ($this->getFromDB($deploygroups_id)) {
@@ -403,7 +411,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Display title of the page
      */
-    public function title()
+    public function title(): void
     {
         $buttons = [];
         $title   = self::getTypeName();
@@ -425,7 +433,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Display form
      *
      * @param int $ID
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return true
      */
     public function showForm($ID, array $options = [])
@@ -461,7 +469,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function rawSearchOptions()
     {
@@ -522,8 +530,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Get a specific value to display
      *
      * @param string $field
-     * @param string|array $values
-     * @param array $options
+     * @param string|array<string,mixed> $values
+     * @param array<string,mixed> $options
      * @return string
      */
     public static function getSpecificValueToDisplay($field, $values, array $options = [])
@@ -570,8 +578,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      *
      * @param string $field
      * @param string $name
-     * @param string|array $values
-     * @param array $options
+     * @param string|array<string,mixed> $values
+     * @param array<string,mixed> $options
      * @return string
      */
     public static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
@@ -614,7 +622,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Show criteria to search computers
      *
      * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
-     * @param array $p
+     * @param array<string,mixed> $p
      *
      * @return void
      */
@@ -654,8 +662,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * Get targets for the group
      *
      * @param int $groups_id id of the group
-     * @param bool    $use_cache retrieve agents from cache or not (only for dynamic groups)
-     * @return array list of computers
+     * @param bool $use_cache retrieve agents from cache or not (only for dynamic groups)
+     * @return array<int> list of computers
      */
     public static function getTargetsForGroup($groups_id, $use_cache = false)
     {
@@ -689,7 +697,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
      * @param bool $check_post_values
      * @param bool $getAll
-     * @return array
+     * @return array<string,mixed>
      */
     public static function getSearchParamsAsAnArray(PluginGlpiinventoryDeployGroup $group, $check_post_values = false, $getAll = false)
     {
@@ -753,7 +761,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     /**
      * Clean when purge a deploy group
      */
-    public function cleanDBOnPurge()
+    public function cleanDBOnPurge(): void
     {
         $dynamic_group = new PluginGlpiinventoryDeployGroup_Dynamicdata();
         $static_group  = new PluginGlpiinventoryDeployGroup_Staticdata();
@@ -771,10 +779,8 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
     /**
      * Display for a computer the groups where it is
-     *
-     * @param int $computers_id
      */
-    public function showForComputer($computers_id)
+    public function showForComputer(int $computers_id): void
     {
         /** @var DBmysql $DB */
         global $DB;

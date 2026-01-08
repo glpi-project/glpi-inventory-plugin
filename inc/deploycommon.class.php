@@ -50,7 +50,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
      * If definitions_filter is NULL, this check is inhibited and return false.
      *
      * @param string $definition_type
-     * @param null|array $definitions_filter
+     * @param null|array<string> $definitions_filter
      * @return bool
      */
     public function definitionFiltered($definition_type, $definitions_filter)
@@ -67,13 +67,13 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
 
 
     /**
-     * Prepare a takjob, get all devices and put in taskjobstate each task
+     * Prepare a taskjob, get all devices and put in taskjobstate each task
      * for each device for each agent
      *
      * @param int $taskjob_id id of the taskjob
-     * @param null|array $definitions_filter
+     * @param null|array<string> $definitions_filter
      */
-    public function prepareRun($taskjob_id, $definitions_filter = null)
+    public function prepareRun($taskjob_id, $definitions_filter = null): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -312,7 +312,7 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
      * run function, so return data to send to the agent for deploy
      *
      * @param PluginGlpiinventoryTaskjobstate $taskjobstate PluginGlpiinventoryTaskjobstate instance
-     * @return false|array
+     * @return false|array<string,mixed>
      */
     public function run($taskjobstate)
     {

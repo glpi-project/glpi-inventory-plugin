@@ -426,6 +426,9 @@ function plugin_glpiinventory_haveTypeRight(string $type, string $right): bool
     return true;
 }
 
+/**
+ * @return array<string, mixed>
+ */
 function plugin_glpiinventory_options(): array
 {
     return [
@@ -441,7 +444,7 @@ function plugin_glpiinventory_boot(): void
     SessionManager::registerPluginStatelessPath('glpiinventory', '#^/front/communication.php$#');
 }
 
-function addPublicFile($file, $ext): string
+function addPublicFile(string $file, string $ext): string
 {
     return sprintf(
         '%s%s.%s',

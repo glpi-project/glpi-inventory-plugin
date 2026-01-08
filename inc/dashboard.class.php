@@ -36,6 +36,10 @@
 */
 class PluginGlpiinventoryDashboard
 {
+    /**
+     * @param array<string,mixed> $params
+     * @return array<string,mixed>
+     */
     public static function nbItems(array $params): array
     {
         $default_params = [

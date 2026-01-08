@@ -50,10 +50,10 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
      * Update state of discovery
      *
      * @param int $p_number
-     * @param array $a_input
+     * @param array<string,mixed> $a_input
      * @param int $agent_id
      */
-    public function updateState($p_number, $a_input, $agent_id)
+    public function updateState($p_number, $a_input, $agent_id): void
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
@@ -109,7 +109,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
      * @param string $date_end
      * @param int $agent_id
      */
-    public function endState($p_number, $date_end, $agent_id)
+    public function endState($p_number, $date_end, $agent_id): void
     {
         $data = $this->find(
             ['plugin_glpiinventory_taskjob_id' => $p_number,
@@ -126,7 +126,9 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
     /**
      * Display the discovery state
      *
-     * @param array $options
+     * @param array<string,mixed> $options
+     *
+     * @return void
      */
     public function display($options = []) // @phpstan-ignore method.parentMethodFinalByPhpDoc
     {
