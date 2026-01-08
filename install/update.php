@@ -7474,9 +7474,9 @@ function doDynamicDataSearchParamsMigration(): void
  * Migration of one dynamic group
  *
  * @param string $fields search params in old format (serialized or JSON encoded)
- * @return string|false search params in new format (JSON encoded) or false on error
+ * @return string search params in new format (JSON encoded)
  */
-function migrationDynamicGroupFields(string $fields): string|false // @phpstan-ignore return.unusedType (json_encode may return false)
+function migrationDynamicGroupFields(string $fields): string
 {
     $new_fields = [];
     $data = [];
@@ -7498,7 +7498,7 @@ function migrationDynamicGroupFields(string $fields): string|false // @phpstan-i
 
     //We're still in 0.85 or higher ->return as json format
     if (isset($data['criteria']) || $from_serialized) {
-        return \json_encode($data, JSON_THROW_ON_ERROR);
+        return json_encode($data);
     }
 
     //Upgrade from 0.84
@@ -7545,7 +7545,7 @@ function migrationDynamicGroupFields(string $fields): string|false // @phpstan-i
             }
         }
     }
-    return \json_encode($new_fields, JSON_THROW_ON_ERROR);
+    return json_encode($new_fields);
 }
 
 
