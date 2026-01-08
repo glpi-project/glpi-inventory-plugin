@@ -44,9 +44,9 @@ class PluginGlpiinventoryToolbox
      * Log if extra debug enabled
      *
      * @param string $file
-     * @param string|array $message
+     * @param string|array<string> $message
      */
-    public static function logIfExtradebug($file, $message)
+    public static function logIfExtradebug(string $file, string|array $message): void
     {
         new PluginGlpiinventoryConfig();
         if (PluginGlpiinventoryConfig::isExtradebugActive()) {
@@ -60,11 +60,8 @@ class PluginGlpiinventoryToolbox
 
     /**
      * Format XML, ie indent it for pretty printing
-     *
-     * @param object $xml simplexml instance
-     * @return string
      */
-    public static function formatXML($xml)
+    public static function formatXML(SimpleXMLElement $xml): string
     {
         $string     = str_replace("><", ">\n<", $xml->asXML());
         $token      = strtok($string, "\n");
@@ -102,8 +99,10 @@ class PluginGlpiinventoryToolbox
      * Add AUTHENTICATION string to XML node
      *
      * @param int $p_id Authenticate id
+     *
+     * @return array<string,array<string,mixed>>
      **/
-    public function addAuth($p_id)
+    public function addAuth(int $p_id): array
     {
         $node = [];
         $credentials = new SNMPCredential();
@@ -137,11 +136,11 @@ class PluginGlpiinventoryToolbox
     /**
      * Get IP for device
      *
-     * @param string $itemtype
+     * @param class-string<CommonDBTM> $itemtype
      * @param int $items_id
-     * @return array
+     * @return array<string,string>
      */
-    public static function getIPforDevice($itemtype, $items_id)
+    public static function getIPforDevice(string $itemtype, int $items_id): array
     {
         $NetworkPort = new NetworkPort();
         $networkName = new NetworkName();
@@ -220,7 +219,7 @@ class PluginGlpiinventoryToolbox
      *     )
      *
      * @param DBmysqlIterator $iterator
-     * @return array
+     * @return array<int,array<string,array<string,mixed>>>
      */
     public static function fetchAssocByTableIterator(DBmysqlIterator $iterator): array
     {
@@ -251,12 +250,9 @@ class PluginGlpiinventoryToolbox
 
 
     /**
-    * Format a json in a pretty json
-    *
-    * @param string $json
-    * @return string
+    * Format a JSON in a pretty JSON
     */
-    public static function formatJson($json)
+    public static function formatJson(string $json): string
     {
         return json_encode(
             json_decode($json, true),
@@ -269,10 +265,10 @@ class PluginGlpiinventoryToolbox
      * Dropdown for display hours
      *
      * @param string $name
-     * @param array $options
+     * @param array<string,mixed> $options
      * @return string unique html element id
      */
-    public static function showHours(string $name, array $options = [])
+    public static function showHours(string $name, array $options = []): string
     {
 
         $p['value']          = '';
@@ -303,11 +299,8 @@ class PluginGlpiinventoryToolbox
 
     /**
      * Get hour:minute from number of seconds
-     *
-     * @param int $seconds
-     * @return string
      */
-    public static function getHourMinute($seconds)
+    public static function getHourMinute(int $seconds): string
     {
         $hour = floor($seconds / 3600);
         $minute = (($seconds - ((floor($seconds / 3600)) * 3600)) / 60);
@@ -318,11 +311,11 @@ class PluginGlpiinventoryToolbox
     /**
      * Execute a function as plugin user
      *
-     * @param string|array $function
-     * @param array $args
-     * @return array the normally returned value from executed callable
+     * @param string|array<string> $function
+     * @param array<string,mixed> $args
+     * @return array the normally returned value from executed callable //@phpstan-ignore missingType.iterableValue
      */
-    public function executeAsGlpiinventoryUser($function, array $args = [])
+    public function executeAsGlpiinventoryUser(string|array $function, array $args = []): array
     {
 
         $config = new PluginGlpiinventoryConfig();
@@ -370,14 +363,8 @@ class PluginGlpiinventoryToolbox
 
     /**
     * Check if an item is inventoried by plugin
-    *
-    * @since 9.2
-    *
-    * @param CommonDBTM $item the item to check
-    *
-    * @return bool
     */
-    public static function isAnInventoryDevice($item)
+    public static function isAnInventoryDevice(CommonDBTM $item): bool
     {
         switch ($item::class) {
             case Computer::class:
