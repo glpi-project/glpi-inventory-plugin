@@ -341,7 +341,7 @@ function plugin_init_glpiinventory()
             }
         }
     } else { // plugin not active, need $moduleId for uninstall check
-        include_once(PLUGIN_GLPI_INVENTORY_DIR . '/inc/module.class.php');
+        include_once(__DIR__ . '/inc/module.class.php');
     }
 
     // exclude some pages from splitted layout
