@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 use Glpi\Http\Firewall;
 use Glpi\Http\SessionManager;
 use Glpi\Plugin\Hooks;
@@ -53,9 +55,15 @@ foreach ($constants as $name => $default_value) {
         define($name, $default_value);
     }
 }
-// Used for use config values in 'cache'
+/**
+ * Used for use config values in 'cache'
+ * @var array<string,string|int> $PF_CONFIG
+ */
 $PF_CONFIG = [];
-// used to know if computer inventory is in reality a ESX task
+/**
+ * Used to know if computer inventory is in reality a ESX task
+ * @var bool $PF_EXSINVENTORY
+ */
 $PF_ESXINVENTORY = false;
 
 /**
@@ -64,7 +72,7 @@ $PF_ESXINVENTORY = false;
  * @param string $scriptname
  * @return bool
  */
-function plugin_glpiinventory_script_endswith($scriptname)
+function plugin_glpiinventory_script_endswith(string $scriptname): bool
 {
     //append plugin directory to avoid dumb errors...
     $requested = 'glpiinventory/front/' . $scriptname;
@@ -77,9 +85,9 @@ function plugin_glpiinventory_script_endswith($scriptname)
 /**
  * Init hook
  */
-function plugin_init_glpiinventory()
+function plugin_init_glpiinventory(): void
 {
-    /** @var array $PF_CONFIG */
+    /** @var array<string,string|int> $PF_CONFIG */
     global $PLUGIN_HOOKS, $CFG_GLPI, $PF_CONFIG;
 
     $current_url = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'];
@@ -366,9 +374,9 @@ function plugin_init_glpiinventory()
 /**
  * Manage the version information of the plugin
  *
- * @return array
+ * @return array<string, mixed>
  */
-function plugin_version_glpiinventory()
+function plugin_version_glpiinventory(): array
 {
     return [
         'name'           => 'GLPI Inventory',
@@ -399,11 +407,8 @@ function plugin_version_glpiinventory()
 
 /**
  * Manage / check the prerequisites of the plugin
- *
- * @global DBMysql $DB
- * @return bool
  */
-function plugin_glpiinventory_check_prerequisites()
+function plugin_glpiinventory_check_prerequisites(): bool
 {
     return true;
 }
@@ -416,12 +421,12 @@ function plugin_glpiinventory_check_prerequisites()
  * @param string $right
  * @return bool
  */
-function plugin_glpiinventory_haveTypeRight($type, $right)
+function plugin_glpiinventory_haveTypeRight(string $type, string $right): bool
 {
     return true;
 }
 
-function plugin_glpiinventory_options()
+function plugin_glpiinventory_options(): array
 {
     return [
         'autoinstall_disabled' => true,
@@ -429,7 +434,7 @@ function plugin_glpiinventory_options()
 }
 
 
-function plugin_glpiinventory_boot()
+function plugin_glpiinventory_boot(): void
 {
     SessionManager::registerPluginStatelessPath('glpiinventory', '#^/$#');
     SessionManager::registerPluginStatelessPath('glpiinventory', '#^/Communication$#');

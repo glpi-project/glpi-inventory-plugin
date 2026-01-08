@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 use Glpi\Error\ErrorHandler;
 use Safe\Exceptions\InfoException;
 
@@ -43,7 +45,7 @@ use function Safe\json_decode;
  * @param class-string<CommonDBTM> $itemtype
  * @return array
  */
-function plugin_glpiinventory_getAddSearchOptions($itemtype)
+function plugin_glpiinventory_getAddSearchOptions(string $itemtype): array
 {
 
     $sopt = [];
@@ -111,7 +113,7 @@ function plugin_glpiinventory_getAddSearchOptions($itemtype)
     return $sopt;
 }
 
-function plugin_glpiinventory_hook_dashboard_cards($cards)
+function plugin_glpiinventory_hook_dashboard_cards(?array $cards): array
 {
     if ($cards === null) {
         $cards = [];
@@ -207,7 +209,7 @@ function plugin_glpiinventory_hook_dashboard_cards($cards)
  * @param int $num
  * @return string
  */
-function plugin_glpiinventory_giveItem($type, $id, $data, $num)
+function plugin_glpiinventory_giveItem(string $type, int $id, array $data, int $num): string
 {
     $searchopt = Search::getOptions($type);
     $table = $searchopt[$id]["table"];
@@ -280,19 +282,14 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
         }
     }
 
-    switch ($type) {
-        // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-        case PluginGlpiinventoryIPRange::class:
-            switch ($table . '.' . $field) {
-                // ** Display entity name
-                case "glpi_entities.name":
-                    if ($data['raw']["ITEM_$num"] == '') {
-                        $out = Dropdown::getDropdownName("glpi_entities", $data['raw']["ITEM_$num"]);
-                        return "<center>" . $out . "</center>";
-                    }
-                    break;
-            }
-            break;
+    // * range IP list (plugins/fusinvsnmp/front/iprange.php)
+    if (
+        $type == PluginGlpiinventoryIPRange::class
+        && $table . '.' . $field == "glpi_entities.name"
+        && $data['raw']["ITEM_$num"] == ''
+    ) {
+        $out = Dropdown::getDropdownName("glpi_entities", $data['raw']["ITEM_$num"]);
+        return "<center>" . $out . "</center>";
     }
 
     return "";
@@ -302,11 +299,11 @@ function plugin_glpiinventory_giveItem($type, $id, $data, $num)
 /**
  * Manage search options values
  *
- * @global DBMysql $DB
- * @param object $item
+ * @param CommonDBTM $item
+ *
  * @return bool
  */
-function plugin_glpiinventory_searchOptionsValues($item)
+function plugin_glpiinventory_searchOptionsValues(CommonDBTM $item): bool
 {
     global $DB;
 
@@ -341,7 +338,7 @@ function plugin_glpiinventory_searchOptionsValues($item)
  *
  * @return bool
  */
-function plugin_glpiinventory_install()
+function plugin_glpiinventory_install(): bool
 {
     try {
         ini_set("max_execution_time", "0");
@@ -385,7 +382,7 @@ function plugin_glpiinventory_install()
  *
  * @return bool
  */
-function plugin_glpiinventory_uninstall()
+function plugin_glpiinventory_uninstall(): bool
 {
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/setup.class.php");
     require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/profile.class.php");
@@ -396,10 +393,11 @@ function plugin_glpiinventory_uninstall()
 /**
  * Add massive actions to GLPI itemtypes
  *
- * @param string $type
+ * @param class-string<CommonDBTM> $type
+ *
  * @return array
  */
-function plugin_glpiinventory_MassiveActions($type)
+function plugin_glpiinventory_MassiveActions(string $type): array
 {
 
     $sep = MassiveAction::CLASS_ACTION_SEPARATOR;
@@ -430,7 +428,7 @@ function plugin_glpiinventory_MassiveActions($type)
  * @param array $options
  * @return bool
  */
-function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
+function plugin_glpiinventory_MassiveActionsFieldsDisplay(array $options = []): bool
 {
 
     $table = $options['options']['table'];
@@ -455,12 +453,12 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay($options = [])
 /**
  * Manage Add select to search query
  *
- * @param string $type
+ * @param class-string<CommonDBTM> $type
  * @param int $id
  * @param int $num
  * @return string
  */
-function plugin_glpiinventory_addSelect($type, $id, $num)
+function plugin_glpiinventory_addSelect(string $type, int $id, int $num): string
 {
 
     $searchopt = Search::getOptions($type);
@@ -486,10 +484,10 @@ function plugin_glpiinventory_addSelect($type, $id, $num)
 /**
  * Manage group by in search query
  *
- * @param string $type
+ * @param class-string<CommonDBTM> $type
  * @return bool
  */
-function plugin_glpiinventory_forceGroupBy($type)
+function plugin_glpiinventory_forceGroupBy(string $type): bool
 {
     return false;
 }
@@ -498,7 +496,7 @@ function plugin_glpiinventory_forceGroupBy($type)
 /**
  * Manage left join in search query
  *
- * @param string   $itemtype
+ * @param class-string<CommonDBTM> $itemtype
  * @param string   $ref_table
  * @param string   $new_table
  * @param string   $linkfield
@@ -506,12 +504,12 @@ function plugin_glpiinventory_forceGroupBy($type)
  * @return string
  */
 function plugin_glpiinventory_addLeftJoin(
-    $itemtype,
-    $ref_table,
-    $new_table,
-    $linkfield,
-    &$already_link_tables
-) {
+    string $itemtype,
+    string $ref_table,
+    string $new_table,
+    string $linkfield,
+    array &$already_link_tables
+): string {
 
     switch ($itemtype) {
         case PluginGlpiinventoryTask::class:
@@ -565,7 +563,7 @@ function plugin_glpiinventory_addLeftJoin(
  * @param int $key
  * @return string
  */
-function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0)
+function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0): string
 {
     return "";
 }
@@ -576,12 +574,12 @@ function plugin_glpiinventory_addOrderBy($type, $id, $order, $key = 0)
  *
  * @param string $link
  * @param string $nott
- * @param string $type
+ * @param class-string<CommonDBTM> $type
  * @param int $id
  * @param string $val
  * @return string
  */
-function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
+function plugin_glpiinventory_addWhere(string $link, string $nott, string $type, int $id, string $val): string
 {
 
     $searchopt = Search::getOptions($type);
@@ -708,9 +706,9 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
 /**
  * Manage pre-item update an item
  *
- * @param object $parm
+ * @param CommonDBTM $parm
  */
-function plugin_pre_item_update_glpiinventory($parm)
+function plugin_pre_item_update_glpiinventory(CommonDBTM $parm): void
 {
     if ($parm->fields['directory'] == 'glpiinventory') {
         $plugin = new Plugin();
@@ -725,41 +723,35 @@ function plugin_pre_item_update_glpiinventory($parm)
 
 /**
  * Manage pre-item purge an item
- *
- * @param object $parm
- * @return object
  */
-function plugin_pre_item_purge_glpiinventory($parm)
+function plugin_pre_item_purge_glpiinventory(CommonDBTM $parm): CommonDBTM
 {
-    $itemtype = get_class($parm);
     $items_id = $parm->getID();
 
-    switch ($itemtype) {
-        case Computer::class:
-            $agent = new Agent();
-            $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
-            $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
-            $pfStatediscovery = new PluginGlpiinventoryStateDiscovery();
-            if ($agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $items_id])) {
-                $agent_id = $agent->fields['id'];
-                // purge associated task job state
-                $pfTaskjobstate->deleteByCriteria(['agents_id' => $agent_id], true);
-                // purge associated task job log
-                $pfTaskjoblog->deleteByCriteria(['items_id' => $agent_id, 'itemtype' => "Agent"], true);
-                // purge related sate discovery
-                $pfStatediscovery->deleteByCriteria(['agents_id' => $agent_id], true);
-                //remove agent
-                $agent->delete(['id' => $agent_id], true);
-            }
+    if ($parm instanceof Computer) {
+        $agent = new Agent();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+        $pfStatediscovery = new PluginGlpiinventoryStateDiscovery();
+        if ($agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $items_id])) {
+            $agent_id = $agent->fields['id'];
+            // purge associated task job state
+            $pfTaskjobstate->deleteByCriteria(['agents_id' => $agent_id], true);
+            // purge associated task job log
+            $pfTaskjoblog->deleteByCriteria(['items_id' => $agent_id, 'itemtype' => "Agent"], true);
+            // purge related sate discovery
+            $pfStatediscovery->deleteByCriteria(['agents_id' => $agent_id], true);
+            //remove agent
+            $agent->delete(['id' => $agent_id], true);
+        }
 
-            PluginGlpiinventoryCollect_File_Content::cleanComputer($items_id);
-            PluginGlpiinventoryCollect_Registry_Content::cleanComputer($items_id);
-            PluginGlpiinventoryCollect_Wmi_Content::cleanComputer($items_id);
-            break;
+        PluginGlpiinventoryCollect_File_Content::cleanComputer($items_id);
+        PluginGlpiinventoryCollect_Registry_Content::cleanComputer($items_id);
+        PluginGlpiinventoryCollect_Wmi_Content::cleanComputer($items_id);
     }
 
     $rule = new RuleMatchedLog();
-    $rule->deleteByCriteria(['itemtype' => $itemtype, 'items_id' => $items_id]);
+    $rule->deleteByCriteria(['itemtype' => $parm::class, 'items_id' => $items_id]);
 
     return $parm;
 }
@@ -767,15 +759,12 @@ function plugin_pre_item_purge_glpiinventory($parm)
 
 /**
  * Manage when purge an item
- *
- * @param object $parm
- * @return object
  */
-function plugin_item_purge_glpiinventory($parm)
+function plugin_item_purge_glpiinventory(CommonDBTM $parm): CommonDBTM
 {
     global $DB;
 
-    switch (get_class($parm)) {
+    switch ($parm::class) {
         case NetworkPort_NetworkPort::class:
             // If remove connection of a hub port (unknown device), we must delete this port too
             $NetworkPort = new NetworkPort();
@@ -909,9 +898,9 @@ function plugin_item_purge_glpiinventory($parm)
 /**
  * Define dropdown relations
  *
- * @return array
+ * @return array<string, array<string, string>>
  */
-function plugin_glpiinventory_getDatabaseRelations()
+function plugin_glpiinventory_getDatabaseRelations(): array
 {
 
     $plugin = new Plugin();
@@ -949,7 +938,12 @@ function plugin_glpiinventory_getDatabaseRelations()
     return [];
 }
 
-function plugin_glpiinventory_prolog_response($params)
+/**
+ * @param array<string, mixed> $params
+ *
+ * @return array<string, mixed>
+ */
+function plugin_glpiinventory_prolog_response(array $params): array
 {
     $agent = new Agent();
     if ($agent->getFromDBByCrit(['deviceid' => $params['deviceid']])) {
@@ -961,7 +955,11 @@ function plugin_glpiinventory_prolog_response($params)
     return $params;
 }
 
-function plugin_glpiinventory_network_discovery($params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_network_discovery(array $params): array
 {
     $agent = new Agent();
     if ($agent->getFromDBByCrit(['deviceid' => $params['deviceid']])) {
@@ -979,7 +977,11 @@ function plugin_glpiinventory_network_discovery($params)
     return $params;
 }
 
-function plugin_glpiinventory_network_inventory($params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_network_inventory(array $params): array
 {
     $agent = new Agent();
     if ($agent->getFromDBByCrit(['deviceid' => $params['deviceid']])) {
@@ -997,7 +999,11 @@ function plugin_glpiinventory_network_inventory($params)
     return $params;
 }
 
-function plugin_glpiinventory_handle_common_handle_task($task, array $params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_handle_common_handle_task(string $task, array $params): array
 {
     $a_plugin = plugin_version_glpiinventory();
     $params['options']['response'][$task] = [
@@ -1008,28 +1014,47 @@ function plugin_glpiinventory_handle_common_handle_task($task, array $params)
     return $params;
 }
 
-function plugin_glpiinventory_handle_netdiscovery_task(array $params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_handle_netdiscovery_task(array $params): array
 {
     return plugin_glpiinventory_handle_common_handle_task('netdiscovery', $params);
 }
 
-function plugin_glpiinventory_handle_netinventory_task(array $params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_handle_netinventory_task(array $params): array
 {
     return plugin_glpiinventory_handle_common_handle_task('netinventory', $params);
 }
 
-
-function plugin_glpiinventory_handle_esx_task(array $params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_handle_esx_task(array $params): array
 {
     return plugin_glpiinventory_handle_common_handle_task('esx', $params);
 }
 
-function plugin_glpiinventory_handle_collect_task(array $params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_handle_collect_task(array $params): array
 {
     return plugin_glpiinventory_handle_common_handle_task('collect', $params);
 }
 
-function plugin_glpiinventory_handle_deploy_task(array $params)
+/**
+ * @param array<string,mixed> $params
+ * @return array<string,mixed>
+ */
+function plugin_glpiinventory_handle_deploy_task(array $params): array
 {
     return plugin_glpiinventory_handle_common_handle_task('deploy', $params);
 }

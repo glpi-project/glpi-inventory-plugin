@@ -96,7 +96,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
     public static function getList($agents_id)
     {
         /**
-         * @var array $PF_CONFIG
+         * @var array<string,string|int> $PF_CONFIG
          * @var DBmysql $DB
          */
         global $PF_CONFIG, $DB;

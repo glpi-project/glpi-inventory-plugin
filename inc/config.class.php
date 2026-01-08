@@ -160,19 +160,12 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         foreach ($values as $type => $value) {
             if ($this->getValue($type) === null) {
                 $this->addValue($type, $value);
-            } elseif ($update == true) {
+            } elseif ($update) {
                 $this->updateValue($type, $value);
             }
         }
     }
 
-
-    /**
-     * Define tabs to display on form page
-     *
-     * @param array $options
-     * @return array containing the tabs name
-     */
     public function defineTabs($options = [])
     {
 
@@ -200,14 +193,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         return $ong;
     }
 
-
-    /**
-     * Get the tab name used for item
-     *
-     * @param CommonGLPI $item the item object
-     * @param int $withtemplate 1 if is a template form
-     * @return string|array name of the tab
-     */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
@@ -221,15 +206,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         return '';
     }
 
-
-    /**
-     * Display the content of the tab
-     *
-     * @param CommonGLPI $item
-     * @param int $tabnum number of the tab to display
-     * @param int $withtemplate 1 if is a template form
-     * @return bool
-     */
     public static function displayTabContentForItem($item, $tabnum = 1, $withtemplate = 0)
     {
         /** @var PluginGlpiinventoryConfig $item */
@@ -258,7 +234,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      */
     public function getValue(string $name): string|int|null
     {
-        /** @var array $PF_CONFIG */
+        /** @var array<string,string|int> $PF_CONFIG */
         global $PF_CONFIG;
 
         if (isset($PF_CONFIG[$name])) {
@@ -276,7 +252,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * @param string $name name in configuration
      * @return bool
      */
-    public function isFieldActive($name)
+    public function isFieldActive(string $name): bool
     {
         if (!($this->getValue($name))) {
             return false;
@@ -285,13 +261,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         }
     }
 
-
-    /**
-     * Display form
-     *
-     * @return void
-     */
-    public function showConfigForm()
+    public function showConfigForm(): void
     {
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/config/main.html.twig', [
             'canedit' => true,
@@ -306,7 +276,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      * @param int $action
      * @return string
      */
-    public static function getActions($action)
+    public static function getActions(int $action): string
     {
         switch ($action) {
             case self::ACTION_STATUS:
@@ -322,10 +292,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
     /**
      * Display form for tab 'Network inventory'
-     *
-     * @return void
      */
-    public function showFormNetworkInventory()
+    public function showFormNetworkInventory(): void
     {
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/config/netinv.html.twig', [
             'canedit' => true,
@@ -336,10 +304,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
 
     /**
      * Display form for tab 'Deploy'
-     *
-     * @return void
      */
-    public function showFormDeploy()
+    public function showFormDeploy(): void
     {
         TemplateRenderer::getInstance()->display('@glpiinventory/forms/config/deploy.html.twig', [
             'canedit' => true,
@@ -375,7 +341,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      */
     public function updateValue(string $name, string|int $value): bool
     {
-        /** @var array $PF_CONFIG */
+        /** @var array<string,string|int> $PF_CONFIG */
         global $PF_CONFIG;
 
         // retrieve current config
@@ -436,7 +402,7 @@ class PluginGlpiinventoryConfig extends CommonDBTM
     public static function loadCache()
     {
         /** @var DBmysql $DB */
-        /** @var array $PF_CONFIG */
+        /** @var array<string,string|int> $PF_CONFIG */
         global $DB, $PF_CONFIG;
 
         if ($DB->tableExists('glpi_plugin_glpiinventory_configs')) {

@@ -49,7 +49,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
     /**
      * Get cron task's description
      *
-     * @return array
+     * @return array<string, string>
      */
     public static function cronInfo(): array
     {
@@ -95,7 +95,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
      *
      * @return bool
      */
-    public static function cronWakeupAgents($crontask)
+    public static function cronWakeupAgents($crontask): bool
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -208,7 +208,7 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
         //Number of agents successfully woken up
         $wokeup = 0;
         if ($tasks !== []) {
-            //Update last wake up time each task
+            //Update last wake-up time each task
             $DB->update(
                 'glpi_plugin_glpiinventory_tasks',
                 [
@@ -234,10 +234,8 @@ class PluginGlpiinventoryAgentWakeup extends CommonDBTM
 
     /**
      * Send a request to the remote agent to run now
-     *
-     * @return bool true if send successfully, otherwise false
      */
-    public static function wakeUp(Agent $agent)
+    public static function wakeUp(Agent $agent): bool
     {
         try {
             $agent->requestAgent('now');
