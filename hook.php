@@ -209,10 +209,10 @@ function plugin_glpiinventory_hook_dashboard_cards(?array $cards): array
  * @param string $type
  * @param int $id
  * @param array<string,mixed> $data
- * @param int $num
+ * @param string $num
  * @return string
  */
-function plugin_glpiinventory_giveItem(string $type, int $id, array $data, int $num): string
+function plugin_glpiinventory_giveItem(string $type, int $id, array $data, string $num): string
 {
     $searchopt = Search::getOptions($type);
     $table = $searchopt[$id]["table"];
@@ -458,10 +458,10 @@ function plugin_glpiinventory_MassiveActionsFieldsDisplay(array $options = []): 
  *
  * @param class-string<CommonDBTM> $type
  * @param int $id
- * @param int $num
+ * @param string $num
  * @return string
  */
-function plugin_glpiinventory_addSelect(string $type, int $id, int $num): string
+function plugin_glpiinventory_addSelect(string $type, int $id, string $num): string
 {
 
     $searchopt = Search::getOptions($type);
