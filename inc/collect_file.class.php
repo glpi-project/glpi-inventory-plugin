@@ -36,7 +36,7 @@
  */
 class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
 {
-    public $collect_type = 'file';
+    public string $collect_type = 'file';
 
     /**
      * Get name of this type by language of the user connected
@@ -54,7 +54,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         return "ti ti-file-search";
     }
 
-    public function getListHeaders()
+    public function getListHeaders(): array
     {
         return [
             'limit' => __("Limit", "glpiinventory"),
@@ -70,7 +70,7 @@ class PluginGlpiinventoryCollect_File extends PluginGlpiinventoryCollectCommon
         ];
     }
 
-    public function displayOneRow($row = [])
+    public function displayOneRow(array $row = []): array
     {
         $filter = $type = '';
         if (!empty($row['filter_sizeequals'])) {

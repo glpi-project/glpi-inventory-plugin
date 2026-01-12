@@ -62,7 +62,7 @@ class PluginGlpiinventoryInventoryComputerStat extends CommonDBTM
     /**
      * Init stats
      */
-    public static function init()
+    public static function init(): void
     {
         /** @var DBmysql $DB */
         global $DB;

@@ -85,12 +85,11 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * return array with state mapping name
      *
-     * @return array with all elements
+     * @return array<int,string> with all elements
      */
     public static function dropdownStateValues()
     {
-
-        $elements = [
+        return [
             self::TASK_PREPARED           => __('Prepared', 'glpiinventory'),
             self::TASK_STARTED            => __('Started', 'glpiinventory'),
             self::TASK_RUNNING            => __('Running'),
@@ -98,8 +97,6 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             self::TASK_ERROR              => __('Error'),
             self::TASK_INFO               => __('Info', 'glpiinventory'),
         ];
-
-        return $elements;
     }
 
 
@@ -154,7 +151,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
     /**
      * Get search function for the class
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function rawSearchOptions()
     {
@@ -252,7 +249,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      * @param string $state state of this taskjobstate
      * @param string $comment the comment of this insertion
      */
-    public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment)
+    public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment): void
     {
         /** @var DBmysql $DB */
         global $DB;

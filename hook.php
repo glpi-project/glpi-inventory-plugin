@@ -43,7 +43,7 @@ use function Safe\json_decode;
  * Add search options for GLPI objects
  *
  * @param class-string<CommonDBTM> $itemtype
- * @return array
+ * @return array<int, array<string,mixed>>
  */
 function plugin_glpiinventory_getAddSearchOptions(string $itemtype): array
 {
@@ -113,6 +113,10 @@ function plugin_glpiinventory_getAddSearchOptions(string $itemtype): array
     return $sopt;
 }
 
+/**
+ * @param ?array<string,mixed> $cards
+ * @return array<string, array<string,mixed>>
+ */
 function plugin_glpiinventory_hook_dashboard_cards(?array $cards): array
 {
     if ($cards === null) {
@@ -202,10 +206,9 @@ function plugin_glpiinventory_hook_dashboard_cards(?array $cards): array
 /**
  * Manage search give items (display information in the search page)
  *
- * @global array $CFG_GLPI
  * @param string $type
  * @param int $id
- * @param array $data
+ * @param array<string,mixed> $data
  * @param int $num
  * @return string
  */
@@ -395,7 +398,7 @@ function plugin_glpiinventory_uninstall(): bool
  *
  * @param class-string<CommonDBTM> $type
  *
- * @return array
+ * @return array<string, string>
  */
 function plugin_glpiinventory_MassiveActions(string $type): array
 {
@@ -425,7 +428,7 @@ function plugin_glpiinventory_MassiveActions(string $type): array
 /**
  * Manage massive actions fields display
  *
- * @param array $options
+ * @param array<string,mixed> $options
  * @return bool
  */
 function plugin_glpiinventory_MassiveActionsFieldsDisplay(array $options = []): bool

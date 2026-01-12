@@ -140,9 +140,9 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Get all states name
      *
-     * @return array
+     * @return array<int, string>
      */
-    public static function getStateNames()
+    public static function getStateNames(): array
     {
         return [
             self::PREPARED             => __('Prepared', 'glpiinventory'),
@@ -250,7 +250,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * @param int $id id of the taskjobstate
      * @param int $state state to set
      */
-    public function changeStatus($id, $state)
+    public function changeStatus($id, $state): void
     {
         $this->update(['id' => $id, 'state' => $state]);
     }
@@ -260,10 +260,11 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * Get taskjobs of an agent
      *
      * @param int $agent_id id of the agent
+     *
+     * @return array<string,mixed>
      */
-    public function getTaskjobsAgent($agent_id)
+    public function getTaskjobsAgent(int $agent_id): array
     {
-        /** @var DBmysql $DB */
         global $DB;
 
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
@@ -291,13 +292,12 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Process ajax parameters for getLogs() methods
-     * Displays in json format, encoded list of logs grouped by jobstates
+     * Displays in JSON format, encoded list of logs grouped by jobstates
      *
-     * since 0.85+1.0
-     * @param array $params list of ajax expected 'id' and 'last_date' parameters
+     * @param array<string,mixed> $params list of ajax expected 'id' and 'last_date' parameters
      * @return void
      */
-    public function ajaxGetLogs($params)
+    public function ajaxGetLogs(array $params): void
     {
         $id        = null;
         $last_date = null;
@@ -322,9 +322,9 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      *
      * @param int $id
      * @param string $last_date
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getLogs($id, $last_date)
+    public function getLogs(int $id, string $last_date): array
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -379,7 +379,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      * @param int $error error
      * @param string $message message for the status
      */
-    public function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = '')
+    public function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = ''): void
     {
 
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
@@ -413,10 +413,8 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Update taskjob(log) in error
-     *
-     * @param string $reason
      */
-    public function fail($reason = '')
+    public function fail(string $reason = ''): void
     {
         $this->updateState(
             PluginGlpiinventoryTaskjoblog::TASK_ERROR,
@@ -426,12 +424,13 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     }
 
 
-    /*
+    /**
      * Postpone a job
+     *
      * @param string $type the type of interaction (before download, etc)
      * @param string $reason the text to be displayed
      */
-    public function postpone($type, $reason = '')
+    public function postpone(string $type, string $reason = ''): void
     {
         $this->updateState(
             PluginGlpiinventoryTaskjoblog::TASK_INFO,
@@ -444,10 +443,8 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Cancel a taskjob
-     *
-     * @param string $reason
      */
-    public function cancel($reason = '')
+    public function cancel(string $reason = ''): void
     {
         $this->updateState(
             PluginGlpiinventoryTaskjoblog::TASK_INFO,
@@ -459,15 +456,13 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Update the state of a jobstate
-     * @since 9.2
      *
      * @param string|int $joblog_state the state of the joblog to set
      * @param string|int $jobstate_state the state of the jobstate to set
      * @param string $reason
      */
-    public function updateState($joblog_state, $jobstate_state, $reason = '')
+    public function updateState($joblog_state, $jobstate_state, $reason = ''): void
     {
-
         $log       = new PluginGlpiinventoryTaskjoblog();
         $log_input = [
             'plugin_glpiinventory_taskjobstates_id' => $this->fields['id'],
@@ -486,7 +481,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     }
 
 
-    private function processPostonedJob($type)
+    private function processPostonedJob(string $type): void
     {
 
         $pfDeployUserInteraction = new PluginGlpiinventoryDeployUserinteraction();
@@ -563,7 +558,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Get cron task's description
      *
-     * @return array
+     * @return array<string, string>
      */
     public static function cronInfo(): array
     {
@@ -576,7 +571,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     /**
      * Cron task: clean taskjob (retention time)
      */
-    public static function cronCleantaskjob()
+    public static function cronCleantaskjob(): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -614,11 +609,9 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
 
     /**
-    * Fill a taskjobstate by it's uuid
-    * @since 9.2
-    * @param string $uniqid taskjobstate's uniqid
+    * Fill a taskjobstate by its UUID
     */
-    public function getFromDBByUniqID($uniqid)
+    public function getFromDBByUniqID(string $uniqid): void
     {
         $result = $this->find(['uniqid' => $uniqid], [], 1);
         if (!empty($result)) {
@@ -629,10 +622,8 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Display the tasks where the computer is associated
-     *
-     * @param int $computers_id
      */
-    public function showStatesForComputer($computers_id)
+    public function showStatesForComputer(int $computers_id): void
     {
         /** @var DBmysql $DB */
         global $DB;

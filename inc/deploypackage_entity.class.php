@@ -83,7 +83,7 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
      * Get entities for a deploypackage
      *
      * @param int $deploypackages_id ID of the deploypackage
-     * @return array list of of entities linked to a deploypackage
+     * @return array<int,mixed> list of entities linked to a deploypackage
     **/
     public static function getEntities($deploypackages_id)
     {

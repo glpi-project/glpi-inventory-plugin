@@ -83,7 +83,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      *
      * @param CommonGLPI $item the item object
      * @param int $withtemplate 1 if is a template form
-     * @return string|array name of the tab
+     * @return string|array<string> name of the tab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
@@ -145,7 +145,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      *
      * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
      */
-    public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item)
+    public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item): void
     {
 
         echo "<div class='alert alert-primary d-flex align-items-center' role='alert'>";
@@ -199,7 +199,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     /**
      * Display result, so list of computers
      */
-    public static function showResults(PluginGlpiinventoryDeployGroup $item)
+    public static function showResults(PluginGlpiinventoryDeployGroup $item): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -357,10 +357,8 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     /**
      * Import into DB the computers ID
      *
-     * @since 9.2+2.0
-     *
-     * @param array $post_data
-     * @param array $files_data array with information of $_FILE
+     * @param array<string,mixed> $post_data
+     * @param array<string,mixed> $files_data array with information of $_FILE
      *
      * @return bool
      */

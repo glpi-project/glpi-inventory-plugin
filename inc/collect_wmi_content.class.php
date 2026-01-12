@@ -39,19 +39,19 @@ use Glpi\Application\View\TemplateRenderer;
 
 class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectContentCommon
 {
-    public $collect_itemtype = PluginGlpiinventoryCollect_Wmi::class;
-    public $collect_table    = 'glpi_plugin_glpiinventory_collects_wmis';
+    public string $collect_itemtype = PluginGlpiinventoryCollect_Wmi::class;
+    public string $collect_table    = 'glpi_plugin_glpiinventory_collects_wmis';
 
-    public $collect_type = 'wmi';
+    public string $collect_type = 'wmi';
 
     /**
      * update wmi data to compute (add and update) with data sent by the agent
      *
      * @param int $computers_id id of the computer
-     * @param array $wmi_data
+     * @param array<string,mixed> $wmi_data
      * @param int $collects_wmis_id
      */
-    public function updateComputer($computers_id, $wmi_data, $collects_wmis_id)
+    public function updateComputer($computers_id, $wmi_data, $collects_wmis_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -108,7 +108,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
      *
      * @param int $computers_id id of computer
      */
-    public function showForComputer($computers_id)
+    public function showForComputer(int $computers_id): void
     {
 
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
@@ -149,18 +149,18 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     /**
      * Display wmi information of collect_wmi_id
      *
-     * @param int $collects_wmis_id
+     * @param int $id
      *
      * @return void
      */
-    public function showContent($collects_wmis_id): void
+    public function showContent(int $id): void
     {
         $collect_wmi = new PluginGlpiinventoryCollect_Wmi();
         $computer = new Computer();
-        $collect_wmi->getFromDB($collects_wmis_id);
+        $collect_wmi->getFromDB($id);
 
         $data = $this->find(
-            ['plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id],
+            ['plugin_glpiinventory_collects_wmis_id' => $id],
             ['property']
         );
         $entries = [];

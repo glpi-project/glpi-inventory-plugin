@@ -36,7 +36,7 @@
  */
 class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
 {
-    public $collect_type = 'wmi';
+    public string $collect_type = 'wmi';
 
     /**
      * Get name of this type by language of the user connected
@@ -54,7 +54,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
         return "ti ti-settings-search";
     }
 
-    public function getListHeaders()
+    public function getListHeaders(): array
     {
         return [
             'moniker' => "Moniker",
@@ -63,7 +63,7 @@ class PluginGlpiinventoryCollect_Wmi extends PluginGlpiinventoryCollectCommon
         ];
     }
 
-    public function displayOneRow($row = [])
+    public function displayOneRow(array $row = []): array
     {
         return [
             'moniker' => $row['moniker'],

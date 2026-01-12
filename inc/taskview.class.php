@@ -57,7 +57,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     /**
      * Show job logs
      */
-    public function showJobLogs()
+    public function showJobLogs(): void
     {
         $task_id = $this->fields['id'] ?? null;
         echo "<div class='card fusinv_panel'>";
@@ -287,8 +287,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      * Display form for task configuration
      *
      * @param int $id ID of the task
-     * @param $options array
-     * @return bool TRUE if form is ok
+     * @param array<string,mixed> $options
+     * @return bool
      *
      **/
     public function showForm($id, $options = [])
@@ -390,6 +390,10 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
 
+    /**
+     * @param array<string,mixed> $options
+     * @return void
+     */
     public function showFormButtons($options = [])
     {
         $ID = 0;
@@ -450,9 +454,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     /**
      * Manage the different actions in when submit form (add, update,purge...)
      *
-     * @param array $postvars
+     * @param array<string,mixed> $postvars
      */
-    public function submitForm($postvars)
+    public function submitForm($postvars): void
     {
 
         if (isset($postvars['forcestart'])) {
@@ -509,6 +513,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
 
+    /**
+     * @return array<array<string,mixed>>
+     */
     public function rawSearchOptions()
     {
 
@@ -533,7 +540,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     /**
      * Export a list of jobs in CSV format, and download file
      *
-     * @param  array  $params these possible entries:
+     * @param  array<string,mixed> $params these possible entries:
      *                        - agent_state_types: array of agent states to filter output
      *                          (prepared, cancelled, running, success, error)
      *                        - debug_csv, possible values:
@@ -545,7 +552,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      */
     public function csvExport($params = [])
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $default_params = [
@@ -697,7 +703,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     /**
      * Force running the current task
      **/
-    public function forceRunning()
+    public function forceRunning(): void
     {
         $methods = [];
         foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
@@ -710,8 +716,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     /**
      * Prepare task jobs
      *
-     * @param array $methods
+     * @param array<string> $methods
      * @param false|int $tasks_id the concerned task
+     * @param ?CronTask $crontask
      * @return true
      */
     public function prepareTaskjobs($methods = [], $tasks_id = false, $crontask = null)
@@ -976,9 +983,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      * TODO: this method should be rewritten to call directly a getAgents() method in the
      * corresponding itemtype classes.
      *
-     * @param array $actors
+     * @param array<int,array<string,mixed>> $actors
      * @param bool  $use_cache retrieve agents from cache or not
-     * @return array list of agents
+     * @return array<int> list of agents
      */
     public function getAgentsFromActors($actors = [], $use_cache = false)
     {

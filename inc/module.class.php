@@ -40,7 +40,7 @@ class PluginGlpiinventoryModule extends CommonDBTM
      * Get all installed modules
      *
      * @param bool $p_inactive Show inactive modules
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public static function getAll($p_inactive = false)
     {

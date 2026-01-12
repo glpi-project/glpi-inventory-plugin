@@ -46,33 +46,27 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     public const EDIT        = 'edit';
     public const INIT        = 'init';
 
-    public $shortname = '';
+    public string $shortname = '';
 
     //The section name in the JSON representation
-    public $json_name = '';
+    public string $json_name = '';
 
 
     /**
      * Get an event label by its identifier
-     * @since 9.2
-     * @return false|string
      */
-    public function getLabelForAType($type)
+    public function getLabelForAType(string $type): string
     {
         $types = $this->getTypes();
-        if (isset($types[$type])) {
-            return $type[$type];
-        } else {
-            return false;
-        }
+        return $types[$type] ?? '';
     }
 
 
     /**
     * Get the types already in used, so they cannot be selected anymore
-    * @since 9.2
+    *
     * @param PluginGlpiinventoryDeployPackage $package the package to check
-    * @return array the types already in used
+    * @return array<string> the types already in used
     */
     public function getTypesAlreadyInUse(PluginGlpiinventoryDeployPackage $package)
     {
@@ -84,7 +78,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      * Display the dropdown to select type of element
      *
      * @param PluginGlpiinventoryDeployPackage $package the package
-     * @param array $config order item configuration
+     * @param array<string,mixed> $config order item configuration
      * @param string $rand unique element id used to identify/update an element
      * @param string $mode mode in use (create, edit...)
      */
@@ -93,14 +87,13 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         $config,
         $rand,
         $mode
-    ) {
-        /** @var array $CFG_GLPI */
+    ): void {
         global $CFG_GLPI;
 
         //In case of a file item, there's no type, so don't display dropdown
         //in edition mode
         if (!isset($config['type']) && $mode == self::EDIT) {
-            return true;
+            return;
         }
 
         /*
@@ -152,10 +145,13 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 
     /**
     * Create a configuration request data
-    *
-    * @since 9.2
+     *
+     * @param PluginGlpiinventoryDeployPackage $package the package
+     * @param array<string,mixed> $request_data the request data
+     *
+     * @return array<string,mixed> the item configuration
     */
-    public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data)
+    public function getItemConfig(PluginGlpiinventoryDeployPackage $package, array $request_data): array
     {
         $config  = [];
         $element = $package->getSubElement($this->json_name, $request_data['index']);
@@ -172,7 +168,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      * Display form
      *
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-     * @param array $request_data
+     * @param array<string,mixed> $request_data
      * @param string $rand unique element id used to identify/update an element
      * @param string $mode possible values: init|edit|create
      */
@@ -181,7 +177,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         $request_data,
         $rand,
         $mode
-    ) {
+    ): void {
         /*
          * Get element config in 'edit' mode
          */
@@ -246,7 +242,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      *
      * @since 9.2
      * @param int $id the package ID
-     * @param array $item the item to add to the package definition
+     * @param array<string,mixed> $item the item to add to the package definition
      * @param string $order the order of the item
      *
      * @return void
@@ -282,6 +278,11 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     }
 
 
+    /**
+     * @param array<string,mixed> $params
+     * @param array<string,mixed> $entry
+     * @return array<string,mixed>
+     */
     public function prepareDataToSave($params, $entry)
     {
         //get current order json
@@ -307,7 +308,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      * Update the order json
      *
      * @param int $packages_id
-     * @param array $data
+     * @param array<string,mixed> $data
      * @return int error number
      */
     public function updateOrderJson($packages_id, $data)
@@ -345,14 +346,26 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         return $error;
     }
 
+    /**
+     * Add a new item in files of the package
+     *
+     * @param array<string,mixed> $params list of fields with value of the file
+     */
+    abstract public function add_item(array $params): bool;
+
+    /**
+     * Save the item in files
+     *
+     * @param array<string,mixed> $params list of fields with value of the file
+     */
+    abstract public function save_item(array $params): bool;
 
     /**
      * Remove an item
      *
-     * @param array $params
-     * @return bool
+     * @param array<string,mixed> $params
      */
-    public function remove_item($params)
+    public function remove_item(array $params): bool
     {
         if (!isset($params[$this->shortname . '_entries'])) {
             return false;
@@ -380,9 +393,9 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     /**
      * Move an item
      *
-     * @param array $params
+     * @param array<string,mixed> $params
      */
-    public function move_item($params)
+    public function move_item(array $params): bool
     {
         //get current order json
         $data = json_decode($this->getJson($params['id']), true);
@@ -398,6 +411,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 
         //update order
         $this->updateOrderJson($params['id'], $data);
+        return true;
     }
 
 
@@ -427,8 +441,7 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
 
 
     /**
-    * Display a add or save button
-    * @since 9.2
+    * Display add or save button
     *
     * @param PluginGlpiinventoryDeployPackage $pfDeployPackage the package in use
     * @param string $mode the mode (edit or create)
@@ -455,7 +468,10 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
     }
 
 
-    public function getItemValues($packages_id)
+    /**
+     * @return array<stirng,mixed>
+     */
+    public function getItemValues(int $packages_id)
     {
         $data = json_decode($this->getJson($packages_id), true);
         if ($data) {
@@ -465,11 +481,19 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
         }
     }
 
-    public function displayAjaxValues($config, $request_data, $rand, $mode)
-    {
-        return;
-    }
+    /**
+     * @param ?array<string,mixed> $config
+     * @param array<string,mixed> $request_data
+     * @param string $rand
+     * @param string $mode mode to sue (create, edit...)
+     *
+     * @return void
+     */
+    public function displayAjaxValues(?array $config, array $request_data, string $rand, string $mode): void {}
 
+    /**
+     * @return array<string,string|array<string,string>>
+     */
     public function getTypes()
     {
         return [];
@@ -480,9 +504,9 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
      * Display list
      *
      * @param PluginGlpiinventoryDeployPackage $package PluginGlpiinventoryDeployPackage instance
-     * @param array $data array converted of 'json' field in DB where stored checks
+     * @param array<string,mixed> $data array converted of 'json' field in DB where stored checks
      * @param string $rand unique element id used to identify/update an element
      */
 
-    abstract public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand);
+    abstract public function displayDeployList(PluginGlpiinventoryDeployPackage $package, array $data, string $rand): void;
 }

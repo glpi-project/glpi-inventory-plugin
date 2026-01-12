@@ -348,8 +348,8 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     /**
      * When agent contact server, this function send datas to agent
      *
-     * @param object $jobstate PluginGlpiinventoryTaskjobstate instance
-     * @return array
+     * @param PluginGlpiinventoryTaskjobstate $jobstate PluginGlpiinventoryTaskjobstate instance
+     * @return array<string, mixed>
      */
     public function run($jobstate)
     {
@@ -452,7 +452,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
      * Get the devices have an IP in the IP range
      *
      * @param int $ipranges_id
-     * @return array
+     * @return array<array<string, int>>
      */
     public function getDevicesOfIPRange($ipranges_id, bool $restrict_entity = true)
     {
@@ -547,7 +547,7 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
     * @param string $job_itemtype
     * @param int $job_items_id
     * @param int $tasks_id
-    * @return string
+    * @return string|false
     */
     public function getDeviceIPOfTaskID($job_itemtype, $job_items_id, $tasks_id)
     {

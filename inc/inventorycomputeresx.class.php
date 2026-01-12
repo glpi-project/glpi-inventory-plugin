@@ -138,7 +138,7 @@ class PluginGlpiinventoryInventoryComputerESX extends PluginGlpiinventoryCommuni
      * Get ESX jobs for this agent
      *
      * @param object $taskjobstate
-     * @return array
+     * @return array<string,string>
      */
     public function run($taskjobstate)
     {

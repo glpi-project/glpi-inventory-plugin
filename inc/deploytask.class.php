@@ -80,8 +80,8 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     /**
      * Define tabs to display on form page
      *
-     * @param array $options
-     * @return array containing the tabs name
+     * @param array<string,mixed> $options
+     * @return array<string,mixed> containing the tabs name
      */
     public function defineTabs($options = [])
     {
@@ -136,7 +136,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     /**
      * Show list of deploy tasks
      */
-    public function showList()
+    public function showList(): void
     {
         self::title();
         Search::show(PluginGlpiinventoryDeployTask::class);
@@ -146,7 +146,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
     /**
      * Display the title of the page
      */
-    public function title()
+    public function title(): void
     {
         global $CFG_GLPI;
 
@@ -171,7 +171,7 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
      *
      * @param int $id
      */
-    public function showActions($id)
+    public function showActions($id): void
     {
         $this->getFromDB($id);
         if ($this->getField('is_active') == 1) {
@@ -205,7 +205,6 @@ class PluginGlpiinventoryDeployTask extends PluginGlpiinventoryTask
      */
     public function pre_deleteItem()
     {
-        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         //if task active, delete denied
