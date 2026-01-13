@@ -43,6 +43,13 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      *
      * @var int
      */
+    public const TASK_UNKNOWN = 0;
+
+    /**
+     * Define state task started
+     *
+     * @var int
+     */
     public const TASK_STARTED = 1;
 
     /**
@@ -353,5 +360,41 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             }
         }
         return str_replace(",[", "<br/>[", $comment);
+    }
+
+    /**
+     * @param int $taskjobs_id
+     * @param int $items_id
+     * @param class-string<CommonDBTM> $itemtype
+     * @param int $state
+     * @param array{
+     *     TaskJobLogsTypes,
+     *     array{
+     *         nb_devices?: int,
+     *         properties?: array{
+     *             type?: string,
+     *             name?: string,
+     *             mac?: string|string[],
+     *             ip?: string|string[],
+     *         },
+     *         message?: string
+     *     }
+     * } $comment
+     * @return void
+     */
+    public function addJobLog(
+        int $taskjobs_id,
+        int $items_id,
+        string $itemtype,
+        int $state,
+        array $comment
+    ): void {
+        $this->taskJobLog->addTaskjoblog(
+            $taskjobs_id,
+            $items_id,
+            $itemtype,
+            $state,
+            json_encode($comment)
+        );
     }
 }
