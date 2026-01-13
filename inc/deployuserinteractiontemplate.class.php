@@ -83,10 +83,6 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     public const WTS_ICON_ERROR               = 'error';
 
 
-    /**
-     * @param array<string,mixed> $options
-     * @return array<int,array<string,mixed>>
-     */
     public function defineTabs($options = [])
     {
 
