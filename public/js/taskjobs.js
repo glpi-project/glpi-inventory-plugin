@@ -447,7 +447,7 @@ function agents_chart(chart_id) {
                            return false; // break
                         }
                      });
-                     
+
                      rows.push(
                         "<tr class='run header" + ((taskjob_state !== null) ? ' run_' + taskjob_state : '' ) + "'><th colspan='3'>"+
                         run.run +
@@ -458,7 +458,7 @@ function agents_chart(chart_id) {
                            "<tr class='run log" + ((taskjob_state !== null) ? ' run_' + taskjob_state : '' ) + "'>" +
                            "<td>" + log['log.date'] +"</td>"+
                            "<td>" + taskjobs.logstatuses_names[log['log.state']] +"</td>"+
-                           "<td class='comment'>" + __(log['log.comment'], 'glpiinventory') +"</td>"+
+                           "<td class='comment'>" + log['log.comment'] +"</td>"+
                            "</tr>"
                         );
                       });
