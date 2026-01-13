@@ -32,6 +32,7 @@
  */
 
 use Glpi\Inventory\Inventory;
+use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
 
 /**
  * Manage the communication of network discovery feature with the agents.
@@ -50,6 +51,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
     public function import($p_DEVICEID, $a_CONTENT, Inventory $inventory): array
     {
         $response = [];
+        $taskJobLog  = new PluginGlpiinventoryTaskjoblog();
         $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
         $agent = new Agent();
 
@@ -73,13 +75,22 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     && (!isset($a_CONTENT->content->agent->nbip))
                     && (!isset($a_CONTENT->content->agent->exit))
                 ) {
-                    $nb_devices = 1;
+                    $taskJobLog->addJobLog(
+                        taskjobs_id: $a_CONTENT->jobid,
+                        items_id: $agent->fields['id'],
+                        itemtype: Agent::class,
+                        state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
+                        comment: [
+                            TaskJobLogsTypes::DEVICES_FOUND->value => 1,
+                        ]
+                    );
+                    /*$nb_devices = 1;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
                     $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = Agent::class;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devicesfound==';
-                    $this->addtaskjoblog();
+                    $this->addtaskjoblog();*/
                 }
             }
         }
@@ -134,30 +145,55 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                         $device = $a_CONTENT->content->network_device;
                         if (count($refused)) {
                             $a_text = [];
+                            $properties = [];
                             if (isset($device)) {
                                 foreach (["type", "name", "mac", "ips"] as $property) {
-                                    if (property_exists($device, $property)) {
+                                    $properties[$property] = $device->$property;
+                                    /*if (property_exists($device, $property)) {
                                         if (is_array($device->$property)) {
                                             $a_text[] = "[" . $property . "]: " . implode(", ", $device->$property);
                                         } else {
                                             $a_text[] = "[" . $property . "]: " . $device->$property;
                                         }
-                                    }
+                                    }*/
                                 }
                             }
-                            $itemtype_discovered = $refused = $inventory->getMainAsset()->getItemtype();
+                            $item = $inventory->getMainAsset()->getItem();
+                            /*$itemtype_discovered = $inventory->getMainAsset()->getItemtype();
                             if ($itemtype_discovered == Computer::class) {
                                 $a_text[] = "<br>[info]: " . __("If a real 'computer' please install agent on it (glpiinventory plugin is not design for this) otherwise check SNMP credentials from the IP range");
-                            }
-                            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
-                            $this->addtaskjoblog();
+                            }*/
+                            $taskJobLog->addJobLog(
+                                taskjobs_id: $a_CONTENT->jobid,
+                                items_id: $item->fields['id'],
+                                itemtype: $item::class,
+                                state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
+                                comment: [
+                                    TaskJobLogsTypes::IMPORT_DENIED->value => [
+                                        'properties' => $properties,
+                                    ],
+                                ]
+                            );
+                            /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
+                            $this->addtaskjoblog();*/
                         } else {
                             $item = $inventory->getMainAsset()->getItem();
-                            $what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
+                            $taskJobLog->addJobLog(
+                                taskjobs_id: $a_CONTENT->jobid,
+                                items_id: $item->fields['id'],
+                                itemtype: $item::class,
+                                state: PluginGlpiinventoryTaskjoblog::TASK_OK,
+                                comment: [
+                                    $inventory->getMainAsset()->isNew()
+                                        ? TaskJobLogsTypes::ADD_ITEM->value
+                                        : TaskJobLogsTypes::UPDATE_ITEM->value => 1,
+                                ]
+                            );
+                            /*$what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
                             $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
                                 = '[==detail==] ' . $what . ' ' . $item->getTypeName()
                                 . ' [[' . $item::class . '::' . $item->getID() . ']]';
-                            $this->addtaskjoblog();
+                            $this->addtaskjoblog();*/
                         }
                         $response = ['response' => ['RESPONSE' => 'SEND']];
                     }

@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
 use Safe\DateTime;
 
 use function Safe\strtotime;
@@ -168,13 +169,21 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
             foreach ($a_taskjobstates as $datastate) {
                 $a_taskjoblog = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $datastate['id']]);
                 foreach ($a_taskjoblog as $taskjoblog) {
-                    if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
-                        $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);
-                    } elseif (strstr($taskjoblog['comment'], " No response from remote host")) {
-                        $nb_errors++;
-                    } elseif ($taskjoblog['state'] == "1") {
-                        $nb_threads = $taskjoblog['comment'];
-                        $start_date = $taskjoblog['date'];
+                    if (!Toolbox::isJSON($taskjoblog['comment'])) {
+                        //Old way to handle task job logs
+                        if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
+                            $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);
+                        } elseif (strstr($taskjoblog['comment'], " No response from remote host")) {
+                            $nb_errors++;
+                        } elseif ($taskjoblog['state'] == "1") {
+                            $nb_threads = $taskjoblog['comment'];
+                            $start_date = $taskjoblog['date'];
+                        }
+                    } else {
+                        $comment = json_decode($taskjoblog['comment']);
+                        if ($comment['type'] === TaskJobLogsTypes::DEVICES_QEUERIED) {
+                            $nb_query += (int) $comment->{TaskJobLogsTypes::DEVICES_QEUERIED->value};
+                        }
                     }
 
                     if (
