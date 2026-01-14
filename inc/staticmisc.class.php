@@ -181,6 +181,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param string $title (not used)
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX($title)
     {
@@ -225,6 +226,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param array<string,mixed> $a_itemtype
      * @return array<string,string>
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actiontype_InventoryComputerESX($a_itemtype)
     {
@@ -239,6 +241,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_InventoryComputerESX
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
     {
@@ -277,6 +280,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_InventoryComputerESX
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_Agent_InventoryComputerESX()
     {
@@ -303,6 +307,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param int $entities_id id of the entity
      * @return array<string,mixed>
+     * @used-by PluginGlpiinventoryCommunicationRest::getConfigByAgent() via PluginGlpiinventoryCommunicationRest::getMethodForParameters()
      */
     public static function task_ESX_getParameters($entities_id)
     {
@@ -336,6 +341,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param string $title (not used)
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery($title)
     {
@@ -374,6 +380,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param string $title (not used)
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_PluginGlpiinventoryIPRange_networkinventory($title)
     {
@@ -388,6 +395,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param string $title (not used)
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_NetworkEquipment_networkinventory($title)
     {
@@ -406,6 +414,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param string $title (not used)
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_Printer_networkinventory($title)
     {
@@ -460,6 +469,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param string $itemtype
      * @return string
+     * @used-by PluginGlpiinventoryTaskjobView::submitForm()
      */
     public static function task_selection_type_networkinventory($itemtype)
     {
@@ -483,6 +493,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param string $itemtype
      * @return string
+     * @used-by PluginGlpiinventoryTaskjobView::submitForm()
      */
     public static function task_selection_type_networkdiscovery($itemtype)
     {
@@ -516,6 +527,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_definitiontype_deployinstall
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_PluginGlpiinventoryDeployPackage_deployinstall()
     {
@@ -534,6 +546,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param array<string,mixed> $a_itemtype
      * @return array<string,string>
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actiontype_deployinstall($a_itemtype)
     {
@@ -550,6 +563,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_deployinstall
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_Computer_deployinstall()
     {
@@ -586,6 +600,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_deployinstall
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_Group_deployinstall()
     {
@@ -602,6 +617,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_deployinstall
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_PluginGlpiinventoryDeployGroup_deployinstall()
     {
@@ -618,6 +634,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param int $entities_id
      * @return array<string,string>
+     * @used-by PluginGlpiinventoryCommunicationRest::getConfigByAgent() via PluginGlpiinventoryCommunicationRest::getMethodForParameters()
      */
     public static function task_deploy_getParameters($entities_id)
     {
@@ -650,6 +667,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_definitiontype_collect
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_PluginGlpiinventoryCollect_collect()
     {
@@ -665,6 +683,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param array<string,mixed> $a_itemtype
      * @return array<string,string>
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actiontype_collect($a_itemtype)
     {
@@ -681,6 +700,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_collect
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_Computer_collect()
     {
@@ -717,6 +737,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_collect
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_Group_collect()
     {
@@ -733,6 +754,7 @@ class PluginGlpiinventoryStaticmisc
      * defined in task_actiontype_collect
      *
      * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_PluginGlpiinventoryDeployGroup_collect()
     {
@@ -750,6 +772,7 @@ class PluginGlpiinventoryStaticmisc
      *
      * @param int $entities_id
      * @return array<string,string>
+     * @used-by PluginGlpiinventoryCommunicationRest::getConfigByAgent() via PluginGlpiinventoryCommunicationRest::getMethodForParameters()
      */
     public static function task_collect_getParameters(int $entities_id): array
     {
