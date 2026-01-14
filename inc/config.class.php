@@ -251,6 +251,8 @@ class PluginGlpiinventoryConfig extends CommonDBTM
      *
      * @param string $name name in configuration
      * @return bool
+     * @used-by templates/forms/config/main.html.twig
+     * @used-by templates/forms/config/deploy.html.twig
      */
     public function isFieldActive(string $name): bool
     {
