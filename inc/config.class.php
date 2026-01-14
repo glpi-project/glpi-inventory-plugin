@@ -376,24 +376,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         return $fConfig->getValue('extradebug');
     }
 
-
-    /**
-     * Log when extra-debug is activated
-     *
-     * @param string $file name of log file to update
-     * @param string|string[] $message the message to put in log file
-     */
-    public static function logIfExtradebug($file, $message): void
-    {
-        if (self::isExtradebugActive()) {
-            if (is_array($message)) {
-                $message = print_r($message, true);
-            }
-            Toolbox::logInFile($file, $message);
-        }
-    }
-
-
     /**
      * Load all configuration in global variable $PF_CONFIG
      *
