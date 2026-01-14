@@ -281,44 +281,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         );
     }
 
-
-
-    /**
-     * Purge all tasks AND taskjob related with method
-     *
-     * @param string $method
-     */
-    public static function cleanTasksbyMethod($method): void
-    {
-        $pfTaskjob = new PluginGlpiinventoryTaskjob();
-        $pfTask = new PluginGlpiinventoryTask();
-
-        $a_taskjobs = $pfTaskjob->find(['method' => $method]);
-        $task_id = 0;
-        foreach ($a_taskjobs as $a_taskjob) {
-            $pfTaskjob->delete($a_taskjob, true);
-            if (
-                $task_id != $a_taskjob['plugin_glpiinventory_tasks_id'] && $task_id != '0'
-            ) {
-                // Search if this task have other taskjobs, if not, we will delete it
-                $findtaskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $task_id]);
-                if (count($findtaskjobs) == '0') {
-                    $pfTask->delete(['id' => $task_id], true);
-                }
-            }
-            $task_id = $a_taskjob['plugin_glpiinventory_tasks_id'];
-        }
-        if ($task_id != '0') {
-            // Search if this task have other taskjobs, if not, we will delete it
-            $findtaskjobs = $pfTaskjob->find(['plugin_glpiinventory_tasks_id' => $task_id]);
-            if (count($findtaskjobs) == '0') {
-                $pfTask->delete(['id' => $task_id], true);
-            }
-        }
-    }
-
-
-
     /**
      * Get the list of taskjobstate for the agent
      *
@@ -1342,58 +1304,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             return '';
         }
     }
-
-
-
-    /**
-     * Get tasks planned
-     *
-     * @param int $tasks_id if 0, no restriction so get all
-     * @param bool $only_active, set to true to include only active tasks
-     * @return object
-     */
-    public function getTasksPlanned($tasks_id = 0, $only_active = true)
-    {
-        //FIXME: seems unused
-        /** @var DBmysql $DB */
-        global $DB;
-
-        $sub_query = new QuerySubQuery([
-            'SELECT' => 'execution_id',
-            'FROM'   => 'glpi_plugin_glpiinventory_taskjobs AS taskjob',
-            'WHERE'  => [
-                'taskjob.`plugin_glpiinventory_tasks_id`' => new QueryExpression($DB->quoteName('task.id')),
-            ],
-            'ORDERBY' => [
-                'execution_id DESC',
-            ],
-            'LIMIT' => 1,
-        ]);
-
-        $criteria = [
-            'SELECT' => 'task.*',
-            'FROM'   => 'glpi_plugin_glpiinventory_tasks AS task',
-            'WHERE'  => [
-                'execution_id' => $sub_query,
-                'periodicity_count' => ['>', 0],
-                'periodicity_type'  => ['!=', '0'],
-            ] + getEntitiesRestrictCriteria('task'),
-        ];
-
-        // Include tasks that are not active
-        if ($only_active) {
-            $criteria['WHERE']["is_active"] = 1;
-        }
-
-        if ($tasks_id > 0) {
-            $criteria['WHERE']['task.id'] = $tasks_id;
-            $criteria['LIMIT'] = 1;
-        }
-
-        return $DB->request($criteria);
-    }
-
-
 
     /**
      * Get tasks filtered by relevant criteria
