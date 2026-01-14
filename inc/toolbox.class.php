@@ -48,7 +48,6 @@ class PluginGlpiinventoryToolbox
      */
     public static function logIfExtradebug(string $file, string|array $message): void
     {
-        new PluginGlpiinventoryConfig();
         if (PluginGlpiinventoryConfig::isExtradebugActive()) {
             if (is_array($message)) {
                 $message = print_r($message, true);

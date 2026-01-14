@@ -166,10 +166,6 @@ class PluginGlpiinventoryConfig extends CommonDBTM
         }
     }
 
-    /**
-     * @param array<string,mixed> $options
-     * @return array<string,mixed>
-     */
     public function defineTabs($options = [])
     {
 
