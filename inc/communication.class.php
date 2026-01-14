@@ -94,15 +94,10 @@ class PluginGlpiinventoryCommunication
      */
     public static function addLog($p_logs): void
     {
-        if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-            if (PluginGlpiinventoryConfig::isExtradebugActive()) {
-                file_put_contents(
-                    GLPI_LOG_DIR . '/pluginGlpiinventory-communication.log',
-                    "\n" . time() . ' : ' . $p_logs,
-                    FILE_APPEND
-                );
-            }
-        }
+        PluginGlpiinventoryToolbox::logIfExtradebug(
+            GLPI_LOG_DIR . '/pluginGlpiinventory-communication.log',
+            sprintf("\n%s: %s", time(), $p_logs)
+        );
     }
 
 
