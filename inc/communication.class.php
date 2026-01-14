@@ -31,10 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\file_put_contents;
-use function Safe\gzcompress;
-use function Safe\gzdeflate;
-use function Safe\gzencode;
 use function Safe\simplexml_load_string;
 
 /**
@@ -91,52 +87,6 @@ class PluginGlpiinventoryCommunication
         );
     }
 
-
-    /**
-     * Send response to agent, using given compression algorithm
-     *
-     * @param string $compressmode compressed mode: none|zlib|deflate|gzip
-     */
-    public function sendMessage($compressmode = 'none'): void
-    {
-
-        if (!$this->message) {
-            return;
-        }
-
-        switch ($compressmode) {
-            case 'none':
-                header("Content-Type: application/xml");
-                echo PluginGlpiinventoryToolbox::formatXML($this->message);
-                break;
-
-            case 'zlib':
-                // rfc 1950
-                header("Content-Type: application/x-compress-zlib");
-                echo gzcompress(
-                    PluginGlpiinventoryToolbox::formatXML($this->message)
-                );
-                break;
-
-            case 'deflate':
-                // rfc 1951
-                header("Content-Type: application/x-compress-deflate");
-                echo gzdeflate(
-                    PluginGlpiinventoryToolbox::formatXML($this->message)
-                );
-                break;
-
-            case 'gzip':
-                // rfc 1952
-                header("Content-Type: application/x-compress-gzip");
-                echo gzencode(
-                    PluginGlpiinventoryToolbox::formatXML($this->message)
-                );
-                break;
-        }
-    }
-
-
     /**
      * If extra-debug is active, write log
      *
@@ -144,7 +94,6 @@ class PluginGlpiinventoryCommunication
      */
     public static function addLog($p_logs): void
     {
-
         if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
             if (PluginGlpiinventoryConfig::isExtradebugActive()) {
                 file_put_contents(

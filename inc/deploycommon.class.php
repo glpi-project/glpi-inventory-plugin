@@ -44,29 +44,6 @@ use function Safe\json_decode;
 class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
 {
     /**
-     * Check if definition_type is present in definitions_filter array.
-     * This function returns true if the definition_type is not in
-     * definitions_filter array.
-     * If definitions_filter is NULL, this check is inhibited and return false.
-     *
-     * @param string $definition_type
-     * @param null|array<string> $definitions_filter
-     * @return bool
-     */
-    public function definitionFiltered($definition_type, $definitions_filter)
-    {
-        if (
-            is_array($definitions_filter)
-            && count($definitions_filter) > 0
-            && !in_array($definition_type, $definitions_filter)
-        ) {
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
      * run function, so return data to send to the agent for deploy
      *
      * @param PluginGlpiinventoryTaskjobstate $taskjobstate PluginGlpiinventoryTaskjobstate instance
