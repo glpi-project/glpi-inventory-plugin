@@ -39,12 +39,20 @@ class PluginGlpiinventoryStaticmisc
     /**
      * Get task methods of this plugin
      *
-     * @return array an array of the form ('module'=>'value', 'method'=>'value') //@phpstan-ignore missingType.iterableValue
+     * @return array<array{
+     *     module: string,
+     *     method: string,
+     *     classname?: string,
+     *     selection_type?: string,
+     *     hidetask?: int,
+     *     name: string,
+     *     task?: string,
+     *     use_rest?: bool
+     * }>
      */
     public static function task_methods()
     {
-
-        $a_tasks = [
+        return [
             [   'module'         => 'glpiinventory',
                 'method'         => 'inventory',
                 'selection_type' => 'devices',
@@ -90,12 +98,11 @@ class PluginGlpiinventoryStaticmisc
                 'use_rest'       => true,
             ],
         ];
-        return $a_tasks;
     }
 
 
     /**
-     * Display methods availables
+     * Display methods available
      *
      * @return array<string,string>
      */

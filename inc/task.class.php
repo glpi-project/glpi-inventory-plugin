@@ -78,11 +78,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
 
 
-    /**
-     * Get search function for the class
-     *
-     * @return array<array<string,mixed>>
-     */
     public function rawSearchOptions()
     {
 
@@ -172,13 +167,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     }
 
 
-    /**
-    * Get the tab name used for item
-    *
-    * @param CommonGLPI $item the item object
-    * @param int $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var PluginGlpiinventoryIPRange $item */
@@ -193,14 +181,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     }
 
 
-    /**
-     * Display the content of the tab
-     *
-     * @param CommonGLPI $item
-     * @param int $tabnum number of the tab to display
-     * @param int $withtemplate 1 if is a template form
-     * @return true
-     */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $pf_Task = new self();
@@ -252,7 +232,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      */
     public static function purgeTask(CommonDBTM $param): void
     {
-        /** @var DBmysql $DB */
         global $DB;
 
         $tasks_id = $param->fields['id'];
@@ -1945,7 +1924,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     */
     public function duplicate($source_tasks_id)
     {
-        $result = true;
+        $result = false;
         if ($this->getFromDB($source_tasks_id)) {
             $input              = $this->fields;
             $input['name']      = sprintf(
@@ -1956,13 +1935,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             unset($input['id']);
             if ($target_task_id = $this->add($input)) {
                 //Clone taskjobs
-                $result
-                 = PluginGlpiinventoryTaskjob::duplicate($source_tasks_id, $target_task_id);
-            } else {
-                $result = false;
+                $result = PluginGlpiinventoryTaskjob::duplicate($source_tasks_id, $target_task_id);
             }
-        } else {
-            $result = false;
         }
         return $result;
     }
