@@ -179,11 +179,10 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of definition type 'PluginGlpiinventoryCredentialIp'
      * defined in task_definitiontype_InventoryComputerESX
      *
-     * @param string $title (not used)
      * @return string unique html element id
      * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
-    public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX($title)
+    public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -339,11 +338,10 @@ class PluginGlpiinventoryStaticmisc
      * Get all ip ranges of definition type 'PluginGlpiinventoryIPRange'
      * defined in task_definitiontype_networkdiscovery
      *
-     * @param string $title (not used)
      * @return string unique html element id
      * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
-    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery($title)
+    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery()
     {
         $options = [];
         $options['entity'] = $_SESSION['glpiactive_entity'];
@@ -378,13 +376,12 @@ class PluginGlpiinventoryStaticmisc
      * Get all ip ranges of definition type 'PluginGlpiinventoryIPRange'
      * defined in task_definitiontype_networkinventory
      *
-     * @param string $title (not used)
      * @return string unique html element id
      * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
-    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkinventory($title)
+    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkinventory()
     {
-        $rand = PluginGlpiinventoryStaticmisc::task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery($title);
+        $rand = PluginGlpiinventoryStaticmisc::task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery();
         return $rand;
     }
 
@@ -393,11 +390,10 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of definition type 'NetworkEquipment'
      * defined in task_definitiontype_networkinventory
      *
-     * @param string $title (not used)
      * @return string unique html element id
      * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
-    public static function task_definitionselection_NetworkEquipment_networkinventory($title)
+    public static function task_definitionselection_NetworkEquipment_networkinventory()
     {
         $options = [];
         $options['entity'] = $_SESSION['glpiactive_entity'];
@@ -412,11 +408,10 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of definition type 'Printer'
      * defined in task_definitiontype_networkinventory
      *
-     * @param string $title (not used)
      * @return string unique html element id
      * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
-    public static function task_definitionselection_Printer_networkinventory($title)
+    public static function task_definitionselection_Printer_networkinventory()
     {
 
         $options = [];
