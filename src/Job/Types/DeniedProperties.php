@@ -38,10 +38,14 @@ use JsonSerializable;
 
 class DeniedProperties
 {
+    /**
+     * @param string|string[]|null $mac
+     * @param string|string[]|null $ip
+     */
     public function __construct(
-        private readonly string|array|null $type,
-        private readonly string|array|null $name,
-        private readonly string|array|null $mac,
-        private readonly string|array|null $ip,
+        private readonly string|null $type, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
+        private readonly string|null $name, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
+        private readonly string|array|null $mac, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
+        private readonly string|array|null $ip, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
     ) {}
 }
