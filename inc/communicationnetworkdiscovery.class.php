@@ -99,14 +99,24 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                         'glpi_plugin_glpiinventory_taskjoblogs',
                         [
                             'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                            'comment' => ['LIKE', '%==updatetheitem==%'],
+                            'comment' => [
+                                'OR' => [
+                                    ["LIKE", '%[==detail==] ==updatetheitem== %'], // old way
+                                    ['LIKE', '%' . TaskJobLogsTypes::UPDATE_ITEM->value . '%'] //new way
+                                ]
+                            ],
                         ]
                     );
                     $created = countElementsInTable(
                         'glpi_plugin_glpiinventory_taskjoblogs',
                         [
                             'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                            'comment' => ['LIKE', '%==addtheitem==%'],
+                            'comment' => [
+                                'OR' => [
+                                    ["LIKE", '%[==detail==] ==addtheitem== %'], // old way
+                                    ['LIKE', '%' . TaskJobLogsTypes::ADD_ITEM->value . '%'] //new way
+                                ]
+                            ],
                         ]
                     );
 

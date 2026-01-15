@@ -31,6 +31,7 @@
  * ---------------------------------------------------------------------
  */
 
+use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
 use Safe\DateTime;
 
 /**
@@ -233,25 +234,65 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
             foreach ($a_taskjobstates as $datastate) {
                 $a_taskjoblog = $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $datastate['id']]);
                 foreach ($a_taskjoblog as $taskjoblog) {
-                    if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
-                        $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);
-                    } elseif (strstr($taskjoblog['comment'], "==importdenied==")) {
-                        $notimporteddevices++;
-                    } elseif (strstr($taskjoblog['comment'], "==updatetheitem==")) {
-                        $updateddevices++;
-                    } elseif (strstr($taskjoblog['comment'], "==addtheitem==")) {
-                        $createddevices++;
-                    } elseif ($taskjoblog['state'] == "1") {
-                        $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
-                        $start_date = $taskjoblog['date'];
-                    }
-
-                    if (
-                        $taskjoblog['state'] == "2" || $taskjoblog['state'] == "3" || $taskjoblog['state'] == "4" || $taskjoblog['state'] == "5"
-                    ) {
-                        if (!strstr($taskjoblog['comment'], 'Merged with ')) {
-                            $end_date = $taskjoblog['date'];
+                    if (!Toolbox::isJSON($taskjoblog['comment'])) {
+                        //Old way to handle task job logs
+                        if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
+                            $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);
+                        } elseif (strstr($taskjoblog['comment'], "==importdenied==")) {
+                            $notimporteddevices++;
+                        } elseif (strstr($taskjoblog['comment'], "==updatetheitem==")) {
+                            $updateddevices++;
+                        } elseif (strstr($taskjoblog['comment'], "==addtheitem==")) {
+                            $createddevices++;
+                        } elseif ($taskjoblog['state'] == "1") {
+                            $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
+                            $start_date = $taskjoblog['date'];
                         }
+
+                        if (
+                            $taskjoblog['state'] == PluginGlpiinventoryTaskjoblog::TASK_OK
+                            || $taskjoblog['state'] == "3" //unknown
+                            || $taskjoblog['state'] == PluginGlpiinventoryTaskjoblog::TASK_ERROR
+                            || $taskjoblog['state'] == PluginGlpiinventoryTaskjoblog::TASK_INFO
+                        ) {
+                            if (!strstr($taskjoblog['comment'], 'Merged with ')) {
+                                $end_date = $taskjoblog['date'];
+                            }
+                        }
+                    } else {
+                        $comment = json_decode($taskjoblog['comment']);
+                        switch ($comment['type']) {
+                            case TaskJobLogsTypes::DEVICES_FOUND:
+                                ++$nb_found;
+                                break;
+                            case TaskJobLogsTypes::IMPORT_DENIED:
+                                ++$notimporteddevices;
+                                break;
+                            case TaskJobLogsTypes::UPDATE_ITEM:
+                                ++$updateddevices;
+                                break;
+                            case TaskJobLogsTypes::ADD_ITEM:
+                                ++$createddevices;
+                                break;
+                            default:
+                                /*if ($taskjoblog['state'] == PluginGlpiinventoryTaskjoblog::TASK_STARTED) {
+                                    $nb_threads = str_replace(" threads", "", $taskjoblog['comment']); //FIXME: should not rely on textual value, but JSON one with new method.
+                                    $start_date = $taskjoblog['date'];
+                                }*/
+                                break;
+                        }
+
+                        if (
+                            $taskjoblog['state'] == PluginGlpiinventoryTaskjoblog::TASK_OK
+                            || $taskjoblog['state'] == "3" //unknown
+                            || $taskjoblog['state'] == PluginGlpiinventoryTaskjoblog::TASK_ERROR
+                            || $taskjoblog['state'] == PluginGlpiinventoryTaskjoblog::TASK_INFO
+                        ) {
+                            /*if (!strstr($taskjoblog['comment'], 'Merged with ')) { //FIXME: should not rely on textual value, but JSON one with new method.
+                                $end_date = $taskjoblog['date'];
+                            }*/
+                        }
+
                     }
                 }
             }

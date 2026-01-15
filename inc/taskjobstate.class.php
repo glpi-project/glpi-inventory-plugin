@@ -469,7 +469,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     public function updateState($joblog_state, $jobstate_state, $reason = ''): void
     {
         $log       = new PluginGlpiinventoryTaskjoblog();
-        $log_input = [
+        /*$log_input = [
             'plugin_glpiinventory_taskjobstates_id' => $this->fields['id'],
             'items_id' => $this->fields['items_id'],
             'itemtype' => $this->fields['itemtype'],
@@ -477,8 +477,14 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             'state'    => $joblog_state,
             'comment'  => $reason,
         ];
-
-        $log->add($log_input);
+        $log->add($log_input);*/
+        $log->addJobLog(
+            taskjobs_id: $this->fields['id'],
+            items_id: $this->fields['items_id'],
+            itemtype: $this->fields['itemtype'],
+            state: $jobstate_state,
+            comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+        );
         $this->update([
             'id'    => $this->fields['id'],
             'state' => $jobstate_state,
@@ -515,7 +521,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
                     $reason    = '-----------------------------------------------------';
                     $log       = new PluginGlpiinventoryTaskjoblog();
-                    $log_input = [
+                    /*$log_input = [
                         'plugin_glpiinventory_taskjobstates_id' => $states_id,
                         'items_id' => $this->fields['items_id'],
                         'itemtype' => $this->fields['itemtype'],
@@ -523,14 +529,21 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
                         'comment'  => $reason,
                     ];
-                    $log->add($log_input);
+                    $log->add($log_input);*/
+                    $log->addJobLog(
+                        taskjobs_id: $states_id,
+                        items_id: $this->fields['items_id'],
+                        itemtype: $this->fields['itemtype'],
+                        state: PluginGlpiinventoryTaskjoblog::TASK_INFO,
+                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+                    );
 
                     $reason = sprintf(
                         __('Job available for next execution at %s', 'glpiinventory'),
                         Html::convDateTime($params['date_start'])
                     );
 
-                    $log_input = [
+                    /*$log_input = [
                         'plugin_glpiinventory_taskjobstates_id' => $states_id,
                         'items_id' => $this->fields['items_id'],
                         'itemtype' => $this->fields['itemtype'],
@@ -538,14 +551,21 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_STARTED,
                         'comment'  => $reason,
                     ];
-                    $log->add($log_input);
+                    $log->add($log_input);*/
+                    $log->addJobLog(
+                        taskjobs_id: $states_id,
+                        items_id: $this->fields['items_id'],
+                        itemtype: $this->fields['itemtype'],
+                        state: PluginGlpiinventoryTaskjoblog::TASK_STARTED,
+                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+                    );
 
                     if ($params['nb_retry'] <= $params['max_retry']) {
                         $reason = ' ' . sprintf(__('Retry #%d', 'glpiinventory'), $params['nb_retry']);
                     } else {
                         $reason = ' ' . __('Maximum number of retry reached: force deployment', 'glpiinventory');
                     }
-                    $log_input = [
+                    /*$log_input = [
                         'plugin_glpiinventory_taskjobstates_id' => $states_id,
                         'items_id' => $this->fields['items_id'],
                         'itemtype' => $this->fields['itemtype'],
@@ -553,7 +573,14 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         'state'    => PluginGlpiinventoryTaskjoblog::TASK_INFO,
                         'comment'  => $reason,
                     ];
-                    $log->add($log_input);
+                    $log->add($log_input);*/
+                    $log->addJobLog(
+                        taskjobs_id: $states_id,
+                        items_id: $this->fields['items_id'],
+                        itemtype: $this->fields['itemtype'],
+                        state: PluginGlpiinventoryTaskjoblog::TASK_INFO,
+                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+                    );
                 }
             }
         }
