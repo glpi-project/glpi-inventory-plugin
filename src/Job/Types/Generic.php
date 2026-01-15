@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,20 +31,22 @@
 
 declare(strict_types=1);
 
-namespace GlpiPlugin\Glpiinventory\Enums;
+namespace GlpiPlugin\Glpiinventory\Job\Types;
 
-enum TaskJobLogsTypes: string
+use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
+use JsonSerializable;
+
+class Generic implements JsonSerializable
 {
-    case DEVICES_QEUERIED  = 'devicesqueried';
-    case DEVICES_FOUND     = 'devicesfound';
-    case ADD_ITEM      = 'addtheitem';
-    case UPDATE_ITEM   = 'updatetheitem';
-    case INVENTORY_STARTED = 'inventorystarted';
-    case DETAIL            = 'detail';
-    case INFO            = 'info'; //to replace DETAIL
+    public function __construct(private TaskJobLogsTypes $type) {}
 
-    case BAD_TOKEN        = 'badtoken';
-    case AGENT_CRASHED    = 'agentcrashed';
-    case IMPORT_DENIED    = 'importdenied';
-    case ERROR            = 'error';
+    public function getType(): TaskJobLogsTypes
+    {
+        return $this->type;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return get_object_vars($this);
+    }
 }
