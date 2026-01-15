@@ -169,7 +169,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 
         //Add extra parameters for massive action display : only the Add action should be displayed
         $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
-        $search_params['massiveactionparams']['extraparams']['specific_actions']['PluginGlpiinventoryComputer' . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
+        $search_params['massiveactionparams']['extraparams']['specific_actions'][PluginGlpiinventoryComputer::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
         $limit_backup = $_SESSION['glpilist_limit'];
@@ -225,7 +225,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         Html::openMassiveActionsForm('mass' . $mass_class . $rand);
         $massiveactionparams = ['num_displayed' => min($_SESSION['glpilist_limit'], $number),
             'item' => $item,
-            'specific_actions' => ['PluginGlpiinventoryComputer' . MassiveAction::CLASS_ACTION_SEPARATOR . 'deleteitem' => _x('button', __('Remove from static group', 'glpiinventory'))],
+            'specific_actions' => [PluginGlpiinventoryComputer::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'deleteitem' => _x('button', __('Remove from static group', 'glpiinventory'))],
             'container' => 'mass' . $mass_class . $rand,
             'massive_action_fields' => ['action', 'id'],
         ];

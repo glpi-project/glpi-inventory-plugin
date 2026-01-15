@@ -76,7 +76,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     $nb_devices = 1;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = Agent::class;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devicesfound==';
                     $this->addtaskjoblog();
@@ -117,7 +117,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     $pfTaskjobstate->changeStatusFinish(
                         $a_CONTENT->jobid,
                         $agent->fields['id'],
-                        'Agent',
+                        Agent::class,
                         0,
                         $message
                     );

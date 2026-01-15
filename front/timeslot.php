@@ -45,6 +45,6 @@ Html::header(
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginGlpiinventoryTimeslot');
+Search::show(PluginGlpiinventoryTimeslot::class);
 
 Html::footer();

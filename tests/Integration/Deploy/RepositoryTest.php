@@ -87,7 +87,7 @@ class RepositoryTest extends TestCase
         // create a file for this package
         $data_file = [
             'id'        => $this->packages_1_id,
-            'itemtype'  => 'PluginGlpiinventoryDeployFile',
+            'itemtype'  => PluginGlpiinventoryDeployFile::class,
             'filestype' => 'Server',
             'filename'  => $this->filename,
         ];
@@ -119,7 +119,7 @@ class RepositoryTest extends TestCase
         // remove file from the first package
         $data_file = [
             'packages_id'     => $this->packages_1_id,
-            'itemtype'        => 'PluginGlpiinventoryDeployFile',
+            'itemtype'        => PluginGlpiinventoryDeployFile::class,
             'file_entries'    => [0 => 1],
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
@@ -136,7 +136,7 @@ class RepositoryTest extends TestCase
         // remove file from the second package
         $data_file = [
             'packages_id'     => $this->packages_2_id,
-            'itemtype'        => 'PluginGlpiinventoryDeployFile',
+            'itemtype'        => PluginGlpiinventoryDeployFile::class,
             'file_entries'    => [0 => 1],
         ];
         PluginGlpiinventoryDeployPackage::alterJSON('remove_item', $data_file);
@@ -164,7 +164,7 @@ class RepositoryTest extends TestCase
         // create a file and it to both packages
         $data_file = [
             'id'        => $this->packages_1_id,
-            'itemtype'  => 'PluginGlpiinventoryDeployFile',
+            'itemtype'  => PluginGlpiinventoryDeployFile::class,
             'filestype' => 'Server',
             'filename'  => $this->filename,
         ];

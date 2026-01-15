@@ -885,7 +885,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 foreach ($targets as $keyt => $target) {
                     $item_type = key($target);
                     $items_id  = current($target);
-                    if ($item_type == 'PluginGlpiinventoryIPRange') {
+                    if ($item_type == PluginGlpiinventoryIPRange::class) {
                         unset($targets[$keyt]);
                         // In this case get devices of this iprange
                         $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id, $result['job_restrict_to_task_entity']);
@@ -1572,7 +1572,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 echo "</td>";
                 echo "<td>";
                 $rand = mt_rand();
-                Dropdown::show('PluginGlpiinventoryTask', [
+                Dropdown::show(PluginGlpiinventoryTask::class, [
                     'name'      => "tasks_id",
                     'condition' => ['is_active' => 0],
                     'toupdate'  => [
@@ -1589,7 +1589,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 echo __('Package', 'glpiinventory') . "&nbsp;:";
                 echo "</td>";
                 echo "<td>";
-                Dropdown::show('PluginGlpiinventoryDeployPackage', [
+                Dropdown::show(PluginGlpiinventoryDeployPackage::class, [
                     'name' => "packages_id",
                     'rand' => $rand,
                 ]);
@@ -1612,7 +1612,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 echo "</td>";
                 echo "<td>";
                 $rand = mt_rand();
-                Dropdown::show('PluginGlpiinventoryTask', [
+                Dropdown::show(PluginGlpiinventoryTask::class, [
                     'name'      => "tasks_id",
                     'toupdate'  => [
                         'value_fieldname' => "id",

@@ -1129,7 +1129,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $types = [];
         $moduletype_tmp = '';
         if ($moduletype === 'actors') {
-            $types['Agent'] = Agent::getTypeName();
+            $types[Agent::class] = Agent::getTypeName();
         }
 
         /**

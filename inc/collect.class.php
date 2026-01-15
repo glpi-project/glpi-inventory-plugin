@@ -486,7 +486,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             $a_input = [
                                 'plugin_glpiinventory_taskjobstates_id'    => $taskjobstate->fields['id'],
                                 'items_id'                                   => $agent['id'],
-                                'itemtype'                                   => 'Agent',
+                                'itemtype'                                   => Agent::class,
                                 'date'                                       => date("Y-m-d H:i:s"),
                                 'comment'                                    => '',
                                 'state'                                      => PluginGlpiinventoryTaskjoblog::TASK_STARTED,

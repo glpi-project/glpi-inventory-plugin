@@ -854,7 +854,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 foreach ($targets as $keyt => $target) {
                     $item_type = key($target);
                     $items_id = current($target);
-                    if ($item_type == 'PluginGlpiinventoryIPRange') {
+                    if ($item_type == PluginGlpiinventoryIPRange::class) {
                         unset($targets[$keyt]);
                         // In this case get devices of this iprange
                         $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id, $result['job']['restrict_to_task_entity']);
@@ -1016,11 +1016,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             }
 
             switch ($itemtype) {
-                case 'Computer':
+                case Computer::class:
                     $computers[$itemid] = 1;
                     break;
 
-                case 'PluginGlpiinventoryDeployGroup':
+                case PluginGlpiinventoryDeployGroup::class:
                     $group_targets = $pfToolbox->executeAsGlpiinventoryUser(
                         'PluginGlpiinventoryDeployGroup::getTargetsForGroup',
                         [$itemid, $use_cache]
@@ -1030,7 +1030,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                     }
                     break;
 
-                case 'Group':
+                case Group::class:
                     //find computers by user associated with this group
                     $group_users   = new Group_User();
                     $members       = [];

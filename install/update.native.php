@@ -87,7 +87,7 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
 
             //mappings
             $data_agent['deviceid'] = $data_agent['device_id'];
-            $data_agent['itemtype'] = 'Computer';
+            $data_agent['itemtype'] = Computer::class;
             $data_agent['items_id'] = $data_agent['computers_id'];
             $data_agent['port'] = $data_agent['agent_port'];
             $data_agent['agenttypes_id'] = $agenttype->fields['id'];
@@ -515,7 +515,7 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
     $iterator = $DB->request([
         'SELECT' => ['MAX' => 'ranking AS max_ranking'],
         'FROM'   => 'glpi_rules',
-        'WHERE'  => ['sub_type' => 'RuleImportAsset'],
+        'WHERE'  => ['sub_type' => RuleImportAsset::class],
     ]);
     if (count($iterator)) {
         $rank_ria = $iterator->current()['max_ranking'];
@@ -540,7 +540,7 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
     $DB->update(
         'glpi_rules',
         [
-            'sub_type'  => 'RuleImportAsset',
+            'sub_type'  => RuleImportAsset::class,
             'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
             'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ria ?? 0)),
         ],
@@ -555,7 +555,7 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
     $DB->update(
         'glpi_rules',
         [
-            'sub_type'  => 'RuleImportEntity',
+            'sub_type'  => RuleImportEntity::class,
             'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
             'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_rie ?? 0)),
         ],
@@ -569,7 +569,7 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
     $DB->update(
         'glpi_rules',
         [
-            'sub_type'  => 'RuleLocation',
+            'sub_type'  => RuleLocation::class,
             'name'      => new QueryExpression('CONCAT(' . $DB->quoteValue('[MIGRATED_FROM_FUSION]') . ', ' . $DB->quoteName('name') . ')'),
             'ranking'   => new QueryExpression($DB->quoteName('ranking') . " + " . ($rank_ril ?? 0)),
         ],
@@ -711,13 +711,13 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
 
     //Fix old types
     $types = [
-        'PluginGlpiinventoryAgent' => 'Agent',
-        'PluginGlpiinventoryUnmanaged' => 'Unmanaged',
+        'PluginGlpiinventoryAgent' => Agent::class,
+        'PluginGlpiinventoryUnmanaged' => Unmanaged::class,
     ];
 
     $mappings = [
-        'Agent' => $agents_mapping,
-        'Unmanaged' => $unmanageds_mapping,
+        Agent::class => $agents_mapping,
+        Unmanaged::class => $unmanageds_mapping,
     ];
 
     $types_iterator = $DB->request(
@@ -748,7 +748,7 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
         foreach ($types as $orig_type => $new_type) {
             if ($DB->fieldExists($table_name, $items_id_col)) {
                 // items_id field exists, update itemtype and items_id
-                // and remove data related to items that does not exists anymore
+                // and remove data related to items that does not exist anymore
                 $mapping = $mappings[$new_type];
                 foreach ($mapping as $orig_id => $new_id) {
                     $migration->addPostQuery(
@@ -774,7 +774,7 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
                     )
                 );
             } else {
-                // items_id field does not exists, just rename the itemtype
+                // items_id field does not exist, just rename the itemtype
                 $migration->addPostQuery(
                     $DB->buildUpdate(
                         $table_name,

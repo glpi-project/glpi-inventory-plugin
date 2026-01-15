@@ -56,7 +56,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     {
         /** @var CommonDBTM $item */
         if ($item->fields['id'] > 0) {
-            if (get_class($item) == 'PluginGlpiinventoryCollect') {
+            if (get_class($item) == PluginGlpiinventoryCollect::class) {
                 if ($item->fields['type'] == 'registry') {
                     $a_colregs = getAllDataFromTable(
                         'glpi_plugin_glpiinventory_collects_registries',

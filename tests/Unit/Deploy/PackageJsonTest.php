@@ -65,7 +65,7 @@ class PackageJsonTest extends TestCase
         $item = [
             'id'               => $packages_id,
             'name'             => 'check winkey',
-            'itemtype'         => 'PluginGlpiinventoryDeployCheck',
+            'itemtype'         => PluginGlpiinventoryDeployCheck::class,
             'checkstype'       => 'winkeyExists',
             'path'             => 'toto',
             'return'           => 'error',

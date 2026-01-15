@@ -93,7 +93,7 @@ function plugin_glpiinventory_getAddSearchOptions(string $itemtype): array
         $sopt[5170]['massiveaction'] = false;
 
         $sopt[5171]['name']          = __('Static group', 'glpiinventory');
-        $sopt[5171]['table']         = getTableForItemType('PluginGlpiinventoryDeployGroup');
+        $sopt[5171]['table']         = getTableForItemType(PluginGlpiinventoryDeployGroup::class);
         $sopt[5171]['massiveaction'] = false;
         $sopt[5171]['field']         = 'name';
         $sopt[5171]['forcegroupby']  = true;
@@ -244,7 +244,7 @@ function plugin_glpiinventory_giveItem(string $type, int $id, array $data, strin
                 return NOT_AVAILABLE;
             }
             $itemtype = PluginGlpiinventoryTaskjoblog::getStateItemtype($data['raw']['ITEM_0']);
-            if ($itemtype == 'PluginGlpiinventoryDeployPackage') {
+            if ($itemtype == PluginGlpiinventoryDeployPackage::class) {
                 $computer = new Computer();
                 $computer->getFromDB($agent->fields['items_id']);
                 return $computer->getLink();
@@ -741,7 +741,7 @@ function plugin_pre_item_purge_glpiinventory(CommonDBTM $parm): CommonDBTM
             // purge associated task job state
             $pfTaskjobstate->deleteByCriteria(['agents_id' => $agent_id], true);
             // purge associated task job log
-            $pfTaskjoblog->deleteByCriteria(['items_id' => $agent_id, 'itemtype' => "Agent"], true);
+            $pfTaskjoblog->deleteByCriteria(['items_id' => $agent_id, 'itemtype' => Agent::class], true);
             // purge related sate discovery
             $pfStatediscovery->deleteByCriteria(['agents_id' => $agent_id], true);
             //remove agent

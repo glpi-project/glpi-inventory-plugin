@@ -102,28 +102,27 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
         if ($item->fields['id'] > 0) {
             $class   = $this->collect_itemtype;
             $collect = $this->getCollectClass();
-            switch (get_class($item)) {
-                case 'PluginGlpiinventoryCollect':
-                    if ($item->fields['type'] == $this->collect_type) {
-                        $a_colfiles = getAllDataFromTable(
-                            $collect::getTable(),
-                            ['plugin_glpiinventory_collects_id' => $item->fields['id']]
-                        );
-                        if (count($a_colfiles) == 0) {
-                            return '';
-                        }
-                        $in = array_keys($a_colfiles);
-                        $fk = getForeignKeyFieldForItemType($collect);
-                        if (
-                            ($nb = countElementsInTable(
-                                $this->getTable(),
-                                [$fk => $in]
-                            )) > 0
-                        ) {
-                            return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb, null, $class::getIcon());
-                        }
-                    }
-                    break;
+            if (
+                $item instanceof PluginGlpiinventoryCollect
+                && $item->fields['type'] == $this->collect_type
+            ) {
+                $a_colfiles = getAllDataFromTable(
+                    $collect::getTable(),
+                    ['plugin_glpiinventory_collects_id' => $item->fields['id']]
+                );
+                if (count($a_colfiles) == 0) {
+                    return '';
+                }
+                $in = array_keys($a_colfiles);
+                $fk = getForeignKeyFieldForItemType($collect);
+                if (
+                    ($nb = countElementsInTable(
+                        $this->getTable(),
+                        [$fk => $in]
+                    )) > 0
+                ) {
+                    return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb, null, $class::getIcon());
+                }
             }
         }
         return '';

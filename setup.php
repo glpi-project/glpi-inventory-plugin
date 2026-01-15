@@ -118,7 +118,7 @@ function plugin_init_glpiinventory(): void
             PluginGlpiinventoryAgentmodule::class,
             [
                 'addtabon' => [
-                    'Agent',
+                    Agent::class,
                 ],
             ]
         );
@@ -292,8 +292,8 @@ function plugin_init_glpiinventory(): void
         ];
         $p = [
             NetworkPort_NetworkPort::class => 'plugin_item_purge_glpiinventory',
-            PluginGlpiinventoryTask::class => ['PluginGlpiinventoryTask', 'purgeTask'],
-            PluginGlpiinventoryTaskjob::class => ['PluginGlpiinventoryTaskjob', 'purgeTaskjob'],
+            PluginGlpiinventoryTask::class => [PluginGlpiinventoryTask::class, 'purgeTask'],
+            PluginGlpiinventoryTaskjob::class => [PluginGlpiinventoryTaskjob::class, 'purgeTaskjob'],
             PluginGlpiinventoryTimeslot::class => 'plugin_item_purge_glpiinventory',
             Entity::class => 'plugin_item_purge_glpiinventory',
             PluginGlpiinventoryDeployPackage::class => 'plugin_item_purge_glpiinventory',
