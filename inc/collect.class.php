@@ -604,7 +604,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             $jobstate['id'],
                             $jobstate['items_id'],
                             $jobstate['itemtype'],
-                            (string) $flag,
+                            $flag,
                             isset($name) ? "$name: $message" : $message
                         );
                     } else {

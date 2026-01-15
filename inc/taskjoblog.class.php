@@ -255,7 +255,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      * @param int $taskjobstates_id id of the taskjobstate
      * @param int $items_id id of the item associated with taskjob status
      * @param string $itemtype type name of the item associated with taskjob status
-     * @param string $state state of this taskjobstate
+     * @param int $state state of this taskjobstate
      * @param string $comment the comment of this insertion
      */
     public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment): void

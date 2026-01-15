@@ -228,7 +228,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
             $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'],
             $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'],
             $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'],
-            $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
+            (int) $_SESSION['plugin_glpiinventory_taskjoblog']['state'],
             $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
         );
     }
