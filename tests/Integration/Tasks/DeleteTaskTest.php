@@ -113,16 +113,14 @@ class DeleteTaskTest extends TestCase
         ];
         self::$taskjobstateId = $pfTaskjobState->add($input);
 
-        //crfeate taskjoblogR
-        $input = [
-            'plugin_glpiinventory_taskjobstates_id' => self::$taskjobstateId,
-            'date '                                   => date('Y-m-d H:i:s'),
-            'items_id'                                => 0,
-            'itemtype'                                => 'Computer',
-            'state'                                   => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-            'comment'                                 => new Generic(type: TaskJobLogsTypes::DEVICES_FOUND),
-        ];
-        self::$taskjoblogId = $pfTaskjoblog->add($input);
+        //create taskjoblog
+        self::$taskjoblogId = $pfTaskjoblog->addJobLog(
+            taskjobs_id: self::$taskjobstateId,
+            items_id: 0,
+            itemtype: Computer::class,
+            state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
+            comment: new Generic(type: TaskJobLogsTypes::DEVICES_FOUND),
+        );
     }
 
 
