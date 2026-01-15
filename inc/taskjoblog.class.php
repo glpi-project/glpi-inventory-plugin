@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use \GlpiPlugin\Glpiinventory\Job\Types\Generic;
+
 use function Safe\preg_match_all;
 
 /**
@@ -367,7 +369,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      * @param int $items_id
      * @param class-string<CommonDBTM> $itemtype
      * @param int $state
-     * @param array{
+     * @param Generic|array{
      *     TaskJobLogsTypes,
      *     array{
      *         nb_devices?: int,
@@ -387,9 +389,9 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         int $items_id,
         string $itemtype,
         int $state,
-        array $comment
+        array|Generic|null $comment //TODO: remove array - was used before Generic class creation
     ): void {
-        $this->taskJobLog->addTaskjoblog(
+        $this->addTaskjoblog(
             $taskjobs_id,
             $items_id,
             $itemtype,

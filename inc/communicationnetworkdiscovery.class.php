@@ -65,7 +65,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
             $a_CONTENT->jobid = $a_CONTENT->content->processnumber;
         }
 
-        $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
+        //$_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
         if ($pfTaskjobstate->getFromDB($a_CONTENT->jobid)) {
             if ($pfTaskjobstate->fields['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
                 $pfTaskjobstate->changeStatus($a_CONTENT->jobid, 2);
@@ -80,17 +80,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                         items_id: $agent->fields['id'],
                         itemtype: Agent::class,
                         state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-                        comment: [
-                            TaskJobLogsTypes::DEVICES_FOUND->value => 1,
-                        ]
+                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::DEVICES_FOUND)
                     );
-                    /*$nb_devices = 1;
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = Agent::class;
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = PluginGlpiinventoryTaskjoblog::TASK_RUNNING;
-                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices . ' ==devicesfound==';
-                    $this->addtaskjoblog();*/
                 }
             }
         }
@@ -133,7 +124,11 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                         $message
                     );
                     $response['response'] = ['RESPONSE' => 'SEND'];
-                } elseif (!isset($a_CONTENT->content->agent->start) && !isset($a_CONTENT->content->agent->end) && !isset($a_CONTENT->content->agent->nbip)) {
+                } elseif (
+                    !isset($a_CONTENT->content->agent->start)
+                    && !isset($a_CONTENT->content->agent->end)
+                    && !isset($a_CONTENT->content->agent->nbip)
+                ) {
                     $inventory->setDiscovery(true);
                     $inventory->doInventory();
                     if ($inventory->inError()) {
@@ -168,11 +163,14 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                                 items_id: $item->fields['id'],
                                 itemtype: $item::class,
                                 state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                                comment: [
-                                    TaskJobLogsTypes::IMPORT_DENIED->value => [
-                                        'properties' => $properties,
-                                    ],
-                                ]
+                                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Denied(
+                                    new \GlpiPlugin\Glpiinventory\Job\Types\DeniedProperties(
+                                        type: $properties['type'] ?? null,
+                                        name: $properties['name'] ?? null,
+                                        mac: $properties['mac'] ?? null,
+                                        ip: $properties['ips'] ?? null,
+                                    )
+                                )
                             );
                             /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
                             $this->addtaskjoblog();*/
@@ -183,11 +181,11 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                                 items_id: $item->fields['id'],
                                 itemtype: $item::class,
                                 state: PluginGlpiinventoryTaskjoblog::TASK_OK,
-                                comment: [
+                                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(
                                     $inventory->getMainAsset()->isNew()
                                         ? TaskJobLogsTypes::ADD_ITEM->value
-                                        : TaskJobLogsTypes::UPDATE_ITEM->value => 1,
-                                ]
+                                        : TaskJobLogsTypes::UPDATE_ITEM->value
+                                )
                             );
                             /*$what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
                             $_SESSION['plugin_glpiinventory_taskjoblog']['comment']

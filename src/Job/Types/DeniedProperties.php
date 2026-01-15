@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -30,20 +31,17 @@
 
 declare(strict_types=1);
 
-namespace GlpiPlugin\Glpiinventory\Enums;
+namespace GlpiPlugin\Glpiinventory\Job\Types;
 
-enum TaskJobLogsTypes: string
+use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
+use JsonSerializable;
+
+class DeniedProperties
 {
-    case DEVICES_QEUERIED  = 'devicesqueried';
-    case DEVICES_FOUND     = 'devicesfound';
-    case ADD_ITEM      = 'addtheitem';
-    case UPDATE_ITEM   = 'updatetheitem';
-    case INVENTORY_STARTED = 'inventorystarted';
-    case DETAIL            = 'detail';
-    case INFO            = 'info'; //to replace DETAIL
-
-    case BAD_TOKEN        = 'badtoken';
-    case AGENT_CRASHED    = 'agentcrashed';
-    case IMPORT_DENIED    = 'importdenied';
-    case ERROR            = 'error';
+    public function __construct(
+        private readonly string|array|null $type,
+        private readonly string|array|null $name,
+        private readonly string|array|null $mac,
+        private readonly string|array|null $ip,
+    ) {}
 }

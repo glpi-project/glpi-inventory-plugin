@@ -397,12 +397,20 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         }
 
         $this->update($input);
-        $log_input['plugin_glpiinventory_taskjobstates_id'] = (string) $taskjobstates_id;
+        /*$log_input['plugin_glpiinventory_taskjobstates_id'] = (string) $taskjobstates_id;
         $log_input['items_id'] = (string) $items_id;
         $log_input['itemtype'] = $itemtype;
         $log_input['date']     = $_SESSION['glpi_currenttime'];
         $log_input['comment']  = $message;
-        $pfTaskjoblog->add($log_input);
+        $pfTaskjoblog->add($log_input);*/
+        $comment = !empty(trim($message)) ? new \GlpiPlugin\Glpiinventory\Job\Types\Info($message) : null;
+        $pfTaskjoblog->addJobLog(
+            taskjobs_id: $taskjobstates_id,
+            items_id: $items_id,
+            itemtype: $itemtype,
+            state: $input['state'],
+            comment: $comment
+        );
 
         $pfTaskjob->getFromDB($this->fields['plugin_glpiinventory_taskjobs_id']);
     }

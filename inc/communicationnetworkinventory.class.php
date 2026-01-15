@@ -77,28 +77,15 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             }
         }
 
-        $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
+        //$_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
         if ((!isset($a_CONTENT->content->agent->start)) && (!isset($a_CONTENT->content->agent->end)) && (!isset($a_CONTENT->content->agent->exit))) {
             $taskJobLog->addJobLog(
                 taskjobs_id: $a_CONTENT->jobid,
                 items_id: $agent->fields['id'],
                 itemtype: Agent::class,
                 state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-                comment: [
-                    TaskJobLogsTypes::DEVICES_QEUERIED->value => [
-                        'nb_devices' => 1,
-                    ]
-                ]
+                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::DEVICES_QEUERIED)
             );
-            /*$nb_devices = 1;
-            $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id']
-              = $a_CONTENT->jobid;
-            $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = Agent::class;
-            $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices
-              . ' ==devicesqueried==';
-            $this->addtaskjoblog();*/
         }
 
         if (isset($a_CONTENT->content->agent->exit)) {
@@ -134,16 +121,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 items_id: $agent->fields['id'],
                 itemtype: Agent::class,
                 state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-                comment: [
-                    TaskJobLogsTypes::INVENTORY_STARTED->value,
-                ]
+                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::INVENTORY_STARTED),
             );
-            /*$_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
-            $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = Agent::class;
-            $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
-            $this->addtaskjoblog();*/
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } elseif (isset($a_CONTENT->content->error)) {
             $itemtype = "";
@@ -157,11 +136,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 items_id: $a_CONTENT->content->error->id,
                 itemtype: $itemtype,
                 state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                comment: [
-                    TaskJobLogsTypes::DETAIL->value => [
-                        'content' => $a_CONTENT->content->error->message,
-                    ]
-                ]
+                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($a_CONTENT->content->error->message)
             );
             /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
             . $a_CONTENT->content->error->message . ' [[' . $itemtype . '::'
@@ -177,15 +152,11 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 $itemtype = Printer::class;
             }
             $taskJobLog->addJobLog(
-                taskjobs_id: $a_CONTENT->jobid,
-                items_id: $a_CONTENT->content->device->error->id,
-                itemtype: $itemtype,
-                state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                comment: [
-                    TaskJobLogsTypes::ERROR->value => [
-                        'message' => $a_CONTENT->content->device->error->message,
-                    ]
-                ]
+                taskjobs_id: $a_CONTENT->jobid, //FIXME: what should be the value here?
+                items_id: $a_CONTENT->content->device->error->id, //FIXME: what should be the value here?
+                itemtype: $itemtype, //FIXME: what should be the value here?
+                state: PluginGlpiinventoryTaskjoblog::TASK_ERROR, //FIXME: what should be the value here?
+                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($a_CONTENT->content->device->error->message)
             );
             /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
             . $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::'
@@ -221,24 +192,25 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                         items_id: 0,
                         itemtype: $device::class,
                         state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                        comment: [
-                            TaskJobLogsTypes::IMPORT_DENIED->value => [
-                                'properties' => $properties,
-                            ]
-                        ]
+                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Denied(
+                            new \GlpiPlugin\Glpiinventory\Job\Types\DeniedProperties(
+                                type: $properties['type'] ?? null,
+                                name: $properties['name'] ?? null,
+                                mac: $properties['mac'] ?? null,
+                                ip: $properties['ips'] ?? null,
+                            )
+                        )
                     );
                     /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
                     $this->addtaskjoblog();*/
                 } else {
                     $item = $inventory->getMainAsset()->getItem();
                     $taskJobLog->addJobLog(
-                        taskjobs_id: $a_CONTENT->jobid,
-                        items_id: $item->fields['id'],
-                        itemtype: $item::class,
-                        state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                        comment: [
-                            TaskJobLogsTypes::UPDATE_ITEM->value => [],
-                        ]
+                        taskjobs_id: $a_CONTENT->jobid, //FIXME: what should be the value here?
+                        items_id: $item->fields['id'], //FIXME: what should be the value here?
+                        itemtype: $item::class, //FIXME: what should be the value here?
+                        state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN, //FIXME: what should be the value here?
+                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::UPDATE_ITEM)
                     );
                     /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment']
                         = '[==detail==] ==updatetheitem== ' . $item->getTypeName()
