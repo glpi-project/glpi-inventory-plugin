@@ -84,7 +84,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 items_id: $agent->fields['id'],
                 itemtype: Agent::class,
                 state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::DEVICES_QEUERIED)
+                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::DEVICES_QUERIED)
             );
         }
 

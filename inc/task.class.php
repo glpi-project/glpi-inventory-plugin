@@ -287,7 +287,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
      * @param int $agent_id
      * @param array<string> $methods
      * @param array<string,mixed> $options
-     * @return array<string,mixed>
+     * @return PluginGlpiinventoryTaskjobstate[]
      */
     public function getTaskjobstatesForAgent($agent_id, $methods = [], $options = [])
     {

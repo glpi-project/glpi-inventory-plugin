@@ -34,7 +34,7 @@ namespace GlpiPlugin\Glpiinventory\Enums;
 
 enum TaskJobLogsTypes: string
 {
-    case DEVICES_QEUERIED  = 'devicesqueried';
+    case DEVICES_QUERIED  = 'devicesqueried';
     case DEVICES_FOUND     = 'devicesfound';
     case ADD_ITEM      = 'addtheitem';
     case UPDATE_ITEM   = 'updatetheitem';
