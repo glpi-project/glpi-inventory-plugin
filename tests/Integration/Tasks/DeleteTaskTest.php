@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
+use GlpiPlugin\Glpiinventory\Job\Types\Generic;
 use PHPUnit\Framework\TestCase;
 
 class DeleteTaskTest extends TestCase
@@ -118,7 +120,7 @@ class DeleteTaskTest extends TestCase
             'items_id'                                => 0,
             'itemtype'                                => 'Computer',
             'state'                                   => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-            'comment'                                 => "1 ==devicesfound==",
+            'comment'                                 => new Generic(type: TaskJobLogsTypes::DEVICES_FOUND),
         ];
         self::$taskjoblogId = $pfTaskjoblog->add($input);
     }
