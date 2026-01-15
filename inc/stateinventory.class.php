@@ -183,6 +183,11 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                         $comment = json_decode($taskjoblog['comment']);
                         if ($comment['type'] === TaskJobLogsTypes::DEVICES_QUERIED) {
                             ++$nb_query;
+                        /*} elseif (strstr($taskjoblog['comment'], " No response from remote host")) { //If it's reported from agent, maybe state set to error would be better.
+                            $nb_errors++;*/
+                        /*} elseif ($taskjoblog['state'] == "1") {
+                            $nb_threads = $taskjoblog['comment']; //FIXME: how to handle that case correctly?
+                            $start_date = $taskjoblog['date'];*/
                         }
                     }
 
