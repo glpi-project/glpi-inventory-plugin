@@ -31,7 +31,6 @@
  * ---------------------------------------------------------------------
  */
 
-use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
 use GlpiPlugin\Glpiinventory\Job\Types\Generic;
 
 use function Safe\json_encode;
