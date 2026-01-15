@@ -99,11 +99,12 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 'glpi_plugin_glpiinventory_taskjoblogs',
                 [
                     'plugin_glpiinventory_taskjobstates_id' => $a_CONTENT->jobid,
-                    'comment'                                 => [
-                        'OR' =>
+                    'comment' => [
+                        'OR' => [
                             ["LIKE", '%[==detail==] ==updatetheitem== %'], // old way
                             ['LIKE', '%' . TaskJobLogsTypes::UPDATE_ITEM->value . '%'] //new way
                         ]
+                    ]
                 ]
             );
 
