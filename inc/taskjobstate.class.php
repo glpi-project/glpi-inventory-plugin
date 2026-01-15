@@ -121,10 +121,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     {
         switch ($item::class) {
             case Computer::class:
-                if (
-                    method_exists($item, 'getInventoryAgent')
-                    && $item->getInventoryAgent() != null
-                ) {
+                if ($item->getInventoryAgent() != null) {
                     return self::createTabEntry(__("Tasks / Groups", "glpiinventory"), 0, icon: 'ti ti-checklist');
                 }
                 break;
