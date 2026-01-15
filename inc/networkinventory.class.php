@@ -106,14 +106,25 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
             $device_attrs['AUTHSNMP_ID'] = $a_extended['snmpcredentials_id'];
 
             $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
-            $pfTaskjoblog->addTaskjoblog(
+            /*$pfTaskjoblog->addTaskjoblog(
                 $taskjobstatedatas['id'],
                 0,
                 Agent::class,
                 '1',
                 $param_attrs['THREADS_QUERY'] . ' threads '
                 . $param_attrs['TIMEOUT'] . ' timeout'
+            );*/
+            $pfTaskjoblog->addJobLog(
+                taskjobs_id: $pfTaskjobstate->fields['id'],
+                items_id: 0,
+                itemtype: Agent::class,
+                state: PluginGlpiinventoryTaskjoblog::TASK_STARTED,
+                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info( //FIXME: probably use a specific type to store those information
+                    $param_attrs['THREADS_QUERY'] . ' threads '
+                    . $param_attrs['TIMEOUT'] . ' timeout'
+                )
             );
+
 
             // Only keep required snmp credentials
             $snmpauthlist = $credentials->find(['id' => $a_extended['snmpcredentials_id']]);
