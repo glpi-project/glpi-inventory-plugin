@@ -33,6 +33,10 @@
 
 use Glpi\Inventory\Inventory;
 use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
+use GlpiPlugin\Glpiinventory\Job\Types\Denied;
+use GlpiPlugin\Glpiinventory\Job\Types\DeniedProperties;
+use GlpiPlugin\Glpiinventory\Job\Types\Generic;
+use GlpiPlugin\Glpiinventory\Job\Types\Info;
 
 /**
  * Manage the communication of network inventory feature with the agents.
@@ -84,7 +88,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 items_id: $agent->fields['id'],
                 itemtype: Agent::class,
                 state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::DEVICES_QUERIED)
+                comment: new Generic(type: TaskJobLogsTypes::DEVICES_QUERIED)
             );
         }
 
@@ -102,9 +106,9 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                     'comment' => [
                         'OR' => [
                             ["LIKE", '%[==detail==] ==updatetheitem== %'], // old way
-                            ['LIKE', '%' . TaskJobLogsTypes::UPDATE_ITEM->value . '%'] //new way
-                        ]
-                    ]
+                            ['LIKE', '%' . TaskJobLogsTypes::UPDATE_ITEM->value . '%'], //new way
+                        ],
+                    ],
                 ]
             );
 
@@ -122,7 +126,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 items_id: $agent->fields['id'],
                 itemtype: Agent::class,
                 state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::INVENTORY_STARTED),
+                comment: new Generic(type: TaskJobLogsTypes::INVENTORY_STARTED),
             );
             $response = ['response' => ['RESPONSE' => 'SEND']];
         } elseif (isset($a_CONTENT->content->error)) {
@@ -137,7 +141,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 items_id: $a_CONTENT->content->error->id,
                 itemtype: $itemtype,
                 state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($a_CONTENT->content->error->message)
+                comment: new Info(message: $a_CONTENT->content->error->message)
             );
             /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
             . $a_CONTENT->content->error->message . ' [[' . $itemtype . '::'
@@ -157,7 +161,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                 items_id: $a_CONTENT->content->device->error->id, //FIXME: what should be the value here?
                 itemtype: $itemtype, //FIXME: what should be the value here?
                 state: PluginGlpiinventoryTaskjoblog::TASK_ERROR, //FIXME: what should be the value here?
-                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($a_CONTENT->content->device->error->message)
+                comment: new Info(message: $a_CONTENT->content->device->error->message)
             );
             /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '[==detail==] '
             . $a_CONTENT->content->device->error->message . ' [[' . $itemtype . '::'
@@ -193,8 +197,8 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                         items_id: 0,
                         itemtype: $device::class,
                         state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Denied(
-                            new \GlpiPlugin\Glpiinventory\Job\Types\DeniedProperties(
+                        comment: new Denied(
+                            properties: new DeniedProperties(
                                 type: $properties['type'] ?? null,
                                 name: $properties['name'] ?? null,
                                 mac: $properties['mac'] ?? null,
@@ -211,7 +215,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                         items_id: $item->fields['id'], //FIXME: what should be the value here?
                         itemtype: $item::class, //FIXME: what should be the value here?
                         state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN, //FIXME: what should be the value here?
-                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::UPDATE_ITEM)
+                        comment: new Generic(type: TaskJobLogsTypes::UPDATE_ITEM)
                     );
                     /*$_SESSION['plugin_glpiinventory_taskjoblog']['comment']
                         = '[==detail==] ==updatetheitem== ' . $item->getTypeName()

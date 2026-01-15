@@ -33,6 +33,9 @@
 
 use Glpi\Inventory\Inventory;
 use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
+use GlpiPlugin\Glpiinventory\Job\Types\Denied;
+use GlpiPlugin\Glpiinventory\Job\Types\DeniedProperties;
+use GlpiPlugin\Glpiinventory\Job\Types\Generic;
 
 /**
  * Manage the communication of network discovery feature with the agents.
@@ -80,7 +83,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                         items_id: $agent->fields['id'],
                         itemtype: Agent::class,
                         state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(TaskJobLogsTypes::DEVICES_FOUND)
+                        comment: new Generic(type: TaskJobLogsTypes::DEVICES_FOUND)
                     );
                 }
             }
@@ -102,8 +105,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             'comment' => [
                                 'OR' => [
                                     ["LIKE", '%[==detail==] ==updatetheitem== %'], // old way
-                                    ['LIKE', '%' . TaskJobLogsTypes::UPDATE_ITEM->value . '%'] //new way
-                                ]
+                                    ['LIKE', '%' . TaskJobLogsTypes::UPDATE_ITEM->value . '%'], //new way
+                                ],
                             ],
                         ]
                     );
@@ -114,8 +117,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             'comment' => [
                                 'OR' => [
                                     ["LIKE", '%[==detail==] ==addtheitem== %'], // old way
-                                    ['LIKE', '%' . TaskJobLogsTypes::ADD_ITEM->value . '%'] //new way
-                                ]
+                                    ['LIKE', '%' . TaskJobLogsTypes::ADD_ITEM->value . '%'], //new way
+                                ],
                             ],
                         ]
                     );
@@ -173,8 +176,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                                 items_id: $item->fields['id'],
                                 itemtype: $item::class,
                                 state: PluginGlpiinventoryTaskjoblog::TASK_UNKNOWN,
-                                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Denied(
-                                    new \GlpiPlugin\Glpiinventory\Job\Types\DeniedProperties(
+                                comment: new Denied(
+                                    properties: new DeniedProperties(
                                         type: $properties['type'] ?? null,
                                         name: $properties['name'] ?? null,
                                         mac: $properties['mac'] ?? null,
@@ -191,8 +194,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                                 items_id: $item->fields['id'],
                                 itemtype: $item::class,
                                 state: PluginGlpiinventoryTaskjoblog::TASK_OK,
-                                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(
-                                    $inventory->getMainAsset()->isNew()
+                                comment: new Generic(
+                                    type: $inventory->getMainAsset()->isNew()
                                         ? TaskJobLogsTypes::ADD_ITEM
                                         : TaskJobLogsTypes::UPDATE_ITEM
                                 )

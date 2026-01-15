@@ -32,6 +32,8 @@
  */
 
 use Glpi\DBAL\QueryExpression;
+use GlpiPlugin\Glpiinventory\Enums\NetTaskTypes;
+use GlpiPlugin\Glpiinventory\Job\Types\NetTask;
 
 /**
  * Manage network inventory task jobs.
@@ -119,9 +121,10 @@ class PluginGlpiinventoryNetworkinventory extends PluginGlpiinventoryCommunicati
                 items_id: 0,
                 itemtype: Agent::class,
                 state: PluginGlpiinventoryTaskjoblog::TASK_STARTED,
-                comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info( //FIXME: probably use a specific type to store those information
-                    $param_attrs['THREADS_QUERY'] . ' threads '
-                    . $param_attrs['TIMEOUT'] . ' timeout'
+                comment: new NetTask(
+                    task_type: NetTaskTypes::TASK_INVENTORY,
+                    threads: $param_attrs['THREADS_QUERY'],
+                    timeout: $param_attrs['TIMEOUT']
                 )
             );
 
