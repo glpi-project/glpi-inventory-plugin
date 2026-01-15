@@ -105,16 +105,14 @@ class DeleteTaskTest extends DbTestCase
         ];
         $this->taskjobstateId = $pfTaskjobState->add($input);
 
-        //crfeate taskjoblogR
-        $input = [
-            'plugin_glpiinventory_taskjobstates_id' => $this->taskjobstateId,
-            'date' => date('Y-m-d H:i:s'),
-            'items_id' => 0,
-            'itemtype' => Computer::class,
-            'state' => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-            'comment' => new Generic(type: TaskJobLogsTypes::DEVICES_FOUND),
-        ];
-        $this->taskjoblogId = $pfTaskjoblog->add($input);
+        //create taskjoblog
+        $this->taskjoblogId = $pfTaskjoblog->addJobLog(
+            taskjobs_id: self::$taskjobstateId,
+            items_id: 0,
+            itemtype: Computer::class,
+            state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
+            comment: new Generic(type: TaskJobLogsTypes::DEVICES_FOUND),
+        );
     }
 
     public function testDeleteTask(): void
