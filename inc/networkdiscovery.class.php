@@ -96,13 +96,23 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
         $iprange_attrs['ENTITY'] = $pfIPRange->fields["entities_id"];
 
         $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
-        $pfTaskjoblog->addTaskjoblog(
+        /*$pfTaskjoblog->addTaskjoblog(
             $pfTaskjobstate->fields['id'],
             0,
             Agent::class,
-            '1',
+            1,
             $agent->fields["threads_networkdiscovery"] . ' threads '
                              . $agent->fields["timeout_networkdiscovery"] . ' timeout'
+        );*/
+        $pfTaskjoblog->addJobLog(
+            taskjobs_id: $pfTaskjobstate->fields['id'],
+            items_id: 0,
+            itemtype: Agent::class,
+            state: PluginGlpiinventoryTaskjoblog::TASK_STARTED,
+            comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info( //FIXME: probably use a specific type to store those information
+                $agent->fields["threads_networkdiscovery"] . ' threads '
+                . $agent->fields["timeout_networkdiscovery"] . ' timeout'
+            )
         );
 
         $iprange_credentials = new PluginGlpiinventoryIPRange_SNMPCredential();
