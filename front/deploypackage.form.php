@@ -57,7 +57,7 @@ $data = $_POST;
 if (isset($data["add"])) {
     Session::checkRight('plugin_glpiinventory_package', CREATE);
     $newID = $package->add($data);
-    Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployPackage') . "?id=" . $newID);
+    Html::redirect(Toolbox::getItemTypeFormURL(PluginGlpiinventoryDeployPackage::class) . "?id=" . $newID);
 } elseif (isset($data["update"])) {
     Session::checkRight('plugin_glpiinventory_package', UPDATE);
     $package->update($data);

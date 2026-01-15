@@ -44,6 +44,6 @@ Session::checkRight('plugin_glpiinventory_iprange', READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginGlpiinventoryIPRange');
+Search::show(PluginGlpiinventoryIPRange::class);
 
 Html::footer();

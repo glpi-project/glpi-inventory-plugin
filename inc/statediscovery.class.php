@@ -176,7 +176,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
         echo "<tr class='tab_bg_1'>";
         echo "<th>" . __('Unique id', 'glpiinventory') . "</th>";
         echo "<th>" . _n('Task', 'Tasks', 1, 'glpiinventory') . "</th>";
-        echo "<th>" . __('Agent', 'glpiinventory') . "</th>";
+        echo "<th>" . Agent::getTypeName(1) . "</th>";
         echo "<th>" . __('Status') . "</th>";
         echo "<th>" . __('Starting date', 'glpiinventory') . "</th>";
         echo "<th>" . __('Ending date', 'glpiinventory') . "</th>";

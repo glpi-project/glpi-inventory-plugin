@@ -1128,7 +1128,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         if ($canedit) {
             echo "<div class='firstbloc'>";
             echo "<form name='deploypackagevisibility_form$rand' id='deploypackagevisibility_form$rand' ";
-            echo " method='post' action='" . Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployPackage') . "'>";
+            echo " method='post' action='" . Toolbox::getItemTypeFormURL(PluginGlpiinventoryDeployPackage::class) . "'>";
             echo "<input type='hidden' name='plugin_glpiinventory_deploypackages_id' value='$ID'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Add a target for self-service', 'glpiinventory') . "</th></tr>";
@@ -1192,7 +1192,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     echo "<tr class='tab_bg_1'>";
                     if ($canedit) {
                         echo "<td>";
-                        Html::showMassiveActionCheckBox('PluginGlpiinventoryDeployPackage_User', $data["id"]);
+                        Html::showMassiveActionCheckBox(PluginGlpiinventoryDeployPackage_User::class, $data["id"]);
                         echo "</td>";
                     }
                     echo "<td>" . __('User') . "</td>";
@@ -1209,7 +1209,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     echo "<tr class='tab_bg_1'>";
                     if ($canedit) {
                         echo "<td>";
-                        Html::showMassiveActionCheckBox('PluginGlpiinventoryDeployPackage_Group', $data["id"]);
+                        Html::showMassiveActionCheckBox(PluginGlpiinventoryDeployPackage_Group::class, $data["id"]);
                         echo "</td>";
                     }
                     echo "<td>" . __('Group') . "</td>";
@@ -1985,7 +1985,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 if (isset($enduser[$users_id])) {
                     $targets = importArrayFromDB($data['targets']);
                     foreach ($enduser[$users_id] as $computers_id) {
-                        $packages_used[$computers_id][$targets[0]['PluginGlpiinventoryDeployPackage']] = $data['id'];
+                        $packages_used[$computers_id][$targets[0][PluginGlpiinventoryDeployPackage::class]] = $data['id'];
                     }
                 }
 
@@ -1996,7 +1996,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 foreach ($actors as $actor) {
                     foreach ($actor as $itemtype => $items_id) {
                         if ($itemtype == 'Computer' && $items_id == $computers_id) {
-                            $packages_used[$computers_id][$targets[0]['PluginGlpiinventoryDeployPackage']] = $data['id'];
+                            $packages_used[$computers_id][$targets[0][PluginGlpiinventoryDeployPackage::class]] = $data['id'];
                         }
                     }
                 }

@@ -78,13 +78,13 @@ if (isset($_POST["add"])) {
         $input_task["periodicity_type"]  = $_POST['periodicity_type'];
         if (!empty($_POST['action'])) {
             $a_actionDB                                 = [];
-            $a_actionDB[]['Agent'] = $_POST['action'];
+            $a_actionDB[][Agent::class] = $_POST['action'];
             $input_taskjob["action"]                    = exportArrayToDB($a_actionDB);
         } else {
             $input_taskjob["action"] = '';
         }
         $a_definition = [];
-        $a_definition[]['PluginGlpiinventoryIPRange'] = $_POST['iprange'];
+        $a_definition[][PluginGlpiinventoryIPRange::class] = $_POST['iprange'];
         $input_taskjob['definition'] = exportArrayToDB($a_definition);
         $input_task["communication"] = $_POST['communication'];
 
@@ -111,7 +111,7 @@ if (isset($_POST["add"])) {
         Session::checkRight('plugin_glpiinventory_iprange', PURGE);
 
         $iprange->delete($_POST);
-        Html::redirect(Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange'));
+        Html::redirect(Toolbox::getItemTypeSearchURL(PluginGlpiinventoryIPRange::class));
     }
 }
 

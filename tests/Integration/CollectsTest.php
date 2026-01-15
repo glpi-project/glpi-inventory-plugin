@@ -288,8 +288,8 @@ class CollectsTest extends TestCase
             'entities_id' => 0,
             'name'    => 'collectjob',
             'method'  => 'collect',
-            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
-            'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
+            'targets' => exportArrayToDB([[PluginGlpiinventoryCollect::class => $collects_id]]),
+            'actors'  => exportArrayToDB([[Computer::class => $computers_id]]),
         ];
         $taskjobs_id = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobs_id);
@@ -443,8 +443,8 @@ class CollectsTest extends TestCase
             'entities_id' => 0,
             'name'    => 'collectjob',
             'method'  => 'collect',
-            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
-            'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
+            'targets' => exportArrayToDB([[PluginGlpiinventoryCollect::class => $collects_id]]),
+            'actors'  => exportArrayToDB([[Computer::class => $computers_id]]),
         ];
         $taskjobs_id = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobs_id);
@@ -607,8 +607,8 @@ class CollectsTest extends TestCase
             'entities_id' => 0,
             'name'    => 'collectjob',
             'method'  => 'collect',
-            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => $collects_id]]),
-            'actors'  => exportArrayToDB([['Computer' => $computers_id]]),
+            'targets' => exportArrayToDB([[PluginGlpiinventoryCollect::class => $collects_id]]),
+            'actors'  => exportArrayToDB([[Computer::class => $computers_id]]),
         ];
         $taskjobs_id = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobs_id);
@@ -1076,8 +1076,8 @@ class CollectsTest extends TestCase
             'entities_id' => 0,
             'name'    => 'collectjob',
             'method'  => 'collect',
-            'targets' => exportArrayToDB([['PluginGlpiinventoryCollect' => 0]]),
-            'actors'  => exportArrayToDB([['Agent' => 0]]),
+            'targets' => exportArrayToDB([[PluginGlpiinventoryCollect::class => 0]]),
+            'actors'  => exportArrayToDB([[Agent::class => 0]]),
         ];
         $taskjobs_id = $pfTaskjob->add($input);
         $this->assertNotFalse($taskjobs_id);

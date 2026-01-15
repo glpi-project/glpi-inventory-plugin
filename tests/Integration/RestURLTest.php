@@ -122,7 +122,7 @@ class RestURLTest extends TestCase
 
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
-            'itemtype' => 'PluginGlpiinventoryCollect',
+            'itemtype' => PluginGlpiinventoryCollect::class,
             'agents_id' => $agent->fields['id'],
         ];
         $ret = $pfTaskjobstate->add($input);
@@ -157,7 +157,7 @@ class RestURLTest extends TestCase
 
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
-            'itemtype' => 'PluginGlpiinventoryDeployPackage',
+            'itemtype' => PluginGlpiinventoryDeployPackage::class,
             'agents_id' => $agent->fields['id'],
         ];
         $pfTaskjobstate->add($input);
@@ -191,7 +191,7 @@ class RestURLTest extends TestCase
 
         $agent->getFromDBByCrit(['name' => 'toto']);
         $input = [
-            'itemtype' => 'PluginGlpiinventoryCredentialIp',
+            'itemtype' => PluginGlpiinventoryCredentialIp::class,
             'agents_id' => $agent->fields['id'],
         ];
         $pfTaskjobstate->add($input);

@@ -122,7 +122,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             'linkfield'     => 'plugin_glpiinventory_tasks_id',
             'name'          => __('Task'),
             'datatype'      => 'itemlink',
-            'itemlink_type' => 'PluginGlpiinventoryTask',
+            'itemlink_type' => PluginGlpiinventoryTask::class,
         ];
 
         $tab[] = [
@@ -199,7 +199,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $a_type = [];
         $a_type[''] = Dropdown::EMPTY_VALUE;
         if ($myname == 'action') {
-            $a_type['Agent'] = Agent::getTypeName();
+            $a_type[Agent::class] = Agent::getTypeName();
         }
         foreach ($a_methods as $datas) {
             if ($method == $datas['method']) {
@@ -332,7 +332,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $a_methods               = PluginGlpiinventoryStaticmisc::getmethods();
         $a_actioninitiontype     = [];
         $a_actioninitiontype[''] = Dropdown::EMPTY_VALUE;
-        $a_actioninitiontype['Agent'] = Agent::getTypeName();
+        $a_actioninitiontype[Agent::class] = Agent::getTypeName();
         foreach ($a_methods as $datas) {
             if ($method == $datas['method']) {
                 $module = ucfirst($datas['module']);

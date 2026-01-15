@@ -47,7 +47,7 @@ Html::header(
 
 // Manage forcetab : non standard system (file name <> class name)
 if (isset($_GET['forcetab'])) {
-    Session::setActiveTab('PluginGlpiinventoryTask', $_GET['forcetab']);
+    Session::setActiveTab(PluginGlpiinventoryTask::class, $_GET['forcetab']);
     unset($_GET['forcetab']);
 }
 

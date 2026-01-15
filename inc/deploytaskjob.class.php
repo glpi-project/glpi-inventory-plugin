@@ -102,7 +102,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                     $tmp         = array_keys($action);
                     $action_type = $tmp[0];
 
-                    $json['tasks'][$i]['package_id']       = $package['PluginGlpiinventoryDeployPackage'];
+                    $json['tasks'][$i]['package_id']       = $package[PluginGlpiinventoryDeployPackage::class];
                     $json['tasks'][$i]['method']           = $task['method'];
                     $json['tasks'][$i]['comment']          = $task['comment'];
                     $json['tasks'][$i]['retry_nb']         = $task['retry_nb'];
@@ -172,7 +172,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             //    $task['action_type'] => $task['action_selection'])));
             $action = exportArrayToDB($task['action']);
             $definition = exportArrayToDB([[
-                'PluginGlpiinventoryDeployPackage' => $task['package_id'],
+                PluginGlpiinventoryDeployPackage::class => $task['package_id'],
             ],
             ]);
 

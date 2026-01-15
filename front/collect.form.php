@@ -44,7 +44,7 @@ $pfCollect = new PluginGlpiinventoryCollect();
 
 if (isset($_POST["add"])) {
     $collects_id = $pfCollect->add($_POST);
-    Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryCollect')
+    Html::redirect(Toolbox::getItemTypeFormURL(PluginGlpiinventoryCollect::class)
            . "?id=" . $collects_id);
 } elseif (isset($_POST["update"])) {
     $pfCollect->update($_POST);

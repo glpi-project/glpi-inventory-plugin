@@ -155,7 +155,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
             'field'         => 'name',
             'name'          => __('Authentication for remote devices (VMware)', 'glpiinventory'),
             'datatype'      => 'itemlink',
-            'itemlink_type' => 'PluginGlpiinventoryCredential',
+            'itemlink_type' => PluginGlpiinventoryCredential::class,
         ];
 
         $tab[] = [

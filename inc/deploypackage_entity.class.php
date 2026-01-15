@@ -41,7 +41,7 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
      *
      * @var string
      */
-    public static $itemtype_1 = 'PluginGlpiinventoryDeployPackage';
+    public static $itemtype_1 = PluginGlpiinventoryDeployPackage::class;
 
     /**
      * id field name for the first part of relation
@@ -55,7 +55,7 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
      *
      * @var string
      */
-    public static $itemtype_2 = 'Entity';
+    public static $itemtype_2 = Entity::class;
 
     /**
      * id field name for the second part of relation

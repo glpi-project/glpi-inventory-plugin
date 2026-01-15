@@ -44,6 +44,6 @@ Html::header(
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginGlpiinventoryDeployGroup');
+Search::show(PluginGlpiinventoryDeployGroup::class);
 
 Html::footer();

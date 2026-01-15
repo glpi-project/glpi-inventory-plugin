@@ -81,7 +81,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id']
               = $a_CONTENT->jobid;
             $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = Agent::class;
             $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = $nb_devices
               . ' ==devicesqueried==';
@@ -106,7 +106,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
             $pfTaskjobstate->changeStatusFinish(
                 $a_CONTENT->jobid,
                 $agent->fields['id'],
-                'Agent',
+                Agent::class,
                 0,
                 'Total updated:' . $cnt
             );
@@ -114,7 +114,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
         } elseif (isset($a_CONTENT->content->agent->start)) {
             $_SESSION['plugin_glpiinventory_taskjoblog']['taskjobs_id'] = $a_CONTENT->jobid;
             $_SESSION['plugin_glpiinventory_taskjoblog']['items_id'] = $agent->fields['id'];
-            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = 'Agent';
+            $_SESSION['plugin_glpiinventory_taskjoblog']['itemtype'] = Agent::class;
             $_SESSION['plugin_glpiinventory_taskjoblog']['state'] = '6';
             $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==inventorystarted==';
             $this->addtaskjoblog();

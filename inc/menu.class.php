@@ -106,20 +106,20 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         $fi_path  = $CFG_GLPI['root_doc'] . '/plugins/glpiinventory';
 
         $elements = [
-            'iprange'                    => 'PluginGlpiinventoryIPRange',
-            'config'                     => 'PluginGlpiinventoryConfig',
-            'task'                       => 'PluginGlpiinventoryTask',
-            'timeslot'                   => 'PluginGlpiinventoryTimeslot',
-            'unmanaged'                  => 'Unmanaged',
-            'configsecurity'             => 'SNMPCredential',
-            'credential'                 => 'PluginGlpiinventoryCredential',
-            'credentialip'               => 'PluginGlpiinventoryCredentialIp',
-            'collect'                    => 'PluginGlpiinventoryCollect',
-            'deploypackage'              => 'PluginGlpiinventoryDeployPackage',
-            'deploymirror'               => 'PluginGlpiinventoryDeployMirror',
-            'deploygroup'                => 'PluginGlpiinventoryDeployGroup',
-            'deployuserinteractiontemplate' => 'PluginGlpiinventoryDeployUserinteractionTemplate',
-            'ignoredimportdevice'        => 'RefusedEquipment',
+            'iprange'                    => PluginGlpiinventoryIPRange::class,
+            'config'                     => PluginGlpiinventoryConfig::class,
+            'task'                       => PluginGlpiinventoryTask::class,
+            'timeslot'                   => PluginGlpiinventoryTimeslot::class,
+            'unmanaged'                  => Unmanaged::class,
+            'configsecurity'             => SNMPCredential::class,
+            'credential'                 => PluginGlpiinventoryCredential::class,
+            'credentialip'               => PluginGlpiinventoryCredentialIp::class,
+            'collect'                    => PluginGlpiinventoryCollect::class,
+            'deploypackage'              => PluginGlpiinventoryDeployPackage::class,
+            'deploymirror'               => PluginGlpiinventoryDeployMirror::class,
+            'deploygroup'                => PluginGlpiinventoryDeployGroup::class,
+            'deployuserinteractiontemplate' => PluginGlpiinventoryDeployUserinteractionTemplate::class,
+            'ignoredimportdevice'        => RefusedEquipment::class,
         ];
         $options = [];
 
@@ -239,11 +239,11 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $tasks_menu[2]['name'] = __('Task management', 'glpiinventory');
             $tasks_menu[2]['pic']  = "ti ti-list-check";
-            $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTask');
+            $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryTask::class);
 
             $tasks_menu[3]['name'] = __('Monitoring / Logs', 'glpiinventory');
             $tasks_menu[3]['pic']  = "ti ti-activity";
-            $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTaskJob');
+            $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryTaskjob::class);
         }
 
         if (Session::haveRight('config', READ)) {
@@ -255,13 +255,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         if (Session::haveRight("plugin_glpiinventory_collect", READ)) {
             $tasks_menu[11]['name'] = __('Collect information', 'glpiinventory');
             $tasks_menu[11]['pic']  = "ti ti-device-desktop-down";
-            $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCollect');
+            $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryCollect::class);
         }
 
         if (Session::haveRight('plugin_glpiinventory_task', READ)) {
             $tasks_menu[12]['name'] = __('Time slot', 'glpiinventory');
             $tasks_menu[12]['pic']  = "ti ti-calendar-time";
-            $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginGlpiinventoryTimeslot');
+            $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryTimeslot::class);
         }
 
         if ($tasks_menu !== []) {
@@ -320,7 +320,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('IP Ranges', 'glpiinventory'),
                 'pic'  => "ti ti-viewfinder",
-                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryIPRange'),
+                'link' => Toolbox::getItemTypeSearchURL(PluginGlpiinventoryIPRange::class),
             ];
         }
 
@@ -328,7 +328,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
                 'pic'  => "ti ti-devices-pc",
-                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredentialip'),
+                'link' => Toolbox::getItemTypeSearchURL(PluginGlpiinventoryCredentialIp::class),
             ];
         }
 
@@ -344,7 +344,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $network_menu[] = [
                 'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
                 'pic'  => "ti ti-lock",
-                'link' => Toolbox::getItemTypeSearchURL('PluginGlpiinventoryCredential'),
+                'link' => Toolbox::getItemTypeSearchURL(PluginGlpiinventoryCredential::class),
             ];
         }
 

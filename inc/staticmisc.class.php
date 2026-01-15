@@ -62,7 +62,7 @@ class PluginGlpiinventoryStaticmisc
             ],
 
             [   'module'         => 'glpiinventory',
-                'classname'      => 'PluginGlpiinventoryInventoryComputerESX',
+                'classname'      => PluginGlpiinventoryInventoryComputerESX::class,
                 'method'         => 'InventoryComputerESX',
                 'selection_type' => 'devices',
                 'name'           => __('VMware host remote inventory', 'glpiinventory'),
@@ -71,19 +71,19 @@ class PluginGlpiinventoryStaticmisc
             ],
 
             [   'module'         => 'glpiinventory',
-                'classname'      => 'PluginGlpiinventoryNetworkDiscovery',
+                'classname'      => PluginGlpiinventoryNetworkdiscovery::class,
                 'method'         => 'networkdiscovery',
                 'name'           => __('Network discovery', 'glpiinventory'),
             ],
 
             [   'module'         => 'glpiinventory',
-                'classname'      => 'PluginGlpiinventoryNetworkInventory',
+                'classname'      => PluginGlpiinventoryNetworkinventory::class,
                 'method'         => 'networkinventory',
                 'name'           => __('Network inventory (SNMP)', 'glpiinventory'),
             ],
 
             [   'module'         => 'glpiinventory',
-                'classname'      => 'PluginGlpiinventoryDeployCommon',
+                'classname'      => PluginGlpiinventoryDeployCommon::class,
                 'method'         => 'deployinstall',
                 'name'           => __('Package deploy', 'glpiinventory'),
                 'task'           => "DEPLOY",
@@ -91,7 +91,7 @@ class PluginGlpiinventoryStaticmisc
             ],
 
             [   'module'         => 'glpiinventory',
-                'classname'      => 'PluginGlpiinventoryCollect',
+                'classname'      => PluginGlpiinventoryCollect::class,
                 'method'         => 'collect',
                 'name'           => __('Collect data', 'glpiinventory'),
                 'task'           => "Collect",

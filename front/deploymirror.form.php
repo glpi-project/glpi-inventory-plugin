@@ -57,7 +57,7 @@ if (isset($_POST["add"])) {
     Html::back();
 } elseif (isset($_POST["delete"])) {
     $mirror->delete($_POST);
-    Html::redirect(Toolbox::getItemTypeFormURL('PluginGlpiinventoryDeployMirror'));
+    Html::redirect(Toolbox::getItemTypeFormURL(PluginGlpiinventoryDeployMirror::class));
 }
 
 $id = "";

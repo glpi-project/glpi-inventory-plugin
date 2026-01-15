@@ -299,7 +299,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     public static function findItemtypeType($credential_itemtype): array
     {
 
-        $credential = ['itemtype' => 'PluginGlpiinventoryInventoryComputerESX', //Credential itemtype
+        $credential = ['itemtype' => PluginGlpiinventoryInventoryComputerESX::class, //Credential itemtype
             'name'    => __('VMware host', 'glpiinventory'), //Label
             'targets' => ['Computer'],
         ];

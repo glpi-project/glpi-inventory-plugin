@@ -226,7 +226,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
             'id'           => '8',
             'table'        => "glpi_agents",
             'field'        => 'name',
-            'name'         => __('Agent', 'glpiinventory'),
+            'name'         => Agent::getTypeName(1),
             'datatype'     => 'itemlink',
             'forcegroupby' => true,
             'joinparams'   => [

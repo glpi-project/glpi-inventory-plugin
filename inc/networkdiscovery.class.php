@@ -99,7 +99,7 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
         $pfTaskjoblog->addTaskjoblog(
             $pfTaskjobstate->fields['id'],
             0,
-            'Agent',
+            Agent::class,
             '1',
             $agent->fields["threads_networkdiscovery"] . ' threads '
                              . $agent->fields["timeout_networkdiscovery"] . ' timeout'

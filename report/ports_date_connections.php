@@ -193,7 +193,7 @@ function displaySearchForm(): void
     $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
     TemplateRenderer::getInstance()->render('pages/tools/savedsearch/save_button.html.twig', [
         'type' => SavedSearch::SEARCH,
-        'itemtype' => 'PluginGlpiinventoryNetworkport2',
+        'itemtype' => 'PluginGlpiinventoryNetworkport2', //FIXME?
     ]);
     echo "</td>";
 

@@ -39,7 +39,7 @@ if (plugin_glpiinventory_script_endswith("dropdown_taskjob.php")) {
 Session::checkCentralAccess();
 $id = filter_input(INPUT_POST, "id");
 if (!empty($id) && $id > 0) {
-    Dropdown::show('PluginGlpiinventoryTaskjob', [
+    Dropdown::show(PluginGlpiinventoryTaskjob::class, [
         'name' => "taskjobs_id",
         'condition' => ['plugin_glpiinventory_tasks_id' => $id],
     ]);

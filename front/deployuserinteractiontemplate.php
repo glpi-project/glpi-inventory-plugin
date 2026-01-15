@@ -44,6 +44,6 @@ Html::header(
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
-Search::show('PluginGlpiinventoryDeployUserinteractionTemplate');
+Search::show(PluginGlpiinventoryDeployUserinteractionTemplate::class);
 
 Html::footer();

@@ -299,10 +299,10 @@ class DatabaseTestsCommons extends Assert
         */
         $crontask = new CronTask();
         $crons = [
-            'taskscheduler' => 'PluginGlpiinventoryTask',
-            'cleantaskjob' => 'PluginGlpiinventoryTaskjobstate',
-            'wakeupAgents' => 'PluginGlpiinventoryAgentWakeup',
-            'cleanondemand' => 'PluginGlpiinventoryTask',
+            'taskscheduler' => PluginGlpiinventoryTask::class,
+            'cleantaskjob' => PluginGlpiinventoryTaskjobstate::class,
+            'wakeupAgents' => PluginGlpiinventoryAgentWakeup::class,
+            'cleanondemand' => PluginGlpiinventoryTask::class,
         ];
         foreach ($crons as $cron => $class) {
             $this->assertTrue(
