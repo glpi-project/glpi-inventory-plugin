@@ -8929,17 +8929,34 @@ function renamePlugin(Migration $migration): void
         $table_name   = $itemtype['TABLE_NAME'];
         $itemtype_col = $itemtype['COLUMN_NAME'];
 
-        $DB->update(
-            $table_name,
-            [
-                $itemtype_col => new QueryExpression(
-                    'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
-                ),
-            ],
-            [
-                $itemtype_col => ['LIKE', 'PluginFusioninventory%'],
-            ]
-        );
+        try {
+            $DB->update(
+                $table_name,
+                [
+                    $itemtype_col => new QueryExpression(
+                        'REPLACE(' . $DB->quoteName($itemtype_col) . ', "PluginFusioninventory", "PluginGlpiinventory")'
+                    ),
+                ],
+                [
+                    $itemtype_col => ['LIKE', 'PluginFusioninventory%'],
+                ]
+            );
+        } catch (RuntimeException $e) {
+            // Handle duplicate entry error for glpi_displaypreferences
+            if (
+                str_contains($e->getMessage(), 'Duplicate entry')
+                && $table_name == 'glpi_displaypreferences'
+            ) {
+                $DB->delete(
+                    'glpi_displaypreferences',
+                    [
+                        'itemtype' => ['LIKE', 'PluginFusioninventory%'],
+                    ]
+                );
+                continue;
+            }
+            throw $e;
+        }
     }
 }
 
