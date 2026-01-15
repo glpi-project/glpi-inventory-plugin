@@ -260,7 +260,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      * @param int $state state of this taskjobstate
      * @param string $comment the comment of this insertion
      */
-    public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment): void
+    public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment): int|bool
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -273,7 +273,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $this->fields['state']     = $state;
         $this->fields['comment']   = $DB->escape($comment);
 
-        $this->addToDB();
+        return $this->addToDB();
     }
 
     /**
@@ -374,34 +374,23 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      * @param int $items_id
      * @param class-string<CommonDBTM> $itemtype
      * @param int $state
-     * @param Generic|array{
-     *     TaskJobLogsTypes,
-     *     array{
-     *         nb_devices?: int,
-     *         properties?: array{
-     *             type?: string,
-     *             name?: string,
-     *             mac?: string|string[],
-     *             ip?: string|string[],
-     *         },
-     *         message?: string
-     *     }
-     * } $comment
-     * @return void
+     * @param ?Generic $comment
+     * @return int|bool
      */
     public function addJobLog(
         int $taskjobs_id,
         int $items_id,
         string $itemtype,
         int $state,
-        array|Generic|null $comment //TODO: remove array - was used before Generic class creation
-    ): void {
-        $this->addTaskjoblog(
+        ?Generic $comment
+    ): int|bool {
+        $comment = $comment ? json_encode($comment) : null;
+        return $this->addTaskjoblog(
             $taskjobs_id,
             $items_id,
             $itemtype,
             $state,
-            json_encode($comment)
+            $comment
         );
     }
 }
