@@ -34,6 +34,7 @@
 use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
 use Safe\DateTime;
 
+use function Safe\json_decode;
 use function Safe\strtotime;
 
 /**
