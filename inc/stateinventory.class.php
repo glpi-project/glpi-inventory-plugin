@@ -181,8 +181,8 @@ class PluginGlpiinventoryStateInventory extends CommonDBTM
                         }
                     } else {
                         $comment = json_decode($taskjoblog['comment']);
-                        if ($comment['type'] === TaskJobLogsTypes::DEVICES_QEUERIED) {
-                            $nb_query += (int) $comment->{TaskJobLogsTypes::DEVICES_QEUERIED->value};
+                        if ($comment['type'] === TaskJobLogsTypes::DEVICES_QUERIED) {
+                            ++$nb_query;
                         }
                     }
 
