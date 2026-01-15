@@ -34,6 +34,8 @@
 use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
 use Safe\DateTime;
 
+use function Safe\json_decode;
+
 /**
  * Manage the network discovery state.
  */

@@ -193,8 +193,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                                 state: PluginGlpiinventoryTaskjoblog::TASK_OK,
                                 comment: new \GlpiPlugin\Glpiinventory\Job\Types\Generic(
                                     $inventory->getMainAsset()->isNew()
-                                        ? TaskJobLogsTypes::ADD_ITEM->value
-                                        : TaskJobLogsTypes::UPDATE_ITEM->value
+                                        ? TaskJobLogsTypes::ADD_ITEM
+                                        : TaskJobLogsTypes::UPDATE_ITEM
                                 )
                             );
                             /*$what = $inventory->getMainAsset()->isNew() ? '==addtheitem==' : '==updatetheitem==' ;
