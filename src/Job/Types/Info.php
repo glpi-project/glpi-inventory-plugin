@@ -34,7 +34,6 @@ declare(strict_types=1);
 namespace GlpiPlugin\Glpiinventory\Job\Types;
 
 use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
-use JsonSerializable;
 
 class Info extends Generic
 {

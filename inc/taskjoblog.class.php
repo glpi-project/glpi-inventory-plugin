@@ -32,7 +32,7 @@
  */
 
 use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
-use \GlpiPlugin\Glpiinventory\Job\Types\Generic;
+use GlpiPlugin\Glpiinventory\Job\Types\Generic;
 
 use function Safe\json_encode;
 use function Safe\preg_match_all;

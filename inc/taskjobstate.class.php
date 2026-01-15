@@ -33,6 +33,7 @@
 
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QueryParam;
+use GlpiPlugin\Glpiinventory\Job\Types\Info;
 use Safe\DateTime;
 
 use function Safe\json_encode;
@@ -403,7 +404,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         $log_input['date']     = $_SESSION['glpi_currenttime'];
         $log_input['comment']  = $message;
         $pfTaskjoblog->add($log_input);*/
-        $comment = !empty(trim($message)) ? new \GlpiPlugin\Glpiinventory\Job\Types\Info($message) : null;
+        $comment = !empty(trim($message)) ? new Info(message: $message) : null;
         $pfTaskjoblog->addJobLog(
             taskjobs_id: $taskjobstates_id,
             items_id: $items_id,
@@ -483,7 +484,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             items_id: $this->fields['items_id'],
             itemtype: $this->fields['itemtype'],
             state: $jobstate_state,
-            comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+            comment: new Info($reason)
         );
         $this->update([
             'id'    => $this->fields['id'],
@@ -535,7 +536,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         items_id: $this->fields['items_id'],
                         itemtype: $this->fields['itemtype'],
                         state: PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+                        comment: new Info($reason)
                     );
 
                     $reason = sprintf(
@@ -557,7 +558,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         items_id: $this->fields['items_id'],
                         itemtype: $this->fields['itemtype'],
                         state: PluginGlpiinventoryTaskjoblog::TASK_STARTED,
-                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+                        comment: new Info($reason)
                     );
 
                     if ($params['nb_retry'] <= $params['max_retry']) {
@@ -579,7 +580,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
                         items_id: $this->fields['items_id'],
                         itemtype: $this->fields['itemtype'],
                         state: PluginGlpiinventoryTaskjoblog::TASK_INFO,
-                        comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info($reason)
+                        comment: new Info($reason)
                     );
                 }
             }

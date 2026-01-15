@@ -34,16 +34,17 @@ namespace GlpiPlugin\Glpiinventory\Enums;
 
 enum TaskJobLogsTypes: string
 {
-    case DEVICES_QUERIED  = 'devicesqueried';
-    case DEVICES_FOUND     = 'devicesfound';
-    case ADD_ITEM      = 'addtheitem';
-    case UPDATE_ITEM   = 'updatetheitem';
+    case DEVICES_QUERIED = 'devicesqueried';
+    case DEVICES_FOUND = 'devicesfound';
+    case ADD_ITEM = 'addtheitem';
+    case UPDATE_ITEM = 'updatetheitem';
     case INVENTORY_STARTED = 'inventorystarted';
-    case DETAIL            = 'detail';
-    case INFO            = 'info'; //to replace DETAIL
+    case DETAIL = 'detail';
+    case INFO = 'info'; //to replace DETAIL
 
-    case BAD_TOKEN        = 'badtoken';
-    case AGENT_CRASHED    = 'agentcrashed';
-    case IMPORT_DENIED    = 'importdenied';
-    case ERROR            = 'error';
+    case BAD_TOKEN = 'badtoken';
+    case AGENT_CRASHED = 'agentcrashed';
+    case IMPORT_DENIED = 'importdenied';
+    case ERROR = 'error';
+    case NET_TASK = 'nettask';
 }

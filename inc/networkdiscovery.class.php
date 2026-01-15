@@ -1,5 +1,8 @@
 <?php
 
+use GlpiPlugin\Glpiinventory\Enums\NetTaskTypes;
+use GlpiPlugin\Glpiinventory\Job\Types\NetTask;
+
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
@@ -109,9 +112,10 @@ class PluginGlpiinventoryNetworkdiscovery extends PluginGlpiinventoryCommunicati
             items_id: 0,
             itemtype: Agent::class,
             state: PluginGlpiinventoryTaskjoblog::TASK_STARTED,
-            comment: new \GlpiPlugin\Glpiinventory\Job\Types\Info( //FIXME: probably use a specific type to store those information
-                $agent->fields["threads_networkdiscovery"] . ' threads '
-                . $agent->fields["timeout_networkdiscovery"] . ' timeout'
+            comment: new NetTask(
+                task_type: NetTaskTypes::TASk_DISCOVERY,
+                threads: $agent->fields["threads_networkdiscovery"],
+                timeout: $agent->fields["timeout_networkdiscovery"]
             )
         );
 

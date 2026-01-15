@@ -33,9 +33,6 @@ declare(strict_types=1);
 
 namespace GlpiPlugin\Glpiinventory\Job\Types;
 
-use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
-use JsonSerializable;
-
 class DeniedProperties
 {
     /**
@@ -43,8 +40,8 @@ class DeniedProperties
      * @param string|string[]|null $ip
      */
     public function __construct(
-        private readonly string|null $type, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
-        private readonly string|null $name, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
+        private readonly ?string $type, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
+        private readonly ?string $name, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
         private readonly string|array|null $mac, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
         private readonly string|array|null $ip, //@phpstan-ignore property.onlyWritten (should be read on json encoding)
     ) {}
