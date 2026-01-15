@@ -32,6 +32,8 @@
  */
 
 use Glpi\Tests\DbTestCase;
+use GlpiPlugin\Glpiinventory\Enums\TaskJobLogsTypes;
+use GlpiPlugin\Glpiinventory\Job\Types\Generic;
 
 class DeleteTaskTest extends DbTestCase
 {
@@ -110,7 +112,7 @@ class DeleteTaskTest extends DbTestCase
             'items_id' => 0,
             'itemtype' => Computer::class,
             'state' => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-            'comment' => "1 ==devicesfound==",
+            'comment' => new Generic(type: TaskJobLogsTypes::DEVICES_FOUND),
         ];
         $this->taskjoblogId = $pfTaskjoblog->add($input);
     }

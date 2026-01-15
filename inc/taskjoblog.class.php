@@ -363,6 +363,9 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
                 $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);
             }
         }
+
+        //TODO: handle new JSON way to do.
+
         return str_replace(",[", "<br/>[", $comment);
     }
 
