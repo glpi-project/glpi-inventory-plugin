@@ -471,6 +471,16 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 }
             }
 
+            if (empty($filter_id)) {
+                // No available agents/computers: show empty dropdown safely
+                $this->showDropdownFromArray(
+                    $title,
+                    null,
+                    ['' => Dropdown::EMPTY_VALUE]
+                );
+                return;
+            }
+
             $condition = ['id' => $filter_id];
         }
         if ($DB->fieldExists($itemtype::getTable(), 'is_active')) {
