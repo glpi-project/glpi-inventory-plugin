@@ -102,8 +102,10 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
         if ($item->fields['id'] > 0) {
             $class   = $this->collect_itemtype;
             $collect = $this->getCollectClass();
-            if ($item instanceof PluginGlpiinventoryCollect) {
-                if ($item->fields['type'] == $this->collect_type) {
+            if (
+                $item instanceof PluginGlpiinventoryCollect
+                && $item->fields['type'] == $this->collect_type
+            ) {
                     $a_colfiles = getAllDataFromTable(
                         $collect::getTable(),
                         ['plugin_glpiinventory_collects_id' => $item->fields['id']]
