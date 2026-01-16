@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class GetTaskByFiltersTest extends TestCase
+class GetTaskByFiltersTest extends DbTestCase
 {
     public function testGetTaskWithoutJobs()
     {

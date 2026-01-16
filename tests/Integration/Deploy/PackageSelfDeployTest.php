@@ -31,149 +31,60 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class PackageSelfDeployTest extends TestCase
+class PackageSelfDeployTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
+    private int $users_id;
+
+    private function prepare(): void
     {
         global $DB;
 
-        // Delete all packages
-        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $items = $pfDeployPackage->find();
-        foreach ($items as $item) {
-            $pfDeployPackage->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all groups
-        $group = new Group();
-        $items = $group->find();
-        foreach ($items as $item) {
-            $group->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all deploygroups
-        $pfDeployGroup = new PluginGlpiinventoryDeployGroup();
-        $items = $pfDeployGroup->find();
-        foreach ($items as $item) {
-            $pfDeployGroup->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all computers
+        $user = new User();
+        $profile = new Profile();
         $computer = new Computer();
-        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-        foreach ($items as $item) {
-            $computer->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all agents
         $agent = new Agent();
-        $items = $agent->find();
-        foreach ($items as $item) {
-            $agent->delete(['id' => $item['id']], true);
-        }
-
-        $computer      = new Computer();
-        $user          = new User();
-        $agent         = new Agent();
         $pfDeployGroup = new PluginGlpiinventoryDeployGroup();
-        $profile       = new Profile();
 
-        $user->getFromDBByCrit(['name' => 'David']);
-        if (isset($user->fields['id'])) {
-            $userId = $user->fields['id'];
-        } else {
-            $userId = $user->add(['name' => 'David']);
-        }
-        $computerId = $computer->add([
+        $this->users_id = $user->add(['name' => 'selfdeployuser']);
+        $computers_id = $computer->add([
             'name'        => 'pc01',
             'entities_id' => 0,
-            'users_id'    => $userId,
+            'users_id'    => $this->users_id,
         ]);
+        $this->assertNotFalse($computers_id);
         $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
-        $agent->add([
-            'itemtype' => Computer::class,
-            'items_id' => $computerId,
-            'entities_id' => 0,
-            'agenttypes_id' => $agenttype['id'],
-            'deviceid' => "Computer$computerId",
-            'use_module_package_deployment' => 1,
-        ]);
-        $pfDeployGroup->add([
-            'name' => 'all',
-            'type' => 'DYNAMIC',
-        ]);
-        $a_profile = current($profile->find(['interface' => 'helpdesk'], [], 1));
+        $this->assertNotFalse(
+            $agent->add([
+                'itemtype' => Computer::class,
+                'items_id' => $computers_id,
+                'entities_id' => 0,
+                'agenttypes_id' => $agenttype['id'],
+                'deviceid' => "Computer$computers_id",
+                'use_module_package_deployment' => 1,
+            ])
+        );
+        $this->assertNotFalse(
+            $pfDeployGroup->add([
+                'name' => 'all',
+                'type' => 'DYNAMIC',
+            ])
+        );
 
-        $_SESSION['glpiID']                    = $userId;
-        $_SESSION['glpiname']                  = 'David';
-        $_SESSION['glpiactive_entity']         = 0;
+        $_SESSION['glpiID'] = $this->users_id;
+        $_SESSION['glpiname'] = 'selfdeployuser';
+        $_SESSION['glpiactive_entity'] = 0;
+        $_SESSION['glpiactiveentities'] = [0];
         $_SESSION['glpiactiveentities_string'] = "'0'";
-        $_SESSION['glpigroups']                = [];
-        $_SESSION['glpiactiveprofile']         = $a_profile;
-        $_SESSION['glpiparententities']        = [];
+        $_SESSION['glpigroups'] = [];
+        $_SESSION['glpiactiveprofile'] = current($profile->find(['interface' => 'helpdesk'], [], 1));
+        $_SESSION['glpiparententities'] = [];
     }
 
-
-    public static function tearDownAfterClass(): void
+    public function testPackageNoTarget(): void
     {
-        $auth = new Auth();
-        $user = new User();
-        $auth->auth_succeded = true;
-        $user->getFromDB(2);
-        $auth->user = $user;
-        //Session::init($auth);
-        Session::initEntityProfiles(2);
-        Session::changeProfile(4);
-        plugin_init_glpiinventory();
-    }
-
-
-    protected function setUp(): void
-    {
-
-        // Delete all package entity
-        $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
-        $items = $pfDeployPackage_Entity->find();
-        foreach ($items as $item) {
-            $pfDeployPackage_Entity->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all package group
-        $pfDeployPackage_Group = new PluginGlpiinventoryDeployPackage_Group();
-        $items = $pfDeployPackage_Group->find();
-        foreach ($items as $item) {
-            $pfDeployPackage_Group->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all package user
-        $pfDeployPackage_User = new PluginGlpiinventoryDeployPackage_User();
-        $items = $pfDeployPackage_User->find();
-        foreach ($items as $item) {
-            $pfDeployPackage_User->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all package profile
-        $pfDeployPackage_Profile = new PluginGlpiinventoryDeployPackage_Profile();
-        $items = $pfDeployPackage_Profile->find();
-        foreach ($items as $item) {
-            $pfDeployPackage_Profile->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all tasks
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
-    }
-
-
-    public function testPackageNoTarget()
-    {
-
+        $this->prepare();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
             'name'        => 'test1',
@@ -186,10 +97,9 @@ class PackageSelfDeployTest extends TestCase
         $this->assertFalse($packages, 'May have no packages');
     }
 
-
-    public function testPackageTargetEntity()
+    public function testPackageTargetEntity(): void
     {
-
+        $this->testPackageNoTarget();
         $pfDeployPackage        = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
         $pfDeployGroup          = new PluginGlpiinventoryDeployGroup();
@@ -214,10 +124,9 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages, 'May have 1 package');
     }
 
-
-    public function testPackageTargetgroup()
+    public function testPackageTargetGroup(): void
     {
-
+        $this->testPackageNoTarget();
         $pfDeployPackage       = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_Group = new PluginGlpiinventoryDeployPackage_Group();
         $group                 = new Group();
@@ -254,9 +163,9 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages, 'May have 1 package');
     }
 
-
-    public function testPackageTargetUser()
+    public function testPackageTargetUser(): void
     {
+        $this->testPackageNoTarget();
         $pfDeployPackage      = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_User = new PluginGlpiinventoryDeployPackage_User();
         $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
@@ -288,9 +197,9 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages, 'May have 1 package');
     }
 
-
-    public function testPackageTargetProfile()
+    public function testPackageTargetProfile(): void
     {
+        $this->testPackageNoTarget();
         $pfDeployPackage         = new PluginGlpiinventoryDeployPackage();
         $pfDeployPackage_Profile = new PluginGlpiinventoryDeployPackage_Profile();
         $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
@@ -322,11 +231,10 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages, 'May have 1 package');
     }
 
-    #[Depends('testPackageNoTarget')]
-    public function testReportMyPackage()
+    public function testReportMyPackage(): void
     {
         global $DB;
-
+        $this->testPackageNoTarget();
         // Enable deploy feature for all agents
         $module = new PluginGlpiinventoryAgentmodule();
         $this->assertTrue($module->getFromDBByCrit(['modulename' => 'DEPLOY']));
@@ -342,19 +250,16 @@ class PackageSelfDeployTest extends TestCase
         $agent           = new Agent();
         $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
         $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
-        $user = new User();
 
         $this->assertTrue($pfDeployGroup->getFromDBByCrit(['name' => 'all']));
 
         $this->assertTrue($computer->getFromDBByCrit(['name' => 'pc01']));
         $computerId1 = $computer->fields['id'];
 
-        $this->assertTrue($user->getFromDBByCrit(['name' => 'David']));
-
         $computerId2 = $computer->add([
             'name'        => 'pc02',
             'entities_id' => 1,
-            'users_id'    => $user->fields['id'],
+            'users_id'    => $this->users_id,
         ]);
         $this->assertNotFalse($computerId2);
 
@@ -402,10 +307,9 @@ class PackageSelfDeployTest extends TestCase
 
         // Create task
         $pfDeployPackage->deployToComputer($computerId1, $packages_id_1, $_SESSION['glpiID']);
-        $userId = $_SESSION['glpiID'];
         $_SESSION['glpiID'] = 2; // glpi user account
         $pfDeployPackage->deployToComputer($computerId2, $packages_id_1, $_SESSION['glpiID']);
-        $_SESSION['glpiID'] = $userId;
+        $_SESSION['glpiID'] = $this->users_id;
         // Prepare task
         PluginGlpiinventoryTask::cronTaskscheduler();
 
@@ -414,7 +318,7 @@ class PackageSelfDeployTest extends TestCase
         ];
 
         $_SERVER['REQUEST_URI'] = 'front/deploypackage.php'; // URL is used to fix addDefaultWhere
-        $packages = $pfDeployPackage->getPackageForMe($userId);
+        $packages = $pfDeployPackage->getPackageForMe($_SESSION['glpiID']);
         $packages_deploy = [];
         foreach ($packages as $data) {
             foreach ($data as $package_info) {
@@ -426,7 +330,7 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages_deploy);
 
         $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php'; // URL is used to fix addDefaultWhere
-        $packages = $pfDeployPackage->getPackageForMe($userId);
+        $packages = $pfDeployPackage->getPackageForMe($_SESSION['glpiID']);
         $packages_deploy = [];
         foreach ($packages as $data) {
             foreach ($data as $package_info) {
@@ -438,20 +342,19 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($reference, $packages_deploy);
     }
 
-    #[Depends('testPackageNoTarget')]
-    public function testReportComputerPackages()
+    public function testReportComputerPackages(): void
     {
         global $DB;
-
+        $this->testReportMyPackage();
         $pfDeployPackage        = new PluginGlpiinventoryDeployPackage();
         $computer               = new Computer();
         $agent                  = new Agent();
         $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
         $pfDeployGroup         = new PluginGlpiinventoryDeployGroup();
 
-        $pfDeployGroup->getFromDBByCrit(['name' => 'all']);
+        $this->assertTrue($pfDeployGroup->getFromDBByCrit(['name' => 'all']));
 
-        $computer->getFromDBByCrit(['name' => 'pc01']);
+        $this->assertTrue($computer->getFromDBByCrit(['name' => 'pc01']));
         $computerId1 = $computer->fields['id'];
 
         $computerId3 = $computer->add([
@@ -460,36 +363,46 @@ class PackageSelfDeployTest extends TestCase
         ]);
         $this->assertNotFalse($computerId3);
         $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
-        $agent->add([
-            'itemtype' => Computer::class,
-            'items_id' => $computerId3,
-            'entities_id' => 0,
-            'agenttypes_id' => $agenttype['id'],
-            'deviceid' => "Computer$computerId3",
-            'use_module_package_deployment' => 1,
-        ]);
+        $this->assertNotFalse(
+            $agent->add([
+                'itemtype' => Computer::class,
+                'items_id' => $computerId3,
+                'entities_id' => 0,
+                'agenttypes_id' => $agenttype['id'],
+                'deviceid' => "Computer$computerId3",
+                'use_module_package_deployment' => 1,
+            ])
+        );
 
-        $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
-        $pfDeployPackage->update([
-            'id'                                     => $pfDeployPackage->fields['id'],
-            'entities_id'                            => 0,
-            'plugin_glpiinventory_deploygroups_id' => $pfDeployGroup->fields['id'],
-        ]);
+        $this->assertTrue($pfDeployPackage->getFromDBByCrit(['name' => 'test1']));
+        $this->assertTrue(
+            $pfDeployPackage->update([
+                'id'                                     => $pfDeployPackage->fields['id'],
+                'entities_id'                            => 0,
+                'plugin_glpiinventory_deploygroups_id' => $pfDeployGroup->fields['id'],
+            ])
+        );
         $packages_id = $pfDeployPackage->fields['id'];
-        $pfDeployPackage_Entity->add([
-            'plugin_glpiinventory_deploypackages_id' => $packages_id,
-        ]);
+        $this->assertNotFalse(
+            $pfDeployPackage_Entity->add([
+                'plugin_glpiinventory_deploypackages_id' => $packages_id,
+            ])
+        );
 
-        $pfDeployPackage->getFromDBByCrit(['name' => 'test2']);
-        $pfDeployPackage->update([
-            'id'                                     => $pfDeployPackage->fields['id'],
-            'entities_id'                            => 0,
-            'plugin_glpiinventory_deploygroups_id' => $pfDeployGroup->fields['id'],
-        ]);
+        $this->assertTrue($pfDeployPackage->getFromDBByCrit(['name' => 'test2']));
+        $this->assertTrue(
+            $pfDeployPackage->update([
+                'id'                                     => $pfDeployPackage->fields['id'],
+                'entities_id'                            => 0,
+                'plugin_glpiinventory_deploygroups_id' => $pfDeployGroup->fields['id'],
+            ])
+        );
 
-        $pfDeployPackage_Entity->add([
-            'plugin_glpiinventory_deploypackages_id' => $pfDeployPackage->fields['id'],
-        ]);
+        $this->assertNotFalse(
+            $pfDeployPackage_Entity->add([
+                'plugin_glpiinventory_deploypackages_id' => $pfDeployPackage->fields['id'],
+            ])
+        );
 
         $input = [
             'name'                                   => 'test3',
@@ -512,10 +425,9 @@ class PackageSelfDeployTest extends TestCase
         $this->assertEquals($expected, $names);
     }
 
-    #[Depends('testReportComputerPackages')]
-    public function testReportComputerPackagesDeployDisabled()
+    public function testReportComputerPackagesDeployDisabled(): void
     {
-
+        $this->testReportComputerPackages();
         // Disable deploy feature for all agents
         $module = new PluginGlpiinventoryAgentmodule();
         $module->getFromDBByCrit(['modulename' => 'DEPLOY']);

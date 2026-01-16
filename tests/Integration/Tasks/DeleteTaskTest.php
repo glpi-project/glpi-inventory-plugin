@@ -31,19 +31,18 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeleteTaskTest extends TestCase
+class DeleteTaskTest extends DbTestCase
 {
-    private static $taskId = 0;
-    private static $taskjobId = 0;
-    private static $taskjobstateId = 0;
-    private static $taskjoblogId = 0;
+    private int $taskId = 0;
+    private int $taskjobId = 0;
+    private int $taskjobstateId = 0;
+    private int $taskjoblogId = 0;
 
 
-    public static function setUpBeforeClass(): void
+    public function prepareDb(): void
     {
-
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployGroup   = new PluginGlpiinventoryDeployGroup();
         $pfTask          = new PluginGlpiinventoryTask();
@@ -51,13 +50,6 @@ class DeleteTaskTest extends TestCase
         $pfTaskjobState  = new PluginGlpiinventoryTaskjobstate();
         $pfTaskjoblog    = new PluginGlpiinventoryTaskjoblog();
         $pfDeployGrDyndata = new PluginGlpiinventoryDeployGroup_Dynamicdata();
-
-        // Delete all task
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
 
         // Create package
         $input = [
@@ -82,70 +74,69 @@ class DeleteTaskTest extends TestCase
         // create task
         $input = [
             'entities_id' => 0,
-            'name'        => 'deploy',
-            'is_active'   => 1,
+            'name' => 'deploy',
+            'is_active' => 1,
         ];
-        self::$taskId = $pfTask->add($input);
+        $this->taskId = $pfTask->add($input);
 
         // create taskjob
         $input = [
-            'plugin_glpiinventory_tasks_id' => self::$taskId,
-            'entities_id'                     => 0,
-            'name'                            => 'deploy',
-            'method'                          => 'deployinstall',
-            'targets'                         => '[{"PluginGlpiinventoryDeployPackage":"' . $packageId . '"}]',
-            'actors'                          => '[{"PluginGlpiinventoryDeployGroup":"' . self::$taskId . '"}]',
+            'plugin_glpiinventory_tasks_id' => $this->taskId,
+            'entities_id' => 0,
+            'name' => 'deploy',
+            'method' => 'deployinstall',
+            'targets' => '[{"PluginGlpiinventoryDeployPackage":"' . $packageId . '"}]',
+            'actors' => '[{"PluginGlpiinventoryDeployGroup":"' . $this->taskId . '"}]',
         ];
-        self::$taskjobId = $pfTaskjob->add($input);
+        $this->taskjobId = $pfTaskjob->add($input);
 
         //create taskjobstate
         $input = [
-            'plugin_glpiinventory_taskjobs_id' => self::$taskjobId,
-            'items_id'                           => 0,
-            'itemtype'                           => 'Computer',
-            'state'                              => PluginGlpiinventoryTaskjobstate::FINISHED,
-            'agents_id'   => 0,
-            'specificity'                        => 0,
-            'uniqid'                             => 0,
+            'plugin_glpiinventory_taskjobs_id' => $this->taskjobId,
+            'items_id' => 0,
+            'itemtype' => Computer::class,
+            'state' => PluginGlpiinventoryTaskjobstate::FINISHED,
+            'agents_id' => 0,
+            'specificity' => 0,
+            'uniqid' => 0,
 
         ];
-        self::$taskjobstateId = $pfTaskjobState->add($input);
+        $this->taskjobstateId = $pfTaskjobState->add($input);
 
         //crfeate taskjoblogR
         $input = [
-            'plugin_glpiinventory_taskjobstates_id' => self::$taskjobstateId,
-            'date '                                   => date('Y-m-d H:i:s'),
-            'items_id'                                => 0,
-            'itemtype'                                => 'Computer',
-            'state'                                   => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
-            'comment'                                 => "1 ==devicesfound==",
+            'plugin_glpiinventory_taskjobstates_id' => $this->taskjobstateId,
+            'date' => date('Y-m-d H:i:s'),
+            'items_id' => 0,
+            'itemtype' => Computer::class,
+            'state' => PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
+            'comment' => "1 ==devicesfound==",
         ];
-        self::$taskjoblogId = $pfTaskjoblog->add($input);
+        $this->taskjoblogId = $pfTaskjoblog->add($input);
     }
 
-
-    public function testDeleteTask()
+    public function testDeleteTask(): void
     {
-
+        $this->prepareDb();
         $pfTask         = new PluginGlpiinventoryTask();
         $pfTaskjob      = new PluginGlpiinventoryTaskjob();
         $pfTaskjobState = new PluginGlpiinventoryTaskjobstate();
         $pfTaskjoblog   = new PluginGlpiinventoryTaskjoblog();
 
         //delete task
-        $return = $pfTask->delete(['id' => self::$taskId]);
+        $return = $pfTask->delete(['id' => $this->taskId]);
         $this->assertEquals(true, $return);
 
         //check deletion of job
-        $jobsFound = $pfTaskjob->find(['id' => self::$taskjobId]);
+        $jobsFound = $pfTaskjob->find(['id' => $this->taskjobId]);
         $this->assertEquals([], $jobsFound);
 
         //check deletion of state
-        $statesFound = $pfTaskjobState->find(['id' => self::$taskjobstateId]);
+        $statesFound = $pfTaskjobState->find(['id' => $this->taskjobstateId]);
         $this->assertEquals([], $statesFound);
 
         //check deletion of log
-        $logsFound = $pfTaskjoblog->find(['id' => self::$taskjoblogId]);
+        $logsFound = $pfTaskjoblog->find(['id' => $this->taskjoblogId]);
         $this->assertEquals([], $logsFound);
     }
 }

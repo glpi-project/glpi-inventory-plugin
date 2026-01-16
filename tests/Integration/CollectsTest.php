@@ -31,44 +31,11 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class CollectsTest extends TestCase
+class CollectsTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-
-        // Delete all tasks
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all computers
-        $computer = new Computer();
-        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-        foreach ($items as $item) {
-            $computer->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all agents
-        $agent = new Agent();
-        $items = $agent->find();
-        foreach ($items as $item) {
-            $agent->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all collects
-        $pfCollect = new PluginGlpiinventoryCollect();
-        $items = $pfCollect->find();
-        foreach ($items as $item) {
-            $pfCollect->delete(['id' => $item['id']], true);
-        }
-    }
-
-
-    public function testPrepareDb()
+    private function prepareDb(): void
     {
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;
@@ -123,10 +90,39 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($collectFileId);
     }
 
-
-    public function testGetSearchOptionsToAdd()
+    private function createComputer(): int
     {
+        global $DB;
 
+        $computer = new Computer();
+        $agent    = new Agent();
+
+        // Create computer
+        $input = [
+            'name'        => 'pc01',
+            'entities_id' => 0,
+        ];
+        $computers_id = $computer->add($input);
+        $this->assertNotFalse($computers_id);
+
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+        $input = [
+            'name'         => 'pc01',
+            'entities_id'  => 0,
+            'itemtype'     => Computer::class,
+            'items_id'     => $computers_id,
+            'deviceid'     => 'pc01',
+            'agenttypes_id' => $agenttype['id'],
+            'use_module_collect_data' => 1,
+        ];
+        $agents_id = $agent->add($input);
+        $this->assertNotFalse($agents_id);
+        return $computers_id;
+    }
+
+    public function testGetSearchOptionsToAdd(): void
+    {
+        $this->prepareDb();
         $pfCollect = new PluginGlpiinventoryCollect();
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
@@ -207,8 +203,7 @@ class CollectsTest extends TestCase
         $this->assertEquals($expected, $sopts[5203]);
     }
 
-
-    public function testRegistryProcessWithAgent()
+    public function testRegistryProcessWithAgent(): void
     {
         global $DB;
 
@@ -253,26 +248,7 @@ class CollectsTest extends TestCase
         $registry_fi = $pfCollect_Registry->add($input);
         $this->assertNotFalse($registry_fi);
 
-        // Create computer
-        $input = [
-            'name'        => 'pc01',
-            'entities_id' => 0,
-        ];
-        $computers_id = $computer->add($input);
-        $this->assertNotFalse($computers_id);
-
-        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
-        $input = [
-            'name'         => 'pc01',
-            'entities_id'  => 0,
-            'itemtype'     => Computer::class,
-            'items_id'     => $computers_id,
-            'deviceid'     => 'pc01',
-            'agenttypes_id' => $agenttype['id'],
-            'use_module_collect_data' => 1,
-        ];
-        $agents_id = $agent->add($input);
-        $this->assertNotFalse($agents_id);
+        $computers_id = $this->createComputer();
 
         // Create task
         $input = [
@@ -370,8 +346,7 @@ class CollectsTest extends TestCase
         $this->assertEquals($result, '{}');
     }
 
-
-    public function testWmiProcessWithAgent()
+    public function testWmiProcessWithAgent(): void
     {
 
         // Delete all tasks
@@ -424,10 +399,7 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($registry_kd);
 
         // get computer
-        $computer->getFromDBByCrit(['name' => 'pc01']);
-        $computers_id = $computer->fields['id'];
-        $agent->getFromDBByCrit(['name' => 'pc01']);
-        $agents_id = $agent->fields['id'];
+        $computers_id = $this->createComputer();
 
         // Create task
         $input = [
@@ -532,8 +504,7 @@ class CollectsTest extends TestCase
         $this->assertEquals($reference, $items);
     }
 
-
-    public function testFilesProcessWithAgent()
+    public function testFilesProcessWithAgent(): void
     {
 
         // Delete all tasks
@@ -588,10 +559,7 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($registry_down);
 
         // get computer
-        $this->assertTrue($computer->getFromDBByCrit(['name' => 'pc01']), 'Computer pc01 does not exists');
-        $computers_id = $computer->fields['id'];
-        $this->assertTrue($agent->getFromDBByCrit(['name' => 'pc01']), 'Agent for computer pc01 does not exists');
-        $agents_id = $agent->fields['id'];
+        $computers_id = $this->createComputer();
 
         // Create task
         $input = [
@@ -762,10 +730,9 @@ class CollectsTest extends TestCase
         $this->assertEquals($reference, $items);
     }
 
-
-    public function testFilesCleanComputer()
+    public function testFilesCleanComputer(): void
     {
-
+        $this->prepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -791,7 +758,7 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($collects_id);
 
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
-        $pfCollect_File->getFromDBByCrit(['name' => 'PHP files']);
+        $this->assertNotFalse($pfCollect_File->getFromDBByCrit(['name' => 'PHP files']));
         $file_id = $pfCollect_File->fields['id'];
 
         $input = [
@@ -818,22 +785,19 @@ class CollectsTest extends TestCase
         $this->assertEquals(0, count($pfCollect_File_Contents->fields));
     }
 
-
-    public function testRegistryCleanComputer()
+    public function testRegistryCleanComputer(): void
     {
-
+        $this->prepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-        $pfCollect = new PluginGlpiinventoryCollect();
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
-        $computer = new Computer();
 
-        $pfCollect_Registry->getFromDBByCrit(['name' => 'Registry collection']);
-        $computer->getFromDBByCrit(['name' => 'pc01']);
+        $this->assertNotFalse($pfCollect_Registry->getFromDBByCrit(['name' => 'Registry collection']));
+        $computers_id = $this->createComputer();
 
         $input = [
-            'computers_id'                                     => $computer->fields['id'],
+            'computers_id'                                     => $computers_id,
             'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Registry->fields['id'],
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -850,28 +814,25 @@ class CollectsTest extends TestCase
 
         //Second, clean and check if it has been removed
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
-        $pfCollect_Registry_Contents->cleanComputer($computer->fields['id']);
+        $pfCollect_Registry_Contents->cleanComputer($computers_id);
 
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
         $this->assertEquals(0, count($pfCollect_Registry_Contents->fields));
     }
 
-
-    public function testWmiCleanComputer()
+    public function testWmiCleanComputer(): void
     {
-
+        $this->prepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-        $pfCollect = new PluginGlpiinventoryCollect();
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
-        $computer = new Computer();
 
-        $pfCollect_Wmi->getFromDBByCrit(['name' => 'WMI']);
-        $computer->getFromDBByCrit(['name' => 'pc01']);
+        $this->assertNotFalse($pfCollect_Wmi->getFromDBByCrit(['name' => 'WMI']));
+        $computers_id = $this->createComputer();
 
         $input = [
-            'computers_id'                                     => $computer->fields['id'],
+            'computers_id'                                     => $computers_id,
             'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Wmi->fields['id'],
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -888,24 +849,21 @@ class CollectsTest extends TestCase
 
         //Second, clean and check if it has been removed
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
-        $pfCollect_Wmi_Contents->cleanComputer($computer->fields['id']);
+        $pfCollect_Wmi_Contents->cleanComputer($computers_id);
 
         $pfCollect_Wmi_Contents->getFromDB($collectWmiContentId);
         $this->assertEquals(0, count($pfCollect_Wmi_Contents->fields));
     }
 
-
-    public function testDeleteComputer()
+    public function testDeleteComputer(): void
     {
-
+        $this->prepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
         // Create computer
-
         $computer = new Computer();
-        $computer->getFromDBByCrit(['name' => 'pc01']);
-        $computers_id = $computer->fields['id'];
+        $computers_id = $this->createComputer();
 
         $pfCollect = new PluginGlpiinventoryCollect();
 
@@ -957,7 +915,7 @@ class CollectsTest extends TestCase
         $this->assertNotFalse($collects_id);
 
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
-        $pfCollect_File->getFromDBByCrit(['name' => 'PHP files']);
+        $this->assertNotFalse($pfCollect_File->getFromDBByCrit(['name' => 'PHP files']));
         $file_id = $pfCollect_File->fields['id'];
 
         $input = [
@@ -1047,7 +1005,7 @@ class CollectsTest extends TestCase
         $this->assertEquals(0, count($pfCollect_File_Contents->fields));
     }
 
-    public function testTaskWithDeletedActor()
+    public function testTaskWithDeletedActor(): void
     {
         // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();

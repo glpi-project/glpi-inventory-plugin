@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class CredentialTest extends TestCase
+class CredentialTest extends DbTestCase
 {
     public function testPasswordIsDecrypted(): void
     {

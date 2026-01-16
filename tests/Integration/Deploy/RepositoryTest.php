@@ -31,29 +31,18 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class RepositoryTest extends TestCase
+class RepositoryTest extends DbTestCase
 {
-    private $packages_1_id   = 0;
-    private $packages_2_id   = 0;
-    private $filename        = "";
-    private $sha512          = "";
+    private int $packages_1_id = 0;
+    private int $packages_2_id = 0;
+    private string $filename = "";
+    private string $sha512 = "";
 
-    public static function setUpBeforeClass(): void
+    public function setUp(): void
     {
-
-        // Delete all packages
-        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $items = $pfDeployPackage->find();
-        foreach ($items as $item) {
-            $pfDeployPackage->delete(['id' => $item['id']], true);
-        }
-    }
-
-    protected function setUp(): void
-    {
-
+        parent::setUp();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
         // create a package
@@ -78,8 +67,18 @@ class RepositoryTest extends TestCase
         $this->sha512 = hash_file('sha512', $this->filename);
     }
 
+    public function tearDown(): void
+    {
+        // remove created file in upload folder
+        if (file_exists($this->filename)) {
+            unlink($this->filename);
+        }
 
-    public function testCleanFiles()
+        parent::tearDown();
+    }
+
+
+    public function testCleanFiles(): void
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployFile    = new PluginGlpiinventoryDeployFile();
