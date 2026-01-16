@@ -33,35 +33,10 @@
 
 use Glpi\Inventory\Converter;
 use Glpi\Inventory\Inventory;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class RuleImportTest extends TestCase
+class RuleImportTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        // Reinit rules
-        $rules = new RuleImportAsset();
-        $rules->initRules();
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        // Reinit rules
-        $rules = new RuleImportAsset();
-        $rules->initRules();
-    }
-
-    public function setUp(): void
-    {
-        // Delete all printers
-        $printer = new Printer();
-        $items = $printer->find();
-        foreach ($items as $item) {
-            $printer->delete(['id' => $item['id']], true);
-        }
-    }
-
-
     public function testChangeRulesForPrinterRules()
     {
 
