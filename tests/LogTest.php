@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\GLPITestCase;
 
-class GLPIlogs extends TestCase
+class GLPIlogs extends GLPITestCase
 {
     public function testSQLlogs()
     {
