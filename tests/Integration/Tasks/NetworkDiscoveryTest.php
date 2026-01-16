@@ -31,42 +31,10 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class NetworkDiscoveryTest extends TestCase
+class NetworkDiscoveryTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-
-        // Delete all computers
-        $computer = new Computer();
-        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-        foreach ($items as $item) {
-            $computer->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all agents
-        $agent = new Agent();
-        $items = $agent->find();
-        foreach ($items as $item) {
-            $agent->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all ipranges
-        $pfIPRange = new PluginGlpiinventoryIPRange();
-        $items = $pfIPRange->find();
-        foreach ($items as $item) {
-            $pfIPRange->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all tasks
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
-    }
-
     public function testPrepareDb()
     {
         global $DB;
@@ -214,6 +182,7 @@ class NetworkDiscoveryTest extends TestCase
 
     public function testPrepareTask()
     {
+        $this->testPrepareDb();
         $pfTask  = new PluginGlpiinventoryTask();
         $agent = new Agent();
 
@@ -232,6 +201,7 @@ class NetworkDiscoveryTest extends TestCase
 
     public function testPrepareTask2()
     {
+        $this->testPrepareDb();
         $pfTask = new PluginGlpiinventoryTask();
         $agent = new Agent();
 

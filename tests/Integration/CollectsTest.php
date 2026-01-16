@@ -31,46 +31,12 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class CollectsTest extends TestCase
+class CollectsTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-
-        // Delete all tasks
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all computers
-        $computer = new Computer();
-        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-        foreach ($items as $item) {
-            $computer->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all agents
-        $agent = new Agent();
-        $items = $agent->find();
-        foreach ($items as $item) {
-            $agent->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all collects
-        $pfCollect = new PluginGlpiinventoryCollect();
-        $items = $pfCollect->find();
-        foreach ($items as $item) {
-            $pfCollect->delete(['id' => $item['id']], true);
-        }
-    }
-
-
     public function testPrepareDb()
     {
-
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -126,7 +92,7 @@ class CollectsTest extends TestCase
 
     public function testGetSearchOptionsToAdd()
     {
-
+        $this->testPrepareDb();
         $pfCollect = new PluginGlpiinventoryCollect();
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
@@ -212,6 +178,7 @@ class CollectsTest extends TestCase
     {
         global $DB;
 
+        $this->testPrepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -373,7 +340,7 @@ class CollectsTest extends TestCase
 
     public function testWmiProcessWithAgent()
     {
-
+        $this->testRegistryProcessWithAgent();
         // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
@@ -532,10 +499,9 @@ class CollectsTest extends TestCase
         $this->assertEquals($reference, $items);
     }
 
-
     public function testFilesProcessWithAgent()
     {
-
+        $this->testRegistryProcessWithAgent();
         // Delete all tasks
         $pfTask = new PluginGlpiinventoryTask();
         $items = $pfTask->find();
@@ -765,7 +731,7 @@ class CollectsTest extends TestCase
 
     public function testFilesCleanComputer()
     {
-
+        $this->testFilesProcessWithAgent();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -821,11 +787,10 @@ class CollectsTest extends TestCase
 
     public function testRegistryCleanComputer()
     {
-
+        $this->testRegistryProcessWithAgent();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
-        $pfCollect = new PluginGlpiinventoryCollect();
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         $computer = new Computer();
 
@@ -859,7 +824,7 @@ class CollectsTest extends TestCase
 
     public function testWmiCleanComputer()
     {
-
+        $this->testWmiProcessWithAgent();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -897,7 +862,7 @@ class CollectsTest extends TestCase
 
     public function testDeleteComputer()
     {
-
+        $this->testWmiProcessWithAgent();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
