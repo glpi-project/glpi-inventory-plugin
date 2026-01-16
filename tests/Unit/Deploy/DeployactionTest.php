@@ -236,15 +236,7 @@ class DeployactionTest extends DbTestCase
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
         $computer = new Computer();
         $agent = new Agent();
-        $entity = new Entity();
         $action = new PluginGlpiinventoryDeployAction();
-
-        $this->assertTrue($entity->getFromDBByCrit(['id' => 0]));
-        $input = [
-            'id'             => $entity->fields['id'],
-            'agent_base_url' => 'http://127.0.0.1/glpi',
-        ];
-        $this->assertTrue($entity->update($input));
 
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls","name":"echo","logLineLimit":"10"}}],"userinteractions":[]},"associatedFiles":[]}';
         $input = [
