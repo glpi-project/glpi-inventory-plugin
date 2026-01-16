@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeployactionTest extends TestCase
+class DeployactionTest extends DbTestCase
 {
     public static function setUpBeforeClass(): void
     {

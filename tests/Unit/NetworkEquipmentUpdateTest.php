@@ -33,10 +33,9 @@
 
 use Glpi\Inventory\Converter;
 use Glpi\Inventory\Inventory;
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class NetworkEquipmentUpdateTest extends TestCase
+class NetworkEquipmentUpdateTest extends DbTestCase
 {
     public $items_id = 0;
 
@@ -212,9 +211,9 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
         $this->assertEquals(1, count($networkEquipment->find()));
     }
 
-    #[Depends('testAddNetworkEquipment')]
     public function testgetDeviceIPOfTaskjobID()
     {
+        $this->testAddNetworkEquipment();
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskJob();
         $pfIpRange = new PluginGlpiinventoryIPRange();

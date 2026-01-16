@@ -31,10 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class PackageJsonTest extends TestCase
+class PackageJsonTest extends DbTestCase
 {
     public function testJsonCreateNewPackage()
     {
@@ -78,9 +77,9 @@ class PackageJsonTest extends TestCase
         $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
     }
 
-    #[Depends('testAddItem')]
     public function testDuplicate()
     {
+        $this->testAddItem();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $packages        = $pfDeployPackage->find(['name' => 'test2']);
         $this->assertEquals(1, count($packages));
@@ -100,8 +99,6 @@ class PackageJsonTest extends TestCase
     public function testMigration_to_91()
     {
         global $DB;
-
-        $DB->connect();
 
         // create package orders used before 9.1 version
         $DB->dropTable('glpi_plugin_glpiinventory_deploypackages', true);

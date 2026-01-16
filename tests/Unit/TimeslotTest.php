@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class TimeslotTest extends TestCase
+class TimeslotTest extends DbTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -62,6 +62,7 @@ class TimeslotTest extends TestCase
 
     public function testAddSimpleEntrieslot()
     {
+        $this->testAddTimeslot();
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
@@ -136,7 +137,7 @@ class TimeslotTest extends TestCase
 
     public function testAddEntriesTimeslotYetAdded()
     {
-
+        $this->testAddSimpleEntrieslot();
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
@@ -198,7 +199,7 @@ class TimeslotTest extends TestCase
 
     public function testAddEntriesTimeslotNotInRanges()
     {
-
+        $this->testAddSimpleEntrieslot();
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
@@ -259,7 +260,7 @@ class TimeslotTest extends TestCase
 
     public function testAddEntryIn3Ranges()
     {
-
+        $this->testAddSimpleEntrieslot();
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
@@ -304,7 +305,7 @@ class TimeslotTest extends TestCase
 
     public function testAddEntryForTwoDays()
     {
-
+        $this->testAddEntryIn3Ranges();
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
 
@@ -373,7 +374,7 @@ class TimeslotTest extends TestCase
 
     public function testAddEntryForTwoDaysYetAdded()
     {
-
+        $this->testAddEntryForTwoDays();
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
         $pfTimeslot = new PluginGlpiinventoryTimeslot();
 

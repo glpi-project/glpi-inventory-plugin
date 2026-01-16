@@ -33,10 +33,9 @@
 
 use Glpi\Inventory\Converter;
 use Glpi\Inventory\Inventory;
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class PrinterUpdateTest extends TestCase
+class PrinterUpdateTest extends DbTestCase
 {
     public $items_id = 0;
     public $update_time = '';
@@ -113,6 +112,7 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterGeneral()
     {
+        $this->testAddPrinter();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
         unset($printer->fields['id']);
@@ -192,6 +192,7 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterSnmpExtension()
     {
+        $this->testAddPrinter();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
         $this->assertEquals($printer->fields['sysdescr'], 'HP ETHERNET MULTI-ENVIRONMENT');
@@ -200,6 +201,7 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterPageCounter()
     {
+        $this->testAddPrinter();
         $printerlog = new PrinterLog();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
@@ -211,6 +213,7 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterCartridgeBlack()
     {
+        $this->testAddPrinter();
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
@@ -226,6 +229,7 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterCartridgeCyan()
     {
+        $this->testAddPrinter();
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
@@ -241,6 +245,7 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterCartridgeYellow()
     {
+        $this->testAddPrinter();
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
@@ -256,6 +261,7 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterCartridgeMagenta()
     {
+        $this->testAddPrinter();
         $cartridge_info = new Printer_CartridgeInfo();
         $printer = new Printer();
         $printer->getFromDBByCrit(['name' => 'ARC12-B09-N']);
@@ -270,6 +276,10 @@ class PrinterUpdateTest extends TestCase
 
     public function testPrinterAllCartridges()
     {
+        $this->testPrinterCartridgeBlack();
+        $this->testPrinterCartridgeCyan();
+        $this->testPrinterCartridgeYellow();
+        $this->testPrinterCartridgeMagenta();
         $cartridge_info = new Printer_CartridgeInfo();
         $a_cartridge = $cartridge_info->find();
         $this->assertEquals(4, count($a_cartridge));
@@ -379,10 +389,9 @@ class PrinterUpdateTest extends TestCase
         );
     }
 
-    #[Depends('testNewPrinterFromNetdiscovery')]
     public function testUpdatePrinterFromNetdiscovery()
     {
-        global $DB;
+        $this->testNewPrinterFromNetdiscovery();
 
         $networkName = new NetworkName();
         $iPAddress = new IPAddress();
