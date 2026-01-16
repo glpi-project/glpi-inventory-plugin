@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeleteTaskTest extends TestCase
+class DeleteTaskTest extends DbTestCase
 {
     private static $taskId = 0;
     private static $taskjobId = 0;
@@ -43,7 +43,7 @@ class DeleteTaskTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-
+        parent::setUpBeforeClass();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $pfDeployGroup   = new PluginGlpiinventoryDeployGroup();
         $pfTask          = new PluginGlpiinventoryTask();
@@ -52,12 +52,7 @@ class DeleteTaskTest extends TestCase
         $pfTaskjoblog    = new PluginGlpiinventoryTaskjoblog();
         $pfDeployGrDyndata = new PluginGlpiinventoryDeployGroup_Dynamicdata();
 
-        // Delete all task
         $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
 
         // Create package
         $input = [
