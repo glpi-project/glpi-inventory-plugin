@@ -338,10 +338,11 @@ abstract class PluginGlpiinventoryDeployPackageItem extends CommonDBTM
             );
             $error = 1;
         } else {
-            $error = $pfDeployPackage->update([
+            $updated = $pfDeployPackage->update([
                 'id'   => $packages_id,
                 'json' => $json,
             ]);
+            $error = !$updated;
         }
         return $error;
     }
