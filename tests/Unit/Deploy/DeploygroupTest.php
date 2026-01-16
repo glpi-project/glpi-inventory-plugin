@@ -31,10 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeploygroupTest extends TestCase
+class DeploygroupTest extends DbTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -77,10 +76,9 @@ class DeploygroupTest extends TestCase
         $this->assertEquals($pfDeploygroup->fields, $result);
     }
 
-
-    #[Depends('testAddGroup')]
     public function testCloneStaticGroup()
     {
+        $this->testAddGroup();
         $computer      = new Computer();
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $pfStaticgroup = new PluginGlpiinventoryDeployGroup_Staticdata();
@@ -125,10 +123,9 @@ class DeploygroupTest extends TestCase
         $this->assertEquals($computers_id_2, $tmp['items_id']);
     }
 
-
-    #[Depends('testCloneStaticGroup')]
     public function testCloneDynamicGroup()
     {
+        $this->testCloneStaticGroup();
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $input = ['name'    => 'Dynamic group',
             'type'    => PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP,
@@ -160,10 +157,9 @@ class DeploygroupTest extends TestCase
         $this->assertEquals($json, $tmp['fields_array']);
     }
 
-
-    #[Depends('testCloneDynamicGroup')]
     public function testUpdateGroup()
     {
+        $this->testCloneDynamicGroup();
         //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $data = $pfDeploygroup->find(['name' => 'Copy of Dynamic group']);
@@ -182,10 +178,9 @@ class DeploygroupTest extends TestCase
         $this->assertEquals(1, count($data));
     }
 
-
-    #[Depends('testUpdateGroup')]
     public function testSwitchDynamicToStaticGroup()
     {
+        $this->testUpdateGroup();
         //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $data = $pfDeploygroup->find(['name' => 'Dynamic group']);
@@ -210,11 +205,9 @@ class DeploygroupTest extends TestCase
         $this->assertEquals(0, count($data));
     }
 
-
-    #[Depends('testCloneDynamicGroup')]
     public function testDeleteDynamicGroup()
     {
-
+        $this->testUpdateGroup();
         $pfDeploygroup  = new PluginGlpiinventoryDeployGroup();
         $pfDynamicgroup = new PluginGlpiinventoryDeployGroup_Dynamicdata();
 
@@ -237,11 +230,9 @@ class DeploygroupTest extends TestCase
         $this->assertFalse($pfDynamicgroup->getFromDB($dynamicgroups_id));
     }
 
-
-    #[Depends('testCloneStaticGroup')]
     public function testDeleteStaticGroup()
     {
-
+        $this->testCloneStaticGroup();
         //Get the group have the name "Windows computers"
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $data = $pfDeploygroup->find(['name' => 'MyGroup']);

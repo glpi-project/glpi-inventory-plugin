@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeploycheckTest extends TestCase
+class DeploycheckTest extends DbTestCase
 {
     public function testGetTypes()
     {

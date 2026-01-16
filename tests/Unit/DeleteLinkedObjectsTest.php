@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeleteLinkedObjectsTest extends TestCase
+class DeleteLinkedObjectsTest extends DbTestCase
 {
     public function testIpRangeDeleteConfigSecurity()
     {
