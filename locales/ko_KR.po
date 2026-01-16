@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 00:57+0000\n"
+"POT-Creation-Date: 2026-01-16 00:59+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: SeongHyeon Cho <jaymz9634@gmail.com>, 2022\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -428,7 +428,7 @@ msgstr "그룹 추가"
 #: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:283
 #: inc/stateinventory.class.php:193 inc/deploypackage.class.php:1370
 #: inc/taskview.class.php:236 inc/statediscovery.class.php:262
-#: inc/taskjobstate.class.php:148
+#: inc/taskjobstate.class.php:145
 msgid "Prepared"
 msgstr "준비됨"
 
@@ -449,11 +449,6 @@ msgstr "정보"
 #: inc/statediscovery.class.php:177
 msgid "Unique id"
 msgstr "고유 id"
-
-#: inc/taskjoblog.class.php:229 inc/stateinventory.class.php:116
-#: inc/statediscovery.class.php:179
-msgid "Agent"
-msgstr "에이전트"
 
 #: inc/taskjoblog.class.php:305
 msgid "unknown"
@@ -883,7 +878,7 @@ msgid "Running"
 msgstr "실행중"
 
 #: inc/deploypackage.class.php:1371 inc/taskview.class.php:237
-#: inc/taskjobstate.class.php:153
+#: inc/taskjobstate.class.php:150
 msgid "Cancelled"
 msgstr "취소됨"
 
@@ -1670,49 +1665,53 @@ msgstr "이 작업이 활성화되어, 수정할 수 없음"
 msgid "This task is active. delete denied"
 msgstr "이 업무는 활성화 되었습니다. 삭제가 거부됨"
 
-#: inc/taskjobstate.class.php:128
+#: inc/collectcommon.class.php:75
+msgid "Collect configuration"
+msgstr ""
+
+#: inc/taskjobstate.class.php:125
 msgid "Tasks / Groups"
 msgstr "업무 / 그룹"
 
-#: inc/taskjobstate.class.php:133
+#: inc/taskjobstate.class.php:130
 msgid "Job executions"
 msgstr "작업 실행"
 
-#: inc/taskjobstate.class.php:149
+#: inc/taskjobstate.class.php:146
 msgid "Server has sent data to the agent"
 msgstr "서버에서 에이전트로 데이터 전송"
 
-#: inc/taskjobstate.class.php:150
+#: inc/taskjobstate.class.php:147
 msgid "Agent replied with data to the server"
 msgstr "에이전트가 서버에 데이터와 함께 응답함"
 
-#: inc/taskjobstate.class.php:151
+#: inc/taskjobstate.class.php:148
 msgid "Finished"
 msgstr "종료됨"
 
-#: inc/taskjobstate.class.php:152
+#: inc/taskjobstate.class.php:149
 msgid "Error"
 msgstr "오류"
 
-#: inc/taskjobstate.class.php:154
+#: inc/taskjobstate.class.php:151
 msgid "Postponed"
 msgstr "연기됨"
 
-#: inc/taskjobstate.class.php:524
+#: inc/taskjobstate.class.php:521
 #, php-format
 msgid "Job available for next execution at %s"
 msgstr ""
 
-#: inc/taskjobstate.class.php:539
+#: inc/taskjobstate.class.php:536
 #, php-format
 msgid "Retry #%d"
 msgstr "재시도 #%d"
 
-#: inc/taskjobstate.class.php:541
+#: inc/taskjobstate.class.php:538
 msgid "Maximum number of retry reached: force deployment"
 msgstr "최대 재시도 횟수 도달함: 강제 배포"
 
-#: inc/taskjobstate.class.php:566
+#: inc/taskjobstate.class.php:563
 msgid "Clean taskjob (retention time)"
 msgstr ""
 
