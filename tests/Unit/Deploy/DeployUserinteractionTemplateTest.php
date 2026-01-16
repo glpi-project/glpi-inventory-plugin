@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeployUserinteractionTemplateTest extends TestCase
+class DeployUserinteractionTemplateTest extends DbTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -195,6 +195,7 @@ class DeployUserinteractionTemplateTest extends TestCase
 
     public function testUpdate()
     {
+        $this->testAdd();
         $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
         $interaction->getFromDBByCrit(['name' => 'test']);
         $tmp = [

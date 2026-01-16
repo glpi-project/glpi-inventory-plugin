@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class ToolboxTest extends TestCase
+class ToolboxTest extends DbTestCase
 {
     public $formatJson_input = [
         'test_text' => 'Lorem Ipsum',

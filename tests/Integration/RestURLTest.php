@@ -32,33 +32,13 @@
  */
 
 use Glpi\DBAL\QueryExpression;
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class RestURLTest extends TestCase
+class RestURLTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        // Delete all entities except root entity
-        $entity = new Entity();
-        $items = $entity->find();
-        foreach ($items as $item) {
-            if ($item['id'] > 0) {
-                $entity->delete(['id' => $item['id']], true);
-            }
-        }
-
-        // Delete all agents
-        $agent = new Agent();
-        $items = $agent->find();
-        foreach ($items as $item) {
-            $agent->delete(['id' => $item['id']], true);
-        }
-    }
-
-
     public function testPrepareDb()
     {
+        $this->login();
         global $DB;
 
         $_SESSION["plugin_glpiinventory_entity"] = 0;
@@ -109,11 +89,9 @@ class RestURLTest extends TestCase
         );
     }
 
-
-    #[Depends('testPrepareDb')]
     public function testGetCollectUrlEnt1Entity()
     {
-
+        $this->testPrepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -144,11 +122,9 @@ class RestURLTest extends TestCase
         );
     }
 
-
-    #[Depends('testPrepareDb')]
     public function testGetDeployUrlRootEntity()
     {
-
+        $this->testPrepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -178,11 +154,9 @@ class RestURLTest extends TestCase
         );
     }
 
-
-    #[Depends('testPrepareDb')]
     public function testGetEsxUrlRootEntity()
     {
-
+        $this->testPrepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -212,11 +186,9 @@ class RestURLTest extends TestCase
         );
     }
 
-
-    #[Depends('testPrepareDb')]
     public function testGetCollectUrlRootEntity()
     {
-
+        $this->testPrepareDb();
         $_SESSION["plugin_glpiinventory_entity"] = 0;
         $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
 
@@ -228,6 +200,16 @@ class RestURLTest extends TestCase
         $this->assertArrayHasKey('id', $entity->fields);
 
         $this->assertTrue($entity->update(['id' => $entity->fields['id'], 'agent_base_url' => '']));
+
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $agent  = new Agent();
+
+        $agent->getFromDBByCrit(['name' => 'toto']);
+        $input = [
+            'itemtype' => PluginGlpiinventoryCollect::class,
+            'agents_id' => $agent->fields['id'],
+        ];
+        $pfTaskjobstate->add($input);
 
         // Get answer
         $input = [

@@ -91,23 +91,23 @@ class PluginGlpiinventoryCommunicationRest
             $a_agent       = $params['agent']->fields;
 
             foreach (array_keys($params['task']) as $task) {
-                foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
-                    switch (strtolower($task)) {
-                        case 'deploy':
-                            $classname = PluginGlpiinventoryDeployPackage::class;
-                            break;
-                        case 'esx':
-                            $classname = PluginGlpiinventoryCredentialIp::class;
-                            break;
-                        case 'collect':
-                            $classname = PluginGlpiinventoryCollect::class;
-                            break;
-                        default:
-                            $classname = '';
-                    }
+                switch (strtolower($task)) {
+                    case 'deploy':
+                        $classname = PluginGlpiinventoryDeployPackage::class;
+                        break;
+                    case 'esx':
+                        $classname = PluginGlpiinventoryCredentialIp::class;
+                        break;
+                    case 'collect':
+                        $classname = PluginGlpiinventoryCollect::class;
+                        break;
+                    default:
+                        $classname = '';
+                }
 
+                foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
                     $taskname = $method['method'];
-                    if (strstr($taskname, 'deploy')) {
+                    if (str_contains($taskname, 'deploy')) {
                         $taskname = $method['task'];
                     }
                     $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($method['module']);
