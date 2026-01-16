@@ -31,10 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class DeploymirrorTest extends TestCase
+class DeploymirrorTest extends DbTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -69,10 +68,9 @@ class DeploymirrorTest extends TestCase
         $this->assertTrue($pfDeploymirror->getFromDB($mirrors_id));
     }
 
-
-    #[Depends('testAddMirror')]
     public function testUpdateMirror()
     {
+        $this->testAddMirror();
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $pfDeploymirror->getFromDBByCrit(['name' => 'MyMirror']);
         $this->assertNotNull($pfDeploymirror->fields['id']);
@@ -87,10 +85,9 @@ class DeploymirrorTest extends TestCase
         $this->assertEquals('http://localhost:8088/mirror', $pfDeploymirror->fields['url']);
     }
 
-
-    #[Depends('testUpdateMirror')]
     public function testDeleteLocationFromMirror()
     {
+        $this->testUpdateMirror();
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $location       = new Location();
         $locations_id = $location->add(['name'         => 'MyLocation',
@@ -112,10 +109,9 @@ class DeploymirrorTest extends TestCase
         $this->assertEquals(0, $pfDeploymirror->fields['locations_id']);
     }
 
-
-    #[Depends('testDeleteLocationFromMirror')]
     public function testDeleteMirror()
     {
+        $this->testDeleteLocationFromMirror();
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
         $pfDeploymirror->getFromDBByCrit(['name' => 'Mirror 1']);
         $this->assertNotNull($pfDeploymirror->fields['id']);

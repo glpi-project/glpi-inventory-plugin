@@ -31,9 +31,9 @@
  * ---------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class TaskTest extends TestCase
+class TaskTest extends DbTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -79,6 +79,7 @@ class TaskTest extends TestCase
 
     public function testDuplicateTask()
     {
+        $this->testAddTask();
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskJob();
 
@@ -112,10 +113,11 @@ class TaskTest extends TestCase
 
     public function testDeleteTask()
     {
+        $this->testAddTask();
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskJob();
 
-        $data = $pfTask->find(['name' => 'Copy of MyTask']);
+        $data = $pfTask->find(['name' => 'MyTask']);
         $this->assertEquals(1, count($data));
         $tmp = current($data);
         $tasks_id = $tmp['id'];
