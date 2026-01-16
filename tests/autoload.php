@@ -91,6 +91,8 @@ include_once GLPI_ROOT . '/inc/includes.php';
 include_once GLPI_ROOT . '/plugins/glpiinventory/vendor/autoload.php';
 include_once __DIR__ . '/LogTest.php';
 
+loadDataset();
+
 $auth = new Auth();
 $user = new User();
 $auth->auth_succeded = true;
