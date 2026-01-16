@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 00:57+0000\n"
+"POT-Creation-Date: 2026-01-16 00:59+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2025\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -445,7 +445,7 @@ msgstr "Přidat skupinu"
 #: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:283
 #: inc/stateinventory.class.php:193 inc/deploypackage.class.php:1370
 #: inc/taskview.class.php:236 inc/statediscovery.class.php:262
-#: inc/taskjobstate.class.php:148
+#: inc/taskjobstate.class.php:145
 msgid "Prepared"
 msgstr "Připravuje se"
 
@@ -466,11 +466,6 @@ msgstr "Info"
 #: inc/statediscovery.class.php:177
 msgid "Unique id"
 msgstr "Neopakující se identifikátor"
-
-#: inc/taskjoblog.class.php:229 inc/stateinventory.class.php:116
-#: inc/statediscovery.class.php:179
-msgid "Agent"
-msgstr "Agent"
 
 #: inc/taskjoblog.class.php:305
 msgid "unknown"
@@ -923,7 +918,7 @@ msgid "Running"
 msgstr "Spuštěné"
 
 #: inc/deploypackage.class.php:1371 inc/taskview.class.php:237
-#: inc/taskjobstate.class.php:153
+#: inc/taskjobstate.class.php:150
 msgid "Cancelled"
 msgstr "Zrušeno"
 
@@ -1722,49 +1717,53 @@ msgstr "Není možné upravit, tato úloha je aktivní"
 msgid "This task is active. delete denied"
 msgstr "Tato úloha je aktivní, smazání odepřeno"
 
-#: inc/taskjobstate.class.php:128
+#: inc/collectcommon.class.php:75
+msgid "Collect configuration"
+msgstr ""
+
+#: inc/taskjobstate.class.php:125
 msgid "Tasks / Groups"
 msgstr "Úkoly / Skupiny"
 
-#: inc/taskjobstate.class.php:133
+#: inc/taskjobstate.class.php:130
 msgid "Job executions"
 msgstr "Vykonávání úlohy"
 
-#: inc/taskjobstate.class.php:149
+#: inc/taskjobstate.class.php:146
 msgid "Server has sent data to the agent"
 msgstr "Server odeslal data agentovi"
 
-#: inc/taskjobstate.class.php:150
+#: inc/taskjobstate.class.php:147
 msgid "Agent replied with data to the server"
 msgstr "Agent odpověděl serveru daty"
 
-#: inc/taskjobstate.class.php:151
+#: inc/taskjobstate.class.php:148
 msgid "Finished"
 msgstr "Dokončeno"
 
-#: inc/taskjobstate.class.php:152
+#: inc/taskjobstate.class.php:149
 msgid "Error"
 msgstr "Chyba"
 
-#: inc/taskjobstate.class.php:154
+#: inc/taskjobstate.class.php:151
 msgid "Postponed"
 msgstr "Odloženo"
 
-#: inc/taskjobstate.class.php:524
+#: inc/taskjobstate.class.php:521
 #, php-format
 msgid "Job available for next execution at %s"
 msgstr "Úloha k dispozici pro příští vykonání v %s"
 
-#: inc/taskjobstate.class.php:539
+#: inc/taskjobstate.class.php:536
 #, php-format
 msgid "Retry #%d"
 msgstr "Opětovný pokus č. %d"
 
-#: inc/taskjobstate.class.php:541
+#: inc/taskjobstate.class.php:538
 msgid "Maximum number of retry reached: force deployment"
 msgstr "Dosaženo maxima opakovaných pokusů: vynutit nasazení"
 
-#: inc/taskjobstate.class.php:566
+#: inc/taskjobstate.class.php:563
 msgid "Clean taskjob (retention time)"
 msgstr "Čištění úloh (retenční doba)"
 

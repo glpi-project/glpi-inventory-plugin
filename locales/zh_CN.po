@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 00:57+0000\n"
+"POT-Creation-Date: 2026-01-16 00:59+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: DWXXX, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -429,7 +429,7 @@ msgstr "添加组"
 #: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:283
 #: inc/stateinventory.class.php:193 inc/deploypackage.class.php:1370
 #: inc/taskview.class.php:236 inc/statediscovery.class.php:262
-#: inc/taskjobstate.class.php:148
+#: inc/taskjobstate.class.php:145
 msgid "Prepared"
 msgstr "已就绪"
 
@@ -450,11 +450,6 @@ msgstr "信息"
 #: inc/statediscovery.class.php:177
 msgid "Unique id"
 msgstr "唯一ID"
-
-#: inc/taskjoblog.class.php:229 inc/stateinventory.class.php:116
-#: inc/statediscovery.class.php:179
-msgid "Agent"
-msgstr "代理"
 
 #: inc/taskjoblog.class.php:305
 msgid "unknown"
@@ -884,7 +879,7 @@ msgid "Running"
 msgstr "正在运行"
 
 #: inc/deploypackage.class.php:1371 inc/taskview.class.php:237
-#: inc/taskjobstate.class.php:153
+#: inc/taskjobstate.class.php:150
 msgid "Cancelled"
 msgstr "已取消"
 
@@ -1671,49 +1666,53 @@ msgstr "无法编辑，此任务是活动的"
 msgid "This task is active. delete denied"
 msgstr "此任务处于活动状态。拒绝删除。"
 
-#: inc/taskjobstate.class.php:128
+#: inc/collectcommon.class.php:75
+msgid "Collect configuration"
+msgstr ""
+
+#: inc/taskjobstate.class.php:125
 msgid "Tasks / Groups"
 msgstr "任务/群组"
 
-#: inc/taskjobstate.class.php:133
+#: inc/taskjobstate.class.php:130
 msgid "Job executions"
 msgstr "作业执行"
 
-#: inc/taskjobstate.class.php:149
+#: inc/taskjobstate.class.php:146
 msgid "Server has sent data to the agent"
 msgstr "服务器已发送数据到代理"
 
-#: inc/taskjobstate.class.php:150
+#: inc/taskjobstate.class.php:147
 msgid "Agent replied with data to the server"
 msgstr "代理回复数据到服务器"
 
-#: inc/taskjobstate.class.php:151
+#: inc/taskjobstate.class.php:148
 msgid "Finished"
 msgstr "已完成"
 
-#: inc/taskjobstate.class.php:152
+#: inc/taskjobstate.class.php:149
 msgid "Error"
 msgstr "错误"
 
-#: inc/taskjobstate.class.php:154
+#: inc/taskjobstate.class.php:151
 msgid "Postponed"
 msgstr "已推迟"
 
-#: inc/taskjobstate.class.php:524
+#: inc/taskjobstate.class.php:521
 #, php-format
 msgid "Job available for next execution at %s"
 msgstr ""
 
-#: inc/taskjobstate.class.php:539
+#: inc/taskjobstate.class.php:536
 #, php-format
 msgid "Retry #%d"
 msgstr "重试 #%d"
 
-#: inc/taskjobstate.class.php:541
+#: inc/taskjobstate.class.php:538
 msgid "Maximum number of retry reached: force deployment"
 msgstr ""
 
-#: inc/taskjobstate.class.php:566
+#: inc/taskjobstate.class.php:563
 msgid "Clean taskjob (retention time)"
 msgstr ""
 

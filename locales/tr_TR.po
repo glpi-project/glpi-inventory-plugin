@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Cédric Anne, 2021
-# Kaya Zeren <kayazeren@gmail.com>, 2025
+# Kaya Zeren <kayazeren@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 00:57+0000\n"
+"POT-Creation-Date: 2026-01-16 00:59+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,7 +116,7 @@ msgstr "Boyut"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Disabled"
-msgstr "Devre dışı"
+msgstr "Etkisizleştirilmiş"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Operator"
@@ -396,7 +396,7 @@ msgstr "Bilgisayar grupları"
 
 #: inc/profile.class.php:395 inc/menu.class.php:256 inc/collect.class.php:57
 msgid "Collect information"
-msgstr "Bilgileri derle"
+msgstr "Derleme bilgileri"
 
 #: inc/collect_file_content.class.php:93
 #: inc/collect_file_content.class.php:148
@@ -434,7 +434,7 @@ msgstr "Grup ekle"
 #: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:283
 #: inc/stateinventory.class.php:193 inc/deploypackage.class.php:1370
 #: inc/taskview.class.php:236 inc/statediscovery.class.php:262
-#: inc/taskjobstate.class.php:148
+#: inc/taskjobstate.class.php:145
 msgid "Prepared"
 msgstr "Hazırlanmış"
 
@@ -455,11 +455,6 @@ msgstr "Bilgiler"
 #: inc/statediscovery.class.php:177
 msgid "Unique id"
 msgstr "Eşsiz kimlik"
-
-#: inc/taskjoblog.class.php:229 inc/stateinventory.class.php:116
-#: inc/statediscovery.class.php:179
-msgid "Agent"
-msgstr "Aracı"
 
 #: inc/taskjoblog.class.php:305
 msgid "unknown"
@@ -529,7 +524,7 @@ msgstr "Paket dağıtımı"
 
 #: inc/staticmisc.class.php:96
 msgid "Collect data"
-msgstr "Verileri derle"
+msgstr "Derleme verileri"
 
 #: inc/stateinventory.class.php:118 inc/statediscovery.class.php:181
 msgid "Starting date"
@@ -903,7 +898,7 @@ msgid "Running"
 msgstr "Çalışıyor"
 
 #: inc/deploypackage.class.php:1371 inc/taskview.class.php:237
-#: inc/taskjobstate.class.php:153
+#: inc/taskjobstate.class.php:150
 msgid "Cancelled"
 msgstr "İptal edildi"
 
@@ -1655,7 +1650,7 @@ msgstr "Dağıtım görevlerini temizleme isteği"
 
 #: inc/task.class.php:1523
 msgid "Task has been disabled"
-msgstr "Görev devre dışı bırakılmış"
+msgstr "Görev etkisizleştirilmiş"
 
 #: inc/task.class.php:1722
 msgid ""
@@ -1699,49 +1694,53 @@ msgstr "Bu görev etkin olduğundan düzenlenemez"
 msgid "This task is active. delete denied"
 msgstr "Bu görev etkin olduğundan silinemez"
 
-#: inc/taskjobstate.class.php:128
+#: inc/collectcommon.class.php:75
+msgid "Collect configuration"
+msgstr "Derleme yapılandırması"
+
+#: inc/taskjobstate.class.php:125
 msgid "Tasks / Groups"
 msgstr "Görevler / gruplar"
 
-#: inc/taskjobstate.class.php:133
+#: inc/taskjobstate.class.php:130
 msgid "Job executions"
 msgstr "İş yürütmeleri"
 
-#: inc/taskjobstate.class.php:149
+#: inc/taskjobstate.class.php:146
 msgid "Server has sent data to the agent"
 msgstr "Sunucu aracıya veri gönderdi"
 
-#: inc/taskjobstate.class.php:150
+#: inc/taskjobstate.class.php:147
 msgid "Agent replied with data to the server"
 msgstr "Aracı sunucuya veri yanıtı gönderdi"
 
-#: inc/taskjobstate.class.php:151
+#: inc/taskjobstate.class.php:148
 msgid "Finished"
 msgstr "Tamamlandı"
 
-#: inc/taskjobstate.class.php:152
+#: inc/taskjobstate.class.php:149
 msgid "Error"
 msgstr "Hata"
 
-#: inc/taskjobstate.class.php:154
+#: inc/taskjobstate.class.php:151
 msgid "Postponed"
 msgstr "Ertelenmiş"
 
-#: inc/taskjobstate.class.php:524
+#: inc/taskjobstate.class.php:521
 #, php-format
 msgid "Job available for next execution at %s"
 msgstr "İş %s zamanında sonraki yürütülmeye hazır"
 
-#: inc/taskjobstate.class.php:539
+#: inc/taskjobstate.class.php:536
 #, php-format
 msgid "Retry #%d"
 msgstr "Yeniden deneme sayısı %d"
 
-#: inc/taskjobstate.class.php:541
+#: inc/taskjobstate.class.php:538
 msgid "Maximum number of retry reached: force deployment"
 msgstr "En fazla yeniden deneme sayısına ulaşıldı: Zorla dağıtılsın"
 
-#: inc/taskjobstate.class.php:566
+#: inc/taskjobstate.class.php:563
 msgid "Clean taskjob (retention time)"
 msgstr "Temizleme işlemi görevi (tutma süresi)"
 
@@ -1764,7 +1763,7 @@ msgstr "yoldosya"
 
 #: inc/collect.class.php:472
 msgid "Collect module has been disabled for this agent"
-msgstr "Bu aracı için modül derleme özelliği devre dışı bırakılmış"
+msgstr "Bu aracı için derleme modülü etkisizleştirilmiş"
 
 #: inc/collect.class.php:612
 msgid "Path not found"
@@ -1904,7 +1903,7 @@ msgstr "Son envanterden sonra geçecek (en az) gün"
 
 #: public/b/deploy/index.php:66
 msgid "Deploy module has been disabled for this agent"
-msgstr "Bu aracının dağıtma modülü devre dışı bırakılmış"
+msgstr "Bu aracının dağıtma modülü etkisizleştirilmiş"
 
 #: public/b/deploy/index.php:136
 msgid "Checks"

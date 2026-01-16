@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 00:57+0000\n"
+"POT-Creation-Date: 2026-01-16 00:59+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Alexander Sokolov <a.sokolov@outlook.com>, 2022\n"
 "Language-Team: Russian (Russia) (https://app.transifex.com/teclib/teams/28042/ru_RU/)\n"
@@ -444,7 +444,7 @@ msgstr "Добавить группу"
 #: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:283
 #: inc/stateinventory.class.php:193 inc/deploypackage.class.php:1370
 #: inc/taskview.class.php:236 inc/statediscovery.class.php:262
-#: inc/taskjobstate.class.php:148
+#: inc/taskjobstate.class.php:145
 msgid "Prepared"
 msgstr "Подготовлен"
 
@@ -465,11 +465,6 @@ msgstr "Инфо"
 #: inc/statediscovery.class.php:177
 msgid "Unique id"
 msgstr "Уникальный id"
-
-#: inc/taskjoblog.class.php:229 inc/stateinventory.class.php:116
-#: inc/statediscovery.class.php:179
-msgid "Agent"
-msgstr "Агент"
 
 #: inc/taskjoblog.class.php:305
 msgid "unknown"
@@ -921,7 +916,7 @@ msgid "Running"
 msgstr "Выполняется"
 
 #: inc/deploypackage.class.php:1371 inc/taskview.class.php:237
-#: inc/taskjobstate.class.php:153
+#: inc/taskjobstate.class.php:150
 msgid "Cancelled"
 msgstr "Отменено"
 
@@ -1723,50 +1718,54 @@ msgstr "Редактирование невозможно, данная зада
 msgid "This task is active. delete denied"
 msgstr "Данная задача активна,  в удалении отказано"
 
-#: inc/taskjobstate.class.php:128
+#: inc/collectcommon.class.php:75
+msgid "Collect configuration"
+msgstr ""
+
+#: inc/taskjobstate.class.php:125
 msgid "Tasks / Groups"
 msgstr "Задания / Группы"
 
-#: inc/taskjobstate.class.php:133
+#: inc/taskjobstate.class.php:130
 msgid "Job executions"
 msgstr "Исполнение заданий"
 
-#: inc/taskjobstate.class.php:149
+#: inc/taskjobstate.class.php:146
 msgid "Server has sent data to the agent"
 msgstr "Сервер отправил данные агенту"
 
-#: inc/taskjobstate.class.php:150
+#: inc/taskjobstate.class.php:147
 msgid "Agent replied with data to the server"
 msgstr "Агент отправил данные в ответ серверу"
 
-#: inc/taskjobstate.class.php:151
+#: inc/taskjobstate.class.php:148
 msgid "Finished"
 msgstr "Завершено"
 
-#: inc/taskjobstate.class.php:152
+#: inc/taskjobstate.class.php:149
 msgid "Error"
 msgstr "Ошибка"
 
-#: inc/taskjobstate.class.php:154
+#: inc/taskjobstate.class.php:151
 msgid "Postponed"
 msgstr "Отложено"
 
-#: inc/taskjobstate.class.php:524
+#: inc/taskjobstate.class.php:521
 #, php-format
 msgid "Job available for next execution at %s"
 msgstr "Задание доступно для следующего выполнения в %s"
 
-#: inc/taskjobstate.class.php:539
+#: inc/taskjobstate.class.php:536
 #, php-format
 msgid "Retry #%d"
 msgstr "Повтор #%d"
 
-#: inc/taskjobstate.class.php:541
+#: inc/taskjobstate.class.php:538
 msgid "Maximum number of retry reached: force deployment"
 msgstr ""
 "Достигнуто максимальное количество попыток: принудительное развертывание"
 
-#: inc/taskjobstate.class.php:566
+#: inc/taskjobstate.class.php:563
 msgid "Clean taskjob (retention time)"
 msgstr ""
 
