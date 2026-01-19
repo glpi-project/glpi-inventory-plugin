@@ -32,47 +32,13 @@
  */
 
 use Glpi\DBAL\QueryExpression;
-use PHPUnit\Framework\TestCase;
+use Glpi\Tests\DbTestCase;
 
-class CronTaskTest extends TestCase
+class CronTaskTest extends DbTestCase
 {
     public static function setUpBeforeClass(): void
     {
-
-        // Delete all computers
-        $computer = new Computer();
-        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-        foreach ($items as $item) {
-            $computer->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all agents (force)
-        $agent = new Agent();
-        $items = $agent->find();
-        foreach ($items as $item) {
-            $agent->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all tasks
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
-
-        // Delete al deploygroups
-        $pfDeployGroup   = new PluginGlpiinventoryDeployGroup();
-        $items = $pfDeployGroup->find();
-        foreach ($items as $item) {
-            $pfDeployGroup->delete(['id' => $item['id']], true);
-        }
-
-        // Delete al deploypackages
-        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $items = $pfDeployPackage->find();
-        foreach ($items as $item) {
-            $pfDeployPackage->delete(['id' => $item['id']], true);
-        }
+        parent::setUpBeforeClass();
 
         $module = new PluginGlpiinventoryAgentmodule();
         $module->getFromDBByCrit(['modulename' => 'DEPLOY']);
@@ -248,6 +214,7 @@ class CronTaskTest extends TestCase
 
     public function testPrepareTask()
     {
+        $this->testPrepareDb();
         PluginGlpiinventoryTask::cronTaskscheduler();
 
         $pfTask = new PluginGlpiinventoryTask();
@@ -299,6 +266,7 @@ class CronTaskTest extends TestCase
     {
         global $DB;
 
+        $this->testPrepareDb();
         $computer = new Computer();
         $agent  = new Agent();
 
@@ -349,7 +317,8 @@ class CronTaskTest extends TestCase
 
     public function testPrepareTaskWithdynamicgroupchanged()
     {
-
+        //$this->testPrepareTaskWithNewComputer();
+        $this->testPrepareDb();
         $computer = new Computer();
         $computer->getFromDBByCrit(['name' => 'computer2']);
         $computer->update([
@@ -368,20 +337,14 @@ class CronTaskTest extends TestCase
         $agent = new Agent();
         $reference = [];
         $ref_prepared = [];
-        $agent->getFromDBByCrit(['name' => 'computer1']);
+        $this->assertTrue($agent->getFromDBByCrit(['name' => 'computer1']));
         $reference[$agent->fields['id']] = 'computer1';
         $agentId1 = $agent->fields['id'];
 
-        $agent->getFromDBByCrit(['name' => 'computer2']);
-        $reference[$agent->fields['id']] = 'computer2';
-
-        $agent->getFromDBByCrit(['name' => 'computer3']);
+        $this->assertTrue($agent->getFromDBByCrit(['name' => 'computer3']));
         $reference[$agent->fields['id']] = 'computer3';
         $agentId2 = $agent->fields['id'];
 
-        $agent->getFromDBByCrit(['name' => 'computer4']);
-        $reference[$agent->fields['id']] = 'computer4';
-        $ref_prepared[] = $agent->fields['id'];
         $ref_prepared[] = $agentId2;
         $ref_prepared[] = $agentId1;
 
@@ -399,7 +362,7 @@ class CronTaskTest extends TestCase
 
     public function testPrepareTaskDisabled()
     {
-
+        $this->testPrepareDb();
         $pfTask = new PluginGlpiinventoryTask();
 
         $pfTask->getFromDBByCrit(['name' => 'deploy']);
@@ -425,14 +388,11 @@ class CronTaskTest extends TestCase
 
     public function testPrepareTaskNoLogs()
     {
+        $this->testPrepareDb();
         $pfTask = new PluginGlpiinventoryTask();
 
         $pfTask->getFromDBByCrit(['name' => 'deploy']);
         $this->assertArrayHasKey('id', $pfTask->fields);
-        $pfTask->update([
-            'id'        => $pfTask->fields['id'],
-            'is_active' => 1,
-        ]);
 
         PluginGlpiinventoryTask::cronTaskscheduler();
 
@@ -440,14 +400,12 @@ class CronTaskTest extends TestCase
 
         $agent = new Agent();
         $reference = [];
-        $agent->getFromDBByCrit(['name' => 'computer1']);
+        $this->assertTrue($agent->getFromDBByCrit(['name' => 'computer1']));
         $reference[$agent->fields['id']] = 'computer1';
-        $agent->getFromDBByCrit(['name' => 'computer2']);
+        $this->assertTrue($agent->getFromDBByCrit(['name' => 'computer2']));
         $reference[$agent->fields['id']] = 'computer2';
-        $agent->getFromDBByCrit(['name' => 'computer3']);
+        $this->assertTrue($agent->getFromDBByCrit(['name' => 'computer3']));
         $reference[$agent->fields['id']] = 'computer3';
-        $agent->getFromDBByCrit(['name' => 'computer4']);
-        $reference[$agent->fields['id']] = 'computer4';
 
         $this->assertEquals($reference, $data['agents']);
 
@@ -468,18 +426,16 @@ class CronTaskTest extends TestCase
     public function testPrepareTaskNotRePrepareIfSuccessful()
     {
         global $DB;
-
+        $this->testPrepareDb();
         $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] = 2;
 
         $agent        = new Agent();
         $pfTask       = new PluginGlpiinventoryTask();
         $deploycommon = new PluginGlpiinventoryDeployCommon();
 
-        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjoblogs`");
-        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
+        $found = $pfTask->find(['name' => 'deploy']);
+        $this->assertTrue($pfTask->getFromDB(array_shift($found)['id']));
 
-        $pfTask->getFromDBByCrit(['name' => 'deploy']);
-        $this->assertArrayHasKey('id', $pfTask->fields);
 
         //update directly in DB to prevent reset jobstate
         //see PluginGlpiinventoryTask->post_updateItem
@@ -643,17 +599,13 @@ class CronTaskTest extends TestCase
     {
         global $DB;
 
+        $this->testPrepareDb();
         $pfTask         = new PluginGlpiinventoryTask();
-        $pfTaskJob      = new PluginGlpiinventoryTaskJob();
         $pfTaskJobstate = new PluginGlpiinventoryTaskjobstate();
 
         //We only work on 1 task
-        $pfTask->getFromDBByCrit(['name' => 'deploy']);
+        $this->assertTrue($pfTask->getFromDBByCrit(['name' => 'deploy']));
         $pfTask->delete(['id' => $pfTask->fields['id']], true);
-
-        //Clean all taskjoblogs & states
-        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjoblogs`");
-        $DB->doQuery("TRUNCATE TABLE `glpi_plugin_glpiinventory_taskjobstates`");
 
         //Find the on demand task
         $tasks = $pfTask->find(['name' => 'ondemand']);
