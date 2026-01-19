@@ -32,31 +32,10 @@
  */
 
 use Glpi\Tests\DbTestCase;
+use org\bovigo\vfs\vfsStream;
 
 class DeploygroupTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        global $DB;
-
-        // Delete all groups
-        $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
-        $items = $pfDeploygroup->find();
-        foreach ($items as $item) {
-            $pfDeploygroup->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all computers
-        $computer = new Computer();
-        $items = $computer->find(['NOT' => ['name' => ['LIKE', '_test_pc%']]]);
-        foreach ($items as $item) {
-            $computer->delete(['id' => $item['id']], true);
-        }
-
-        $DB->doQuery("TRUNCATE TABLE glpi_computers");
-    }
-
-
     public function testAddGroup()
     {
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
@@ -257,45 +236,59 @@ class DeploygroupTest extends DbTestCase
 
     public function testImportCsvStaticGroup()
     {
-        global $DB;
-
         // Add some computers, with the ID
         $computer = new Computer();
-
-        $DB->doQuery("ALTER TABLE glpi_computers AUTO_INCREMENT = 12345;");
-
-        $input = [
-            'entities_id' => 0,
-            'name' => 'computer1',
-        ];
-        $ret = $computer->add($input);
-        $this->assertEquals(12345, $ret);
+        $csvcontents = '';
 
         $input = [
             'entities_id' => 0,
-            'name' => 'computer2',
+            'name' => 'computer_static_group_1',
         ];
-        $ret = $computer->add($input);
-        $this->assertEquals(12346, $ret);
+        $computers_id_1 = $computer->add($input);
+        $this->assertNotFalse($computers_id_1);
+        $csvcontents .= implode(';', [$computers_id_1, $computer->fields['name'], 'other things']) . "\n";
+
+        $input = [
+            'entities_id' => 0,
+            'name' => 'computer_static_group_2',
+        ];
+        $computers_id_2 = $computer->add($input);
+        $this->assertNotFalse($computers_id_2);
+        $csvcontents .= implode(';', [$computers_id_2, $computer->fields['name'], 'other things']) . "\n";
 
         $pfDeploygroup = new PluginGlpiinventoryDeployGroup();
         $pfDeploygroup_static = new PluginGlpiinventoryDeployGroup_Staticdata();
 
-        $input = ['name'    => 'MyGroup',
+        $input = [
+            'name'    => 'MyGroup',
             'type'    => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
             'comment' => 'MyComment',
         ];
         $groups_id = $pfDeploygroup->add($input);
         $this->assertGreaterThan(0, $groups_id);
 
+        $csvcontents .= implode(';', [$computers_id_2 + 100, 'noOne', 'computer id that does not exists']);
+        vfsStream::setup(
+            'glpi',
+            null,
+            [
+                'files' => [
+                    '_tmp' => [
+                        'computers.csv' => $csvcontents,
+                    ],
+                ],
+            ]
+        );
+
         $input_post = [
             'groups_id' => $groups_id,
         ];
         $input_files = [
             'importcsvfile' => [
-                'tmp_name' => realpath(dirname(__FILE__)) . '/computers.csv',
+                'tmp_name' => vfsStream::url('glpi/files/_tmp/computers.csv'),
             ],
         ];
+
         $ret = $pfDeploygroup_static->csvImport($input_post, $input_files);
         $this->assertTrue($ret);
 
@@ -304,6 +297,6 @@ class DeploygroupTest extends DbTestCase
         foreach ($computer_list as $comp_data) {
             $computer_list_db[] = $comp_data['items_id'];
         }
-        $this->assertEquals(['12345', '12346'], $computer_list_db);
+        $this->assertEquals([$computers_id_1, $computers_id_2], $computer_list_db);
     }
 }
