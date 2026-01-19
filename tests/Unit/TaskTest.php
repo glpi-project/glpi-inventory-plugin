@@ -35,16 +35,6 @@ use Glpi\Tests\DbTestCase;
 
 class TaskTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
-    }
-
-
     public function testAddTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();

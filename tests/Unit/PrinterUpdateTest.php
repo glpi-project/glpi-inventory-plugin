@@ -40,22 +40,6 @@ class PrinterUpdateTest extends DbTestCase
     public $items_id = 0;
     public $update_time = '';
 
-    public static function setUpBeforeClass(): void
-    {
-        // Delete all printers
-        $printer = new Printer();
-        $items = $printer->find();
-        foreach ($items as $item) {
-            $printer->delete(['id' => $item['id']], true);
-        }
-        $_SESSION["glpiID"] = 0;
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        $_SESSION["glpiID"] = 2;
-    }
-
     public function testAddPrinter()
     {
         $this->update_time = date('Y-m-d H:i:s');
