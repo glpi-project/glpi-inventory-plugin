@@ -35,18 +35,6 @@ use Glpi\Tests\DbTestCase;
 
 class DeployUserinteractionTemplateTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-
-        // Delete all Interactions
-        $interaction = new PluginGlpiinventoryDeployUserinteractionTemplate();
-        $items = $interaction->find();
-        foreach ($items as $item) {
-            $interaction->delete(['id' => $item['id']], true);
-        }
-    }
-
-
     public function testDefineTabs()
     {
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();

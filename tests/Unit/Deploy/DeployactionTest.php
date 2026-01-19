@@ -35,18 +35,6 @@ use Glpi\Tests\DbTestCase;
 
 class DeployactionTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-
-        // Delete all tasks
-        $pfTask = new PluginGlpiinventoryTask();
-        $items = $pfTask->find();
-        foreach ($items as $item) {
-            $pfTask->delete(['id' => $item['id']], true);
-        }
-    }
-
-
     public function testGetReturnActionNames()
     {
         $action = new PluginGlpiinventoryDeployAction();
@@ -258,7 +246,6 @@ class DeployactionTest extends DbTestCase
         ];
         $this->assertTrue($entity->update($input));
 
-        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls","name":"echo","logLineLimit":"10"}}],"userinteractions":[]},"associatedFiles":[]}';
         $input = [
             'name'        => 'cmd test',

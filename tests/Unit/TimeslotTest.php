@@ -35,17 +35,6 @@ use Glpi\Tests\DbTestCase;
 
 class TimeslotTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        // Delete all timeslots
-        $pfTimeslot = new PluginGlpiinventoryTimeslot();
-        $items = $pfTimeslot->find();
-        foreach ($items as $item) {
-            $pfTimeslot->delete(['id' => $item['id']], true);
-        }
-    }
-
-
     public function testAddTimeslot()
     {
         $pfTimeslot = new PluginGlpiinventoryTimeslot();

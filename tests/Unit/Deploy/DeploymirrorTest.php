@@ -35,24 +35,6 @@ use Glpi\Tests\DbTestCase;
 
 class DeploymirrorTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-
-        // Delete all mirrors
-        $pfDeploymirror = new PluginGlpiinventoryDeployMirror();
-        $items = $pfDeploymirror->find();
-        foreach ($items as $item) {
-            $pfDeploymirror->delete(['id' => $item['id']], true);
-        }
-
-        // Delete all locations
-        $location = new Location();
-        $items = $location->find();
-        foreach ($items as $item) {
-            $location->delete(['id' => $item['id']], true);
-        }
-    }
-
     public function testAddMirror()
     {
         $pfDeploymirror = new PluginGlpiinventoryDeployMirror();

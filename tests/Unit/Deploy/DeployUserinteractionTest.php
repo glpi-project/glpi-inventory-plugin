@@ -35,19 +35,6 @@ use Glpi\Tests\DbTestCase;
 
 class DeployUserinteractionTest extends DbTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-
-        // Delete all packages
-        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $items = $pfDeployPackage->find();
-        foreach ($items as $item) {
-            $pfDeployPackage->delete(['id' => $item['id']], true);
-        }
-    }
-
-
-
     public function testGetTypeName()
     {
         $this->assertEquals(
