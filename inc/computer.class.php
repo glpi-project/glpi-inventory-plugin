@@ -61,7 +61,7 @@ class PluginGlpiinventoryComputer extends Computer
                     'name' => __('Plugin fields'),
                 ];
                 /** @phpstan-ignore-next-line */
-                $fieldsoptions =  plugin_fields_getAddSearchOptions('Computer');
+                $fieldsoptions =  plugin_fields_getAddSearchOptions(Computer::class);
                 foreach ($fieldsoptions as $id => $data) {
                     $data['id'] = $id;
                     $options[$id] = $data;
@@ -123,7 +123,7 @@ class PluginGlpiinventoryComputer extends Computer
                                 $group_item->getTable(),
                                 [
                                     'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
-                                    'itemtype'                               => 'Computer',
+                                    'itemtype'                               => Computer::class,
                                     'items_id'                               => $key,
                                 ]
                             )
@@ -131,7 +131,7 @@ class PluginGlpiinventoryComputer extends Computer
                             $group_item->add([
                                 'plugin_glpiinventory_deploygroups_id'
                             => $_POST['id'],
-                                'itemtype' => 'Computer',
+                                'itemtype' => Computer::class,
                                 'items_id' => $key,
                             ]);
                             $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
@@ -149,7 +149,7 @@ class PluginGlpiinventoryComputer extends Computer
                 foreach ($ids as $key) {
                     if (
                         $group_item->deleteByCriteria(['items_id' => $key,
-                            'itemtype' => 'Computer',
+                            'itemtype' => Computer::class,
                             'plugin_glpiinventory_deploygroups_id'
                                                           => $_POST['item_items_id'],
                         ])

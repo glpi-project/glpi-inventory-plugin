@@ -992,7 +992,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 ],
                 'WHERE'  => [
                     'glpi_plugin_glpiinventory_taskjobstates.plugin_glpiinventory_taskjobs_id' => $taskjob['id'],
-                    'agent.itemtype' => 'Computer',
+                    'agent.itemtype' => Computer::class,
                 ],
                 'ORDER'  => 'glpi_plugin_glpiinventory_taskjobstates.id DESC',
             ]);
@@ -1759,7 +1759,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     foreach ($ids as $computer_id) {
                         $computer->getFromDB($computer_id);
                         $message .= $computer->getName() . ",";
-                        $input['actors'][] = ['Computer' => $computer_id];
+                        $input['actors'][] = [Computer::class => $computer_id];
                         $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_OK);
                     }
                     //               $ma->addMessage($message);
@@ -1802,7 +1802,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         foreach ($ids as $computer_id) {
                             $computer->getFromDB($computer_id);
                             $message .= $computer->getName() . ",";
-                            $input['actors'][] = ['Computer' => $computer_id];
+                            $input['actors'][] = [Computer::class => $computer_id];
                             $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_OK);
                         }
                         $input['actors'] = json_encode($input['actors']);

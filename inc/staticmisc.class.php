@@ -449,7 +449,7 @@ class PluginGlpiinventoryStaticmisc
 
 
     /**
-     * Get all computers of action type 'Computer'
+     * Get all computers of action type Computer::class
      * defined in task_actiontype_deployinstall
      *
      * @return string unique html element id
@@ -570,7 +570,7 @@ class PluginGlpiinventoryStaticmisc
 
 
     /**
-     * Get all computers of action type 'Computer'
+     * Get all computers of action type Computer::class
      * defined in task_actiontype_collect
      *
      * @return string unique html element id

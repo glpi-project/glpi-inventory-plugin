@@ -1075,7 +1075,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         //Get agents from the computer's ids list
         if (count($computers)) {
-            $agents_entries = $agent->find(['itemtype' => 'Computer', 'items_id' => array_keys($computers)]);
+            $agents_entries = $agent->find(['itemtype' => Computer::class, 'items_id' => array_keys($computers)]);
             foreach ($agents_entries as $agent_entry) {
                 $agents[$agent_entry['id']] = 1;
             }
