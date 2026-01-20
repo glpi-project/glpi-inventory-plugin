@@ -181,7 +181,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             'is_tab' => true,
             'nofilter' => true,
             'columns' => [
-                'computer' => __('Computer'),
+                'computer' => Computer::getTypeName(1),
                 'property' => __('Property', 'glpiinventory'),
                 'value' => __('Value', 'glpiinventory'),
             ],

@@ -438,7 +438,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                             'computers' => 'id',
                             'agents' => 'items_id', [
                                 'AND' => [
-                                    'agents.itemtype' => 'Computer',
+                                    'agents.itemtype' => Computer::class,
                                 ],
                             ],
                         ],
@@ -464,7 +464,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             ]);
             $filter_id = [];
             foreach ($iterator as $data_filter) {
-                if ($itemtype == 'Computer') {
+                if ($itemtype == Computer::class) {
                     $filter_id[] =  $data_filter['items_id'];
                 } else {
                     $filter_id[] =  $data_filter['agents_id'];

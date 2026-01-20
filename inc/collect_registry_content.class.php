@@ -229,7 +229,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             'is_tab' => true,
             'nofilter' => true,
             'columns' => [
-                'computer' => __('Computer'),
+                'computer' => Computer::getTypeName(1),
                 'value' => __('Value', 'glpiinventory'),
                 'data' => __('Data', 'glpiinventory'),
             ],

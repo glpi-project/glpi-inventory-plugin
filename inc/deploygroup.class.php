@@ -321,7 +321,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                         ) {
                             $values = [
                                 'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
-                                'itemtype' => 'Computer',
+                                'itemtype' => Computer::class,
                                 'items_id' => $id,
                             ];
                             $group_item->add($values);
@@ -348,7 +348,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                         ) {
                             $values = [
                                 'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
-                                'itemtype' => 'Computer',
+                                'itemtype' => Computer::class,
                                 'items_id' => $id,
                             ];
                             if ($group_item->getFromDBByCrit($values)) {
@@ -675,7 +675,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             foreach (
                 $staticgroup->find(
                     ['plugin_glpiinventory_deploygroups_id' => $groups_id,
-                        'itemtype'                               => 'Computer',
+                        'itemtype'                               => Computer::class,
                     ]
                 ) as $tmpgroup
             ) {
@@ -704,12 +704,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         /** @var DBmysql $DB */
         global $DB;
 
-        // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
+        // It's necessary to do a backup of $_SESSION['glpisearch'][Computer::class]
         // to isolate the search performed in the dynamic group,
-        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch']['Computer'])
+        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch'][Computer::class])
         $backup_criteria = [];
-        if (isset($_SESSION['glpisearch']['Computer'])) {
-            $backup_criteria = $_SESSION['glpisearch']['Computer'];
+        if (isset($_SESSION['glpisearch'][Computer::class])) {
+            $backup_criteria = $_SESSION['glpisearch'][Computer::class];
         }
 
         $is_dynamic = $group->isDynamicGroup();
@@ -718,7 +718,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         //Check criteria from DB
         if (!$check_post_values) {
             if (isset($group->fields['type']) && $is_dynamic) {
-                unset($_SESSION['glpisearch']['Computer']);
+                unset($_SESSION['glpisearch'][Computer::class]);
                 $iterator = $DB->request([
                     'SELECT' => 'fields_array',
                     'FROM'   => 'glpi_plugin_glpiinventory_deploygroups_dynamicdatas',
@@ -735,12 +735,12 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             if (
                 isset($group->fields['type'])
                  && $group->fields['type'] == PluginGlpiinventoryDeployGroup::STATIC_GROUP
-                 && isset($_SESSION['glpisearch']['Computer'])
-                 && !isset($_SESSION['glpisearch']['Computer']['show_results'])
+                 && isset($_SESSION['glpisearch'][Computer::class])
+                 && !isset($_SESSION['glpisearch'][Computer::class]['show_results'])
             ) {
-                $computers_params = $_SESSION['glpisearch']['Computer'];
+                $computers_params = $_SESSION['glpisearch'][Computer::class];
             } else {
-                unset($_SESSION['glpisearch']['Computer']);
+                unset($_SESSION['glpisearch'][Computer::class]);
                 $computers_params = $_GET;
             }
         }
@@ -749,10 +749,10 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         }
 
         $computers_params["reset"] = true;
-        $managed_criteria =  Search::manageParams('Computer', $computers_params, $is_dynamic, false);
+        $managed_criteria =  Search::manageParams(Computer::class, $computers_params, $is_dynamic, false);
 
         //restore session data
-        $_SESSION['glpisearch']['Computer'] = $backup_criteria;
+        $_SESSION['glpisearch'][Computer::class] = $backup_criteria;
 
         return $managed_criteria;
     }
@@ -818,7 +818,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
             'FROM'   => PluginGlpiinventoryDeployGroup_Staticdata::getTable(),
             'WHERE'  => [
                 'items_id' => $computers_id,
-                'itemtype' => 'Computer',
+                'itemtype' => Computer::class,
             ],
         ]);
         foreach ($iterator as $data) {

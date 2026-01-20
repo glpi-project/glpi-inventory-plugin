@@ -127,9 +127,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      */
     public function getMatchingItemsCount(PluginGlpiinventoryDeployGroup $item)
     {
-        // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
+        // It's necessary to do a backup of $_SESSION['glpisearch'][Computer::class]
         // to isolate the search performed in the dynamic group,
-        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch']['Computer'])
+        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch'][Computer::class])
         $backup_criteria = [];
         if (isset($_SESSION['glpisearch'][Computer::class])) {
             $backup_criteria = $_SESSION['glpisearch'][Computer::class];
@@ -163,9 +163,9 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        // It's necessary to do a backup of $_SESSION['glpisearch']['Computer']
+        // It's necessary to do a backup of $_SESSION['glpisearch'][Computer::class]
         // to isolate the search performed in the dynamic group,
-        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch']['Computer'])
+        // otherwise the search will be reused by GLPI in the computer list (cf.$_SESSION['glpisearch'][Computer::class])
         $backup_criteria = [];
         if (isset($_SESSION['glpisearch'][Computer::class])) {
             $backup_criteria = $_SESSION['glpisearch'][Computer::class];

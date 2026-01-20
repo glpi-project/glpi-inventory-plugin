@@ -1432,7 +1432,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             $computer->getFromDB($computers_id);
             echo "<tr>";
             echo "<th><i class='ti ti-devices-pc align-bottom'></i> "
-            . _n('Computer', 'Computers', 1) . " <i>"
+            . Computer::getTypeName(1) . " <i>"
             . $computer->fields['name'] . "</i></th>";
             echo "</tr>";
 
@@ -1876,7 +1876,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 $actors   = importArrayFromDB($data['actors']);
 
                 //Add a new actor : the computer that is being processed
-                $actors[] = ['Computer' => $computers_id];
+                $actors[] = [Computer::class => $computers_id];
 
                 //Get end user computers
                 $enduser  = importArrayFromDB($data['enduser']);
@@ -1919,7 +1919,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 'name'        => 'deploy',
                 'method'      => 'deployinstall',
                 'targets'     => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
-                'actors'      => exportArrayToDB([['Computer' => $computers_id]]),
+                'actors'      => exportArrayToDB([[Computer::class => $computers_id]]),
                 'enduser'     => exportArrayToDB([$users_id  => [$computers_id]]),
             ];
             $pfTaskJob->add($input);
@@ -1995,7 +1995,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 $actors  = importArrayFromDB($data['actors']);
                 foreach ($actors as $actor) {
                     foreach ($actor as $itemtype => $items_id) {
-                        if ($itemtype == 'Computer' && $items_id == $computers_id) {
+                        if ($itemtype == Computer::class && $items_id == $computers_id) {
                             $packages_used[$computers_id][$targets[0][PluginGlpiinventoryDeployPackage::class]] = $data['id'];
                         }
                     }

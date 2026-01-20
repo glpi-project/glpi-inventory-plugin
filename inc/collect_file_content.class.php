@@ -144,7 +144,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
             'is_tab' => true,
             'nofilter' => true,
             'columns' => [
-                'computer' => __('Computer'),
+                'computer' => Computer::getTypeName(1),
                 'pathfile' => __('Path/file', 'glpiinventory'),
                 'size' => __('Size', 'glpiinventory'),
             ],
