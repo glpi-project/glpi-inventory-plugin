@@ -147,7 +147,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
             ] + getEntitiesRestrictCriteria(
                 'mirror',
                 'entities_id',
-                $agent['entities_id'],
+                '',
                 true
             ),
             'ORDER'  => [
@@ -170,24 +170,7 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
 
             //Second, check by entity
             if (in_array($mirror_match, [self::MATCH_ENTITY, self::MATCH_BOTH])) {
-                $entities = $result['entities_id'];
-
-                //If the mirror is visible in child entities then get all child entities
-                //and check it the agent's entity is one of it
-                if ($result['is_recursive']) {
-                    $entities = getSonsOf('glpi_entities', $result['entities_id']);
-                }
-
-                $add_mirror = false;
-                if (
-                    is_array($entities)
-                    && in_array($computer->fields['entities_id'], $entities)
-                ) {
-                    $add_mirror = true;
-                } elseif ($computer->fields['entities_id'] == $result['entities_id']) {
-                    $add_mirror = true;
-                }
-                if (!in_array($result['url'], $mirrors) && $add_mirror) {
+                if (!in_array($result['url'], $mirrors)) {
                     $mirrors[] = $result['url'];
                 }
             }
