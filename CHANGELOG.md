@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## UNRELEASED
 
 - Fix PHP exception on empty task job agent dropdown
+- Remove the `Cancel Job` button for 'self-deploy' users, as they do not have the necessary permissions.
 
 ## [1.6.5] - 2026-01-08
 
