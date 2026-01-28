@@ -107,7 +107,7 @@ class DeleteTaskTest extends DbTestCase
 
         //create taskjoblog
         $this->taskjoblogId = $pfTaskjoblog->addJobLog(
-            taskjobs_id: self::$taskjobstateId,
+            taskjobs_id: $this->taskjobstateId,
             items_id: 0,
             itemtype: Computer::class,
             state: PluginGlpiinventoryTaskjoblog::TASK_RUNNING,
