@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Soporte Infraestructura Standby, 2023
+# Jairo Cervantes, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-16 00:59+0000\n"
+"POT-Creation-Date: 2026-01-29 01:07+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Soporte Infraestructura Standby, 2023\n"
+"Last-Translator: Jairo Cervantes, 2023\n"
 "Language-Team: Spanish (Ecuador) (https://app.transifex.com/teclib/teams/28042/es_EC/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,7 +72,7 @@ msgstr "Activación (predeterminada)"
 msgid "Exceptions"
 msgstr "Excepciones"
 
-#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:270
+#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:253
 msgid "Mirror server address"
 msgstr "Dirección del servidor espejo"
 
@@ -428,7 +428,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: inc/deploygroup.class.php:204 inc/taskjobview.class.php:628
+#: inc/deploygroup.class.php:204 inc/taskjobview.class.php:638
 msgid "Module method"
 msgstr "Método modular"
 
@@ -751,47 +751,47 @@ msgstr "Elemento de actor"
 msgid "Target Item"
 msgstr "Elemento de destino"
 
-#: inc/taskjobview.class.php:585 inc/taskjobview.class.php:588
+#: inc/taskjobview.class.php:595 inc/taskjobview.class.php:598
 msgid "New action"
 msgstr "Nueva acción"
 
-#: inc/taskjobview.class.php:665
+#: inc/taskjobview.class.php:675
 msgid "Restrict scope to task entity"
 msgstr "Restringir el ámbito a la entidad de tarea"
 
-#: inc/taskjobview.class.php:683 inc/taskjobview.class.php:716
+#: inc/taskjobview.class.php:693 inc/taskjobview.class.php:726
 msgid "Targets"
 msgstr "Objetivos"
 
-#: inc/taskjobview.class.php:689
+#: inc/taskjobview.class.php:699
 msgid "The items that should be applied for this job."
 msgstr "Los elementos que deben aplicarse para este trabajo."
 
-#: inc/taskjobview.class.php:695 inc/taskjobview.class.php:738
+#: inc/taskjobview.class.php:705 inc/taskjobview.class.php:748
 msgid "Actors"
 msgstr "Actores"
 
-#: inc/taskjobview.class.php:700
+#: inc/taskjobview.class.php:710
 msgid "The items that should carry out those targets."
 msgstr "Los elementos que deben llevar a cabo esos objetivos."
 
-#: inc/taskjobview.class.php:724 inc/taskjobview.class.php:746
+#: inc/taskjobview.class.php:734 inc/taskjobview.class.php:756
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: inc/taskjobview.class.php:729 inc/taskjobview.class.php:751
+#: inc/taskjobview.class.php:739 inc/taskjobview.class.php:761
 msgid "Delete selected items"
 msgstr "Eliminar elementos seleccionados"
 
-#: inc/taskjobview.class.php:769
+#: inc/taskjobview.class.php:779
 msgid "Cancel modifications"
 msgstr "Cancelar modificaciones"
 
-#: inc/taskjobview.class.php:774
+#: inc/taskjobview.class.php:784
 msgid "Purge"
 msgstr "Depurar"
 
-#: inc/taskjobview.class.php:777
+#: inc/taskjobview.class.php:787
 msgid "Confirm the final deletion ?"
 msgstr "¿Confirmar la eliminación final?"
 
@@ -918,36 +918,31 @@ msgstr "Cancelado"
 msgid "Restart job"
 msgstr "Reiniciar el trabajo"
 
-#: inc/deploypackage.class.php:1501
-#: inc/deployuserinteractiontemplate.class.php:206
-msgid "Cancel job"
-msgstr "Cancelar trabajo"
-
-#: inc/deploypackage.class.php:1508
+#: inc/deploypackage.class.php:1499
 msgid "refresh job"
 msgstr "actualizar trabajo"
 
-#: inc/deploypackage.class.php:1650
+#: inc/deploypackage.class.php:1641
 msgid "Select packages you want install"
 msgstr "Seleccione los paquetes que desea instalar"
 
-#: inc/deploypackage.class.php:1659
+#: inc/deploypackage.class.php:1650
 msgid "Prepare for install"
 msgstr "Preparar la instalación"
 
-#: inc/deploypackage.class.php:1664
+#: inc/deploypackage.class.php:1655
 msgid "I'm on this computer: local wakeup"
 msgstr "Estoy en esta computadora: despertar local"
 
-#: inc/deploypackage.class.php:1665
+#: inc/deploypackage.class.php:1656
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "No estoy en esta computadora: despertar desde el servidor"
 
-#: inc/deploypackage.class.php:1666
+#: inc/deploypackage.class.php:1657
 msgid "Don't wakeup"
 msgstr "No despertar"
 
-#: inc/deploypackage.class.php:1682
+#: inc/deploypackage.class.php:1673
 msgid "No packages available to install"
 msgstr "No hay paquetes disponibles para instalar"
 
@@ -1431,6 +1426,10 @@ msgstr "Continuar el trabajo sin interacción del usuario"
 #: inc/deployuserinteractiontemplate.class.php:205
 msgid "Retry job later"
 msgstr "Volver a intentar el trabajo más tarde"
+
+#: inc/deployuserinteractiontemplate.class.php:206
+msgid "Cancel job"
+msgstr "Cancelar trabajo"
 
 #: inc/deployuserinteractiontemplate.class.php:439
 msgid "Button ok"
