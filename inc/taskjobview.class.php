@@ -398,11 +398,10 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         $moduletype = $options['moduletype'];
         $itemtype   = $options['itemtype'];
-        $method     = $options['method'];
-        $title      = '';
-        if ($itemtype === "") {
+        if (!$item = getItemForItemtype($itemtype)) {
             return;
         }
+        $method     = $options['method'];
         switch ($moduletype) {
             case 'actors':
                 $title = __('Actor Item', 'glpiinventory');
@@ -411,6 +410,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             case 'targets':
                 $title = __('Target Item', 'glpiinventory');
                 break;
+            default:
+                return;
         }
 
         if (!preg_match("/^[a-zA-Z]+$/", $method)) {
@@ -421,7 +422,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $condition = [];
         if (
             $moduletype == "actors"
-            && in_array($itemtype, ["Computer", "Agent"])
+            && in_array($itemtype, [Computer::class, Agent::class])
         ) {
             // remove install suffix from deploy
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
@@ -493,7 +494,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 'condition' => $condition,
             ]
         );
-        $item = getItemForItemtype($itemtype);
         $itemtype_name = $item->getTypeName();
         $item_key_id = $item->getForeignKeyField();
         $dropdown_rand_id = "dropdown_" . $item_key_id . $dropdown_rand;
