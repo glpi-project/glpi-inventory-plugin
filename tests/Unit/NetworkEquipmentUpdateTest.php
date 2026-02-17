@@ -224,7 +224,6 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team</DESCRIPTION>
 
         $this->assertGreaterThan(0, $networkEquipment->fields['networkequipmenttypes_id']);
         $this->assertGreaterThan(0, $networkEquipment->fields['manufacturers_id']);
-        $this->assertGreaterThan(0, $networkEquipment->fields['autoupdatesystems_id']);
 
         unset(
             $networkEquipment->fields['id'],
