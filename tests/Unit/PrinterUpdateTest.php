@@ -174,7 +174,7 @@ class PrinterUpdateTest extends TestCase
             'sysdescr'             => 'HP ETHERNET MULTI-ENVIRONMENT',
             'last_inventory_update' => $_SESSION['glpi_currenttime'],
             'snmpcredentials_id' => 0,
-            'autoupdatesystems_id' => $autoupdate->fields['id'],
+            'autoupdatesystems_id' => 0,
         ];
 
         $this->assertEquals($a_reference, $printer->fields);
