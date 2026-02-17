@@ -112,9 +112,6 @@ class PrinterUpdateTest extends DbTestCase
         $type = new PrinterType();
         $type->getFromDBByCrit(['name' => 'Printer']);
 
-        $autoupdate = new AutoUpdateSystem();
-        $autoupdate->getFromDBByCrit(['name' => 'GLPI Native Inventory']);
-
         $a_reference = [
             'name'                 => 'ARC12-B09-N',
             'serial'               => 'VRG5XUT5',
@@ -152,7 +149,7 @@ class PrinterUpdateTest extends DbTestCase
             'sysdescr'             => 'HP ETHERNET MULTI-ENVIRONMENT',
             'last_inventory_update' => $_SESSION['glpi_currenttime'],
             'snmpcredentials_id' => 0,
-            'autoupdatesystems_id' => $autoupdate->fields['id'],
+            'autoupdatesystems_id' => $printer->fields['autoupdatesystems_id'],
         ];
 
         $this->assertEquals($a_reference, $printer->fields);
