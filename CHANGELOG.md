@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## [1.6.6] - 2026-02-18
 
 - Fix PHP exception on empty task job agent dropdown
 - Remove the `Cancel Job` button for 'self-deploy' users, as they do not have the necessary permissions.
