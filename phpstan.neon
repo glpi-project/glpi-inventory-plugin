@@ -20,7 +20,6 @@ parameters:
         - src
         - install
         - public
-        - report
         - hook.php
         - setup.php
     scanDirectories:
