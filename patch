@@ -1,0 +1,499 @@
+diff --git a/inc/staticmisc.class.php b/inc/staticmisc.class.php
+index 285af51fa..f0dbd6e51 100644
+--- a/inc/staticmisc.class.php
++++ b/inc/staticmisc.class.php
+@@ -39,14 +39,20 @@ class PluginGlpiinventoryStaticmisc
+     /**
+      * Get task methods of this plugin
+      *
+-     * @return array an array of the form ('module'=>'value', 'method'=>'value')
+-     *   module value name of plugin
+-     *   method value name of method
++     * @return array<array{
++     *     module: string,
++     *     method: string,
++     *     classname?: string,
++     *     selection_type?: string,
++     *     hidetask?: int,
++     *     name: string,
++     *     task?: string,
++     *     use_rest?: bool
++     * }>
+      */
+     public static function task_methods()
+     {
+-
+-        $a_tasks = [
++        return [
+             [   'module'         => 'glpiinventory',
+                 'method'         => 'inventory',
+                 'selection_type' => 'devices',
+@@ -56,7 +62,7 @@ class PluginGlpiinventoryStaticmisc
+             ],
+ 
+             [   'module'         => 'glpiinventory',
+-                'classname'      => 'PluginGlpiinventoryInventoryComputerESX',
++                'classname'      => PluginGlpiinventoryInventoryComputerESX::class,
+                 'method'         => 'InventoryComputerESX',
+                 'selection_type' => 'devices',
+                 'name'           => __('VMware host remote inventory', 'glpiinventory'),
+@@ -65,19 +71,19 @@ class PluginGlpiinventoryStaticmisc
+             ],
+ 
+             [   'module'         => 'glpiinventory',
+-                'classname'      => 'PluginGlpiinventoryNetworkDiscovery',
++                'classname'      => PluginGlpiinventoryNetworkdiscovery::class,
+                 'method'         => 'networkdiscovery',
+                 'name'           => __('Network discovery', 'glpiinventory'),
+             ],
+ 
+             [   'module'         => 'glpiinventory',
+-                'classname'      => 'PluginGlpiinventoryNetworkInventory',
++                'classname'      => PluginGlpiinventoryNetworkinventory::class,
+                 'method'         => 'networkinventory',
+                 'name'           => __('Network inventory (SNMP)', 'glpiinventory'),
+             ],
+ 
+             [   'module'         => 'glpiinventory',
+-                'classname'      => 'PluginGlpiinventoryDeployCommon',
++                'classname'      => PluginGlpiinventoryDeployCommon::class,
+                 'method'         => 'deployinstall',
+                 'name'           => __('Package deploy', 'glpiinventory'),
+                 'task'           => "DEPLOY",
+@@ -85,21 +91,20 @@ class PluginGlpiinventoryStaticmisc
+             ],
+ 
+             [   'module'         => 'glpiinventory',
+-                'classname'      => 'PluginGlpiinventoryCollect',
++                'classname'      => PluginGlpiinventoryCollect::class,
+                 'method'         => 'collect',
+                 'name'           => __('Collect data', 'glpiinventory'),
+                 'task'           => "Collect",
+                 'use_rest'       => true,
+             ],
+         ];
+-        return $a_tasks;
+     }
+ 
+ 
+     /**
+-     * Display methods availables
++     * Display methods available
+      *
+-     * @return array
++     * @return array<string,string>
+      */
+     public static function getModulesMethods()
+     {
+@@ -124,10 +129,7 @@ class PluginGlpiinventoryStaticmisc
+     /**
+      * Get all methods of this plugin
+      *
+-     * @return array an array of the form('module'=>'value', 'method'=>'value')
+-     *   module value name of plugin
+-     *   method value name of method
+-     *
++     * @return array an array of the form('module'=>'value', 'method'=>'value') //@phpstan-ignore missingType.iterableValue
+      */
+     public static function getmethods()
+     {
+@@ -157,32 +159,13 @@ class PluginGlpiinventoryStaticmisc
+         return "Plugin" . ucfirst($module) . "Staticmisc";
+     }
+ 
+-
+-    /**
+-     * Get types of datas available to select for taskjob definition for ESX method
+-     *
+-     * @param array $a_itemtype array types yet added for definitions
+-     *
+-     * @return array an array of the form ('itemtype'=>'value', 'itemtype'=>'value'...)
+-     *   itemtype itemtype of object
+-     *   value name of the itemtype
+-     */
+-    public static function task_definitiontype_InventoryComputerESX($a_itemtype)
+-    {
+-        $a_itemtype[PluginGlpiinventoryCredentialIp::class]
+-                       = PluginGlpiinventoryCredentialIp::getTypeName();
+-        return $a_itemtype;
+-    }
+-
+-
+     /**
+      * Get all devices of definition type 'PluginGlpiinventoryCredentialIp'
+-     * defined in task_definitiontype_InventoryComputerESX
+      *
+-     * @param string $title (not used)
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
+      */
+-    public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX($title)
++    public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
+     {
+         /** @var DBmysql $DB */
+         global $DB;
+@@ -223,8 +206,9 @@ class PluginGlpiinventoryStaticmisc
+     /**
+      * Get action types for InventoryComputerESX
+      *
+-     * @param array $a_itemtype
+-     * @return array
++     * @param array<string,mixed> $a_itemtype
++     * @return array<string,string>
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actiontype_InventoryComputerESX($a_itemtype)
+     {
+@@ -239,6 +223,7 @@ class PluginGlpiinventoryStaticmisc
+      * defined in task_actiontype_InventoryComputerESX
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
+     {
+@@ -277,6 +262,7 @@ class PluginGlpiinventoryStaticmisc
+      * defined in task_actiontype_InventoryComputerESX
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_Agent_InventoryComputerESX()
+     {
+@@ -302,7 +288,8 @@ class PluginGlpiinventoryStaticmisc
+      * For the moment it's hardcoded, but in a future release it may be in DB
+      *
+      * @param int $entities_id id of the entity
+-     * @return array
++     * @return array<string,mixed>
++     * @used-by PluginGlpiinventoryCommunicationRest::getConfigByAgent() via PluginGlpiinventoryCommunicationRest::getMethodForParameters()
+      */
+     public static function task_ESX_getParameters($entities_id)
+     {
+@@ -316,28 +303,13 @@ class PluginGlpiinventoryStaticmisc
+ 
+     // *** NETWORKDISCOVERY ***
+ 
+-
+-    /**
+-     * Definition types for network discovery
+-     *
+-     * @param array $a_itemtype
+-     * @return array
+-     */
+-    public static function task_definitiontype_networkdiscovery($a_itemtype)
+-    {
+-        $a_itemtype['PluginGlpiinventoryIPRange'] = __('IP Ranges', 'glpiinventory');
+-        return $a_itemtype;
+-    }
+-
+-
+     /**
+      * Get all ip ranges of definition type 'PluginGlpiinventoryIPRange'
+-     * defined in task_definitiontype_networkdiscovery
+      *
+-     * @param string $title (not used)
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
+      */
+-    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery($title)
++    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery()
+     {
+         $options = [];
+         $options['entity'] = $_SESSION['glpiactive_entity'];
+@@ -350,46 +322,26 @@ class PluginGlpiinventoryStaticmisc
+ 
+     // *** NETWORKINVENTORY ***
+ 
+-
+-    /**
+-     * Definition types for network inventory
+-     *
+-     * @param array $a_itemtype
+-     * @return array
+-     */
+-    public static function task_definitiontype_networkinventory($a_itemtype)
+-    {
+-        $a_itemtype[PluginGlpiinventoryIPRange::class] = __('IP Ranges', 'glpiinventory');
+-
+-        $a_itemtype[NetworkEquipment::class] = NetworkEquipment::getTypeName();
+-        $a_itemtype[Printer::class] = Printer::getTypeName();
+-
+-        return $a_itemtype;
+-    }
+-
+-
+     /**
+      * Get all ip ranges of definition type 'PluginGlpiinventoryIPRange'
+-     * defined in task_definitiontype_networkinventory
+      *
+-     * @param string $title (not used)
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
+      */
+-    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkinventory($title)
++    public static function task_definitionselection_PluginGlpiinventoryIPRange_networkinventory()
+     {
+-        $rand = PluginGlpiinventoryStaticmisc::task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery($title);
++        $rand = PluginGlpiinventoryStaticmisc::task_definitionselection_PluginGlpiinventoryIPRange_networkdiscovery();
+         return $rand;
+     }
+ 
+ 
+     /**
+      * Get all devices of definition type 'NetworkEquipment'
+-     * defined in task_definitiontype_networkinventory
+      *
+-     * @param string $title (not used)
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
+      */
+-    public static function task_definitionselection_NetworkEquipment_networkinventory($title)
++    public static function task_definitionselection_NetworkEquipment_networkinventory()
+     {
+         $options = [];
+         $options['entity'] = $_SESSION['glpiactive_entity'];
+@@ -402,12 +354,11 @@ class PluginGlpiinventoryStaticmisc
+ 
+     /**
+      * Get all devices of definition type 'Printer'
+-     * defined in task_definitiontype_networkinventory
+      *
+-     * @param string $title (not used)
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
+      */
+-    public static function task_definitionselection_Printer_networkinventory($title)
++    public static function task_definitionselection_Printer_networkinventory()
+     {
+ 
+         $options = [];
+@@ -419,48 +370,12 @@ class PluginGlpiinventoryStaticmisc
+     }
+ 
+ 
+-    /**
+-     * Get agents allowed to do network discovery
+-     *
+-     * @return array
+-     */
+-    public static function task_networkdiscovery_agents()
+-    {
+-
+-        $array = [];
+-        $array["-.1"] = __('Auto management dynamic of agents', 'glpiinventory');
+-
+-        $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
+-        $array1 = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
+-        foreach ($array1 as $id => $data) {
+-            $array["PluginGlpiinventoryAgent-" . $id]
+-                 = __('Auto management dynamic of agents', 'glpiinventory') . " - " . $data['name'];
+-        }
+-        return $array;
+-    }
+-
+-
+-    /**
+-     * Get types of actions for network inventory
+-     *
+-     * @return array
+-     */
+-    public static function task_action_networkinventory()
+-    {
+-        $a_itemtype = [];
+-        $a_itemtype[] = Printer::class;
+-        $a_itemtype[] = NetworkEquipment::class;
+-        $a_itemtype[] = PluginGlpiinventoryIPRange::class;
+-
+-        return $a_itemtype;
+-    }
+-
+-
+     /**
+      * Get selection type for network inventory
+      *
+      * @param string $itemtype
+      * @return string
++     * @used-by PluginGlpiinventoryTaskjobView::submitForm()
+      */
+     public static function task_selection_type_networkinventory($itemtype)
+     {
+@@ -484,14 +399,13 @@ class PluginGlpiinventoryStaticmisc
+      *
+      * @param string $itemtype
+      * @return string
++     * @used-by PluginGlpiinventoryTaskjobView::submitForm()
+      */
+     public static function task_selection_type_networkdiscovery($itemtype)
+     {
+         $selection_type = '';
+-        switch ($itemtype) {
+-            case PluginGlpiinventoryIPRange::class:
+-                $selection_type = 'iprange';
+-                break;
++        if ($itemtype == PluginGlpiinventoryIPRange::class) {
++            $selection_type = 'iprange';
+         }
+         return $selection_type;
+     }
+@@ -499,26 +413,11 @@ class PluginGlpiinventoryStaticmisc
+ 
+     /* Deploy definitions */
+ 
+-
+-    /**
+-     * Get definition types for deploy install
+-     *
+-     * @param string $a_itemtype
+-     * @return array
+-     */
+-    public static function task_definitiontype_deployinstall($a_itemtype)
+-    {
+-        return ['' => Dropdown::EMPTY_VALUE,
+-            PluginGlpiinventoryDeployPackage::class => __('Package'),
+-        ];
+-    }
+-
+-
+     /**
+      * Get all packages of definition type 'PluginGlpiinventoryDeployPackage'
+-     * defined in task_definitiontype_deployinstall
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
+      */
+     public static function task_definitionselection_PluginGlpiinventoryDeployPackage_deployinstall()
+     {
+@@ -535,8 +434,9 @@ class PluginGlpiinventoryStaticmisc
+     /**
+      * Get types of action for deployinstall
+      *
+-     * @param array $a_itemtype
+-     * @return array
++     * @param array<string,mixed> $a_itemtype
++     * @return array<string,string>
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actiontype_deployinstall($a_itemtype)
+     {
+@@ -549,10 +449,11 @@ class PluginGlpiinventoryStaticmisc
+ 
+ 
+     /**
+-     * Get all computers of action type 'Computer'
++     * Get all computers of action type Computer::class
+      * defined in task_actiontype_deployinstall
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_Computer_deployinstall()
+     {
+@@ -589,6 +490,7 @@ class PluginGlpiinventoryStaticmisc
+      * defined in task_actiontype_deployinstall
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_Group_deployinstall()
+     {
+@@ -605,6 +507,7 @@ class PluginGlpiinventoryStaticmisc
+      * defined in task_actiontype_deployinstall
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_PluginGlpiinventoryDeployGroup_deployinstall()
+     {
+@@ -620,7 +523,8 @@ class PluginGlpiinventoryStaticmisc
+      * Get Deploy paramaters: url for communication with server
+      *
+      * @param int $entities_id
+-     * @return array
++     * @return array<string,string>
++     * @used-by PluginGlpiinventoryCommunicationRest::getConfigByAgent() via PluginGlpiinventoryCommunicationRest::getMethodForParameters()
+      */
+     public static function task_deploy_getParameters($entities_id)
+     {
+@@ -633,26 +537,11 @@ class PluginGlpiinventoryStaticmisc
+ 
+     /* Collect */
+ 
+-
+-    /**
+-     * Get definition types of collect
+-     *
+-     * @param array $a_itemtype
+-     * @return array
+-     */
+-    public static function task_definitiontype_collect($a_itemtype)
+-    {
+-        return ['' => Dropdown::EMPTY_VALUE,
+-            PluginGlpiinventoryCollect::class => PluginGlpiinventoryCollect::getTypeName(),
+-        ];
+-    }
+-
+-
+     /**
+      * Get all collects of definition type 'PluginGlpiinventoryCollect'
+-     * defined in task_definitiontype_collect
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
+      */
+     public static function task_definitionselection_PluginGlpiinventoryCollect_collect()
+     {
+@@ -666,8 +555,9 @@ class PluginGlpiinventoryStaticmisc
+     /**
+      * Get action types for collect
+      *
+-     * @param array $a_itemtype
+-     * @return array
++     * @param array<string,mixed> $a_itemtype
++     * @return array<string,string>
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actiontype_collect($a_itemtype)
+     {
+@@ -680,10 +570,11 @@ class PluginGlpiinventoryStaticmisc
+ 
+ 
+     /**
+-     * Get all computers of action type 'Computer'
++     * Get all computers of action type Computer::class
+      * defined in task_actiontype_collect
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_Computer_collect()
+     {
+@@ -720,6 +611,7 @@ class PluginGlpiinventoryStaticmisc
+      * defined in task_actiontype_collect
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_Group_collect()
+     {
+@@ -736,6 +628,7 @@ class PluginGlpiinventoryStaticmisc
+      * defined in task_actiontype_collect
+      *
+      * @return string unique html element id
++     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+      */
+     public static function task_actionselection_PluginGlpiinventoryDeployGroup_collect()
+     {
+@@ -752,9 +645,10 @@ class PluginGlpiinventoryStaticmisc
+      * Get collect parameters (URL to dialog with server)
+      *
+      * @param int $entities_id
+-     * @return array
++     * @return array<string,string>
++     * @used-by PluginGlpiinventoryCommunicationRest::getConfigByAgent() via PluginGlpiinventoryCommunicationRest::getMethodForParameters()
+      */
+-    public static function task_collect_getParameters($entities_id)
++    public static function task_collect_getParameters(int $entities_id): array
+     {
+         return [
+             "task" => "Collect",

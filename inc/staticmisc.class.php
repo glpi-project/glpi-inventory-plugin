@@ -160,6 +160,111 @@ class PluginGlpiinventoryStaticmisc
     }
 
     /**
+     * Get types of datas available to select for taskjob definition for ESX method
+     *
+    * @param array $a_itemtype array types yet added for definitions
+     *
+     * @return array an array of the form ('itemtype'=>'value', 'itemtype'=>'value'...)
+     *   itemtype itemtype of object
+     *   value name of the itemtype
+     */
+    public static function task_definitiontype_InventoryComputerESX($a_itemtype)
+    {
+        $a_itemtype[PluginGlpiinventoryCredentialIp::class]
+                       = PluginGlpiinventoryCredentialIp::getTypeName();
+        return $a_itemtype;
+    }
+
+
+    /**
+     * Definition types for network discovery
+     *
+     * @param array $a_itemtype
+     * @return array
+     */
+    public static function task_definitiontype_networkdiscovery($a_itemtype)
+    {
+        $a_itemtype['PluginGlpiinventoryIPRange'] = __('IP Ranges', 'glpiinventory');
+        return $a_itemtype;
+    }
+
+    /**
+     * Definition types for network inventory
+     *
+     * @param array $a_itemtype
+     * @return array
+     */
+    public static function task_definitiontype_networkinventory($a_itemtype)
+    {
+        $a_itemtype[PluginGlpiinventoryIPRange::class] = __('IP Ranges', 'glpiinventory');
+
+        $a_itemtype[NetworkEquipment::class] = NetworkEquipment::getTypeName();
+        $a_itemtype[Printer::class] = Printer::getTypeName();
+
+        return $a_itemtype;
+    }
+
+    /**
+     * Get agents allowed to do network discovery
+     *
+     * @return array
+     */
+    public static function task_networkdiscovery_agents()
+    {
+
+        $array = [];
+        $array["-.1"] = __('Auto management dynamic of agents', 'glpiinventory');
+        $pfAgentmodule = new PluginGlpiinventoryAgentmodule();
+        $array1 = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
+        foreach ($array1 as $id => $data) {
+            $array["PluginGlpiinventoryAgent-" . $id]
+                 = __('Auto management dynamic of agents', 'glpiinventory') . " - " . $data['name'];
+        }
+        return $array;
+    }
+
+    /**
+     * Get definition types for deploy install
+     *
+     * @param string $a_itemtype
+     * @return array
+     */
+   public static function task_definitiontype_deployinstall($a_itemtype)
+    {
+        return ['' => Dropdown::EMPTY_VALUE,
+            PluginGlpiinventoryDeployPackage::class => __('Package'),
+        ];
+    }
+
+    /**
+     * Get definition types of collect
+     *
+     * @param array $a_itemtype
+     * @return array
+    */
+    public static function task_definitiontype_collect($a_itemtype)
+    {
+        return ['' => Dropdown::EMPTY_VALUE,
+            PluginGlpiinventoryCollect::class => PluginGlpiinventoryCollect::getTypeName(),
+        ];
+    }
+
+    /**
+     * Get types of actions for network inventory
+     *
+     * @return array
+     */
+    public static function task_action_networkinventory()
+    {
+        $a_itemtype = [];
+        $a_itemtype[] = Printer::class;
+        $a_itemtype[] = NetworkEquipment::class;
+        $a_itemtype[] = PluginGlpiinventoryIPRange::class;
+
+        return $a_itemtype;
+    }
+
+    /**
      * Get all devices of definition type 'PluginGlpiinventoryCredentialIp'
      *
      * @return string unique html element id
