@@ -76,7 +76,7 @@ function plugin_glpiinventory_script_endswith(string $scriptname): bool
 {
     //append plugin directory to avoid dumb errors...
     $requested = 'glpiinventory/front/' . $scriptname;
-    $current = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'];
+    $current = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'] ?? '';
 
     return str_ends_with($current, $requested);
 }
@@ -90,7 +90,7 @@ function plugin_init_glpiinventory(): void
     /** @var array<string,string|int> $PF_CONFIG */
     global $PLUGIN_HOOKS, $CFG_GLPI, $PF_CONFIG;
 
-    $current_url = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'];
+    $current_url = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'] ?? '';
 
     $Plugin = new Plugin();
 
@@ -241,7 +241,7 @@ function plugin_init_glpiinventory(): void
         $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'] = [];
         $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'] = [];
         if (
-            str_contains($current_url, $CFG_GLPI['root_doc'] . '/plugins/glpiinventory/')
+            str_contains($current_url, '/plugins/glpiinventory/')
             || str_ends_with($current_url, "front/printer.form.php")
             || str_ends_with($current_url, "front/computer.form.php")
         ) {
