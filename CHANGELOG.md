@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.6.7] - 2026-02-25
 
-- FIx plugin initialization
+- Fix plugin initialization
 - Revert "Drop methods that seems unused"
 
 ## [1.6.6] - 2026-02-18
