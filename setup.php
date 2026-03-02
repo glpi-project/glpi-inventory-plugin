@@ -66,6 +66,15 @@ $PF_CONFIG = [];
  */
 $PF_ESXINVENTORY = false;
 
+function getPluginCurrentURL(): string
+{
+    $url = '';
+    if (is_array($parsed_url = parse_url($_SERVER['REQUEST_URI'] ?? ''))) {
+        $url = $parsed_url['path'] ?? '';
+    }
+    return $url;
+}
+
 /**
  * Check if the script name finish by
  *
@@ -76,7 +85,7 @@ function plugin_glpiinventory_script_endswith(string $scriptname): bool
 {
     //append plugin directory to avoid dumb errors...
     $requested = 'glpiinventory/front/' . $scriptname;
-    $current = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'] ?? '';
+    $current = getPluginCurrentURL();
 
     return str_ends_with($current, $requested);
 }
@@ -90,7 +99,7 @@ function plugin_init_glpiinventory(): void
     /** @var array<string,string|int> $PF_CONFIG */
     global $PLUGIN_HOOKS, $CFG_GLPI, $PF_CONFIG;
 
-    $current_url = parse_url($_SERVER['REQUEST_URI'] ?? '')['path'] ?? '';
+    $current_url = getPluginCurrentURL();
 
     $Plugin = new Plugin();
 
