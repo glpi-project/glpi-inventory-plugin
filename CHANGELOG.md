@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.8] - UNRELEASED
+
+- Fix plugin instanciation on some cases
 
 ## [1.6.7] - 2026-02-25
 
