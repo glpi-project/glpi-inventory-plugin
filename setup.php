@@ -68,11 +68,19 @@ $PF_ESXINVENTORY = false;
 
 function getPluginCurrentURL(): string
 {
-    $url = '';
-    if (is_array($parsed_url = parse_url($_SERVER['REQUEST_URI'] ?? ''))) {
-        $url = $parsed_url['path'] ?? '';
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+
+    try {
+        $parsed_url = parse_url($request_uri);
+    } catch (Exception) {
+        return '';
     }
-    return $url;
+
+    if (!is_array($parsed_url)) {
+        return '';
+    }
+
+    return $parsed_url['path'] ?? '';
 }
 
 /**
