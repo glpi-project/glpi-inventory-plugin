@@ -168,10 +168,10 @@ jobs:
     - name: Activate plugin
       run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:activate -n --ansi glpiinventory
     - name: run Unit tests
-      run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/Unit/
+      run: cd glpi/plugins/glpiinventory/ && php ../../vendor/bin/phpunit --testdox --colors=always tests/Unit/
     - name: run Integration tests
-      run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/Integration/
+      run: cd glpi/plugins/glpiinventory/ && php ../../vendor/bin/phpunit --testdox --colors=always tests/Integration/
     - name: run Install tests
-      run: cd glpi/plugins/glpiinventory/ && php vendor/bin/phpunit --testdox --colors=always tests/Installation/
+      run: cd glpi/plugins/glpiinventory/ && php ../../vendor/bin/phpunit --testdox --colors=always tests/Installation/
     - name: PHPStan checks
       run: cd glpi/plugins/glpiinventory && php ../../vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress
