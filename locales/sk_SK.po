@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# feonsu <feonsu@gmail.com>, 2025
+# feonsu <feonsu@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 01:09+0000\n"
+"POT-Creation-Date: 2026-03-17 01:11+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: feonsu <feonsu@gmail.com>, 2025\n"
+"Last-Translator: feonsu <feonsu@gmail.com>, 2026\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -179,7 +179,7 @@ msgstr "Vypnuté"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Operator"
-msgstr ""
+msgstr "Operátor"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filename"
@@ -195,11 +195,11 @@ msgstr "Rozlišovať veľké a malé písmená"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Comparison type"
-msgstr ""
+msgstr "Typ porovnania"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filter name"
-msgstr ""
+msgstr "Názov filtra"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:84
 #: inc/deploycheck.class.php:377 inc/deploycheck.class.php:390
@@ -874,11 +874,11 @@ msgstr "Čas ukončenia"
 
 #: inc/timeslotentry.class.php:285
 msgid "End day must be after start day"
-msgstr ""
+msgstr "Deň ukončenia musí byť po dni začiatku"
 
 #: inc/timeslotentry.class.php:295
 msgid "End time must be after start time"
-msgstr ""
+msgstr "Čas ukončenia musí byť po čase začiatku"
 
 #: inc/stateinventory.class.php:121
 msgid "Number per second"
@@ -1446,7 +1446,7 @@ msgstr "Konfigurácia"
 
 #: inc/collectcommon.class.php:75
 msgid "Collect configuration"
-msgstr ""
+msgstr "Konfigurácia zberu"
 
 #: inc/iprange.class.php:79
 msgid "Communication mode"
@@ -1913,7 +1913,7 @@ msgstr "Funkcie"
 
 #: front/deployfile.clean.php:60
 msgid "Delete unused files"
-msgstr ""
+msgstr "Odstrániť nepoužívané súbory"
 
 #: front/deployfile_download.php:92
 msgid "An error occurs"
