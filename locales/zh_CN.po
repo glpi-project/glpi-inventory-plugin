@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Cédric Anne, 2021
-# DWXXX, 2025
+# DWXXX, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 01:09+0000\n"
+"POT-Creation-Date: 2026-03-27 01:19+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: DWXXX, 2025\n"
+"Last-Translator: DWXXX, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -197,7 +197,7 @@ msgstr ""
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filter name"
-msgstr ""
+msgstr "过滤器名称"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:84
 #: inc/deploycheck.class.php:377 inc/deploycheck.class.php:390
@@ -437,7 +437,7 @@ msgstr "好"
 
 #: inc/deployuserinteractiontemplate.class.php:167
 msgid "OK (asynchronous)"
-msgstr ""
+msgstr "好 (异步)"
 
 #: inc/deployuserinteractiontemplate.class.php:168
 msgid "OK - Cancel"
@@ -581,7 +581,7 @@ msgstr "添加组"
 #: inc/communicationnetworkdiscovery.class.php:112
 #, php-format
 msgid "Processed: %1$s Created: %2$s Updated: %3$s"
-msgstr ""
+msgstr "已处理: %1$s 已创建: %2$s 已更新: %3$s"
 
 #: inc/deploymirror.class.php:68 inc/menu.class.php:395
 #: inc/profile.class.php:287
@@ -674,7 +674,7 @@ msgstr "时间段"
 
 #: inc/menu.class.php:280
 msgid "Equipment import and link rules"
-msgstr ""
+msgstr "设备导入并连接到规则"
 
 #: inc/menu.class.php:288
 msgid "Asset skipped during import"
@@ -730,7 +730,7 @@ msgstr "向导"
 msgid ""
 "This is the steps to configure plugin for SNMP inventory (swicth, router, "
 "network printer)"
-msgstr ""
+msgstr "此步骤用于配置SNMP资产盘点插件(交换机，路由器，网络打印机)"
 
 #: inc/menu.class.php:461
 msgid "Configure SNMP credentials"
@@ -757,7 +757,7 @@ msgstr "定义一个代理允许发现网络"
 #: inc/menu.class.php:482
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
-msgstr ""
+msgstr "使用发现模块和之前定义的代理创建一个新任务"
 
 #: inc/menu.class.php:486
 msgid "If you have devices not typed, import them from unmanaged devices"
@@ -769,7 +769,7 @@ msgstr "“网络资源盘点”，用于完成对发现的设备的资源盘点
 
 #: inc/menu.class.php:495
 msgid "Define an agent allowed to inventory the network by SNMP"
-msgstr ""
+msgstr "定义一个允许通过 SNMP 对网络进行盘点管理的代理"
 
 #: inc/menu.class.php:499
 msgid ""
@@ -1210,7 +1210,7 @@ msgstr "强制开始"
 
 #: inc/taskview.class.php:935
 msgid "Device no longer defined in definition of job"
-msgstr ""
+msgstr "该设备在作业定义中未被定义"
 
 #: inc/credential.class.php:303 inc/credential.class.php:321
 #: inc/profile.class.php:326
@@ -1317,7 +1317,7 @@ msgstr ""
 
 #: inc/deployuserinteraction.class.php:432
 msgid "Alert displayed, no input required"
-msgstr ""
+msgstr "告警显示，无需输入"
 
 #: inc/deployuserinteraction.class.php:438
 msgid "Retry"
@@ -1407,7 +1407,7 @@ msgstr "配置"
 
 #: inc/collectcommon.class.php:75
 msgid "Collect configuration"
-msgstr ""
+msgstr "采集配置"
 
 #: inc/iprange.class.php:79
 msgid "Communication mode"
@@ -1563,7 +1563,7 @@ msgstr "P2P"
 #: inc/deployfile.class.php:438
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
-msgstr ""
+msgstr "文件需要被上传到文件夹 %s 并在此展示"
 
 #: inc/deployfile.class.php:630
 msgid "Upload error"
@@ -1653,7 +1653,7 @@ msgstr "新动作"
 
 #: inc/taskjobview.class.php:675
 msgid "Restrict scope to task entity"
-msgstr ""
+msgstr "将范围限制在任务实体上"
 
 #: inc/taskjobview.class.php:693 inc/taskjobview.class.php:726
 msgid "Targets"
@@ -1661,7 +1661,7 @@ msgstr "目标"
 
 #: inc/taskjobview.class.php:699
 msgid "The items that should be applied for this job."
-msgstr ""
+msgstr "该职位应具备的条件。"
 
 #: inc/taskjobview.class.php:705 inc/taskjobview.class.php:748
 msgid "Actors"
@@ -1789,11 +1789,11 @@ msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
 "error."
-msgstr ""
+msgstr "代理正在请求服务器已经发送给它的配置。这很可能是代理遇到了严重错误。"
 
 #: inc/task.class.php:421
 msgid "The task has been deactivated after preparation of this job."
-msgstr ""
+msgstr "在准备完此作业后，该任务已被停用"
 
 #: inc/task.class.php:442
 msgid "This job can not be executed anymore due to the task's schedule."
@@ -1801,7 +1801,7 @@ msgstr "由于任务日程安排，无法执行此作业。"
 
 #: inc/task.class.php:488
 msgid "This job can not be executed anymore due to the task's timeslot."
-msgstr ""
+msgstr "由于该任务的时间段限制，此作业无法再执行。"
 
 #: inc/task.class.php:507
 msgid "This agent does not belong anymore in the actors defined in the job."
@@ -1860,7 +1860,7 @@ msgstr "特性"
 
 #: front/deployfile.clean.php:60
 msgid "Delete unused files"
-msgstr ""
+msgstr "删除未使用文件"
 
 #: front/deployfile_download.php:92
 msgid "An error occurs"
