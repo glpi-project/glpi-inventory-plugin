@@ -169,18 +169,18 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                     $_SESSION['plugin_glpiinventory_taskjoblog']['comment'] = '==importdenied== ' . implode(", ", $a_text);
                     $this->addtaskjoblog();
                 } else {
-                      $item = $inventory->getMainAsset()->getItem();
-                      $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
-                          = '[==detail==] ==updatetheitem== ' . $item->getTypeName()
-                          . ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
-                      $this->addtaskjoblog();
-                
-                      Plugin::doHookFunction('glpiinventory_post_network_inventory', [
+                    $item = $inventory->getMainAsset()->getItem();
+                    $_SESSION['plugin_glpiinventory_taskjoblog']['comment']
+                        = '[==detail==] ==updatetheitem== ' . $item->getTypeName()
+                        . ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
+                    $this->addtaskjoblog();
+					
+					Plugin::doHookFunction('glpiinventory_post_network_inventory', [
                           'item'     => $item,
                           'raw_data' => $a_CONTENT,
                       ]);
-                  }
-                  $response = ['response' => ['RESPONSE' => 'SEND']];
+                }
+                $response = ['response' => ['RESPONSE' => 'SEND']];
             }
         }
 
