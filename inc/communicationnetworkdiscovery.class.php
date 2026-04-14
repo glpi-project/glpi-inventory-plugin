@@ -158,7 +158,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                                 = '[==detail==] ' . $what . ' ' . $item->getTypeName()
                                 . ' [[' . $item::class . '::' . $item->getID() . ']]';
                             $this->addtaskjoblog();
-							Plugin::doHookFunction('glpiinventory_post_network_discovery', [
+                            Plugin::doHookFunction('glpiinventory_post_network_discovery', [
 								'item'     => $item,
 								'raw_data' => $a_CONTENT,
 							]);

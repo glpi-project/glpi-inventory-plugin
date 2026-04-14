@@ -175,7 +175,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                         . ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
                     $this->addtaskjoblog();
 					
-					Plugin::doHookFunction('glpiinventory_post_network_inventory', [
+                    Plugin::doHookFunction('glpiinventory_post_network_inventory', [
                           'item'     => $item,
                           'raw_data' => $a_CONTENT,
                       ]);
