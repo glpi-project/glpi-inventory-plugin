@@ -174,6 +174,10 @@ class PluginGlpiinventoryCommunicationNetworkInventory
                         = '[==detail==] ==updatetheitem== ' . $item->getTypeName()
                         . ' [[' . $item::class . '::' . $item->fields['id'] . ']]';
                     $this->addtaskjoblog();
+                    Plugin::doHookFunction('glpiinventory_post_network_inventory', [
+                        'item'     => $item,
+                        'raw_data' => $a_CONTENT,
+                    ]);
                 }
                 $response = ['response' => ['RESPONSE' => 'SEND']];
             }
