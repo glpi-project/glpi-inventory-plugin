@@ -153,7 +153,8 @@ CREATE TABLE `glpi_plugin_glpiinventory_taskjobstates` (
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_taskjobs_id` (`plugin_glpiinventory_taskjobs_id`),
   KEY `agents_id` (`agents_id`),
-  KEY `uniqid` (`uniqid`,`state`)
+  KEY `uniqid` (`uniqid`,`state`),
+  KEY `item` (`itemtype`, `items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 

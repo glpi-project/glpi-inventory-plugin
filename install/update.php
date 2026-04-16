@@ -1091,6 +1091,12 @@ function addTaskJobLogIndex(Migration $migration): Migration
         'item'
     );
 
+    $migration->addKey(
+        "glpi_plugin_glpiinventory_taskjobstates",
+        ['itemtype', 'items_id'],
+        'item'
+    );
+
     return $migration;
 }
 
