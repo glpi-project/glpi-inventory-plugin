@@ -161,7 +161,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                             Plugin::doHookFunction('glpiinventory_post_network_discovery', [
                                 'item'     => $item,
                                 'raw_data' => $a_CONTENT,
-							]);
+                            ]);
                         }
                         $response = ['response' => ['RESPONSE' => 'SEND']];
                     }
