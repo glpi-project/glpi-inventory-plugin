@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+
+- Fix module / exception handling during updates from the agent or general settings.
+
 ## [1.6.8] - UNRELEASED
 
 - Fix plugin instanciation on some cases

@@ -44,10 +44,10 @@ Session::checkRight(PluginGlpiinventoryAgentmodule::$rightname, READ);
 $agentmodule = new PluginGlpiinventoryAgentmodule();
 
 if (isset($_POST["update"])) {
-    $agentmodule->updateModules($_POST);
+    $agentmodule->updateForAgent($_POST);
     Html::back();
 } elseif (isset($_POST["update_exceptions"])) {
-    $agentmodule->updateForAgent($_POST);
+    $agentmodule->updateModules($_POST);
     Html::back();
 }
 
