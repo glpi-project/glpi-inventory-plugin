@@ -291,7 +291,6 @@ class PluginGlpiinventoryProfile extends Profile
                 'itemtype'  => PluginGlpiinventoryDeployPackage::class,
                 'label'     => __('Deploy packages on demand', 'glpiinventory'),
                 'field'     => 'plugin_glpiinventory_selfpackage',
-                'rights'    => [READ => __('Read')],
             ],
         ];
         return $rights;
