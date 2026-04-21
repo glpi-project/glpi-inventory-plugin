@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix module / exception handling during updates from the agent or general settings.
 - Fix display of rights for deploy on demand
+- Fix MySQL query error: Unknown column 'groups_id'
 
 ## [1.6.8] - UNRELEASED
 
