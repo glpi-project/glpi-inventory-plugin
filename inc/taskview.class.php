@@ -1046,7 +1046,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                     //find computers directly associated with this group
                     $group_item = new Group_Item();
                     $computer_from_group = $group_item->getItemsAssociatedTo(Group::class, $itemid);
-                    //$computer_from_group = $computer->find(['groups_id' => $itemid]);
                     foreach ($computer_from_group as $computer_entry) {
                         $computers[$computer_entry->fields['id']] = 1;
                     }
