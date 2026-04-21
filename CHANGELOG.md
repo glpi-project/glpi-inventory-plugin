@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [UNRELEASED]
 
 - Fix module / exception handling during updates from the agent or general settings.
+- Fix display of rights for deploy on demand
 
 ## [1.6.8] - UNRELEASED
 
