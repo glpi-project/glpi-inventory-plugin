@@ -126,9 +126,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
                     $inventory->setDiscovery(true);
                     $inventory->doInventory();
                     if ($inventory->inError()) {
-                        foreach ($inventory->getErrors() as $error) {
-                            $response = ['response' => ['ERROR' => $error]];
-                        }
+                        $response = ['ERROR' => implode(' | ', $inventory->getErrors())];
                     } else {
                         $refused = $inventory->getMainAsset()->getRefused();
                         $device = $a_CONTENT->content->network_device;
@@ -173,6 +171,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
             } else {
                 $response = ['response' => ['ERROR' => 'Task is already finished!']];
             }
+        } else {
+            $response['response'] = ['ERROR' => 'Task not found'];
         }
         return $response;
     }
