@@ -173,6 +173,8 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
             } else {
                 $response = ['response' => ['ERROR' => 'Task is already finished!']];
             }
+        } else {
+            $response['response'] = ['ERROR' => 'Task not found'];
         }
         return $response;
     }
