@@ -31,15 +31,29 @@
  * ---------------------------------------------------------------------
  */
 
-Session::checkCentralAccess();
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Exception\Http\BadRequestHttpException;
+use Glpi\Exception\Http\NotFoundHttpException;
+
+Session::checkRight('plugin_glpiinventory_task', PURGE);
 
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
-if (isset($_REQUEST['jobstate_id'])) {
-    $jobstate = new PluginGlpiinventoryTaskjobstate();
-    $jobstate->getFromDB($_REQUEST['jobstate_id']);
-
-    $job = new PluginGlpiinventoryTaskjob();
-    $job->delete(['id' => $jobstate->fields['plugin_glpiinventory_taskjobs_id']], true);
+$jobstate_id = (int)($_POST['jobstate_id'] ?? 0);
+if ($jobstate_id <= 0) {
+    throw new BadRequestHttpException();
 }
+
+$jobstate = new PluginGlpiinventoryTaskjobstate();
+if (!$jobstate->getFromDB($jobstate_id)) {
+    throw new NotFoundHttpException();
+}
+
+$jobs_id = (int)$jobstate->fields['plugin_glpiinventory_taskjobs_id'];
+$job = new PluginGlpiinventoryTaskjob();
+if (!$job->can($jobs_id, PURGE)) {
+    throw new AccessDeniedHttpException();
+}
+
+$job->delete(['id' => $jobs_id], true);

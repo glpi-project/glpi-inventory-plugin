@@ -1535,6 +1535,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                         event.preventDefault();
                         $.ajax({
                            url: '" . $url . "/ajax/cancel_job.php',
+                           method: 'POST',
                            data: {
                               'jobstate_id': " . $package_info['last_taskjobstate']['id'] . ",
                               'agent_id':    " . $package_info['agent_id'] . "
@@ -1549,6 +1550,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                         event.preventDefault();
                         $.ajax({
                            url: '" . $url . "/ajax/restart_job.php',
+                           method: 'POST',
                            data: {
                               'jobstate_id': " . $package_info['last_taskjobstate']['id'] . ",
                               'agent_id':    " . $package_info['agent_id'] . "
@@ -1565,6 +1567,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                           .removeClass('fa-sync');
                         $.ajax({
                            url: '" . $url . "/ajax/jobstates_logs.php',
+                           method: 'POST',
                            data: {
                               'id': " . $package_info['last_taskjobstate']['id'] . ",
                               'last_date': '2999-01-01 00:00:00' // force a future date

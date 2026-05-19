@@ -80,6 +80,7 @@ taskjobs.register_form_changed = function () {
 taskjobs.create = function(ajax_url, task_id) {
    $.ajax({
       url: ajax_url,
+      method: 'POST',
       data: {
          "task_id" : task_id
       },
@@ -90,6 +91,7 @@ taskjobs.create = function(ajax_url, task_id) {
 taskjobs.edit = function(ajax_url, taskjob_id) {
    $.ajax({
       url: ajax_url,
+      method: 'POST',
       data: {
          "id" : taskjob_id
       },
@@ -168,6 +170,7 @@ taskjobs.show_moduletypes = function(ajax_url, moduletype) {
    taskjobs.hide_moduleitems_dropdown();
    $.ajax({
       url: ajax_url,
+      method: 'POST',
       data: {
          "moduletype" : moduletype,
          "method" : $('#method_selected').text()
@@ -182,6 +185,7 @@ taskjobs.show_moduleitems = function(ajax_url, moduletype, itemtype) {
    taskjobs.hide_moduleitems_dropdown();
    $.ajax({
       url: ajax_url,
+      method: 'POST',
       data: {
          "itemtype" : itemtype,
          "moduletype" : moduletype,
@@ -250,6 +254,7 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
 
             $.ajax( {
                url: '../ajax/jobstates_logs.php',
+               method: 'POST',
                data: {
                   'id': agent[i].jobstate_id,
                   'last_date': agent[i].last_log_date
@@ -399,6 +404,7 @@ function agents_chart(chart_id) {
                  .on('click', function(d) {
                      $.ajax({
                         url: '../ajax/restart_job.php',
+                        method: 'POST',
                         data: {
                            'jobstate_id': d[1][0].jobstate_id,
                            'agent_id':   d[1][0].agent_id
@@ -573,7 +579,7 @@ taskjobs.display_agents_view = function(chart_id) {
 
             $.ajax({
                url: '../ajax/restart_job.php',
-               method: 'post',
+               method: 'POST',
                data: {
                   'params': params
                },
@@ -1163,6 +1169,7 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
 
     $.ajax({
          url: ajax_url,
+         method: 'POST',
          data: data,
          success: function( data, textStatus, jqXHR) {
             $('.refresh_button > span')
@@ -1211,6 +1218,7 @@ taskjobs.init_tasks_expand_buttons = function() {
 
          $.ajax({
             url: '../ajax/expand_task.php',
+            method: 'POST',
             data: {
                'task_id' : task_id,
                'expanded':  $(this).parent().hasClass('expand')

@@ -41,9 +41,9 @@ Session::checkCentralAccess();
 $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
 $params = [
-    "moduletype" => filter_input(INPUT_GET, "moduletype"),
-    "itemtype"   => filter_input(INPUT_GET, "itemtype"),
-    "method"     => filter_input(INPUT_GET, "method"),
+    "moduletype" => filter_input(INPUT_POST, "moduletype"),
+    "itemtype"   => filter_input(INPUT_POST, "itemtype"),
+    "method"     => filter_input(INPUT_POST, "method"),
 ];
 
 $pfTaskjob->ajaxModuleItemsDropdown($params);

@@ -31,19 +31,38 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Exception\Http\BadRequestHttpException;
+use Glpi\Exception\Http\NotFoundHttpException;
+
 use function Safe\session_write_close;
 
 if (plugin_glpiinventory_script_endswith("jobstates_logs.php")) {
-    Session::checkCentralAccess();
+    Session::checkRight('plugin_glpiinventory_task', READ);
 }
+
+$jobstate_id = (int)($_POST['id'] ?? 0);
+if ($jobstate_id <= 0) {
+    throw new BadRequestHttpException();
+}
+
+$pfJobstate = new PluginGlpiinventoryTaskjobstate();
+if (!$pfJobstate->getFromDB($jobstate_id)) {
+    throw new NotFoundHttpException();
+}
+
+$pfJob = new PluginGlpiinventoryTaskjob();
+if (!$pfJob->can((int)$pfJobstate->fields['plugin_glpiinventory_taskjobs_id'], READ)) {
+    throw new AccessDeniedHttpException();
+}
+
 //unlock session since access checks have been done
 session_write_close();
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
-$pfJobstate = new PluginGlpiinventoryTaskjobstate();
 
 $params = [
-    "id"        => filter_input(INPUT_GET, "id"),
-    "last_date" => filter_input(INPUT_GET, "last_date"),
+    "id"        => $jobstate_id,
+    "last_date" => filter_input(INPUT_POST, "last_date"),
 ];
 $pfJobstate->ajaxGetLogs($params);

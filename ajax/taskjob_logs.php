@@ -31,12 +31,26 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+
 if (plugin_glpiinventory_script_endswith("taskjob_logs.php")) {
-    Session::checkCentralAccess();
+    Session::checkRight('plugin_glpiinventory_task', READ);
 }
 
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
+$task_ids = $_POST['task_id'] ?? null;
+if ($task_ids !== null) {
+    $task_ids = is_array($task_ids) ? $task_ids : [$task_ids];
+    $pfTask = new PluginGlpiinventoryTask();
+    foreach ($task_ids as $task_id) {
+        $task_id = (int)$task_id;
+        if ($task_id > 0 && !$pfTask->can($task_id, READ)) {
+            throw new AccessDeniedHttpException();
+        }
+    }
+}
+
 $pfTask = new PluginGlpiinventoryTask();
-$pfTask->ajaxGetJobLogs($_GET);
+$pfTask->ajaxGetJobLogs($_POST);

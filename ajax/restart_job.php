@@ -31,15 +31,39 @@
  * ---------------------------------------------------------------------
  */
 
-Session::checkCentralAccess();
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Exception\Http\BadRequestHttpException;
+use Glpi\Exception\Http\NotFoundHttpException;
+
+Session::checkRight('plugin_glpiinventory_task', UPDATE);
 
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
-if (isset($_REQUEST['params']) && is_array($_REQUEST['params'])) {
-    foreach ($_REQUEST['params'] as $params) {
-        PluginGlpiinventoryTaskjob::restartJob($params);
+$check_restart_params = static function (array $params): array {
+    $jobstate_id = (int)($params['jobstate_id'] ?? 0);
+    if ($jobstate_id <= 0) {
+        throw new BadRequestHttpException();
+    }
+
+    $jobstate = new PluginGlpiinventoryTaskjobstate();
+    if (!$jobstate->getFromDB($jobstate_id)) {
+        throw new NotFoundHttpException();
+    }
+
+    $jobs_id = (int)$jobstate->fields['plugin_glpiinventory_taskjobs_id'];
+    $job = new PluginGlpiinventoryTaskjob();
+    if (!$job->can($jobs_id, UPDATE)) {
+        throw new AccessDeniedHttpException();
+    }
+
+    return ['jobstate_id' => $jobstate_id, 'agent_id' => (int)($params['agent_id'] ?? 0)];
+};
+
+if (isset($_POST['params']) && is_array($_POST['params'])) {
+    foreach ($_POST['params'] as $params) {
+        PluginGlpiinventoryTaskjob::restartJob($check_restart_params((array)$params));
     }
 } else {
-    PluginGlpiinventoryTaskjob::restartJob($_REQUEST);
+    PluginGlpiinventoryTaskjob::restartJob($check_restart_params($_POST));
 }
