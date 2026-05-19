@@ -268,8 +268,9 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
 
         $rand = '';
         $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
+        $name = htmlentities($_POST['name'], ENT_QUOTES, 'UTF-8');
         if (
-            is_callable([$class, "task_" . $_POST['name'] . "selection_" .
+            is_callable([$class, "task_" . $name . "selection_" .
             $definitiontype . "_" . $method,
             ])
         ) {
@@ -281,27 +282,27 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
                 $title
             );
 
-            $iddropdown = "dropdown_" . $_POST['name'] . "selectiontoadd";
+            $iddropdown = "dropdown_" . $name . "selectiontoadd";
         } else {
             $a_data = $this->getAgents($method);
 
-            $rand = Dropdown::showFromArray($_POST['name'] . 'selectiontoadd', $a_data);
-            $iddropdown = "dropdown_" . $_POST['name'] . "selectiontoadd";
+            $rand = Dropdown::showFromArray($name . 'selectiontoadd', $a_data);
+            $iddropdown = "dropdown_" . $name . "selectiontoadd";
         }
 
         echo "<br/><center><input type='button' id='add_button_" . $_POST['name'] . $taskjobs_id . "' " .
               "name='add_button_" . $_POST['name'] . "' value=\"" . __('Add') .
               "\" class='submit'></center>";
         $params = ['items_id'  => '__VALUE0__',
-            'add_button_' . $_POST['name'] . $taskjobs_id => '__VALUE1__',
+            'add_button_' . $name . $taskjobs_id => '__VALUE1__',
             'itemtype'  => $definitiontype,
             'rand'      => $rand,
             'myname'    => 'items_id',
-            'type'      => $_POST['name'],
+            'type'      => $name,
             'taskjobs_id' => $taskjobs_id,
         ];
         Ajax::updateItemOnEvent(
-            [$iddropdown . $rand, "add_button_" . $_POST['name'] . $taskjobs_id],
+            [$iddropdown . $rand, "add_button_" . $name . $taskjobs_id],
             "Additem_$rand",
             Plugin::getWebDir('glpiinventory') . "/ajax/taskjobaddtype.php",
             $params,
