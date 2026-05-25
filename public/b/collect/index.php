@@ -31,16 +31,33 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\json_encode;
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Inventory\Conf;
+use Glpi\Inventory\Request;
 
-//Agent communication using REST protocol
+$conf = new Conf();
+if ($conf->enabled_inventory != 1) {
+    throw new AccessDeniedHttpException("Inventory is disabled");
+}
 
-$pfCollect = new PluginGlpiinventoryCollect();
+$inventory_request = new Request();
+$inventory_request->handleHeaders();
+$inventory_request->handleContentType('application/json');
 
-$response = $pfCollect->communication(
-    filter_input(INPUT_GET, "action"),
-    filter_input(INPUT_GET, "machineid"),
-    filter_input(INPUT_GET, "uuid")
-);
+if (PluginGlpiinventoryToolbox::authInventory($inventory_request)) {
+    $collect = new PluginGlpiinventoryCollect();
+    $response = $collect->communication(
+        filter_input(INPUT_GET, "action"),
+        filter_input(INPUT_GET, "machineid"),
+        filter_input(INPUT_GET, "uuid")
+    );
+    $inventory_request->addToResponse((array) $response);
+}
 
-echo json_encode($response);
+http_response_code($inventory_request->getHttpResponseCode());
+$headers = $inventory_request->getHeaders(true);
+foreach ($headers as $key => $value) {
+    header(sprintf('%s: %s', $key, $value));
+}
+
+echo $inventory_request->getResponse();

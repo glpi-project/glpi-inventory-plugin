@@ -459,6 +459,9 @@ function plugin_glpiinventory_boot(): void
     SessionManager::registerPluginStatelessPath('glpiinventory', '#^/$#');
     SessionManager::registerPluginStatelessPath('glpiinventory', '#^/Communication$#');
     SessionManager::registerPluginStatelessPath('glpiinventory', '#^/front/communication.php$#');
+    SessionManager::registerPluginStatelessPath('glpiinventory', '#^/b/collect/(?:index\.php)?$#');
+    SessionManager::registerPluginStatelessPath('glpiinventory', '#^/b/deploy/(?:index\.php)?$#');
+    SessionManager::registerPluginStatelessPath('glpiinventory', '#^/b/esx/(?:index\.php)?$#');
 }
 
 function addPublicFile(string $file, string $ext): string

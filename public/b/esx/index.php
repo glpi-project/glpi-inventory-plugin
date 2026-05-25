@@ -31,18 +31,34 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\json_encode;
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Inventory\Conf;
+use Glpi\Inventory\Request;
+
+$conf = new Conf();
+if ($conf->enabled_inventory != 1) {
+    throw new AccessDeniedHttpException("Inventory is disabled");
+}
+
+$inventory_request = new Request();
+$inventory_request->handleHeaders();
+$inventory_request->handleContentType('application/json');
+
+$request_ok = false;
+if (PluginGlpiinventoryToolbox::authInventory($inventory_request)) {
+    $request_ok = true;
+}
 
 //This call is to check that the ESX inventory service is up and running
 $fi_status = filter_input(INPUT_GET, "status");
-if (!empty($fi_status)) {
+if ($request_ok && !empty($fi_status)) {
     return 'ok';
 }
 
 $response = false;
 //Agent communication using REST protocol
 $fi_machineid = filter_input(INPUT_GET, "machineid");
-if (!empty($fi_machineid)) {
+if ($request_ok && !empty($fi_machineid)) {
     switch (filter_input(INPUT_GET, "action")) {
         case 'getJobs':
             $agent        = new Agent();
@@ -70,11 +86,8 @@ if (!empty($fi_machineid)) {
                     );
                 }
 
-                // return an empty dictionnary if there are no jobs.
-                if (count($order->jobs) == 0) {
-                    $response = "{}";
-                } else {
-                    $response = json_encode($order);
+                if (count($order->jobs) > 0) {
+                    $response = $order;
                 }
             }
 
@@ -85,10 +98,22 @@ if (!empty($fi_machineid)) {
             PluginGlpiinventoryCommunicationRest::updateLog($_GET);
             break;
     }
+}
 
-    if ($response !== false) {
-        echo $response;
-    } else {
-        echo json_encode((object) []);
-    }
+http_response_code($inventory_request->getHttpResponseCode());
+$headers = $inventory_request->getHeaders(true);
+foreach ($headers as $key => $value) {
+    header(sprintf('%s: %s', $key, $value));
+}
+
+if ($response !== false) {
+    $inventory_request->addToResponse((array) $response);
+    echo $inventory_request->getResponse();
+} elseif ($request_ok) {
+    // Authenticated, but no job to send: return a valid (empty) JSON object so
+    // the agent does not complain about a non-hash answer ("[]" is an array).
+    echo json_encode((object) []);
+} else {
+    // Not authenticated: output the authentication challenge / error response.
+    echo $inventory_request->getResponse();
 }

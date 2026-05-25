@@ -31,6 +31,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Inventory\Request;
+
 use function Safe\json_decode;
 use function Safe\json_encode;
 use function Safe\preg_match;
@@ -377,5 +379,40 @@ class PluginGlpiinventoryToolbox
              RuleMatchedLog::getTable(),
              ['itemtype' => $item::class, 'items_id' => $item->fields['id']]
          );
+    }
+
+    public static function authInventory(Request $request): bool
+    {
+        // GLPI >= 11.0.8: the method is provided natively
+        if (method_exists($request, 'authenticateRequest')) {
+            return $request->authenticateRequest();
+        }
+
+        // TODO: remove v12 — backport for GLPI < 11.0.8
+        // The endpoints instantiate a core \Glpi\Inventory\Request; since a method
+        // cannot be added to an already built object, we run authenticateRequest()
+        // on a Backport\Request carrying the real request state (transferred by
+        // reflection), then copy the mutated state back to the original request.
+        $backport = new \GlpiPlugin\Glpiinventory\Backport\Request();
+        $abstract = \Glpi\Agent\Communication\AbstractRequest::class;
+
+        // Input state: 'headers' is an object, so it is shared by reference and
+        // setHeader('www-authenticate') propagates back to $request automatically.
+        // 'mode' + 'response' are required for addError()/addToResponse() to work.
+        foreach (['headers', 'local', 'mode', 'response'] as $prop) {
+            $rp = new \ReflectionProperty($abstract, $prop);
+            $rp->setValue($backport, $rp->getValue($request));
+        }
+
+        $result = $backport->authenticateRequest();
+
+        // Copy the state mutated by addError() back to the request the endpoint
+        // reads from (these are scalars/array, hence not shared by reference).
+        foreach (['response', 'http_response_code', 'error'] as $prop) {
+            $rp = new \ReflectionProperty($abstract, $prop);
+            $rp->setValue($request, $rp->getValue($backport));
+        }
+
+        return $result;
     }
 }
