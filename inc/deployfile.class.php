@@ -163,7 +163,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             = $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
             // start new line
-            $pics_path = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/pics/";
+            $pics_path = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/public/pics/";
             echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
