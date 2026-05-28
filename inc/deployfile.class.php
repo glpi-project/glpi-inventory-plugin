@@ -163,7 +163,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             = $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
             // start new line
-            $pics_path = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/public/pics/";
+            $pics_url  = $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/public/pics/";
+            $pics_path = Plugin::getPhpDir('glpiinventory') . "/public/pics/";
             echo Search::showNewLine(Search::HTML_OUTPUT, (bool) ($i % 2));
             if ($canedit) {
                 echo "<td class='control'>";
@@ -175,9 +176,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 !empty($file_mimetype)
                  && file_exists($pics_path . "extensions/$file_mimetype.png")
             ) {
-                echo "<img src='" . $pics_path . "extensions/$file_mimetype.png' />";
+                echo "<img src='" . $pics_url . "extensions/$file_mimetype.png' />";
             } else {
-                echo "<img src='" . $pics_path . "extensions/documents.png' />";
+                echo "<img src='" . $pics_url . "extensions/documents.png' />";
             }
 
             //filename
