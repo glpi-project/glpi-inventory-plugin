@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix MySQL query error: Unknown column 'groups_id'
 - Fix warning : `file pics/extensions/... is not within the allowed path(s)`
 - Fix warning : `open_basedir restriction in effect`
+- Fix ESX job status incorrectly showing all hosts as 'In Error' when only one host fails and the others complete successfully.
 
 ## [1.6.8] - UNRELEASED
 
