@@ -949,7 +949,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                 'items_id'                           => $item_id,
                                 'plugin_glpiinventory_taskjobs_id' => $job_id,
                                 'agents_id'   => $agent_id,
-                                'uniqid'                             => uniqid(),
+                                'uniqid'                             => bin2hex(random_bytes(16)),
                             ]
                         );
 
