@@ -543,10 +543,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      * @param  array<string,mixed> $params these possible entries:
      *                        - agent_state_types: array of agent states to filter output
      *                          (prepared, cancelled, running, success, error)
-     *                        - debug_csv, possible values:
-     *                           - 0 : no debug (really export to csv,
-     *                           - 1 : display params AND html table,
-     *                           - 2: like 1 + display also json of jobs logs
      *
      * @return void
      */
@@ -556,7 +552,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
         $default_params = [
             'agent_state_types' => [],
-            'debug_csv'         => 0,
         ];
         $params = array_merge($default_params, $params);
 
@@ -566,16 +561,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             $agent_state_types = $params['agent_state_types'];
         }
 
-        if (!$params['debug_csv']) {
-            header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
-            header('Pragma: private'); /// IE BUG + SSL
-            header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
-            header("Content-disposition: attachment; filename=export.csv");
-            header("Content-type: text/csv");
-        } else {
-            Html::printCleanArray($params);
-            Html::printCleanArray($agent_state_types);
-        }
+        header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
+        header('Pragma: private'); /// IE BUG + SSL
+        header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
+        header("Content-disposition: attachment; filename=export.csv");
+        header("Content-type: text/csv");
 
         $params['display'] = false;
         $pfTask            = new PluginGlpiinventoryTask();
@@ -602,11 +592,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         // clean old temporary variables
         unset($task, $job, $target, $agent);
 
-        define('SEP', $params['debug_csv'] ? $CFG_GLPI['csv_delimiter'] : '</td><td>'); // @phpstan-ignore theCodingMachineSafe.function
-        define('NL', $params["debug_csv"] ? "\r\n" : '</tr><tr><td>'); // @phpstan-ignore theCodingMachineSafe.function
-        if ($params['debug_csv']) {
-            echo "<table border=1><tr><td>";
-        }
+        define('SEP', $CFG_GLPI['csv_delimiter']); // @phpstan-ignore theCodingMachineSafe.function
+        define('NL', "\r\n"); // @phpstan-ignore theCodingMachineSafe.function
 
         // cols titles
         echo "Task_name" . SEP;
@@ -687,12 +674,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                     }
                 }
             }
-        }
-        if ($params['debug_csv'] === 2) {
-            echo "</td></tr></table>";
-
-            //echo original datas
-            echo "<pre>" . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
         }
 
         // force exit to prevent further display
