@@ -60,11 +60,9 @@ if (isset($_GET['version'])) {
 }
 
 $response = false;
-if (!$request_ok) {
-    $_GET['action'] = 'none'; //no action, request is not OK.
-}
 //Agent communication using REST protocol
-switch (filter_input(INPUT_GET, "action")) {
+$action = $request_ok ? filter_input(INPUT_GET, "action") : 'none';
+switch ($action) {
     case 'getJobs':
         $machineid = filter_input(INPUT_GET, "machineid");
         if (isset($machineid)) {
