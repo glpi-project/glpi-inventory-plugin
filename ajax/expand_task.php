@@ -36,4 +36,4 @@ Session::checkCentralAccess();
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
-$_SESSION['plugin_glpiinventory_tasks_expanded'][(int)($_POST['task_id'])] = filter_input(INPUT_POST, "expanded");
+$_SESSION['plugin_glpiinventory_tasks_expanded'][(int) ($_POST['task_id'])] = filter_input(INPUT_POST, "expanded");

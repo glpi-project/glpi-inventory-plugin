@@ -41,7 +41,7 @@ if (plugin_glpiinventory_script_endswith("jobstates_logs.php")) {
     Session::checkRight('plugin_glpiinventory_task', READ);
 }
 
-$jobstate_id = (int)($_POST['id'] ?? 0);
+$jobstate_id = (int) ($_POST['id'] ?? 0);
 if ($jobstate_id <= 0) {
     throw new BadRequestHttpException();
 }
@@ -52,7 +52,7 @@ if (!$pfJobstate->getFromDB($jobstate_id)) {
 }
 
 $pfJob = new PluginGlpiinventoryTaskjob();
-if (!$pfJob->can((int)$pfJobstate->fields['plugin_glpiinventory_taskjobs_id'], READ)) {
+if (!$pfJob->can((int) $pfJobstate->fields['plugin_glpiinventory_taskjobs_id'], READ)) {
     throw new AccessDeniedHttpException();
 }
 

@@ -41,7 +41,7 @@ if (plugin_glpiinventory_script_endswith("taskjobaddtype.php")) {
 
 Session::checkRight('plugin_glpiinventory_task', UPDATE);
 
-$taskjobs_id = (int)filter_input(INPUT_POST, "taskjobs_id");
+$taskjobs_id = (int) filter_input(INPUT_POST, "taskjobs_id");
 if ($taskjobs_id <= 0) {
     throw new BadRequestHttpException();
 }
@@ -54,6 +54,6 @@ if (!$pfTaskjob->can($taskjobs_id, UPDATE)) {
 $pfTaskjob->additemtodefatc(
     filter_input(INPUT_POST, "type"),
     filter_input(INPUT_POST, "itemtype"),
-    (int)filter_input(INPUT_POST, "items_id"),
+    (int) filter_input(INPUT_POST, "items_id"),
     $taskjobs_id
 );

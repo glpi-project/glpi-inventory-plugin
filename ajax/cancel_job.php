@@ -40,7 +40,7 @@ Session::checkRight('plugin_glpiinventory_task', PURGE);
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
-$jobstate_id = (int)($_POST['jobstate_id'] ?? 0);
+$jobstate_id = (int) ($_POST['jobstate_id'] ?? 0);
 if ($jobstate_id <= 0) {
     throw new BadRequestHttpException();
 }
@@ -50,7 +50,7 @@ if (!$jobstate->getFromDB($jobstate_id)) {
     throw new NotFoundHttpException();
 }
 
-$jobs_id = (int)$jobstate->fields['plugin_glpiinventory_taskjobs_id'];
+$jobs_id = (int) $jobstate->fields['plugin_glpiinventory_taskjobs_id'];
 $job = new PluginGlpiinventoryTaskjob();
 if (!$job->can($jobs_id, PURGE)) {
     throw new AccessDeniedHttpException();

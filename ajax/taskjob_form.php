@@ -42,8 +42,8 @@ Session::checkRight('plugin_glpiinventory_task', READ);
 
 $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
-$id = (int)($_POST['id'] ?? 0);
-$task_id = (int)($_POST['task_id'] ?? 0);
+$id = (int) ($_POST['id'] ?? 0);
+$task_id = (int) ($_POST['task_id'] ?? 0);
 
 if ($id > 0) {
     if (!$pfTaskjob->can($id, READ)) {

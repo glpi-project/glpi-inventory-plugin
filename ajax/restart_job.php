@@ -41,7 +41,7 @@ header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
 $check_restart_params = static function (array $params): array {
-    $jobstate_id = (int)($params['jobstate_id'] ?? 0);
+    $jobstate_id = (int) ($params['jobstate_id'] ?? 0);
     if ($jobstate_id <= 0) {
         throw new BadRequestHttpException();
     }
@@ -51,18 +51,18 @@ $check_restart_params = static function (array $params): array {
         throw new NotFoundHttpException();
     }
 
-    $jobs_id = (int)$jobstate->fields['plugin_glpiinventory_taskjobs_id'];
+    $jobs_id = (int) $jobstate->fields['plugin_glpiinventory_taskjobs_id'];
     $job = new PluginGlpiinventoryTaskjob();
     if (!$job->can($jobs_id, UPDATE)) {
         throw new AccessDeniedHttpException();
     }
 
-    return ['jobstate_id' => $jobstate_id, 'agent_id' => (int)($params['agent_id'] ?? 0)];
+    return ['jobstate_id' => $jobstate_id, 'agent_id' => (int) ($params['agent_id'] ?? 0)];
 };
 
 if (isset($_POST['params']) && is_array($_POST['params'])) {
     foreach ($_POST['params'] as $params) {
-        PluginGlpiinventoryTaskjob::restartJob($check_restart_params((array)$params));
+        PluginGlpiinventoryTaskjob::restartJob($check_restart_params((array) $params));
     }
 } else {
     PluginGlpiinventoryTaskjob::restartJob($check_restart_params($_POST));

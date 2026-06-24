@@ -45,7 +45,7 @@ if ($task_ids !== null) {
     $task_ids = is_array($task_ids) ? $task_ids : [$task_ids];
     $pfTask = new PluginGlpiinventoryTask();
     foreach ($task_ids as $task_id) {
-        $task_id = (int)$task_id;
+        $task_id = (int) $task_id;
         if ($task_id > 0 && !$pfTask->can($task_id, READ)) {
             throw new AccessDeniedHttpException();
         }
