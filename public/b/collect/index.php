@@ -54,7 +54,7 @@ if (PluginGlpiinventoryToolbox::authInventory($inventory_request)) {
     $inventory_request->addToResponse((array) $response);
 }
 
-http_response_code($inventory_request->getHttpResponseCode());
+http_response_code($inventory_request->getHttpResponseCode()); //@phpstan-ignore glpi.forbidHttpResponseCode
 $headers = $inventory_request->getHeaders(true);
 foreach ($headers as $key => $value) {
     header(sprintf('%s: %s', $key, $value));

@@ -385,7 +385,7 @@ class PluginGlpiinventoryToolbox
     public static function authInventory(Request $request): bool
     {
         // GLPI >= 11.0.8: the method is provided natively
-        if (method_exists($request, 'authenticateRequest')) {
+        if (method_exists($request, 'authenticateRequest')) { //@phpstan-ignore function.alreadyNarrowedType
             return $request->authenticateRequest();
         }
 

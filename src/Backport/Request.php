@@ -42,6 +42,9 @@ use Glpi\OAuth\Server;
 use GLPIKey;
 use League\OAuth2\Server\Exception\OAuthServerException;
 
+use function Safe\base64_decode;
+use function Safe\preg_match;
+
 class Request extends GlpiRequest
 {
     /**
@@ -54,7 +57,6 @@ class Request extends GlpiRequest
     {
         // Delegate to core as soon as it provides the method (GLPI >= 11.0.8)
         if (method_exists(get_parent_class($this), 'authenticateRequest')) {
-            /** @phpstan-ignore-next-line (method only exists on GLPI >= 11.0.8) */
             return parent::authenticateRequest();
         }
 

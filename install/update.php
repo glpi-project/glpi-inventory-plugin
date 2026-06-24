@@ -52,6 +52,7 @@ use function Safe\mkdir;
 use function Safe\preg_match;
 use function Safe\preg_replace;
 use function Safe\rename;
+use function Safe\unserialize;
 
 /**
  * Get the current version of the plugin

@@ -35,6 +35,8 @@ use Glpi\Exception\Http\AccessDeniedHttpException;
 use Glpi\Inventory\Conf;
 use Glpi\Inventory\Request;
 
+use function Safe\json_encode;
+
 $conf = new Conf();
 if ($conf->enabled_inventory != 1) {
     throw new AccessDeniedHttpException("Inventory is disabled");
@@ -267,7 +269,7 @@ switch ($action) {
         }
 }
 
-http_response_code($inventory_request->getHttpResponseCode());
+http_response_code($inventory_request->getHttpResponseCode()); //@phpstan-ignore glpi.forbidHttpResponseCode
 $headers = $inventory_request->getHeaders(true);
 foreach ($headers as $key => $value) {
     header(sprintf('%s: %s', $key, $value));
