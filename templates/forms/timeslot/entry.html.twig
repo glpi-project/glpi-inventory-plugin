@@ -97,7 +97,6 @@
       </div>
       <div class="card-footer d-flex">
          {{ fields.hiddenField('timeslots_id', timeslots_id) }}
-         {{ fields.hiddenField('_glpi_csrf_token', csrf_token()) }}
          <button type="submit" name="add" class="btn btn-primary ms-auto">
             <i class="ti ti-plus"></i>
             {{ _x('button', 'Add') }}
@@ -141,7 +140,6 @@
                </tbody>
             </table>
          </div>
-         {{ fields.hiddenField('_glpi_csrf_token', csrf_token()) }}
       </div>
    </form>
 {% endif %}

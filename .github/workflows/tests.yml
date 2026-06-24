@@ -27,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.2', '8.5']
+        php-versions: ['8.3', '8.5']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2
@@ -72,7 +72,7 @@ jobs:
         repository: glpi-project/glpi
         path: glpi
         fetch-depth: 1
-        ref: 11.0/bugfixes
+        ref: 12.0/bugfixes
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install GLPI dependencies
@@ -102,10 +102,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {php-versions: "8.2", db-image: "mysql:8.0"}
+          - {php-versions: "8.3", db-image: "mysql:8.0"}
           - {php-versions: "8.4", db-image: "mysql:8.0"}
           - {php-versions: "8.5", db-image: "mysql:8.4"}
-          - {php-versions: "8.5", db-image: "mariadb:10.6"}
+          - {php-versions: "8.5", db-image: "mariadb:10.11"}
           - {php-versions: "8.5", db-image: "mariadb:11"}
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
@@ -161,6 +161,10 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         extensions: ${{ env.extensions }}
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
     - name: Cache Composer dependencies
       uses: actions/cache@v6
       with:
@@ -174,26 +178,23 @@ jobs:
         repository: glpi-project/glpi
         path: glpi
         fetch-depth: 1
-        ref: 11.0/bugfixes
+        ref: 12.0/bugfixes
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install dependencies
       run: |
         cd glpi
-        composer install --ansi --no-interaction
-        php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
         mkdir --parents public/lib
-        php bin/console locales:compile
-
+        php bin/console dependencies install
     - name: Init database
       run: |
         mysql -e 'create database IF NOT EXISTS glpi;' -u root --password=glpi1iventory -h 127.0.0.1 -P 3306
     - name: Install GLPI
-      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:database:install -n --ansi --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306 --strict-configuration
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console database:install -n --ansi --db-host=127.0.0.1 --db-name=glpi --db-user=root --db-password=glpi1iventory --db-port=3306 --strict-configuration
     - name: Install plugin
-      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:install -vvv -n --ansi --username=glpi glpiinventory
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console plugin:install -vvv -n --ansi --username=glpi glpiinventory
     - name: Activate plugin
-      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:activate -n --ansi glpiinventory
+      run: cd glpi && GLPI_ENVIRONMENT_TYPE="testing" php bin/console plugin:activate -n --ansi glpiinventory
     - name: run Unit tests
       run: cd glpi/plugins/glpiinventory/ && php ../../vendor/bin/phpunit --testdox --colors=always tests/Unit/
     - name: run Integration tests

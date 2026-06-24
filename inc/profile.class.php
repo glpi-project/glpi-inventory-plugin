@@ -40,7 +40,7 @@ class PluginGlpiinventoryProfile extends Profile
      *
      * @var string
      */
-    public static $rightname = "config";
+    public static string $rightname = "config";
 
     /**
      * Rights that are not owned by any itemtype, and therefore cannot be

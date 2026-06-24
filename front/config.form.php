@@ -50,7 +50,6 @@ if (isset($_POST['update'])) {
     $data = $_POST;
     unset($data['update']);
     unset($data['id']);
-    unset($data['_glpi_csrf_token']);
     foreach ($data as $key => $value) {
         $pfConfig->updateValue($key, $value);
     }

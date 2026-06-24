@@ -61,7 +61,7 @@ $kernel->boot();
 global $CFG_GLPI, $GLPI_CACHE;
 
 if (!file_exists(GLPI_CONFIG_DIR . '/config_db.php')) {
-    throw new RuntimeException("Configuration file for tests not found; run: GLPI_ENVIRONMENT_TYPE=\"testing\" bin/console glpi:database:install ...");
+    throw new RuntimeException("Configuration file for tests not found; run: GLPI_ENVIRONMENT_TYPE=\"testing\" bin/console database:install ...");
 }
 
 // Create subdirectories of GLPI_VAR_DIR based on defined constants
