@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [1.6.8] - 2026-06-24
 
 - Fix module / exception handling during updates from the agent or general settings.
 - Fix display of rights for deploy on demand
@@ -13,10 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix warning : `file pics/extensions/... is not within the allowed path(s)`
 - Fix warning : `open_basedir restriction in effect`
 - Fix ESX job status incorrectly showing all hosts as 'In Error' when only one host fails and the others complete successfully.
-
-## [1.6.8] - UNRELEASED
-
 - Fix plugin instanciation on some cases
+- Add checks on tasks URLs
 
 ## [1.6.7] - 2026-02-25
 
