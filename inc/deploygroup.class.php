@@ -58,7 +58,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      *
      * @var string
      */
-    public static $rightname = "plugin_glpiinventory_group";
+    public static string $rightname = "plugin_glpiinventory_group";
 
     /**
      * Define the array of itemtype allowed in static groups
@@ -72,7 +72,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      *
      * @var bool
      */
-    public $dohistory = true;
+    public bool $dohistory = true;
 
     /**
      * @var array<string,string>
