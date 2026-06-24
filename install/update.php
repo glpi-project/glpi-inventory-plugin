@@ -39,8 +39,6 @@ use Glpi\Error\ErrorHandler;
 use Ramsey\Uuid\Uuid;
 use Safe\Exceptions\InfoException;
 
-include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
-
 use function Safe\copy;
 use function Safe\fclose;
 use function Safe\fopen;
@@ -52,8 +50,8 @@ use function Safe\mkdir;
 use function Safe\preg_match;
 use function Safe\preg_replace;
 use function Safe\rename;
-use function Safe\unserialize;
 
+include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 /**
  * Get the current version of the plugin
  */
