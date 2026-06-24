@@ -45,7 +45,7 @@ class DeployUserinteractionTemplateTest extends DbTestCase
 
     public function testGetTabNameForItem()
     {
-        $expected = [  1 => '<span class="d-flex align-items-center"><i class="ti ti-hand-click me-2"></i>General</span>', 2 => '<span class="d-flex align-items-center"><i class="ti ti-settings me-2"></i>Behaviors</span>'];
+        $expected = [  1 => '<span class="d-flex align-items-center"><i class="ti ti-hand-click me-2" aria-hidden="true"></i>General</span>', 2 => '<span class="d-flex align-items-center"><i class="ti ti-settings me-2" aria-hidden="true"></i>Behaviors</span>'];
         $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
         $this->assertEquals($expected, $template->getTabNameForItem($template));
     }
