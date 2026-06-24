@@ -40,7 +40,7 @@ use Glpi\Plugin\Hooks;
 use function Safe\define;
 use function Safe\parse_url;
 
-define(PLUGIN_GLPIINVENTORY_VERSION, "1.6.8");
+define('PLUGIN_GLPIINVENTORY_VERSION', "1.6.8");
 
 $constants = [
     'PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION' => '11.0.2', // Minimal GLPI version, inclusive
