@@ -43,14 +43,14 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
      *
      * @var bool
      */
-    public $dohistory = true;
+    public bool $dohistory = true;
 
     /**
      * The right name for this class
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_iprange';
+    public static string $rightname = 'plugin_glpiinventory_iprange';
 
 
     /**

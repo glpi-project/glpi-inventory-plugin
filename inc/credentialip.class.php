@@ -63,7 +63,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_credentialip';
+    public static string $rightname = 'plugin_glpiinventory_credentialip';
 
 
     /**

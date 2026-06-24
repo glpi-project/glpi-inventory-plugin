@@ -39,44 +39,44 @@ class PluginGlpiinventoryDeployPackage_Entity extends CommonDBRelation
     /**
      * Itemtype for the first part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $itemtype_1 = PluginGlpiinventoryDeployPackage::class;
+    public static ?string $itemtype_1 = PluginGlpiinventoryDeployPackage::class;
 
     /**
      * id field name for the first part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $items_id_1 = 'plugin_glpiinventory_deploypackages_id';
+    public static ?string $items_id_1 = 'plugin_glpiinventory_deploypackages_id';
 
     /**
      * Itemtype for the second part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $itemtype_2 = Entity::class;
+    public static ?string $itemtype_2 = Entity::class;
 
     /**
      * id field name for the second part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $items_id_2 = 'entities_id';
+    public static ?string $items_id_2 = 'entities_id';
 
     /**
      * Set we don't check parent right of the second item
      *
      * @var self::DONT_CHECK_ITEM_RIGHTS|self::HAVE_VIEW_RIGHT_ON_ITEM|self::HAVE_SAME_RIGHT_ON_ITEM
      */
-    public static $checkItem_2_Rights = self::DONT_CHECK_ITEM_RIGHTS;
+    public static int $checkItem_2_Rights = self::DONT_CHECK_ITEM_RIGHTS;
 
     /**
      * Logs for the second item are disabled
      *
      * @var bool
      */
-    public static $logs_for_item_2 = false;
+    public static bool $logs_for_item_2 = false;
 
 
     /**

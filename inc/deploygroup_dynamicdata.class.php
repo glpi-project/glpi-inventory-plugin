@@ -77,21 +77,21 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
      *
      * @var string
      */
-    public static $rightname = "plugin_glpiinventory_group";
+    public static string $rightname = "plugin_glpiinventory_group";
 
     /**
      * Itemtype of the item linked
      *
      * @var string
      */
-    public static $itemtype = PluginGlpiinventoryDeployGroup::class;
+    public static string $itemtype = PluginGlpiinventoryDeployGroup::class;
 
     /**
      * id field of the item linked
      *
      * @var string
      */
-    public static $items_id = 'plugin_glpiinventory_deploygroups_id';
+    public static string $items_id = 'plugin_glpiinventory_deploygroups_id';
 
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)

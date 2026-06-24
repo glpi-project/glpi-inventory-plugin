@@ -45,8 +45,8 @@ if (!defined('PLUGIN_GLPIINVENTORY_VERSION')) {
 }
 
 $constants = [
-    'PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION' => '11.0.2', // Minimal GLPI version, inclusive
-    'PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION' => '11.0.99', // Maximum GLPI version, exclusive
+    'PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION' => '12.0.0', // Minimal GLPI version, inclusive
+    'PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION' => '12.0.99', // Maximum GLPI version, exclusive
     'PLUGIN_GLPI_INVENTORY_DIR' => __DIR__,
     'PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE' => 0,
     'PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR' => GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/repository/',
