@@ -592,89 +592,85 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         // clean old temporary variables
         unset($task, $job, $target, $agent);
 
-        define('SEP', $CFG_GLPI['csv_delimiter']); // @phpstan-ignore theCodingMachineSafe.function
-        define('NL', "\r\n"); // @phpstan-ignore theCodingMachineSafe.function
+        $delimiter = $CFG_GLPI['csv_delimiter'];
+        $out       = fopen('php://output', 'w');
 
-        // cols titles
-        echo "Task_name" . SEP;
-        echo "Job_name" . SEP;
-        echo "Method" . SEP;
-        echo "Target" . SEP;
-        echo "Agent" . SEP;
-        echo "Computer name" . SEP;
-        echo "Date" . SEP;
-        echo "Status" . SEP;
-        echo "Last Message" . NL;
+        fputcsv($out, [
+            'Task_name',
+            'Job_name',
+            'Method',
+            'Target',
+            'Agent',
+            'Computer name',
+            'Date',
+            'Status',
+            'Last Message',
+        ], $delimiter);
 
         $agent_obj = new Agent();
         $computer  = new Computer();
 
-        // prepare an anonymous (and temporory) function
-        // for test if an element is the last of an array
-        $last = (fn(&$array, $key) => $key === array_key_last($array));
-        foreach ($data['tasks'] as $task_id => $task) {
-            echo $task['task_name'] . SEP;
+        foreach ($data['tasks'] as $task) {
+            $task_name = $task['task_name'] ?? '';
+            if (empty($task['jobs'])) {
+                fputcsv($out, [$task_name, '', '', '', '', '', '', '', ''], $delimiter);
+                continue;
+            }
 
-            if (count($task['jobs']) == 0) {
-                echo NL;
-            } else {
-                $log_cpt = 0;
-                foreach ($task['jobs'] as $job_id => $job) {
-                    echo $job['name'] . SEP;
-                    echo $job['method'] . SEP;
-                    if (count($job['targets']) == 0) {
-                        echo NL;
-                    } else {
-                        foreach ($job['targets'] as $target_id => $target) {
-                            echo $target['name'] . SEP;
+            $log_cpt = 0;
+            foreach ($task['jobs'] as $job) {
+                $job_name = $job['name']   ?? '';
+                $method   = $job['method'] ?? '';
 
-                            if (count($target['agents']) == 0) {
-                                echo NL;
-                            } else {
-                                foreach ($target['agents'] as $agent_id => $agent) {
-                                    $agent_obj->getFromDB($agent_id);
-                                    echo $agent_obj->getName() . SEP;
-                                    $computer->getFromDB($agent_obj->fields['items_id']);
-                                    echo $computer->getname() . SEP;
+                if (empty($job['targets'])) {
+                    fputcsv($out, [$task_name, $job_name, $method, '', '', '', '', '', ''], $delimiter);
+                } else {
+                    foreach ($job['targets'] as $target) {
+                        $target_name = $target['name'] ?? '';
 
-                                    if (count($agent) == 0) {
-                                        echo NL;
-                                    } else {
-                                        foreach ($agent as $exec_id => $exec) {
-                                            echo $exec['last_log_date'] . SEP;
-                                            echo $exec['state'] . SEP;
-                                            echo $exec['last_log'] . NL;
+                        if (empty($target['agents'])) {
+                            fputcsv($out, [$task_name, $job_name, $method, $target_name, '', '', '', '', ''], $delimiter);
+                            continue;
+                        }
 
-                                            if (!$last($agent, $exec_id)) {
-                                                echo SEP . SEP . SEP . SEP . SEP . SEP;
-                                            }
-                                        }
-                                    }
-
-                                    if (!$last($target['agents'], $agent_id)) {
-                                        echo SEP . SEP . SEP . SEP;
-                                    }
-                                }
+                        foreach ($target['agents'] as $agent_id => $agent) {
+                            $agent_obj->getFromDB($agent_id);
+                            $agent_name = $agent_obj->getName();
+                            $computer_name = '';
+                            if (isset($agent_obj->fields['items_id']) && $computer->getFromDB($agent_obj->fields['items_id'])) {
+                                $computer_name = $computer->getName();
                             }
 
-                            if (!$last($job['targets'], $target_id)) {
-                                echo SEP . SEP . SEP;
+                            if (empty($agent)) {
+                                fputcsv($out, [$task_name, $job_name, $method, $target_name, $agent_name, $computer_name, '', '', ''], $delimiter);
+                                continue;
+                            }
+
+                            foreach ($agent as $exec) {
+                                fputcsv($out, [
+                                    $task_name,
+                                    $job_name,
+                                    $method,
+                                    $target_name,
+                                    $agent_name,
+                                    $computer_name,
+                                    $exec['last_log_date'] ?? '',
+                                    $exec['state'] ?? '',
+                                    $exec['last_log'] ?? '',
+                                ], $delimiter);
                             }
                         }
                     }
+                }
 
-                    if (!$last($task['jobs'], $job_id)) {
-                        echo SEP;
-                    }
-
-                    $log_cpt++;
-
-                    if ($includeoldjobs != -1 && $log_cpt >= $includeoldjobs) {
-                        break;
-                    }
+                $log_cpt++;
+                if ($includeoldjobs != -1 && $log_cpt >= $includeoldjobs) {
+                    break;
                 }
             }
         }
+
+        fclose($out);
 
         // force exit to prevent further display
         exit; //@phpstan-ignore-line (whole method needs to be refactored)
