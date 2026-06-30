@@ -551,6 +551,8 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      */
     public function csvExport($params = [])
     {
+        global $CFG_GLPI;
+
         $default_params = [
             'agent_state_types' => [],
         ];
@@ -593,14 +595,15 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         // clean old temporary variables
         unset($task, $job, $target, $agent);
 
-        $spread = $this->buildSpreadsheet($data, $includeoldjobs);
+        define('SEP', $CFG_GLPI['csv_delimiter']); // @phpstan-ignore theCodingMachineSafe.function
+        define('NL', "\r\n"); // @phpstan-ignore theCodingMachineSafe.function
 
-        $writer = new CsvWriter($spread);
+        $writer = new CsvWriter($this->buildSpreadsheet($data, $includeoldjobs));
         $writer
-            ->setDelimiter($_SESSION['glpicsv_delimiter'] ?? ';')
+            ->setDelimiter(SEP)
             ->setEnclosure('"')
             ->setUseBOM(true)
-            ->setLineEnding("\r\n")
+            ->setLineEnding(NL)
             ->setSheetIndex(0);
         $writer->save('php://output');
 
@@ -662,11 +665,13 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                         }
 
                         foreach ($target['agents'] as $agent_id => $agent) {
-                            $agent_obj->getFromDB($agent_id);
-                            $agent_name = $agent_obj->getName();
+                            $agent_name = '';
                             $computer_name = '';
-                            if (isset($agent_obj->fields['items_id']) && $computer->getFromDB($agent_obj->fields['items_id'])) {
-                                $computer_name = $computer->getName();
+                            if ($agent_obj->getFromDB($agent_id)) {
+                                $agent_name = $agent_obj->getName();
+                                if (isset($agent_obj->fields['items_id']) && $computer->getFromDB($agent_obj->fields['items_id'])) {
+                                    $computer_name = $computer->getName();
+                                }
                             }
 
                             if (empty($agent)) {
