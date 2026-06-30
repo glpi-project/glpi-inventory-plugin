@@ -90,13 +90,13 @@ class TaskCsvExportTest extends DbTestCase
         $rows = $this->getRows($this->dataWith([$this->exec('success', 'OK')]));
 
         // Row 0 = headers, row 1 = first execution.
-        $this->assertSame('Test task',           $rows[1][0]);
-        $this->assertSame('Test job',            $rows[1][1]);
-        $this->assertSame('inventory',           $rows[1][2]);
-        $this->assertSame('Test target',         $rows[1][3]);
+        $this->assertSame('Test task', $rows[1][0]);
+        $this->assertSame('Test job', $rows[1][1]);
+        $this->assertSame('inventory', $rows[1][2]);
+        $this->assertSame('Test target', $rows[1][3]);
         $this->assertSame('2026-06-29 16:18:02', $rows[1][6]);
-        $this->assertSame('success',             $rows[1][7]);
-        $this->assertSame('OK',                  $rows[1][8]);
+        $this->assertSame('success', $rows[1][7]);
+        $this->assertSame('OK', $rows[1][8]);
     }
 
     // With several executions, the parent columns must be repeated on every row
@@ -104,13 +104,13 @@ class TaskCsvExportTest extends DbTestCase
     {
         $rows = $this->getRows($this->dataWith([
             $this->exec('success', 'OK'),
-            $this->exec('error',   'KO'),
+            $this->exec('error', 'KO'),
         ]));
 
-        $this->assertSame('Test task',   $rows[2][0]);
-        $this->assertSame('Test job',    $rows[2][1]);
+        $this->assertSame('Test task', $rows[2][0]);
+        $this->assertSame('Test job', $rows[2][1]);
         $this->assertSame('Test target', $rows[2][3]);
-        $this->assertSame('KO',          $rows[2][8]);
+        $this->assertSame('KO', $rows[2][8]);
     }
 
     // a message containing a semicolon,  double quotes or a newline must stay inside a single cell
@@ -119,14 +119,14 @@ class TaskCsvExportTest extends DbTestCase
         $multiline_message = "Line 1\nLine 2 with \"quotes\"\nLine 3;and;semicolons";
 
         $rows = $this->getRows($this->dataWith([
-            $this->exec('error',   'Path not found; aborted'),
+            $this->exec('error', 'Path not found; aborted'),
             $this->exec('success', $multiline_message),
         ]));
 
         // 1 header row + 2 execution rows = 3 rows
         $this->assertCount(3, $rows);
         $this->assertSame('Path not found; aborted', $rows[1][8]);
-        $this->assertSame($multiline_message,        $rows[2][8]);
+        $this->assertSame($multiline_message, $rows[2][8]);
     }
 
     // The $includeoldjobs parameter must cap the number of jobs per task
@@ -154,7 +154,7 @@ class TaskCsvExportTest extends DbTestCase
 
         // 1 header + 2 kept jobs
         $this->assertCount(3, $rows);
-        $this->assertSame('first',  $rows[1][8]);
+        $this->assertSame('first', $rows[1][8]);
         $this->assertSame('second', $rows[2][8]);
     }
 }

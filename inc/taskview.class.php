@@ -32,11 +32,10 @@
  */
 
 use Glpi\DBAL\QueryExpression;
-use Safe\DateTime;
-
 use Glpi\Search\Output\SpreadsheetValueBinder;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv as CsvWriter;
+use Safe\DateTime;
 
 use function Safe\json_decode;
 use function Safe\json_encode;
@@ -611,7 +610,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
 
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param int $includeoldjobs
      * @return Spreadsheet
      */
