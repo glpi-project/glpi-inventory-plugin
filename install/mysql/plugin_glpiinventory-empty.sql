@@ -475,6 +475,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_registries` (
   `hive` varchar(255) DEFAULT NULL,
   `path` text DEFAULT NULL,
   `key` varchar(255) DEFAULT NULL,
+  `mode` int NOT NULL DEFAULT '0',
+  `defined` tinyint NOT NULL DEFAULT '0',
+  `depth` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
@@ -488,6 +491,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_registries_contents` (
   `plugin_glpiinventory_collects_registries_id` int unsigned NOT NULL DEFAULT '0',
   `key` varchar(255) DEFAULT NULL,
   `value` text DEFAULT NULL,
+  `depth` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;

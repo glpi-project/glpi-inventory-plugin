@@ -40,6 +40,12 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
 {
     public string $collect_type = 'registry';
 
+    public const MODE_DEFAULT = 0;
+
+    public const MODE_PATH_EXISTS = 1;
+
+    public const MODE_KEY_DEFINED = 2;
+
     /**
      * Get name of this type by language of the user connected
      *
@@ -68,21 +74,40 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         ];
     }
 
+    /**
+     * Get the available collect modes.
+     *
+     * @return array<int,string> list of modes [value => label]
+     */
+    public static function getModes(): array
+    {
+        return [
+            self::MODE_DEFAULT     => __('Default', 'glpiinventory'),
+            self::MODE_PATH_EXISTS => __('Check path existence', 'glpiinventory'),
+            self::MODE_KEY_DEFINED => __('Check if a key is defined', 'glpiinventory'),
+        ];
+    }
+
     public function getListHeaders(): array
     {
         return [
             'hive' => __('Hive', 'glpiinventory'),
             'path' => __("Path", "glpiinventory"),
             'key' => __("Key", "glpiinventory"),
+            'mode' => __("Mode", "glpiinventory"),
         ];
     }
 
     public function displayOneRow(array $row = []): array
     {
+        $modes = self::getModes();
+        $mode  = (int) ($row['mode'] ?? self::MODE_DEFAULT);
         return [
             'hive' => $row['hive'],
             'path' => $row['path'],
-            'key' => $row['key'],
+            // the key is not relevant when only checking the path existence
+            'key'  => ($mode === self::MODE_PATH_EXISTS) ? '' : $row['key'],
+            'mode' => $modes[$mode] ?? $modes[self::MODE_DEFAULT],
         ];
     }
 
@@ -95,6 +120,30 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             $input['path'] .= "/";
         }
 
-        return parent::prepareInputForAdd($input);
+        return parent::prepareInputForAdd($this->normalizeModeInput($input));
+    }
+
+    /**
+     * Normalize the "defined" flag and recursion "depth" according to the selected mode.
+     *
+     * - "defined" is a boolean flag driven by the MODE_KEY_DEFINED mode (case 2).
+     * - "depth" (recursion depth) only applies to the default mode (case 3); it is
+     *   forced to 0 for the other modes.
+     *
+     * @param array<string,mixed> $input
+     * @return array<string,mixed>
+     */
+    private function normalizeModeInput(array $input): array
+    {
+        $mode = (int) ($input['mode'] ?? self::MODE_DEFAULT);
+        $input['mode'] = $mode;
+
+        // case 2: the "key is defined" check is requested through the mode
+        $input['defined'] = ($mode === self::MODE_KEY_DEFINED) ? 1 : 0;
+
+        // recursion depth is only meaningful in the default mode (case 3)
+        $input['depth'] = ($mode === self::MODE_DEFAULT) ? max(0, (int) ($input['depth'] ?? 0)) : 0;
+
+        return $input;
     }
 }

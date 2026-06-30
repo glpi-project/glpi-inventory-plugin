@@ -347,12 +347,49 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
                 $reg_db = $pfCollect_Registry->find($sql_where);
                 foreach ($reg_db as $reg) {
-                    $output[] = [
-                        'function' => 'getFromRegistry',
-                        'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
-                        'uuid'     => $taskjobstate->fields['uniqid'],
-                        '_sid'     => $reg['id'],
-                    ];
+                    $mode = (int) ($reg['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
+                    switch ($mode) {
+                        case PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS:
+                            $output[] = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                                'exists'   => 1,
+                            ];
+                            break;
+
+                        case PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
+                            $output[] = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                                'defined'  => (int) $reg['defined'],
+                            ];
+                            break;
+
+                        default:
+                            $job = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                            ];
+                            $depth = (int) ($reg['depth'] ?? 0);
+                            if ($depth > 0) {
+                                $job['depth'] = $depth;
+                                $DB->delete(
+                                    'glpi_plugin_glpiinventory_collects_registries_contents',
+                                    [
+                                        'plugin_glpiinventory_collects_registries_id' => $reg['id'],
+                                        'computers_id'                                => $agent['items_id'],
+                                    ]
+                                );
+                            }
+                            $output[] = $job;
+                            break;
+                    }
                 }
                 break;
 

@@ -1062,6 +1062,36 @@ function pluginGlpiinventoryUpdate(string $current_version): void
     // Migrate search params for dynamic groups
     doDynamicDataSearchParamsMigration();
 
+    // Collect registry: add support for collect "mode" (default / check path existence /
+    // check if a key is defined) and recursion depth (read sub-keys recursively).
+    $migration->addField(
+        'glpi_plugin_glpiinventory_collects_registries',
+        'mode',
+        "int NOT NULL DEFAULT '0'",
+        ['after' => 'key']
+    );
+    $migration->addField(
+        'glpi_plugin_glpiinventory_collects_registries',
+        'defined',
+        "tinyint NOT NULL DEFAULT '0'",
+        ['after' => 'mode']
+    );
+    $migration->addField(
+        'glpi_plugin_glpiinventory_collects_registries',
+        'depth',
+        "int NOT NULL DEFAULT '0'",
+        ['after' => 'defined']
+    );
+    $migration->migrationOneTable('glpi_plugin_glpiinventory_collects_registries');
+
+    $migration->addField(
+        'glpi_plugin_glpiinventory_collects_registries_contents',
+        'depth',
+        "int NOT NULL DEFAULT '0'",
+        ['after' => 'value']
+    );
+    $migration->migrationOneTable('glpi_plugin_glpiinventory_collects_registries_contents');
+
     installDashboard();
 
     // Add missing index on `glpi_plugin_glpiinventory_taskjoblogs`
