@@ -34,6 +34,10 @@
 use Glpi\DBAL\QueryExpression;
 use Safe\DateTime;
 
+use Glpi\Search\Output\SpreadsheetValueBinder;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv as CsvWriter;
+
 use function Safe\json_decode;
 use function Safe\json_encode;
 
@@ -548,8 +552,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
      */
     public function csvExport($params = [])
     {
-        global $CFG_GLPI;
-
         $default_params = [
             'agent_state_types' => [],
         ];
@@ -592,10 +594,35 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         // clean old temporary variables
         unset($task, $job, $target, $agent);
 
-        $delimiter = $CFG_GLPI['csv_delimiter'];
-        $out       = fopen('php://output', 'w');
+        $spread = $this->buildSpreadsheet($data, $includeoldjobs);
 
-        fputcsv($out, [
+        $writer = new CsvWriter($spread);
+        $writer
+            ->setDelimiter($_SESSION['glpicsv_delimiter'] ?? ';')
+            ->setEnclosure('"')
+            ->setUseBOM(true)
+            ->setLineEnding("\r\n")
+            ->setSheetIndex(0);
+        $writer->save('php://output');
+
+        // force exit to prevent further display
+        exit; //@phpstan-ignore-line (whole method needs to be refactored)
+    }
+
+
+    /**
+     * @param array $data
+     * @param int $includeoldjobs
+     * @return Spreadsheet
+     */
+    public function buildSpreadsheet(array $data, int $includeoldjobs): Spreadsheet
+    {
+        $spread = new Spreadsheet();
+        // Prevent values starting with "=" from being interpreted as formulas (excel)
+        $spread->setValueBinder(new SpreadsheetValueBinder());
+        $sheet = $spread->getActiveSheet();
+
+        $headers = [
             'Task_name',
             'Job_name',
             'Method',
@@ -605,15 +632,17 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             'Date',
             'Status',
             'Last Message',
-        ], $delimiter);
+        ];
+        $sheet->fromArray($headers);
 
         $agent_obj = new Agent();
         $computer  = new Computer();
+        $row       = 2;
 
-        foreach ($data['tasks'] as $task) {
+        foreach ($data['tasks'] ?? [] as $task) {
             $task_name = $task['task_name'] ?? '';
             if (empty($task['jobs'])) {
-                fputcsv($out, [$task_name, '', '', '', '', '', '', '', ''], $delimiter);
+                $sheet->fromArray([$task_name, '', '', '', '', '', '', '', ''], null, 'A' . $row++);
                 continue;
             }
 
@@ -623,13 +652,13 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 $method   = $job['method'] ?? '';
 
                 if (empty($job['targets'])) {
-                    fputcsv($out, [$task_name, $job_name, $method, '', '', '', '', '', ''], $delimiter);
+                    $sheet->fromArray([$task_name, $job_name, $method, '', '', '', '', '', ''], null, 'A' . $row++);
                 } else {
                     foreach ($job['targets'] as $target) {
                         $target_name = $target['name'] ?? '';
 
                         if (empty($target['agents'])) {
-                            fputcsv($out, [$task_name, $job_name, $method, $target_name, '', '', '', '', ''], $delimiter);
+                            $sheet->fromArray([$task_name, $job_name, $method, $target_name, '', '', '', '', ''], null, 'A' . $row++);
                             continue;
                         }
 
@@ -642,12 +671,12 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             }
 
                             if (empty($agent)) {
-                                fputcsv($out, [$task_name, $job_name, $method, $target_name, $agent_name, $computer_name, '', '', ''], $delimiter);
+                                $sheet->fromArray([$task_name, $job_name, $method, $target_name, $agent_name, $computer_name, '', '', ''], null, 'A' . $row++);
                                 continue;
                             }
 
                             foreach ($agent as $exec) {
-                                fputcsv($out, [
+                                $sheet->fromArray([
                                     $task_name,
                                     $job_name,
                                     $method,
@@ -657,7 +686,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                     $exec['last_log_date'] ?? '',
                                     $exec['state'] ?? '',
                                     $exec['last_log'] ?? '',
-                                ], $delimiter);
+                                ], null, 'A' . $row++);
                             }
                         }
                     }
@@ -669,11 +698,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 }
             }
         }
-
-        fclose($out);
-
-        // force exit to prevent further display
-        exit; //@phpstan-ignore-line (whole method needs to be refactored)
+        return $spread;
     }
 
 
