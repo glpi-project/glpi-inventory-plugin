@@ -157,4 +157,44 @@ class TaskCsvExportTest extends DbTestCase
         $this->assertSame('first', $rows[1][8]);
         $this->assertSame('second', $rows[2][8]);
     }
+
+    // Computer  - agent / Columns are populated
+    public function testAgentAndComputerColumnsArePopulated(): void
+    {
+        $computer_id = $this->createItem(Computer::class, [
+            'name'        => 'pc test',
+            'entities_id' => 0,
+        ])->getID();
+
+        // agent requires fk agentType
+        $agenttype_id = $this->createItem(AgentType::class, [
+            'name' => 'type test',
+        ])->getID();
+
+        $agent_id = $this->createItem(Agent::class, [
+            'name'          => 'agent test',
+            'entities_id'   => 0,
+            'itemtype'      => Computer::class,
+            'items_id'      => $computer_id,
+            'deviceid'      => 'deviceid test',
+            'agenttypes_id' => $agenttype_id,
+        ])->getID();
+
+        $data = ['tasks' => [1 => [
+            'task_name' => 'test task',
+            'jobs'      => [10 => [
+                'name'    => 'test job',
+                'method'  => 'inventory',
+                'targets' => [99 => [
+                    'name'   => 'test target',
+                    'agents' => [$agent_id => [$this->exec('success', 'OK')]],
+                ]],
+            ]],
+        ]]];
+
+        $rows = $this->getRows($data);
+
+        $this->assertSame('agent test', $rows[1][4]);
+        $this->assertSame('pc test', $rows[1][5]);
+    }
 }

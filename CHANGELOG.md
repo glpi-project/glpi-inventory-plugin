@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
-- Fix export csv
+- Fix task execution results CSV export
 
 ## [1.6.8] - 2026-06-24
 
