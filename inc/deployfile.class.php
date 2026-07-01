@@ -59,7 +59,6 @@ use function Safe\scandir;
 use function Safe\tempnam;
 use function Safe\unlink;
 
-
 /**
  * Manage the files to deploy.
  */
