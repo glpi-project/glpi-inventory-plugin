@@ -34,6 +34,7 @@
 use Glpi\Application\View\TemplateRenderer;
 
 use function Safe\preg_match;
+use function Safe\preg_replace;
 
 /**
  * Manage the registry keys found by the collect module of agent.
