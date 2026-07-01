@@ -104,13 +104,21 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
         switch ($mode) {
             case PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS:
-                $exists = isset($registry_data['_exists']) ? (int) (bool) $registry_data['_exists'] : 0;
+                // Use the "_exists" flag if the agent supports it, otherwise fall back on
+                // the presence of returned data (agent that does not know the flag).
+                $exists = isset($registry_data['_exists'])
+                    ? (int) (bool) $registry_data['_exists']
+                    : (int) $this->hasReturnedData($registry_data);
                 $this->storeSingleResult($computers_id, $collects_registries_id, '', (string) $exists);
                 return;
 
             case PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
-                $defined = isset($registry_data['_defined']) ? (int) (bool) $registry_data['_defined'] : 0;
-                $key     = (string) ($collect_registry->fields['key'] ?? '');
+                // Use the "_defined" flag if the agent supports it, otherwise consider the key
+                // defined when the agent returned a value for it (agent without flag support).
+                $defined = isset($registry_data['_defined'])
+                    ? (int) (bool) $registry_data['_defined']
+                    : (int) $this->hasReturnedData($registry_data);
+                $key = (string) ($collect_registry->fields['key'] ?? '');
                 $this->storeSingleResult($computers_id, $collects_registries_id, $key, (string) $defined);
                 return;
 
@@ -188,6 +196,28 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             ];
             $this->add($input);
         }
+    }
+
+    /**
+     * Tell whether the agent returned actual registry data (i.e. anything else than
+     * the control/flag keys). Used as a fallback for the "path existence" and
+     * "key defined" modes when the agent does not support the dedicated flags:
+     * getting a value back means the path/key exists.
+     *
+     * @param array<string,mixed> $registry_data
+     */
+    private function hasReturnedData(array $registry_data): bool
+    {
+        $control = [
+            '_exists' => true,
+            '_defined' => true,
+            '_path' => true,
+            '_value' => true,
+            '_depth' => true,
+            '_cpt' => true,
+            'method' => true,
+        ];
+        return count(array_diff_key($registry_data, $control)) > 0;
     }
 
     /**
