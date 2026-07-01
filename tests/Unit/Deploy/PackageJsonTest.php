@@ -32,9 +32,24 @@
  */
 
 use Glpi\Tests\DbTestCase;
+use Glpi\Tests\GLPITestCase;
 
 class PackageJsonTest extends DbTestCase
 {
+    public function setUp(): void
+    {
+        GLPITestCase::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        global $DB;
+
+        $DB->setMustUnsanitizeData(false); // Be sure to switch back to disabled unsanitization.
+
+        GLPITestCase::tearDown();
+    }
+
     public function testJsonCreateNewPackage()
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
@@ -55,7 +70,7 @@ class PackageJsonTest extends DbTestCase
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
-            'name'        => 'test2',
+            'name'        => 'test2_packagejsontest',
             'entities_id' => 0,
         ];
         $packages_id = $pfDeployPackage->add($input);
@@ -79,15 +94,24 @@ class PackageJsonTest extends DbTestCase
 
     public function testDuplicate()
     {
+        // purge all packages before test
+        // because addItem test create a package with the same name
+        // and testDuplicate call testAddItem to create a package with the same name
+        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+        $packages = $pfDeployPackage->find();
+        foreach ($packages as $package) {
+            $pfDeployPackage->delete(['id' => $package['id']]);
+        }
+
         $this->testAddItem();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $packages        = $pfDeployPackage->find(['name' => 'test2']);
+        $packages        = $pfDeployPackage->find(['name' => 'test2_packagejsontest']);
         $this->assertEquals(1, count($packages));
         $package = current($packages);
 
         $this->assertTrue($pfDeployPackage->duplicate($package['id']));
 
-        $packages = $pfDeployPackage->find(['name' => 'Copy of test2']);
+        $packages = $pfDeployPackage->find(['name' => 'Copy of test2_packagejsontest']);
         $this->assertEquals(1, count($packages));
         $package = current($packages);
 
