@@ -283,7 +283,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     public static function getLabelByItemtype($credential_itemtype)
     {
         $credentialtypes = self::findItemtypeType($credential_itemtype);
-        if (!empty($credentialtypes)) {
+        if ($credentialtypes !== []) {
             return $credentialtypes['name'];
         }
         return false;
@@ -427,7 +427,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
     public static function hasAlLeastOneType()
     {
         $types = self::getCredentialsItemTypes();
-        return (!empty($types));
+        return ($types !== []);
     }
 
 

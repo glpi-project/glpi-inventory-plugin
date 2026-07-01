@@ -32,6 +32,9 @@
  */
 
 use Glpi\DBAL\QueryExpression;
+use Glpi\Search\Output\SpreadsheetValueBinder;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv as CsvWriter;
 use Safe\DateTime;
 
 use function Safe\json_decode;
@@ -595,89 +598,111 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         define('SEP', $CFG_GLPI['csv_delimiter']); // @phpstan-ignore theCodingMachineSafe.function
         define('NL', "\r\n"); // @phpstan-ignore theCodingMachineSafe.function
 
-        // cols titles
-        echo "Task_name" . SEP;
-        echo "Job_name" . SEP;
-        echo "Method" . SEP;
-        echo "Target" . SEP;
-        echo "Agent" . SEP;
-        echo "Computer name" . SEP;
-        echo "Date" . SEP;
-        echo "Status" . SEP;
-        echo "Last Message" . NL;
-
-        $agent_obj = new Agent();
-        $computer  = new Computer();
-
-        // prepare an anonymous (and temporory) function
-        // for test if an element is the last of an array
-        $last = (fn(&$array, $key) => $key === array_key_last($array));
-        foreach ($data['tasks'] as $task_id => $task) {
-            echo $task['task_name'] . SEP;
-
-            if (count($task['jobs']) == 0) {
-                echo NL;
-            } else {
-                $log_cpt = 0;
-                foreach ($task['jobs'] as $job_id => $job) {
-                    echo $job['name'] . SEP;
-                    echo $job['method'] . SEP;
-                    if (count($job['targets']) == 0) {
-                        echo NL;
-                    } else {
-                        foreach ($job['targets'] as $target_id => $target) {
-                            echo $target['name'] . SEP;
-
-                            if (count($target['agents']) == 0) {
-                                echo NL;
-                            } else {
-                                foreach ($target['agents'] as $agent_id => $agent) {
-                                    $agent_obj->getFromDB($agent_id);
-                                    echo $agent_obj->getName() . SEP;
-                                    $computer->getFromDB($agent_obj->fields['items_id']);
-                                    echo $computer->getname() . SEP;
-
-                                    if (count($agent) == 0) {
-                                        echo NL;
-                                    } else {
-                                        foreach ($agent as $exec_id => $exec) {
-                                            echo $exec['last_log_date'] . SEP;
-                                            echo $exec['state'] . SEP;
-                                            echo $exec['last_log'] . NL;
-
-                                            if (!$last($agent, $exec_id)) {
-                                                echo SEP . SEP . SEP . SEP . SEP . SEP;
-                                            }
-                                        }
-                                    }
-
-                                    if (!$last($target['agents'], $agent_id)) {
-                                        echo SEP . SEP . SEP . SEP;
-                                    }
-                                }
-                            }
-
-                            if (!$last($job['targets'], $target_id)) {
-                                echo SEP . SEP . SEP;
-                            }
-                        }
-                    }
-
-                    if (!$last($task['jobs'], $job_id)) {
-                        echo SEP;
-                    }
-
-                    $log_cpt++;
-
-                    if ($includeoldjobs != -1 && $log_cpt >= $includeoldjobs) {
-                        break;
-                    }
-                }
-            }
-        }
+        $writer = new CsvWriter($this->buildSpreadsheet($data, $includeoldjobs));
+        $writer
+            ->setDelimiter(SEP)
+            ->setEnclosure('"')
+            ->setUseBOM(true)
+            ->setLineEnding(NL)
+            ->setSheetIndex(0);
+        $writer->save('php://output');
 
         // force exit to prevent further display
         exit; //@phpstan-ignore-line (whole method needs to be refactored)
+    }
+
+
+    /**
+     * @param array<string, mixed> $data
+     * @param int $includeoldjobs
+     * @return Spreadsheet
+     */
+    public function buildSpreadsheet(array $data, int $includeoldjobs): Spreadsheet
+    {
+        $spread = new Spreadsheet();
+        // Prevent values starting with "=" from being interpreted as formulas (excel)
+        $spread->setValueBinder(new SpreadsheetValueBinder());
+        $sheet = $spread->getActiveSheet();
+
+        $headers = [
+            'Task_name',
+            'Job_name',
+            'Method',
+            'Target',
+            'Agent',
+            'Computer name',
+            'Date',
+            'Status',
+            'Last Message',
+        ];
+        $sheet->fromArray($headers);
+
+        $agent_obj = new Agent();
+        $computer  = new Computer();
+        $row       = 2;
+
+        foreach ($data['tasks'] ?? [] as $task) {
+            $task_name = $task['task_name'] ?? '';
+            if (empty($task['jobs'])) {
+                $sheet->fromArray([$task_name, '', '', '', '', '', '', '', ''], null, 'A' . $row++);
+                continue;
+            }
+
+            $log_cpt = 0;
+            foreach ($task['jobs'] as $job) {
+                $job_name = $job['name']   ?? '';
+                $method   = $job['method'] ?? '';
+
+                if (empty($job['targets'])) {
+                    $sheet->fromArray([$task_name, $job_name, $method, '', '', '', '', '', ''], null, 'A' . $row++);
+                } else {
+                    foreach ($job['targets'] as $target) {
+                        $target_name = $target['name'] ?? '';
+
+                        if (empty($target['agents'])) {
+                            $sheet->fromArray([$task_name, $job_name, $method, $target_name, '', '', '', '', ''], null, 'A' . $row++);
+                            continue;
+                        }
+
+                        foreach ($target['agents'] as $agent_id => $agent) {
+                            $agent_name = '';
+                            $computer_name = '';
+                            if ($agent_obj->getFromDB($agent_id)) {
+                                $agent_name = $agent_obj->getName();
+                                if (isset($agent_obj->fields['items_id']) && $computer->getFromDB($agent_obj->fields['items_id'])) {
+                                    $computer_name = $computer->getName();
+                                }
+                            }
+
+                            if (empty($agent)) {
+                                $sheet->fromArray([$task_name, $job_name, $method, $target_name, $agent_name, $computer_name, '', '', ''], null, 'A' . $row++);
+                                continue;
+                            }
+
+                            foreach ($agent as $exec) {
+                                $sheet->fromArray([
+                                    $task_name,
+                                    $job_name,
+                                    $method,
+                                    $target_name,
+                                    $agent_name,
+                                    $computer_name,
+                                    $exec['last_log_date'] ?? '',
+                                    $exec['state'] ?? '',
+                                    $exec['last_log'] ?? '',
+                                ], null, 'A' . $row++);
+                            }
+                        }
+                    }
+                }
+
+                $log_cpt++;
+                if ($includeoldjobs != -1 && $log_cpt >= $includeoldjobs) {
+                    break;
+                }
+            }
+        }
+        return $spread;
     }
 
 

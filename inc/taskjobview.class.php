@@ -472,7 +472,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 }
             }
 
-            if (empty($filter_id)) {
+            if ($filter_id === []) {
                 // No available agents/computers: show empty dropdown safely
                 $this->showDropdownFromArray(
                     $title,

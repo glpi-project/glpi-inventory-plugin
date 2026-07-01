@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+
+- Fix task execution results CSV export
+
 ## [1.6.8] - 2026-06-24
 
 - Fix module / exception handling during updates from the agent or general settings.

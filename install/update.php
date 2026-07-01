@@ -182,8 +182,6 @@ function pluginGlpiinventoryUpdate(string $current_version): void
     }
 
     $migration = new Migration($current_version);
-    $prepare_task = [];
-    $prepare_rangeip = [];
     $prepare_Config = [];
 
     $a_plugin = plugin_version_glpiinventory();
