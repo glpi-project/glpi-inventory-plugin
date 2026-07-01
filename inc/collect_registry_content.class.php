@@ -108,7 +108,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 // the presence of returned data (agent that does not know the flag).
                 $exists = isset($registry_data['_exists'])
                     ? (int) (bool) $registry_data['_exists']
-                    : (int) $this->hasReturnedData($registry_data);
+                    : (int) self::hasReturnedData($registry_data);
                 $this->storeSingleResult($computers_id, $collects_registries_id, '', (string) $exists);
                 return;
 
@@ -117,7 +117,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 // defined when the agent returned a value for it (agent without flag support).
                 $defined = isset($registry_data['_defined'])
                     ? (int) (bool) $registry_data['_defined']
-                    : (int) $this->hasReturnedData($registry_data);
+                    : (int) self::hasReturnedData($registry_data);
                 $key = (string) ($collect_registry->fields['key'] ?? '');
                 $this->storeSingleResult($computers_id, $collects_registries_id, $key, (string) $defined);
                 return;
@@ -206,7 +206,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      *
      * @param array<string,mixed> $registry_data
      */
-    private function hasReturnedData(array $registry_data): bool
+    public static function hasReturnedData(array $registry_data): bool
     {
         $control = [
             '_exists' => true,
@@ -218,6 +218,57 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             'method' => true,
         ];
         return count(array_diff_key($registry_data, $control)) > 0;
+    }
+
+    /**
+     * Build a human-readable job-log message for a registry collect answer, so the
+     * task execution log shows the tested path and the verdict instead of raw JSON.
+     * Returns null for the default and recursion modes (raw payload is kept).
+     *
+     * @param PluginGlpiinventoryCollect_Registry $registry the collect registry
+     * @param array<string,mixed> $registry_data the agent answer
+     */
+    public static function getAnswerLogMessage(PluginGlpiinventoryCollect_Registry $registry, array $registry_data): ?string
+    {
+        $mode = (int) ($registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
+        $path = $registry->fields['hive'] . $registry->fields['path'];
+
+        switch ($mode) {
+            case PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS:
+                $exists = isset($registry_data['_exists'])
+                    ? (bool) $registry_data['_exists']
+                    : self::hasReturnedData($registry_data);
+                return sprintf(
+                    $exists
+                        ? __('%s found', 'glpiinventory')
+                        : __('%s not found', 'glpiinventory'),
+                    self::toWindowsPath($path)
+                );
+
+            case PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
+                $defined = isset($registry_data['_defined'])
+                    ? (bool) $registry_data['_defined']
+                    : self::hasReturnedData($registry_data);
+                return sprintf(
+                    $defined
+                        ? __('%s exists', 'glpiinventory')
+                        : __("%s doesn't exist", 'glpiinventory'),
+                    self::toWindowsPath($path . $registry->fields['key'])
+                );
+
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Format a registry path the Windows way: use backslashes as separators and
+     * collapse any duplicate backslashes so no "\\" appears in the output.
+     */
+    private static function toWindowsPath(string $path): string
+    {
+        $path = str_replace('/', '\\', $path);
+        return preg_replace('/\\\\+/', '\\\\', $path);
     }
 
     /**

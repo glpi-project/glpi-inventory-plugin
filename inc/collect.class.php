@@ -636,7 +636,18 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     // add logs to job
                     if ($add_value && count($a_values)) {
                         $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
-                        $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                        $message = null;
+                        // For registry collects, log a readable message (tested path + verdict)
+                        // instead of the raw agent payload.
+                        if ($this->fields['type'] == 'registry' && $sid) {
+                            $reg = new PluginGlpiinventoryCollect_Registry();
+                            if ($reg->getFromDB($sid)) {
+                                $message = PluginGlpiinventoryCollect_Registry_Content::getAnswerLogMessage($reg, $a_values);
+                            }
+                        }
+                        if ($message === null) {
+                            $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                        }
                         $pfTaskjoblog->addTaskjoblog(
                             $jobstate['id'],
                             $jobstate['items_id'],
