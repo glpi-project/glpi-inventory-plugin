@@ -75,7 +75,7 @@
     {{ fields.dropdownNumberField(
         'depth',
         0,
-        __('Recursion depth', 'glpiinventory'),
+        __('All value', 'glpiinventory'),
         field_options|merge({
             'min': 0,
             'max': 10
@@ -86,7 +86,7 @@
 <script>
     $(function () {
         // Registry collect mode values (see PluginGlpiinventoryCollect_Registry):
-        //   0 = MODE_DEFAULT, 1 = MODE_PATH_EXISTS, 2 = MODE_KEY_DEFINED
+        //   0 = MODE_DEFAULT, 1 = MODE_PATH_EXISTS, 2 = MODE_KEY_DEFINED, 3 = MODE_DEPTH
         var rand        = '{{ rand }}';
         var keyField    = $('#collect_registry_key_' + rand);
         var depthField  = $('#collect_registry_depth_' + rand);
@@ -94,10 +94,10 @@
 
         var toggleRegistryFields = function () {
             var mode = parseInt(modeSelect.val(), 10) || 0;
-            // The key is useless when we only check the path existence
-            keyField.toggle(mode !== 1);
-            // The recursion depth only applies to the default mode
-            depthField.toggle(mode === 0);
+            // The key is useless when checking the path existence or reading recursively
+            keyField.toggle(mode !== 1 && mode !== 3);
+            // The All value field only applies to the depth mode
+            depthField.toggle(mode === 3);
         };
 
         modeSelect.on('change', toggleRegistryFields);

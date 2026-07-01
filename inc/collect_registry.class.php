@@ -47,6 +47,13 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
     public const MODE_KEY_DEFINED = 2;
 
     /**
+     * Case 3: read all the values found under the path, recursively down to the
+     * configured depth (depth 0 = only the values at the path, depth 1 = also the
+     * sub-keys of first level, etc.).
+     */
+    public const MODE_DEPTH = 3;
+
+    /**
      * Get name of this type by language of the user connected
      *
      * @param int $nb number of elements
@@ -85,6 +92,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             self::MODE_DEFAULT     => __('Default', 'glpiinventory'),
             self::MODE_PATH_EXISTS => __('Check path existence', 'glpiinventory'),
             self::MODE_KEY_DEFINED => __('Check if a key is defined', 'glpiinventory'),
+            self::MODE_DEPTH       => __('All value', 'glpiinventory'),
         ];
     }
 
@@ -95,6 +103,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             'path' => __("Path", "glpiinventory"),
             'key' => __("Key", "glpiinventory"),
             'mode' => __("Mode", "glpiinventory"),
+            'depth' => __("All value", "glpiinventory"),
         ];
     }
 
@@ -105,9 +114,11 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         return [
             'hive' => $row['hive'],
             'path' => $row['path'],
-            // the key is not relevant when only checking the path existence
-            'key'  => ($mode === self::MODE_PATH_EXISTS) ? '' : $row['key'],
+            // the key is not relevant when checking the path existence or reading recursively
+            'key'  => in_array($mode, [self::MODE_PATH_EXISTS, self::MODE_DEPTH], true) ? '' : $row['key'],
             'mode' => $modes[$mode] ?? $modes[self::MODE_DEFAULT],
+            // the All value only applies to the depth mode
+            'depth' => ($mode === self::MODE_DEPTH) ? (int) ($row['depth'] ?? 0) : '',
         ];
     }
 
@@ -127,7 +138,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
      * Normalize the "defined" flag and recursion "depth" according to the selected mode.
      *
      * - "defined" is a boolean flag driven by the MODE_KEY_DEFINED mode (case 2).
-     * - "depth" (recursion depth) only applies to the default mode (case 3); it is
+     * - "depth" (All value) only applies to the MODE_DEPTH mode (case 3); it is
      *   forced to 0 for the other modes.
      *
      * @param array<string,mixed> $input
@@ -141,8 +152,8 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
         // case 2: the "key is defined" check is requested through the mode
         $input['defined'] = ($mode === self::MODE_KEY_DEFINED) ? 1 : 0;
 
-        // recursion depth is only meaningful in the default mode (case 3)
-        $input['depth'] = ($mode === self::MODE_DEFAULT) ? max(0, (int) ($input['depth'] ?? 0)) : 0;
+        // All value is only meaningful in the depth mode (case 3)
+        $input['depth'] = ($mode === self::MODE_DEPTH) ? max(0, (int) ($input['depth'] ?? 0)) : 0;
 
         return $input;
     }

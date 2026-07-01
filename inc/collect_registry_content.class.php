@@ -122,8 +122,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 $this->storeSingleResult($computers_id, $collects_registries_id, $key, (string) $defined);
                 return;
 
-            default:
-                // Content has been cleaned at job dispatch (see PluginGlpiinventoryCollect::run()),
+            case PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
+                // Case 3: content has been cleaned at job dispatch (see PluginGlpiinventoryCollect::run()),
                 // so we only append the reported entry here.
                 if (array_key_exists('_path', $registry_data)) {
                     $path  = (string) $registry_data['_path'];
@@ -358,7 +358,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             if ($previous_key != $data['plugin_glpiinventory_collects_registries_id']) {
                 $pfCollect_Registry->getFromDB($data['plugin_glpiinventory_collects_registries_id']);
                 $mode          = (int) ($pfCollect_Registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
-                $depth_enabled = ((int) ($pfCollect_Registry->fields['depth'] ?? 0)) > 0;
+                $depth_enabled = ($mode === PluginGlpiinventoryCollect_Registry::MODE_DEPTH);
 
                 $colspan = ($mode === PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS) ? 2 : 3;
                 echo "<tr class='tab_bg_1'>";
@@ -427,8 +427,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         $collect_registry->getFromDB($id);
         $computer = new Computer();
 
-        $mode  = (int) ($collect_registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
-        $depth = (int) ($collect_registry->fields['depth'] ?? 0);
+        $mode = (int) ($collect_registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
 
         $data = $this->find(
             ['plugin_glpiinventory_collects_registries_id' => $id],
@@ -470,7 +469,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 }
                 break;
 
-            case $depth > 0:
+            case $mode === PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
                 $columns = [
                     'computer' => Computer::getTypeName(1),
                     'value'    => __('Path', 'glpiinventory'),

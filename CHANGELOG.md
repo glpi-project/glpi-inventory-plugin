@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.6.8] - 2026-06-24
 
 - Add registry collect modes: `Check path existence` and `Check if key is defined`
-- Add a `Recursion depth` option to the registry collect to read sub-keys recursively.
+- Add a `All value` option to the registry collect to read sub-keys recursively.
 - Fix module / exception handling during updates from the agent or general settings.
 - Fix display of rights for deploy on demand
 - Fix MySQL query error: Unknown column 'groups_id'

@@ -369,25 +369,36 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             ];
                             break;
 
+                        case PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
+                            // Case 3: read every value under the path, recursively down to
+                            // the configured depth. The key is not used (the whole path is read).
+                            $output[] = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                                'depth'    => (int) ($reg['depth'] ?? 0),
+                            ];
+                            // A recursive collect reports one entry per answer (like the file
+                            // collect), so clean the previously collected content before the
+                            // agent reports the new tree.
+                            $DB->delete(
+                                'glpi_plugin_glpiinventory_collects_registries_contents',
+                                [
+                                    'plugin_glpiinventory_collects_registries_id' => $reg['id'],
+                                    'computers_id'                                => $agent['items_id'],
+                                ]
+                            );
+                            break;
+
                         default:
-                            $job = [
+                            // Default mode: read the value(s) of the configured key.
+                            $output[] = [
                                 'function' => 'getFromRegistry',
                                 'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
                                 'uuid'     => $taskjobstate->fields['uniqid'],
                                 '_sid'     => $reg['id'],
                             ];
-                            $depth = (int) ($reg['depth'] ?? 0);
-                            if ($depth > 0) {
-                                $job['depth'] = $depth;
-                                $DB->delete(
-                                    'glpi_plugin_glpiinventory_collects_registries_contents',
-                                    [
-                                        'plugin_glpiinventory_collects_registries_id' => $reg['id'],
-                                        'computers_id'                                => $agent['items_id'],
-                                    ]
-                                );
-                            }
-                            $output[] = $job;
                             break;
                     }
                 }
