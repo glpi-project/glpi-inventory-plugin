@@ -71,7 +71,7 @@ class PackageJsonTest extends DbTestCase
     {
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
-            'name'        => 'test2',
+            'name'        => 'test2_packagejsontest',
             'entities_id' => 0,
         ];
         $packages_id = $pfDeployPackage->add($input);
@@ -97,13 +97,13 @@ class PackageJsonTest extends DbTestCase
     {
         $this->testAddItem();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-        $packages        = $pfDeployPackage->find(['name' => 'test2']);
+        $packages        = $pfDeployPackage->find(['name' => 'test2_packagejsontest']);
         $this->assertEquals(1, count($packages));
         $package = current($packages);
 
         $this->assertTrue($pfDeployPackage->duplicate($package['id']));
 
-        $packages = $pfDeployPackage->find(['name' => 'Copy of test2']);
+        $packages = $pfDeployPackage->find(['name' => 'Copy of test2_packagejsontest']);
         $this->assertEquals(1, count($packages));
         $package = current($packages);
 
