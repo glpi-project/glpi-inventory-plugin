@@ -50,6 +50,7 @@ use function Safe\mkdir;
 use function Safe\preg_match;
 use function Safe\preg_replace;
 use function Safe\rename;
+use function Safe\unserialize;
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 /**
