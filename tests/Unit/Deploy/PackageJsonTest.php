@@ -94,6 +94,15 @@ class PackageJsonTest extends DbTestCase
 
     public function testDuplicate()
     {
+        // purge all packages before test
+        // because addItem test create a package with the same name
+        // and testDuplicate call testAddItem to create a package with the same name
+        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+        $packages = $pfDeployPackage->find();
+        foreach ($packages as $package) {
+            $pfDeployPackage->delete(['id' => $package['id']]);
+        }
+
         $this->testAddItem();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $packages        = $pfDeployPackage->find(['name' => 'test2_packagejsontest']);
