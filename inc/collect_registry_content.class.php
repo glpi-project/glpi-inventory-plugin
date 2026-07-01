@@ -259,8 +259,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     public static function getExistenceLabel($value): string
     {
         return ((int) $value === 1)
-            ? __('Present', 'glpiinventory')
-            : __('Absent', 'glpiinventory');
+            ? __('Exist', 'glpiinventory')
+            : __('Does not exist', 'glpiinventory');
     }
 
     /**
