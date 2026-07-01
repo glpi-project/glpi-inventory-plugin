@@ -35,15 +35,9 @@ use Glpi\Tests\DbTestCase;
 
 class PackageJsonTest extends DbTestCase
 {
-    public function setUp(): void
-    {
+    public function setUp(): void {}
 
-    }
-
-    public function tearDown(): void
-    {
-
-    }
+    public function tearDown(): void {}
 
     public function testJsonCreateNewPackage()
     {
