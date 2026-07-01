@@ -810,7 +810,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         //Second, clean and check if it has been removed
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
@@ -970,7 +970,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         // delete computer and check if it has been put in trash
         $computer->delete(['id' => $computers_id]);
@@ -982,7 +982,7 @@ class CollectsTest extends DbTestCase
 
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
