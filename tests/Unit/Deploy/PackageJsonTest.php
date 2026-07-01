@@ -32,12 +32,24 @@
  */
 
 use Glpi\Tests\DbTestCase;
+use Glpi\Tests\GLPITestCase;
 
 class PackageJsonTest extends DbTestCase
 {
-    public function setUp(): void {}
 
-    public function tearDown(): void {}
+    public function setUp(): void
+    {
+        GLPITestCase::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        global $DB;
+
+        $DB->setMustUnsanitizeData(false); // Be sure to switch back to disabled unsanitization.
+
+        GLPITestCase::tearDown();
+    }
 
     public function testJsonCreateNewPackage()
     {
