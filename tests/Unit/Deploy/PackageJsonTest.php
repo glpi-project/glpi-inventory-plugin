@@ -36,7 +36,6 @@ use Glpi\Tests\GLPITestCase;
 
 class PackageJsonTest extends DbTestCase
 {
-
     public function setUp(): void
     {
         GLPITestCase::setUp();
