@@ -75,7 +75,7 @@
     {{ fields.dropdownNumberField(
         'depth',
         0,
-        __('All value', 'glpiinventory'),
+        __('Recursion depth', 'glpiinventory'),
         field_options|merge({
             'min': 0,
             'max': 10
@@ -96,7 +96,7 @@
             var mode = parseInt(modeSelect.val(), 10) || 0;
             // The key is useless when checking the path existence or reading recursively
             keyField.toggle(mode !== 1 && mode !== 3);
-            // The All value field only applies to the depth mode
+            // The recursion depth field only applies to the "All values" mode
             depthField.toggle(mode === 3);
         };
 

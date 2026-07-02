@@ -92,7 +92,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             self::MODE_DEFAULT     => __('Default', 'glpiinventory'),
             self::MODE_PATH_EXISTS => __('Check path existence', 'glpiinventory'),
             self::MODE_KEY_DEFINED => __('Check if a key is defined', 'glpiinventory'),
-            self::MODE_DEPTH       => __('All value', 'glpiinventory'),
+            self::MODE_DEPTH       => __('All values', 'glpiinventory'),
         ];
     }
 
@@ -103,7 +103,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             'path' => __("Path", "glpiinventory"),
             'key' => __("Key", "glpiinventory"),
             'mode' => __("Mode", "glpiinventory"),
-            'depth' => __("All value", "glpiinventory"),
+            'depth' => __("Recursion depth", "glpiinventory"),
         ];
     }
 
