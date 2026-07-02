@@ -347,12 +347,48 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                 $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
                 $reg_db = $pfCollect_Registry->find($sql_where);
                 foreach ($reg_db as $reg) {
-                    $output[] = [
-                        'function' => 'getFromRegistry',
-                        'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
-                        'uuid'     => $taskjobstate->fields['uniqid'],
-                        '_sid'     => $reg['id'],
-                    ];
+                    $mode = (int) ($reg['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
+                    switch ($mode) {
+                        case PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS:
+                            $output[] = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                                'exists'   => 1,
+                            ];
+                            break;
+
+                        case PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
+                            $output[] = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                                'defined'  => (int) $reg['defined'],
+                            ];
+                            break;
+
+                        case PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
+                            $output[] = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                                'depth'    => (int) ($reg['depth'] ?? 0),
+                            ];
+                            break;
+
+                        default:
+                            // Default mode: read the value(s) of the configured key.
+                            $output[] = [
+                                'function' => 'getFromRegistry',
+                                'path'     => $reg['hive'] . $reg['path'] . $reg['key'],
+                                'uuid'     => $taskjobstate->fields['uniqid'],
+                                '_sid'     => $reg['id'],
+                            ];
+                            break;
+                    }
                 }
                 break;
 
@@ -542,6 +578,16 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
                     $this->getFromDB($jobstate['items_id']);
 
+                    if (
+                        $this->fields['type'] == 'registry'
+                        && $jobstate['state'] == PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                    ) {
+                        PluginGlpiinventoryCollect_Registry_Content::resetDepthContent(
+                            (int) $this->fields['id'],
+                            (int) $computers_id
+                        );
+                    }
+
                     switch ($this->fields['type']) {
                         case 'registry':
                             // update registry content
@@ -599,7 +645,18 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     // add logs to job
                     if ($add_value && count($a_values)) {
                         $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
-                        $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                        $message = null;
+                        // For registry collects, log a readable message (tested path + verdict)
+                        // instead of the raw agent payload.
+                        if ($this->fields['type'] == 'registry' && $sid) {
+                            $reg = new PluginGlpiinventoryCollect_Registry();
+                            if ($reg->getFromDB($sid)) {
+                                $message = PluginGlpiinventoryCollect_Registry_Content::getAnswerLogMessage($reg, $a_values);
+                            }
+                        }
+                        if ($message === null) {
+                            $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                        }
                         $pfTaskjoblog->addTaskjoblog(
                             $jobstate['id'],
                             $jobstate['items_id'],

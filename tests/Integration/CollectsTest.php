@@ -90,34 +90,77 @@ class CollectsTest extends DbTestCase
         $this->assertNotFalse($collectFileId);
     }
 
-    private function createComputer(): int
+    private function createComputer(string $name = 'pc01'): int
     {
         global $DB;
 
-        $computer = new Computer();
-        $agent    = new Agent();
-
-        // Create computer
-        $input = [
-            'name'        => 'pc01',
+        $computers_id = $this->createItem(Computer::class, [
+            'name'        => $name,
             'entities_id' => 0,
-        ];
-        $computers_id = $computer->add($input);
-        $this->assertNotFalse($computers_id);
+        ])->getID();
 
         $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
-        $input = [
-            'name'         => 'pc01',
-            'entities_id'  => 0,
-            'itemtype'     => Computer::class,
-            'items_id'     => $computers_id,
-            'deviceid'     => 'pc01',
-            'agenttypes_id' => $agenttype['id'],
+        $this->createItem(Agent::class, [
+            'name'                    => $name,
+            'entities_id'             => 0,
+            'itemtype'                => Computer::class,
+            'items_id'                => $computers_id,
+            'deviceid'                => $name,
+            'agenttypes_id'           => $agenttype['id'],
             'use_module_collect_data' => 1,
-        ];
-        $agents_id = $agent->add($input);
-        $this->assertNotFalse($agents_id);
+        ]);
         return $computers_id;
+    }
+
+    /**
+     * Delete every existing collect task (tests share the DB).
+     */
+    private function deleteAllTasks(): void
+    {
+        $pfTask = new PluginGlpiinventoryTask();
+        foreach ($pfTask->find() as $item) {
+            $pfTask->delete(['id' => $item['id']], true);
+        }
+    }
+
+    /**
+     * Create a collect task targeting a collect for a computer, prepare the task
+     * jobs and return the (single) created task job state.
+     *
+     * @return array<string,mixed> the task job state
+     */
+    private function prepareCollectJob(int $collects_id, int $computers_id): array
+    {
+        $pfTask         = new PluginGlpiinventoryTask();
+        $pfTaskjob      = new PluginGlpiinventoryTaskjob();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+
+        $tasks_id = $pfTask->add([
+            'name'        => 'mycollect',
+            'entities_id' => 0,
+            'is_active'   => 1,
+        ]);
+        $this->assertNotFalse($tasks_id);
+
+        $taskjobs_id = $pfTaskjob->add([
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id' => 0,
+            'name'    => 'collectjob',
+            'method'  => 'collect',
+            'targets' => exportArrayToDB([[PluginGlpiinventoryCollect::class => $collects_id]]),
+            'actors'  => exportArrayToDB([[Computer::class => $computers_id]]),
+        ]);
+        $this->assertNotFalse($taskjobs_id);
+
+        $methods = [];
+        foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
+            $methods[] = $method['method'];
+        }
+        $pfTask->prepareTaskjobs($methods);
+
+        $jobstates = $pfTaskjobstate->find();
+        $this->assertEquals(1, count($jobstates));
+        return current($jobstates);
     }
 
     public function testGetSearchOptionsToAdd(): void
@@ -810,7 +853,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         //Second, clean and check if it has been removed
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
@@ -970,7 +1013,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         // delete computer and check if it has been put in trash
         $computer->delete(['id' => $computers_id]);
@@ -982,7 +1025,7 @@ class CollectsTest extends DbTestCase
 
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
@@ -1049,5 +1092,247 @@ class CollectsTest extends DbTestCase
         $pfTaskjob->getFromDB($taskjobs_id);
         // Check actors
         $this->assertEquals('[]', $pfTaskjob->fields['actors']);
+    }
+
+    public function testRegistryModeNormalization(): void
+    {
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+
+        $collects_id = $this->createItem(PluginGlpiinventoryCollect::class, [
+            'name' => 'registry modes', 'entities_id' => 0, 'type' => 'registry', 'is_active' => 1,
+        ])->getID();
+
+        $this->assertCount(4, PluginGlpiinventoryCollect_Registry::getModes());
+
+        // Default mode: no "defined", depth forced to 0 (depth belongs to MODE_DEPTH now)
+        $reg = $this->createItem(PluginGlpiinventoryCollect_Registry::class, [
+            'name' => 'default', 'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE', 'path' => '/a/', 'key' => '*',
+            'mode' => PluginGlpiinventoryCollect_Registry::MODE_DEFAULT, 'depth' => 3,
+        ], ['depth']);
+        $this->assertEquals(0, (int) $reg->fields['defined']);
+        $this->assertEquals(0, (int) $reg->fields['depth']);
+
+        // Key defined mode: "defined" forced to 1, depth 0
+        $reg = $this->createItem(PluginGlpiinventoryCollect_Registry::class, [
+            'name' => 'defined', 'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE', 'path' => '/a/', 'key' => 'k',
+            'mode' => PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED, 'depth' => 5,
+        ], ['depth']);
+        $this->assertEquals(1, (int) $reg->fields['defined']);
+        $this->assertEquals(0, (int) $reg->fields['depth']);
+
+        // Path exists mode: "defined" 0, depth 0
+        $reg = $this->createItem(PluginGlpiinventoryCollect_Registry::class, [
+            'name' => 'exists', 'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE', 'path' => '/a/', 'key' => 'k',
+            'mode' => PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS, 'depth' => 5,
+        ], ['depth']);
+        $this->assertEquals(0, (int) $reg->fields['defined']);
+        $this->assertEquals(0, (int) $reg->fields['depth']);
+
+        // Depth mode: "defined" 0, depth kept
+        $reg = $this->createItem(PluginGlpiinventoryCollect_Registry::class, [
+            'name' => 'depth', 'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE', 'path' => '/a/', 'key' => 'k',
+            'mode' => PluginGlpiinventoryCollect_Registry::MODE_DEPTH, 'depth' => 2,
+        ]);
+        $this->assertEquals(0, (int) $reg->fields['defined']);
+        $this->assertEquals(2, (int) $reg->fields['depth']);
+    }
+
+    public function testRegistryModeExistsProcessWithAgent(): void
+    {
+        $this->deleteAllTasks();
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+
+        $pfCollect                  = new PluginGlpiinventoryCollect();
+        $pfCollect_Registry_Content = new PluginGlpiinventoryCollect_Registry_Content();
+
+        $collects_id = $this->createItem(PluginGlpiinventoryCollect::class, [
+            'name' => 'registry existence', 'entities_id' => 0, 'type' => 'registry', 'is_active' => 1,
+        ])->getID();
+        $registry_id = $this->createItem(PluginGlpiinventoryCollect_Registry::class, [
+            'name' => 'TeamViewer path',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE',
+            'path' => '/software/Wow6432Node/TeamViewer/',
+            'key'  => 'Version',
+            'mode' => PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS,
+        ])->getID();
+
+        $computers_id = $this->createComputer('pc-exists');
+        $jobstate     = $this->prepareCollectJob($collects_id, $computers_id);
+
+        // getJobs: existence check, no key in the path, "exists" flag set
+        $resultObject = $pfCollect->communication('getJobs', 'pc-exists', null);
+        $this->assertCount(1, $resultObject->jobs);
+        $job = $resultObject->jobs[0];
+        $this->assertEquals('getFromRegistry', $job['function']);
+        $this->assertEquals('HKEY_LOCAL_MACHINE/software/Wow6432Node/TeamViewer/', $job['path']);
+        $this->assertSame(1, $job['exists']);
+        $this->assertArrayNotHasKey('defined', $job);
+        $this->assertArrayNotHasKey('depth', $job);
+
+        // setAnswer: path present
+        $_GET = [
+            'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'],
+            '_sid' => $registry_id, '_cpt' => '1', '_exists' => '1',
+        ];
+        $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
+
+        $contents = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $registry_id]);
+        $this->assertCount(1, $contents);
+        $this->assertEquals('1', current($contents)['value']);
+
+        // fallback: no _exists but the agent returned a value => present
+        $_GET = [
+            'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'],
+            '_sid' => $registry_id, '_cpt' => '1', 'Version' => '15.0',
+        ];
+        $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
+        $contents = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $registry_id]);
+        $this->assertCount(1, $contents);
+        $this->assertEquals('1', current($contents)['value']);
+    }
+
+    public function testRegistryModeDefinedProcessWithAgent(): void
+    {
+        $this->deleteAllTasks();
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+
+        $pfCollect                  = new PluginGlpiinventoryCollect();
+        $pfCollect_Registry_Content = new PluginGlpiinventoryCollect_Registry_Content();
+
+        $collects_id = $this->createItem(PluginGlpiinventoryCollect::class, [
+            'name' => 'registry defined', 'entities_id' => 0, 'type' => 'registry', 'is_active' => 1,
+        ])->getID();
+        $registry = $this->createItem(PluginGlpiinventoryCollect_Registry::class, [
+            'name' => 'GLPI-Agent server',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE',
+            'path' => '/software/GLPI-Agent/',
+            'key'  => 'server',
+            'mode' => PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED,
+        ]);
+        $registry_id = $registry->getID();
+
+        // mode 2 forces the "defined" flag on the config
+        $this->assertEquals(1, (int) $registry->fields['defined']);
+
+        $computers_id = $this->createComputer('pc-defined');
+        $jobstate     = $this->prepareCollectJob($collects_id, $computers_id);
+
+        // getJobs: path includes the key, "defined" flag set
+        $resultObject = $pfCollect->communication('getJobs', 'pc-defined', null);
+        $job = $resultObject->jobs[0];
+        $this->assertEquals('HKEY_LOCAL_MACHINE/software/GLPI-Agent/server', $job['path']);
+        $this->assertSame(1, $job['defined']);
+        $this->assertArrayNotHasKey('exists', $job);
+        $this->assertArrayNotHasKey('depth', $job);
+
+        // setAnswer: key defined
+        $_GET = [
+            'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'],
+            '_sid' => $registry_id, '_cpt' => '1', '_defined' => '1',
+        ];
+        $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
+
+        $contents = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $registry_id]);
+        $this->assertCount(1, $contents);
+        $content = current($contents);
+        $this->assertEquals('server', $content['key']);
+        $this->assertEquals('1', $content['value']);
+    }
+
+    public function testRegistryModeDepthProcessWithAgent(): void
+    {
+        $this->deleteAllTasks();
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+
+        $pfCollect                  = new PluginGlpiinventoryCollect();
+        $pfCollect_Registry_Content = new PluginGlpiinventoryCollect_Registry_Content();
+
+        $collects_id = $this->createItem(PluginGlpiinventoryCollect::class, [
+            'name' => 'registry recursion', 'entities_id' => 0, 'type' => 'registry', 'is_active' => 1,
+        ])->getID();
+        $registry_id = $this->createItem(PluginGlpiinventoryCollect_Registry::class, [
+            'name' => 'GLPI-Agent tree',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'hive' => 'HKEY_LOCAL_MACHINE',
+            'path' => '/software/GLPI-Agent/',
+            'key'  => '*',
+            'mode' => PluginGlpiinventoryCollect_Registry::MODE_DEPTH,
+            'depth' => 2,
+        ])->getID();
+
+        $computers_id = $this->createComputer('pc-depth');
+
+        // a stale content row that must be cleaned when the job is dispatched
+        $this->createItem(PluginGlpiinventoryCollect_Registry_Content::class, [
+            'computers_id' => $computers_id,
+            'plugin_glpiinventory_collects_registries_id' => $registry_id,
+            'key' => 'old', 'value' => 'old', 'depth' => 0,
+        ]);
+
+        $jobstate = $this->prepareCollectJob($collects_id, $computers_id);
+
+        // getJobs: recursion depth sent, path without key
+        $resultObject = $pfCollect->communication('getJobs', 'pc-depth', null);
+        $job = $resultObject->jobs[0];
+        $this->assertEquals('HKEY_LOCAL_MACHINE/software/GLPI-Agent/', $job['path']);
+        $this->assertSame(2, $job['depth']);
+        $this->assertArrayNotHasKey('exists', $job);
+        $this->assertArrayNotHasKey('defined', $job);
+        // the stale content is NOT wiped at dispatch: it must survive until real data arrives
+        $this->assertCount(1, $pfCollect_Registry_Content->find([
+            'plugin_glpiinventory_collects_registries_id' => $registry_id,
+            'computers_id' => $computers_id,
+        ]));
+
+        // answer 1: explicit depth -> the stale content is reset on this first answer
+        $_GET = [
+            'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'], '_sid' => $registry_id,
+            '_cpt' => '2', '_path' => 'httpd-port', '_value' => '65354', '_depth' => '0',
+        ];
+        $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
+
+        // the stale 'old' entry has been removed, only the reported entry remains
+        $afterFirst = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $registry_id]);
+        $this->assertCount(1, $afterFirst);
+        $this->assertEquals('httpd-port', current($afterFirst)['key']);
+
+        // answer 2: depth deduced from the relative path
+        $_GET = [
+            'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'], '_sid' => $registry_id,
+            '_cpt' => '1', '_path' => 'Subkey/debug', '_value' => '2',
+        ];
+        $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
+
+        // answer 3: SAME path as answer 1 => must upsert, not duplicate
+        $_GET = [
+            'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'], '_sid' => $registry_id,
+            '_cpt' => '1', '_path' => 'httpd-port', '_value' => '62354', '_depth' => '0',
+        ];
+        $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
+
+        $contents = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $registry_id]);
+        $this->assertCount(2, $contents);
+
+        $byKey = [];
+        foreach ($contents as $row) {
+            $byKey[$row['key']] = $row;
+        }
+        $this->assertArrayHasKey('httpd-port', $byKey);
+        $this->assertEquals('62354', $byKey['httpd-port']['value']); // updated by the upsert
+        $this->assertEquals(0, (int) $byKey['httpd-port']['depth']);
+
+        $this->assertArrayHasKey('Subkey/debug', $byKey);
+        $this->assertEquals('2', $byKey['Subkey/debug']['value']);
+        $this->assertEquals(1, (int) $byKey['Subkey/debug']['depth']);
     }
 }

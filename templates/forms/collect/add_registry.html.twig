@@ -30,11 +30,20 @@
 #}
 {% import "components/form/fields_macros.html.twig" as fields %}
 {% set field_options = field_options|merge({'full_width': true}) %}
+{% set rand = field_options.rand %}
 
 {{ fields.textField(
     'name',
     '',
     __('Name'),
+    field_options
+) }}
+
+{{ fields.dropdownArrayField(
+    'mode',
+    0,
+    item.getModes(),
+    __('Mode', 'glpiinventory'),
     field_options
 ) }}
 
@@ -53,9 +62,45 @@
     field_options
 ) }}
 
-{{ fields.textField(
-    'key',
-    '',
-    __('Key', 'glpiinventory'),
-    field_options
-) }}
+<div id="collect_registry_key_{{ rand }}">
+    {{ fields.textField(
+        'key',
+        '',
+        __('Key', 'glpiinventory'),
+        field_options
+    ) }}
+</div>
+
+<div id="collect_registry_depth_{{ rand }}">
+    {{ fields.dropdownNumberField(
+        'depth',
+        0,
+        __('Recursion depth', 'glpiinventory'),
+        field_options|merge({
+            'min': 0,
+            'max': 10
+        })
+    ) }}
+</div>
+
+<script>
+    $(function () {
+        // Registry collect mode values (see PluginGlpiinventoryCollect_Registry):
+        //   0 = MODE_DEFAULT, 1 = MODE_PATH_EXISTS, 2 = MODE_KEY_DEFINED, 3 = MODE_DEPTH
+        var rand        = '{{ rand }}';
+        var keyField    = $('#collect_registry_key_' + rand);
+        var depthField  = $('#collect_registry_depth_' + rand);
+        var modeSelect  = keyField.closest('form').find('select[name="mode"]');
+
+        var toggleRegistryFields = function () {
+            var mode = parseInt(modeSelect.val(), 10) || 0;
+            // The key is useless when checking the path existence or reading recursively
+            keyField.toggle(mode !== 1 && mode !== 3);
+            // The recursion depth field only applies to the "All values" mode
+            depthField.toggle(mode === 3);
+        };
+
+        modeSelect.on('change', toggleRegistryFields);
+        toggleRegistryFields();
+    });
+</script>
