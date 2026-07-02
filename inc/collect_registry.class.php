@@ -117,7 +117,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             // the key is not relevant when checking the path existence or reading recursively
             'key'  => in_array($mode, [self::MODE_PATH_EXISTS, self::MODE_DEPTH], true) ? '' : $row['key'],
             'mode' => $modes[$mode] ?? $modes[self::MODE_DEFAULT],
-            // the All value only applies to the depth mode
+            // the All values only applies to the depth mode
             'depth' => ($mode === self::MODE_DEPTH) ? (int) ($row['depth'] ?? 0) : '',
         ];
     }
