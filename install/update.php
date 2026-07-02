@@ -1063,7 +1063,7 @@ function pluginGlpiinventoryUpdate(string $current_version): void
     doDynamicDataSearchParamsMigration();
 
     // Collect registry: add support for collect "mode" (default / check path existence /
-    // check if a key is defined) and All value (read sub-keys recursively).
+    // check if a key is defined) and All values (read sub-keys recursively).
     $migration->addField(
         'glpi_plugin_glpiinventory_collects_registries',
         'mode',
