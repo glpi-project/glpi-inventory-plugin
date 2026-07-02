@@ -41,7 +41,7 @@ class PluginGlpiinventoryComputer extends Computer
      *
      * @var string
      */
-    public static $rightname = "plugin_glpiinventory_group";
+    public static string $rightname = "plugin_glpiinventory_group";
 
     /**
      * @return array<string,mixed>

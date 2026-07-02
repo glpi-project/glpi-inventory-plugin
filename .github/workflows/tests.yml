@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['8.2', '8.5']
+        php-versions: ['8.3', '8.5']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -75,7 +75,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - {php-versions: "8.2", db-image: "mysql:8.0"}
+          - {php-versions: "8.3", db-image: "mysql:8.0"}
           - {php-versions: "8.4", db-image: "mysql:8.0"}
           - {php-versions: "8.5", db-image: "mysql:8.4"}
           - {php-versions: "8.5", db-image: "mariadb:10.6"}
@@ -134,6 +134,10 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         extensions: ${{ env.extensions }}
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
     - name: Cache Composer dependencies
       uses: actions/cache@v6
       with:
@@ -147,17 +151,14 @@ jobs:
         repository: glpi-project/glpi
         path: glpi
         fetch-depth: 1
-        ref: 11.0/bugfixes
+        ref: main
     - name: Copy plugin
       run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
     - name: Install dependencies
       run: |
         cd glpi
-        composer install --ansi --no-interaction
-        php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
         mkdir --parents public/lib
-        php bin/console locales:compile
-
+        php bin/console dependencies install
     - name: Init database
       run: |
         mysql -e 'create database IF NOT EXISTS glpi;' -u root --password=glpi1iventory -h 127.0.0.1 -P 3306

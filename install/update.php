@@ -606,28 +606,30 @@ function pluginGlpiinventoryUpdate(string $current_version): void
         $insert = $DB->buildInsert(
             'glpi_displaypreferences',
             [
-                'itemtype'  => 'PluginGlpiinventoryTaskjoblog',
+                'itemtype'  => new QueryParam(),
                 'num'       => new QueryParam(),
                 'rank'      => new QueryParam(),
-                'users_id'  => 0,
+                'users_id'  => new QueryParam(),
             ]
         );
 
         $stmt = $DB->prepare($insert);
         $insert_data = [
-            [2, 1],
-            [3, 2],
-            [4, 3],
-            [5, 4],
-            [6, 5],
-            [7, 6],
-            [8, 7],
+            [PluginGlpiinventoryTaskjoblog::class, 2, 1, 0],
+            [PluginGlpiinventoryTaskjoblog::class, 3, 2, 0],
+            [PluginGlpiinventoryTaskjoblog::class, 4, 3, 0],
+            [PluginGlpiinventoryTaskjoblog::class, 5, 4, 0],
+            [PluginGlpiinventoryTaskjoblog::class, 6, 5, 0],
+            [PluginGlpiinventoryTaskjoblog::class, 7, 6, 0],
+            [PluginGlpiinventoryTaskjoblog::class, 8, 7, 0],
         ];
         foreach ($insert_data as $idata) {
             $stmt->bind_param(
-                'ss',
+                'ssss',
                 $idata[0],
-                $idata[1]
+                $idata[1],
+                $idata[2],
+                $idata[3]
             );
             $DB->executeStatement($stmt);
         }
@@ -931,12 +933,18 @@ function pluginGlpiinventoryUpdate(string $current_version): void
                 'entities_id'  => 0,
             ]
         );
-        $stmt = $DB->prepare($update);
+        $stmt = $DB->prepare($update->getQuery());
         foreach ($iterator as $data) {
-            $stmt->bind_param(
-                'ss',
+            $params = [
                 $data['entities_id'],
-                $data['id']
+                Computer::class,
+                $data['id'],
+                1,
+                0,
+            ];
+            $stmt->bind_param(
+                'sssss',
+                ...$params
             );
             $DB->executeStatement($stmt);
         }

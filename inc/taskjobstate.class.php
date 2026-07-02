@@ -108,7 +108,7 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
     public $method = '';
 
 
-    public static $rightname = 'plugin_glpiinventory_task';
+    public static string $rightname = 'plugin_glpiinventory_task';
 
     /**
      * Get the tab name used for item

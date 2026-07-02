@@ -43,7 +43,7 @@ class PluginGlpiinventoryStateDiscovery extends CommonDBTM
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_task';
+    public static string $rightname = 'plugin_glpiinventory_task';
 
 
     /**

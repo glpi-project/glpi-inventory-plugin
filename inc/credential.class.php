@@ -36,7 +36,7 @@
  */
 class PluginGlpiinventoryCredential extends CommonDropdown
 {
-    public $can_be_translated = false;
+    public bool $can_be_translated = false;
 
     /**
      * Define first level menu name
@@ -64,7 +64,7 @@ class PluginGlpiinventoryCredential extends CommonDropdown
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_credential';
+    public static string $rightname = 'plugin_glpiinventory_credential';
 
 
     /**
