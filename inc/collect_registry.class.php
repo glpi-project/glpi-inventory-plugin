@@ -138,7 +138,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
      * Normalize the "defined" flag and recursion "depth" according to the selected mode.
      *
      * - "defined" is a boolean flag driven by the MODE_KEY_DEFINED mode (case 2).
-     * - "depth" (All value) only applies to the MODE_DEPTH mode (case 3); it is
+     * - "depth" (All values) only applies to the MODE_DEPTH mode (case 3); it is
      *   forced to 0 for the other modes.
      *
      * @param array<string,mixed> $input
