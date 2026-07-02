@@ -161,7 +161,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     }
                     return;
                 }
-                break;
+                return;
         }
 
         $db_registries = [];
