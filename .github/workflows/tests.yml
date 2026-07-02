@@ -157,13 +157,8 @@ jobs:
     - name: Install dependencies
       run: |
         cd glpi
-        composer install --ansi --no-interaction --no-scripts
-        php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
         mkdir --parents public/lib
-        composer run-script build --ansi --no-interaction
-        composer run-script post-install-cmd --ansi --no-interaction
-        php bin/console locales:compile
-
+        php bin/console dependencies install
     - name: Init database
       run: |
         mysql -e 'create database IF NOT EXISTS glpi;' -u root --password=glpi1iventory -h 127.0.0.1 -P 3306
