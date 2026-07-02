@@ -364,7 +364,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         echo "<table class='tab_cadre_fixe'>";
         $a_data = $this->find(
             ['computers_id' => $computers_id],
-            ['plugin_glpiinventory_collects_registries_id', 'depth', 'key']
+            ['plugin_glpiinventory_collects_registries_id', 'key']
         );
         $previous_key  = 0;
         $mode          = PluginGlpiinventoryCollect_Registry::MODE_DEFAULT;
