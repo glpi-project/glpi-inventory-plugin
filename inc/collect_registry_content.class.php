@@ -124,8 +124,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 return;
 
             case PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
-                // Case 3: content has been cleaned at job dispatch (see PluginGlpiinventoryCollect::run()),
-                // so we only append the reported entry here.
+                // Upsert by path so a repeated entry (the agent may revisit the same value while
+                // recursing, or re-send it) never creates duplicate rows.
                 if (array_key_exists('_path', $registry_data)) {
                     $path  = (string) $registry_data['_path'];
                     $value = (string) ($registry_data['_value'] ?? '');
@@ -138,13 +138,27 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
                         $value = hexdec($value);
                     }
-                    $this->add([
+                    $existing = $this->find([
                         'computers_id' => $computers_id,
                         'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
                         'key'          => $path,
-                        'value'        => $value,
-                        'depth'        => $depth,
-                    ]);
+                    ], [], 1);
+                    if (count($existing)) {
+                        $current = current($existing);
+                        $this->update([
+                            'id'    => $current['id'],
+                            'value' => $value,
+                            'depth' => $depth,
+                        ]);
+                    } else {
+                        $this->add([
+                            'computers_id' => $computers_id,
+                            'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
+                            'key'          => $path,
+                            'value'        => $value,
+                            'depth'        => $depth,
+                        ]);
+                    }
                     return;
                 }
                 break;
