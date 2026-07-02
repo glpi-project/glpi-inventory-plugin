@@ -370,8 +370,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             break;
 
                         case PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
-                            // Case 3: read every value under the path, recursively down to
-                            // the configured depth. The key is not used (the whole path is read).
                             $output[] = [
                                 'function' => 'getFromRegistry',
                                 'path'     => $reg['hive'] . $reg['path'],
@@ -379,16 +377,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 '_sid'     => $reg['id'],
                                 'depth'    => (int) ($reg['depth'] ?? 0),
                             ];
-                            // A recursive collect reports one entry per answer (like the file
-                            // collect), so clean the previously collected content before the
-                            // agent reports the new tree.
-                            $DB->delete(
-                                'glpi_plugin_glpiinventory_collects_registries_contents',
-                                [
-                                    'plugin_glpiinventory_collects_registries_id' => $reg['id'],
-                                    'computers_id'                                => $agent['items_id'],
-                                ]
-                            );
                             break;
 
                         default:
@@ -589,6 +577,16 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     unset($a_values['_sid']);
 
                     $this->getFromDB($jobstate['items_id']);
+
+                    if (
+                        $this->fields['type'] == 'registry'
+                        && $jobstate['state'] == PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                    ) {
+                        PluginGlpiinventoryCollect_Registry_Content::resetDepthContent(
+                            (int) $this->fields['id'],
+                            (int) $computers_id
+                        );
+                    }
 
                     switch ($this->fields['type']) {
                         case 'registry':

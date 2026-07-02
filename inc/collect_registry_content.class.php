@@ -214,6 +214,35 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
     /**
+     * Reset the collected content of every "All values" (recursive) registry of a collect,
+     * for the given computer. Called when the first answer of a collect run is received, so
+     * the previously collected tree survives if the agent never answers.
+     *
+     * @param int $collects_id  id of the collect
+     * @param int $computers_id id of the computer
+     */
+    public static function resetDepthContent(int $collects_id, int $computers_id): void
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        $registry = new PluginGlpiinventoryCollect_Registry();
+        $depth_registries = $registry->find([
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'mode'                             => PluginGlpiinventoryCollect_Registry::MODE_DEPTH,
+        ]);
+        foreach ($depth_registries as $depth_registry) {
+            $DB->delete(
+                'glpi_plugin_glpiinventory_collects_registries_contents',
+                [
+                    'plugin_glpiinventory_collects_registries_id' => $depth_registry['id'],
+                    'computers_id'                                => $computers_id,
+                ]
+            );
+        }
+    }
+
+    /**
      * Tell whether the agent returned actual registry data (i.e. anything else than
      * the control/flag keys). Used as a fallback for the "path existence" and
      * "key defined" modes when the agent does not support the dedicated flags:

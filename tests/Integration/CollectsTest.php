@@ -1281,24 +1281,30 @@ class CollectsTest extends DbTestCase
 
         $jobstate = $this->prepareCollectJob($collects_id, $computers_id);
 
-        // getJobs: recursion depth sent, path without key, stale content cleaned
+        // getJobs: recursion depth sent, path without key
         $resultObject = $pfCollect->communication('getJobs', 'pc-depth', null);
         $job = $resultObject->jobs[0];
         $this->assertEquals('HKEY_LOCAL_MACHINE/software/GLPI-Agent/', $job['path']);
         $this->assertSame(2, $job['depth']);
         $this->assertArrayNotHasKey('exists', $job);
         $this->assertArrayNotHasKey('defined', $job);
-        $this->assertCount(0, $pfCollect_Registry_Content->find([
+        // the stale content is NOT wiped at dispatch: it must survive until real data arrives
+        $this->assertCount(1, $pfCollect_Registry_Content->find([
             'plugin_glpiinventory_collects_registries_id' => $registry_id,
             'computers_id' => $computers_id,
         ]));
 
-        // answer 1: explicit depth
+        // answer 1: explicit depth -> the stale content is reset on this first answer
         $_GET = [
             'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'], '_sid' => $registry_id,
             '_cpt' => '2', '_path' => 'httpd-port', '_value' => '65354', '_depth' => '0',
         ];
         $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
+
+        // the stale 'old' entry has been removed, only the reported entry remains
+        $afterFirst = $pfCollect_Registry_Content->find(['plugin_glpiinventory_collects_registries_id' => $registry_id]);
+        $this->assertCount(1, $afterFirst);
+        $this->assertEquals('httpd-port', current($afterFirst)['key']);
 
         // answer 2: depth deduced from the relative path
         $_GET = [
