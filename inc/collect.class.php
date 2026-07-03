@@ -582,7 +582,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         $this->fields['type'] == 'registry'
                         && $jobstate['state'] == PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
                     ) {
-                        PluginGlpiinventoryCollect_Registry_Content::resetDepthContent(
+                        PluginGlpiinventoryCollect_Registry_Content::resetContent(
                             (int) $this->fields['id'],
                             (int) $computers_id
                         );

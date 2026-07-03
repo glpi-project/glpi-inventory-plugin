@@ -1084,14 +1084,6 @@ function pluginGlpiinventoryUpdate(string $current_version): void
     );
     $migration->migrationOneTable('glpi_plugin_glpiinventory_collects_registries');
 
-    $migration->addField(
-        'glpi_plugin_glpiinventory_collects_registries_contents',
-        'depth',
-        "int NOT NULL DEFAULT '0'",
-        ['after' => 'value']
-    );
-    $migration->migrationOneTable('glpi_plugin_glpiinventory_collects_registries_contents');
-
     installDashboard();
 
     // Add missing index on `glpi_plugin_glpiinventory_taskjoblogs`

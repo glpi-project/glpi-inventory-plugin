@@ -853,7 +853,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
 
         //Second, clean and check if it has been removed
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
@@ -1013,7 +1013,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
 
         // delete computer and check if it has been put in trash
         $computer->delete(['id' => $computers_id]);
@@ -1025,7 +1025,7 @@ class CollectsTest extends DbTestCase
 
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
-        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
 
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
@@ -1276,7 +1276,7 @@ class CollectsTest extends DbTestCase
         $this->createItem(PluginGlpiinventoryCollect_Registry_Content::class, [
             'computers_id' => $computers_id,
             'plugin_glpiinventory_collects_registries_id' => $registry_id,
-            'key' => 'old', 'value' => 'old', 'depth' => 0,
+            'key' => 'old', 'value' => 'old',
         ]);
 
         $jobstate = $this->prepareCollectJob($collects_id, $computers_id);
@@ -1294,10 +1294,10 @@ class CollectsTest extends DbTestCase
             'computers_id' => $computers_id,
         ]));
 
-        // answer 1: explicit depth -> the stale content is reset on this first answer
+        // answer 1: first value -> the stale content is reset on this first answer
         $_GET = [
             'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'], '_sid' => $registry_id,
-            '_cpt' => '2', '_path' => 'httpd-port', '_value' => '65354', '_depth' => '0',
+            '_cpt' => '2', '_path' => 'httpd-port', '_value' => '65354',
         ];
         $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
 
@@ -1306,7 +1306,7 @@ class CollectsTest extends DbTestCase
         $this->assertCount(1, $afterFirst);
         $this->assertEquals('httpd-port', current($afterFirst)['key']);
 
-        // answer 2: depth deduced from the relative path
+        // answer 2: another value under the path
         $_GET = [
             'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'], '_sid' => $registry_id,
             '_cpt' => '1', '_path' => 'Subkey/debug', '_value' => '2',
@@ -1316,7 +1316,7 @@ class CollectsTest extends DbTestCase
         // answer 3: SAME path as answer 1 => must upsert, not duplicate
         $_GET = [
             'action' => 'setAnswer', 'uuid' => $jobstate['uniqid'], '_sid' => $registry_id,
-            '_cpt' => '1', '_path' => 'httpd-port', '_value' => '62354', '_depth' => '0',
+            '_cpt' => '1', '_path' => 'httpd-port', '_value' => '62354',
         ];
         $pfCollect->communication('setAnswer', null, $jobstate['uniqid']);
 
@@ -1329,10 +1329,8 @@ class CollectsTest extends DbTestCase
         }
         $this->assertArrayHasKey('httpd-port', $byKey);
         $this->assertEquals('62354', $byKey['httpd-port']['value']); // updated by the upsert
-        $this->assertEquals(0, (int) $byKey['httpd-port']['depth']);
 
         $this->assertArrayHasKey('Subkey/debug', $byKey);
         $this->assertEquals('2', $byKey['Subkey/debug']['value']);
-        $this->assertEquals(1, (int) $byKey['Subkey/debug']['depth']);
     }
 }

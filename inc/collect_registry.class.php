@@ -103,7 +103,7 @@ class PluginGlpiinventoryCollect_Registry extends PluginGlpiinventoryCollectComm
             'path' => __("Path", "glpiinventory"),
             'key' => __("Key", "glpiinventory"),
             'mode' => __("Mode", "glpiinventory"),
-            'depth' => __("Recursion depth", "glpiinventory"),
+            'depth' => __("Depth", "glpiinventory"),
         ];
     }
 

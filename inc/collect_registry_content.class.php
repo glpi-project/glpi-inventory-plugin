@@ -103,6 +103,12 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             $mode = (int) $collect_registry->fields['mode'];
         }
 
+        // New agents can use the new value submission format (one "_path"/"_value" entry per
+        // answer) even in the default mode; it is equivalent to the "All values" mode.
+        if ($mode === PluginGlpiinventoryCollect_Registry::MODE_DEFAULT && array_key_exists('_path', $registry_data)) {
+            $mode = PluginGlpiinventoryCollect_Registry::MODE_DEPTH;
+        }
+
         switch ($mode) {
             case PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS:
                 // Use the "_exists" flag if the agent supports it, otherwise fall back on
@@ -129,12 +135,6 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 if (array_key_exists('_path', $registry_data)) {
                     $path  = (string) $registry_data['_path'];
                     $value = (string) ($registry_data['_value'] ?? '');
-                    if (isset($registry_data['_depth'])) {
-                        $depth = (int) $registry_data['_depth'];
-                    } else {
-                        // fall back to the depth encoded in the relative path
-                        $depth = substr_count(trim($path, '/'), '/');
-                    }
                     if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
                         $value = hexdec($value);
                     }
@@ -144,11 +144,9 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                         'key'          => $path,
                     ], [], 1);
                     if (count($existing)) {
-                        $current = current($existing);
                         $this->update([
-                            'id'    => $current['id'],
+                            'id'    => current($existing)['id'],
                             'value' => $value,
-                            'depth' => $depth,
                         ]);
                     } else {
                         $this->add([
@@ -156,7 +154,6 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                             'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
                             'key'          => $path,
                             'value'        => $value,
-                            'depth'        => $depth,
                         ]);
                     }
                     return;
@@ -196,9 +193,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             }
         }
 
-        foreach (array_keys($db_registries) as $id) {
-            $this->delete(['id' => $id], true);
-        }
+        // Stale keys are removed by resetContent() on the first received answer, so we only
+        // update the values still reported and add the new ones here.
         foreach ($registry_data as $key => $value) {
             if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
                 $value = hexdec($value);
@@ -214,28 +210,26 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
     /**
-     * Reset the collected content of every "All values" (recursive) registry of a collect,
-     * for the given computer. Called when the first answer of a collect run is received, so
-     * the previously collected tree survives if the agent never answers.
+     * Reset the collected content of every registry of a collect, for the given computer.
+     * Called when the first answer of a collect run is received, so the previously collected
+     * data survives if the agent fails or is stopped before sending anything. This makes the
+     * per-answer deletions unnecessary.
      *
      * @param int $collects_id  id of the collect
      * @param int $computers_id id of the computer
      */
-    public static function resetDepthContent(int $collects_id, int $computers_id): void
+    public static function resetContent(int $collects_id, int $computers_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
 
-        $registry = new PluginGlpiinventoryCollect_Registry();
-        $depth_registries = $registry->find([
-            'plugin_glpiinventory_collects_id' => $collects_id,
-            'mode'                             => PluginGlpiinventoryCollect_Registry::MODE_DEPTH,
-        ]);
-        foreach ($depth_registries as $depth_registry) {
+        $registry   = new PluginGlpiinventoryCollect_Registry();
+        $registries = $registry->find(['plugin_glpiinventory_collects_id' => $collects_id]);
+        foreach ($registries as $one_registry) {
             $DB->delete(
                 'glpi_plugin_glpiinventory_collects_registries_contents',
                 [
-                    'plugin_glpiinventory_collects_registries_id' => $depth_registry['id'],
+                    'plugin_glpiinventory_collects_registries_id' => $one_registry['id'],
                     'computers_id'                                => $computers_id,
                 ]
             );
@@ -327,23 +321,26 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      */
     private function storeSingleResult(int $computers_id, int $collects_registries_id, string $key, string $value): void
     {
-        /** @var DBmysql $DB */
-        global $DB;
-
-        $DB->delete(
-            'glpi_plugin_glpiinventory_collects_registries_contents',
-            [
-                'computers_id' => $computers_id,
-                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
-            ]
-        );
-        $this->add([
+        // Upsert the single result row (content is already reset on the first received answer,
+        // see resetContent(); this just keeps it idempotent).
+        $existing = $this->find([
             'computers_id' => $computers_id,
             'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
-            'key'          => $key,
-            'value'        => $value,
-            'depth'        => 0,
-        ]);
+        ], [], 1);
+        if (count($existing)) {
+            $this->update([
+                'id'    => current($existing)['id'],
+                'key'   => $key,
+                'value' => $value,
+            ]);
+        } else {
+            $this->add([
+                'computers_id' => $computers_id,
+                'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
+                'key'          => $key,
+                'value'        => $value,
+            ]);
+        }
     }
 
     /**
@@ -371,18 +368,6 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
     /**
-     * Render a registry path indented according to its depth
-     *
-     * @param string $path  the (relative) registry path
-     * @param int    $depth the depth of the entry in the tree
-     */
-    public static function getIndentedPath(string $path, int $depth): string
-    {
-        $padding = max(0, $depth) * 20;
-        return '<span style="padding-left: ' . $padding . 'px;">' . htmlspecialchars($path) . '</span>';
-    }
-
-    /**
      * Show registries keys of the computer
      *
      * @param int $computers_id id of the computer
@@ -395,14 +380,12 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             ['computers_id' => $computers_id],
             ['plugin_glpiinventory_collects_registries_id', 'key']
         );
-        $previous_key  = 0;
-        $mode          = PluginGlpiinventoryCollect_Registry::MODE_DEFAULT;
-        $depth_enabled = false;
+        $previous_key = 0;
+        $mode         = PluginGlpiinventoryCollect_Registry::MODE_DEFAULT;
         foreach ($a_data as $data) {
             if ($previous_key != $data['plugin_glpiinventory_collects_registries_id']) {
                 $pfCollect_Registry->getFromDB($data['plugin_glpiinventory_collects_registries_id']);
-                $mode          = (int) ($pfCollect_Registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
-                $depth_enabled = ($mode === PluginGlpiinventoryCollect_Registry::MODE_DEPTH);
+                $mode = (int) ($pfCollect_Registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
 
                 $colspan = ($mode === PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS) ? 2 : 3;
                 echo "<tr class='tab_bg_1'>";
@@ -444,11 +427,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     break;
 
                 default:
-                    echo '<td>';
-                    echo $depth_enabled
-                        ? self::getIndentedPath((string) $data['key'], (int) ($data['depth'] ?? 0))
-                        : $data['key'];
-                    echo '</td>';
+                    echo '<td>' . $data['key'] . '</td>';
                     echo '<td>' . $data['value'] . '</td>';
                     break;
             }
@@ -509,23 +488,6 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                         'computer' => $computer->getLink(),
                         'key'      => $row['key'],
                         'value'    => self::getDefinedLabel($row['value']),
-                    ];
-                }
-                break;
-
-            case $mode === PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
-                $columns = [
-                    'computer' => Computer::getTypeName(1),
-                    'value'    => __('Path', 'glpiinventory'),
-                    'data'     => __('Data', 'glpiinventory'),
-                ];
-                $formatters['value'] = 'raw_html';
-                foreach ($data as $row) {
-                    $computer->getFromDB($row['computers_id']);
-                    $entries[] = [
-                        'computer' => $computer->getLink(),
-                        'value'    => self::getIndentedPath((string) $row['key'], (int) ($row['depth'] ?? 0)),
-                        'data'     => $row['value'],
                     ];
                 }
                 break;
