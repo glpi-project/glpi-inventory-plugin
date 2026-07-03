@@ -251,7 +251,6 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             '_defined' => true,
             '_path' => true,
             '_value' => true,
-            '_depth' => true,
             '_cpt' => true,
             'method' => true,
         ];
