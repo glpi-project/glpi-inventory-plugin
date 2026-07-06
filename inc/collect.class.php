@@ -571,10 +571,12 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     }
                     $sid = $a_values['_sid'] ?? 0;
                     $cpt = $a_values['_cpt'] ?? 0;
+                    $count = $a_values['_count'] ?? 0;
                     unset($a_values['action']);
                     unset($a_values['uuid']);
                     unset($a_values['_cpt']);
                     unset($a_values['_sid']);
+                    unset($a_values['_count']);
 
                     $this->getFromDB($jobstate['items_id']);
 
@@ -647,23 +649,31 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
                         $message = null;
                         // For registry collects, log a readable message (tested path + verdict)
-                        // instead of the raw agent payload.
+                        // instead of the raw agent payload. But only when cpt equals count on first
                         if ($this->fields['type'] == 'registry' && $sid) {
-                            $reg = new PluginGlpiinventoryCollect_Registry();
-                            if ($reg->getFromDB($sid)) {
-                                $message = PluginGlpiinventoryCollect_Registry_Content::getAnswerLogMessage($reg, $a_values);
+                            if ($count === $cpt) {
+                                $reg = new PluginGlpiinventoryCollect_Registry();
+                                if ($reg->getFromDB($sid)) {
+                                    $message = PluginGlpiinventoryCollect_Registry_Content::getAnswerLogMessage($reg, $a_values, $count);
+                                }
+                            } else {
+                                // When newer agent submits values one by one, we can avoid to log
+                                // a message on each, only the first has to trigger a log message
+                                $message = "";
                             }
                         }
                         if ($message === null) {
                             $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
                         }
-                        $pfTaskjoblog->addTaskjoblog(
-                            $jobstate['id'],
-                            $jobstate['items_id'],
-                            $jobstate['itemtype'],
-                            (string) $flag,
-                            isset($name) ? "$name: $message" : $message
-                        );
+                        if (strlen($message) > 0) {
+                            $pfTaskjoblog->addTaskjoblog(
+                                $jobstate['id'],
+                                $jobstate['items_id'],
+                                $jobstate['itemtype'],
+                                (string) $flag,
+                                isset($name) ? "$name: $message" : $message
+                            );
+                        }
                     } else {
                         // Can only happen on file collect
                         $message = __('Path not found', 'glpiinventory');

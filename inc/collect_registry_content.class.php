@@ -252,6 +252,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             '_path' => true,
             '_value' => true,
             '_cpt' => true,
+            '_count' => true,
             'method' => true,
         ];
         return count(array_diff_key($registry_data, $control)) > 0;
@@ -264,48 +265,55 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      *
      * @param PluginGlpiinventoryCollect_Registry $registry the collect registry
      * @param array<string,mixed> $registry_data the agent answer
+     * @param int                 $count         count of found values
      */
-    public static function getAnswerLogMessage(PluginGlpiinventoryCollect_Registry $registry, array $registry_data): ?string
+    public static function getAnswerLogMessage(PluginGlpiinventoryCollect_Registry $registry, array $registry_data, int $count): ?string
     {
         $mode = (int) ($registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
-        $path = $registry->fields['hive'] . $registry->fields['path'];
 
         switch ($mode) {
             case PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS:
                 $exists = isset($registry_data['_exists'])
                     ? (bool) $registry_data['_exists']
-                    : self::hasReturnedData($registry_data);
+                    : false;
                 return sprintf(
                     $exists
-                        ? __('%s found', 'glpiinventory')
-                        : __('%s not found', 'glpiinventory'),
-                    self::toWindowsPath($path)
+                        ? __('%s path found', 'glpiinventory')
+                        : __('%s path not found', 'glpiinventory'),
+                    $registry->fields['name']
                 );
 
             case PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
                 $defined = isset($registry_data['_defined'])
                     ? (bool) $registry_data['_defined']
-                    : self::hasReturnedData($registry_data);
+                    : false;
                 return sprintf(
                     $defined
-                        ? __('%s exists', 'glpiinventory')
-                        : __("%s doesn't exist", 'glpiinventory'),
-                    self::toWindowsPath($path . $registry->fields['key'])
+                        ? __('%s value exists', 'glpiinventory')
+                        : __('%s value does not exist', 'glpiinventory'),
+                    $registry->fields['name']
                 );
 
             default:
-                return null;
+                if (isset($registry_data['_path'])) {
+                    if ($count === 1) {
+                        return sprintf(
+                            __('%s: Found a value', 'glpiinventory'),
+                            $registry->fields['name']
+                        );
+                    } else {
+                        return sprintf(
+                            __('%s: Found %d values', 'glpiinventory'),
+                            $registry->fields['name'],
+                            $count
+                        );
+                    }
+                }
+                return sprintf(
+                    __('%s: Found a result', 'glpiinventory'),
+                    $registry->fields['name']
+                );
         }
-    }
-
-    /**
-     * Format a registry path the Windows way: use backslashes as separators and
-     * collapse any duplicate backslashes so no "\\" appears in the output.
-     */
-    private static function toWindowsPath(string $path): string
-    {
-        $path = str_replace('/', '\\', $path);
-        return preg_replace('/\\\\+/', '\\\\', $path);
     }
 
     /**
@@ -397,9 +405,9 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 echo "<th>" . __('Path', 'glpiinventory') . "</th>";
                 if ($mode === PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED) {
                     echo "<th>" . __('Key', 'glpiinventory') . "</th>";
-                    echo "<th>" . __('Value', 'glpiinventory') . "</th>";
+                    echo "<th>" . __('State', 'glpiinventory') . "</th>";
                 } elseif ($mode === PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS) {
-                    echo "<th>" . __('Value', 'glpiinventory') . "</th>";
+                    echo "<th>" . __('State', 'glpiinventory') . "</th>";
                 } else {
                     echo "<th>" . __('Value', 'glpiinventory') . "</th>";
                     echo "<th>" . __('Data', 'glpiinventory') . "</th>";
