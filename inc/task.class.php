@@ -1174,6 +1174,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'SELECT' => [
                         'log.id AS log_last_id',
                         'log.date AS log_last_date',
+                        'log.state AS log_last_state',
                         'log.comment AS log_last_comment',
                         'log.plugin_glpiinventory_taskjobstates_id AS run_id',
                         new QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp')),
@@ -1217,15 +1218,16 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     $targets = &$jobs[$run_data['jobs_id']]['targets'];
 
                     $targets[$run_data['target_id']]['agents'][$run_data['agent_id']][] = [
-                        'agent_id'      => $run_data['agent_id'],
-                        'link'          => $run_data['link'],
-                        'numstate'      => $run_data['numstate'],
-                        'state'         => $run_data['state'],
-                        'jobstate_id'   => $run_id,
-                        'last_log_id'   => $log_result['log_last_id'],
-                        'last_log_date' => $log_result['log_last_date'],
-                        'timestamp'     => $log_result['log_last_timestamp'],
-                        'last_log'      => PluginGlpiinventoryTaskjoblog::convertComment($log_result['log_last_comment']),
+                        'agent_id'       => $run_data['agent_id'],
+                        'link'           => $run_data['link'],
+                        'numstate'       => $run_data['numstate'],
+                        'state'          => $run_data['state'],
+                        'jobstate_id'    => $run_id,
+                        'last_log_id'    => $log_result['log_last_id'],
+                        'last_log_date'  => $log_result['log_last_date'],
+                        'last_log_state' => (int) $log_result['log_last_state'],
+                        'timestamp'      => $log_result['log_last_timestamp'],
+                        'last_log'       => PluginGlpiinventoryTaskjoblog::convertComment($log_result['log_last_comment']),
                     ];
                 }
             }

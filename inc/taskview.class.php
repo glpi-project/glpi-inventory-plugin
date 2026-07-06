@@ -633,6 +633,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             'Computer name',
             'Date',
             'Status',
+            'Log status',
             'Last Message',
         ];
         $sheet->fromArray($headers);
@@ -644,7 +645,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         foreach ($data['tasks'] ?? [] as $task) {
             $task_name = $task['task_name'] ?? '';
             if (empty($task['jobs'])) {
-                $sheet->fromArray([$task_name, '', '', '', '', '', '', '', ''], null, 'A' . $row++);
+                $sheet->fromArray([$task_name, '', '', '', '', '', '', '', '', ''], null, 'A' . $row++);
                 continue;
             }
 
@@ -654,13 +655,13 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 $method   = $job['method'] ?? '';
 
                 if (empty($job['targets'])) {
-                    $sheet->fromArray([$task_name, $job_name, $method, '', '', '', '', '', ''], null, 'A' . $row++);
+                    $sheet->fromArray([$task_name, $job_name, $method, '', '', '', '', '', '', ''], null, 'A' . $row++);
                 } else {
                     foreach ($job['targets'] as $target) {
                         $target_name = $target['name'] ?? '';
 
                         if (empty($target['agents'])) {
-                            $sheet->fromArray([$task_name, $job_name, $method, $target_name, '', '', '', '', ''], null, 'A' . $row++);
+                            $sheet->fromArray([$task_name, $job_name, $method, $target_name, '', '', '', '', '', ''], null, 'A' . $row++);
                             continue;
                         }
 
@@ -675,7 +676,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             }
 
                             if (empty($agent)) {
-                                $sheet->fromArray([$task_name, $job_name, $method, $target_name, $agent_name, $computer_name, '', '', ''], null, 'A' . $row++);
+                                $sheet->fromArray([$task_name, $job_name, $method, $target_name, $agent_name, $computer_name, '', '', '', ''], null, 'A' . $row++);
                                 continue;
                             }
 
@@ -689,6 +690,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                     $computer_name,
                                     $exec['last_log_date'] ?? '',
                                     $exec['state'] ?? '',
+                                    PluginGlpiinventoryTaskjoblog::getStateName($exec['last_log_state'] ?? -1),
                                     $exec['last_log'] ?? '',
                                 ], null, 'A' . $row++);
                             }
