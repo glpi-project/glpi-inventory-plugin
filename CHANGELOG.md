@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [unreleased]
 
 - Fix task execution results CSV export
+- Add column log status in CSV export
 
 ## [1.6.8] - 2026-06-24
 
