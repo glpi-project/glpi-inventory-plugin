@@ -79,12 +79,12 @@ class TaskCsvExportTest extends DbTestCase
     {
         $rows = $this->getRows(['tasks' => []]);
         $this->assertSame(
-            ['Task_name', 'Job_name', 'Method', 'Target', 'Agent', 'Computer name', 'Date', 'Status', 'Last Message'],
+            ['Task_name', 'Job_name', 'Method', 'Target', 'Agent', 'Computer name', 'Date', 'Status', 'Log status', 'Last Message'],
             $rows[0]
         );
     }
 
-    // A single execution must fill the 9 expected columns
+    // A single execution must fill the 10 expected columns
     public function testSingleExecution(): void
     {
         $rows = $this->getRows($this->dataWith([$this->exec('success', 'OK')]));
@@ -96,7 +96,9 @@ class TaskCsvExportTest extends DbTestCase
         $this->assertSame('Test target', $rows[1][3]);
         $this->assertSame('2026-06-29 16:18:02', $rows[1][6]);
         $this->assertSame('success', $rows[1][7]);
-        $this->assertSame('OK', $rows[1][8]);
+        // Column 8 = Log status; last_log_state is not set by helper => label falls back to "N/A"
+        $this->assertSame(NOT_AVAILABLE, $rows[1][8]);
+        $this->assertSame('OK', $rows[1][9]);
     }
 
     // With several executions, the parent columns must be repeated on every row
@@ -110,7 +112,7 @@ class TaskCsvExportTest extends DbTestCase
         $this->assertSame('Test task', $rows[2][0]);
         $this->assertSame('Test job', $rows[2][1]);
         $this->assertSame('Test target', $rows[2][3]);
-        $this->assertSame('KO', $rows[2][8]);
+        $this->assertSame('KO', $rows[2][9]);
     }
 
     // a message containing a semicolon,  double quotes or a newline must stay inside a single cell
@@ -125,8 +127,8 @@ class TaskCsvExportTest extends DbTestCase
 
         // 1 header row + 2 execution rows = 3 rows
         $this->assertCount(3, $rows);
-        $this->assertSame('Path not found; aborted', $rows[1][8]);
-        $this->assertSame($multiline_message, $rows[2][8]);
+        $this->assertSame('Path not found; aborted', $rows[1][9]);
+        $this->assertSame($multiline_message, $rows[2][9]);
     }
 
     // The $includeoldjobs parameter must cap the number of jobs per task
@@ -154,8 +156,8 @@ class TaskCsvExportTest extends DbTestCase
 
         // 1 header + 2 kept jobs
         $this->assertCount(3, $rows);
-        $this->assertSame('first', $rows[1][8]);
-        $this->assertSame('second', $rows[2][8]);
+        $this->assertSame('first', $rows[1][9]);
+        $this->assertSame('second', $rows[2][9]);
     }
 
     // Computer  - agent / Columns are populated
@@ -196,5 +198,46 @@ class TaskCsvExportTest extends DbTestCase
 
         $this->assertSame('agent test', $rows[1][4]);
         $this->assertSame('pc test', $rows[1][5]);
+    }
+
+    // The "Log status" column (col 8) must display the localized label
+    // for the taskjoblog state (Ok, Error, Info, Prepared, Running, Started).
+    public function testLogStatusColumnUsesLocalizedLabel(): void
+    {
+        $execWithLogState = fn(int $log_state, string $message) => [
+            'last_log_date'  => '2026-06-29 16:18:02',
+            'state'          => 'success',
+            'last_log_state' => $log_state,
+            'last_log'       => $message,
+        ];
+
+        $data = ['tasks' => [1 => [
+            'task_name' => 'T',
+            'jobs'      => [10 => [
+                'name'    => 'J',
+                'method'  => 'inventory',
+                'targets' => [99 => [
+                    'name'   => 'tgt',
+                    'agents' => [0 => [
+                        $execWithLogState(PluginGlpiinventoryTaskjoblog::TASK_OK, 'ok'),
+                        $execWithLogState(PluginGlpiinventoryTaskjoblog::TASK_ERROR, 'err'),
+                        $execWithLogState(PluginGlpiinventoryTaskjoblog::TASK_INFO, 'info'),
+                        $execWithLogState(PluginGlpiinventoryTaskjoblog::TASK_PREPARED, 'prep'),
+                        $execWithLogState(PluginGlpiinventoryTaskjoblog::TASK_RUNNING, 'run'),
+                        $execWithLogState(PluginGlpiinventoryTaskjoblog::TASK_STARTED, 'start'),
+                    ]],
+                ]],
+            ]],
+        ]]];
+
+        $rows = $this->getRows($data);
+        $labels = PluginGlpiinventoryTaskjoblog::dropdownStateValues();
+
+        $this->assertSame($labels[PluginGlpiinventoryTaskjoblog::TASK_OK], $rows[1][8]);
+        $this->assertSame($labels[PluginGlpiinventoryTaskjoblog::TASK_ERROR], $rows[2][8]);
+        $this->assertSame($labels[PluginGlpiinventoryTaskjoblog::TASK_INFO], $rows[3][8]);
+        $this->assertSame($labels[PluginGlpiinventoryTaskjoblog::TASK_PREPARED], $rows[4][8]);
+        $this->assertSame($labels[PluginGlpiinventoryTaskjoblog::TASK_RUNNING], $rows[5][8]);
+        $this->assertSame($labels[PluginGlpiinventoryTaskjoblog::TASK_STARTED], $rows[6][8]);
     }
 }
