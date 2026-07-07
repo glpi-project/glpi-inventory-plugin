@@ -97,7 +97,7 @@ class TaskCsvExportTest extends DbTestCase
         $this->assertSame('2026-06-29 16:18:02', $rows[1][6]);
         $this->assertSame('success', $rows[1][7]);
         // Column 8 = Log status; last_log_state is not set by helper => label falls back to "N/A"
-        $this->assertSame('N/A', $rows[1][8]);
+        $this->assertSame(NOT_AVAILABLE, $rows[1][8]);
         $this->assertSame('OK', $rows[1][9]);
     }
 
