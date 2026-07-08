@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix task execution results CSV export
 - Add column log status in CSV export
+- Allow `domain` READ right for dynamic group criterion
 
 ## [1.6.8] - 2026-06-24
 
