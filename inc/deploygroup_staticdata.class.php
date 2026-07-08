@@ -47,35 +47,35 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
      *
      * @var string
      */
-    public static $rightname = "plugin_glpiinventory_group";
+    public static string $rightname = "plugin_glpiinventory_group";
 
     /**
      * Itemtype for the first part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $itemtype_1 = PluginGlpiinventoryDeployGroup::class;
+    public static ?string $itemtype_1 = PluginGlpiinventoryDeployGroup::class;
 
     /**
      * id field name for the first part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $items_id_1 = 'plugin_glpiinventory_deploygroups_id';
+    public static ?string $items_id_1 = 'plugin_glpiinventory_deploygroups_id';
 
     /**
      * Itemtype for the second part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $itemtype_2 = 'itemtype';
+    public static ?string $itemtype_2 = 'itemtype';
 
     /**
      * id field name for the second part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $items_id_2 = 'items_id';
+    public static ?string $items_id_2 = 'items_id';
 
 
     /**

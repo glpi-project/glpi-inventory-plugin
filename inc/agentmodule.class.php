@@ -46,7 +46,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
      *
      * @var string
      */
-    public static $rightname = 'agent';
+    public static string $rightname = 'agent';
 
 
     /**

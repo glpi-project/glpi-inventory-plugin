@@ -43,7 +43,7 @@ class PluginGlpiinventoryCommunicationNetworkInventory
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_networkequipment';
+    public static string $rightname = 'plugin_glpiinventory_networkequipment';
 
     /**
      * Import data, so get data from agent to put in GLPI

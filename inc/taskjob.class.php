@@ -44,7 +44,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_task';
+    public static string $rightname = 'plugin_glpiinventory_task';
 
     /**
      * Get name of this type by language of the user connected

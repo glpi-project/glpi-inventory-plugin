@@ -39,44 +39,44 @@ class PluginGlpiinventoryIPRange_SNMPCredential extends CommonDBRelation
     /**
      * Itemtype for the first part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $itemtype_1    = PluginGlpiinventoryIPRange::class;
+    public static ?string $itemtype_1    = PluginGlpiinventoryIPRange::class;
 
     /**
      * id field name for the first part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $items_id_1    = 'plugin_glpiinventory_ipranges_id';
+    public static ?string $items_id_1    = 'plugin_glpiinventory_ipranges_id';
 
     /**
      * Restrict the first item to the current entity
      *
      * @var bool
      */
-    public static $take_entity_1 = true;
+    public static bool $take_entity_1 = true;
 
     /**
      * Itemtype for the second part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $itemtype_2    = SNMPCredential::class;
+    public static ?string $itemtype_2    = SNMPCredential::class;
 
     /**
      * id field name for the second part of relation
      *
-     * @var string
+     * @var ?string
      */
-    public static $items_id_2    = 'snmpcredentials_id';
+    public static ?string $items_id_2    = 'snmpcredentials_id';
 
     /**
      * Not restrict the second item to the current entity
      *
      * @var bool
      */
-    public static $take_entity_2 = false;
+    public static bool $take_entity_2 = false;
 
 
     /**

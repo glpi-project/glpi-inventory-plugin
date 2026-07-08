@@ -72,7 +72,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_package';
+    public static string $rightname = 'plugin_glpiinventory_package';
 
     public const REGISTRY_NO_DB_ENTRY = 0x1;
     public const REGISTRY_NO_MANIFEST = 0x2;

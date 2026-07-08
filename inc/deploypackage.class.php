@@ -60,7 +60,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_package';
+    public static string $rightname = 'plugin_glpiinventory_package';
 
     /**
      * Initialize the users visibility of package for self-service deploy
