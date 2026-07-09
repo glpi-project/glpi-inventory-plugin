@@ -288,10 +288,6 @@ function plugin_init_glpiinventory(): void
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = addPublicFile('lib/mustache.js-2.3.0/mustache', 'js');
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = addPublicFile('js/taskjobs', 'js');
         }
-        if (plugin_glpiinventory_script_endswith("menu.php")) {
-            $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = addPublicFile('js/stats', 'js');
-        }
-
         if (
             Session::haveRight('plugin_glpiinventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)
@@ -342,32 +338,6 @@ function plugin_init_glpiinventory(): void
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = addPublicFile('css/views', 'css');
         }
 
-        if (isset($_SESSION["glpiname"])) {
-            /*
-             * Deploy submenu entries
-             */
-
-            // Load nvd3 for printerpage counter graph
-            if (
-                str_ends_with($current_url, '/front/printer.form.php')
-                 || str_ends_with($current_url, 'glpiinventory/front/menu.php')
-            ) {
-                // Add graph javascript
-                $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'] = array_merge(
-                    $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'],
-                    [
-                        "lib/nvd3/nv.d3.min.js",
-                    ]
-                );
-                // Add graph css
-                $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'] = array_merge(
-                    $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'],
-                    [
-                        "lib/nvd3/nv.d3.min.css",
-                    ]
-                );
-            }
-        }
     } else { // plugin not active, need $moduleId for uninstall check
         include_once(__DIR__ . '/inc/module.class.php');
     }

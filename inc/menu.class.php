@@ -528,44 +528,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
 
     /**
-     * Display chart
-     *
-     * @param string $name
-     * @param array<string,mixed> $data list of data for the chart
-     * @param string $title
-     */
-    public static function showChart($name, $data, $title = '&nbsp;'): void
-    {
-        echo "<div class='fi_chart donut'>";
-        echo "<h2 class='fi_chart_title'>$title</h2>";
-        echo '<svg id="' . $name . '"></svg>';
-        echo Html::scriptBlock("$(function() {
-         statHalfDonut('" . $name . "', '" . json_encode($data) . "');
-      });");
-        echo "</div>";
-    }
-
-
-    /**
-     * Display chart bar
-     *
-     * @param string $name
-     * @param array<string,mixed> $data list of data for the chart
-     * @param string $title
-     * @param int $width
-     */
-    public static function showChartBar($name, $data, $title = '', $width = 370): void
-    {
-        echo "<div class='fi_chart bar'>";
-        echo "<h2 class='fi_chart_title'>$title</h2>";
-        echo '<svg id="' . $name . '"></svg>';
-        echo Html::scriptBlock("$(function() {
-         statBar('" . $name . "', '" . json_encode($data) . "');
-      });");
-        echo "</div>";
-    }
-
-    /**
      * @return string
      */
     public static function getIcon()
