@@ -30,7 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\json_encode;
+use Glpi\Application\View\TemplateRenderer;
 
 /**
  * Manage the hours in the timeslot.
@@ -116,74 +116,24 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
 
 
     /**
-     * Display form to add a new time entry in timeslot
+     * Display the time slot entries management: add form, entries list and the weekly grid.
      *
      * @param int $timeslots_id
      */
     public function formEntry(int $timeslots_id): void
     {
-        $ID = 0;
-        $options = [];
-        $this->initForm($ID, $options);
-        $this->showFormHeader($options);
+        // Days of week, keyed by their ISO-8601 numeric value (1 = Monday ... 7 = Sunday).
+        $days = Toolbox::getDaysOfWeekArray();
+        $days[7] = $days[0];
+        unset($days[0]);
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Start time', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        $days = [
-            '1' => __('Monday'),
-            '2' => __('Tuesday'),
-            '3' => __('Wednesday'),
-            '4' => __('Thursday'),
-            '5' => __('Friday'),
-            '6' => __('Saturday'),
-            '7' => __('Sunday'),
-        ];
-        echo '<div id="beginday">';
-        Dropdown::showFromArray('beginday', $days);
-        echo '</div>';
+        // Available hours (in seconds since midnight) with a 15 minutes step.
         $hours = [];
-        $dec = 15 * 60;
-        for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec) {
-            $hours[$timestamp] = date('H:i', $timestamp);
+        for ($seconds = 0; $seconds <= (24 * 3600); $seconds += (15 * 60)) {
+            $hours[$seconds] = PluginGlpiinventoryToolbox::getHourMinute($seconds);
         }
-        PluginGlpiinventoryToolbox::showHours('beginhours', ['step' => 15]);
-        echo "</td>";
-        echo "</tr>";
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('End time', 'glpiinventory');
-        echo "</td>";
-        echo "<td>";
-        echo '<div id="beginday">';
-        Dropdown::showFromArray('lastday', $days);
-        echo '</div>';
-        PluginGlpiinventoryToolbox::showHours('lasthours', ['step' => 15]);
-        echo Html::hidden('timeslots_id', ['value' => $timeslots_id]);
-        echo "</td>";
-        echo "</tr>";
-        $this->showFormButtons($options);
-
-        $this->formDeleteEntry($timeslots_id);
-
-        $this->showTimeSlot($timeslots_id);
-    }
-
-
-    /**
-     * Display delete form
-     *
-     * @todo rename this method in showTimeslots() since it's not only used to delete but also to
-     *       show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
-     *
-     * @param int $timeslots_id
-     */
-    public function formDeleteEntry($timeslots_id): void
-    {
-
+        // Existing entries grouped by day.
         $dbentries = getAllDataFromTable(
             'glpi_plugin_glpiinventory_timeslotentries',
             [
@@ -192,83 +142,62 @@ class PluginGlpiinventoryTimeslotEntry extends CommonDBTM
             ]
         );
 
-        $options = [];
-        $ID      = key($dbentries);
-        $canedit = $this->getFromDB($ID)
-                 && $this->can($ID, READ);
-        $this->showFormHeader($options);
-
+        $entries_by_day = [];
+        $entries = [];
         foreach ($dbentries as $dbentry) {
-            echo "<tr class='tab_bg_3'>";
-            echo "<td>";
-            $daysofweek = Toolbox::getDaysOfWeekArray();
-            $daysofweek[7] = $daysofweek[0];
-            unset($daysofweek[0]);
-            echo $daysofweek[$dbentry['day']];
-            echo "</td>";
-            echo "<td>";
-            echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['begin']);
-            echo " - ";
-            echo PluginGlpiinventoryToolbox::getHourMinute($dbentry['end']);
-            echo "</td>";
-            echo "<td colspan='2'>";
-            if ($canedit) {
-                echo "<input type='submit' class='submit' name='purge-" . $dbentry['id'] . "' value='" . __('Delete') . "' />";
-            }
-            echo "</td>";
-            echo "</tr>";
+            $entries_by_day[$dbentry['day']][] = $dbentry;
+            $entries[] = [
+                'id'        => $dbentry['id'],
+                'day_label' => $days[$dbentry['day']] ?? $dbentry['day'],
+                'begin'     => PluginGlpiinventoryToolbox::getHourMinute($dbentry['begin']),
+                'end'       => PluginGlpiinventoryToolbox::getHourMinute($dbentry['end']),
+            ];
         }
-        $this->showFormButtons(['canedit' => false]);
+
+        TemplateRenderer::getInstance()->display('@glpiinventory/forms/timeslot/entry.html.twig', [
+            'timeslots_id' => $timeslots_id,
+            'target_entry' => self::getFormURL(),
+            'days'         => $days,
+            'hours'        => $hours,
+            'entries'      => $entries,
+            'canedit'      => Session::haveRight(self::$rightname, PURGE),
+            'grid'         => $this->getWeekGrid($days, $entries_by_day),
+        ]);
     }
 
 
     /**
-     * Display timeslot graph
+     * Build the weekly grid used to visualise the configured time slots.
      *
-     * @todo This must be moved in Timeslot class since a Task class is linked to a Timeslot and not
-     * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.
-     * -- Kevin 'kiniou' Roy
+     * Each day is split into 96 quarter-hour cells; a cell is active when it falls within
+     * a configured entry range [begin, end[ (boundaries expressed in seconds).
      *
-     * @param int $timeslots_id
+     * @param array<int,string> $days           Days of week keyed by ISO numeric value.
+     * @param array<int,array<array<string,mixed>>> $entries_by_day Entries grouped by day.
+     * @return array<array{day:int,label:string,cells:array<bool>}>
      */
-    public function showTimeSlot(int $timeslots_id): void
+    private function getWeekGrid(array $days, array $entries_by_day): array
     {
-        echo "<div id='chart'></div>";
-        echo "<div id='startperiod'></div>";
-        echo "<div id='stopperiod'></div>";
-
-        $daysofweek = Toolbox::getDaysOfWeekArray();
-        $daysofweek[7] = $daysofweek[0];
-        unset($daysofweek[0]);
-        $dates = [
-            $daysofweek[1] => [],
-            $daysofweek[2] => [],
-            $daysofweek[3] => [],
-            $daysofweek[4] => [],
-            $daysofweek[5] => [],
-            $daysofweek[6] => [],
-            $daysofweek[7] => [],
-        ];
-
-        for ($day = 1; $day <= 7; $day++) {
-            $dbentries = getAllDataFromTable(
-                'glpi_plugin_glpiinventory_timeslotentries',
-                [
-                    'WHERE'  => [
-                        'plugin_glpiinventory_timeslots_id' => $timeslots_id,
-                        'day'                                 => $day,
-                    ],
-                    'ORDER'  => 'begin ASC',
-                ]
-            );
-            foreach ($dbentries as $entries) {
-                $dates[$daysofweek[$day]][] = [
-                    'start' => $entries['begin'],
-                    'end'   => $entries['end'],
-                ];
+        $grid = [];
+        foreach ($days as $daynum => $label) {
+            $cells = [];
+            for ($quarter = 0; $quarter < (24 * 4); $quarter++) {
+                $active = false;
+                foreach ($entries_by_day[$daynum] ?? [] as $entry) {
+                    if ($quarter >= ($entry['begin'] / 900) && $quarter < ($entry['end'] / 900)) {
+                        $active = true;
+                        break;
+                    }
+                }
+                $cells[] = $active;
             }
+            $grid[] = [
+                'day'   => $daynum,
+                'label' => $label,
+                'cells' => $cells,
+            ];
         }
-        echo '<script>timeslot(\'' . json_encode($dates) . '\')</script>';
+        return $grid;
     }
 
 
