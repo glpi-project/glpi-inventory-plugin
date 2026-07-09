@@ -56,7 +56,8 @@
                      <th scope="row" class="timeslot-day">{{ row.label }}</th>
                      {% for cell in row.cells %}
                         <td class="timeslot-cell{{ cell ? ' active' : '' }}"
-                            data-day="{{ row.day }}"></td>
+                            data-day="{{ row.day }}"
+                            data-hour="{{ loop.index0 * 900 }}"></td>
                      {% endfor %}
                   </tr>
                {% endfor %}
@@ -152,9 +153,13 @@
    (function () {
       document.querySelectorAll('.timeslot-grid .timeslot-cell').forEach(function (cell) {
          cell.addEventListener('click', function () {
-            var select = document.querySelector('select[name="beginday"]');
-            if (select) {
-               $(select).val(this.dataset.day).trigger('change');
+            var day_select = document.querySelector('select[name="beginday"]');
+            if (day_select) {
+               $(day_select).val(this.dataset.day).trigger('change');
+            }
+            var hour_select = document.querySelector('select[name="beginhours"]');
+            if (hour_select) {
+               $(hour_select).val(this.dataset.hour).trigger('change');
             }
          });
       });
