@@ -33,8 +33,6 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
-use function Safe\json_encode;
-
 /**
  * Manage plugin menu
  */
