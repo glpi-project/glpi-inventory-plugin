@@ -31,6 +31,38 @@
 
 {% import "components/form/fields_macros.html.twig" as fields %}
 
+{# ---- Weekly time slot grid (read-only visualisation) ---- #}
+<div class="card mt-3">
+   <div class="card-body">
+      <div class="timeslot-grid-wrapper">
+         <table class="timeslot-grid">
+            <caption class="visually-hidden">
+               {{ __('Weekly view of the configured time slots', 'glpiinventory') }}
+            </caption>
+            <thead>
+               <tr>
+                  <td></td>
+                  {% for h in 0..23 %}
+                     <th colspan="4" scope="col" class="timeslot-hour">{{ h }}</th>
+                  {% endfor %}
+               </tr>
+            </thead>
+            <tbody>
+               {% for row in grid %}
+                  <tr>
+                     <th scope="row" class="timeslot-day">{{ row.label }}</th>
+                     {% for cell in row.cells %}
+                        <td class="timeslot-cell{{ cell ? ' active' : '' }}"
+                            data-day="{{ row.day }}"></td>
+                     {% endfor %}
+                  </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+
 {# ---- Add a new time slot entry ---- #}
 <form method="POST" action="{{ target_entry }}" class="mt-3">
    <div class="card">
@@ -106,38 +138,6 @@
       </div>
    </form>
 {% endif %}
-
-{# ---- Weekly time slot grid (read-only visualisation) ---- #}
-<div class="card mt-3">
-   <div class="card-body">
-      <div class="timeslot-grid-wrapper">
-         <table class="timeslot-grid">
-            <caption class="visually-hidden">
-               {{ __('Weekly view of the configured time slots', 'glpiinventory') }}
-            </caption>
-            <thead>
-               <tr>
-                  <td></td>
-                  {% for h in 0..23 %}
-                     <th colspan="4" scope="col" class="timeslot-hour">{{ h }}</th>
-                  {% endfor %}
-               </tr>
-            </thead>
-            <tbody>
-               {% for row in grid %}
-                  <tr>
-                     <th scope="row" class="timeslot-day">{{ row.label }}</th>
-                     {% for cell in row.cells %}
-                        <td class="timeslot-cell{{ cell ? ' active' : '' }}"
-                            data-day="{{ row.day }}"></td>
-                     {% endfor %}
-                  </tr>
-               {% endfor %}
-            </tbody>
-         </table>
-      </div>
-   </div>
-</div>
 
 <script>
    (function () {
