@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add column log status in CSV export
 - Allow `domain` READ right for dynamic group criterion
 - Remove NVD3 charting library and dead showChart/showChartBar methods
+- Switch timeslot views to Twig, minor UI changes
 
 ## [1.6.8] - 2026-06-24
 
