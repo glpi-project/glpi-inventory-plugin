@@ -888,6 +888,47 @@ table.runs td.comment {
   transform: rotate(180deg);
 }
 
+/* Weekly time slot grid (see templates/forms/timeslot/entry.html.twig) */
+.timeslot-grid-wrapper {
+   overflow-x: auto;
+}
+
+.timeslot-grid {
+   border-collapse: collapse;
+}
+
+.timeslot-grid th.timeslot-hour {
+   font-weight: normal;
+   font-size: 0.75rem;
+   text-align: left;
+   padding: 0 0 4px 1px;
+   border-left: 1px solid var(--tblr-border-color, #e6e6e6);
+}
+
+.timeslot-grid th.timeslot-day {
+   font-weight: normal;
+   text-align: right;
+   white-space: nowrap;
+   padding-right: 8px;
+}
+
+.timeslot-grid .timeslot-cell {
+   width: 8px;
+   height: 18px;
+   padding: 0;
+   border: 1px solid var(--tblr-page-bg, #fff);
+   background-color: var(--tblr-border-color, #e6e6e6);
+   cursor: pointer;
+}
+
+.timeslot-grid .timeslot-cell.active {
+   background-color: var(--tblr-primary, #3f3f3f);
+}
+
+.timeslot-grid .timeslot-cell:hover {
+   background-color: var(--tblr-green, #77ff77);
+}
+
 .toggle_run {
    background: rgba(255, 255, 255, .5) no-repeat 2px 2px;
    background-image: url("../../../pics/expand.png");

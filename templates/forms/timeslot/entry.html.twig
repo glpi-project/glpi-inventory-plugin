@@ -1,0 +1,153 @@
+{#
+ # ---------------------------------------------------------------------
+ # GLPI Inventory Plugin
+ # Copyright (C) 2021 Teclib' and contributors.
+ #
+ # http://glpi-project.org
+ #
+ # based on FusionInventory for GLPI
+ # Copyright (C) 2010-2021 by the FusionInventory Development Team.
+ #
+ # ---------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of GLPI Inventory Plugin.
+ #
+ # GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU Affero General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # GLPI Inventory Plugin is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ # GNU Affero General Public License for more details.
+ #
+ # You should have received a copy of the GNU Affero General Public License
+ # along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ # ---------------------------------------------------------------------
+ #}
+
+{% import "components/form/fields_macros.html.twig" as fields %}
+
+{# ---- Add a new time slot entry ---- #}
+<form method="POST" action="{{ target_entry }}" class="mt-3">
+   <div class="card">
+      <div class="card-body">
+         {% set start_field %}
+            <div class="row g-2 flex-nowrap">
+               <div class="col-auto">
+                  {% do call('Dropdown::showFromArray', ['beginday', days, {'width': '100%'}]) %}
+               </div>
+               <div class="col-auto">
+                  {% do call('Dropdown::showFromArray', ['beginhours', hours, {'width': '100%'}]) %}
+               </div>
+            </div>
+         {% endset %}
+         {{ fields.field('beginday', start_field, __('Start time', 'glpiinventory')) }}
+
+         {% set end_field %}
+            <div class="row g-2 flex-nowrap">
+               <div class="col-auto">
+                  {% do call('Dropdown::showFromArray', ['lastday', days, {'width': '100%'}]) %}
+               </div>
+               <div class="col-auto">
+                  {% do call('Dropdown::showFromArray', ['lasthours', hours, {'width': '100%'}]) %}
+               </div>
+            </div>
+         {% endset %}
+         {{ fields.field('lastday', end_field, __('End time', 'glpiinventory')) }}
+      </div>
+      <div class="card-footer d-flex">
+         {{ fields.hiddenField('timeslots_id', timeslots_id) }}
+         {{ fields.hiddenField('_glpi_csrf_token', csrf_token()) }}
+         <button type="submit" name="add" class="btn btn-primary ms-auto">
+            <i class="ti ti-plus"></i>
+            {{ _x('button', 'Add') }}
+         </button>
+      </div>
+   </div>
+</form>
+
+{# ---- Existing entries ---- #}
+{% if entries is not empty %}
+   <form method="POST" action="{{ target_entry }}" class="mt-3">
+      <div class="card">
+         <div class="table-responsive">
+            <table class="table card-table">
+               <thead>
+                  <tr>
+                     <th>{{ _n('Day', 'Days', 1) }}</th>
+                     <th>{{ __('Hours') }}</th>
+                     <th class="text-end"></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for entry in entries %}
+                     <tr>
+                        <td>{{ entry.day_label }}</td>
+                        <td>{{ entry.begin }} - {{ entry.end }}</td>
+                        <td class="text-end">
+                           {% if canedit %}
+                              <button type="submit" name="purge-{{ entry.id }}"
+                                      class="btn btn-sm btn-outline-danger">
+                                 <i class="ti ti-trash"></i>
+                                 {{ _x('button', 'Delete permanently') }}
+                              </button>
+                           {% endif %}
+                        </td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+         {{ fields.hiddenField('_glpi_csrf_token', csrf_token()) }}
+      </div>
+   </form>
+{% endif %}
+
+{# ---- Weekly time slot grid (read-only visualisation) ---- #}
+<div class="card mt-3">
+   <div class="card-body">
+      <div class="timeslot-grid-wrapper">
+         <table class="timeslot-grid">
+            <caption class="visually-hidden">
+               {{ __('Weekly view of the configured time slots', 'glpiinventory') }}
+            </caption>
+            <thead>
+               <tr>
+                  <td></td>
+                  {% for h in 0..23 %}
+                     <th colspan="4" scope="col" class="timeslot-hour">{{ h }}</th>
+                  {% endfor %}
+               </tr>
+            </thead>
+            <tbody>
+               {% for row in grid %}
+                  <tr>
+                     <th scope="row" class="timeslot-day">{{ row.label }}</th>
+                     {% for cell in row.cells %}
+                        <td class="timeslot-cell{{ cell ? ' active' : '' }}"
+                            data-day="{{ row.day }}"></td>
+                     {% endfor %}
+                  </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+
+<script>
+   (function () {
+      document.querySelectorAll('.timeslot-grid .timeslot-cell').forEach(function (cell) {
+         cell.addEventListener('click', function () {
+            var select = document.querySelector('select[name="beginday"]');
+            if (select) {
+               $(select).val(this.dataset.day).trigger('change');
+            }
+         });
+      });
+   })();
+</script>

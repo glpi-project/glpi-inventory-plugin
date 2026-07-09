@@ -30,6 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
 use Glpi\DBAL\QueryExpression;
 use Safe\DateTime;
 
@@ -264,25 +265,10 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
     public function showForm($ID, $options = [])
     {
         $this->initForm($ID, $options);
-        $this->showFormHeader($options);
-
-        echo "<tr class='tab_bg_1'>";
-        //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
-        echo "<td>" . sprintf(
-            __('%1$s%2$s'),
-            __('Name'),
-            (isset($options['withtemplate']) && $options['withtemplate'] ? "*" : "")
-        )
-           . "</td>";
-        echo "<td>";
-        echo Html::input('name', ['value' => $this->fields["name"]]);
-        echo "</td>";
-        echo "<td>" . __('Comments') . "</td>";
-        echo "<td class='middle'>";
-        echo "<textarea cols='45' class='form-control' name='comment' >" . $this->fields["comment"];
-        echo "</textarea></td></tr>\n";
-
-        $this->showFormButtons($options);
+        TemplateRenderer::getInstance()->display('@glpiinventory/forms/timeslot.html.twig', [
+            'item'   => $this,
+            'params' => $options,
+        ]);
 
         if ($ID > 0) {
             $pf = new PluginGlpiinventoryTimeslotEntry();
