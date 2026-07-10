@@ -36,6 +36,10 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\TestCase;
 
+use function Safe\exec;
+use function Safe\file_put_contents;
+use function Safe\mkdir;
+
 class UpdateTest extends TestCase
 {
     public static function setUpBeforeClass(): void
@@ -185,6 +189,7 @@ class UpdateTest extends TestCase
 
         $this->verifyEntityRules($nbrules);
         $this->checkDeployMirrors();
+        $this->checkBlacklistTablesDropped();
 
         if ($verify) {
             $this->verifyConfig();
@@ -322,5 +327,15 @@ class UpdateTest extends TestCase
             'glpi_plugin_glpiinventory_deploymirrors',
             'is_active'
         ));
+    }
+
+
+    private function checkBlacklistTablesDropped(): void
+    {
+        global $DB;
+
+        // Must never be recreated, regardless of the pre-update data state.
+        $this->assertFalse($DB->tableExists('glpi_plugin_glpiinventory_inventorycomputercriterias'));
+        $this->assertFalse($DB->tableExists('glpi_plugin_glpiinventory_inventorycomputerblacklists'));
     }
 }
