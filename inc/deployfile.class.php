@@ -45,7 +45,6 @@ use function Safe\fwrite;
 use function Safe\gzclose;
 use function Safe\gzopen;
 use function Safe\gzwrite;
-use function Safe\hash_file;
 use function Safe\ini_get;
 use function Safe\json_decode;
 use function Safe\json_encode;
@@ -786,7 +785,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      */
     public function registerFilepart($filePath, $skip_creation = false)
     {
-        $sha512 = hash_file('sha512', $filePath);
+        $sha512 = hash_file('sha512', $filePath); //@phpstan-ignore theCodingMachineSafe.function (see https://github.com/glpi-project/glpi-inventory-plugin/issues/981)
 
         if (!$skip_creation) {
             $dir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($sha512);
@@ -812,7 +811,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         $file_tmp_name = $params['file_tmp_name'];
         $maxPartSize   = 1024 * 1024;
         $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/", "filestore");
-        $sha512        = hash_file('sha512', $file_tmp_name);
+        $sha512        = hash_file('sha512', $file_tmp_name); //@phpstan-ignore theCodingMachineSafe.function (see https://github.com/glpi-project/glpi-inventory-plugin/issues/981)
         $short_sha512  = substr($sha512, 0, 6);
 
         $file_present_in_repo = false;
