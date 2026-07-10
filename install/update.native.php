@@ -698,6 +698,9 @@ function pluginGlpiinventoryUpdateNative(string $current_version): void
     $migration->displayMessage("Drop blacklists tables");
     $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputerblacklists');
     $migration->dropTable('glpi_plugin_glpiinventory_inventorycomputercriterias');
+    // Legacy FusionInventory-era names, never renamed since the migration step was removed.
+    $migration->dropTable('glpi_plugin_fusinvinventory_blacklists');
+    $migration->dropTable('glpi_plugin_fusinvinventory_criterias');
 
     // Remove deleted crontasks
     $crontask = new CronTask();
