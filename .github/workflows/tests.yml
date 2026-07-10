@@ -157,6 +157,8 @@ jobs:
         php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
         mkdir --parents public/lib
         php bin/console locales:compile
+    - name: Check licence headers
+      run: cd glpi && php bin/console tools:licence_headers_check --plugin glpiinventory
 
     - name: Init database
       run: |
