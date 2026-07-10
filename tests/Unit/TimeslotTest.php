@@ -440,7 +440,6 @@ class TimeslotTest extends DbTestCase
     {
         $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
         $method = new ReflectionMethod($pfTimeslotEntry, 'getWeekGrid');
-        $method->setAccessible(true);
         return $method->invoke($pfTimeslotEntry, $days, $entries_by_day);
     }
 
