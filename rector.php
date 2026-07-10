@@ -3,7 +3,7 @@
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
- * Copyright (C) 2021 Teclib' and contributors.
+ * @copyright 2021-2026 Teclib' and contributors.
  *
  * http://glpi-project.org
  *

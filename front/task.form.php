@@ -3,12 +3,11 @@
 /**
  * ---------------------------------------------------------------------
  * GLPI Inventory Plugin
- * Copyright (C) 2021 Teclib' and contributors.
+ * @basedon   FusionInventory for GLPI
+ * @copyright 2021-2026 Teclib' and contributors.
+ * @copyright 2010-2021 by the FusionInventory Development Team.
  *
  * http://glpi-project.org
- *
- * based on FusionInventory for GLPI
- * Copyright (C) 2010-2021 by the FusionInventory Development Team.
  *
  * ---------------------------------------------------------------------
  *
@@ -30,7 +29,6 @@
  * along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
-
 
 $pfTask = new PluginGlpiinventoryTask();
 
