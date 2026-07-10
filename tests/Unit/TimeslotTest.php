@@ -427,4 +427,108 @@ class TimeslotTest extends DbTestCase
         }
         $this->assertEquals($references, $items, "May have 4 entries " . print_r($items, true));
     }
+
+
+    /**
+     * Invoke the private getWeekGrid() method.
+     *
+     * @param array<int,string> $days
+     * @param array<int,array<array<string,mixed>>> $entries_by_day
+     * @return array<array{day:int,label:string,cells:array<bool>}>
+     */
+    private function callGetWeekGrid(array $days, array $entries_by_day): array
+    {
+        $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
+        $method = new ReflectionMethod($pfTimeslotEntry, 'getWeekGrid');
+        $method->setAccessible(true);
+        return $method->invoke($pfTimeslotEntry, $days, $entries_by_day);
+    }
+
+
+    public function testWeekGridFullDay()
+    {
+        // A single entry covering the whole day, up to the 86400 upper boundary.
+        $days = [1 => 'Monday'];
+        $entries_by_day = [
+            1 => [
+                ['begin' => 0, 'end' => 24 * 3600],
+            ],
+        ];
+
+        $grid = $this->callGetWeekGrid($days, $entries_by_day);
+
+        $this->assertCount(1, $grid);
+        $this->assertSame(1, $grid[0]['day']);
+        $this->assertSame('Monday', $grid[0]['label']);
+        // 96 quarter-hour cells, all active: the end == 86400 boundary must not
+        // leave the last (23:45 -> 24:00) cell inactive.
+        $this->assertCount(96, $grid[0]['cells']);
+        $this->assertSame(
+            array_fill(0, 96, true),
+            $grid[0]['cells'],
+            "A full-day entry must activate every cell, including the last one"
+        );
+    }
+
+
+    public function testWeekGridMiddayBoundaries()
+    {
+        // Noon splits the day exactly on cell 48 (43200 / 900 = 48).
+        $days = [1 => 'Monday', 2 => 'Tuesday'];
+        $entries_by_day = [
+            // Morning only: [00:00, 12:00[
+            1 => [
+                ['begin' => 0, 'end' => 12 * 3600],
+            ],
+            // Afternoon only: [12:00, 24:00[
+            2 => [
+                ['begin' => 12 * 3600, 'end' => 24 * 3600],
+            ],
+        ];
+
+        $grid = $this->callGetWeekGrid($days, $entries_by_day);
+
+        $this->assertCount(2, $grid);
+
+        // Morning: cells 0..47 active, 48..95 inactive.
+        $morning = $grid[0]['cells'];
+        $this->assertCount(96, $morning);
+        for ($i = 0; $i < 96; $i++) {
+            $this->assertSame(
+                $i < 48,
+                $morning[$i],
+                "Morning cell $i should be " . ($i < 48 ? 'active' : 'inactive')
+            );
+        }
+        // The 11:45 -> 12:00 cell is active, the 12:00 -> 12:15 cell is not.
+        $this->assertTrue($morning[47]);
+        $this->assertFalse($morning[48]);
+
+        // Afternoon: cells 0..47 inactive, 48..95 active.
+        $afternoon = $grid[1]['cells'];
+        $this->assertCount(96, $afternoon);
+        for ($i = 0; $i < 96; $i++) {
+            $this->assertSame(
+                $i >= 48,
+                $afternoon[$i],
+                "Afternoon cell $i should be " . ($i >= 48 ? 'active' : 'inactive')
+            );
+        }
+        // The noon boundary belongs to the afternoon entry.
+        $this->assertFalse($afternoon[47]);
+        $this->assertTrue($afternoon[48]);
+    }
+
+
+    public function testWeekGridEmptyDay()
+    {
+        // A day with no entry must produce 96 inactive cells
+        $days = [1 => 'Monday'];
+
+        $grid = $this->callGetWeekGrid($days, []);
+
+        $this->assertCount(1, $grid);
+        $this->assertCount(96, $grid[0]['cells']);
+        $this->assertSame(array_fill(0, 96, false), $grid[0]['cells']);
+    }
 }
