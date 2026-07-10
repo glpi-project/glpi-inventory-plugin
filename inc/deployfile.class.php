@@ -45,7 +45,6 @@ use function Safe\fwrite;
 use function Safe\gzclose;
 use function Safe\gzopen;
 use function Safe\gzwrite;
-use function Safe\hash_file;
 use function Safe\ini_get;
 use function Safe\json_decode;
 use function Safe\json_encode;
