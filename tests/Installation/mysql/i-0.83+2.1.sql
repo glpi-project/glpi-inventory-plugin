@@ -394,7 +394,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
   `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=71 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=73 ;
 
 
 INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
@@ -467,7 +467,9 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (67, 1, 'OEM_Serial'),
 (68, 1, 'SystemSerialNumb'),
 (69, 2, 'Not'),
-(70, 2, '.');
+(70, 2, '.'),
+(71, 11, 'custom-site-value'),
+(72, 12, 'custom-asset-value');
 
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
@@ -495,9 +497,10 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_criterias` (
   `comment` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
 
 
+-- Rows 11-12 simulate custom criteria drifting the ids on a long-lived instance.
 INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`id`, `name`, `comment`) VALUES
 (1, 'Serial number', 'ssn'),
 (2, 'uuid', 'uuid'),
@@ -508,7 +511,9 @@ INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`id`, `name`, `comment`) VA
 (7, 'drives serial', 'drivesSerial'),
 (8, 'Asset Tag', 'assetTag'),
 (9, 'Computer name', 'name'),
-(10, 'Manufacturer', 'manufacturer');
+(10, 'Manufacturer', 'manufacturer'),
+(11, 'Custom site criterion', 'customSiteCriterion'),
+(12, 'Custom asset criterion', 'customAssetCriterion');
 
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_libserialization` (
