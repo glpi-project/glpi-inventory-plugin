@@ -263,42 +263,6 @@ class PluginGlpiinventoryToolbox
 
 
     /**
-     * Dropdown for display hours
-     *
-     * @param string $name
-     * @param array<string,mixed> $options
-     * @return string unique html element id
-     */
-    public static function showHours(string $name, array $options = []): string
-    {
-
-        $p['value']          = '';
-        $p['display']        = true;
-        $p['width']          = '80%';
-        $p['step']           = 5;
-        $p['begin']          = 0;
-        $p['end']            = (24 * 3600);
-
-        if (count($options)) {
-            foreach ($options as $key => $val) {
-                $p[$key] = $val;
-            }
-        }
-        if ($p['step'] <= 0) {
-            $p['step'] = 5;
-        }
-
-        $values   = [];
-
-        $p['step'] *= 60; // to have in seconds
-        for ($s = $p['begin']; $s <= $p['end']; $s += $p['step']) {
-            $values[$s] = PluginGlpiinventoryToolbox::getHourMinute($s);
-        }
-        return Dropdown::showFromArray($name, $values, $p);
-    }
-
-
-    /**
      * Get hour:minute from number of seconds
      */
     public static function getHourMinute(int $seconds): string
