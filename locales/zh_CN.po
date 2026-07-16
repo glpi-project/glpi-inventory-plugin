@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 01:23+0000\n"
+"POT-Creation-Date: 2026-07-16 01:41+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: DWXXX, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -48,11 +48,11 @@ msgstr "告警显示超时"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Weekly view of the configured time slots"
-msgstr ""
+msgstr "设置的时间段的周视图"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Add a time slot entry"
-msgstr ""
+msgstr "增加一个时间段条目"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Start time"
@@ -64,7 +64,7 @@ msgstr "截止时间"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Configured time slot entries"
-msgstr ""
+msgstr "配置时间段条目"
 
 #: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
 msgid "Threads number"
