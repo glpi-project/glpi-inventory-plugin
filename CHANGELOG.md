@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove NVD3 charting library and dead showChart/showChartBar methods
 - Switch timeslot views to Twig, minor UI changes
 - Removed dead `PluginGlpiinventoryToolbox::showHours()` method
+- Fix SQL query syntax on agent status search option
 
 ## [1.6.8] - 2026-06-24
 

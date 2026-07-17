@@ -474,7 +474,7 @@ function plugin_glpiinventory_addSelect(string $type, int $id, string $num): str
                 if ($table . "." . $field == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
                     return " `FUSION_" . $module . "`.`is_active` AS ITEM_$num, "
                           . "`FUSION_" . $module . "`.`exceptions`  AS ITEM_" . $num . "_0, "
-                          . "`agent" . strtolower($module) . "`.`id`  AS ITEM_" . $num . "_1, ";
+                          . "`agent" . strtolower($module) . "`.`id`  AS ITEM_" . $num . "_1";
                 }
             }
             break;
@@ -543,11 +543,11 @@ function plugin_glpiinventory_addLeftJoin(
             $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
             foreach ($a_agent_modules as $module) {
                 if ($new_table . "." . $linkfield == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
-                    return " LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` AS FUSION_" . $module . "
-                             ON FUSION_" . $module . ".`modulename`='" . $module . "'
-                          LEFT JOIN `glpi_agents` as agent" . strtolower($module) . "
-                             ON (`glpi_computers`.`id`=`agent" . strtolower($module) . "`.`items_id`
-                                 AND `agent" . strtolower($module) . "`.`itemtype`='Computer') ";
+                    return " LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` AS `FUSION_" . $module . "`"
+                          . " ON `FUSION_" . $module . "`.`modulename`='" . $module . "'"
+                          . " LEFT JOIN `glpi_agents` AS `agent" . strtolower($module) . "`"
+                          . " ON (`glpi_computers`.`id`=`agent" . strtolower($module) . "`.`items_id`"
+                          . " AND `agent" . strtolower($module) . "`.`itemtype`='Computer') ";
                 }
             }
             break;
