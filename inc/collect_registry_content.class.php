@@ -111,9 +111,17 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         }
 
         unset($registry_data['_sid']);
+        foreach ($registry_data as $k => $v) {
+            if (is_array($v)) {
+                $registry_data[$k] = implode("\n", $v);
+            }
+        }
         foreach ($registry_data as $key => $value) {
             foreach ($db_registries as $keydb => $arraydb) {
                 if ($arraydb['key'] == $key) {
+                    if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
+                        $value = hexdec($value);
+                    }
                     $input = ['key'   => $arraydb['key'],
                         'id'    => $keydb,
                         'value' => $value,
