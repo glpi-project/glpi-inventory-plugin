@@ -42,6 +42,8 @@ class RepositoryTest extends DbTestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->login('glpi', 'glpi');
+
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
         // create a package

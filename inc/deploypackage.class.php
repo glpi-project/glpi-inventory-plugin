@@ -30,6 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
 use Glpi\Exception\Http\BadRequestHttpException;
 use Safe\Exceptions\JsonException;
 
@@ -702,6 +703,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public static function alterJSON(string $action_type, array $params): bool
     {
+        $packages_id = $params['id'] ?? $params['packages_id'] ?? 0;
+        $package     = new self();
+        if (!$package->getFromDB($packages_id) || !$package->canUpdateContent()) {
+            throw new AccessDeniedHttpException('Missing right to update this package content');
+        }
+
         //route to sub class
         $item_type = $params['itemtype'];
 
@@ -981,6 +988,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public static function updateOrderJson($packages_id, $datas)
     {
         $pfDeployPackage = new self();
+        if (!$pfDeployPackage->getFromDB($packages_id) || !$pfDeployPackage->canUpdateContent()) {
+            throw new AccessDeniedHttpException('Missing right to update this package content');
+        }
+
         $options = JSON_UNESCAPED_SLASHES;
 
         $json = \json_encode($datas, $options); // @phpstan-ignore theCodingMachineSafe.function (error are properly checked here)
