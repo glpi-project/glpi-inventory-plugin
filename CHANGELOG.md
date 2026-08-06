@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+- Harmonize rights check when editing a deploy package's actions, files or checks
 - Harden value encoding in action/definition dropdown selection scripts
 - Remove unused XML message setter in communication class
 - Harmonize rights checks across collect, deploy, task, IP range and agent module management entry points

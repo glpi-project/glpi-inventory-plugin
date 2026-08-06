@@ -67,6 +67,8 @@ class PackageJsonTest extends DbTestCase
 
     public function testAddItem()
     {
+        $this->login('glpi', 'glpi');
+
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = [
             'name'        => 'test2_packagejsontest',
