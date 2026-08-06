@@ -30,9 +30,12 @@
  * ---------------------------------------------------------------------
  */
 
+Session::checkLoginUser();
+
 $pfIPRange_ConfigSecurity = new PluginGlpiinventoryIPRange_SNMPCredential();
 
 if (isset($_POST["add"])) {
+    Session::checkRight(PluginGlpiinventoryIPRange::$rightname, UPDATE);
     $a_data = current(
         getAllDataFromTable(
             PluginGlpiinventoryIPRange_SNMPCredential::getTable(),

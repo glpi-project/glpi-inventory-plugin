@@ -62,6 +62,7 @@ if (isset($_POST["add"])) {
     }
 } elseif (isset($_POST["update"])) {
     if (isset($_POST['communication'])) {
+        Session::checkRight(PluginGlpiinventoryTask::$rightname, UPDATE);
         //task permanent update
         $task = new PluginGlpiinventoryTask();
         $taskjob = new PluginGlpiinventoryTaskjob();
@@ -101,12 +102,13 @@ if (isset($_POST["add"])) {
     Html::back();
 } elseif (isset($_POST["purge"])) {
     if (isset($_POST['communication'])) {
+        Session::checkRight(PluginGlpiinventoryTask::$rightname, PURGE);
         $task = new PluginGlpiinventoryTask();
         $task->delete(['id' => $_POST['task_id']], true);
         $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
         Html::back();
     } else {
-        Session::checkRight('plugin_glpiinventory_iprange', PURGE);
+        Session::checkRight(PluginGlpiinventoryIPRange::$rightname, PURGE);
 
         $iprange->delete($_POST);
         Html::redirect(Toolbox::getItemTypeSearchURL(PluginGlpiinventoryIPRange::class));

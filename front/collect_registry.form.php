@@ -30,12 +30,16 @@
  * ---------------------------------------------------------------------
  */
 
+Session::checkLoginUser();
+
 $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
 
 if (isset($_POST["add"])) {
+    Session::checkRight(PluginGlpiinventoryCollect_Registry::$rightname, CREATE);
     $pfCollect_Registry->add($_POST);
     Html::back();
 } elseif (isset($_POST["delete"])) {
+    Session::checkRight(PluginGlpiinventoryCollect_Registry::$rightname, PURGE);
     $pfCollect_Registry->delete($_POST);
     Html::back();
 }

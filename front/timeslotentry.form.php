@@ -30,7 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-Session::checkRight('plugin_glpiinventory_task', READ);
+Session::checkRight(PluginGlpiinventoryTimeslotEntry::$rightname, READ);
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -49,6 +49,7 @@ foreach (array_keys($_POST) as $key) {
 
 $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
 
+Session::checkRight(PluginGlpiinventoryTimeslotEntry::$rightname, CREATE);
 $pfTimeslotEntry->addEntry($_POST);
 
 Html::back();
