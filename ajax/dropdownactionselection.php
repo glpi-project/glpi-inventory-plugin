@@ -30,6 +30,8 @@
  * ---------------------------------------------------------------------
  */
 
+use function Safe\json_encode;
+
 if (plugin_glpiinventory_script_endswith("dropdownactionselection.php")) {
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
@@ -41,8 +43,8 @@ Session::checkCentralAccess();
 
 echo "<script type='text/javascript'>
 var select = document.getElementById('actionlist');
-var obj = document.getElementById('" . filter_input(INPUT_POST, "actionselectadd") . "');
-var actiontype = document.getElementById('" . filter_input(INPUT_POST, "actiontypeid") . "');
+var obj = document.getElementById(" . json_encode(filter_input(INPUT_POST, "actionselectadd")) . ");
+var actiontype = document.getElementById(" . json_encode(filter_input(INPUT_POST, "actiontypeid")) . ");
 
 var list = document.getElementById('actionselection').innerHTML;
 

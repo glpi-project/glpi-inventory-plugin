@@ -30,7 +30,6 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\simplexml_load_string;
 
 /**
  * Manage communication with agents using XML
@@ -70,21 +69,6 @@ class PluginGlpiinventoryCommunication
         return $this->message;
     }
 
-
-    /**
-     * Set XML message
-     *
-     * @param string $message XML in string format
-     */
-    public function setMessage($message): void
-    {
-        // avoid xml warnings
-        $this->message = @simplexml_load_string(
-            $message,
-            'SimpleXMLElement',
-            LIBXML_NOCDATA
-        );
-    }
 
     /**
      * If extra-debug is active, write log
