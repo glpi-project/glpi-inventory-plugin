@@ -46,6 +46,7 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 $pfConfig = new PluginGlpiinventoryConfig();
 
 if (isset($_POST['update'])) {
+    Session::checkRight(PluginGlpiinventoryConfig::$rightname, UPDATE);
     $data = $_POST;
     unset($data['update']);
     unset($data['id']);

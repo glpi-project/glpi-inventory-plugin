@@ -39,6 +39,8 @@ if (isset($_GET['plugin_glpiinventory_deploygroups_id'])) {
 }
 
 if (isset($_GET['save'])) {
+    $group->check($_GET['id'], UPDATE);
+
     $group_item = new PluginGlpiinventoryDeployGroup_Dynamicdata();
     $criteria = ['criteria'     =>  $_GET['criteria'] ?? [],
         'metacriteria' => $_GET['metacriteria'] ?? [],
@@ -64,6 +66,7 @@ if (isset($_GET['save'])) {
 
     Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup") . "?id=" . $_GET['id']);
 } elseif (isset($_FILES['importcsvfile'])) {
+    $group->check($_POST['groups_id'], UPDATE);
     PluginGlpiinventoryDeployGroup_Staticdata::csvImport($_POST, $_FILES);
     Html::back();
 } elseif (isset($_POST["add"])) {
@@ -71,12 +74,12 @@ if (isset($_GET['save'])) {
     $newID = $group->add($_POST);
     Html::redirect(Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup") . "?id=" . $newID);
 } elseif (isset($_POST["delete"])) {
-    //   $group->check($_POST['id'], DELETE);
+    $group->check($_POST['id'], DELETE);
     $ok = $group->delete($_POST);
 
     $group->redirectToList();
 } elseif (isset($_POST["purge"])) {
-    //   $group->check($_POST['id'], DELETE);
+    $group->check($_POST['id'], PURGE);
     $ok = $group->delete($_REQUEST, true);
 
     $group->redirectToList();

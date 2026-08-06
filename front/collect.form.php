@@ -30,6 +30,8 @@
  * ---------------------------------------------------------------------
  */
 
+Session::checkLoginUser();
+
 Html::header(
     __('Collect management', 'glpiinventory'),
     '',
@@ -41,13 +43,16 @@ Html::header(
 $pfCollect = new PluginGlpiinventoryCollect();
 
 if (isset($_POST["add"])) {
+    Session::checkRight(PluginGlpiinventoryCollect::$rightname, CREATE);
     $collects_id = $pfCollect->add($_POST);
     Html::redirect(Toolbox::getItemTypeFormURL(PluginGlpiinventoryCollect::class)
            . "?id=" . $collects_id);
 } elseif (isset($_POST["update"])) {
+    Session::checkRight(PluginGlpiinventoryCollect::$rightname, UPDATE);
     $pfCollect->update($_POST);
     Html::back();
 } elseif (isset($_REQUEST["purge"])) {
+    Session::checkRight(PluginGlpiinventoryCollect::$rightname, PURGE);
     $pfCollect->delete($_POST);
     $pfCollect->redirectToList();
 }

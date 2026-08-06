@@ -45,6 +45,7 @@ PluginGlpiinventoryMenu::displayMenu("mini");
 $mirror = new PluginGlpiinventoryDeployMirror();
 
 if (isset($_POST["add"])) {
+    Session::checkRight(PluginGlpiinventoryDeployMirror::$rightname, CREATE);
     $newID = $mirror->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($mirror->getLinkURL());
@@ -52,9 +53,11 @@ if (isset($_POST["add"])) {
         Html::back();
     }
 } elseif (isset($_POST["update"])) {
+    Session::checkRight(PluginGlpiinventoryDeployMirror::$rightname, UPDATE);
     $mirror->update($_POST);
     Html::back();
 } elseif (isset($_POST["delete"])) {
+    Session::checkRight(PluginGlpiinventoryDeployMirror::$rightname, PURGE);
     $mirror->delete($_POST);
     Html::redirect(Toolbox::getItemTypeFormURL(PluginGlpiinventoryDeployMirror::class));
 }

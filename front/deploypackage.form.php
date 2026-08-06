@@ -54,18 +54,19 @@ $data = $_POST;
 
 //general form
 if (isset($data["add"])) {
-    Session::checkRight('plugin_glpiinventory_package', CREATE);
+    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, CREATE);
     $newID = $package->add($data);
     Html::redirect(Toolbox::getItemTypeFormURL(PluginGlpiinventoryDeployPackage::class) . "?id=" . $newID);
 } elseif (isset($data["update"])) {
-    Session::checkRight('plugin_glpiinventory_package', UPDATE);
+    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, UPDATE);
     $package->update($data);
     Html::back();
 } elseif (isset($data["purge"])) {
-    Session::checkRight('plugin_glpiinventory_package', PURGE);
+    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, PURGE);
     $package->delete($data, true);
     $package->redirectToList();
 } elseif (isset($_POST["addvisibility"])) {
+    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, UPDATE);
     if (
         isset($_POST["_type"]) && !empty($_POST["_type"])
            && isset($_POST["plugin_glpiinventory_deploypackages_id"])

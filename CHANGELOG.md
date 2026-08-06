@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+- Harmonize rights checks across collect, deploy, task, IP range and agent module management entry points
 - Fix duplicate key error during update by removing dead blacklist migration
 - Stop adding FusionInventory attribution header to new files
 - Fix task execution results CSV export
