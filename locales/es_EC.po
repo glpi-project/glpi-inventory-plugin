@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 01:54+0000\n"
+"POT-Creation-Date: 2026-08-07 02:05+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Soporte Infraestructura Standby, 2023\n"
 "Language-Team: Spanish (Ecuador) (https://app.transifex.com/teclib/teams/28042/es_EC/)\n"
@@ -281,7 +281,7 @@ msgstr[2] "Plantillas de interacción del usuario"
 msgid "Features"
 msgstr "Funciones"
 
-#: front/collect.form.php:34
+#: front/collect.form.php:36
 msgid "Collect management"
 msgstr "Gestión de cobros"
 
@@ -300,7 +300,7 @@ msgstr "Archivo no encontrado"
 #: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:282
 #: inc/statediscovery.class.php:261 inc/taskjobstate.class.php:144
 #: inc/taskview.class.php:238 inc/stateinventory.class.php:192
-#: inc/deploypackage.class.php:1369
+#: inc/deploypackage.class.php:1380
 msgid "Prepared"
 msgstr "Preparado"
 
@@ -448,7 +448,7 @@ msgstr[0] "Tarea"
 msgstr[1] "Tareas"
 msgstr[2] "Tareas"
 
-#: inc/task.class.php:1590 inc/deploypackage.class.php:101
+#: inc/task.class.php:1590 inc/deploypackage.class.php:102
 msgid "Package"
 msgstr "Paquete"
 
@@ -489,7 +489,7 @@ msgstr "Inventario de computadoras"
 msgid "VMware host remote inventory"
 msgstr "Inventario remoto del host VMware"
 
-#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1060
+#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1071
 msgid "Package deploy"
 msgstr "Despliegue del paquete"
 
@@ -708,11 +708,11 @@ msgstr[0] "Entrada encontrada"
 msgstr[1] "Entradas encontradas"
 msgstr[2] "Entradas encontradas"
 
-#: inc/deploypackageitem.class.php:332 inc/deploypackage.class.php:1004
+#: inc/deploypackageitem.class.php:332 inc/deploypackage.class.php:1015
 msgid "The modified JSON contained a syntax error :"
 msgstr "El JSON modificado contenía un error de sintaxis :"
 
-#: inc/menu.class.php:148 inc/deploypackage.class.php:155
+#: inc/menu.class.php:148 inc/deploypackage.class.php:156
 msgid "Import"
 msgstr "Importar"
 
@@ -895,7 +895,7 @@ msgid "Error"
 msgstr "Error"
 
 #: inc/taskjobstate.class.php:149 inc/taskview.class.php:239
-#: inc/deploypackage.class.php:1370
+#: inc/deploypackage.class.php:1381
 msgid "Cancelled"
 msgstr "Cancelado"
 
@@ -1251,15 +1251,15 @@ msgstr "Estados de ejecución de tareas"
 msgid "Show/Hide details"
 msgstr "Mostrar/Ocultar detalles"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1366
+#: inc/taskview.class.php:235 inc/deploypackage.class.php:1377
 msgid "In error"
 msgstr "En error"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1367
+#: inc/taskview.class.php:236 inc/deploypackage.class.php:1378
 msgid "Successful"
 msgstr "Éxito"
 
-#: inc/taskview.class.php:237 inc/deploypackage.class.php:1368
+#: inc/taskview.class.php:237 inc/deploypackage.class.php:1379
 msgid "Running"
 msgstr "Ejecutando"
 
@@ -1531,97 +1531,97 @@ msgstr "MiB"
 msgid "Unused file"
 msgstr "Archivo no utilizado"
 
-#: inc/deploypackage.class.php:158
+#: inc/deploypackage.class.php:159
 msgid "Export"
 msgstr "Exportar"
 
-#: inc/deploypackage.class.php:279
+#: inc/deploypackage.class.php:280
 msgid "Modification Denied"
 msgstr "Modificación denegada"
 
-#: inc/deploypackage.class.php:282
+#: inc/deploypackage.class.php:283
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "La siguiente tarea se está ejecutando con este paquete"
 msgstr[1] "Las siguientes tareas se están ejecutando con este paquete"
 msgstr[2] "Las siguientes tareas se están ejecutando con este paquete"
 
-#: inc/deploypackage.class.php:390 inc/deploypackage.class.php:514
+#: inc/deploypackage.class.php:391 inc/deploypackage.class.php:515
 msgid "Enable deploy on demand for the following group"
 msgstr "Activar despliegue bajo demanda para el siguiente grupo"
 
-#: inc/deploypackage.class.php:533
+#: inc/deploypackage.class.php:534
 msgid "Audits"
 msgstr "Auditorías"
 
-#: inc/deploypackage.class.php:534
+#: inc/deploypackage.class.php:535
 msgid "Files"
 msgstr "Archivos"
 
-#: inc/deploypackage.class.php:535 public/b/deploy/index.php:153
+#: inc/deploypackage.class.php:536 public/b/deploy/index.php:153
 msgid "Actions"
 msgstr "Acciones"
 
-#: inc/deploypackage.class.php:536
+#: inc/deploypackage.class.php:537
 msgid "User interactions"
 msgstr "Interacciones del usuario"
 
-#: inc/deploypackage.class.php:688
+#: inc/deploypackage.class.php:689
 msgid "JSON package representation"
 msgstr "Representación del paquete JSON"
 
-#: inc/deploypackage.class.php:806
+#: inc/deploypackage.class.php:813
 msgid "Package exported in"
 msgstr "Paquete exportado en"
 
-#: inc/deploypackage.class.php:879
+#: inc/deploypackage.class.php:886
 msgid "Packages to import"
 msgstr "Paquetes a importar"
 
-#: inc/deploypackage.class.php:1032
+#: inc/deploypackage.class.php:1043
 msgid "Package actions"
 msgstr "Acciones del paquete"
 
-#: inc/deploypackage.class.php:1041
+#: inc/deploypackage.class.php:1052
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "Destino para el despliegue bajo demanda"
 msgstr[1] "Destinos para el despliegue bajo demanda"
 msgstr[2] "Destinos para el despliegue bajo demanda"
 
-#: inc/deploypackage.class.php:1133
+#: inc/deploypackage.class.php:1144
 msgid "Add a target for self-service"
 msgstr "Agregar un destino para el autoservicio"
 
-#: inc/deploypackage.class.php:1491
+#: inc/deploypackage.class.php:1502
 msgid "Restart job"
 msgstr "Reiniciar el trabajo"
 
-#: inc/deploypackage.class.php:1498
+#: inc/deploypackage.class.php:1509
 msgid "refresh job"
 msgstr "actualizar trabajo"
 
-#: inc/deploypackage.class.php:1643
+#: inc/deploypackage.class.php:1654
 msgid "Select packages you want install"
 msgstr "Seleccione los paquetes que desea instalar"
 
-#: inc/deploypackage.class.php:1652
+#: inc/deploypackage.class.php:1663
 msgid "Prepare for install"
 msgstr "Preparar la instalación"
 
-#: inc/deploypackage.class.php:1657
+#: inc/deploypackage.class.php:1668
 msgid "I'm on this computer: local wakeup"
 msgstr "Estoy en esta computadora: despertar local"
 
-#: inc/deploypackage.class.php:1658
+#: inc/deploypackage.class.php:1669
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "No estoy en esta computadora: despertar desde el servidor"
 
-#: inc/deploypackage.class.php:1659
+#: inc/deploypackage.class.php:1670
 msgid "Don't wakeup"
 msgstr "No despertar"
 
-#: inc/deploypackage.class.php:1675
+#: inc/deploypackage.class.php:1686
 msgid "No packages available to install"
 msgstr "No hay paquetes disponibles para instalar"
 
