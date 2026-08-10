@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-07 02:05+0000\n"
+"POT-Creation-Date: 2026-08-10 00:55+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -28,11 +28,11 @@ msgstr "Yansı sunucu adresi"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Weekly view of the configured time slots"
-msgstr ""
+msgstr "Yapılandırılmış zaman aralıklarının haftalık görünümü"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Add a time slot entry"
-msgstr ""
+msgstr "Bir zaman aralığı kaydı ekle"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Start time"
@@ -44,7 +44,7 @@ msgstr "Bitiş zamanı"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Configured time slot entries"
-msgstr ""
+msgstr "Yapılandırılmış zaman aralığı kayıtları"
 
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:73
