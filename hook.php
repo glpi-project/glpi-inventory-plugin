@@ -543,11 +543,15 @@ function plugin_glpiinventory_addLeftJoin(
             $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
             foreach ($a_agent_modules as $module) {
                 if ($new_table . "." . $linkfield == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
-                    return " LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` AS `FUSION_" . $module . "`"
-                          . " ON `FUSION_" . $module . "`.`modulename`='" . $module . "'"
-                          . " LEFT JOIN `glpi_agents` AS `agent" . strtolower($module) . "`"
-                          . " ON (`glpi_computers`.`id`=`agent" . strtolower($module) . "`.`items_id`"
-                          . " AND `agent" . strtolower($module) . "`.`itemtype`='Computer') ";
+                    $agent_alias = "agent" . strtolower($module);
+                    // GLPI parses this string (see SQLProvider::parseJoinString()) with a regex that
+                    // stops on end of lines: the `ON` keyword must start a new line, and the whole
+                    // join condition must fit on a single line.
+                    return " LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` AS `FUSION_" . $module . "`\n"
+                          . " ON `FUSION_" . $module . "`.`modulename`='" . $module . "'\n"
+                          . " LEFT JOIN `glpi_agents` AS `" . $agent_alias . "`\n"
+                          . " ON (`glpi_computers`.`id`=`" . $agent_alias . "`.`items_id`"
+                          . " AND `" . $agent_alias . "`.`itemtype`='Computer')";
                 }
             }
             break;
