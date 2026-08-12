@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [1.6.9] - 2026-08-12
 
 - Restore agent modules left join in computer search
 - Harmonize rights check when editing a deploy package's actions, files or checks

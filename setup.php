@@ -40,7 +40,7 @@ use function Safe\define;
 use function Safe\parse_url;
 
 if (!defined('PLUGIN_GLPIINVENTORY_VERSION')) {
-    define('PLUGIN_GLPIINVENTORY_VERSION', "1.6.8");
+    define('PLUGIN_GLPIINVENTORY_VERSION', "1.6.9");
 }
 
 $constants = [
