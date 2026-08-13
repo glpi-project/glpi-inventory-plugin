@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-10 00:55+0000\n"
+"POT-Creation-Date: 2026-08-13 01:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,48 +22,51 @@ msgstr ""
 msgid "Mirror server address"
 msgstr ""
 
-#: templates/forms/timeslot/entry.html.twig
-msgid "Weekly view of the configured time slots"
+#: templates/forms/iprange.html.twig inc/iprange.class.php:137
+#: inc/iprange.class.php:229
+msgid "Start of IP range"
 msgstr ""
 
-#: templates/forms/timeslot/entry.html.twig
-msgid "Add a time slot entry"
+#: templates/forms/iprange.html.twig inc/iprange.class.php:144
+#: inc/iprange.class.php:232
+msgid "End of IP range"
 msgstr ""
 
-#: templates/forms/timeslot/entry.html.twig
-msgid "Start time"
-msgstr ""
-
-#: templates/forms/timeslot/entry.html.twig
-msgid "End time"
-msgstr ""
-
-#: templates/forms/timeslot/entry.html.twig
-msgid "Configured time slot entries"
-msgstr ""
-
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:73
-msgid "Hive"
-msgstr ""
-
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:74 inc/collect_registry_content.class.php:170
-msgid "Path"
-msgstr ""
-
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:75
-msgid "Key"
-msgstr ""
-
-#: templates/forms/collect/add_wmi.html.twig
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi.class.php:60
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:60
+#: inc/collect_wmi_content.class.php:118
 msgid "Class"
 msgstr ""
 
 #: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
 msgid "Properties"
+msgstr ""
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:104
+msgid "Mode"
+msgstr ""
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:101
+msgid "Hive"
+msgstr ""
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:102
+#: inc/collect_registry_content.class.php:403
+msgid "Path"
+msgstr ""
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:103
+#: inc/collect_registry_content.class.php:405
+#: inc/collect_registry_content.class.php:487
+msgid "Key"
+msgstr ""
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:105
+msgid "Depth"
 msgstr ""
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
@@ -96,9 +99,9 @@ msgstr ""
 msgid "Checksum SHA2"
 msgstr ""
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:63
-#: inc/collect.class.php:262 inc/deployfile.class.php:1094
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1094
 #: inc/collect_file_content.class.php:93 inc/collect_file_content.class.php:148
+#: inc/collect_file.class.php:63 inc/collect.class.php:262
 msgid "Size"
 msgstr ""
 
@@ -130,8 +133,8 @@ msgstr ""
 msgid "Filter name"
 msgstr ""
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:83
-#: inc/deployfile.class.php:317 inc/deploycheck.class.php:376
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:317
+#: inc/collect_file.class.php:83 inc/deploycheck.class.php:376
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
 msgid "File"
 msgstr ""
@@ -141,28 +144,39 @@ msgstr ""
 msgid "Folder"
 msgstr ""
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction format"
+#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
+#: hook.php:76 hook.php:83 hook.php:90
+msgid "Module"
 msgstr ""
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction type"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation"
 msgstr ""
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Alert icon"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation (by default)"
 msgstr ""
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Retry job after"
+#: templates/forms/agentmodule.html.twig
+msgid "Exceptions"
 msgstr ""
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Maximum number of retry allowed"
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
+msgid "Threads number"
 msgstr ""
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Alert display timeout"
+#: templates/forms/config/netinv.html.twig hook.php:83
+#: inc/staticmisc.class.php:75
+msgid "Network discovery"
+msgstr ""
+
+#: templates/forms/config/netinv.html.twig inc/agentmodule.class.php:122
+#: inc/staticmisc.class.php:81
+msgid "Network inventory (SNMP)"
+msgstr ""
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
 msgstr ""
 
 #: templates/forms/config/main.html.twig
@@ -201,76 +215,81 @@ msgstr ""
 msgid "Delete successful on demand tasks after (in days)"
 msgstr ""
 
-#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
-msgid "Threads number"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction format"
 msgstr ""
 
-#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:75
-#: hook.php:83
-msgid "Network discovery"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction type"
 msgstr ""
 
-#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:81
-#: inc/agentmodule.class.php:122
-msgid "Network inventory (SNMP)"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert icon"
 msgstr ""
 
-#: templates/forms/config/netinv.html.twig
-msgid "SNMP timeout"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Retry job after"
 msgstr ""
 
-#: templates/forms/iprange.html.twig inc/iprange.class.php:137
-#: inc/iprange.class.php:229
-msgid "Start of IP range"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Maximum number of retry allowed"
 msgstr ""
 
-#: templates/forms/iprange.html.twig inc/iprange.class.php:144
-#: inc/iprange.class.php:232
-msgid "End of IP range"
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert display timeout"
 msgstr ""
 
-#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
-#: hook.php:76 hook.php:83 hook.php:90
-msgid "Module"
+#: templates/forms/timeslot/entry.html.twig
+msgid "Weekly view of the configured time slots"
 msgstr ""
 
-#: templates/forms/agentmodule.html.twig
-msgid "Activation"
+#: templates/forms/timeslot/entry.html.twig
+msgid "Add a time slot entry"
 msgstr ""
 
-#: templates/forms/agentmodule.html.twig
-msgid "Activation (by default)"
+#: templates/forms/timeslot/entry.html.twig
+msgid "Start time"
 msgstr ""
 
-#: templates/forms/agentmodule.html.twig
-msgid "Exceptions"
+#: templates/forms/timeslot/entry.html.twig
+msgid "End time"
 msgstr ""
 
-#: front/iprange.form.php:36 front/menu_snmpinventory.php:37
-#: front/credentialip.form.php:42 front/statediscovery.php:34
-#: front/credential.php:34 front/timeslot.php:37 front/stateinventory.php:34
-#: front/task.form.php:39 front/taskjob.form.php:36
-#: front/agentmodule.form.php:34 front/task.php:34 front/menu.php:38
-#: front/credential.form.php:39 front/iprange.php:34 front/taskjob.php:34
-#: front/collect.php:34 front/credentialip.php:34 inc/menu.class.php:48
-#: inc/profile.class.php:116 src/Controller/InventoryController.php:81
+#: templates/forms/timeslot/entry.html.twig
+msgid "Configured time slot entries"
+msgstr ""
+
+#: front/credential.php:34 front/menu_snmpinventory.php:37
+#: front/timeslot.php:37 front/statediscovery.php:34
+#: front/credentialip.form.php:42 front/credentialip.php:34
+#: front/credential.form.php:39 front/collect.php:34 front/task.form.php:39
+#: front/task.php:34 front/taskjob.php:34 front/stateinventory.php:34
+#: front/taskjob.form.php:36 front/iprange.php:34 front/agentmodule.form.php:34
+#: front/menu.php:38 front/iprange.form.php:36
+#: src/Controller/InventoryController.php:81 inc/profile.class.php:116
+#: inc/menu.class.php:48
 msgid "GLPI Inventory"
 msgstr ""
 
-#: front/deploygroup.php:36 inc/menu.class.php:213
-#: inc/deploytaskjob.class.php:222 inc/profile.class.php:388
+#: front/deploygroup.php:36 inc/deploytaskjob.class.php:222
+#: inc/profile.class.php:388 inc/menu.class.php:213
 msgid "Groups of computers"
 msgstr ""
 
-#: front/deployuserinteractiontemplate.php:36 inc/menu.class.php:399
+#: front/deployuserinteractiontemplate.php:36
 #: inc/deployuserinteractiontemplate.class.php:135 inc/profile.class.php:281
+#: inc/menu.class.php:399
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: front/config.form.php:36
-msgid "Features"
+#: front/deployfile_download.php:90
+msgid "An error occurs"
+msgstr ""
+
+#: front/deployfile_download.php:93 front/deployfile_download.php:96
+msgid "File not found"
 msgstr ""
 
 #: front/collect.form.php:36
@@ -281,18 +300,92 @@ msgstr ""
 msgid "Delete unused files"
 msgstr ""
 
-#: front/deployfile_download.php:90
-msgid "An error occurs"
+#: front/config.form.php:36
+msgid "Features"
 msgstr ""
 
-#: front/deployfile_download.php:93 front/deployfile_download.php:96
-msgid "File not found"
+#: hook.php:55 inc/menu.class.php:410
+msgid "Deploy"
+msgstr ""
+
+#: hook.php:62
+msgid "Local inventory"
+msgstr ""
+
+#: hook.php:69
+msgid "ESX/VMWare"
+msgstr ""
+
+#: hook.php:76
+msgid "Network inventory"
+msgstr ""
+
+#: hook.php:90
+msgid "Collect"
+msgstr ""
+
+#: hook.php:94 inc/deploygroup.class.php:89 inc/deploygroup.class.php:805
+msgid "Static group"
+msgstr ""
+
+#: hook.php:132 inc/menu.class.php:266 inc/task.class.php:212
+msgid "Tasks"
+msgstr ""
+
+#: hook.php:140 hook.php:150 hook.php:160 hook.php:170
+#, php-format
+msgid "%s inventoried"
+msgstr ""
+
+#: hook.php:353
+msgid "Setup"
+msgstr ""
+
+#: hook.php:412 inc/iprange.class.php:284 inc/deploygroup.class.php:231
+msgid "Target a task"
+msgstr ""
+
+#: hook.php:416 inc/deploygroup_staticdata.class.php:155
+#: inc/deploygroup_staticdata.class.php:171
+msgid "Add to static group"
+msgstr ""
+
+#: hook.php:418 inc/deploygroup_staticdata.class.php:227
+msgid "Remove from static group"
+msgstr ""
+
+#: public/b/deploy/index.php:84
+msgid "Deploy module has been disabled for this agent"
+msgstr ""
+
+#: public/b/deploy/index.php:150
+msgid "Checks"
+msgstr ""
+
+#: public/b/deploy/index.php:151
+msgid "Files download"
+msgstr ""
+
+#: public/b/deploy/index.php:152
+msgid "Files preparation"
+msgstr ""
+
+#: public/b/deploy/index.php:153 inc/deploypackage.class.php:536
+msgid "Actions"
+msgstr ""
+
+#: public/b/deploy/index.php:263
+msgid "User canceled the job"
+msgstr ""
+
+#: public/b/deploy/index.php:265
+msgid "User postponed the job"
 msgstr ""
 
 #: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:282
-#: inc/statediscovery.class.php:261 inc/taskjobstate.class.php:144
-#: inc/taskview.class.php:238 inc/stateinventory.class.php:192
-#: inc/deploypackage.class.php:1380
+#: inc/taskjobstate.class.php:144 inc/statediscovery.class.php:261
+#: inc/deploypackage.class.php:1380 inc/taskview.class.php:238
+#: inc/stateinventory.class.php:192
 msgid "Prepared"
 msgstr ""
 
@@ -309,8 +402,8 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: inc/taskjoblog.class.php:186 inc/task.class.php:1629
-#: inc/taskjob.class.php:56 inc/agentwakeup.class.php:69
+#: inc/taskjoblog.class.php:186 inc/taskjob.class.php:56
+#: inc/task.class.php:1629 inc/agentwakeup.class.php:69
 msgid "Job"
 msgstr ""
 
@@ -359,145 +452,246 @@ msgstr ""
 msgid "Import denied"
 msgstr ""
 
-#: inc/task.class.php:63 inc/menu.class.php:237
-msgid "Task management"
+#: inc/deployfile.class.php:88
+msgid "Upload from computer"
 msgstr ""
 
-#: inc/task.class.php:102 inc/taskview.class.php:338
-msgid "Schedule start"
+#: inc/deployfile.class.php:92
+msgid "Upload from server"
 msgstr ""
 
-#: inc/task.class.php:110 inc/taskview.class.php:344
-msgid "Schedule end"
+#: inc/deployfile.class.php:201
+msgid "p2p"
 msgstr ""
 
-#: inc/task.class.php:143 inc/taskview.class.php:322
-msgid "Permit to re-prepare task after run"
+#: inc/deployfile.class.php:202 inc/deployfile.class.php:367
+msgid "retention"
 msgstr ""
 
-#: inc/task.class.php:153
-msgid "deploy on demand task"
+#: inc/deployfile.class.php:204 inc/deployfile.class.php:368
+#: inc/taskjob.class.php:766
+msgid "Minute(s)"
 msgstr ""
 
-#: inc/task.class.php:177
-msgid "Associated tasks"
+#: inc/deployfile.class.php:216
+msgid "uncompress"
 msgstr ""
 
-#: inc/task.class.php:212 inc/menu.class.php:266 hook.php:132
-msgid "Tasks"
+#: inc/deployfile.class.php:223
+msgid "Download"
 msgstr ""
 
-#: inc/task.class.php:407
-msgid ""
-"The agent is requesting a configuration that has already been sent to him by "
-"the server. It is more likely that the agent is subject to a critical error."
+#: inc/deployfile.class.php:258 inc/deployaction.class.php:236
+#: inc/deployuserinteraction.class.php:250 inc/deploycheck.class.php:264
+msgid "drag"
 msgstr ""
 
-#: inc/task.class.php:420
-msgid "The task has been deactivated after preparation of this job."
+#: inc/deployfile.class.php:271 inc/deployaction.class.php:250
+#: inc/taskjobview.class.php:279 inc/deployuserinteraction.class.php:264
+#: inc/deploycheck.class.php:278
+msgid "Delete"
 msgstr ""
 
-#: inc/task.class.php:441
-msgid "This job can not be executed anymore due to the task's schedule."
+#: inc/deployfile.class.php:323
+msgid "filename"
 msgstr ""
 
-#: inc/task.class.php:487
-msgid "This job can not be executed anymore due to the task's timeslot."
+#: inc/deployfile.class.php:330
+msgid "Choose"
 msgstr ""
 
-#: inc/task.class.php:506
-msgid "This agent does not belong anymore in the actors defined in the job."
+#: inc/deployfile.class.php:336
+msgid "Select the file on server"
 msgstr ""
 
-#: inc/task.class.php:545
-msgid "The task cannot be updated if it is active"
+#: inc/deployfile.class.php:352
+msgid "Uncompress"
 msgstr ""
 
-#: inc/task.class.php:700
-msgid "Inventory task scheduler"
+#: inc/deployfile.class.php:359
+msgid "P2P"
 msgstr ""
 
-#: inc/task.class.php:703
-msgid "Clean on demand deployment tasks"
+#: inc/deployfile.class.php:440
+#, php-format
+msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
 
-#: inc/task.class.php:1524
-msgid "Task has been disabled"
+#: inc/deployfile.class.php:632
+msgid "Upload error"
 msgstr ""
 
-#: inc/task.class.php:1572 inc/task.class.php:1612
-#: inc/statediscovery.class.php:177 inc/taskview.class.php:164
-#: inc/profile.class.php:383 inc/stateinventory.class.php:114
-#: inc/deploytask.class.php:53 inc/deploytask.class.php:153
-msgid "Task"
-msgid_plural "Tasks"
+#: inc/deployfile.class.php:636
+msgid "Transfer error: the file size is too big"
+msgstr ""
+
+#: inc/deployfile.class.php:640
+msgid "The uploaded file was only partially uploaded"
+msgstr ""
+
+#: inc/deployfile.class.php:644
+msgid "No file was uploaded"
+msgstr ""
+
+#: inc/deployfile.class.php:648
+msgid "Missing a temporary folder"
+msgstr ""
+
+#: inc/deployfile.class.php:652
+msgid "Failed to write file to disk"
+msgstr ""
+
+#: inc/deployfile.class.php:656
+msgid "PHP extension stopped the file upload"
+msgstr ""
+
+#: inc/deployfile.class.php:684 inc/deployfile.class.php:739
+msgid "File saved!"
+msgstr ""
+
+#: inc/deployfile.class.php:687 inc/deployfile.class.php:742
+msgid "Failed to copy file"
+msgstr ""
+
+#: inc/deployfile.class.php:691 inc/deployfile.class.php:746
+msgid "File missing"
+msgstr ""
+
+#: inc/deployfile.class.php:1077
+msgid "Max file size"
+msgstr ""
+
+#: inc/deployfile.class.php:1078
+msgid "Mio"
+msgstr ""
+
+#: inc/deployfile.class.php:1091
+msgid "Unused file"
+msgstr ""
+
+#: inc/collect_registry.class.php:63
+msgid "Found entry"
+msgid_plural "Found entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/task.class.php:1590 inc/deploypackage.class.php:102
-msgid "Package"
+#: inc/collect_registry.class.php:91
+msgid "Default"
 msgstr ""
 
-#: inc/task.class.php:1723
+#: inc/collect_registry.class.php:92
+msgid "Check path existence"
+msgstr ""
+
+#: inc/collect_registry.class.php:93
+msgid "Check if a key is defined"
+msgstr ""
+
+#: inc/collect_registry.class.php:94
+msgid "All values"
+msgstr ""
+
+#: inc/deploygroup_staticdata.class.php:107
+msgid "CSV import"
+msgstr ""
+
+#: inc/deploygroup_staticdata.class.php:154
+#, php-format
 msgid ""
-"You must choose a task and a package to target a task with a deployment "
-"package."
+"Make a search to get desired computer, then use massive actions and use %s"
 msgstr ""
 
-#: inc/task.class.php:1740
-msgid "Deployment job, package: "
+#: inc/deploygroup_staticdata.class.php:336
+msgid ""
+"Import a list of computers from a CSV file (the first column must contain "
+"the computer ID)"
 msgstr ""
 
-#: inc/task.class.php:1757
-msgid "Updated a deployment job, package: "
+#: inc/deploygroup_staticdata.class.php:381
+msgid "Computers imported successfully from CSV file"
 msgstr ""
 
-#: inc/task.class.php:1758 inc/task.class.php:1801
-msgid ", actors: "
+#: inc/deploygroup_staticdata.class.php:384
+msgid "Impossible to read the CSV file"
 msgstr ""
 
-#: inc/task.class.php:1786
-msgid "The selected task already has a deployment job for another package: "
+#: inc/deployaction.class.php:53
+msgid "Return code is equal to"
 msgstr ""
 
-#: inc/task.class.php:1800
-msgid "Created a deployment job, package: "
+#: inc/deployaction.class.php:54
+msgid "Return code is not equal to"
 msgstr ""
 
-#: inc/staticmisc.class.php:59
-msgid "Computer Inventory"
+#: inc/deployaction.class.php:55
+msgid "Command output contains"
 msgstr ""
 
-#: inc/staticmisc.class.php:67
-msgid "VMware host remote inventory"
+#: inc/deployaction.class.php:56
+msgid "Command output does not contains"
 msgstr ""
 
-#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1071
-msgid "Package deploy"
+#: inc/deployaction.class.php:69
+msgid "Command"
 msgstr ""
 
-#: inc/staticmisc.class.php:95
-msgid "Collect data"
+#: inc/deployaction.class.php:70
+msgid "Move"
 msgstr ""
 
-#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
-#: inc/menu.class.php:318 inc/iprange.class.php:83 inc/iprange.class.php:86
-msgid "IP Ranges"
+#: inc/deployaction.class.php:71
+msgid "Copy"
 msgstr ""
 
-#: inc/staticmisc.class.php:434 inc/staticmisc.class.php:440
-#: inc/taskjob.class.php:803
-msgid "Auto management dynamic of agents"
+#: inc/deployaction.class.php:72
+msgid "Delete directory"
 msgstr ""
 
-#: inc/credentialip.class.php:76
-msgid "Remote device inventory"
+#: inc/deployaction.class.php:73
+msgid "Create directory"
 msgstr ""
 
-#: inc/credentialip.class.php:132 inc/credentialip.class.php:155
-#: inc/credential.class.php:77 inc/credential.class.php:186
-#: inc/menu.class.php:342 inc/profile.class.php:314
-msgid "Authentication for remote devices (VMware)"
+#: inc/deployaction.class.php:200
+msgid "Command to execute"
+msgstr ""
+
+#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
+msgid "Action label"
+msgstr ""
+
+#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
+msgid "Number of output lines to retrieve"
+msgstr ""
+
+#: inc/deployaction.class.php:223
+msgid "return codes saved for this command"
+msgstr ""
+
+#: inc/deployaction.class.php:296
+msgid "From"
+msgstr ""
+
+#: inc/deployaction.class.php:298
+msgid "To"
+msgstr ""
+
+#: inc/deployaction.class.php:309
+msgid "exec"
+msgstr ""
+
+#: inc/deployaction.class.php:324
+msgid "path"
+msgstr ""
+
+#: inc/deployaction.class.php:370
+msgid "Execution checks"
+msgstr ""
+
+#: inc/deployaction.class.php:435 inc/deploycheck.class.php:233
+#: inc/deploycheck.class.php:351 inc/deploycheck.class.php:362
+#: inc/deploycheck.class.php:371
+#, php-format
+msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgstr ""
 
 #: inc/iprange_snmpcredential.class.php:101
@@ -516,41 +710,85 @@ msgstr ""
 msgid "By order of priority"
 msgstr ""
 
-#: inc/taskjob.class.php:746
-msgid "Scheduled date"
+#: inc/collect_registry_content.class.php:74
+msgid "Windows registry content"
 msgstr ""
 
-#: inc/taskjob.class.php:747
-msgid "Periodicity"
+#: inc/collect_registry_content.class.php:279
+#, php-format
+msgid "%s path found"
 msgstr ""
 
-#: inc/taskjob.class.php:748
-msgid "Definition"
+#: inc/collect_registry_content.class.php:280
+#, php-format
+msgid "%s path not found"
 msgstr ""
 
-#: inc/taskjob.class.php:749
-msgid "Action"
+#: inc/collect_registry_content.class.php:290
+#, php-format
+msgid "%s value exists"
 msgstr ""
 
-#: inc/taskjob.class.php:766 inc/deployfile.class.php:204
-#: inc/deployfile.class.php:368
-msgid "Minute(s)"
+#: inc/collect_registry_content.class.php:291
+#, php-format
+msgid "%s value does not exist"
 msgstr ""
 
-#: inc/taskjob.class.php:771
-msgid "hour(s)"
+#: inc/collect_registry_content.class.php:299
+#, php-format
+msgid "%s: Found a value"
 msgstr ""
 
-#: inc/taskjob.class.php:776
-msgid "day(s)"
+#: inc/collect_registry_content.class.php:304
+#, php-format
+msgid "%s: Found %d values"
 msgstr ""
 
-#: inc/taskjob.class.php:805
-msgid "Auto management dynamic of agents (same subnet)"
+#: inc/collect_registry_content.class.php:311
+#, php-format
+msgid "%s: Found a result"
 msgstr ""
 
-#: inc/taskjob.class.php:1007
-msgid "Force the end"
+#: inc/collect_registry_content.class.php:359
+msgid "Exist"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:360
+msgid "Does not exist"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:371
+msgid "Defined"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:372
+msgid "Not defined"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:406
+#: inc/collect_registry_content.class.php:408
+msgid "State"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:410
+#: inc/collect_registry_content.class.php:473
+#: inc/collect_registry_content.class.php:488
+#: inc/collect_registry_content.class.php:503
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
+#: inc/deploycheck.class.php:357 inc/deploycheck.class.php:390
+#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:403
+msgid "Value"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:411
+#: inc/collect_registry_content.class.php:504
+msgid "Data"
+msgstr ""
+
+#: inc/credential.class.php:77 inc/credential.class.php:186
+#: inc/credentialip.class.php:132 inc/credentialip.class.php:155
+#: inc/profile.class.php:314 inc/menu.class.php:342
+msgid "Authentication for remote devices (VMware)"
 msgstr ""
 
 #: inc/credential.class.php:302 inc/credential.class.php:320
@@ -558,422 +796,25 @@ msgstr ""
 msgid "VMware host"
 msgstr ""
 
-#: inc/statediscovery.class.php:180 inc/stateinventory.class.php:117
-msgid "Starting date"
+#: inc/iprange.class.php:78
+msgid "Communication mode"
 msgstr ""
 
-#: inc/statediscovery.class.php:181 inc/stateinventory.class.php:118
-msgid "Ending date"
+#: inc/iprange.class.php:81
+msgid "See all informations of task"
 msgstr ""
 
-#: inc/statediscovery.class.php:184
-msgid "Total discovery devices"
+#: inc/iprange.class.php:83 inc/iprange.class.php:86 inc/menu.class.php:318
+#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
+msgid "IP Ranges"
 msgstr ""
 
-#: inc/statediscovery.class.php:185
-msgid "Devices not imported"
+#: inc/iprange.class.php:113 inc/profile.class.php:309
+msgid "IP range configuration"
 msgstr ""
 
-#: inc/statediscovery.class.php:186
-msgid "Devices linked"
-msgstr ""
-
-#: inc/statediscovery.class.php:187
-msgid "Devices imported"
-msgstr ""
-
-#: inc/statediscovery.class.php:270 inc/stateinventory.class.php:201
-msgid "Finished tasks"
-msgstr ""
-
-#: inc/taskjobview.class.php:69
-msgid "Job configuration"
-msgstr ""
-
-#: inc/taskjobview.class.php:235
-msgid ""
-"Several jobs in the same task is not anymore supported because of unexpected "
-"side-effects.\n"
-"         Please consider modifying this task to avoid unexpected results."
-msgstr ""
-
-#: inc/taskjobview.class.php:250
-msgid "Add a job"
-msgstr ""
-
-#: inc/taskjobview.class.php:279 inc/deployuserinteraction.class.php:264
-#: inc/deployfile.class.php:271 inc/deployaction.class.php:250
-#: inc/deploycheck.class.php:278
-msgid "Delete"
-msgstr ""
-
-#: inc/taskjobview.class.php:358
-msgid "Actor Type"
-msgstr ""
-
-#: inc/taskjobview.class.php:362
-msgid "Target Type"
-msgstr ""
-
-#: inc/taskjobview.class.php:405
-msgid "Actor Item"
-msgstr ""
-
-#: inc/taskjobview.class.php:409
-msgid "Target Item"
-msgstr ""
-
-#: inc/taskjobview.class.php:594 inc/taskjobview.class.php:597
-msgid "New action"
-msgstr ""
-
-#: inc/taskjobview.class.php:637 inc/deploygroup.class.php:173
-msgid "Module method"
-msgstr ""
-
-#: inc/taskjobview.class.php:674
-msgid "Restrict scope to task entity"
-msgstr ""
-
-#: inc/taskjobview.class.php:692 inc/taskjobview.class.php:725
-msgid "Targets"
-msgstr ""
-
-#: inc/taskjobview.class.php:698
-msgid "The items that should be applied for this job."
-msgstr ""
-
-#: inc/taskjobview.class.php:704 inc/taskjobview.class.php:747
-msgid "Actors"
-msgstr ""
-
-#: inc/taskjobview.class.php:709
-msgid "The items that should carry out those targets."
-msgstr ""
-
-#: inc/taskjobview.class.php:733 inc/taskjobview.class.php:755
-msgid "Clear list"
-msgstr ""
-
-#: inc/taskjobview.class.php:738 inc/taskjobview.class.php:760
-msgid "Delete selected items"
-msgstr ""
-
-#: inc/taskjobview.class.php:778
-msgid "Cancel modifications"
-msgstr ""
-
-#: inc/taskjobview.class.php:783
-msgid "Purge"
-msgstr ""
-
-#: inc/taskjobview.class.php:786
-msgid "Confirm the final deletion ?"
-msgstr ""
-
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:184
-msgid "Property"
-msgstr ""
-
-#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
-#: inc/collect_registry_content.class.php:171
-#: inc/collect_registry_content.class.php:232 inc/deploycheck.class.php:357
-#: inc/deploycheck.class.php:390 inc/deploycheck.class.php:397
-#: inc/deploycheck.class.php:403
-msgid "Value"
-msgstr ""
-
-#: inc/collect_registry.class.php:50
-msgid "Found entry"
-msgid_plural "Found entries"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/deploypackageitem.class.php:332 inc/deploypackage.class.php:1015
-msgid "The modified JSON contained a syntax error :"
-msgstr ""
-
-#: inc/menu.class.php:148 inc/deploypackage.class.php:156
-msgid "Import"
-msgstr ""
-
-#: inc/menu.class.php:154
-msgid "Clean unused files"
-msgstr ""
-
-#: inc/menu.class.php:207
-msgid "Agents management"
-msgstr ""
-
-#: inc/menu.class.php:219
-msgid "General configuration"
-msgstr ""
-
-#: inc/menu.class.php:226 inc/profile.class.php:162
-msgid "General"
-msgstr ""
-
-#: inc/menu.class.php:241
-msgid "Monitoring / Logs"
-msgstr ""
-
-#: inc/menu.class.php:247
-msgid "Import agent XML file"
-msgstr ""
-
-#: inc/menu.class.php:253 inc/profile.class.php:393 inc/collect.class.php:56
-msgid "Collect information"
-msgstr ""
-
-#: inc/menu.class.php:259 inc/timeslotentry.class.php:79
-#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
-msgid "Time slot"
-msgstr ""
-
-#: inc/menu.class.php:277
-msgid "Equipment import and link rules"
-msgstr ""
-
-#: inc/menu.class.php:285
-msgid "Asset skipped during import"
-msgstr ""
-
-#: inc/menu.class.php:291
-msgid "Computer entity rules"
-msgstr ""
-
-#: inc/menu.class.php:305
-msgid "Rules"
-msgstr ""
-
-#: inc/menu.class.php:326 inc/profile.class.php:319
-msgid "Remote devices to inventory (VMware)"
-msgstr ""
-
-#: inc/menu.class.php:350
-msgid "Discovery status"
-msgstr ""
-
-#: inc/menu.class.php:356
-msgid "Network inventory status"
-msgstr ""
-
-#: inc/menu.class.php:364
-msgid "SNMP models creation"
-msgstr ""
-
-#: inc/menu.class.php:372
-msgid "Networking"
-msgstr ""
-
-#: inc/menu.class.php:385 inc/config.class.php:202
-msgid "Package management"
-msgstr ""
-
-#: inc/menu.class.php:392 inc/profile.class.php:286
-#: inc/deploymirror.class.php:67
-msgid "Mirror servers"
-msgstr ""
-
-#: inc/menu.class.php:410 hook.php:55
-msgid "Deploy"
-msgstr ""
-
-#: inc/menu.class.php:422
-msgid "SNMP inventory"
-msgstr ""
-
-#: inc/menu.class.php:428
-msgid "Guide"
-msgstr ""
-
-#: inc/menu.class.php:452
-msgid ""
-"This is the steps to configure plugin for SNMP inventory (swicth, router, "
-"network printer)"
-msgstr ""
-
-#: inc/menu.class.php:458
-msgid "Configure SNMP credentials"
-msgstr ""
-
-#: inc/menu.class.php:462
-msgid ""
-"Define rules for import : merge and create new devices (CAUTION: same rules "
-"for computer inventory)"
-msgstr ""
-
-#: inc/menu.class.php:466
-msgid "`Network Discovery`, used to discover the devices on the network"
-msgstr ""
-
-#: inc/menu.class.php:471
-msgid "Define IP Ranges of your network + related SNMP credentials"
-msgstr ""
-
-#: inc/menu.class.php:475
-msgid "Define an agent allowed to discover the network"
-msgstr ""
-
-#: inc/menu.class.php:479
-msgid ""
-"Create a new Task with discovery module and the agent defined previously"
-msgstr ""
-
-#: inc/menu.class.php:483
-msgid "If you have devices not typed, import them from unmanaged devices"
-msgstr ""
-
-#: inc/menu.class.php:487
-msgid "`Network Inventory`, used to complete inventory the discovered devices"
-msgstr ""
-
-#: inc/menu.class.php:492
-msgid "Define an agent allowed to inventory the network by SNMP"
-msgstr ""
-
-#: inc/menu.class.php:496
-msgid ""
-"Create a new Task with network inventory module and the agent defined "
-"previously"
-msgstr ""
-
-#: inc/taskjobstate.class.php:124
-msgid "Tasks / Groups"
-msgstr ""
-
-#: inc/taskjobstate.class.php:129
-msgid "Job executions"
-msgstr ""
-
-#: inc/taskjobstate.class.php:145
-msgid "Server has sent data to the agent"
-msgstr ""
-
-#: inc/taskjobstate.class.php:146
-msgid "Agent replied with data to the server"
-msgstr ""
-
-#: inc/taskjobstate.class.php:147
-msgid "Finished"
-msgstr ""
-
-#: inc/taskjobstate.class.php:148
-msgid "Error"
-msgstr ""
-
-#: inc/taskjobstate.class.php:149 inc/taskview.class.php:239
-#: inc/deploypackage.class.php:1381
-msgid "Cancelled"
-msgstr ""
-
-#: inc/taskjobstate.class.php:150
-msgid "Postponed"
-msgstr ""
-
-#: inc/taskjobstate.class.php:520
-#, php-format
-msgid "Job available for next execution at %s"
-msgstr ""
-
-#: inc/taskjobstate.class.php:535
-#, php-format
-msgid "Retry #%d"
-msgstr ""
-
-#: inc/taskjobstate.class.php:537
-msgid "Maximum number of retry reached: force deployment"
-msgstr ""
-
-#: inc/taskjobstate.class.php:562
-msgid "Clean taskjob (retention time)"
-msgstr ""
-
-#: inc/communicationnetworkdiscovery.class.php:111
-#, php-format
-msgid "Processed: %1$s Created: %2$s Updated: %3$s"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:79
-msgid "User interaction"
-msgid_plural "User interactions"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/deployuserinteraction.class.php:95
-msgid "Before download"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:96
-msgid "After download"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:97
-msgid "After actions"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:98
-msgid "On download failure"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:99
-msgid "On actions failure"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:187
-msgid "Interaction label"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:250 inc/deployfile.class.php:258
-#: inc/deployaction.class.php:236 inc/deploycheck.class.php:264
-msgid "drag"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:392
-#, php-format
-msgid "Job cancelled by the user %1$s"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:399
-#, php-format
-msgid "User %1$s agreed to continue the job"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:406
-#, php-format
-msgid "Job postponed by the user %1$s"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:412
-msgid "Bad event sent to the agent"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:431
-msgid "Alert displayed, no input required"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:437
-msgid "Retry"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:443
-msgid "Abort"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:446
-msgid "Ignore"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:452
-msgid "Alert duration exceeded"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:455
-msgid "No user connected"
-msgstr ""
-
-#: inc/deployuserinteraction.class.php:458
-msgid "Multiple users connected"
+#: inc/iprange.class.php:227
+msgid "Bad IP"
 msgstr ""
 
 #: inc/deployuserinteractiontemplate.class.php:99
@@ -1086,293 +927,14 @@ msgstr ""
 msgid "Behaviors"
 msgstr ""
 
-#: inc/collect_registry_content.class.php:74
-msgid "Windows registry content"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:172
-#: inc/collect_registry_content.class.php:233
-msgid "Data"
-msgstr ""
-
-#: inc/display.class.php:134
-msgid "Progress"
-msgstr ""
-
-#: inc/iprange.class.php:78
-msgid "Communication mode"
-msgstr ""
-
-#: inc/iprange.class.php:81
-msgid "See all informations of task"
-msgstr ""
-
-#: inc/iprange.class.php:113 inc/profile.class.php:309
-msgid "IP range configuration"
-msgstr ""
-
-#: inc/iprange.class.php:227
-msgid "Bad IP"
-msgstr ""
-
-#: inc/iprange.class.php:284 inc/deploygroup.class.php:231 hook.php:412
-msgid "Target a task"
-msgstr ""
-
-#: inc/agentmodule.class.php:62
-msgid "Agents modules"
-msgstr ""
-
-#: inc/agentmodule.class.php:126
-msgid "Package deployment"
-msgstr ""
-
-#: inc/collect_wmi.class.php:48
-msgid "Found WMI"
-msgid_plural "Found WMIs"
+#: inc/deploytask.class.php:53 inc/deploytask.class.php:153
+#: inc/statediscovery.class.php:177 inc/profile.class.php:383
+#: inc/task.class.php:1572 inc/task.class.php:1612 inc/taskview.class.php:164
+#: inc/stateinventory.class.php:114
+msgid "Task"
+msgid_plural "Tasks"
 msgstr[0] ""
 msgstr[1] ""
-
-#: inc/config.class.php:201
-msgid "Network Inventory"
-msgstr ""
-
-#: inc/config.class.php:284
-msgid "Change the status"
-msgstr ""
-
-#: inc/config.class.php:287
-msgid "Clean agents"
-msgstr ""
-
-#: inc/config.class.php:315
-msgid "with location"
-msgstr ""
-
-#: inc/config.class.php:316
-msgid "with entity"
-msgstr ""
-
-#: inc/config.class.php:317
-msgid "with both"
-msgstr ""
-
-#: inc/collect_file.class.php:48
-msgid "Found file"
-msgid_plural "Found files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/collect_file.class.php:61
-msgid "Recursive"
-msgstr ""
-
-#: inc/collect_file.class.php:66
-msgid "Name"
-msgstr ""
-
-#: inc/collect_file.class.php:67
-msgid "Iname"
-msgstr ""
-
-#: inc/collect_file.class.php:68
-msgid "Type"
-msgstr ""
-
-#: inc/collectcommon.class.php:74
-msgid "Collect configuration"
-msgstr ""
-
-#: inc/commonview.class.php:298
-msgid "Warning:"
-msgstr ""
-
-#: inc/commonview.class.php:303
-msgid "Error:"
-msgstr ""
-
-#: inc/taskview.class.php:70
-msgid "Include old jobs"
-msgstr ""
-
-#: inc/taskview.class.php:88
-msgid "refresh interval"
-msgstr ""
-
-#: inc/taskview.class.php:91
-msgid "Off"
-msgstr ""
-
-#: inc/taskview.class.php:108
-msgid "Export task result"
-msgstr ""
-
-#: inc/taskview.class.php:126
-msgid "Task execution states"
-msgstr ""
-
-#: inc/taskview.class.php:212
-msgid "Show/Hide details"
-msgstr ""
-
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1377
-msgid "In error"
-msgstr ""
-
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1378
-msgid "Successful"
-msgstr ""
-
-#: inc/taskview.class.php:237 inc/deploypackage.class.php:1379
-msgid "Running"
-msgstr ""
-
-#: inc/taskview.class.php:327
-msgid "This is an on demand deployment task"
-msgstr ""
-
-#: inc/taskview.class.php:350
-msgid "Preparation timeslot"
-msgstr ""
-
-#: inc/taskview.class.php:358
-msgid "Execution timeslot"
-msgstr ""
-
-#: inc/taskview.class.php:366
-msgid "Agent wakeup interval (in minutes)"
-msgstr ""
-
-#: inc/taskview.class.php:376
-msgid "Number of agents to wake up"
-msgstr ""
-
-#: inc/taskview.class.php:422
-msgid "Force start"
-msgstr ""
-
-#: inc/taskview.class.php:942
-msgid "Device no longer defined in definition of job"
-msgstr ""
-
-#: inc/timeslotentry.class.php:63
-msgid "Time slot entry"
-msgstr ""
-
-#: inc/timeslotentry.class.php:213
-msgid "End day must be after start day"
-msgstr ""
-
-#: inc/timeslotentry.class.php:223
-msgid "End time must be after start time"
-msgstr ""
-
-#: inc/deploygroup_staticdata.class.php:107
-msgid "CSV import"
-msgstr ""
-
-#: inc/deploygroup_staticdata.class.php:154
-#, php-format
-msgid ""
-"Make a search to get desired computer, then use massive actions and use %s"
-msgstr ""
-
-#: inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171 hook.php:416
-msgid "Add to static group"
-msgstr ""
-
-#: inc/deploygroup_staticdata.class.php:227 hook.php:418
-msgid "Remove from static group"
-msgstr ""
-
-#: inc/deploygroup_staticdata.class.php:336
-msgid ""
-"Import a list of computers from a CSV file (the first column must contain "
-"the computer ID)"
-msgstr ""
-
-#: inc/deploygroup_staticdata.class.php:381
-msgid "Computers imported successfully from CSV file"
-msgstr ""
-
-#: inc/deploygroup_staticdata.class.php:384
-msgid "Impossible to read the CSV file"
-msgstr ""
-
-#: inc/profile.class.php:168
-msgid "Inventory"
-msgstr ""
-
-#: inc/profile.class.php:174 inc/profile.class.php:220
-msgid "Software deployment"
-msgstr ""
-
-#: inc/profile.class.php:214 inc/profile.class.php:291
-msgid "Deploy packages on demand"
-msgstr ""
-
-#: inc/profile.class.php:276
-msgid "Manage packages"
-msgstr ""
-
-#: inc/profile.class.php:333
-msgid "Network equipment SNMP"
-msgstr ""
-
-#: inc/profile.class.php:338
-msgid "Printer SNMP"
-msgstr ""
-
-#: inc/profile.class.php:372
-msgid "Menu"
-msgstr ""
-
-#: inc/profile.class.php:378
-msgid "Configuration"
-msgstr ""
-
-#: inc/collect.class.php:147 inc/collect.class.php:209
-#: inc/deploycheck.class.php:52
-msgid "Registry"
-msgstr ""
-
-#: inc/collect.class.php:148 inc/collect.class.php:227
-msgid "WMI"
-msgstr ""
-
-#: inc/collect.class.php:149 inc/collect.class.php:245
-#: inc/collect.class.php:260
-msgid "Find file"
-msgstr ""
-
-#: inc/collect.class.php:247
-msgid "pathfile"
-msgstr ""
-
-#: inc/collect.class.php:471
-msgid "Collect module has been disabled for this agent"
-msgstr ""
-
-#: inc/collect.class.php:611
-msgid "Path not found"
-msgstr ""
-
-#: inc/stateinventory.class.php:120
-msgid "Number per second"
-msgstr ""
-
-#: inc/stateinventory.class.php:121
-msgid "Threads / Timeout configuration"
-msgstr ""
-
-#: inc/stateinventory.class.php:122
-msgid "To inventory"
-msgstr ""
-
-#: inc/stateinventory.class.php:123
-msgid "Error(s)"
-msgstr ""
 
 #: inc/deploytask.class.php:109
 msgid "Order list"
@@ -1390,105 +952,201 @@ msgstr ""
 msgid "This task is active. delete denied"
 msgstr ""
 
-#: inc/deployfile.class.php:88
-msgid "Upload from computer"
+#: inc/taskjobstate.class.php:124
+msgid "Tasks / Groups"
 msgstr ""
 
-#: inc/deployfile.class.php:92
-msgid "Upload from server"
+#: inc/taskjobstate.class.php:129
+msgid "Job executions"
 msgstr ""
 
-#: inc/deployfile.class.php:201
-msgid "p2p"
+#: inc/taskjobstate.class.php:145
+msgid "Server has sent data to the agent"
 msgstr ""
 
-#: inc/deployfile.class.php:202 inc/deployfile.class.php:367
-msgid "retention"
+#: inc/taskjobstate.class.php:146
+msgid "Agent replied with data to the server"
 msgstr ""
 
-#: inc/deployfile.class.php:216
-msgid "uncompress"
+#: inc/taskjobstate.class.php:147
+msgid "Finished"
 msgstr ""
 
-#: inc/deployfile.class.php:223
-msgid "Download"
+#: inc/taskjobstate.class.php:148
+msgid "Error"
 msgstr ""
 
-#: inc/deployfile.class.php:323
-msgid "filename"
+#: inc/taskjobstate.class.php:149 inc/deploypackage.class.php:1381
+#: inc/taskview.class.php:239
+msgid "Cancelled"
 msgstr ""
 
-#: inc/deployfile.class.php:330
-msgid "Choose"
+#: inc/taskjobstate.class.php:150
+msgid "Postponed"
 msgstr ""
 
-#: inc/deployfile.class.php:336
-msgid "Select the file on server"
-msgstr ""
-
-#: inc/deployfile.class.php:352
-msgid "Uncompress"
-msgstr ""
-
-#: inc/deployfile.class.php:359
-msgid "P2P"
-msgstr ""
-
-#: inc/deployfile.class.php:440
+#: inc/taskjobstate.class.php:520
 #, php-format
-msgid "Files need to be uploaded to %s folder to be displayed here"
+msgid "Job available for next execution at %s"
 msgstr ""
 
-#: inc/deployfile.class.php:632
-msgid "Upload error"
+#: inc/taskjobstate.class.php:535
+#, php-format
+msgid "Retry #%d"
 msgstr ""
 
-#: inc/deployfile.class.php:636
-msgid "Transfer error: the file size is too big"
+#: inc/taskjobstate.class.php:537
+msgid "Maximum number of retry reached: force deployment"
 msgstr ""
 
-#: inc/deployfile.class.php:640
-msgid "The uploaded file was only partially uploaded"
+#: inc/taskjobstate.class.php:562
+msgid "Clean taskjob (retention time)"
 msgstr ""
 
-#: inc/deployfile.class.php:644
-msgid "No file was uploaded"
+#: inc/taskjobview.class.php:69
+msgid "Job configuration"
 msgstr ""
 
-#: inc/deployfile.class.php:648
-msgid "Missing a temporary folder"
+#: inc/taskjobview.class.php:235
+msgid ""
+"Several jobs in the same task is not anymore supported because of unexpected "
+"side-effects.\n"
+"         Please consider modifying this task to avoid unexpected results."
 msgstr ""
 
-#: inc/deployfile.class.php:652
-msgid "Failed to write file to disk"
+#: inc/taskjobview.class.php:250
+msgid "Add a job"
 msgstr ""
 
-#: inc/deployfile.class.php:656
-msgid "PHP extension stopped the file upload"
+#: inc/taskjobview.class.php:358
+msgid "Actor Type"
 msgstr ""
 
-#: inc/deployfile.class.php:684 inc/deployfile.class.php:739
-msgid "File saved!"
+#: inc/taskjobview.class.php:362
+msgid "Target Type"
 msgstr ""
 
-#: inc/deployfile.class.php:687 inc/deployfile.class.php:742
-msgid "Failed to copy file"
+#: inc/taskjobview.class.php:405
+msgid "Actor Item"
 msgstr ""
 
-#: inc/deployfile.class.php:691 inc/deployfile.class.php:746
-msgid "File missing"
+#: inc/taskjobview.class.php:409
+msgid "Target Item"
 msgstr ""
 
-#: inc/deployfile.class.php:1077
-msgid "Max file size"
+#: inc/taskjobview.class.php:594 inc/taskjobview.class.php:597
+msgid "New action"
 msgstr ""
 
-#: inc/deployfile.class.php:1078
-msgid "Mio"
+#: inc/taskjobview.class.php:637 inc/deploygroup.class.php:173
+msgid "Module method"
 msgstr ""
 
-#: inc/deployfile.class.php:1091
-msgid "Unused file"
+#: inc/taskjobview.class.php:674
+msgid "Restrict scope to task entity"
+msgstr ""
+
+#: inc/taskjobview.class.php:692 inc/taskjobview.class.php:725
+msgid "Targets"
+msgstr ""
+
+#: inc/taskjobview.class.php:698
+msgid "The items that should be applied for this job."
+msgstr ""
+
+#: inc/taskjobview.class.php:704 inc/taskjobview.class.php:747
+msgid "Actors"
+msgstr ""
+
+#: inc/taskjobview.class.php:709
+msgid "The items that should carry out those targets."
+msgstr ""
+
+#: inc/taskjobview.class.php:733 inc/taskjobview.class.php:755
+msgid "Clear list"
+msgstr ""
+
+#: inc/taskjobview.class.php:738 inc/taskjobview.class.php:760
+msgid "Delete selected items"
+msgstr ""
+
+#: inc/taskjobview.class.php:778
+msgid "Cancel modifications"
+msgstr ""
+
+#: inc/taskjobview.class.php:783
+msgid "Purge"
+msgstr ""
+
+#: inc/taskjobview.class.php:786
+msgid "Confirm the final deletion ?"
+msgstr ""
+
+#: inc/credentialip.class.php:76
+msgid "Remote device inventory"
+msgstr ""
+
+#: inc/statediscovery.class.php:180 inc/stateinventory.class.php:117
+msgid "Starting date"
+msgstr ""
+
+#: inc/statediscovery.class.php:181 inc/stateinventory.class.php:118
+msgid "Ending date"
+msgstr ""
+
+#: inc/statediscovery.class.php:184
+msgid "Total discovery devices"
+msgstr ""
+
+#: inc/statediscovery.class.php:185
+msgid "Devices not imported"
+msgstr ""
+
+#: inc/statediscovery.class.php:186
+msgid "Devices linked"
+msgstr ""
+
+#: inc/statediscovery.class.php:187
+msgid "Devices imported"
+msgstr ""
+
+#: inc/statediscovery.class.php:270 inc/stateinventory.class.php:201
+msgid "Finished tasks"
+msgstr ""
+
+#: inc/commonview.class.php:298
+msgid "Warning:"
+msgstr ""
+
+#: inc/commonview.class.php:303
+msgid "Error:"
+msgstr ""
+
+#: inc/collect_wmi.class.php:48
+msgid "Found WMI"
+msgid_plural "Found WMIs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/communicationnetworkdiscovery.class.php:111
+#, php-format
+msgid "Processed: %1$s Created: %2$s Updated: %3$s"
+msgstr ""
+
+#: inc/agentmodule.class.php:62
+msgid "Agents modules"
+msgstr ""
+
+#: inc/agentmodule.class.php:126
+msgid "Package deployment"
+msgstr ""
+
+#: inc/deploypackage.class.php:102 inc/task.class.php:1590
+msgid "Package"
+msgstr ""
+
+#: inc/deploypackage.class.php:156 inc/menu.class.php:148
+msgid "Import"
 msgstr ""
 
 #: inc/deploypackage.class.php:159
@@ -1517,10 +1175,6 @@ msgstr ""
 msgid "Files"
 msgstr ""
 
-#: inc/deploypackage.class.php:536 public/b/deploy/index.php:153
-msgid "Actions"
-msgstr ""
-
 #: inc/deploypackage.class.php:537
 msgid "User interactions"
 msgstr ""
@@ -1537,6 +1191,10 @@ msgstr ""
 msgid "Packages to import"
 msgstr ""
 
+#: inc/deploypackage.class.php:1015 inc/deploypackageitem.class.php:332
+msgid "The modified JSON contained a syntax error :"
+msgstr ""
+
 #: inc/deploypackage.class.php:1043
 msgid "Package actions"
 msgstr ""
@@ -1547,8 +1205,24 @@ msgid_plural "Targets for deploy on demand"
 msgstr[0] ""
 msgstr[1] ""
 
+#: inc/deploypackage.class.php:1071 inc/staticmisc.class.php:87
+msgid "Package deploy"
+msgstr ""
+
 #: inc/deploypackage.class.php:1144
 msgid "Add a target for self-service"
+msgstr ""
+
+#: inc/deploypackage.class.php:1377 inc/taskview.class.php:235
+msgid "In error"
+msgstr ""
+
+#: inc/deploypackage.class.php:1378 inc/taskview.class.php:236
+msgid "Successful"
+msgstr ""
+
+#: inc/deploypackage.class.php:1379 inc/taskview.class.php:237
+msgid "Running"
 msgstr ""
 
 #: inc/deploypackage.class.php:1502
@@ -1583,87 +1257,382 @@ msgstr ""
 msgid "No packages available to install"
 msgstr ""
 
-#: inc/deployaction.class.php:53
-msgid "Return code is equal to"
+#: inc/taskjob.class.php:746
+msgid "Scheduled date"
 msgstr ""
 
-#: inc/deployaction.class.php:54
-msgid "Return code is not equal to"
+#: inc/taskjob.class.php:747
+msgid "Periodicity"
 msgstr ""
 
-#: inc/deployaction.class.php:55
-msgid "Command output contains"
+#: inc/taskjob.class.php:748
+msgid "Definition"
 msgstr ""
 
-#: inc/deployaction.class.php:56
-msgid "Command output does not contains"
+#: inc/taskjob.class.php:749
+msgid "Action"
 msgstr ""
 
-#: inc/deployaction.class.php:69
-msgid "Command"
+#: inc/taskjob.class.php:771
+msgid "hour(s)"
 msgstr ""
 
-#: inc/deployaction.class.php:70
-msgid "Move"
+#: inc/taskjob.class.php:776
+msgid "day(s)"
 msgstr ""
 
-#: inc/deployaction.class.php:71
-msgid "Copy"
+#: inc/taskjob.class.php:803 inc/staticmisc.class.php:434
+#: inc/staticmisc.class.php:440
+msgid "Auto management dynamic of agents"
 msgstr ""
 
-#: inc/deployaction.class.php:72
-msgid "Delete directory"
+#: inc/taskjob.class.php:805
+msgid "Auto management dynamic of agents (same subnet)"
 msgstr ""
 
-#: inc/deployaction.class.php:73
-msgid "Create directory"
+#: inc/taskjob.class.php:1007
+msgid "Force the end"
 msgstr ""
 
-#: inc/deployaction.class.php:200
-msgid "Command to execute"
+#: inc/timeslotentry.class.php:63
+msgid "Time slot entry"
 msgstr ""
 
-#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
-msgid "Action label"
+#: inc/timeslotentry.class.php:79 inc/menu.class.php:259
+#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
+msgid "Time slot"
 msgstr ""
 
-#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
-msgid "Number of output lines to retrieve"
+#: inc/timeslotentry.class.php:213
+msgid "End day must be after start day"
 msgstr ""
 
-#: inc/deployaction.class.php:223
-msgid "return codes saved for this command"
+#: inc/timeslotentry.class.php:223
+msgid "End time must be after start time"
 msgstr ""
 
-#: inc/deployaction.class.php:296
-msgid "From"
+#: inc/collect_file_content.class.php:92 inc/collect_file_content.class.php:147
+msgid "Path/file"
 msgstr ""
 
-#: inc/deployaction.class.php:298
-msgid "To"
+#: inc/profile.class.php:162 inc/menu.class.php:226
+msgid "General"
 msgstr ""
 
-#: inc/deployaction.class.php:309
-msgid "exec"
+#: inc/profile.class.php:168
+msgid "Inventory"
 msgstr ""
 
-#: inc/deployaction.class.php:324
-msgid "path"
+#: inc/profile.class.php:174 inc/profile.class.php:220
+msgid "Software deployment"
 msgstr ""
 
-#: inc/deployaction.class.php:370
-msgid "Execution checks"
+#: inc/profile.class.php:214 inc/profile.class.php:291
+msgid "Deploy packages on demand"
 msgstr ""
 
-#: inc/deployaction.class.php:435 inc/deploycheck.class.php:233
-#: inc/deploycheck.class.php:351 inc/deploycheck.class.php:362
-#: inc/deploycheck.class.php:371
-#, php-format
-msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
+#: inc/profile.class.php:276
+msgid "Manage packages"
 msgstr ""
 
-#: inc/deploygroup.class.php:89 inc/deploygroup.class.php:805 hook.php:94
-msgid "Static group"
+#: inc/profile.class.php:286 inc/menu.class.php:392
+#: inc/deploymirror.class.php:67
+msgid "Mirror servers"
+msgstr ""
+
+#: inc/profile.class.php:319 inc/menu.class.php:326
+msgid "Remote devices to inventory (VMware)"
+msgstr ""
+
+#: inc/profile.class.php:333
+msgid "Network equipment SNMP"
+msgstr ""
+
+#: inc/profile.class.php:338
+msgid "Printer SNMP"
+msgstr ""
+
+#: inc/profile.class.php:372
+msgid "Menu"
+msgstr ""
+
+#: inc/profile.class.php:378
+msgid "Configuration"
+msgstr ""
+
+#: inc/profile.class.php:393 inc/menu.class.php:253 inc/collect.class.php:56
+msgid "Collect information"
+msgstr ""
+
+#: inc/menu.class.php:154
+msgid "Clean unused files"
+msgstr ""
+
+#: inc/menu.class.php:207
+msgid "Agents management"
+msgstr ""
+
+#: inc/menu.class.php:219
+msgid "General configuration"
+msgstr ""
+
+#: inc/menu.class.php:237 inc/task.class.php:63
+msgid "Task management"
+msgstr ""
+
+#: inc/menu.class.php:241
+msgid "Monitoring / Logs"
+msgstr ""
+
+#: inc/menu.class.php:247
+msgid "Import agent XML file"
+msgstr ""
+
+#: inc/menu.class.php:277
+msgid "Equipment import and link rules"
+msgstr ""
+
+#: inc/menu.class.php:285
+msgid "Asset skipped during import"
+msgstr ""
+
+#: inc/menu.class.php:291
+msgid "Computer entity rules"
+msgstr ""
+
+#: inc/menu.class.php:305
+msgid "Rules"
+msgstr ""
+
+#: inc/menu.class.php:350
+msgid "Discovery status"
+msgstr ""
+
+#: inc/menu.class.php:356
+msgid "Network inventory status"
+msgstr ""
+
+#: inc/menu.class.php:364
+msgid "SNMP models creation"
+msgstr ""
+
+#: inc/menu.class.php:372
+msgid "Networking"
+msgstr ""
+
+#: inc/menu.class.php:385 inc/config.class.php:202
+msgid "Package management"
+msgstr ""
+
+#: inc/menu.class.php:422
+msgid "SNMP inventory"
+msgstr ""
+
+#: inc/menu.class.php:428
+msgid "Guide"
+msgstr ""
+
+#: inc/menu.class.php:452
+msgid ""
+"This is the steps to configure plugin for SNMP inventory (swicth, router, "
+"network printer)"
+msgstr ""
+
+#: inc/menu.class.php:458
+msgid "Configure SNMP credentials"
+msgstr ""
+
+#: inc/menu.class.php:462
+msgid ""
+"Define rules for import : merge and create new devices (CAUTION: same rules "
+"for computer inventory)"
+msgstr ""
+
+#: inc/menu.class.php:466
+msgid "`Network Discovery`, used to discover the devices on the network"
+msgstr ""
+
+#: inc/menu.class.php:471
+msgid "Define IP Ranges of your network + related SNMP credentials"
+msgstr ""
+
+#: inc/menu.class.php:475
+msgid "Define an agent allowed to discover the network"
+msgstr ""
+
+#: inc/menu.class.php:479
+msgid ""
+"Create a new Task with discovery module and the agent defined previously"
+msgstr ""
+
+#: inc/menu.class.php:483
+msgid "If you have devices not typed, import them from unmanaged devices"
+msgstr ""
+
+#: inc/menu.class.php:487
+msgid "`Network Inventory`, used to complete inventory the discovered devices"
+msgstr ""
+
+#: inc/menu.class.php:492
+msgid "Define an agent allowed to inventory the network by SNMP"
+msgstr ""
+
+#: inc/menu.class.php:496
+msgid ""
+"Create a new Task with network inventory module and the agent defined "
+"previously"
+msgstr ""
+
+#: inc/staticmisc.class.php:59
+msgid "Computer Inventory"
+msgstr ""
+
+#: inc/staticmisc.class.php:67
+msgid "VMware host remote inventory"
+msgstr ""
+
+#: inc/staticmisc.class.php:95
+msgid "Collect data"
+msgstr ""
+
+#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:184
+msgid "Property"
+msgstr ""
+
+#: inc/collect_file.class.php:48
+msgid "Found file"
+msgid_plural "Found files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/collect_file.class.php:61
+msgid "Recursive"
+msgstr ""
+
+#: inc/collect_file.class.php:66
+msgid "Name"
+msgstr ""
+
+#: inc/collect_file.class.php:67
+msgid "Iname"
+msgstr ""
+
+#: inc/collect_file.class.php:68
+msgid "Type"
+msgstr ""
+
+#: inc/collectcommon.class.php:74
+msgid "Collect configuration"
+msgstr ""
+
+#: inc/collect.class.php:147 inc/collect.class.php:209
+#: inc/deploycheck.class.php:52
+msgid "Registry"
+msgstr ""
+
+#: inc/collect.class.php:148 inc/collect.class.php:227
+msgid "WMI"
+msgstr ""
+
+#: inc/collect.class.php:149 inc/collect.class.php:245
+#: inc/collect.class.php:260
+msgid "Find file"
+msgstr ""
+
+#: inc/collect.class.php:247
+msgid "pathfile"
+msgstr ""
+
+#: inc/collect.class.php:507
+msgid "Collect module has been disabled for this agent"
+msgstr ""
+
+#: inc/collect.class.php:678
+msgid "Path not found"
+msgstr ""
+
+#: inc/task.class.php:102 inc/taskview.class.php:338
+msgid "Schedule start"
+msgstr ""
+
+#: inc/task.class.php:110 inc/taskview.class.php:344
+msgid "Schedule end"
+msgstr ""
+
+#: inc/task.class.php:143 inc/taskview.class.php:322
+msgid "Permit to re-prepare task after run"
+msgstr ""
+
+#: inc/task.class.php:153
+msgid "deploy on demand task"
+msgstr ""
+
+#: inc/task.class.php:177
+msgid "Associated tasks"
+msgstr ""
+
+#: inc/task.class.php:407
+msgid ""
+"The agent is requesting a configuration that has already been sent to him by "
+"the server. It is more likely that the agent is subject to a critical error."
+msgstr ""
+
+#: inc/task.class.php:420
+msgid "The task has been deactivated after preparation of this job."
+msgstr ""
+
+#: inc/task.class.php:441
+msgid "This job can not be executed anymore due to the task's schedule."
+msgstr ""
+
+#: inc/task.class.php:487
+msgid "This job can not be executed anymore due to the task's timeslot."
+msgstr ""
+
+#: inc/task.class.php:506
+msgid "This agent does not belong anymore in the actors defined in the job."
+msgstr ""
+
+#: inc/task.class.php:545
+msgid "The task cannot be updated if it is active"
+msgstr ""
+
+#: inc/task.class.php:700
+msgid "Inventory task scheduler"
+msgstr ""
+
+#: inc/task.class.php:703
+msgid "Clean on demand deployment tasks"
+msgstr ""
+
+#: inc/task.class.php:1524
+msgid "Task has been disabled"
+msgstr ""
+
+#: inc/task.class.php:1723
+msgid ""
+"You must choose a task and a package to target a task with a deployment "
+"package."
+msgstr ""
+
+#: inc/task.class.php:1740
+msgid "Deployment job, package: "
+msgstr ""
+
+#: inc/task.class.php:1757
+msgid "Updated a deployment job, package: "
+msgstr ""
+
+#: inc/task.class.php:1758 inc/task.class.php:1801
+msgid ", actors: "
+msgstr ""
+
+#: inc/task.class.php:1786
+msgid "The selected task already has a deployment job for another package: "
+msgstr ""
+
+#: inc/task.class.php:1800
+msgid "Created a deployment job, package: "
 msgstr ""
 
 #: inc/deploygroup.class.php:90 inc/deploygroup.class.php:826
@@ -1684,6 +1653,167 @@ msgstr[1] ""
 
 #: inc/deploygroup.class.php:389
 msgid "Add group"
+msgstr ""
+
+#: inc/agentwakeup.class.php:56
+msgid "Wake agents up"
+msgstr ""
+
+#: inc/config.class.php:201
+msgid "Network Inventory"
+msgstr ""
+
+#: inc/config.class.php:284
+msgid "Change the status"
+msgstr ""
+
+#: inc/config.class.php:287
+msgid "Clean agents"
+msgstr ""
+
+#: inc/config.class.php:315
+msgid "with location"
+msgstr ""
+
+#: inc/config.class.php:316
+msgid "with entity"
+msgstr ""
+
+#: inc/config.class.php:317
+msgid "with both"
+msgstr ""
+
+#: inc/taskview.class.php:70
+msgid "Include old jobs"
+msgstr ""
+
+#: inc/taskview.class.php:88
+msgid "refresh interval"
+msgstr ""
+
+#: inc/taskview.class.php:91
+msgid "Off"
+msgstr ""
+
+#: inc/taskview.class.php:108
+msgid "Export task result"
+msgstr ""
+
+#: inc/taskview.class.php:126
+msgid "Task execution states"
+msgstr ""
+
+#: inc/taskview.class.php:212
+msgid "Show/Hide details"
+msgstr ""
+
+#: inc/taskview.class.php:327
+msgid "This is an on demand deployment task"
+msgstr ""
+
+#: inc/taskview.class.php:350
+msgid "Preparation timeslot"
+msgstr ""
+
+#: inc/taskview.class.php:358
+msgid "Execution timeslot"
+msgstr ""
+
+#: inc/taskview.class.php:366
+msgid "Agent wakeup interval (in minutes)"
+msgstr ""
+
+#: inc/taskview.class.php:376
+msgid "Number of agents to wake up"
+msgstr ""
+
+#: inc/taskview.class.php:422
+msgid "Force start"
+msgstr ""
+
+#: inc/taskview.class.php:942
+msgid "Device no longer defined in definition of job"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:79
+msgid "User interaction"
+msgid_plural "User interactions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/deployuserinteraction.class.php:95
+msgid "Before download"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:96
+msgid "After download"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:97
+msgid "After actions"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:98
+msgid "On download failure"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:99
+msgid "On actions failure"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:187
+msgid "Interaction label"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:392
+#, php-format
+msgid "Job cancelled by the user %1$s"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:399
+#, php-format
+msgid "User %1$s agreed to continue the job"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:406
+#, php-format
+msgid "Job postponed by the user %1$s"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:412
+msgid "Bad event sent to the agent"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:431
+msgid "Alert displayed, no input required"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:437
+msgid "Retry"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:443
+msgid "Abort"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:446
+msgid "Ignore"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:452
+msgid "Alert duration exceeded"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:455
+msgid "No user connected"
+msgstr ""
+
+#: inc/deployuserinteraction.class.php:458
+msgid "Multiple users connected"
+msgstr ""
+
+#: inc/display.class.php:134
+msgid "Progress"
 msgstr ""
 
 #: inc/deploycheck.class.php:53
@@ -1833,61 +1963,20 @@ msgstr ""
 msgid "report warning"
 msgstr ""
 
-#: inc/agentwakeup.class.php:56
-msgid "Wake agents up"
+#: inc/stateinventory.class.php:120
+msgid "Number per second"
 msgstr ""
 
-#: inc/collect_file_content.class.php:92 inc/collect_file_content.class.php:147
-msgid "Path/file"
+#: inc/stateinventory.class.php:121
+msgid "Threads / Timeout configuration"
 msgstr ""
 
-#: hook.php:62
-msgid "Local inventory"
+#: inc/stateinventory.class.php:122
+msgid "To inventory"
 msgstr ""
 
-#: hook.php:69
-msgid "ESX/VMWare"
-msgstr ""
-
-#: hook.php:76
-msgid "Network inventory"
-msgstr ""
-
-#: hook.php:90
-msgid "Collect"
-msgstr ""
-
-#: hook.php:140 hook.php:150 hook.php:160 hook.php:170
-#, php-format
-msgid "%s inventoried"
-msgstr ""
-
-#: hook.php:353
-msgid "Setup"
-msgstr ""
-
-#: public/b/deploy/index.php:84
-msgid "Deploy module has been disabled for this agent"
-msgstr ""
-
-#: public/b/deploy/index.php:150
-msgid "Checks"
-msgstr ""
-
-#: public/b/deploy/index.php:151
-msgid "Files download"
-msgstr ""
-
-#: public/b/deploy/index.php:152
-msgid "Files preparation"
-msgstr ""
-
-#: public/b/deploy/index.php:263
-msgid "User canceled the job"
-msgstr ""
-
-#: public/b/deploy/index.php:265
-msgid "User postponed the job"
+#: inc/stateinventory.class.php:123
+msgid "Error(s)"
 msgstr ""
 
 #: public/js/taskjobs.js:747
