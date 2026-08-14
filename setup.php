@@ -258,12 +258,16 @@ function plugin_init_glpiinventory(): void
          */
         $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'] = [];
         $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'] = [];
+        // Form of an itemtype an agent can be linked to. The itemtype classes cannot be used
+        // here to compute the URLs: custom asset classes are not loadable yet at this point.
+        $is_agent_item_form = str_ends_with($current_url, "front/computer.form.php")
+            || str_ends_with($current_url, "front/phone.form.php")
+            || str_ends_with($current_url, "front/asset/asset.form.php");
+
         if (
             str_contains($current_url, '/plugins/glpiinventory/')
             || str_ends_with($current_url, "front/printer.form.php")
-            || str_ends_with($current_url, "front/computer.form.php")
-            || str_ends_with($current_url, "front/phone.form.php")
-            || str_ends_with($current_url, "front/asset/asset.form.php")
+            || $is_agent_item_form
         ) {
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = addPublicFile("css/views", "css");
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = addPublicFile('css/deploy', 'css');
@@ -333,8 +337,8 @@ function plugin_init_glpiinventory(): void
             }
         }
 
-        // load task view css for computer self deploy (tech)
-        if (str_ends_with($current_url, "front/computer.form.php")) {
+        // load task view css for item self deploy (tech)
+        if ($is_agent_item_form) {
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = addPublicFile('css/views', 'css');
         }
 
