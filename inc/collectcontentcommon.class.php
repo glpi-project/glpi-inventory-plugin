@@ -128,14 +128,28 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     }
 
     /**
-     * Delete all contents linked to the computer (most cases when delete a
-     * computer)
+     * Get the link of the inventoried item a content row belongs to
+     *
+     * @param array<string,mixed> $row
      */
-    public static function cleanComputer(int $computers_id): void
+    protected static function getItemLink(array $row): string
+    {
+        $item = getItemForItemtype($row['itemtype'] ?? '');
+        if ($item === false || !$item->getFromDB($row['items_id'])) {
+            return NOT_AVAILABLE;
+        }
+        return $item->getLink();
+    }
+
+    /**
+     * Delete all contents linked to an inventoried item (most cases when delete
+     * an item)
+     */
+    public static function cleanItem(string $itemtype, int $items_id): void
     {
         $classname = static::class;
         $content   = new $classname();
-        $content->deleteByCriteria(['computers_id' => $computers_id]);
+        $content->deleteByCriteria(['itemtype' => $itemtype, 'items_id' => $items_id]);
     }
 
     /**

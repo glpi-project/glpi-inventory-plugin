@@ -118,15 +118,16 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        switch ($item::class) {
-            case Computer::class:
-                if ($item->getInventoryAgent() != null) {
-                    return self::createTabEntry(__("Tasks / Groups", "glpiinventory"), 0, icon: 'ti ti-checklist');
-                }
-                break;
+        if ($item instanceof PluginGlpiinventoryTask) {
+            return self::createTabEntry(__("Job executions", "glpiinventory"), 0, icon: 'ti ti-activity');
+        }
 
-            case PluginGlpiinventoryTask::class:
-                return self::createTabEntry(__("Job executions", "glpiinventory"), 0, icon: 'ti ti-activity');
+        if (
+            $item instanceof CommonDBTM
+            && PluginGlpiinventoryToolbox::isAgentItemtype($item::class)
+            && PluginGlpiinventoryToolbox::getAgentForItem($item::class, $item->fields['id']) !== null
+        ) {
+            return self::createTabEntry(__("Tasks / Groups", "glpiinventory"), 0, icon: 'ti ti-checklist');
         }
 
         return '';
@@ -165,12 +166,12 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         if ($item instanceof PluginGlpiinventoryTask) {
             $item->showJobLogs();
             return true;
-        } elseif ($item instanceof Computer) {
+        } elseif ($item instanceof CommonDBTM && PluginGlpiinventoryToolbox::isAgentItemtype($item::class)) {
             $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
-            $pfTaskJobState->showStatesForComputer($item->fields['id']);
+            $pfTaskJobState->showStatesForItem($item::class, $item->fields['id']);
             echo "<br>";
             $pfDeployGroup = new PluginGlpiinventoryDeployGroup();
-            $pfDeployGroup->showForComputer($item->fields['id']);
+            $pfDeployGroup->showForItem($item::class, $item->fields['id']);
         }
         return false;
     }
@@ -617,20 +618,20 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
 
     /**
-     * Display the tasks where the computer is associated
+     * Display the tasks where the item is associated
      */
-    public function showStatesForComputer(int $computers_id): void
+    public function showStatesForItem(string $itemtype, int $items_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
 
-        $agent      = new Agent();
         $pfTask       = new PluginGlpiinventoryTask();
         $pfTaskjob    = new PluginGlpiinventoryTaskjob();
         $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
 
-        // Get the agent of the computer
-        if (!$agent->getFromDBByCrit(['itemtype' => Computer::class, 'items_id' => $computers_id])) {
+        // Get the agent of the item
+        $agent = PluginGlpiinventoryToolbox::getAgentForItem($itemtype, $items_id);
+        if ($agent === null) {
             return;
         }
         $agents_id = $agent->fields['id'];

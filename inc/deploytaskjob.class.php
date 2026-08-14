@@ -209,20 +209,22 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
     public static function getActionTypes()
     {
 
-        return [
-            [
-                'name' => Computer::getTypeName(),
-                'value' => Computer::class,
-            ],
-            [
-                'name' => Group::getTypeName(),
-                'value' => 'Group',
-            ],
-            [
-                'name' => __('Groups of computers', 'glpiinventory'),
-                'value' => PluginGlpiinventoryDeployGroup::class,
-            ],
+        $types = [];
+        foreach (PluginGlpiinventoryToolbox::getAgentItemtypeNames() as $itemtype => $name) {
+            $types[] = [
+                'name'  => $name,
+                'value' => $itemtype,
+            ];
+        }
+        $types[] = [
+            'name' => Group::getTypeName(),
+            'value' => 'Group',
         ];
+        $types[] = [
+            'name' => __('Groups of computers', 'glpiinventory'),
+            'value' => PluginGlpiinventoryDeployGroup::class,
+        ];
+        return $types;
     }
 
 
@@ -248,9 +250,10 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                 ]);
                 break;
             case "selection":
-                switch ($params['type']) {
-                    case Computer::class:
-                        $where = [];
+                switch (true) {
+                    case PluginGlpiinventoryToolbox::isAgentItemtype($params['type']):
+                        // Custom assets share a single table, hence the system criteria
+                        $where = $params['type']::getSystemSQLCriteria();
                         if (isset($params['query'])) {
                             $where['name'] = ['LIKE', '%' . $params['query']];
                         }
@@ -258,7 +261,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                         $i = 0;
                         $iterator = $DB->request([
                             'SELECT' => ['id', 'name'],
-                            'FROM' => 'glpi_computers',
+                            'FROM' => $params['type']::getTable(),
                             'WHERE' => $where,
                             'ORDER' => 'name ASC',
                         ]);
@@ -272,7 +275,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
                         $res = json_encode($res);
                         break;
 
-                    case Group::class:
+                    case $params['type'] === Group::class:
                         $like = [];
                         if (isset($params['query'])) {
                             //FIXME: not sure escape is mandatory here

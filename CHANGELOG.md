@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+- Support agents linked to any inventoried itemtype (custom assets with the inventory capacity, phones) in addition to computers
+- Deploy groups now target an itemtype; static groups accept items of several itemtypes
+- Migrate collected registry, WMI and file contents from `computers_id` to `itemtype` + `items_id`
+- Remove the `PluginGlpiinventoryComputer` search proxy, static group massive actions moved to `PluginGlpiinventoryDeployGroup_Staticdata`
+- Restore the agent link of the self deploy on demand form, which was always empty
+- Restore the plugin user rights after a dynamic group criteria search
+
 ## [1.6.10] - 2026-08-17
 
 - Fix issues on Safe usage

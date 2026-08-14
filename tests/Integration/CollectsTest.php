@@ -183,13 +183,12 @@ class CollectsTest extends DbTestCase
             'field'            => 'value',
             'linkfield'        => '',
             'name'             => __('Registry', 'glpiinventory') . " - Registry collection",
-            'joinparams'       => ['jointype' => 'child'],
             'datatype'         => 'text',
             'forcegroupby'     => true,
             'massiveaction'    => false,
             'joinparams'       => [
                 'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_registries_id` = " . $pfCollect_Registry->fields['id'],
-                'jointype'  => 'child',
+                'jointype'  => 'itemtype_item',
             ],
         ];
         $this->assertEquals($expected, $sopts[5200]);
@@ -199,13 +198,12 @@ class CollectsTest extends DbTestCase
             'field'            => 'value',
             'linkfield'        => '',
             'name'             => __('WMI', 'glpiinventory') . " - WMI",
-            'joinparams'       => ['jointype' => 'child'],
             'datatype'         => 'text',
             'forcegroupby'     => true,
             'massiveaction'    => false,
             'joinparams'       => [
                 'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_wmis_id` = " . $pfCollect_Wmi->fields['id'],
-                'jointype'  => 'child',
+                'jointype'  => 'itemtype_item',
             ],
         ];
         $this->assertEquals($expected, $sopts[5201]);
@@ -216,13 +214,12 @@ class CollectsTest extends DbTestCase
             'linkfield'        => '',
             'name'             => __('Find file', 'glpiinventory') . " - PHP files"
             . " - " . __('pathfile', 'glpiinventory'),
-            'joinparams'       => ['jointype' => 'child'],
             'datatype'         => 'text',
             'forcegroupby'     => true,
             'massiveaction'    => false,
             'joinparams'       => [
                 'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
-                'jointype'  => 'child',
+                'jointype'  => 'itemtype_item',
             ],
         ];
         $this->assertEquals($expected, $sopts[5202]);
@@ -233,13 +230,12 @@ class CollectsTest extends DbTestCase
             'linkfield'        => '',
             'name'             => __('Find file', 'glpiinventory') . " - PHP files"
                                     . " - " . __('Size', 'glpiinventory'),
-            'joinparams'       => ['jointype' => 'child'],
             'datatype'         => 'text',
             'forcegroupby'     => true,
             'massiveaction'    => false,
             'joinparams'       => [
                 'condition' => "AND NEWTABLE.`plugin_glpiinventory_collects_files_id` = " . $pfCollect_File->fields['id'],
-                'jointype'  => 'child',
+                'jointype'  => 'itemtype_item',
             ],
         ];
         $this->assertEquals($expected, $sopts[5203]);
@@ -531,13 +527,15 @@ class CollectsTest extends DbTestCase
 
         $reference = [
             [
-                'computers_id' => $computers_id,
+                'itemtype' => Computer::class,
+                'items_id' => $computers_id,
                 'plugin_glpiinventory_collects_wmis_id' => $registry_kn,
                 'property'     => 'Name',
                 'value'        => 'Enhanced (101- or 102-key)',
             ],
             [
-                'computers_id' => $computers_id,
+                'itemtype' => Computer::class,
+                'items_id' => $computers_id,
                 'plugin_glpiinventory_collects_wmis_id' => $registry_kd,
                 'property'     => 'Description',
                 'value'        => 'Standard PS/2 Keyboard',
@@ -739,31 +737,36 @@ class CollectsTest extends DbTestCase
 
         $reference = [
             [
-                'computers_id' => "$computers_id",
+                'itemtype' => Computer::class,
+                'items_id' => "$computers_id",
                 'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
                 'pathfile'     => 'C:/Users/toto/Desktop/06_import_tickets.php',
                 'size'         => '5053',
             ],
             [
-                'computers_id' => "$computers_id",
+                'itemtype' => Computer::class,
+                'items_id' => "$computers_id",
                 'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
                 'pathfile'     => 'C:/Users/toto/Desktop/glpiinventory.txt',
                 'size'         => '28',
             ],
             [
-                'computers_id' => "$computers_id",
+                'itemtype' => Computer::class,
+                'items_id' => "$computers_id",
                 'plugin_glpiinventory_collects_files_id' => "$registry_desktop",
                 'pathfile'     => 'C:/Users/toto/Desktop/desktop.ini',
                 'size'         => '282',
             ],
             [
-                'computers_id' => "$computers_id",
+                'itemtype' => Computer::class,
+                'items_id' => "$computers_id",
                 'plugin_glpiinventory_collects_files_id' => "$registry_down",
                 'pathfile'     => 'C:/Users/toto/Downloads/jxpiinstall.exe',
                 'size'         => '738368',
             ],
             [
-                'computers_id' => "$computers_id",
+                'itemtype' => Computer::class,
+                'items_id' => "$computers_id",
                 'plugin_glpiinventory_collects_files_id' => "$registry_down",
                 'pathfile'     => 'C:/Users/toto/Downloads/npp.6.9.2.Installer.exe',
                 'size'         => '4211112',
@@ -804,7 +807,8 @@ class CollectsTest extends DbTestCase
         $file_id = $pfCollect_File->fields['id'];
 
         $input = [
-            'computers_id'                                     => $computerId,
+            'itemtype'                                     => Computer::class,
+            'items_id'                                     => $computerId,
             'plugin_glpiinventory_collects_registries_id'    => $file_id,
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -817,11 +821,11 @@ class CollectsTest extends DbTestCase
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
 
-        $this->assertEquals(5, count($pfCollect_File_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_File_Contents->fields));
 
         //Second, clean and check if it has been removed
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
-        $pfCollect_File_Contents->cleanComputer($computerId);
+        $pfCollect_File_Contents->cleanItem(Computer::class, $computerId);
 
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
         $this->assertEquals(0, count($pfCollect_File_Contents->fields));
@@ -839,7 +843,8 @@ class CollectsTest extends DbTestCase
         $computers_id = $this->createComputer();
 
         $input = [
-            'computers_id'                                     => $computers_id,
+            'itemtype'                                     => Computer::class,
+            'items_id'                                     => $computers_id,
             'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Registry->fields['id'],
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -852,11 +857,11 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         //Second, clean and check if it has been removed
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
-        $pfCollect_Registry_Contents->cleanComputer($computers_id);
+        $pfCollect_Registry_Contents->cleanItem(Computer::class, $computers_id);
 
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
         $this->assertEquals(0, count($pfCollect_Registry_Contents->fields));
@@ -874,7 +879,8 @@ class CollectsTest extends DbTestCase
         $computers_id = $this->createComputer();
 
         $input = [
-            'computers_id'                                     => $computers_id,
+            'itemtype'                                     => Computer::class,
+            'items_id'                                     => $computers_id,
             'plugin_glpiinventory_collects_registries_id'    => $pfCollect_Wmi->fields['id'],
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -887,11 +893,11 @@ class CollectsTest extends DbTestCase
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $pfCollect_Wmi_Contents->getFromDB($collectWmiContentId);
 
-        $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Wmi_Contents->fields));
 
         //Second, clean and check if it has been removed
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
-        $pfCollect_Wmi_Contents->cleanComputer($computers_id);
+        $pfCollect_Wmi_Contents->cleanItem(Computer::class, $computers_id);
 
         $pfCollect_Wmi_Contents->getFromDB($collectWmiContentId);
         $this->assertEquals(0, count($pfCollect_Wmi_Contents->fields));
@@ -930,7 +936,8 @@ class CollectsTest extends DbTestCase
         $this->assertNotFalse($wmi_id);
 
         $input = [
-            'computers_id'                                     => $computers_id,
+            'itemtype'                                     => Computer::class,
+            'items_id'                                     => $computers_id,
             'plugin_glpiinventory_collects_registries_id'    => $wmi_id,
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -943,7 +950,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $pfCollect_Wmi_Contents->getFromDB($collectWmiContectId);
 
-        $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Wmi_Contents->fields));
 
         //populate files data
         $input = [
@@ -961,7 +968,8 @@ class CollectsTest extends DbTestCase
         $file_id = $pfCollect_File->fields['id'];
 
         $input = [
-            'computers_id'                                     => $computers_id,
+            'itemtype'                                     => Computer::class,
+            'items_id'                                     => $computers_id,
             'plugin_glpiinventory_collects_registries_id'    => $file_id,
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -974,7 +982,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
 
-        $this->assertEquals(5, count($pfCollect_File_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_File_Contents->fields));
 
         //populate registry data
         $input = [
@@ -999,7 +1007,8 @@ class CollectsTest extends DbTestCase
         $this->assertNotFalse($registry_id);
 
         $input = [
-            'computers_id'                                     => $computers_id,
+            'itemtype'                                     => Computer::class,
+            'items_id'                                     => $computers_id,
             'plugin_glpiinventory_collects_registries_id'    => $registry_id,
             'key'                                              => 'test_key',
             'value'                                            => 'test_value',
@@ -1012,7 +1021,7 @@ class CollectsTest extends DbTestCase
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
 
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         // delete computer and check if it has been put in trash
         $computer->delete(['id' => $computers_id]);
@@ -1020,15 +1029,15 @@ class CollectsTest extends DbTestCase
 
         $pfCollect_Wmi_Contents = new PluginGlpiinventoryCollect_Wmi_Content();
         $pfCollect_Wmi_Contents->getFromDB($collectWmiContectId);
-        $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Wmi_Contents->fields));
 
         $pfCollect_Registry_Contents = new PluginGlpiinventoryCollect_Registry_Content();
         $pfCollect_Registry_Contents->getFromDB($collectRegistryContentId);
-        $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_Registry_Contents->fields));
 
         $pfCollect_File_Contents = new PluginGlpiinventoryCollect_File_Content();
         $pfCollect_File_Contents->getFromDB($collectFileContentId);
-        $this->assertEquals(5, count($pfCollect_File_Contents->fields));
+        $this->assertEquals(6, count($pfCollect_File_Contents->fields));
 
         // purge computer and check if it has been removed
         $computer->delete(['id' => $computers_id], true);
@@ -1273,7 +1282,8 @@ class CollectsTest extends DbTestCase
 
         // a stale content row that must be cleaned when the job is dispatched
         $this->createItem(PluginGlpiinventoryCollect_Registry_Content::class, [
-            'computers_id' => $computers_id,
+            'itemtype' => Computer::class,
+            'items_id' => $computers_id,
             'plugin_glpiinventory_collects_registries_id' => $registry_id,
             'key' => 'old', 'value' => 'old',
         ]);
@@ -1290,7 +1300,8 @@ class CollectsTest extends DbTestCase
         // the stale content is NOT wiped at dispatch: it must survive until real data arrives
         $this->assertCount(1, $pfCollect_Registry_Content->find([
             'plugin_glpiinventory_collects_registries_id' => $registry_id,
-            'computers_id' => $computers_id,
+            'itemtype' => Computer::class,
+            'items_id' => $computers_id,
         ]));
 
         // answer 1: first value -> the stale content is reset on this first answer

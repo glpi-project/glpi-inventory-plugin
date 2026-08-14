@@ -119,6 +119,8 @@ function plugin_init_glpiinventory(): void
     }
 
     if ($Plugin->isActivated('glpiinventory')) { // check if plugin is active
+        $agent_itemtypes = PluginGlpiinventoryToolbox::getAgentItemtypes();
+
         // Disable firewall checks for machine to machine endpoints
         Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/index\.php#', Firewall::STRATEGY_NO_CHECK);
         Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/b/#', Firewall::STRATEGY_NO_CHECK);
@@ -156,10 +158,7 @@ function plugin_init_glpiinventory(): void
         $Plugin->registerClass(
             PluginGlpiinventoryTaskjobstate::class,
             [
-                'addtabon' => [
-                    PluginGlpiinventoryTask::class,
-                    Computer::class,
-                ],
+                'addtabon' => array_merge([PluginGlpiinventoryTask::class], $agent_itemtypes),
             ]
         );
 
@@ -179,7 +178,7 @@ function plugin_init_glpiinventory(): void
 
         $Plugin->registerClass(
             PluginGlpiinventoryCollect::class,
-            ['addtabon' => [Computer::class]]
+            ['addtabon' => $agent_itemtypes]
         );
         $Plugin->registerClass(
             PluginGlpiinventoryCollect_Registry::class,
@@ -219,7 +218,7 @@ function plugin_init_glpiinventory(): void
         );
         $Plugin->registerClass(
             PluginGlpiinventoryDeployPackage::class,
-            ['addtabon' => [Computer::class]]
+            ['addtabon' => $agent_itemtypes]
         );
 
         // ##### 3. get informations of the plugin #####
@@ -263,6 +262,8 @@ function plugin_init_glpiinventory(): void
             str_contains($current_url, '/plugins/glpiinventory/')
             || str_ends_with($current_url, "front/printer.form.php")
             || str_ends_with($current_url, "front/computer.form.php")
+            || str_ends_with($current_url, "front/phone.form.php")
+            || str_ends_with($current_url, "front/asset/asset.form.php")
         ) {
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = addPublicFile("css/views", "css");
             $PLUGIN_HOOKS[Hooks::ADD_CSS]['glpiinventory'][] = addPublicFile('css/deploy', 'css');
@@ -299,9 +300,12 @@ function plugin_init_glpiinventory(): void
         ];
 
         $PLUGIN_HOOKS[Hooks::PRE_ITEM_PURGE]['glpiinventory'] = [
-            Computer::class => 'plugin_pre_item_purge_glpiinventory',
             NetworkPort_NetworkPort::class => 'plugin_pre_item_purge_glpiinventory',
         ];
+        foreach ($agent_itemtypes as $agent_itemtype) {
+            $PLUGIN_HOOKS[Hooks::PRE_ITEM_PURGE]['glpiinventory'][$agent_itemtype]
+                = 'plugin_pre_item_purge_glpiinventory';
+        }
         $p = [
             NetworkPort_NetworkPort::class => 'plugin_item_purge_glpiinventory',
             PluginGlpiinventoryTask::class => [PluginGlpiinventoryTask::class, 'purgeTask'],

@@ -81,14 +81,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
 
     /**
-     * Update computer registry values (add and update) related to this
+     * Update item registry values (add and update) related to this
      * collect registry id
      *
-     * @param int $computers_id id of the computer
      * @param array<string,mixed> $registry_data registry info sent by agent
      * @param int $collects_registries_id id of collect_registry
      */
-    public function updateComputer($computers_id, $registry_data, $collects_registries_id): void
+    public function updateItem(string $itemtype, int $items_id, $registry_data, $collects_registries_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -114,7 +113,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 $exists = isset($registry_data['_exists'])
                     ? (int) (bool) $registry_data['_exists']
                     : (int) self::hasReturnedData($registry_data);
-                $this->storeSingleResult($computers_id, $collects_registries_id, '', (string) $exists);
+                $this->storeSingleResult($itemtype, $items_id, $collects_registries_id, '', (string) $exists);
                 return;
 
             case PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
@@ -124,7 +123,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     ? (int) (bool) $registry_data['_defined']
                     : (int) self::hasReturnedData($registry_data);
                 $key = (string) ($collect_registry->fields['key'] ?? '');
-                $this->storeSingleResult($computers_id, $collects_registries_id, $key, (string) $defined);
+                $this->storeSingleResult($itemtype, $items_id, $collects_registries_id, $key, (string) $defined);
                 return;
 
             case PluginGlpiinventoryCollect_Registry::MODE_DEPTH:
@@ -137,7 +136,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                         $value = hexdec($value);
                     }
                     $existing = $this->find([
-                        'computers_id' => $computers_id,
+                        'itemtype'     => $itemtype,
+                        'items_id'     => $items_id,
                         'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
                         'key'          => $path,
                     ], [], 1);
@@ -148,7 +148,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                         ]);
                     } else {
                         $this->add([
-                            'computers_id' => $computers_id,
+                            'itemtype'     => $itemtype,
+                            'items_id'     => $items_id,
                             'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
                             'key'          => $path,
                             'value'        => $value,
@@ -165,7 +166,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             'SELECT' => ['id', 'key', 'value'],
             'FROM'   => 'glpi_plugin_glpiinventory_collects_registries_contents',
             'WHERE'  => [
-                'computers_id' => $computers_id,
+                'itemtype' => $itemtype,
+                'items_id' => $items_id,
                 'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
             ],
         ]);
@@ -198,7 +200,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 $value = hexdec($value);
             }
             $input = [
-                'computers_id' => $computers_id,
+                'itemtype'     => $itemtype,
+                'items_id'     => $items_id,
                 'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
                 'key'          => $key,
                 'value'        => $value,
@@ -208,15 +211,14 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
     /**
-     * Reset the collected content of every registry of a collect, for the given computer.
+     * Reset the collected content of every registry of a collect, for the given item.
      * Called when the first answer of a collect run is received, so the previously collected
      * data survives if the agent fails or is stopped before sending anything. This makes the
      * per-answer deletions unnecessary.
      *
-     * @param int $collects_id  id of the collect
-     * @param int $computers_id id of the computer
+     * @param int $collects_id id of the collect
      */
-    public static function resetContent(int $collects_id, int $computers_id): void
+    public static function resetContent(int $collects_id, string $itemtype, int $items_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -228,7 +230,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 'glpi_plugin_glpiinventory_collects_registries_contents',
                 [
                     'plugin_glpiinventory_collects_registries_id' => $one_registry['id'],
-                    'computers_id'                                => $computers_id,
+                    'itemtype'                                    => $itemtype,
+                    'items_id'                                    => $items_id,
                 ]
             );
         }
@@ -315,21 +318,21 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
     /**
-     * Replace the (single) collected result for a computer and a collect registry.
+     * Replace the (single) collected result for an item and a collect registry.
      * Used by the "path existence" and "key defined" modes, which
      * report a single yes/no result.
      *
-     * @param int    $computers_id           id of the computer
      * @param int    $collects_registries_id id of the collect registry
      * @param string $key                    key to store (empty for the existence check)
      * @param string $value                  value to store ('0' or '1')
      */
-    private function storeSingleResult(int $computers_id, int $collects_registries_id, string $key, string $value): void
+    private function storeSingleResult(string $itemtype, int $items_id, int $collects_registries_id, string $key, string $value): void
     {
         // Upsert the single result row (content is already reset on the first received answer,
         // see resetContent(); this just keeps it idempotent).
         $existing = $this->find([
-            'computers_id' => $computers_id,
+            'itemtype'     => $itemtype,
+            'items_id'     => $items_id,
             'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
         ], [], 1);
         if (count($existing)) {
@@ -340,7 +343,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             ]);
         } else {
             $this->add([
-                'computers_id' => $computers_id,
+                'itemtype'     => $itemtype,
+                'items_id'     => $items_id,
                 'plugin_glpiinventory_collects_registries_id' => $collects_registries_id,
                 'key'          => $key,
                 'value'        => $value,
@@ -373,16 +377,14 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     }
 
     /**
-     * Show registries keys of the computer
-     *
-     * @param int $computers_id id of the computer
+     * Show registries keys of the inventoried item
      */
-    public function showForComputer(int $computers_id): void
+    public function showForItem(string $itemtype, int $items_id): void
     {
         $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
         echo "<table class='tab_cadre_fixe'>";
         $a_data = $this->find(
-            ['computers_id' => $computers_id],
+            ['itemtype' => $itemtype, 'items_id' => $items_id],
             ['plugin_glpiinventory_collects_registries_id', 'key']
         );
         $previous_key = 0;
@@ -453,62 +455,58 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     {
         $collect_registry = new PluginGlpiinventoryCollect_Registry();
         $collect_registry->getFromDB($id);
-        $computer = new Computer();
 
         $mode = (int) ($collect_registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
 
         $data = $this->find(
             ['plugin_glpiinventory_collects_registries_id' => $id],
-            ['computers_id', 'key']
+            ['items_id', 'key']
         );
 
         $columns    = [];
-        $formatters = ['computer' => 'raw_html'];
+        $formatters = ['item' => 'raw_html'];
         $entries    = [];
 
         switch (true) {
             case $mode === PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS:
                 $columns = [
-                    'computer' => Computer::getTypeName(1),
-                    'value'    => __('Value', 'glpiinventory'),
+                    'item'  => _n('Item', 'Items', 1),
+                    'value' => __('Value', 'glpiinventory'),
                 ];
                 foreach ($data as $row) {
-                    $computer->getFromDB($row['computers_id']);
                     $entries[] = [
-                        'computer' => $computer->getLink(),
-                        'value'    => self::getExistenceLabel($row['value']),
+                        'item'  => self::getItemLink($row),
+                        'value' => self::getExistenceLabel($row['value']),
                     ];
                 }
                 break;
 
             case $mode === PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
                 $columns = [
-                    'computer' => Computer::getTypeName(1),
-                    'key'      => __('Key', 'glpiinventory'),
-                    'value'    => __('Value', 'glpiinventory'),
+                    'item'  => _n('Item', 'Items', 1),
+                    'key'   => __('Key', 'glpiinventory'),
+                    'value' => __('Value', 'glpiinventory'),
                 ];
                 foreach ($data as $row) {
-                    $computer->getFromDB($row['computers_id']);
                     $entries[] = [
-                        'computer' => $computer->getLink(),
-                        'key'      => $row['key'],
-                        'value'    => self::getDefinedLabel($row['value']),
+                        'item'  => self::getItemLink($row),
+                        'key'   => $row['key'],
+                        'value' => self::getDefinedLabel($row['value']),
                     ];
                 }
                 break;
 
             default:
                 $columns = [
-                    'computer' => Computer::getTypeName(1),
-                    'value'    => __('Value', 'glpiinventory'),
-                    'data'     => __('Data', 'glpiinventory'),
+                    'item'  => _n('Item', 'Items', 1),
+                    'value' => __('Value', 'glpiinventory'),
+                    'data'  => __('Data', 'glpiinventory'),
                 ];
                 foreach ($data as $row) {
-                    $computer->getFromDB($row['computers_id']);
                     $entries[] = [
-                        'computer' => $computer->getLink(),
-                        'value'    => $row['key'],
-                        'data'     => $row['value'],
+                        'item'  => self::getItemLink($row),
+                        'value' => $row['key'],
+                        'data'  => $row['value'],
                     ];
                 }
                 break;
