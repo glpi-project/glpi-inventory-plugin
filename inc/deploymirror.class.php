@@ -111,8 +111,10 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
             return [];
         }
 
-        $computer = new Computer();
-        $computer->getFromDB($agent['items_id']);
+        $agent_item = getItemForItemtype($agent['itemtype']);
+        if ($agent_item === false || !$agent_item->getFromDB($agent['items_id'])) {
+            return [];
+        }
 
         //If no configuration has been done in the plugin's configuration
         //then use location for mirrors as default
@@ -161,8 +163,8 @@ class PluginGlpiinventoryDeployMirror extends CommonDBTM
             //First, check mirror by location
             if (
                 in_array($mirror_match, [self::MATCH_LOCATION, self::MATCH_BOTH])
-                && $computer->fields['locations_id'] > 0
-                && $computer->fields['locations_id'] == $result['locations_id']
+                && ($agent_item->fields['locations_id'] ?? 0) > 0
+                && $agent_item->fields['locations_id'] == $result['locations_id']
             ) {
                 $mirrors[] = $result['url'];
             }

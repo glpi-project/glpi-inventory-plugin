@@ -42,18 +42,18 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     public string $collect_type     = 'file';
 
     /**
-     * Update computer files (add and update files) related to this
+     * Update item files (add and update files) related to this
      * collect file id
      *
-     * @param int $computers_id id of the computer
      * @param array<string,mixed> $file_data
      * @param int $collects_files_id id of collect_file
      */
-    public function updateComputer($computers_id, $file_data, $collects_files_id): void
+    public function updateItem(string $itemtype, int $items_id, $file_data, $collects_files_id): void
     {
         foreach ($file_data as $key => $value) {
             $input = [
-                'computers_id' => $computers_id,
+                'itemtype'     => $itemtype,
+                'items_id'     => $items_id,
                 'plugin_glpiinventory_collects_files_id' => $collects_files_id,
                 'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
                 'size'         => $value['size'],
@@ -64,18 +64,16 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
 
 
     /**
-     * Display files found on the computer
-     *
-     * @param int $computers_id id of the computer
+     * Display files found on the inventoried item
      */
-    public function showForComputer(int $computers_id): void
+    public function showForItem(string $itemtype, int $items_id): void
     {
         $pfCollect_File = new PluginGlpiinventoryCollect_File();
 
         echo "<table class='tab_cadre_fixe'>";
 
         $a_data = $this->find(
-            ['computers_id' => $computers_id],
+            ['itemtype' => $itemtype, 'items_id' => $items_id],
             ['plugin_glpiinventory_collects_files_id', 'pathfile']
         );
         $previous_key = 0;
@@ -118,7 +116,6 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     public function showContent(int $id): void
     {
         $collect_file = new PluginGlpiinventoryCollect_File();
-        $computer = new Computer();
         $collect_file->getFromDB($id);
 
         $data = $this->find(
@@ -127,9 +124,8 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
         );
         $entries = [];
         foreach ($data as $row) {
-            $computer->getFromDB($row['computers_id']);
             $entry = [
-                'computer' => $computer->getLink(),
+                'item'     => self::getItemLink($row),
                 'pathfile' => $row['pathfile'],
                 'size'     => $row['size'],
             ];
@@ -143,12 +139,12 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
             'is_tab' => true,
             'nofilter' => true,
             'columns' => [
-                'computer' => Computer::getTypeName(1),
+                'item' => _n('Item', 'Items', 1),
                 'pathfile' => __('Path/file', 'glpiinventory'),
                 'size' => __('Size', 'glpiinventory'),
             ],
             'formatters' => [
-                'computer' => 'raw_html',
+                'item' => 'raw_html',
                 'size' => 'bytesize',
             ],
             'entries' => $entries,

@@ -30,6 +30,9 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QuerySubQuery;
+
 /**
  * Manage the specifications of each module and for the task configuration.
  */
@@ -544,48 +547,62 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function task_actiontype_deployinstall($a_itemtype)
     {
-        return ['' => Dropdown::EMPTY_VALUE,
-            Computer::class  => Computer::getTypeName(),
-            PluginGlpiinventoryDeployGroup::class => PluginGlpiinventoryDeployGroup::getTypeName(),
-            Group::class => Group::getTypeName(),
-        ];
+        return ['' => Dropdown::EMPTY_VALUE]
+            + PluginGlpiinventoryToolbox::getAgentItemtypeNames()
+            + [
+                PluginGlpiinventoryDeployGroup::class => PluginGlpiinventoryDeployGroup::getTypeName(),
+                Group::class => Group::getTypeName(),
+            ];
     }
 
 
     /**
-     * Get all computers of action type Computer::class
-     * defined in task_actiontype_deployinstall
-     *
-     * @return string unique html element id
-     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
+     * Get the agent module an item must have enabled to be an action of a task method
      */
-    public static function task_actionselection_Computer_deployinstall()
+    public static function getAgentModuleForMethod(string $method): ?string
+    {
+        return match ($method) {
+            'deployinstall' => 'DEPLOY',
+            'collect'       => 'Collect',
+            default         => null,
+        };
+    }
+
+
+    /**
+     * Display the dropdown of the items the agent module is enabled on
+     *
+     * @param class-string<CommonDBTM> $itemtype
+     * @return string unique html element id
+     * @used-by PluginGlpiinventoryTaskjob::dropdownvalue()
+     */
+    public static function showItemtypeSelection(string $itemtype, string $agent_module): string
     {
         $options = [];
         $options['entity']      = $_SESSION['glpiactive_entity'];
         $options['entity_sons'] = 1;
         $options['name']        = 'actionselectiontoadd';
-        $options['condition']
-         = implode(
-             " ",
-             [
-                 '`id` IN ( ',
-                 '  SELECT agents.`items_id`',
-                 '  FROM `glpi_agents` as agents',
-                 '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
-                 '  ON module.modulename = "DEPLOY"',
-                 '  WHERE',
-                 '     agents.`itemtype` = \'Computer\'',
-                 '     AND (',
-                 '           (  module.is_active=1',
-                 '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-                 '        OR (  module.is_active=0',
-                 '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-                 '     )',
-                 ')',
-             ]
-         );
-        return Dropdown::show(Computer::class, $options);
+        $options['condition']   = [
+            'id' => new QuerySubQuery([
+                'SELECT' => 'agents.items_id',
+                'FROM'   => ['glpi_agents AS agents', 'glpi_plugin_glpiinventory_agentmodules AS module'],
+                'WHERE'  => [
+                    'module.modulename' => $agent_module,
+                    'agents.itemtype'   => $itemtype,
+                    'OR'                => [
+                        [
+                            'module.is_active' => 1,
+                            new QueryExpression('module.exceptions NOT LIKE CONCAT(\'%"\', agents.id, \'"%\')'),
+                        ],
+                        [
+                            'module.is_active' => 0,
+                            new QueryExpression('module.exceptions LIKE CONCAT(\'%"\', agents.id, \'"%\')'),
+                        ],
+                    ],
+                ],
+            ]),
+        ];
+        return Dropdown::show($itemtype, $options);
     }
 
 
@@ -681,48 +698,12 @@ class PluginGlpiinventoryStaticmisc
      */
     public static function task_actiontype_collect($a_itemtype)
     {
-        return ['' => Dropdown::EMPTY_VALUE,
-            Computer::class => Computer::getTypeName(),
-            PluginGlpiinventoryDeployGroup::class => PluginGlpiinventoryDeployGroup::getTypeName(),
-            Group::class => Group::getTypeName(),
-        ];
-    }
-
-
-    /**
-     * Get all computers of action type Computer::class
-     * defined in task_actiontype_collect
-     *
-     * @return string unique html element id
-     * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
-     */
-    public static function task_actionselection_Computer_collect()
-    {
-        $options = [];
-        $options['entity']      = $_SESSION['glpiactive_entity'];
-        $options['entity_sons'] = 1;
-        $options['name']        = 'actionselectiontoadd';
-        $options['condition']
-         = implode(
-             " ",
-             [
-                 '`id` IN ( ',
-                 '  SELECT agents.`items_id`',
-                 '  FROM `glpi_agents` as agents',
-                 '  LEFT JOIN `glpi_plugin_glpiinventory_agentmodules` as module',
-                 '  ON module.modulename = "Collect"',
-                 '  WHERE',
-                 '     agents.`itemtype` = \'Computer\'',
-                 '     AND (',
-                 '           (  module.is_active=1',
-                 '              AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-                 '        OR (  module.is_active=0',
-                 '              AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
-                 '     )',
-                 ')',
-             ]
-         );
-        return Dropdown::show("Computer", $options);
+        return ['' => Dropdown::EMPTY_VALUE]
+            + PluginGlpiinventoryToolbox::getAgentItemtypeNames()
+            + [
+                PluginGlpiinventoryDeployGroup::class => PluginGlpiinventoryDeployGroup::getTypeName(),
+                Group::class => Group::getTypeName(),
+            ];
     }
 
 

@@ -98,7 +98,6 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
                 $count = countElementsInTable(
                     getTableForItemType(self::class),
                     [
-                        'itemtype'                               => Computer::class,
                         'plugin_glpiinventory_deploygroups_id' => $item->fields['id'],
                     ]
                 );
@@ -140,12 +139,13 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 
 
     /**
-     * Display criteria form + list of computers
+     * Display criteria form + list of items
      *
      * @param PluginGlpiinventoryDeployGroup $item PluginGlpiinventoryDeployGroup instance
      */
     public static function showCriteriaAndSearch(PluginGlpiinventoryDeployGroup $item): void
     {
+        $itemtype = $item->getGroupItemtype();
 
         echo "<div class='alert alert-primary d-flex align-items-center' role='alert'>";
         echo "<i class='fas fa-info-circle fa-xl'></i>";
@@ -168,12 +168,12 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
 
         //Add extra parameters for massive action display : only the Add action should be displayed
         $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
-        $search_params['massiveactionparams']['extraparams']['specific_actions'][PluginGlpiinventoryComputer::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
+        $search_params['massiveactionparams']['extraparams']['specific_actions'][self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'add'] = __('Add to static group', 'glpiinventory');
         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
         $limit_backup = $_SESSION['glpilist_limit'];
         $_SESSION['glpilist_limit'] = 200;
-        $data = Search::prepareDatasForSearch(Computer::class, $search_params);
+        $data = Search::prepareDatasForSearch($itemtype, $search_params);
         Search::constructSQL($data);
         Search::constructData($data);
         $data['search']['target'] = PluginGlpiinventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
@@ -187,7 +187,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
                     $('label.form-switch').hide();
                     $('#dropdown-export').hide();
                     $('button.show_displaypreference_modal').hide();
-                    $('#massformPluginGlpiinventoryComputer').find('table:first').removeClass('search-results');
+                    $('form[id^=\"massform" . str_replace('\\', '', $itemtype) . "\"]').find('table:first').removeClass('search-results');
                     $('span.search-limit').html('');
                 }
             );
@@ -220,11 +220,11 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         echo "<div class='spaced'>";
         echo "<div class='spaced'>";
 
-        $mass_class = "PluginGlpiinventoryComputer";
+        $mass_class = str_replace('\\', '', self::class);
         Html::openMassiveActionsForm('mass' . $mass_class . $rand);
         $massiveactionparams = ['num_displayed' => min($_SESSION['glpilist_limit'], $number),
             'item' => $item,
-            'specific_actions' => [PluginGlpiinventoryComputer::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'deleteitem' => _x('button', __('Remove from static group', 'glpiinventory'))],
+            'specific_actions' => [self::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'deleteitem' => _x('button', __('Remove from static group', 'glpiinventory'))],
             'container' => 'mass' . $mass_class . $rand,
             'massive_action_fields' => ['action', 'id'],
         ];
@@ -242,6 +242,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         $header_bottom .=  "</th>";
 
         $header_end .= "<th>" . __('Name') . "</th>";
+        $header_end .= "<th>" . _n('Item type', 'Item types', 1) . "</th>";
         $header_end .= "<th>" . __('Automatic inventory') . "</th>";
         $header_end .= "<th>" . Entity::getTypeName(1) . "</th>";
         $header_end .= "<th>" . __('Serial number') . "</th>";
@@ -250,34 +251,36 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
         echo $header_begin . $header_top . $header_end;
 
         foreach ($datas as $data) {
-            $computer = new Computer();
-            $computer->getFromDB($data["items_id"]);
-            $linkname = $computer->fields["name"];
-            $itemtype = Computer::class;
-            if ($_SESSION["glpiis_ids_visible"] || empty($computer->fields["name"])) {
-                $linkname = sprintf(__('%1$s (%2$s)'), $linkname, $computer->fields["id"]);
+            $target = getItemForItemtype($data["itemtype"]);
+            if ($target === false || !$target->getFromDB($data["items_id"])) {
+                continue;
             }
-            $link = $itemtype::getFormURLWithID($computer->fields["id"]);
+            $linkname = $target->fields["name"];
+            if ($_SESSION["glpiis_ids_visible"] || empty($target->fields["name"])) {
+                $linkname = sprintf(__('%1$s (%2$s)'), $linkname, $target->fields["id"]);
+            }
+            $link = $target::getFormURLWithID($target->fields["id"]);
             $name = "<a href=\"" . $link . "\">" . $linkname . "</a>";
             echo "<tr class='tab_bg_1'>";
 
             echo "<td width='10'>";
-            Html::showMassiveActionCheckBox($mass_class, $data["items_id"]);
+            Html::showMassiveActionCheckBox($data["itemtype"], $data["items_id"]);
             echo "</td>";
 
             echo "<td "
-                . ((isset($computer->fields['is_deleted']) && $computer->fields['is_deleted']) ? "class='tab_bg_2_2'" : "")
+                . ((isset($target->fields['is_deleted']) && $target->fields['is_deleted']) ? "class='tab_bg_2_2'" : "")
                 . ">" . $name . "</td>";
-            echo "<td>" . Dropdown::getYesNo($computer->fields['is_dynamic']) . "</td>";
+            echo "<td>" . $target::getTypeName(1) . "</td>";
+            echo "<td>" . Dropdown::getYesNo($target->fields['is_dynamic']) . "</td>";
             echo "<td>" . Dropdown::getDropdownName(
                 "glpi_entities",
-                $computer->fields['entities_id']
+                $target->fields['entities_id']
             );
             echo "</td>";
             echo "<td>"
-                    . (isset($computer->fields["serial"]) ? "" . $computer->fields["serial"] . "" : "-") . "</td>";
+                    . (isset($target->fields["serial"]) ? "" . $target->fields["serial"] . "" : "-") . "</td>";
             echo "<td>"
-                    . (isset($computer->fields["otherserial"]) ? "" . $computer->fields["otherserial"] . "" : "-") . "</td>";
+                    . (isset($target->fields["otherserial"]) ? "" . $target->fields["otherserial"] . "" : "-") . "</td>";
             echo "</tr>";
         }
         echo $header_begin . $header_bottom . $header_end;
@@ -364,17 +367,21 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     public static function csvImport($post_data, $files_data)
     {
         $pfDeployGroup_static = new self();
-        $computer = new Computer();
+        $itemtype = PluginGlpiinventoryDeployGroup::getItemtypeForGroup((int) $post_data['groups_id']);
+        $item     = getItemForItemtype($itemtype);
+        if ($item === false) {
+            return false;
+        }
         $input = [
             'plugin_glpiinventory_deploygroups_id' => $post_data['groups_id'],
-            'itemtype' => Computer::class,
+            'itemtype' => $itemtype,
         ];
         if (isset($files_data['importcsvfile']['tmp_name'])) {
             try {
                 $handle = fopen($files_data['importcsvfile']['tmp_name'], "r");
                 while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"], '"', '')) !== false) {
                     $input['items_id'] = (int) str_replace(' ', '', $data[0]);
-                    if ($computer->getFromDB($input['items_id'])) {
+                    if ($item->getFromDB($input['items_id'])) {
                         $pfDeployGroup_static->add($input);
                     }
                 }
@@ -389,5 +396,77 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
             return false;
         }
         return true;
+    }
+
+
+    /**
+     * Execution code for massive action
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @param CommonDBTM $item item on which execute the code
+     * @param array<int> $ids list of ID on which execute the code
+     *
+     * @return void
+     */
+    public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
+    {
+
+        $group_item = new self();
+        switch ($ma->getAction()) {
+            case 'add':
+                foreach ($ids as $key) {
+                    if (!$item->can($key, UPDATE)) {
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_NORIGHT);
+                        $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+                        continue;
+                    }
+                    $values = [
+                        'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
+                        'itemtype'                             => $item::class,
+                        'items_id'                             => $key,
+                    ];
+                    if (!countElementsInTable($group_item->getTable(), $values)) {
+                        $group_item->add($values);
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
+                    } else {
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
+                    }
+                }
+                return;
+
+            case 'deleteitem':
+                foreach ($ids as $key) {
+                    if (
+                        $group_item->deleteByCriteria([
+                            'items_id' => $key,
+                            'itemtype' => $item::class,
+                            'plugin_glpiinventory_deploygroups_id' => $_POST['item_items_id'],
+                        ])
+                    ) {
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);
+                    } else {
+                        $ma->itemDone($item::class, $key, MassiveAction::ACTION_KO);
+                    }
+                }
+        }
+    }
+
+
+    /**
+     * Display form related to the massive action selected
+     *
+     * @param MassiveAction $ma MassiveAction instance
+     * @return bool
+     */
+    public static function showMassiveActionsSubForm(MassiveAction $ma)
+    {
+        if ($ma->getAction() == 'add') {
+            echo "<br><br>" . Html::submit(
+                _x('button', 'Add'),
+                ['name' => 'massiveaction']
+            );
+            return true;
+        }
+        return parent::showMassiveActionsSubForm($ma);
     }
 }

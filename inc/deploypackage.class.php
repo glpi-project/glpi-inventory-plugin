@@ -49,6 +49,20 @@ use function Safe\unlink;
 class PluginGlpiinventoryDeployPackage extends CommonDBTM
 {
     /**
+     * Prefix of the package selection fields of the self deploy form
+     *
+     * @var string
+     */
+    public const SELECTION_FIELD_PREFIX = 'deploypackages_';
+
+    /**
+     * Prefix of the fields carrying the itemtype of a package selection
+     *
+     * @var string
+     */
+    public const SELECTION_ITEMTYPE_FIELD_PREFIX = 'deploypackages_itemtype_';
+
+    /**
      * Initialize the tasks running with this package (updated with overridden getFromDB method)
      *
      * @var array<array<string,mixed>>
@@ -1062,11 +1076,13 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     }
                     break;
 
-                case Computer::class:
+                default:
                     if (
-                        Session::haveRight("plugin_glpiinventory_selfpackage", READ)
+                        $item instanceof CommonDBTM
+                        && PluginGlpiinventoryToolbox::isAgentItemtype($item::class)
+                        && Session::haveRight("plugin_glpiinventory_selfpackage", READ)
                         && PluginGlpiinventoryToolbox::isAnInventoryDevice($item)
-                        && self::isDeployEnabled($item->fields['id'])
+                        && self::isDeployEnabled($item::class, $item->fields['id'])
                     ) {
                         return self::createTabEntry(__('Package deploy', 'glpiinventory'), 0, icon: 'ti ti-package');
                     }
@@ -1096,7 +1112,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 $item->displayOrderTypeForm();
                 return true;
             }
-        } elseif ($item instanceof Computer) {
+        } elseif ($item instanceof CommonDBTM && PluginGlpiinventoryToolbox::isAgentItemtype($item::class)) {
             $package = new self();
             $package->showPackageForMe($_SESSION['glpiID'], $item);
             return true;
@@ -1401,23 +1417,24 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
     /**
      * Display a form with a list of packages and their state, that a user
-     * has request to install on it's computer
+     * has request to install on its items
      *
      * @param int $users_id id of the user
-     * @param false|User|Computer$item source item (maybe a User or a computer)
+     * @param false|CommonDBTM $item source item (maybe a User or an inventoried item)
      */
     public function showPackageForMe($users_id, $item = false): void
     {
         global $CFG_GLPI;
 
-        $computer     = new Computer();
         $self_service = $_SESSION['glpiactiveprofile']['interface'] != 'central';
         if (!$self_service) {
-            $computers_id = false;
-            if ($item && $item instanceof Computer) {
-                $computers_id = $item->getID();
+            $target_itemtype = null;
+            $target_items_id = false;
+            if ($item instanceof CommonDBTM && PluginGlpiinventoryToolbox::isAgentItemtype($item::class)) {
+                $target_itemtype = $item::class;
+                $target_items_id = $item->getID();
             }
-            $my_packages = $this->getPackageForMe(false, $computers_id);
+            $my_packages = $this->getPackageForMe(false, $target_itemtype, $target_items_id);
         } else {
             $my_packages = $this->getPackageForMe($users_id);
         }
@@ -1437,13 +1454,20 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
              enctype=\"multipart/form-data\">";
 
         echo "<table class='tab_cadre_fixe'>";
-        foreach ($my_packages as $computers_id => $data) {
+        foreach (self::flattenPackagesForMe($my_packages) as $target) {
+            $target_itemtype = $target['itemtype'];
+            $target_items_id = $target['items_id'];
+            $data            = $target['packages'];
+
+            $target_item = getItemForItemtype($target_itemtype);
+            if ($target_item === false || !$target_item->getFromDB($target_items_id)) {
+                continue;
+            }
             $package_to_install = [];
-            $computer->getFromDB($computers_id);
             echo "<tr>";
-            echo "<th><i class='ti ti-devices-pc align-bottom'></i> "
-            . Computer::getTypeName(1) . " <i>"
-            . $computer->fields['name'] . "</i></th>";
+            echo "<th><i class='" . $target_itemtype::getIcon() . " align-bottom'></i> "
+            . $target_itemtype::getTypeName(1) . " <i>"
+            . $target_item->fields['name'] . "</i></th>";
             echo "</tr>";
 
             if (count($data)) {
@@ -1643,7 +1667,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             }
 
             if (count($package_to_install)) {
-                $p['name']     = 'deploypackages_' . $computers_id;
+                $p['name']     = self::getPackageSelectionName($target_items_id);
                 $p['display']  = true;
                 $p['multiple'] = true;
                 $p['size']     = 3;
@@ -1654,6 +1678,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 echo __('Select packages you want install', 'glpiinventory');
                 echo "<br/>";
                 Dropdown::showFromArray($p['name'], $package_to_install, $p);
+                echo Html::hidden(
+                    self::getPackageSelectionItemtypeName($target_items_id),
+                    ['value' => $target_itemtype]
+                );
                 echo "</td>";
                 echo "</tr>";
 
@@ -1694,18 +1722,92 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
+     * Flatten the packages returned by getPackageForMe() into a list of targets
+     *
+     * @param array<class-string<CommonDBTM>, array<int,array<int,mixed>>> $my_packages
+     * @return array<int, array{itemtype: class-string<CommonDBTM>, items_id: int, packages: array<int,mixed>}>
+     */
+    private static function flattenPackagesForMe(array $my_packages): array
+    {
+        $targets = [];
+        foreach ($my_packages as $itemtype => $items) {
+            foreach ($items as $items_id => $packages) {
+                $targets[] = [
+                    'itemtype' => $itemtype,
+                    'items_id' => (int) $items_id,
+                    'packages' => $packages,
+                ];
+            }
+        }
+        return $targets;
+    }
+
+
+    /**
+     * Get the name of the package selection field of an item in the self deploy form
+     */
+    public static function getPackageSelectionName(int $items_id): string
+    {
+        return self::SELECTION_FIELD_PREFIX . $items_id;
+    }
+
+
+    /**
+     * Get the name of the field carrying the itemtype of a package selection
+     */
+    public static function getPackageSelectionItemtypeName(int $items_id): string
+    {
+        return self::SELECTION_ITEMTYPE_FIELD_PREFIX . $items_id;
+    }
+
+
+    /**
+     * Get the packages selected for each item in the self deploy form
+     *
+     * @param array<string,mixed> $post
+     * @return array<int, array{itemtype: class-string<CommonDBTM>, items_id: int, packages_ids: array<int>}>
+     */
+    public static function getPackageSelections(array $post): array
+    {
+        $selections = [];
+        foreach ($post as $key => $packages_ids) {
+            if (
+                !str_starts_with($key, self::SELECTION_FIELD_PREFIX)
+                || str_starts_with($key, self::SELECTION_ITEMTYPE_FIELD_PREFIX)
+                || !is_array($packages_ids)
+            ) {
+                continue;
+            }
+
+            $items_id = (int) substr($key, strlen(self::SELECTION_FIELD_PREFIX));
+            // The itemtype could not be selected before the plugin handled other itemtypes
+            $itemtype = $post[self::getPackageSelectionItemtypeName($items_id)] ?? Computer::class;
+            if ($items_id <= 0 || !PluginGlpiinventoryToolbox::isAgentItemtype($itemtype)) {
+                continue;
+            }
+
+            $selections[] = [
+                'itemtype'     => $itemtype,
+                'items_id'     => $items_id,
+                'packages_ids' => $packages_ids,
+            ];
+        }
+        return $selections;
+    }
+
+
+    /**
      * Check if an agent have deploy feature enabled
      * @since 9.2
      *
-     * @param int $computers_id the ID of the computer to check
      * @return bool true if deploy is enabled for the agent
      */
-    public static function isDeployEnabled($computers_id)
+    public static function isDeployEnabled(string $itemtype, int $items_id)
     {
-        $agent = new Agent();
-        //If the agent associated with the computer has not the
+        //If the agent associated with the item has not the
         //deploy feature enabled, do not propose to deploy packages on
-        if (!$agent->getFromDBByCrit(['itemtype' => Computer::class,  'items_id' => $computers_id])) {
+        $agent = PluginGlpiinventoryToolbox::getAgentForItem($itemtype, $items_id);
+        if ($agent === null) {
             return false;
         }
         $pfAgentModule = new PluginGlpiinventoryAgentmodule();
@@ -1718,18 +1820,18 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
-     * Get deploy packages available to install on user computer(s) and for
+     * Get deploy packages available to install on the user item(s) and for
      * packages requested the state of deploy
      *
      * @param false|int $users_id id of the user
-     * @param false|int $computers_id id of the computer
+     * @param null|class-string<CommonDBTM> $itemtype restrict to this itemtype
+     * @param false|int $items_id restrict to this item
      *
-     * @return array<int,mixed>
+     * @return array<class-string<CommonDBTM>, array<int,mixed>>
      */
-    public function getPackageForMe($users_id, $computers_id = false)
+    public function getPackageForMe($users_id, ?string $itemtype = null, $items_id = false)
     {
 
-        $computer      = new Computer();
         $pfDeployGroup = new PluginGlpiinventoryDeployGroup();
         $my_packages   = []; //Store all installable packages
 
@@ -1737,21 +1839,28 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         if ($users_id) {
             $query += ['users_id' => $users_id];
         }
-        if ($computers_id) {
-            $query += ['id' => $computers_id];
+        if ($items_id) {
+            $query += ['id' => $items_id];
         }
         $query += ['entities_id' => $_SESSION['glpiactiveentities']];
 
-        //Get all computers of the user
-        $mycomputers = $computer->find($query);
-
-        $agent       = new Agent();
-
-        foreach ($mycomputers as $mycomputers_id => $data) {
-            $my_packages[$mycomputers_id] = [];
+        //Get all items of the user
+        $myitems   = [];
+        $itemtypes = $itemtype !== null ? [$itemtype] : PluginGlpiinventoryToolbox::getAgentItemtypes();
+        foreach ($itemtypes as $my_itemtype) {
+            $my_item = getItemForItemtype($my_itemtype);
+            if ($my_item === false) {
+                continue;
+            }
+            // Custom assets share a single table, hence the system criteria
+            $myitems[$my_itemtype] = $my_item->find($query + $my_itemtype::getSystemSQLCriteria());
+            $my_packages[$my_itemtype] = [];
+            foreach (array_keys($myitems[$my_itemtype]) as $my_items_id) {
+                $my_packages[$my_itemtype][$my_items_id] = [];
+            }
         }
 
-        //Get packages used for the user or a specific computer
+        //Get packages used for the user or a specific item
         $packages_used = $this->getMyDepoyPackages($my_packages, $users_id);
 
         //Get packages that a the user can deploy
@@ -1760,64 +1869,59 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         if ($packages) {
             //Browse all packages that the user can install
             foreach ($packages as $package) {
-                //Get computers that can be targeted for this package installation
-                $computers = $pfDeployGroup->getTargetsForGroup($package['plugin_glpiinventory_deploygroups_id']);
+                //Get items that can be targeted for this package installation
+                $targets = $pfDeployGroup->getTargetsForGroup($package['plugin_glpiinventory_deploygroups_id']);
 
-                //Browse all computers that are target by a package installation
-
-                foreach ($mycomputers as $comp_id => $data) {
-                    //If we only want packages for one computer
-                    //check if it's the computer we look for
-                    if ($computers_id && $comp_id != $computers_id) {
-                        continue;
-                    }
-
-                    //If the agent associated with the computer has not the
-                    //deploy feature enabled, do not propose to deploy packages on it
-                    if (!self::isDeployEnabled($comp_id)) {
-                        continue;
-                    }
-
-                    //Get computers that can be targeted for this package installation
-                    //Check if the package belong to one of the entity that
-                    //are currently visible
-
-                    //The package is recursive, and visible in computer's entity
-                    if (Session::isMultiEntitiesMode()) {
-                        if (
-                            !$package['is_recursive']
-                            && $package['entities_id'] != $data['entities_id']
-                        ) {
-                            continue;
-                        } elseif (
-                            $package['is_recursive']
-                            && $package['entities_id'] != $data['entities_id']
-                            && !in_array(
-                                $package['entities_id'],
-                                getAncestorsOf('glpi_entities', $data['entities_id'])
-                            )
-                        ) {
-                            //The package is not recursive, and invisible in the computer's entity
+                //Browse all items that are target by a package installation
+                foreach ($myitems as $my_itemtype => $my_itemtype_items) {
+                    foreach ($my_itemtype_items as $my_items_id => $data) {
+                        //If the agent associated with the item has not the
+                        //deploy feature enabled, do not propose to deploy packages on it
+                        $agent = PluginGlpiinventoryToolbox::getAgentForItem($my_itemtype, $my_items_id);
+                        if ($agent === null || !self::isDeployEnabled($my_itemtype, $my_items_id)) {
                             continue;
                         }
-                    }
 
-                    //Does the computer belongs to the group
-                    //associated with the package ?
-                    if (isset($computers[$comp_id])) {
-                        $my_packages[$comp_id][$package['id']]
-                        = ['name'     => $package['name'],
-                            'agent_id' => $agent->getId(),
-                        ];
+                        //Check if the package belong to one of the entity that
+                        //are currently visible
 
-                        //The package has already been deployed or requested to deploy
-                        if (isset($packages_used[$comp_id][$package['id']])) {
-                            $taskjobs_id = $packages_used[$comp_id][$package['id']];
-                            $my_packages[$comp_id][$package['id']]['taskjobs_id'] = $taskjobs_id;
-                            $last_job_state = $this->getMyDepoyPackagesState($comp_id, $taskjobs_id);
-                            if ($last_job_state) {
-                                $my_packages[$comp_id][$package['id']]['last_taskjobstate']
-                                = $last_job_state;
+                        //The package is recursive, and visible in item's entity
+                        if (Session::isMultiEntitiesMode()) {
+                            if (
+                                !$package['is_recursive']
+                                && $package['entities_id'] != $data['entities_id']
+                            ) {
+                                continue;
+                            } elseif (
+                                $package['is_recursive']
+                                && $package['entities_id'] != $data['entities_id']
+                                && !in_array(
+                                    $package['entities_id'],
+                                    getAncestorsOf('glpi_entities', $data['entities_id'])
+                                )
+                            ) {
+                                //The package is not recursive, and invisible in the item's entity
+                                continue;
+                            }
+                        }
+
+                        //Does the item belongs to the group
+                        //associated with the package ?
+                        if (isset($targets[$my_itemtype][$my_items_id])) {
+                            $my_packages[$my_itemtype][$my_items_id][$package['id']]
+                            = ['name'     => $package['name'],
+                                'agent_id' => $agent->getID(),
+                            ];
+
+                            //The package has already been deployed or requested to deploy
+                            if (isset($packages_used[$my_itemtype][$my_items_id][$package['id']])) {
+                                $taskjobs_id = $packages_used[$my_itemtype][$my_items_id][$package['id']];
+                                $my_packages[$my_itemtype][$my_items_id][$package['id']]['taskjobs_id'] = $taskjobs_id;
+                                $last_job_state = $this->getMyDepoyPackagesState($my_itemtype, $my_items_id, $taskjobs_id);
+                                if ($last_job_state) {
+                                    $my_packages[$my_itemtype][$my_items_id][$package['id']]['last_taskjobstate']
+                                    = $last_job_state;
+                                }
                             }
                         }
                     }
@@ -1829,25 +1933,27 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
-     * Add the package in task or use existant task and add the computer in
+     * Add the package in task or use existant task and add the item in
      * taskjob
      *
-     * @param int $computers_id id of the computer where deploy package
-     * @param int $packages_id id of the package to install in computer
+     * @param int $items_id id of the item where deploy package
+     * @param int $packages_id id of the package to install in item
      * @param int $users_id id of the user have requested the installation
      */
-    public function deployToComputer($computers_id, $packages_id, $users_id): void
+    public function deployToItem(string $itemtype, $items_id, $packages_id, $users_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
 
         $pfTask    = new PluginGlpiinventoryTask();
         $pfTaskJob = new PluginGlpiinventoryTaskjob();
-        $computer  = new Computer();
+        $item      = getItemForItemtype($itemtype);
 
-        $computer->getFromDB($computers_id);
+        if ($item === false || !$item->getFromDB($items_id)) {
+            return;
+        }
 
-        //Get jobs for a package on a computer
+        //Get jobs for a package on an item
         $iterator = $DB->request([
             'SELECT' => [
                 'job.*',
@@ -1865,7 +1971,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 'job.targets' => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
                 'task.is_active' => 1,
                 'task.is_deploy_on_demand' => 1,
-                'task.entities_id' => $computer->fields['entities_id'],
+                'task.entities_id' => $item->fields['entities_id'],
                 'task.reprepare_if_successful' => 0,
                 'method'  => 'deployinstall',
             ],
@@ -1873,23 +1979,19 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         ]);
 
         $tasks_id = 0;
-        // case 1: if exist, we add computer in actors of the taskjob
+        // case 1: if exist, we add the item in actors of the taskjob
         if ($iterator->numrows() == 1) {
             foreach ($iterator as $data) {
                 //Get current list of actors
                 $actors   = importArrayFromDB($data['actors']);
 
-                //Add a new actor : the computer that is being processed
-                $actors[] = [Computer::class => $computers_id];
+                //Add a new actor : the item that is being processed
+                $actors[] = [$itemtype => $items_id];
 
-                //Get end user computers
-                $enduser  = importArrayFromDB($data['enduser']);
-                if (isset($enduser[$users_id])) {
-                    if (!in_array($computers_id, $enduser[$users_id])) {
-                        $enduser[$users_id][] = $computers_id;
-                    }
-                } else {
-                    $enduser[$users_id] = [$computers_id];
+                //Get end user items
+                $enduser  = self::getEnduserTargets($data['enduser']);
+                if (!in_array($items_id, $enduser[$users_id][$itemtype] ?? [])) {
+                    $enduser[$users_id][$itemtype][] = $items_id;
                 }
                 $input = [
                     'id'      => $data['id'],
@@ -1908,7 +2010,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             //Add the new task
             $input = [
                 'name'                    => '[deploy on demand] ' . $this->fields['name'],
-                'entities_id'             => $computer->fields['entities_id'],
+                'entities_id'             => $item->fields['entities_id'],
                 'reprepare_if_successful' => 0,
                 'is_deploy_on_demand'     => 1,
                 'is_active'               => 1,
@@ -1919,12 +2021,12 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             //and enable it
             $input = [
                 'plugin_glpiinventory_tasks_id' => $tasks_id,
-                'entities_id' => $computer->fields['entities_id'],
+                'entities_id' => $item->fields['entities_id'],
                 'name'        => 'deploy',
                 'method'      => 'deployinstall',
                 'targets'     => '[{"PluginGlpiinventoryDeployPackage":"' . $packages_id . '"}]',
-                'actors'      => exportArrayToDB([[Computer::class => $computers_id]]),
-                'enduser'     => exportArrayToDB([$users_id  => [$computers_id]]),
+                'actors'      => exportArrayToDB([[$itemtype => $items_id]]),
+                'enduser'     => exportArrayToDB([$users_id  => [$itemtype => [$items_id]]]),
             ];
             $pfTaskJob->add($input);
         }
@@ -1935,23 +2037,50 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
-     * Get all packages that a user has requested to install
-     * on one of it's computer
+     * Read the end user targets of a taskjob, which used to be a flat list of
+     * computer ids and is now indexed by itemtype
      *
-     * @param array<int,mixed> $computers_packages
-     * @param false|int $users_id
-     * @return array<int,array<int,int>>
+     * @param null|string $enduser the raw taskjob field
+     * @return array<int, array<class-string<CommonDBTM>, array<int,int>>>
      */
-    public function getMyDepoyPackages($computers_packages, $users_id = false)
+    private static function getEnduserTargets($enduser): array
+    {
+        $targets = [];
+        foreach (importArrayFromDB($enduser) as $users_id => $user_targets) {
+            $targets[$users_id] = [];
+            foreach ($user_targets as $key => $value) {
+                if (is_array($value)) {
+                    $targets[$users_id][$key] = $value;
+                } else {
+                    // Legacy format: a flat list of computer ids
+                    $targets[$users_id][Computer::class][] = $value;
+                }
+            }
+        }
+        return $targets;
+    }
+
+
+    /**
+     * Get all packages that a user has requested to install
+     * on one of its items
+     *
+     * @param array<class-string<CommonDBTM>, array<int,mixed>> $items_packages
+     * @param false|int $users_id
+     * @return array<class-string<CommonDBTM>, array<int,array<int,int>>>
+     */
+    public function getMyDepoyPackages($items_packages, $users_id = false)
     {
         /** @var DBmysql $DB */
         global $DB;
 
         // Get packages yet deployed by enduser
         $packages_used = [];
-        $computers_id = 0;
-        foreach ($computers_packages as $computers_id => $data) {
-            $packages_used[$computers_id] = [];
+        foreach ($items_packages as $itemtype => $items) {
+            $packages_used[$itemtype] = [];
+            foreach (array_keys($items) as $items_id) {
+                $packages_used[$itemtype][$items_id] = [];
+            }
         }
 
         $where = [];
@@ -1985,23 +2114,29 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
             //Look for all deploy on demand packages for a user
             if ($users_id) {
-                $enduser = importArrayFromDB($data['enduser']);
+                $enduser = self::getEnduserTargets($data['enduser']);
                 if (isset($enduser[$users_id])) {
                     $targets = importArrayFromDB($data['targets']);
-                    foreach ($enduser[$users_id] as $computers_id) {
-                        $packages_used[$computers_id][$targets[0][PluginGlpiinventoryDeployPackage::class]] = $data['id'];
+                    foreach ($enduser[$users_id] as $itemtype => $items_ids) {
+                        foreach ($items_ids as $items_id) {
+                            if (!isset($packages_used[$itemtype][$items_id])) {
+                                continue;
+                            }
+                            $packages_used[$itemtype][$items_id][$targets[0][PluginGlpiinventoryDeployPackage::class]] = $data['id'];
+                        }
                     }
                 }
 
-                //Look for all deploy on demand package for a computer
+                //Look for all deploy on demand package for an item
             } else {
                 $targets = importArrayFromDB($data['targets']);
                 $actors  = importArrayFromDB($data['actors']);
                 foreach ($actors as $actor) {
                     foreach ($actor as $itemtype => $items_id) {
-                        if ($itemtype == Computer::class && $items_id == $computers_id) {
-                            $packages_used[$computers_id][$targets[0][PluginGlpiinventoryDeployPackage::class]] = $data['id'];
+                        if (!isset($packages_used[$itemtype][$items_id])) {
+                            continue;
                         }
+                        $packages_used[$itemtype][$items_id][$targets[0][PluginGlpiinventoryDeployPackage::class]] = $data['id'];
                     }
                 }
             }
@@ -2013,18 +2148,20 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Get the state of the package I have requested to install
      *
-     * @param int $computers_id id of the computer
+     * @param int $items_id id of the item
      * @param int $taskjobs_id id of the taskjob (where order defined)
      *
      * @return array<string,mixed>
      */
-    public function getMyDepoyPackagesState($computers_id, $taskjobs_id)
+    public function getMyDepoyPackagesState(string $itemtype, $items_id, $taskjobs_id)
     {
         $pfTaskJobState = new PluginGlpiinventoryTaskjobstate();
-        $agent        = new Agent();
 
-        // Get a taskjobstate by giving a  taskjobID and a computer ID
-        $agent->getFromDBByCrit(['itemtype' => Computer::class, 'items_id' => $computers_id]);
+        // Get a taskjobstate by giving a taskjobID and an item
+        $agent = PluginGlpiinventoryToolbox::getAgentForItem($itemtype, (int) $items_id);
+        if ($agent === null) {
+            return [];
+        }
         $agents_id = $agent->fields['id'];
 
         $last_job_state = [];

@@ -6261,6 +6261,10 @@ function do_deploygroup_migration(Migration $migration): void
             'type' => 'varchar(255) NOT NULL',
             'value' => null,
         ],
+        'itemtype' =>  [
+            'type' => 'string',
+            'value' => Computer::class,
+        ],
     ];
 
     $a_table['oldfields'] = [
@@ -6362,7 +6366,7 @@ function do_deploygroup_migration(Migration $migration): void
             'type' => 'bool',
             'value' => 0,
         ],
-        'computers_id_cache' =>  [
+        'items_id_cache' =>  [
             'type' => 'longtext',
             'value' => null,
         ],
@@ -6373,6 +6377,7 @@ function do_deploygroup_migration(Migration $migration): void
 
     $a_table['renamefields'] = [
         'groups_id' => 'plugin_glpiinventory_deploygroups_id',
+        'computers_id_cache' => 'items_id_cache',
     ];
 
     $a_table['keys'] = [
@@ -6707,7 +6712,10 @@ function do_collect_migration(Migration $migration): void
     $a_table['fields']['id']         = ['type'    => "autoincrement",
         'value'   => '',
     ];
-    $a_table['fields']['computers_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
+    $a_table['fields']['itemtype'] = ['type'    => 'string',
+        'value'   => null,
+    ];
+    $a_table['fields']['items_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
         'value'   => null,
     ];
     $a_table['fields']['plugin_glpiinventory_collects_registries_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
@@ -6722,14 +6730,15 @@ function do_collect_migration(Migration $migration): void
 
     $a_table['oldfields']  = [];
 
-    $a_table['renamefields'] = [];
+    $a_table['renamefields'] = ['computers_id' => 'items_id'];
 
     $a_table['keys']   = [];
-    $a_table['keys'][] = ['field' => 'computers_id', 'name' => '', 'type' => 'INDEX'];
+    $a_table['keys'][] = ['field' => ['itemtype', 'items_id'], 'name' => 'item', 'type' => 'INDEX'];
 
-    $a_table['oldkeys'] = [];
+    $a_table['oldkeys'] = ['computers_id'];
 
     migratePluginTables($migration, $a_table);
+    backfillCollectContentItemtype($a_table['name']);
 
     /*
     * Table glpi_plugin_glpiinventory_collects_wmis
@@ -6779,7 +6788,10 @@ function do_collect_migration(Migration $migration): void
     $a_table['fields']['id']         = ['type'    => "autoincrement",
         'value'   => '',
     ];
-    $a_table['fields']['computers_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
+    $a_table['fields']['itemtype'] = ['type'    => 'string',
+        'value'   => null,
+    ];
+    $a_table['fields']['items_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
         'value'   => null,
     ];
     $a_table['fields']['plugin_glpiinventory_collects_wmis_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
@@ -6794,13 +6806,15 @@ function do_collect_migration(Migration $migration): void
 
     $a_table['oldfields']  = [];
 
-    $a_table['renamefields'] = [];
+    $a_table['renamefields'] = ['computers_id' => 'items_id'];
 
     $a_table['keys']   = [];
+    $a_table['keys'][] = ['field' => ['itemtype', 'items_id'], 'name' => 'item', 'type' => 'INDEX'];
 
     $a_table['oldkeys'] = [];
 
     migratePluginTables($migration, $a_table);
+    backfillCollectContentItemtype($a_table['name']);
 
     /*
     * Table glpi_plugin_glpiinventory_collects_files
@@ -6880,7 +6894,10 @@ function do_collect_migration(Migration $migration): void
     $a_table['fields']['id']         = ['type'    => "autoincrement",
         'value'   => '',
     ];
-    $a_table['fields']['computers_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
+    $a_table['fields']['itemtype'] = ['type'    => 'string',
+        'value'   => null,
+    ];
+    $a_table['fields']['items_id'] = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
         'value'   => null,
     ];
     $a_table['fields']['plugin_glpiinventory_collects_files_id']   = ['type'    => 'int unsigned NOT NULL DEFAULT 0',
@@ -6895,13 +6912,27 @@ function do_collect_migration(Migration $migration): void
 
     $a_table['oldfields']  = [];
 
-    $a_table['renamefields'] = [];
+    $a_table['renamefields'] = ['computers_id' => 'items_id'];
 
     $a_table['keys']   = [];
+    $a_table['keys'][] = ['field' => ['itemtype', 'items_id'], 'name' => 'item', 'type' => 'INDEX'];
 
     $a_table['oldkeys'] = [];
 
     migratePluginTables($migration, $a_table);
+    backfillCollectContentItemtype($a_table['name']);
+}
+
+
+/**
+ * Set the itemtype of collected contents migrated from the computers_id column,
+ * which could only reference a computer
+ */
+function backfillCollectContentItemtype(string $table): void
+{
+    global $DB;
+
+    $DB->update($table, ['itemtype' => Computer::class], ['itemtype' => null]);
 }
 
 
