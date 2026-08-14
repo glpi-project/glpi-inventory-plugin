@@ -327,7 +327,7 @@ class PluginGlpiinventoryToolbox
 
         if (self::$preboot_definitions === null) {
             self::$preboot_definitions = [];
-            if ($DB->connected && $DB->tableExists(AssetDefinition::getTable())) {
+            if ($DB !== null && $DB->connected && $DB->tableExists(AssetDefinition::getTable())) {
                 $iterator = $DB->request([
                     'FROM'  => AssetDefinition::getTable(),
                     'WHERE' => ['is_active' => 1],

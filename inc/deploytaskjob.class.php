@@ -221,7 +221,7 @@ class PluginGlpiinventoryDeployTaskjob extends CommonDBTM
             'value' => 'Group',
         ];
         $types[] = [
-            'name' => __('Groups of computers', 'glpiinventory'),
+            'name' => PluginGlpiinventoryDeployGroup::getTypeName(),
             'value' => PluginGlpiinventoryDeployGroup::class,
         ];
         return $types;
