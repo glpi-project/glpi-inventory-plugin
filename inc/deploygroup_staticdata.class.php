@@ -411,6 +411,16 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
 
+        // GLPI does not check any right on the actions declared through `specific_actions`,
+        // and the itemtype comes from the request: both must be checked here.
+        if (!self::canUpdate() || !PluginGlpiinventoryToolbox::isAgentItemtype($item::class)) {
+            foreach ($ids as $key) {
+                $ma->itemDone($item::class, $key, MassiveAction::ACTION_NORIGHT);
+            }
+            $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+            return;
+        }
+
         $group_item = new self();
         switch ($ma->getAction()) {
             case 'add':
@@ -421,7 +431,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
                         continue;
                     }
                     $values = [
-                        'plugin_glpiinventory_deploygroups_id' => $_POST['id'],
+                        'plugin_glpiinventory_deploygroups_id' => (int) $_POST['id'],
                         'itemtype'                             => $item::class,
                         'items_id'                             => $key,
                     ];
@@ -440,7 +450,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
                         $group_item->deleteByCriteria([
                             'items_id' => $key,
                             'itemtype' => $item::class,
-                            'plugin_glpiinventory_deploygroups_id' => $_POST['item_items_id'],
+                            'plugin_glpiinventory_deploygroups_id' => (int) $_POST['item_items_id'],
                         ])
                     ) {
                         $ma->itemDone($item::class, $key, MassiveAction::ACTION_OK);

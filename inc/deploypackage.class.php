@@ -1799,10 +1799,8 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Check if an agent have deploy feature enabled
      * @since 9.2
-     *
-     * @return bool true if deploy is enabled for the agent
      */
-    public static function isDeployEnabled(string $itemtype, int $items_id)
+    public static function isDeployEnabled(string $itemtype, int $items_id): bool
     {
         //If the agent associated with the item has not the
         //deploy feature enabled, do not propose to deploy packages on
@@ -1863,6 +1861,19 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         //Get packages used for the user or a specific item
         $packages_used = $this->getMyDepoyPackages($my_packages, $users_id);
 
+        //Resolve the agent of each item once, keeping only the items whose agent has the
+        //deploy feature enabled: the packages loop below only deals with eligible items
+        $pfAgentModule = new PluginGlpiinventoryAgentmodule();
+        $agents_ids    = [];
+        foreach ($myitems as $my_itemtype => $my_itemtype_items) {
+            foreach (array_keys($my_itemtype_items) as $my_items_id) {
+                $agent = PluginGlpiinventoryToolbox::getAgentForItem($my_itemtype, (int) $my_items_id);
+                if ($agent !== null && $pfAgentModule->isAgentCanDo('deploy', $agent->getID())) {
+                    $agents_ids[$my_itemtype][$my_items_id] = $agent->getID();
+                }
+            }
+        }
+
         //Get packages that a the user can deploy
         $packages = $this->canUserDeploySelf();
 
@@ -1877,8 +1888,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     foreach ($my_itemtype_items as $my_items_id => $data) {
                         //If the agent associated with the item has not the
                         //deploy feature enabled, do not propose to deploy packages on it
-                        $agent = PluginGlpiinventoryToolbox::getAgentForItem($my_itemtype, $my_items_id);
-                        if ($agent === null || !self::isDeployEnabled($my_itemtype, $my_items_id)) {
+                        if (!isset($agents_ids[$my_itemtype][$my_items_id])) {
                             continue;
                         }
 
@@ -1910,7 +1920,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                         if (isset($targets[$my_itemtype][$my_items_id])) {
                             $my_packages[$my_itemtype][$my_items_id][$package['id']]
                             = ['name'     => $package['name'],
-                                'agent_id' => $agent->getID(),
+                                'agent_id' => $agents_ids[$my_itemtype][$my_items_id],
                             ];
 
                             //The package has already been deployed or requested to deploy
@@ -1940,7 +1950,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      * @param int $packages_id id of the package to install in item
      * @param int $users_id id of the user have requested the installation
      */
-    public function deployToItem(string $itemtype, $items_id, $packages_id, $users_id): void
+    public function deployToItem(string $itemtype, int $items_id, $packages_id, $users_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
