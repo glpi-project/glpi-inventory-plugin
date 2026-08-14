@@ -1667,7 +1667,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             }
 
             if (count($package_to_install)) {
-                $p['name']     = self::getPackageSelectionName($target_items_id);
+                $p['name']     = self::getPackageSelectionName($target_itemtype, $target_items_id);
                 $p['display']  = true;
                 $p['multiple'] = true;
                 $p['size']     = 3;
@@ -1679,7 +1679,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 echo "<br/>";
                 Dropdown::showFromArray($p['name'], $package_to_install, $p);
                 echo Html::hidden(
-                    self::getPackageSelectionItemtypeName($target_items_id),
+                    self::getPackageSelectionItemtypeName($target_itemtype, $target_items_id),
                     ['value' => $target_itemtype]
                 );
                 echo "</td>";
@@ -1746,18 +1746,28 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     /**
      * Get the name of the package selection field of an item in the self deploy form
      */
-    public static function getPackageSelectionName(int $items_id): string
+    public static function getPackageSelectionName(string $itemtype, int $items_id): string
     {
-        return self::SELECTION_FIELD_PREFIX . $items_id;
+        return self::SELECTION_FIELD_PREFIX . self::getPackageSelectionSuffix($itemtype, $items_id);
     }
 
 
     /**
      * Get the name of the field carrying the itemtype of a package selection
      */
-    public static function getPackageSelectionItemtypeName(int $items_id): string
+    public static function getPackageSelectionItemtypeName(string $itemtype, int $items_id): string
     {
-        return self::SELECTION_ITEMTYPE_FIELD_PREFIX . $items_id;
+        return self::SELECTION_ITEMTYPE_FIELD_PREFIX . self::getPackageSelectionSuffix($itemtype, $items_id);
+    }
+
+
+    /**
+     * Get the field name suffix identifying an item of the self deploy form. The itemtype is
+     * part of it: two items of different itemtypes can share the same id.
+     */
+    private static function getPackageSelectionSuffix(string $itemtype, int $items_id): string
+    {
+        return str_replace('\\', '_', $itemtype) . '_' . $items_id;
     }
 
 
@@ -1779,9 +1789,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 continue;
             }
 
-            $items_id = (int) substr($key, strlen(self::SELECTION_FIELD_PREFIX));
-            // The itemtype could not be selected before the plugin handled other itemtypes
-            $itemtype = $post[self::getPackageSelectionItemtypeName($items_id)] ?? Computer::class;
+            $suffix   = substr($key, strlen(self::SELECTION_FIELD_PREFIX));
+            $position = strrpos($suffix, '_');
+            $items_id = (int) ($position === false ? $suffix : substr($suffix, $position + 1));
+            // The itemtype was not part of the field names before the plugin handled other itemtypes
+            $itemtype = $post[self::SELECTION_ITEMTYPE_FIELD_PREFIX . $suffix] ?? Computer::class;
             if ($items_id <= 0 || !PluginGlpiinventoryToolbox::isAgentItemtype($itemtype)) {
                 continue;
             }

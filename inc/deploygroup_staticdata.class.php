@@ -271,7 +271,7 @@ class PluginGlpiinventoryDeployGroup_Staticdata extends CommonDBRelation
                 . ((isset($target->fields['is_deleted']) && $target->fields['is_deleted']) ? "class='tab_bg_2_2'" : "")
                 . ">" . $name . "</td>";
             echo "<td>" . $target::getTypeName(1) . "</td>";
-            echo "<td>" . Dropdown::getYesNo($target->fields['is_dynamic']) . "</td>";
+            echo "<td>" . Dropdown::getYesNo($target->fields['is_dynamic'] ?? 0) . "</td>";
             echo "<td>" . Dropdown::getDropdownName(
                 "glpi_entities",
                 $target->fields['entities_id']

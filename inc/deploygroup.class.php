@@ -272,7 +272,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                     $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
                     foreach ($ids as $id) {
                         $values = [
-                            'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
+                            'plugin_glpiinventory_deploygroups_id' => (int) $_POST['plugin_glpiinventory_deploygroups_id'],
                             'itemtype' => $item::class,
                             'items_id' => $id,
                         ];
@@ -290,7 +290,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                     $group_item = new PluginGlpiinventoryDeployGroup_Staticdata();
                     foreach ($ids as $id) {
                         $values = [
-                            'plugin_glpiinventory_deploygroups_id' => $_POST['plugin_glpiinventory_deploygroups_id'],
+                            'plugin_glpiinventory_deploygroups_id' => (int) $_POST['plugin_glpiinventory_deploygroups_id'],
                             'itemtype' => $item::class,
                             'items_id' => $id,
                         ];
