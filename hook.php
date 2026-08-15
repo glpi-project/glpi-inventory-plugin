@@ -486,9 +486,11 @@ function plugin_glpiinventory_addSelect(string $type, int $id, string $num): str
         $a_agent_modules = PluginGlpiinventoryAgentmodule::getModules();
         foreach ($a_agent_modules as $module) {
             if ($table . "." . $field == 'glpi_plugin_glpiinventory_agentmodules.' . $module) {
-                return " `FUSION_" . $module . "`.`is_active` AS ITEM_$num, "
-                      . "`FUSION_" . $module . "`.`exceptions`  AS ITEM_" . $num . "_0, "
-                      . "`agent" . strtolower($module) . "`.`id`  AS ITEM_" . $num . "_1";
+                // Aliases must be quoted: $num carries the itemtype, and a custom asset
+                // class name contains backslashes.
+                return " `FUSION_" . $module . "`.`is_active` AS `ITEM_" . $num . "`, "
+                      . "`FUSION_" . $module . "`.`exceptions`  AS `ITEM_" . $num . "_0`, "
+                      . "`agent" . strtolower($module) . "`.`id`  AS `ITEM_" . $num . "_1`";
             }
         }
     }
