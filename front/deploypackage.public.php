@@ -47,7 +47,12 @@ $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 if (isset($_POST['prepareinstall'])) {
     $target = null;
 
-    foreach (PluginGlpiinventoryDeployPackage::getPackageSelections($_POST) as $selection) {
+    $selections = $pfDeployPackage->filterOfferedSelections(
+        PluginGlpiinventoryDeployPackage::getPackageSelections($_POST),
+        $_SESSION['glpiID']
+    );
+
+    foreach ($selections as $selection) {
         $target = $selection;
         foreach ($selection['packages_ids'] as $packages_id) {
             $pfDeployPackage->deployToItem(

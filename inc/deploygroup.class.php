@@ -406,11 +406,18 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
         echo "<td>" . _n('Item type', 'Item types', 1) . "&nbsp;:</td>";
         echo "<td align='center'>";
-        Dropdown::showFromArray(
-            'itemtype',
-            PluginGlpiinventoryToolbox::getAgentItemtypeNames(),
-            ['value' => $this->getGroupItemtype()]
-        );
+        if ($this->hasStoredCriteria()) {
+            // The stored criteria are search options of this itemtype: changing it would
+            // silently reinterpret them against another set of search options.
+            $group_itemtype = $this->getGroupItemtype();
+            echo $group_itemtype::getTypeName(1);
+        } else {
+            Dropdown::showFromArray(
+                'itemtype',
+                PluginGlpiinventoryToolbox::getAgentItemtypeNames(),
+                ['value' => $this->getGroupItemtype()]
+            );
+        }
         echo "</td>";
         echo "</tr>";
 
@@ -466,6 +473,45 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
     {
         $itemtype = $this->fields['itemtype'] ?? '';
         return PluginGlpiinventoryToolbox::isAgentItemtype($itemtype) ? $itemtype : Computer::class;
+    }
+
+
+    /**
+     * @param array<string,mixed> $input
+     * @return array<string,mixed>|false
+     */
+    public function prepareInputForUpdate($input)
+    {
+        // Mirrors the locked dropdown of showForm(): the stored criteria belong to this itemtype
+        if (isset($input['itemtype']) && $this->hasStoredCriteria()) {
+            unset($input['itemtype']);
+        }
+        return $input;
+    }
+
+
+    /**
+     * Check the group is a dynamic group with search criteria already stored
+     */
+    public function hasStoredCriteria(): bool
+    {
+        return $this->isDynamicGroup()
+            && countElementsInTable(
+                PluginGlpiinventoryDeployGroup_Dynamicdata::getTable(),
+                ['plugin_glpiinventory_deploygroups_id' => $this->getID()]
+            ) > 0;
+    }
+
+
+    /**
+     * Check the itemtype the group targets can still receive an agent. A legacy group has no
+     * itemtype and could only target computers, but a stored itemtype that disappeared (custom
+     * asset definition deactivated) must not silently fall back to another itemtype.
+     */
+    public function hasAvailableGroupItemtype(): bool
+    {
+        $itemtype = $this->fields['itemtype'] ?? '';
+        return $itemtype === '' || PluginGlpiinventoryToolbox::isAgentItemtype($itemtype);
     }
 
 
@@ -667,6 +713,19 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                 $results[$tmpgroup['itemtype']][$tmpgroup['items_id']] = $tmpgroup['items_id'];
             }
         } else {
+            if (!$group->hasAvailableGroupItemtype()) {
+                // The stored criteria are search options of an itemtype that is gone: running
+                // them against another itemtype would target unrelated items.
+                trigger_error(
+                    sprintf(
+                        'Deploy group %d targets the unavailable itemtype "%s".',
+                        $groups_id,
+                        $group->fields['itemtype']
+                    ),
+                    E_USER_WARNING
+                );
+                return $results;
+            }
             $ids = PluginGlpiinventoryDeployGroup_Dynamicdata::getTargetsByGroup(
                 $group,
                 $use_cache

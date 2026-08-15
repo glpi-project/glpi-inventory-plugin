@@ -1809,6 +1809,46 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
+     * Keep only the selections the self deploy form actually offered
+     *
+     * The itemtype, the item and the packages all come from the request: the list is rebuilt
+     * server side, in the same context as the form, and anything else is dropped.
+     *
+     * @param array<int, array{itemtype: class-string<CommonDBTM>, items_id: int, packages_ids: array<int>}> $selections
+     * @param false|int $users_id
+     * @return array<int, array{itemtype: class-string<CommonDBTM>, items_id: int, packages_ids: array<int>}>
+     */
+    public function filterOfferedSelections(array $selections, $users_id): array
+    {
+        $self_service = $_SESSION['glpiactiveprofile']['interface'] != 'central';
+        // Self service lists every item of the user at once, central one item at a time
+        $offered = $self_service ? $this->getPackageForMe($users_id) : [];
+
+        $allowed = [];
+        foreach ($selections as $selection) {
+            $itemtype = $selection['itemtype'];
+            $items_id = $selection['items_id'];
+            if (!$self_service) {
+                $offered = $this->getPackageForMe(false, $itemtype, $items_id);
+            }
+            $packages_ids = array_values(array_intersect(
+                array_map('intval', $selection['packages_ids']),
+                array_keys($offered[$itemtype][$items_id] ?? [])
+            ));
+            if ($packages_ids === []) {
+                continue;
+            }
+            $allowed[] = [
+                'itemtype'     => $itemtype,
+                'items_id'     => $items_id,
+                'packages_ids' => $packages_ids,
+            ];
+        }
+        return $allowed;
+    }
+
+
+    /**
      * Check if an agent have deploy feature enabled
      * @since 9.2
      */
