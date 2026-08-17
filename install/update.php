@@ -49,7 +49,6 @@ use function Safe\mkdir;
 use function Safe\preg_match;
 use function Safe\preg_replace;
 use function Safe\rename;
-use function Safe\unserialize;
 
 include_once(PLUGIN_GLPI_INVENTORY_DIR . "/install/update.tasks.php");
 /**
@@ -5594,7 +5593,7 @@ function do_computeroperatingsystem_migration(Migration $migration): void
                 // else try unserialize
                 $from_serialize = true;
                 try {
-                    $unserialized = @unserialize($fields_array, ['allowed_classes' => false]);
+                    $unserialized = @unserialize($fields_array, ['allowed_classes' => false]); //@phpstan-ignore theCodingMachineSafe.function (see https://github.com/glpi-project/glpi-inventory-plugin/issues/981)
 
                     if ($unserialized !== false) {
                         $fields = $unserialized;
@@ -7177,7 +7176,7 @@ function migrationDynamicGroupFields(string $fields): string
             $data = $decoded;
         }
     } else {
-        $unserialized = @unserialize($fields, ['allowed_classes' => false]);
+        $unserialized = @unserialize($fields, ['allowed_classes' => false]); //@phpstan-ignore theCodingMachineSafe.function (see https://github.com/glpi-project/glpi-inventory-plugin/issues/981)
         $from_serialized = true;
         if ($unserialized !== false) {
             $data = $unserialized;
