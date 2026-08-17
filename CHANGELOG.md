@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.10] - 2026-08-17
+
+- Fix issues on Safe usage
+
 ## [1.6.9] - 2026-08-12
 
 - Restore agent modules left join in computer search
