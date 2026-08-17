@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-13 01:02+0000\n"
+"POT-Creation-Date: 2026-08-17 00:37+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Edwin Elias Alvarez <elias986@yahoo.com>, 2026\n"
 "Language-Team: Spanish (Mexico) (https://app.transifex.com/teclib/teams/28042/es_MX/)\n"
@@ -47,7 +47,7 @@ msgstr "Propiedades"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:104
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:101
@@ -70,7 +70,7 @@ msgstr "Clave"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:105
 msgid "Depth"
-msgstr ""
+msgstr "Profundidad"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
 msgid "Limit"
@@ -585,19 +585,19 @@ msgstr[2] "Entradas encontradas"
 
 #: inc/collect_registry.class.php:91
 msgid "Default"
-msgstr ""
+msgstr "Predeterminado"
 
 #: inc/collect_registry.class.php:92
 msgid "Check path existence"
-msgstr ""
+msgstr "Comprobar la existencia de la ruta"
 
 #: inc/collect_registry.class.php:93
 msgid "Check if a key is defined"
-msgstr ""
+msgstr "Comprobar si se ha definido una clave"
 
 #: inc/collect_registry.class.php:94
 msgid "All values"
-msgstr ""
+msgstr "Todos los valores"
 
 #: inc/deploygroup_staticdata.class.php:107
 msgid "CSV import"
@@ -729,58 +729,58 @@ msgstr "Contenido del registro de Windows"
 #: inc/collect_registry_content.class.php:279
 #, php-format
 msgid "%s path found"
-msgstr ""
+msgstr "Ruta %s encontrada"
 
 #: inc/collect_registry_content.class.php:280
 #, php-format
 msgid "%s path not found"
-msgstr ""
+msgstr "Ruta %s no encontrada"
 
 #: inc/collect_registry_content.class.php:290
 #, php-format
 msgid "%s value exists"
-msgstr ""
+msgstr "Existe un valor %s"
 
 #: inc/collect_registry_content.class.php:291
 #, php-format
 msgid "%s value does not exist"
-msgstr ""
+msgstr "El valor %s no existe."
 
 #: inc/collect_registry_content.class.php:299
 #, php-format
 msgid "%s: Found a value"
-msgstr ""
+msgstr "%s: Se encontró un valor"
 
 #: inc/collect_registry_content.class.php:304
 #, php-format
 msgid "%s: Found %d values"
-msgstr ""
+msgstr "%s: Se encontraron %d valores"
 
 #: inc/collect_registry_content.class.php:311
 #, php-format
 msgid "%s: Found a result"
-msgstr ""
+msgstr "%s: Se encontró un resultado"
 
 #: inc/collect_registry_content.class.php:359
 msgid "Exist"
-msgstr ""
+msgstr "Existe"
 
 #: inc/collect_registry_content.class.php:360
 msgid "Does not exist"
-msgstr ""
+msgstr "No existe"
 
 #: inc/collect_registry_content.class.php:371
 msgid "Defined"
-msgstr ""
+msgstr "Definido"
 
 #: inc/collect_registry_content.class.php:372
 msgid "Not defined"
-msgstr ""
+msgstr "No definido"
 
 #: inc/collect_registry_content.class.php:406
 #: inc/collect_registry_content.class.php:408
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: inc/collect_registry_content.class.php:410
 #: inc/collect_registry_content.class.php:473

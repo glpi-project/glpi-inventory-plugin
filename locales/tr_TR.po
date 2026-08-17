@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-13 01:02+0000\n"
+"POT-Creation-Date: 2026-08-17 00:37+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -48,7 +48,7 @@ msgstr "Özellikler"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:104
 msgid "Mode"
-msgstr ""
+msgstr "Kip"
 
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:101
@@ -71,7 +71,7 @@ msgstr "Anahtar"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:105
 msgid "Depth"
-msgstr ""
+msgstr "Derinlik"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
 msgid "Limit"
@@ -582,19 +582,19 @@ msgstr[1] "Bulunan kayıtlar"
 
 #: inc/collect_registry.class.php:91
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
 #: inc/collect_registry.class.php:92
 msgid "Check path existence"
-msgstr ""
+msgstr "Yolun varlığını denetle"
 
 #: inc/collect_registry.class.php:93
 msgid "Check if a key is defined"
-msgstr ""
+msgstr "Bir anahtar tanımlanmış mı denetle"
 
 #: inc/collect_registry.class.php:94
 msgid "All values"
-msgstr ""
+msgstr "Tüm değerler"
 
 #: inc/deploygroup_staticdata.class.php:107
 msgid "CSV import"
@@ -728,58 +728,58 @@ msgstr "Windows kayıt defteri içeriği"
 #: inc/collect_registry_content.class.php:279
 #, php-format
 msgid "%s path found"
-msgstr ""
+msgstr "%s yolu bulundu"
 
 #: inc/collect_registry_content.class.php:280
 #, php-format
 msgid "%s path not found"
-msgstr ""
+msgstr "%s yolu bulunamadı"
 
 #: inc/collect_registry_content.class.php:290
 #, php-format
 msgid "%s value exists"
-msgstr ""
+msgstr "%s değeri var"
 
 #: inc/collect_registry_content.class.php:291
 #, php-format
 msgid "%s value does not exist"
-msgstr ""
+msgstr "%s değeri yok"
 
 #: inc/collect_registry_content.class.php:299
 #, php-format
 msgid "%s: Found a value"
-msgstr ""
+msgstr "%s: Bir değer bulundu"
 
 #: inc/collect_registry_content.class.php:304
 #, php-format
 msgid "%s: Found %d values"
-msgstr ""
+msgstr "%s: %d değer bulundu"
 
 #: inc/collect_registry_content.class.php:311
 #, php-format
 msgid "%s: Found a result"
-msgstr ""
+msgstr "%s: Bir sonuç bulundu"
 
 #: inc/collect_registry_content.class.php:359
 msgid "Exist"
-msgstr ""
+msgstr "Var"
 
 #: inc/collect_registry_content.class.php:360
 msgid "Does not exist"
-msgstr ""
+msgstr "Yok"
 
 #: inc/collect_registry_content.class.php:371
 msgid "Defined"
-msgstr ""
+msgstr "Tanımlanmış"
 
 #: inc/collect_registry_content.class.php:372
 msgid "Not defined"
-msgstr ""
+msgstr "Tanımlanmamış"
 
 #: inc/collect_registry_content.class.php:406
 #: inc/collect_registry_content.class.php:408
 msgid "State"
-msgstr ""
+msgstr "Durum"
 
 #: inc/collect_registry_content.class.php:410
 #: inc/collect_registry_content.class.php:473
