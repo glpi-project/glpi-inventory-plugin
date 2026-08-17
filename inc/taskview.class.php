@@ -256,7 +256,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         echo "<div class='tasks_block'></div>";
 
         $agent = new Agent();
-        $Computer = new Computer();
 
         echo Html::scriptBlock("$(document).ready(function() {
          taskjobs.task_id        = '" . $task_id . "';
@@ -264,7 +263,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
          taskjobs.agents_url     = '" . $agent->getFormUrl() . "';
          taskjobs.includeoldjobs = '" . $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] . "';
          taskjobs.refresh        = '" . $_SESSION['glpi_plugin_glpiinventory']['refresh'] . "';
-         taskjobs.computers_url  = '" . $Computer->getFormUrl() . "';
          taskjobs.init_templates();
          taskjobs.init_refresh_form(
             '" . $this->getBaseUrlFor('fi.job.logs') . "',
@@ -638,7 +636,6 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
         $sheet->fromArray($headers);
 
         $agent_obj = new Agent();
-        $computer  = new Computer();
         $row       = 2;
 
         foreach ($data['tasks'] ?? [] as $task) {
@@ -668,9 +665,10 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                             $agent_name = '';
                             $computer_name = '';
                             if ($agent_obj->getFromDB($agent_id)) {
-                                $agent_name = $agent_obj->getName();
-                                if (isset($agent_obj->fields['items_id']) && $computer->getFromDB($agent_obj->fields['items_id'])) {
-                                    $computer_name = $computer->getName();
+                                $agent_name  = $agent_obj->getName();
+                                $agent_item  = getItemForItemtype($agent_obj->fields['itemtype'] ?? '');
+                                if ($agent_item !== false && $agent_item->getFromDB($agent_obj->fields['items_id'])) {
+                                    $computer_name = $agent_item->getName();
                                 }
                             }
 
@@ -986,7 +984,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     }
 
     /**
-     * Get agents of Computers from Actors defined in taskjobs
+     * Get agents of inventoried items from Actors defined in taskjobs
      * TODO: this method should be rewritten to call directly a getAgents() method in the
      * corresponding itemtype classes.
      *
@@ -997,8 +995,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     public function getAgentsFromActors($actors = [], $use_cache = false)
     {
         $agents    = [];
-        $computers = [];
-        $computer  = new Computer();
+        $items     = [];
         $agent     = new Agent();
         $pfToolbox = new PluginGlpiinventoryToolbox();
         $actors_ok = $actors;
@@ -1022,47 +1019,58 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                 continue;
             }
 
-            switch ($itemtype) {
-                case Computer::class:
-                    $computers[$itemid] = 1;
-                    break;
-
-                case PluginGlpiinventoryDeployGroup::class:
+            switch (true) {
+                case $itemtype === PluginGlpiinventoryDeployGroup::class:
                     $group_targets = $pfToolbox->executeAsGlpiinventoryUser(
                         'PluginGlpiinventoryDeployGroup::getTargetsForGroup',
                         [$itemid, $use_cache]
                     );
-                    foreach ($group_targets as $computerid) {
-                        $computers[$computerid] = 1;
+                    foreach ($group_targets as $target_itemtype => $target_ids) {
+                        foreach ($target_ids as $target_id) {
+                            $items[$target_itemtype][$target_id] = 1;
+                        }
                     }
                     break;
 
-                case Group::class:
-                    //find computers by user associated with this group
+                case $itemtype === Group::class:
+                    //find items by user associated with this group
                     $group_users   = new Group_User();
                     $members       = [];
                     $members       = $group_users->getGroupUsers($itemid);
 
-                    foreach ($members as $member) {
-                        $computers_from_user = $computer->find(['users_id' => $member['id']]);
-                        foreach ($computers_from_user as $computer_entry) {
-                            $computers[$computer_entry['id']] = 1;
+                    foreach (PluginGlpiinventoryToolbox::getAgentItemtypes() as $agent_itemtype) {
+                        $agent_item = getItemForItemtype($agent_itemtype);
+                        if ($agent_item === false) {
+                            continue;
+                        }
+                        // Custom assets share a single table, hence the system criteria
+                        $system_criteria = $agent_itemtype::getSystemSQLCriteria();
+                        foreach ($members as $member) {
+                            foreach ($agent_item->find(['users_id' => $member['id']] + $system_criteria) as $entry) {
+                                $items[$agent_itemtype][$entry['id']] = 1;
+                            }
                         }
                     }
 
-                    //find computers directly associated with this group
+                    //find items directly associated with this group
                     $group_item = new Group_Item();
-                    $computer_from_group = $group_item->getItemsAssociatedTo(Group::class, $itemid);
-                    foreach ($computer_from_group as $computer_entry) {
-                        $computers[$computer_entry->fields['id']] = 1;
+                    foreach ($group_item->getItemsAssociatedTo(Group::class, $itemid) as $entry) {
+                        if (!PluginGlpiinventoryToolbox::isAgentItemtype($entry::class)) {
+                            continue;
+                        }
+                        $items[$entry::class][$entry->fields['id']] = 1;
                     }
                     break;
 
                     /**
                      * TODO: The following should be replaced with Dynamic groups
                      */
-                case Agent::class:
+                case $itemtype === Agent::class:
                     $agents[$itemid] = 1;
+                    break;
+
+                case PluginGlpiinventoryToolbox::isAgentItemtype($itemtype):
+                    $items[$itemtype][$itemid] = 1;
                     break;
             }
         }
@@ -1081,9 +1089,9 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             }
         }
 
-        //Get agents from the computer's ids list
-        if (count($computers)) {
-            $agents_entries = $agent->find(['itemtype' => Computer::class, 'items_id' => array_keys($computers)]);
+        //Get agents from the item's ids list
+        foreach ($items as $items_itemtype => $items_ids) {
+            $agents_entries = $agent->find(['itemtype' => $items_itemtype, 'items_id' => array_keys($items_ids)]);
             foreach ($agents_entries as $agent_entry) {
                 $agents[$agent_entry['id']] = 1;
             }

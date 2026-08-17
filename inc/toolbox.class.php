@@ -31,6 +31,10 @@
  */
 
 use Glpi\Agent\Communication\AbstractRequest;
+use Glpi\Asset\AssetDefinition;
+use Glpi\Asset\AssetDefinitionManager;
+use Glpi\Asset\Capacity\IsInventoriableCapacity;
+use Glpi\Inventory\MainAsset\NetworkEquipment as NetworkEquipmentMainAsset;
 use Glpi\Inventory\Request;
 
 use function Safe\json_decode;
@@ -42,6 +46,14 @@ use function Safe\preg_match;
  **/
 class PluginGlpiinventoryToolbox
 {
+    /**
+     * Active custom asset definitions, read before they are booted
+     *
+     * @var ?array<AssetDefinition>
+     */
+    private static ?array $preboot_definitions = null;
+
+
     /**
      * Log if extra debug enabled
      *
@@ -274,6 +286,128 @@ class PluginGlpiinventoryToolbox
 
 
     /**
+     * Get the itemtypes an inventory agent can be linked to
+     *
+     * @return array<class-string<CommonDBTM>>
+     */
+    public static function getAgentItemtypes(): array
+    {
+        global $CFG_GLPI;
+
+        // Custom assets are added to agent_types when their definition is booted, which happens
+        // after plugins initialization: they must be computed here to be visible at any time.
+        $itemtypes = $CFG_GLPI['agent_types'];
+        foreach (self::getAgentAssetDefinitions() as $definition) {
+            $itemtype = $definition->getAssetClassName();
+            if (!in_array($itemtype, $itemtypes, true)) {
+                $itemtypes[] = $itemtype;
+            }
+        }
+        return $itemtypes;
+    }
+
+
+    /**
+     * Get the active custom asset definitions
+     *
+     * Definitions are booted after the plugins are initialized, so they have to be read from
+     * the database to be able to declare the plugin tabs and hooks.
+     *
+     * @return array<AssetDefinition>
+     */
+    private static function getAssetDefinitions(): array
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        $definitions = AssetDefinitionManager::getInstance()->getDefinitions(true);
+        if ($definitions !== []) {
+            return $definitions;
+        }
+
+        if (self::$preboot_definitions === null) {
+            self::$preboot_definitions = [];
+            if ($DB->connected && $DB->tableExists(AssetDefinition::getTable())) {
+                $iterator = $DB->request([
+                    'FROM'  => AssetDefinition::getTable(),
+                    'WHERE' => ['is_active' => 1],
+                ]);
+                foreach ($iterator as $row) {
+                    $definition = new AssetDefinition();
+                    $definition->getFromResultSet($row);
+                    self::$preboot_definitions[] = $definition;
+                }
+            }
+        }
+        return self::$preboot_definitions;
+    }
+
+
+    /**
+     * Get the custom asset definitions whose assets are inventoried by an agent
+     *
+     * @return array<AssetDefinition>
+     */
+    private static function getAgentAssetDefinitions(): array
+    {
+        $capacity    = new IsInventoriableCapacity();
+        $definitions = [];
+
+        foreach (self::getAssetDefinitions() as $definition) {
+            if (!$definition->hasCapacityEnabled($capacity)) {
+                continue;
+            }
+            // Network assets are inventoried without being linked to an agent
+            $mainasset = $definition
+                ->getCapacityConfiguration(IsInventoriableCapacity::class)
+                ->getValue('inventory_mainasset');
+            if (is_a($mainasset ?? '', NetworkEquipmentMainAsset::class, true)) {
+                continue;
+            }
+            $definitions[] = $definition;
+        }
+        return $definitions;
+    }
+
+
+    /**
+     * Check whether an inventory agent can be linked to this itemtype
+     */
+    public static function isAgentItemtype(string $itemtype): bool
+    {
+        return in_array($itemtype, self::getAgentItemtypes(), true);
+    }
+
+
+    /**
+     * Get the itemtypes an inventory agent can be linked to, indexed by itemtype
+     *
+     * @return array<class-string<CommonDBTM>, string>
+     */
+    public static function getAgentItemtypeNames(): array
+    {
+        $names = [];
+        foreach (self::getAgentItemtypes() as $itemtype) {
+            $names[$itemtype] = $itemtype::getTypeName(1);
+        }
+        return $names;
+    }
+
+
+    /**
+     * Get the agent linked to an item
+     */
+    public static function getAgentForItem(string $itemtype, int $items_id): ?Agent
+    {
+        $agent = new Agent();
+        if (!$agent->getFromDBByCrit(['itemtype' => $itemtype, 'items_id' => $items_id])) {
+            return null;
+        }
+        return $agent;
+    }
+
+
+    /**
      * Execute a function as plugin user
      *
      * @param string|array<string> $function
@@ -291,7 +425,7 @@ class PluginGlpiinventoryToolbox
 
         foreach (
             ['glpiID', 'glpiname','glpiactiveentities_string',
-                'glpiactiveentities', 'glpiparententities',
+                'glpiactiveentities', 'glpiparententities', 'glpiactiveprofile',
             ] as $session_key
         ) {
             if (isset($_SESSION[$session_key])) {
@@ -312,8 +446,10 @@ class PluginGlpiinventoryToolbox
 
         $_SESSION['glpiactiveprofile']['interface'] = 'central';
 
-        $_SESSION["glpiactiveprofile"]["computer"] = 1;
-        $_SESSION["glpiactiveprofile"]["domain"] = 1;
+        $_SESSION["glpiactiveprofile"]["domain"] = READ;
+        foreach (self::getAgentItemtypes() as $itemtype) {
+            $_SESSION["glpiactiveprofile"][$itemtype::$rightname] = READ;
+        }
 
         // Execute function with impersonated SESSION
         $result = call_user_func_array($function, $args);

@@ -44,13 +44,12 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     public string $collect_type = 'wmi';
 
     /**
-     * update wmi data to compute (add and update) with data sent by the agent
+     * update wmi data of an item (add and update) with data sent by the agent
      *
-     * @param int $computers_id id of the computer
      * @param array<string,mixed> $wmi_data
      * @param int $collects_wmis_id
      */
-    public function updateComputer($computers_id, $wmi_data, $collects_wmis_id): void
+    public function updateItem(string $itemtype, int $items_id, $wmi_data, $collects_wmis_id): void
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -61,7 +60,8 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             'SELECT' => ['id', 'property', 'value'],
             'FROM'   => 'glpi_plugin_glpiinventory_collects_wmis_contents',
             'WHERE'  => [
-                'computers_id' => $computers_id,
+                'itemtype' => $itemtype,
+                'items_id' => $items_id,
                 'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
             ],
         ]);
@@ -93,7 +93,8 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         }
         foreach ($wmi_data as $key => $value) {
             $input = [
-                'computers_id' => $computers_id,
+                'itemtype'     => $itemtype,
+                'items_id'     => $items_id,
                 'plugin_glpiinventory_collects_wmis_id' => $collects_wmis_id,
                 'property'     => $key,
                 'value'        => $value,
@@ -103,11 +104,9 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     }
 
     /**
-     * Display wmi information of computer
-     *
-     * @param int $computers_id id of computer
+     * Display wmi information of the inventoried item
      */
-    public function showForComputer(int $computers_id): void
+    public function showForItem(string $itemtype, int $items_id): void
     {
 
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
@@ -121,7 +120,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         echo "</tr>";
 
         $a_data = $this->find(
-            ['computers_id' => $computers_id],
+            ['itemtype' => $itemtype, 'items_id' => $items_id],
             ['plugin_glpiinventory_collects_wmis_id', 'property']
         );
         foreach ($a_data as $data) {
@@ -155,7 +154,6 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     public function showContent(int $id): void
     {
         $collect_wmi = new PluginGlpiinventoryCollect_Wmi();
-        $computer = new Computer();
         $collect_wmi->getFromDB($id);
 
         $data = $this->find(
@@ -164,9 +162,8 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         );
         $entries = [];
         foreach ($data as $row) {
-            $computer->getFromDB($row['computers_id']);
             $entry = [
-                'computer' => $computer->getLink(),
+                'item'     => self::getItemLink($row),
                 'property' => $row['property'],
                 'value'     => $row['value'],
             ];
@@ -180,12 +177,12 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             'is_tab' => true,
             'nofilter' => true,
             'columns' => [
-                'computer' => Computer::getTypeName(1),
+                'item' => _n('Item', 'Items', 1),
                 'property' => __('Property', 'glpiinventory'),
                 'value' => __('Value', 'glpiinventory'),
             ],
             'formatters' => [
-                'computer' => 'raw_html',
+                'item' => 'raw_html',
             ],
             'entries' => $entries,
             'total_number' => count($entries),

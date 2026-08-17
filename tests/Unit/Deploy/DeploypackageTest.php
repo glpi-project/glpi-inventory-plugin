@@ -76,11 +76,11 @@ class DeploypackageTest extends DbTestCase
         ];
         $this->assertNotFalse($agent->add($input));
 
-        $this->assertTrue($package->isDeployEnabled($computers_id));
+        $this->assertTrue($package->isDeployEnabled(Computer::class, $computers_id));
 
         //Disable deploy feature for all agents
         $module->update(['id' => $module->fields['id'], 'is_active' => 0]);
 
-        $this->assertFalse($package->isDeployEnabled($computers_id));
+        $this->assertFalse($package->isDeployEnabled(Computer::class, $computers_id));
     }
 }

@@ -305,9 +305,9 @@ class PackageSelfDeployTest extends DbTestCase
         );
 
         // Create task
-        $pfDeployPackage->deployToComputer($computerId1, $packages_id_1, $_SESSION['glpiID']);
+        $pfDeployPackage->deployToItem(Computer::class, $computerId1, $packages_id_1, $_SESSION['glpiID']);
         $_SESSION['glpiID'] = 2; // glpi user account
-        $pfDeployPackage->deployToComputer($computerId2, $packages_id_1, $_SESSION['glpiID']);
+        $pfDeployPackage->deployToItem(Computer::class, $computerId2, $packages_id_1, $_SESSION['glpiID']);
         $_SESSION['glpiID'] = $this->users_id;
         // Prepare task
         PluginGlpiinventoryTask::cronTaskscheduler();
@@ -319,10 +319,12 @@ class PackageSelfDeployTest extends DbTestCase
         $_SERVER['REQUEST_URI'] = 'front/deploypackage.php'; // URL is used to fix addDefaultWhere
         $packages = $pfDeployPackage->getPackageForMe($_SESSION['glpiID']);
         $packages_deploy = [];
-        foreach ($packages as $data) {
-            foreach ($data as $package_info) {
-                if (isset($package_info['taskjobs_id'])) {
-                    $packages_deploy[] = $package_info['last_taskjobstate']['state'];
+        foreach ($packages as $items) {
+            foreach ($items as $data) {
+                foreach ($data as $package_info) {
+                    if (isset($package_info['taskjobs_id'])) {
+                        $packages_deploy[] = $package_info['last_taskjobstate']['state'];
+                    }
                 }
             }
         }
@@ -331,10 +333,12 @@ class PackageSelfDeployTest extends DbTestCase
         $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php'; // URL is used to fix addDefaultWhere
         $packages = $pfDeployPackage->getPackageForMe($_SESSION['glpiID']);
         $packages_deploy = [];
-        foreach ($packages as $data) {
-            foreach ($data as $package_info) {
-                if (isset($package_info['taskjobs_id'])) {
-                    $packages_deploy[] = $package_info['last_taskjobstate']['state'];
+        foreach ($packages as $items) {
+            foreach ($items as $data) {
+                foreach ($data as $package_info) {
+                    if (isset($package_info['taskjobs_id'])) {
+                        $packages_deploy[] = $package_info['last_taskjobstate']['state'];
+                    }
                 }
             }
         }
@@ -411,12 +415,14 @@ class PackageSelfDeployTest extends DbTestCase
         $packages_id = $pfDeployPackage->add($input);
         $this->assertNotFalse($packages_id);
 
-        $packages = $pfDeployPackage->getPackageForMe(false, $computerId1);
+        $packages = $pfDeployPackage->getPackageForMe(false, Computer::class, $computerId1);
         $names    = [];
 
-        foreach ($packages as $data) {
-            foreach ($data as $package_info) {
-                $names[] = $package_info['name'];
+        foreach ($packages as $items) {
+            foreach ($items as $data) {
+                foreach ($data as $package_info) {
+                    $names[] = $package_info['name'];
+                }
             }
         }
 
@@ -454,12 +460,14 @@ class PackageSelfDeployTest extends DbTestCase
 
         $computer->getFromDBByCrit(['name' => 'pc03']);
 
-        $packages = $pfDeployPackage->getPackageForMe(false, $computer->fields['id']);
+        $packages = $pfDeployPackage->getPackageForMe(false, Computer::class, $computer->fields['id']);
         $names    = [];
 
-        foreach ($packages as $data) {
-            foreach ($data as $package_info) {
-                $names[] = $package_info['name'];
+        foreach ($packages as $items) {
+            foreach ($items as $data) {
+                foreach ($data as $package_info) {
+                    $names[] = $package_info['name'];
+                }
             }
         }
 
