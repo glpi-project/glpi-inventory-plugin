@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-17 00:37+0000\n"
+"POT-Creation-Date: 2026-08-18 00:37+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: DWXXX, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -102,7 +102,7 @@ msgstr "SHA512校验和"
 msgid "Checksum SHA2"
 msgstr "SHA2校验和"
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1094
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:93
 #: inc/collect_file_content.class.php:148 inc/collect_file.class.php:63
 #: inc/collect.class.php:262
@@ -137,7 +137,7 @@ msgstr "比较类型"
 msgid "Filter name"
 msgstr "过滤器名称"
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:317
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:316
 #: inc/collect_file.class.php:83 inc/deploycheck.class.php:376
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
 msgid "File"
@@ -455,120 +455,120 @@ msgstr "代理停止/崩溃"
 msgid "Import denied"
 msgstr "拒绝导入"
 
-#: inc/deployfile.class.php:88
+#: inc/deployfile.class.php:87
 msgid "Upload from computer"
 msgstr "从计算机上传"
 
-#: inc/deployfile.class.php:92
+#: inc/deployfile.class.php:91
 msgid "Upload from server"
 msgstr "从服务器上传"
 
-#: inc/deployfile.class.php:201
+#: inc/deployfile.class.php:200
 msgid "p2p"
 msgstr "点对点P2P"
 
-#: inc/deployfile.class.php:202 inc/deployfile.class.php:367
+#: inc/deployfile.class.php:201 inc/deployfile.class.php:366
 msgid "retention"
 msgstr "保留"
 
-#: inc/deployfile.class.php:204 inc/deployfile.class.php:368
+#: inc/deployfile.class.php:203 inc/deployfile.class.php:367
 #: inc/taskjob.class.php:766
 msgid "Minute(s)"
 msgstr "分钟(m)"
 
-#: inc/deployfile.class.php:216
+#: inc/deployfile.class.php:215
 msgid "uncompress"
 msgstr "未压缩"
 
-#: inc/deployfile.class.php:223
+#: inc/deployfile.class.php:222
 msgid "Download"
 msgstr "下载"
 
-#: inc/deployfile.class.php:258 inc/deployaction.class.php:236
+#: inc/deployfile.class.php:257 inc/deployaction.class.php:236
 #: inc/deployuserinteraction.class.php:250 inc/deploycheck.class.php:264
 msgid "drag"
 msgstr "拖动"
 
-#: inc/deployfile.class.php:271 inc/deployaction.class.php:250
+#: inc/deployfile.class.php:270 inc/deployaction.class.php:250
 #: inc/taskjobview.class.php:279 inc/deployuserinteraction.class.php:264
 #: inc/deploycheck.class.php:278
 msgid "Delete"
 msgstr "删除"
 
-#: inc/deployfile.class.php:323
+#: inc/deployfile.class.php:322
 msgid "filename"
 msgstr "文件名"
 
-#: inc/deployfile.class.php:330
+#: inc/deployfile.class.php:329
 msgid "Choose"
 msgstr "选择"
 
-#: inc/deployfile.class.php:336
+#: inc/deployfile.class.php:335
 msgid "Select the file on server"
 msgstr "选择服务器上的文件"
 
-#: inc/deployfile.class.php:352
+#: inc/deployfile.class.php:351
 msgid "Uncompress"
 msgstr "未压缩"
 
-#: inc/deployfile.class.php:359
+#: inc/deployfile.class.php:358
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:440
+#: inc/deployfile.class.php:439
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr "文件需要被上传到文件夹 %s 并在此展示"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:631
 msgid "Upload error"
 msgstr "上传错误"
 
-#: inc/deployfile.class.php:636
+#: inc/deployfile.class.php:635
 msgid "Transfer error: the file size is too big"
 msgstr "传输错误：文件尺寸太大"
 
-#: inc/deployfile.class.php:640
+#: inc/deployfile.class.php:639
 msgid "The uploaded file was only partially uploaded"
 msgstr "上传的文件只上传了部分"
 
-#: inc/deployfile.class.php:644
+#: inc/deployfile.class.php:643
 msgid "No file was uploaded"
 msgstr "没有文件被上传"
 
-#: inc/deployfile.class.php:648
+#: inc/deployfile.class.php:647
 msgid "Missing a temporary folder"
 msgstr "临时文件夹缺失"
 
-#: inc/deployfile.class.php:652
+#: inc/deployfile.class.php:651
 msgid "Failed to write file to disk"
 msgstr "写入到磁盘失败"
 
-#: inc/deployfile.class.php:656
+#: inc/deployfile.class.php:655
 msgid "PHP extension stopped the file upload"
 msgstr "PHP扩展停止文件上传"
 
-#: inc/deployfile.class.php:684 inc/deployfile.class.php:739
+#: inc/deployfile.class.php:683 inc/deployfile.class.php:738
 msgid "File saved!"
 msgstr "文件已保存!"
 
-#: inc/deployfile.class.php:687 inc/deployfile.class.php:742
+#: inc/deployfile.class.php:686 inc/deployfile.class.php:741
 msgid "Failed to copy file"
 msgstr "复制文件失败"
 
-#: inc/deployfile.class.php:691 inc/deployfile.class.php:746
+#: inc/deployfile.class.php:690 inc/deployfile.class.php:745
 msgid "File missing"
 msgstr "文件丢失"
 
-#: inc/deployfile.class.php:1077
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "最大文件尺寸"
 
-#: inc/deployfile.class.php:1078
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "Mio"
 
-#: inc/deployfile.class.php:1091
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "未使用文件"
 

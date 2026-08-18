@@ -7,16 +7,16 @@
 # Stanislas <skita@teclib.com>, 2022
 # Cédric Anne, 2023
 # Johan Cwiklinski, 2025
-# EpicIT33, 2025
+# EpicIT33, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-17 00:37+0000\n"
+"POT-Creation-Date: 2026-08-18 00:37+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: EpicIT33, 2025\n"
+"Last-Translator: EpicIT33, 2026\n"
 "Language-Team: French (France) (https://app.transifex.com/teclib/teams/28042/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,7 +50,7 @@ msgstr "Propriétés"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:104
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:101
@@ -73,7 +73,7 @@ msgstr "Clé"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:105
 msgid "Depth"
-msgstr ""
+msgstr "Profondeur"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
 msgid "Limit"
@@ -106,7 +106,7 @@ msgstr "Checksum SHA512"
 msgid "Checksum SHA2"
 msgstr "Checksum SHA2"
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1094
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:93
 #: inc/collect_file_content.class.php:148 inc/collect_file.class.php:63
 #: inc/collect.class.php:262
@@ -141,7 +141,7 @@ msgstr "Type de comparaison"
 msgid "Filter name"
 msgstr "Nom du filtre"
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:317
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:316
 #: inc/collect_file.class.php:83 inc/deploycheck.class.php:376
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
 msgid "File"
@@ -249,11 +249,11 @@ msgstr "Durée d'affichage des alertes"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Weekly view of the configured time slots"
-msgstr ""
+msgstr "Vue hebdomadaire des créneaux horaires configurés"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Add a time slot entry"
-msgstr ""
+msgstr "Ajouter une entrée de créneau horaire"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Start time"
@@ -265,7 +265,7 @@ msgstr "Heure de fin"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Configured time slot entries"
-msgstr ""
+msgstr "Entrées de créneaux horaires configurés"
 
 #: front/credential.php:34 front/menu_snmpinventory.php:37
 #: front/timeslot.php:37 front/statediscovery.php:34
@@ -461,122 +461,122 @@ msgstr "Agent arrêté / crashé"
 msgid "Import denied"
 msgstr "Import refusé"
 
-#: inc/deployfile.class.php:88
+#: inc/deployfile.class.php:87
 msgid "Upload from computer"
 msgstr "Télécharger depuis votre ordinateur"
 
-#: inc/deployfile.class.php:92
+#: inc/deployfile.class.php:91
 msgid "Upload from server"
 msgstr "Télécharger depuis le serveur"
 
-#: inc/deployfile.class.php:201
+#: inc/deployfile.class.php:200
 msgid "p2p"
 msgstr "p2p"
 
-#: inc/deployfile.class.php:202 inc/deployfile.class.php:367
+#: inc/deployfile.class.php:201 inc/deployfile.class.php:366
 msgid "retention"
 msgstr "rétention"
 
-#: inc/deployfile.class.php:204 inc/deployfile.class.php:368
+#: inc/deployfile.class.php:203 inc/deployfile.class.php:367
 #: inc/taskjob.class.php:766
 msgid "Minute(s)"
 msgstr "Minute(s)"
 
-#: inc/deployfile.class.php:216
+#: inc/deployfile.class.php:215
 msgid "uncompress"
 msgstr "décompresser"
 
-#: inc/deployfile.class.php:223
+#: inc/deployfile.class.php:222
 msgid "Download"
 msgstr "Télécharger"
 
-#: inc/deployfile.class.php:258 inc/deployaction.class.php:236
+#: inc/deployfile.class.php:257 inc/deployaction.class.php:236
 #: inc/deployuserinteraction.class.php:250 inc/deploycheck.class.php:264
 msgid "drag"
 msgstr "prendre"
 
-#: inc/deployfile.class.php:271 inc/deployaction.class.php:250
+#: inc/deployfile.class.php:270 inc/deployaction.class.php:250
 #: inc/taskjobview.class.php:279 inc/deployuserinteraction.class.php:264
 #: inc/deploycheck.class.php:278
 msgid "Delete"
 msgstr "Supprimer"
 
-#: inc/deployfile.class.php:323
+#: inc/deployfile.class.php:322
 msgid "filename"
 msgstr "Nom du fichier"
 
-#: inc/deployfile.class.php:330
+#: inc/deployfile.class.php:329
 msgid "Choose"
 msgstr "Choisir"
 
-#: inc/deployfile.class.php:336
+#: inc/deployfile.class.php:335
 msgid "Select the file on server"
 msgstr "Choisissez le fichier sur le serveur"
 
-#: inc/deployfile.class.php:352
+#: inc/deployfile.class.php:351
 msgid "Uncompress"
 msgstr "Décompresser"
 
-#: inc/deployfile.class.php:359
+#: inc/deployfile.class.php:358
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:440
+#: inc/deployfile.class.php:439
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
 "Les fichiers doivent être téléversés dans le dossier %s pour pouvoir être "
 "affichés ici"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:631
 msgid "Upload error"
 msgstr "Erreur lors du téléversement"
 
-#: inc/deployfile.class.php:636
+#: inc/deployfile.class.php:635
 msgid "Transfer error: the file size is too big"
 msgstr "Erreur de transfert : Le fichier est trop gros"
 
-#: inc/deployfile.class.php:640
+#: inc/deployfile.class.php:639
 msgid "The uploaded file was only partially uploaded"
 msgstr "Le fichier n'est qu'en partie téléchargé"
 
-#: inc/deployfile.class.php:644
+#: inc/deployfile.class.php:643
 msgid "No file was uploaded"
 msgstr "Aucun fichier n'a été téléchargé"
 
-#: inc/deployfile.class.php:648
+#: inc/deployfile.class.php:647
 msgid "Missing a temporary folder"
 msgstr "Absence d'un dossier temporaire"
 
-#: inc/deployfile.class.php:652
+#: inc/deployfile.class.php:651
 msgid "Failed to write file to disk"
 msgstr "Impossible d'écrire le fichier sur le disque"
 
-#: inc/deployfile.class.php:656
+#: inc/deployfile.class.php:655
 msgid "PHP extension stopped the file upload"
 msgstr "L'extension PHP à stoppé le fichier téléchargé"
 
-#: inc/deployfile.class.php:684 inc/deployfile.class.php:739
+#: inc/deployfile.class.php:683 inc/deployfile.class.php:738
 msgid "File saved!"
 msgstr "Fichier enregistré !"
 
-#: inc/deployfile.class.php:687 inc/deployfile.class.php:742
+#: inc/deployfile.class.php:686 inc/deployfile.class.php:741
 msgid "Failed to copy file"
 msgstr "Erreur lors de la copie du fichier"
 
-#: inc/deployfile.class.php:691 inc/deployfile.class.php:746
+#: inc/deployfile.class.php:690 inc/deployfile.class.php:745
 msgid "File missing"
 msgstr "Fichier perdu"
 
-#: inc/deployfile.class.php:1077
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "Taille maximale du fichier"
 
-#: inc/deployfile.class.php:1078
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "Mio"
 
-#: inc/deployfile.class.php:1091
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Fichier non utilisé"
 
@@ -589,19 +589,19 @@ msgstr[2] "Entrées trouvées"
 
 #: inc/collect_registry.class.php:91
 msgid "Default"
-msgstr ""
+msgstr "Par défaut"
 
 #: inc/collect_registry.class.php:92
 msgid "Check path existence"
-msgstr ""
+msgstr "Vérifier si le chemin existe"
 
 #: inc/collect_registry.class.php:93
 msgid "Check if a key is defined"
-msgstr ""
+msgstr "Vérifier si un clé est définie"
 
 #: inc/collect_registry.class.php:94
 msgid "All values"
-msgstr ""
+msgstr "Toutes les valeurs"
 
 #: inc/deploygroup_staticdata.class.php:107
 msgid "CSV import"
@@ -733,22 +733,22 @@ msgstr "Contenu de la base de registre Windows"
 #: inc/collect_registry_content.class.php:279
 #, php-format
 msgid "%s path found"
-msgstr ""
+msgstr "%s chemin trouvé"
 
 #: inc/collect_registry_content.class.php:280
 #, php-format
 msgid "%s path not found"
-msgstr ""
+msgstr "%s Chemin introuvable"
 
 #: inc/collect_registry_content.class.php:290
 #, php-format
 msgid "%s value exists"
-msgstr ""
+msgstr "%s valeurs existent"
 
 #: inc/collect_registry_content.class.php:291
 #, php-format
 msgid "%s value does not exist"
-msgstr ""
+msgstr "%s n'existe pas"
 
 #: inc/collect_registry_content.class.php:299
 #, php-format
@@ -763,28 +763,28 @@ msgstr ""
 #: inc/collect_registry_content.class.php:311
 #, php-format
 msgid "%s: Found a result"
-msgstr ""
+msgstr "%s : Un résultat a été trouvé"
 
 #: inc/collect_registry_content.class.php:359
 msgid "Exist"
-msgstr ""
+msgstr "Existe"
 
 #: inc/collect_registry_content.class.php:360
 msgid "Does not exist"
-msgstr ""
+msgstr "N'existe pas"
 
 #: inc/collect_registry_content.class.php:371
 msgid "Defined"
-msgstr ""
+msgstr "Défini"
 
 #: inc/collect_registry_content.class.php:372
 msgid "Not defined"
-msgstr ""
+msgstr "Non défini"
 
 #: inc/collect_registry_content.class.php:406
 #: inc/collect_registry_content.class.php:408
 msgid "State"
-msgstr ""
+msgstr "Etat"
 
 #: inc/collect_registry_content.class.php:410
 #: inc/collect_registry_content.class.php:473
@@ -1562,7 +1562,7 @@ msgstr "Type"
 
 #: inc/collectcommon.class.php:74
 msgid "Collect configuration"
-msgstr ""
+msgstr "Configuration de la collecte"
 
 #: inc/collect.class.php:147 inc/collect.class.php:209
 #: inc/deploycheck.class.php:52
