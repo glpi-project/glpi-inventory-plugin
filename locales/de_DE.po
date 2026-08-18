@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-17 00:37+0000\n"
+"POT-Creation-Date: 2026-08-18 00:37+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: iDazai, 2023\n"
 "Language-Team: German (Germany) (https://app.transifex.com/teclib/teams/28042/de_DE/)\n"
@@ -104,7 +104,7 @@ msgstr "SHA512-Prüfsumme"
 msgid "Checksum SHA2"
 msgstr "SHA2-Prüfsumme"
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1094
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1093
 #: inc/collect_file_content.class.php:93
 #: inc/collect_file_content.class.php:148 inc/collect_file.class.php:63
 #: inc/collect.class.php:262
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Filter name"
 msgstr ""
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:317
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:316
 #: inc/collect_file.class.php:83 inc/deploycheck.class.php:376
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
 msgid "File"
@@ -458,122 +458,122 @@ msgstr "Agent gestoppt / abgestürzt"
 msgid "Import denied"
 msgstr "Import nicht erlaubt"
 
-#: inc/deployfile.class.php:88
+#: inc/deployfile.class.php:87
 msgid "Upload from computer"
 msgstr "Von Computer heraufladen"
 
-#: inc/deployfile.class.php:92
+#: inc/deployfile.class.php:91
 msgid "Upload from server"
 msgstr "Hochgeladen vom Server"
 
-#: inc/deployfile.class.php:201
+#: inc/deployfile.class.php:200
 msgid "p2p"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:202 inc/deployfile.class.php:367
+#: inc/deployfile.class.php:201 inc/deployfile.class.php:366
 msgid "retention"
 msgstr "Speicherung"
 
-#: inc/deployfile.class.php:204 inc/deployfile.class.php:368
+#: inc/deployfile.class.php:203 inc/deployfile.class.php:367
 #: inc/taskjob.class.php:766
 msgid "Minute(s)"
 msgstr "Minute(n)"
 
-#: inc/deployfile.class.php:216
+#: inc/deployfile.class.php:215
 msgid "uncompress"
 msgstr "dekomprimieren"
 
-#: inc/deployfile.class.php:223
+#: inc/deployfile.class.php:222
 msgid "Download"
 msgstr "Download"
 
-#: inc/deployfile.class.php:258 inc/deployaction.class.php:236
+#: inc/deployfile.class.php:257 inc/deployaction.class.php:236
 #: inc/deployuserinteraction.class.php:250 inc/deploycheck.class.php:264
 msgid "drag"
 msgstr "ziehen"
 
-#: inc/deployfile.class.php:271 inc/deployaction.class.php:250
+#: inc/deployfile.class.php:270 inc/deployaction.class.php:250
 #: inc/taskjobview.class.php:279 inc/deployuserinteraction.class.php:264
 #: inc/deploycheck.class.php:278
 msgid "Delete"
 msgstr "Löschen"
 
-#: inc/deployfile.class.php:323
+#: inc/deployfile.class.php:322
 msgid "filename"
 msgstr "Dateiname"
 
-#: inc/deployfile.class.php:330
+#: inc/deployfile.class.php:329
 msgid "Choose"
 msgstr "Auswählen"
 
-#: inc/deployfile.class.php:336
+#: inc/deployfile.class.php:335
 msgid "Select the file on server"
 msgstr "Datei auf dem Server wählen"
 
-#: inc/deployfile.class.php:352
+#: inc/deployfile.class.php:351
 msgid "Uncompress"
 msgstr "Dekomprimieren"
 
-#: inc/deployfile.class.php:359
+#: inc/deployfile.class.php:358
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:440
+#: inc/deployfile.class.php:439
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
 msgstr ""
 "Dateien müssen zuerst in den Ordner %s hochgeladen werden, bevor sie hier "
 "angezeigt werden können"
 
-#: inc/deployfile.class.php:632
+#: inc/deployfile.class.php:631
 msgid "Upload error"
 msgstr "Uploadfehler"
 
-#: inc/deployfile.class.php:636
+#: inc/deployfile.class.php:635
 msgid "Transfer error: the file size is too big"
 msgstr "Übertragunsfehler: Die Datei ist zu groß"
 
-#: inc/deployfile.class.php:640
+#: inc/deployfile.class.php:639
 msgid "The uploaded file was only partially uploaded"
 msgstr "Die hochgeladene Datei ist unvollständig"
 
-#: inc/deployfile.class.php:644
+#: inc/deployfile.class.php:643
 msgid "No file was uploaded"
 msgstr "Dateien wurde nicht heraufgeladen"
 
-#: inc/deployfile.class.php:648
+#: inc/deployfile.class.php:647
 msgid "Missing a temporary folder"
 msgstr "Temporäres Verzeichnis fehlt"
 
-#: inc/deployfile.class.php:652
+#: inc/deployfile.class.php:651
 msgid "Failed to write file to disk"
 msgstr "Datei konnte nicht gespeichert werden"
 
-#: inc/deployfile.class.php:656
+#: inc/deployfile.class.php:655
 msgid "PHP extension stopped the file upload"
 msgstr "PHP-Erweiterung hat den Upload gestoppt"
 
-#: inc/deployfile.class.php:684 inc/deployfile.class.php:739
+#: inc/deployfile.class.php:683 inc/deployfile.class.php:738
 msgid "File saved!"
 msgstr "Datei gespeichert!"
 
-#: inc/deployfile.class.php:687 inc/deployfile.class.php:742
+#: inc/deployfile.class.php:686 inc/deployfile.class.php:741
 msgid "Failed to copy file"
 msgstr "Datei konnte nicht kopiert werden"
 
-#: inc/deployfile.class.php:691 inc/deployfile.class.php:746
+#: inc/deployfile.class.php:690 inc/deployfile.class.php:745
 msgid "File missing"
 msgstr "Datei fehlt"
 
-#: inc/deployfile.class.php:1077
+#: inc/deployfile.class.php:1076
 msgid "Max file size"
 msgstr "Maximale Dateigrösse"
 
-#: inc/deployfile.class.php:1078
+#: inc/deployfile.class.php:1077
 msgid "Mio"
 msgstr "Mio"
 
-#: inc/deployfile.class.php:1091
+#: inc/deployfile.class.php:1090
 msgid "Unused file"
 msgstr "Ungenutzte Datei"
 
