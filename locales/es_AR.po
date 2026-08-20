@@ -6,16 +6,16 @@
 # Translators:
 # Cédric Anne, 2021
 # Juan Fortuna <juan.fortuna@gmail.com>, 2022
-# Alan Lehoux, 2025
+# Alan Lehoux, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 00:37+0000\n"
+"POT-Creation-Date: 2026-08-20 00:37+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Alan Lehoux, 2025\n"
+"Last-Translator: Alan Lehoux, 2026\n"
 "Language-Team: Spanish (Argentina) (https://app.transifex.com/teclib/teams/28042/es_AR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +49,7 @@ msgstr "Propiedades"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:104
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:101
@@ -72,7 +72,7 @@ msgstr "Clave"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:105
 msgid "Depth"
-msgstr ""
+msgstr "Profundidad"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
 msgid "Limit"
@@ -118,7 +118,7 @@ msgstr "Desactivado"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Operator"
-msgstr ""
+msgstr "Operador"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filename"
@@ -134,11 +134,11 @@ msgstr "Sensible a mayúsculas/minúsculas"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Comparison type"
-msgstr ""
+msgstr "Tipo de comparación"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filter name"
-msgstr ""
+msgstr "Nombre del filtro"
 
 #: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:316
 #: inc/collect_file.class.php:83 inc/deploycheck.class.php:376
@@ -158,7 +158,7 @@ msgstr "Módulo"
 
 #: templates/forms/agentmodule.html.twig
 msgid "Activation"
-msgstr ""
+msgstr "Activación"
 
 #: templates/forms/agentmodule.html.twig
 msgid "Activation (by default)"
@@ -248,11 +248,11 @@ msgstr "Tiempo de espera de visualización de la alerta"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Weekly view of the configured time slots"
-msgstr ""
+msgstr "Vista semanal de las franjas horarias configuradas"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Add a time slot entry"
-msgstr ""
+msgstr "Agregar una franja horaria"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Start time"
@@ -264,7 +264,7 @@ msgstr "Hora de fin"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Configured time slot entries"
-msgstr ""
+msgstr "Franjas horarias configuradas"
 
 #: front/credential.php:34 front/menu_snmpinventory.php:37
 #: front/timeslot.php:37 front/statediscovery.php:34
@@ -294,11 +294,11 @@ msgstr[2] "Plantillas de interacción de usuario"
 
 #: front/deployfile_download.php:90
 msgid "An error occurs"
-msgstr ""
+msgstr "Ocurrió un error"
 
 #: front/deployfile_download.php:93 front/deployfile_download.php:96
 msgid "File not found"
-msgstr ""
+msgstr "Archivo no encontrado"
 
 #: front/collect.form.php:36
 msgid "Collect management"
@@ -306,7 +306,7 @@ msgstr "Administración de colector"
 
 #: front/deployfile.clean.php:59
 msgid "Delete unused files"
-msgstr ""
+msgstr "Eliminar archivos sin usar"
 
 #: front/config.form.php:36
 msgid "Features"
@@ -343,7 +343,7 @@ msgstr "Tareas"
 #: hook.php:140 hook.php:150 hook.php:160 hook.php:170
 #, php-format
 msgid "%s inventoried"
-msgstr ""
+msgstr "%s inventariado"
 
 #: hook.php:353
 msgid "Setup"
@@ -360,7 +360,7 @@ msgstr "Agregar a grupo estático"
 
 #: hook.php:418 inc/deploygroup_staticdata.class.php:227
 msgid "Remove from static group"
-msgstr ""
+msgstr "Quitar del grupo estático"
 
 #: public/b/deploy/index.php:84
 msgid "Deploy module has been disabled for this agent"
@@ -487,7 +487,7 @@ msgstr "Descomprimir"
 
 #: inc/deployfile.class.php:222
 msgid "Download"
-msgstr ""
+msgstr "Descargar"
 
 #: inc/deployfile.class.php:257 inc/deployaction.class.php:236
 #: inc/deployuserinteraction.class.php:250 inc/deploycheck.class.php:264
@@ -523,11 +523,11 @@ msgstr "P2P"
 #: inc/deployfile.class.php:439
 #, php-format
 msgid "Files need to be uploaded to %s folder to be displayed here"
-msgstr ""
+msgstr "Los archivos se deben subir a la carpeta %s para que se muestren acá"
 
 #: inc/deployfile.class.php:631
 msgid "Upload error"
-msgstr ""
+msgstr "Error al subir"
 
 #: inc/deployfile.class.php:635
 msgid "Transfer error: the file size is too big"
@@ -588,19 +588,19 @@ msgstr[2] "Entradas encontradas"
 
 #: inc/collect_registry.class.php:91
 msgid "Default"
-msgstr ""
+msgstr "Por defecto"
 
 #: inc/collect_registry.class.php:92
 msgid "Check path existence"
-msgstr ""
+msgstr "Comprobar existencia de la ruta"
 
 #: inc/collect_registry.class.php:93
 msgid "Check if a key is defined"
-msgstr ""
+msgstr "Comprobar si hay una clave definida"
 
 #: inc/collect_registry.class.php:94
 msgid "All values"
-msgstr ""
+msgstr "Todos los valores"
 
 #: inc/deploygroup_staticdata.class.php:107
 msgid "CSV import"
@@ -611,6 +611,8 @@ msgstr "Importar CSV"
 msgid ""
 "Make a search to get desired computer, then use massive actions and use %s"
 msgstr ""
+"Hacé una búsqueda para encontrar la computadora deseada, después seleccioná "
+"las acciones masivas y usá %s"
 
 #: inc/deploygroup_staticdata.class.php:336
 msgid ""
@@ -706,7 +708,7 @@ msgstr "Comprobaciones de ejecución"
 #: inc/deploycheck.class.php:371
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
-msgstr ""
+msgstr "Es obligatorio usar GLPI-Agent o Fusioninventory-Agent >= %1s"
 
 #: inc/iprange_snmpcredential.class.php:101
 msgid "Associated SNMP credentials"
@@ -731,58 +733,58 @@ msgstr "Contenido del registro de Windows"
 #: inc/collect_registry_content.class.php:279
 #, php-format
 msgid "%s path found"
-msgstr ""
+msgstr "%s ruta encontrada"
 
 #: inc/collect_registry_content.class.php:280
 #, php-format
 msgid "%s path not found"
-msgstr ""
+msgstr "%s ruta no encontrada"
 
 #: inc/collect_registry_content.class.php:290
 #, php-format
 msgid "%s value exists"
-msgstr ""
+msgstr "El valor %s existe"
 
 #: inc/collect_registry_content.class.php:291
 #, php-format
 msgid "%s value does not exist"
-msgstr ""
+msgstr "El valor %s no existe"
 
 #: inc/collect_registry_content.class.php:299
 #, php-format
 msgid "%s: Found a value"
-msgstr ""
+msgstr "%s: Se encontró un valor"
 
 #: inc/collect_registry_content.class.php:304
 #, php-format
 msgid "%s: Found %d values"
-msgstr ""
+msgstr "%s: Se encontraron %d valores"
 
 #: inc/collect_registry_content.class.php:311
 #, php-format
 msgid "%s: Found a result"
-msgstr ""
+msgstr "%s: Se encontró un resultado"
 
 #: inc/collect_registry_content.class.php:359
 msgid "Exist"
-msgstr ""
+msgstr "Existe"
 
 #: inc/collect_registry_content.class.php:360
 msgid "Does not exist"
-msgstr ""
+msgstr "No existe"
 
 #: inc/collect_registry_content.class.php:371
 msgid "Defined"
-msgstr ""
+msgstr "Definido"
 
 #: inc/collect_registry_content.class.php:372
 msgid "Not defined"
-msgstr ""
+msgstr "No definido"
 
 #: inc/collect_registry_content.class.php:406
 #: inc/collect_registry_content.class.php:408
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: inc/collect_registry_content.class.php:410
 #: inc/collect_registry_content.class.php:473
@@ -1017,7 +1019,7 @@ msgstr "Número máximo de intentos alcanzados: despliegue a la fuerza"
 
 #: inc/taskjobstate.class.php:562
 msgid "Clean taskjob (retention time)"
-msgstr ""
+msgstr "Limpieza de taskjob (tiempo de retención)"
 
 #: inc/taskjobview.class.php:69
 msgid "Job configuration"
@@ -1559,7 +1561,7 @@ msgstr "Tipo"
 
 #: inc/collectcommon.class.php:74
 msgid "Collect configuration"
-msgstr ""
+msgstr "Configuración de recolección"
 
 #: inc/collect.class.php:147 inc/collect.class.php:209
 #: inc/deploycheck.class.php:52
@@ -1597,7 +1599,7 @@ msgstr "Finaliza programación"
 
 #: inc/task.class.php:143 inc/taskview.class.php:322
 msgid "Permit to re-prepare task after run"
-msgstr ""
+msgstr "Permitir volver a preparar la tarea después de ejecutarla"
 
 #: inc/task.class.php:153
 msgid "deploy on demand task"
@@ -1605,7 +1607,7 @@ msgstr "implementar tarea a petición"
 
 #: inc/task.class.php:177
 msgid "Associated tasks"
-msgstr ""
+msgstr "Tareas asociadas"
 
 #: inc/task.class.php:407
 msgid ""
@@ -1636,15 +1638,15 @@ msgstr "Este agente ya no pertenece a los actores definidos en el trabajo."
 
 #: inc/task.class.php:545
 msgid "The task cannot be updated if it is active"
-msgstr ""
+msgstr "No se puede actualizar la tarea si está activa"
 
 #: inc/task.class.php:700
 msgid "Inventory task scheduler"
-msgstr ""
+msgstr "Programador de tareas de inventario"
 
 #: inc/task.class.php:703
 msgid "Clean on demand deployment tasks"
-msgstr ""
+msgstr "Limpieza de tareas de despliegue a demanda"
 
 #: inc/task.class.php:1524
 msgid "Task has been disabled"
@@ -1701,7 +1703,7 @@ msgstr "Agregar grupo"
 
 #: inc/agentwakeup.class.php:56
 msgid "Wake agents up"
-msgstr ""
+msgstr "Despertar agentes"
 
 #: inc/config.class.php:201
 msgid "Network Inventory"
@@ -1741,7 +1743,7 @@ msgstr "Apagado"
 
 #: inc/taskview.class.php:108
 msgid "Export task result"
-msgstr ""
+msgstr "Exportar resultado de la tarea"
 
 #: inc/taskview.class.php:126
 msgid "Task execution states"
@@ -1951,12 +1953,12 @@ msgstr "Ruta a la clave"
 
 #: inc/deploycheck.class.php:342
 msgid "Example of registry key"
-msgstr ""
+msgstr "Ejemplo de clave del registro"
 
 #: inc/deploycheck.class.php:343 inc/deploycheck.class.php:360
 #, php-format
 msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
-msgstr ""
+msgstr "Se recomienda GLPI-Agent o FusionInventory-Agent >= %1s"
 
 #: inc/deploycheck.class.php:348 inc/deploycheck.class.php:356
 #: inc/deploycheck.class.php:367
@@ -1966,7 +1968,7 @@ msgstr "Ruta al valor"
 #: inc/deploycheck.class.php:350 inc/deploycheck.class.php:358
 #: inc/deploycheck.class.php:370
 msgid "Example of registry value"
-msgstr ""
+msgstr "Ejemplo de valor del registro"
 
 #: inc/deploycheck.class.php:368
 msgid "Type of value"
@@ -2026,4 +2028,4 @@ msgstr "Error(es)"
 
 #: public/js/taskjobs.js:747
 msgid "The preparation of the task did not return any targets"
-msgstr ""
+msgstr "La preparación de la tarea no devolvió ningún destino"
