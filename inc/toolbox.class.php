@@ -53,6 +53,18 @@ class PluginGlpiinventoryToolbox
      */
     private static ?array $preboot_definitions = null;
 
+    /**
+     * Itemtypes of the custom asset definitions an agent can be linked to
+     *
+     * @var ?array<class-string<CommonDBTM>>
+     */
+    private static ?array $agent_asset_itemtypes = null;
+
+    /**
+     * Whether the cached itemtypes were computed from booted definitions
+     */
+    private static bool $agent_asset_itemtypes_booted = false;
+
 
     /**
      * Log if extra debug enabled
@@ -297,13 +309,36 @@ class PluginGlpiinventoryToolbox
         // Custom assets are added to agent_types when their definition is booted, which happens
         // after plugins initialization: they must be computed here to be visible at any time.
         $itemtypes = $CFG_GLPI['agent_types'];
-        foreach (self::getAgentAssetDefinitions() as $definition) {
-            $itemtype = $definition->getAssetClassName();
+        foreach (self::getAgentAssetItemtypes() as $itemtype) {
             if (!in_array($itemtype, $itemtypes, true)) {
                 $itemtypes[] = $itemtype;
             }
         }
         return $itemtypes;
+    }
+
+
+    /**
+     * Get the itemtypes of the custom asset definitions an agent can be linked to. Reading a
+     * definition decodes its capacities, so the result is cached: it is recomputed once the
+     * definitions are booted, as a pre-boot read may miss what the boot registers.
+     *
+     * @return array<class-string<CommonDBTM>>
+     */
+    private static function getAgentAssetItemtypes(): array
+    {
+        $booted = AssetDefinitionManager::getInstance()->getDefinitions(true) !== [];
+        if (self::$agent_asset_itemtypes !== null && self::$agent_asset_itemtypes_booted === $booted) {
+            return self::$agent_asset_itemtypes;
+        }
+
+        self::$agent_asset_itemtypes = [];
+        foreach (self::getAgentAssetDefinitions() as $definition) {
+            self::$agent_asset_itemtypes[] = $definition->getAssetClassName();
+        }
+        self::$agent_asset_itemtypes_booted = $booted;
+
+        return self::$agent_asset_itemtypes;
     }
 
 
@@ -423,11 +458,10 @@ class PluginGlpiinventoryToolbox
         // Backup _SESSION environment
         $OLD_SESSION = [];
 
-        foreach (
-            ['glpiID', 'glpiname','glpiactiveentities_string',
-                'glpiactiveentities', 'glpiparententities', 'glpiactiveprofile',
-            ] as $session_key
-        ) {
+        $session_keys = ['glpiID', 'glpiname', 'glpiactiveentities_string',
+            'glpiactiveentities', 'glpiparententities', 'glpiactiveprofile',
+        ];
+        foreach ($session_keys as $session_key) {
             if (isset($_SESSION[$session_key])) {
                 $OLD_SESSION[$session_key] = $_SESSION[$session_key];
             }
@@ -454,9 +488,14 @@ class PluginGlpiinventoryToolbox
         // Execute function with impersonated SESSION
         $result = call_user_func_array($function, $args);
 
-        // Restore SESSION
-        foreach ($OLD_SESSION as $key => $value) {
-            $_SESSION[$key] = $value;
+        // Restore SESSION. Keys absent before the call are dropped: the impersonation writes
+        // an elevated profile that must not survive a context without one (console, cron).
+        foreach ($session_keys as $session_key) {
+            if (array_key_exists($session_key, $OLD_SESSION)) {
+                $_SESSION[$session_key] = $OLD_SESSION[$session_key];
+            } else {
+                unset($_SESSION[$session_key]);
+            }
         }
         // Return function results
         return $result;

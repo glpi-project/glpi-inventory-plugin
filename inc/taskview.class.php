@@ -1038,17 +1038,16 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                     $members       = [];
                     $members       = $group_users->getGroupUsers($itemid);
 
+                    $members_ids = array_column($members, 'id');
                     foreach (PluginGlpiinventoryToolbox::getAgentItemtypes() as $agent_itemtype) {
                         $agent_item = getItemForItemtype($agent_itemtype);
-                        if ($agent_item === false) {
+                        if ($agent_item === false || $members_ids === []) {
                             continue;
                         }
                         // Custom assets share a single table, hence the system criteria
                         $system_criteria = $agent_itemtype::getSystemSQLCriteria();
-                        foreach ($members as $member) {
-                            foreach ($agent_item->find(['users_id' => $member['id']] + $system_criteria) as $entry) {
-                                $items[$agent_itemtype][$entry['id']] = 1;
-                            }
+                        foreach ($agent_item->find(['users_id' => $members_ids] + $system_criteria) as $entry) {
+                            $items[$agent_itemtype][$entry['id']] = 1;
                         }
                     }
 

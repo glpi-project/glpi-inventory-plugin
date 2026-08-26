@@ -1663,6 +1663,16 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $pfTask    = new self();
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
+        // GLPI takes the action and its processor from hidden POST fields and does not recheck
+        // the rights of the previous stages: the task right must be enforced here.
+        if ($ma->getAction() === 'target_task' && !Session::haveRight('plugin_glpiinventory_task', UPDATE)) {
+            foreach ($ids as $items_id) {
+                $ma->itemDone($item::class, $items_id, MassiveAction::ACTION_NORIGHT);
+            }
+            $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+            return;
+        }
+
         switch ($ma->getAction()) {
             case "duplicate":
                 foreach ($ids as $key) {

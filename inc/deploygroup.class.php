@@ -266,6 +266,19 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         CommonDBTM $item,
         array $ids
     ) {
+        // GLPI takes the action and its processor from hidden POST fields and does not recheck
+        // the rights of the previous stages: the group right must be enforced here.
+        if (
+            in_array($ma->getAction(), ['add_to_static_group', 'exclude_from_static_group'], true)
+            && !Session::haveRight('plugin_glpiinventory_group', UPDATE)
+        ) {
+            foreach ($ids as $id) {
+                $ma->itemDone($item::class, $id, MassiveAction::ACTION_NORIGHT);
+            }
+            $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+            return;
+        }
+
         switch ($ma->getAction()) {
             case 'add_to_static_group':
                 if (PluginGlpiinventoryToolbox::isAgentItemtype($item::class)) {
@@ -480,13 +493,30 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      * @param array<string,mixed> $input
      * @return array<string,mixed>|false
      */
+    public function prepareInputForAdd($input)
+    {
+        if (
+            isset($input['itemtype'])
+            && !PluginGlpiinventoryToolbox::isAgentItemtype($input['itemtype'])
+        ) {
+            Session::addMessageAfterRedirect(__('An agent cannot be linked to this item type', 'glpiinventory'), false, ERROR);
+            return false;
+        }
+        return $input;
+    }
+
+
+    /**
+     * @param array<string,mixed> $input
+     * @return array<string,mixed>|false
+     */
     public function prepareInputForUpdate($input)
     {
         // Mirrors the locked dropdown of showForm(): the stored criteria belong to this itemtype
         if (isset($input['itemtype']) && $this->hasStoredCriteria()) {
             unset($input['itemtype']);
         }
-        return $input;
+        return $this->prepareInputForAdd($input);
     }
 
 
