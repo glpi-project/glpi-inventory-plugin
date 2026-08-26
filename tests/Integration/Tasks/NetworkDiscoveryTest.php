@@ -30,6 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Inventory\Request as InventoryRequest;
 use Glpi\Tests\DbTestCase;
 
 class NetworkDiscoveryTest extends DbTestCase
@@ -168,6 +169,70 @@ class NetworkDiscoveryTest extends DbTestCase
 
         $ref = [$agent->fields['id'] => 'computer2',];
         $this->assertEquals($ref, $data['agents']);
+    }
+
+
+    /**
+     * Credentials must survive XML serialization of the prolog response.
+     *
+     * The array returned by getTaskAgent() is already correct when the bug is
+     * present: the corruption happens when the core serializes it to XML. So the
+     * assertion has to be made on the XML the agent actually receives.
+     *
+     * @see https://github.com/glpi-project/glpi-inventory-plugin/issues/936
+     */
+    public function testDiscoveryXmlKeepsSpecialCharsInCredentials(): void
+    {
+        $this->prepareDb();
+
+        $pfIPRange = new PluginGlpiinventoryIPRange();
+        $this->assertTrue($pfIPRange->getFromDBByCrit(['name' => 'Office']));
+
+        $credential = new SNMPCredential();
+        $credentials_id = $credential->add([
+            'name'            => 'v3 credential with ampersands',
+            'snmpversion'     => 3,
+            'username'        => 'snmp&user',
+            'authentication'  => 2, //SHA
+            'auth_passphrase' => 'pass&word',
+            'encryption'      => 2, //AES
+            'priv_passphrase' => '12345&67890',
+        ]);
+        $this->assertNotFalse($credentials_id);
+
+        $iprange_credential = new PluginGlpiinventoryIPRange_SNMPCredential();
+        $this->assertNotFalse(
+            $iprange_credential->add([
+                'plugin_glpiinventory_ipranges_id' => $pfIPRange->fields['id'],
+                'snmpcredentials_id'               => $credentials_id,
+                'rank'                             => 1,
+            ])
+        );
+
+        $agent = new Agent();
+        $this->assertTrue($agent->getFromDBByCrit(['name' => 'computer2']));
+
+        $communication = new PluginGlpiinventoryCommunication();
+        $tasks = $communication->getTaskAgent($agent->fields['id']);
+        $this->assertCount(1, $tasks);
+
+        //serialize like the core does when answering a legacy XML prolog
+        $request = new InventoryRequest();
+        $request->handleContentType('application/xml');
+        $request->addToResponse($tasks[0]);
+        $xml = $request->getResponse();
+
+        $parsed = simplexml_load_string($xml);
+        $this->assertNotFalse($parsed, $xml);
+
+        $auth = $parsed->OPTION->AUTHENTICATION;
+        $this->assertSame((string) $credentials_id, (string) $auth->ID);
+        $this->assertSame('3', (string) $auth->VERSION);
+        $this->assertSame('snmp&user', (string) $auth->USERNAME);
+        $this->assertSame('SHA', (string) $auth->AUTHPROTOCOL);
+        $this->assertSame('pass&word', (string) $auth->AUTHPASSPHRASE);
+        $this->assertSame('AES', (string) $auth->PRIVPROTOCOL);
+        $this->assertSame('12345&67890', (string) $auth->PRIVPASSPHRASE);
     }
 
 
