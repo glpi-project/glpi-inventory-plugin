@@ -4,9 +4,9 @@
 
 ```
 cd glpi/
-GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:database:install --force
-GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:install --username=glpi glpiinventory
-GLPI_ENVIRONMENT_TYPE="testing" php bin/console glpi:plugin:activate glpiinventory
+GLPI_ENVIRONMENT_TYPE="testing" php bin/console database:install --force
+GLPI_ENVIRONMENT_TYPE="testing" php bin/console plugin:install --username=glpi glpiinventory
+GLPI_ENVIRONMENT_TYPE="testing" php bin/console plugin:activate glpiinventory
 ```
 
 ## Run plugin tests
