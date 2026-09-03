@@ -269,7 +269,17 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $rand = '';
         $class = PluginGlpiinventoryStaticmisc::getStaticMiscClass($module);
         $name = htmlentities($_POST['name'], ENT_QUOTES, 'UTF-8');
+        $agent_module = PluginGlpiinventoryStaticmisc::getAgentModuleForMethod($method);
         if (
+            $name === 'action'
+            && $agent_module !== null
+            && PluginGlpiinventoryToolbox::isAgentItemtype($definitiontype)
+        ) {
+            // Items an agent can be linked to have no dedicated selection method as their
+            // itemtype is not known when the plugin is written
+            $rand = PluginGlpiinventoryStaticmisc::showItemtypeSelection($definitiontype, $agent_module);
+            $iddropdown = "dropdown_" . $name . "selectiontoadd";
+        } elseif (
             is_callable([$class, "task_" . $name . "selection_"
             . $definitiontype . "_" . $method,
             ])

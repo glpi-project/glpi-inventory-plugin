@@ -45,10 +45,11 @@ class DeploygroupTest extends DbTestCase
         $groups_id = $pfDeploygroup->add($input);
         $this->assertGreaterThan(0, $groups_id);
 
-        $result = ['id'      => $groups_id,
-            'name'    => 'MyGroup',
-            'type'    => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
-            'comment' => 'MyComment',
+        $result = ['id'       => $groups_id,
+            'name'     => 'MyGroup',
+            'type'     => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
+            'comment'  => 'MyComment',
+            'itemtype' => Computer::class,
         ];
         $pfDeploygroup->getFromDB($groups_id);
         $this->assertEquals($pfDeploygroup->fields, $result);

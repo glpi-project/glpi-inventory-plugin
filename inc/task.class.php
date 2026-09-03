@@ -978,7 +978,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     'glpi_plugin_glpiinventory_taskjobstates.items_id',
                     'agents_id AS agent_id',
                     'agent.name AS agent_name',
-                    'agent.items_id AS agent_computers_id',
+                    'agent.itemtype AS agent_itemtype',
+                    'agent.items_id AS agent_items_id',
                 ],
                 'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
                 'LEFT JOIN' => [
@@ -991,7 +992,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 ],
                 'WHERE'  => [
                     'glpi_plugin_glpiinventory_taskjobstates.plugin_glpiinventory_taskjobs_id' => $taskjob['id'],
-                    'agent.itemtype' => Computer::class,
+                    'agent.itemtype' => PluginGlpiinventoryToolbox::getAgentItemtypes(),
                 ],
                 'ORDER'  => 'glpi_plugin_glpiinventory_taskjobstates.id DESC',
             ]);
@@ -1159,7 +1160,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 if ($with_logs) {
                     $runs_id[$run_id] = [
                         'agent_id' => $agent_id,
-                        'link'     => Computer::getFormURLWithID($result['agent_computers_id']),
+                        'link'     => $result['agent_itemtype']::getFormURLWithID($result['agent_items_id']),
                         'numstate' => $result['state'],
                         'state'    => $agent_state,
                         'jobs_id'  => $job_id,
@@ -1662,6 +1663,16 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $pfTask    = new self();
         $pfTaskjob = new PluginGlpiinventoryTaskjob();
 
+        // GLPI takes the action and its processor from hidden POST fields and does not recheck
+        // the rights of the previous stages: the task right must be enforced here.
+        if ($ma->getAction() === 'target_task' && !Session::haveRight('plugin_glpiinventory_task', UPDATE)) {
+            foreach ($ids as $items_id) {
+                $ma->itemDone($item::class, $items_id, MassiveAction::ACTION_NORIGHT);
+            }
+            $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+            return;
+        }
+
         switch ($ma->getAction()) {
             case "duplicate":
                 foreach ($ids as $key) {
@@ -1704,7 +1715,6 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 break;
 
             case 'target_task':
-                $computer = new Computer();
                 $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
                 // Get the task and the package
@@ -1712,9 +1722,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 $got_package = $pfDeployPackage->getFromDB($ma->POST['packages_id']);
                 if (! $got_package || ! $got_task) {
                     // No task or package provided
-                    foreach ($ids as $computer_id) {
-                        $computer->getFromDB($computer_id);
-                        $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_KO);
+                    foreach ($ids as $items_id) {
+                        $ma->itemDone($item::class, $items_id, MassiveAction::ACTION_KO);
                     }
                     Session::addMessageAfterRedirect(sprintf(
                         __('%1$s: %2$s'),
@@ -1757,11 +1766,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                         __('Updated a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName()
                         . __(', actors: ', 'glpiinventory')
                     );
-                    foreach ($ids as $computer_id) {
-                        $computer->getFromDB($computer_id);
-                        $message .= $computer->getName() . ",";
-                        $input['actors'][] = [Computer::class => $computer_id];
-                        $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_OK);
+                    foreach ($ids as $items_id) {
+                        $item->getFromDB($items_id);
+                        $message .= $item->getName() . ",";
+                        $input['actors'][] = [$item::class => $items_id];
+                        $ma->itemDone($item::class, $items_id, MassiveAction::ACTION_OK);
                     }
                     //               $ma->addMessage($message);
                     Session::addMessageAfterRedirect($message, false, INFO);
@@ -1775,9 +1784,8 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 } else {
                     if ($pfTaskjob->getFromDBByCrit(['plugin_glpiinventory_tasks_id' => $pfTask->getID()])) {
                         // The task already has a job - do not replace!
-                        foreach ($ids as $computer_id) {
-                            $computer->getFromDB($computer_id);
-                            $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_KO);
+                        foreach ($ids as $items_id) {
+                            $ma->itemDone($item::class, $items_id, MassiveAction::ACTION_KO);
                         }
                         Session::addMessageAfterRedirect(
                             sprintf(
@@ -1800,11 +1808,11 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                             __('Created a deployment job, package: ', 'glpiinventory') . $pfDeployPackage->getName()
                             . __(', actors: ', 'glpiinventory')
                         );
-                        foreach ($ids as $computer_id) {
-                            $computer->getFromDB($computer_id);
-                            $message .= $computer->getName() . ",";
-                            $input['actors'][] = [Computer::class => $computer_id];
-                            $ma->itemDone($computer::class, $computer_id, MassiveAction::ACTION_OK);
+                        foreach ($ids as $items_id) {
+                            $item->getFromDB($items_id);
+                            $message .= $item->getName() . ",";
+                            $input['actors'][] = [$item::class => $items_id];
+                            $ma->itemDone($item::class, $items_id, MassiveAction::ACTION_OK);
                         }
                         $input['actors'] = json_encode($input['actors']);
                         //                  $ma->addMessage($message);

@@ -395,6 +395,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploygroups` (
   `name` varchar(255) NOT NULL,
   `comment` text DEFAULT NULL,
   `type` varchar(255) NOT NULL,
+  `itemtype` varchar(255) NOT NULL DEFAULT 'Computer',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
@@ -421,7 +422,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_deploygroups_dynamicdatas` (
   `plugin_glpiinventory_deploygroups_id` int unsigned NOT NULL DEFAULT '0',
   `fields_array` text DEFAULT NULL,
   `can_update_group` tinyint NOT NULL DEFAULT '0',
-  `computers_id_cache` longtext DEFAULT NULL,
+  `items_id_cache` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_glpiinventory_deploygroups_id` (`plugin_glpiinventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)
@@ -486,12 +487,13 @@ DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_registries_contents`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_registries_contents` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `itemtype` varchar(255) DEFAULT NULL,
+  `items_id` int unsigned NOT NULL DEFAULT '0',
   `plugin_glpiinventory_collects_registries_id` int unsigned NOT NULL DEFAULT '0',
   `key` varchar(255) DEFAULT NULL,
   `value` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `computers_id` (`computers_id`)
+  KEY `item` (`itemtype`,`items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -514,11 +516,13 @@ DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_wmis_contents`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis_contents` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `itemtype` varchar(255) DEFAULT NULL,
+  `items_id` int unsigned NOT NULL DEFAULT '0',
   `plugin_glpiinventory_collects_wmis_id` int unsigned NOT NULL DEFAULT '0',
   `property` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `item` (`itemtype`,`items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -551,11 +555,13 @@ DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_files_contents`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_files_contents` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `itemtype` varchar(255) DEFAULT NULL,
+  `items_id` int unsigned NOT NULL DEFAULT '0',
   `plugin_glpiinventory_collects_files_id` int unsigned NOT NULL DEFAULT '0',
   `pathfile` text DEFAULT NULL,
   `size` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `item` (`itemtype`,`items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 

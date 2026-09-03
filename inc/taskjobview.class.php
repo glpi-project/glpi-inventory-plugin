@@ -418,31 +418,21 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         // filter actor list with active agent and with current module active
         $condition = [];
+        $is_agent_itemtype = PluginGlpiinventoryToolbox::isAgentItemtype($itemtype);
         if (
             $moduletype == "actors"
-            && in_array($itemtype, [Computer::class, Agent::class])
+            && ($is_agent_itemtype || $itemtype === Agent::class)
         ) {
             // remove install suffix from deploy
             $modulename = str_replace('DEPLOYINSTALL', 'DEPLOY', strtoupper($method));
 
-            // prepare a query to retrieve agent's & computer's id
-            $iterator = $DB->request([
+            $criteria = [
                 'SELECT' => [
                     'agents.id AS agents_id',
                     'agents.items_id',
                 ],
                 'FROM' => 'glpi_agents AS agents',
                 'LEFT JOIN' => [
-                    'glpi_computers AS computers' => [
-                        'ON' => [
-                            'computers' => 'id',
-                            'agents' => 'items_id', [
-                                'AND' => [
-                                    'agents.itemtype' => Computer::class,
-                                ],
-                            ],
-                        ],
-                    ],
                     'glpi_plugin_glpiinventory_agentmodules AS modules' => [
                         'OR' => [
                             'exceptions' => ['LIKE', new QueryExpression("CONCAT('%\"', agents.`id`, '\"%')")],
@@ -454,25 +444,42 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                     'RAW' => [
                         'UPPER(modules.modulename)' => $modulename,
                     ],
-                    'computers.is_deleted' => 0,
-                    'computers.is_template' => 0,
                 ],
                 'GROUP' => [
                     'agents.id',
                     'agents.items_id',
                 ],
-            ]);
-            $filter_id = [];
-            foreach ($iterator as $data_filter) {
-                if ($itemtype == Computer::class) {
-                    $filter_id[] =  $data_filter['items_id'];
-                } else {
-                    $filter_id[] =  $data_filter['agents_id'];
+            ];
+
+            if ($is_agent_itemtype) {
+                // Only keep the agents of this itemtype, and drop deleted or template items
+                $item_table = $itemtype::getTable();
+                $criteria['LEFT JOIN']["$item_table AS items"] = [
+                    'ON' => [
+                        'items'  => 'id',
+                        'agents' => 'items_id', [
+                            'AND' => [
+                                'agents.itemtype' => $itemtype,
+                            ],
+                        ],
+                    ],
+                ];
+                $criteria['WHERE']['agents.itemtype'] = $itemtype;
+                foreach (['is_deleted', 'is_template'] as $flag) {
+                    if ($DB->fieldExists($item_table, $flag)) {
+                        $criteria['WHERE']["items.$flag"] = 0;
+                    }
                 }
             }
 
+            $iterator = $DB->request($criteria);
+            $filter_id = [];
+            foreach ($iterator as $data_filter) {
+                $filter_id[] = $is_agent_itemtype ? $data_filter['items_id'] : $data_filter['agents_id'];
+            }
+
             if ($filter_id === []) {
-                // No available agents/computers: show empty dropdown safely
+                // No available agents/items: show empty dropdown safely
                 $this->showDropdownFromArray(
                     $title,
                     null,
