@@ -533,7 +533,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 // Inform agent we request POST method, agent will then submit result
                                 // in POST request if it supports the method or it will continue with GET
                                 $response->postmethod = 'POST';
-                                $response->token = Session::getNewCSRFToken();
                             }
                         }
                     }
@@ -562,10 +561,9 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     $computers_id = $pfAgent->fields['items_id'];
 
                     $a_values = $_GET;
-                    // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
+                    // Check agent uses POST method to use the right submitted values.
                     if (isset($_GET['method']) && $_GET['method'] == 'POST') {
                         $a_values = $_POST;
-                        $response->token = Session::getNewCSRFToken();
                         unset($a_values['_glpi_csrf_token']);
                     }
                     $sid = $a_values['_sid'] ?? 0;

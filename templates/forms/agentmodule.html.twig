@@ -85,7 +85,6 @@
     {% if agents_id is defined %}
         {{ fields.hiddenField('agents_id', agents_id) }}
     {% endif %}
-        {{ fields.hiddenField('_glpi_csrf_token', csrf_token()) }}
     </div>
 </form>
 {% endif %}

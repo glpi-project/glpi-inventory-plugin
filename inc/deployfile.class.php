@@ -387,7 +387,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         global $CFG_GLPI;
 
         echo "<script type='text/javascript'>";
-        echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
          dataUrl:'" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/serverfilestreesons.php'
       });";
