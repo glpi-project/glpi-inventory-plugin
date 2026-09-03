@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 00:37+0000\n"
+"POT-Creation-Date: 2026-09-03 02:00+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Cédric Anne, 2021\n"
 "Language-Team: Finnish (Finland) (https://app.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -20,10 +20,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:252
-msgid "Mirror server address"
-msgstr "Peilipalvelimen osoite"
 
 #: templates/forms/iprange.html.twig inc/iprange.class.php:137
 #: inc/iprange.class.php:229
@@ -35,41 +31,125 @@ msgstr "IP-osoitealueen alku"
 msgid "End of IP range"
 msgstr "IP-osoitealueen loppu"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:60
-#: inc/collect_wmi_content.class.php:118
-msgid "Class"
-msgstr "Luokka"
+#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
+#: hook.php:76 hook.php:83 hook.php:90
+msgid "Module"
+msgstr "Moduuli"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
-msgid "Properties"
-msgstr "Ominaisuudet"
-
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:104
-msgid "Mode"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation"
 msgstr ""
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:101
-msgid "Hive"
-msgstr "Avain"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation (by default)"
+msgstr "Aktivointi (oletuksena)"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:102
-#: inc/collect_registry_content.class.php:403
-msgid "Path"
-msgstr "Polku"
+#: templates/forms/agentmodule.html.twig
+msgid "Exceptions"
+msgstr "Poikkeukset"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:103
-#: inc/collect_registry_content.class.php:405
-#: inc/collect_registry_content.class.php:487
-msgid "Key"
-msgstr "Avain"
+#: templates/forms/config/main.html.twig
+msgid "SSL-only for agent"
+msgstr "Yhteys agenttin vain SSL:än avulla"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:105
-msgid "Depth"
+#: templates/forms/config/main.html.twig
+msgid "Agent port"
+msgstr "Agentin portti"
+
+#: templates/forms/config/main.html.twig
+msgid "Delete tasks logs after"
+msgstr "Poista tehtävien lokit, kun on kulunut "
+
+#: templates/forms/config/main.html.twig
+msgid "Re-prepare successful jobs"
+msgstr "Uudelleenvalmistele onnistuneet työt"
+
+#: templates/forms/config/main.html.twig
+msgid "Maximum number of agents to wake up in a task"
+msgstr "Herätettävien agenttien enimmäismäärä tehtävää kohden"
+
+#: templates/forms/config/main.html.twig
+msgid "Extra-debug"
+msgstr "Extra-debug"
+
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
+msgid "Threads number"
+msgstr "Säikeiden lukumäärä"
+
+#: templates/forms/config/netinv.html.twig hook.php:83
+#: inc/staticmisc.class.php:75
+msgid "Network discovery"
+msgstr "Verkon löytäminen"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:81
+#: inc/agentmodule.class.php:122
+msgid "Network inventory (SNMP)"
+msgstr "Verkon kartoitus (SNMP)"
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
+msgstr "SNMP-timeout"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Use this GLPI server as a mirror server"
+msgstr "Käytä tätä GLPI-palvelinta peilipalvelimena"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Match mirrors to agents"
+msgstr "Sovita peilipalvelimet agenteille"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Delete successful on demand tasks after (in days)"
+msgstr ""
+"Poista onnistuneet pyyntöön perustuvat käyttöönottotehtävät jälkeen "
+"(päivissä)"
+
+#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:252
+msgid "Mirror server address"
+msgstr "Peilipalvelimen osoite"
+
+#: templates/forms/timeslot/entry.html.twig
+msgid "Weekly view of the configured time slots"
+msgstr ""
+
+#: templates/forms/timeslot/entry.html.twig
+msgid "Add a time slot entry"
+msgstr ""
+
+#: templates/forms/timeslot/entry.html.twig
+msgid "Start time"
+msgstr "Aloitusaika"
+
+#: templates/forms/timeslot/entry.html.twig
+msgid "End time"
+msgstr "Päättymisaika"
+
+#: templates/forms/timeslot/entry.html.twig
+msgid "Configured time slot entries"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction format"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction type"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert icon"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Retry job after"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Maximum number of retry allowed"
+msgstr ""
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert display timeout"
 msgstr ""
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
@@ -102,10 +182,10 @@ msgstr "Tarkistussumma SHA512"
 msgid "Checksum SHA2"
 msgstr "Tarkistussumma SHA2"
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:1093
+#: templates/forms/collect/add_file.html.twig inc/collect.class.php:262
 #: inc/collect_file_content.class.php:93
-#: inc/collect_file_content.class.php:148 inc/collect_file.class.php:63
-#: inc/collect.class.php:262
+#: inc/collect_file_content.class.php:148 inc/deployfile.class.php:1093
+#: inc/collect_file.class.php:63
 msgid "Size"
 msgstr "Koko"
 
@@ -137,9 +217,9 @@ msgstr ""
 msgid "Filter name"
 msgstr ""
 
-#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:316
-#: inc/collect_file.class.php:83 inc/deploycheck.class.php:376
+#: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:376
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
+#: inc/deployfile.class.php:316 inc/collect_file.class.php:83
 msgid "File"
 msgstr "Tiedosto"
 
@@ -148,143 +228,64 @@ msgstr "Tiedosto"
 msgid "Folder"
 msgstr "Hakemisto"
 
-#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
-#: hook.php:76 hook.php:83 hook.php:90
-msgid "Module"
-msgstr "Moduuli"
-
-#: templates/forms/agentmodule.html.twig
-msgid "Activation"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:104
+msgid "Mode"
 msgstr ""
 
-#: templates/forms/agentmodule.html.twig
-msgid "Activation (by default)"
-msgstr "Aktivointi (oletuksena)"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:101
+msgid "Hive"
+msgstr "Avain"
 
-#: templates/forms/agentmodule.html.twig
-msgid "Exceptions"
-msgstr "Poikkeukset"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:102
+#: inc/collect_registry_content.class.php:403
+msgid "Path"
+msgstr "Polku"
 
-#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
-msgid "Threads number"
-msgstr "Säikeiden lukumäärä"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:103
+#: inc/collect_registry_content.class.php:405
+#: inc/collect_registry_content.class.php:487
+msgid "Key"
+msgstr "Avain"
 
-#: templates/forms/config/netinv.html.twig hook.php:83
-#: inc/staticmisc.class.php:75
-msgid "Network discovery"
-msgstr "Verkon löytäminen"
-
-#: templates/forms/config/netinv.html.twig inc/agentmodule.class.php:122
-#: inc/staticmisc.class.php:81
-msgid "Network inventory (SNMP)"
-msgstr "Verkon kartoitus (SNMP)"
-
-#: templates/forms/config/netinv.html.twig
-msgid "SNMP timeout"
-msgstr "SNMP-timeout"
-
-#: templates/forms/config/main.html.twig
-msgid "SSL-only for agent"
-msgstr "Yhteys agenttin vain SSL:än avulla"
-
-#: templates/forms/config/main.html.twig
-msgid "Agent port"
-msgstr "Agentin portti"
-
-#: templates/forms/config/main.html.twig
-msgid "Delete tasks logs after"
-msgstr "Poista tehtävien lokit, kun on kulunut "
-
-#: templates/forms/config/main.html.twig
-msgid "Re-prepare successful jobs"
-msgstr "Uudelleenvalmistele onnistuneet työt"
-
-#: templates/forms/config/main.html.twig
-msgid "Maximum number of agents to wake up in a task"
-msgstr "Herätettävien agenttien enimmäismäärä tehtävää kohden"
-
-#: templates/forms/config/main.html.twig
-msgid "Extra-debug"
-msgstr "Extra-debug"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Use this GLPI server as a mirror server"
-msgstr "Käytä tätä GLPI-palvelinta peilipalvelimena"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Match mirrors to agents"
-msgstr "Sovita peilipalvelimet agenteille"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Delete successful on demand tasks after (in days)"
-msgstr ""
-"Poista onnistuneet pyyntöön perustuvat käyttöönottotehtävät jälkeen "
-"(päivissä)"
-
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction format"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:105
+msgid "Depth"
 msgstr ""
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction type"
-msgstr ""
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:60
+#: inc/collect_wmi_content.class.php:118
+msgid "Class"
+msgstr "Luokka"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Alert icon"
-msgstr ""
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+msgid "Properties"
+msgstr "Ominaisuudet"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Retry job after"
-msgstr ""
-
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Maximum number of retry allowed"
-msgstr ""
-
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Alert display timeout"
-msgstr ""
-
-#: templates/forms/timeslot/entry.html.twig
-msgid "Weekly view of the configured time slots"
-msgstr ""
-
-#: templates/forms/timeslot/entry.html.twig
-msgid "Add a time slot entry"
-msgstr ""
-
-#: templates/forms/timeslot/entry.html.twig
-msgid "Start time"
-msgstr "Aloitusaika"
-
-#: templates/forms/timeslot/entry.html.twig
-msgid "End time"
-msgstr "Päättymisaika"
-
-#: templates/forms/timeslot/entry.html.twig
-msgid "Configured time slot entries"
-msgstr ""
-
-#: front/credential.php:34 front/menu_snmpinventory.php:37
-#: front/timeslot.php:37 front/statediscovery.php:34
-#: front/credentialip.form.php:42 front/credentialip.php:34
-#: front/credential.form.php:39 front/collect.php:34 front/task.form.php:39
-#: front/task.php:34 front/taskjob.php:34 front/stateinventory.php:34
-#: front/taskjob.form.php:36 front/iprange.php:34
-#: front/agentmodule.form.php:34 front/menu.php:38 front/iprange.form.php:36
-#: src/Controller/InventoryController.php:81 inc/profile.class.php:116
-#: inc/menu.class.php:48
+#: front/taskjob.php:34 front/credential.php:34 front/stateinventory.php:34
+#: front/credentialip.php:34 front/statediscovery.php:34
+#: front/credentialip.form.php:42 front/task.php:34 front/iprange.php:34
+#: front/task.form.php:39 front/menu.php:38 front/collect.php:34
+#: front/credential.form.php:39 front/agentmodule.form.php:34
+#: front/iprange.form.php:36 front/menu_snmpinventory.php:37
+#: front/taskjob.form.php:36 front/timeslot.php:37 inc/profile.class.php:116
+#: inc/menu.class.php:48 src/Controller/InventoryController.php:81
 msgid "GLPI Inventory"
 msgstr ""
 
-#: front/deploygroup.php:36 inc/deploytaskjob.class.php:222
-#: inc/profile.class.php:388 inc/menu.class.php:213
-msgid "Groups of computers"
-msgstr "Tietokoneryhmät"
+#: front/config.form.php:36
+msgid "Features"
+msgstr "Piirteet"
 
-#: front/deployuserinteractiontemplate.php:36
-#: inc/deployuserinteractiontemplate.class.php:135 inc/profile.class.php:281
-#: inc/menu.class.php:399
+#: front/deployfile.clean.php:59
+msgid "Delete unused files"
+msgstr ""
+
+#: front/deployuserinteractiontemplate.php:36 inc/profile.class.php:281
+#: inc/deployuserinteractiontemplate.class.php:135 inc/menu.class.php:399
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "Käyttäjän vuorovaikutusmalli"
@@ -302,13 +303,10 @@ msgstr ""
 msgid "Collect management"
 msgstr "Keräyksen hallinta"
 
-#: front/deployfile.clean.php:59
-msgid "Delete unused files"
-msgstr ""
-
-#: front/config.form.php:36
-msgid "Features"
-msgstr "Piirteet"
+#: front/deploygroup.php:36 inc/deploytaskjob.class.php:222
+#: inc/profile.class.php:388 inc/menu.class.php:213
+msgid "Groups of computers"
+msgstr "Tietokoneryhmät"
 
 #: hook.php:55 inc/menu.class.php:410
 msgid "Deploy"
@@ -334,7 +332,7 @@ msgstr "Keräys"
 msgid "Static group"
 msgstr "Staattinen ryhmä"
 
-#: hook.php:132 inc/menu.class.php:266 inc/task.class.php:212
+#: hook.php:132 inc/task.class.php:212 inc/menu.class.php:266
 msgid "Tasks"
 msgstr "Tehtävät"
 
@@ -360,46 +358,446 @@ msgstr "Lisää staattiseen ryhmään"
 msgid "Remove from static group"
 msgstr ""
 
-#: public/b/deploy/index.php:84
-msgid "Deploy module has been disabled for this agent"
+#: inc/iprange.class.php:78
+msgid "Communication mode"
+msgstr "Yhteystapa"
+
+#: inc/iprange.class.php:81
+msgid "See all informations of task"
+msgstr "Katso tehtävien kaikki tiedot"
+
+#: inc/iprange.class.php:83 inc/iprange.class.php:86
+#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
+#: inc/menu.class.php:318
+msgid "IP Ranges"
+msgstr "IP-osoitealueet"
+
+#: inc/iprange.class.php:113 inc/profile.class.php:309
+msgid "IP range configuration"
+msgstr "IP-osoitealueen määritys"
+
+#: inc/iprange.class.php:227
+msgid "Bad IP"
+msgstr "Virheellinen IP-osoite"
+
+#: inc/collect_wmi.class.php:48
+msgid "Found WMI"
+msgid_plural "Found WMIs"
+msgstr[0] "WMI löytyi"
+msgstr[1] "WMI:t löytyivät"
+
+#: inc/collect.class.php:56 inc/profile.class.php:393 inc/menu.class.php:253
+msgid "Collect information"
+msgstr "Keräystiedot"
+
+#: inc/collect.class.php:147 inc/collect.class.php:209
+#: inc/deploycheck.class.php:52
+msgid "Registry"
+msgstr "Rekisteri"
+
+#: inc/collect.class.php:148 inc/collect.class.php:227
+msgid "WMI"
+msgstr "WMI"
+
+#: inc/collect.class.php:149 inc/collect.class.php:245
+#: inc/collect.class.php:260
+msgid "Find file"
+msgstr "Tiedoston haku"
+
+#: inc/collect.class.php:247
+msgid "pathfile"
+msgstr "tiedostopolku"
+
+#: inc/collect.class.php:507
+msgid "Collect module has been disabled for this agent"
+msgstr "Tiedon keräys-moduuli on poistettu käytöstä kyseiselle agentille"
+
+#: inc/collect.class.php:678
+msgid "Path not found"
+msgstr "Polkua ei löydy"
+
+#: inc/deployaction.class.php:53
+msgid "Return code is equal to"
+msgstr "Paluuarvo on yhtä suuri kuin"
+
+#: inc/deployaction.class.php:54
+msgid "Return code is not equal to"
+msgstr "Paluuarvo on eri suuri kuin"
+
+#: inc/deployaction.class.php:55
+msgid "Command output contains"
+msgstr "Komennon tulos sisältää"
+
+#: inc/deployaction.class.php:56
+msgid "Command output does not contains"
+msgstr "Komennon tulos ei sisällä"
+
+#: inc/deployaction.class.php:69
+msgid "Command"
+msgstr "Komento"
+
+#: inc/deployaction.class.php:70
+msgid "Move"
+msgstr "Siirrä"
+
+#: inc/deployaction.class.php:71
+msgid "Copy"
+msgstr "Kopioi"
+
+#: inc/deployaction.class.php:72
+msgid "Delete directory"
+msgstr "Poista hakemisto"
+
+#: inc/deployaction.class.php:73
+msgid "Create directory"
+msgstr "Luo hakemisto"
+
+#: inc/deployaction.class.php:200
+msgid "Command to execute"
+msgstr "Suoritettava komento"
+
+#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
+msgid "Action label"
+msgstr "Toiminnon tunniste"
+
+#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
+msgid "Number of output lines to retrieve"
+msgstr "Haettavien tulostusrivien määrä"
+
+#: inc/deployaction.class.php:223
+msgid "return codes saved for this command"
+msgstr "tämän komennon paluuarvot talletettu "
+
+#: inc/deployaction.class.php:236 inc/deploycheck.class.php:264
+#: inc/deployuserinteraction.class.php:250 inc/deployfile.class.php:257
+msgid "drag"
+msgstr "raahaa"
+
+#: inc/deployaction.class.php:250 inc/deploycheck.class.php:278
+#: inc/deployuserinteraction.class.php:264 inc/taskjobview.class.php:279
+#: inc/deployfile.class.php:270
+msgid "Delete"
+msgstr "Poista "
+
+#: inc/deployaction.class.php:296
+msgid "From"
+msgstr "Alkaen"
+
+#: inc/deployaction.class.php:298
+msgid "To"
+msgstr "Asti"
+
+#: inc/deployaction.class.php:309
+msgid "exec"
+msgstr "exec"
+
+#: inc/deployaction.class.php:324
+msgid "path"
+msgstr "Polku "
+
+#: inc/deployaction.class.php:370
+msgid "Execution checks"
+msgstr "Tarkistusten suoritus"
+
+#: inc/deployaction.class.php:435 inc/deploycheck.class.php:233
+#: inc/deploycheck.class.php:351 inc/deploycheck.class.php:362
+#: inc/deploycheck.class.php:371
+#, php-format
+msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
 msgstr ""
-"Paketin käyttöönotto-moduuli on poistettu käytöstä kyseiselle agentille"
 
-#: public/b/deploy/index.php:150
-msgid "Checks"
-msgstr "Tarkastukset"
+#: inc/config.class.php:201
+msgid "Network Inventory"
+msgstr "Verkkokartoitus"
 
-#: public/b/deploy/index.php:151
-msgid "Files download"
-msgstr "Tiedostojen lataus"
+#: inc/config.class.php:202 inc/menu.class.php:385
+msgid "Package management"
+msgstr "Paketin hallinta"
 
-#: public/b/deploy/index.php:152
-msgid "Files preparation"
-msgstr "Tiedostojen valmistelu"
+#: inc/config.class.php:284
+msgid "Change the status"
+msgstr "Muuta tilaa"
 
-#: public/b/deploy/index.php:153 inc/deploypackage.class.php:536
-msgid "Actions"
-msgstr "Toiminnot"
+#: inc/config.class.php:287
+msgid "Clean agents"
+msgstr "Siivoa agentit"
 
-#: public/b/deploy/index.php:263
-msgid "User canceled the job"
-msgstr "Käyttäjä peruutti työn"
+#: inc/config.class.php:315
+msgid "with location"
+msgstr "sijainnilla"
 
-#: public/b/deploy/index.php:265
-msgid "User postponed the job"
-msgstr "Käyttäjä lykkäsi työtä"
+#: inc/config.class.php:316
+msgid "with entity"
+msgstr "yksiköllä"
 
+#: inc/config.class.php:317
+msgid "with both"
+msgstr "molemmilla"
+
+#: inc/deploygroup_staticdata.class.php:107
+msgid "CSV import"
+msgstr "CSV-tuonti"
+
+#: inc/deploygroup_staticdata.class.php:154
+#, php-format
+msgid ""
+"Make a search to get desired computer, then use massive actions and use %s"
+msgstr ""
+
+#: inc/deploygroup_staticdata.class.php:336
+msgid ""
+"Import a list of computers from a CSV file (the first column must contain "
+"the computer ID)"
+msgstr ""
+"Tuo tietokoneet CSV-tiedostosta (ensimmäisessä sarakkeessa on oltava "
+"tietokoneen tunnus)"
+
+#: inc/deploygroup_staticdata.class.php:381
+msgid "Computers imported successfully from CSV file"
+msgstr "Tietokoneet tuotu onnistuneesti CSV-tiedostosta"
+
+#: inc/deploygroup_staticdata.class.php:384
+msgid "Impossible to read the CSV file"
+msgstr "CSV-tiedostoa ei voi lukea"
+
+#: inc/credential.class.php:77 inc/credential.class.php:186
+#: inc/credentialip.class.php:132 inc/credentialip.class.php:155
+#: inc/profile.class.php:314 inc/menu.class.php:342
+msgid "Authentication for remote devices (VMware)"
+msgstr "Kirjautuminen etälaitteille (Vmware)"
+
+#: inc/credential.class.php:302 inc/credential.class.php:320
+#: inc/profile.class.php:324
+msgid "VMware host"
+msgstr "Vmware-isäntä"
+
+#: inc/taskview.class.php:70
+msgid "Include old jobs"
+msgstr "Sisällytä vanhat työt"
+
+#: inc/taskview.class.php:88
+msgid "refresh interval"
+msgstr "tarkistustiheys"
+
+#: inc/taskview.class.php:91
+msgid "Off"
+msgstr "Ei käynnissä"
+
+#: inc/taskview.class.php:108
+msgid "Export task result"
+msgstr ""
+
+#: inc/taskview.class.php:126
+msgid "Task execution states"
+msgstr "Tehtävien suoritustilat"
+
+#: inc/taskview.class.php:164 inc/stateinventory.class.php:114
+#: inc/deploytask.class.php:53 inc/deploytask.class.php:153
+#: inc/task.class.php:1572 inc/task.class.php:1612
+#: inc/statediscovery.class.php:177 inc/profile.class.php:383
+msgid "Task"
+msgid_plural "Tasks"
+msgstr[0] "Tehtävä"
+msgstr[1] "Tehtävä"
+
+#: inc/taskview.class.php:212
+msgid "Show/Hide details"
+msgstr "Näytä/piilota tiedot"
+
+#: inc/taskview.class.php:235 inc/deploypackage.class.php:1377
+msgid "In error"
+msgstr "Virhetilassa"
+
+#: inc/taskview.class.php:236 inc/deploypackage.class.php:1378
+msgid "Successful"
+msgstr "Onnistunut"
+
+#: inc/taskview.class.php:237 inc/deploypackage.class.php:1379
+msgid "Running"
+msgstr "Käynnissä"
+
+#: inc/taskview.class.php:238 inc/stateinventory.class.php:192
 #: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:282
-#: inc/taskjobstate.class.php:144 inc/statediscovery.class.php:261
-#: inc/deploypackage.class.php:1380 inc/taskview.class.php:238
-#: inc/stateinventory.class.php:192
+#: inc/taskjobstate.class.php:144 inc/deploypackage.class.php:1380
+#: inc/statediscovery.class.php:261
 msgid "Prepared"
 msgstr "Valmiina"
 
-#: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:286
-#: inc/statediscovery.class.php:266 inc/stateinventory.class.php:197
+#: inc/taskview.class.php:239 inc/taskjobstate.class.php:149
+#: inc/deploypackage.class.php:1381
+msgid "Cancelled"
+msgstr "Peruttu"
+
+#: inc/taskview.class.php:322 inc/task.class.php:143
+msgid "Permit to re-prepare task after run"
+msgstr ""
+
+#: inc/taskview.class.php:327
+msgid "This is an on demand deployment task"
+msgstr "Tämä on pyyntöön perustuva käyttöönottotehtävä"
+
+#: inc/taskview.class.php:338 inc/task.class.php:102
+msgid "Schedule start"
+msgstr "Aikatauluta aloitus"
+
+#: inc/taskview.class.php:344 inc/task.class.php:110
+msgid "Schedule end"
+msgstr "Aikatauluta lopetus"
+
+#: inc/taskview.class.php:350
+msgid "Preparation timeslot"
+msgstr "Valmistelun aikaväli"
+
+#: inc/taskview.class.php:358
+msgid "Execution timeslot"
+msgstr "Suorituksen aikaväli"
+
+#: inc/taskview.class.php:366
+msgid "Agent wakeup interval (in minutes)"
+msgstr "Kahden herätyksen välinen aika (minuutteina)"
+
+#: inc/taskview.class.php:376
+msgid "Number of agents to wake up"
+msgstr "Herätettävien agenttien määrä"
+
+#: inc/taskview.class.php:422
+msgid "Force start"
+msgstr "Pakota aloitus"
+
+#: inc/taskview.class.php:942
+msgid "Device no longer defined in definition of job"
+msgstr "Laite ei ole enää työn määrityksissä"
+
+#: inc/stateinventory.class.php:113 inc/taskjoblog.class.php:212
+#: inc/statediscovery.class.php:176
+msgid "Unique id"
+msgstr "Yksilöllinen tunniste"
+
+#: inc/stateinventory.class.php:117 inc/statediscovery.class.php:180
+msgid "Starting date"
+msgstr "Aloituspäivä"
+
+#: inc/stateinventory.class.php:118 inc/statediscovery.class.php:181
+msgid "Ending date"
+msgstr "Lopetuspäivä"
+
+#: inc/stateinventory.class.php:120
+msgid "Number per second"
+msgstr "Numeroa sekunnissa"
+
+#: inc/stateinventory.class.php:121
+msgid "Threads / Timeout configuration"
+msgstr ""
+
+#: inc/stateinventory.class.php:122
+msgid "To inventory"
+msgstr "Kartoitettavat"
+
+#: inc/stateinventory.class.php:123
+msgid "Error(s)"
+msgstr "Virheet"
+
+#: inc/stateinventory.class.php:197 inc/taskjoblog.class.php:93
+#: inc/taskjoblog.class.php:286 inc/statediscovery.class.php:266
 msgid "Started"
 msgstr "Käynnistyi"
+
+#: inc/stateinventory.class.php:201 inc/statediscovery.class.php:270
+msgid "Finished tasks"
+msgstr "Päättyneet tehtävät"
+
+#: inc/deploygroup.class.php:90 inc/deploygroup.class.php:826
+msgid "Dynamic group"
+msgstr "Dynaaminen ryhmä"
+
+#: inc/deploygroup.class.php:103
+msgid "Inventory group"
+msgid_plural "Inventory groups"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/deploygroup.class.php:120
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/deploygroup.class.php:173 inc/taskjobview.class.php:637
+msgid "Module method"
+msgstr "Moduulin menetelmä"
+
+#: inc/deploygroup.class.php:389
+msgid "Add group"
+msgstr "Lisää ryhmä"
+
+#: inc/collect_registry.class.php:63
+msgid "Found entry"
+msgid_plural "Found entries"
+msgstr[0] "Löydetty merkintä"
+msgstr[1] "Löydetyt merkinnät"
+
+#: inc/collect_registry.class.php:91
+msgid "Default"
+msgstr ""
+
+#: inc/collect_registry.class.php:92
+msgid "Check path existence"
+msgstr ""
+
+#: inc/collect_registry.class.php:93
+msgid "Check if a key is defined"
+msgstr ""
+
+#: inc/collect_registry.class.php:94
+msgid "All values"
+msgstr ""
+
+#: inc/deploymirror.class.php:67 inc/profile.class.php:286
+#: inc/menu.class.php:392
+msgid "Mirror servers"
+msgstr "Peilipalvelimet"
+
+#: inc/staticmisc.class.php:59
+msgid "Computer Inventory"
+msgstr "Tietokonekartoitus"
+
+#: inc/staticmisc.class.php:67
+msgid "VMware host remote inventory"
+msgstr "Vmware-isäntien etäkartoitus"
+
+#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1071
+msgid "Package deploy"
+msgstr "Paketin käyttöönotto"
+
+#: inc/staticmisc.class.php:95
+msgid "Collect data"
+msgstr "Tiedon keräys"
+
+#: inc/staticmisc.class.php:434 inc/staticmisc.class.php:440
+#: inc/taskjob.class.php:803
+msgid "Auto management dynamic of agents"
+msgstr ""
+
+#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
+#: inc/timeslotentry.class.php:79 inc/menu.class.php:259
+msgid "Time slot"
+msgstr "Aikaväli"
+
+#: inc/deploytask.class.php:109
+msgid "Order list"
+msgstr "Järjestysluettelo"
+
+#: inc/deploytask.class.php:156
+msgid "Add task"
+msgstr "Lisää tehtävä"
+
+#: inc/deploytask.class.php:181
+msgid "Edit impossible, this task is active"
+msgstr "Muokkaus ei ole mahdollinen, sillä tämä tehtävä on aktiivinen."
+
+#: inc/deploytask.class.php:212
+msgid "This task is active. delete denied"
+msgstr "Poisto ei ole mahdollinen, sillä tämä tehtävä on aktiivinen."
 
 #: inc/taskjoblog.class.php:95
 msgid "Ok"
@@ -409,15 +807,10 @@ msgstr "Ok "
 msgid "Info"
 msgstr "Tiedot"
 
-#: inc/taskjoblog.class.php:186 inc/taskjob.class.php:56
-#: inc/task.class.php:1629 inc/agentwakeup.class.php:69
+#: inc/taskjoblog.class.php:186 inc/task.class.php:1629
+#: inc/taskjob.class.php:56 inc/agentwakeup.class.php:69
 msgid "Job"
 msgstr "Työ"
-
-#: inc/taskjoblog.class.php:212 inc/statediscovery.class.php:176
-#: inc/stateinventory.class.php:113
-msgid "Unique id"
-msgstr "Yksilöllinen tunniste"
 
 #: inc/taskjoblog.class.php:304
 msgid "unknown"
@@ -459,6 +852,669 @@ msgstr "Agentti pysähtyi/kaatui"
 msgid "Import denied"
 msgstr "Tuonti estetty"
 
+#: inc/agentmodule.class.php:62
+msgid "Agents modules"
+msgstr "Agenttien moduulit"
+
+#: inc/agentmodule.class.php:126
+msgid "Package deployment"
+msgstr "Paketin käyttöönotto"
+
+#: inc/commonview.class.php:298
+msgid "Warning:"
+msgstr "Varoitus"
+
+#: inc/commonview.class.php:303
+msgid "Error:"
+msgstr "Virhe "
+
+#: inc/task.class.php:63 inc/menu.class.php:237
+msgid "Task management"
+msgstr "Tehtävän hallinta"
+
+#: inc/task.class.php:153
+msgid "deploy on demand task"
+msgstr "käyttöönota pyyntöön perustuva tehtävä"
+
+#: inc/task.class.php:177
+msgid "Associated tasks"
+msgstr ""
+
+#: inc/task.class.php:407
+msgid ""
+"The agent is requesting a configuration that has already been sent to him by"
+" the server. It is more likely that the agent is subject to a critical "
+"error."
+msgstr ""
+"Agentti pyytää konfiguraatiota, jonka se on jo saanut palvelimelta. Agentti "
+"on todennäköisesti virhetilassa."
+
+#: inc/task.class.php:420
+msgid "The task has been deactivated after preparation of this job."
+msgstr "Tehtävä on deaktivoitu tämän työn valmistelun jälkeen."
+
+#: inc/task.class.php:441
+msgid "This job can not be executed anymore due to the task's schedule."
+msgstr "Tätä työtä ei voida suorittaa enää johtuen tehtävän aikataulusta."
+
+#: inc/task.class.php:487
+msgid "This job can not be executed anymore due to the task's timeslot."
+msgstr "Tätä työtä ei voida suorittaa enää johtuen tehtävän aikavälistä."
+
+#: inc/task.class.php:506
+msgid "This agent does not belong anymore in the actors defined in the job."
+msgstr "Tämä agentti ei kuulu enää työssä määritetyille toimijoille"
+
+#: inc/task.class.php:545
+msgid "The task cannot be updated if it is active"
+msgstr ""
+
+#: inc/task.class.php:700
+msgid "Inventory task scheduler"
+msgstr ""
+
+#: inc/task.class.php:703
+msgid "Clean on demand deployment tasks"
+msgstr ""
+
+#: inc/task.class.php:1524
+msgid "Task has been disabled"
+msgstr "Tehtävä ei ole käytössä"
+
+#: inc/task.class.php:1590 inc/deploypackage.class.php:102
+msgid "Package"
+msgstr "Paketti"
+
+#: inc/task.class.php:1723
+msgid ""
+"You must choose a task and a package to target a task with a deployment "
+"package."
+msgstr "Täytyy valita tehtävä ja paketti käyttöönotto tehtävän kohdennukseen."
+
+#: inc/task.class.php:1740
+msgid "Deployment job, package: "
+msgstr "Käyttönottotyö, paketti:"
+
+#: inc/task.class.php:1757
+msgid "Updated a deployment job, package: "
+msgstr "Päivitetty käyttöönottotyö, paketti:"
+
+#: inc/task.class.php:1758 inc/task.class.php:1801
+msgid ", actors: "
+msgstr ", toimijat:"
+
+#: inc/task.class.php:1786
+msgid "The selected task already has a deployment job for another package: "
+msgstr "Valitulla tehtävällä on jo käyttöönottotyö toiselle paketille:"
+
+#: inc/task.class.php:1800
+msgid "Created a deployment job, package: "
+msgstr "Luotu käyttöönottotyö, paketti:"
+
+#: inc/timeslotentry.class.php:63
+msgid "Time slot entry"
+msgstr "Aikavälimerkintä"
+
+#: inc/timeslotentry.class.php:213
+msgid "End day must be after start day"
+msgstr ""
+
+#: inc/timeslotentry.class.php:223
+msgid "End time must be after start time"
+msgstr ""
+
+#: inc/taskjobstate.class.php:124
+msgid "Tasks / Groups"
+msgstr ""
+
+#: inc/taskjobstate.class.php:129
+msgid "Job executions"
+msgstr "Töiden suoritukset"
+
+#: inc/taskjobstate.class.php:145
+msgid "Server has sent data to the agent"
+msgstr "Palvelin on lähettänyt tietoja agentille"
+
+#: inc/taskjobstate.class.php:146
+msgid "Agent replied with data to the server"
+msgstr "Agentti vastasi lähettämällä tietoa palvelimelle"
+
+#: inc/taskjobstate.class.php:147
+msgid "Finished"
+msgstr "Päättynyt"
+
+#: inc/taskjobstate.class.php:148
+msgid "Error"
+msgstr "Virhe "
+
+#: inc/taskjobstate.class.php:150
+msgid "Postponed"
+msgstr "Lykätty"
+
+#: inc/taskjobstate.class.php:520
+#, php-format
+msgid "Job available for next execution at %s"
+msgstr "Työ käytettävissä seuraavaan suoritukseen %s"
+
+#: inc/taskjobstate.class.php:535
+#, php-format
+msgid "Retry #%d"
+msgstr "Yritä uudelleen #%d"
+
+#: inc/taskjobstate.class.php:537
+msgid "Maximum number of retry reached: force deployment"
+msgstr "Uudelleenyritysten enimmäismäärä saavutettu: pakota käyttöönotto"
+
+#: inc/taskjobstate.class.php:562
+msgid "Clean taskjob (retention time)"
+msgstr ""
+
+#: inc/collectcommon.class.php:74
+msgid "Collect configuration"
+msgstr ""
+
+#: inc/deploypackage.class.php:156 inc/menu.class.php:148
+msgid "Import"
+msgstr "Tuonti"
+
+#: inc/deploypackage.class.php:159
+msgid "Export"
+msgstr "Vienti"
+
+#: inc/deploypackage.class.php:280
+msgid "Modification Denied"
+msgstr "Muokkaus estetty"
+
+#: inc/deploypackage.class.php:283
+msgid "The following task is running with this package"
+msgid_plural "The following tasks are running with this package"
+msgstr[0] "Seuraava tehtävä suoritetaan tällä paketilla"
+msgstr[1] "Seuraavat tehtävät suoritetaan tällä paketilla"
+
+#: inc/deploypackage.class.php:391 inc/deploypackage.class.php:515
+msgid "Enable deploy on demand for the following group"
+msgstr "Ota käyttöön käyttöönotto pyynnöstä seuraavalle ryhmälle"
+
+#: inc/deploypackage.class.php:534
+msgid "Audits"
+msgstr "Tarkastukset"
+
+#: inc/deploypackage.class.php:535
+msgid "Files"
+msgstr "Tiedostot"
+
+#: inc/deploypackage.class.php:536 public/b/deploy/index.php:153
+msgid "Actions"
+msgstr "Toiminnot"
+
+#: inc/deploypackage.class.php:537
+msgid "User interactions"
+msgstr "Käyttäjän vuorovaikutus"
+
+#: inc/deploypackage.class.php:689
+msgid "JSON package representation"
+msgstr "JSON-paketin esitys"
+
+#: inc/deploypackage.class.php:813
+msgid "Package exported in"
+msgstr "Paketin käyttöönotto"
+
+#: inc/deploypackage.class.php:886
+msgid "Packages to import"
+msgstr "Tuotavat paketit"
+
+#: inc/deploypackage.class.php:1015 inc/deploypackageitem.class.php:332
+msgid "The modified JSON contained a syntax error :"
+msgstr "Muokattu JSON sisältää syntaksivirheen:"
+
+#: inc/deploypackage.class.php:1043
+msgid "Package actions"
+msgstr "Paketitoiminnot"
+
+#: inc/deploypackage.class.php:1052
+msgid "Target for deploy on demand"
+msgid_plural "Targets for deploy on demand"
+msgstr[0] "Pyydetyn käyttöönoton kohde"
+msgstr[1] "Pyydetyn käyttöönoton kohteet"
+
+#: inc/deploypackage.class.php:1144
+msgid "Add a target for self-service"
+msgstr "Lisää itsepalvelun tavoitekohde"
+
+#: inc/deploypackage.class.php:1502
+msgid "Restart job"
+msgstr "Käynnistä työ uudelleen"
+
+#: inc/deploypackage.class.php:1509
+msgid "refresh job"
+msgstr "päivitä työ"
+
+#: inc/deploypackage.class.php:1654
+msgid "Select packages you want install"
+msgstr "Valitse asennettavat paketit"
+
+#: inc/deploypackage.class.php:1663
+msgid "Prepare for install"
+msgstr "Valmistele asennus"
+
+#: inc/deploypackage.class.php:1668
+msgid "I'm on this computer: local wakeup"
+msgstr "Olen tällä tietokoneella: paikallinen herätys"
+
+#: inc/deploypackage.class.php:1669
+msgid "I'm not on this computer: wakeup from the server"
+msgstr "En ole tällä tietokoneella: herätys palvelimelta"
+
+#: inc/deploypackage.class.php:1670
+msgid "Don't wakeup"
+msgstr "Älä herätä"
+
+#: inc/deploypackage.class.php:1686
+msgid "No packages available to install"
+msgstr "Ei asennettavia paketteja"
+
+#: inc/credentialip.class.php:76
+msgid "Remote device inventory"
+msgstr "Etälaitteen kartoitus"
+
+#: inc/statediscovery.class.php:184
+msgid "Total discovery devices"
+msgstr "Löydettyjen laitteiden kokonaismäärä"
+
+#: inc/statediscovery.class.php:185
+msgid "Devices not imported"
+msgstr "Tuomattomat laitteet"
+
+#: inc/statediscovery.class.php:186
+msgid "Devices linked"
+msgstr "Linkitetyt laitteet"
+
+#: inc/statediscovery.class.php:187
+msgid "Devices imported"
+msgstr "Tuodut laitteet"
+
+#: inc/deploycheck.class.php:53
+msgid "Registry key exists"
+msgstr "Rekisteriavain on olemassa"
+
+#: inc/deploycheck.class.php:54
+msgid "Registry value exists"
+msgstr "Rekisterin arvo on olemassa"
+
+#: inc/deploycheck.class.php:55
+msgid "Registry key missing"
+msgstr "Rekisteriavain ei ole olemassa"
+
+#: inc/deploycheck.class.php:56
+msgid "Registry value missing"
+msgstr "Rekisterin arvo puuttuu"
+
+#: inc/deploycheck.class.php:57
+msgid "Registry value equals to"
+msgstr "Rekisterin arvo on sama kuin"
+
+#: inc/deploycheck.class.php:58
+msgid "Registry value not equals to"
+msgstr "Rekisterin arvo eri suuri kuin"
+
+#: inc/deploycheck.class.php:59
+msgid "Type of registry value equals to"
+msgstr "Rekisteriarvon tyyppi on sama kuin"
+
+#: inc/deploycheck.class.php:62
+msgid "File exists"
+msgstr "Tiedosto on olemassa"
+
+#: inc/deploycheck.class.php:63
+msgid "File is missing"
+msgstr "Tiedosto ei ole olemassa"
+
+#: inc/deploycheck.class.php:64
+msgid "File size is greater than"
+msgstr "Tiedoston koko on suurempi kuin "
+
+#: inc/deploycheck.class.php:65
+msgid "File size is equal to"
+msgstr "Tiedoston koko on yhtä suuri kuin "
+
+#: inc/deploycheck.class.php:66
+msgid "File size is lower than"
+msgstr "Tiedoston koko on pienempi kuin "
+
+#: inc/deploycheck.class.php:67
+msgid "SHA-512 hash value matches"
+msgstr "SHA-512-tiiviste on yhteensopiva"
+
+#: inc/deploycheck.class.php:68
+msgid "SHA-512 hash value mismatch"
+msgstr "SHA-512-tiiviste on yhteensopimaton"
+
+#: inc/deploycheck.class.php:71
+msgid "Directory exists"
+msgstr "Hakemisto on olemassa"
+
+#: inc/deploycheck.class.php:72
+msgid "Directory is missing"
+msgstr "Hakemisto puuttuu"
+
+#: inc/deploycheck.class.php:75
+msgid "Free space is greater than"
+msgstr "Vapaa tila suurempi kuin "
+
+#: inc/deploycheck.class.php:122
+msgid "continue"
+msgstr "jatka"
+
+#: inc/deploycheck.class.php:124
+msgid "passed"
+msgstr "läpäissyt"
+
+#: inc/deploycheck.class.php:126
+msgid "otherwise"
+msgstr "muuten"
+
+#: inc/deploycheck.class.php:297 inc/deploycheck.class.php:440
+msgid "Audit label"
+msgstr "Auditoinnin tunniste"
+
+#: inc/deploycheck.class.php:340
+msgid "Path to the key"
+msgstr "Avaimen polku"
+
+#: inc/deploycheck.class.php:342
+msgid "Example of registry key"
+msgstr ""
+
+#: inc/deploycheck.class.php:343 inc/deploycheck.class.php:360
+#, php-format
+msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
+msgstr ""
+
+#: inc/deploycheck.class.php:348 inc/deploycheck.class.php:356
+#: inc/deploycheck.class.php:367
+msgid "Path to the value"
+msgstr "Arvon polku"
+
+#: inc/deploycheck.class.php:350 inc/deploycheck.class.php:358
+#: inc/deploycheck.class.php:370
+msgid "Example of registry value"
+msgstr ""
+
+#: inc/deploycheck.class.php:357 inc/deploycheck.class.php:390
+#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:403
+#: inc/collect_registry_content.class.php:410
+#: inc/collect_registry_content.class.php:473
+#: inc/collect_registry_content.class.php:488
+#: inc/collect_registry_content.class.php:503
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
+msgid "Value"
+msgstr "Arvo"
+
+#: inc/deploycheck.class.php:368
+msgid "Type of value"
+msgstr "Arvon tyyppi"
+
+#: inc/deploycheck.class.php:382
+msgid "Directory"
+msgstr "Hakemisto"
+
+#: inc/deploycheck.class.php:402
+msgid "Disk or directory"
+msgstr "Levy tai hakemisto"
+
+#: inc/deploycheck.class.php:499
+msgid "Unit"
+msgstr "Yksikkö"
+
+#: inc/deploycheck.class.php:522
+msgid "If not successful"
+msgstr "Jos ei ole onnistunut"
+
+#: inc/deploycheck.class.php:553
+msgid "abort job"
+msgstr "keskeytä työ"
+
+#: inc/deploycheck.class.php:554
+msgid "skip job"
+msgstr "ohita työ"
+
+#: inc/deploycheck.class.php:555
+msgid "start job now"
+msgstr ""
+
+#: inc/deploycheck.class.php:556
+msgid "report info"
+msgstr "raportti tiedoista"
+
+#: inc/deploycheck.class.php:557
+msgid "report warning"
+msgstr "raportti varoituksista"
+
+#: inc/collect_registry_content.class.php:74
+msgid "Windows registry content"
+msgstr "Windows-rekisterin sisältö"
+
+#: inc/collect_registry_content.class.php:279
+#, php-format
+msgid "%s path found"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:280
+#, php-format
+msgid "%s path not found"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:290
+#, php-format
+msgid "%s value exists"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:291
+#, php-format
+msgid "%s value does not exist"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:299
+#, php-format
+msgid "%s: Found a value"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:304
+#, php-format
+msgid "%s: Found %d values"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:311
+#, php-format
+msgid "%s: Found a result"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:359
+msgid "Exist"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:360
+msgid "Does not exist"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:371
+msgid "Defined"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:372
+msgid "Not defined"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:406
+#: inc/collect_registry_content.class.php:408
+msgid "State"
+msgstr ""
+
+#: inc/collect_registry_content.class.php:411
+#: inc/collect_registry_content.class.php:504
+msgid "Data"
+msgstr "Tiedot"
+
+#: inc/deployuserinteraction.class.php:79
+msgid "User interaction"
+msgid_plural "User interactions"
+msgstr[0] "Käyttäjän vuorovaikutus"
+msgstr[1] "Käyttäjän vuorovaikutus"
+
+#: inc/deployuserinteraction.class.php:95
+msgid "Before download"
+msgstr "Ennen lataamista"
+
+#: inc/deployuserinteraction.class.php:96
+msgid "After download"
+msgstr "Lataamisen jälkeen"
+
+#: inc/deployuserinteraction.class.php:97
+msgid "After actions"
+msgstr "Toimintojen jälkeen"
+
+#: inc/deployuserinteraction.class.php:98
+msgid "On download failure"
+msgstr "Latauksen epäonnistuessa"
+
+#: inc/deployuserinteraction.class.php:99
+msgid "On actions failure"
+msgstr "Toimintojen epäonnistuessa"
+
+#: inc/deployuserinteraction.class.php:187
+msgid "Interaction label"
+msgstr "Vuorovaikutuksen tunniste"
+
+#: inc/deployuserinteraction.class.php:392
+#, php-format
+msgid "Job cancelled by the user %1$s"
+msgstr "Käyttäjä %1$s peruutti työn"
+
+#: inc/deployuserinteraction.class.php:399
+#, php-format
+msgid "User %1$s agreed to continue the job"
+msgstr "Käyttäjä %1$s suostui jatkamaan työtä"
+
+#: inc/deployuserinteraction.class.php:406
+#, php-format
+msgid "Job postponed by the user %1$s"
+msgstr "Käyttäjä %1$s lykkäsi työn suoritusta"
+
+#: inc/deployuserinteraction.class.php:412
+msgid "Bad event sent to the agent"
+msgstr "Agentille lähetetty virheellinen tapahtuma"
+
+#: inc/deployuserinteraction.class.php:431
+msgid "Alert displayed, no input required"
+msgstr "Hälytys näytetty, syötettä ei vaadita"
+
+#: inc/deployuserinteraction.class.php:437
+msgid "Retry"
+msgstr "Yritä uudelleen"
+
+#: inc/deployuserinteraction.class.php:443
+msgid "Abort"
+msgstr "Keskeytä"
+
+#: inc/deployuserinteraction.class.php:446
+msgid "Ignore"
+msgstr "Sivuuta"
+
+#: inc/deployuserinteraction.class.php:452
+msgid "Alert duration exceeded"
+msgstr "Hälytyksen kesto ylittyi"
+
+#: inc/deployuserinteraction.class.php:455
+msgid "No user connected"
+msgstr "Ei käyttäjiä yhteydessä"
+
+#: inc/deployuserinteraction.class.php:458
+msgid "Multiple users connected"
+msgstr "Useita käyttäjiä yhteydessä"
+
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:147
+msgid "Path/file"
+msgstr "Polku/tiedosto"
+
+#: inc/display.class.php:134
+msgid "Progress"
+msgstr "Edistyminen"
+
+#: inc/taskjobview.class.php:69
+msgid "Job configuration"
+msgstr ""
+
+#: inc/taskjobview.class.php:235
+msgid ""
+"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
+"         Please consider modifying this task to avoid unexpected results."
+msgstr ""
+
+#: inc/taskjobview.class.php:250
+msgid "Add a job"
+msgstr "Lisää työ"
+
+#: inc/taskjobview.class.php:358
+msgid "Actor Type"
+msgstr "Toimijatyyppi"
+
+#: inc/taskjobview.class.php:362
+msgid "Target Type"
+msgstr "Tavoitekohteen tyyppi"
+
+#: inc/taskjobview.class.php:405
+msgid "Actor Item"
+msgstr "Toimijan kohde"
+
+#: inc/taskjobview.class.php:409
+msgid "Target Item"
+msgstr "Tavoitekohteen osa"
+
+#: inc/taskjobview.class.php:594 inc/taskjobview.class.php:597
+msgid "New action"
+msgstr "Uusi toiminto"
+
+#: inc/taskjobview.class.php:674
+msgid "Restrict scope to task entity"
+msgstr ""
+
+#: inc/taskjobview.class.php:692 inc/taskjobview.class.php:725
+msgid "Targets"
+msgstr "Tavoitekohteet"
+
+#: inc/taskjobview.class.php:698
+msgid "The items that should be applied for this job."
+msgstr "Kohteet, joita tulee käyttää tässä työssä"
+
+#: inc/taskjobview.class.php:704 inc/taskjobview.class.php:747
+msgid "Actors"
+msgstr "Toimijat"
+
+#: inc/taskjobview.class.php:709
+msgid "The items that should carry out those targets."
+msgstr "Kohteet tavoitekohteen suorittamiseksi"
+
+#: inc/taskjobview.class.php:733 inc/taskjobview.class.php:755
+msgid "Clear list"
+msgstr "Tyhjennä luettelo"
+
+#: inc/taskjobview.class.php:738 inc/taskjobview.class.php:760
+msgid "Delete selected items"
+msgstr "Poista valitut kohteet"
+
+#: inc/taskjobview.class.php:778
+msgid "Cancel modifications"
+msgstr "Peru muutokset"
+
+#: inc/taskjobview.class.php:783
+msgid "Purge"
+msgstr "Poista pysyvästi"
+
+#: inc/taskjobview.class.php:786
+msgid "Confirm the final deletion ?"
+msgstr "Vahvista pysyvä poisto"
+
 #: inc/deployfile.class.php:87
 msgid "Upload from computer"
 msgstr "Lataa tietokoneelta"
@@ -487,17 +1543,6 @@ msgstr "pura"
 #: inc/deployfile.class.php:222
 msgid "Download"
 msgstr ""
-
-#: inc/deployfile.class.php:257 inc/deployaction.class.php:236
-#: inc/deployuserinteraction.class.php:250 inc/deploycheck.class.php:264
-msgid "drag"
-msgstr "raahaa"
-
-#: inc/deployfile.class.php:270 inc/deployaction.class.php:250
-#: inc/taskjobview.class.php:279 inc/deployuserinteraction.class.php:264
-#: inc/deploycheck.class.php:278
-msgid "Delete"
-msgstr "Poista "
 
 #: inc/deployfile.class.php:322
 msgid "filename"
@@ -576,132 +1621,108 @@ msgstr "Mt"
 msgid "Unused file"
 msgstr "Käyttämätön tiedosto"
 
-#: inc/collect_registry.class.php:63
-msgid "Found entry"
-msgid_plural "Found entries"
-msgstr[0] "Löydetty merkintä"
-msgstr[1] "Löydetyt merkinnät"
+#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:184
+msgid "Property"
+msgstr "Ominaisuus"
 
-#: inc/collect_registry.class.php:91
-msgid "Default"
-msgstr ""
+#: inc/collect_file.class.php:48
+msgid "Found file"
+msgid_plural "Found files"
+msgstr[0] "Tiedosto löytyi"
+msgstr[1] "Tiedostot löytyivät"
 
-#: inc/collect_registry.class.php:92
-msgid "Check path existence"
-msgstr ""
+#: inc/collect_file.class.php:61
+msgid "Recursive"
+msgstr "Rekursiivinen"
 
-#: inc/collect_registry.class.php:93
-msgid "Check if a key is defined"
-msgstr ""
+#: inc/collect_file.class.php:66
+msgid "Name"
+msgstr "Nimi"
 
-#: inc/collect_registry.class.php:94
-msgid "All values"
-msgstr ""
+#: inc/collect_file.class.php:67
+msgid "Iname"
+msgstr "Iname"
 
-#: inc/deploygroup_staticdata.class.php:107
-msgid "CSV import"
-msgstr "CSV-tuonti"
+#: inc/collect_file.class.php:68
+msgid "Type"
+msgstr "Tyyppi"
 
-#: inc/deploygroup_staticdata.class.php:154
+#: inc/communicationnetworkdiscovery.class.php:111
 #, php-format
-msgid ""
-"Make a search to get desired computer, then use massive actions and use %s"
+msgid "Processed: %1$s Created: %2$s Updated: %3$s"
 msgstr ""
 
-#: inc/deploygroup_staticdata.class.php:336
-msgid ""
-"Import a list of computers from a CSV file (the first column must contain "
-"the computer ID)"
+#: inc/taskjob.class.php:746
+msgid "Scheduled date"
+msgstr "Aikataulutettu päiväys"
+
+#: inc/taskjob.class.php:747
+msgid "Periodicity"
+msgstr "Jaksottaisuus"
+
+#: inc/taskjob.class.php:748
+msgid "Definition"
+msgstr "Toiminta-alue"
+
+#: inc/taskjob.class.php:749
+msgid "Action"
+msgstr "Toiminto"
+
+#: inc/taskjob.class.php:771
+msgid "hour(s)"
+msgstr "tuntia"
+
+#: inc/taskjob.class.php:776
+msgid "day(s)"
+msgstr "päivää"
+
+#: inc/taskjob.class.php:805
+msgid "Auto management dynamic of agents (same subnet)"
 msgstr ""
-"Tuo tietokoneet CSV-tiedostosta (ensimmäisessä sarakkeessa on oltava "
-"tietokoneen tunnus)"
 
-#: inc/deploygroup_staticdata.class.php:381
-msgid "Computers imported successfully from CSV file"
-msgstr "Tietokoneet tuotu onnistuneesti CSV-tiedostosta"
+#: inc/taskjob.class.php:1007
+msgid "Force the end"
+msgstr "Pakota lopetus"
 
-#: inc/deploygroup_staticdata.class.php:384
-msgid "Impossible to read the CSV file"
-msgstr "CSV-tiedostoa ei voi lukea"
+#: inc/profile.class.php:162 inc/menu.class.php:226
+msgid "General"
+msgstr "Yleinen"
 
-#: inc/deployaction.class.php:53
-msgid "Return code is equal to"
-msgstr "Paluuarvo on yhtä suuri kuin"
+#: inc/profile.class.php:168
+msgid "Inventory"
+msgstr "Kartoitus"
 
-#: inc/deployaction.class.php:54
-msgid "Return code is not equal to"
-msgstr "Paluuarvo on eri suuri kuin"
+#: inc/profile.class.php:174 inc/profile.class.php:220
+msgid "Software deployment"
+msgstr "Ohjelmiston käyttöönotto"
 
-#: inc/deployaction.class.php:55
-msgid "Command output contains"
-msgstr "Komennon tulos sisältää"
+#: inc/profile.class.php:214 inc/profile.class.php:291
+msgid "Deploy packages on demand"
+msgstr "Pakettien jakelu pyynnöstä"
 
-#: inc/deployaction.class.php:56
-msgid "Command output does not contains"
-msgstr "Komennon tulos ei sisällä"
+#: inc/profile.class.php:276
+msgid "Manage packages"
+msgstr "Hallinnoi paketteja"
 
-#: inc/deployaction.class.php:69
-msgid "Command"
-msgstr "Komento"
+#: inc/profile.class.php:319 inc/menu.class.php:326
+msgid "Remote devices to inventory (VMware)"
+msgstr "Kartoitettavat etälaitteet (Vmware)"
 
-#: inc/deployaction.class.php:70
-msgid "Move"
-msgstr "Siirrä"
-
-#: inc/deployaction.class.php:71
-msgid "Copy"
-msgstr "Kopioi"
-
-#: inc/deployaction.class.php:72
-msgid "Delete directory"
-msgstr "Poista hakemisto"
-
-#: inc/deployaction.class.php:73
-msgid "Create directory"
-msgstr "Luo hakemisto"
-
-#: inc/deployaction.class.php:200
-msgid "Command to execute"
-msgstr "Suoritettava komento"
-
-#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
-msgid "Action label"
-msgstr "Toiminnon tunniste"
-
-#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
-msgid "Number of output lines to retrieve"
-msgstr "Haettavien tulostusrivien määrä"
-
-#: inc/deployaction.class.php:223
-msgid "return codes saved for this command"
-msgstr "tämän komennon paluuarvot talletettu "
-
-#: inc/deployaction.class.php:296
-msgid "From"
-msgstr "Alkaen"
-
-#: inc/deployaction.class.php:298
-msgid "To"
-msgstr "Asti"
-
-#: inc/deployaction.class.php:309
-msgid "exec"
-msgstr "exec"
-
-#: inc/deployaction.class.php:324
-msgid "path"
-msgstr "Polku "
-
-#: inc/deployaction.class.php:370
-msgid "Execution checks"
-msgstr "Tarkistusten suoritus"
-
-#: inc/deployaction.class.php:435 inc/deploycheck.class.php:233
-#: inc/deploycheck.class.php:351 inc/deploycheck.class.php:362
-#: inc/deploycheck.class.php:371
-#, php-format
-msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
+#: inc/profile.class.php:333
+msgid "Network equipment SNMP"
 msgstr ""
+
+#: inc/profile.class.php:338
+msgid "Printer SNMP"
+msgstr ""
+
+#: inc/profile.class.php:372
+msgid "Menu"
+msgstr "Tehtävälista"
+
+#: inc/profile.class.php:378
+msgid "Configuration"
+msgstr "Konfiguraatio"
 
 #: inc/iprange_snmpcredential.class.php:101
 msgid "Associated SNMP credentials"
@@ -718,113 +1739,6 @@ msgstr "Versio"
 #: inc/iprange_snmpcredential.class.php:215
 msgid "By order of priority"
 msgstr "Tärkeysjärjestyksen mukaan"
-
-#: inc/collect_registry_content.class.php:74
-msgid "Windows registry content"
-msgstr "Windows-rekisterin sisältö"
-
-#: inc/collect_registry_content.class.php:279
-#, php-format
-msgid "%s path found"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:280
-#, php-format
-msgid "%s path not found"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:290
-#, php-format
-msgid "%s value exists"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:291
-#, php-format
-msgid "%s value does not exist"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:299
-#, php-format
-msgid "%s: Found a value"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:304
-#, php-format
-msgid "%s: Found %d values"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:311
-#, php-format
-msgid "%s: Found a result"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:359
-msgid "Exist"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:360
-msgid "Does not exist"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:371
-msgid "Defined"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:372
-msgid "Not defined"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:406
-#: inc/collect_registry_content.class.php:408
-msgid "State"
-msgstr ""
-
-#: inc/collect_registry_content.class.php:410
-#: inc/collect_registry_content.class.php:473
-#: inc/collect_registry_content.class.php:488
-#: inc/collect_registry_content.class.php:503
-#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
-#: inc/deploycheck.class.php:357 inc/deploycheck.class.php:390
-#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:403
-msgid "Value"
-msgstr "Arvo"
-
-#: inc/collect_registry_content.class.php:411
-#: inc/collect_registry_content.class.php:504
-msgid "Data"
-msgstr "Tiedot"
-
-#: inc/credential.class.php:77 inc/credential.class.php:186
-#: inc/credentialip.class.php:132 inc/credentialip.class.php:155
-#: inc/profile.class.php:314 inc/menu.class.php:342
-msgid "Authentication for remote devices (VMware)"
-msgstr "Kirjautuminen etälaitteille (Vmware)"
-
-#: inc/credential.class.php:302 inc/credential.class.php:320
-#: inc/profile.class.php:324
-msgid "VMware host"
-msgstr "Vmware-isäntä"
-
-#: inc/iprange.class.php:78
-msgid "Communication mode"
-msgstr "Yhteystapa"
-
-#: inc/iprange.class.php:81
-msgid "See all informations of task"
-msgstr "Katso tehtävien kaikki tiedot"
-
-#: inc/iprange.class.php:83 inc/iprange.class.php:86 inc/menu.class.php:318
-#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
-msgid "IP Ranges"
-msgstr "IP-osoitealueet"
-
-#: inc/iprange.class.php:113 inc/profile.class.php:309
-msgid "IP range configuration"
-msgstr "IP-osoitealueen määritys"
-
-#: inc/iprange.class.php:227
-msgid "Bad IP"
-msgstr "Virheellinen IP-osoite"
 
 #: inc/deployuserinteractiontemplate.class.php:99
 msgid "Behavior"
@@ -936,442 +1850,9 @@ msgstr "Useita aktiivisia istuntoja"
 msgid "Behaviors"
 msgstr "Käyttäyminen"
 
-#: inc/deploytask.class.php:53 inc/deploytask.class.php:153
-#: inc/statediscovery.class.php:177 inc/profile.class.php:383
-#: inc/task.class.php:1572 inc/task.class.php:1612 inc/taskview.class.php:164
-#: inc/stateinventory.class.php:114
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "Tehtävä"
-msgstr[1] "Tehtävä"
-
-#: inc/deploytask.class.php:109
-msgid "Order list"
-msgstr "Järjestysluettelo"
-
-#: inc/deploytask.class.php:156
-msgid "Add task"
-msgstr "Lisää tehtävä"
-
-#: inc/deploytask.class.php:181
-msgid "Edit impossible, this task is active"
-msgstr "Muokkaus ei ole mahdollinen, sillä tämä tehtävä on aktiivinen."
-
-#: inc/deploytask.class.php:212
-msgid "This task is active. delete denied"
-msgstr "Poisto ei ole mahdollinen, sillä tämä tehtävä on aktiivinen."
-
-#: inc/taskjobstate.class.php:124
-msgid "Tasks / Groups"
+#: inc/agentwakeup.class.php:56
+msgid "Wake agents up"
 msgstr ""
-
-#: inc/taskjobstate.class.php:129
-msgid "Job executions"
-msgstr "Töiden suoritukset"
-
-#: inc/taskjobstate.class.php:145
-msgid "Server has sent data to the agent"
-msgstr "Palvelin on lähettänyt tietoja agentille"
-
-#: inc/taskjobstate.class.php:146
-msgid "Agent replied with data to the server"
-msgstr "Agentti vastasi lähettämällä tietoa palvelimelle"
-
-#: inc/taskjobstate.class.php:147
-msgid "Finished"
-msgstr "Päättynyt"
-
-#: inc/taskjobstate.class.php:148
-msgid "Error"
-msgstr "Virhe "
-
-#: inc/taskjobstate.class.php:149 inc/deploypackage.class.php:1381
-#: inc/taskview.class.php:239
-msgid "Cancelled"
-msgstr "Peruttu"
-
-#: inc/taskjobstate.class.php:150
-msgid "Postponed"
-msgstr "Lykätty"
-
-#: inc/taskjobstate.class.php:520
-#, php-format
-msgid "Job available for next execution at %s"
-msgstr "Työ käytettävissä seuraavaan suoritukseen %s"
-
-#: inc/taskjobstate.class.php:535
-#, php-format
-msgid "Retry #%d"
-msgstr "Yritä uudelleen #%d"
-
-#: inc/taskjobstate.class.php:537
-msgid "Maximum number of retry reached: force deployment"
-msgstr "Uudelleenyritysten enimmäismäärä saavutettu: pakota käyttöönotto"
-
-#: inc/taskjobstate.class.php:562
-msgid "Clean taskjob (retention time)"
-msgstr ""
-
-#: inc/taskjobview.class.php:69
-msgid "Job configuration"
-msgstr ""
-
-#: inc/taskjobview.class.php:235
-msgid ""
-"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
-"         Please consider modifying this task to avoid unexpected results."
-msgstr ""
-
-#: inc/taskjobview.class.php:250
-msgid "Add a job"
-msgstr "Lisää työ"
-
-#: inc/taskjobview.class.php:358
-msgid "Actor Type"
-msgstr "Toimijatyyppi"
-
-#: inc/taskjobview.class.php:362
-msgid "Target Type"
-msgstr "Tavoitekohteen tyyppi"
-
-#: inc/taskjobview.class.php:405
-msgid "Actor Item"
-msgstr "Toimijan kohde"
-
-#: inc/taskjobview.class.php:409
-msgid "Target Item"
-msgstr "Tavoitekohteen osa"
-
-#: inc/taskjobview.class.php:594 inc/taskjobview.class.php:597
-msgid "New action"
-msgstr "Uusi toiminto"
-
-#: inc/taskjobview.class.php:637 inc/deploygroup.class.php:173
-msgid "Module method"
-msgstr "Moduulin menetelmä"
-
-#: inc/taskjobview.class.php:674
-msgid "Restrict scope to task entity"
-msgstr ""
-
-#: inc/taskjobview.class.php:692 inc/taskjobview.class.php:725
-msgid "Targets"
-msgstr "Tavoitekohteet"
-
-#: inc/taskjobview.class.php:698
-msgid "The items that should be applied for this job."
-msgstr "Kohteet, joita tulee käyttää tässä työssä"
-
-#: inc/taskjobview.class.php:704 inc/taskjobview.class.php:747
-msgid "Actors"
-msgstr "Toimijat"
-
-#: inc/taskjobview.class.php:709
-msgid "The items that should carry out those targets."
-msgstr "Kohteet tavoitekohteen suorittamiseksi"
-
-#: inc/taskjobview.class.php:733 inc/taskjobview.class.php:755
-msgid "Clear list"
-msgstr "Tyhjennä luettelo"
-
-#: inc/taskjobview.class.php:738 inc/taskjobview.class.php:760
-msgid "Delete selected items"
-msgstr "Poista valitut kohteet"
-
-#: inc/taskjobview.class.php:778
-msgid "Cancel modifications"
-msgstr "Peru muutokset"
-
-#: inc/taskjobview.class.php:783
-msgid "Purge"
-msgstr "Poista pysyvästi"
-
-#: inc/taskjobview.class.php:786
-msgid "Confirm the final deletion ?"
-msgstr "Vahvista pysyvä poisto"
-
-#: inc/credentialip.class.php:76
-msgid "Remote device inventory"
-msgstr "Etälaitteen kartoitus"
-
-#: inc/statediscovery.class.php:180 inc/stateinventory.class.php:117
-msgid "Starting date"
-msgstr "Aloituspäivä"
-
-#: inc/statediscovery.class.php:181 inc/stateinventory.class.php:118
-msgid "Ending date"
-msgstr "Lopetuspäivä"
-
-#: inc/statediscovery.class.php:184
-msgid "Total discovery devices"
-msgstr "Löydettyjen laitteiden kokonaismäärä"
-
-#: inc/statediscovery.class.php:185
-msgid "Devices not imported"
-msgstr "Tuomattomat laitteet"
-
-#: inc/statediscovery.class.php:186
-msgid "Devices linked"
-msgstr "Linkitetyt laitteet"
-
-#: inc/statediscovery.class.php:187
-msgid "Devices imported"
-msgstr "Tuodut laitteet"
-
-#: inc/statediscovery.class.php:270 inc/stateinventory.class.php:201
-msgid "Finished tasks"
-msgstr "Päättyneet tehtävät"
-
-#: inc/commonview.class.php:298
-msgid "Warning:"
-msgstr "Varoitus"
-
-#: inc/commonview.class.php:303
-msgid "Error:"
-msgstr "Virhe "
-
-#: inc/collect_wmi.class.php:48
-msgid "Found WMI"
-msgid_plural "Found WMIs"
-msgstr[0] "WMI löytyi"
-msgstr[1] "WMI:t löytyivät"
-
-#: inc/communicationnetworkdiscovery.class.php:111
-#, php-format
-msgid "Processed: %1$s Created: %2$s Updated: %3$s"
-msgstr ""
-
-#: inc/agentmodule.class.php:62
-msgid "Agents modules"
-msgstr "Agenttien moduulit"
-
-#: inc/agentmodule.class.php:126
-msgid "Package deployment"
-msgstr "Paketin käyttöönotto"
-
-#: inc/deploypackage.class.php:102 inc/task.class.php:1590
-msgid "Package"
-msgstr "Paketti"
-
-#: inc/deploypackage.class.php:156 inc/menu.class.php:148
-msgid "Import"
-msgstr "Tuonti"
-
-#: inc/deploypackage.class.php:159
-msgid "Export"
-msgstr "Vienti"
-
-#: inc/deploypackage.class.php:280
-msgid "Modification Denied"
-msgstr "Muokkaus estetty"
-
-#: inc/deploypackage.class.php:283
-msgid "The following task is running with this package"
-msgid_plural "The following tasks are running with this package"
-msgstr[0] "Seuraava tehtävä suoritetaan tällä paketilla"
-msgstr[1] "Seuraavat tehtävät suoritetaan tällä paketilla"
-
-#: inc/deploypackage.class.php:391 inc/deploypackage.class.php:515
-msgid "Enable deploy on demand for the following group"
-msgstr "Ota käyttöön käyttöönotto pyynnöstä seuraavalle ryhmälle"
-
-#: inc/deploypackage.class.php:534
-msgid "Audits"
-msgstr "Tarkastukset"
-
-#: inc/deploypackage.class.php:535
-msgid "Files"
-msgstr "Tiedostot"
-
-#: inc/deploypackage.class.php:537
-msgid "User interactions"
-msgstr "Käyttäjän vuorovaikutus"
-
-#: inc/deploypackage.class.php:689
-msgid "JSON package representation"
-msgstr "JSON-paketin esitys"
-
-#: inc/deploypackage.class.php:813
-msgid "Package exported in"
-msgstr "Paketin käyttöönotto"
-
-#: inc/deploypackage.class.php:886
-msgid "Packages to import"
-msgstr "Tuotavat paketit"
-
-#: inc/deploypackage.class.php:1015 inc/deploypackageitem.class.php:332
-msgid "The modified JSON contained a syntax error :"
-msgstr "Muokattu JSON sisältää syntaksivirheen:"
-
-#: inc/deploypackage.class.php:1043
-msgid "Package actions"
-msgstr "Paketitoiminnot"
-
-#: inc/deploypackage.class.php:1052
-msgid "Target for deploy on demand"
-msgid_plural "Targets for deploy on demand"
-msgstr[0] "Pyydetyn käyttöönoton kohde"
-msgstr[1] "Pyydetyn käyttöönoton kohteet"
-
-#: inc/deploypackage.class.php:1071 inc/staticmisc.class.php:87
-msgid "Package deploy"
-msgstr "Paketin käyttöönotto"
-
-#: inc/deploypackage.class.php:1144
-msgid "Add a target for self-service"
-msgstr "Lisää itsepalvelun tavoitekohde"
-
-#: inc/deploypackage.class.php:1377 inc/taskview.class.php:235
-msgid "In error"
-msgstr "Virhetilassa"
-
-#: inc/deploypackage.class.php:1378 inc/taskview.class.php:236
-msgid "Successful"
-msgstr "Onnistunut"
-
-#: inc/deploypackage.class.php:1379 inc/taskview.class.php:237
-msgid "Running"
-msgstr "Käynnissä"
-
-#: inc/deploypackage.class.php:1502
-msgid "Restart job"
-msgstr "Käynnistä työ uudelleen"
-
-#: inc/deploypackage.class.php:1509
-msgid "refresh job"
-msgstr "päivitä työ"
-
-#: inc/deploypackage.class.php:1654
-msgid "Select packages you want install"
-msgstr "Valitse asennettavat paketit"
-
-#: inc/deploypackage.class.php:1663
-msgid "Prepare for install"
-msgstr "Valmistele asennus"
-
-#: inc/deploypackage.class.php:1668
-msgid "I'm on this computer: local wakeup"
-msgstr "Olen tällä tietokoneella: paikallinen herätys"
-
-#: inc/deploypackage.class.php:1669
-msgid "I'm not on this computer: wakeup from the server"
-msgstr "En ole tällä tietokoneella: herätys palvelimelta"
-
-#: inc/deploypackage.class.php:1670
-msgid "Don't wakeup"
-msgstr "Älä herätä"
-
-#: inc/deploypackage.class.php:1686
-msgid "No packages available to install"
-msgstr "Ei asennettavia paketteja"
-
-#: inc/taskjob.class.php:746
-msgid "Scheduled date"
-msgstr "Aikataulutettu päiväys"
-
-#: inc/taskjob.class.php:747
-msgid "Periodicity"
-msgstr "Jaksottaisuus"
-
-#: inc/taskjob.class.php:748
-msgid "Definition"
-msgstr "Toiminta-alue"
-
-#: inc/taskjob.class.php:749
-msgid "Action"
-msgstr "Toiminto"
-
-#: inc/taskjob.class.php:771
-msgid "hour(s)"
-msgstr "tuntia"
-
-#: inc/taskjob.class.php:776
-msgid "day(s)"
-msgstr "päivää"
-
-#: inc/taskjob.class.php:803 inc/staticmisc.class.php:434
-#: inc/staticmisc.class.php:440
-msgid "Auto management dynamic of agents"
-msgstr ""
-
-#: inc/taskjob.class.php:805
-msgid "Auto management dynamic of agents (same subnet)"
-msgstr ""
-
-#: inc/taskjob.class.php:1007
-msgid "Force the end"
-msgstr "Pakota lopetus"
-
-#: inc/timeslotentry.class.php:63
-msgid "Time slot entry"
-msgstr "Aikavälimerkintä"
-
-#: inc/timeslotentry.class.php:79 inc/menu.class.php:259
-#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
-msgid "Time slot"
-msgstr "Aikaväli"
-
-#: inc/timeslotentry.class.php:213
-msgid "End day must be after start day"
-msgstr ""
-
-#: inc/timeslotentry.class.php:223
-msgid "End time must be after start time"
-msgstr ""
-
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:147
-msgid "Path/file"
-msgstr "Polku/tiedosto"
-
-#: inc/profile.class.php:162 inc/menu.class.php:226
-msgid "General"
-msgstr "Yleinen"
-
-#: inc/profile.class.php:168
-msgid "Inventory"
-msgstr "Kartoitus"
-
-#: inc/profile.class.php:174 inc/profile.class.php:220
-msgid "Software deployment"
-msgstr "Ohjelmiston käyttöönotto"
-
-#: inc/profile.class.php:214 inc/profile.class.php:291
-msgid "Deploy packages on demand"
-msgstr "Pakettien jakelu pyynnöstä"
-
-#: inc/profile.class.php:276
-msgid "Manage packages"
-msgstr "Hallinnoi paketteja"
-
-#: inc/profile.class.php:286 inc/menu.class.php:392
-#: inc/deploymirror.class.php:67
-msgid "Mirror servers"
-msgstr "Peilipalvelimet"
-
-#: inc/profile.class.php:319 inc/menu.class.php:326
-msgid "Remote devices to inventory (VMware)"
-msgstr "Kartoitettavat etälaitteet (Vmware)"
-
-#: inc/profile.class.php:333
-msgid "Network equipment SNMP"
-msgstr ""
-
-#: inc/profile.class.php:338
-msgid "Printer SNMP"
-msgstr ""
-
-#: inc/profile.class.php:372
-msgid "Menu"
-msgstr "Tehtävälista"
-
-#: inc/profile.class.php:378
-msgid "Configuration"
-msgstr "Konfiguraatio"
-
-#: inc/profile.class.php:393 inc/menu.class.php:253 inc/collect.class.php:56
-msgid "Collect information"
-msgstr "Keräystiedot"
 
 #: inc/menu.class.php:154
 msgid "Clean unused files"
@@ -1384,10 +1865,6 @@ msgstr "Agenttien hallinta"
 #: inc/menu.class.php:219
 msgid "General configuration"
 msgstr "Yleiset asetukset"
-
-#: inc/menu.class.php:237 inc/task.class.php:63
-msgid "Task management"
-msgstr "Tehtävän hallinta"
 
 #: inc/menu.class.php:241
 msgid "Monitoring / Logs"
@@ -1428,10 +1905,6 @@ msgstr "SNMP-mallin luonti"
 #: inc/menu.class.php:372
 msgid "Networking"
 msgstr "Verkko "
-
-#: inc/menu.class.php:385 inc/config.class.php:202
-msgid "Package management"
-msgstr "Paketin hallinta"
 
 #: inc/menu.class.php:422
 msgid "SNMP inventory"
@@ -1501,504 +1974,30 @@ msgstr ""
 "Luo uusi tehtävä käyttäen aikaisemmin määriteltyä verkkokartoitusta ja "
 "agenttia"
 
-#: inc/staticmisc.class.php:59
-msgid "Computer Inventory"
-msgstr "Tietokonekartoitus"
-
-#: inc/staticmisc.class.php:67
-msgid "VMware host remote inventory"
-msgstr "Vmware-isäntien etäkartoitus"
-
-#: inc/staticmisc.class.php:95
-msgid "Collect data"
-msgstr "Tiedon keräys"
-
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:184
-msgid "Property"
-msgstr "Ominaisuus"
-
-#: inc/collect_file.class.php:48
-msgid "Found file"
-msgid_plural "Found files"
-msgstr[0] "Tiedosto löytyi"
-msgstr[1] "Tiedostot löytyivät"
-
-#: inc/collect_file.class.php:61
-msgid "Recursive"
-msgstr "Rekursiivinen"
-
-#: inc/collect_file.class.php:66
-msgid "Name"
-msgstr "Nimi"
-
-#: inc/collect_file.class.php:67
-msgid "Iname"
-msgstr "Iname"
-
-#: inc/collect_file.class.php:68
-msgid "Type"
-msgstr "Tyyppi"
-
-#: inc/collectcommon.class.php:74
-msgid "Collect configuration"
+#: public/b/deploy/index.php:84
+msgid "Deploy module has been disabled for this agent"
 msgstr ""
-
-#: inc/collect.class.php:147 inc/collect.class.php:209
-#: inc/deploycheck.class.php:52
-msgid "Registry"
-msgstr "Rekisteri"
-
-#: inc/collect.class.php:148 inc/collect.class.php:227
-msgid "WMI"
-msgstr "WMI"
-
-#: inc/collect.class.php:149 inc/collect.class.php:245
-#: inc/collect.class.php:260
-msgid "Find file"
-msgstr "Tiedoston haku"
-
-#: inc/collect.class.php:247
-msgid "pathfile"
-msgstr "tiedostopolku"
-
-#: inc/collect.class.php:507
-msgid "Collect module has been disabled for this agent"
-msgstr "Tiedon keräys-moduuli on poistettu käytöstä kyseiselle agentille"
-
-#: inc/collect.class.php:678
-msgid "Path not found"
-msgstr "Polkua ei löydy"
-
-#: inc/task.class.php:102 inc/taskview.class.php:338
-msgid "Schedule start"
-msgstr "Aikatauluta aloitus"
-
-#: inc/task.class.php:110 inc/taskview.class.php:344
-msgid "Schedule end"
-msgstr "Aikatauluta lopetus"
-
-#: inc/task.class.php:143 inc/taskview.class.php:322
-msgid "Permit to re-prepare task after run"
-msgstr ""
-
-#: inc/task.class.php:153
-msgid "deploy on demand task"
-msgstr "käyttöönota pyyntöön perustuva tehtävä"
-
-#: inc/task.class.php:177
-msgid "Associated tasks"
-msgstr ""
-
-#: inc/task.class.php:407
-msgid ""
-"The agent is requesting a configuration that has already been sent to him by"
-" the server. It is more likely that the agent is subject to a critical "
-"error."
-msgstr ""
-"Agentti pyytää konfiguraatiota, jonka se on jo saanut palvelimelta. Agentti "
-"on todennäköisesti virhetilassa."
-
-#: inc/task.class.php:420
-msgid "The task has been deactivated after preparation of this job."
-msgstr "Tehtävä on deaktivoitu tämän työn valmistelun jälkeen."
-
-#: inc/task.class.php:441
-msgid "This job can not be executed anymore due to the task's schedule."
-msgstr "Tätä työtä ei voida suorittaa enää johtuen tehtävän aikataulusta."
-
-#: inc/task.class.php:487
-msgid "This job can not be executed anymore due to the task's timeslot."
-msgstr "Tätä työtä ei voida suorittaa enää johtuen tehtävän aikavälistä."
-
-#: inc/task.class.php:506
-msgid "This agent does not belong anymore in the actors defined in the job."
-msgstr "Tämä agentti ei kuulu enää työssä määritetyille toimijoille"
-
-#: inc/task.class.php:545
-msgid "The task cannot be updated if it is active"
-msgstr ""
-
-#: inc/task.class.php:700
-msgid "Inventory task scheduler"
-msgstr ""
-
-#: inc/task.class.php:703
-msgid "Clean on demand deployment tasks"
-msgstr ""
-
-#: inc/task.class.php:1524
-msgid "Task has been disabled"
-msgstr "Tehtävä ei ole käytössä"
-
-#: inc/task.class.php:1723
-msgid ""
-"You must choose a task and a package to target a task with a deployment "
-"package."
-msgstr "Täytyy valita tehtävä ja paketti käyttöönotto tehtävän kohdennukseen."
-
-#: inc/task.class.php:1740
-msgid "Deployment job, package: "
-msgstr "Käyttönottotyö, paketti:"
-
-#: inc/task.class.php:1757
-msgid "Updated a deployment job, package: "
-msgstr "Päivitetty käyttöönottotyö, paketti:"
-
-#: inc/task.class.php:1758 inc/task.class.php:1801
-msgid ", actors: "
-msgstr ", toimijat:"
-
-#: inc/task.class.php:1786
-msgid "The selected task already has a deployment job for another package: "
-msgstr "Valitulla tehtävällä on jo käyttöönottotyö toiselle paketille:"
-
-#: inc/task.class.php:1800
-msgid "Created a deployment job, package: "
-msgstr "Luotu käyttöönottotyö, paketti:"
-
-#: inc/deploygroup.class.php:90 inc/deploygroup.class.php:826
-msgid "Dynamic group"
-msgstr "Dynaaminen ryhmä"
-
-#: inc/deploygroup.class.php:103
-msgid "Inventory group"
-msgid_plural "Inventory groups"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/deploygroup.class.php:120
-msgid "Associated task"
-msgid_plural "Associated tasks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/deploygroup.class.php:389
-msgid "Add group"
-msgstr "Lisää ryhmä"
-
-#: inc/agentwakeup.class.php:56
-msgid "Wake agents up"
-msgstr ""
-
-#: inc/config.class.php:201
-msgid "Network Inventory"
-msgstr "Verkkokartoitus"
-
-#: inc/config.class.php:284
-msgid "Change the status"
-msgstr "Muuta tilaa"
-
-#: inc/config.class.php:287
-msgid "Clean agents"
-msgstr "Siivoa agentit"
-
-#: inc/config.class.php:315
-msgid "with location"
-msgstr "sijainnilla"
-
-#: inc/config.class.php:316
-msgid "with entity"
-msgstr "yksiköllä"
-
-#: inc/config.class.php:317
-msgid "with both"
-msgstr "molemmilla"
-
-#: inc/taskview.class.php:70
-msgid "Include old jobs"
-msgstr "Sisällytä vanhat työt"
-
-#: inc/taskview.class.php:88
-msgid "refresh interval"
-msgstr "tarkistustiheys"
-
-#: inc/taskview.class.php:91
-msgid "Off"
-msgstr "Ei käynnissä"
-
-#: inc/taskview.class.php:108
-msgid "Export task result"
-msgstr ""
-
-#: inc/taskview.class.php:126
-msgid "Task execution states"
-msgstr "Tehtävien suoritustilat"
-
-#: inc/taskview.class.php:212
-msgid "Show/Hide details"
-msgstr "Näytä/piilota tiedot"
-
-#: inc/taskview.class.php:327
-msgid "This is an on demand deployment task"
-msgstr "Tämä on pyyntöön perustuva käyttöönottotehtävä"
-
-#: inc/taskview.class.php:350
-msgid "Preparation timeslot"
-msgstr "Valmistelun aikaväli"
-
-#: inc/taskview.class.php:358
-msgid "Execution timeslot"
-msgstr "Suorituksen aikaväli"
-
-#: inc/taskview.class.php:366
-msgid "Agent wakeup interval (in minutes)"
-msgstr "Kahden herätyksen välinen aika (minuutteina)"
-
-#: inc/taskview.class.php:376
-msgid "Number of agents to wake up"
-msgstr "Herätettävien agenttien määrä"
-
-#: inc/taskview.class.php:422
-msgid "Force start"
-msgstr "Pakota aloitus"
-
-#: inc/taskview.class.php:942
-msgid "Device no longer defined in definition of job"
-msgstr "Laite ei ole enää työn määrityksissä"
-
-#: inc/deployuserinteraction.class.php:79
-msgid "User interaction"
-msgid_plural "User interactions"
-msgstr[0] "Käyttäjän vuorovaikutus"
-msgstr[1] "Käyttäjän vuorovaikutus"
-
-#: inc/deployuserinteraction.class.php:95
-msgid "Before download"
-msgstr "Ennen lataamista"
-
-#: inc/deployuserinteraction.class.php:96
-msgid "After download"
-msgstr "Lataamisen jälkeen"
-
-#: inc/deployuserinteraction.class.php:97
-msgid "After actions"
-msgstr "Toimintojen jälkeen"
-
-#: inc/deployuserinteraction.class.php:98
-msgid "On download failure"
-msgstr "Latauksen epäonnistuessa"
-
-#: inc/deployuserinteraction.class.php:99
-msgid "On actions failure"
-msgstr "Toimintojen epäonnistuessa"
-
-#: inc/deployuserinteraction.class.php:187
-msgid "Interaction label"
-msgstr "Vuorovaikutuksen tunniste"
-
-#: inc/deployuserinteraction.class.php:392
-#, php-format
-msgid "Job cancelled by the user %1$s"
-msgstr "Käyttäjä %1$s peruutti työn"
-
-#: inc/deployuserinteraction.class.php:399
-#, php-format
-msgid "User %1$s agreed to continue the job"
-msgstr "Käyttäjä %1$s suostui jatkamaan työtä"
-
-#: inc/deployuserinteraction.class.php:406
-#, php-format
-msgid "Job postponed by the user %1$s"
-msgstr "Käyttäjä %1$s lykkäsi työn suoritusta"
-
-#: inc/deployuserinteraction.class.php:412
-msgid "Bad event sent to the agent"
-msgstr "Agentille lähetetty virheellinen tapahtuma"
-
-#: inc/deployuserinteraction.class.php:431
-msgid "Alert displayed, no input required"
-msgstr "Hälytys näytetty, syötettä ei vaadita"
-
-#: inc/deployuserinteraction.class.php:437
-msgid "Retry"
-msgstr "Yritä uudelleen"
-
-#: inc/deployuserinteraction.class.php:443
-msgid "Abort"
-msgstr "Keskeytä"
-
-#: inc/deployuserinteraction.class.php:446
-msgid "Ignore"
-msgstr "Sivuuta"
-
-#: inc/deployuserinteraction.class.php:452
-msgid "Alert duration exceeded"
-msgstr "Hälytyksen kesto ylittyi"
-
-#: inc/deployuserinteraction.class.php:455
-msgid "No user connected"
-msgstr "Ei käyttäjiä yhteydessä"
-
-#: inc/deployuserinteraction.class.php:458
-msgid "Multiple users connected"
-msgstr "Useita käyttäjiä yhteydessä"
-
-#: inc/display.class.php:134
-msgid "Progress"
-msgstr "Edistyminen"
-
-#: inc/deploycheck.class.php:53
-msgid "Registry key exists"
-msgstr "Rekisteriavain on olemassa"
-
-#: inc/deploycheck.class.php:54
-msgid "Registry value exists"
-msgstr "Rekisterin arvo on olemassa"
-
-#: inc/deploycheck.class.php:55
-msgid "Registry key missing"
-msgstr "Rekisteriavain ei ole olemassa"
-
-#: inc/deploycheck.class.php:56
-msgid "Registry value missing"
-msgstr "Rekisterin arvo puuttuu"
-
-#: inc/deploycheck.class.php:57
-msgid "Registry value equals to"
-msgstr "Rekisterin arvo on sama kuin"
-
-#: inc/deploycheck.class.php:58
-msgid "Registry value not equals to"
-msgstr "Rekisterin arvo eri suuri kuin"
-
-#: inc/deploycheck.class.php:59
-msgid "Type of registry value equals to"
-msgstr "Rekisteriarvon tyyppi on sama kuin"
-
-#: inc/deploycheck.class.php:62
-msgid "File exists"
-msgstr "Tiedosto on olemassa"
-
-#: inc/deploycheck.class.php:63
-msgid "File is missing"
-msgstr "Tiedosto ei ole olemassa"
-
-#: inc/deploycheck.class.php:64
-msgid "File size is greater than"
-msgstr "Tiedoston koko on suurempi kuin "
-
-#: inc/deploycheck.class.php:65
-msgid "File size is equal to"
-msgstr "Tiedoston koko on yhtä suuri kuin "
-
-#: inc/deploycheck.class.php:66
-msgid "File size is lower than"
-msgstr "Tiedoston koko on pienempi kuin "
-
-#: inc/deploycheck.class.php:67
-msgid "SHA-512 hash value matches"
-msgstr "SHA-512-tiiviste on yhteensopiva"
-
-#: inc/deploycheck.class.php:68
-msgid "SHA-512 hash value mismatch"
-msgstr "SHA-512-tiiviste on yhteensopimaton"
-
-#: inc/deploycheck.class.php:71
-msgid "Directory exists"
-msgstr "Hakemisto on olemassa"
-
-#: inc/deploycheck.class.php:72
-msgid "Directory is missing"
-msgstr "Hakemisto puuttuu"
-
-#: inc/deploycheck.class.php:75
-msgid "Free space is greater than"
-msgstr "Vapaa tila suurempi kuin "
-
-#: inc/deploycheck.class.php:122
-msgid "continue"
-msgstr "jatka"
-
-#: inc/deploycheck.class.php:124
-msgid "passed"
-msgstr "läpäissyt"
-
-#: inc/deploycheck.class.php:126
-msgid "otherwise"
-msgstr "muuten"
-
-#: inc/deploycheck.class.php:297 inc/deploycheck.class.php:440
-msgid "Audit label"
-msgstr "Auditoinnin tunniste"
-
-#: inc/deploycheck.class.php:340
-msgid "Path to the key"
-msgstr "Avaimen polku"
-
-#: inc/deploycheck.class.php:342
-msgid "Example of registry key"
-msgstr ""
-
-#: inc/deploycheck.class.php:343 inc/deploycheck.class.php:360
-#, php-format
-msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
-msgstr ""
-
-#: inc/deploycheck.class.php:348 inc/deploycheck.class.php:356
-#: inc/deploycheck.class.php:367
-msgid "Path to the value"
-msgstr "Arvon polku"
-
-#: inc/deploycheck.class.php:350 inc/deploycheck.class.php:358
-#: inc/deploycheck.class.php:370
-msgid "Example of registry value"
-msgstr ""
-
-#: inc/deploycheck.class.php:368
-msgid "Type of value"
-msgstr "Arvon tyyppi"
-
-#: inc/deploycheck.class.php:382
-msgid "Directory"
-msgstr "Hakemisto"
-
-#: inc/deploycheck.class.php:402
-msgid "Disk or directory"
-msgstr "Levy tai hakemisto"
-
-#: inc/deploycheck.class.php:499
-msgid "Unit"
-msgstr "Yksikkö"
-
-#: inc/deploycheck.class.php:522
-msgid "If not successful"
-msgstr "Jos ei ole onnistunut"
-
-#: inc/deploycheck.class.php:553
-msgid "abort job"
-msgstr "keskeytä työ"
-
-#: inc/deploycheck.class.php:554
-msgid "skip job"
-msgstr "ohita työ"
-
-#: inc/deploycheck.class.php:555
-msgid "start job now"
-msgstr ""
-
-#: inc/deploycheck.class.php:556
-msgid "report info"
-msgstr "raportti tiedoista"
-
-#: inc/deploycheck.class.php:557
-msgid "report warning"
-msgstr "raportti varoituksista"
-
-#: inc/stateinventory.class.php:120
-msgid "Number per second"
-msgstr "Numeroa sekunnissa"
-
-#: inc/stateinventory.class.php:121
-msgid "Threads / Timeout configuration"
-msgstr ""
-
-#: inc/stateinventory.class.php:122
-msgid "To inventory"
-msgstr "Kartoitettavat"
-
-#: inc/stateinventory.class.php:123
-msgid "Error(s)"
-msgstr "Virheet"
+"Paketin käyttöönotto-moduuli on poistettu käytöstä kyseiselle agentille"
+
+#: public/b/deploy/index.php:150
+msgid "Checks"
+msgstr "Tarkastukset"
+
+#: public/b/deploy/index.php:151
+msgid "Files download"
+msgstr "Tiedostojen lataus"
+
+#: public/b/deploy/index.php:152
+msgid "Files preparation"
+msgstr "Tiedostojen valmistelu"
+
+#: public/b/deploy/index.php:263
+msgid "User canceled the job"
+msgstr "Käyttäjä peruutti työn"
+
+#: public/b/deploy/index.php:265
+msgid "User postponed the job"
+msgstr "Käyttäjä lykkäsi työtä"
 
 #: public/js/taskjobs.js:747
 msgid "The preparation of the task did not return any targets"
