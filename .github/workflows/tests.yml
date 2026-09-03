@@ -105,7 +105,7 @@ jobs:
           - {php-versions: "8.3", db-image: "mysql:8.0"}
           - {php-versions: "8.4", db-image: "mysql:8.0"}
           - {php-versions: "8.5", db-image: "mysql:8.4"}
-          - {php-versions: "8.5", db-image: "mariadb:10.6"}
+          - {php-versions: "8.5", db-image: "mariadb:10.11"}
           - {php-versions: "8.5", db-image: "mariadb:11"}
     name: Unit tests ${{ matrix.php-versions }} ${{ matrix.db-image }}
     env:
