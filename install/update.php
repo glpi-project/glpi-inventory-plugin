@@ -34,6 +34,7 @@ use Glpi\Dashboard\Dashboard;
 use Glpi\Dashboard\Item as Dashboard_Item;
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QueryParam;
+use Glpi\DBAL\QuerySubQuery;
 use Glpi\Error\ErrorHandler;
 use Ramsey\Uuid\Uuid;
 use Safe\Exceptions\InfoException;
@@ -1821,7 +1822,7 @@ function do_entities_migration(Migration $migration): void
                 [
                     'agent_base_url' => $agent_base_url,
                 ],
-                [true]
+                [new QueryExpression('true')]
             );
         }
     }
@@ -2720,24 +2721,18 @@ function do_computercomputer_migration(Migration $migration): void
     /*
      * Manage devices with is_dynamic
      */
-    $iterator = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_inventorycomputercomputers']);
-    if (count($iterator)) {
-        $update = $DB->buildUpdate(
-            'glpi_computers',
-            [
-                'is_dynamic'   => 1,
-            ],
-            [
-                'id'           => new QueryParam(),
-            ]
-        );
-        $stmt = $DB->prepare($update);
-        foreach ($iterator as $data) {
-            $stmt->bind_param('s', $data['computers_id']);
-            $DB->executeStatement($stmt);
-        }
-        mysqli_stmt_close($stmt);
-    }
+    $DB->update(
+        'glpi_computers',
+        [
+            'is_dynamic'   => 1,
+        ],
+        [
+            'id' => new QuerySubQuery([
+                'SELECT' => 'computers_id',
+                'FROM'   => 'glpi_plugin_glpiinventory_inventorycomputercomputers',
+            ]),
+        ]
+    );
 }
 
 
@@ -4336,24 +4331,18 @@ function do_printer_migration(Migration $migration): void
     /*
      * Manage devices with is_dynamic
      */
-    $iterator = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_printers']);
-    if (count($iterator)) {
-        $update = $DB->buildUpdate(
-            'glpi_printers',
-            [
-                'is_dynamic'   => 1,
-            ],
-            [
-                'id'           => new QueryParam(),
-            ]
-        );
-        $stmt = $DB->prepare($update);
-        foreach ($iterator as $data) {
-            $stmt->bind_param('s', $data['printers_id']);
-            $DB->executeStatement($stmt);
-        }
-        mysqli_stmt_close($stmt);
-    }
+    $DB->update(
+        'glpi_printers',
+        [
+            'is_dynamic'   => 1,
+        ],
+        [
+            'id' => new QuerySubQuery([
+                'SELECT' => 'printers_id',
+                'FROM'   => 'glpi_plugin_glpiinventory_printers',
+            ]),
+        ]
+    );
 
     $migration->displayMessage("Clean printers");
     /*
@@ -4782,24 +4771,18 @@ function do_networkequipment_migration(Migration $migration): void
     /*
      * Manage devices with is_dynamic
      */
-    $iterator = $DB->request(['FROM' => 'glpi_plugin_glpiinventory_networkequipments']);
-    if (count($iterator)) {
-        $update = $DB->buildUpdate(
-            'glpi_networkequipments',
-            [
-                'is_dynamic'   => 1,
-            ],
-            [
-                'id'           => new QueryParam(),
-            ]
-        );
-        $stmt = $DB->prepare($update);
-        foreach ($iterator as $data) {
-            $stmt->bind_param('s', $data['networkequipments_id']);
-            $DB->executeStatement($stmt);
-        }
-        mysqli_stmt_close($stmt);
-    }
+    $DB->update(
+        'glpi_networkequipments',
+        [
+            'is_dynamic'   => 1,
+        ],
+        [
+            'id' => new QuerySubQuery([
+                'SELECT' => 'networkequipments_id',
+                'FROM'   => 'glpi_plugin_glpiinventory_networkequipments',
+            ]),
+        ]
+    );
 }
 
 
@@ -6956,29 +6939,21 @@ function do_rule_migration(Migration $migration, array $prepare_Config): void
         ]
     );
 
-    $iterator = $DB->request([
-        'FROM'   => 'glpi_rules',
-        'WHERE'  => ['sub_type' => 'PluginGlpiinventoryInventoryRuleImport'],
-    ]);
-    if (count($iterator)) {
-        $update = $DB->buildUpdate(
-            'glpi_ruleactions',
-            [
-                'value'  => 1,
-            ],
-            [
-                'rules_id'  => new QueryParam(),
-                'value'     => 0,
-                'field'     => '_fusion',
-            ]
-        );
-        $stmt = $DB->prepare($update);
-        foreach ($iterator as $data) {
-            $stmt->bind_param('s', $data['id']);
-            $DB->executeStatement($stmt);
-        }
-        mysqli_stmt_close($stmt);
-    }
+    $DB->update(
+        'glpi_ruleactions',
+        [
+            'value'  => 1,
+        ],
+        [
+            'rules_id' => new QuerySubQuery([
+                'SELECT' => 'id',
+                'FROM'   => 'glpi_rules',
+                'WHERE'  => ['sub_type' => 'PluginGlpiinventoryInventoryRuleImport'],
+            ]),
+            'value'    => 0,
+            'field'    => '_fusion',
+        ]
+    );
 
     /*
     *  Manage configuration of plugin
