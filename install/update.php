@@ -6210,7 +6210,7 @@ function do_deploymirror_migration(Migration $migration): void
             [
                 'is_active' => 1,
             ],
-            [1 => 1]
+            [new QueryExpression('true')]
         );
     }
 }
