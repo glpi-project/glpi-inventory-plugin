@@ -34,7 +34,7 @@ use Glpi\Exception\Http\AccessDeniedHttpException;
 use Glpi\Exception\Http\BadRequestHttpException;
 use Glpi\Exception\Http\NotFoundHttpException;
 
-Session::checkRight('plugin_glpiinventory_task', PURGE);
+Session::checkRight(PluginGlpiinventoryTask::$rightname, PURGE);
 
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();

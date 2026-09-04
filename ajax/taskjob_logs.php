@@ -33,7 +33,7 @@
 use Glpi\Exception\Http\AccessDeniedHttpException;
 
 if (plugin_glpiinventory_script_endswith("taskjob_logs.php")) {
-    Session::checkRight('plugin_glpiinventory_task', READ);
+    Session::checkRight(PluginGlpiinventoryTask::$rightname, READ);
 }
 
 header("Content-Type: text/html; charset=UTF-8");

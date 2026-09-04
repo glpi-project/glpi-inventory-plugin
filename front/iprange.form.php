@@ -40,12 +40,12 @@ Html::header(
     "iprange"
 );
 
-Session::checkRight('plugin_glpiinventory_iprange', READ);
+Session::checkRight(PluginGlpiinventoryIPRange::$rightname, READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
 if (isset($_POST["add"])) {
-    Session::checkRight('plugin_glpiinventory_iprange', CREATE);
+    Session::checkRight(PluginGlpiinventoryIPRange::$rightname, CREATE);
     if ($iprange->checkip($_POST)) {
         $_POST['ip_start']  = (int) $_POST['ip_start0'] . "." . (int) $_POST['ip_start1'] . ".";
         $_POST['ip_start'] .= (int) $_POST['ip_start2'] . "." . (int) $_POST['ip_start3'];
@@ -90,7 +90,7 @@ if (isset($_POST["add"])) {
         $task->update($input_task);
         $taskjob->update($input_taskjob);
     } else {
-        Session::checkRight('plugin_glpiinventory_iprange', UPDATE);
+        Session::checkRight(PluginGlpiinventoryIPRange::$rightname, UPDATE);
         if ($iprange->checkip($_POST)) {
             $_POST['ip_start']  = (int) $_POST['ip_start0'] . "." . (int) $_POST['ip_start1'] . ".";
             $_POST['ip_start'] .= (int) $_POST['ip_start2'] . "." . (int) $_POST['ip_start3'];
