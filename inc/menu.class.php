@@ -123,7 +123,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
 
         $options['menu']['title'] = self::getTypeName();
         $options['menu']['page']  = self::getSearchURL(false);
-        if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryConfig::$rightname, READ)) {
             $options['menu']['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
         }
         foreach ($elements as $type => $itemtype) {
@@ -138,7 +138,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
                     $options[$type]['links']['add'] = $itemtype::getFormURL(false);
                 }
             }
-            if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
+            if (Session::haveRight(PluginGlpiinventoryConfig::$rightname, READ)) {
                 $options[$type]['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
             }
         }
@@ -164,7 +164,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
                 'search' => Agent::getSearchURL(false),
             ],
         ];
-        if (Session::haveRight('plugin_glpiinventory_configuration', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryConfig::$rightname, READ)) {
             $options['agent']['links']['config']  = PluginGlpiinventoryConfig::getFormURL(false);
         }
         return $options;
@@ -210,13 +210,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $general_menu[0]['link'] = Agent::getSearchURL();
         }
 
-        if (Session::haveRight('plugin_glpiinventory_group', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryDeployGroup::$rightname, READ)) {
             $general_menu[2]['name'] = __('Groups of computers', 'glpiinventory');
             $general_menu[2]['pic']  = "ti ti-devices-pc";
             $general_menu[2]['link'] = $fi_path . "/front/deploygroup.php";
         }
 
-        if (Session::haveRight(Config::$rightname, UPDATE) || Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
+        if (Session::haveRight(Config::$rightname, UPDATE) || Session::haveRight(PluginGlpiinventoryConfig::$rightname, UPDATE)) {
             $general_menu[3]['name'] = __('General configuration', 'glpiinventory');
             $general_menu[3]['pic']  = "ti ti-settings";
             $general_menu[3]['link'] = $fi_path . "/front/config.form.php";
@@ -234,7 +234,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         * Tasks
         */
         $tasks_menu = [];
-        if (Session::haveRight('plugin_glpiinventory_task', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryTask::$rightname, READ)) {
             $tasks_menu[2]['name'] = __('Task management', 'glpiinventory');
             $tasks_menu[2]['pic']  = "ti ti-list-check";
             $tasks_menu[2]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryTask::class);
@@ -250,13 +250,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $tasks_menu[0]['link'] = $CFG_GLPI['root_doc'] . "/front/inventory.conf.php?forcetab=Glpi\Inventory\Conf$2";
         }
 
-        if (Session::haveRight("plugin_glpiinventory_collect", READ)) {
+        if (Session::haveRight(PluginGlpiinventoryCollect::$rightname, READ)) {
             $tasks_menu[11]['name'] = __('Collect information', 'glpiinventory');
             $tasks_menu[11]['pic']  = "ti ti-device-desktop-down";
             $tasks_menu[11]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryCollect::class);
         }
 
-        if (Session::haveRight('plugin_glpiinventory_task', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryTask::$rightname, READ)) {
             $tasks_menu[12]['name'] = __('Time slot', 'glpiinventory');
             $tasks_menu[12]['pic']  = "ti ti-calendar-time";
             $tasks_menu[12]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryTimeslot::class);
@@ -274,7 +274,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         * Rules
         */
         $rules_menu = [];
-        if (Session::haveRight('plugin_glpiinventory_ruleimport', READ)) {
+        if (Session::haveRight(RuleImportAsset::$rightname, READ)) {
             $rules_menu[1]['name'] = __('Equipment import and link rules', 'glpiinventory');
             $rules_menu[1]['pic']  = "ti ti-book";
             $rules_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
@@ -288,7 +288,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $rules_menu[2]['link'] = RefusedEquipment::getSearchURL();
         }
 
-        if (Session::haveRight('rule_import', READ)) {
+        if (Session::haveRight(RuleImportEntity::$rightname, READ)) {
             $rules_menu[3]['name'] = __('Computer entity rules', 'glpiinventory');
             $rules_menu[3]['pic']  = "ti ti-book";
             $rules_menu[3]['link'] = RuleImportEntity::getSearchURL();
@@ -314,7 +314,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         */
         $network_menu = [];
 
-        if (Session::haveRight('plugin_glpiinventory_iprange', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryIPRange::$rightname, READ)) {
             $network_menu[] = [
                 'name' => __('IP Ranges', 'glpiinventory'),
                 'pic'  => "ti ti-viewfinder",
@@ -322,7 +322,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-        if (Session::haveRight('plugin_glpiinventory_credentialip', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryCredentialIp::$rightname, READ)) {
             $network_menu[] = [
                 'name' => __('Remote devices to inventory (VMware)', 'glpiinventory'),
                 'pic'  => "ti ti-devices-pc",
@@ -330,15 +330,15 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-        if (Session::haveRight('plugin_glpiinventory_configsecurity', READ)) {
+        if (Session::haveRight(SNMPCredential::$rightname, READ)) {
             $network_menu[] = [
-                'name' => __('SNMP credentials', 'glpiinventory'),
+                'name' => SNMPCredential::getTypeName(Session::getPluralNumber()),
                 'pic'  => "ti ti-lock",
                 'link' => SNMPCredential::getSearchURL(),
             ];
         }
 
-        if (Session::haveRight('plugin_glpiinventory_credential', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryCredential::$rightname, READ)) {
             $network_menu[] = [
                 'name' => __('Authentication for remote devices (VMware)', 'glpiinventory'),
                 'pic'  => "ti ti-lock",
@@ -346,7 +346,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-        if (Session::haveRight('plugin_glpiinventory_task', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryTask::$rightname, READ)) {
             $network_menu[] = [
                 'name' => __('Discovery status', 'glpiinventory'),
                 'pic'  =>   "ti ti-activity",
@@ -357,14 +357,6 @@ class PluginGlpiinventoryMenu extends CommonGLPI
                 'name' => __('Network inventory status', 'glpiinventory'),
                 'pic' =>    "ti ti-activity",
                 'link' =>   $fi_path . "/front/stateinventory.php",
-            ];
-        }
-
-        if (Session::haveRight('plugin_glpiinventory_model', READ)) {
-            $network_menu[] = [
-                'name' => __('SNMP models creation', 'glpiinventory'),
-                'pic'  => "ti ti-model",
-                'link' => $fi_path . "/front/constructmodel.php",
             ];
         }
 
@@ -381,7 +373,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         */
         $deploy_menu = [];
 
-        if (Session::haveRight('plugin_glpiinventory_package', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryDeployPackage::$rightname, READ)) {
             $deploy_menu[] = [
                 'name' => __('Package management', 'glpiinventory'),
                 'pic'  => "ti ti-package",
@@ -389,13 +381,13 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             ];
         }
 
-        if (Session::haveRight('plugin_glpiinventory_deploymirror', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryDeployMirror::$rightname, READ)) {
             $deploy_menu[1]['name'] = __('Mirror servers', 'glpiinventory');
             $deploy_menu[1]['pic']  = "ti ti-server-2";
             $deploy_menu[1]['link'] = $fi_path . "/front/deploymirror.php";
         }
 
-        if (Session::haveRight('plugin_glpiinventory_userinteractiontemplate', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryDeployUserinteractionTemplate::$rightname, READ)) {
             $deploy_menu[2]['name'] = _n(
                 'User interaction template',
                 'User interaction templates',

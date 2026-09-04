@@ -462,18 +462,18 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
     {
 
         if (isset($postvars['forcestart'])) {
-            Session::checkRight('plugin_glpiinventory_task', UPDATE);
+            Session::checkRight(PluginGlpiinventoryTask::$rightname, UPDATE);
 
             $this->getFromDB($postvars['id']);
             $this->forceRunning();
 
             Html::back();
         } elseif (isset($postvars["add"])) {
-            Session::checkRight('plugin_glpiinventory_task', CREATE);
+            Session::checkRight(PluginGlpiinventoryTask::$rightname, CREATE);
             $items_id = $this->add($postvars);
             Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER']) . "?id=" . $items_id);
         } elseif (isset($postvars["purge"])) {
-            Session::checkRight('plugin_glpiinventory_task', PURGE);
+            Session::checkRight(PluginGlpiinventoryTask::$rightname, PURGE);
             $pfTaskJob = new PluginGlpiinventoryTaskjob();
             $taskjobs = $pfTaskJob->find(['plugin_glpiinventory_tasks_id' => $postvars['id']]);
             foreach ($taskjobs as $taskjob) {
@@ -482,7 +482,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             $this->delete($postvars);
             Html::redirect(Toolbox::getItemTypeSearchURL(get_class($this)));
         } elseif (isset($_POST["update"])) {
-            Session::checkRight('plugin_glpiinventory_task', UPDATE);
+            Session::checkRight(PluginGlpiinventoryTask::$rightname, UPDATE);
             $this->getFromDB($postvars['id']);
             //Ensure empty value are set to NULL for datetime fields
             if (isset($postvars['datetime_start']) && $postvars['datetime_start'] === '') {
@@ -494,7 +494,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
             $this->update($postvars);
             Html::back();
         } elseif (isset($postvars['export_jobs'])) {
-            Session::checkRight('plugin_glpiinventory_task', READ);
+            Session::checkRight(PluginGlpiinventoryTask::$rightname, READ);
             $this->csvExport($postvars);
         }
     }

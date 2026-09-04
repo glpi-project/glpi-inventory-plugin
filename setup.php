@@ -280,7 +280,7 @@ function plugin_init_glpiinventory(): void
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = addPublicFile('js/taskjobs', 'js');
         }
         if (
-            Session::haveRight('plugin_glpiinventory_configuration', READ)
+            Session::haveRight(PluginGlpiinventoryConfig::$rightname, READ)
               || Session::haveRight(Profile::$rightname, UPDATE)
         ) {// Config page
             $PLUGIN_HOOKS['config_page']['glpiinventory'] = 'front/config.form.php'
@@ -307,7 +307,7 @@ function plugin_init_glpiinventory(): void
         ];
         $PLUGIN_HOOKS[Hooks::ITEM_PURGE]['glpiinventory'] = $p;
 
-        if (Session::haveRight('plugin_glpiinventory_menu', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryProfile::RIGHT_MENU, READ)) {
             $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['admin'] = PluginGlpiinventoryMenu::class;
         }
 

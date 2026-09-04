@@ -39,7 +39,7 @@ use function Safe\ob_end_clean;
 use function Safe\readgzfile;
 use function Safe\session_write_close;
 
-Session::checkRight('plugin_glpiinventory_package', READ);
+Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, READ);
 
 session_write_close(); // unlock session to ensure GLPI is still usable while huge file downloads is done in background
 

@@ -38,7 +38,7 @@ Html::header(
     "collect"
 );
 
-Session::checkRight("plugin_glpiinventory_collect", READ);
+Session::checkRight(PluginGlpiinventoryCollect::$rightname, READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 
