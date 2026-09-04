@@ -648,14 +648,12 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
         foreach ($iterator as $data) {
             $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
             $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
-            if (!isset($tasks_id[$pfTask->fields['id']])) {
-                $tasks_id[$pfTask->fields['id']] = [
-                    'is_active' => $pfTask->fields['is_active'],
-                    'jobstates' => [],
-                    'method'    => $pfTaskjob->fields['method'],
-                    'name'      => $pfTask->fields['name'],
-                ];
-            }
+            $tasks_id[$pfTask->fields['id']] ??= [
+                'is_active' => $pfTask->fields['is_active'],
+                'jobstates' => [],
+                'method'    => $pfTaskjob->fields['method'],
+                'name'      => $pfTask->fields['name'],
+            ];
             // Limit to 5 last runs
             if (count($tasks_id[$pfTask->fields['id']]['jobstates']) < 5) {
                 $tasks_id[$pfTask->fields['id']]['jobstates'][] = $data['id'];

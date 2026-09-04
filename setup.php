@@ -235,13 +235,8 @@ function plugin_init_glpiinventory(): void
         $_SESSION['glpi_plugin_glpiinventory']['xmltags']['NETWORKINVENTORY']
                                              = PluginGlpiinventoryCommunicationNetworkInventory::class;
 
-        // set default values for task view
-        if (!isset($_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'])) {
-            $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] = 2;
-        }
-        if (!isset($_SESSION['glpi_plugin_glpiinventory']['refresh'])) {
-            $_SESSION['glpi_plugin_glpiinventory']['refresh'] = 'off';
-        }
+        $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] ??= 2;
+        $_SESSION['glpi_plugin_glpiinventory']['refresh'] ??= 'off';
 
         $PLUGIN_HOOKS['import_item']['glpiinventory'] = [
             'Computer' => ['Plugin'],

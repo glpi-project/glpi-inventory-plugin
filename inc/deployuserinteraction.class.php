@@ -299,12 +299,8 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
     public function add_item(array $params): bool
     {
-        if (!isset($params['text'])) {
-            $params['text'] = "";
-        }
-        if (!isset($params['template'])) {
-            $params['template'] = 0;
-        }
+        $params['text'] ??= "";
+        $params['template'] ??= 0;
 
         //prepare new check entry to insert in json
         $entry = [
@@ -323,12 +319,8 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
 
     public function save_item(array $params): bool
     {
-        if (!isset($params['value'])) {
-            $params['value'] = "";
-        }
-        if (!isset($params['name'])) {
-            $params['name'] = "";
-        }
+        $params['value'] ??= "";
+        $params['name'] ??= "";
         //prepare new check entry to insert in json
         $entry = [
             'name'        => $params['name'],
@@ -361,9 +353,7 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             && !empty($json['jobs'][$this->json_name])
         ) {
             foreach ($json['jobs'][$this->json_name] as $interaction) {
-                if (!isset($used_interactions[$interaction['type']])) {
-                    $used_interactions[$interaction['type']] = $interaction['type'];
-                }
+                $used_interactions[$interaction['type']] ??= $interaction['type'];
             }
         }
         return $used_interactions;

@@ -8498,18 +8498,9 @@ function migrateTablesFromFusinvDeploy(Migration $migration): void
             $json_order->jobs = new stdClass();
         }
 
-        if (!isset($json_order->jobs->checks)) {
-            //print("deployorders fixer : create missing required '/jobs/checks' array property\n");
-            $json_order->jobs->checks = [];
-        }
-        if (!isset($json_order->jobs->actions)) {
-            //print("deployorders fixer : create missing required '/jobs/actions' array property\n");
-            $json_order->jobs->actions = [];
-        }
-        if (!isset($json_order->jobs->associatedFiles)) {
-            //print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
-            $json_order->jobs->associatedFiles = [];
-        }
+        $json_order->jobs->checks ??= [];
+        $json_order->jobs->actions ??= [];
+        $json_order->jobs->associatedFiles ??= [];
 
         // Checks for /associatedFiles json property
         if (!isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles)) {

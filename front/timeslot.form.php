@@ -32,9 +32,7 @@
 
 Session::checkRight('plugin_glpiinventory_task', READ);
 
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
-}
+$_GET["id"] ??= "";
 
 $pfTimeslot = new PluginGlpiinventoryTimeslot();
 //Add a new timeslot

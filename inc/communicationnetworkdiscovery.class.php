@@ -58,9 +58,7 @@ class PluginGlpiinventoryCommunicationNetworkDiscovery
 
         $agent->getFromDBByCrit(['deviceid' => $p_DEVICEID]);
 
-        if (!isset($a_CONTENT->jobid)) {
-            $a_CONTENT->jobid = $a_CONTENT->content->processnumber;
-        }
+        $a_CONTENT->jobid ??= $a_CONTENT->content->processnumber;
 
         $_SESSION['glpi_plugin_glpiinventory_processnumber'] = $a_CONTENT->jobid;
         if ($pfTaskjobstate->getFromDB($a_CONTENT->jobid)) {

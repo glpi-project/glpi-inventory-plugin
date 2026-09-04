@@ -102,12 +102,8 @@ class InventoryController extends AbstractController
 
         $headers = ['server-type' => 'glpi/glpiinventory ' . PLUGIN_GLPIINVENTORY_VERSION];
 
-        if ($action === null) {
-            $action = $request->query->get('action');
-        }
-        if ($machine_id === null) {
-            $machine_id = $request->query->get('machineid');
-        }
+        $action ??= $request->query->get('action');
+        $machine_id ??= $request->query->get('machineid');
 
         if (empty($action) || empty($machine_id)) {
             return new Response(null, 400, $headers);
@@ -118,9 +114,7 @@ class InventoryController extends AbstractController
         }
 
         $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
-        if (!isset($_SESSION['glpilanguage'])) {
-            $_SESSION['glpilanguage'] = 'en_GB';
-        }
+        $_SESSION['glpilanguage'] ??= 'en_GB';
         $_SESSION['glpi_glpiinventory_nolock'] = true;
         $_SESSION['glpi_use_mode'] = 0;
         $_SESSION['glpiparententities'] = '';

@@ -276,9 +276,7 @@ class PluginGlpiinventoryDeployUserinteractionTemplate extends CommonDropdown
     public function initializeJsonFields($json_fields)
     {
         foreach ($this->getJsonFields() as $field) {
-            if (!isset($json_fields[$field])) {
-                $json_fields[$field] = $this->getDefaultBehaviorForAButton($field);
-            }
+            $json_fields[$field] ??= $this->getDefaultBehaviorForAButton($field);
         }
         return $json_fields;
     }

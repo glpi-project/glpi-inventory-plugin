@@ -661,10 +661,8 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                                 $message = "";
                             }
                         }
-                        if ($message === null) {
-                            $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
-                        }
-                        if (strlen($message) > 0) {
+                        $message ??= json_encode($a_values, JSON_UNESCAPED_SLASHES);
+                        if ($message !== '') {
                             $pfTaskjoblog->addTaskjoblog(
                                 $jobstate['id'],
                                 $jobstate['items_id'],

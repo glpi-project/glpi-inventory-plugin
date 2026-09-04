@@ -118,9 +118,7 @@ function plugin_glpiinventory_getAddSearchOptions(string $itemtype): array
  */
 function plugin_glpiinventory_hook_dashboard_cards(?array $cards): array
 {
-    if ($cards === null) {
-        $cards = [];
-    }
+    $cards ??= [];
 
     $counters = [
         'agent'        => [

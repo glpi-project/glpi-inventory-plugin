@@ -307,17 +307,15 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public function prepareInputForAdd($input)
     {
-        if (!isset($input['json'])) {
-            $input['json'] = json_encode([
-                'jobs' => [
-                    'checks'           => [],
-                    'associatedFiles'  => [],
-                    'actions'          => [],
-                    'userinteractions' => [],
-                ],
-                'associatedFiles' => [],
-            ]);
-        }
+        $input['json'] ??= json_encode([
+            'jobs' => [
+                'checks'           => [],
+                'associatedFiles'  => [],
+                'actions'          => [],
+                'userinteractions' => [],
+            ],
+            'associatedFiles' => [],
+        ]);
 
         return parent::prepareInputForAdd($input);
     }

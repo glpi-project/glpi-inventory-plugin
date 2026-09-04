@@ -581,9 +581,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
             );
 
             if ($period != '0') {
-                if (is_null($data['date_scheduled_timestamp'])) {
-                    $data['date_scheduled_timestamp'] = date('U');
-                }
+                $data['date_scheduled_timestamp'] ??= date('U');
                 if (
                     ($data['date_scheduled_timestamp'] + $period) <= date('U')
                 ) {
