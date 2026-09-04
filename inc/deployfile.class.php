@@ -71,7 +71,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_package';
+    public static string $rightname = 'plugin_glpiinventory_package';
 
     public const REGISTRY_NO_DB_ENTRY = 0x1;
     public const REGISTRY_NO_MANIFEST = 0x2;
@@ -387,7 +387,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         global $CFG_GLPI;
 
         echo "<script type='text/javascript'>";
-        echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
         echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
          dataUrl:'" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/serverfilestreesons.php'
       });";

@@ -40,7 +40,15 @@ class PluginGlpiinventoryProfile extends Profile
      *
      * @var string
      */
-    public static $rightname = "config";
+    public static string $rightname = "config";
+
+    /**
+     * Rights that are not owned by any itemtype, and therefore cannot be
+     * referenced through a `CommonGLPI::$rightname` property.
+     */
+    public const RIGHT_MENU           = 'plugin_glpiinventory_menu';
+    public const RIGHT_SELFPACKAGE    = 'plugin_glpiinventory_selfpackage';
+    public const RIGHT_PRINTER        = 'plugin_glpiinventory_printer';
 
     /*
      * Old profile names:

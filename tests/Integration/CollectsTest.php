@@ -325,10 +325,8 @@ class CollectsTest extends DbTestCase
         $resultObject = $pfCollect->communication('getJobs', 'pc01', null);
         $result = json_encode($resultObject);
 
-        $matches = [];
-        preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
         $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_tm . '},'
-                                          . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/GLPI-Agent\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_fi . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
+                                          . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/GLPI-Agent\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_fi . '}],"postmethod":"POST"}');
         // answer 1
         $params = [
             'action'                => 'setAnswer',
@@ -478,9 +476,8 @@ class CollectsTest extends DbTestCase
         $resultObject = $pfCollect->communication('getJobs', 'pc01', null);
         $result = json_encode($resultObject);
 
-        preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
         $this->assertEquals($result, '{"jobs":[{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Name"],"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_kn . '},'
-                                          . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_kd . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
+                                          . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_kd . '}],"postmethod":"POST"}');
 
         // answer 1
         $params = [
@@ -637,9 +634,8 @@ class CollectsTest extends DbTestCase
         $resultObject = $pfCollect->communication('getJobs', 'pc01', null);
         $result = json_encode($resultObject);
 
-        preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
         $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:\\\Users\\\toto\\\Desktop","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_desktop . '},'
-                                          . '{"function":"findFile","dir":"C:\\\Users\\\toto\\\Downloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST","token":"' . $matches[1] . '"}');
+                                          . '{"function":"findFile","dir":"C:\\\Users\\\toto\\\Downloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST"}');
         // answer 1
         $params = [
             'action' => 'setAnswer',

@@ -33,7 +33,7 @@
 Session::checkLoginUser();
 
 if (Session::getCurrentInterface() !== 'helpdesk') {
-    Session::checkRight('plugin_glpiinventory_selfpackage', READ);
+    Session::checkRight(PluginGlpiinventoryProfile::RIGHT_SELFPACKAGE, READ);
 }
 
 Html::helpHeader(

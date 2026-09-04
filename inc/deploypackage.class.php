@@ -60,7 +60,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_package';
+    public static string $rightname = 'plugin_glpiinventory_package';
 
     /**
      * Initialize the users visibility of package for self-service deploy
@@ -1062,7 +1062,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
                 case Computer::class:
                     if (
-                        Session::haveRight("plugin_glpiinventory_selfpackage", READ)
+                        Session::haveRight(PluginGlpiinventoryProfile::RIGHT_SELFPACKAGE, READ)
                         && PluginGlpiinventoryToolbox::isAnInventoryDevice($item)
                         && self::isDeployEnabled($item->fields['id'])
                     ) {
@@ -2082,7 +2082,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         global $DB;
 
         if (Session::getCurrentInterface() !== 'helpdesk') {
-            if (!Session::haveRight('plugin_glpiinventory_selfpackage', READ)) {
+            if (!Session::haveRight(PluginGlpiinventoryProfile::RIGHT_SELFPACKAGE, READ)) {
                 return false;
             }
         }

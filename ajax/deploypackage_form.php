@@ -43,7 +43,7 @@ $fi_move_item = filter_input(INPUT_POST, "move_item");
 if (!empty($fi_move_item)) { //ajax request
     $json_response = ["success" => true, "reason"  => ''];
 
-    if (Session::haveRight('plugin_glpiinventory_package', UPDATE)) {
+    if (Session::haveRight(PluginGlpiinventoryDeployPackage::$rightname, UPDATE)) {
         $params = [
             'old_index' => filter_input(INPUT_POST, "old_index"),
             'new_index' => filter_input(INPUT_POST, "new_index"),

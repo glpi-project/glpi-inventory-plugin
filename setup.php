@@ -44,8 +44,8 @@ if (!defined('PLUGIN_GLPIINVENTORY_VERSION')) {
 }
 
 $constants = [
-    'PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION' => '11.0.2', // Minimal GLPI version, inclusive
-    'PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION' => '11.0.99', // Maximum GLPI version, exclusive
+    'PLUGIN_GLPI_INVENTORY_GLPI_MIN_VERSION' => '12.0.0', // Minimal GLPI version, inclusive
+    'PLUGIN_GLPI_INVENTORY_GLPI_MAX_VERSION' => '12.0.99', // Maximum GLPI version, exclusive
     'PLUGIN_GLPI_INVENTORY_DIR' => __DIR__,
     'PLUGIN_GLPI_INVENTORY_OFFICIAL_RELEASE' => 0,
     'PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR' => GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/repository/',
@@ -280,8 +280,8 @@ function plugin_init_glpiinventory(): void
             $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['glpiinventory'][] = addPublicFile('js/taskjobs', 'js');
         }
         if (
-            Session::haveRight('plugin_glpiinventory_configuration', READ)
-              || Session::haveRight('profile', UPDATE)
+            Session::haveRight(PluginGlpiinventoryConfig::$rightname, READ)
+              || Session::haveRight(Profile::$rightname, UPDATE)
         ) {// Config page
             $PLUGIN_HOOKS['config_page']['glpiinventory'] = 'front/config.form.php'
                  . '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
@@ -307,7 +307,7 @@ function plugin_init_glpiinventory(): void
         ];
         $PLUGIN_HOOKS[Hooks::ITEM_PURGE]['glpiinventory'] = $p;
 
-        if (Session::haveRight('plugin_glpiinventory_menu', READ)) {
+        if (Session::haveRight(PluginGlpiinventoryProfile::RIGHT_MENU, READ)) {
             $PLUGIN_HOOKS["menu_toadd"]['glpiinventory']['admin'] = PluginGlpiinventoryMenu::class;
         }
 

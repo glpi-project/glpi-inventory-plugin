@@ -42,14 +42,14 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
      *
      * @var bool
      */
-    public $dohistory = true;
+    public bool $dohistory = true;
 
     /**
      * The right name for this class
      *
      * @var string
      */
-    public static $rightname = 'plugin_glpiinventory_iprange';
+    public static string $rightname = 'plugin_glpiinventory_iprange';
 
 
     /**
@@ -280,7 +280,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     {
 
         $actions = [];
-        if (Session::haveRight("plugin_glpiinventory_task", UPDATE)) {
+        if (Session::haveRight(PluginGlpiinventoryTask::$rightname, UPDATE)) {
             $actions[PluginGlpiinventoryTask::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'addtojob_target'] = __('Target a task', 'glpiinventory');
         }
         return $actions;
