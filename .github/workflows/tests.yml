@@ -88,6 +88,9 @@ jobs:
     - name: Check licence headers
       if: ${{ success() || failure() }}
       run: cd glpi && php bin/console tools:licence_headers_check --plugin glpiinventory
+    - name: Rector checks
+      if: ${{ success() || failure() }}
+      run: cd glpi/plugins/glpiinventory && php ../../vendor/bin/rector
     - name: PHPStan checks
       if: ${{ success() || failure() }}
       run: cd glpi/plugins/glpiinventory && php ../../vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress
