@@ -25,11 +25,12 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php-versions: ['8.2', '8.5']
     name: lint (${{ matrix.php-versions }})
     env:
-      extensions: zip
+      extensions: zip, hash, fileinfo, mysqli, gd, bz2
       key: cache-v1
     steps:
     - name: Change dir owner to working user
@@ -65,14 +66,37 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
     - name: Install dependencies
       run: composer install
+    - name: Checkout GLPI
+      uses: actions/checkout@v7
+      with:
+        repository: glpi-project/glpi
+        path: glpi
+        fetch-depth: 1
+        ref: 11.0/bugfixes
+    - name: Copy plugin
+      run: rsync -avr --exclude='glpi' ./* glpi/plugins/glpiinventory/
+    - name: Install GLPI dependencies
+      run: |
+        cd glpi
+        composer install --ansi --no-interaction
+        php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
+        mkdir --parents public/lib
     - name: Check for coding standards violations
-      if: matrix.php-versions == '8.5'
+      if: ${{ success() || failure() }}
       run: |
         vendor/bin/php-cs-fixer check  --show-progress=dots --verbose --diff
+    - name: Check licence headers
+      if: ${{ success() || failure() }}
+      run: cd glpi && php bin/console tools:licence_headers_check --plugin glpiinventory
+    - name: PHPStan checks
+      if: ${{ success() || failure() }}
+      run: cd glpi/plugins/glpiinventory && php ../../vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress
 
+  # Test suites: one run per PHP / database combination.
   phpunit:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - {php-versions: "8.2", db-image: "mysql:8.0"}
@@ -157,8 +181,6 @@ jobs:
         php -r "file_put_contents('.package.hash', sha1_file('package-lock.json'));"
         mkdir --parents public/lib
         php bin/console locales:compile
-    - name: Check licence headers
-      run: cd glpi && php bin/console tools:licence_headers_check --plugin glpiinventory
 
     - name: Init database
       run: |
@@ -175,5 +197,3 @@ jobs:
       run: cd glpi/plugins/glpiinventory/ && php ../../vendor/bin/phpunit --testdox --colors=always tests/Integration/
     - name: run Install tests
       run: cd glpi/plugins/glpiinventory/ && php ../../vendor/bin/phpunit --testdox --colors=always tests/Installation/
-    - name: PHPStan checks
-      run: cd glpi/plugins/glpiinventory && php ../../vendor/bin/phpstan analyze --ansi --memory-limit=1G --no-interaction --no-progress

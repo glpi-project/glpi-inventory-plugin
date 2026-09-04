@@ -37,6 +37,7 @@ $finder = (new Finder())
     ->in(__DIR__)
     ->exclude([
         '.git/',
+        'glpi/', // GLPI tree, checked out here by the CI
         'tests/config/',
         'tests/files/',
         'vendor/',
