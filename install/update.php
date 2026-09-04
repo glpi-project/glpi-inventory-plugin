@@ -4304,8 +4304,6 @@ function do_printer_migration(Migration $migration): void
         ],
         'WHERE'     => ['glpi_printers.id' => null],
     ]);
-
-    $stmt = null;
     foreach ($iterator as $data) {
         $DB->delete(
             'glpi_plugin_glpiinventory_printercartridges',
