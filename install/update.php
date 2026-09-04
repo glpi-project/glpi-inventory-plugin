@@ -5302,7 +5302,7 @@ function do_computerarch_migration(Migration $migration): void
                 ],
                 [
                     'LEFT JOIN' => [
-                        'operatingsystemarchitectures AS os_arch' => [
+                        'glpi_operatingsystemarchitectures AS os_arch' => [
                             'ON' => [
                                 'pf_os' => 'operatingsystemarchitectures_id',
                                 'os_arch' => 'id',
@@ -8441,9 +8441,7 @@ function migrateTablesFromFusinvDeploy(Migration $migration): void
                 ],
                 'FROM' => 'glpi_plugin_fusinvdeploy_files AS files',
                 'WHERE' => [
-                    'files.shortsha512' => [
-                        '!=' => '',
-                    ],
+                    'files.shortsha512' => ['!=', ''],
                 ],
             ]);
             foreach ($f_iterator as $f_datas) {
