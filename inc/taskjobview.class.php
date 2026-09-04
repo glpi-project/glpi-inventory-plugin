@@ -636,9 +636,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         echo "<div class='mb-2 row col-20 col-sm-10'>";
         echo "<label class='form-label col-form-label'>" . __('Module method', 'glpiinventory') . "&nbsp;</label>";
 
-        if (!isset($options['width'])) {
-            $options['width'] = '40%';
-        }
+        $options['width'] ??= '40%';
 
         $options['value'] = $this->fields["method"];
         $options["on_change"] = "task_method_change(this.value)";
@@ -921,9 +919,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             // * Add and update taskjob
             Session::checkRight(PluginGlpiinventoryTask::$rightname, CREATE);
             if (isset($postvars['add'])) {
-                if (!isset($postvars['entities_id'])) {
-                    $postvars['entities_id'] = $_SESSION['glpidefault_entity'] ?? 0;
-                }
+                $postvars['entities_id'] ??= $_SESSION['glpidefault_entity'] ?? 0;
                 // Get entity of task
                 $pfTask = new PluginGlpiinventoryTask();
                 $pfTask->getFromDB($postvars['plugin_glpiinventory_tasks_id']);

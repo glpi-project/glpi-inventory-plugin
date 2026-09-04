@@ -32,9 +32,7 @@
 
 Session::checkRight(PluginGlpiinventoryTimeslotEntry::$rightname, READ);
 
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
-}
+$_GET["id"] ??= "";
 
 $pfTimeslotEntry = new PluginGlpiinventoryTimeslotEntry();
 foreach (array_keys($_POST) as $key) {

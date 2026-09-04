@@ -245,9 +245,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
      */
     public function getTimeslotCursor(?\DateTime $datetime = null)
     {
-        if (is_null($datetime)) {
-            $datetime = new DateTime();
-        }
+        $datetime ??= new DateTime();
         $dateday = new DateTime($datetime->format("Y-m-d 0:0:0"));
         $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime, true))->getTimestamp();
         return $timeslot_cursor;

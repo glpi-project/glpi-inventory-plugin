@@ -368,9 +368,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         $agents = [];
         foreach ($actors as $agents_list) {
             foreach (array_keys($agents_list) as $id) {
-                if (!isset($agents[$id])) {
-                    $agents[$id] = true;
-                }
+                $agents[$id] ??= true;
             }
         }
         $agents = array_keys($agents);
@@ -522,9 +520,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
         //Remove the list of jobstates previously filtered for removal.
         foreach ($jobstates_to_cancel as $jobstate) {
-            if (!isset($jobstate['code'])) {
-                $jobstate['code'] = PluginGlpiinventoryTaskjobstate::CANCELLED;
-            }
+            $jobstate['code'] ??= PluginGlpiinventoryTaskjobstate::CANCELLED;
             switch ($jobstate['code']) {
                 case PluginGlpiinventoryTaskjobstate::IN_ERROR:
                     $jobstate['jobstate']->fail($jobstate['reason']);
@@ -865,14 +861,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             $job_id = (int) $result['job_id'];
             /** @var array<int,mixed>  $jobs_handle */
             $jobs_handle = &$logs[$task_id]['jobs'];
-            if (!isset($jobs_handle[$job_id])) {
-                $jobs_handle[$job_id] = [
-                    'name'    => $result['job_name'],
-                    'id'      => $result['job_id'],
-                    'method'  => $result['job_method'],
-                    'targets' => [],
-                ];
-            }
+            $jobs_handle[$job_id] ??= [
+                'name'    => $result['job_name'],
+                'id'      => $result['job_id'],
+                'method'  => $result['job_method'],
+                'targets' => [],
+            ];
             $targets = importArrayFromDB($result['job_targets']);
             $targets_handle = &$jobs_handle[$job_id]['targets'];
 
@@ -1019,9 +1013,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 // ***** create a unique key ***** //
 
                 $key_runs = $result['agent_id'] . "+" . $result['items_id'] . "+" . $result['itemtype'];
-                if (!isset($counter_agents[$key_runs])) {
-                    $counter_agents[$key_runs] = 0;
-                }
+                $counter_agents[$key_runs] ??= 0;
                 $counter_agents[$key_runs]++;
                 if ($counter_agents[$key_runs] > $max_runs) {
                     continue;
@@ -1052,9 +1044,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 // This to be updated if needed!
                 $agents[$agent_id] = $result['agent_name'];
 
-                if (!isset($targets[$target_id]['agents'][$agent_id])) {
-                    $targets[$target_id]['agents'][$agent_id] = [];
-                }
+                $targets[$target_id]['agents'][$agent_id] ??= [];
                 $agent_state = '';
                 $run_id = $result['id'];
 

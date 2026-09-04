@@ -582,12 +582,8 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
     */
     public function formatCheckForJson(array $params): array
     {
-        if (!isset($params['value'])) {
-            $params['value'] = "";
-        }
-        if (!isset($params['name'])) {
-            $params['name'] = "";
-        }
+        $params['value'] ??= "";
+        $params['name'] ??= "";
 
         if (!empty($params['unit'])) {
             $params['value'] = str_replace(",", ".", $params['value']);

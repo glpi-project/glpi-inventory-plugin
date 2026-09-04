@@ -210,9 +210,7 @@ class PluginGlpiinventoryCommonView extends CommonDBTM
     {
         echo "<div class='col-lg-4'>";
         echo $title . "&nbsp;";
-        if (!isset($options['width'])) {
-            $options['width'] = '40%';
-        }
+        $options['width'] ??= '40%';
 
         if (!is_null($varname)) {
             $options['value'] = $this->fields[$varname];

@@ -235,9 +235,7 @@ class PluginGlpiinventoryToolbox
             foreach (array_keys($row) as $col) {
                 $tname = $fields[$i]->table;
                 $fname = $fields[$i]->orgname;
-                if (!isset($result[$tname])) {
-                    $result[$tname] = [];
-                }
+                $result[$tname] ??= [];
                 $result[$tname][$fname] = $row[$col];
                 ++$i;
             }
