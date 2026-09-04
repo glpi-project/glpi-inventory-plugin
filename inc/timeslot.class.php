@@ -178,8 +178,7 @@ class PluginGlpiinventoryTimeslot extends CommonDBTM
         $timeslot_entries = getAllDataFromTable(
             "glpi_plugin_glpiinventory_timeslotentries",
             $condition,
-            false,
-            ''
+            false
         );
 
         foreach ($timeslot_entries as $timeslot_entry) {

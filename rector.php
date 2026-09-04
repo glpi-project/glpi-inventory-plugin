@@ -35,8 +35,6 @@ use Rector\CodeQuality\Rector as CodeQuality;
 use Rector\Config\RectorConfig;
 use Rector\Configuration\PhpLevelSetResolver;
 use Rector\DeadCode\Rector as DeadCode;
-use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
-use Rector\Php74\Rector\If_\IfToNullCoalescingAssignRector;
 use Rector\ValueObject\PhpVersion;
 use RectorGlpi\Set\GlpiSetList;
 

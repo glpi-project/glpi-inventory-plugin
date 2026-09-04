@@ -31,6 +31,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\Dashboard\Dashboard;
 
 /**
  * Manage plugin menu
@@ -186,7 +187,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
         /*
          * Dashboard
          */
-        if (Session::haveRight('dashboard', READ)) {
+        if (Session::haveRight(Dashboard::$rightname, READ)) {
             $dashboard_menu = [];
             $dashboard_menu[0]['name'] = __('Inventory');
             $dashboard_menu[0]['pic']  = "ti ti-dashboard";
@@ -203,7 +204,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
          * General
          */
         $general_menu = [];
-        if (Session::haveRight('agent', READ)) {
+        if (Session::haveRight(Agent::$rightname, READ)) {
             $general_menu[0]['name'] = __('Agents management', 'glpiinventory');
             $general_menu[0]['pic']  = "ti ti-robot";
             $general_menu[0]['link'] = Agent::getSearchURL();
@@ -215,7 +216,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $general_menu[2]['link'] = $fi_path . "/front/deploygroup.php";
         }
 
-        if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
+        if (Session::haveRight(Config::$rightname, UPDATE) || Session::haveRight('plugin_glpiinventory_configuration', UPDATE)) {
             $general_menu[3]['name'] = __('General configuration', 'glpiinventory');
             $general_menu[3]['pic']  = "ti ti-settings";
             $general_menu[3]['link'] = $fi_path . "/front/config.form.php";
@@ -243,7 +244,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             $tasks_menu[3]['link'] = Toolbox::getItemTypeSearchURL(PluginGlpiinventoryTaskjob::class);
         }
 
-        if (Session::haveRight('config', READ)) {
+        if (Session::haveRight(Config::$rightname, READ)) {
             $tasks_menu[0]['name'] = __('Import agent XML file', 'glpiinventory');
             $tasks_menu[0]['pic']  = "ti ti-file-import";
             $tasks_menu[0]['link'] = $CFG_GLPI['root_doc'] . "/front/inventory.conf.php?forcetab=Glpi\Inventory\Conf$2";
@@ -281,7 +282,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             );
         }
 
-        if (Session::haveRight('config', READ)) {
+        if (Session::haveRight(Config::$rightname, READ)) {
             $rules_menu[2]['name'] = __('Asset skipped during import', 'glpiinventory');
             $rules_menu[2]['pic']  = "ti ti-device-desktop-off";
             $rules_menu[2]['link'] = RefusedEquipment::getSearchURL();
@@ -294,7 +295,7 @@ class PluginGlpiinventoryMenu extends CommonGLPI
             //$rules_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
         }
 
-        if (Session::haveRight('config', READ)) {
+        if (Session::haveRight(Config::$rightname, READ)) {
             $rules_menu[6]['name'] = Blacklist::getTypeName(1);
             $rules_menu[6]['pic']  = "ti ti-ban";
             $rules_menu[6]['link'] = Blacklist::getSearchURL();

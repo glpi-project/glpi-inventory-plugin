@@ -281,7 +281,7 @@ function plugin_init_glpiinventory(): void
         }
         if (
             Session::haveRight('plugin_glpiinventory_configuration', READ)
-              || Session::haveRight('profile', UPDATE)
+              || Session::haveRight(Profile::$rightname, UPDATE)
         ) {// Config page
             $PLUGIN_HOOKS['config_page']['glpiinventory'] = 'front/config.form.php'
                  . '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
