@@ -38,7 +38,7 @@ if (plugin_glpiinventory_script_endswith("taskjobaddtype.php")) {
     Html::header_nocache();
 }
 
-Session::checkRight('plugin_glpiinventory_task', UPDATE);
+Session::checkRight(PluginGlpiinventoryTask::$rightname, UPDATE);
 
 $taskjobs_id = (int) filter_input(INPUT_POST, "taskjobs_id");
 if ($taskjobs_id <= 0) {

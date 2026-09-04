@@ -34,7 +34,7 @@ global $CFG_GLPI;
 
 Session::checkLoginUser();
 
-Session::checkRight('plugin_glpiinventory_package', PURGE);
+Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, PURGE);
 
 Html::header(
     __('GLPI Inventory DEPLOY'),

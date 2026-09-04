@@ -37,7 +37,7 @@ use Glpi\Exception\Http\NotFoundHttpException;
 use function Safe\session_write_close;
 
 if (plugin_glpiinventory_script_endswith("jobstates_logs.php")) {
-    Session::checkRight('plugin_glpiinventory_task', READ);
+    Session::checkRight(PluginGlpiinventoryTask::$rightname, READ);
 }
 
 $jobstate_id = (int) ($_POST['id'] ?? 0);

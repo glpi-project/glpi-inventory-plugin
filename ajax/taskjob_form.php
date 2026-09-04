@@ -37,7 +37,7 @@ if (plugin_glpiinventory_script_endswith("taskjob_form.php")) {
     Html::header_nocache();
 }
 
-Session::checkRight('plugin_glpiinventory_task', READ);
+Session::checkRight(PluginGlpiinventoryTask::$rightname, READ);
 
 $pfTaskjob = new PluginGlpiinventoryTaskjob();
 

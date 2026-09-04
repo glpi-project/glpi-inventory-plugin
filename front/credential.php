@@ -38,7 +38,7 @@ Html::header(
     "credential"
 );
 
-Session::checkRight('plugin_glpiinventory_iprange', READ);
+Session::checkRight(PluginGlpiinventoryIPRange::$rightname, READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 

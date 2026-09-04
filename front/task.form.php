@@ -49,7 +49,7 @@ if (isset($_GET['forcetab'])) {
     unset($_GET['forcetab']);
 }
 
-Session::checkRight('plugin_glpiinventory_task', READ);
+Session::checkRight(PluginGlpiinventoryTask::$rightname, READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 

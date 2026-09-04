@@ -38,7 +38,7 @@ Html::header(
     "task"
 );
 
-Session::checkRight('plugin_glpiinventory_task', READ);
+Session::checkRight(PluginGlpiinventoryTask::$rightname, READ);
 
 PluginGlpiinventoryMenu::displayMenu("mini");
 

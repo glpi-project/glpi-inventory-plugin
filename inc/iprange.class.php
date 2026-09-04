@@ -280,7 +280,7 @@ class PluginGlpiinventoryIPRange extends CommonDBTM
     {
 
         $actions = [];
-        if (Session::haveRight("plugin_glpiinventory_task", UPDATE)) {
+        if (Session::haveRight(PluginGlpiinventoryTask::$rightname, UPDATE)) {
             $actions[PluginGlpiinventoryTask::class . MassiveAction::CLASS_ACTION_SEPARATOR . 'addtojob_target'] = __('Target a task', 'glpiinventory');
         }
         return $actions;

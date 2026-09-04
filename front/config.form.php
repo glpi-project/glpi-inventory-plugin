@@ -30,7 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-Session::checkRight('plugin_glpiinventory_configuration', READ);
+Session::checkRight(PluginGlpiinventoryConfig::$rightname, READ);
 
 Html::header(
     __('Features', 'glpiinventory'),

@@ -37,15 +37,15 @@ $_GET["id"] ??= "";
 $template = new PluginGlpiinventoryDeployUserinteractionTemplate();
 //general form
 if (isset($_POST["add"])) {
-    Session::checkRight('plugin_glpiinventory_userinteractiontemplate', CREATE);
+    Session::checkRight(PluginGlpiinventoryDeployUserinteractionTemplate::$rightname, CREATE);
     $newID = $template->add($_POST);
     Html::redirect($template->getFormURLWithID($newID));
 } elseif (isset($_POST["update"])) {
-    Session::checkRight('plugin_glpiinventory_userinteractiontemplate', UPDATE);
+    Session::checkRight(PluginGlpiinventoryDeployUserinteractionTemplate::$rightname, UPDATE);
     $template->update($_POST);
     Html::back();
 } elseif (isset($_POST["purge"])) {
-    Session::checkRight('plugin_glpiinventory_userinteractiontemplate', PURGE);
+    Session::checkRight(PluginGlpiinventoryDeployUserinteractionTemplate::$rightname, PURGE);
     $template->delete($_POST, true);
     $template->redirectToList();
 }

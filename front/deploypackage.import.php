@@ -32,7 +32,7 @@
 
 Session::checkLoginUser();
 
-Session::checkRight('plugin_glpiinventory_package', CREATE);
+Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, CREATE);
 
 Html::header(
     __('GLPI Inventory DEPLOY'),

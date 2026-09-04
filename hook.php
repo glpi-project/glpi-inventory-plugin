@@ -405,11 +405,11 @@ function plugin_glpiinventory_MassiveActions(string $type): array
 
     switch ($type) {
         case Computer::class:
-            if (Session::haveRight('plugin_glpiinventory_task', UPDATE)) {
+            if (Session::haveRight(PluginGlpiinventoryTask::$rightname, UPDATE)) {
                 $ma["PluginGlpiinventoryTask" . $sep . "target_task"]
                  = "<i class='ti ti-list-check'></i>" . __('Target a task', 'glpiinventory');
             }
-            if (Session::haveRight('plugin_glpiinventory_group', UPDATE)) {
+            if (Session::haveRight(PluginGlpiinventoryDeployGroup::$rightname, UPDATE)) {
                 $ma["PluginGlpiinventoryDeployGroup" . $sep . "add_to_static_group"]
                 = "<i class='ti ti-devices-pc'></i>" . __('Add to static group', 'glpiinventory');
                 $ma["PluginGlpiinventoryDeployGroup" . $sep . "exclude_from_static_group"]
