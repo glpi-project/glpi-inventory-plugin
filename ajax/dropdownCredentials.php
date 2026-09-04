@@ -35,7 +35,7 @@ if (plugin_glpiinventory_script_endswith("dropdownCredentials.php")) {
     Html::header_nocache();
 }
 
-Session::checkRight('plugin_glpiinventory_credential', READ);
+Session::checkRight(PluginGlpiinventoryCredential::$rightname, READ);
 $params = [
     'itemtype' => filter_input(INPUT_POST, "itemtype"),
     'id'       => filter_input(INPUT_POST, "id"),

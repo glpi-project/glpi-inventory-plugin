@@ -65,7 +65,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         /** @var CommonDBTM $item */
-        if ($item->fields['id'] > 0 && Session::haveRight('plugin_glpiinventory_task', READ)) {
+        if ($item->fields['id'] > 0 && Session::haveRight(PluginGlpiinventoryTask::$rightname, READ)) {
             return  self::createTabEntry(__('Job configuration', 'glpiinventory'), 0, icon: 'ti ti-settings');
         }
         return '';
@@ -623,7 +623,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         $modules_methods = PluginGlpiinventoryStaticmisc::getModulesMethods();
         if (
-            !Session::haveRight('plugin_glpiinventory_networkequipment', CREATE) && !Session::haveRight('plugin_glpiinventory_printer', CREATE)
+            !Session::haveRight(PluginGlpiinventoryCommunicationNetworkInventory::$rightname, CREATE) && !Session::haveRight(PluginGlpiinventoryProfile::RIGHT_PRINTER, CREATE)
         ) {
             if (isset($modules_methods['networkdiscovery'])) {
                 unset($modules_methods['networkdiscovery']);
