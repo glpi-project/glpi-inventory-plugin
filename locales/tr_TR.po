@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 02:00+0000\n"
+"POT-Creation-Date: 2026-09-17 02:20+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -270,7 +270,7 @@ msgstr "Özellikler"
 #: front/task.form.php:39 front/menu.php:38 front/collect.php:34
 #: front/credential.form.php:39 front/agentmodule.form.php:34
 #: front/iprange.form.php:36 front/menu_snmpinventory.php:37
-#: front/taskjob.form.php:36 front/timeslot.php:37 inc/profile.class.php:116
+#: front/taskjob.form.php:36 front/timeslot.php:37 inc/profile.class.php:124
 #: inc/menu.class.php:48 src/Controller/InventoryController.php:81
 msgid "GLPI Inventory"
 msgstr "GLPI envanter"
@@ -283,8 +283,8 @@ msgstr "Özellikler"
 msgid "Delete unused files"
 msgstr "Kullanılmayan dosyaları sil"
 
-#: front/deployuserinteractiontemplate.php:36 inc/profile.class.php:281
-#: inc/deployuserinteractiontemplate.class.php:135 inc/menu.class.php:399
+#: front/deployuserinteractiontemplate.php:36 inc/profile.class.php:289
+#: inc/deployuserinteractiontemplate.class.php:135 inc/menu.class.php:391
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "Kullanıcı etkileşimi kalıbı"
@@ -303,11 +303,11 @@ msgid "Collect management"
 msgstr "Derleme yönetimi"
 
 #: front/deploygroup.php:36 inc/deploytaskjob.class.php:222
-#: inc/profile.class.php:388 inc/menu.class.php:213
+#: inc/profile.class.php:396 inc/menu.class.php:213
 msgid "Groups of computers"
 msgstr "Bilgisayar grupları"
 
-#: hook.php:55 inc/menu.class.php:410
+#: hook.php:55 inc/menu.class.php:402
 msgid "Deploy"
 msgstr "Dağıtım"
 
@@ -331,29 +331,29 @@ msgstr "Derle"
 msgid "Static group"
 msgstr "Durağan grup"
 
-#: hook.php:132 inc/task.class.php:212 inc/menu.class.php:266
+#: hook.php:130 inc/task.class.php:212 inc/menu.class.php:266
 msgid "Tasks"
 msgstr "Görevler"
 
-#: hook.php:140 hook.php:150 hook.php:160 hook.php:170
+#: hook.php:138 hook.php:148 hook.php:158 hook.php:168
 #, php-format
 msgid "%s inventoried"
 msgstr "%s envantere alındı"
 
-#: hook.php:353
+#: hook.php:351
 msgid "Setup"
 msgstr "Kur"
 
-#: hook.php:412 inc/iprange.class.php:284 inc/deploygroup.class.php:231
+#: hook.php:410 inc/iprange.class.php:284 inc/deploygroup.class.php:231
 msgid "Target a task"
 msgstr "Bir görevi hedefle"
 
-#: hook.php:416 inc/deploygroup_staticdata.class.php:155
+#: hook.php:414 inc/deploygroup_staticdata.class.php:155
 #: inc/deploygroup_staticdata.class.php:171
 msgid "Add to static group"
 msgstr "Durağan gruba ekle"
 
-#: hook.php:418 inc/deploygroup_staticdata.class.php:227
+#: hook.php:416 inc/deploygroup_staticdata.class.php:227
 msgid "Remove from static group"
 msgstr "Durağan gruptan çıkar"
 
@@ -371,7 +371,7 @@ msgstr "Görev bilgilerini görüntüle"
 msgid "IP Ranges"
 msgstr "IP aralıkları"
 
-#: inc/iprange.class.php:113 inc/profile.class.php:309
+#: inc/iprange.class.php:113 inc/profile.class.php:317
 msgid "IP range configuration"
 msgstr "IP aralığı ayarları"
 
@@ -385,7 +385,7 @@ msgid_plural "Found WMIs"
 msgstr[0] "Bulunan WMI"
 msgstr[1] "Bulunan WMI"
 
-#: inc/collect.class.php:56 inc/profile.class.php:393 inc/menu.class.php:253
+#: inc/collect.class.php:56 inc/profile.class.php:401 inc/menu.class.php:253
 msgid "Collect information"
 msgstr "Derleme bilgileri"
 
@@ -411,7 +411,7 @@ msgstr "yoldosya"
 msgid "Collect module has been disabled for this agent"
 msgstr "Bu aracı için derleme modülü etkisizleştirilmiş"
 
-#: inc/collect.class.php:678
+#: inc/collect.class.php:676
 msgid "Path not found"
 msgstr "Yol bulunamadı"
 
@@ -511,7 +511,7 @@ msgstr ""
 msgid "Network Inventory"
 msgstr "Ağ envanteri"
 
-#: inc/config.class.php:202 inc/menu.class.php:385
+#: inc/config.class.php:202 inc/menu.class.php:377
 msgid "Package management"
 msgstr "Paket yönetimi"
 
@@ -565,12 +565,12 @@ msgstr "CSV dosyası okunamadı"
 
 #: inc/credential.class.php:77 inc/credential.class.php:186
 #: inc/credentialip.class.php:132 inc/credentialip.class.php:155
-#: inc/profile.class.php:314 inc/menu.class.php:342
+#: inc/profile.class.php:322 inc/menu.class.php:342
 msgid "Authentication for remote devices (VMware)"
 msgstr "Uzak aygıtlar için kimlik doğrulaması (VMware)"
 
 #: inc/credential.class.php:302 inc/credential.class.php:320
-#: inc/profile.class.php:324
+#: inc/profile.class.php:332
 msgid "VMware host"
 msgstr "VMware sunucusu"
 
@@ -596,8 +596,8 @@ msgstr "Görev yürütme durumları"
 
 #: inc/taskview.class.php:164 inc/stateinventory.class.php:114
 #: inc/deploytask.class.php:53 inc/deploytask.class.php:153
-#: inc/task.class.php:1572 inc/task.class.php:1612
-#: inc/statediscovery.class.php:177 inc/profile.class.php:383
+#: inc/task.class.php:1562 inc/task.class.php:1602
+#: inc/statediscovery.class.php:177 inc/profile.class.php:391
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Görev"
@@ -607,27 +607,27 @@ msgstr[1] "Görevler"
 msgid "Show/Hide details"
 msgstr "Ayrıntıları görüntüle./ gizle"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1377
+#: inc/taskview.class.php:235 inc/deploypackage.class.php:1375
 msgid "In error"
 msgstr "Hata"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1378
+#: inc/taskview.class.php:236 inc/deploypackage.class.php:1376
 msgid "Successful"
 msgstr "Başarılı"
 
-#: inc/taskview.class.php:237 inc/deploypackage.class.php:1379
+#: inc/taskview.class.php:237 inc/deploypackage.class.php:1377
 msgid "Running"
 msgstr "Çalışıyor"
 
 #: inc/taskview.class.php:238 inc/stateinventory.class.php:192
 #: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:282
-#: inc/taskjobstate.class.php:144 inc/deploypackage.class.php:1380
+#: inc/taskjobstate.class.php:144 inc/deploypackage.class.php:1378
 #: inc/statediscovery.class.php:261
 msgid "Prepared"
 msgstr "Hazırlanmış"
 
 #: inc/taskview.class.php:239 inc/taskjobstate.class.php:149
-#: inc/deploypackage.class.php:1381
+#: inc/deploypackage.class.php:1379
 msgid "Cancelled"
 msgstr "İptal edildi"
 
@@ -755,8 +755,8 @@ msgstr "Bir anahtar tanımlanmış mı denetle"
 msgid "All values"
 msgstr "Tüm değerler"
 
-#: inc/deploymirror.class.php:67 inc/profile.class.php:286
-#: inc/menu.class.php:392
+#: inc/deploymirror.class.php:67 inc/profile.class.php:294
+#: inc/menu.class.php:384
 msgid "Mirror servers"
 msgstr "Yansı sunucular"
 
@@ -768,7 +768,7 @@ msgstr "Bilgisayar envanteri"
 msgid "VMware host remote inventory"
 msgstr "VMware uzak sunucu envanteri"
 
-#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1071
+#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1069
 msgid "Package deploy"
 msgstr "Paket dağıtımı"
 
@@ -777,7 +777,7 @@ msgid "Collect data"
 msgstr "Derleme verileri"
 
 #: inc/staticmisc.class.php:434 inc/staticmisc.class.php:440
-#: inc/taskjob.class.php:803
+#: inc/taskjob.class.php:801
 msgid "Auto management dynamic of agents"
 msgstr "Aracının otomatik yönetim devinimi"
 
@@ -810,7 +810,7 @@ msgstr "Tamam"
 msgid "Info"
 msgstr "Bilgiler"
 
-#: inc/taskjoblog.class.php:186 inc/task.class.php:1629
+#: inc/taskjoblog.class.php:186 inc/task.class.php:1619
 #: inc/taskjob.class.php:56 inc/agentwakeup.class.php:69
 msgid "Job"
 msgstr "İş"
@@ -863,11 +863,11 @@ msgstr "Aracı modülleri"
 msgid "Package deployment"
 msgstr "Paket dağıtımı"
 
-#: inc/commonview.class.php:298
+#: inc/commonview.class.php:296
 msgid "Warning:"
 msgstr "Uyarı:"
 
-#: inc/commonview.class.php:303
+#: inc/commonview.class.php:301
 msgid "Error:"
 msgstr "Hata:"
 
@@ -883,7 +883,7 @@ msgstr "isteğe bağlı görevi dağıt"
 msgid "Associated tasks"
 msgstr "İlgili görevler"
 
-#: inc/task.class.php:407
+#: inc/task.class.php:405
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
@@ -892,65 +892,65 @@ msgstr ""
 "Aracı zaten sunucu tarafından kendisine gönderilmiş ayarları istiyor. "
 "Aracıda kritik bir sorun çıkmış olma olasılığı daha yüksek. "
 
-#: inc/task.class.php:420
+#: inc/task.class.php:418
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
 
-#: inc/task.class.php:441
+#: inc/task.class.php:439
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "Görev zamanlaması nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:487
+#: inc/task.class.php:485
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:506
+#: inc/task.class.php:504
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "Bu aracı artık işin içinde tanımlanmış aktörlere bağlı değil."
 
-#: inc/task.class.php:545
+#: inc/task.class.php:541
 msgid "The task cannot be updated if it is active"
 msgstr "Görev etkinse güncellenemez"
 
-#: inc/task.class.php:700
+#: inc/task.class.php:696
 msgid "Inventory task scheduler"
 msgstr "Envanter görevi zamanlayıcısı"
 
-#: inc/task.class.php:703
+#: inc/task.class.php:699
 msgid "Clean on demand deployment tasks"
 msgstr "Dağıtım görevlerini temizleme isteği"
 
-#: inc/task.class.php:1524
+#: inc/task.class.php:1514
 msgid "Task has been disabled"
 msgstr "Görev etkisizleştirilmiş"
 
-#: inc/task.class.php:1590 inc/deploypackage.class.php:102
+#: inc/task.class.php:1580 inc/deploypackage.class.php:102
 msgid "Package"
 msgstr "Paket"
 
-#: inc/task.class.php:1723
+#: inc/task.class.php:1713
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
 msgstr "Bir hedefe dağıtmak için bir görev ve bir paket seçmelisiniz."
 
-#: inc/task.class.php:1740
+#: inc/task.class.php:1730
 msgid "Deployment job, package: "
 msgstr "Dağıtım işi, paket:"
 
-#: inc/task.class.php:1757
+#: inc/task.class.php:1747
 msgid "Updated a deployment job, package: "
 msgstr "Bir dağıtım işi, paket güncellendi: "
 
-#: inc/task.class.php:1758 inc/task.class.php:1801
+#: inc/task.class.php:1748 inc/task.class.php:1791
 msgid ", actors: "
 msgstr ", aktörler: "
 
-#: inc/task.class.php:1786
+#: inc/task.class.php:1776
 msgid "The selected task already has a deployment job for another package: "
 msgstr "Seçilmiş görevin zaten başka bir paket için dağıtım işi var: "
 
-#: inc/task.class.php:1800
+#: inc/task.class.php:1790
 msgid "Created a deployment job, package: "
 msgstr "Bir dağıtım işi, paket oluşturuldu:"
 
@@ -1034,85 +1034,85 @@ msgid_plural "The following tasks are running with this package"
 msgstr[0] "Bu paketle birlikte şu görev yürütülüyor"
 msgstr[1] "Bu paketle birlikte şu görevler yürütülüyor"
 
-#: inc/deploypackage.class.php:391 inc/deploypackage.class.php:515
+#: inc/deploypackage.class.php:389 inc/deploypackage.class.php:513
 msgid "Enable deploy on demand for the following group"
 msgstr "Şu grup için isteğe göre dağıtım kullanılsın"
 
-#: inc/deploypackage.class.php:534
+#: inc/deploypackage.class.php:532
 msgid "Audits"
 msgstr "Denetimler"
 
-#: inc/deploypackage.class.php:535
+#: inc/deploypackage.class.php:533
 msgid "Files"
 msgstr "Dosyalar"
 
-#: inc/deploypackage.class.php:536 public/b/deploy/index.php:153
+#: inc/deploypackage.class.php:534 public/b/deploy/index.php:153
 msgid "Actions"
 msgstr "İşlemler"
 
-#: inc/deploypackage.class.php:537
+#: inc/deploypackage.class.php:535
 msgid "User interactions"
 msgstr "Kullanıcı etkileşimleri"
 
-#: inc/deploypackage.class.php:689
+#: inc/deploypackage.class.php:687
 msgid "JSON package representation"
 msgstr "JSON paketi gösterimi"
 
-#: inc/deploypackage.class.php:813
+#: inc/deploypackage.class.php:811
 msgid "Package exported in"
 msgstr "Paket şuraya dışa aktarıldı"
 
-#: inc/deploypackage.class.php:886
+#: inc/deploypackage.class.php:884
 msgid "Packages to import"
 msgstr "İçe aktarılacak paketler"
 
-#: inc/deploypackage.class.php:1015 inc/deploypackageitem.class.php:332
+#: inc/deploypackage.class.php:1013 inc/deploypackageitem.class.php:332
 msgid "The modified JSON contained a syntax error :"
 msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
 
-#: inc/deploypackage.class.php:1043
+#: inc/deploypackage.class.php:1041
 msgid "Package actions"
 msgstr "Paket işlemleri"
 
-#: inc/deploypackage.class.php:1052
+#: inc/deploypackage.class.php:1050
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "İsteğe bağlı dağıtım hedefi"
 msgstr[1] "İsteğe bağlı dağıtım hedefleri"
 
-#: inc/deploypackage.class.php:1144
+#: inc/deploypackage.class.php:1142
 msgid "Add a target for self-service"
 msgstr "Kendi kendine hizmet için bir hedef ekleyin"
 
-#: inc/deploypackage.class.php:1502
+#: inc/deploypackage.class.php:1500
 msgid "Restart job"
 msgstr "İşi yeniden başlat"
 
-#: inc/deploypackage.class.php:1509
+#: inc/deploypackage.class.php:1507
 msgid "refresh job"
 msgstr "işi yenile"
 
-#: inc/deploypackage.class.php:1654
+#: inc/deploypackage.class.php:1652
 msgid "Select packages you want install"
 msgstr "Kurmak istediğiniz paketleri seçin"
 
-#: inc/deploypackage.class.php:1663
+#: inc/deploypackage.class.php:1661
 msgid "Prepare for install"
 msgstr "Kurulum için hazırla"
 
-#: inc/deploypackage.class.php:1668
+#: inc/deploypackage.class.php:1666
 msgid "I'm on this computer: local wakeup"
 msgstr "Bu bilgisayardayım: Yerel olarak uyandır"
 
-#: inc/deploypackage.class.php:1669
+#: inc/deploypackage.class.php:1667
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "Bu bilgisayarda değilim: Sunucudan uyandır"
 
-#: inc/deploypackage.class.php:1670
+#: inc/deploypackage.class.php:1668
 msgid "Don't wakeup"
 msgstr "Uyandırma"
 
-#: inc/deploypackage.class.php:1686
+#: inc/deploypackage.class.php:1684
 msgid "No packages available to install"
 msgstr "Kurulabilecek bir paket yok"
 
@@ -1390,50 +1390,50 @@ msgstr "İşlemler yapılamadığında"
 msgid "Interaction label"
 msgstr "Etkileşim etiketi"
 
-#: inc/deployuserinteraction.class.php:392
+#: inc/deployuserinteraction.class.php:382
 #, php-format
 msgid "Job cancelled by the user %1$s"
 msgstr "İş %1$s kullanıcısı tarafından iptal edildi"
 
-#: inc/deployuserinteraction.class.php:399
+#: inc/deployuserinteraction.class.php:389
 #, php-format
 msgid "User %1$s agreed to continue the job"
 msgstr "%1$s kullanıcısı işi sürdürmeyi onayladı"
 
-#: inc/deployuserinteraction.class.php:406
+#: inc/deployuserinteraction.class.php:396
 #, php-format
 msgid "Job postponed by the user %1$s"
 msgstr "%1$s kullanıcısı işi erteledi"
 
-#: inc/deployuserinteraction.class.php:412
+#: inc/deployuserinteraction.class.php:402
 msgid "Bad event sent to the agent"
 msgstr "Aracıya hatalı bir işlem gönderildi"
 
-#: inc/deployuserinteraction.class.php:431
+#: inc/deployuserinteraction.class.php:421
 msgid "Alert displayed, no input required"
 msgstr "Uyarı görüntülendi, herhangi bir giriş gerekmiyor"
 
-#: inc/deployuserinteraction.class.php:437
+#: inc/deployuserinteraction.class.php:427
 msgid "Retry"
 msgstr "Yeniden dene"
 
-#: inc/deployuserinteraction.class.php:443
+#: inc/deployuserinteraction.class.php:433
 msgid "Abort"
 msgstr "Vazgeç"
 
-#: inc/deployuserinteraction.class.php:446
+#: inc/deployuserinteraction.class.php:436
 msgid "Ignore"
 msgstr "Yok say"
 
-#: inc/deployuserinteraction.class.php:452
+#: inc/deployuserinteraction.class.php:442
 msgid "Alert duration exceeded"
 msgstr "Uyarı süresi aşıldı"
 
-#: inc/deployuserinteraction.class.php:455
+#: inc/deployuserinteraction.class.php:445
 msgid "No user connected"
 msgstr "Herhangi bir kullanıcı bağlı değil"
 
-#: inc/deployuserinteraction.class.php:458
+#: inc/deployuserinteraction.class.php:448
 msgid "Multiple users connected"
 msgstr "Birden çok kullanıcı bağlı"
 
@@ -1482,43 +1482,43 @@ msgstr "Hedef öge"
 msgid "New action"
 msgstr "Yeni işlem"
 
-#: inc/taskjobview.class.php:674
+#: inc/taskjobview.class.php:672
 msgid "Restrict scope to task entity"
 msgstr "Kapsam görev varlığı ile sınırlansın"
 
-#: inc/taskjobview.class.php:692 inc/taskjobview.class.php:725
+#: inc/taskjobview.class.php:690 inc/taskjobview.class.php:723
 msgid "Targets"
 msgstr "Hedefler"
 
-#: inc/taskjobview.class.php:698
+#: inc/taskjobview.class.php:696
 msgid "The items that should be applied for this job."
 msgstr "Bu işin uygulanacağı ögeler."
 
-#: inc/taskjobview.class.php:704 inc/taskjobview.class.php:747
+#: inc/taskjobview.class.php:702 inc/taskjobview.class.php:745
 msgid "Actors"
 msgstr "Aktörler"
 
-#: inc/taskjobview.class.php:709
+#: inc/taskjobview.class.php:707
 msgid "The items that should carry out those targets."
 msgstr "Bu hedeflere ulaşacak ögeler."
 
-#: inc/taskjobview.class.php:733 inc/taskjobview.class.php:755
+#: inc/taskjobview.class.php:731 inc/taskjobview.class.php:753
 msgid "Clear list"
 msgstr "Listeyi temizle"
 
-#: inc/taskjobview.class.php:738 inc/taskjobview.class.php:760
+#: inc/taskjobview.class.php:736 inc/taskjobview.class.php:758
 msgid "Delete selected items"
 msgstr "Seçilmiş ögeleri sil"
 
-#: inc/taskjobview.class.php:778
+#: inc/taskjobview.class.php:776
 msgid "Cancel modifications"
 msgstr "Değişiklikleri iptal et"
 
-#: inc/taskjobview.class.php:783
+#: inc/taskjobview.class.php:781
 msgid "Purge"
 msgstr "Sil"
 
-#: inc/taskjobview.class.php:786
+#: inc/taskjobview.class.php:784
 msgid "Confirm the final deletion ?"
 msgstr "Silme işlemini onaylıyor musunuz?"
 
@@ -1539,7 +1539,7 @@ msgid "retention"
 msgstr "tutma"
 
 #: inc/deployfile.class.php:203 inc/deployfile.class.php:367
-#: inc/taskjob.class.php:766
+#: inc/taskjob.class.php:764
 msgid "Minute(s)"
 msgstr "dakika"
 
@@ -1654,80 +1654,80 @@ msgstr "Iad"
 msgid "Type"
 msgstr "Tür"
 
-#: inc/communicationnetworkdiscovery.class.php:111
+#: inc/communicationnetworkdiscovery.class.php:109
 #, php-format
 msgid "Processed: %1$s Created: %2$s Updated: %3$s"
 msgstr "İşlenen: %1$s Oluşturulan: %2$s Güncellenen: %3$s"
 
-#: inc/taskjob.class.php:746
+#: inc/taskjob.class.php:744
 msgid "Scheduled date"
 msgstr "Zamanlanan tarih"
 
-#: inc/taskjob.class.php:747
+#: inc/taskjob.class.php:745
 msgid "Periodicity"
 msgstr "Sıklık"
 
-#: inc/taskjob.class.php:748
+#: inc/taskjob.class.php:746
 msgid "Definition"
 msgstr "Açıklama"
 
-#: inc/taskjob.class.php:749
+#: inc/taskjob.class.php:747
 msgid "Action"
 msgstr "İşlem"
 
-#: inc/taskjob.class.php:771
+#: inc/taskjob.class.php:769
 msgid "hour(s)"
 msgstr "saat"
 
-#: inc/taskjob.class.php:776
+#: inc/taskjob.class.php:774
 msgid "day(s)"
 msgstr "gün"
 
-#: inc/taskjob.class.php:805
+#: inc/taskjob.class.php:803
 msgid "Auto management dynamic of agents (same subnet)"
 msgstr "Aracıların otomatik yönetim devinimi (aynı alt ağda)"
 
-#: inc/taskjob.class.php:1007
+#: inc/taskjob.class.php:1005
 msgid "Force the end"
 msgstr "Durmaya zorla"
 
-#: inc/profile.class.php:162 inc/menu.class.php:226
+#: inc/profile.class.php:170 inc/menu.class.php:226
 msgid "General"
 msgstr "Genel"
 
-#: inc/profile.class.php:168
+#: inc/profile.class.php:176
 msgid "Inventory"
 msgstr "Envanter"
 
-#: inc/profile.class.php:174 inc/profile.class.php:220
+#: inc/profile.class.php:182 inc/profile.class.php:228
 msgid "Software deployment"
 msgstr "Yazılım dağıtma"
 
-#: inc/profile.class.php:214 inc/profile.class.php:291
+#: inc/profile.class.php:222 inc/profile.class.php:299
 msgid "Deploy packages on demand"
 msgstr "Paketleri isteğe göre dağıt"
 
-#: inc/profile.class.php:276
+#: inc/profile.class.php:284
 msgid "Manage packages"
 msgstr "Paket yönetimi"
 
-#: inc/profile.class.php:319 inc/menu.class.php:326
+#: inc/profile.class.php:327 inc/menu.class.php:326
 msgid "Remote devices to inventory (VMware)"
 msgstr "Envantere eklenecek uzak aygıtlar (VMware)"
 
-#: inc/profile.class.php:333
+#: inc/profile.class.php:341
 msgid "Network equipment SNMP"
 msgstr "Ağ aygıtı SNMP"
 
-#: inc/profile.class.php:338
+#: inc/profile.class.php:346
 msgid "Printer SNMP"
 msgstr "Yazıcı SNMP"
 
-#: inc/profile.class.php:372
+#: inc/profile.class.php:380
 msgid "Menu"
 msgstr "Menü"
 
-#: inc/profile.class.php:378
+#: inc/profile.class.php:386
 msgid "Configuration"
 msgstr "Yapılandırma"
 
@@ -1735,7 +1735,7 @@ msgstr "Yapılandırma"
 msgid "Associated SNMP credentials"
 msgstr "Atanmış SNMP kimlik doğrulama bilgileri"
 
-#: inc/iprange_snmpcredential.class.php:209 inc/menu.class.php:334
+#: inc/iprange_snmpcredential.class.php:209
 msgid "SNMP credentials"
 msgstr "SNMP kimlik doğrulama bilgileri"
 
@@ -1805,55 +1805,55 @@ msgstr "İş daha sonra yeniden başlatılsın"
 msgid "Cancel job"
 msgstr "İş iptal edilsin"
 
-#: inc/deployuserinteractiontemplate.class.php:438
+#: inc/deployuserinteractiontemplate.class.php:436
 msgid "Button ok"
 msgstr "Tamam düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:439
+#: inc/deployuserinteractiontemplate.class.php:437
 msgid "Button yes"
 msgstr "Evet düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:440
+#: inc/deployuserinteractiontemplate.class.php:438
 msgid "Button continue"
 msgstr "Sürdür düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:441
+#: inc/deployuserinteractiontemplate.class.php:439
 msgid "Button retry"
 msgstr "Yeniden dene düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:442
+#: inc/deployuserinteractiontemplate.class.php:440
 msgid "Button try"
 msgstr "Dene düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:443
+#: inc/deployuserinteractiontemplate.class.php:441
 msgid "Button no"
 msgstr "Hayır düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:444
+#: inc/deployuserinteractiontemplate.class.php:442
 msgid "Button cancel"
 msgstr "İptal düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:445
+#: inc/deployuserinteractiontemplate.class.php:443
 msgid "Button abort"
 msgstr "Vazgeç düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:446
+#: inc/deployuserinteractiontemplate.class.php:444
 msgid "Button ignore"
 msgstr "Yok say düğmesi"
 
-#: inc/deployuserinteractiontemplate.class.php:447
+#: inc/deployuserinteractiontemplate.class.php:445
 msgid "No active session"
 msgstr "Etkin bir oturum bulunamadı"
 
-#: inc/deployuserinteractiontemplate.class.php:448
+#: inc/deployuserinteractiontemplate.class.php:446
 msgid "Alert timeout exceeded"
 msgstr "Uyarı zaman aşımı süresi aşıldı"
 
-#: inc/deployuserinteractiontemplate.class.php:449
+#: inc/deployuserinteractiontemplate.class.php:447
 msgid "Several active sessions"
 msgstr "Bir kaç etkin oturum var"
 
-#: inc/deployuserinteractiontemplate.class.php:558
+#: inc/deployuserinteractiontemplate.class.php:556
 msgid "Behaviors"
 msgstr "Davranışlar"
 
@@ -1906,22 +1906,18 @@ msgid "Network inventory status"
 msgstr "Ağ envanteri durumu"
 
 #: inc/menu.class.php:364
-msgid "SNMP models creation"
-msgstr "SNMP modeli oluşturma"
-
-#: inc/menu.class.php:372
 msgid "Networking"
 msgstr "Ağ"
 
-#: inc/menu.class.php:422
+#: inc/menu.class.php:414
 msgid "SNMP inventory"
 msgstr "SNMP envanteri"
 
-#: inc/menu.class.php:428
+#: inc/menu.class.php:420
 msgid "Guide"
 msgstr "Rehber"
 
-#: inc/menu.class.php:452
+#: inc/menu.class.php:444
 msgid ""
 "This is the steps to configure plugin for SNMP inventory (swicth, router, "
 "network printer)"
@@ -1929,11 +1925,11 @@ msgstr ""
 "Eklentiyi SNMP envanteri için yapılandırma adımları (ağ anahtarı, yöneltici,"
 " ağ yazıcısı)"
 
-#: inc/menu.class.php:458
+#: inc/menu.class.php:450
 msgid "Configure SNMP credentials"
 msgstr "SNMP kimlik doğrulama bilgilerini yapılandır"
 
-#: inc/menu.class.php:462
+#: inc/menu.class.php:454
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
@@ -1941,39 +1937,39 @@ msgstr ""
 "İçe aktarma kurallarını belirleyin : aktarılsın ve yeni aygıtlar "
 "oluşturulsun (DİKKAT: Bilgisayar envanteri ile aynı kurallar)"
 
-#: inc/menu.class.php:466
+#: inc/menu.class.php:458
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr "Ağdaki aygıtları bulmak için `Ağ keşfi` kullanın"
 
-#: inc/menu.class.php:471
+#: inc/menu.class.php:463
 msgid "Define IP Ranges of your network + related SNMP credentials"
 msgstr ""
 "Ağınızın IP aralıklarını ve ilgili SNMP kimlik doğrulama bilgilerini "
 "ayarlayın"
 
-#: inc/menu.class.php:475
+#: inc/menu.class.php:467
 msgid "Define an agent allowed to discover the network"
 msgstr "Ağı keşfetmesine izin verilecek bir aracı belirleyin"
 
-#: inc/menu.class.php:479
+#: inc/menu.class.php:471
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
 msgstr ""
 "Keşif modülünde önceden belirlediğiniz aracı ile yeni bir görev oluşturun"
 
-#: inc/menu.class.php:483
+#: inc/menu.class.php:475
 msgid "If you have devices not typed, import them from unmanaged devices"
 msgstr "Yazılmamış aygıtlarınız varsa, yönetilmeyen aygıtlar olarak alın"
 
-#: inc/menu.class.php:487
+#: inc/menu.class.php:479
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr "Bulunan aygıtları envantere tamamlamak için `Ağ envanteri` kullanın"
 
-#: inc/menu.class.php:492
+#: inc/menu.class.php:484
 msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr "Ağ üzerinden SNMP kullanarak envanter toplayacak bir aracı belirleyin"
 
-#: inc/menu.class.php:496
+#: inc/menu.class.php:488
 msgid ""
 "Create a new Task with network inventory module and the agent defined "
 "previously"
