@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 02:00+0000\n"
+"POT-Creation-Date: 2026-09-17 02:20+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Daisuke INOUE, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -268,7 +268,7 @@ msgstr "プロパティー"
 #: front/task.form.php:39 front/menu.php:38 front/collect.php:34
 #: front/credential.form.php:39 front/agentmodule.form.php:34
 #: front/iprange.form.php:36 front/menu_snmpinventory.php:37
-#: front/taskjob.form.php:36 front/timeslot.php:37 inc/profile.class.php:116
+#: front/taskjob.form.php:36 front/timeslot.php:37 inc/profile.class.php:124
 #: inc/menu.class.php:48 src/Controller/InventoryController.php:81
 msgid "GLPI Inventory"
 msgstr "GLPI Inventory"
@@ -281,8 +281,8 @@ msgstr "機能"
 msgid "Delete unused files"
 msgstr "不使用ファイルの削除"
 
-#: front/deployuserinteractiontemplate.php:36 inc/profile.class.php:281
-#: inc/deployuserinteractiontemplate.class.php:135 inc/menu.class.php:399
+#: front/deployuserinteractiontemplate.php:36 inc/profile.class.php:289
+#: inc/deployuserinteractiontemplate.class.php:135 inc/menu.class.php:391
 msgid "User interaction template"
 msgid_plural "User interaction templates"
 msgstr[0] "ユーザー操作テンプレート"
@@ -300,11 +300,11 @@ msgid "Collect management"
 msgstr "収集管理"
 
 #: front/deploygroup.php:36 inc/deploytaskjob.class.php:222
-#: inc/profile.class.php:388 inc/menu.class.php:213
+#: inc/profile.class.php:396 inc/menu.class.php:213
 msgid "Groups of computers"
 msgstr "コンピューターのグループ"
 
-#: hook.php:55 inc/menu.class.php:410
+#: hook.php:55 inc/menu.class.php:402
 msgid "Deploy"
 msgstr "配置"
 
@@ -328,29 +328,29 @@ msgstr "収集"
 msgid "Static group"
 msgstr "固定のグループ"
 
-#: hook.php:132 inc/task.class.php:212 inc/menu.class.php:266
+#: hook.php:130 inc/task.class.php:212 inc/menu.class.php:266
 msgid "Tasks"
 msgstr "タスク"
 
-#: hook.php:140 hook.php:150 hook.php:160 hook.php:170
+#: hook.php:138 hook.php:148 hook.php:158 hook.php:168
 #, php-format
 msgid "%s inventoried"
 msgstr "検出済%s "
 
-#: hook.php:353
+#: hook.php:351
 msgid "Setup"
 msgstr "セットアップ"
 
-#: hook.php:412 inc/iprange.class.php:284 inc/deploygroup.class.php:231
+#: hook.php:410 inc/iprange.class.php:284 inc/deploygroup.class.php:231
 msgid "Target a task"
 msgstr "タスクと対象を結びつける"
 
-#: hook.php:416 inc/deploygroup_staticdata.class.php:155
+#: hook.php:414 inc/deploygroup_staticdata.class.php:155
 #: inc/deploygroup_staticdata.class.php:171
 msgid "Add to static group"
 msgstr "静的グループに追加"
 
-#: hook.php:418 inc/deploygroup_staticdata.class.php:227
+#: hook.php:416 inc/deploygroup_staticdata.class.php:227
 msgid "Remove from static group"
 msgstr "静的グループから削除"
 
@@ -368,7 +368,7 @@ msgstr "タスクのすべての情報を表示"
 msgid "IP Ranges"
 msgstr "IP 範囲"
 
-#: inc/iprange.class.php:113 inc/profile.class.php:309
+#: inc/iprange.class.php:113 inc/profile.class.php:317
 msgid "IP range configuration"
 msgstr "IP 範囲設定"
 
@@ -381,7 +381,7 @@ msgid "Found WMI"
 msgid_plural "Found WMIs"
 msgstr[0] "見つかった WMI"
 
-#: inc/collect.class.php:56 inc/profile.class.php:393 inc/menu.class.php:253
+#: inc/collect.class.php:56 inc/profile.class.php:401 inc/menu.class.php:253
 msgid "Collect information"
 msgstr "情報収集"
 
@@ -407,7 +407,7 @@ msgstr "パスファイル"
 msgid "Collect module has been disabled for this agent"
 msgstr "このエージェントでは収集モジュールが無効に設定されています"
 
-#: inc/collect.class.php:678
+#: inc/collect.class.php:676
 msgid "Path not found"
 msgstr "パスが見つかりません"
 
@@ -505,7 +505,7 @@ msgstr "GLPI-Agent または Fusioninventory-Agent の %1s 以上必須"
 msgid "Network Inventory"
 msgstr "ネットワーク インベントリー"
 
-#: inc/config.class.php:202 inc/menu.class.php:385
+#: inc/config.class.php:202 inc/menu.class.php:377
 msgid "Package management"
 msgstr "パッケージ管理"
 
@@ -555,12 +555,12 @@ msgstr "CSV ファイルが読み込めません"
 
 #: inc/credential.class.php:77 inc/credential.class.php:186
 #: inc/credentialip.class.php:132 inc/credentialip.class.php:155
-#: inc/profile.class.php:314 inc/menu.class.php:342
+#: inc/profile.class.php:322 inc/menu.class.php:342
 msgid "Authentication for remote devices (VMware)"
 msgstr "リモートデバイス (VMWare) の認証"
 
 #: inc/credential.class.php:302 inc/credential.class.php:320
-#: inc/profile.class.php:324
+#: inc/profile.class.php:332
 msgid "VMware host"
 msgstr "VMware ホスト"
 
@@ -586,8 +586,8 @@ msgstr "タスク実行状態"
 
 #: inc/taskview.class.php:164 inc/stateinventory.class.php:114
 #: inc/deploytask.class.php:53 inc/deploytask.class.php:153
-#: inc/task.class.php:1572 inc/task.class.php:1612
-#: inc/statediscovery.class.php:177 inc/profile.class.php:383
+#: inc/task.class.php:1562 inc/task.class.php:1602
+#: inc/statediscovery.class.php:177 inc/profile.class.php:391
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "タスク"
@@ -596,27 +596,27 @@ msgstr[0] "タスク"
 msgid "Show/Hide details"
 msgstr "詳細の表示・非表示"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1377
+#: inc/taskview.class.php:235 inc/deploypackage.class.php:1375
 msgid "In error"
 msgstr "エラー"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1378
+#: inc/taskview.class.php:236 inc/deploypackage.class.php:1376
 msgid "Successful"
 msgstr "成功"
 
-#: inc/taskview.class.php:237 inc/deploypackage.class.php:1379
+#: inc/taskview.class.php:237 inc/deploypackage.class.php:1377
 msgid "Running"
 msgstr "実行中"
 
 #: inc/taskview.class.php:238 inc/stateinventory.class.php:192
 #: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:282
-#: inc/taskjobstate.class.php:144 inc/deploypackage.class.php:1380
+#: inc/taskjobstate.class.php:144 inc/deploypackage.class.php:1378
 #: inc/statediscovery.class.php:261
 msgid "Prepared"
 msgstr "準備済"
 
 #: inc/taskview.class.php:239 inc/taskjobstate.class.php:149
-#: inc/deploypackage.class.php:1381
+#: inc/deploypackage.class.php:1379
 msgid "Cancelled"
 msgstr "取消済"
 
@@ -741,8 +741,8 @@ msgstr "キーが定義済みか確認"
 msgid "All values"
 msgstr "すべての値"
 
-#: inc/deploymirror.class.php:67 inc/profile.class.php:286
-#: inc/menu.class.php:392
+#: inc/deploymirror.class.php:67 inc/profile.class.php:294
+#: inc/menu.class.php:384
 msgid "Mirror servers"
 msgstr "ミラーサーバー"
 
@@ -754,7 +754,7 @@ msgstr "コンピューター インベントリー"
 msgid "VMware host remote inventory"
 msgstr "VMware ホスト リモート インベントリー"
 
-#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1071
+#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1069
 msgid "Package deploy"
 msgstr "パッケージ配置"
 
@@ -763,7 +763,7 @@ msgid "Collect data"
 msgstr "データ収集"
 
 #: inc/staticmisc.class.php:434 inc/staticmisc.class.php:440
-#: inc/taskjob.class.php:803
+#: inc/taskjob.class.php:801
 msgid "Auto management dynamic of agents"
 msgstr "エージェントの自動動的管理"
 
@@ -796,7 +796,7 @@ msgstr "OK"
 msgid "Info"
 msgstr "情報"
 
-#: inc/taskjoblog.class.php:186 inc/task.class.php:1629
+#: inc/taskjoblog.class.php:186 inc/task.class.php:1619
 #: inc/taskjob.class.php:56 inc/agentwakeup.class.php:69
 msgid "Job"
 msgstr "ジョブ"
@@ -849,11 +849,11 @@ msgstr "エージェント モジュール"
 msgid "Package deployment"
 msgstr "パッケージ配置"
 
-#: inc/commonview.class.php:298
+#: inc/commonview.class.php:296
 msgid "Warning:"
 msgstr "警告 : "
 
-#: inc/commonview.class.php:303
+#: inc/commonview.class.php:301
 msgid "Error:"
 msgstr "エラー : "
 
@@ -869,72 +869,72 @@ msgstr "オンデマンド配置タスク"
 msgid "Associated tasks"
 msgstr "関連タスク"
 
-#: inc/task.class.php:407
+#: inc/task.class.php:405
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
 "error."
 msgstr "エージェントが以前にサーバーから送信された設定を要求しています。エージェントに致命的なエラーが発生している可能性が高いです。"
 
-#: inc/task.class.php:420
+#: inc/task.class.php:418
 msgid "The task has been deactivated after preparation of this job."
 msgstr "このジョブの準備後、タスクが無効になりました。"
 
-#: inc/task.class.php:441
+#: inc/task.class.php:439
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "タスクのスケジュールに従うと、このジョブは今後実行されません。"
 
-#: inc/task.class.php:487
+#: inc/task.class.php:485
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr "タスクのタイムスロットに従うと、このジョブは今後実行されません。"
 
-#: inc/task.class.php:506
+#: inc/task.class.php:504
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "このエージェントは、このジョブの実行エージェントとしてすでに登録されていません。"
 
-#: inc/task.class.php:545
+#: inc/task.class.php:541
 msgid "The task cannot be updated if it is active"
 msgstr "有効なタスクは更新できません"
 
-#: inc/task.class.php:700
+#: inc/task.class.php:696
 msgid "Inventory task scheduler"
 msgstr "インベントリータスク スケジュール"
 
-#: inc/task.class.php:703
+#: inc/task.class.php:699
 msgid "Clean on demand deployment tasks"
 msgstr "オンデマンド配置タスクのクリーンアップ"
 
-#: inc/task.class.php:1524
+#: inc/task.class.php:1514
 msgid "Task has been disabled"
 msgstr "タスクを無効にしました"
 
-#: inc/task.class.php:1590 inc/deploypackage.class.php:102
+#: inc/task.class.php:1580 inc/deploypackage.class.php:102
 msgid "Package"
 msgstr "パッケージ"
 
-#: inc/task.class.php:1723
+#: inc/task.class.php:1713
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
 msgstr "タスクが配置パッケージを対象とするよう両者を選択してください。"
 
-#: inc/task.class.php:1740
+#: inc/task.class.php:1730
 msgid "Deployment job, package: "
 msgstr "配置ジョブ - パッケージ : "
 
-#: inc/task.class.php:1757
+#: inc/task.class.php:1747
 msgid "Updated a deployment job, package: "
 msgstr "配置ジョブ更新済み。パッケージ : "
 
-#: inc/task.class.php:1758 inc/task.class.php:1801
+#: inc/task.class.php:1748 inc/task.class.php:1791
 msgid ", actors: "
 msgstr ", 実行エージェント : "
 
-#: inc/task.class.php:1786
+#: inc/task.class.php:1776
 msgid "The selected task already has a deployment job for another package: "
 msgstr "選択したジョブは、別のパッケージの配置ジョブを担当しています : "
 
-#: inc/task.class.php:1800
+#: inc/task.class.php:1790
 msgid "Created a deployment job, package: "
 msgstr "配置ジョブを作成しました。パッケージ : "
 
@@ -1017,84 +1017,84 @@ msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "以下のタスクが、このパッケージを実行中"
 
-#: inc/deploypackage.class.php:391 inc/deploypackage.class.php:515
+#: inc/deploypackage.class.php:389 inc/deploypackage.class.php:513
 msgid "Enable deploy on demand for the following group"
 msgstr "以下のグループでオンデマンド配置を有効にする"
 
-#: inc/deploypackage.class.php:534
+#: inc/deploypackage.class.php:532
 msgid "Audits"
 msgstr "検査"
 
-#: inc/deploypackage.class.php:535
+#: inc/deploypackage.class.php:533
 msgid "Files"
 msgstr "ファイル"
 
-#: inc/deploypackage.class.php:536 public/b/deploy/index.php:153
+#: inc/deploypackage.class.php:534 public/b/deploy/index.php:153
 msgid "Actions"
 msgstr "操作"
 
-#: inc/deploypackage.class.php:537
+#: inc/deploypackage.class.php:535
 msgid "User interactions"
 msgstr "ユーザー操作"
 
-#: inc/deploypackage.class.php:689
+#: inc/deploypackage.class.php:687
 msgid "JSON package representation"
 msgstr "JSON パッケージ表現"
 
-#: inc/deploypackage.class.php:813
+#: inc/deploypackage.class.php:811
 msgid "Package exported in"
 msgstr "パッケージのエクスポート先 : "
 
-#: inc/deploypackage.class.php:886
+#: inc/deploypackage.class.php:884
 msgid "Packages to import"
 msgstr "インポートするパッケージ"
 
-#: inc/deploypackage.class.php:1015 inc/deploypackageitem.class.php:332
+#: inc/deploypackage.class.php:1013 inc/deploypackageitem.class.php:332
 msgid "The modified JSON contained a syntax error :"
 msgstr "修正した JSON に構文エラーが含まれています : "
 
-#: inc/deploypackage.class.php:1043
+#: inc/deploypackage.class.php:1041
 msgid "Package actions"
 msgstr "パッケージの操作"
 
-#: inc/deploypackage.class.php:1052
+#: inc/deploypackage.class.php:1050
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
 msgstr[0] "オンデマンドで配置する対象"
 
-#: inc/deploypackage.class.php:1144
+#: inc/deploypackage.class.php:1142
 msgid "Add a target for self-service"
 msgstr "セルフサービス向けに対象を追加"
 
-#: inc/deploypackage.class.php:1502
+#: inc/deploypackage.class.php:1500
 msgid "Restart job"
 msgstr "ジョブの再実行"
 
-#: inc/deploypackage.class.php:1509
+#: inc/deploypackage.class.php:1507
 msgid "refresh job"
 msgstr "ジョブを更新"
 
-#: inc/deploypackage.class.php:1654
+#: inc/deploypackage.class.php:1652
 msgid "Select packages you want install"
 msgstr "インストールしたいパッケージを選択"
 
-#: inc/deploypackage.class.php:1663
+#: inc/deploypackage.class.php:1661
 msgid "Prepare for install"
 msgstr "インストール準備"
 
-#: inc/deploypackage.class.php:1668
+#: inc/deploypackage.class.php:1666
 msgid "I'm on this computer: local wakeup"
 msgstr "このコンピューター上で作業 : ローカル 起動指示"
 
-#: inc/deploypackage.class.php:1669
+#: inc/deploypackage.class.php:1667
 msgid "I'm not on this computer: wakeup from the server"
 msgstr "このコンピューター上で作業していない : サーバーから起動指示"
 
-#: inc/deploypackage.class.php:1670
+#: inc/deploypackage.class.php:1668
 msgid "Don't wakeup"
 msgstr "起動指示しない"
 
-#: inc/deploypackage.class.php:1686
+#: inc/deploypackage.class.php:1684
 msgid "No packages available to install"
 msgstr "インストールすべきパッケージはありません"
 
@@ -1369,50 +1369,50 @@ msgstr "操作での失敗"
 msgid "Interaction label"
 msgstr "インタラクション ラベル"
 
-#: inc/deployuserinteraction.class.php:392
+#: inc/deployuserinteraction.class.php:382
 #, php-format
 msgid "Job cancelled by the user %1$s"
 msgstr "%1$s がジョブを取り消し"
 
-#: inc/deployuserinteraction.class.php:399
+#: inc/deployuserinteraction.class.php:389
 #, php-format
 msgid "User %1$s agreed to continue the job"
 msgstr "%1$s ユーザーがジョブの続行に同意しました"
 
-#: inc/deployuserinteraction.class.php:406
+#: inc/deployuserinteraction.class.php:396
 #, php-format
 msgid "Job postponed by the user %1$s"
 msgstr "%1$s ユーザーがジョブを延期"
 
-#: inc/deployuserinteraction.class.php:412
+#: inc/deployuserinteraction.class.php:402
 msgid "Bad event sent to the agent"
 msgstr "不正なイベントがエージェントに送られました"
 
-#: inc/deployuserinteraction.class.php:431
+#: inc/deployuserinteraction.class.php:421
 msgid "Alert displayed, no input required"
 msgstr "警告を表示、応答入力の必要なし"
 
-#: inc/deployuserinteraction.class.php:437
+#: inc/deployuserinteraction.class.php:427
 msgid "Retry"
 msgstr "再試行"
 
-#: inc/deployuserinteraction.class.php:443
+#: inc/deployuserinteraction.class.php:433
 msgid "Abort"
 msgstr "中止"
 
-#: inc/deployuserinteraction.class.php:446
+#: inc/deployuserinteraction.class.php:436
 msgid "Ignore"
 msgstr "無視"
 
-#: inc/deployuserinteraction.class.php:452
+#: inc/deployuserinteraction.class.php:442
 msgid "Alert duration exceeded"
 msgstr "警告期間を超過"
 
-#: inc/deployuserinteraction.class.php:455
+#: inc/deployuserinteraction.class.php:445
 msgid "No user connected"
 msgstr "ユーザーは接続していません"
 
-#: inc/deployuserinteraction.class.php:458
+#: inc/deployuserinteraction.class.php:448
 msgid "Multiple users connected"
 msgstr "複数ユーザーが接続"
 
@@ -1461,43 +1461,43 @@ msgstr "対象アイテム"
 msgid "New action"
 msgstr "新しい操作"
 
-#: inc/taskjobview.class.php:674
+#: inc/taskjobview.class.php:672
 msgid "Restrict scope to task entity"
 msgstr "タスクエンティティーに範囲を限定する"
 
-#: inc/taskjobview.class.php:692 inc/taskjobview.class.php:725
+#: inc/taskjobview.class.php:690 inc/taskjobview.class.php:723
 msgid "Targets"
 msgstr "対象"
 
-#: inc/taskjobview.class.php:698
+#: inc/taskjobview.class.php:696
 msgid "The items that should be applied for this job."
 msgstr "このジョブに割り当てるアイテム。"
 
-#: inc/taskjobview.class.php:704 inc/taskjobview.class.php:747
+#: inc/taskjobview.class.php:702 inc/taskjobview.class.php:745
 msgid "Actors"
 msgstr "実行エージェント"
 
-#: inc/taskjobview.class.php:709
+#: inc/taskjobview.class.php:707
 msgid "The items that should carry out those targets."
 msgstr "対象に実施すべきアイテム"
 
-#: inc/taskjobview.class.php:733 inc/taskjobview.class.php:755
+#: inc/taskjobview.class.php:731 inc/taskjobview.class.php:753
 msgid "Clear list"
 msgstr "一覧の初期化"
 
-#: inc/taskjobview.class.php:738 inc/taskjobview.class.php:760
+#: inc/taskjobview.class.php:736 inc/taskjobview.class.php:758
 msgid "Delete selected items"
 msgstr "選択したアイテムの削除"
 
-#: inc/taskjobview.class.php:778
+#: inc/taskjobview.class.php:776
 msgid "Cancel modifications"
 msgstr "変更取消"
 
-#: inc/taskjobview.class.php:783
+#: inc/taskjobview.class.php:781
 msgid "Purge"
 msgstr "抹消"
 
-#: inc/taskjobview.class.php:786
+#: inc/taskjobview.class.php:784
 msgid "Confirm the final deletion ?"
 msgstr "削除の最終決定を確認する？"
 
@@ -1518,7 +1518,7 @@ msgid "retention"
 msgstr "保持期間"
 
 #: inc/deployfile.class.php:203 inc/deployfile.class.php:367
-#: inc/taskjob.class.php:766
+#: inc/taskjob.class.php:764
 msgid "Minute(s)"
 msgstr "単位 : 分"
 
@@ -1632,80 +1632,80 @@ msgstr "Iname"
 msgid "Type"
 msgstr "型"
 
-#: inc/communicationnetworkdiscovery.class.php:111
+#: inc/communicationnetworkdiscovery.class.php:109
 #, php-format
 msgid "Processed: %1$s Created: %2$s Updated: %3$s"
 msgstr "処理済 : %1$s 作成済 : %2$s 更新済 : %3$s"
 
-#: inc/taskjob.class.php:746
+#: inc/taskjob.class.php:744
 msgid "Scheduled date"
 msgstr "スケジュール日"
 
-#: inc/taskjob.class.php:747
+#: inc/taskjob.class.php:745
 msgid "Periodicity"
 msgstr "周期性"
 
-#: inc/taskjob.class.php:748
+#: inc/taskjob.class.php:746
 msgid "Definition"
 msgstr "定義"
 
-#: inc/taskjob.class.php:749
+#: inc/taskjob.class.php:747
 msgid "Action"
 msgstr "操作"
 
-#: inc/taskjob.class.php:771
+#: inc/taskjob.class.php:769
 msgid "hour(s)"
 msgstr "時間"
 
-#: inc/taskjob.class.php:776
+#: inc/taskjob.class.php:774
 msgid "day(s)"
 msgstr "日間"
 
-#: inc/taskjob.class.php:805
+#: inc/taskjob.class.php:803
 msgid "Auto management dynamic of agents (same subnet)"
 msgstr "エージェントの自動動的管理 ( 同サブネット )"
 
-#: inc/taskjob.class.php:1007
+#: inc/taskjob.class.php:1005
 msgid "Force the end"
 msgstr "強制終了"
 
-#: inc/profile.class.php:162 inc/menu.class.php:226
+#: inc/profile.class.php:170 inc/menu.class.php:226
 msgid "General"
 msgstr "全般"
 
-#: inc/profile.class.php:168
+#: inc/profile.class.php:176
 msgid "Inventory"
 msgstr "インベントリー"
 
-#: inc/profile.class.php:174 inc/profile.class.php:220
+#: inc/profile.class.php:182 inc/profile.class.php:228
 msgid "Software deployment"
 msgstr "ソフトウェアの配置"
 
-#: inc/profile.class.php:214 inc/profile.class.php:291
+#: inc/profile.class.php:222 inc/profile.class.php:299
 msgid "Deploy packages on demand"
 msgstr "オンデマンドでパッケージを配置"
 
-#: inc/profile.class.php:276
+#: inc/profile.class.php:284
 msgid "Manage packages"
 msgstr "パッケージ管理"
 
-#: inc/profile.class.php:319 inc/menu.class.php:326
+#: inc/profile.class.php:327 inc/menu.class.php:326
 msgid "Remote devices to inventory (VMware)"
 msgstr "インベントリー対象のリモートデバイス（VMware）"
 
-#: inc/profile.class.php:333
+#: inc/profile.class.php:341
 msgid "Network equipment SNMP"
 msgstr "ネットワーク機器 SNMP"
 
-#: inc/profile.class.php:338
+#: inc/profile.class.php:346
 msgid "Printer SNMP"
 msgstr "プリンター SNMP"
 
-#: inc/profile.class.php:372
+#: inc/profile.class.php:380
 msgid "Menu"
 msgstr "メニュー"
 
-#: inc/profile.class.php:378
+#: inc/profile.class.php:386
 msgid "Configuration"
 msgstr "設定"
 
@@ -1713,7 +1713,7 @@ msgstr "設定"
 msgid "Associated SNMP credentials"
 msgstr "関連 SNMP 認証"
 
-#: inc/iprange_snmpcredential.class.php:209 inc/menu.class.php:334
+#: inc/iprange_snmpcredential.class.php:209
 msgid "SNMP credentials"
 msgstr "SNMP 認証"
 
@@ -1782,55 +1782,55 @@ msgstr "時間をあけてジョブを再試行"
 msgid "Cancel job"
 msgstr "ジョブをキャンセル"
 
-#: inc/deployuserinteractiontemplate.class.php:438
+#: inc/deployuserinteractiontemplate.class.php:436
 msgid "Button ok"
 msgstr "OK ボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:439
+#: inc/deployuserinteractiontemplate.class.php:437
 msgid "Button yes"
 msgstr "はいボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:440
+#: inc/deployuserinteractiontemplate.class.php:438
 msgid "Button continue"
 msgstr "続行ボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:441
+#: inc/deployuserinteractiontemplate.class.php:439
 msgid "Button retry"
 msgstr "再試行ボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:442
+#: inc/deployuserinteractiontemplate.class.php:440
 msgid "Button try"
 msgstr "実行ボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:443
+#: inc/deployuserinteractiontemplate.class.php:441
 msgid "Button no"
 msgstr "いいえボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:444
+#: inc/deployuserinteractiontemplate.class.php:442
 msgid "Button cancel"
 msgstr "キャンセル ボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:445
+#: inc/deployuserinteractiontemplate.class.php:443
 msgid "Button abort"
 msgstr "中止ボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:446
+#: inc/deployuserinteractiontemplate.class.php:444
 msgid "Button ignore"
 msgstr "無視ボタン"
 
-#: inc/deployuserinteractiontemplate.class.php:447
+#: inc/deployuserinteractiontemplate.class.php:445
 msgid "No active session"
 msgstr "アクティブセッションなし"
 
-#: inc/deployuserinteractiontemplate.class.php:448
+#: inc/deployuserinteractiontemplate.class.php:446
 msgid "Alert timeout exceeded"
 msgstr "警告のタイムアウトを超過"
 
-#: inc/deployuserinteractiontemplate.class.php:449
+#: inc/deployuserinteractiontemplate.class.php:447
 msgid "Several active sessions"
 msgstr "サーバー アクティブ セッション"
 
-#: inc/deployuserinteractiontemplate.class.php:558
+#: inc/deployuserinteractiontemplate.class.php:556
 msgid "Behaviors"
 msgstr "ふるまい"
 
@@ -1883,67 +1883,63 @@ msgid "Network inventory status"
 msgstr "ネットワーク インベントリー状態"
 
 #: inc/menu.class.php:364
-msgid "SNMP models creation"
-msgstr "SNMP モデル作成"
-
-#: inc/menu.class.php:372
 msgid "Networking"
 msgstr "ネットワーク"
 
-#: inc/menu.class.php:422
+#: inc/menu.class.php:414
 msgid "SNMP inventory"
 msgstr "SNMP インベントリー"
 
-#: inc/menu.class.php:428
+#: inc/menu.class.php:420
 msgid "Guide"
 msgstr "ガイド"
 
-#: inc/menu.class.php:452
+#: inc/menu.class.php:444
 msgid ""
 "This is the steps to configure plugin for SNMP inventory (swicth, router, "
 "network printer)"
 msgstr "このステップで、プラグインの SNMP インベントリー（スイッチ、ルーター、ネットワーク プリンター）の設定を行います"
 
-#: inc/menu.class.php:458
+#: inc/menu.class.php:450
 msgid "Configure SNMP credentials"
 msgstr "SNMP 認証設定"
 
-#: inc/menu.class.php:462
+#: inc/menu.class.php:454
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
 msgstr "インポートのルールを定義する : 新しいデバイスのマージと作成（注意 : コンピューター インベントリーのルールに同じものを）"
 
-#: inc/menu.class.php:466
+#: inc/menu.class.php:458
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr "「ネットワーク探索」は、ネットワーク内のデバイスを発見するのに使います"
 
-#: inc/menu.class.php:471
+#: inc/menu.class.php:463
 msgid "Define IP Ranges of your network + related SNMP credentials"
 msgstr "対象のネットワークの IP 範囲 + 関連する SNMP 認証を定義する"
 
-#: inc/menu.class.php:475
+#: inc/menu.class.php:467
 msgid "Define an agent allowed to discover the network"
 msgstr "ネットワーク ディスカバリーを許可するエージェントを定義する"
 
-#: inc/menu.class.php:479
+#: inc/menu.class.php:471
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
 msgstr "探索モジュールと以前に定義したエージェントでタスクを作成"
 
-#: inc/menu.class.php:483
+#: inc/menu.class.php:475
 msgid "If you have devices not typed, import them from unmanaged devices"
 msgstr "型を指定していないデバイスは、未管理デバイスからインポートしてください"
 
-#: inc/menu.class.php:487
+#: inc/menu.class.php:479
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr "「ネットワーク インベントリー」は発見したデバイスの詳細なインベントリーを取得するのに使います"
 
-#: inc/menu.class.php:492
+#: inc/menu.class.php:484
 msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr "SNMP でのネットワーク ディスカバリーを許可するエージェントを定義する"
 
-#: inc/menu.class.php:496
+#: inc/menu.class.php:488
 msgid ""
 "Create a new Task with network inventory module and the agent defined "
 "previously"
