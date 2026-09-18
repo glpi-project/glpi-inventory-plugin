@@ -558,4 +558,82 @@ class PackageSelfDeployTest extends TestCase
         $expected = [];
         $this->assertEquals($names, $expected);
     }
+
+    private function enableDeployModule(): void
+    {
+        $module = new PluginGlpiinventoryAgentmodule();
+        $module->getFromDBByCrit(['modulename' => 'DEPLOY']);
+        $module->update([
+            'id'        => $module->fields['id'],
+            'is_active' => 1,
+        ]);
+    }
+
+    public function testPackageForMeExcludesForeignComputer(): void
+    {
+        $this->enableDeployModule();
+        $this->PackageTargetEntity();
+
+        $computer               = new Computer();
+        $agent                  = new Agent();
+        $pfDeployPackage        = new PluginGlpiinventoryDeployPackage();
+        $pfDeployPackage_Entity = new PluginGlpiinventoryDeployPackage_Entity();
+
+        global $DB;
+        $agenttype = $DB->request(['FROM' => AgentType::getTable(), 'WHERE' => ['name' => 'Core']])->current();
+
+        $foreign_computers_id = $computer->add([
+            'name'        => 'pc-foreign',
+            'entities_id' => 0,
+            'users_id'    => 2,
+        ]);
+        $this->assertNotFalse($foreign_computers_id);
+        $this->assertNotFalse(
+            $agent->add([
+                'itemtype'                      => Computer::class,
+                'items_id'                      => $foreign_computers_id,
+                'entities_id'                   => 0,
+                'agenttypes_id'                 => $agenttype['id'],
+                'deviceid'                      => "Computer$foreign_computers_id",
+                'use_module_package_deployment' => 1,
+            ])
+        );
+
+        $pfDeployPackage->getFromDBByCrit(['name' => 'test1']);
+        $pfDeployPackage_Entity->add([
+            'plugin_glpiinventory_deploypackages_id' => $pfDeployPackage->fields['id'],
+        ]);
+
+        $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php';
+        $packages = $pfDeployPackage->getPackageForMe($_SESSION['glpiID']);
+
+        $this->assertArrayNotHasKey($foreign_computers_id, $packages);
+    }
+
+    public function testFilterAllowedDeploymentsRejectsUnofferedSelection(): void
+    {
+        $this->enableDeployModule();
+        $this->PackageTargetEntity();
+
+        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+
+        $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php';
+        $offered = array_filter($pfDeployPackage->getPackageForMe($_SESSION['glpiID']));
+        $this->assertNotEmpty($offered);
+
+        $computers_id = (int) array_key_first($offered);
+        $packages_id  = (int) array_key_first($offered[$computers_id]);
+
+        $posted = [
+            'prepareinstall'               => 1,
+            "deploypackages_$computers_id" => [$packages_id, $packages_id, $packages_id + 1000],
+            'deploypackages_999999'        => [$packages_id],
+            'deploypackages_'              => 'not-an-array',
+        ];
+
+        $this->assertSame(
+            [$computers_id => [$packages_id]],
+            $pfDeployPackage->filterAllowedDeployments($posted, (int) $_SESSION['glpiID'])
+        );
+    }
 }
